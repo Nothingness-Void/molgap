@@ -1,0 +1,18 @@
+{
+  "_comment": "复制此文件并填写实验结果。文件名随意，放在 results/experiments/ 下即可自动收录到总表。",
+  "phase": "3",
+  "sub_stage": "3.1",
+  "experiment": "your_experiment_name",
+  "model": "lightgbm_tuned",
+  "data_desc": "50k CHONSFCl",
+  "elements": "C,Cl,F,H,N,O,S",
+  "mw_range": "200-500",
+  "n_data": 50000,
+  "split": "random_test",
+  "metrics": {
+    "homo":    {"mae": 0.0, "rmse": 0.0, "r2": 0.0},
+    "lumo":    {"mae": 0.0, "rmse": 0.0, "r2": 0.0},
+    "gap":     {"mae": 0.0, "rmse": 0.0, "r2": 0.0},
+    "average": {"mae": 0.0, "rmse": 0.0, "r2": 0.0}
+  }
+}
