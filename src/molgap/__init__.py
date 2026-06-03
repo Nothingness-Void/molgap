@@ -1,0 +1,1 @@
+"""MolGap shared package."""

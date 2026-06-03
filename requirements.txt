@@ -1,0 +1,22 @@
+# Phase 1 data fetch (streaming)
+ijson==3.5.0
+requests==2.34.2
+# urllib is stdlib, no install needed
+
+# Phase 2 clean + features
+pandas
+numpy
+rdkit
+
+# Phase 3 modeling (baseline)
+lightgbm
+scikit-learn
+joblib
+matplotlib
+seaborn
+tqdm
+optuna
+
+# Phase 3 advanced (optional, install later if needed)
+# torch
+# torch_geometric
