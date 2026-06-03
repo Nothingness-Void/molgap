@@ -1,0 +1,15 @@
+model,split,metric,old_value,new_value,change,change_pct
+lightgbm,test,homo_mae,0.14411,0.13717,-0.00694,-4.82%
+lightgbm,test,homo_r2,0.87085,0.88315,+0.01230,+1.41%
+lightgbm,test,lumo_mae,0.15881,0.15117,-0.00764,-4.81%
+lightgbm,test,lumo_r2,0.93458,0.94193,+0.00735,+0.79%
+lightgbm,test,gap_mae,0.19806,0.18764,-0.01042,-5.26%
+lightgbm,test,gap_r2,0.89967,0.90448,+0.00481,+0.53%
+lightgbm,test,average_mae,0.16700,0.15866,-0.00834,-4.99%
+lightgbm,test,average_r2,0.90170,0.90985,+0.00815,+0.90%
+extratrees,test,average_mae,0.17471,0.17341,-0.00130,-0.74%
+extratrees,test,average_r2,0.86650,0.87102,+0.00452,+0.52%
+randomforest,test,average_mae,0.19823,0.19092,-0.00731,-3.69%
+randomforest,test,average_r2,0.84660,0.85421,+0.00761,+0.90%
+ridge,test,average_mae,0.23133,0.21697,-0.01436,-6.21%
+ridge,test,average_r2,0.83933,0.85416,+0.01483,+1.77%

@@ -1,0 +1,5 @@
+model,split,average_mae,average_r2,mae_improvement
+lightgbm_baseline,random,0.1755,0.8952,
+lightgbm_tuned,random,0.1497746636107264,0.920516972523088,14.7%
+lightgbm_baseline,scaffold,0.2047,0.8642,
+lightgbm_tuned,scaffold,0.1851411324443156,0.8799188755355704,9.6%

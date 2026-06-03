@@ -1,0 +1,5 @@
+target_a,target_b,top_n,intersection_size,union_size,jaccard,overlap_features
+homo,lumo,30,13,47,0.2765957446808511,desc_BCUT2D_MRLOW;desc_EState_VSA10;desc_MaxPartialCharge;desc_MinAbsPartialCharge;desc_PEOE_VSA1;desc_SMR_VSA10;desc_SMR_VSA7;desc_SlogP_VSA1;desc_TPSA;desc_VSA_EState2;desc_VSA_EState4;desc_VSA_EState5;desc_VSA_EState6
+homo,gap,30,6,54,0.1111111111111111,desc_BCUT2D_MRLOW;desc_MaxAbsPartialCharge;desc_SMR_VSA10;desc_SMR_VSA7;desc_SlogP_VSA10;desc_VSA_EState2
+lumo,gap,30,16,44,0.36363636363636365,desc_BCUT2D_MRHI;desc_BCUT2D_MRLOW;desc_FractionCSP3;desc_HallKierAlpha;desc_NumAmideBonds;desc_NumHAcceptors;desc_SMR_VSA10;desc_SMR_VSA7;desc_SlogP_VSA8;desc_VSA_EState2;desc_VSA_EState3;desc_fr_NH0;desc_fr_ketone;desc_qed;morgan_694;morgan_715
+homo_lumo_gap,all,30,4,59,,desc_BCUT2D_MRLOW;desc_SMR_VSA10;desc_SMR_VSA7;desc_VSA_EState2

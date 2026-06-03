@@ -10,6 +10,11 @@ build/
 # Model files (binary, retrain is fast)
 models/*.joblib
 
+# Large intermediate data (regenerate with pipeline)
+data/processed/*.csv
+data/raw/*.csv
+!data/commercial/commercial_molecules_template.csv
+
 # Keep directory structure
 !data/raw/.gitkeep
 !data/processed/.gitkeep
