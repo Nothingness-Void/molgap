@@ -1,12 +1,7 @@
 ﻿# MolGap TODO
 
-## Path update
-- Production pipeline scripts now live under `scripts/pipeline/`.
-- Evaluation and validation scripts now live under `scripts/evaluation/`.
-- Experimental benchmark scripts now live under `scripts/experiments/`.
-- Deferred application scripts now live under `scripts/todo/`.
-- Shared utilities moved from `src/utils.py` to `src/molgap/utils.py`.
-- Historical archive notes may still mention the pre-refactor `src/*.py` paths.
+## Path update (2026-06-04)
+Scripts reorganized by Phase. See `scripts/README.md` for full layout.
 
 ## Active priority
 

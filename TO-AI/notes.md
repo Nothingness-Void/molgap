@@ -1,12 +1,8 @@
 ﻿# MolGap Notes
 
-## Path update
-- Production pipeline scripts now live under `scripts/pipeline/`.
-- Evaluation and validation scripts now live under `scripts/evaluation/`.
-- Experimental benchmark scripts now live under `scripts/experiments/`.
-- Deferred application scripts now live under `scripts/todo/`.
-- Shared utilities moved from `src/utils.py` to `src/molgap/utils.py`.
-- Historical archive notes may still mention the pre-refactor `src/*.py` paths.
+## Path update (2026-06-04)
+Scripts reorganized by Phase. See `scripts/README.md` for full layout.
+Old `scripts/evaluation/`, `scripts/experiments/`, `scripts/todo/` removed.
 
 ## Conversation notes
 
@@ -74,32 +70,58 @@ Use the same fixed split across all experiments.
 ### Pooling recommendation
 For transformer embeddings, use attention-mask mean pooling rather than naïvely averaging padded tokens.
 
+## 虚拟环境
+
+项目使用 `.venv/` 虚拟环境（已加入 `.gitignore`），所有脚本必须用 `.venv\Scripts\python.exe` 运行，不要使用系统 Python。
+
+```bash
+# 正确
+.venv\Scripts\python.exe scripts/experiments/18_phase3_scaleup.py
+
+# 错误
+python scripts/experiments/18_phase3_scaleup.py
+```
+
+依赖安装：
+```bash
+.venv\Scripts\pip.exe install -r requirements.txt
+.venv\Scripts\pip.exe install ijson
+```
+
+## 权限配置
+
+项目已配置 `.claude/settings.json` 全量权限模式，无需启动时加 `--dangerously-skip-permissions`。
+
 ## Coding style preferences inferred from user/project
 - User prefers incremental development from simple to complex.
 - User wants persistent local project notes so context survives session closure.
 - User has prior molecular ML experience and can understand RDKit descriptors, embeddings, split strategy, and model comparison.
 - Keep project scientifically defensible: fixed splits, clear metrics, and avoid overclaiming small-sample results.
 
-## Next assistant should do
-If the user says to continue implementation, start with:
-
-```text
-src/molgap/utils.py
-scripts/pipeline/02_clean.py
+## 新增依赖 (2026-06-04)
+```bash
+.venv\Scripts\pip.exe install xgboost catboost
 ```
+已安装: xgboost 3.2.0, catboost 1.2.10
 
-Then verify with:
+## Next assistant should do
+Phase 3.4 模型优化尚未完成。用户下次继续时，直接运行:
 
 ```bash
-python scripts/pipeline/02_clean.py
+.venv\Scripts\python.exe scripts/phase3/select_and_optimize.py --lgbm-trials 80 --xgb-trials 60
 ```
 
-After that implement:
+该脚本会:
+1. 加载已缓存的 Phase 3 特征 (`results/phase3/phase3_features.csv`, 30k x 6028)
+2. Gain-based 特征筛选 (6028 → 2811)
+3. Optuna 调参 LightGBM (80 轮) + XGBoost (60 轮)
+4. CatBoost, HistGBT, Per-target LGBM 对比
+5. 输出到 `results/phase3/optimize/`
 
-```text
-scripts/pipeline/03_features.py
-scripts/pipeline/04_train_baseline.py
-```
+目标: avg R2 >= 0.9 (当前 baseline 0.876)
 
-Do not jump directly to embeddings or GNN until traditional baseline is complete.
+如果 R2 仍未达 0.9，可考虑:
+- 扩数据到 50k
+- 更多 Optuna 轮次
+- 数据增强或进一步特征工程
 

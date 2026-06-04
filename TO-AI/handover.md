@@ -1,15 +1,19 @@
 ﻿# MolGap Handover
 
-## Path update
-- Production pipeline scripts now live under `scripts/pipeline/`.
-- Evaluation and validation scripts now live under `scripts/evaluation/`.
-- Experimental benchmark scripts now live under `scripts/experiments/`.
-- Deferred application scripts now live under `scripts/todo/`.
-- Shared utilities moved from `src/utils.py` to `src/molgap/utils.py`.
-- Historical archive notes may still mention the pre-refactor `src/*.py` paths.
+## Path update (2026-06-04 restructure)
+Scripts reorganized by Phase:
+- `scripts/pipeline/` — 通用管线 (fetch, clean, features, feature_selection)
+- `scripts/phase1/` — Model Optimization (baseline, tuning, analysis, embeddings)
+- `scripts/phase2/` — Generalization Study
+- `scripts/phase3/` — Production Scale-Up
+- `scripts/phase5/` — Commercial Prediction
+- `scripts/colab/` — Colab notebooks
+- `src/molgap/utils.py` — shared utilities
+- Old `scripts/evaluation/`, `scripts/experiments/`, `scripts/todo/` directories removed.
+- See `scripts/README.md` for full listing.
 
 ## Last updated
-2026-06-02
+2026-06-04
 
 ## User intent
 The user wants to continue developing the `molgap` project incrementally. They asked to create a local `TO-AI` folder containing workflow, TODO, handover, and related files so that context and progress are not lost after closing the assistant session.
