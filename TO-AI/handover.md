@@ -287,3 +287,17 @@ Feature selection (6028→2811) + Optuna tuning on CHONSFCl 30k:
 - Results in `results/phase3/optimize/`
 - Archive: `TO-AI/archive/stage9_phase3_optimization_20260604.md`
 
+## 2026-06-04/05 update: Phase 4 Deep Learning & Ensemble
+
+Phase 4 explored ensemble methods and GNN architectures:
+- Ensemble stacking (LGBM+XGB+HistGBT): R²=0.8906
+- Per-target Optuna tuning: R²=0.8857
+- AttentiveFP (2D GNN): R²=0.8788
+- **SchNet 3D (best): avg MAE=0.1492, R²=0.8942** — surpassed LightGBM
+- SchNet+LGBM fusion did not improve over SchNet alone
+- 3D conformers generated via RDKit ETKDG, cached in `results/phase4/pyg_3d_graphs.pt`
+- Distance R²=0.9: only 0.006 remaining
+- Results in `results/phase4/`
+- Scripts in `scripts/phase4/`
+- PyTorch 2.11+cu128, PyG 2.7.0, torch-cluster installed in .venv
+

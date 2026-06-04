@@ -1,0 +1,51 @@
+{
+  "best_model": "SchNet_3D_alone",
+  "best_mae": 0.1492,
+  "best_r2": 0.8942,
+  "lgbm_schnet_blend_alpha": 1.0,
+  "all_results": [
+    {
+      "model": "SchNet_3D_alone",
+      "average_mae": 0.1492,
+      "average_r2": 0.8942
+    },
+    {
+      "model": "Tuned_LGBM_alone",
+      "average_mae": 0.1596,
+      "average_r2": 0.8853
+    },
+    {
+      "model": "LGBM+SchNet_features",
+      "average_mae": 0.15943076685902757,
+      "average_r2": 0.8840221853884681,
+      "homo_mae": 0.13610067392845818,
+      "homo_r2": 0.8498870079098468,
+      "lumo_mae": 0.14677108472692302,
+      "lumo_r2": 0.9221334839008926,
+      "gap_mae": 0.19542054192170158,
+      "gap_r2": 0.880046064354665
+    },
+    {
+      "model": "Ridge_stack(LGBM+XGB+SchNet)",
+      "average_mae": 0.15433068588734075,
+      "average_r2": 0.8912024164336897,
+      "homo_mae": 0.13383128166108121,
+      "homo_r2": 0.8566169525258714,
+      "lumo_mae": 0.14283745069792353,
+      "lumo_r2": 0.926242130945729,
+      "gap_mae": 0.18632332530301748,
+      "gap_r2": 0.8907481658294686
+    },
+    {
+      "model": "Blend(LGBM*1.00+SchNet*0.00)",
+      "average_mae": 0.15746737255945628,
+      "average_r2": 0.8864905264914383,
+      "homo_mae": 0.1357015025437185,
+      "homo_r2": 0.8523906783739184,
+      "lumo_mae": 0.1439693684363039,
+      "lumo_r2": 0.9250372666188335,
+      "gap_mae": 0.19273124669834646,
+      "gap_r2": 0.8820436344815633
+    }
+  ]
+}

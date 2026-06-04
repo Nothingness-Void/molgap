@@ -85,18 +85,40 @@ Optuna 调参 + 特征筛选将 baseline MAE 从 0.1706 降至 0.1596（-6.4%）
 - 化学空间扩大（CHON→CHONSFCl, MW 200-300→200-500）带来约 3% R² 损失，数据扩量+调参只能部分补回
 - LUMO 最容易预测（R²=0.923），Gap 最难（R²=0.880）
 
-## Phase 4: Embedding Revisit (TODO)
-在 Phase 3 的大数据+多元素场景下重新评估 embedding。
+## Phase 4: Deep Learning & Ensemble Experiments
+在 Phase 3 基础上探索集成学习和 GNN 路线。
 
 | Sub | 内容 | 数据 | 状态 |
 |-----|------|------|------|
-| 4.1 | Re-extract ChemBERTa/MolFormer embeddings for CHONSFCl dataset | 30k-50k | 🔲 |
-| 4.2 | Embedding-only models on expanded chemical space | 30k-50k | 🔲 |
-| 4.3 | Feature fusion (traditional + embedding) | 30k-50k | 🔲 |
-| 4.4 | Compare with Phase 1.3 embedding results (CHON 10k) | — | 🔲 |
+| 4.1 | Ensemble blend (LGBM+XGB+HistGBT) | 30k | ✅ |
+| 4.2 | Per-target Optuna tuning (60 trials/target) | 30k | ✅ |
+| 4.3 | GNN AttentiveFP (2D topology) | 30k | ✅ |
+| 4.4 | GNN SchNet (3D conformers, radius graph) | 30k | ✅ |
+| 4.5 | SchNet + LightGBM fusion | 30k | ✅ |
 
-### Phase 4 Hypothesis
-Phase 1 结论"embedding 无用"基于 CHON 10k 小范围数据。化学空间扩大后，SMILES 序列多样性增加（杂原子、卤素、大分子），embedding 可能捕捉到 fingerprint 不擅长的长程/杂原子模式，值得重新验证。
+### Phase 4 Results
+```
+Model Comparison (test set, sorted by avg R2):
+  SchNet_3D                MAE=0.1492  R2=0.8942  ← Best overall
+  Ridge_stack(LGBM+XGB+SchNet) MAE=0.1543  R2=0.8912
+  Ridge_stack(LGBM+XGB+HGBT)  MAE=0.1555  R2=0.8906
+  Per-target tuned LGBM    MAE=0.1589  R2=0.8857
+  Tuned LGBM (Phase 3)     MAE=0.1596  R2=0.8853
+  AttentiveFP (2D)         MAE=0.1630  R2=0.8788
+
+SchNet 3D per-target:
+  homo : MAE=0.1309  R2=0.8537
+  lumo : MAE=0.1383  R2=0.9332
+  gap  : MAE=0.1783  R2=0.8958
+```
+
+### Phase 4 Conclusions
+- **SchNet 3D 超越 LightGBM**: R² 0.8853→0.8942, MAE 0.1596→0.1492 (-6.5%)
+- 3D 构象信息（RDKit ETKDG）是关键突破——证实了 HydraGNN 论文的路线
+- AttentiveFP (2D) 接近但不及 LGBM (R²=0.879 vs 0.885)
+- 融合未超过 SchNet 单独表现——3D GNN 已涵盖 fingerprint 的信息
+- 集成学习（stacking/blend）对传统模型有效 (+0.5%)，但不如换模型架构
+- 距 R²=0.9 目标仅差 0.006
 
 ## Phase 5: Commercial Prediction (TODO)
 对市售分子进行预测和置信度筛选。
