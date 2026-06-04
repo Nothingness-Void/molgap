@@ -229,8 +229,10 @@ def build_feature_rows_parallel(
 
     results: list[tuple[int, dict[str, float]]] = []
     with mp.Pool(n_jobs, initializer=_worker_init, initargs=(radius, n_bits)) as pool:
-        for idx, row in enumerate(pool.imap(
-            _worker_func, smiles_list, chunksize=256
+        from tqdm import tqdm
+        for idx, row in enumerate(tqdm(
+            pool.imap(_worker_func, smiles_list, chunksize=256),
+            total=len(smiles_list), desc="Features", unit="mol",
         )):
             if row is not None:
                 results.append((idx, row))

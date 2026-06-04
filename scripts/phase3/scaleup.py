@@ -330,14 +330,31 @@ def main():
     p = argparse.ArgumentParser(description="Phase 3: Production Scale-Up")
     p.add_argument("--max-records", type=int, default=30000)
     p.add_argument("--chunk-bytes", type=int, default=50_000_000)
+    p.add_argument("--raw-csv", type=str, default=None,
+                   help="Path to pre-fetched raw CSV; skips the fetch step")
     p.add_argument("--seed", type=int, default=42)
     args = p.parse_args()
 
     ensure_dirs(PHASE3_DIR)
 
-    raw_path = fetch_data(args.max_records, args.chunk_bytes)
+    if args.raw_csv:
+        raw_path = Path(args.raw_csv)
+        print(f"Using pre-fetched data: {raw_path} ({len(pd.read_csv(raw_path))} rows)")
+    else:
+        raw_path = fetch_data(args.max_records, args.chunk_bytes)
+    print(f"\n{'='*50}")
+    print(f"[1/4] Cleaning data...")
+    print(f"{'='*50}")
     df_clean = clean_data(raw_path)
+
+    print(f"\n{'='*50}")
+    print(f"[2/4] Generating features ({len(df_clean)} molecules)...")
+    print(f"{'='*50}")
     df_feat = generate_features(df_clean)
+
+    print(f"\n{'='*50}")
+    print(f"[3/4] Training & evaluating...")
+    print(f"{'='*50}")
     metrics, n_mol, n_feat, n_train, n_test = train_and_evaluate(df_feat, seed=args.seed)
 
     result = {

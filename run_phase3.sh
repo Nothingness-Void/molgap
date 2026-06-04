@@ -12,6 +12,7 @@ set -euo pipefail
 #   LGBM_TRIALS=80   LightGBM Optuna trials (default 80)
 #   XGB_TRIALS=60    XGBoost Optuna trials (default 60)
 #   MAX_RECORDS=30000 数据获取量 (default 30000)
+#   RAW_CSV=path      手动指定已有的 raw CSV, 跳过数据获取
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
@@ -34,25 +35,22 @@ echo ">>> [1/5] Installing dependencies..."
 "$PYTHON" -m pip install --quiet --upgrade pip
 "$PYTHON" -m pip install --quiet -r requirements.txt xgboost catboost
 
-# ── 2. 数据获取 (如果 Phase 3 raw 数据不存在) ──
-RAW_PATTERN="data/raw/phase3_chonsfcl_mw200_500_*.csv"
+# ── 2-3. 数据获取 + baseline ──
 PHASE3_FEAT="results/phase3/phase3_features.csv"
 MAX_RECORDS="${MAX_RECORDS:-30000}"
+RAW_CSV="${RAW_CSV:-}"
 
-if ! ls $RAW_PATTERN 1>/dev/null 2>&1; then
-    echo ">>> [2/5] Fetching CHONSFCl MW 200-500 data (${MAX_RECORDS} records)..."
-    "$PYTHON" scripts/phase3/scaleup.py --max-records "$MAX_RECORDS" 2>&1 | tail -20
+SCALEUP_ARGS=()
+if [ -n "$RAW_CSV" ]; then
+    echo ">>> [2/5] Using pre-fetched data: $RAW_CSV"
+    SCALEUP_ARGS+=(--raw-csv "$RAW_CSV")
 else
-    echo ">>> [2/5] Raw data exists, skipping fetch."
+    echo ">>> [2/5] Will fetch data (${MAX_RECORDS} records)..."
+    SCALEUP_ARGS+=(--max-records "$MAX_RECORDS")
 fi
 
-# ── 3. Phase 3 baseline (scaleup 含 clean + features + train) ──
-if [ ! -f "$PHASE3_FEAT" ]; then
-    echo ">>> [3/5] Running Phase 3 scaleup (clean + features + baseline)..."
-    "$PYTHON" scripts/phase3/scaleup.py 2>&1 | tail -20
-else
-    echo ">>> [3/5] Phase 3 features exist, skipping baseline."
-fi
+echo ">>> [3/5] Running Phase 3 scaleup (clean + features + baseline)..."
+"$PYTHON" scripts/phase3/scaleup.py "${SCALEUP_ARGS[@]}" 2>&1
 
 # ── 4. Phase 3.4 优化 ──
 LGBM_TRIALS="${LGBM_TRIALS:-80}"
