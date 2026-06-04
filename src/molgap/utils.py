@@ -225,7 +225,7 @@ def build_feature_rows_parallel(
     import multiprocessing as mp
 
     if n_jobs is None:
-        n_jobs = max(1, mp.cpu_count() - 1)
+        n_jobs = min(32, max(1, mp.cpu_count() - 1))
 
     results: list[tuple[int, dict[str, float]]] = []
     with mp.Pool(n_jobs, initializer=_worker_init, initargs=(radius, n_bits)) as pool:
