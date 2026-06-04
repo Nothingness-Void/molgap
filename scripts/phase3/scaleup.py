@@ -333,28 +333,30 @@ def main():
     p.add_argument("--raw-csv", type=str, default=None,
                    help="Path to pre-fetched raw CSV; skips the fetch step")
     p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--features-only", action="store_true",
+                   help="Stop after generating features (skip training)")
     args = p.parse_args()
 
     ensure_dirs(PHASE3_DIR)
+
+    feat_path = PHASE3_DIR / "phase3_features.csv"
 
     if args.raw_csv:
         raw_path = Path(args.raw_csv)
         print(f"Using pre-fetched data: {raw_path} ({len(pd.read_csv(raw_path))} rows)")
     else:
         raw_path = fetch_data(args.max_records, args.chunk_bytes)
-    print(f"\n{'='*50}")
-    print(f"[1/4] Cleaning data...")
-    print(f"{'='*50}")
-    df_clean = clean_data(raw_path)
 
-    print(f"\n{'='*50}")
-    print(f"[2/4] Generating features ({len(df_clean)} molecules)...")
-    print(f"{'='*50}")
+    df_clean = clean_data(raw_path)
     df_feat = generate_features(df_clean)
 
-    print(f"\n{'='*50}")
-    print(f"[3/4] Training & evaluating...")
-    print(f"{'='*50}")
+    df_feat.to_csv(feat_path, index=False)
+    print(f"Features saved to {feat_path}")
+
+    if args.features_only:
+        print("--features-only: stopping here.")
+        return
+
     metrics, n_mol, n_feat, n_train, n_test = train_and_evaluate(df_feat, seed=args.seed)
 
     result = {

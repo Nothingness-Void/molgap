@@ -49,8 +49,12 @@ else
     SCALEUP_ARGS+=(--max-records "$MAX_RECORDS")
 fi
 
-echo ">>> [3/5] Running Phase 3 scaleup (clean + features + baseline)..."
-"$PYTHON" scripts/phase3/scaleup.py "${SCALEUP_ARGS[@]}" 2>&1
+if [ ! -f "$PHASE3_FEAT" ]; then
+    echo ">>> [3/5] Running Phase 3 scaleup (clean + features)..."
+    "$PYTHON" scripts/phase3/scaleup.py "${SCALEUP_ARGS[@]}" --features-only 2>&1
+else
+    echo ">>> [3/5] Phase 3 features exist, skipping."
+fi
 
 # ── 4. Phase 3.4 优化 ──
 LGBM_TRIALS="${LGBM_TRIALS:-80}"

@@ -278,3 +278,12 @@ claude plugin install andrej-karpathy-skills@karpathy-skills
 
 A later plugin list command was interrupted by the user, so installation was not re-verified by listing, but the install command reported success.
 
+## 2026-06-04 update: Phase 3.4 Optimization Complete
+
+Feature selection (6028→2811) + Optuna tuning on CHONSFCl 30k:
+- Best: Tuned LightGBM avg MAE=0.1596, R²=0.8853
+- Improvement over Phase 3 baseline: MAE -6.4%, R² +0.01
+- R²=0.9 target not reached (gap=0.015)
+- Results in `results/phase3/optimize/`
+- Archive: `TO-AI/archive/stage9_phase3_optimization_20260604.md`
+

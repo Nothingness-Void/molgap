@@ -42,7 +42,7 @@ Fixed model: tuned LightGBM. Fixed data size: 10k per step.
 | 3.1 | Scale CHONSFCl MW 200-500 to 30k | 30k | ✅ |
 | 3.2 | Retrain tuned LightGBM (Phase 1 params), compare with Phase 2 | 30k | ✅ |
 | 3.3 | Feature selection (6028 → 2811) | 30k | ✅ |
-| 3.4 | Optuna retune LGBM + XGB + CatBoost + HistGBT + per-target | 30k | 🔲 进行中 |
+| 3.4 | Optuna retune LGBM + XGB + CatBoost + HistGBT + per-target | 30k | ✅ |
 
 ### Phase 3.2 Baseline Result (no feature selection, Phase 1 params)
 ```
@@ -62,17 +62,28 @@ Phase 3 (30k):  avg MAE=0.1706  R2=0.8755  (Delta MAE=-0.0048, Delta R2=+0.0019)
 砍掉:     3217 (53%)
 ```
 
-### Phase 3.4 Model Optimization (待完成)
-脚本: `scripts/phase3/select_and_optimize.py`
-目标: 在筛选后的 2811 维特征上 Optuna 调参 + 多模型对比，争取 R2 >= 0.9。
-运行命令:
-```bash
-.venv\Scripts\python.exe scripts/phase3/select_and_optimize.py --lgbm-trials 80 --xgb-trials 60
+### Phase 3.4 Model Optimization Result
 ```
-包含模型: Tuned LGBM, Tuned XGB, CatBoost, HistGBT, Per-target LGBM
+Model Comparison (test set, sorted by avg R2):
+  Tuned_LGBM         MAE=0.1596  R2=0.8853  ← Best
+  PerTarget_LGBM     MAE=0.1596  R2=0.8853
+  Tuned_XGB          MAE=0.1616  R2=0.8817
+  HistGBT            MAE=0.1692  R2=0.8761
+  Phase3_baseline    MAE=0.1706  R2=0.8755
+  CatBoost           MAE=0.1859  R2=0.8604
 
-### Phase 3 Hypothesis
-Phase 2 中每步仅用 10k，R² 从 0.901 降至 0.874。Phase 1 证明数据量 10k→30k 可提升约 3%。放大 CHONSFCl 数据量应能部分补回泛化损失。加上特征筛选和针对新数据的超参重调，有望进一步提升。
+Tuned LGBM per-target:
+  homo : MAE=0.1369  R2=0.8530
+  lumo : MAE=0.1463  R2=0.9229
+  gap  : MAE=0.1958  R2=0.8801
+```
+Optuna 调参 + 特征筛选将 baseline MAE 从 0.1706 降至 0.1596（-6.4%），R² 从 0.8755 升至 0.8853。距 R²=0.9 目标仍差 0.015。CatBoost 表现意外差于 baseline。
+
+### Phase 3 Conclusions
+- 最佳模型: Tuned LightGBM (Optuna 80 trials)
+- 特征筛选 6028→2811 + 调参有效，但不足以达到 R²=0.9
+- 化学空间扩大（CHON→CHONSFCl, MW 200-300→200-500）带来约 3% R² 损失，数据扩量+调参只能部分补回
+- LUMO 最容易预测（R²=0.923），Gap 最难（R²=0.880）
 
 ## Phase 4: Embedding Revisit (TODO)
 在 Phase 3 的大数据+多元素场景下重新评估 embedding。
