@@ -3,8 +3,9 @@ set -euo pipefail
 
 # ── MolGap Phase 3 一键运行脚本 ──
 # 用法:
-#   nohup bash run_phase3.sh > run_phase3.log 2>&1 &
-#   tail -f run_phase3.log
+#   screen -S molgap
+#   bash run_phase3.sh
+#   # Ctrl+A D 断开, screen -r molgap 重连
 #
 # 环境: Linux CPU, Python 3.10+
 # 可调参数 (环境变量):
