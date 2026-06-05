@@ -277,7 +277,7 @@ def train_and_evaluate(df, seed=42):
 # ── Comparison ─────────────────────────────────────────────
 
 def build_comparison(metrics, n_molecules, n_features):
-    phase2_path = RESULTS_DIR / "generalization" / "step4_chonsfcl_mw200_500_metrics.json"
+    phase2_path = RESULTS_DIR / "phase2" / "generalization" / "step4_chonsfcl_mw200_500_metrics.json"
     rows = []
 
     if phase2_path.exists():

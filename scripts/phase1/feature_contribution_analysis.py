@@ -47,7 +47,7 @@ from molgap.utils import (
 DEFAULT_FEATURES = PROCESSED_DIR / "features_morgan2048_desc.csv"
 DEFAULT_LIGHTGBM = MODELS_DIR / "baseline_lightgbm.joblib"
 DEFAULT_RIDGE = MODELS_DIR / "baseline_ridge.joblib"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "feature_contribution"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "feature_contribution"
 
 
 def feature_type(feature: str) -> str:
@@ -342,7 +342,7 @@ def main() -> int:
     parser.add_argument("--features", type=Path, default=PROCESSED_DIR / "features_morgan2048_desc.csv")
     parser.add_argument("--lightgbm", type=Path, default=MODELS_DIR / "baseline_lightgbm.joblib")
     parser.add_argument("--ridge", type=Path, default=MODELS_DIR / "baseline_ridge.joblib")
-    parser.add_argument("--output-dir", type=Path, default=RESULTS_DIR / "feature_contribution")
+    parser.add_argument("--output-dir", type=Path, default=RESULTS_DIR / "phase1" / "feature_contribution")
     parser.add_argument("--top-n", type=int, default=30)
     parser.add_argument("--permutation-top-n", type=int, default=50)
     parser.add_argument("--permutation-sample-size", type=int, default=1000)

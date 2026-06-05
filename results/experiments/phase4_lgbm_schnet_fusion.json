@@ -1,0 +1,17 @@
+{
+  "phase": "4",
+  "sub_stage": "4.3",
+  "experiment": "phase4_lgbm_schnet_fusion",
+  "model": "lgbm_schnet_features",
+  "data_desc": "30k CHONSFCl",
+  "elements": "C,Cl,F,H,N,O,S",
+  "mw_range": "200-500",
+  "n_data": 30000,
+  "split": "random_test",
+  "metrics": {
+    "homo":    {"mae": 0.13610067392845818, "rmse": null, "r2": 0.8498870079098468},
+    "lumo":    {"mae": 0.14677108472692302, "rmse": null, "r2": 0.9221334839008926},
+    "gap":     {"mae": 0.19542054192170158, "rmse": null, "r2": 0.880046064354665},
+    "average": {"mae": 0.15943076685902757, "rmse": null, "r2": 0.8840221853884681}
+  }
+}

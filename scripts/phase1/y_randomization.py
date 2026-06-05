@@ -35,8 +35,8 @@ from molgap.utils import (
 
 
 DEFAULT_INPUT = PROCESSED_DIR / "features_morgan2048_desc.csv"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "y_randomization"
-DEFAULT_REAL_METRICS = RESULTS_DIR / "metrics_lightgbm_test.json"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "y_randomization"
+DEFAULT_REAL_METRICS = RESULTS_DIR / "phase1" / "baseline" / "metrics_lightgbm_test.json"
 
 
 def make_lightgbm(random_state: int):

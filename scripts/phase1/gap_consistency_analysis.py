@@ -25,9 +25,9 @@ if str(SRC_DIR) not in sys.path:
 from molgap.utils import RESULTS_DIR, ensure_dirs
 
 
-DEFAULT_RANDOM = RESULTS_DIR / "test_predictions_lightgbm.csv"
-DEFAULT_SCAFFOLD = RESULTS_DIR / "scaffold" / "test_predictions_lightgbm_scaffold.csv"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "gap_consistency"
+DEFAULT_RANDOM = RESULTS_DIR / "phase1" / "baseline" / "test_predictions_lightgbm.csv"
+DEFAULT_SCAFFOLD = RESULTS_DIR / "phase1" / "scaffold" / "test_predictions_lightgbm_scaffold.csv"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "gap_consistency"
 
 
 def gap_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:

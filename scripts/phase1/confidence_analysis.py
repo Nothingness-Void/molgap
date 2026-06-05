@@ -42,7 +42,7 @@ from molgap.utils import (
 
 
 DEFAULT_INPUT = PROCESSED_DIR / "features_morgan2048_desc.csv"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "confidence"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "confidence"
 DEFAULT_MODELS = {
     "extratrees": MODELS_DIR / "baseline_extratrees.joblib",
     "randomforest": MODELS_DIR / "baseline_randomforest.joblib",

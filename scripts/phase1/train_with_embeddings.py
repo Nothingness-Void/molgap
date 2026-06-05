@@ -49,7 +49,7 @@ from molgap.utils import (
 )
 
 EMB_DIR = PROCESSED_DIR
-RESULTS_EMB = RESULTS_DIR / "embeddings"
+RESULTS_EMB = RESULTS_DIR / "phase1" / "embeddings"
 
 
 def load_and_merge(trad_path, emb_path):

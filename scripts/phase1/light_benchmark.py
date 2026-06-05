@@ -40,8 +40,8 @@ from molgap.utils import (
 
 
 DEFAULT_INPUT = PROCESSED_DIR / "features_morgan2048_desc.csv"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "benchmark"
-SCAFFOLD_SPLIT_PATH = RESULTS_DIR / "scaffold" / "scaffold_split_indices.npz"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "benchmark"
+SCAFFOLD_SPLIT_PATH = RESULTS_DIR / "phase1" / "scaffold" / "scaffold_split_indices.npz"
 METADATA_AND_TARGETS = {"cid", "mw", "formula", "smiles", "canonical_smiles", *TARGET_COLS}
 
 

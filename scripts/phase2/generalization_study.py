@@ -56,7 +56,7 @@ from molgap.utils import (
 log = logging.getLogger("generalization")
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-GEN_DIR = RESULTS_DIR / "generalization"
+GEN_DIR = RESULTS_DIR / "phase2" / "generalization"
 
 # ── HuggingFace config ──────────────────────────────────────
 

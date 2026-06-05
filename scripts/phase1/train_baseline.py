@@ -150,7 +150,7 @@ def train_baselines(input_path: Path, random_state: int = 42) -> pd.DataFrame:
 
         valid_pred = model.predict(X_valid)
         valid_metrics = regression_metrics(y_valid, valid_pred)
-        save_json(valid_metrics, RESULTS_DIR / f"metrics_{name}_valid.json")
+        save_json(valid_metrics, RESULTS_DIR / "phase1" / "baseline" / f"metrics_{name}_valid.json")
         comparison_rows.append(flatten_metrics(name, "valid", valid_metrics))
         tqdm.write(
             f"  valid avg MAE={valid_metrics['average']['mae']:.4f} "
@@ -165,7 +165,7 @@ def train_baselines(input_path: Path, random_state: int = 42) -> pd.DataFrame:
         model.fit(X_train_valid, y_train_valid)
         test_pred = model.predict(X_test)
         test_metrics = regression_metrics(y_test, test_pred)
-        save_json(test_metrics, RESULTS_DIR / f"metrics_{name}_test.json")
+        save_json(test_metrics, RESULTS_DIR / "phase1" / "baseline" / f"metrics_{name}_test.json")
         comparison_rows.append(flatten_metrics(name, "test", test_metrics))
         tqdm.write(
             f"  test  avg MAE={test_metrics['average']['mae']:.4f} "
@@ -186,7 +186,7 @@ def train_baselines(input_path: Path, random_state: int = 42) -> pd.DataFrame:
         )
 
     comparison = pd.DataFrame(comparison_rows)
-    comparison_path = RESULTS_DIR / "model_comparison_baseline.csv"
+    comparison_path = RESULTS_DIR / "phase1" / "baseline" / "model_comparison_baseline.csv"
     comparison.to_csv(comparison_path, index=False, encoding="utf-8")
 
     print("\n=== BASELINE SUMMARY ===")

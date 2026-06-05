@@ -1,0 +1,17 @@
+{
+  "phase": "4",
+  "sub_stage": "4.2",
+  "experiment": "phase4_ensemble_stack",
+  "model": "ridge_stack",
+  "data_desc": "30k CHONSFCl",
+  "elements": "C,Cl,F,H,N,O,S",
+  "mw_range": "200-500",
+  "n_data": 30000,
+  "split": "random_test",
+  "metrics": {
+    "homo":    {"mae": 0.13383128166108121, "rmse": null, "r2": 0.8566169525258714},
+    "lumo":    {"mae": 0.14283745069792353, "rmse": null, "r2": 0.926242130945729},
+    "gap":     {"mae": 0.18632332530301748, "rmse": null, "r2": 0.8907481658294686},
+    "average": {"mae": 0.15433068588734075, "rmse": null, "r2": 0.8912024164336897}
+  }
+}

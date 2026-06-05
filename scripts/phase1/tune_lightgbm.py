@@ -53,7 +53,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 DEFAULT_INPUT = PROCESSED_DIR / "features_morgan2048_desc.csv"
-TUNING_DIR = RESULTS_DIR / "tuning"
+TUNING_DIR = RESULTS_DIR / "phase1" / "tuning"
 
 
 def scaffold_split_indices(

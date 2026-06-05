@@ -29,10 +29,10 @@ from molgap.utils import MODELS_DIR, RESULTS_DIR, TARGET_COLS, ensure_dirs, load
 
 
 DEFAULT_MODEL = MODELS_DIR / "baseline_lightgbm.joblib"
-DEFAULT_PREDICTIONS = RESULTS_DIR / "test_predictions_lightgbm.csv"
-DEFAULT_COMPARISON = RESULTS_DIR / "model_comparison_baseline.csv"
-DEFAULT_METRICS = RESULTS_DIR / "metrics_lightgbm_test.json"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "analysis"
+DEFAULT_PREDICTIONS = RESULTS_DIR / "phase1" / "baseline" / "test_predictions_lightgbm.csv"
+DEFAULT_COMPARISON = RESULTS_DIR / "phase1" / "baseline" / "model_comparison_baseline.csv"
+DEFAULT_METRICS = RESULTS_DIR / "phase1" / "baseline" / "metrics_lightgbm_test.json"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "analysis"
 
 
 TARGET_LABELS = {

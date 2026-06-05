@@ -36,7 +36,7 @@ RESULTS_DIR = REPO_ROOT / "results"
 TARGET_COLS = ["homo", "lumo", "gap"]
 METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
 
-DEFAULT_SPLIT_PATH = RESULTS_DIR / "train_valid_test_split_indices.npz"
+DEFAULT_SPLIT_PATH = RESULTS_DIR / "common" / "train_valid_test_split_indices.npz"
 
 
 def ensure_dirs(*paths: os.PathLike | str) -> None:

@@ -78,7 +78,7 @@ def make_row(phase, sub, experiment, model, data_desc, elements, mw_range,
 
 def collect_phase1_1(rows):
     """1.1 Baseline models — 10k CHON MW200-300."""
-    csv_path = RESULTS / "model_comparison_baseline.csv"
+    csv_path = RESULTS / "phase1" / "baseline" / "model_comparison_baseline.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -109,7 +109,7 @@ def collect_phase1_2(rows):
 
 def collect_phase1_3(rows):
     """1.3 Embedding experiments — 10k CHON."""
-    csv_path = RESULTS / "embeddings" / "embedding_model_comparison.csv"
+    csv_path = RESULTS / "phase1" / "embeddings" / "embedding_model_comparison.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -124,7 +124,7 @@ def collect_phase1_3(rows):
 
 def collect_phase1_4(rows):
     """1.4 Advanced models — 30k CHON."""
-    csv_path = RESULTS / "advanced" / "advanced_model_comparison.csv"
+    csv_path = RESULTS / "phase1" / "advanced" / "advanced_model_comparison.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -139,7 +139,7 @@ def collect_phase1_4(rows):
 
 def collect_phase1_5(rows):
     """1.5 Data scaling — 30k tuned LightGBM."""
-    json_path = RESULTS / "tuning" / "tuning_result_summary.json"
+    json_path = RESULTS / "phase1" / "tuning" / "tuning_result_summary.json"
     if not json_path.exists():
         return
     d = json.load(open(json_path, encoding="utf-8"))
@@ -153,7 +153,7 @@ def collect_phase1_5(rows):
 
 def collect_phase2(rows):
     """2.x Generalization steps."""
-    gen_dir = RESULTS / "generalization"
+    gen_dir = RESULTS / "phase2" / "generalization"
     if not gen_dir.exists():
         return
     step_map = {

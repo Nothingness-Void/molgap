@@ -42,8 +42,8 @@ from molgap.utils import (
 
 DEFAULT_INPUT = Path("data/commercial/commercial_molecules.csv")
 DEFAULT_FALLBACK_INPUT = Path("data/commercial/commercial_molecules_template.csv")
-DEFAULT_OUTPUT = RESULTS_DIR / "database" / "commercial_molgap_predictions_v1.csv"
-DEFAULT_SUMMARY = RESULTS_DIR / "database" / "commercial_prediction_summary.json"
+DEFAULT_OUTPUT = RESULTS_DIR / "phase5" / "database" / "commercial_molgap_predictions_v1.csv"
+DEFAULT_SUMMARY = RESULTS_DIR / "phase5" / "database" / "commercial_prediction_summary.json"
 DEFAULT_TRAIN_FEATURES = PROCESSED_DIR / "features_morgan2048_desc.csv"
 
 REQUIRED_COLS = ["name", "supplier", "smiles"]

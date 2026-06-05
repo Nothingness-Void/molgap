@@ -41,7 +41,7 @@ from molgap.utils import (
 
 
 DEFAULT_INPUT = PROCESSED_DIR / "features_morgan2048_desc.csv"
-DEFAULT_OUTPUT_DIR = RESULTS_DIR / "scaffold"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "phase1" / "scaffold"
 
 
 def build_scaffold_models(random_state: int = 42, include_extratrees: bool = True) -> dict:
@@ -142,7 +142,7 @@ def scaffold_split_indices(
 
 
 def save_random_vs_scaffold(scaffold_comparison: pd.DataFrame, output_dir: Path) -> None:
-    random_path = RESULTS_DIR / "model_comparison_baseline.csv"
+    random_path = RESULTS_DIR / "phase1" / "baseline" / "model_comparison_baseline.csv"
     if not random_path.exists():
         return
     random_comp = pd.read_csv(random_path)

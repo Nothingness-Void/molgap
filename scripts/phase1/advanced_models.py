@@ -48,7 +48,7 @@ from molgap.utils import (
 
 warnings.filterwarnings("ignore")
 
-RESULTS_ADV = RESULTS_DIR / "advanced"
+RESULTS_ADV = RESULTS_DIR / "phase1" / "advanced"
 
 
 def per_target_lightgbm(X_train, y_train, X_test, y_test, seed=42):

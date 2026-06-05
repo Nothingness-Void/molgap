@@ -1,0 +1,17 @@
+{
+  "phase": "4",
+  "sub_stage": "4.2",
+  "experiment": "phase4_ensemble_blend",
+  "model": "weighted_blend",
+  "data_desc": "30k CHONSFCl",
+  "elements": "C,Cl,F,H,N,O,S",
+  "mw_range": "200-500",
+  "n_data": 30000,
+  "split": "random_test",
+  "metrics": {
+    "homo":    {"mae": 0.1357015025437185,  "rmse": null, "r2": 0.8523906783739184},
+    "lumo":    {"mae": 0.1439693684363039,  "rmse": null, "r2": 0.9250372666188335},
+    "gap":     {"mae": 0.19273124669834646, "rmse": null, "r2": 0.8820436344815633},
+    "average": {"mae": 0.15746737255945628, "rmse": null, "r2": 0.8864905264914383}
+  }
+}
