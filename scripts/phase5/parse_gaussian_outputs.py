@@ -38,23 +38,28 @@ def parse_gaussian_output(filepath: Path) -> dict | None:
     # Find orbital energies from the last "Population analysis" block
     # Look for "Alpha  occ." and "Alpha virt." eigenvalues
     occ_energies = []
-    virt_energies = []
+    first_virt = None
+    in_last_occ_block = False
 
     for line in text.splitlines():
         if "Alpha  occ. eigenvalues" in line:
             vals = re.findall(r"[-]?\d+\.\d+", line)
             occ_energies = [float(v) for v in vals]
+            in_last_occ_block = True
+            first_virt = None
         elif "Alpha virt. eigenvalues" in line:
-            vals = re.findall(r"[-]?\d+\.\d+", line)
-            if vals:
-                virt_energies = [float(v) for v in vals]
+            if in_last_occ_block and first_virt is None:
+                vals = re.findall(r"[-]?\d+\.\d+", line)
+                if vals:
+                    first_virt = float(vals[0])
+                    in_last_occ_block = False
 
-    if not occ_energies or not virt_energies:
+    if not occ_energies or first_virt is None:
         print(f"  WARNING: {filepath.name} no orbital energies found")
         return None
 
     homo_hartree = occ_energies[-1]
-    lumo_hartree = virt_energies[0]
+    lumo_hartree = first_virt
     homo_ev = homo_hartree * HARTREE_TO_EV
     lumo_ev = lumo_hartree * HARTREE_TO_EV
     gap_ev = lumo_ev - homo_ev
