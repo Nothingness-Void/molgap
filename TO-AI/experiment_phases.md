@@ -141,11 +141,11 @@ SchNet 3D per-target:
 | 6.4 | Export final database CSV + documentation | 🔲 |
 
 ## Master Experiment Log
-All 33 experiments are recorded in:
+All 44 experiments are recorded in:
 ```
 results/master_experiment_log.csv
 ```
 Regenerate with:
 ```bash
-python scripts/experiments/17_build_master_experiment_table.py
+.venv\Scripts\python.exe scripts/pipeline/build_master_experiment_table.py
 ```

@@ -1,0 +1,6 @@
+phase,focus,data_scope,best_experiment,best_model,average_mae,average_r2,note
+P1,CHON optimization,"30k CHON, MW 200-300",data_scaling_30k_tuned,LightGBM tuned,0.1497746636107264,0.920516972523088,Best easy-chemistry traditional result
+P2,Generalization study,"10k per step, expanded chemistry",gen_step0_chon_mw200_300,LightGBM tuned,0.16173711018931436,0.9012428549959606,R2 declines smoothly to 0.8736 by step4
+P3,Scale-up + optimization,"30k CHONSFCl, MW 200-500",phase3_tuned_lgbm,LightGBM tuned,0.1596478487680887,0.8853385942334663,Best traditional model on the hard task
+P4,Ensemble + GNN,"30k CHONSFCl, MW 200-500",phase4_schnet_3d,SchNet 3D,0.1491643190383911,0.894249419371287,Best overall model so far
+P5,Commercial prediction,Application stage,template_smoke_test,pending final production model,,,Deferred until model/report side is stable

@@ -1,289 +1,149 @@
-﻿# MolGap Workflow
+# MolGap Workflow
 
-## Path update
-- Production pipeline scripts now live under `scripts/pipeline/`.
-- Evaluation and validation scripts now live under `scripts/evaluation/`.
-- Experimental benchmark scripts now live under `scripts/experiments/`.
-- Deferred application scripts now live under `scripts/todo/`.
-- Shared utilities moved from `src/utils.py` to `src/molgap/utils.py`.
-- Historical archive notes may still mention the pre-refactor `src/*.py` paths.
+## Last updated
+2026-06-05
 
-## Project goal
-Build a machine-learning database for commercially available organic electronic-material molecules. The model predicts three quantum-chemical properties from molecular structure:
+## Goal
+Build a molecular-property prediction workflow for organic electronic-material molecules. The three targets are:
+- `HOMO`
+- `LUMO`
+- `HOMO-LUMO gap`
 
-- HOMO energy
-- LUMO energy
-- HOMO-LUMO gap
+## Current workflow structure
 
-The target application is OLED / organic thin-film / organic solar-cell related small molecules and building blocks.
-
-## Key constraints
-- Main data source: `molssiai-hub/pubchemqc-b3lyp` on HuggingFace.
-- Use the internal subset: `data/b3lyp_pm6_chon300nosalt/train/*.json`.
-- Do not download the full PubChemQC dataset.
-- Current molecule scope: molecular weight 200–300 g/mol, CHON-only, no salts.
-- PubChemQC values are calculated values, not experimental values.
-- Current script self-check indicates `energy-alpha-homo`, `energy-alpha-lumo`, and `energy-alpha-gap` are already in eV and satisfy `gap = lumo - homo`; do not multiply by 27.2114.
-
-## Current repository state
-Current project root:
+### Pipeline
+Shared preprocessing and bookkeeping:
 
 ```text
-D:/文档/GitHub/molgap
-```
-
-Important files:
-
-```text
-Project.md
-requirements.txt
-scripts/pipeline/01_fetch_stream.py
-data/raw/pubchemqc_chon_mw200_300.csv
-data/processed/.gitkeep
-data/commercial/.gitkeep
-models/.gitkeep
-results/.gitkeep
-```
-
-`scripts/pipeline/01_fetch_stream.py` currently supports:
-
-- `--selfcheck` for unit/field sanity check.
-- `--run` for streaming sample extraction.
-- HTTP Range requests.
-- `ijson` incremental parsing.
-- CHON + MW 200–300 filtering.
-- Slim CSV output with fields: `cid,mw,formula,smiles,homo,lumo,gap`.
-
-Important limitation:
-
-The current `run_stream()` only reads the first `chunk_bytes` of each large JSON file. Therefore the current raw CSV is a sample/smoke-test dataset, not the full filtered PubChemQC subset.
-
-## Recommended iterative development route
-
-### Stage 0 — Project foundation
-Add shared utilities and keep the pipeline reproducible.
-
-Recommended file:
-
-```text
+scripts/pipeline/fetch_stream.py
+scripts/pipeline/clean.py
+scripts/pipeline/features.py
+scripts/pipeline/feature_selection.py
+scripts/pipeline/build_master_experiment_table.py
 src/molgap/utils.py
 ```
 
-Functions to include:
+### Phase 1 — Model Optimization
+Chemistry scope:
+`CHON`, `MW 200-300`
 
-- `safe_mol(smiles)`
-- `canonicalize_smiles(smiles)`
-- `load_or_create_split_indices(...)`
-- `save_split_indices(...)`
-- `calculate_regression_metrics(...)`
-- JSON/CSV save helpers
+Main outputs:
+- baseline comparison
+- tuning
+- embeddings
+- advanced model comparison
 
-Reference project:
-
-```text
-D:/文档/GitHub/Graduation-project
-```
-
-Useful reference file:
+Canonical scripts:
 
 ```text
-D:/文档/GitHub/Graduation-project/utils/data_utils.py
+scripts/phase1/train_baseline.py
+scripts/phase1/tune_lightgbm.py
+scripts/phase1/train_with_embeddings.py
+scripts/phase1/advanced_models.py
 ```
 
-It contains `load_saved_split_indices(...)`, useful for fixed train/test splits.
-
-### Stage 1 — Small-sample pipeline
-Use the current ~280-row raw CSV only to verify the full code path, not for final scientific conclusions.
-
-Implement:
+### Phase 2 — Generalization Study
+Expand chemistry gradually and observe degradation:
 
 ```text
-scripts/pipeline/02_clean.py
-scripts/pipeline/03_features.py
-scripts/pipeline/04_train_baseline.py
+scripts/phase2/generalization_study.py
 ```
 
-Expected flow:
+### Phase 3 — Production Scale-Up
+Harder chemistry space:
+`CHONSFCl`, `MW 200-500`, `30k`
+
+Canonical scripts:
 
 ```text
-data/raw/pubchemqc_chon_mw200_300.csv
-  -> data/processed/pubchemqc_chon_mw200_300_clean.csv
-  -> data/processed/features_morgan2048_desc.csv
-  -> models/baseline_*.joblib + results/metrics_*.json
+scripts/phase3/scaleup.py
+scripts/phase3/select_and_optimize.py
 ```
 
-### Stage 2 — Expand dataset to 10k+
-First target: at least 10,000 filtered rows.
+### Phase 4 — Ensemble and GNN
+Try to surpass the best Phase-3 LightGBM result.
 
-Suggested command style after pipeline is ready:
+Canonical scripts:
+
+```text
+scripts/phase4/ensemble_blend.py
+scripts/phase4/per_target_optuna.py
+scripts/phase4/gnn_attentivefp.py
+scripts/phase4/gnn_schnet_3d.py
+scripts/phase4/schnet_lgbm_fusion.py
+scripts/phase4/comparison_report.py
+```
+
+### Phase 5 — Commercial Prediction
+Exists, but not the active priority:
+
+```text
+scripts/phase5/predict_commercial.py
+```
+
+## Current best results
+
+### Easier chemistry setting
+`30k CHON, MW 200-300`
+- Best model: tuned LightGBM
+- `avg MAE=0.1498`
+- `avg R²=0.9205`
+
+### Harder chemistry setting
+`30k CHONSFCl, MW 200-500`
+- Best traditional model: tuned LightGBM
+- `avg MAE=0.1596`
+- `avg R²=0.8853`
+
+- Best overall model: SchNet 3D
+- `avg MAE=0.1492`
+- `avg R²=0.8942`
+
+## Canonical result directories
+
+```text
+results/common/
+results/phase2/generalization/
+results/phase3/
+results/phase3/optimize/
+results/phase4/
+results/phase5/database/
+```
+
+The master experiment table is:
+
+```text
+results/master_experiment_log.csv
+```
+
+Regenerate it with:
 
 ```bash
-python scripts/pipeline/01_fetch_stream.py --run --max-records 10000 --chunk-bytes 100000000
+.venv\Scripts\python.exe scripts/pipeline/build_master_experiment_table.py
 ```
 
-If needed, try larger chunks: 200 MB or 300 MB per file.
+## Current recommended focus
+Do not treat commercial prediction as the current mainline. The current mainline is:
 
-Avoid implementing full 349 GB traversal until the downstream pipeline is stable.
+1. finalize the model comparison narrative
+2. decide the final reported benchmark
+3. decide whether direct gap, blended gap, or both should be emphasized
+4. optionally push one more round of SchNet / scale-up if you want to try crossing `R²=0.9`
 
-### Stage 3 — Traditional baseline
-Features:
+## Reproduction hints
 
-- Morgan fingerprint / ECFP4, radius=2, 2048 bits.
-- RDKit 2D descriptors.
-
-Models:
-
-- Ridge
-- RandomForestRegressor
-- ExtraTreesRegressor
-- LightGBM if available
-
-Targets:
-
-- `homo`
-- `lumo`
-- `gap`
-
-Metrics for each target:
-
-- MAE
-- RMSE
-- R2
-
-### Stage 4 — Model optimization and error analysis
-Add:
-
-- Fixed train/valid/test split saved to `results/train_valid_test_split_indices.npz`.
-- Parity plots for HOMO/LUMO/gap.
-- Residual histograms.
-- `results/test_predictions_*.csv` with true, predicted, residual, absolute error.
-- Top-error molecule analysis.
-
-### Stage 5 — SMILES embedding comparison
-Only after a stable traditional baseline and preferably 10k+ data.
-
-Recommended first embedding models:
-
-- ChemBERTa
-- MolFormer
-
-Optional later:
-
-- Mol2Vec
-- MolBERT
-- GROVER
-- Uni-Mol
-
-Recommended files:
-
-```text
-src/06_embed_smiles.py
-src/07_train_embeddings.py
-```
-
-Recommended outputs:
-
-```text
-data/processed/embeddings/chemberta.npy
-data/processed/embeddings/chemberta_metadata.csv
-data/processed/embeddings/molformer.npy
-data/processed/embeddings/molformer_metadata.csv
-results/model_comparison_embeddings.csv
-```
-
-Use attention-mask mean pooling for transformer embeddings.
-
-### Stage 6 — Feature fusion
-Compare:
-
-- Morgan + RDKit
-- ChemBERTa only
-- MolFormer only
-- Morgan + RDKit + ChemBERTa
-- Morgan + RDKit + MolFormer
-
-Recommended models:
-
-- ExtraTrees
-- LightGBM
-
-### Stage 7 — Scaffold split
-Use RDKit Bemis-Murcko scaffold split to test generalization to unseen scaffolds.
-
-Compare:
-
-```text
-random split vs scaffold split
-```
-
-### Stage 8 — Commercial molecule prediction database
-Create:
-
-```text
-data/commercial/commercial_molecules.csv
-```
-
-Suggested columns:
-
-```text
-name,supplier,catalog_id,cid,smiles,formula,mw,category,note
-```
-
-Prediction output:
-
-```text
-results/commercial_predictions.csv
-```
-
-Current status:
-- Deferred for now.
-- Do not treat this as the active next step.
-- Resume only after the model-focused stages are stable.
-
-### Stage 9 — Advanced models and Gaussian validation
-Only after the baseline and embedding comparisons are stable.
-
-Possible additions:
-
-- GNN / MPNN / GIN
-- Uni-Mol with generated 3D conformers
-- Gaussian B3LYP/6-31G(d) validation for selected commercial candidates
-
-## Current recommended next action
-Do not move to commercial prediction yet. Keep the current focus on the model side:
-
-```text
-1. tune current baseline models
-2. run lightweight benchmark
-3. review gap-consistency strategy
-4. decide between embeddings and feature fusion
-```
-
-If you need to rerun the core model pipeline, use:
-
-```text
-1. src/molgap/utils.py
-2. scripts/pipeline/02_clean.py
-3. scripts/pipeline/03_features.py
-4. scripts/pipeline/04_train_baseline.py
-```
-
-Then run:
-
+### CPU-side best traditional model
 ```bash
-python scripts/pipeline/02_clean.py
-python scripts/pipeline/03_features.py
-python scripts/pipeline/04_train_baseline.py
+.venv\Scripts\python.exe scripts/phase3/select_and_optimize.py --lgbm-trials 80 --xgb-trials 60
 ```
 
-Useful next model commands:
-
+### Best overall model
 ```bash
-python scripts/pipeline/08_scaffold_split_train.py
-python scripts/experiments/10_light_benchmark.py
-python scripts/evaluation/11_gap_consistency_analysis.py
-python scripts/evaluation/12_feature_contribution_analysis.py
+.venv\Scripts\python.exe scripts/phase4/gnn_schnet_3d.py
 ```
 
-The current ~280 rows are only for pipeline verification. Once the code path works, expand to 10k+ filtered molecules and re-run the same pipeline.
-
+### Final comparison rebuild
+```bash
+.venv\Scripts\python.exe scripts/phase4/comparison_report.py
+.venv\Scripts\python.exe scripts/pipeline/build_master_experiment_table.py
+```
