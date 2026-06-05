@@ -122,28 +122,34 @@ Regenerate it with:
 .venv\Scripts\python.exe scripts/pipeline/build_master_experiment_table.py
 ```
 
-## Current recommended focus
-Do not treat commercial prediction as the current mainline. The current mainline is:
+## Current status (2026-06-05)
 
-1. finalize the model comparison narrative
-2. decide the final reported benchmark
-3. decide whether direct gap, blended gap, or both should be emphasized
-4. optionally push one more round of SchNet / scale-up if you want to try crossing `R²=0.9`
+Best model: **Ridge Stacking (LGBM + XGB + SchNet tuned)** — avg MAE=0.132, R²=0.921
+
+Completed:
+- Phase 1-4: model development (baseline → stacking)
+- Phase 5: Gaussian validation (10 OLED molecules), OOD validation (100 PubChemQC molecules)
+- Final report: `results/FINAL_REPORT.md`
 
 ## Reproduction hints
 
-### CPU-side best traditional model
+### Full pipeline (CPU)
 ```bash
+.venv\Scripts\python.exe scripts/phase3/scaleup.py --max-records 30000
 .venv\Scripts\python.exe scripts/phase3/select_and_optimize.py --lgbm-trials 80 --xgb-trials 60
 ```
 
-### Best overall model
+### SchNet tuned (GPU)
 ```bash
-.venv\Scripts\python.exe scripts/phase4/gnn_schnet_3d.py
+.venv\Scripts\python.exe scripts/phase4/schnet_retrain_best.py
 ```
 
-### Final comparison rebuild
+### Stacking (GPU + CPU)
 ```bash
-.venv\Scripts\python.exe scripts/phase4/comparison_report.py
+.venv\Scripts\python.exe scripts/phase4/stacking_v2.py
+```
+
+### Rebuild experiment table
+```bash
 .venv\Scripts\python.exe scripts/pipeline/build_master_experiment_table.py
 ```

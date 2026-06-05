@@ -34,6 +34,14 @@ data/raw/*.csv
 # CatBoost cache
 catboost_info/
 
+# Gaussian temp files
+*.chk
+*.gjf.ap
+*.sh.e*
+*.sh.o*
+fort.7
+H-*.sh
+
 # IDE
 .vscode/
 .idea/
