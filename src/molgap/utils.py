@@ -172,6 +172,47 @@ def calc_rdkit_descriptors(mol) -> dict[str, float]:
     return result
 
 
+def calc_gasteiger_descriptors(mol) -> dict[str, float]:
+    """Compute aggregate Gasteiger charge descriptors for a molecule."""
+    require_rdkit()
+    from rdkit.Chem import AllChem
+
+    prefix = "gasteiger_"
+    try:
+        AllChem.ComputeGasteigerCharges(mol)
+    except Exception:
+        return {f"{prefix}{k}": np.nan for k in [
+            "mean", "std", "min", "max", "range",
+            "abs_mean", "abs_max", "pos_count", "neg_count",
+            "most_pos", "most_neg",
+        ]}
+
+    charges = []
+    for atom in mol.GetAtoms():
+        c = atom.GetDoubleProp('_GasteigerCharge')
+        if c != c or abs(c) > 1e6:
+            c = 0.0
+        charges.append(c)
+
+    charges = np.array(charges)
+    pos = charges[charges > 0]
+    neg = charges[charges < 0]
+
+    return {
+        f"{prefix}mean": float(charges.mean()),
+        f"{prefix}std": float(charges.std()),
+        f"{prefix}min": float(charges.min()),
+        f"{prefix}max": float(charges.max()),
+        f"{prefix}range": float(charges.max() - charges.min()),
+        f"{prefix}abs_mean": float(np.abs(charges).mean()),
+        f"{prefix}abs_max": float(np.abs(charges).max()),
+        f"{prefix}pos_count": float(len(pos)),
+        f"{prefix}neg_count": float(len(neg)),
+        f"{prefix}most_pos": float(pos.max()) if len(pos) > 0 else 0.0,
+        f"{prefix}most_neg": float(neg.min()) if len(neg) > 0 else 0.0,
+    }
+
+
 def build_feature_row_from_smiles(
     smiles: object,
     radius: int = 2,
@@ -200,6 +241,7 @@ def build_feature_row_from_smiles(
         row[f"torsion_{bit_idx}"] = int(bit_value)
 
     row.update(calc_rdkit_descriptors(mol))
+    row.update(calc_gasteiger_descriptors(mol))
     return row
 
 
@@ -395,3 +437,59 @@ def flatten_metrics(model_name: str, split_name: str, metrics: dict) -> dict:
         for metric_name, value in values.items():
             row[f"{target}_{metric_name}"] = value
     return row
+
+
+# ── PM6 geometry + Gasteiger charges for inference ────────────
+
+
+def generate_pm6_coords_mopac(smiles: str):
+    """Run PM6 geometry optimization via mopactools. Returns (atomic_numbers, coords) or None."""
+    require_rdkit()
+    from rdkit.Chem import AllChem
+
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        return None
+    mol_h = AllChem.AddHs(mol)
+    if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
+        return None
+
+    n = mol_h.GetNumAtoms()
+    conf = mol_h.GetConformer()
+    atomic_nums = [mol_h.GetAtomWithIdx(i).GetAtomicNum() for i in range(n)]
+    coords = []
+    for i in range(n):
+        p = conf.GetAtomPosition(i)
+        coords.extend([p.x, p.y, p.z])
+
+    try:
+        from mopactools.api import MopacSystem, MopacState, from_data
+
+        system = MopacSystem()
+        system.natom = n
+        system.natom_move = n
+        system.model = "PM6"
+        system.charge = 0
+        system.spin = 0
+        system.atom = [mol_h.GetAtomWithIdx(i).GetSymbol() for i in range(n)]
+        system.coord = np.array(coords, dtype=np.float64)
+
+        state = MopacState()
+        from_data(system, state, relax=True)
+
+        opt_coords = list(system.coord[:n * 3])
+        return atomic_nums, opt_coords
+    except Exception:
+        return None
+
+
+def compute_gasteiger_charges(mol) -> list[float]:
+    """Compute Gasteiger partial charges for an RDKit mol."""
+    require_rdkit()
+    from rdkit.Chem import AllChem
+    AllChem.ComputeGasteigerCharges(mol)
+    charges = []
+    for atom in mol.GetAtoms():
+        c = atom.GetDoubleProp('_GasteigerCharge')
+        charges.append(0.0 if (c != c) or abs(c) > 1e6 else c)  # NaN/inf guard
+    return charges

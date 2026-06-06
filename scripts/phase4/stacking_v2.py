@@ -32,10 +32,13 @@ from molgap.utils import (
     save_json,
 )
 
+from molgap.schnet import SchNetWrapper
+
 OUT_DIR = RESULTS_DIR / "phase4" / "stacking_v2"
 PHASE3_FEAT = RESULTS_DIR / "phase3" / "phase3_features.csv"
 PHASE3_OPT = RESULTS_DIR / "phase3" / "optimize"
-GRAPHS_PATH = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
+GRAPHS_PATH_PM6 = RESULTS_DIR / "phase4" / "pyg_3d_graphs_pm6.pt"
+GRAPHS_PATH_LEGACY = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
 SCHNET_WEIGHTS = MODELS_DIR / "gnn_schnet_3d_tuned.pt"
 SEED = 42
 
@@ -49,49 +52,11 @@ SCHNET_PARAMS = {
 }
 
 
-class SchNetWrapper(torch.nn.Module):
-    def __init__(self, hidden_channels, num_filters, num_interactions,
-                 num_gaussians, cutoff, dropout=0.0, n_targets=3):
-        super().__init__()
-        from torch_geometric.nn.models import SchNet
-        self.schnet = SchNet(
-            hidden_channels=hidden_channels, num_filters=num_filters,
-            num_interactions=num_interactions, num_gaussians=num_gaussians,
-            cutoff=cutoff,
-        )
-        self.head = torch.nn.Sequential(
-            torch.nn.Linear(hidden_channels, hidden_channels),
-            torch.nn.SiLU(),
-            torch.nn.Dropout(dropout),
-            torch.nn.Linear(hidden_channels, hidden_channels // 2),
-            torch.nn.SiLU(),
-            torch.nn.Linear(hidden_channels // 2, n_targets),
-        )
-
-    def forward(self, z, pos, batch):
-        from torch_geometric.nn import global_mean_pool
-        h = self.schnet.embedding(z)
-        edge_index, edge_weight = self._radius_graph(pos, batch)
-        edge_attr = self.schnet.distance_expansion(edge_weight)
-        for interaction in self.schnet.interactions:
-            h = h + interaction(h, edge_index, edge_weight, edge_attr)
-        h = global_mean_pool(h, batch)
-        return self.head(h)
-
-    def _radius_graph(self, pos, batch):
-        from torch_geometric.nn.models.schnet import radius_graph
-        edge_index = radius_graph(pos, r=self.schnet.cutoff, batch=batch,
-                                  max_num_neighbors=32)
-        row, col = edge_index
-        edge_weight = (pos[row] - pos[col]).norm(dim=-1)
-        return edge_index, edge_weight
-
-
 @torch.no_grad()
-def get_all_schnet_predictions(data_list, y_mean, y_std, device):
+def get_all_schnet_predictions(data_list, y_mean, y_std, device, use_charges=False):
     from torch_geometric.loader import DataLoader
 
-    model = SchNetWrapper(**SCHNET_PARAMS).to(device)
+    model = SchNetWrapper(**SCHNET_PARAMS, use_charges=use_charges).to(device)
     model.load_state_dict(torch.load(SCHNET_WEIGHTS, weights_only=True, map_location=device))
     model.eval()
 
@@ -100,7 +65,8 @@ def get_all_schnet_predictions(data_list, y_mean, y_std, device):
     for batch in loader:
         batch = batch.to(device)
         with torch.amp.autocast("cuda"):
-            out = model(batch.z, batch.pos, batch.batch)
+            charges = getattr(batch, 'charges', None)
+            out = model(batch.z, batch.pos, batch.batch, charges=charges)
         preds.append(out.cpu().numpy() * y_std + y_mean)
     return np.vstack(preds)
 
@@ -117,8 +83,11 @@ def main():
     print(f"  Device: {device}", flush=True)
 
     # Load graphs
-    print(f"  Loading 3D graphs...", flush=True)
-    data_list = torch.load(GRAPHS_PATH, weights_only=False)
+    graphs_path = GRAPHS_PATH_PM6 if GRAPHS_PATH_PM6.exists() else GRAPHS_PATH_LEGACY
+    print(f"  Loading 3D graphs from {graphs_path}...", flush=True)
+    data_list = torch.load(graphs_path, weights_only=False)
+    has_charges = hasattr(data_list[0], 'charges')
+    print(f"  Gasteiger charges: {has_charges}", flush=True)
     n_graph = len(data_list)
     y_graph = np.stack([d.y.squeeze(0).numpy() for d in data_list]).astype(np.float32)
 
@@ -175,7 +144,8 @@ def main():
     y_std[y_std < 1e-6] = 1.0
 
     print(f"  Getting SchNet(tuned) predictions...", flush=True)
-    schnet_preds_all = get_all_schnet_predictions(data_list, y_mean, y_std, device)
+    schnet_preds_all = get_all_schnet_predictions(data_list, y_mean, y_std, device,
+                                                     use_charges=has_charges)
     schnet_preds = schnet_preds_all[aligned_graph_idx]
 
     # Split the aligned dataset

@@ -62,8 +62,9 @@ HF_API_TREE = (
 
 USER_AGENT = "curl/8"
 ELEMENTS = {"C", "H", "O", "N", "S", "F", "Cl"}
-MW_MIN, MW_MAX = 200, 500
+MW_MIN, MW_MAX = 200, 1000
 CSV_FIELDS = ["cid", "mw", "formula", "smiles", "homo", "lumo", "gap"]
+COORDS_PARQUET = RAW_DIR / "pubchemqc_pm6_coords.parquet"
 
 
 def http_get_range(url, start, end, timeout=120, retries=3):
@@ -125,11 +126,11 @@ def iter_records_from_bytes(buf):
 
 # ── Fetch ──────────────────────────────────────────────────
 
-def fetch_data(max_records, chunk_bytes):
+def fetch_data(max_records, chunk_bytes, with_coords=False):
     tag = f"{max_records // 1000}k"
-    out_path = RAW_DIR / f"phase3_chonsfcl_mw200_500_{tag}.csv"
+    out_path = RAW_DIR / f"phase3_chonsfcl_mw{MW_MIN}_{MW_MAX}_{tag}.csv"
 
-    if out_path.exists():
+    if out_path.exists() and (not with_coords or COORDS_PARQUET.exists()):
         df = pd.read_csv(out_path)
         if len(df) >= max_records * 0.9:
             print(f"Reusing existing {out_path} ({len(df)} rows)")
@@ -137,12 +138,16 @@ def fetch_data(max_records, chunk_bytes):
         print(f"Existing file has only {len(df)} rows, re-fetching")
 
     print(f"Fetching CHONSFCl MW {MW_MIN}-{MW_MAX}, target {max_records} records...")
+    if with_coords:
+        print("  (with PM6 coordinates + atomic numbers)")
     ensure_dirs(out_path.parent)
 
     files = list_hf_files()
     print(f"Found {len(files)} files in subset")
 
     total_kept = 0
+    coord_rows = []
+
     with open(out_path, "w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=CSV_FIELDS)
         writer.writeheader()
@@ -177,13 +182,47 @@ def fetch_data(max_records, chunk_bytes):
                     "cid": cid, "mw": mw, "formula": formula,
                     "smiles": smiles, "homo": homo, "lumo": lumo, "gap": gap,
                 })
+
+                if with_coords:
+                    raw_coords = obj.get("coordinates")
+                    raw_atoms = obj.get("atomic-numbers")
+                    if raw_coords and raw_atoms:
+                        coord_rows.append({
+                            "cid": int(cid),
+                            "atomic_numbers": [int(a) for a in raw_atoms],
+                            "coordinates": [float(c) for c in raw_coords],
+                        })
+
                 total_kept += 1
                 if total_kept >= max_records:
                     print(f"Reached {max_records} records")
+                    if with_coords:
+                        _save_coords_parquet(coord_rows)
                     return out_path
 
+    if with_coords:
+        _save_coords_parquet(coord_rows)
     print(f"Fetched {total_kept} records (wanted {max_records})")
     return out_path
+
+
+def _save_coords_parquet(coord_rows):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    if not coord_rows:
+        print("  WARNING: no coordinate data collected")
+        return
+
+    table = pa.table({
+        "cid": pa.array([r["cid"] for r in coord_rows], type=pa.int64()),
+        "atomic_numbers": pa.array([r["atomic_numbers"] for r in coord_rows],
+                                   type=pa.list_(pa.int32())),
+        "coordinates": pa.array([r["coordinates"] for r in coord_rows],
+                                type=pa.list_(pa.float64())),
+    })
+    pq.write_table(table, COORDS_PARQUET)
+    print(f"  PM6 coordinates saved: {COORDS_PARQUET} ({len(coord_rows)} molecules)")
 
 
 # ── Clean ──────────────────────────────────────────────────
@@ -313,9 +352,9 @@ def build_comparison(metrics, n_molecules, n_features):
         delta_r2 = p3_r2 - p2_r2
         print(f"Delta MAE={delta_mae:+.4f}  Delta R2={delta_r2:+.4f}")
         if delta_r2 > 0:
-            print("✓ Scale-up recovered accuracy as hypothesized")
+            print("[OK] Scale-up recovered accuracy as hypothesized")
         else:
-            print("✗ Scale-up did not improve — may need model retuning")
+            print("[NG] Scale-up did not improve -- may need model retuning")
         print(f"{'='*50}")
 
     return comp
@@ -332,6 +371,8 @@ def main():
     p.add_argument("--chunk-bytes", type=int, default=50_000_000)
     p.add_argument("--raw-csv", type=str, default=None,
                    help="Path to pre-fetched raw CSV; skips the fetch step")
+    p.add_argument("--with-coords", action="store_true",
+                   help="Also extract PM6 coordinates + atomic numbers to parquet")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--features-only", action="store_true",
                    help="Stop after generating features (skip training)")
@@ -345,7 +386,7 @@ def main():
         raw_path = Path(args.raw_csv)
         print(f"Using pre-fetched data: {raw_path} ({len(pd.read_csv(raw_path))} rows)")
     else:
-        raw_path = fetch_data(args.max_records, args.chunk_bytes)
+        raw_path = fetch_data(args.max_records, args.chunk_bytes, args.with_coords)
 
     df_clean = clean_data(raw_path)
     df_feat = generate_features(df_clean)

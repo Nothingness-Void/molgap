@@ -41,56 +41,13 @@ from molgap.utils import (
     save_json,
 )
 
+from molgap.schnet import SchNetWrapper
+
 OUT_DIR = RESULTS_DIR / "phase4" / "schnet_optuna"
-PROCESSED_GRAPHS = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
-RAW_CSV = RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
+PROCESSED_GRAPHS = RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
+PROCESSED_GRAPHS_LEGACY = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
+RAW_CSV = RAW_DIR / "phase3_chonsfcl_mw200_1000_30k.csv"
 SEED = 42
-
-
-# ── Model (same as gnn_schnet_3d.py) ──────────────────────────
-
-class SchNetWrapper(torch.nn.Module):
-    def __init__(self, hidden_channels, num_filters, num_interactions,
-                 num_gaussians, cutoff, dropout=0.1, n_targets=3):
-        super().__init__()
-        from torch_geometric.nn.models import SchNet
-
-        self.schnet = SchNet(
-            hidden_channels=hidden_channels,
-            num_filters=num_filters,
-            num_interactions=num_interactions,
-            num_gaussians=num_gaussians,
-            cutoff=cutoff,
-        )
-        self.head = torch.nn.Sequential(
-            torch.nn.Linear(hidden_channels, hidden_channels),
-            torch.nn.SiLU(),
-            torch.nn.Dropout(dropout),
-            torch.nn.Linear(hidden_channels, hidden_channels // 2),
-            torch.nn.SiLU(),
-            torch.nn.Linear(hidden_channels // 2, n_targets),
-        )
-
-    def forward(self, z, pos, batch):
-        from torch_geometric.nn import global_mean_pool
-
-        h = self.schnet.embedding(z)
-        edge_index, edge_weight = self._radius_graph(pos, batch)
-        edge_attr = self.schnet.distance_expansion(edge_weight)
-
-        for interaction in self.schnet.interactions:
-            h = h + interaction(h, edge_index, edge_weight, edge_attr)
-
-        h = global_mean_pool(h, batch)
-        return self.head(h)
-
-    def _radius_graph(self, pos, batch):
-        from torch_geometric.nn.models.schnet import radius_graph
-        edge_index = radius_graph(pos, r=self.schnet.cutoff, batch=batch,
-                                  max_num_neighbors=32)
-        row, col = edge_index
-        edge_weight = (pos[row] - pos[col]).norm(dim=-1)
-        return edge_index, edge_weight
 
 
 # ── Train / evaluate ──────────────────────────────────────────
@@ -103,7 +60,8 @@ def train_epoch(model, loader, optimizer, device, scaler):
         batch = batch.to(device)
         optimizer.zero_grad()
         with torch.amp.autocast("cuda"):
-            out = model(batch.z, batch.pos, batch.batch)
+            charges = getattr(batch, 'charges', None)
+            out = model(batch.z, batch.pos, batch.batch, charges=charges)
             loss = F.l1_loss(out, batch.y)
         scaler.scale(loss).backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0)
@@ -121,14 +79,15 @@ def evaluate(model, loader, device):
     for batch in loader:
         batch = batch.to(device)
         with torch.amp.autocast("cuda"):
-            out = model(batch.z, batch.pos, batch.batch)
+            charges = getattr(batch, 'charges', None)
+            out = model(batch.z, batch.pos, batch.batch, charges=charges)
         preds.append(out.cpu().numpy())
         trues.append(batch.y.cpu().numpy())
     return np.vstack(preds), np.vstack(trues)
 
 
 def run_training(params, train_loader, valid_loader, y_mean, y_std,
-                 device, max_epochs, patience, verbose=False):
+                 device, max_epochs, patience, verbose=False, use_charges=False):
     """Train a SchNet model with given params, return best val MAE and metrics."""
 
     model = SchNetWrapper(
@@ -138,6 +97,7 @@ def run_training(params, train_loader, valid_loader, y_mean, y_std,
         num_gaussians=params["num_gaussians"],
         cutoff=params["cutoff"],
         dropout=params["dropout"],
+        use_charges=use_charges,
     ).to(device)
 
     lr = params["lr"]
@@ -204,13 +164,14 @@ def load_data(batch_size_default=64):
     """Load cached graphs and split into train/valid/test."""
     from torch_geometric.loader import DataLoader
 
-    if PROCESSED_GRAPHS.exists():
-        print(f"  Loading cached graphs from {PROCESSED_GRAPHS}...")
-        data_list = torch.load(PROCESSED_GRAPHS, weights_only=False)
+    graph_path = PROCESSED_GRAPHS if PROCESSED_GRAPHS.exists() else PROCESSED_GRAPHS_LEGACY
+    if graph_path.exists():
+        print(f"  Loading cached graphs from {graph_path}...")
+        data_list = torch.load(graph_path, weights_only=False)
         print(f"  Loaded {len(data_list)} graphs", flush=True)
     else:
         raise FileNotFoundError(
-            f"{PROCESSED_GRAPHS} not found. Run gnn_schnet_3d.py first to generate 3D graphs."
+            f"No graph cache found. Run gnn_schnet_3d.py first to generate 3D graphs."
         )
 
     train_idx, valid_idx, test_idx = create_split_indices(
@@ -228,22 +189,24 @@ def load_data(batch_size_default=64):
     for d in train_data + valid_data + test_data:
         d.y = (d.y - torch.tensor(y_mean)) / torch.tensor(y_std)
 
-    return train_data, valid_data, test_data, y_mean, y_std
+    has_charges = hasattr(data_list[0], 'charges')
+    return train_data, valid_data, test_data, y_mean, y_std, has_charges
 
 
 # ── Optuna objective ──────────────────────────────────────────
 
-def create_objective(train_data, valid_data, y_mean, y_std, device, fast_epochs):
+def create_objective(train_data, valid_data, y_mean, y_std, device, fast_epochs,
+                     use_charges=False):
     import optuna
     from torch_geometric.loader import DataLoader
 
     def objective(trial: optuna.Trial):
         params = {
-            "hidden_channels": trial.suggest_categorical("hidden_channels", [128, 192, 256, 384]),
+            "hidden_channels": trial.suggest_categorical("hidden_channels", [128, 192, 256]),
             "num_filters": trial.suggest_categorical("num_filters", [128, 192, 256]),
-            "num_interactions": trial.suggest_int("num_interactions", 3, 8),
+            "num_interactions": trial.suggest_int("num_interactions", 3, 6),
             "num_gaussians": trial.suggest_categorical("num_gaussians", [25, 50, 100]),
-            "cutoff": trial.suggest_float("cutoff", 5.0, 15.0, step=1.0),
+            "cutoff": trial.suggest_float("cutoff", 6.0, 12.0, step=1.0),
             "dropout": trial.suggest_float("dropout", 0.0, 0.3, step=0.05),
             "lr": trial.suggest_float("lr", 1e-4, 2e-3, log=True),
             "weight_decay": trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True),
@@ -258,9 +221,11 @@ def create_objective(train_data, valid_data, y_mean, y_std, device, fast_epochs)
             best_mae, best_ep, _, _ = run_training(
                 params, train_loader, valid_loader, y_mean, y_std,
                 device, max_epochs=fast_epochs, patience=15,
+                use_charges=use_charges,
             )
         except Exception as e:
             print(f"  Trial {trial.number} failed: {e}", flush=True)
+            torch.cuda.empty_cache()
             return float("inf")
 
         n_params = sum(
@@ -277,6 +242,7 @@ def create_objective(train_data, valid_data, y_mean, y_std, device, fast_epochs)
               f"bs={params['batch_size']} params={n_params:,}",
               flush=True)
 
+        torch.cuda.empty_cache()
         return best_mae
 
     return objective
@@ -306,7 +272,8 @@ def main():
     print(f"  Trials: {args.n_trials}, Fast epochs: {args.fast_epochs}, "
           f"Full epochs: {args.full_epochs}", flush=True)
 
-    train_data, valid_data, test_data, y_mean, y_std = load_data()
+    train_data, valid_data, test_data, y_mean, y_std, has_charges = load_data()
+    print(f"  Gasteiger charges: {has_charges}")
 
     # ── Phase 1: Optuna search ────────────────────────────────
     print(f"\n{'='*60}")
@@ -320,7 +287,7 @@ def main():
     )
 
     objective = create_objective(train_data, valid_data, y_mean, y_std,
-                                 device, args.fast_epochs)
+                                 device, args.fast_epochs, use_charges=has_charges)
     study.optimize(objective, n_trials=args.n_trials)
 
     best = study.best_trial
@@ -347,7 +314,7 @@ def main():
     best_mae, best_epoch, best_state, log_rows = run_training(
         best_params, train_loader, valid_loader, y_mean, y_std,
         device, max_epochs=args.full_epochs, patience=args.full_patience,
-        verbose=True,
+        verbose=True, use_charges=has_charges,
     )
 
     pd.DataFrame(log_rows).to_csv(OUT_DIR / "retrain_log.csv", index=False)
@@ -360,6 +327,7 @@ def main():
         num_gaussians=best_params["num_gaussians"],
         cutoff=best_params["cutoff"],
         dropout=best_params["dropout"],
+        use_charges=has_charges,
     ).to(device)
     model.load_state_dict({k: v.to(device) for k, v in best_state.items()})
 
@@ -409,7 +377,7 @@ def main():
         "model": "SchNet_3D_optuna",
         "data_desc": "30k CHONSFCl",
         "elements": "C,Cl,F,H,N,O,S",
-        "mw_range": "200-500",
+        "mw_range": "200-1000",
         "n_data": 30000,
         "split": "random_test",
         "metrics": m,

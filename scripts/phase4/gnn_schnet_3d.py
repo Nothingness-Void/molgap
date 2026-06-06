@@ -1,7 +1,11 @@
 """
 Phase 4 Step 4b: SchNet (3D) for HOMO/LUMO/gap prediction.
-Generates 3D conformers via RDKit ETKDG, builds radius graphs,
-trains SchNet on GPU with Gaussian basis distance encoding.
+
+Supports two 3D coordinate sources:
+  - PM6 optimized geometry from PubChemQC (via parquet, preferred)
+  - RDKit ETKDG fallback when PM6 coords unavailable
+
+Optionally injects per-atom Gasteiger partial charges.
 """
 from __future__ import annotations
 
@@ -32,10 +36,11 @@ from molgap.utils import (
     regression_metrics,
     save_json,
 )
+from molgap.schnet import SchNetWrapper
 
 OUT_DIR = RESULTS_DIR / "phase4"
-RAW_CSV = RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
-PROCESSED_GRAPHS = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
+RAW_CSV = RAW_DIR / "phase3_chonsfcl_mw200_1000_30k.csv"
+PROCESSED_GRAPHS = RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
 SEED = 42
 
 HIDDEN = 256
@@ -47,10 +52,24 @@ BATCH_SIZE = 64
 LR = 5e-4
 EPOCHS = 300
 PATIENCE = 30
+USE_CHARGES = True
+
+
+def load_pm6_lookup():
+    """Load PM6 coordinate lookup from parquet, keyed by CID."""
+    if not COORDS_PARQUET.exists():
+        return {}
+    import pyarrow.parquet as pq
+    table = pq.read_table(COORDS_PARQUET)
+    df = table.to_pandas()
+    lookup = {}
+    for _, row in df.iterrows():
+        lookup[int(row["cid"])] = (row["atomic_numbers"], row["coordinates"])
+    return lookup
 
 
 def generate_3d_coords(mol):
-    """Generate 3D conformer for a molecule using ETKDG."""
+    """Generate 3D conformer for a molecule using ETKDG (fallback)."""
     from rdkit.Chem import AllChem
     mol_h = AllChem.AddHs(mol)
     result = AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3())
@@ -65,7 +84,42 @@ def generate_3d_coords(mol):
     return mol_h
 
 
-def mol_to_pyg_data(mol_3d, targets, remove_h=True):
+def compute_gasteiger_charges(mol):
+    """Compute Gasteiger partial charges, return list of floats."""
+    from rdkit.Chem import AllChem
+    AllChem.ComputeGasteigerCharges(mol)
+    charges = []
+    for atom in mol.GetAtoms():
+        c = atom.GetDoubleProp('_GasteigerCharge')
+        charges.append(0.0 if np.isnan(c) or np.isinf(c) else c)
+    return charges
+
+
+def mol_to_pyg_data_from_pm6(atomic_numbers, coordinates, targets,
+                              smiles=None, use_charges=True):
+    """Build PyG Data from PM6 coordinates (includes hydrogens)."""
+    from torch_geometric.data import Data
+    from rdkit import Chem
+
+    z = torch.tensor(atomic_numbers, dtype=torch.long)
+    pos = torch.tensor(coordinates, dtype=torch.float64).reshape(-1, 3).float()
+
+    data = Data(z=z, pos=pos)
+    data.y = torch.tensor(targets, dtype=torch.float32).unsqueeze(0)
+
+    if use_charges and smiles:
+        mol = Chem.MolFromSmiles(smiles)
+        if mol is not None:
+            from rdkit.Chem import AllChem
+            mol_h = AllChem.AddHs(mol)
+            charges = compute_gasteiger_charges(mol_h)
+            if len(charges) == len(atomic_numbers):
+                data.charges = torch.tensor(charges, dtype=torch.float32)
+
+    return data
+
+
+def mol_to_pyg_data_from_etkdg(mol_3d, targets, use_charges=True, remove_h=False):
     """Convert RDKit mol with 3D coords to PyG Data object."""
     from torch_geometric.data import Data
     from rdkit import Chem
@@ -78,26 +132,45 @@ def mol_to_pyg_data(mol_3d, targets, remove_h=True):
     if n_atoms == 0:
         return None
 
-    # Atom features: atomic number (used as embedding index by SchNet)
     z = torch.tensor([atom.GetAtomicNum() for atom in mol_3d.GetAtoms()],
                      dtype=torch.long)
-
-    # 3D positions
     pos = torch.tensor(conf.GetPositions(), dtype=torch.float32)
 
     data = Data(z=z, pos=pos)
     data.y = torch.tensor(targets, dtype=torch.float32).unsqueeze(0)
+
+    if use_charges:
+        charges = compute_gasteiger_charges(mol_3d)
+        data.charges = torch.tensor(charges, dtype=torch.float32)
+
     return data
 
 
-def build_graph_dataset(smiles_list, targets_array):
-    """Convert SMILES list to 3D PyG Data objects."""
+def build_graph_dataset(smiles_list, targets_array, cid_list=None,
+                         pm6_lookup=None, use_charges=True):
+    """Convert SMILES list to 3D PyG Data objects, preferring PM6 coords."""
     from rdkit import Chem
 
     data_list = []
     failed = 0
+    n_pm6 = 0
+    n_etkdg = 0
 
     for i, smi in enumerate(smiles_list):
+        cid = int(cid_list[i]) if cid_list is not None else None
+
+        if pm6_lookup and cid and cid in pm6_lookup:
+            atomic_nums, coords = pm6_lookup[cid]
+            data = mol_to_pyg_data_from_pm6(
+                atomic_nums, coords, targets_array[i],
+                smiles=smi, use_charges=use_charges)
+            if data is not None:
+                data_list.append(data)
+                n_pm6 += 1
+                if (i + 1) % 5000 == 0:
+                    print(f"    {i+1}/{len(smiles_list)} done (pm6={n_pm6}, etkdg={n_etkdg}, fail={failed})")
+                continue
+
         mol = Chem.MolFromSmiles(smi)
         if mol is None:
             failed += 1
@@ -108,65 +181,20 @@ def build_graph_dataset(smiles_list, targets_array):
             failed += 1
             continue
 
-        data = mol_to_pyg_data(mol_3d, targets_array[i])
+        data = mol_to_pyg_data_from_etkdg(mol_3d, targets_array[i],
+                                            use_charges=use_charges)
         if data is None:
             failed += 1
             continue
 
         data_list.append(data)
+        n_etkdg += 1
 
         if (i + 1) % 5000 == 0:
-            print(f"    {i+1}/{len(smiles_list)} done ({failed} failed)")
+            print(f"    {i+1}/{len(smiles_list)} done (pm6={n_pm6}, etkdg={n_etkdg}, fail={failed})")
 
-    print(f"  Total: {len(data_list)} graphs, {failed} failed")
+    print(f"  Total: {len(data_list)} graphs (PM6={n_pm6}, ETKDG={n_etkdg}), {failed} failed")
     return data_list
-
-
-class SchNetWrapper(torch.nn.Module):
-    """SchNet with multi-target output head."""
-    def __init__(self, hidden_channels, num_filters, num_interactions,
-                 num_gaussians, cutoff, n_targets=3):
-        super().__init__()
-        from torch_geometric.nn.models import SchNet
-
-        self.schnet = SchNet(
-            hidden_channels=hidden_channels,
-            num_filters=num_filters,
-            num_interactions=num_interactions,
-            num_gaussians=num_gaussians,
-            cutoff=cutoff,
-        )
-        self.head = torch.nn.Sequential(
-            torch.nn.Linear(hidden_channels, hidden_channels),
-            torch.nn.SiLU(),
-            torch.nn.Dropout(0.1),
-            torch.nn.Linear(hidden_channels, hidden_channels // 2),
-            torch.nn.SiLU(),
-            torch.nn.Linear(hidden_channels // 2, n_targets),
-        )
-
-    def forward(self, z, pos, batch):
-        # SchNet returns per-atom embeddings; we need graph-level
-        from torch_geometric.nn import global_mean_pool
-
-        # Get atom-level features from SchNet's representation network
-        h = self.schnet.embedding(z)
-        edge_index, edge_weight = self._radius_graph(pos, batch)
-        edge_attr = self.schnet.distance_expansion(edge_weight)
-
-        for interaction in self.schnet.interactions:
-            h = h + interaction(h, edge_index, edge_weight, edge_attr)
-
-        h = global_mean_pool(h, batch)
-        return self.head(h)
-
-    def _radius_graph(self, pos, batch):
-        from torch_geometric.nn.models.schnet import radius_graph
-        edge_index = radius_graph(pos, r=self.schnet.cutoff, batch=batch,
-                                  max_num_neighbors=32)
-        row, col = edge_index
-        edge_weight = (pos[row] - pos[col]).norm(dim=-1)
-        return edge_index, edge_weight
 
 
 def train_epoch(model, loader, optimizer, device, scaler):
@@ -177,7 +205,8 @@ def train_epoch(model, loader, optimizer, device, scaler):
         batch = batch.to(device)
         optimizer.zero_grad()
         with torch.amp.autocast("cuda"):
-            out = model(batch.z, batch.pos, batch.batch)
+            charges = getattr(batch, 'charges', None)
+            out = model(batch.z, batch.pos, batch.batch, charges=charges)
             loss = F.l1_loss(out, batch.y)
         scaler.scale(loss).backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0)
@@ -195,7 +224,8 @@ def evaluate(model, loader, device):
     for batch in loader:
         batch = batch.to(device)
         with torch.amp.autocast("cuda"):
-            out = model(batch.z, batch.pos, batch.batch)
+            charges = getattr(batch, 'charges', None)
+            out = model(batch.z, batch.pos, batch.batch, charges=charges)
         preds.append(out.cpu().numpy())
         trues.append(batch.y.cpu().numpy())
     return np.vstack(preds), np.vstack(trues)
@@ -209,12 +239,11 @@ def main():
     np.random.seed(SEED)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"=== Phase 4 Step 4b: SchNet 3D ===")
+    print(f"=== Phase 4 Step 4b: SchNet 3D (ETKDG + Gasteiger) ===")
     print(f"  Device: {device}")
     if device.type == "cuda":
         print(f"  GPU: {torch.cuda.get_device_name(0)}")
 
-    # Load or build graph dataset
     if PROCESSED_GRAPHS.exists():
         print(f"\n  Loading cached graphs from {PROCESSED_GRAPHS}...")
         data_list = torch.load(PROCESSED_GRAPHS, weights_only=False)
@@ -238,11 +267,13 @@ def main():
         smiles_list = df["canonical_smiles"].tolist()
         targets = df[TARGET_COLS].values.astype(np.float32)
 
-        print(f"\n  Generating 3D conformers + building graphs...")
+        print(f"\n  Building ETKDG graphs (use_charges={USE_CHARGES})...")
         t0 = time.time()
-        data_list = build_graph_dataset(smiles_list, targets)
+        data_list = build_graph_dataset(
+            smiles_list, targets, cid_list=None,
+            pm6_lookup=None, use_charges=USE_CHARGES)
         elapsed = time.time() - t0
-        print(f"  3D generation time: {elapsed:.1f}s ({elapsed/60:.1f}min)")
+        print(f"  Graph build time: {elapsed:.1f}s ({elapsed/60:.1f}min)")
 
         print(f"  Caching graphs to {PROCESSED_GRAPHS}...")
         torch.save(data_list, PROCESSED_GRAPHS)
@@ -268,9 +299,10 @@ def main():
     valid_loader = DataLoader(valid_data, batch_size=BATCH_SIZE)
     test_loader = DataLoader(test_data, batch_size=BATCH_SIZE)
 
-    # Build model
+    has_charges = hasattr(data_list[0], 'charges')
     print(f"\n  SchNet config: hidden={HIDDEN}, filters={NUM_FILTERS}, "
           f"interactions={NUM_INTERACTIONS}, gaussians={NUM_GAUSSIANS}, cutoff={CUTOFF}")
+    print(f"  Gasteiger charges: {has_charges}")
     print(f"  Train: {len(train_data)}, Valid: {len(valid_data)}, Test: {len(test_data)}")
 
     model = SchNetWrapper(
@@ -279,6 +311,7 @@ def main():
         num_interactions=NUM_INTERACTIONS,
         num_gaussians=NUM_GAUSSIANS,
         cutoff=CUTOFF,
+        use_charges=has_charges,
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters())
@@ -288,7 +321,6 @@ def main():
     scheduler = ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=12, min_lr=1e-6)
     scaler = torch.amp.GradScaler("cuda")
 
-    # Training loop
     print(f"\n  Training {EPOCHS} epochs (patience={PATIENCE})...\n")
     best_val_mae = float("inf")
     best_epoch = 0
@@ -325,7 +357,6 @@ def main():
 
     pd.DataFrame(log_rows).to_csv(OUT_DIR / "schnet_training_log.csv", index=False)
 
-    # Load best and evaluate
     model.load_state_dict(torch.load(MODELS_DIR / "gnn_schnet_3d.pt", weights_only=True))
     test_pred, test_true = evaluate(model, test_loader, device)
     test_pred_real = test_pred * y_std + y_mean
@@ -334,13 +365,12 @@ def main():
     m = regression_metrics(test_true_real, test_pred_real)
 
     print(f"\n{'='*50}")
-    print(f"  SchNet 3D Test Results")
+    print(f"  SchNet 3D Test Results (ETKDG + Gasteiger)")
     print(f"{'='*50}")
     for t in TARGET_COLS:
         print(f"  {t:5s}: MAE={m[t]['mae']:.4f} R2={m[t]['r2']:.4f}")
     print(f"  avg  : MAE={m['average']['mae']:.4f} R2={m['average']['r2']:.4f}")
 
-    # Compare with AttentiveFP
     afp_path = OUT_DIR / "gnn_metrics.json"
     if afp_path.exists():
         import json
@@ -353,12 +383,13 @@ def main():
         print(f"  Improvement: R2 {'+'if diff>=0 else ''}{diff:.4f}")
 
     save_json({
-        "model": "SchNet_3D",
+        "model": "SchNet_3D_ETKDG_Gasteiger",
         "hidden": HIDDEN,
         "num_filters": NUM_FILTERS,
         "num_interactions": NUM_INTERACTIONS,
         "num_gaussians": NUM_GAUSSIANS,
         "cutoff": CUTOFF,
+        "use_charges": has_charges,
         "n_params": n_params,
         "best_epoch": best_epoch,
         "epochs_trained": len(log_rows),

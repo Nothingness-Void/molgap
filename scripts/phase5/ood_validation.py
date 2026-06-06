@@ -41,7 +41,10 @@ from molgap.utils import (
     ensure_dirs,
     regression_metrics,
     save_json,
+    generate_pm6_coords_mopac,
+    compute_gasteiger_charges,
 )
+from molgap.schnet import SchNetWrapper
 
 OUT_DIR = RESULTS_DIR / "phase5" / "ood_validation"
 SEED = 42
@@ -169,64 +172,88 @@ def main():
     ood_df = pd.DataFrame(all_records)
     ood_df.to_csv(OUT_DIR / "ood_molecules.csv", index=False, encoding="utf-8")
 
-    # ── Generate 3D conformers and predict with SchNet ────────
+    # ── Generate 3D conformers (PM6 preferred) and predict with SchNet ──
     from rdkit import Chem
     from rdkit.Chem import AllChem
     from torch_geometric.data import Data
     from torch_geometric.loader import DataLoader
+    from molgap.utils import create_split_indices
 
-    print(f"\n  Generating 3D conformers...", flush=True)
+    print(f"\n  Generating 3D conformers (PM6 → ETKDG fallback)...", flush=True)
 
-    def smiles_to_pyg(smi):
+    def smiles_to_pyg(smi, use_charges=True):
+        pm6_result = generate_pm6_coords_mopac(smi)
+        if pm6_result is not None:
+            atomic_nums, coords = pm6_result
+            z = torch.tensor(atomic_nums, dtype=torch.long)
+            pos = torch.tensor(coords, dtype=torch.float64).reshape(-1, 3).float()
+            data = Data(z=z, pos=pos)
+            if use_charges:
+                mol = Chem.MolFromSmiles(smi)
+                if mol:
+                    mol_h = AllChem.AddHs(mol)
+                    charges = compute_gasteiger_charges(mol_h)
+                    if len(charges) == len(atomic_nums):
+                        data.charges = torch.tensor(charges, dtype=torch.float32)
+            return data, "pm6"
+
         mol = Chem.MolFromSmiles(smi)
         if mol is None:
-            return None
+            return None, "fail"
         mol_h = AllChem.AddHs(mol)
         if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
             if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-                return None
+                return None, "fail"
         try:
             AllChem.MMFFOptimizeMolecule(mol_h, maxIters=200)
         except Exception:
             pass
-        mol_noh = Chem.RemoveHs(mol_h)
-        conf = mol_noh.GetConformer()
-        if mol_noh.GetNumAtoms() == 0:
-            return None
-        z = torch.tensor([a.GetAtomicNum() for a in mol_noh.GetAtoms()], dtype=torch.long)
+        n = mol_h.GetNumAtoms()
+        if n == 0:
+            return None, "fail"
+        conf = mol_h.GetConformer()
+        z = torch.tensor([mol_h.GetAtomWithIdx(i).GetAtomicNum() for i in range(n)], dtype=torch.long)
         pos = torch.tensor(conf.GetPositions(), dtype=torch.float32)
-        return Data(z=z, pos=pos)
+        data = Data(z=z, pos=pos)
+        if use_charges:
+            charges = compute_gasteiger_charges(mol_h)
+            data.charges = torch.tensor(charges, dtype=torch.float32)
+        return data, "etkdg"
 
     pyg_list = []
     valid_idx = []
+    n_pm6, n_etkdg = 0, 0
     for i, row in ood_df.iterrows():
-        d = smiles_to_pyg(row["smiles"])
+        d, method = smiles_to_pyg(row["smiles"])
         if d is not None:
             pyg_list.append(d)
             valid_idx.append(i)
+            if method == "pm6":
+                n_pm6 += 1
+            else:
+                n_etkdg += 1
     valid_idx = np.array(valid_idx)
-    print(f"  3D success: {len(pyg_list)}/{len(ood_df)}", flush=True)
+    has_charges = len(pyg_list) > 0 and hasattr(pyg_list[0], 'charges')
+    print(f"  3D success: {len(pyg_list)}/{len(ood_df)} (PM6={n_pm6}, ETKDG={n_etkdg})", flush=True)
 
     # Load SchNet tuned model
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from phase4.schnet_retrain_best import SchNetWrapper
-
     SCHNET_MODEL_PARAMS = {
-        "hidden_channels": 256,
-        "num_filters": 192,
-        "num_interactions": 7,
-        "num_gaussians": 50,
-        "cutoff": 7.0,
-        "dropout": 0.0,
+        "hidden_channels": 192,
+        "num_filters": 256,
+        "num_interactions": 6,
+        "num_gaussians": 100,
+        "cutoff": 6.0,
+        "dropout": 0.2,
     }
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"  Device: {device}", flush=True)
 
     # Get y_mean/y_std from training graphs
-    GRAPHS_PATH = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
-    from molgap.utils import create_split_indices
-    data_list = torch.load(GRAPHS_PATH, weights_only=False)
+    GRAPHS_PATH_PM6 = RESULTS_DIR / "phase4" / "pyg_3d_graphs_pm6.pt"
+    GRAPHS_PATH_LEGACY = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
+    graphs_path = GRAPHS_PATH_PM6 if GRAPHS_PATH_PM6.exists() else GRAPHS_PATH_LEGACY
+    data_list = torch.load(graphs_path, weights_only=False)
     train_idx_g, _, _ = create_split_indices(len(data_list), random_state=SEED)
     train_y = np.stack([data_list[i].y.squeeze(0).numpy() for i in train_idx_g])
     y_mean = train_y.mean(axis=0)
@@ -234,19 +261,20 @@ def main():
     y_std[y_std < 1e-6] = 1.0
     del data_list
 
-    model = SchNetWrapper(**SCHNET_MODEL_PARAMS).to(device)
+    model = SchNetWrapper(**SCHNET_MODEL_PARAMS, use_charges=has_charges).to(device)
     model.load_state_dict(torch.load(MODELS_DIR / "gnn_schnet_3d_tuned.pt",
                                      weights_only=True, map_location=device))
     model.eval()
 
-    print(f"  Predicting with SchNet...", flush=True)
+    print(f"  Predicting with SchNet (charges={has_charges})...", flush=True)
     loader = DataLoader(pyg_list, batch_size=64)
     preds = []
     with torch.no_grad():
         for batch in loader:
             batch = batch.to(device)
             with torch.amp.autocast("cuda"):
-                out = model(batch.z, batch.pos, batch.batch)
+                charges = getattr(batch, 'charges', None)
+                out = model(batch.z, batch.pos, batch.batch, charges=charges)
             preds.append(out.cpu().numpy() * y_std + y_mean)
     schnet_preds = np.vstack(preds)
 
@@ -272,10 +300,10 @@ def main():
     # Stats
     print(f"\n  Element coverage:", flush=True)
     if "formula" in ood_valid.columns:
-        from pipeline.fetch_stream import formula_elements
+        import re
         all_elements = set()
         for f in ood_valid["formula"].dropna():
-            all_elements.update(formula_elements(str(f)))
+            all_elements.update(re.findall(r'[A-Z][a-z]?', str(f)))
         print(f"    Elements seen: {sorted(all_elements)}", flush=True)
 
     if "mw" in ood_valid.columns:
