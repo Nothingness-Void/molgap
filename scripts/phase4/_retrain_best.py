@@ -1,4 +1,4 @@
-"""Retrain SchNet with Trial 1 best params (PM6 + Gasteiger)."""
+"""Retrain SchNet with saved Optuna best params (ETKDG, skip search phase)."""
 import sys, time, json
 import numpy as np
 import pandas as pd
@@ -16,17 +16,13 @@ device = torch.device("cuda")
 OUT_DIR = RESULTS_DIR / "phase4" / "schnet_optuna"
 ensure_dirs(OUT_DIR, MODELS_DIR)
 
-params = {
-    "hidden_channels": 192, "num_filters": 256, "num_interactions": 6,
-    "num_gaussians": 100, "cutoff": 6.0, "dropout": 0.2,
-    "lr": 0.0001666698328606644, "weight_decay": 1.5673095467235414e-06,
-    "batch_size": 64, "scheduler": "plateau"
-}
-print(f"Params: {params}")
+with open(OUT_DIR / "optuna_best_params.json") as f:
+    params = json.load(f)
+print(f"Params: {params}", flush=True)
 
-graph_path = RESULTS_DIR / "phase4" / "pyg_3d_graphs_pm6.pt"
+graph_path = RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
 data_list = torch.load(graph_path, weights_only=False)
-print(f"Loaded {len(data_list)} graphs")
+print(f"Loaded {len(data_list)} graphs", flush=True)
 
 train_idx, valid_idx, test_idx = create_split_indices(len(data_list), random_state=SEED)
 train_data = [data_list[i] for i in train_idx]
@@ -52,10 +48,10 @@ test_loader = DataLoader(test_data, batch_size=bs)
 sys.path.insert(0, str(Path(r"D:\文档\molgap\scripts\phase4")))
 from schnet_optuna import run_training, evaluate
 
-print(f"\nFull retrain: 300 epochs, patience=40, charges={has_charges}")
+print(f"\nFull retrain: 500 epochs, patience=40, charges={has_charges}", flush=True)
 best_mae, best_epoch, best_state, log_rows = run_training(
     params, train_loader, valid_loader, y_mean, y_std,
-    device, max_epochs=300, patience=40, verbose=True, use_charges=has_charges)
+    device, max_epochs=500, patience=40, verbose=True, use_charges=has_charges)
 
 pd.DataFrame(log_rows).to_csv(OUT_DIR / "retrain_log.csv", index=False)
 
@@ -70,12 +66,12 @@ test_pred_real = test_pred * y_std + y_mean
 test_true_real = test_true * y_std + y_mean
 m = regression_metrics(test_true_real, test_pred_real)
 
-print(f"\n{'='*60}")
-print(f"  SchNet Optuna-tuned Test Results (PM6 + Gasteiger)")
-print(f"{'='*60}")
+print(f"\n{'='*60}", flush=True)
+print(f"  SchNet ETKDG Optuna-tuned Test Results", flush=True)
+print(f"{'='*60}", flush=True)
 for t in TARGET_COLS:
-    print(f"  {t:5s}: MAE={m[t]['mae']:.4f}  RMSE={m[t]['rmse']:.4f}  R2={m[t]['r2']:.4f}")
-print(f"  avg  : MAE={m['average']['mae']:.4f}  RMSE={m['average']['rmse']:.4f}  R2={m['average']['r2']:.4f}")
+    print(f"  {t:5s}: MAE={m[t]['mae']:.4f}  RMSE={m[t]['rmse']:.4f}  R2={m[t]['r2']:.4f}", flush=True)
+print(f"  avg  : MAE={m['average']['mae']:.4f}  RMSE={m['average']['rmse']:.4f}  R2={m['average']['r2']:.4f}", flush=True)
 
 prev_path = RESULTS_DIR / "phase4" / "schnet_metrics.json"
 if prev_path.exists():
@@ -83,12 +79,17 @@ if prev_path.exists():
         prev = json.load(f)
     prev_mae = prev["metrics"]["average"]["mae"]
     prev_r2 = prev["metrics"]["average"]["r2"]
-    print(f"\n  vs default SchNet: MAE={prev_mae:.4f} R2={prev_r2:.4f}")
-    print(f"  MAE improvement: {prev_mae - m['average']['mae']:.4f}")
-    print(f"  R2  improvement: {m['average']['r2'] - prev_r2:.4f}")
+    print(f"\n  vs ETKDG baseline: MAE={prev_mae:.4f} R2={prev_r2:.4f}", flush=True)
+    print(f"  MAE improvement: {prev_mae - m['average']['mae']:.4f}", flush=True)
+    print(f"  R2  improvement: {m['average']['r2'] - prev_r2:.4f}", flush=True)
 
 torch.save(best_state, MODELS_DIR / "gnn_schnet_3d_tuned.pt")
-save_json({"model": "SchNet_3D_optuna", "params": params,
+save_json({"model": "SchNet_3D_ETKDG_optuna", "params": params,
     "n_params": sum(p.numel() for p in model.parameters()),
-    "best_epoch": best_epoch, "metrics": m}, OUT_DIR / "schnet_tuned_metrics.json")
-print(f"\nDone! Model saved.")
+    "best_epoch": best_epoch, "epochs_trained": len(log_rows), "metrics": m},
+    OUT_DIR / "schnet_tuned_metrics.json")
+save_json({"phase": "4", "sub_stage": "4.4", "experiment": "phase4_schnet_optuna_etkdg",
+    "model": "SchNet_3D_ETKDG_optuna", "data_desc": "30k CHONSFCl MW200-1000",
+    "mw_range": "200-1000", "n_data": 30000, "split": "random_test", "metrics": m},
+    RESULTS_DIR / "experiments" / "phase4_schnet_optuna.json")
+print(f"\nDone! Model saved.", flush=True)

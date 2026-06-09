@@ -41,7 +41,6 @@ from molgap.utils import (
     ensure_dirs,
     regression_metrics,
     save_json,
-    generate_pm6_coords_mopac,
     compute_gasteiger_charges,
 )
 from molgap.schnet import SchNetWrapper
@@ -108,7 +107,7 @@ def parse_records(buf):
 
 def load_training_cids():
     """Load CIDs from training data to exclude."""
-    csv_path = RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
+    csv_path = RAW_DIR / "phase3_chonsfcl_mw200_1000_30k.csv"
     if csv_path.exists():
         df = pd.read_csv(csv_path)
         return set(df["cid"].tolist())
@@ -179,38 +178,23 @@ def main():
     from torch_geometric.loader import DataLoader
     from molgap.utils import create_split_indices
 
-    print(f"\n  Generating 3D conformers (PM6 → ETKDG fallback)...", flush=True)
+    print(f"\n  Generating 3D conformers (ETKDG only — matches training)...", flush=True)
 
     def smiles_to_pyg(smi, use_charges=True):
-        pm6_result = generate_pm6_coords_mopac(smi)
-        if pm6_result is not None:
-            atomic_nums, coords = pm6_result
-            z = torch.tensor(atomic_nums, dtype=torch.long)
-            pos = torch.tensor(coords, dtype=torch.float64).reshape(-1, 3).float()
-            data = Data(z=z, pos=pos)
-            if use_charges:
-                mol = Chem.MolFromSmiles(smi)
-                if mol:
-                    mol_h = AllChem.AddHs(mol)
-                    charges = compute_gasteiger_charges(mol_h)
-                    if len(charges) == len(atomic_nums):
-                        data.charges = torch.tensor(charges, dtype=torch.float32)
-            return data, "pm6"
-
         mol = Chem.MolFromSmiles(smi)
         if mol is None:
-            return None, "fail"
+            return None
         mol_h = AllChem.AddHs(mol)
         if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
             if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-                return None, "fail"
+                return None
         try:
             AllChem.MMFFOptimizeMolecule(mol_h, maxIters=200)
         except Exception:
             pass
         n = mol_h.GetNumAtoms()
         if n == 0:
-            return None, "fail"
+            return None
         conf = mol_h.GetConformer()
         z = torch.tensor([mol_h.GetAtomWithIdx(i).GetAtomicNum() for i in range(n)], dtype=torch.long)
         pos = torch.tensor(conf.GetPositions(), dtype=torch.float32)
@@ -218,41 +202,51 @@ def main():
         if use_charges:
             charges = compute_gasteiger_charges(mol_h)
             data.charges = torch.tensor(charges, dtype=torch.float32)
-        return data, "etkdg"
+        return data
 
     pyg_list = []
     valid_idx = []
-    n_pm6, n_etkdg = 0, 0
     for i, row in ood_df.iterrows():
-        d, method = smiles_to_pyg(row["smiles"])
+        d = smiles_to_pyg(row["smiles"])
         if d is not None:
             pyg_list.append(d)
             valid_idx.append(i)
-            if method == "pm6":
-                n_pm6 += 1
-            else:
-                n_etkdg += 1
     valid_idx = np.array(valid_idx)
     has_charges = len(pyg_list) > 0 and hasattr(pyg_list[0], 'charges')
-    print(f"  3D success: {len(pyg_list)}/{len(ood_df)} (PM6={n_pm6}, ETKDG={n_etkdg})", flush=True)
+    print(f"  3D success: {len(pyg_list)}/{len(ood_df)} (ETKDG)", flush=True)
 
-    # Load SchNet tuned model
-    SCHNET_MODEL_PARAMS = {
-        "hidden_channels": 192,
-        "num_filters": 256,
-        "num_interactions": 6,
-        "num_gaussians": 100,
-        "cutoff": 6.0,
-        "dropout": 0.2,
-    }
+    # Load SchNet tuned model params from Optuna results
+    optuna_params_path = RESULTS_DIR / "phase4" / "schnet_optuna" / "optuna_best_params.json"
+    if optuna_params_path.exists():
+        with open(optuna_params_path) as f:
+            optuna_params = json.load(f)
+        SCHNET_MODEL_PARAMS = {
+            "hidden_channels": optuna_params["hidden_channels"],
+            "num_filters": optuna_params["num_filters"],
+            "num_interactions": optuna_params["num_interactions"],
+            "num_gaussians": optuna_params["num_gaussians"],
+            "cutoff": optuna_params["cutoff"],
+            "dropout": optuna_params["dropout"],
+        }
+        print(f"  Loaded Optuna best params from {optuna_params_path}", flush=True)
+    else:
+        SCHNET_MODEL_PARAMS = {
+            "hidden_channels": 192,
+            "num_filters": 256,
+            "num_interactions": 6,
+            "num_gaussians": 100,
+            "cutoff": 6.0,
+            "dropout": 0.2,
+        }
+        print(f"  WARNING: Optuna params not found, using defaults", flush=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"  Device: {device}", flush=True)
 
-    # Get y_mean/y_std from training graphs
-    GRAPHS_PATH_PM6 = RESULTS_DIR / "phase4" / "pyg_3d_graphs_pm6.pt"
+    # Get y_mean/y_std from ETKDG training graphs (must match training)
+    GRAPHS_PATH_ETKDG = RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
     GRAPHS_PATH_LEGACY = RESULTS_DIR / "phase4" / "pyg_3d_graphs.pt"
-    graphs_path = GRAPHS_PATH_PM6 if GRAPHS_PATH_PM6.exists() else GRAPHS_PATH_LEGACY
+    graphs_path = GRAPHS_PATH_ETKDG if GRAPHS_PATH_ETKDG.exists() else GRAPHS_PATH_LEGACY
     data_list = torch.load(graphs_path, weights_only=False)
     train_idx_g, _, _ = create_split_indices(len(data_list), random_state=SEED)
     train_y = np.stack([data_list[i].y.squeeze(0).numpy() for i in train_idx_g])

@@ -1,0 +1,39 @@
+{
+  "model": "SchNet_3D_ETKDG_optuna_expanded",
+  "params": {
+    "hidden_channels": 192,
+    "num_filters": 256,
+    "num_interactions": 6,
+    "num_gaussians": 100,
+    "cutoff": 8.0,
+    "dropout": 0.1,
+    "lr": 0.0015631978662010817,
+    "weight_decay": 2.0598531172041378e-05,
+    "batch_size": 512,
+    "scheduler": "plateau"
+  },
+  "n_data": 44827,
+  "mw_range": "200-1000",
+  "best_epoch": 114,
+  "epochs_trained": 154,
+  "metrics": {
+    "homo": {
+      "mae": 0.1396,
+      "r2": 0.8459
+    },
+    "lumo": {
+      "mae": 0.1510,
+      "r2": 0.9196
+    },
+    "gap": {
+      "mae": 0.1954,
+      "r2": 0.8813
+    },
+    "average": {
+      "mae": 0.1620,
+      "r2": 0.8823
+    }
+  },
+  "trained_on": "Google Colab",
+  "note": "Optuna best params from colab_optuna.ipynb, retrained with early stopping"
+}

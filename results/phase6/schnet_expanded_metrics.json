@@ -1,0 +1,41 @@
+{
+  "model": "SchNet_3D_ETKDG_expanded",
+  "params": {
+    "hidden_channels": 192,
+    "num_filters": 256,
+    "num_interactions": 6,
+    "num_gaussians": 100,
+    "cutoff": 6.0,
+    "dropout": 0.2,
+    "lr": 0.0001666698328606644,
+    "weight_decay": 1.5673095467235414e-06,
+    "batch_size": 64,
+    "scheduler": "plateau"
+  },
+  "n_data": 44827,
+  "mw_range": "200-1000",
+  "best_epoch": 75,
+  "epochs_trained": 115,
+  "metrics": {
+    "homo": {
+      "mae": 0.13533852994441986,
+      "rmse": 0.19097827241927567,
+      "r2": 0.8519869446754456
+    },
+    "lumo": {
+      "mae": 0.14646127820014954,
+      "rmse": 0.20745067576084328,
+      "r2": 0.926360547542572
+    },
+    "gap": {
+      "mae": 0.19170983135700226,
+      "rmse": 0.2708336420546508,
+      "r2": 0.8914260864257812
+    },
+    "average": {
+      "mae": 0.1578365465005239,
+      "rmse": 0.22308753007825657,
+      "r2": 0.8899245262145996
+    }
+  }
+}

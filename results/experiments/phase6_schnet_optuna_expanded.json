@@ -1,0 +1,21 @@
+{
+  "phase": "6",
+  "experiment": "phase6_schnet_optuna_expanded",
+  "model": "SchNet_3D_ETKDG_optuna_expanded",
+  "data_desc": "44827 CHONSFCl MW200-1000",
+  "mw_range": "200-1000",
+  "n_data": 44827,
+  "split": "random_test",
+  "trained_on": "Google Colab",
+  "metrics": {
+    "homo": { "mae": 0.1396, "r2": 0.8459 },
+    "lumo": { "mae": 0.1510, "r2": 0.9196 },
+    "gap":  { "mae": 0.1954, "r2": 0.8813 },
+    "average": { "mae": 0.1620, "r2": 0.8823 }
+  },
+  "gaussian_validation_10mol": {
+    "homo": { "mae": 0.1839 },
+    "lumo": { "mae": 0.1809 },
+    "gap":  { "mae": 0.2233 }
+  }
+}

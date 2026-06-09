@@ -1,163 +1,230 @@
-PROJECT BRIEF — 市售有机电子材料分子的 HOMO/LUMO/Gap 机器学习预测数据库
+# MolGap — OLED 分子 HOMO/LUMO/Gap 机器学习预测
 
- 给 Claude Code 的项目说明书。所有事实均已实测验证。
- 作者背景:TUAT 工学部 化学物理工学科,指导老师布置课题。
+## 目标
 
-0. 一句话目标
+从分子结构预测有机电子材料（OLED/有机薄膜/有机太阳能电池）的 HOMO、LUMO、HOMO-LUMO gap，建立市售分子性质预测数据库。
 
-构建一个市售有机电子材料分子(OLED / 有机薄膜 / 有机太阳能电池相关)的电子性质数据库,用机器学习从分子结构预测 HOMO energy、LUMO energy、HOMO-LUMO gap 三个量,最终能对「买得到但还没算过」的分子给出性质预测。
+- 数据源：PubChemQC B3LYP/6-31G*//PM6（~8594 万分子）
+- 目标性质：HOMO, LUMO, Gap（eV）— B3LYP Kohn-Sham 轨道能量，非实验值
+- 验证方式：Gaussian B3LYP 单点 + 实验值文献对比
 
-1. 对题目的完整理解
+---
 
-1.1 任务本质
+## Phase 总览
 
-市售分子 (OLED / 有机薄膜 / 太阳能电池, 分子量 200–300 起步)
-   ↓ 获取 / 计算
-HOMO energy, LUMO energy, HOMO-LUMO gap
-   ↓ 机器学习 (从分子结构学三个量)
-预测模型
-   ↓ 应用
-对市售分子预测性质 → 建立可查询数据库
+| Phase | 内容 | 数据规模 | 最佳结果 |
+|-------|------|----------|----------|
+| 1 | 传统 ML 基线 + 特征工程 + 调参 | 10k→30k CHON MW200-300 | LightGBM R²=0.921 |
+| 2 | 泛化性研究（元素/MW 逐步扩展） | 10k/step | R² 0.901→0.874（无断崖） |
+| 3 | 数据扩展 + 传统 ML 优化 | 30k CHONSFCl MW200-500 | LightGBM R²=0.885 |
+| 4 | GNN SchNet + ETKDG + Optuna | 30k CHONSFCl MW200-503 | SchNet R²=0.896 |
+| 5 | 验证（市售分子 + OOD + 实验值） | 10 商用 + 100 OOD | OOD R²=0.849 |
+| **6** | **MW 扩展 + Optuna (Colab)** | **44.8k CHONSFCl MW200-1000** | **SchNet R²=0.882, Gaussian Gap MAE=0.223** |
 
+---
 
-1.2 已确认的约束与事实
+## Phase 1: 传统 ML 基线
 
-- 目标性质(3个,多目标回归):HOMO、LUMO、HOMO-LUMO gap
-- 分子量范围:先从 200–300 g/mol 小分子开始(Gaussian 算得动)
-- 材料领域:OLED、有机薄膜、有机太阳能电池及 building blocks
-- 数据源:老师点名 PubChemQC(已验证可用)
-- 量子化学工具:Gaussian / GaussView,分子研(IMS)服务器可用
-- 数据性质:PubChemQC 的值是计算值(B3LYP/6-31G* level),非实验值
-- 流程顺序:先用现成数据库拿数据,缺的再 Gaussian 补算,别一上来跑 Gaussian
+**范围**: CHON, MW 200-300, 10k→30k
 
-1.3 物理意义(写报告用)
+| 实验 | MAE | R² |
+|------|-----|-----|
+| Ridge / RF / ExtraTrees / LightGBM baseline | — | — |
+| LightGBM Optuna 调参 | 0.150 | 0.921 |
+| ChemBERTa/MolFormer embedding | — | 无提升 |
+| XGBoost / CatBoost / Stacking | 0.152 | 0.917 |
 
-- HOMO = 最高被占分子軌道;LUMO = 最低空分子軌道;gap = E(LUMO) − E(HOMO)
-- 对 OLED:gap 影响发光颜色/电荷传输/激发能;HOMO 高→空穴传输好,LUMO 低→电子传输好
+**结论**: LightGBM 最优，embedding 无帮助，数据量 10k→30k 有 +3% 提升。
 
-2. 数据源(已实测验证)
+**脚本**: `scripts/phase1/`
+**结果**: `results/phase1/`
 
-2.1 主数据源:PubChemQC B3LYP/6-31G*//PM6
+---
 
-- HF: molssiai-hub/pubchemqc-b3lyp
-- 约 8594 万分子,MW up to 1000
-- 几何 PM6 优化,电子性质 B3LYP/6-31G* 单点
-- 整库 ≈ 7.67 TB(1587 文件,JSON)→ 不可整库下载
+## Phase 2: 泛化性研究
 
-2.2 关键:内部已切好子集
+**固定**: LightGBM 调参后, 10k/step
 
-data/b3lyp_pm6_chon300nosalt/train/*.json
-  → 元素限 C,H,O,N; 分子量 < 300; 无盐
-  → 87 个文件, 共 ≈ 349 GB, 每文件 2–4 GB
+| Step | 元素 | MW | R² |
+|------|------|-----|-----|
+| 0 | CHON | 200-300 | 0.901 |
+| 1 | CHON | 200-500 | 0.889 |
+| 2 | CHONS | 200-500 | 0.879 |
+| 3 | CHONSF | 200-500 | 0.878 |
+| 4 | CHONSFCl | 200-500 | 0.874 |
 
-其他可选:b3lyp_pm6_chon500nosalt、b3lyp_pm6_chnopsfclnakmgca500
+**结论**: R² 平滑下降，无断崖。HOMO 对多样性最敏感，LUMO 最稳定。
 
-2.3 字段(实测样例 CID=1)
+**脚本**: `scripts/phase2/generalization_study.py`
+**结果**: `results/phase2/`
 
-{
-  "cid": 1,
-  "pubchem-molecular-weight": 203.23558,
-  "pubchem-molecular-formula": "C9H17NO4",
-  "pubchem-isomeric-smiles": "CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C",
-  "energy-alpha-homo": -4.60960862747,
-  "energy-alpha-lumo": -0.26122929648,
-  "energy-alpha-gap":   4.34837933099,
-  "coordinates": [...],         // 大字段, 丢弃
-  "orbital-energies": [[...]]   // 大字段, 丢弃
-}
+---
 
+## Phase 3: 数据扩展 + ML 优化
 
-单位说明(务必代码核对):homo/lumo 实测负值量级 ~-4到-8,gap 字段 ≈ lumo−homo 数值一致。开工第一步先写单位自检脚本(取几条算 lumo−homo 对比 gap)。若需 eV,Hartree×27.2114。闭壳层分子 alpha==beta,用 energy-alpha-* 即可。
+**范围**: CHONSFCl, MW 200-500, 30k
 
-2.4 流式读取(已实测成功)
+| 实验 | MAE | R² |
+|------|-----|-----|
+| Baseline（Phase 1 参数） | 0.171 | 0.876 |
+| 特征筛选 6028→2811 + Optuna | 0.160 | 0.885 |
 
-- HF 文件支持 HTTP Range(返回 206),可只拉前段
-- JSON 按 CID 升序排列,文件名即 CID 区间
-- ijson 增量解析,只下 12MB 就解析出真实 HOMO/LUMO/gap,不落盘大文件
+**结论**: 调参+筛选有效但不足以达 R²=0.9。
 
-import urllib.request, ijson, io
-url = "https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp/resolve/main/{file}"
-req = urllib.request.Request(url, headers={"User-Agent":"curl/8","Range":"bytes=0-12000000"})
-buf = urllib.request.urlopen(req, timeout=60).read()
-for obj in ijson.items(io.BytesIO(buf), "item"):
-    cid=obj.get("cid"); mw=obj.get("pubchem-molecular-weight")
-    homo=obj.get("energy-alpha-homo"); lumo=obj.get("energy-alpha-lumo"); gap=obj.get("energy-alpha-gap")
-    # 边读边过滤 MW, 只留需要字段
+**脚本**: `scripts/phase3/`
+**结果**: `results/phase3/`
 
+---
 
-2.5 市售信息补充源
+## Phase 4: GNN + ETKDG 一致性
 
-TCI(東京化成)、Sigma-Aldrich/Merck、Ossila、Lumtec、Alfa Aesar、PubChem(拿 CID/SMILES/式/MW)
+**范围**: CHONSFCl, MW 200-503, 30k
 
-3. 全流程
+| 模型 | MAE | R² | 备注 |
+|------|-----|-----|------|
+| AttentiveFP (2D) | 0.163 | 0.879 | |
+| SchNet PM6 默认 | 0.113 | 0.930 | 训练推理不一致 ✗ |
+| SchNet PM6 Optuna | 0.095 | 0.950 | 训练推理不一致 ✗ |
+| SchNet ETKDG 默认 | 0.155 | 0.885 | 训练推理一致 ✓ |
+| **SchNet ETKDG Optuna** | **0.147** | **0.896** | **训练推理一致 ✓** |
 
-Phase 1 — 数据获取(流式,不落盘大文件)
-1.1  单位自检:抓第一文件前~20条,确认 gap==lumo-homo
-1.2  过滤条件:MW∈[200,300], 元素⊆{C,H,O,N}
-1.3  流式扫 chon300nosalt 87文件:Range分块 + ijson增量解析 + 边读边过滤
-     只留 cid/MW/formula/SMILES/homo/lumo/gap,丢 coordinates、orbital-energies
-1.4  产出 data/raw/pubchemqc_chon_mw200_300.csv(预计几万~十几万分子,几十MB)
+**结论**: SchNet 3D 超越 LightGBM。PM6 构象 R² 更高但训练推理不一致（训练用 PM6 坐标、推理用 ETKDG），不可用。ETKDG 统一后 R²=0.896。
 
- 磁盘有限,只存精简 CSV,绝不落盘原始 JSON
+**脚本**: `scripts/phase4/`（当前版: `_retrain_best.py`, `schnet_optuna.py`）
+**结果**: `results/phase4/`
+**模型**: `models/gnn_schnet_3d_tuned.pt`
 
-Phase 2 — 清洗与特征
-2.1  去重(canonical SMILES/InChI)
-2.2  异常值过滤(gap<0、离群、解析失败)
-2.3  单位统一(建议建模用 eV)
-2.4  RDKit:Morgan fingerprint(ECFP4,r=2,2048bit)+ 描述符
-     (MW,MolLogP,TPSA,NumAromaticRings,HBD,HBA,RotatableBonds,FractionCSP3,杂原子数)
-2.5  划分:建议 scaffold split(Bemis-Murcko),否则 random 8:1:1
+---
 
+## Phase 5: 验证
 
-Phase 3 — 建模(多目标回归)
-3.1  baseline:LightGBM/XGBoost/RandomForest,输入=fingerprint(+描述符),输出=[HOMO,LUMO,gap]
-3.2  指标:对 HOMO/LUMO/gap 分别报 MAE,RMSE,R²
-3.3  进阶(可选):GNN(PyG 的 MPNN/GIN/SchNet)
-3.4  误差分析:哪类骨架预测差、gap误差分布
+### 市售 OLED 分子（10 个）
+- 10/10 ETKDG 构象生成成功
+- 6/10 MW > 500（外推预测）
 
+### OOD 验证（100 个 PubChemQC 分子）
+- avg R²=0.849, MAE=0.188
 
-Phase 4 — 预测与数据库
-4.1  收集市售分子清单(TCI/Sigma/Ossila + CID)
-4.2  无 PubChemQC 数据的市售分子用模型预测
-4.3  关键分子 Gaussian B3LYP/6-31G(d) 补算验证
-4.4  汇总数据库:分子名|CID|SMILES|式|MW|用途|供应商|HOMO|LUMO|gap|来源|备注
+### 实验值对比（9 个分子）
+- HOMO: B3LYP 偏浅 ~0.5-0.7 eV（Koopmans 近似）
+- LUMO: B3LYP 偏浅 ~1.3-2.1 eV（DFT 虚轨道已知缺陷）
+- 线性校正不可靠（9 点太少，骨架偏窄）
 
+**脚本**: `scripts/phase5/`（`gaussian_validation.py`, `ood_validation.py`）
+**结果**: `results/phase5/`
 
-4. 推荐目录结构 (1/2)
-oled_homo_lumo_ml/
-├── PROJECT_BRIEF.md
-├── requirements.txt
-├── src/  01_fetch_stream.py / 02_clean.py / 03_features.py / 04_train.py / 05_predict.py / utils.py
-├── data/  raw/ processed/ commercial/
-├── models/  notebooks/  results/
+---
 
+## Phase 6: MW 扩展
 
-5. 技术栈
-Python 3.10+
-获取:urllib/requests(Range), ijson
-处理:pandas, numpy
-化学:rdkit
-ML:lightgbm/xgboost/scikit-learn  (进阶可选 torch, torch_geometric)
-可视化:matplotlib, seaborn
+**范围**: CHONSFCl, MW 200-1000, 44827 分子（30k 既存 + ~15k MW 500-1000）
 
+| 实验 | MAE | R² | 备注 |
+|------|-----|-----|------|
+| SchNet ETKDG 默认（P4 参数） | 0.158 | 0.890 | cutoff=6.0, dropout=0.2 |
+| **SchNet ETKDG Optuna** | **0.162** | **0.882** | cutoff=8.0, dropout=0.1, Colab 训练 |
 
-6. 开工顺序(给 Claude Code)
-1. 不要整下 7.67TB;不要第一步跑 Gaussian
-2. 先写 01_fetch_stream.py,只抓 chon300nosalt 第一文件前 200 条,跑通解析+过滤+写CSV
-3. 写单位自检:确认 gap≈lumo-homo,确认 Hartree/eV
-4. 跑通后扩到全子集流式过滤 MW 200–300
-5. 03_features.py RDKit fingerprint+描述符
-6. 04_train.py LightGBM baseline,输出 MAE/RMSE/R²
-7. 看效果再决定上 GNN / 补 Gaussian
-8. 小步验证,每脚本独立可跑、有日志
+### Gaussian B3LYP 验证（10 市售 OLED 分子）
 
+| 指标 | Phase 4 | Phase 6 |
+|------|---------|---------|
+| HOMO MAE | 0.216 | **0.184** |
+| LUMO MAE | 0.196 | **0.181** |
+| Gap MAE | 0.352 | **0.223** |
 
-7. 报告必写点
-- HOMO/LUMO/gap 全是计算值(B3LYP/6-31G* level),非实验值
-- 几何 PM6 优化,电子性质 B3LYP 单点
-- 原始 Hartree,展示用 eV(注明换算)
-- ML 预测值 vs PubChemQC 计算值要明确区分来源
-- 数据划分方式(random/scaffold)影响 R²,要说明
+### OOD Validation (500 PubChemQC molecules, MW 200-1000, CHONSFCl)
 
-8. 开工前问老师 1 个问题
-建模用 fingerprint+描述符(LightGBM)还是分子图 GNN? 不确认也行,先 baseline 跑通拿结果再问。
+| Metric | Phase 4 | Phase 6 |
+|--------|---------|---------|
+| HOMO MAE | 0.187 | **0.184** |
+| LUMO MAE | **0.237** | 0.237 |
+| Gap MAE | **0.270** | 0.290 |
+| avg R² | 0.730 | **0.797** |
+
+Per MW bin: MW 200-500 P4 slightly better, MW 500+ P6 wins. P6 RMSE improved (0.390→0.335), fewer extreme errors.
+
+**Conclusion**: Internal test R² slightly decreased (0.896→0.882) due to data diversity, but external Gaussian validation improved across all targets (Gap MAE -37%). OOD R² improved 0.730→0.797. MW>500 molecules changed from extrapolation to interpolation.
+
+**Key finding**: OOD R²≈0.8 is the current accuracy ceiling. Bottlenecks:
+1. ETKDG conformer randomness (~0.1-0.3 eV fluctuation for same molecule)
+2. 44k training data covers tiny fraction of PubChemQC 85M chemical space
+
+**Scripts**: `scripts/phase6/` (Optuna: `colab_optuna.ipynb`, predict: `predict_commercial_p6.py`, OOD: `ood_validation_p6.py`)
+**Results**: `results/phase6/`
+**Model**: `models/gnn_schnet_3d_optuna_expanded.pt`
+
+---
+
+## Phase 7: Conformer Improvement + Data Scaling (TODO)
+
+**Goal**: Break past OOD R²≈0.8 ceiling and build the final molecular property database.
+
+### TODO
+
+1. **GFN2-xTB conformer test** (priority)
+   - Replace ETKDG with xTB-optimized conformers to reduce conformer noise
+   - Not available on Windows — **run on Colab** (`conda install -c conda-forge xtb`)
+   - Test with 1000 molecules first: xTB vs ETKDG accuracy comparison
+
+2. **Scale data to 300k**
+   - After confirming xTB improvement, expand 44k → 300k
+   - Fetch ~250k new molecules + xTB conformer generation + SchNet retrain
+   - Expected: OOD R² 0.80 → 0.88-0.92
+
+3. **Conformer ensemble** (low-cost supplement)
+   - Run multiple xTB/ETKDG conformers at inference, average predictions
+
+### Estimates
+
+| Step | Time | Environment |
+|------|------|-------------|
+| xTB 1k test | 1-2 hours | Colab |
+| xTB 44k full | 0.5-1 day | Colab |
+| 300k fetch | 1-2 hours | Colab |
+| 300k xTB conformers | 2-3 days | Colab (parallelizable) |
+| SchNet retrain | 4-5 hours | Colab |
+
+---
+
+## 項目結構
+
+```
+scripts/
+  pipeline/     # 数据获取、清洗、特征工程
+  phase1/       # 传统 ML 基线
+  phase2/       # 泛化性研究
+  phase3/       # 数据扩展 + ML 优化
+  phase4/       # GNN SchNet
+  phase5/       # 验证（OOD + Gaussian + 实验値）
+  phase6/       # MW 扩展 + Colab Optuna
+src/molgap/     # 共用模块（schnet.py, utils.py）
+data/raw/       # 原始数据 CSV
+data/commercial/# 市售分子
+models/         # 训练好的模型 (.pt)
+results/        # 各 phase 结果
+```
+
+## 复现
+
+```bash
+# 数据获取 + 特征
+.venv\Scripts\python.exe scripts/phase3/scaleup.py --max-records 30000
+
+# SchNet Optuna 调优
+.venv\Scripts\python.exe scripts/phase4/schnet_optuna.py
+
+# SchNet 最佳参数重训练
+.venv\Scripts\python.exe scripts/phase4/_retrain_best.py
+
+# OOD 验証
+.venv\Scripts\python.exe scripts/phase5/ood_validation.py
+
+# Phase 6: MW 500-1000 データ取得
+.venv\Scripts\python.exe scripts/phase6/fetch_large_mw.py
+
+# Phase 6: Optuna 調優（Colab notebook）
+# scripts/phase6/colab_optuna.ipynb
+
+# Phase 6: 市售分子予測
+.venv\Scripts\python.exe scripts/phase6/predict_commercial_p6.py
+```
