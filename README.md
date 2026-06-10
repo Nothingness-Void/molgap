@@ -2,7 +2,7 @@
 
 Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
 
-Trained on [PubChemQC](https://pubchemqc.riken.jp/) B3LYP/6-31G\* data (~85M molecules), using a 3D graph neural network (SchNet) with ETKDG conformers.
+Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp) B3LYP/6-31G\* data (~85M molecules), using a 3D graph neural network (SchNet) with ETKDG conformers.
 
 ## Quick Start
 
@@ -131,7 +131,7 @@ build_labeled_graphs(smiles_list, targets) -> list[Data]
 
 ## Data Source
 
-[PubChemQC B3LYP/6-31G\*//PM6](https://pubchemqc.riken.jp/) — ~85 million molecules with DFT-computed electronic properties. Data fetched via PUG REST API.
+[PubChemQC B3LYP/6-31G\*//PM6](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp) — ~85 million molecules with DFT-computed electronic properties. Hosted on Hugging Face, fetched via streaming API.
 
 ## License
 
