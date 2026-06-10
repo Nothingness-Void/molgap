@@ -7,20 +7,15 @@ import io
 import json
 import logging
 import re
-import sys
 import time
 import urllib.error
 import urllib.request
-from pathlib import Path
 
 import ijson
 from tqdm import tqdm
 
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
-from molgap.utils import RAW_DIR, ensure_dirs
+from molgap.constants import RAW_DIR
+from molgap.utils import ensure_dirs
 
 log = logging.getLogger("phase6")
 

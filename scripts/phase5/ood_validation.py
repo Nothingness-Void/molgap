@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import io
 import json
-import sys
 import time
 import urllib.request
 import urllib.error
@@ -29,10 +28,6 @@ import torch
 
 warnings.filterwarnings("ignore")
 
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
 from molgap.utils import (
     MODELS_DIR,
     RAW_DIR,
@@ -41,7 +36,6 @@ from molgap.utils import (
     ensure_dirs,
     regression_metrics,
     save_json,
-    compute_gasteiger_charges,
 )
 from molgap.schnet import SchNetWrapper
 
@@ -172,37 +166,11 @@ def main():
     ood_df.to_csv(OUT_DIR / "ood_molecules.csv", index=False, encoding="utf-8")
 
     # ── Generate 3D conformers (PM6 preferred) and predict with SchNet ──
-    from rdkit import Chem
-    from rdkit.Chem import AllChem
-    from torch_geometric.data import Data
     from torch_geometric.loader import DataLoader
     from molgap.utils import create_split_indices
+    from molgap.graphs import smiles_to_pyg
 
     print(f"\n  Generating 3D conformers (ETKDG only — matches training)...", flush=True)
-
-    def smiles_to_pyg(smi, use_charges=True):
-        mol = Chem.MolFromSmiles(smi)
-        if mol is None:
-            return None
-        mol_h = AllChem.AddHs(mol)
-        if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-            if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-                return None
-        try:
-            AllChem.MMFFOptimizeMolecule(mol_h, maxIters=200)
-        except Exception:
-            pass
-        n = mol_h.GetNumAtoms()
-        if n == 0:
-            return None
-        conf = mol_h.GetConformer()
-        z = torch.tensor([mol_h.GetAtomWithIdx(i).GetAtomicNum() for i in range(n)], dtype=torch.long)
-        pos = torch.tensor(conf.GetPositions(), dtype=torch.float32)
-        data = Data(z=z, pos=pos)
-        if use_charges:
-            charges = compute_gasteiger_charges(mol_h)
-            data.charges = torch.tensor(charges, dtype=torch.float32)
-        return data
 
     pyg_list = []
     valid_idx = []

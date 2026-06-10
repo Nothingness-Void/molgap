@@ -13,7 +13,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import sys
 import time
 import warnings
 from pathlib import Path
@@ -25,10 +24,6 @@ import torch.nn.functional as F
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts, ReduceLROnPlateau
 
 warnings.filterwarnings("ignore")
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import (
     MODELS_DIR,

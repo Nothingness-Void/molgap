@@ -15,16 +15,11 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-import sys
 
 import numpy as np
 import pandas as pd
 from lightgbm import LGBMRegressor
 from sklearn.multioutput import MultiOutputRegressor
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import (
     METADATA_COLS,

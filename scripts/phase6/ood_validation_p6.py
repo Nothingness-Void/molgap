@@ -7,12 +7,10 @@ from __future__ import annotations
 import io
 import json
 import re
-import sys
 import time
 import urllib.request
 import urllib.error
 import warnings
-from pathlib import Path
 
 import ijson
 import numpy as np
@@ -21,16 +19,14 @@ import torch
 
 warnings.filterwarnings("ignore")
 
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
-from molgap.utils import (
+from molgap.constants import (
     MODELS_DIR, RAW_DIR, RESULTS_DIR, TARGET_COLS,
-    ensure_dirs, regression_metrics, save_json,
-    compute_gasteiger_charges, create_split_indices,
+    MODEL_PHASE4, MODEL_PHASE6, PARAMS_PHASE4, PARAMS_PHASE6,
+    GRAPHS_PHASE4, GRAPHS_PHASE6,
 )
-from molgap.schnet import SchNetWrapper
+from molgap.utils import ensure_dirs, regression_metrics, save_json
+from molgap.graphs import smiles_to_pyg
+from molgap.inference import load_model as _load_model, predict_graphs
 
 OUT_DIR = RESULTS_DIR / "phase6" / "ood_validation"
 SEED = 42
@@ -118,62 +114,6 @@ def load_training_cids():
     return cids
 
 
-def smiles_to_pyg(smi):
-    from rdkit import Chem
-    from rdkit.Chem import AllChem
-    from torch_geometric.data import Data
-
-    mol = Chem.MolFromSmiles(smi)
-    if mol is None:
-        return None
-    mol_h = AllChem.AddHs(mol)
-    if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-        if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) != 0:
-            return None
-    try:
-        AllChem.MMFFOptimizeMolecule(mol_h, maxIters=200)
-    except Exception:
-        pass
-    n = mol_h.GetNumAtoms()
-    if n == 0:
-        return None
-    conf = mol_h.GetConformer()
-    z = torch.tensor([mol_h.GetAtomWithIdx(i).GetAtomicNum() for i in range(n)], dtype=torch.long)
-    pos = torch.tensor(conf.GetPositions(), dtype=torch.float32)
-    charges = compute_gasteiger_charges(mol_h)
-    return Data(z=z, pos=pos, charges=torch.tensor(charges, dtype=torch.float32))
-
-
-def load_model(model_path, params, norm_graphs_path):
-    """Load a SchNet model and its normalization stats."""
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    graphs = torch.load(norm_graphs_path, weights_only=False)
-    train_idx, _, _ = create_split_indices(len(graphs), random_state=SEED)
-    train_y = np.stack([graphs[i].y.squeeze(0).numpy() for i in train_idx])
-    y_mean = train_y.mean(axis=0)
-    y_std = train_y.std(axis=0)
-    y_std[y_std < 1e-6] = 1.0
-    del graphs
-
-    model = SchNetWrapper(**params, use_charges=True).to(device)
-    model.load_state_dict(torch.load(model_path, weights_only=True, map_location=device))
-    model.eval()
-    return model, y_mean, y_std, device
-
-
-def predict(model, pyg_list, y_mean, y_std, device):
-    from torch_geometric.loader import DataLoader
-    loader = DataLoader(pyg_list, batch_size=64)
-    preds = []
-    with torch.no_grad():
-        for batch in loader:
-            batch = batch.to(device)
-            out = model(batch.z, batch.pos, batch.batch, charges=batch.charges)
-            preds.append(out.cpu().numpy() * y_std + y_mean)
-    return np.vstack(preds)
-
-
 def main():
     ensure_dirs(OUT_DIR)
     np.random.seed(SEED)
@@ -231,24 +171,18 @@ def main():
 
     # Load both models
     print(f"\n  Loading models...")
-    p4_model, p4_mean, p4_std, device = load_model(
-        MODELS_DIR / "gnn_schnet_3d_tuned.pt",
-        {"hidden_channels": 192, "num_filters": 256, "num_interactions": 6,
-         "num_gaussians": 100, "cutoff": 6.0, "dropout": 0.2},
-        RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt",
+    p4_model, p4_mean, p4_std, device = _load_model(
+        MODEL_PHASE4, PARAMS_PHASE4, GRAPHS_PHASE4,
     )
-    p6_model, p6_mean, p6_std, _ = load_model(
-        MODELS_DIR / "gnn_schnet_3d_optuna_expanded.pt",
-        {"hidden_channels": 192, "num_filters": 256, "num_interactions": 6,
-         "num_gaussians": 100, "cutoff": 8.0, "dropout": 0.1},
-        RESULTS_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt",
+    p6_model, p6_mean, p6_std, _ = _load_model(
+        MODEL_PHASE6, PARAMS_PHASE6, GRAPHS_PHASE6,
     )
 
     # Predict
     print(f"  Predicting with P4...")
-    p4_preds = predict(p4_model, pyg_list, p4_mean, p4_std, device)
+    p4_preds = predict_graphs(p4_model, pyg_list, p4_mean, p4_std, device)
     print(f"  Predicting with P6...")
-    p6_preds = predict(p6_model, pyg_list, p6_mean, p6_std, device)
+    p6_preds = predict_graphs(p6_model, pyg_list, p6_mean, p6_std, device)
 
     # Build comparison
     ood_valid = ood_df.loc[valid_idx].reset_index(drop=True)

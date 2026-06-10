@@ -25,7 +25,6 @@ import io
 import json
 import logging
 import os
-import sys
 import time
 import urllib.error
 import urllib.request
@@ -34,10 +33,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import (
     METADATA_COLS,

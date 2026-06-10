@@ -1,1 +1,10 @@
-"""MolGap shared package."""
+"""MolGap — OLED molecular property prediction."""
+from .constants import (
+    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR, RESULTS_DIR,
+    TARGET_COLS, METADATA_COLS,
+    DATA_PHASE3, DATA_PHASE6_LARGE,
+    GRAPHS_PHASE4, GRAPHS_PHASE6,
+    MODEL_PHASE4, MODEL_PHASE6,
+    PARAMS_PHASE4, PARAMS_PHASE6,
+    SEED,
+)

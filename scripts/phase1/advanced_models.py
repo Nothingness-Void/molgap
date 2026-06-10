@@ -17,7 +17,6 @@ Outputs:
 from __future__ import annotations
 
 import argparse
-import sys
 import warnings
 from pathlib import Path
 
@@ -29,10 +28,6 @@ from sklearn.linear_model import Ridge
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import (
     METADATA_COLS,

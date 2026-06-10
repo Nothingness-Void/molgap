@@ -19,7 +19,6 @@ from __future__ import annotations
 import argparse
 import itertools
 from pathlib import Path
-import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,10 +26,6 @@ import pandas as pd
 import seaborn as sns
 from sklearn.metrics import r2_score
 from tqdm import tqdm
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import (
     DEFAULT_SPLIT_PATH,

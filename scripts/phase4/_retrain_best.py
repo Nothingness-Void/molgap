@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import torch
 
-sys.path.insert(0, r"D:\文档\molgap\src")
 from pathlib import Path
 from molgap.utils import RESULTS_DIR, MODELS_DIR, TARGET_COLS, create_split_indices, ensure_dirs, regression_metrics, save_json
 from molgap.schnet import SchNetWrapper
@@ -45,7 +44,7 @@ train_loader = DataLoader(train_data, batch_size=bs, shuffle=True)
 valid_loader = DataLoader(valid_data, batch_size=bs)
 test_loader = DataLoader(test_data, batch_size=bs)
 
-sys.path.insert(0, str(Path(r"D:\文档\molgap\scripts\phase4")))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from schnet_optuna import run_training, evaluate
 
 print(f"\nFull retrain: 500 epochs, patience=40, charges={has_charges}", flush=True)

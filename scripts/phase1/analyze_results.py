@@ -14,16 +14,11 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-import sys
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from tqdm import tqdm
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import MODELS_DIR, RESULTS_DIR, TARGET_COLS, ensure_dirs, load_model_bundle
 

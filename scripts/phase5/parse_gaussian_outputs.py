@@ -11,14 +11,9 @@ from __future__ import annotations
 
 import argparse
 import re
-import sys
 from pathlib import Path
 
 import pandas as pd
-
-SRC_DIR = Path(__file__).resolve().parents[2] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 from molgap.utils import RESULTS_DIR, ensure_dirs, save_json
 

@@ -1,13 +1,14 @@
 """Phase 6: Merge MW 200-503 + MW 500-1000 data, build ETKDG graphs, retrain SchNet."""
-import sys, time, json
+import time, json
 import numpy as np
 import pandas as pd
 import torch
 
-sys.path.insert(0, r"D:\文档\molgap\src")
-from pathlib import Path
+from molgap.constants import (
+    DATA_PHASE3, DATA_PHASE6_LARGE, RESULTS_DIR, MODELS_DIR, TARGET_COLS,
+    SCRIPTS_DIR,
+)
 from molgap.utils import (
-    RAW_DIR, RESULTS_DIR, MODELS_DIR, TARGET_COLS,
     create_split_indices, ensure_dirs, regression_metrics, save_json,
     canonicalize_smiles,
 )
@@ -27,8 +28,8 @@ print("=" * 60)
 print("Step 1: Merging datasets")
 print("=" * 60)
 
-df_small = pd.read_csv(RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv")
-df_large = pd.read_csv(RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv")
+df_small = pd.read_csv(DATA_PHASE3)
+df_large = pd.read_csv(DATA_PHASE6_LARGE)
 print(f"  Small MW (200-503): {len(df_small)}")
 print(f"  Large MW (500-1000): {len(df_large)}")
 
@@ -63,14 +64,13 @@ else:
     data_list = None
 
 if data_list is None:
-    sys.path.insert(0, str(Path(r"D:\文档\molgap\scripts\phase4")))
-    from gnn_schnet_3d import build_graph_dataset
+    from molgap.graphs import build_labeled_graphs
 
     smiles_list = df_merged["canonical_smiles"].tolist()
     targets = df_merged[TARGET_COLS].values.astype(np.float32)
 
     t0 = time.time()
-    data_list = build_graph_dataset(smiles_list, targets, use_charges=True)
+    data_list = build_labeled_graphs(smiles_list, targets, use_charges=True)
     elapsed = time.time() - t0
     print(f"  Built {len(data_list)} graphs in {elapsed:.0f}s")
 
@@ -108,7 +108,8 @@ train_loader = DataLoader(train_data, batch_size=bs, shuffle=True)
 valid_loader = DataLoader(valid_data, batch_size=bs)
 test_loader = DataLoader(test_data, batch_size=bs)
 
-sys.path.insert(0, str(Path(r"D:\文档\molgap\scripts\phase4")))
+import sys
+sys.path.insert(0, str(SCRIPTS_DIR / "phase4"))
 from schnet_optuna import run_training, evaluate
 
 print(f"\n  Full retrain: 500 epochs, patience=40, charges={has_charges}")

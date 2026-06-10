@@ -26,15 +26,10 @@ except Exception:  # pragma: no cover - scripts will fail clearly when RDKit is 
     Chem = None
 
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = REPO_ROOT / "data"
-RAW_DIR = DATA_DIR / "raw"
-PROCESSED_DIR = DATA_DIR / "processed"
-MODELS_DIR = REPO_ROOT / "models"
-RESULTS_DIR = REPO_ROOT / "results"
-
-TARGET_COLS = ["homo", "lumo", "gap"]
-METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
+from .constants import (
+    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR, RESULTS_DIR,
+    TARGET_COLS, METADATA_COLS,
+)
 
 DEFAULT_SPLIT_PATH = RESULTS_DIR / "common" / "train_valid_test_split_indices.npz"
 

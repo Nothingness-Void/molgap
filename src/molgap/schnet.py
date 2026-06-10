@@ -1,4 +1,4 @@
-"""Shared SchNet wrapper with optional Gasteiger charge injection."""
+"""Shared SchNet wrapper with optional Gasteiger charge injection and 2D descriptor fusion."""
 from __future__ import annotations
 
 import torch
@@ -6,11 +6,11 @@ import torch.nn as nn
 
 
 class SchNetWrapper(nn.Module):
-    """SchNet with multi-target output head and optional atom-level charge features."""
+    """SchNet with multi-target output head, optional charge features, and optional 2D descriptor fusion."""
 
     def __init__(self, hidden_channels, num_filters, num_interactions,
                  num_gaussians, cutoff, dropout=0.1, n_targets=3,
-                 use_charges=False):
+                 use_charges=False, n_desc=0):
         super().__init__()
         from torch_geometric.nn.models import SchNet
 
@@ -25,8 +25,19 @@ class SchNetWrapper(nn.Module):
         if use_charges:
             self.charge_proj = nn.Linear(1, hidden_channels)
 
+        self.n_desc = n_desc
+        if n_desc > 0:
+            self.desc_proj = nn.Sequential(
+                nn.Linear(n_desc, hidden_channels // 2),
+                nn.SiLU(),
+                nn.Dropout(dropout),
+            )
+            head_in = hidden_channels + hidden_channels // 2
+        else:
+            head_in = hidden_channels
+
         self.head = nn.Sequential(
-            nn.Linear(hidden_channels, hidden_channels),
+            nn.Linear(head_in, hidden_channels),
             nn.SiLU(),
             nn.Dropout(dropout),
             nn.Linear(hidden_channels, hidden_channels // 2),
@@ -34,7 +45,7 @@ class SchNetWrapper(nn.Module):
             nn.Linear(hidden_channels // 2, n_targets),
         )
 
-    def forward(self, z, pos, batch, charges=None):
+    def forward(self, z, pos, batch, charges=None, desc=None):
         from torch_geometric.nn import global_mean_pool
 
         h = self.schnet.embedding(z)
@@ -49,6 +60,11 @@ class SchNetWrapper(nn.Module):
             h = h + interaction(h, edge_index, edge_weight, edge_attr)
 
         h = global_mean_pool(h, batch)
+
+        if self.n_desc > 0 and desc is not None:
+            desc = desc.view(h.size(0), self.n_desc)
+            h = torch.cat([h, self.desc_proj(desc)], dim=-1)
+
         return self.head(h)
 
     def _radius_graph(self, pos, batch):
