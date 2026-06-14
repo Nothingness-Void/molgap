@@ -25,65 +25,33 @@ print(df)
 "
 ```
 
-## Current Best Model
-
-| Metric | Value |
-|--------|-------|
-| Architecture | SchNet (3D GNN) + Gasteiger charges |
-| Training data | 44.8k molecules, CHONSFCl, MW 200-1000 |
-| Internal test R² | 0.882 |
-| OOD R² (500 molecules) | 0.797 |
-| Gaussian B3LYP Gap MAE | 0.223 eV |
-| Checkpoint | `models/gnn_schnet_3d_optuna_expanded.pt` |
+> **Current recommended model, performance, and next steps:** see
+> [`CURRENT_STATE.md`](CURRENT_STATE.md). Per-phase history: [`docs/`](docs/).
+> This README only covers what is stable: what the project is, install, basic inference.
 
 ## Prediction Pipeline
 
 ```
-SMILES → RDKit Mol → ETKDG 3D conformer → PyG graph (+ Gasteiger charges) → SchNet → HOMO/LUMO/Gap (eV)
+SMILES ─┬─ 2D bond graph ───────────────→ GPS 2D ──┐
+        └─ ETKDG 3D conformer + charges → SchNet 3D ┴─ gate fusion → HOMO/LUMO/Gap (eV)
 ```
 
-**Important**: Predicted values are B3LYP Kohn-Sham orbital energies, not experimental ionization potentials / electron affinities. Systematic offsets exist: HOMO ~0.5-0.7 eV shallower, LUMO ~1.3-2.1 eV shallower than experiment.
+**Important**: Predicted values are B3LYP Kohn-Sham orbital energies, not experimental
+IP/EA. Known systematic offsets vs experiment exist (see `CURRENT_STATE.md`); Gap is
+the most reliable output.
 
 ## Project Structure
 
-```
-src/molgap/
-  constants.py       # Centralized paths and model configurations
-  graphs.py          # SMILES → PyG 3D graph conversion
-  inference.py       # Model loading and prediction API
-  schnet.py          # SchNetWrapper (3D GNN + optional 2D descriptor fusion)
-  utils.py           # Splits, metrics, SMILES/RDKit helpers
-
-scripts/
-  pipeline/          # Data fetch, clean, feature engineering
-  phase1/            # Traditional ML baseline (LightGBM, R²=0.921)
-  phase2/            # Generalization study (element/MW expansion)
-  phase3/            # 30k data scaling + ML optimization
-  phase4/            # SchNet GNN + ETKDG consistency (R²=0.896)
-  phase5/            # Validation (OOD, Gaussian B3LYP, experimental)
-  phase6/            # MW expansion to 200-1000 (R²=0.882)
-  phase7/            # Conformer ensemble, Hybrid 2D+3D, 300k scaling
-
-docs/                # Per-phase detailed documentation
-data/raw/            # PubChemQC CSV data
-data/commercial/     # Commercial molecule lists
-models/              # Trained model checkpoints (.pt)
-results/             # Per-phase metrics, plots, JSONs
-```
+Code map and module boundaries ("to change X, edit which file") live in
+[`ARCHITECTURE.md`](ARCHITECTURE.md). In short: reusable logic in `src/molgap/`,
+thin CLI wrappers in `scripts/phase{1-7}/`, outputs in `results/`, checkpoints in
+`models/`, per-phase docs in `docs/`.
 
 ## Experiment History
 
-| Phase | Data | Best R² | Key Finding |
-|-------|------|---------|-------------|
-| 1 | 10-30k CHON MW 200-300 | 0.921 (LightGBM) | Traditional ML baseline |
-| 2 | 10k/step, expanding | 0.901→0.874 | Smooth R² decay with diversity |
-| 3 | 30k CHONSFCl MW 200-500 | 0.885 (LightGBM) | Feature selection helps, but ceiling at ~0.89 |
-| 4 | 30k CHONSFCl MW 200-503 | 0.896 (SchNet) | 3D GNN beats ML; PM6/ETKDG mismatch discovered |
-| 5 | 100 OOD + 10 commercial | OOD R²=0.849 | B3LYP systematic bias quantified |
-| 6 | 44.8k MW 200-1000 | 0.882 (SchNet) | MW expansion, Gaussian Gap MAE improved 37% |
-| 7 | Various | +2.5% R² (ensemble) | Conformer ensemble marginal; 2D+3D hybrid in progress |
-
-See `docs/phase{N}.md` for detailed per-phase documentation, and `ROADMAP.md` for the current priority checklist.
+Per-phase background, experiments, and conclusions live in [`docs/phase{N}.md`](docs/).
+Phase 7 (300k + 2D/3D hybrid) is the current best — see [`docs/phase7.md`](docs/phase7.md).
+Task priorities are in [`ROADMAP.md`](ROADMAP.md).
 
 ## Requirements
 

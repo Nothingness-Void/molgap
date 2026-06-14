@@ -1,48 +1,87 @@
-# Phase 7: Model Improvement Experiments
+# Phase 7: 300k Scaling + Hybrid 2D+3D Fusion
 
 ## Goal
-Break past OOD R²≈0.8 ceiling identified in Phase 6.
+Break past the OOD R²≈0.8 ceiling from Phase 6, via (a) 10× more training data
+and (b) combining 2D topology and 3D geometry.
 
-## Sub-experiments
+## Outcome
+Three models trained on **300k** molecules (CHONSFCl, MW 200-1000), fused at the
+embedding level. The Hybrid is the best/most-stable model; OOD R² 0.797 (P6) → 0.941.
 
-### 7A: Conformer Ensemble (DONE)
-Generate K ETKDG conformers per molecule, predict each, average.
+| Model | Checkpoint | Captures |
+|-------|-----------|----------|
+| GPS 2D | `models/gps_2d_300k.pt` | bond topology (graph transformer) |
+| SchNet 3D | `models/gnn_schnet_3d_300k.pt` | geometry (3D GNN + charges) |
+| **Hybrid** | `models/hybrid_fusion_optuna.pt` | gate fusion of both embeddings (Optuna) |
 
-| k | avg R² | avg MAE |
-|---|--------|---------|
-| 1 | 0.791 | 0.234 |
-| 3 | 0.808 | 0.225 |
-| 5 | 0.809 | 0.224 |
-| 8 | 0.816 | 0.221 |
+## Pipeline (see `scripts/phase7/README.md` for the script table)
+1. `fetch_300k.py` → 300k training CSV
+2. `build_graphs_local.py` / `build_2d_graphs_local.py` → 3D + 2D graphs
+3. `train_gps_2d_local.py` → GPS 2D (params from Kaggle Optuna)
+4. `extract_{gps_2d,schnet_3d}_embeddings.py` → two 192-d embedding sets
+5. `align_2d_to_3d.py` → align 2D to 3D (3D dropped 371 ETKDG failures; two-pointer on labels, zero error)
+6. `fusion_optuna_local.py` → train + tune the gate fusion head (60 trials)
+7. `fetch_ood_1000.py` + `compare_models_full.py` → final OOD + experimental comparison
 
-Per-molecule conformer std: HOMO 0.075, LUMO 0.085, Gap 0.104 eV.
+## Architecture: embedding-level gate fusion
+Both GNNs are frozen; only a light head trains on their pooled 192-d embeddings.
+```
+emb_2d ─proj→ h2d ┐  g = sigmoid(W·[h2d;h3d])
+emb_3d ─proj→ h3d ┴→ h = g·h2d + (1-g)·h3d → MLP → HOMO/LUMO/Gap
+```
+`g` is a per-molecule, per-dimension gate (not fixed weights) — it dynamically
+decides how much to trust 2D vs 3D. Beats plain concat. Optuna best:
+gate, hidden=192, dropout≈0, lr=5.4e-4, bs=1024.
 
-**Conclusion**: +2.5% R², marginal improvement. Conformer noise quantified but not the primary bottleneck.
+## Results
 
-Script: `scripts/phase7/conformer_ensemble.py`
-Results: `results/phase7/conformer_ensemble/`
+In-distribution test (held-out 10% of 300k), MAE eV:
 
-### 7B: Hybrid 2D+3D SchNet (RUNNING)
-Fuse RDKit 2D descriptors into SchNet via `desc_proj` layer in SchNetWrapper.
+| Model | HOMO | LUMO | Gap |
+|-------|------|------|-----|
+| GPS 2D | 0.098 | 0.095 | 0.126 |
+| SchNet 3D | ~0.095 | ~0.095 | ~0.12 |
+| Hybrid | **0.064** | **0.062** | **0.076** |
 
-- Running on Kaggle: `scripts/phase7/kaggle_hybrid_2d3d.ipynb`
-- Local prep: `scripts/phase7/inject_desc_to_graphs.py`, `scripts/phase7/hybrid_2d3d_experiment.py`
-- Graph cache with descriptors: `results/phase7/pyg_3d_graphs_etkdg_expanded_with_desc.pt`
-- Normalization stats: `results/phase7/desc_normalization.json`
+OOD 1000 unseen molecules (B3LYP labels):
 
-**Status**: Awaiting Kaggle results. Compare with Phase 6 baseline (R²=0.882).
+| Model | avg MAE | avg R² |
+|-------|---------|--------|
+| GPS 2D | 0.130 | 0.935 |
+| SchNet 3D | 0.148 | 0.922 |
+| Hybrid | **0.124** | **0.941** |
 
-### 7C: xTB Conformer (SUSPENDED)
-Replace ETKDG with GFN2-xTB optimized conformers. Suspended — conformer ensemble (7A) showed limited improvement, so finer conformers unlikely to help much. Lowest priority.
+Experimental 65 molecules (bias-corrected vs measured), by source:
 
-### 7D: 300k Data Scaling (TODO — HIGHEST PRIORITY)
-Scale training data 44.8k → 300k via additional PubChemQC fetch.
+| Source | best | avg MAE | why |
+|--------|------|---------|-----|
+| OLED (17, rigid emitters) | **SchNet 3D** | 0.189 | reliable conformers → geometry wins |
+| HOPV15 (47, floppy donors) | **Hybrid** | 0.266 | bad ETKDG → 3D noisy, fusion leans 2D |
 
-- Script: `scripts/phase7/fetch_300k.py`
-- Kaggle notebook: `scripts/phase7/kaggle_optuna_300k.ipynb`
-- Expected: OOD R² 0.80 → 0.88-0.92
-- Estimated effort: 2-3 days on Kaggle
+Per-molecule Gap winner: 3D 38, 2D 18, Hybrid 9 — 3D wins most single molecules,
+but Hybrid has the lowest average error (low variance, never badly wrong).
 
-## Dependencies
-- Phase 6 model + data as baseline
-- `src/molgap/schnet.py` (SchNetWrapper with n_desc support for 7B)
+## Key findings
+- **Hybrid > either alone** on OOD and experimental — 2D and 3D are complementary.
+- **Ranking flips by molecule class**: rigid → 3D, floppy → 2D/Hybrid. The earlier
+  "2D > 3D on OOD" was a HOPV-dominated average, not universal.
+- **Systematic bias** (pred − measured, build-DB offsets): LUMO +0.85, Gap +0.74,
+  HOMO +0.10 eV. Residual std ~0.4 eV is the B3LYP floor.
+- **B3LYP is the ceiling, not the model**: model is a faithful B3LYP surrogate
+  (OOD R² 0.94); experimental gap is a functional limit. Strong charge-transfer /
+  narrow-gap (<2 eV) molecules overestimated ~1.8 eV — a B3LYP blind spot. Gap is
+  the most trustworthy output (bias-corrected R² ~0.70). Δ-learning on experimental
+  data is the only real path past this.
+
+## Earlier sub-experiments (archived)
+- **Conformer ensemble** (k=1→8): +2.5% R², marginal. Single conformer kept.
+  `results/phase7/conformer_ensemble/`, script in `archive/superseded/`.
+- **RDKit-descriptor fusion** (SchNet `n_desc`): superseded by learned-embedding
+  fusion. Scripts/notebooks in `archive/`.
+- **xTB conformers**: suspended (ensemble showed conformer refinement gains are small).
+
+## Results map
+- `results/phase7/full_comparison/` — final 3-model comparison (OOD + experimental)
+- `results/phase7/ood_1000/` — OOD molecule set
+- `results/phase7/fusion_optuna_metrics.json` + `fusion_optuna.db` — tuning
+- `results/phase7/{gps_2d,schnet_3d}_*` — embeddings + per-model metrics
