@@ -46,6 +46,10 @@ class SchNetWrapper(nn.Module):
         )
 
     def forward(self, z, pos, batch, charges=None, desc=None):
+        return self.head(self.encode(z, pos, batch, charges=charges, desc=desc))
+
+    def encode(self, z, pos, batch, charges=None, desc=None):
+        """Pooled molecular embedding (pre-head). Used for hybrid 2D+3D fusion."""
         from torch_geometric.nn import global_mean_pool
 
         h = self.schnet.embedding(z)
@@ -65,7 +69,7 @@ class SchNetWrapper(nn.Module):
             desc = desc.view(h.size(0), self.n_desc)
             h = torch.cat([h, self.desc_proj(desc)], dim=-1)
 
-        return self.head(h)
+        return h
 
     def _radius_graph(self, pos, batch):
         from torch_geometric.nn.models.schnet import radius_graph

@@ -30,6 +30,12 @@ GRAPHS_PHASE6 = RESULTS_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt"
 MODEL_PHASE4 = MODELS_DIR / "gnn_schnet_3d_tuned.pt"
 MODEL_PHASE6 = MODELS_DIR / "gnn_schnet_3d_optuna_expanded.pt"
 
+# Phase 7 (300k, raw eV — no normalization)
+MODEL_SCHNET_300K = MODELS_DIR / "gnn_schnet_3d_300k.pt"
+MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
+MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
+FUSION_METRICS = RESULTS_DIR / "phase7" / "fusion_optuna_metrics.json"
+
 # ── Model hyperparameters ──
 
 PARAMS_PHASE4 = {
@@ -48,6 +54,46 @@ PARAMS_PHASE6 = {
     "num_gaussians": 100,
     "cutoff": 8.0,
     "dropout": 0.1,
+}
+
+PARAMS_SCHNET_300K = {
+    "hidden_channels": 192,
+    "num_filters": 192,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 6.0,
+    "dropout": 0.0,
+}
+
+PARAMS_GPS_2D = {
+    "hidden_channels": 192,
+    "num_layers": 7,
+    "num_heads": 4,
+    "dropout": 0.05,
+}
+
+# ── Model registry ──
+# Single source of truth for "which checkpoint + which hyperparams + is it
+# normalized". Consumed by inference.load_model(key=...) and inference.load_hybrid().
+# kind: "schnet" → SchNetWrapper, "gps" → GPSWrapper, "hybrid" → FusionHead trio.
+# normalized: True → predictions are (raw * y_std + y_mean); False → raw eV.
+MODEL_REGISTRY = {
+    "phase6_schnet": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE6, "params": PARAMS_PHASE6,
+        "normalized": True, "graphs": GRAPHS_PHASE6, "use_charges": True,
+    },
+    "phase7_schnet_300k": {
+        "kind": "schnet", "checkpoint": MODEL_SCHNET_300K, "params": PARAMS_SCHNET_300K,
+        "normalized": False, "use_charges": True,
+    },
+    "phase7_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_GPS_2D, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase7_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_HYBRID, "metrics": FUSION_METRICS,
+        "normalized": False, "components": ["phase7_gps_2d", "phase7_schnet_300k"],
+    },
 }
 
 SEED = 42

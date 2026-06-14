@@ -7,10 +7,21 @@ import torch
 
 from .constants import (
     MODEL_PHASE6, GRAPHS_PHASE6, PARAMS_PHASE6, TARGET_COLS, SEED,
+    MODEL_REGISTRY,
 )
+from .fusion import FusionHead
+from .gps import GPSWrapper
 from .graphs import smiles_to_pyg, smiles_list_to_pyg, smiles_to_pyg_ensemble
 from .schnet import SchNetWrapper
 from .utils import create_split_indices
+
+
+def _resolve_device(device: torch.device | str | None) -> torch.device:
+    if device is None:
+        return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if isinstance(device, str):
+        return torch.device(device)
+    return device
 
 
 def load_normalization_stats(
@@ -34,24 +45,49 @@ def load_model(
     params: dict | None = None,
     graphs_path: str | None = None,
     *,
+    key: str | None = None,
+    normalized: bool | None = None,
     use_charges: bool = True,
     n_desc: int = 0,
     device: torch.device | str | None = None,
 ) -> tuple[SchNetWrapper, np.ndarray, np.ndarray, torch.device]:
     """Load a SchNet model with its normalization stats.
 
-    Defaults to the Phase 6 best model if no arguments are given.
+    With no arguments, defaults to the Phase 6 best model (normalized).
+    Pass ``key=`` a registry name ("phase6_schnet" / "phase7_schnet_300k") to
+    load that model with the right checkpoint, params, and normalization. For
+    the GPS 2D or hybrid models use ``load_hybrid`` instead.
+
+    For non-normalized models (P7 raw eV), y_mean/y_std are 0/1 so the same
+    ``predict_graphs`` denorm step is a no-op.
     """
+    if key is not None:
+        spec = MODEL_REGISTRY[key]
+        if spec["kind"] != "schnet":
+            raise ValueError(
+                f"load_model is for SchNet keys; '{key}' is kind='{spec['kind']}'. "
+                "Use load_hybrid() for the 2D/hybrid models."
+            )
+        model_path = spec["checkpoint"]
+        params = spec["params"]
+        graphs_path = spec.get("graphs", graphs_path)
+        use_charges = spec.get("use_charges", use_charges)
+        if normalized is None:
+            normalized = spec["normalized"]
+
     model_path = model_path or MODEL_PHASE6
     params = params or PARAMS_PHASE6
     graphs_path = graphs_path or GRAPHS_PHASE6
+    if normalized is None:
+        normalized = True
 
-    if device is None:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    elif isinstance(device, str):
-        device = torch.device(device)
+    device = _resolve_device(device)
 
-    y_mean, y_std = load_normalization_stats(graphs_path)
+    if normalized:
+        y_mean, y_std = load_normalization_stats(graphs_path)
+    else:
+        y_mean = np.zeros(len(TARGET_COLS), dtype=np.float32)
+        y_std = np.ones(len(TARGET_COLS), dtype=np.float32)
 
     model = SchNetWrapper(**params, use_charges=use_charges, n_desc=n_desc).to(device)
     model.load_state_dict(
@@ -59,6 +95,46 @@ def load_model(
     )
     model.eval()
     return model, y_mean, y_std, device
+
+
+def load_hybrid(
+    device: torch.device | str | None = None,
+) -> tuple[GPSWrapper, SchNetWrapper, FusionHead, torch.device]:
+    """Load the Phase 7 hybrid trio: (gps_2d, schnet_3d, fusion_head, device).
+
+    All three are raw-eV (no normalization). The fusion head's architecture
+    (fusion_type, hidden) is read from its Optuna metrics file so it always
+    matches the saved checkpoint. Encoders expose ``encode()`` for the 192-d
+    embeddings the fusion head consumes.
+    """
+    import json
+
+    device = _resolve_device(device)
+    gspec = MODEL_REGISTRY["phase7_gps_2d"]
+    sspec = MODEL_REGISTRY["phase7_schnet_300k"]
+    hspec = MODEL_REGISTRY["phase7_hybrid"]
+
+    gps = GPSWrapper(**gspec["params"]).to(device)
+    gps.load_state_dict(
+        torch.load(gspec["checkpoint"], weights_only=True, map_location=device)
+    )
+    gps.eval()
+
+    schnet = SchNetWrapper(**sspec["params"], use_charges=sspec.get("use_charges", True)).to(device)
+    schnet.load_state_dict(
+        torch.load(sspec["checkpoint"], weights_only=True, map_location=device)
+    )
+    schnet.eval()
+
+    with open(hspec["metrics"]) as f:
+        bp = json.load(f)["best_params"]
+    fusion = FusionHead(bp["fusion_type"], bp["hidden"]).to(device)
+    fusion.load_state_dict(
+        torch.load(hspec["checkpoint"], weights_only=True, map_location=device)
+    )
+    fusion.eval()
+
+    return gps, schnet, fusion, device
 
 
 def predict_graphs(
