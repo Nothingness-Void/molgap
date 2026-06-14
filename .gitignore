@@ -8,6 +8,9 @@ results/**/*.pt
 results/**/*.db
 models/*.pt
 
+# Large public datasets (download separately; referenced by path in code)
+data/commercial/*.data
+
 # Python
 __pycache__/
 *.pyc
