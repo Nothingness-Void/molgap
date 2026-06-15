@@ -56,3 +56,9 @@ Thumbs.db
 
 # Claude Code
 .claude/
+
+# Large downloaded datasets / binaries (download or regenerate separately)
+data/raw/*.json
+data/raw/*.zip
+data/raw/pcqm4m-v2/
+results/**/*.npz

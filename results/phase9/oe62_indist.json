@@ -1,0 +1,24 @@
+{
+  "input": "data/raw/oe62_df_5k.json",
+  "n_total_rows": 5239,
+  "n_with_gw": 5239,
+  "n_smiles_parsed": 5185,
+  "n_pass_elements": 4284,
+  "n_pass_mw": 4635,
+  "n_in_distribution": 3756,
+  "rejected_by_element": {
+    "Br": 346,
+    "P": 286,
+    "Si": 169,
+    "I": 65,
+    "Se": 55,
+    "B": 34,
+    "As": 10,
+    "Li": 2
+  },
+  "indist_gw_gap_eV": {
+    "min": 3.5272999999999994,
+    "p50": 7.92695,
+    "max": 12.6181
+  }
+}

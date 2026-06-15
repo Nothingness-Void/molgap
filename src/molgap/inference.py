@@ -11,7 +11,9 @@ from .constants import (
 )
 from .fusion import FusionHead
 from .gps import GPSWrapper
-from .graphs import smiles_to_pyg, smiles_list_to_pyg, smiles_to_pyg_ensemble
+from .graphs import (
+    smiles_to_pyg, smiles_list_to_pyg, smiles_to_pyg_ensemble, smiles_to_2d_pyg,
+)
 from .schnet import SchNetWrapper
 from .utils import create_split_indices
 
@@ -135,6 +137,76 @@ def load_hybrid(
     fusion.eval()
 
     return gps, schnet, fusion, device
+
+
+def predict_smiles_batch_hybrid(
+    smiles_list: list[str],
+    models: tuple | None = None,
+    *,
+    bs_2d: int = 256,
+    bs_3d: int = 128,
+    return_embeddings: bool = False,
+    device: torch.device | str | None = None,
+):
+    """Batch-predict B3LYP HOMO/LUMO/Gap with the Phase 7 hybrid (raw eV).
+
+    Builds both 2D and 3D graphs, keeps only molecules where BOTH succeed (3D
+    ETKDG can fail), encodes each with its frozen encoder, and fuses. Returns
+    ``(valid_idx, preds)`` — preds[i] aligns with smiles_list[valid_idx[i]]. With
+    ``return_embeddings=True`` also returns the 192-d ``emb_2d, emb_3d`` arrays
+    (the features the Δ model will consume), so one forward pass yields both the
+    B3LYP baseline and the Δ features.
+
+    Pass ``models=(gps, schnet, fusion, device)`` from ``load_hybrid`` to reuse a
+    loaded trio across calls.
+    """
+    from torch_geometric.loader import DataLoader
+
+    if models is None:
+        gps, schnet, fusion, device = load_hybrid(device)
+    else:
+        gps, schnet, fusion, device = models
+
+    g2d_list, g3d_list, valid_idx = [], [], []
+    for i, smi in enumerate(smiles_list):
+        g3d = smiles_to_pyg(smi)
+        if g3d is None:
+            continue
+        g2d = smiles_to_2d_pyg(smi)
+        if g2d is None:
+            continue
+        g3d_list.append(g3d)
+        g2d_list.append(g2d)
+        valid_idx.append(i)
+
+    if not valid_idx:
+        empty = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
+        return (np.array([], dtype=int), empty) + (
+            (np.empty((0, 192)), np.empty((0, 192))) if return_embeddings else ()
+        )
+
+    emb_2d = []
+    with torch.no_grad():
+        for b in DataLoader(g2d_list, batch_size=bs_2d):
+            b = b.to(device)
+            emb_2d.append(gps.encode(b.x, b.edge_index, b.edge_attr, b.batch).cpu())
+    emb_2d = torch.cat(emb_2d)
+
+    emb_3d = []
+    with torch.no_grad():
+        for b in DataLoader(g3d_list, batch_size=bs_3d):
+            b = b.to(device)
+            charges = b.charges if hasattr(b, "charges") else None
+            emb_3d.append(schnet.encode(b.z, b.pos, b.batch, charges=charges).cpu())
+    emb_3d = torch.cat(emb_3d)
+
+    with torch.no_grad():
+        preds = fusion(emb_2d.to(device), emb_3d.to(device)).cpu().numpy()
+
+    valid_idx = np.array(valid_idx, dtype=int)
+    if return_embeddings:
+        return valid_idx, preds, emb_2d.numpy(), emb_3d.numpy()
+    return valid_idx, preds
 
 
 def predict_graphs(

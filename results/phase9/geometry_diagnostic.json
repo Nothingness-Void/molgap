@@ -1,0 +1,23 @@
+{
+  "n": 3675,
+  "n_train": 2816,
+  "n_test": 859,
+  "homo": {
+    "mae_pbe_geom": 0.19799132759085203,
+    "mae_const": 0.26626651447785504,
+    "etkdg_baseline": 0.197,
+    "improvement": -0.0009913275908520203
+  },
+  "lumo": {
+    "mae_pbe_geom": 0.19804409041940524,
+    "mae_const": 0.26849498898778323,
+    "etkdg_baseline": 0.217,
+    "improvement": 0.01895590958059476
+  },
+  "gap": {
+    "mae_pbe_geom": 0.29309155308159557,
+    "mae_const": 0.43554526882363825,
+    "etkdg_baseline": 0.303,
+    "improvement": 0.009908446918404423
+  }
+}

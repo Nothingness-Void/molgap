@@ -20,18 +20,27 @@ All trained on 300k molecules, CHONSFCl, MW 200-1000.
 - Details: `docs/phase7.md`. Raw numbers: `results/phase7/full_comparison/`.
 
 ## 3. Primary deliverable
-Commercial-molecule property database — CSV of OLED/thin-film/OPV molecules with
-predicted HOMO/LUMO/Gap (eV) + confidence flag. NOT built yet.
+A **property database of commercially available organic molecules** — a CSV of
+HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
+is one slice of the commercial-molecule set. Built on two layers:
+1. the Phase 7 hybrid model — a fast B3LYP surrogate (done);
+2. a **Δ-learning correction toward GW** (trained on OE62 GW5000) — lifts predictions
+   past the B3LYP method ceiling.
+The database is the deliverable; the predictor is how we build it. Not built yet.
 
 ## 4. Current blocker
-None blocking. Model development is done. Remaining work is database-building
-(curate molecule list → batch inference → apply bias correction).
+None blocking. **Δ-learning (B3LYP→GW) works**: scaffold-test GW MAE
+HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89, beats constant-bias and
+passes Y-randomization (`docs/phase9.md`, P9.4 variant A). Remaining work is wiring
+the Δ layer into inference and building the commercial-molecule database (Phase 10).
 
 ## 5. Next actions (1-3)
-1. **Code consolidation** (in progress): collapse duplicate GPSWrapper/FusionHead
-   into `src/molgap/`, add a model registry, make scripts thin wrappers. See ROADMAP.
-2. Curate commercial molecule list (D3) and build the batch-inference CLI (D2).
-3. Generate the database with bias correction + confidence flags (D4/D5).
+1. **Wire Δ into inference**: load `delta_lgbm_{homo,lumo,gap}.txt`, predict
+   B3LYP + Δ → near-GW; emit OOD flag for molecules outside the in-dist screen.
+2. *(optional)* Δ variants B/C (readout-only finetune to GW/Δ) as a comparison —
+   variant A already R² ~0.88, low marginal expected.
+3. **Phase 10**: curate commercial molecule list → build the near-GW property
+   database with bias/confidence/OOD flags.
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).

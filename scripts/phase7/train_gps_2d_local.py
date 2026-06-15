@@ -151,7 +151,25 @@ def run_training(params, train_set, val_set, max_epochs=80,
     return best_val, model
 
 
+def parse_args():
+    ap = argparse.ArgumentParser(description="Train GPS 2D on one or more graph files")
+    ap.add_argument("--graphs", nargs="+", default=[str(DEFAULT_GRAPHS)],
+                    help="one or more 2D graph .pt files, merged before training")
+    ap.add_argument("--model-out", default=str(MODELS_DIR / "gps_2d_300k.pt"),
+                    help="where to save the final model weights")
+    ap.add_argument("--save-prefix", default="gps_2d_best",
+                    help="prefix for checkpoint/best files in results/phase7/")
+    ap.add_argument("--metrics-out", default=str(PHASE7_DIR / "gps_2d_metrics.json"))
+    ap.add_argument("--embeddings-out", default=str(PHASE7_DIR / "gps_2d_embeddings.pt"))
+    ap.add_argument("--epochs", type=int, default=FULL_EPOCHS)
+    ap.add_argument("--patience", type=int, default=FULL_PATIENCE)
+    ap.add_argument("--no-embeddings", action="store_true",
+                    help="skip the final embedding extraction step")
+    return ap.parse_args()
+
+
 def main():
+    args = parse_args()
     torch.manual_seed(SEED)
     np.random.seed(SEED)
     print(f"Device: {device}")
@@ -159,10 +177,13 @@ def main():
         props = torch.cuda.get_device_properties(0)
         print(f"{props.name} | {props.total_memory / 1e9:.1f} GB")
 
-    # ── Load data ──
-    print(f"Loading graphs from {GRAPH_PATH} ...")
-    graphs = torch.load(str(GRAPH_PATH), weights_only=False)
-    print(f"Loaded {len(graphs)} 2D graphs")
+    # ── Load data (merge all graph files) ──
+    graphs = []
+    for gp in args.graphs:
+        g = torch.load(str(gp), weights_only=False)
+        print(f"  {gp}: {len(g)} graphs")
+        graphs.extend(g)
+    print(f"Loaded {len(graphs)} 2D graphs from {len(args.graphs)} file(s)")
 
     N = len(graphs)
     idx = np.random.RandomState(SEED).permutation(N)
