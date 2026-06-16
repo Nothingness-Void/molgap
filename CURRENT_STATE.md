@@ -10,6 +10,13 @@ SchNet 3D embeddings, Optuna-tuned: gate, hidden=192).
 Also available standalone: `models/gps_2d_300k.pt`, `models/gnn_schnet_3d_300k.pt`.
 All trained on 300k molecules, CHONSFCl, MW 200-1000.
 
+The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed**
+— TensorNet wins solo (Gap R² 0.906 vs 0.889) but **fusion-level differences
+collapse to <0.2% R²** (fusion Gap R² 0.9101 vs 0.9083). At 1M scale the ~3.7×
+training-time penalty of TensorNet (≈55 h vs ≈15 h on RTX 5060) buys no
+deployment-relevant accuracy, so production stays on SchNet. See
+`results/ab3d/README.md` for the full reasoning.
+
 ## 2. Validation conclusions
 - In-dist test (Hybrid): HOMO/LUMO/Gap MAE = 0.064 / 0.062 / 0.076 eV.
 - OOD 1000 (Hybrid): avg MAE 0.124, R² 0.941. Beats GPS 2D (0.130) and SchNet 3D (0.148).
@@ -29,18 +36,18 @@ is one slice of the commercial-molecule set. Built on two layers:
 The database is the deliverable; the predictor is how we build it. Not built yet.
 
 ## 4. Current blocker
-None blocking. **Δ-learning (B3LYP→GW) works**: scaffold-test GW MAE
-HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89, beats constant-bias and
-passes Y-randomization (`docs/phase9.md`, P9.4 variant A). Remaining work is wiring
-the Δ layer into inference and building the commercial-molecule database (Phase 10).
+**1M-scale retrain pending.** Advisor delivered a 1M-molecule dataset; next step
+is retraining the GPS 2D + SchNet 3D + FusionHead trio on it (same architecture as
+Phase 7, just more data). Δ-learning will be re-validated against the 1M model.
+
+Δ-learning (B3LYP→GW) currently works with the Phase 7 SchNet hybrid: scaffold-test
+GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89.
 
 ## 5. Next actions (1-3)
-1. **Wire Δ into inference**: load `delta_lgbm_{homo,lumo,gap}.txt`, predict
-   B3LYP + Δ → near-GW; emit OOD flag for molecules outside the in-dist screen.
-2. *(optional)* Δ variants B/C (readout-only finetune to GW/Δ) as a comparison —
-   variant A already R² ~0.88, low marginal expected.
-3. **Phase 10**: curate commercial molecule list → build the near-GW property
-   database with bias/confidence/OOD flags.
+1. **Build 1M graph cache** (2D + 3D ETKDG, sharded streaming write) and rerun
+   the Phase 7 training pipeline at 1M scale.
+2. **Retrain FusionHead** on 1M (GPS 192-d + SchNet 192-d) embeddings.
+3. **Re-validate Δ-learning** against the 1M hybrid, then wire into inference (Phase 10).
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).
@@ -55,3 +62,4 @@ the Δ layer into inference and building the commercial-molecule database (Phase
 - Reusable logic lives in `src/molgap/` only. See `ARCHITECTURE.md` for the map.
 - Phase 7 pipeline + scripts: `scripts/phase7/README.md`.
 - Model/weight/params registry: `src/molgap/constants.py`.
+- ab3d closed experiment: `results/ab3d/README.md`.

@@ -1,0 +1,44 @@
+[
+  {
+    "encoder": "schnet",
+    "n_params": 1041028,
+    "use_charges": true,
+    "sec_per_epoch": 5.3,
+    "train_seconds": 381.6,
+    "peak_train_mem_mb": 1496.6,
+    "epochs_ran": 72,
+    "solo_gap_mae": 0.2388210892677307,
+    "solo_gap_r2": 0.8892012238502502,
+    "solo_avg_mae": 0.19652830561002096,
+    "fusion_gap_mae": 0.22298039495944977,
+    "fusion_gap_r2": 0.9083458781242371
+  },
+  {
+    "encoder": "visnet",
+    "n_params": 1098115,
+    "use_charges": false,
+    "sec_per_epoch": 16.4,
+    "train_seconds": 1870.0,
+    "peak_train_mem_mb": 3512.5,
+    "epochs_ran": 114,
+    "solo_gap_mae": 0.2339198738336563,
+    "solo_gap_r2": 0.8945175409317017,
+    "solo_avg_mae": 0.1952680697043737,
+    "fusion_gap_mae": 0.21910443902015686,
+    "fusion_gap_r2": 0.907994270324707
+  },
+  {
+    "encoder": "tensornet",
+    "n_params": 786563,
+    "use_charges": false,
+    "sec_per_epoch": 19.78,
+    "train_seconds": 1997.4,
+    "peak_train_mem_mb": 2066.5,
+    "epochs_ran": 101,
+    "solo_gap_mae": 0.22216759622097015,
+    "solo_gap_r2": 0.9058803915977478,
+    "solo_avg_mae": 0.18292559683322906,
+    "fusion_gap_mae": 0.2174871563911438,
+    "fusion_gap_r2": 0.9100810289382935
+  }
+]

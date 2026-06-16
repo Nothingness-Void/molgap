@@ -15,6 +15,7 @@ from .graphs import (
     smiles_to_pyg, smiles_list_to_pyg, smiles_to_pyg_ensemble, smiles_to_2d_pyg,
 )
 from .schnet import SchNetWrapper
+from .tensornet import TensorNetWrapper
 from .utils import create_split_indices
 
 
@@ -52,22 +53,24 @@ def load_model(
     use_charges: bool = True,
     n_desc: int = 0,
     device: torch.device | str | None = None,
-) -> tuple[SchNetWrapper, np.ndarray, np.ndarray, torch.device]:
-    """Load a SchNet model with its normalization stats.
+) -> tuple[SchNetWrapper | TensorNetWrapper, np.ndarray, np.ndarray, torch.device]:
+    """Load a 3D encoder model with its normalization stats.
 
     With no arguments, defaults to the Phase 6 best model (normalized).
-    Pass ``key=`` a registry name ("phase6_schnet" / "phase7_schnet_300k") to
-    load that model with the right checkpoint, params, and normalization. For
-    the GPS 2D or hybrid models use ``load_hybrid`` instead.
+    Pass ``key=`` a registry name ("phase6_schnet" / "phase7_schnet_300k" /
+    "tensornet_300k") to load that model with the right checkpoint, params, and
+    normalization. For the GPS 2D or hybrid models use ``load_hybrid`` instead.
 
     For non-normalized models (P7 raw eV), y_mean/y_std are 0/1 so the same
     ``predict_graphs`` denorm step is a no-op.
     """
+    kind = "schnet"
     if key is not None:
         spec = MODEL_REGISTRY[key]
-        if spec["kind"] != "schnet":
+        kind = spec["kind"]
+        if kind not in ("schnet", "tensornet"):
             raise ValueError(
-                f"load_model is for SchNet keys; '{key}' is kind='{spec['kind']}'. "
+                f"load_model is for 3D encoder keys; '{key}' is kind='{kind}'. "
                 "Use load_hybrid() for the 2D/hybrid models."
             )
         model_path = spec["checkpoint"]
@@ -91,7 +94,10 @@ def load_model(
         y_mean = np.zeros(len(TARGET_COLS), dtype=np.float32)
         y_std = np.ones(len(TARGET_COLS), dtype=np.float32)
 
-    model = SchNetWrapper(**params, use_charges=use_charges, n_desc=n_desc).to(device)
+    if kind == "tensornet":
+        model = TensorNetWrapper(**params, use_charges=use_charges).to(device)
+    else:
+        model = SchNetWrapper(**params, use_charges=use_charges, n_desc=n_desc).to(device)
     model.load_state_dict(
         torch.load(model_path, weights_only=True, map_location=device)
     )
@@ -101,20 +107,26 @@ def load_model(
 
 def load_hybrid(
     device: torch.device | str | None = None,
-) -> tuple[GPSWrapper, SchNetWrapper, FusionHead, torch.device]:
-    """Load the Phase 7 hybrid trio: (gps_2d, schnet_3d, fusion_head, device).
+    *,
+    key: str = "hybrid_tensornet",
+) -> tuple[GPSWrapper, SchNetWrapper | TensorNetWrapper, FusionHead, torch.device]:
+    """Load a hybrid trio: (gps_2d, encoder_3d, fusion_head, device).
 
-    All three are raw-eV (no normalization). The fusion head's architecture
+    Default is ``"hybrid_tensornet"`` (GPS 2D + TensorNet 3D). Pass
+    ``key="phase7_hybrid"`` to load the legacy SchNet-based hybrid.
+
+    All are raw-eV (no normalization). The fusion head's architecture
     (fusion_type, hidden) is read from its Optuna metrics file so it always
-    matches the saved checkpoint. Encoders expose ``encode()`` for the 192-d
+    matches the saved checkpoint. Encoders expose ``encode()`` for the
     embeddings the fusion head consumes.
     """
     import json
 
     device = _resolve_device(device)
-    gspec = MODEL_REGISTRY["phase7_gps_2d"]
-    sspec = MODEL_REGISTRY["phase7_schnet_300k"]
-    hspec = MODEL_REGISTRY["phase7_hybrid"]
+    hspec = MODEL_REGISTRY[key]
+    comp_2d_key, comp_3d_key = hspec["components"]
+    gspec = MODEL_REGISTRY[comp_2d_key]
+    tspec = MODEL_REGISTRY[comp_3d_key]
 
     gps = GPSWrapper(**gspec["params"]).to(device)
     gps.load_state_dict(
@@ -122,11 +134,14 @@ def load_hybrid(
     )
     gps.eval()
 
-    schnet = SchNetWrapper(**sspec["params"], use_charges=sspec.get("use_charges", True)).to(device)
-    schnet.load_state_dict(
-        torch.load(sspec["checkpoint"], weights_only=True, map_location=device)
+    if tspec["kind"] == "tensornet":
+        encoder_3d = TensorNetWrapper(**tspec["params"], use_charges=tspec.get("use_charges", False)).to(device)
+    else:
+        encoder_3d = SchNetWrapper(**tspec["params"], use_charges=tspec.get("use_charges", True)).to(device)
+    encoder_3d.load_state_dict(
+        torch.load(tspec["checkpoint"], weights_only=True, map_location=device)
     )
-    schnet.eval()
+    encoder_3d.eval()
 
     with open(hspec["metrics"]) as f:
         bp = json.load(f)["best_params"]
@@ -136,7 +151,7 @@ def load_hybrid(
     )
     fusion.eval()
 
-    return gps, schnet, fusion, device
+    return gps, encoder_3d, fusion, device
 
 
 def predict_smiles_batch_hybrid(
@@ -147,25 +162,26 @@ def predict_smiles_batch_hybrid(
     bs_3d: int = 128,
     return_embeddings: bool = False,
     device: torch.device | str | None = None,
+    hybrid_key: str = "hybrid_tensornet",
 ):
-    """Batch-predict B3LYP HOMO/LUMO/Gap with the Phase 7 hybrid (raw eV).
+    """Batch-predict B3LYP HOMO/LUMO/Gap with the hybrid model (raw eV).
 
     Builds both 2D and 3D graphs, keeps only molecules where BOTH succeed (3D
     ETKDG can fail), encodes each with its frozen encoder, and fuses. Returns
     ``(valid_idx, preds)`` — preds[i] aligns with smiles_list[valid_idx[i]]. With
-    ``return_embeddings=True`` also returns the 192-d ``emb_2d, emb_3d`` arrays
+    ``return_embeddings=True`` also returns the ``emb_2d, emb_3d`` arrays
     (the features the Δ model will consume), so one forward pass yields both the
     B3LYP baseline and the Δ features.
 
-    Pass ``models=(gps, schnet, fusion, device)`` from ``load_hybrid`` to reuse a
-    loaded trio across calls.
+    Pass ``models=(gps, encoder_3d, fusion, device)`` from ``load_hybrid`` to
+    reuse a loaded trio across calls.
     """
     from torch_geometric.loader import DataLoader
 
     if models is None:
-        gps, schnet, fusion, device = load_hybrid(device)
+        gps, encoder_3d, fusion, device = load_hybrid(device, key=hybrid_key)
     else:
-        gps, schnet, fusion, device = models
+        gps, encoder_3d, fusion, device = models
 
     g2d_list, g3d_list, valid_idx = [], [], []
     for i, smi in enumerate(smiles_list):
@@ -180,9 +196,10 @@ def predict_smiles_batch_hybrid(
         valid_idx.append(i)
 
     if not valid_idx:
+        emb_dim_3d = 128  # TensorNet default
         empty = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
         return (np.array([], dtype=int), empty) + (
-            (np.empty((0, 192)), np.empty((0, 192))) if return_embeddings else ()
+            (np.empty((0, 192)), np.empty((0, emb_dim_3d))) if return_embeddings else ()
         )
 
     emb_2d = []
@@ -197,7 +214,7 @@ def predict_smiles_batch_hybrid(
         for b in DataLoader(g3d_list, batch_size=bs_3d):
             b = b.to(device)
             charges = b.charges if hasattr(b, "charges") else None
-            emb_3d.append(schnet.encode(b.z, b.pos, b.batch, charges=charges).cpu())
+            emb_3d.append(encoder_3d.encode(b.z, b.pos, b.batch, charges=charges).cpu())
     emb_3d = torch.cat(emb_3d)
 
     with torch.no_grad():

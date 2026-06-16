@@ -36,6 +36,11 @@ MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
 MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
 FUSION_METRICS = RESULTS_DIR / "phase7" / "fusion_optuna_metrics.json"
 
+# TensorNet (replaces SchNet as production 3D encoder after ab3d comparison)
+MODEL_TENSORNET_300K = MODELS_DIR / "tensornet_3d_300k.pt"
+MODEL_HYBRID_TENSORNET = MODELS_DIR / "hybrid_fusion_tensornet.pt"
+FUSION_TENSORNET_METRICS = RESULTS_DIR / "phase7" / "fusion_tensornet_metrics.json"
+
 # ── Model hyperparameters ──
 
 PARAMS_PHASE4 = {
@@ -72,6 +77,51 @@ PARAMS_GPS_2D = {
     "dropout": 0.05,
 }
 
+# ── A/B 3D-encoder comparison (scripts/ab3d) ──
+# Same hidden=192 across encoders for capacity parity; layer counts follow each
+# architecture's convention. Param counts are reported by train_encoder.py.
+PARAMS_AB_SCHNET = dict(PARAMS_SCHNET_300K)  # invariant baseline, deployed form
+
+# Feasibility-tuned for the RTX 5060 (8 GB, 30 SM): the equivariant/tensor nets
+# are 40-130x heavier per batch than SchNet at hidden=192, so they run at
+# hidden=128 with fewer layers + cutoff 5.0 (fewer edges). Capacity therefore
+# differs from SchNet (h192) — param counts are reported and the gap is noted in
+# the comparison; the speed gap is itself a decision-relevant deliverable.
+PARAMS_VISNET = {
+    "hidden_channels": 128,
+    "num_layers": 4,
+    "num_heads": 8,      # 128 % 8 == 0
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+PARAMS_TENSORNET = {
+    "hidden_channels": 128,
+    "num_layers": 2,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+# Production TensorNet for 300k training (same arch as ab3d winner)
+PARAMS_TENSORNET_300K = {
+    "hidden_channels": 128,
+    "num_layers": 2,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+# Single source of truth for the A/B arms. `kind` selects the wrapper class in
+# scripts/ab3d/train_encoder.py; `use_charges` is each encoder's native form
+# (SchNet uses Gasteiger charges = deployed form; equivariant nets use Z+geometry).
+AB_ENCODERS = {
+    "schnet":    {"kind": "schnet",    "params": PARAMS_AB_SCHNET,  "use_charges": True},
+    "visnet":    {"kind": "visnet",    "params": PARAMS_VISNET,     "use_charges": False},
+    "tensornet": {"kind": "tensornet", "params": PARAMS_TENSORNET,  "use_charges": False},
+}
+
 # ── Model registry ──
 # Single source of truth for "which checkpoint + which hyperparams + is it
 # normalized". Consumed by inference.load_model(key=...) and inference.load_hybrid().
@@ -93,6 +143,15 @@ MODEL_REGISTRY = {
     "phase7_hybrid": {
         "kind": "hybrid", "checkpoint": MODEL_HYBRID, "metrics": FUSION_METRICS,
         "normalized": False, "components": ["phase7_gps_2d", "phase7_schnet_300k"],
+    },
+    "tensornet_300k": {
+        "kind": "tensornet", "checkpoint": MODEL_TENSORNET_300K,
+        "params": PARAMS_TENSORNET_300K, "normalized": False, "use_charges": False,
+    },
+    "hybrid_tensornet": {
+        "kind": "hybrid", "checkpoint": MODEL_HYBRID_TENSORNET,
+        "metrics": FUSION_TENSORNET_METRICS,
+        "normalized": False, "components": ["phase7_gps_2d", "tensornet_300k"],
     },
 }
 

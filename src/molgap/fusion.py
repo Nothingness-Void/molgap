@@ -1,10 +1,12 @@
-"""Embedding-level fusion head for the Phase 7 hybrid (GPS 2D + SchNet 3D).
+"""Embedding-level fusion head for the hybrid model (GPS 2D + 3D encoder).
 
-The Phase 7 hybrid is *late* fusion: the two encoders are frozen, their pooled
-192-d embeddings are pre-computed, and only this head is trained. Gate fusion
+The hybrid is *late* fusion: the two encoders are frozen, their pooled
+embeddings are pre-computed, and only this head is trained. Gate fusion
 forms a per-molecule, per-dimension convex combination of the two projected
 embeddings (g·h2d + (1-g)·h3d), which beat plain concatenation in the Optuna
 search — see `docs/phase7.md`.
+
+Supports asymmetric input dims (e.g. GPS 2D = 192, TensorNet 3D = 128).
 """
 from __future__ import annotations
 

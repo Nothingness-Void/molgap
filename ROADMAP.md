@@ -77,6 +77,7 @@ smarter (structure-aware) bias correction rather than a full Δ model.
 | Extend training elements (Br / B / P / Si) | If OE62/usage shows too many useful molecules rejected for missing elements — needs refetch + retrain |
 | Conformer-ensemble inference for flagged rows | If sounding (P8.6) shows floppy molecules dominate error |
 | Better geometry via NNP (DPA-2/ANI-style) or conformer selection (CONFPASS) | LOW priority — Phase 7 conformer ensemble was only +2.5% R², so geometry is not the bottleneck. Revisit only if Δ residual analysis shows geometry/flexibility dominates error |
+| LoRA / PEFT fine-tuning of encoders to GW (model-side Δ variant) | AFTER data scaling — coverage is the bottleneck first (PCQM4Mv2 coverage diagnostic). Feasible per ELoRA / GraphLoRA; GPS transformer native, SchNet linear layers adaptable. See docs/phase9.md |
 | Paper figures / write-up | If advisor requires an academic deliverable |
 
 ## Done (cite, don't redo)
@@ -84,3 +85,7 @@ Phases 1-7 complete. Phase 7 = 300k scaling + GPS 2D + SchNet 3D + hybrid fusion
 OOD R² 0.941. Bootstrap CIs on the experimental comparison done
 (`scripts/phase7/bootstrap_ci.py`). Training-set chemical-space characterization
 done (P8.1). See `docs/phase7.md`, `docs/phase8.md`.
+
+**A/B 3D-encoder comparison** (`scripts/ab3d/`, `results/ab3d/`): TensorNet wins
+(solo Gap R² 0.906, MAE 0.222, 787k params) over SchNet (0.889, 0.239, 1.04M) and
+ViSNet (0.895, 0.234, 1.10M). TensorNet is now the production 3D encoder.

@@ -151,6 +151,23 @@ outliers even for molecules larger / chemically distinct from finetuning set**
   only need the qsGW quasiparticle part. Note qsGW (self-consistent) vs OE62
   G0W0@PBE0 (one-shot) differ slightly in fidelity tier.
 
+## Model-side variant: LoRA / PEFT (literature, conditional)
+Beyond the frozen-encoder + LightGBM head, parameter-efficient fine-tuning (LoRA)
+could let the encoders *lightly* adapt to GW with few trainable params (anti-overfit)
+— a middle ground between fully frozen and full finetune. Validated for molecular
+GNNs and GNN transfer in recent work:
+- **ELoRA** — LoRA on SO(3)-equivariant GNNs, improves molecular energy/force → LoRA works on molecular GNNs.
+- **GraphLoRA** (arXiv 2409.16670) — LoRA for cross-graph GNN transfer, ~20% params → our exact transfer setting.
+- **MMEA** (arXiv 2511.06696) — PEFT adapter for equivariant GNNs.
+- **PEFT review** (arXiv 2501.00365) — LoRA ≈ 95-100% of full finetune at 0.01-1% params.
+
+Fit: GPS transformer layers are a native LoRA target; SchNet interaction/filter
+linear layers can take adapters too. Caveats: ELoRA targets *equivariant* GNNs
+(SchNet is invariant — idea transfers, not identical); all 2024-2025, no off-the-shelf
+"B3LYP→GW via LoRA". **Priority: coverage is the bottleneck (PCQM4Mv2 coverage
+diagnostic), so LoRA is a model-side refinement AFTER data scaling + retrain.**
+(Raised by Omozawa in lab discussion 2026-06.)
+
 ## Conditional
 If P8.3 refinement shrinks the clean set too far, Phase 9 degrades to a
 structure-aware (but simpler) bias correction rather than a full Δ model.
