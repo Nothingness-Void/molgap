@@ -14,14 +14,26 @@ embedding level. The Hybrid is the best/most-stable model; OOD R² 0.797 (P6) �
 | SchNet 3D | `models/gnn_schnet_3d_300k.pt` | geometry (3D GNN + charges) |
 | **Hybrid** | `models/hybrid_fusion_optuna.pt` | gate fusion of both embeddings (Optuna) |
 
-## Pipeline (see `scripts/phase7/README.md` for the script table)
-1. `fetch_300k.py` → 300k training CSV
-2. `build_graphs_local.py` / `build_2d_graphs_local.py` → 3D + 2D graphs
-3. `train_gps_2d_local.py` → GPS 2D (params from Kaggle Optuna)
-4. `extract_{gps_2d,schnet_3d}_embeddings.py` → two 192-d embedding sets
-5. `align_2d_to_3d.py` → align 2D to 3D (3D dropped 371 ETKDG failures; two-pointer on labels, zero error)
-6. `fusion_optuna_local.py` → train + tune the gate fusion head (60 trials)
-7. `fetch_ood_1000.py` + `compare_models_full.py` → final OOD + experimental comparison
+## Pipeline
+End-to-end, in run order. All scripts live in `scripts/phase7/` and use
+`.venv\Scripts\python.exe`; each imports from `src/molgap/`, not redefining models.
+
+| # | Script | Output |
+|---|--------|--------|
+| 1 | `fetch_300k.py` | `data/raw/phase7_chonsfcl_mw200_1000_300k.csv` (300k training set) |
+| 2 | `build_graphs_local.py` | `results/phase7/pyg_3d_graphs_etkdg_300k.pt` (3D ETKDG graphs) |
+| 3 | `build_2d_graphs_local.py` | `results/phase7/pyg_2d_graphs_bond_300k.pt` (2D bond graphs) |
+| 4 | `train_gps_2d_local.py` | `models/gps_2d_300k.pt` (GPS 2D model) |
+| 5 | `extract_gps_2d_embeddings.py` | `results/phase7/gps_2d_embeddings.pt` (192-d, regenerable) |
+| 6 | `extract_schnet_3d_embeddings.py` | `results/phase7/schnet_3d_embeddings.pt` (192-d) |
+| 7 | `align_2d_to_3d.py` | `results/phase7/gps_2d_embeddings_aligned.pt` (3D dropped 371 ETKDG failures; two-pointer on labels, zero error) |
+| 8 | `fusion_optuna_local.py` | `models/hybrid_fusion_optuna.pt` + `fusion_optuna_metrics.json` (60-trial gate-fusion search) |
+| 9 | `fetch_ood_1000.py` | `results/phase7/ood_1000/ood_molecules_1000.csv` (1000 unseen mols) |
+| 10 | `compare_models_full.py` | `results/phase7/full_comparison/` (OOD + experimental, 3 models) |
+| 11 | `analyze_full_comparison.py` | by-source / bias / worst-molecule breakdown (stdout) |
+
+`validate_all_experimental.py` is kept as a **dependency module** (compare_models_full
+imports its HOPV/OLED parsers); its standalone main is superseded by step 10.
 
 ## Architecture: embedding-level gate fusion
 Both GNNs are frozen; only a light head trains on their pooled 192-d embeddings.

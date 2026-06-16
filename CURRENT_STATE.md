@@ -15,7 +15,7 @@ The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed*
 collapse to <0.2% R²** (fusion Gap R² 0.9101 vs 0.9083). At 1M scale the ~3.7×
 training-time penalty of TensorNet (≈55 h vs ≈15 h on RTX 5060) buys no
 deployment-relevant accuracy, so production stays on SchNet. See
-`results/ab3d/README.md` for the full reasoning.
+`results/ab3d/comparison.md` for the raw numbers.
 
 ## 2. Validation conclusions
 - In-dist test (Hybrid): HOMO/LUMO/Gap MAE = 0.064 / 0.062 / 0.076 eV.
@@ -60,6 +60,6 @@ GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89.
 
 ## 7. Where to look before changing code
 - Reusable logic lives in `src/molgap/` only. See `ARCHITECTURE.md` for the map.
-- Phase 7 pipeline + scripts: `scripts/phase7/README.md`.
+- Phase 7 pipeline + scripts: `docs/phase7.md`.
 - Model/weight/params registry: `src/molgap/constants.py`.
-- ab3d closed experiment: `results/ab3d/README.md`.
+- ab3d closed experiment (raw numbers): `results/ab3d/comparison.md`.

@@ -20,7 +20,7 @@ Code map and module boundaries. Answers one question: **to change X, edit which 
 | `fusion.py` | `FusionHead` — embedding-level gate/concat fusion (hybrid) | Changing how 2D+3D embeddings combine |
 | `inference.py` | Model loading + `predict_smiles`/`predict_smiles_batch` | Changing the prediction API |
 | `utils.py` | Splits, metrics, SMILES/fingerprint helpers | Shared numeric/IO helpers |
-| `tensornet.py` | `TensorNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — see `results/ab3d/README.md` |
+| `tensornet.py` | `TensorNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — see `results/ab3d/comparison.md` |
 | `visnet.py` | `ViSNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — same |
 
 Notes:
@@ -50,10 +50,10 @@ Notes:
 
 - `scripts/pipeline/` — data fetch, clean, features
 - `scripts/phase{1-7}/` — per-phase experiment CLIs. Phase 7 is the live one;
-  see `scripts/phase7/README.md` for its pipeline. Each script should import from
+  see `docs/phase7.md` for its pipeline. Each script should import from
   `src/molgap/`, not redefine model classes.
 - `scripts/phase7/archive/` — superseded scripts/notebooks/diagnostics.
-- `scripts/ab3d/` — closed A/B comparison. See `results/ab3d/README.md`.
+- `scripts/ab3d/` — closed A/B comparison. See `results/ab3d/comparison.md`.
 
 ## Data / outputs
 - `data/raw/` PubChemQC CSVs · `data/commercial/` molecule lists
