@@ -43,6 +43,14 @@ Phase 7, just more data). Δ-learning will be re-validated against the 1M model.
 Δ-learning (B3LYP→GW) currently works with the Phase 7 SchNet hybrid: scaffold-test
 GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89.
 
+**M1 UQ done (Phase 10).** The Δ-learning path now ships uncertainty:
+`inference.predict_smiles_with_uq(smiles)` returns per-target GW `(value, σ, b3lyp)`
+plus a molecule-level `ood` flag. Built from a 10-member LightGBM Δ-ensemble
+(σ = calibrated member spread) + euclidean k-NN OOD distance on the 384-d hybrid
+embeddings. Calibration is real: post-recalibration ENCE 0.14–0.23, 1σ/2σ coverage
+0.72/0.94, MAE unchanged vs the single Δ-model. OOD distance monotonically predicts
+error (~2.5× near→far) and agrees with σ (ρ≈0.45). Numbers: `results/phase10/`.
+
 ## 5. Next actions (1-3)
 1. **Build 1M graph cache** (2D + 3D ETKDG, sharded streaming write) and rerun
    the Phase 7 training pipeline at 1M scale.
