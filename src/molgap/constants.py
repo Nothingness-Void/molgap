@@ -36,7 +36,10 @@ MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
 MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
 FUSION_METRICS = RESULTS_DIR / "phase7" / "fusion_optuna_metrics.json"
 
-# TensorNet (replaces SchNet as production 3D encoder after ab3d comparison)
+# TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
+# SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
+# training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
+# and results/ab3d/comparison.md. These artifacts are kept for the A/B record.
 MODEL_TENSORNET_300K = MODELS_DIR / "tensornet_3d_300k.pt"
 MODEL_HYBRID_TENSORNET = MODELS_DIR / "hybrid_fusion_tensornet.pt"
 FUSION_TENSORNET_METRICS = RESULTS_DIR / "phase7" / "fusion_tensornet_metrics.json"
@@ -104,7 +107,7 @@ PARAMS_TENSORNET = {
     "dropout": 0.0,
 }
 
-# Production TensorNet for 300k training (same arch as ab3d winner)
+# Experimental TensorNet for 300k training (same arch as ab3d winner; not production)
 PARAMS_TENSORNET_300K = {
     "hidden_channels": 128,
     "num_layers": 2,

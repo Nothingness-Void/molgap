@@ -86,6 +86,9 @@ OOD R² 0.941. Bootstrap CIs on the experimental comparison done
 (`scripts/phase7/bootstrap_ci.py`). Training-set chemical-space characterization
 done (P8.1). See `docs/phase7.md`, `docs/phase8.md`.
 
-**A/B 3D-encoder comparison** (`scripts/ab3d/`, `results/ab3d/`): TensorNet wins
-(solo Gap R² 0.906, MAE 0.222, 787k params) over SchNet (0.889, 0.239, 1.04M) and
-ViSNet (0.895, 0.234, 1.10M). TensorNet is now the production 3D encoder.
+**A/B 3D-encoder comparison** (`scripts/ab3d/`, `results/ab3d/`): solo TensorNet
+wins (Gap R² 0.906, MAE 0.222, 787k params) over SchNet (0.889, 0.239, 1.04M) and
+ViSNet (0.895, 0.234, 1.10M). **But at fusion level the gap collapses to <0.2% R²**
+(fusion Gap R² 0.9101 vs 0.9083), and TensorNet costs ~3.7x training time at 1M
+scale for no deployment-relevant accuracy — so **production stays on SchNet**.
+TensorNet remains an experimental artifact only. See `CURRENT_STATE.md`.
