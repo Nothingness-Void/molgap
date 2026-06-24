@@ -337,3 +337,111 @@ def predict_smiles_ensemble(
         result[t] = float(preds[:, i].mean())
         result[f"{t}_std"] = float(preds[:, i].std())
     return result
+
+
+# ── M1: GW prediction with uncertainty (Δ-ensemble + calibration + OOD) ──
+# The frozen-embedding Δ-learning path (Phase 9/10), wrapped so a single SMILES
+# yields a GW-level (value, σ, ood_flag) instead of a bare number. Artifacts come
+# from scripts/phase10: the 10 LightGBM members per target, the σ-recalibration
+# scales, and the OOD reference bundle (standardized fit embeddings + threshold).
+
+
+def load_uq_bundle(device: torch.device | str | None = None) -> dict:
+    """Load everything predict_smiles_with_uq needs, once, for reuse across calls.
+
+    Returns a dict with: the SchNet hybrid trio (for B3LYP + 384-d features —
+    MUST be the SAME hybrid that produced the Δ-model's training embeddings,
+    i.e. phase7_hybrid, 192+192-d), the per-target LightGBM members, the
+    calibration scales, and the OOD reference arrays.
+    """
+    import json
+    import lightgbm as lgb
+
+    from .constants import RESULTS_DIR
+
+    phase10 = RESULTS_DIR / "phase10"
+    # SchNet hybrid: the Δ embeddings (delta_oe62_embeddings.npz) are 192+192-d,
+    # produced by phase7_hybrid — not the 128-d tensornet hybrid. Train/inference
+    # feature consistency requires the same encoder here.
+    hybrid = load_hybrid(device, key="phase7_hybrid")
+
+    members = {}
+    for t in TARGET_COLS:
+        m, k = [], 0
+        while (phase10 / "ensemble_lgbm" / f"{t}_m{k}.txt").exists():
+            s = (phase10 / "ensemble_lgbm" / f"{t}_m{k}.txt").read_text(encoding="utf-8")
+            m.append(lgb.Booster(model_str=s))
+            k += 1
+        if not m:
+            raise FileNotFoundError(
+                f"No ensemble boosters for '{t}' in {phase10/'ensemble_lgbm'}. "
+                "Run scripts/phase10/train_ensemble.py first."
+            )
+        members[t] = m
+
+    calib = json.loads((phase10 / "ensemble_calibration.json").read_text())
+    ood = np.load(phase10 / "ood_reference.npz")
+    return {
+        "hybrid": hybrid, "members": members, "calib": calib,
+        "ref_std": ood["ref_std"], "ood_mu": ood["mu"], "ood_sd": ood["sd"],
+        "ood_threshold": float(ood["threshold"][0]), "ood_k": int(ood["k"][0]),
+    }
+
+
+def predict_smiles_with_uq(
+    smiles: str,
+    bundle: dict | None = None,
+    device: torch.device | str | None = None,
+) -> dict | None:
+    """Predict GW-level HOMO/LUMO/Gap for one SMILES, with uncertainty.
+
+    Returns, per target, the calibrated GW value, its 1σ uncertainty (eV), plus a
+    single molecule-level ``ood`` flag and the embedding-distance that triggered
+    it. ``None`` if the 3D conformer or 2D graph could not be built.
+
+    Pipeline: SchNet-hybrid B3LYP + 384-d embedding → 10 LightGBM members predict
+    Δ → GW = B3LYP + mean(Δ); σ = std(Δ) × calibration_scale → OOD by k-NN
+    distance to the training embeddings (euclidean, standardized).
+
+    Result shape::
+
+        {"homo": {"value": .., "sigma": .., "b3lyp": ..},   # GW eV, 1σ eV, raw B3LYP
+         "lumo": {...}, "gap": {...},
+         "ood": bool, "ood_distance": float, "ood_threshold": float}
+
+    Pass ``bundle=load_uq_bundle()`` to reuse loaded artifacts across many calls.
+    """
+    from sklearn.neighbors import NearestNeighbors
+
+    if bundle is None:
+        bundle = load_uq_bundle(device)
+
+    # B3LYP prediction + the 384-d fusion embedding (one forward pass).
+    vi, preds, e2d, e3d = predict_smiles_batch_hybrid(
+        [smiles], models=bundle["hybrid"], return_embeddings=True,
+    )
+    if len(vi) == 0:
+        return None
+    b3lyp = preds[0]                       # [homo, lumo, gap] in eV
+    feat = np.hstack([e2d[0], e3d[0]]).astype(np.float32)[None, :]  # [1, 384]
+
+    out: dict = {}
+    for i, t in enumerate(TARGET_COLS):
+        P = np.array([mb.predict(feat)[0] for mb in bundle["members"][t]])  # member Δs
+        delta_mu, delta_sd = float(P.mean()), float(P.std())
+        sigma = delta_sd * bundle["calib"][t]["scale"]   # calibrated 1σ
+        out[t] = {
+            "value": float(b3lyp[i] + delta_mu),         # GW-level prediction
+            "sigma": float(sigma),
+            "b3lyp": float(b3lyp[i]),
+        }
+
+    # OOD: standardized k-NN distance to the training embeddings.
+    fz = (feat - bundle["ood_mu"]) / bundle["ood_sd"]
+    nn = NearestNeighbors(n_neighbors=bundle["ood_k"], metric="euclidean").fit(bundle["ref_std"])
+    dist, _ = nn.kneighbors(fz)
+    d = float(dist.mean())
+    out["ood"] = bool(d > bundle["ood_threshold"])
+    out["ood_distance"] = d
+    out["ood_threshold"] = bundle["ood_threshold"]
+    return out
