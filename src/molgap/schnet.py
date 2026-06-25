@@ -71,6 +71,36 @@ class SchNetWrapper(nn.Module):
 
         return h
 
+    def encode_layers(self, z, pos, batch, charges=None, layers=(2, 4, -1)):
+        """Return concatenated pooled embeddings from selected interaction layers.
+
+        Layer indices are 1-based after each SchNet interaction. ``-1`` means
+        the final interaction layer. Descriptors are intentionally omitted here:
+        layer fusion probes the molecular representation before the readout.
+        """
+        from torch_geometric.nn import global_mean_pool
+
+        n_layers = len(self.schnet.interactions)
+        wanted = {n_layers if layer == -1 else int(layer) for layer in layers}
+        invalid = [layer for layer in wanted if layer < 1 or layer > n_layers]
+        if invalid:
+            raise ValueError(f"SchNet layer index out of range: {invalid}")
+
+        h = self.schnet.embedding(z)
+
+        if self.use_charges and charges is not None:
+            h = h + self.charge_proj(charges.unsqueeze(-1))
+
+        edge_index, edge_weight = self._radius_graph(pos, batch)
+        edge_attr = self.schnet.distance_expansion(edge_weight)
+
+        pooled = []
+        for i, interaction in enumerate(self.schnet.interactions, start=1):
+            h = h + interaction(h, edge_index, edge_weight, edge_attr)
+            if i in wanted:
+                pooled.append(global_mean_pool(h, batch))
+        return torch.cat(pooled, dim=-1)
+
     def _radius_graph(self, pos, batch):
         from torch_geometric.nn.models.schnet import radius_graph
         edge_index = radius_graph(pos, r=self.schnet.cutoff, batch=batch,

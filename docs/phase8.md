@@ -304,6 +304,48 @@ enough to justify one full replacement300k standard hybrid run if compute budget
 is available. Keep the next full run to the single `FusionHead`; MoE remains
 deprioritized.
 
+### Intermediate-layer fusion pilot (done, 2026-06-25)
+
+Question: can a cheap head-only upgrade improve fusion by concatenating
+intermediate GPS/SchNet pooled embeddings instead of using only the final encoder
+embedding?
+
+Implementation:
+
+- encoder APIs: `GPSWrapper.encode_layers(...)`,
+  `SchNetWrapper.encode_layers(...)`
+- layer choice: 2 / 4 / final for each encoder
+- trainer: `scripts/phase8/train_layer_fusion.py`
+- common evaluator: `scripts/phase8/eval_layer_fusion_common.py`
+- comparison table: `results/phase8/intermediate_layer_fusion_comparison.md`
+
+B3LYP replacement30k internal test:
+
+| head | test avg MAE | test Gap MAE | delta avg vs single | delta Gap vs single |
+|---|---:|---:|---:|---:|
+| single FusionHead | 0.13838 | 0.16251 | - | - |
+| MoE(4) | 0.13778 | 0.16211 | -0.00060 | -0.00040 |
+| intermediate-layer fusion | 0.13719 | 0.16149 | -0.00118 | -0.00102 |
+
+Common eval, intermediate-layer fusion minus single replacement30k:
+
+| eval set | avg MAE delta | Gap MAE delta |
+|---|---:|---:|
+| all | +0.00059 | -0.00028 |
+| Phase 7 OOD-1000 | -0.00163 | -0.00400 |
+| P8 targeted hard | +0.00292 | +0.00359 |
+
+Conclusion: intermediate-layer fusion is a real internal-test gain and improves
+the Phase 7 OOD-1000 slice, but it worsens the P8 targeted hard slice. Keep it as
+a cheap head-only follow-up after full replacement300k embeddings exist; do not
+delay the standard single-head full run for it.
+
+Original P7 300k check: with the historical 2D/3D alignment index
+(`results/phase7/align_2d_idx.pt`), intermediate-layer fusion ties/slightly loses
+to the ordinary Phase 7 FusionHead (avg/GAP 0.06740/0.07594 vs
+0.06711/0.07563). This confirms it is not a P7 baseline replacement. Full table:
+`results/phase8/phase7_300k_baseline_lora_layer_comparison.md`.
+
 ## P8.5 Graph cache
 Build full 2D + 3D ETKDG graphs for the broader-coverage data with the same
 conformer method as Phase 7 inference. Use sharded streaming writes; do not mix

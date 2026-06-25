@@ -65,3 +65,27 @@ class GPSWrapper(nn.Module):
             h = conv(h, edge_index, batch, edge_attr=e)
 
         return global_mean_pool(h, batch)
+
+    def encode_layers(self, x, edge_index, edge_attr, batch, layers=(2, 4, -1)):
+        """Return concatenated pooled embeddings from selected GPS layers.
+
+        Layer indices are 1-based after each GPSConv. ``-1`` means the final
+        layer. This supports lightweight layer-fusion probes without changing
+        the normal production ``encode`` path.
+        """
+        from torch_geometric.nn import global_mean_pool
+
+        n_layers = len(self.convs)
+        wanted = {n_layers if layer == -1 else int(layer) for layer in layers}
+        invalid = [layer for layer in wanted if layer < 1 or layer > n_layers]
+        if invalid:
+            raise ValueError(f"GPS layer index out of range: {invalid}")
+
+        h = self.node_emb(x.float())
+        e = self.edge_emb(edge_attr.float())
+        pooled = []
+        for i, conv in enumerate(self.convs, start=1):
+            h = conv(h, edge_index, batch, edge_attr=e)
+            if i in wanted:
+                pooled.append(global_mean_pool(h, batch))
+        return torch.cat(pooled, dim=-1)

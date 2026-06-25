@@ -136,6 +136,8 @@ def main():
     parser.add_argument("--no-embeddings", action="store_true")
     parser.add_argument("--extract-only", action="store_true",
                         help="load --model-out and only write --embeddings-out")
+    parser.add_argument("--init-from", type=Path, default=None,
+                        help="optional same-architecture checkpoint for warm-starting")
     args = parser.parse_args()
 
     ensure_dirs(PHASE8_DIR, MODELS_DIR)
@@ -173,6 +175,10 @@ def main():
 
     p = TRAIN_PARAMS[args.kind]
     model = _make_model(args.kind).to(device)
+    if args.init_from is not None:
+        state = torch.load(args.init_from, weights_only=True, map_location=device)
+        model.load_state_dict(state)
+        print(f"Warm-started from {args.init_from}", flush=True)
     optimizer = torch.optim.AdamW(model.parameters(), lr=p["lr"], weight_decay=p["weight_decay"])
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6)
     scaler = torch.amp.GradScaler("cuda", enabled=torch.cuda.is_available())
@@ -246,6 +252,7 @@ def main():
         "n_graphs": len(graphs),
         "best_val_mae": float(best_val),
         "best_epoch": int(best_epoch),
+        "init_from": str(args.init_from) if args.init_from is not None else None,
         "params": p,
         "test_metrics": _metrics(pred, true),
         "log": log_rows,

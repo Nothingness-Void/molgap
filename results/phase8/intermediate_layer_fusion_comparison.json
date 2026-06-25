@@ -1,0 +1,107 @@
+{
+  "created_at": "2026-06-25",
+  "question": "Does intermediate-layer embedding fusion improve the Phase 8 replacement30k path compared with baseline/MoE/LoRA probes?",
+  "b3lyp_internal_replacement30k": [
+    {
+      "method": "Single FusionHead",
+      "scope": "replacement30k frozen embeddings",
+      "best_val_mae": 0.13901879659067362,
+      "test_avg_mae": 0.13837836682796478,
+      "test_gap_mae": 0.1625078171491623,
+      "n_params": 203907,
+      "delta_avg_vs_single": 0.0,
+      "delta_gap_vs_single": 0.0
+    },
+    {
+      "method": "MoE FusionHead (4 experts)",
+      "scope": "replacement30k frozen embeddings",
+      "best_val_mae": 0.13871046436362,
+      "test_avg_mae": 0.13777745018402734,
+      "test_gap_mae": 0.1621103137731552,
+      "n_params": 409360,
+      "delta_avg_vs_single": -0.000600916643937438,
+      "delta_gap_vs_single": -0.0003975033760070801
+    },
+    {
+      "method": "Intermediate-layer fusion (2/4/final)",
+      "scope": "replacement30k frozen layer embeddings",
+      "best_val_mae": 0.13875148449096833,
+      "test_avg_mae": 0.13719448695580164,
+      "test_gap_mae": 0.1614874005317688,
+      "n_params": 351363,
+      "delta_avg_vs_single": -0.001183879872163146,
+      "delta_gap_vs_single": -0.0010204166173934937
+    },
+    {
+      "method": "End-to-end MoE (4 experts)",
+      "scope": "replacement30k trainable encoders",
+      "best_val_mae": 0.14361869069210959,
+      "test_avg_mae": 0.1416961352030436,
+      "test_gap_mae": 0.17301441729068756,
+      "n_params": null,
+      "delta_avg_vs_single": 0.003317768375078828,
+      "delta_gap_vs_single": 0.010506600141525269
+    }
+  ],
+  "b3lyp_common_eval_replacement30k": [
+    {
+      "eval_set": "All common eval",
+      "single_avg_mae": 0.2161215047041575,
+      "layer_avg_mae": 0.21671471496423086,
+      "delta_avg_layer_minus_single": 0.0005932102600733624,
+      "single_gap_mae": 0.2672145962715149,
+      "layer_gap_mae": 0.2669302821159363,
+      "delta_gap_layer_minus_single": -0.0002843141555786133
+    },
+    {
+      "eval_set": "Phase 7 OOD-1000",
+      "single_avg_mae": 0.20043363173802695,
+      "layer_avg_mae": 0.19880079726378122,
+      "delta_avg_layer_minus_single": -0.0016328344742457257,
+      "single_gap_mae": 0.24120774865150452,
+      "layer_gap_mae": 0.2372061312198639,
+      "delta_gap_layer_minus_single": -0.004001617431640625
+    },
+    {
+      "eval_set": "P8 targeted hard",
+      "single_avg_mae": 0.23209719359874725,
+      "layer_avg_mae": 0.23501330614089966,
+      "delta_avg_layer_minus_single": 0.002916112542152405,
+      "single_gap_mae": 0.29369857907295227,
+      "layer_gap_mae": 0.29729270935058594,
+      "delta_gap_layer_minus_single": 0.003594130277633667
+    }
+  ],
+  "gw_delta_lora_context": [
+    {
+      "method": "LightGBM / external Delta reference",
+      "scope": "OE62 GW scaffold-test",
+      "avg_mae": 0.23872365464436685,
+      "gap_mae": 0.3028717676439667,
+      "trainable_params": null,
+      "train_time_s": null
+    },
+    {
+      "method": "LoRA FusionHead r8",
+      "scope": "OE62 GW scaffold-test",
+      "avg_mae": 0.23580504953861237,
+      "gap_mae": 0.3029162883758545,
+      "trainable_params": 16920,
+      "train_time_s": 10.402915716171265
+    },
+    {
+      "method": "Encoder LoRA GPS+SchNet+Fusion r4",
+      "scope": "OE62 GW scaffold-test",
+      "avg_mae": 0.21717550357182822,
+      "gap_mae": 0.2716881036758423,
+      "trainable_params": 130368,
+      "train_time_s": 431.0222690105438
+    }
+  ],
+  "decision": {
+    "default_full_run": "Train full replacement300k with the standard single FusionHead first.",
+    "intermediate_layer_fusion": "Keep as a cheap head-upgrade candidate; internal replacement30k improves, but common eval is mixed.",
+    "moe": "Deprioritized; gains are tie-level and end-to-end pilot is worse.",
+    "lora": "Promising for GW Delta after base selection, not a replacement for the B3LYP surrogate architecture."
+  }
+}

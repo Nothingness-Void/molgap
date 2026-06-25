@@ -81,18 +81,33 @@ slice (avg MAE -0.00469, Gap -0.00422). Overall delta is avg -0.00216, Gap
 -0.00102. This is a weak-positive coverage signal, not a broad OOD breakthrough.
 Details: `results/phase8/common_eval_30k_summary.md`.
 
+Intermediate-layer embedding fusion (GPS/SchNet layers 2/4/final) is **not a P7
+baseline upgrade**. On original P7 300k it ties/slightly loses to ordinary
+FusionHead (avg/GAP 0.06740/0.07594 vs 0.06711/0.07563). On replacement30k
+internal test it beats single/MoE, but common eval is mixed (OOD improves, P8
+hard worsens). Keep it only as a low-priority head-only follow-up after the
+standard replacement300k embeddings exist. Tables:
+`results/phase8/phase7_300k_baseline_lora_layer_comparison.md`,
+`results/phase8/intermediate_layer_fusion_comparison.md`.
+
 ## 5. Next actions (1-3)
 1. **Train full replacement300k v2 with the standard single FusionHead**: the 30k
    common eval is positive on the targeted hard slice and neutral on OOD-1000,
    so one full-size coverage-value run is justified if compute budget is
    available. Build full 2D + 3D ETKDG graph caches from
-   `data/raw/phase8_replacement_300k.csv`, then train GPS/SchNet/fusion.
+   `data/raw/phase8_replacement_300k.csv`, then train GPS/SchNet/fusion. After
+   the 2026-06-25 ideation pass, the preferred first full run is **warm-started**
+   from the Phase 7 GPS/SchNet checkpoints via `scripts/phase8/train_encoder.py
+   --init-from`; keep from-scratch replacement300k as an audit run if warm-start
+   is ambiguous. Details: `docs/ideation_2026-06-25.md`.
 2. **Keep Phase 7 300k as the control**: do not overwrite
    `data/raw/phase7_chonsfcl_mw200_1000_300k.csv` or existing Phase 7 graph
    caches. Phase 8 compares same-size old300k vs replacement300k.
 3. **Do not run full 300k MoE by default**: MoE remains deprioritized after the
    30k frozen-head tie and the negative end-to-end MoE pilot. Revisit only if the
    full single-head model exposes a specific failure mode that a router can fix.
+   Intermediate-layer fusion can be tested later as a head-only add-on once full
+   replacement300k embeddings are available.
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).

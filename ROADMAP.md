@@ -60,8 +60,9 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Assemble fixed-size replacement 300k | P8.2c | **done** | `data/raw/phase8_replacement_300k.csv`; old300k - 38,620 easy/common + 38,620 targeted hard |
 | 30k trainable-encoder MoE A/B | P8.3 | **done** | MoE gain ≤0.0006 eV avg MAE; tie-level. See `results/phase8/moe_ab_30k_summary.json` |
 | Common-eval old30k vs replacement30k | P8.4 | **done** | OOD-1000 neutral, P8 hard slice positive; see `results/phase8/common_eval_30k_summary.md` |
+| Intermediate-layer fusion pilot | P8.4b | **done** | Internal replacement30k gain, common eval mixed; keep as head-only follow-up after full embeddings. See `results/phase8/intermediate_layer_fusion_comparison.md` |
 | Build full broader-coverage graph cache (2D + 3D ETKDG, sharded) | P8.5 | next | Same 300k size as v1; same ETKDG method as v1; justified by weak-positive hard-slice result |
-| Retrain full hybrid with **trainable** encoder | P8.6 | next | Single FusionHead first — isolates coverage value; MoE only if a later common-eval failure mode justifies it |
+| Retrain full hybrid with **trainable** encoder | P8.6 | next | Single FusionHead first; warm-start GPS/SchNet from Phase 7 weights before doing a from-scratch audit. See `docs/ideation_2026-06-25.md` |
 | Select v2 production base | P8.7 | | Pick the winner; if no robust gain, keep v1 and record the negative result |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
@@ -109,6 +110,7 @@ already implemented in the M1 UQ bundle.
 | Extend training elements (Br / B / P / Si) | If OE62/usage shows too many useful molecules rejected for missing elements — needs refetch + retrain |
 | Conformer-ensemble inference for flagged rows | If sounding (P8.6) shows floppy molecules dominate error |
 | Better geometry via NNP (DPA-2/ANI-style) or conformer selection (CONFPASS) | LOW priority — Phase 7 conformer ensemble was only +2.5% R², so geometry is not the bottleneck. Revisit only if Δ residual analysis shows geometry/flexibility dominates error |
+| SchNet denoising pretraining | After v2 selection or if replacement300k fails; Zaidi-style denoising is the best pretraining candidate but should not interrupt the current full replacement300k run |
 | LoRA / PEFT fine-tuning of encoders to GW (model-side Δ variant) | AFTER data scaling — coverage is the bottleneck first (PCQM4Mv2 coverage diagnostic). Feasible per ELoRA / GraphLoRA; GPS transformer native, SchNet linear layers adaptable. See docs/phase9.md |
 | Paper figures / write-up | If advisor requires an academic deliverable |
 
