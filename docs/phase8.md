@@ -1,39 +1,330 @@
-# Phase 8: Chemical-Space Mapping & Molecule Screening
+# Phase 8: Scaling & Architecture
 
 ## Goal
-The Phase 7 model is fixed and is a faithful B3LYP surrogate **inside its
-training distribution**. Phase 8 defines that distribution and turns it into a
-screen, so that when we predict commercial molecules (Phase 9) we know which
-predictions to trust. Answers: *which commercial molecules look like the
-training set?*
+Produce a better **v2 B3LYP base model** than the Phase 7 300k hybrid, or prove
+that the Phase 7 model should remain the production base. Phase 8 is still model
+optimization; it is **not** the commercial-molecule database build.
 
-## Training-set chemical space (P8.1, done)
-`scripts/phase8/characterize_training_set.py` → `results/phase8/training_space.json`.
-300k PubChemQC molecules — **general organic molecules, not OLED-specific**.
+The Phase 7 hybrid (`models/hybrid_fusion_optuna.pt`) remains the frozen v1
+fallback throughout this phase.
 
-- **Elements** (fraction containing): C 100%, H ~100%, N 94%, O 90%, S 33%,
-  Cl 20%, F 19%. Hard-filtered to {C,H,N,O,S,F,Cl} — **no Br, B, P, Si, Se, I,
-  or metals (Ir/Pt)**.
-- **MW**: 200–1000 (p1–p99 only 203–709 — large molecules are rare).
-- **Labels (eV)**: HOMO −7.1…−4.7, LUMO −2.9…+1.6, **Gap 2.9…7.4, median 4.8**.
-- **Topology** (50k sample): aromatic rings 0–5 (median 2), aromatic-atom
-  fraction 0–0.84 (median 0.43), heavy atoms 14–51, rotatable bonds 1–16.
+## Why Phase 8 changed
+The old Phase 8 chemical-space screening work is delivery-layer trust tagging, so
+it now belongs in Phase 10. Its useful output still matters: P8.1 quantified the
+Phase 7 training space and exposed the coverage gaps. But screening commercial
+molecules before selecting the final base model would force Phase 9/10 artifacts
+to be rebuilt after every base-model change.
 
-### Implications for OLED screening
-Element-correct ≠ in-distribution. Two distribution edges matter:
-- **Low conjugation**: training median is 2 aromatic rings / 0.43 aromatic
-  fraction. Highly conjugated emitters (5–10 rings, >0.8 fraction) sit at the
-  high edge → lower confidence.
-- **Wide gap**: training Gap median 4.8 eV vs OLED emitters' typical 2–3 eV.
-  Narrow-gap materials sit at the low edge, compounding the known B3LYP
-  narrow-gap blind spot.
+The new Phase 8 therefore targets the only remaining B3LYP-surrogate levers:
 
-So screening must combine an **element hard-filter** with **continuous OOD
-scoring** (topology + fingerprint/embedding distance), not elements alone.
+1. **training coverage** — fill known sparse regions instead of re-drawing the
+   same PubChemQC distribution;
+2. **trainable encoders** — frozen-embedding head probes are exhausted;
+3. **MoE A/B** — test a router head only after the encoder can adapt.
 
-## Plan (see ROADMAP.md for task IDs)
-- P8.1 Characterize training space — **done**.
-- P8.2 In-distribution screen: element + MW + topology gates.
-- P8.3 Fingerprint/embedding nearest-neighbor distance → continuous OOD score.
-- P8.4 Curate commercial molecule universe (TCI / Sigma-Aldrich / Ossila).
-- P8.5 Apply screen → in-distribution candidate list + per-molecule trust tier.
+## P8.1 Training-space characterization (done)
+`scripts/phase8/characterize_training_set.py` →
+`results/phase8/training_space.json`.
+
+300k PubChemQC molecules, CHONSFCl, MW 200-1000:
+
+- Elements: C/H plus N 94%, O 90%, S 33%, Cl 20%, F 19%.
+- MW: median 326, p99 709; very large molecules are rare.
+- Labels: Gap median 4.81 eV, p1-p99 2.90-7.42 eV.
+- Topology sample: aromatic rings median 2, p99 5; aromatic-atom fraction median
+  0.43, p99 0.84; rotatable bonds median 5, p99 16.
+
+Coverage gaps called out by `CURRENT_STATE.md`:
+
+- high conjugation / high aromatic fraction;
+- narrow gap / charge-transfer-like molecules;
+- low S/Cl coverage relative to useful commercial chemistry.
+
+## P8.2 Sampling spec (done, 2026-06-25)
+Defined a broader-coverage PubChemQC refetch that fills sparse bins rather than
+repeating the Phase 7 distribution. The intended dataset is **not** old300k plus
+top-up. It is a fixed-size replacement set:
+
+```
+phase8_replacement_300k = phase7_300k - N easy/common rows + N targeted hard rows
+```
+
+This keeps total training size fixed at 300k, so the controlled variable is
+coverage distribution rather than dataset size.
+
+Artifacts:
+
+- descriptor cache: `results/phase8/training_gap_descriptors.csv`
+- executable spec: `results/phase8/sampling_spec.json`
+- readable spec: `results/phase8/sampling_spec.md`
+- fetcher: `scripts/phase8/fetch_targeted_topup.py`
+- replacement assembler: `scripts/phase8/assemble_replacement_dataset.py`
+- smoke CSV: `data/raw/phase8_targeted_topup_smoke.csv`
+- availability probe CSV: `data/raw/phase8_targeted_topup_probe.csv`
+
+Current Phase 7 coverage gaps from the full 300k descriptor cache:
+
+| region | count | fraction |
+|---|---:|---:|
+| Gap `<2.5 eV` | 912 | 0.30% |
+| Gap `<3.0 eV` | 4,041 | 1.35% |
+| aromatic rings `>=5` | 5,045 | 1.68% |
+| aromatic atom fraction `>=0.80` | 6,204 | 2.07% |
+| aromatic edge (`rings>=5` or `frac>=0.85`) | 6,639 | 2.21% |
+| MW `>=500` | 19,637 | 6.55% |
+| MW `>=700` | 3,285 | 1.10% |
+| S/Cl hard subset | 25,443 | 8.48% |
+| flexible hard subset | 9,405 | 3.14% |
+
+Recommended quota axes:
+
+| axis | sparse target | reason |
+|---|---|---|
+| gap | low-gap tail, especially `<3 eV` | known B3LYP/model blind spot; OLED-like region |
+| aromaticity | `aromatic_rings >=5` or `aromatic_atom_fraction >=0.8` | high-conjugation edge |
+| elements | S-containing and Cl-containing molecules | underrepresented but allowed elements |
+| size | MW `500-1000`, especially `>700` | p99 of v1 is only ~709 despite max 1000 |
+
+The executable 200k top-up priority buckets are:
+
+| priority | bucket | quota |
+|---:|---|---:|
+| 1 | `very_low_gap` | 30,000 |
+| 2 | `low_gap_aromatic_edge` | 40,000 |
+| 3 | `large_aromatic_edge` | 26,000 |
+| 4 | `very_large_general` | 20,000 |
+| 5 | `s_or_cl_hard` | 20,000 |
+| 6 | `aromatic_edge_general` | 18,000 |
+| 7 | `flexible_hard` | 10,000 |
+| 8 | `large_mw_500_700` | 36,000 |
+
+The fetcher excludes Phase 7 CIDs/canonical SMILES, preserves the hard element
+set `{C,H,N,O,S,F,Cl}`, and supports `--resume` for long runs. A 10-file / 2-window availability probe produced 597
+targeted candidates; common large/SCl/aromatic buckets fill quickly, while
+`very_low_gap` and `low_gap_aromatic_edge` are genuinely rare and require a long
+scan.
+
+Rare-first scan result:
+
+- command class: `--include-buckets very_low_gap low_gap_aromatic_edge`
+- scanned: 40 HF files x 4 random windows/file x 30 MB
+- output: `data/raw/phase8_targeted_topup_rare_probe.csv`
+- rows: 675 total = 402 `very_low_gap` + 273 `low_gap_aromatic_edge`
+- report: `results/phase8/rare_probe_report.json`
+- gap bins: 402 `<2.5 eV`, 196 `2.5-3.0 eV`, 77 `3.0-3.2 eV`
+
+Balanced non-rare probe:
+
+- command class: exclude rare buckets; collect large/aromatic/SCl/flexible buckets
+- scanned: 30 HF files x 2 random windows/file x 20 MB
+- output: `data/raw/phase8_targeted_topup_balanced_probe.csv`
+- rows: 3,173 total in 272 s (`11.7 rows/s`)
+- report: `results/phase8/balanced_probe_report.json`
+
+Decision: the original 30k/40k low-gap quotas are **availability ceilings, not
+hard requirements**. Low-gap chemistry is genuinely sparse in PubChemQC under the
+current CHONSFCl/MW filters. Do not waste hours trying to force 70k rare rows.
+Keep rare rows as a dedicated hard slice and use sampling/loss weights during
+training; fill the rest of the top-up with the easier hard-coverage buckets.
+
+Replacement assembler smoke:
+
+- inputs: `data/raw/phase8_targeted_topup_rare_probe.csv` +
+  `data/raw/phase8_targeted_topup_balanced_probe.csv`
+- usable candidates: 3,847
+- output: `data/raw/phase8_replacement_300k_probe.csv`
+- output rows: 300,000 exactly
+- report: `results/phase8/replacement_probe_report.md`
+
+Probe coverage shift after replacing 3,847 easy/common rows:
+
+| flag | old fraction | replacement fraction | delta n |
+|---|---:|---:|---:|
+| low-gap (`gap < 3.2`) | 2.44% | 2.73% | +876 |
+| large (`MW >= 500`) | 6.55% | 7.35% | +2,406 |
+| aromatic edge | 2.21% | 2.46% | +744 |
+| S/Cl hard | 8.48% | 9.05% | +1,721 |
+| flexible hard | 3.14% | 3.42% | +855 |
+| any P8 hard | 15.60% | 16.88% | +3,847 |
+
+Next: fetch enough replacement candidates for a first real cut, e.g. 50k targeted
+rows, then assemble `data/raw/phase8_replacement_300k.csv`. The interrupted
+`phase8_targeted_topup_200k.csv` is diagnostic only and should not be treated as
+the final replacement candidate pool.
+
+## P8.2c Replacement 300k first cut (done, 2026-06-25)
+
+Formal fixed-size replacement dataset:
+
+- output: `data/raw/phase8_replacement_300k.csv`
+- report: `results/phase8/replacement_dataset_report.md`
+- old rows removed: 38,620 easy/common Phase 7 rows
+- targeted rows inserted: 38,620 hard replacement candidates
+- final rows: 300,000 exactly
+- duplicate canonical SMILES: 0
+- target NaNs: 0
+- `gap <= 0`: 0
+
+Targeted rows used:
+
+| bucket | n |
+|---|---:|
+| `large_mw_500_700` | 13,847 |
+| `s_or_cl_hard` | 7,677 |
+| `very_large_general` | 4,593 |
+| `aromatic_edge_general` | 4,185 |
+| `flexible_hard` | 3,842 |
+| `large_aromatic_edge` | 3,801 |
+| `very_low_gap` | 402 |
+| `low_gap_aromatic_edge` | 273 |
+
+Coverage shift vs Phase 7 control:
+
+| flag | old fraction | replacement fraction | delta n |
+|---|---:|---:|---:|
+| low-gap (`gap < 3.2`) | 2.44% | 3.61% | +3,510 |
+| large (`MW >= 500`) | 6.55% | 15.04% | +25,492 |
+| aromatic edge | 2.21% | 5.21% | +8,984 |
+| S/Cl hard | 8.48% | 13.01% | +13,581 |
+| flexible hard | 3.14% | 6.46% | +9,956 |
+| any P8 hard | 15.60% | 28.47% | +38,620 |
+
+Next: build sharded 2D + 3D ETKDG graph caches for
+`data/raw/phase8_replacement_300k.csv`, leaving all Phase 7 data/caches intact for
+the same-size control comparison.
+
+## P8.3 30k MoE decision experiment (done, 2026-06-25)
+
+Before spending a full 300k retrain on MoE, run a controlled 30k decision
+experiment:
+
+1. old30k = first 30k rows from the Phase 7 control dataset;
+2. replacement30k = first 30k rows from `phase8_replacement_300k.csv`;
+3. train GPS + SchNet encoders separately on each 30k set;
+4. align 2D/3D embeddings by `source_idx`;
+5. train single `FusionHead` and `MoEFusionHead` on the same embedding/split.
+
+Artifacts:
+
+- runner: `scripts/phase8/run_30k_moe_ab.py`
+- graph builder: `scripts/phase8/build_replacement_graphs.py`
+- encoder trainer/extractor: `scripts/phase8/train_encoder.py`
+- fusion A/B: `scripts/phase8/train_moe_fusion.py`
+- summary: `results/phase8/moe_ab_30k_summary.json`
+
+Graph build:
+
+| dataset | 2D graphs | 3D ETKDG graphs | ETKDG failures |
+|---|---:|---:|---:|
+| old30k | 30,000 | 29,985 | 15 |
+| replacement30k | 30,000 | 29,973 | 27 |
+
+Encoder internal test MAE, average over HOMO/LUMO/Gap:
+
+| dataset | GPS 2D avg MAE | SchNet 3D avg MAE |
+|---|---:|---:|
+| old30k | 0.1543 | 0.1737 |
+| replacement30k | 0.1659 | 0.1756 |
+
+These internal test numbers are **not** a direct old-vs-replacement quality
+comparison because the replacement split is intentionally harder. They are only
+a sanity check that both 30k encoders trained normally.
+
+Fusion A/B on each dataset:
+
+| dataset | head | avg MAE | Gap MAE | delta vs single |
+|---|---|---:|---:|---:|
+| old30k | single FusionHead | 0.12649 | 0.14774 | — |
+| old30k | MoE(4) | 0.12646 | 0.14751 | -0.00003 avg / -0.00022 Gap |
+| replacement30k | single FusionHead | 0.13838 | 0.16251 | — |
+| replacement30k | MoE(4) | 0.13778 | 0.16211 | -0.00060 avg / -0.00040 Gap |
+
+Conclusion: MoE is a **tie-level gain** at 30k, matching the earlier frozen
+Phase 7 result. It is not worth prioritizing a full 300k MoE run. If Phase 8
+continues, the next controlled lever should be replacement-data coverage with a
+single fusion head, evaluated on a common OOD/hard set.
+
+### End-to-end MoE pilot (done, 2026-06-25)
+
+Question: can the 30k MoE be trained end-to-end, with gradients flowing through
+GPS 2D + SchNet 3D + MoE instead of freezing encoder embeddings?
+
+Implementation:
+
+- reusable wrapper: `src/molgap/hybrid.py` (`EndToEndHybrid`)
+- trainer: `scripts/phase8/train_end_to_end_hybrid.py`
+- data: `replacement30k`, aligned by `source_idx`
+- head: `MoEFusionHead`, 4 experts
+- training: batch 64, max 60 epochs, patience 10, lr `2e-4`
+
+Result:
+
+| run | best val MAE | test avg MAE | test Gap MAE |
+|---|---:|---:|---:|
+| replacement30k end-to-end MoE | 0.14362 | 0.14170 | 0.17301 |
+| replacement30k frozen-embedding MoE | 0.1387 val | 0.13778 | 0.16211 |
+
+Conclusion: end-to-end MoE is technically feasible on the RTX 5060 at 30k, but
+this first run does **not** beat the simpler train-encoders-then-fusion setup.
+If revisited, compare against an end-to-end single-head baseline and tune
+learning-rate groups / warm-starts before considering a full 300k run.
+
+## P8.4 Common evaluation (done, 2026-06-25)
+
+Before a full 300k retrain, compare the 30k old/replacement models on a **common**
+evaluation set. This isolates data coverage value; internal test splits cannot do
+that because their distributions differ.
+
+Artifacts:
+
+- evaluator: `scripts/phase8/common_eval_30k.py`
+- metrics: `results/phase8/common_eval_30k_metrics.json`
+- predictions: `results/phase8/common_eval_30k_predictions.csv`
+- summary: `results/phase8/common_eval_30k_summary.md`
+
+Common-eval set:
+
+| slice | valid molecules |
+|---|---:|
+| Phase 7 OOD-1000 | 999 |
+| P8 targeted hard slice | 981 |
+| total | 1,980 |
+
+Hybrid results, replacement30k minus old30k:
+
+| eval set | avg MAE delta | Gap MAE delta |
+|---|---:|---:|
+| all | -0.00216 | -0.00102 |
+| Phase 7 OOD-1000 | +0.00033 | +0.00213 |
+| P8 targeted hard | -0.00469 | -0.00422 |
+
+Conclusion: the replacement distribution is not a broad OOD breakthrough at 30k,
+but it is directionally positive on the hard chemistry Phase 8 targeted. This is
+enough to justify one full replacement300k standard hybrid run if compute budget
+is available. Keep the next full run to the single `FusionHead`; MoE remains
+deprioritized.
+
+## P8.5 Graph cache
+Build full 2D + 3D ETKDG graphs for the broader-coverage data with the same
+conformer method as Phase 7 inference. Use sharded streaming writes; do not mix
+PM6 training coords with ETKDG inference.
+
+## P8.6-P8.7 Model selection
+Use one fixed split per candidate so the comparisons isolate each lever:
+
+1. trainable encoder + single FusionHead on broader coverage data;
+2. same data/split, single FusionHead vs MoE head only if the common-eval result
+   shows a reason to revisit MoE;
+3. select v2 only if the gain clears noise (`scaffold OOD delta > 2x std`).
+
+If MoE ties, keep the single head and record the negative result. If v2 fails to
+beat Phase 7 robustly, keep Phase 7 as production and proceed to Phase 9/10 with
+the v1 stack.
+
+## Records
+Frozen-encoder probes are already closed:
+
+- MoE on frozen Phase 7 embeddings: no OOD win.
+- Descriptor-aware fusion on frozen Phase 7 embeddings: tiny tie-level gain.
+
+See `docs/experiment_moe_experts_2026-06-24.md`.

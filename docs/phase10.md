@@ -1,64 +1,79 @@
-# Phase 10: Uncertainty Quantification (UQ)
+# Phase 10: Inference Pipeline & Property Database
 
 ## Goal
-Ship every GW prediction with a **calibrated confidence**: a per-target σ plus a
-molecule-level OOD flag. Deliverable P10.4 (the property database) requires a
-confidence signal so downstream users know which rows to trust. σ large = the
-model is unsure about that prediction; the OOD flag = the molecule sits in a
-sparse region of training space where error grows even when σ looks small.
+Build the user-facing prediction layer and the commercial-molecule property
+database: SMILES in, B3LYP surrogate + GW correction + trust signals out.
 
-This wraps the Phase 9 Δ-learning path; it does not change the surrogate or the
-Δ-model accuracy.
+Phase 10 absorbs the old chemical-space-screening tasks from the previous Phase 8:
+element/MW/topology gates, embedding-distance OOD scoring, and commercial
+molecule curation are delivery-layer concerns. They should be finalized only
+after Phase 8 selects the production base model.
 
-## Components
+## Current implemented subset: M1 UQ (v1-based, done)
+The current UQ bundle wraps the Phase 7 hybrid + Phase 9 LightGBM Δ stack. It is
+useful and validated, but it is tied to v1 embeddings and must be re-fit if Phase
+8 produces a v2 base.
 
-### 1. Δ-ensemble → σ (`scripts/phase10/train_ensemble.py`)
-10-member LightGBM Δ-ensemble on the frozen 384-d hybrid embedding
-(GPS 192 + SchNet 192). σ = ensemble spread (std across members), then
-**sigma-scaling recalibration** on a scaffold-disjoint calib set
-(`results/phase10/ensemble_calibration.json`).
-- MAE is unchanged vs the single Δ-model: HOMO/LUMO/Gap = 0.199 / 0.219 / 0.307 eV
-  (R² 0.85 / 0.87 / 0.88) — adding UQ costs no accuracy.
-- Split: n=3736 → 2621 fit / 420 calib / 695 test (scaffold-disjoint).
+### 1. Δ-ensemble -> sigma
+`scripts/phase10/train_ensemble.py` trains a 10-member LightGBM Δ-ensemble on the
+frozen 384-d Phase 7 hybrid embedding (GPS 192 + SchNet 192). Sigma is ensemble
+spread, then sigma-scaled on a scaffold-disjoint calibration set.
 
-### 2. OOD distance (`scripts/phase10/ood_score.py`)
-Euclidean k-NN distance (k=5) to the training embeddings.
-- Distance **monotonically predicts error**: Gap binned MAE rises 0.239 → 0.586 eV
-  across deciles (~2.5× near→far).
-- Agrees with σ: Spearman ρ(dist, σ) ≈ 0.43–0.45.
-- **Cosine carries no signal** (ρ ≈ 0, even slightly negative) — use euclidean.
-- Ships `results/phase10/ood_reference.npz` (training embeddings + p95 threshold,
-  ood_fraction ≈ 4.6%) for inference-time scoring.
+Test MAE is unchanged vs the single Δ model:
 
-### 3. Inference interface (`src/molgap/inference.py`)
-`predict_smiles_with_uq(smiles)` → per-target GW `(value, σ, b3lyp)` + a
-molecule-level `ood` flag. Features come from `phase7_hybrid` (192+192-d) to match
-the Δ-ensemble's training features. Local .venv verified: valid SMILES → triple,
-invalid → None.
+| target | MAE | R2 |
+|---|---:|---:|
+| HOMO | 0.199 | 0.85 |
+| LUMO | 0.219 | 0.87 |
+| Gap | 0.307 | 0.88 |
 
-## Calibration (it is real)
+Calibration after scaling:
 
-| target | ENCE pre | ENCE post | 1σ cov | 2σ cov | σ_mean |
-|--------|----------|-----------|--------|--------|--------|
-| HOMO | 4.52 | **0.22** | 0.72 | 0.94 | 0.26 |
-| LUMO | 4.85 | **0.23** | 0.73 | 0.93 | 0.29 |
-| Gap  | 3.95 | **0.14** | 0.74 | 0.94 | 0.43 |
+| target | ENCE post | 1 sigma cov | 2 sigma cov | sigma mean |
+|---|---:|---:|---:|---:|
+| HOMO | 0.22 | 0.72 | 0.94 | 0.26 |
+| LUMO | 0.23 | 0.73 | 0.93 | 0.29 |
+| Gap | 0.14 | 0.74 | 0.94 | 0.43 |
 
-Post-recalibration coverage sits close to the ideal 0.68 / 0.95, so the reported
-σ is a trustworthy number, not a placeholder. Reliability diagrams:
-`results/phase10/reliability_{homo,lumo,gap}.png`;
-distance-vs-error: `results/phase10/ood_distance_vs_error.png`.
+### 2. Embedding-distance OOD
+`scripts/phase10/ood_score.py` computes Euclidean k-NN distance (`k=5`) to the
+training embeddings.
 
-## Status & constraints
-- Built on the **Phase 7 SchNet hybrid + Phase 9 Δ** stack. After the pending 1M
-  retrain, the ensemble and calibration must be **re-fit** against the new hybrid
-  embeddings — σ is only valid in the chemical space it was calibrated on.
-- Inference features MUST be `phase7_hybrid` (192+192-d); feeding any other
-  embedding mis-feeds the Δ-ensemble.
-- This is the confidence half of P10.4; the full deliverable still needs the
-  batch run over the commercial-molecule universe (P10.2 + P10.3).
+- Distance monotonically predicts error: Gap binned MAE rises 0.239 -> 0.586 eV
+  across deciles.
+- Spearman rho(distance, sigma) is about 0.43-0.45.
+- Cosine distance carries no signal; use Euclidean.
+
+### 3. Single-molecule API
+`src/molgap/inference.py` exposes `predict_smiles_with_uq(smiles)`:
+
+- per-target GW estimate;
+- calibrated sigma;
+- underlying B3LYP prediction;
+- molecule-level OOD flag.
+
+This API currently assumes `phase7_hybrid` embeddings. Feeding v2 embeddings into
+the v1 ensemble would mis-calibrate both Δ and sigma.
+
+## Remaining Phase 10 work
+After Phase 8 selects the base and Phase 9 re-validates the GW correction:
+
+| Task | Output |
+|---|---|
+| P10.1 hybrid batch-predict library function | reusable batch API over 2D/3D/fusion |
+| P10.2 batch CLI | SMILES list -> B3LYP + Δ/GW + sigma/OOD CSV |
+| P10.3 in-distribution screen | element + MW + topology gates |
+| P10.4 embedding OOD score | nearest-neighbor trust score for each row |
+| P10.5 real-capability sounding | HOPV/full experimental comparison, layered |
+| P10.6 commercial molecule universe | TCI / Sigma-Aldrich / Ossila / etc. |
+| P10.7 property database | versioned near-GW HOMO/LUMO/Gap CSV with confidence |
 
 ## Artifacts
-`results/phase10/`: `ensemble_calibration.json`, `ensemble_lgbm/{target}_m0..m9.txt`,
-`ood_reference.npz`, `uq_ensemble_metrics.json`, `ood_metrics.json`, reliability +
-OOD plots.
+Current v1 UQ artifacts live in `results/phase10/`:
+
+- `ensemble_calibration.json`
+- `ensemble_lgbm/{target}_m0..m9.txt`
+- `ood_reference.npz`
+- `uq_ensemble_metrics.json`
+- `ood_metrics.json`
+- reliability plots and OOD plots

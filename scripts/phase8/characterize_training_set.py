@@ -1,14 +1,13 @@
 """
-Phase 7: characterize the 300k training set's chemical space.
+Phase 8.1: characterize the Phase 7 300k training set's chemical space.
 
-Defines what "in-distribution" means so we can later screen commercial molecules:
-only molecules that look like the training set get trusted (high-confidence)
-predictions. Answers the user's core question — "what is my training set, and
-which commercial molecules share its elements / size / topology?"
+This is now a coverage diagnostic for the Phase 8 v2-base retrain: it identifies
+sparse regions to target in the broader PubChemQC refetch. Commercial-molecule
+screening moved to Phase 10, after the production base model is selected.
 
 Outputs:
   results/phase8/training_space.json  — element coverage, MW + descriptor ranges,
-                                         label ranges, the in-distribution "box"
+                                         label ranges, and topology summary
 
 Usage:
   .venv\\Scripts\\python.exe scripts/phase8/characterize_training_set.py

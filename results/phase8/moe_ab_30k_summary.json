@@ -1,0 +1,24 @@
+{
+  "rows": [
+    {
+      "tag": "old30k",
+      "n_aligned": 29985,
+      "baseline_avg_mae": 0.12649446974198023,
+      "moe_avg_mae": 0.12646057705084482,
+      "delta_avg_mae": -3.3892691135406494e-05,
+      "baseline_gap_mae": 0.1477375030517578,
+      "moe_gap_mae": 0.14751383662223816,
+      "delta_gap_mae": -0.00022366642951965332
+    },
+    {
+      "tag": "replacement30k",
+      "n_aligned": 29973,
+      "baseline_avg_mae": 0.13837836682796478,
+      "moe_avg_mae": 0.13777745018402734,
+      "delta_avg_mae": -0.000600916643937438,
+      "baseline_gap_mae": 0.1625078171491623,
+      "moe_gap_mae": 0.1621103137731552,
+      "delta_gap_mae": -0.0003975033760070801
+    }
+  ]
+}

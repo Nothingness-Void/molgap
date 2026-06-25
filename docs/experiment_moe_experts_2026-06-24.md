@@ -122,6 +122,137 @@ TopExpert（Kim et al., AAAI 2023）的专家分组**只在分类任务**（BBBP
 - **scaffold split MoE < 基线且跨 seed 稳定（Δ > 2×std）** → **真增益**，专家分组对泛化有用，值得写进路线图、考虑并入 1M 重训。
 - **scaffold split MoE ≈ 或 > 基线** → 回归任务上专家无用（诚实记录这个负结果，本身就是有价值的结论，回应「为什么不做 MoE」）。
 
+## 7.1 本分支执行记录（2026-06-24）
+
+执行环境：RTX 5060，`.venv\Scripts\python.exe`，Phase 7 既有 frozen embeddings。
+
+先做了可行性修正：
+
+- `MoEFusionHead` 已移入 `src/molgap/fusion.py`，脚本只做 CLI/训练，符合 `ARCHITECTURE.md`。
+- Phase 7 的 3D graph cache 没有 `.smiles` 字段，scaffold split 原实现不可跑；已改为用 `results/phase7/align_2d_idx.pt` 从原 CSV 恢复 3D 成功样本的 row-matched SMILES，无需重建 ETKDG 图。
+- scaffold 提取前移除立体信息，并对 RDKit 异常分子做 stable fallback 分组。
+- 新增 `--dry-run` 和 `--max-samples`，用于前置检查和 smoke test；子集结果保存为 `_n{N}` 后缀，避免覆盖正式 full-run 结果。
+
+Dry-run 通过：
+
+| split | N | train/val/test | baseline params | MoE(4) params |
+|---|---:|---:|---:|---:|
+| random | 299,629 | 239,703 / 29,962 / 29,964 | 203,907 | 409,360 |
+| scaffold | 299,629 | 239,835 / 29,962 / 29,832 | 203,907 | 409,360 |
+
+Smoke test（`--max-samples 30000 --epochs 80 --patience 12 --seeds 42 1 2`）：
+
+| split | baseline Gap MAE | MoE(4) Gap MAE | Δ(MoE-baseline) | judgment |
+|---|---:|---:|---:|---|
+| random | 0.07878 ± 0.00044 | 0.07857 ± 0.00025 | -0.00021 eV | tiny, within noise |
+| scaffold | 0.07033 ± 0.00052 | 0.06991 ± 0.00050 | -0.00043 eV | tiny, within noise |
+
+Interim conclusion: **technically feasible, but no deployment-relevant signal yet**.
+The observed gain is <0.001 eV and smaller than seed-to-seed variance; this does
+not meet the pre-declared “Δ > 2×std” criterion. Do not route the 1M retrain
+toward MoE based on this smoke result alone.
+
+Full default run note: a full `--split random --experts 4` run was started, but
+one seed did not finish within the interactive window, so it was stopped before
+writing a result. Use the smoke numbers above only as a feasibility probe, not as
+the final A/B result.
+
+## 7.2 正式 MoE 训练 + OOD-1000 对比（2026-06-24）
+
+应用户要求，已训练一个完整 300k MoE checkpoint，并在 Phase 7 OOD-1000 上
+按同一 GPS 2D + SchNet 3D encoder 重新编码后对比。
+
+命令：
+
+```powershell
+.venv\Scripts\python.exe -u scripts/phase7/train_moe_ood_compare.py --epochs 300 --patience 30 --checkpoint hybrid_fusion_moe_e4.pt --result-json results/phase7/moe_experiment/ood_moe_e4_metrics.json --pred-csv results/phase7/moe_experiment/ood_moe_e4_predictions.csv
+```
+
+训练结果：
+
+- checkpoint: `models/hybrid_fusion_moe_e4.pt`
+- best validation MAE: **0.06716**
+- early stop: epoch 89
+- train time: 238 s on RTX 5060
+
+OOD-1000（999 valid ETKDG molecules, B3LYP labels）：
+
+| model | HOMO MAE/R² | LUMO MAE/R² | Gap MAE/R² | avg MAE/R² |
+|---|---:|---:|---:|---:|
+| GPS 2D | 0.1179 / 0.8852 | 0.1157 / 0.9680 | 0.1561 / 0.9517 | 0.1299 / 0.9350 |
+| SchNet 3D | 0.1341 / 0.8608 | 0.1329 / 0.9598 | 0.1758 / 0.9443 | 0.1476 / 0.9216 |
+| Phase 7 Hybrid | **0.1128 / 0.8956** | **0.1115 / 0.9706** | **0.1485 / 0.9567** | **0.1243 / 0.9410** |
+| MoE(4) | 0.1126 / 0.8955 | 0.1117 / 0.9705 | 0.1489 / 0.9566 | 0.1244 / 0.9409 |
+
+Conclusion: **MoE trains successfully but does not beat the Phase 7 Hybrid on OOD**.
+It slightly improves HOMO MAE by 0.00013 eV, but worsens LUMO and Gap; average
+MAE is worse by 0.00017 eV. This is a tie within noise at best, and not a reason
+to replace the current single FusionHead or complicate the 1M retrain.
+
+## 7.3 Descriptor-aware fusion trial（2026-06-24）
+
+Worst-case OOD analysis suggested two failure modes:
+
+- some molecules are hard for every model (salts/multi-fragment, flexible,
+  chlorinated, large conjugated, extreme gaps);
+- on a subset, Hybrid loses because the gate under-selects the better single
+  modality, usually SchNet 3D.
+
+To test this, added `DescriptorAwareFusionHead`: same frozen GPS 2D + SchNet 3D
+embeddings, but the fusion gate also sees 16 standardized lightweight context
+features:
+
+`mw`, `heavy_atoms`, `fragments`, `hetero_atoms`, `rotatable_bonds`, `ring_count`,
+`aromatic_rings`, `conjugated_bonds`, `frac_csp3`, `tpsa`, `formal_charge`,
+`has_cl`, `has_f`, `has_s`, `has_salt`, `is_charged`.
+
+Command:
+
+```powershell
+.venv\Scripts\python.exe -u scripts/phase7/train_context_fusion_ood_compare.py --epochs 300 --patience 30 --checkpoint hybrid_fusion_context.pt --result-json results/phase7/moe_experiment/ood_context_fusion_metrics.json --pred-csv results/phase7/moe_experiment/ood_context_fusion_predictions.csv
+```
+
+Artifacts:
+
+- descriptor cache: `results/phase7/fusion_context_features.npy`
+- checkpoint: `models/hybrid_fusion_context.pt`
+- metrics: `results/phase7/moe_experiment/ood_context_fusion_metrics.json`
+- predictions: `results/phase7/moe_experiment/ood_context_fusion_predictions.csv`
+
+Training:
+
+- best validation MAE: **0.06749**
+- early stop: epoch 87
+- train time: 277 s on RTX 5060
+
+OOD-1000（999 valid ETKDG molecules, B3LYP labels）:
+
+| model | HOMO MAE/R² | LUMO MAE/R² | Gap MAE/R² | avg MAE/R² |
+|---|---:|---:|---:|---:|
+| Phase 7 Hybrid | 0.11276 / 0.89555 | **0.11152 / 0.97060** | 0.14850 / 0.95671 | 0.12426 / 0.94096 |
+| Descriptor-aware fusion | **0.11225 / 0.89604** | 0.11159 / **0.97064** | **0.14848 / 0.95727** | **0.12411 / 0.94132** |
+
+Conclusion: descriptor-aware fusion gives a **tiny positive OOD signal**
+(avg MAE -0.00015 eV, avg R² +0.00036). This is better than MoE, but still too
+small to replace the Phase 7 production head without multi-seed/full-scale
+confirmation. It is worth keeping as a low-risk candidate for the 1M retrain:
+run it as a parallel head after the baseline FusionHead, not as a replacement
+architecture yet.
+
+Post-hoc error-shift check:
+
+- context better on avg error: 499/999 molecules; worse: 500/999.
+- mean Δ(avg abs) = -0.000154 eV; median = +0.000018 eV.
+- Gap improved on 497/999; mean Δ(Gap abs) = -0.000023 eV.
+- On the **top-20 worst Hybrid molecules**, context improved 14/20 and reduced
+  mean avg error by **0.0116 eV**.
+
+Interpretation: the context features help some known failure modes, especially
+salts/chlorinated/flexible outliers, but the current head also introduces small
+regressions elsewhere. A better version should add regularization or train it as
+a residual/gating correction over the existing FusionHead instead of replacing
+the whole fusion head.
+
 ## 8. 实验脚本
 
 完整脚本见同目录 `moe_experts_local.py`（已写好）。核心 `MoEFusionHead` 类设计依据 TopExpert `model.py`（`gate`/`expert`/`GNN_topexpert` 类）：专家=共享 trunk 上的轻量 MLP 头，router 产生 per-molecule 软权重，加权求和。从二分类适配为 3-target 回归。

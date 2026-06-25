@@ -15,32 +15,56 @@ The database is the deliverable; the predictor is how we build it. Delivery targ
 end of Phase 11.
 
 ## Status snapshot
-B3LYP-surrogate model is **done** (Phase 7). Live work is **Δ-learning to GW**.
-No open blocker. Horizon: **~6 months (2026 H2)**.
+B3LYP-surrogate model is **done** (Phase 7, 300k). Still in **model-optimization**
+mode — NOT building the database yet. Live work is **Phase 8 — scaling &
+architecture**: test broader-coverage data with a trainable encoder, producing a
+new **v2 production base** only if it beats the Phase 7 control. A 30k
+trainable-encoder MoE A/B tied the single fusion head, so MoE is no longer the
+default full run. The Phase 7 300k model is the **v1 fallback**. Horizon:
+**~6 months (2026 H2)**.
 
 ## Phase plan (8 → 11)
 
-The model is a faithful B3LYP surrogate inside its training distribution; the value
-now is (a) knowing where it can be trusted, and (b) lifting it past B3LYP toward GW.
+Phase 7 is a faithful B3LYP surrogate inside its training distribution. We are
+**still optimizing the model**, not yet building the database. The order reflects
+that: scale/architecture first (Phase 8), then lift toward GW (Phase 9), then ship
+the DB (Phase 10–11).
 
 | Phase | Theme | Question | Exit artifact |
 |-------|-------|----------|---------------|
-| **Phase 8** | Chemical-space mapping & real-capability sounding | *Where is the model trustworthy, vs which reference?* | In-distribution screen + a sounding report (model vs experiment/GW, layered) |
-| **Phase 9** | Δ-learning to GW | *Can a small Δ model lift B3LYP→GW accuracy?* | Trained Δ model + validation (scaffold split, Y-rand) |
-| **Phase 10** | Inference pipeline & property database | *Predict any organic molecule at near-GW accuracy.* | Batch CLI (B3LYP + Δ → near-GW) + a predicted-property database |
+| **Phase 8** | Scaling & architecture (**current**) | *Does broader-coverage data + trainable encoder beat the 300k v1?* | New **v2 production base** (or a documented "no-gain, keep v1") |
+| **Phase 9** | Δ-learning to GW | *Can a small Δ model lift B3LYP→GW accuracy?* | Trained Δ model + validation (scaffold split, Y-rand) — re-validated on the chosen base |
+| **Phase 10** | Inference pipeline & property database | *Predict any organic molecule at near-GW accuracy, with trust tiers.* | Batch CLI (B3LYP + Δ → near-GW) + in-distribution screen + predicted-property DB |
 | **Phase 11** | Delivery | *Ship it.* | Versioned predictor + DB, queryable access, reproducible build, data card |
+
+The Phase 7 300k hybrid is the **v1 fallback** and stays frozen as a reference;
+Phase 8 tries to produce a better **v2** base on top of it. Δ-learning (Phase 9)
+and the database (Phase 10) get re-validated against whichever base wins.
 
 Why GW (not OLED-solid experiment): the target is *general* electronic structure,
 not solid-state OLED values — so GW gas-phase quasiparticle energies are the right
 high-accuracy reference, and OE62 GW5000 supplies enough clean training pairs.
 
-### Phase 8 — Chemical-space mapping & sounding
+### Phase 8 — Scaling & architecture (current)
+Goal: push B3LYP-prediction accuracy past the 300k v1 by **expanding coverage** on
+a trainable encoder. Frozen-encoder probes (MoE-on-frozen-embeddings,
+descriptor-aware fusion) and the 30k trainable-encoder MoE A/B both tie the single
+head, so MoE is not the default full run. The remaining lever is data coverage +
+trainable encoders, validated on common OOD/hard evaluation.
+
 | Task | ID | Status | Notes |
 |------|----|--------|-------|
-| Characterize training set chemical space | P8.1 | **done** | `scripts/phase8/characterize_training_set.py` → `results/phase8/training_space.json` |
-| In-distribution screen (element + MW + topology gates) | P8.2 | next | Element hard-filter ⊆ {C,H,N,O,S,F,Cl}; MW 200–1000 |
-| Fingerprint / embedding nearest-neighbor OOD score | P8.3 | | Continuous OOD score per molecule |
-| Real-capability sounding | P8.6 | | HOPV→full 127 + Hybrid + method-aligned exp comparison, layered (in-dist/OOD, conjugation, element) |
+| Quantify coverage gaps in 300k training set | P8.1 | **done** | `results/phase8/training_space.json`; gaps = high-conjugation, narrow-gap, low S/Cl |
+| Define a broader-coverage sampling spec | P8.2 | **done** | `results/phase8/sampling_spec.md`; targeted 200k top-up buckets; fetcher smoke/probe done |
+| Fetch targeted replacement candidates | P8.2b | **done** | First cut uses 38,620 targeted hard rows; interrupted 200k top-up is diagnostic only |
+| Assemble fixed-size replacement 300k | P8.2c | **done** | `data/raw/phase8_replacement_300k.csv`; old300k - 38,620 easy/common + 38,620 targeted hard |
+| 30k trainable-encoder MoE A/B | P8.3 | **done** | MoE gain ≤0.0006 eV avg MAE; tie-level. See `results/phase8/moe_ab_30k_summary.json` |
+| Common-eval old30k vs replacement30k | P8.4 | **done** | OOD-1000 neutral, P8 hard slice positive; see `results/phase8/common_eval_30k_summary.md` |
+| Build full broader-coverage graph cache (2D + 3D ETKDG, sharded) | P8.5 | next | Same 300k size as v1; same ETKDG method as v1; justified by weak-positive hard-slice result |
+| Retrain full hybrid with **trainable** encoder | P8.6 | next | Single FusionHead first — isolates coverage value; MoE only if a later common-eval failure mode justifies it |
+| Select v2 production base | P8.7 | | Pick the winner; if no robust gain, keep v1 and record the negative result |
+
+Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 
 ### Phase 9 — Δ-learning to GW (conditional on data)
 | Task | ID | Notes |
@@ -55,12 +79,20 @@ Conditional: if the in-distribution GW subset is too small, Phase 9 degrades to 
 smarter (structure-aware) bias correction rather than a full Δ model.
 
 ### Phase 10 — Inference pipeline & property database
+Absorbs the old Phase 8 chemical-space-screening tasks (in-distribution screen,
+embedding-distance OOD score, capability sounding): they are **delivery-layer**
+trust tagging, only needed once we actually build the DB. The k-NN OOD half is
+already implemented in the M1 UQ bundle.
+
 | Task | ID | Notes |
 |------|----|-------|
 | Hybrid batch-predict library fn in `src/molgap/inference.py` | P10.1 | `load_hybrid` exists; no batch predict over the trio yet |
 | Batch CLI: SMILES list → B3LYP + Δ → near-GW CSV | P10.2 | Thin wrapper over P10.1 + Δ model |
-| Curate commercial molecule universe (TCI / Sigma-Aldrich / Ossila / …) | P10.3 | The database's molecule list; OLED is one slice, not the whole |
-| Build the property database (commercial molecules, near-GW values + confidence/OOD flags) | P10.4 | **the deliverable** |
+| In-distribution screen (element + MW + topology gates) | P10.3 | Was P8.2. Element hard-filter ⊆ {C,H,N,O,S,F,Cl}; MW 200–1000 |
+| Fingerprint / embedding nearest-neighbor OOD score | P10.4 | Was P8.3. Continuous OOD score per molecule; k-NN half done in M1 UQ |
+| Real-capability sounding | P10.5 | Was P8.6. HOPV→full 127 + Hybrid + method-aligned exp comparison, layered |
+| Curate commercial molecule universe (TCI / Sigma-Aldrich / Ossila / …) | P10.6 | OLED is one slice, not the whole |
+| Build the property database (near-GW values + confidence/OOD flags) | P10.7 | **the deliverable** |
 
 ### Phase 11 — Delivery
 | Task | ID | Notes |

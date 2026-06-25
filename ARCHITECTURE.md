@@ -18,6 +18,7 @@ Code map and module boundaries. Answers one question: **to change X, edit which 
 | `schnet.py` | `SchNetWrapper` — **production 3D encoder**, `forward`/`encode` | Changing the 3D model |
 | `gps.py` | `GPSWrapper` — 2D graph transformer, `forward`/`encode` | Changing the 2D model |
 | `fusion.py` | `FusionHead` — embedding-level gate/concat fusion (hybrid) | Changing how 2D+3D embeddings combine |
+| `hybrid.py` | `EndToEndHybrid` — joint GPS 2D + SchNet 3D + fusion training wrapper | Training the hybrid end-to-end instead of on frozen embeddings |
 | `inference.py` | Model loading + `predict_smiles`/`predict_smiles_batch` + `predict_smiles_with_uq` (GW value+σ+OOD) | Changing the prediction API |
 | `utils.py` | Splits, metrics, SMILES/fingerprint helpers | Shared numeric/IO helpers |
 | `tensornet.py` | `TensorNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — see `results/ab3d/comparison.md` |

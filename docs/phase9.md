@@ -168,6 +168,84 @@ linear layers can take adapters too. Caveats: ELoRA targets *equivariant* GNNs
 diagnostic), so LoRA is a model-side refinement AFTER data scaling + retrain.**
 (Raised by Omozawa in lab discussion 2026-06.)
 
+### LoRA FusionHead pilot (2026-06-24)
+
+Implemented a low-risk LoRA feasibility test that does **not** overwrite or alter
+the B3LYP production checkpoint:
+
+- base: Phase 7 `hybrid_fusion_optuna.pt` FusionHead initialized to B3LYP;
+- frozen: all original FusionHead linear weights;
+- trainable: LoRA adapters on the 6 Linear layers only;
+- input: existing OE62 `emb_2d` + `emb_3d` frozen embeddings;
+- target: absolute GW HOMO/LUMO/Gap;
+- split: same scaffold-disjoint OE62 split as `train_delta.py` test set.
+
+Results on scaffold-test OE62 GW (`n_test=695`):
+
+| method | trainable params | HOMO MAE | LUMO MAE | Gap MAE | avg MAE | avg R² |
+|---|---:|---:|---:|---:|---:|---:|
+| raw B3LYP | 0 | 2.205 | 0.985 | 3.159 | 2.116 | -4.123 |
+| const Δ | 0 | 0.283 | 0.298 | 0.471 | 0.351 | 0.762 |
+| LightGBM Δ | — | 0.197 | **0.217** | **0.303** | 0.239 | — |
+| LoRA r=4 | 8,460 | 0.189 | 0.222 | 0.311 | 0.241 | 0.867 |
+| **LoRA r=8** | **16,920** | **0.186** | 0.218 | 0.303 | **0.236** | 0.877 |
+| LoRA r=16 | 33,840 | 0.190 | 0.218 | 0.306 | 0.238 | **0.879** |
+
+Artifacts:
+
+- script: `scripts/phase9/train_lora_fusion_delta.py`
+- checkpoints: `models/hybrid_fusion_lora_gw_r{4,8,16}.pt`
+- metrics: `results/phase9/lora_fusion_delta*_metrics.json`
+- predictions: `results/phase9/lora_fusion_delta*_predictions.csv`
+
+Conclusion: **LoRA is feasible and competitive with the current LightGBM Δ
+baseline even in the conservative FusionHead-only form.** Rank 8 gives the best
+average MAE and beats LightGBM on HOMO, ties Gap, but is slightly worse on LUMO.
+This is not yet encoder LoRA; the next meaningful step is a true adapter path on
+GPS/SchNet encoder linear layers, still saved separately so the B3LYP base model
+remains unchanged.
+
+### Encoder LoRA pilot (2026-06-24)
+
+Next, injected LoRA into the frozen Phase 7 encoders plus FusionHead, rebuilding
+the OE62 2D/3D graphs from SMILES so gradients flow through `GPSWrapper.encode`
+and `SchNetWrapper.encode`. Original B3LYP weights are still frozen; adapters are
+saved separately. PyTorch `MultiheadAttention.out_proj` is skipped because its
+forward path accesses `.weight` directly; GPS still adapts through node/edge
+embeddings and GINE/MLP linear layers.
+
+Single-seed probe: rank 4, alpha 8, scaffold-test OE62 GW (`n_test=695`).
+
+| adapter targets | trainable params | HOMO MAE | LUMO MAE | Gap MAE | avg MAE | avg R² | note |
+|---|---:|---:|---:|---:|---:|---:|---|
+| FusionHead LoRA r=8 | 16,920 | 0.186 | 0.218 | 0.303 | 0.236 | 0.877 | previous best lightweight adapter |
+| GPS + Fusion | 66,892 | 0.185 | 0.200 | **0.270** | 0.218 | 0.875 | strong gain; fastest encoder adapter |
+| SchNet + Fusion | 71,936 | 0.186 | 0.206 | 0.280 | 0.224 | **0.895** | better R², slower, more overfit-prone |
+| **GPS + SchNet + Fusion** | **130,368** | **0.182** | **0.197** | 0.272 | **0.217** | 0.890 | best MAE, but train/val gap suggests overfit risk |
+
+Artifacts:
+
+- graph cache: `results/phase9/delta_oe62_graphs.pt`
+- script: `scripts/phase9/train_encoder_lora_delta.py`
+- checkpoints: `models/hybrid_encoder_lora_gw_{gps_fusion,schnet_fusion,gps_schnet_fusion}_r4.pt`
+- metrics: `results/phase9/encoder_lora_delta_*_metrics.json`
+
+3-seed stability check (`seed={42,1,2}`, same scaffold split seed 42):
+
+| adapter targets | trainable params | HOMO MAE | LUMO MAE | Gap MAE | avg MAE | avg R² | best-val MAE | train time |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| GPS + Fusion | 66,892 | 0.185 ± 0.004 | 0.204 ± 0.005 | 0.275 ± 0.005 | 0.221 ± 0.004 | 0.873 ± 0.016 | 0.188 ± 0.005 | 181 ± 76 s |
+| **GPS + SchNet + Fusion** | **130,368** | **0.183 ± 0.001** | **0.197 ± 0.002** | **0.270 ± 0.003** | **0.217 ± 0.002** | **0.895 ± 0.005** | **0.179 ± 0.003** | 411 ± 47 s |
+
+Conclusion: **true encoder LoRA is the strongest GW adaptation tried so far**,
+beating LightGBM Δ and FusionHead-only LoRA by a meaningful margin on scaffold
+test. The multi-seed check changes the recommendation: GPS+Fusion is the fast,
+lower-capacity fallback, but **GPS+SchNet+Fusion is stable enough to be the
+primary neural GW-adaptation path**. The remaining risk is not seed instability;
+it is calibration / applicability-domain behavior on commercial OOD molecules.
+Next promotion gate: add UQ/calibration and OOD guardrails before replacing the
+LightGBM Δ baseline in any user-facing workflow.
+
 ## Conditional
 If P8.3 refinement shrinks the clean set too far, Phase 9 degrades to a
 structure-aware (but simpler) bias correction rather than a full Δ model.

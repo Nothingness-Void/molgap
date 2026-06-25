@@ -31,63 +31,21 @@ import json
 import time
 
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 from sklearn.metrics import mean_absolute_error, r2_score
 from torch.utils.data import DataLoader, TensorDataset
 
-from molgap.constants import RESULTS_DIR, MODELS_DIR
-from molgap.fusion import FusionHead
+from molgap.constants import RAW_DIR, RESULTS_DIR, TARGET_COLS
+from molgap.fusion import FusionHead, MoEFusionHead
 
 PHASE7_DIR = RESULTS_DIR / "phase7"
 OUT_DIR = PHASE7_DIR / "moe_experiment"
+DEFAULT_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
+ALIGN_IDX = PHASE7_DIR / "align_2d_idx.pt"
 SEED = 42
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
-# ── MoE head (treatment) ──────────────────────────────────────────
-class MoEFusionHead(nn.Module):
-    """Gate-fuse 2D+3D embeddings into a shared trunk, then route over N expert
-    MLP heads with learned per-molecule soft gating.
-
-    Routing is data-driven (gate sees the fused embedding), NOT hand-partitioned.
-    n_experts=1 collapses to a single head (control == baseline-ish).
-    """
-
-    def __init__(self, hidden=192, dropout=0.0, dim_2d=192, dim_3d=192,
-                 n_targets=3, n_experts=4):
-        super().__init__()
-        self.n_experts = n_experts
-        self.n_targets = n_targets
-        self.proj_2d = nn.Linear(dim_2d, hidden)
-        self.proj_3d = nn.Linear(dim_3d, hidden)
-        self.gate_fuse = nn.Sequential(nn.Linear(hidden * 2, hidden), nn.Sigmoid())
-        # learned router over experts (soft gating, TopExpert-style)
-        self.router = nn.Sequential(
-            nn.Linear(hidden, hidden), nn.SiLU(), nn.Linear(hidden, n_experts)
-        )
-        # N expert MLP heads on the shared trunk
-        self.experts = nn.ModuleList([
-            nn.Sequential(
-                nn.Linear(hidden, hidden), nn.SiLU(), nn.Dropout(dropout),
-                nn.Linear(hidden, hidden // 2), nn.SiLU(),
-                nn.Linear(hidden // 2, n_targets),
-            ) for _ in range(n_experts)
-        ])
-
-    def forward(self, h_2d, h_3d, return_gate=False):
-        h_2d = self.proj_2d(h_2d)
-        h_3d = self.proj_3d(h_3d)
-        g = self.gate_fuse(torch.cat([h_2d, h_3d], dim=-1))
-        h = g * h_2d + (1 - g) * h_3d              # shared trunk (N x hidden)
-        w = torch.softmax(self.router(h), dim=-1)  # N x experts (soft weights)
-        # stack expert outputs: N x experts x targets
-        outs = torch.stack([e(h) for e in self.experts], dim=1)
-        # weighted combination over experts
-        y = torch.sum(w.unsqueeze(-1) * outs, dim=1)  # N x targets
-        if return_gate:
-            return y, w
-        return y
 
 
 # ── data ──────────────────────────────────────────
@@ -96,11 +54,35 @@ def scaffold_from_smiles(smiles):
     from rdkit.Chem.Scaffolds import MurckoScaffold
     m = Chem.MolFromSmiles(smiles)
     if m is None:
-        return ""
-    return MurckoScaffold.MurckoScaffoldSmiles(mol=m, includeChirality=False)
+        return f"invalid:{smiles}"
+    Chem.RemoveStereochemistry(m)
+    try:
+        return MurckoScaffold.MurckoScaffoldSmiles(mol=m, includeChirality=False)
+    except RuntimeError:
+        return f"invalid:{smiles}"
 
 
-def load_data(split="random"):
+def load_aligned_smiles(csv_path):
+    """Recover row-matched SMILES for the 3D embedding set without rebuilding graphs."""
+    if not ALIGN_IDX.exists():
+        raise FileNotFoundError(f"Missing alignment index: {ALIGN_IDX}")
+    df = pd.read_csv(csv_path)
+    for col in TARGET_COLS + ["mw"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+    df = df.dropna(subset=TARGET_COLS + ["smiles"])
+    df = df[df["gap"] > 0].reset_index(drop=True)
+
+    keep = torch.load(ALIGN_IDX, weights_only=False).cpu().numpy()
+    if len(df) <= int(keep.max()):
+        raise RuntimeError(
+            f"CSV has {len(df)} filtered rows, but alignment index reaches {int(keep.max())}"
+        )
+    smiles_col = "canonical_smiles" if "canonical_smiles" in df.columns else "smiles"
+    return df.iloc[keep][smiles_col].tolist()
+
+
+def load_data(split="random", csv_path=DEFAULT_CSV):
     emb_3d = torch.load(PHASE7_DIR / "schnet_3d_embeddings.pt", weights_only=False)
     emb_2d = torch.load(PHASE7_DIR / "gps_2d_embeddings_aligned.pt", weights_only=False)
     graphs = torch.load(PHASE7_DIR / "pyg_3d_graphs_etkdg_300k.pt", weights_only=False)
@@ -113,11 +95,14 @@ def load_data(split="random"):
         n_tr, n_va = int(0.8 * N), int(0.1 * N)
         sp = {"train": idx[:n_tr], "val": idx[n_tr:n_tr + n_va], "test": idx[n_tr + n_va:]}
     elif split == "scaffold":
-        # group by Bemis-Murcko scaffold; disjoint scaffolds across splits
-        smis = [getattr(g, "smiles", None) for g in graphs]
-        if any(s is None for s in smis):
-            raise RuntimeError("graphs lack .smiles; cannot do scaffold split. "
-                               "Re-run with --split random or add smiles to the graph cache.")
+        # Group by Bemis-Murcko scaffold; disjoint scaffolds across splits.
+        # The Phase 7 3D cache predates storing smiles on each graph, so recover
+        # row-matched SMILES through the saved 2D->3D alignment index.
+        from rdkit import RDLogger
+        RDLogger.DisableLog("rdApp.warning")
+        smis = load_aligned_smiles(csv_path)
+        if len(smis) != N:
+            raise RuntimeError(f"Recovered {len(smis)} SMILES for {N} 3D embeddings")
         from collections import defaultdict
         groups = defaultdict(list)
         for i, s in enumerate(smis):
@@ -146,6 +131,43 @@ def make_loader(emb_2d, emb_3d, labels, ii, bs, shuffle):
     return DataLoader(ds, batch_size=bs, shuffle=shuffle, pin_memory=True, num_workers=0)
 
 
+def limit_split(sp, max_samples):
+    if max_samples is None:
+        return sp
+    n_total = int(max_samples)
+    if n_total < 10:
+        raise ValueError("--max-samples must be at least 10")
+    n_tr, n_va = int(0.8 * n_total), int(0.1 * n_total)
+    n_te = n_total - n_tr - n_va
+    if any(len(sp[k]) < n for k, n in [("train", n_tr), ("val", n_va), ("test", n_te)]):
+        raise ValueError("--max-samples exceeds available split size")
+    return {
+        "train": sp["train"][:n_tr],
+        "val": sp["val"][:n_va],
+        "test": sp["test"][:n_te],
+    }
+
+
+def count_params(model):
+    return int(sum(p.numel() for p in model.parameters()))
+
+
+def dry_run(data, hidden, experts):
+    emb_2d, emb_3d, labels, sp = data
+    base = FusionHead("gate", hidden, 0.0).to(device)
+    moe = MoEFusionHead(hidden, 0.0, n_experts=experts).to(device)
+    ii = sp["train"][:8]
+    h2, h3 = emb_2d[ii].to(device), emb_3d[ii].to(device)
+    with torch.no_grad():
+        y_base = base(h2, h3)
+        y_moe, gate = moe(h2, h3, return_gate=True)
+    print("Dry-run OK")
+    print(f"  embeddings: 2D={tuple(emb_2d.shape)} 3D={tuple(emb_3d.shape)} labels={tuple(labels.shape)}")
+    print(f"  split sizes: train={len(sp['train'])} val={len(sp['val'])} test={len(sp['test'])}")
+    print(f"  forward: baseline={tuple(y_base.shape)} moe={tuple(y_moe.shape)} gate={tuple(gate.shape)}")
+    print(f"  params: baseline={count_params(base):,} moe={count_params(moe):,}")
+
+
 # ── train / eval (shared by baseline and MoE) ──────────────────────────────────────────
 def train_eval(model, data, lr, wd, bs, max_epochs, patience):
     emb_2d, emb_3d, labels, sp = data
@@ -153,8 +175,6 @@ def train_eval(model, data, lr, wd, bs, max_epochs, patience):
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
     sched = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, patience=8, factor=0.5, min_lr=1e-6)
     crit = nn.L1Loss()
-    is_moe = isinstance(model, MoEFusionHead)
-
     tr = make_loader(emb_2d, emb_3d, labels, sp["train"], bs, True)
     va = make_loader(emb_2d, emb_3d, labels, sp["val"], 2048, False)
     best_val, best_state, wait = float("inf"), None, 0
@@ -211,16 +231,34 @@ def main():
     ap.add_argument("--epochs", type=int, default=300)
     ap.add_argument("--patience", type=int, default=30)
     ap.add_argument("--seeds", type=int, nargs="+", default=[42, 1, 2])  # repeat for variance
+    ap.add_argument("--csv", type=str, default=str(DEFAULT_CSV))
+    ap.add_argument("--max-samples", type=int, default=None,
+                    help="Use a deterministic subset of the chosen split for smoke tests.")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="Load data, build models, run a tiny forward pass, then exit.")
     args = ap.parse_args()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Device: {device} | split={args.split} | experts={args.experts}")
-    data = load_data(args.split)
+    data = load_data(args.split, args.csv)
+    if args.max_samples is not None:
+        data = (*data[:3], limit_split(data[3], args.max_samples))
     print(f"  N={data[0].shape[0]}  train/val/test="
-          f"{len(data[3]['train'])}/{len(data[3]['val'])}/{len(data[3]['test'])}")
+          f"{len(data[3]['train'])}/{len(data[3]['val'])}/{len(data[3]['test'])}",
+          flush=True)
 
-    results = {"split": args.split, "experts": args.experts, "runs": []}
+    if args.dry_run:
+        dry_run(data, args.hidden, args.experts)
+        return
+
+    results = {
+        "split": args.split,
+        "experts": args.experts,
+        "max_samples": args.max_samples,
+        "runs": [],
+    }
     for seed in args.seeds:
+        print(f"\n=== seed {seed}: training baseline + MoE ===", flush=True)
         torch.manual_seed(seed); np.random.seed(seed)
         t0 = time.time()
         base = FusionHead("gate", args.hidden, 0.0)
@@ -230,11 +268,11 @@ def main():
         dt = time.time() - t0
         row = {"seed": seed, "baseline": m_base, "moe": m_moe, "time_s": dt}
         results["runs"].append(row)
-        print(f"\n[seed {seed}] ({dt/60:.1f} min)")
+        print(f"\n[seed {seed}] ({dt/60:.1f} min)", flush=True)
         for name, m in [("baseline", m_base), ("moe", m_moe)]:
             print(f"  {name:8s} Gap MAE={m['Gap']['mae']:.4f} R2={m['Gap']['r2']:.4f} "
                   f"| HOMO {m['HOMO']['mae']:.4f} LUMO {m['LUMO']['mae']:.4f} "
-                  f"| params={m['n_params']:,}")
+                  f"| params={m['n_params']:,}", flush=True)
 
     # aggregate Gap MAE across seeds
     bg = np.array([r["baseline"]["Gap"]["mae"] for r in results["runs"]])
@@ -250,7 +288,8 @@ def main():
     print(f"  Δ = {mg.mean()-bg.mean():+.4f} eV  "
           f"({'MoE better' if mg.mean()<bg.mean() else 'baseline better/tie'})")
 
-    out = OUT_DIR / f"moe_{args.split}_e{args.experts}.json"
+    suffix = f"_n{args.max_samples}" if args.max_samples is not None else ""
+    out = OUT_DIR / f"moe_{args.split}_e{args.experts}{suffix}.json"
     with open(out, "w") as f:
         json.dump(results, f, indent=2)
     print(f"\n  saved -> {out}")
