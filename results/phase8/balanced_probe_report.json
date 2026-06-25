@@ -1,0 +1,38 @@
+{
+  "out_csv": "data\\raw\\phase8_targeted_topup_balanced_probe.csv",
+  "include_buckets": [
+    "large_aromatic_edge",
+    "very_large_general",
+    "s_or_cl_hard",
+    "aromatic_edge_general",
+    "flexible_hard",
+    "large_mw_500_700"
+  ],
+  "quotas": {
+    "large_aromatic_edge": 2000,
+    "very_large_general": 1538,
+    "s_or_cl_hard": 1538,
+    "aromatic_edge_general": 1385,
+    "flexible_hard": 769,
+    "large_mw_500_700": 2770
+  },
+  "counts": {
+    "large_aromatic_edge": 201,
+    "very_large_general": 333,
+    "s_or_cl_hard": 1285,
+    "aromatic_edge_general": 149,
+    "flexible_hard": 155,
+    "large_mw_500_700": 1050
+  },
+  "resumed_rows": 0,
+  "new_rows": 3173,
+  "total_rows": 3173,
+  "files_scanned": 30,
+  "windows_per_file": 2,
+  "chunk_bytes": 20000000,
+  "parsed_objects": 44442,
+  "filter_passing_candidates_seen": 35368,
+  "elapsed_s": 272.04405450820923,
+  "kept_rows_per_s": 11.663552088047016,
+  "parsed_objects_per_s": 163.36324673715268
+}

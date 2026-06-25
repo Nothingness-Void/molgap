@@ -1,0 +1,333 @@
+{
+  "source_csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase7_chonsfcl_mw200_1000_300k.csv",
+  "n_analyzed": 300000,
+  "topup_size": 200000,
+  "hard_filters": {
+    "allowed_elements": [
+      "C",
+      "Cl",
+      "F",
+      "H",
+      "N",
+      "O",
+      "S"
+    ],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_existing_phase7_cids_and_canonical_smiles": true
+  },
+  "coverage_flags": {
+    "gap_lt_2p5": {
+      "n": 912,
+      "fraction": 0.00304
+    },
+    "gap_lt_3": {
+      "n": 4041,
+      "fraction": 0.01347
+    },
+    "gap_3_to_4": {
+      "n": 42633,
+      "fraction": 0.14211
+    },
+    "high_conjugation": {
+      "n": 50442,
+      "fraction": 0.16814
+    },
+    "aromatic_rings_ge_5": {
+      "n": 5045,
+      "fraction": 0.016816666666666667
+    },
+    "aromatic_fraction_ge_0p8": {
+      "n": 6204,
+      "fraction": 0.02068
+    },
+    "aromatic_edge": {
+      "n": 6639,
+      "fraction": 0.02213
+    },
+    "mw_ge_500": {
+      "n": 19637,
+      "fraction": 0.06545666666666666
+    },
+    "mw_ge_700": {
+      "n": 3285,
+      "fraction": 0.01095
+    },
+    "has_s": {
+      "n": 98198,
+      "fraction": 0.32732666666666665
+    },
+    "has_cl": {
+      "n": 61092,
+      "fraction": 0.20364
+    },
+    "has_s_or_cl_hard": {
+      "n": 25443,
+      "fraction": 0.08481
+    },
+    "flexible_hard": {
+      "n": 9405,
+      "fraction": 0.03135
+    }
+  },
+  "bin_counts": {
+    "gap": [
+      {
+        "bin": "<2.5",
+        "n": 912,
+        "fraction": 0.00304
+      },
+      {
+        "bin": "2.5-3.0",
+        "n": 3129,
+        "fraction": 0.01043
+      },
+      {
+        "bin": "3.0-4.0",
+        "n": 42633,
+        "fraction": 0.14211
+      },
+      {
+        "bin": "4.0-5.5",
+        "n": 192950,
+        "fraction": 0.6431666666666667
+      },
+      {
+        "bin": ">=5.5",
+        "n": 60376,
+        "fraction": 0.20125333333333334
+      }
+    ],
+    "mw": [
+      {
+        "bin": "200-300",
+        "n": 121158,
+        "fraction": 0.40386
+      },
+      {
+        "bin": "300-500",
+        "n": 159205,
+        "fraction": 0.5306833333333333
+      },
+      {
+        "bin": "500-700",
+        "n": 16352,
+        "fraction": 0.05450666666666667
+      },
+      {
+        "bin": "700-1000",
+        "n": 3285,
+        "fraction": 0.01095
+      }
+    ],
+    "aromatic_rings": [
+      {
+        "bin": "0",
+        "n": 25932,
+        "fraction": 0.08644
+      },
+      {
+        "bin": "1-2",
+        "n": 192369,
+        "fraction": 0.64123
+      },
+      {
+        "bin": "3-4",
+        "n": 76654,
+        "fraction": 0.2555133333333333
+      },
+      {
+        "bin": "5-6",
+        "n": 4046,
+        "fraction": 0.013486666666666666
+      },
+      {
+        "bin": ">=7",
+        "n": 999,
+        "fraction": 0.00333
+      }
+    ],
+    "aromatic_atom_fraction": [
+      {
+        "bin": "<0.25",
+        "n": 41976,
+        "fraction": 0.13992
+      },
+      {
+        "bin": "0.25-0.50",
+        "n": 136846,
+        "fraction": 0.45615333333333336
+      },
+      {
+        "bin": "0.50-0.75",
+        "n": 108721,
+        "fraction": 0.36240333333333336
+      },
+      {
+        "bin": "0.75-0.85",
+        "n": 9643,
+        "fraction": 0.032143333333333336
+      },
+      {
+        "bin": ">=0.85",
+        "n": 2814,
+        "fraction": 0.00938
+      }
+    ]
+  },
+  "axis_targets": [
+    {
+      "id": "gap_lt_3",
+      "current_n": 4041,
+      "current_fraction": 0.01347,
+      "desired_final_fraction": 0.08,
+      "needed_topup": 35959
+    },
+    {
+      "id": "gap_lt_2p5",
+      "current_n": 912,
+      "current_fraction": 0.00304,
+      "desired_final_fraction": 0.03,
+      "needed_topup": 14088
+    },
+    {
+      "id": "high_conjugation",
+      "current_n": 50442,
+      "current_fraction": 0.16814,
+      "desired_final_fraction": 0.1,
+      "needed_topup": 0
+    },
+    {
+      "id": "aromatic_rings_ge_5",
+      "current_n": 5045,
+      "current_fraction": 0.016816666666666667,
+      "desired_final_fraction": 0.06,
+      "needed_topup": 24955
+    },
+    {
+      "id": "aromatic_fraction_ge_0p8",
+      "current_n": 6204,
+      "current_fraction": 0.02068,
+      "desired_final_fraction": 0.06,
+      "needed_topup": 23796
+    },
+    {
+      "id": "mw_ge_500",
+      "current_n": 19637,
+      "current_fraction": 0.06545666666666666,
+      "desired_final_fraction": 0.18,
+      "needed_topup": 70363
+    },
+    {
+      "id": "mw_ge_700",
+      "current_n": 3285,
+      "current_fraction": 0.01095,
+      "desired_final_fraction": 0.05,
+      "needed_topup": 21715
+    },
+    {
+      "id": "has_s_or_cl_hard",
+      "current_n": 25443,
+      "current_fraction": 0.08481,
+      "desired_final_fraction": 0.12,
+      "needed_topup": 34557
+    },
+    {
+      "id": "flexible_hard",
+      "current_n": 9405,
+      "current_fraction": 0.03135,
+      "desired_final_fraction": 0.08,
+      "needed_topup": 30595
+    }
+  ],
+  "priority_buckets": [
+    {
+      "id": "very_low_gap",
+      "quota": 30000,
+      "predicate": "gap < 2.5",
+      "why": "Directly fills the lowest-gap B3LYP tail; current v1 has very few.",
+      "current": {
+        "n": 912,
+        "fraction": 0.00304
+      }
+    },
+    {
+      "id": "low_gap_aromatic_edge",
+      "quota": 40000,
+      "predicate": "2.5 <= gap < 3.2 and (aromatic_rings >= 5 or aromatic_atom_fraction >= 0.85)",
+      "why": "OLED-like / charge-transfer-like region where v1 and B3LYP are weakest.",
+      "current": {
+        "n": 533,
+        "fraction": 0.0017766666666666666
+      }
+    },
+    {
+      "id": "large_aromatic_edge",
+      "quota": 26000,
+      "predicate": "mw >= 500 and (aromatic_rings >= 5 or aromatic_atom_fraction >= 0.85)",
+      "why": "Fills the sparse large/conjugated corner most relevant to materials molecules.",
+      "current": {
+        "n": 2889,
+        "fraction": 0.00963
+      }
+    },
+    {
+      "id": "very_large_general",
+      "quota": 20000,
+      "predicate": "mw >= 700",
+      "why": "Phase 7 p99 MW is ~709 despite a 1000 Da allowed max.",
+      "current": {
+        "n": 3285,
+        "fraction": 0.01095
+      }
+    },
+    {
+      "id": "s_or_cl_hard",
+      "quota": 20000,
+      "predicate": "(has_s or has_cl) and (gap < 3.5 or aromatic_rings >= 4 or aromatic_atom_fraction >= 0.70)",
+      "why": "Keeps S/Cl coverage in the hard chemistry rather than only easy molecules; overlaps with low-gap/large buckets.",
+      "current": {
+        "n": 25443,
+        "fraction": 0.08481
+      }
+    },
+    {
+      "id": "aromatic_edge_general",
+      "quota": 18000,
+      "predicate": "gap >= 3.2 and (aromatic_rings >= 5 or aromatic_atom_fraction >= 0.85)",
+      "why": "Adds high-aromatic edge cases not already captured by low-gap or large buckets.",
+      "current": {
+        "n": 5975,
+        "fraction": 0.019916666666666666
+      }
+    },
+    {
+      "id": "flexible_hard",
+      "quota": 10000,
+      "predicate": "rotatable_bonds >= 8 and (gap < 3.5 or aromatic_rings >= 4)",
+      "why": "Targets the flexible donor-like cases where 2D/3D ranking flips.",
+      "current": {
+        "n": 9405,
+        "fraction": 0.03135
+      }
+    },
+    {
+      "id": "large_mw_500_700",
+      "quota": 36000,
+      "predicate": "500 <= mw < 700",
+      "why": "Moves mass out of the overrepresented 200-500 Da region without only chasing extremes.",
+      "current": {
+        "n": 16352,
+        "fraction": 0.05450666666666667
+      }
+    }
+  ],
+  "recommended_training_pool": {
+    "keep_phase7_300k": true,
+    "targeted_topup_size": 200000,
+    "final_pool_size_before_graph_failures": 500000,
+    "use_balanced_or_weighted_batches": true,
+    "holdout_per_bucket_before_training": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "out_csv": "data\\raw\\phase8_targeted_topup_rare_probe.csv",
+  "include_buckets": [
+    "very_low_gap",
+    "low_gap_aromatic_edge"
+  ],
+  "quotas": {
+    "very_low_gap": 429,
+    "low_gap_aromatic_edge": 571
+  },
+  "counts": {
+    "very_low_gap": 402,
+    "low_gap_aromatic_edge": 273
+  },
+  "resumed_rows": 578,
+  "new_rows": 97,
+  "total_rows": 675,
+  "files_scanned": 40,
+  "windows_per_file": 4,
+  "chunk_bytes": 30000000,
+  "parsed_objects": 179731,
+  "filter_passing_candidates_seen": 4322,
+  "elapsed_s": 819.6998589038849,
+  "kept_rows_per_s": 0.11833599694613815,
+  "parsed_objects_per_s": 219.26440275387998
+}

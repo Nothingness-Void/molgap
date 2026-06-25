@@ -208,6 +208,54 @@ def calc_gasteiger_descriptors(mol) -> dict[str, float]:
     }
 
 
+FUSION_CONTEXT_FEATURES = [
+    "mw", "heavy_atoms", "fragments", "hetero_atoms", "rotatable_bonds",
+    "ring_count", "aromatic_rings", "conjugated_bonds", "frac_csp3", "tpsa",
+    "formal_charge", "has_cl", "has_f", "has_s", "has_salt", "is_charged",
+]
+
+
+def calc_fusion_context_features(smiles: object) -> np.ndarray:
+    """Return fixed lightweight context features for descriptor-aware fusion."""
+    require_rdkit()
+    from rdkit.Chem import Descriptors, rdMolDescriptors
+
+    mol = safe_mol(smiles)
+    if mol is None:
+        return np.zeros(len(FUSION_CONTEXT_FEATURES), dtype=np.float32)
+    try:
+        Chem.RemoveStereochemistry(mol)
+    except Exception:
+        pass
+
+    atoms = list(mol.GetAtoms())
+    bonds = list(mol.GetBonds())
+    elements = {atom.GetSymbol() for atom in atoms}
+    fragments = len(Chem.GetMolFrags(mol))
+    formal_charge = sum(atom.GetFormalCharge() for atom in atoms)
+    values = {
+        "mw": float(Descriptors.MolWt(mol)),
+        "heavy_atoms": float(mol.GetNumHeavyAtoms()),
+        "fragments": float(fragments),
+        "hetero_atoms": float(sum(1 for atom in atoms if atom.GetSymbol() not in {"C", "H"})),
+        "rotatable_bonds": float(rdMolDescriptors.CalcNumRotatableBonds(mol)),
+        "ring_count": float(rdMolDescriptors.CalcNumRings(mol)),
+        "aromatic_rings": float(rdMolDescriptors.CalcNumAromaticRings(mol)),
+        "conjugated_bonds": float(sum(1 for bond in bonds if bond.GetIsConjugated())),
+        "frac_csp3": float(rdMolDescriptors.CalcFractionCSP3(mol)),
+        "tpsa": float(rdMolDescriptors.CalcTPSA(mol)),
+        "formal_charge": float(formal_charge),
+        "has_cl": float("Cl" in elements),
+        "has_f": float("F" in elements),
+        "has_s": float("S" in elements),
+        "has_salt": float(fragments > 1),
+        "is_charged": float(formal_charge != 0),
+    }
+    arr = np.array([values[name] for name in FUSION_CONTEXT_FEATURES], dtype=np.float32)
+    arr[~np.isfinite(arr)] = 0.0
+    return arr
+
+
 def build_feature_row_from_smiles(
     smiles: object,
     radius: int = 2,

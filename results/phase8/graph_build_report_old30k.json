@@ -1,0 +1,24 @@
+{
+  "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase7_chonsfcl_mw200_1000_300k.csv",
+  "n_input": 30000,
+  "max_rows": 30000,
+  "results": [
+    {
+      "kind": "2d",
+      "processed": 30000,
+      "graphs": 30000,
+      "failed": 0,
+      "elapsed_s": 34.684619188308716,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_2d_graphs_bond_old30k.pt"
+    },
+    {
+      "kind": "3d",
+      "processed": 30000,
+      "graphs": 29985,
+      "failed": 15,
+      "elapsed_s": 190.54758143424988,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_3d_graphs_etkdg_old30k.pt",
+      "n_jobs": 12
+    }
+  ]
+}
