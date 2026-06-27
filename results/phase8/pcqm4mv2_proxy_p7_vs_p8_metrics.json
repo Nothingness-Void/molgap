@@ -1,0 +1,85 @@
+{
+  "note": "PCQM4Mv2 valid proxy audit, not an OGB leaderboard submission.",
+  "model_keys": {
+    "p7": "phase7_hybrid",
+    "p8": "phase8_replacement_hybrid"
+  },
+  "train_exclusion": {
+    "csv_counts": {
+      "D:\\\u6587\u6863\\molgap\\data\\raw\\phase7_chonsfcl_mw200_1000_300k.csv": 300000,
+      "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_replacement_300k.csv": 300000
+    },
+    "union_canonical_smiles": 338620
+  },
+  "subset": {
+    "n_valid_total": 73545,
+    "n_bad_smiles": 0,
+    "n_train_overlap_union": 257,
+    "n_ood": 33485,
+    "n_usable_before_sample": 39803,
+    "n_sample_requested": 3000,
+    "n_sampled": 3000,
+    "seed": 42
+  },
+  "prediction": {
+    "n_p7_valid": 2990,
+    "n_p8_valid": 2988,
+    "n_common_valid": 2988
+  },
+  "metrics": {
+    "p7": {
+      "n": 2988,
+      "gap_mae": 0.25443523097345827,
+      "gap_err_mean": 0.25443523097345827,
+      "gap_err_median": 0.17239330879524872
+    },
+    "p8": {
+      "n": 2988,
+      "gap_mae": 0.24645355273640382,
+      "gap_err_mean": 0.24645355273640382,
+      "gap_err_median": 0.16939335085883256
+    },
+    "delta_p8_minus_p7": {
+      "gap_mae": -0.007981678237054451,
+      "gap_err_median": -0.0029999579364161644
+    },
+    "by_p7_train_similarity": [
+      {
+        "bin": "[0.0,0.3)",
+        "n": 182,
+        "p7_gap_mae": 0.5273303832693748,
+        "p8_gap_mae": 0.49856780058901273,
+        "delta_p8_minus_p7": -0.028762582680362025
+      },
+      {
+        "bin": "[0.3,0.4)",
+        "n": 581,
+        "p7_gap_mae": 0.3184590734754049,
+        "p8_gap_mae": 0.29761585531108536,
+        "delta_p8_minus_p7": -0.020843218164319555
+      },
+      {
+        "bin": "[0.4,0.5)",
+        "n": 945,
+        "p7_gap_mae": 0.2293324967564244,
+        "p8_gap_mae": 0.223526697250166,
+        "delta_p8_minus_p7": -0.005805799506258397
+      },
+      {
+        "bin": "[0.5,0.6)",
+        "n": 746,
+        "p7_gap_mae": 0.21354574830389178,
+        "p8_gap_mae": 0.21054507133513206,
+        "delta_p8_minus_p7": -0.003000676968759719
+      },
+      {
+        "bin": "[0.6,1.0)",
+        "n": 534,
+        "p7_gap_mae": 0.19331326036504223,
+        "p8_gap_mae": 0.19559871126595174,
+        "delta_p8_minus_p7": 0.002285450900909508
+      }
+    ],
+    "mean_p7_train_max_sim": 0.4873098556342161
+  }
+}

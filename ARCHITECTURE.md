@@ -43,19 +43,23 @@ Notes:
 | phase6_schnet | `gnn_schnet_3d_optuna_expanded.pt` | `PARAMS_PHASE6` | yes (y_mean/y_std) |
 | phase7_schnet_300k | `gnn_schnet_3d_300k.pt` | `PARAMS_SCHNET_300K` | no (raw eV) |
 | phase7_gps_2d | `gps_2d_300k.pt` | `PARAMS_GPS_2D` | no |
-| **phase7_hybrid** | `hybrid_fusion_optuna.pt` | `fusion_optuna_metrics.json` | no |
+| phase7_hybrid *(v1 fallback)* | `hybrid_fusion_optuna.pt` | `fusion_optuna_metrics.json` | no |
+| **phase8_replacement_hybrid** *(v2 default)* | `phase8_hybrid_fusion_replacement_300k.pt` | `fusion_replacement_300k_metrics.json` | no |
 | tensornet_300k *(unused)* | `tensornet_3d_300k.pt` | `PARAMS_TENSORNET_300K` | no |
 | hybrid_tensornet *(unused)* | `hybrid_fusion_tensornet.pt` | `fusion_tensornet_metrics.json` | no |
+
+`inference.load_hybrid()` defaults to `phase8_replacement_hybrid`. Historical
+Phase 7/9 scripts pin `key="phase7_hybrid"` when they reproduce v1 records.
 
 ## Scripts
 
 - `scripts/pipeline/` — data fetch, clean, features
-- `scripts/phase{1-7}/` — per-phase experiment CLIs. Phase 7 is the live one;
+- `scripts/phase{1-7}/` — per-phase experiment CLIs. Phase 7 is the v1 control;
   see `docs/phase7.md` for its pipeline. Each script should import from
   `src/molgap/`, not redefine model classes.
 - `scripts/phase7/archive/` — superseded scripts/notebooks/diagnostics.
-- `scripts/phase8/` — chemical-space characterization (in-distribution box).
-- `scripts/phase9/` — Δ-learning to GW (LightGBM on frozen hybrid embeddings).
+- `scripts/phase8/` — v2 data coverage, retraining, and selection audits.
+- `scripts/phase9/` — Δ-learning to GW (currently v1 records; revalidate on v2).
 - `scripts/phase10/` — M1 UQ: `train_ensemble.py` (Δ-ensemble + calibration),
   `ood_score.py` (embedding-distance OOD flag). Feeds `inference.predict_smiles_with_uq`.
 - `scripts/ab3d/` — closed A/B comparison. See `results/ab3d/comparison.md`.

@@ -104,7 +104,7 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Device: {device}")
     print("Loading models...")
-    gps, schnet, fusion, _ = load_hybrid(device)
+    gps, schnet, fusion, _ = load_hybrid(device, key="phase7_hybrid")
     results = {}
 
     # ── Dataset 1: OOD 1000 (B3LYP labels) ──

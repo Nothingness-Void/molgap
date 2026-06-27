@@ -7,7 +7,7 @@ Tasks, milestones, and priorities only. For results/conclusions see
 A **property database of commercially available organic molecules** — a CSV of
 HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
 is one slice of the commercial-molecule set. Built on two layers:
-1. the Phase 7 hybrid model — a fast B3LYP surrogate (done, OOD R² 0.94);
+1. the Phase 8 replacement300k hybrid model — a fast B3LYP surrogate (v2 selected);
 2. a **Δ-learning correction toward GW**, trained on OE62 GW5000, to push predictions
    past the B3LYP method ceiling.
 
@@ -15,12 +15,12 @@ The database is the deliverable; the predictor is how we build it. Delivery targ
 end of Phase 11.
 
 ## Status snapshot
-B3LYP-surrogate model is **done** (Phase 7, 300k). Still in **model-optimization**
-mode — NOT building the database yet. Live work is **Phase 8 — scaling &
-architecture**: test broader-coverage data with a trainable encoder, producing a
-new **v2 production base** only if it beats the Phase 7 control. A 30k
-trainable-encoder MoE A/B tied the single fusion head, so MoE is no longer the
-default full run. The Phase 7 300k model is the **v1 fallback**. Horizon:
+B3LYP-surrogate model has a selected **v2 base** (Phase 8 replacement300k). Still
+in **model-optimization** mode — NOT building the database yet. Live work is the
+post-v2 handoff: re-validate Phase 9/10 GW Delta/UQ assets against v2 before
+shipping database tooling. A 30k trainable-encoder MoE A/B tied the single fusion
+head, so MoE is no longer the default full run. The Phase 7 300k model is the
+**v1 fallback**. Horizon:
 **~6 months (2026 H2)**.
 
 ## Phase plan (8 → 11)
@@ -32,20 +32,20 @@ the DB (Phase 10–11).
 
 | Phase | Theme | Question | Exit artifact |
 |-------|-------|----------|---------------|
-| **Phase 8** | Scaling & architecture (**current**) | *Does broader-coverage data + trainable encoder beat the 300k v1?* | New **v2 production base** (or a documented "no-gain, keep v1") |
-| **Phase 9** | Δ-learning to GW | *Can a small Δ model lift B3LYP→GW accuracy?* | Trained Δ model + validation (scaffold split, Y-rand) — re-validated on the chosen base |
+| **Phase 8** | Scaling & architecture | *Does broader-coverage data + trainable encoder beat the 300k v1?* | **done** — replacement300k hybrid selected as v2 |
+| **Phase 9** | Δ-learning to GW (**next**) | *Can a small Delta model lift B3LYP to GW accuracy?* | Trained Delta model + validation (scaffold split, Y-rand) — re-validated on v2 |
 | **Phase 10** | Inference pipeline & property database | *Predict any organic molecule at near-GW accuracy, with trust tiers.* | Batch CLI (B3LYP + Δ → near-GW) + in-distribution screen + predicted-property DB |
 | **Phase 11** | Delivery | *Ship it.* | Versioned predictor + DB, queryable access, reproducible build, data card |
 
-The Phase 7 300k hybrid is the **v1 fallback** and stays frozen as a reference;
-Phase 8 tries to produce a better **v2** base on top of it. Δ-learning (Phase 9)
-and the database (Phase 10) get re-validated against whichever base wins.
+The Phase 7 300k hybrid is the **v1 fallback** and stays frozen as a reference.
+Phase 8 selected `phase8_replacement_hybrid` as **v2**. Delta learning (Phase 9)
+and the database (Phase 10) now get re-validated against v2.
 
 Why GW (not OLED-solid experiment): the target is *general* electronic structure,
 not solid-state OLED values — so GW gas-phase quasiparticle energies are the right
 high-accuracy reference, and OE62 GW5000 supplies enough clean training pairs.
 
-### Phase 8 — Scaling & architecture (current)
+### Phase 8 — Scaling & architecture (done)
 Goal: push B3LYP-prediction accuracy past the 300k v1 by **expanding coverage** on
 a trainable encoder. Frozen-encoder probes (MoE-on-frozen-embeddings,
 descriptor-aware fusion) and the 30k trainable-encoder MoE A/B both tie the single
@@ -61,9 +61,9 @@ trainable encoders, validated on common OOD/hard evaluation.
 | 30k trainable-encoder MoE A/B | P8.3 | **done** | MoE gain ≤0.0006 eV avg MAE; tie-level. See `results/phase8/moe_ab_30k_summary.json` |
 | Common-eval old30k vs replacement30k | P8.4 | **done** | OOD-1000 neutral, P8 hard slice positive; see `results/phase8/common_eval_30k_summary.md` |
 | Intermediate-layer fusion pilot | P8.4b | **done** | Internal replacement30k gain, common eval mixed; keep as head-only follow-up after full embeddings. See `results/phase8/intermediate_layer_fusion_comparison.md` |
-| Build full broader-coverage graph cache (2D + 3D ETKDG, sharded) | P8.5 | next | Same 300k size as v1; same ETKDG method as v1; justified by weak-positive hard-slice result |
-| Retrain full hybrid with **trainable** encoder | P8.6 | next | Single FusionHead first; warm-start GPS/SchNet from Phase 7 weights before doing a from-scratch audit. See `docs/ideation_2026-06-25.md` |
-| Select v2 production base | P8.7 | | Pick the winner; if no robust gain, keep v1 and record the negative result |
+| Build full broader-coverage graph cache (2D + 3D ETKDG, sharded) | P8.5 | **done** | 300,000 2D graphs; 298,957 3D ETKDG graphs. See `results/phase8/full_replacement_300k_summary.md` |
+| Retrain full hybrid with **trainable** encoder | P8.6 | **done** | Warm-start GPS/SchNet + standard single FusionHead; common eval strongly beats P7 full baseline. See `results/phase8/full_replacement_300k_summary.md` |
+| Select v2 production base | P8.7 | **done** | `phase8_replacement_hybrid` selected; see `results/phase8/v2_selection_decision.md` |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 

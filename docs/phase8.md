@@ -346,12 +346,117 @@ to the ordinary Phase 7 FusionHead (avg/GAP 0.06740/0.07594 vs
 0.06711/0.07563). This confirms it is not a P7 baseline replacement. Full table:
 `results/phase8/phase7_300k_baseline_lora_layer_comparison.md`.
 
-## P8.5 Graph cache
+## P8.5 Full replacement300k graph cache (done, 2026-06-26)
 Build full 2D + 3D ETKDG graphs for the broader-coverage data with the same
 conformer method as Phase 7 inference. Use sharded streaming writes; do not mix
 PM6 training coords with ETKDG inference.
 
-## P8.6-P8.7 Model selection
+Artifacts:
+
+- graph report: `results/phase8/graph_build_report.json`
+- 2D graphs: `results/phase8/pyg_2d_graphs_bond_replacement_300k.pt`
+- 3D ETKDG graphs: `results/phase8/pyg_3d_graphs_etkdg_replacement_300k.pt`
+
+| kind | processed | graphs | failed | elapsed |
+|---|---:|---:|---:|---:|
+| 2D | 300,000 | 300,000 | 0 | 4.0 min |
+| 3D ETKDG | 300,000 | 298,957 | 1,043 | 59.0 min |
+
+## P8.6 Full replacement300k standard hybrid (done, 2026-06-26)
+
+Run the default full model path: warm-start GPS/SchNet from Phase 7 checkpoints,
+then train the standard single `FusionHead`. MoE is not run at full scale.
+
+Artifacts:
+
+- GPS checkpoint: `models/phase8_gps_replacement_300k.pt`
+- SchNet checkpoint: `models/phase8_schnet_replacement_300k.pt`
+- Hybrid checkpoint: `models/phase8_hybrid_fusion_replacement_300k.pt`
+- summary: `results/phase8/full_replacement_300k_summary.md`
+- common eval: `results/phase8/full_replacement_common_eval_metrics.json`
+
+Internal replacement300k test:
+
+| model | best val MAE | best epoch | test avg MAE | test Gap MAE |
+|---|---:|---:|---:|---:|
+| GPS 2D | 0.10880 | 0 | 0.10870 | 0.13053 |
+| SchNet 3D | 0.12230 | 3 | 0.12342 | 0.14842 |
+| Hybrid FusionHead | 0.09661 | 49 | 0.09745 | 0.11503 |
+
+Internal splits differ from Phase 7 and are not the model-selection criterion.
+The decisive comparison is the shared common eval:
+
+| eval set | P7 avg MAE | replacement avg MAE | delta avg | P7 Gap MAE | replacement Gap MAE | delta Gap |
+|---|---:|---:|---:|---:|---:|---:|
+| all | 0.14529 | 0.12839 | -0.01690 | 0.17930 | 0.15610 | -0.02320 |
+| Phase 7 OOD-1000 | 0.12431 | 0.12144 | -0.00287 | 0.14881 | 0.14479 | -0.00402 |
+| P8 targeted hard | 0.16671 | 0.13548 | -0.03123 | 0.21044 | 0.16765 | -0.04279 |
+
+Conclusion: replacement300k standard FusionHead is a strong v2 candidate. It
+improves the broad common eval, slightly improves the Phase 7 OOD-1000 slice,
+and strongly improves the P8 targeted hard slice. Next step is P8.7 final audit /
+model selection, not full MoE.
+
+## P8.7 Model selection
+### Final decision (done, 2026-06-27)
+
+Select `phase8_replacement_hybrid` as the v2 B3LYP base. Keep `phase7_hybrid`
+as the frozen v1 fallback and historical control. Decision record:
+`results/phase8/v2_selection_decision.md`.
+
+### PCQM4Mv2 valid proxy audit (done, 2026-06-27)
+
+This repeats the Phase 7-era PCQM4Mv2 valid sounding as a coverage stress test,
+not as an OGB leaderboard submission. The audit script uses the official valid
+split, removes any molecule present in either the Phase 7 or replacement300k
+training CSV, keeps CHONSFCl / MW 200-1000, samples 3000 molecules with seed 42,
+and evaluates P7 and P8 on the same ETKDG-valid common subset.
+
+Artifacts:
+
+- script: `scripts/phase8/eval_pcqm4mv2_proxy.py`
+- metrics: `results/phase8/pcqm4mv2_proxy_p7_vs_p8_metrics.json`
+- predictions: `results/phase8/pcqm4mv2_proxy_p7_vs_p8_predictions.csv`
+
+Overall:
+
+| model | common n | Gap MAE | median abs err |
+|---|---:|---:|---:|
+| Phase 7 hybrid | 2,988 | 0.25444 | 0.17239 |
+| replacement300k hybrid | 2,988 | 0.24645 | 0.16939 |
+| delta P8 - P7 | - | -0.00798 | -0.00300 |
+
+By nearest-neighbor similarity to the Phase 7 training set:
+
+| P7 train sim bin | n | P7 Gap MAE | P8 Gap MAE | delta P8 - P7 |
+|---|---:|---:|---:|---:|
+| [0.0,0.3) | 182 | 0.52733 | 0.49857 | -0.02876 |
+| [0.3,0.4) | 581 | 0.31846 | 0.29762 | -0.02084 |
+| [0.4,0.5) | 945 | 0.22933 | 0.22353 | -0.00581 |
+| [0.5,0.6) | 746 | 0.21355 | 0.21055 | -0.00300 |
+| [0.6,1.0) | 534 | 0.19331 | 0.19560 | +0.00229 |
+
+Conclusion: this confirms the intended P8.1 story. The replacement data is not
+moving the model toward an OGB leaderboard-style regime; it mostly improves the
+low-similarity chemistry that the Phase 7 300k set under-covered. The gain is
+smaller than the targeted hard common-eval gain but directionally consistent.
+
+### Error-mode audit (done, 2026-06-27)
+
+Artifacts:
+
+- analysis: `results/phase8/v2_error_mode_analysis.md`
+- JSON: `results/phase8/v2_error_mode_analysis.json`
+- common-eval worst rows: `results/phase8/v2_common_eval_remaining_worst.csv`
+- PCQM proxy worst rows: `results/phase8/v2_pcqm_proxy_remaining_worst.csv`
+
+The remaining common-eval worst cases are mostly flexible, large-conjugated,
+S/Cl/F-containing, and narrow-gap molecules. PCQM proxy remaining worst cases
+are dominated by radical/open-shell SMILES, which are not the core closed-shell
+commercial organic database target. This supports selecting v2 while pushing
+remaining method/coverage risk into Phase 9/10 Delta/UQ validation.
+
+### Selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 
 1. trainable encoder + single FusionHead on broader coverage data;

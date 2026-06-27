@@ -61,7 +61,7 @@ def main():
 
     # ── Predict B3LYP with the hybrid (and grab embeddings) ──
     print("Loading hybrid, predicting B3LYP (ETKDG + 2D/3D + fusion)...")
-    models = load_hybrid()
+    models = load_hybrid(key="phase7_hybrid")
     vi, preds, e2d, e3d = predict_smiles_batch_hybrid(
         cand["smiles"].tolist(), models=models, return_embeddings=True,
     )

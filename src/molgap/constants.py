@@ -36,6 +36,12 @@ MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
 MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
 FUSION_METRICS = RESULTS_DIR / "phase7" / "fusion_optuna_metrics.json"
 
+# Phase 8 replacement300k v2 candidate (raw eV — no normalization)
+MODEL_PHASE8_REPLACEMENT_GPS = MODELS_DIR / "phase8_gps_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
+FUSION_PHASE8_REPLACEMENT_METRICS = RESULTS_DIR / "phase8" / "fusion_replacement_300k_metrics.json"
+
 # TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
 # training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
@@ -146,6 +152,20 @@ MODEL_REGISTRY = {
     "phase7_hybrid": {
         "kind": "hybrid", "checkpoint": MODEL_HYBRID, "metrics": FUSION_METRICS,
         "normalized": False, "components": ["phase7_gps_2d", "phase7_schnet_300k"],
+    },
+    "phase8_replacement_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_REPLACEMENT_GPS, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase8_replacement_schnet_300k": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE8_REPLACEMENT_SCHNET,
+        "params": PARAMS_SCHNET_300K, "normalized": False, "use_charges": True,
+    },
+    "phase8_replacement_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_REPLACEMENT_HYBRID,
+        "metrics": FUSION_PHASE8_REPLACEMENT_METRICS, "normalized": False,
+        "components": ["phase8_replacement_gps_2d", "phase8_replacement_schnet_300k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
     },
     "tensornet_300k": {
         "kind": "tensornet", "checkpoint": MODEL_TENSORNET_300K,

@@ -102,7 +102,7 @@ def main():
         print(f"  sampled {len(sub)} for evaluation")
 
     print("\nPredicting gap with Hybrid (ETKDG + 2D/3D + fusion) ...")
-    models = load_hybrid()
+    models = load_hybrid(key="phase7_hybrid")
     vi, preds = predict_smiles_batch_hybrid(sub["smiles"].tolist(), models=models)
     sv = sub.iloc[vi].reset_index(drop=True)
     gap_pred = preds[:, 2]  # TARGET_COLS = [homo, lumo, gap]

@@ -8,6 +8,7 @@ Runs a controlled A/B on the same aligned embedding set:
 Usage:
   .venv\\Scripts\\python.exe scripts/phase8/train_moe_fusion.py
   .venv\\Scripts\\python.exe scripts/phase8/train_moe_fusion.py --max-samples 2000 --epochs 3
+  .venv\\Scripts\\python.exe scripts/phase8/train_moe_fusion.py --head baseline --out results/phase8/fusion_replacement_300k_metrics.json
 """
 from __future__ import annotations
 
@@ -146,6 +147,7 @@ def main():
     parser.add_argument("--emb-2d", type=Path, default=EMB_2D)
     parser.add_argument("--emb-3d", type=Path, default=EMB_3D)
     parser.add_argument("--graphs-3d", type=Path, default=GRAPH_3D)
+    parser.add_argument("--head", choices=["baseline", "moe", "both"], default="both")
     parser.add_argument("--experts", type=int, default=4)
     parser.add_argument("--hidden", type=int, default=192)
     parser.add_argument("--epochs", type=int, default=300)
@@ -155,6 +157,9 @@ def main():
     parser.add_argument("--weight-decay", type=float, default=1e-5)
     parser.add_argument("--max-samples", type=int, default=None)
     parser.add_argument("--out", type=Path, default=PHASE8_DIR / "moe_replacement_300k_metrics.json")
+    parser.add_argument("--baseline-model-out", type=Path,
+                        default=MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt")
+    parser.add_argument("--moe-model-out", type=Path, default=None)
     args = parser.parse_args()
 
     ensure_dirs(PHASE8_DIR, MODELS_DIR)
@@ -168,35 +173,65 @@ def main():
     print(f"Aligned N={h2.shape[0]} split={len(split['train'])}/{len(split['val'])}/{len(split['test'])}",
           flush=True)
 
-    print("\nBaseline FusionHead", flush=True)
-    base, base_metrics = train_one(
-        FusionHead("gate", args.hidden, 0.0),
-        h2, h3, y, split, args, device,
-    )
-    print("\nMoEFusionHead", flush=True)
-    moe, moe_metrics = train_one(
-        MoEFusionHead(args.hidden, 0.0, n_experts=args.experts),
-        h2, h3, y, split, args, device,
-    )
-
     suffix = f"_n{args.max_samples}" if args.max_samples else ""
-    torch.save(base.state_dict(), MODELS_DIR / f"phase8_hybrid_fusion_baseline{suffix}.pt")
-    torch.save(moe.state_dict(), MODELS_DIR / f"phase8_hybrid_moe_e{args.experts}{suffix}.pt")
     result = {
         "n_aligned": int(h2.shape[0]),
         "max_samples": args.max_samples,
         "source_idx_min": int(source_idx.min().item()),
         "source_idx_max": int(source_idx.max().item()),
-        "baseline": base_metrics,
-        "moe": moe_metrics,
-        "delta_average_mae": float(moe_metrics["average"]["mae"] - base_metrics["average"]["mae"]),
-        "delta_gap_mae": float(moe_metrics["Gap"]["mae"] - base_metrics["Gap"]["mae"]),
+        "head": args.head,
     }
+    if args.head in {"baseline", "both"}:
+        print("\nBaseline FusionHead", flush=True)
+        base, base_metrics = train_one(
+            FusionHead("gate", args.hidden, 0.0),
+            h2, h3, y, split, args, device,
+        )
+        baseline_out = (
+            args.baseline_model_out
+            if not suffix
+            else MODELS_DIR / f"phase8_hybrid_fusion_baseline{suffix}.pt"
+        )
+        torch.save(base.state_dict(), baseline_out)
+        result["baseline"] = base_metrics
+        result["baseline_model"] = str(baseline_out)
+    if args.head in {"moe", "both"}:
+        print("\nMoEFusionHead", flush=True)
+        moe, moe_metrics = train_one(
+            MoEFusionHead(args.hidden, 0.0, n_experts=args.experts),
+            h2, h3, y, split, args, device,
+        )
+        moe_out = args.moe_model_out or MODELS_DIR / f"phase8_hybrid_moe_e{args.experts}{suffix}.pt"
+        torch.save(moe.state_dict(), moe_out)
+        result["moe"] = moe_metrics
+        result["moe_model"] = str(moe_out)
+    if "baseline" in result and "moe" in result:
+        result["delta_average_mae"] = float(
+            result["moe"]["average"]["mae"] - result["baseline"]["average"]["mae"]
+        )
+        result["delta_gap_mae"] = float(result["moe"]["Gap"]["mae"] - result["baseline"]["Gap"]["mae"])
+    elif "baseline" in result:
+        result["delta_average_mae"] = None
+        result["delta_gap_mae"] = None
+    else:
+        result["delta_average_mae"] = None
+        result["delta_gap_mae"] = None
     args.out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"\nMetrics -> {args.out}", flush=True)
-    print(f"Gap MAE baseline={base_metrics['Gap']['mae']:.4f} "
-          f"moe={moe_metrics['Gap']['mae']:.4f} "
-          f"delta={result['delta_gap_mae']:+.4f}", flush=True)
+    if "baseline" in result:
+        print(
+            f"Gap MAE baseline={result['baseline']['Gap']['mae']:.4f} "
+            f"avg={result['baseline']['average']['mae']:.4f}",
+            flush=True,
+        )
+    if "moe" in result:
+        print(
+            f"Gap MAE moe={result['moe']['Gap']['mae']:.4f} "
+            f"avg={result['moe']['average']['mae']:.4f}",
+            flush=True,
+        )
+    if result["delta_gap_mae"] is not None:
+        print(f"MoE delta Gap={result['delta_gap_mae']:+.4f}", flush=True)
 
 
 if __name__ == "__main__":

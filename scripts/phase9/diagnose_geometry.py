@@ -92,7 +92,7 @@ def main():
     print(f"In-distribution candidates: {len(cand)}")
 
     # ── Build 2D (unchanged) + 3D-from-PBE graphs, keep both-valid ──
-    gps, schnet, fusion, device = load_hybrid()
+    gps, schnet, fusion, device = load_hybrid(key="phase7_hybrid")
     g2d, g3d, keep = [], [], []
     for i, r in cand.iterrows():
         d3 = xyz_to_3d_data(r["xyz"])

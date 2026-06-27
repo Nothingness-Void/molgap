@@ -91,7 +91,7 @@ def main():
 
     # Predict gap with Hybrid.
     print("Predicting gap with Hybrid...")
-    models = load_hybrid()
+    models = load_hybrid(key="phase7_hybrid")
     vi, preds = predict_smiles_batch_hybrid(sub["smiles"].tolist(), models=models)
     sv = sub.iloc[vi].reset_index(drop=True)
     sv["gap_pred"] = preds[:, 2]

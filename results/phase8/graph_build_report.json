@@ -1,0 +1,24 @@
+{
+  "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_replacement_300k.csv",
+  "n_input": 300000,
+  "max_rows": null,
+  "results": [
+    {
+      "kind": "2d",
+      "processed": 300000,
+      "graphs": 300000,
+      "failed": 0,
+      "elapsed_s": 240.96069598197937,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_2d_graphs_bond_replacement_300k.pt"
+    },
+    {
+      "kind": "3d",
+      "processed": 300000,
+      "graphs": 298957,
+      "failed": 1043,
+      "elapsed_s": 3538.606346845627,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_3d_graphs_etkdg_replacement_300k.pt",
+      "n_jobs": 15
+    }
+  ]
+}

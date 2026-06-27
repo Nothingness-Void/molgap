@@ -5,10 +5,15 @@
 > next actions change. Do NOT duplicate experiment details here — link to docs/.
 
 ## 1. Recommended model
-**Phase 7 Hybrid** — `models/hybrid_fusion_optuna.pt` (gate fusion of GPS 2D +
-SchNet 3D embeddings, Optuna-tuned: gate, hidden=192).
-Also available standalone: `models/gps_2d_300k.pt`, `models/gnn_schnet_3d_300k.pt`.
-All trained on 300k molecules, CHONSFCl, MW 200-1000.
+**Phase 8 replacement300k Hybrid (v2)** — registry key
+`phase8_replacement_hybrid`, using:
+
+- `models/phase8_gps_replacement_300k.pt`
+- `models/phase8_schnet_replacement_300k.pt`
+- `models/phase8_hybrid_fusion_replacement_300k.pt`
+
+**Phase 7 Hybrid** — `phase7_hybrid` / `models/hybrid_fusion_optuna.pt` — stays
+as the frozen v1 fallback and historical control.
 
 The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed**
 — TensorNet wins solo (Gap R² 0.906 vs 0.889) but **fusion-level differences
@@ -30,15 +35,16 @@ deployment-relevant accuracy, so production stays on SchNet. See
 A **property database of commercially available organic molecules** — a CSV of
 HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
 is one slice of the commercial-molecule set. Built on two layers:
-1. the Phase 7 hybrid model — a fast B3LYP surrogate (done);
+1. the Phase 8 replacement300k hybrid model — a fast B3LYP surrogate (v2 selected);
 2. a **Δ-learning correction toward GW** (trained on OE62 GW5000) — lifts predictions
    past the B3LYP method ceiling.
 The database is the deliverable; the predictor is how we build it. Not built yet.
 
-## 4. Current focus — Phase 8: scaling & architecture
-**Still optimizing the model; NOT building the database yet.** The Phase 7 300k
-hybrid (`hybrid_fusion_optuna.pt`) is the **v1 fallback** and stays frozen as a
-reference. Phase 8 tries to produce a better **v2 base** by:
+## 4. Current focus — post-Phase 8 handoff
+**Still optimizing the model; NOT building the database yet.** Phase 8 selected
+the replacement300k hybrid as the **v2 B3LYP base**. The Phase 7 300k hybrid
+(`hybrid_fusion_optuna.pt`) is the **v1 fallback** and stays frozen as a
+reference. Phase 8 produced v2 by:
 1. **expanding training coverage** (refetch to fill the P8.1 gaps — high-conjugation,
    narrow-gap, low S/Cl — NOT a same-source re-draw), and
 2. **A/B-testing a MoE head** on a **trainable** encoder.
@@ -63,9 +69,10 @@ frozen-embedding replacement30k MoE test avg/GAP 0.13778/0.16211. This keeps the
 default P8 path on single-head/common-eval rather than full 300k end-to-end MoE.
 Decision table: `results/phase8/end2end_vs_standard_30k_comparison.md`.
 
-**v2 will invalidate the current Δ/UQ results** (Phase 9 LoRA/LightGBM and the M1
-UQ k-NN are built on v1's frozen 384-d embeddings). They get **re-validated against
-v2** once a base is chosen — Phase 9/10 are deliberately sequenced *after* Phase 8.
+**v2 invalidates the current Delta/UQ results** (Phase 9 LoRA/LightGBM and the M1
+UQ k-NN are built on v1's frozen 384-d embeddings). They must be **re-validated
+against v2** before any database build — Phase 9/10 are deliberately sequenced
+after Phase 8.
 
 Δ-learning (B3LYP→GW) currently works with the Phase 7 SchNet hybrid: scaffold-test
 GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89 (encoder LoRA pushes
@@ -81,6 +88,27 @@ slice (avg MAE -0.00469, Gap -0.00422). Overall delta is avg -0.00216, Gap
 -0.00102. This is a weak-positive coverage signal, not a broad OOD breakthrough.
 Details: `results/phase8/common_eval_30k_summary.md`.
 
+Full replacement300k standard hybrid retrain is complete and is now the selected
+**v2 B3LYP base**. Warm-started GPS/SchNet from Phase 7, trained the standard single
+FusionHead on 298,957 aligned ETKDG molecules. On the shared common eval versus
+the Phase 7 full baseline, replacement300k improves all avg/GAP by
+-0.01690/-0.02320, OOD-1000 by -0.00287/-0.00402, and P8 targeted hard by
+-0.03123/-0.04279. Artifacts and exact metrics:
+`results/phase8/full_replacement_300k_summary.md`.
+
+The Phase 7-style PCQM4Mv2 valid proxy audit is also positive, but smaller:
+after excluding the union of Phase 7 and replacement300k training SMILES, the
+same 3000-sample in-domain proxy gives Gap MAE 0.25444 -> 0.24645
+(-0.00798 eV). Gains concentrate in low-similarity-to-P7 bins
+(sim<0.3: -0.02876 eV; 0.3-0.4: -0.02084 eV), confirming that the replacement
+data mainly helps the P8.1 coverage gap rather than acting like a broad
+leaderboard optimization. This is not an OGB submission. Artifacts:
+`results/phase8/pcqm4mv2_proxy_p7_vs_p8_metrics.json`.
+
+P8.7 decision record: select `phase8_replacement_hybrid` as v2, keep
+`phase7_hybrid` as fallback, and re-validate Phase 9/10 against v2 before any
+database build. See `results/phase8/v2_selection_decision.md`.
+
 Intermediate-layer embedding fusion (GPS/SchNet layers 2/4/final) is **not a P7
 baseline upgrade**. On original P7 300k it ties/slightly loses to ordinary
 FusionHead (avg/GAP 0.06740/0.07594 vs 0.06711/0.07563). On replacement30k
@@ -91,18 +119,12 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
 ## 5. Next actions (1-3)
-1. **Train full replacement300k v2 with the standard single FusionHead**: the 30k
-   common eval is positive on the targeted hard slice and neutral on OOD-1000,
-   so one full-size coverage-value run is justified if compute budget is
-   available. Build full 2D + 3D ETKDG graph caches from
-   `data/raw/phase8_replacement_300k.csv`, then train GPS/SchNet/fusion. After
-   the 2026-06-25 ideation pass, the preferred first full run is **warm-started**
-   from the Phase 7 GPS/SchNet checkpoints via `scripts/phase8/train_encoder.py
-   --init-from`; keep from-scratch replacement300k as an audit run if warm-start
-   is ambiguous. Details: `docs/ideation_2026-06-25.md`.
-2. **Keep Phase 7 300k as the control**: do not overwrite
-   `data/raw/phase7_chonsfcl_mw200_1000_300k.csv` or existing Phase 7 graph
-   caches. Phase 8 compares same-size old300k vs replacement300k.
+1. **Re-validate Phase 9/10 against v2**: current GW Δ-learning and
+   UQ/k-NN assets are v1-based and must be regenerated or rechecked if
+   replacement300k becomes the production base.
+2. **Update downstream defaults only after validation**: inference can already
+   load `phase8_replacement_hybrid`, but Phase 9/10 docs, UQ assets, and any
+   batch CLI defaults must not silently switch until their metrics are refreshed.
 3. **Do not run full 300k MoE by default**: MoE remains deprioritized after the
    30k frozen-head tie and the negative end-to-end MoE pilot. Revisit only if the
    full single-head model exposes a specific failure mode that a router can fix.

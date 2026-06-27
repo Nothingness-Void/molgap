@@ -82,7 +82,7 @@ def main():
     exp = collect_experimental()
     print(f"Experimental molecules: {len(exp)}")
 
-    models = load_hybrid()
+    models = load_hybrid(key="phase7_hybrid")
     vi, preds, e2d, e3d = predict_smiles_batch_hybrid(
         exp["smiles"].tolist(), models=models, return_embeddings=True)
     ev = exp.iloc[vi].reset_index(drop=True)

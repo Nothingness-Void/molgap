@@ -108,12 +108,12 @@ def load_model(
 def load_hybrid(
     device: torch.device | str | None = None,
     *,
-    key: str = "hybrid_tensornet",
+    key: str = "phase8_replacement_hybrid",
 ) -> tuple[GPSWrapper, SchNetWrapper | TensorNetWrapper, FusionHead, torch.device]:
     """Load a hybrid trio: (gps_2d, encoder_3d, fusion_head, device).
 
-    Default is ``"hybrid_tensornet"`` (GPS 2D + TensorNet 3D). Pass
-    ``key="phase7_hybrid"`` to load the legacy SchNet-based hybrid.
+    Default is the selected Phase 8 v2 base, ``"phase8_replacement_hybrid"``.
+    Pass ``key="phase7_hybrid"`` to load the frozen v1 fallback/control.
 
     All are raw-eV (no normalization). The fusion head's architecture
     (fusion_type, hidden) is read from its Optuna metrics file so it always
@@ -144,8 +144,20 @@ def load_hybrid(
     encoder_3d.eval()
 
     with open(hspec["metrics"]) as f:
-        bp = json.load(f)["best_params"]
-    fusion = FusionHead(bp["fusion_type"], bp["hidden"]).to(device)
+        metrics = json.load(f)
+    bp = metrics.get(
+        "best_params",
+        {
+            "fusion_type": hspec.get("fusion_type", "gate"),
+            "hidden": hspec.get("hidden", 192),
+            "dropout": hspec.get("dropout", 0.0),
+        },
+    )
+    fusion = FusionHead(
+        bp["fusion_type"],
+        bp["hidden"],
+        bp.get("dropout", hspec.get("dropout", 0.0)),
+    ).to(device)
     fusion.load_state_dict(
         torch.load(hspec["checkpoint"], weights_only=True, map_location=device)
     )
@@ -162,7 +174,7 @@ def predict_smiles_batch_hybrid(
     bs_3d: int = 128,
     return_embeddings: bool = False,
     device: torch.device | str | None = None,
-    hybrid_key: str = "hybrid_tensornet",
+    hybrid_key: str = "phase8_replacement_hybrid",
 ):
     """Batch-predict B3LYP HOMO/LUMO/Gap with the hybrid model (raw eV).
 
@@ -196,7 +208,7 @@ def predict_smiles_batch_hybrid(
         valid_idx.append(i)
 
     if not valid_idx:
-        emb_dim_3d = 128  # TensorNet default
+        emb_dim_3d = 192
         empty = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
         return (np.array([], dtype=int), empty) + (
             (np.empty((0, 192)), np.empty((0, emb_dim_3d))) if return_embeddings else ()
