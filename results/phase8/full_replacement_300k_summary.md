@@ -29,7 +29,7 @@ Internal test note: this split is the replacement300k distribution, so it is not
 | Phase 7 OOD-1000 | 0.12431 | 0.12144 | -0.00287 | 0.14881 | 0.14479 | -0.00402 |
 | P8 targeted hard | 0.16671 | 0.13548 | -0.03123 | 0.21044 | 0.16765 | -0.04279 |
 
-Conclusion: full replacement300k standard FusionHead is a strong v2 candidate. It improves the shared common eval overall, improves OOD-1000 slightly, and strongly improves the P8 targeted hard slice.
+Conclusion: full replacement300k standard FusionHead became the selected v2 base after the P8.7 audit. It improves the shared common eval overall, improves OOD-1000 slightly, and strongly improves the P8 targeted hard slice.
 
 ## Artifacts
 

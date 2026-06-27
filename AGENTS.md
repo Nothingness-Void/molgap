@@ -10,7 +10,7 @@ not a project description. One fact lives in one place — follow the links.
    conclusions, blocker, next actions. If anything conflicts, this wins.
 3. **`ROADMAP.md`** — task priorities / backlog (read the relevant section only).
 4. **`docs/phaseN.md`** — background, experiments, conclusions for one phase
-   (history & method, not live status). Phase 7 = current best.
+   (history & method, not live status). Phase 8 selected the current v2 base.
 5. **`ARCHITECTURE.md`** — code map; tells you which file to edit for a change.
 6. The specific code files your task touches.
 

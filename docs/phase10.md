@@ -7,12 +7,13 @@ database: SMILES in, B3LYP surrogate + GW correction + trust signals out.
 Phase 10 absorbs the old chemical-space-screening tasks from the previous Phase 8:
 element/MW/topology gates, embedding-distance OOD scoring, and commercial
 molecule curation are delivery-layer concerns. They should be finalized only
-after Phase 8 selects the production base model.
+after the Phase 8 production base selection.
 
 ## Current implemented subset: M1 UQ (v1-based, done)
 The current UQ bundle wraps the Phase 7 hybrid + Phase 9 LightGBM Δ stack. It is
-useful and validated, but it is tied to v1 embeddings and must be re-fit if Phase
-8 produces a v2 base.
+useful and validated, but it is tied to v1 embeddings. Phase 8 has now selected
+`phase8_replacement_hybrid`, so this bundle remains valid only as a v1 record
+until re-fit on v2 embeddings.
 
 ### 1. Δ-ensemble -> sigma
 `scripts/phase10/train_ensemble.py` trains a 10-member LightGBM Δ-ensemble on the
@@ -56,11 +57,11 @@ This API currently assumes `phase7_hybrid` embeddings. Feeding v2 embeddings int
 the v1 ensemble would mis-calibrate both Δ and sigma.
 
 ## Remaining Phase 10 work
-After Phase 8 selects the base and Phase 9 re-validates the GW correction:
+After Phase 9 re-validates the GW correction on v2:
 
 | Task | Output |
 |---|---|
-| P10.1 hybrid batch-predict library function | reusable batch API over 2D/3D/fusion |
+| P10.1 hybrid batch-predict library function | **done for B3LYP**: `load_hybrid` + `predict_smiles_batch_hybrid`; still needs near-GW wrapper |
 | P10.2 batch CLI | SMILES list -> B3LYP + Δ/GW + sigma/OOD CSV |
 | P10.3 in-distribution screen | element + MW + topology gates |
 | P10.4 embedding OOD score | nearest-neighbor trust score for each row |

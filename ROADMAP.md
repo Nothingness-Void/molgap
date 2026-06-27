@@ -87,7 +87,7 @@ already implemented in the M1 UQ bundle.
 
 | Task | ID | Notes |
 |------|----|-------|
-| Hybrid batch-predict library fn in `src/molgap/inference.py` | P10.1 | `load_hybrid` exists; no batch predict over the trio yet |
+| Hybrid batch-predict library fn in `src/molgap/inference.py` | P10.1 | **done for B3LYP** — `load_hybrid` + `predict_smiles_batch_hybrid`; Phase 10 still needs the near-GW batch CLI |
 | Batch CLI: SMILES list → B3LYP + Δ → near-GW CSV | P10.2 | Thin wrapper over P10.1 + Δ model |
 | In-distribution screen (element + MW + topology gates) | P10.3 | Was P8.2. Element hard-filter ⊆ {C,H,N,O,S,F,Cl}; MW 200–1000 |
 | Fingerprint / embedding nearest-neighbor OOD score | P10.4 | Was P8.3. Continuous OOD score per molecule; k-NN half done in M1 UQ |
@@ -110,7 +110,7 @@ already implemented in the M1 UQ bundle.
 | Extend training elements (Br / B / P / Si) | If OE62/usage shows too many useful molecules rejected for missing elements — needs refetch + retrain |
 | Conformer-ensemble inference for flagged rows | If sounding (P8.6) shows floppy molecules dominate error |
 | Better geometry via NNP (DPA-2/ANI-style) or conformer selection (CONFPASS) | LOW priority — Phase 7 conformer ensemble was only +2.5% R², so geometry is not the bottleneck. Revisit only if Δ residual analysis shows geometry/flexibility dominates error |
-| SchNet denoising pretraining | After v2 selection or if replacement300k fails; Zaidi-style denoising is the best pretraining candidate but should not interrupt the current full replacement300k run |
+| SchNet denoising pretraining | If v2 residual analysis shows encoder pretraining is worth the cost; low priority after replacement300k win |
 | LoRA / PEFT fine-tuning of encoders to GW (model-side Δ variant) | AFTER data scaling — coverage is the bottleneck first (PCQM4Mv2 coverage diagnostic). Feasible per ELoRA / GraphLoRA; GPS transformer native, SchNet linear layers adaptable. See docs/phase9.md |
 | Paper figures / write-up | If advisor requires an academic deliverable |
 

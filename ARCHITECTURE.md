@@ -28,7 +28,7 @@ Notes:
 - The hybrid is **embedding-level late fusion**: freeze the two encoders,
   pre-compute embeddings, train only `FusionHead`. `fusion.py` is the single home
   for that head; load the trio via `inference.load_hybrid()`.
-- The production 3D encoder is **SchNet** (Phase 7 hybrid). The ab3d A/B compared
+- The production 3D encoder is **SchNet** (Phase 8 v2 hybrid). The ab3d A/B compared
   TensorNet / ViSNet / SchNet on a 10k subset: TensorNet wins solo (Gap R² 0.906
   vs 0.889) but **fusion-level differences collapse to <0.2% R²** while training
   cost rises ~3.7×. We kept SchNet for the 1M retrain. `tensornet.py` /

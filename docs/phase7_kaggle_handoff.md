@@ -1,7 +1,8 @@
 # Phase 7 Kaggle Handoff
 
-This note tracks the current Kaggle-notebook work for the Phase 7 3D SchNet 300k run.
-It is a handoff note, not a project-wide source of truth.
+Historical note: this tracked Kaggle-notebook work for the Phase 7 3D SchNet
+300k run. It is a handoff note, not a project-wide source of truth. The current
+recommended model is selected in `CURRENT_STATE.md`.
 
 ## Scope
 
@@ -25,7 +26,7 @@ It is a handoff note, not a project-wide source of truth.
 - Added `DATA_LIMIT` support for subset runs.
 - Kept Optuna checkpoint/result saving and final retrain checkpoint saving.
 
-## Current observed status
+## Observed status at the time
 
 - The notebook reaches the Optuna stage on Kaggle with `T4 x2`.
 - Kaggle shows both GPUs active, so the multi-GPU path is being exercised.

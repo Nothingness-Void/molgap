@@ -5,8 +5,9 @@ Produce a better **v2 B3LYP base model** than the Phase 7 300k hybrid, or prove
 that the Phase 7 model should remain the production base. Phase 8 is still model
 optimization; it is **not** the commercial-molecule database build.
 
+Final outcome: `phase8_replacement_hybrid` is selected as the v2 B3LYP base.
 The Phase 7 hybrid (`models/hybrid_fusion_optuna.pt`) remains the frozen v1
-fallback throughout this phase.
+fallback/control.
 
 ## Why Phase 8 changed
 The old Phase 8 chemical-space screening work is delivery-layer trust tagging, so
@@ -147,10 +148,10 @@ Probe coverage shift after replacing 3,847 easy/common rows:
 | flexible hard | 3.14% | 3.42% | +855 |
 | any P8 hard | 15.60% | 16.88% | +3,847 |
 
-Next: fetch enough replacement candidates for a first real cut, e.g. 50k targeted
-rows, then assemble `data/raw/phase8_replacement_300k.csv`. The interrupted
-`phase8_targeted_topup_200k.csv` is diagnostic only and should not be treated as
-the final replacement candidate pool.
+Historical next step from this probe was to fetch enough replacement candidates
+for a first real cut and then assemble `data/raw/phase8_replacement_300k.csv`.
+That step is now complete. The interrupted `phase8_targeted_topup_200k.csv` is
+diagnostic only and should not be treated as the final replacement candidate pool.
 
 ## P8.2c Replacement 300k first cut (done, 2026-06-25)
 
@@ -189,9 +190,10 @@ Coverage shift vs Phase 7 control:
 | flexible hard | 3.14% | 6.46% | +9,956 |
 | any P8 hard | 15.60% | 28.47% | +38,620 |
 
-Next: build sharded 2D + 3D ETKDG graph caches for
-`data/raw/phase8_replacement_300k.csv`, leaving all Phase 7 data/caches intact for
-the same-size control comparison.
+Historical next step from this cut was to build sharded 2D + 3D ETKDG graph
+caches for `data/raw/phase8_replacement_300k.csv`, leaving all Phase 7
+data/caches intact for the same-size control comparison. That graph-cache build
+is now complete in P8.5.
 
 ## P8.3 30k MoE decision experiment (done, 2026-06-25)
 
@@ -392,10 +394,9 @@ The decisive comparison is the shared common eval:
 | Phase 7 OOD-1000 | 0.12431 | 0.12144 | -0.00287 | 0.14881 | 0.14479 | -0.00402 |
 | P8 targeted hard | 0.16671 | 0.13548 | -0.03123 | 0.21044 | 0.16765 | -0.04279 |
 
-Conclusion: replacement300k standard FusionHead is a strong v2 candidate. It
+Conclusion: replacement300k standard FusionHead is the selected v2 base. It
 improves the broad common eval, slightly improves the Phase 7 OOD-1000 slice,
-and strongly improves the P8 targeted hard slice. Next step is P8.7 final audit /
-model selection, not full MoE.
+and strongly improves the P8 targeted hard slice. Full MoE remains unjustified.
 
 ## P8.7 Model selection
 ### Final decision (done, 2026-06-27)
@@ -456,7 +457,7 @@ are dominated by radical/open-shell SMILES, which are not the core closed-shell
 commercial organic database target. This supports selecting v2 while pushing
 remaining method/coverage risk into Phase 9/10 Delta/UQ validation.
 
-### Selection rule
+### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 
 1. trainable encoder + single FusionHead on broader coverage data;

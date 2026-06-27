@@ -23,8 +23,11 @@ deployment-relevant accuracy, so production stays on SchNet. See
 `results/ab3d/comparison.md` for the raw numbers.
 
 ## 2. Validation conclusions
-- In-dist test (Hybrid): HOMO/LUMO/Gap MAE = 0.064 / 0.062 / 0.076 eV.
-- OOD 1000 (Hybrid): avg MAE 0.124, R² 0.941. Beats GPS 2D (0.130) and SchNet 3D (0.148).
+- Phase 7 v1 reference: in-dist test HOMO/LUMO/Gap MAE = 0.064 / 0.062 / 0.076 eV;
+  OOD-1000 avg MAE 0.124, R² 0.941.
+- Phase 8 v2 selection checks: common eval avg/GAP MAE improves 0.14529/0.17930
+  -> 0.12839/0.15610 versus v1; OOD-1000 slightly improves; P8 targeted hard
+  strongly improves. See `results/phase8/v2_selection_decision.md`.
 - Ranking flips by class: rigid OLED emitters → SchNet 3D wins; floppy donors → Hybrid.
 - B3LYP is the accuracy ceiling, not the model. Bias vs experiment: LUMO +0.85,
   Gap +0.74, HOMO +0.10 eV. Strong charge-transfer / narrow-gap (<2 eV) molecules
@@ -79,7 +82,7 @@ GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89 (encoder LoRA p
 this to 0.183 / 0.197 / 0.270; see `docs/phase9.md`). **M1 UQ done (Phase 10)** —
 `inference.predict_smiles_with_uq(smiles)` returns per-target GW `(value, σ, b3lyp)`
 plus a molecule-level `ood` flag (10-member LightGBM Δ-ensemble + calibrated σ +
-k-NN OOD). Both are v1-based and will be re-validated post-v2. Numbers:
+k-NN OOD). Both are v1-based and must be re-validated on v2. Numbers:
 `results/phase10/`.
 
 30k common-eval is complete: replacement30k is neutral on Phase 7 OOD-1000
@@ -120,8 +123,8 @@ standard replacement300k embeddings exist. Tables:
 
 ## 5. Next actions (1-3)
 1. **Re-validate Phase 9/10 against v2**: current GW Δ-learning and
-   UQ/k-NN assets are v1-based and must be regenerated or rechecked if
-   replacement300k becomes the production base.
+   UQ/k-NN assets are v1-based and must be regenerated or rechecked because
+   replacement300k is now the selected v2 base.
 2. **Update downstream defaults only after validation**: inference can already
    load `phase8_replacement_hybrid`, but Phase 9/10 docs, UQ assets, and any
    batch CLI defaults must not silently switch until their metrics are refreshed.

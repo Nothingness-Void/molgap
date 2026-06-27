@@ -2,7 +2,9 @@
 
 Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
 
-Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp) B3LYP/6-31G\* data (~85M molecules), using a 3D graph neural network (SchNet) with ETKDG conformers.
+Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp)
+B3LYP/6-31G\* data (~85M molecules). The current B3LYP base is a Phase 8
+replacement300k hybrid: GPS 2D + SchNet 3D with ETKDG conformers.
 
 ## Quick Start
 
@@ -10,18 +12,23 @@ Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3
 # Install (editable mode)
 pip install -e .
 
-# Predict a single molecule
+# Predict with the current recommended B3LYP hybrid
 python -c "
-from molgap.inference import predict_smiles
-print(predict_smiles('c1ccc2c(c1)cc1ccc3ccccc3c1n2'))
+from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
+models = load_hybrid()  # defaults to phase8_replacement_hybrid
+vi, preds = predict_smiles_batch_hybrid(
+    ['c1ccc2c(c1)cc1ccc3ccccc3c1n2'], models=models
+)
+print(preds[0].tolist())
 "
-# → {'homo': -5.577, 'lumo': -1.883, 'gap': 3.693}
 
 # Batch prediction
 python -c "
-from molgap.inference import predict_smiles_batch
-df = predict_smiles_batch(['c1ccccc1', 'c1ccc(cc1)N(c1ccccc1)c1ccccc1'])
-print(df)
+from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
+models = load_hybrid()
+smiles = ['c1ccccc1', 'c1ccc(cc1)N(c1ccccc1)c1ccccc1']
+valid_idx, preds = predict_smiles_batch_hybrid(smiles, models=models)
+print(valid_idx, preds)
 "
 ```
 
@@ -44,13 +51,15 @@ the most reliable output.
 
 Code map and module boundaries ("to change X, edit which file") live in
 [`ARCHITECTURE.md`](ARCHITECTURE.md). In short: reusable logic in `src/molgap/`,
-thin CLI wrappers in `scripts/phase{1-7}/`, outputs in `results/`, checkpoints in
+thin CLI wrappers in `scripts/phase{N}/`, outputs in `results/`, checkpoints in
 `models/`, per-phase docs in `docs/`.
 
 ## Experiment History
 
 Per-phase background, experiments, and conclusions live in [`docs/phase{N}.md`](docs/).
-Phase 7 (300k + 2D/3D hybrid) is the current best — see [`docs/phase7.md`](docs/phase7.md).
+Phase 8 selected the replacement300k hybrid as the current v2 base; see
+[`docs/phase8.md`](docs/phase8.md) and
+[`results/phase8/v2_selection_decision.md`](results/phase8/v2_selection_decision.md).
 Task priorities are in [`ROADMAP.md`](ROADMAP.md).
 
 ## Requirements
@@ -70,10 +79,13 @@ pip install torch torch_geometric rdkit scikit-learn pandas numpy tqdm optuna li
 ### `molgap.inference`
 
 ```python
-# Single prediction
-predict_smiles(smiles: str) -> dict[str, float] | None
+# Current recommended B3LYP hybrid
+load_hybrid(key="phase8_replacement_hybrid")
+predict_smiles_batch_hybrid(smiles_list: list[str], models=...)
+    -> (valid_idx, preds)
 
-# Batch prediction
+# Legacy 3D-only SchNet helpers
+predict_smiles(smiles: str) -> dict[str, float] | None
 predict_smiles_batch(smiles_list: list[str]) -> pd.DataFrame
 
 # Ensemble prediction (multiple conformers, averaged)

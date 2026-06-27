@@ -235,9 +235,10 @@ OOD-1000（999 valid ETKDG molecules, B3LYP labels）:
 Conclusion: descriptor-aware fusion gives a **tiny positive OOD signal**
 (avg MAE -0.00015 eV, avg R² +0.00036). This is better than MoE, but still too
 small to replace the Phase 7 production head without multi-seed/full-scale
-confirmation. It is worth keeping as a low-risk candidate for the 1M retrain:
-run it as a parallel head after the baseline FusionHead, not as a replacement
-architecture yet.
+confirmation. This is now superseded by the Phase 8 v2 selection decision:
+standard replacement300k FusionHead won the production-base audit. Keep
+descriptor-aware fusion only as a low-priority follow-up head, not as the current
+replacement architecture.
 
 Post-hoc error-shift check:
 

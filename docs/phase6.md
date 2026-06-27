@@ -47,7 +47,8 @@ Expand training data to MW 200-1000 so large commercial molecules (MW>500) becom
 `results/phase6/`
 
 ## Model
-`models/gnn_schnet_3d_optuna_expanded.pt` — **current best, used for inference**
+`models/gnn_schnet_3d_optuna_expanded.pt` — Phase 6 best model at the time;
+superseded by later Phase 7/8 models.
 
 ## Dependencies
 - `data/raw/phase3_chonsfcl_mw200_500_30k.csv` (Phase 3 data)
