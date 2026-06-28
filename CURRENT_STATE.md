@@ -88,6 +88,15 @@ frozen-embedding replacement30k MoE test avg/GAP 0.13778/0.16211. This keeps the
 default P8 path on single-head/common-eval rather than full 300k end-to-end MoE.
 Decision table: `results/phase8/end2end_vs_standard_30k_comparison.md`.
 
+The head-swap route is now **closed at 500k scale too**. Re-testing MoE(4) and
+intermediate-layer fusion on the same 497,578 expansion500k embeddings as the
+single-head baseline: both tie (MoE avg/GAP -0.00003/-0.00004, layer fusion
+avg/GAP -0.00001/-0.00041 eV), and MoE's gain *shrank* vs 30k instead of growing
+— the opposite of the "experts need more data" hypothesis. Confirms the limiting
+factor is the B3LYP label ceiling, not capacity or fusion topology. Production
+stays on the single FusionHead; MoE is only revisited if the single head exposes
+a specific router-fixable failure. Table: `results/phase8/head_swap_500k_comparison.md`.
+
 **v2 invalidates the current Delta/UQ results** (Phase 9 LoRA/LightGBM and the M1
 UQ k-NN are built on v1's frozen 384-d embeddings). They must be **re-validated
 against v2** before any database build — Phase 9/10 are deliberately sequenced
@@ -152,11 +161,11 @@ standard replacement300k embeddings exist. Tables:
 2. **Re-validate Phase 9/10 against the chosen Phase 8 base**: current GW
    Δ-learning and UQ/k-NN assets are v1-based and must be regenerated or
    rechecked before any database build.
-3. **Do not run full 300k/500k MoE by default**: MoE remains deprioritized after the
-   30k frozen-head tie and the negative end-to-end MoE pilot. Revisit only if the
-   full single-head model exposes a specific failure mode that a router can fix.
-   Intermediate-layer fusion can be tested later as a head-only add-on once full
-   replacement300k embeddings are available.
+3. **Head-swap route is closed (MoE + layer fusion)**: re-tested on 500k and both
+   tie the single head (MoE avg -0.00003, layer fusion avg -0.00001 eV); MoE's
+   gain shrank vs 30k. Do not run full 300k/500k MoE or layer fusion by default.
+   Revisit MoE only if the single-head model exposes a specific router-fixable
+   failure mode. See `results/phase8/head_swap_500k_comparison.md`.
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).

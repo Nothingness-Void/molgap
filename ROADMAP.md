@@ -68,6 +68,7 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Retrain full hybrid with **trainable** encoder | P8.6 | **done** | Warm-start GPS/SchNet + standard single FusionHead; common eval strongly beats P7 full baseline. See `results/phase8/full_replacement_300k_summary.md` |
 | Select v2 production base | P8.7 | **done** | `phase8_replacement_hybrid` selected; see `results/phase8/v2_selection_decision.md` |
 | Expand from 300k to 500k with replay + broader in-domain top-up | P8.8 | **done** | `phase8_expansion_hybrid` v3 candidate; common eval beats replacement300k. See `results/phase8/full_expansion_500k_summary.md` |
+| Re-test head swaps (MoE, layer fusion) on 500k embeddings | P8.9 | **done** | Both still tie single head (MoE avg -0.00003, layer fusion avg -0.00001 eV). Head-swap route closed; bottleneck is the B3LYP label ceiling, not capacity. See `results/phase8/head_swap_500k_comparison.md` |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 
