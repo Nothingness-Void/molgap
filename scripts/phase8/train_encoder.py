@@ -136,8 +136,12 @@ def main():
     parser.add_argument("--no-embeddings", action="store_true")
     parser.add_argument("--extract-only", action="store_true",
                         help="load --model-out and only write --embeddings-out")
+    parser.add_argument("--postprocess-only", action="store_true",
+                        help="load --model-out, evaluate deterministic test split, and write embeddings")
     parser.add_argument("--init-from", type=Path, default=None,
                         help="optional same-architecture checkpoint for warm-starting")
+    parser.add_argument("--eval-batch-size", type=int, default=None)
+    parser.add_argument("--embedding-batch-size", type=int, default=None)
     args = parser.parse_args()
 
     ensure_dirs(PHASE8_DIR, MODELS_DIR)
@@ -158,12 +162,38 @@ def main():
     if args.max_samples is not None:
         graphs = graphs[:args.max_samples]
     print(f"Loaded {len(graphs)} graphs from {graph_path}", flush=True)
+    p = TRAIN_PARAMS[args.kind]
+    eval_bs = args.eval_batch_size or int(p["batch_size"])
+    embed_bs = args.embedding_batch_size or int(p["batch_size"])
 
     if args.extract_only:
         model = _make_model(args.kind).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
-        _extract_embeddings(args.kind, model, graphs, device, embeddings_out,
-                            max(int(TRAIN_PARAMS[args.kind]["batch_size"]), 256))
+        _extract_embeddings(args.kind, model, graphs, device, embeddings_out, embed_bs)
+        return
+
+    if args.postprocess_only:
+        idx = np.random.RandomState(SEED).permutation(len(graphs))
+        n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
+        test_set = [graphs[i] for i in idx[n_train + n_val:]]
+        model = _make_model(args.kind).to(device)
+        model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
+        test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
+        pred, true = _evaluate(args.kind, model, test_loader, device)
+        result = {
+            "kind": args.kind,
+            "graph_path": str(graph_path),
+            "n_graphs": len(graphs),
+            "postprocess_only": True,
+            "model_path": str(model_out),
+            "eval_batch_size": eval_bs,
+            "embedding_batch_size": embed_bs,
+            "test_metrics": _metrics(pred, true),
+        }
+        metrics_out.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(f"Metrics -> {metrics_out}", flush=True)
+        if not args.no_embeddings:
+            _extract_embeddings(args.kind, model, graphs, device, embeddings_out, embed_bs)
         return
 
     idx = np.random.RandomState(SEED).permutation(len(graphs))
@@ -173,7 +203,6 @@ def main():
     test_set = [graphs[i] for i in idx[n_train + n_val:]]
     print(f"Split: train={len(train_set)} val={len(val_set)} test={len(test_set)}", flush=True)
 
-    p = TRAIN_PARAMS[args.kind]
     model = _make_model(args.kind).to(device)
     if args.init_from is not None:
         state = torch.load(args.init_from, weights_only=True, map_location=device)
@@ -244,7 +273,7 @@ def main():
     torch.save(best_state, model_out)
     print(f"Model -> {model_out}", flush=True)
 
-    test_loader = DataLoader(test_set, batch_size=max(bs, 256), shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
     pred, true = _evaluate(args.kind, model, test_loader, device)
     result = {
         "kind": args.kind,
@@ -261,7 +290,7 @@ def main():
     print(f"Metrics -> {metrics_out}", flush=True)
 
     if not args.no_embeddings:
-        _extract_embeddings(args.kind, model, graphs, device, embeddings_out, max(bs, 256))
+        _extract_embeddings(args.kind, model, graphs, device, embeddings_out, embed_bs)
 
 
 if __name__ == "__main__":

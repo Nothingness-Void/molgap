@@ -232,7 +232,7 @@ def main():
         out = args.out_3d if args.out_3d != OUT_3D else PHASE8_DIR / f"pyg_3d_graphs_etkdg_{suffix}.pt"
         report["results"].append(build_3d(smiles, targets, source_idx, out, suffix, args.resume, args.n_jobs))
 
-    report_path = REPORT if args.max_rows is None else PHASE8_DIR / f"graph_build_report_{suffix}.json"
+    report_path = REPORT if args.tag is None and args.max_rows is None else PHASE8_DIR / f"graph_build_report_{suffix}.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"Report -> {report_path}", flush=True)
 

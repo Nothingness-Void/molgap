@@ -230,6 +230,8 @@ def aromatic_edge(row: dict) -> bool:
 
 
 def bucket_matches(bucket_id: str, row: dict) -> bool:
+    if bucket_id == "general_indomain":
+        return True
     gap = row["gap"]
     mw = row["mw"]
     ar = row["aromatic_rings"]
@@ -264,10 +266,12 @@ def assign_bucket(row: dict, buckets: list[str], quotas: dict[str, int], counts:
     return None
 
 
-def load_existing_ids(train_csv: Path) -> tuple[set[int], set[str]]:
-    df = pd.read_csv(train_csv, usecols=["cid", "smiles"])
+def _load_ids_from_csv(path: Path) -> tuple[set[int], set[str]]:
+    df = pd.read_csv(path, usecols=lambda c: c in {"cid", "smiles", "canonical_smiles"})
     cids = set(pd.to_numeric(df["cid"], errors="coerce").dropna().astype(int).tolist())
-    if DESC_CACHE.exists():
+    if "canonical_smiles" in df.columns:
+        smiles = set(df["canonical_smiles"].dropna().astype(str).tolist())
+    elif path == TRAIN_CSV and DESC_CACHE.exists():
         desc = pd.read_csv(DESC_CACHE, usecols=["canonical_smiles"])
         smiles = set(desc["canonical_smiles"].dropna().astype(str).tolist())
     else:
@@ -279,10 +283,23 @@ def load_existing_ids(train_csv: Path) -> tuple[set[int], set[str]]:
     return cids, smiles
 
 
+def load_existing_ids(train_csv: Path, extra_csvs: list[Path]) -> tuple[set[int], set[str]]:
+    cids, smiles = _load_ids_from_csv(train_csv)
+    for path in extra_csvs:
+        if not path.exists():
+            continue
+        extra_cids, extra_smiles = _load_ids_from_csv(path)
+        cids.update(extra_cids)
+        smiles.update(extra_smiles)
+    return cids, smiles
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--spec", type=Path, default=SPEC_JSON)
     ap.add_argument("--train-csv", type=Path, default=TRAIN_CSV)
+    ap.add_argument("--exclude-csv", type=Path, action="append", default=[],
+                    help="Additional CSVs whose cid/canonical_smiles should be excluded")
     ap.add_argument("--out-csv", type=Path, default=OUT_CSV)
     ap.add_argument("--max-kept", type=int, default=200_000)
     ap.add_argument("--max-files", type=int, default=0)
@@ -291,6 +308,8 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--include-buckets", nargs="*", default=None,
                     help="Restrict collection to these spec bucket IDs, preserving spec order")
+    ap.add_argument("--general", action="store_true",
+                    help="Collect any in-domain molecule instead of requiring a hard bucket match")
     ap.add_argument("--report-json", type=Path, default=None,
                     help="Optional path for scan/fill-rate summary")
     ap.add_argument("--overwrite", action="store_true")
@@ -300,7 +319,10 @@ def main() -> None:
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
     raw_quotas = {b["id"]: int(b["quota"]) for b in spec["priority_buckets"]}
     buckets = [b["id"] for b in spec["priority_buckets"]]
-    if args.include_buckets:
+    if args.general:
+        buckets = ["general_indomain"]
+        raw_quotas = {"general_indomain": args.max_kept}
+    elif args.include_buckets:
         requested = set(args.include_buckets)
         unknown = requested - set(buckets)
         if unknown:
@@ -308,7 +330,7 @@ def main() -> None:
         buckets = [b for b in buckets if b in requested]
         raw_quotas = {b: raw_quotas[b] for b in buckets}
     raw_total = sum(raw_quotas.values())
-    if args.max_kept < raw_total:
+    if args.include_buckets or args.max_kept < raw_total:
         quotas = {
             b: max(1, int(round(raw_quotas[b] * args.max_kept / raw_total)))
             for b in buckets
@@ -326,7 +348,7 @@ def main() -> None:
     ensure_dirs(args.out_csv.parent)
 
     print("Loading Phase 7 exclusions...")
-    existing_cids, existing_smiles = load_existing_ids(args.train_csv)
+    existing_cids, existing_smiles = load_existing_ids(args.train_csv, args.exclude_csv)
     seen_cids = set(existing_cids)
     seen_smiles = set(existing_smiles)
     print(f"Excluding {len(existing_cids):,} CIDs and {len(existing_smiles):,} canonical SMILES")

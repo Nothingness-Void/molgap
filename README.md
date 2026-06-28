@@ -3,8 +3,9 @@
 Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
 
 Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp)
-B3LYP/6-31G\* data (~85M molecules). The current B3LYP base is a Phase 8
-replacement300k hybrid: GPS 2D + SchNet 3D with ETKDG conformers.
+B3LYP/6-31G\* data (~85M molecules). The current default B3LYP base is a Phase 8
+replacement300k hybrid: GPS 2D + SchNet 3D with ETKDG conformers. A stronger
+expansion500k candidate is available by explicit registry key.
 
 ## Quick Start
 
@@ -60,6 +61,8 @@ Per-phase background, experiments, and conclusions live in [`docs/phase{N}.md`](
 Phase 8 selected the replacement300k hybrid as the current v2 base; see
 [`docs/phase8.md`](docs/phase8.md) and
 [`results/phase8/v2_selection_decision.md`](results/phase8/v2_selection_decision.md).
+The 500k expansion candidate is summarized in
+[`results/phase8/full_expansion_500k_summary.md`](results/phase8/full_expansion_500k_summary.md).
 Task priorities are in [`ROADMAP.md`](ROADMAP.md).
 
 ## Requirements
@@ -83,6 +86,9 @@ pip install torch torch_geometric rdkit scikit-learn pandas numpy tqdm optuna li
 load_hybrid(key="phase8_replacement_hybrid")
 predict_smiles_batch_hybrid(smiles_list: list[str], models=...)
     -> (valid_idx, preds)
+
+# Explicit 500k candidate
+load_hybrid(key="phase8_expansion_hybrid")
 
 # Legacy 3D-only SchNet helpers
 predict_smiles(smiles: str) -> dict[str, float] | None

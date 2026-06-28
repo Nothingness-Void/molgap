@@ -1,0 +1,23 @@
+{
+  "out_csv": "data\\raw\\phase8_v3_topup_general_60k.csv",
+  "include_buckets": [
+    "general_indomain"
+  ],
+  "quotas": {
+    "general_indomain": 60000
+  },
+  "counts": {
+    "general_indomain": 60000
+  },
+  "resumed_rows": 0,
+  "new_rows": 60000,
+  "total_rows": 60000,
+  "files_scanned": 430,
+  "windows_per_file": 4,
+  "chunk_bytes": 30000000,
+  "parsed_objects": 94885,
+  "filter_passing_candidates_seen": 75100,
+  "elapsed_s": 476.7311282157898,
+  "kept_rows_per_s": 125.8571057118832,
+  "parsed_objects_per_s": 199.03252459120063
+}

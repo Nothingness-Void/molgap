@@ -28,7 +28,8 @@ Notes:
 - The hybrid is **embedding-level late fusion**: freeze the two encoders,
   pre-compute embeddings, train only `FusionHead`. `fusion.py` is the single home
   for that head; load the trio via `inference.load_hybrid()`.
-- The production 3D encoder is **SchNet** (Phase 8 v2 hybrid). The ab3d A/B compared
+- The production 3D encoder is **SchNet** (Phase 8 v2 hybrid, and the 500k v3
+  candidate). The ab3d A/B compared
   TensorNet / ViSNet / SchNet on a 10k subset: TensorNet wins solo (Gap R² 0.906
   vs 0.889) but **fusion-level differences collapse to <0.2% R²** while training
   cost rises ~3.7×. We kept SchNet for the 1M retrain. `tensornet.py` /
@@ -45,11 +46,14 @@ Notes:
 | phase7_gps_2d | `gps_2d_300k.pt` | `PARAMS_GPS_2D` | no |
 | phase7_hybrid *(v1 fallback)* | `hybrid_fusion_optuna.pt` | `fusion_optuna_metrics.json` | no |
 | **phase8_replacement_hybrid** *(v2 default)* | `phase8_hybrid_fusion_replacement_300k.pt` | `fusion_replacement_300k_metrics.json` | no |
+| phase8_expansion_hybrid *(v3 candidate)* | `phase8_hybrid_fusion_expansion_500k.pt` | `fusion_expansion_500k_metrics.json` | no |
 | tensornet_300k *(unused)* | `tensornet_3d_300k.pt` | `PARAMS_TENSORNET_300K` | no |
 | hybrid_tensornet *(unused)* | `hybrid_fusion_tensornet.pt` | `fusion_tensornet_metrics.json` | no |
 
-`inference.load_hybrid()` defaults to `phase8_replacement_hybrid`. Historical
-Phase 7/9 scripts pin `key="phase7_hybrid"` when they reproduce v1 records.
+`inference.load_hybrid()` defaults to `phase8_replacement_hybrid`.
+`phase8_expansion_hybrid` is available by explicit key while the default switch
+is pending. Historical Phase 7/9 scripts pin `key="phase7_hybrid"` when they
+reproduce v1 records.
 
 ## Scripts
 

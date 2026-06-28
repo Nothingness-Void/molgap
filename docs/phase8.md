@@ -457,6 +457,32 @@ are dominated by radical/open-shell SMILES, which are not the core closed-shell
 commercial organic database target. This supports selecting v2 while pushing
 remaining method/coverage risk into Phase 9/10 Delta/UQ validation.
 
+## P8.8 Expansion500k candidate (done, 2026-06-28)
+
+After v2 selection, a 500k expansion was tested without replacing the v2 replay
+set: keep all 300,000 replacement300k rows and append 200,000 non-duplicate rows
+from targeted hard buckets plus general in-domain PubChemQC B3LYP molecules.
+
+Artifacts:
+
+- dataset assembly: `results/phase8/expansion_500k_report.md`
+- summary: `results/phase8/full_expansion_500k_summary.md`
+- common eval: `results/phase8/full_expansion500k_common_eval_metrics.json`
+- registry key: `phase8_expansion_hybrid`
+
+Common-eval hybrid result:
+
+| model | all avg MAE | all Gap MAE | OOD avg MAE | OOD Gap MAE | P8 hard avg MAE | P8 hard Gap MAE |
+|---|---:|---:|---:|---:|---:|---:|
+| Phase 7 full | 0.14529 | 0.17930 | 0.12431 | 0.14881 | 0.16671 | 0.21045 |
+| replacement300k full | 0.12838 | 0.15609 | 0.12144 | 0.14478 | 0.13548 | 0.16765 |
+| expansion500k full | 0.10560 | 0.12528 | 0.11373 | 0.13399 | 0.09729 | 0.11638 |
+
+Conclusion: expanding beyond targeted replacement helps. The gain is strongest
+on the P8 targeted hard slice but also improves OOD-1000. This is a v3 candidate,
+not yet the default loader; Phase 9/10 Delta/UQ must be revalidated against the
+chosen base before database work.
+
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 

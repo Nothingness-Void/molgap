@@ -1,0 +1,24 @@
+{
+  "csv": "data\\raw\\phase8_expansion_500k.csv",
+  "n_input": 500000,
+  "max_rows": null,
+  "results": [
+    {
+      "kind": "2d",
+      "processed": 500000,
+      "graphs": 500000,
+      "failed": 0,
+      "elapsed_s": 441.7444324493408,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_2d_graphs_bond_expansion_500k.pt"
+    },
+    {
+      "kind": "3d",
+      "processed": 500000,
+      "graphs": 497578,
+      "failed": 2422,
+      "elapsed_s": 5934.9606766700745,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_3d_graphs_etkdg_expansion_500k.pt",
+      "n_jobs": 15
+    }
+  ]
+}

@@ -162,6 +162,13 @@ def main():
             "fusion": MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt",
         },
     }
+    expansion500k = {
+        "gps": MODELS_DIR / "phase8_gps_expansion_500k.pt",
+        "schnet": MODELS_DIR / "phase8_schnet_expansion_500k.pt",
+        "fusion": MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt",
+    }
+    if all(path.exists() for path in expansion500k.values()):
+        model_specs["expansion500k_full"] = expansion500k
 
     metrics = {
         "n_eval": int(len(eval_df)),
@@ -180,14 +187,17 @@ def main():
                 pred_df[f"{name}_{pred_name}_{target}"] = pred[:, i]
 
     old = metrics["models"]["phase7_full"]["hybrid"]
-    new = metrics["models"]["replacement300k_full"]["hybrid"]
-    deltas = {}
-    for block in old:
-        deltas[block] = {
-            "average_mae_delta": float(new[block]["average"]["mae"] - old[block]["average"]["mae"]),
-            "gap_mae_delta": float(new[block]["Gap"]["mae"] - old[block]["Gap"]["mae"]),
-        }
-    metrics["replacement_minus_phase7_hybrid"] = deltas
+    for model_name, model_metrics in metrics["models"].items():
+        if model_name == "phase7_full":
+            continue
+        new = model_metrics["hybrid"]
+        deltas = {}
+        for block in old:
+            deltas[block] = {
+                "average_mae_delta": float(new[block]["average"]["mae"] - old[block]["average"]["mae"]),
+                "gap_mae_delta": float(new[block]["Gap"]["mae"] - old[block]["Gap"]["mae"]),
+            }
+        metrics[f"{model_name}_minus_phase7_hybrid"] = deltas
 
     args.out.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     pred_df.to_csv(args.predictions, index=False, encoding="utf-8")
@@ -195,9 +205,10 @@ def main():
     print(f"Predictions -> {args.predictions}", flush=True)
     print(
         "Hybrid all avg: "
-        f"phase7={old['all']['average']['mae']:.5f} "
-        f"replacement={new['all']['average']['mae']:.5f} "
-        f"delta={deltas['all']['average_mae_delta']:+.5f}",
+        + " ".join(
+            f"{name}={metrics['models'][name]['hybrid']['all']['average']['mae']:.5f}"
+            for name in metrics["models"]
+        ),
         flush=True,
     )
 

@@ -42,6 +42,14 @@ MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.p
 MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
 FUSION_PHASE8_REPLACEMENT_METRICS = RESULTS_DIR / "phase8" / "fusion_replacement_300k_metrics.json"
 
+# Phase 8 expansion500k v3 candidate (raw eV — no normalization). This is
+# registered for explicit evaluation; default inference remains on v2 until
+# downstream Delta/UQ assets are revalidated.
+MODEL_PHASE8_EXPANSION_GPS = MODELS_DIR / "phase8_gps_expansion_500k.pt"
+MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
+MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
+FUSION_PHASE8_EXPANSION_METRICS = RESULTS_DIR / "phase8" / "fusion_expansion_500k_metrics.json"
+
 # TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
 # training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
@@ -165,6 +173,20 @@ MODEL_REGISTRY = {
         "kind": "hybrid", "checkpoint": MODEL_PHASE8_REPLACEMENT_HYBRID,
         "metrics": FUSION_PHASE8_REPLACEMENT_METRICS, "normalized": False,
         "components": ["phase8_replacement_gps_2d", "phase8_replacement_schnet_300k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    "phase8_expansion_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_EXPANSION_GPS, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase8_expansion_schnet_500k": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE8_EXPANSION_SCHNET,
+        "params": PARAMS_SCHNET_300K, "normalized": False, "use_charges": True,
+    },
+    "phase8_expansion_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_HYBRID,
+        "metrics": FUSION_PHASE8_EXPANSION_METRICS, "normalized": False,
+        "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
         "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
     },
     "tensornet_300k": {

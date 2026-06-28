@@ -1,0 +1,18 @@
+Device: cuda | kind=schnet
+NVIDIA GeForce RTX 5060 | 8.5 GB
+Loaded 497578 graphs from results\phase8\pyg_3d_graphs_etkdg_expansion_500k.pt
+Split: train=398062 val=49757 test=49759
+Warm-started from models\phase8_schnet_replacement_300k.pt
+ep000 train=0.1329 val=0.1408 best=0.1408@0 lr=2.08e-04 582.4s *
+ep001 train=0.1267 val=0.1269 best=0.1269@1 lr=1.97e-04 567.4s *
+ep002 train=0.1220 val=0.1308 best=0.1269@1 lr=1.81e-04 566.2s
+ep003 train=0.1180 val=0.1245 best=0.1245@3 lr=1.59e-04 606.4s *
+ep004 train=0.1137 val=0.1244 best=0.1244@4 lr=1.33e-04 590.2s *
+ep005 train=0.1095 val=0.1223 best=0.1223@5 lr=1.06e-04 585.3s *
+ep006 train=0.1052 val=0.1237 best=0.1223@5 lr=7.90e-05 570.9s
+ep007 train=0.1011 val=0.1219 best=0.1219@7 lr=5.36e-05 595.5s *
+ep008 train=0.0971 val=0.1193 best=0.1193@8 lr=3.18e-05 569.8s *
+ep009 train=0.0938 val=0.1185 best=0.1185@9 lr=1.51e-05 607.8s *
+ep010 train=0.0911 val=0.1182 best=0.1182@10 lr=4.59e-06 612.5s *
+ep011 train=0.0895 val=0.1180 best=0.1180@11 lr=1.00e-06 578.3s *
+Model -> models\phase8_schnet_expansion_500k.pt

@@ -15,6 +15,17 @@
 **Phase 7 Hybrid** — `phase7_hybrid` / `models/hybrid_fusion_optuna.pt` — stays
 as the frozen v1 fallback and historical control.
 
+**Phase 8 expansion500k Hybrid (v3 candidate)** — registry key
+`phase8_expansion_hybrid`, using:
+
+- `models/phase8_gps_expansion_500k.pt`
+- `models/phase8_schnet_expansion_500k.pt`
+- `models/phase8_hybrid_fusion_expansion_500k.pt`
+
+It is registered for explicit inference/evaluation, but `load_hybrid()` still
+defaults to v2 until the default switch is intentional and downstream Delta/UQ
+assets are revalidated.
+
 The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed**
 — TensorNet wins solo (Gap R² 0.906 vs 0.889) but **fusion-level differences
 collapse to <0.2% R²** (fusion Gap R² 0.9101 vs 0.9083). At 1M scale the ~3.7×
@@ -28,6 +39,11 @@ deployment-relevant accuracy, so production stays on SchNet. See
 - Phase 8 v2 selection checks: common eval avg/GAP MAE improves 0.14529/0.17930
   -> 0.12839/0.15610 versus v1; OOD-1000 slightly improves; P8 targeted hard
   strongly improves. See `results/phase8/v2_selection_decision.md`.
+- Phase 8 expansion500k candidate improves the same common eval again:
+  replacement300k -> expansion500k all avg/GAP MAE 0.12838/0.15609 ->
+  0.10560/0.12528; OOD-1000 0.12144/0.14478 -> 0.11373/0.13399; P8 hard
+  0.13548/0.16765 -> 0.09729/0.11638. See
+  `results/phase8/full_expansion_500k_summary.md`.
 - Ranking flips by class: rigid OLED emitters → SchNet 3D wins; floppy donors → Hybrid.
 - B3LYP is the accuracy ceiling, not the model. Bias vs experiment: LUMO +0.85,
   Gap +0.74, HOMO +0.10 eV. Strong charge-transfer / narrow-gap (<2 eV) molecules
@@ -99,6 +115,14 @@ the Phase 7 full baseline, replacement300k improves all avg/GAP by
 -0.03123/-0.04279. Artifacts and exact metrics:
 `results/phase8/full_replacement_300k_summary.md`.
 
+Expansion500k training is complete as a **v3 candidate**. It keeps the full
+replacement300k replay set and appends 200,000 non-duplicate molecules
+(targeted hard + general in-domain). Warm-started GPS/SchNet from v2 and trained
+the standard single FusionHead on 497,578 aligned ETKDG molecules. On the same
+common eval, expansion500k improves versus v2 by all avg/GAP -0.02279/-0.03081,
+OOD-1000 -0.00771/-0.01079, and P8 targeted hard -0.03819/-0.05126. Artifacts:
+`results/phase8/full_expansion_500k_summary.md`.
+
 The Phase 7-style PCQM4Mv2 valid proxy audit is also positive, but smaller:
 after excluding the union of Phase 7 and replacement300k training SMILES, the
 same 3000-sample in-domain proxy gives Gap MAE 0.25444 -> 0.24645
@@ -122,13 +146,13 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
 ## 5. Next actions (1-3)
-1. **Re-validate Phase 9/10 against v2**: current GW Δ-learning and
-   UQ/k-NN assets are v1-based and must be regenerated or rechecked because
-   replacement300k is now the selected v2 base.
-2. **Update downstream defaults only after validation**: inference can already
-   load `phase8_replacement_hybrid`, but Phase 9/10 docs, UQ assets, and any
-   batch CLI defaults must not silently switch until their metrics are refreshed.
-3. **Do not run full 300k MoE by default**: MoE remains deprioritized after the
+1. **Decide whether expansion500k becomes the default v3 base**: it is registered
+   as `phase8_expansion_hybrid` and wins common eval, but the default remains v2
+   until the switch is intentional.
+2. **Re-validate Phase 9/10 against the chosen Phase 8 base**: current GW
+   Δ-learning and UQ/k-NN assets are v1-based and must be regenerated or
+   rechecked before any database build.
+3. **Do not run full 300k/500k MoE by default**: MoE remains deprioritized after the
    30k frozen-head tie and the negative end-to-end MoE pilot. Revisit only if the
    full single-head model exposes a specific failure mode that a router can fix.
    Intermediate-layer fusion can be tested later as a head-only add-on once full

@@ -15,12 +15,13 @@ The database is the deliverable; the predictor is how we build it. Delivery targ
 end of Phase 11.
 
 ## Status snapshot
-B3LYP-surrogate model has a selected **v2 base** (Phase 8 replacement300k). Still
-in **model-optimization** mode — NOT building the database yet. Live work is the
-post-v2 handoff: re-validate Phase 9/10 GW Delta/UQ assets against v2 before
-shipping database tooling. A 30k trainable-encoder MoE A/B tied the single fusion
-head, so MoE is no longer the default full run. The Phase 7 300k model is the
-**v1 fallback**. Horizon:
+B3LYP-surrogate model has a selected **v2 base** (Phase 8 replacement300k) and a
+stronger **v3 candidate** (Phase 8 expansion500k). Still in **model-optimization**
+mode — NOT building the database yet. Live work is the post-Phase-8 handoff:
+decide whether to promote expansion500k, then re-validate Phase 9/10 GW Delta/UQ
+assets against the chosen base before shipping database tooling. A 30k
+trainable-encoder MoE A/B tied the single fusion head, so MoE is no longer the
+default full run. The Phase 7 300k model is the **v1 fallback**. Horizon:
 **~6 months (2026 H2)**.
 
 ## Phase plan (8 → 11)
@@ -38,8 +39,10 @@ the DB (Phase 10–11).
 | **Phase 11** | Delivery | *Ship it.* | Versioned predictor + DB, queryable access, reproducible build, data card |
 
 The Phase 7 300k hybrid is the **v1 fallback** and stays frozen as a reference.
-Phase 8 selected `phase8_replacement_hybrid` as **v2**. Delta learning (Phase 9)
-and the database (Phase 10) now get re-validated against v2.
+Phase 8 selected `phase8_replacement_hybrid` as **v2** and produced
+`phase8_expansion_hybrid` as a stronger **v3 candidate**. Delta learning
+(Phase 9) and the database (Phase 10) get re-validated against whichever Phase 8
+base is chosen.
 
 Why GW (not OLED-solid experiment): the target is *general* electronic structure,
 not solid-state OLED values — so GW gas-phase quasiparticle energies are the right
@@ -64,6 +67,7 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Build full broader-coverage graph cache (2D + 3D ETKDG, sharded) | P8.5 | **done** | 300,000 2D graphs; 298,957 3D ETKDG graphs. See `results/phase8/full_replacement_300k_summary.md` |
 | Retrain full hybrid with **trainable** encoder | P8.6 | **done** | Warm-start GPS/SchNet + standard single FusionHead; common eval strongly beats P7 full baseline. See `results/phase8/full_replacement_300k_summary.md` |
 | Select v2 production base | P8.7 | **done** | `phase8_replacement_hybrid` selected; see `results/phase8/v2_selection_decision.md` |
+| Expand from 300k to 500k with replay + broader in-domain top-up | P8.8 | **done** | `phase8_expansion_hybrid` v3 candidate; common eval beats replacement300k. See `results/phase8/full_expansion_500k_summary.md` |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 
