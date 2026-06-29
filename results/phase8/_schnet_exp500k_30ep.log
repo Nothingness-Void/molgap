@@ -1,0 +1,27 @@
+Device: cuda | kind=schnet
+NVIDIA GeForce RTX 5060 | 8.5 GB
+Loaded 497578 graphs from results\phase8\pyg_3d_graphs_etkdg_expansion_500k.pt
+Split: train=398062 val=49757 test=49759
+Warm-started from models\phase8_schnet_expansion_500k.pt
+ep000 train=0.1091 val=0.1336 best=0.1336@0 lr=2.11e-04 921.7s *
+ep001 train=0.1093 val=0.1267 best=0.1267@1 lr=2.09e-04 890.5s *
+ep002 train=0.1075 val=0.1296 best=0.1267@1 lr=2.06e-04 665.1s
+ep003 train=0.1062 val=0.1257 best=0.1257@3 lr=2.02e-04 622.0s *
+ep004 train=0.1045 val=0.1268 best=0.1257@3 lr=1.97e-04 546.8s
+ep005 train=0.1028 val=0.1255 best=0.1255@5 lr=1.91e-04 514.7s *
+ep006 train=0.1011 val=0.1255 best=0.1255@5 lr=1.84e-04 494.3s
+ep007 train=0.0995 val=0.1290 best=0.1255@5 lr=1.77e-04 515.1s
+ep008 train=0.0974 val=0.1243 best=0.1243@8 lr=1.68e-04 493.4s *
+ep009 train=0.0956 val=0.1262 best=0.1243@8 lr=1.59e-04 525.7s
+ep010 train=0.0935 val=0.1259 best=0.1243@8 lr=1.49e-04 529.4s
+ep011 train=0.0917 val=0.1242 best=0.1242@11 lr=1.39e-04 505.5s *
+ep012 train=0.0894 val=0.1278 best=0.1242@11 lr=1.28e-04 515.0s
+ep013 train=0.0873 val=0.1268 best=0.1242@11 lr=1.17e-04 519.6s
+ep014 train=0.0852 val=0.1246 best=0.1242@11 lr=1.06e-04 515.9s
+ep015 train=0.0830 val=0.1244 best=0.1242@11 lr=9.53e-05 506.5s
+ep016 train=0.0808 val=0.1253 best=0.1242@11 lr=8.44e-05 494.6s
+ep017 train=0.0786 val=0.1239 best=0.1239@17 lr=7.37e-05 507.1s *
+ep018 train=0.0766 val=0.1241 best=0.1239@17 lr=6.34e-05 503.4s
+ep019 train=0.0745 val=0.1248 best=0.1239@17 lr=5.36e-05 488.7s
+ep020 train=0.0726 val=0.1246 best=0.1239@17 lr=4.44e-05 506.3s
+ep021 train=0.0707 val=0.1251 best=0.1239@17 lr=3.58e-05 600.9s

@@ -483,6 +483,34 @@ on the P8 targeted hard slice but also improves OOD-1000. This is a v3 candidate
 not yet the default loader; Phase 9/10 Delta/UQ must be revalidated against the
 chosen base before database work.
 
+## P8.9 Head-swap + SchNet retrain probes on 500k (done, 2026-06-29)
+
+Two follow-up questions on the expansion500k base, both **negative**:
+
+**(a) Head swap (MoE, layer fusion) on 500k embeddings.** Re-tested MoE(4) and
+intermediate-layer fusion (GPS/SchNet layers 2/4/-1) on the same 497,578
+expansion500k embeddings as the single-head baseline. Both still **tie** the
+single FusionHead — MoE avg/GAP -0.00003/-0.00004, layer fusion avg/GAP
+-0.00001/-0.00041 eV. MoE's marginal gain *shrank* from 30k (≤0.0006 eV) to 500k
+(≤0.00004 eV), the opposite of the "experts need more data to diverge"
+hypothesis. Head-swap route is **closed**; production stays on the single
+FusionHead. Table: `results/phase8/head_swap_500k_comparison.md`.
+
+**(b) SchNet "non-convergence" retrain.** The v3 expansion500k SchNet leg was
+only trained 12 warm-start epochs (its cosine schedule annealed lr→1e-6 by ep11),
+which *looked* like under-training (train 0.1329→0.0895, val→0.1180 both still
+descending). A 30-epoch warm-start continuation (fresh cosine, lr back to 2.1e-4)
+was run to test this. It **failed**: the high re-risen lr destroyed the good
+ep11 minimum on the first epoch (val 0.1180→0.1336), and it never recovered —
+best val only reached **0.1239 @ep17** vs the original **0.1180**, while train
+kept dropping to 0.0707 (clear overfitting, not under-training). Stopped at ep21.
+This **falsifies the under-training hypothesis**: the original 12ep checkpoint
+`phase8_schnet_expansion_500k.pt` is near its generalization limit on this data
+and stays as the v3 SchNet leg. Consistent with the standing diagnosis — the
+bottleneck is the **B3LYP label ceiling**, not training time or capacity. Log:
+`results/phase8/_schnet_exp500k_30ep.log` (kept as evidence; no model artifact
+retained).
+
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 

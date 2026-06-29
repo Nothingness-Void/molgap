@@ -97,6 +97,16 @@ factor is the B3LYP label ceiling, not capacity or fusion topology. Production
 stays on the single FusionHead; MoE is only revisited if the single head exposes
 a specific router-fixable failure. Table: `results/phase8/head_swap_500k_comparison.md`.
 
+The v3 SchNet leg's apparent under-training is also **resolved negatively**. The
+expansion500k SchNet was trained only 12 warm-start epochs (cosine lr→1e-6 by
+ep11) with train/val still descending, which looked like under-training. A
+30-epoch warm-start continuation (fresh cosine, lr back to 2.1e-4) failed: the
+re-risen lr destroyed the good ep11 minimum (val 0.1180→0.1336) and never
+recovered (best 0.1239@ep17 vs 0.1180), while train overfit down to 0.0707. The
+original 12ep checkpoint `phase8_schnet_expansion_500k.pt` stays as the v3 SchNet
+leg. Log: `results/phase8/_schnet_exp500k_30ep.log`. Same conclusion: B3LYP label
+ceiling, not training time.
+
 **v2 invalidates the current Delta/UQ results** (Phase 9 LoRA/LightGBM and the M1
 UQ k-NN are built on v1's frozen 384-d embeddings). They must be **re-validated
 against v2** before any database build — Phase 9/10 are deliberately sequenced
