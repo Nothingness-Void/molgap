@@ -169,6 +169,13 @@ def main():
     }
     if all(path.exists() for path in expansion500k.values()):
         model_specs["expansion500k_full"] = expansion500k
+    tail_probe = {
+        "gps": MODELS_DIR / "phase8_gps_expansion_500k.pt",
+        "schnet": MODELS_DIR / "phase8_schnet_expansion_500k.pt",
+        "fusion": MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt",
+    }
+    if all(path.exists() for path in tail_probe.values()):
+        model_specs["tail_probe30k_fusion"] = tail_probe
 
     metrics = {
         "n_eval": int(len(eval_df)),

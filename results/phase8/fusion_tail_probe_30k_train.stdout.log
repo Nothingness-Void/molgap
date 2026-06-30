@@ -1,0 +1,66 @@
+Device: cuda
+Aligned N=517770 tail_aligned=20192 split=414216/51777/51777
+ep000 val=0.10214 best=0.10214@0 *
+ep001 val=0.09607 best=0.09607@1 *
+ep002 val=0.09097 best=0.09097@2 *
+ep003 val=0.09316 best=0.09097@2
+ep004 val=0.09186 best=0.09097@2
+ep005 val=0.09276 best=0.09097@2
+ep006 val=0.09019 best=0.09019@6 *
+ep007 val=0.08947 best=0.08947@7 *
+ep008 val=0.08996 best=0.08947@7
+ep009 val=0.09517 best=0.08947@7
+ep010 val=0.09113 best=0.08947@7
+ep011 val=0.08992 best=0.08947@7
+ep012 val=0.09068 best=0.08947@7
+ep013 val=0.08988 best=0.08947@7
+ep014 val=0.08987 best=0.08947@7
+ep015 val=0.09100 best=0.08947@7
+ep016 val=0.09023 best=0.08947@7
+ep017 val=0.08944 best=0.08944@17 *
+ep018 val=0.08961 best=0.08944@17
+ep019 val=0.08944 best=0.08944@19 *
+ep020 val=0.08970 best=0.08944@19
+ep021 val=0.09244 best=0.08944@19
+ep022 val=0.08929 best=0.08929@22 *
+ep023 val=0.08942 best=0.08929@22
+ep024 val=0.09186 best=0.08929@22
+ep025 val=0.08945 best=0.08929@22
+ep026 val=0.09075 best=0.08929@22
+ep027 val=0.08951 best=0.08929@22
+ep028 val=0.08944 best=0.08929@22
+ep029 val=0.08927 best=0.08927@29 *
+ep030 val=0.08970 best=0.08927@29
+ep031 val=0.09080 best=0.08927@29
+ep032 val=0.08931 best=0.08927@29
+ep033 val=0.08978 best=0.08927@29
+ep034 val=0.08972 best=0.08927@29
+ep035 val=0.08995 best=0.08927@29
+ep036 val=0.08986 best=0.08927@29
+ep037 val=0.09026 best=0.08927@29
+ep038 val=0.09013 best=0.08927@29
+ep039 val=0.08943 best=0.08927@29
+ep040 val=0.08977 best=0.08927@29
+ep041 val=0.08999 best=0.08927@29
+ep042 val=0.09016 best=0.08927@29
+ep043 val=0.08957 best=0.08927@29
+ep044 val=0.08997 best=0.08927@29
+ep045 val=0.09000 best=0.08927@29
+ep046 val=0.08980 best=0.08927@29
+ep047 val=0.09013 best=0.08927@29
+ep048 val=0.08973 best=0.08927@29
+ep049 val=0.08965 best=0.08927@29
+ep050 val=0.08999 best=0.08927@29
+ep051 val=0.08994 best=0.08927@29
+ep052 val=0.08983 best=0.08927@29
+ep053 val=0.08987 best=0.08927@29
+ep054 val=0.08963 best=0.08927@29
+ep055 val=0.08990 best=0.08927@29
+ep056 val=0.09024 best=0.08927@29
+ep057 val=0.08975 best=0.08927@29
+ep058 val=0.08975 best=0.08927@29
+ep059 val=0.08971 best=0.08927@29
+Early stop at epoch 59
+Model -> D:\�ĵ�\molgap\models\phase8_hybrid_fusion_tail_probe_30k.pt
+Metrics -> D:\�ĵ�\molgap\results\phase8\fusion_tail_probe_30k_metrics.json
+Test avg MAE=0.09031 Gap MAE=0.10612

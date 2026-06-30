@@ -35,6 +35,7 @@ SPLIT_PT = RAW_DIR / "pcqm4m-v2" / "split_dict.pt"
 P7_TRAIN_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
 P8_TRAIN_CSV = RAW_DIR / "phase8_replacement_300k.csv"
 P8_EXPANSION_TRAIN_CSV = RAW_DIR / "phase8_expansion_500k.csv"
+TAIL_PROBE_TRAIN_CSV = RAW_DIR / "phase8_tail_probe_30k.csv"
 OUT_METRICS = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_vs_p8_metrics.json"
 OUT_PREDICTIONS = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_vs_p8_predictions.csv"
 OUT_METRICS_3WAY = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_v2_v3_metrics.json"
@@ -52,11 +53,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--p7-train-csv", type=Path, default=P7_TRAIN_CSV)
     parser.add_argument("--p8-train-csv", type=Path, default=P8_TRAIN_CSV)
     parser.add_argument("--p8-expansion-train-csv", type=Path, default=P8_EXPANSION_TRAIN_CSV)
+    parser.add_argument("--tail-train-csv", type=Path, default=TAIL_PROBE_TRAIN_CSV)
     parser.add_argument("--n-sample", type=int, default=3000)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--p7-key", default="phase7_hybrid")
     parser.add_argument("--p8-key", default="phase8_replacement_hybrid")
     parser.add_argument("--v3-key", default="phase8_expansion_hybrid")
+    parser.add_argument("--tail-key", default="",
+                        help="optional fourth model key, e.g. phase8_tail_probe_hybrid")
     parser.add_argument("--metrics-out", type=Path, default=OUT_METRICS_3WAY)
     parser.add_argument("--predictions-out", type=Path, default=OUT_PREDICTIONS_3WAY)
     parser.add_argument("--skip-similarity", action="store_true")
@@ -199,6 +203,16 @@ def metrics_for(df: pd.DataFrame, labels: list[str]) -> dict:
             "gap_mae": result["v3"]["gap_mae"] - result["p8"]["gap_mae"],
             "gap_err_median": result["v3"]["gap_err_median"] - result["p8"]["gap_err_median"],
         }
+    if "v3_gap_abs_err" in df and "tail_gap_abs_err" in df:
+        result["delta_tail_minus_v3"] = {
+            "gap_mae": result["tail"]["gap_mae"] - result["v3"]["gap_mae"],
+            "gap_err_median": result["tail"]["gap_err_median"] - result["v3"]["gap_err_median"],
+        }
+    if "p7_gap_abs_err" in df and "tail_gap_abs_err" in df:
+        result["delta_tail_minus_p7"] = {
+            "gap_mae": result["tail"]["gap_mae"] - result["p7"]["gap_mae"],
+            "gap_err_median": result["tail"]["gap_err_median"] - result["p7"]["gap_err_median"],
+        }
 
     if "p7_train_max_sim" in df:
         layers = []
@@ -216,6 +230,8 @@ def metrics_for(df: pd.DataFrame, labels: list[str]) -> dict:
                 row["delta_v3_minus_p8"] = row["v3_gap_mae"] - row["p8_gap_mae"]
             if row["n"] and "p7_gap_abs_err" in df and "v3_gap_abs_err" in df:
                 row["delta_v3_minus_p7"] = row["v3_gap_mae"] - row["p7_gap_mae"]
+            if row["n"] and "v3_gap_abs_err" in df and "tail_gap_abs_err" in df:
+                row["delta_tail_minus_v3"] = row["tail_gap_mae"] - row["v3_gap_mae"]
             layers.append(row)
         result["by_p7_train_similarity"] = layers
         result["mean_p7_train_max_sim"] = float(df["p7_train_max_sim"].mean())
@@ -233,6 +249,8 @@ def main() -> None:
         train_paths.append(args.p8_expansion_train_csv)
     else:
         print(f"Warning: expansion train CSV not found, not excluding it: {args.p8_expansion_train_csv}")
+    if args.tail_train_csv.exists():
+        train_paths.append(args.tail_train_csv)
     train_canon, train_counts = load_train_canon(train_paths)
     subset, subset_stats = build_subset(args, train_canon)
     print(f"PCQM4Mv2 proxy subset: {len(subset)} molecules")
@@ -244,6 +262,7 @@ def main() -> None:
     p7 = predict_key(subset, args.p7_key, "p7")
     p8 = predict_key(subset, args.p8_key, "p8")
     v3 = predict_key(subset, args.v3_key, "v3")
+    tail = predict_key(subset, args.tail_key, "tail") if args.tail_key else None
     common = p7.merge(
         p8[["pcqm_idx", "p8_homo_pred", "p8_lumo_pred", "p8_gap_pred", "p8_gap_abs_err"]],
         on="pcqm_idx",
@@ -253,13 +272,20 @@ def main() -> None:
         on="pcqm_idx",
         how="inner",
     )
+    if tail is not None:
+        common = common.merge(
+            tail[["pcqm_idx", "tail_homo_pred", "tail_lumo_pred", "tail_gap_pred", "tail_gap_abs_err"]],
+            on="pcqm_idx",
+            how="inner",
+        )
 
     if not args.skip_similarity:
         common = add_p7_similarity(common, args.p7_train_csv)
 
+    labels = ["p7", "p8", "v3"] + (["tail"] if tail is not None else [])
     metrics = {
         "note": "PCQM4Mv2 valid proxy audit, not an OGB leaderboard submission.",
-        "model_keys": {"p7": args.p7_key, "p8": args.p8_key, "v3": args.v3_key},
+        "model_keys": {"p7": args.p7_key, "p8": args.p8_key, "v3": args.v3_key, "tail": args.tail_key},
         "train_exclusion": {
             "csv_counts": train_counts,
             "union_canonical_smiles": len(train_canon),
@@ -269,9 +295,10 @@ def main() -> None:
             "n_p7_valid": int(len(p7)),
             "n_p8_valid": int(len(p8)),
             "n_v3_valid": int(len(v3)),
+            "n_tail_valid": int(len(tail)) if tail is not None else None,
             "n_common_valid": int(len(common)),
         },
-        "metrics": metrics_for(common, ["p7", "p8", "v3"]),
+        "metrics": metrics_for(common, labels),
     }
     common.to_csv(args.predictions_out, index=False)
     args.metrics_out.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
@@ -279,6 +306,7 @@ def main() -> None:
     p7_mae = metrics["metrics"]["p7"]["gap_mae"]
     p8_mae = metrics["metrics"]["p8"]["gap_mae"]
     v3_mae = metrics["metrics"]["v3"]["gap_mae"]
+    tail_mae = metrics["metrics"]["tail"]["gap_mae"] if "tail" in metrics["metrics"] else None
     delta_p8 = metrics["metrics"]["delta_p8_minus_p7"]["gap_mae"]
     delta_v3_p7 = metrics["metrics"]["delta_v3_minus_p7"]["gap_mae"]
     delta_v3_p8 = metrics["metrics"]["delta_v3_minus_p8"]["gap_mae"]
@@ -286,9 +314,13 @@ def main() -> None:
     print(f"  P7: {p7_mae:.6f} eV")
     print(f"  v2: {p8_mae:.6f} eV")
     print(f"  v3: {v3_mae:.6f} eV")
+    if tail_mae is not None:
+        print(f"  tail: {tail_mae:.6f} eV")
     print(f"  delta v2-P7: {delta_p8:+.6f} eV")
     print(f"  delta v3-P7: {delta_v3_p7:+.6f} eV")
     print(f"  delta v3-v2: {delta_v3_p8:+.6f} eV")
+    if "delta_tail_minus_v3" in metrics["metrics"]:
+        print(f"  delta tail-v3: {metrics['metrics']['delta_tail_minus_v3']['gap_mae']:+.6f} eV")
     print(f"Saved metrics: {args.metrics_out}")
     print(f"Saved predictions: {args.predictions_out}")
 

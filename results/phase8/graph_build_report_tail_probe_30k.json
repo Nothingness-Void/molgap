@@ -1,0 +1,24 @@
+{
+  "csv": "data\\raw\\phase8_tail_probe_30k.csv",
+  "n_input": 20829,
+  "max_rows": null,
+  "results": [
+    {
+      "kind": "2d",
+      "processed": 20829,
+      "graphs": 20829,
+      "failed": 0,
+      "elapsed_s": 30.22433352470398,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_2d_graphs_bond_tail_probe_30k.pt"
+    },
+    {
+      "kind": "3d",
+      "processed": 20829,
+      "graphs": 20192,
+      "failed": 637,
+      "elapsed_s": 498.97927021980286,
+      "out": "D:\\\u6587\u6863\\molgap\\results\\phase8\\pyg_3d_graphs_etkdg_tail_probe_30k.pt",
+      "n_jobs": 12
+    }
+  ]
+}

@@ -50,6 +50,11 @@ MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
 FUSION_PHASE8_EXPANSION_METRICS = RESULTS_DIR / "phase8" / "fusion_expansion_500k_metrics.json"
 
+# Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
+# appending the residual-tail probe pool. Experimental only; not a default.
+MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
+FUSION_PHASE8_TAIL_PROBE_METRICS = RESULTS_DIR / "phase8" / "fusion_tail_probe_30k_metrics.json"
+
 # TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
 # training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
@@ -186,6 +191,12 @@ MODEL_REGISTRY = {
     "phase8_expansion_hybrid": {
         "kind": "hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_HYBRID,
         "metrics": FUSION_PHASE8_EXPANSION_METRICS, "normalized": False,
+        "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    "phase8_tail_probe_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_TAIL_PROBE_HYBRID,
+        "metrics": FUSION_PHASE8_TAIL_PROBE_METRICS, "normalized": False,
         "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
         "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
     },

@@ -1,0 +1,75 @@
+[16:23:32] UFFTYPER: Unrecognized charge state for atom: 1
+[16:23:34] UFFTYPER: Unrecognized atom type: S_5+4 (9)
+[16:23:41] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:23:41] UFFTYPER: Unrecognized atom type: S_5+4 (12)
+[16:23:43] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+[16:23:43] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:23:53] UFFTYPER: Unrecognized atom type: S_5+4 (17)
+[16:24:10] UFFTYPER: Unrecognized charge state for atom: 1
+[16:24:13] UFFTYPER: Unrecognized atom type: S_5+4 (15)
+[16:24:17] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:24:28] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:24:30] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:24:41] UFFTYPER: Unrecognized atom type: S_5+4 (4)
+[16:24:41] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:24:47] UFFTYPER: Unrecognized charge state for atom: 1
+[16:24:49] UFFTYPER: Unrecognized atom type: S_5+4 (9)
+[16:24:56] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:24:56] UFFTYPER: Unrecognized atom type: S_5+4 (12)
+[16:24:58] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+[16:24:58] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:25:08] UFFTYPER: Unrecognized atom type: S_5+4 (17)
+[16:25:25] UFFTYPER: Unrecognized charge state for atom: 1
+[16:25:28] UFFTYPER: Unrecognized atom type: S_5+4 (15)
+[16:25:32] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:25:43] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:25:45] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:26:05] UFFTYPER: Unrecognized atom type: S_5+4 (4)
+[16:26:05] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:26:11] UFFTYPER: Unrecognized charge state for atom: 1
+[16:26:13] UFFTYPER: Unrecognized atom type: S_5+4 (9)
+[16:26:19] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:26:20] UFFTYPER: Unrecognized atom type: S_5+4 (12)
+[16:26:21] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+[16:26:21] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:26:32] UFFTYPER: Unrecognized atom type: S_5+4 (17)
+[16:26:48] UFFTYPER: Unrecognized charge state for atom: 1
+[16:26:51] UFFTYPER: Unrecognized atom type: S_5+4 (15)
+[16:26:56] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:27:07] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:27:09] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:27:28] UFFTYPER: Unrecognized atom type: S_5+4 (4)
+[16:27:29] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:27:34] UFFTYPER: Unrecognized charge state for atom: 1
+[16:27:37] UFFTYPER: Unrecognized atom type: S_5+4 (9)
+[16:27:43] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+[16:27:44] UFFTYPER: Unrecognized atom type: S_5+4 (12)
+[16:27:45] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+[16:27:45] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:27:56] UFFTYPER: Unrecognized atom type: S_5+4 (17)
+[16:28:12] UFFTYPER: Unrecognized charge state for atom: 1
+[16:28:15] UFFTYPER: Unrecognized atom type: S_5+4 (15)
+[16:28:19] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+[16:28:31] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:28:33] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+[16:28:52] UFFTYPER: Unrecognized atom type: S_5+4 (4)
+[16:28:53] UFFTYPER: Unrecognized atom type: S_5+4 (7)
+PCQM4Mv2 proxy subset: 3000 molecules
+  overlaps removed using train union: 312; OOD removed: 33485
+Predicting p7: phase7_hybrid
+Predicting p8: phase8_replacement_hybrid
+Predicting v3: phase8_expansion_hybrid
+Predicting tail: phase8_tail_probe_hybrid
+Computing nearest-neighbor similarity to Phase 7 training set...
+
+PCQM4Mv2 proxy Gap MAE
+  P7: 0.258824 eV
+  v2: 0.251937 eV
+  v3: 0.253062 eV
+  tail: 0.252272 eV
+  delta v2-P7: -0.006887 eV
+  delta v3-P7: -0.005762 eV
+  delta v3-v2: +0.001124 eV
+  delta tail-v3: -0.000790 eV
+Saved metrics: results\phase8\pcqm4mv2_proxy_p7_v2_v3_tail_metrics.json
+Saved predictions: results\phase8\pcqm4mv2_proxy_p7_v2_v3_tail_predictions.csv
