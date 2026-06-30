@@ -88,12 +88,12 @@ def resolve_device(device_arg: str | None) -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def load_or_build_graphs():
-    if GRAPH_CACHE.exists():
-        obj = torch.load(GRAPH_CACHE, weights_only=False)
+def load_or_build_graphs(csv_path: Path, graph_cache: Path):
+    if graph_cache.exists():
+        obj = torch.load(graph_cache, weights_only=False)
         return obj["df"], obj["g2d"], obj["g3d"]
 
-    df = pd.read_csv(CSV)
+    df = pd.read_csv(csv_path)
     g2d, g3d, keep = [], [], []
     for i, smi in enumerate(df["smiles"].tolist()):
         a = smiles_to_2d_pyg(smi)
@@ -106,9 +106,9 @@ def load_or_build_graphs():
         if len(keep) % 500 == 0:
             print(f"  graphs {len(keep)}/{len(df)}", flush=True)
     df = df.iloc[keep].reset_index(drop=True)
-    GRAPH_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"df": df, "g2d": g2d, "g3d": g3d}, GRAPH_CACHE)
-    print(f"Saved graph cache: {GRAPH_CACHE} ({len(df)} molecules)", flush=True)
+    graph_cache.parent.mkdir(parents=True, exist_ok=True)
+    torch.save({"df": df, "g2d": g2d, "g3d": g3d}, graph_cache)
+    print(f"Saved graph cache: {graph_cache} ({len(df)} molecules)", flush=True)
     return df, g2d, g3d
 
 
@@ -177,6 +177,9 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--split-seed", type=int, default=42)
     parser.add_argument("--name", type=str, default=None)
+    parser.add_argument("--hybrid-key", default="phase7_hybrid")
+    parser.add_argument("--csv", type=Path, default=CSV)
+    parser.add_argument("--graph-cache", type=Path, default=GRAPH_CACHE)
     parser.add_argument("--device", type=str, default=None)
     args = parser.parse_args()
 
@@ -192,7 +195,7 @@ def main():
         flush=True,
     )
 
-    df, g2d, g3d = load_or_build_graphs()
+    df, g2d, g3d = load_or_build_graphs(args.csv, args.graph_cache)
     y = torch.tensor(df[[f"gw_{t}" for t in TARGET_COLS]].values, dtype=torch.float32)
     gw = y.numpy()
     raw = df[[f"pred_{t}" for t in TARGET_COLS]].values.astype(np.float32)
@@ -203,7 +206,7 @@ def main():
         flush=True,
     )
 
-    gps, schnet, fusion, _ = load_hybrid(device, key="phase7_hybrid")
+    gps, schnet, fusion, _ = load_hybrid(device, key=args.hybrid_key)
     freeze(gps); freeze(schnet); freeze(fusion)
     layer_counts = {}
     if "gps" in targets:
@@ -315,6 +318,9 @@ def main():
     )
     result = {
         "targets": list(targets),
+        "hybrid_key": args.hybrid_key,
+        "csv": str(args.csv),
+        "graph_cache": str(args.graph_cache),
         "rank": args.rank,
         "alpha": args.alpha,
         "seed": args.seed,

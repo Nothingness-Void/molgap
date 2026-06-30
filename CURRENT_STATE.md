@@ -56,9 +56,10 @@ deployment-relevant accuracy, so production stays on SchNet. See
 A **property database of commercially available organic molecules** — a CSV of
 HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
 is one slice of the commercial-molecule set. Built on two layers:
-1. the Phase 8 replacement300k hybrid model — a fast B3LYP surrogate (v2 selected);
-2. a **Δ-learning correction toward GW** (trained on OE62 GW5000) — lifts predictions
-   past the B3LYP method ceiling.
+1. the Phase 8 expansion500k hybrid model — the current fast B3LYP surrogate
+   (v3 default);
+2. a **Δ-learning correction toward GW** (trained on OE62 GW5000) — lifts
+   predictions past the B3LYP method ceiling.
 The database is the deliverable; the predictor is how we build it. Not built yet.
 
 ## 4. Current focus — post-Phase 8 handoff
@@ -109,18 +110,18 @@ original 12ep checkpoint `phase8_schnet_expansion_500k.pt` stays as the v3 SchNe
 leg. Log: `results/phase8/_schnet_exp500k_30ep.log`. Same conclusion: B3LYP label
 ceiling, not training time.
 
-**v2 invalidates the current Delta/UQ results** (Phase 9 LoRA/LightGBM and the M1
-UQ k-NN are built on v1's frozen 384-d embeddings). They must be **re-validated
-against v2** before any database build — Phase 9/10 are deliberately sequenced
-after Phase 8.
+Phase 9 has now been re-run against the v3 B3LYP base. v3 descriptor-enhanced
+LightGBM Δ improves the old v1 LightGBM baseline on scaffold-test OE62 GW:
+HOMO/LUMO/Gap MAE `0.197/0.217/0.303 -> 0.184/0.212/0.288`. The v3
+GPS+SchNet+Fusion Encoder-LoRA route is the current highest-accuracy candidate
+at `0.184±0.003 / 0.186±0.002 / 0.260±0.006` over 3 seeds. Artifacts and decision:
+`results/phase9/v3_delta_decision.md`.
 
-Δ-learning (B3LYP→GW) currently works with the Phase 7 SchNet hybrid: scaffold-test
-GW MAE HOMO/LUMO/Gap = 0.197 / 0.217 / 0.303 eV, R² 0.86–0.89 (encoder LoRA pushes
-this to 0.183 / 0.197 / 0.270; see `docs/phase9.md`). **M1 UQ done (Phase 10)** —
-`inference.predict_smiles_with_uq(smiles)` returns per-target GW `(value, σ, b3lyp)`
-plus a molecule-level `ood` flag (10-member LightGBM Δ-ensemble + calibrated σ +
-k-NN OOD). Both are v1-based and must be re-validated on v2. Numbers:
-`results/phase10/`.
+Phase 10 UQ/OOD has also been re-calibrated for the v3 LightGBM Δ baseline in
+`results/phase10_v3/`. The explicit loader path is
+`load_uq_bundle(results_subdir="phase10_v3")`; default
+`predict_smiles_with_uq(smiles)` still points to the historical `phase10` bundle
+for backward compatibility until the deployment default is switched.
 
 30k common-eval is complete: replacement30k is neutral on Phase 7 OOD-1000
 (avg MAE +0.00033, Gap +0.00213 vs old30k) but better on the P8 targeted hard
@@ -173,19 +174,27 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/phase7_300k_baseline_lora_layer_comparison.md`,
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
-## 5. Next actions (1-3)
+## 5. Next actions
 1. **DONE — expansion500k is now the default v3 base**: `load_hybrid()` defaults
    to `phase8_expansion_hybrid`. Residual analysis shows v3 already improves the
    hard bins versus v2, but the remaining Gap error is still tail-heavy (worst
    10% of molecules hold 37.7% of total error) and concentrated in narrow-gap
    (<3 eV) and MW>800/flexible molecules. This makes another B3LYP-only targeted
    round possible but lower ROI than Phase 9 GW Delta-learning. See
-   `results/phase8/residual_analysis_expansion500k.md`.
-2. **Re-validate Phase 9/10 against v3**: current GW Δ-learning and UQ/k-NN
-   assets are v1-based and must be regenerated or rechecked. The residual
-   analysis says this is now the **primary accuracy lever** — the dominant error
-   tail (narrow-gap / charge-transfer) is exactly what GW Δ-learning targets.
-3. **Head-swap + SchNet-retrain routes are closed**: MoE + layer fusion both tie
+   `results/phase8/residual_analysis_expansion500k.md`. A follow-up tail-pool
+   fusion-head probe with 20,829 new tail rows is **negative for the primary
+   common eval** (v3 -> tail Gap MAE all 0.12528 -> 0.12661; OOD 0.13398 ->
+   0.13545; P8 hard 0.11638 -> 0.11758) despite a tiny PCQM proxy gain
+   (0.25306 -> 0.25227), so it does not justify a full encoder-level retrain
+   yet. See `results/phase8/tail_probe_30k_decision.md`.
+2. **DONE — Re-validate Phase 9/10 against v3**: v3 descriptor-enhanced LightGBM
+   Δ + `phase10_v3` UQ/OOD is now the calibrated deployment baseline; v3
+   Encoder-LoRA is the higher-accuracy research candidate but lacks its own UQ
+   ensemble. See `results/phase9/v3_delta_decision.md`.
+3. **Next deployment step**: decide whether to switch the default
+   `predict_smiles_with_uq()` bundle from historical `phase10` to `phase10_v3`,
+   or keep v3 explicit until the database pipeline is assembled.
+4. **Head-swap + SchNet-retrain routes are closed**: MoE + layer fusion both tie
    on 500k; SchNet 30ep continuation failed (overfit, val 0.1180->0.1239). Do not
    re-run. See `results/phase8/head_swap_500k_comparison.md` and
    `docs/phase8.md` P8.9.

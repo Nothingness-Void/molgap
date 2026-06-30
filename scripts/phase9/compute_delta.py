@@ -16,10 +16,16 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import json
+import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 from molgap.constants import RESULTS_DIR
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
@@ -33,12 +39,22 @@ OE62 = "data/raw/oe62_df_5k.json"
 OUTDIR = RESULTS_DIR / "phase9"
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--oe62", type=Path, default=Path(OE62))
+    parser.add_argument("--hybrid-key", default="phase7_hybrid")
+    parser.add_argument("--out-dir", type=Path, default=OUTDIR)
+    parser.add_argument("--out-prefix", default="delta_oe62")
+    return parser.parse_args()
+
+
 def pct(a, q):
     return float(np.percentile(a, q))
 
 
 def main():
-    df = pd.read_json(OE62, orient="split")
+    args = parse_args()
+    df = pd.read_json(args.oe62, orient="split")
     print(f"Loaded {len(df)} OE62 GW rows\n")
 
     # ── Collect in-distribution molecules with GW HOMO/LUMO ──
@@ -61,7 +77,7 @@ def main():
 
     # ── Predict B3LYP with the hybrid (and grab embeddings) ──
     print("Loading hybrid, predicting B3LYP (ETKDG + 2D/3D + fusion)...")
-    models = load_hybrid(key="phase7_hybrid")
+    models = load_hybrid(key=args.hybrid_key)
     vi, preds, e2d, e3d = predict_smiles_batch_hybrid(
         cand["smiles"].tolist(), models=models, return_embeddings=True,
     )
@@ -73,7 +89,7 @@ def main():
         cv[f"delta_{t}"] = cv[f"gw_{t}"] - cv[f"pred_{t}"]
 
     # ── Characterize the residual ──
-    summary = {"n": int(len(cv))}
+    summary = {"n": int(len(cv)), "hybrid_key": args.hybrid_key}
     print(f"\n{'='*72}\n  Δ = GW − model-B3LYP  ({len(cv)} molecules)\n{'='*72}")
     print(f"  {'':5s} {'Δ mean':>8s} {'Δ std':>8s} {'Δ p5..p95':>16s}   "
           f"{'std(GW)':>8s} {'std(Δ)':>8s} {'compress':>8s}")
@@ -96,12 +112,17 @@ def main():
     print("  is tighter than the absolute target → learning Δ is easier than GW.")
 
     # ── Save ──
-    OUTDIR.mkdir(parents=True, exist_ok=True)
-    cv.to_csv(OUTDIR / "delta_oe62.csv", index=False)
-    np.savez(OUTDIR / "delta_oe62_embeddings.npz",
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+    csv_out = args.out_dir / f"{args.out_prefix}.csv"
+    npz_out = args.out_dir / f"{args.out_prefix}_embeddings.npz"
+    summary_out = args.out_dir / f"{args.out_prefix}_summary.json"
+    cv.to_csv(csv_out, index=False)
+    np.savez(npz_out,
              emb_2d=e2d, emb_3d=e3d, smiles=cv["smiles"].to_numpy())
-    (OUTDIR / "delta_oe62_summary.json").write_text(json.dumps(summary, indent=2))
-    print(f"\nSaved delta_oe62.csv / _embeddings.npz / _summary.json to {OUTDIR}")
+    summary_out.write_text(json.dumps(summary, indent=2))
+    print(f"\nSaved {csv_out}")
+    print(f"Saved {npz_out}")
+    print(f"Saved {summary_out}")
 
 
 if __name__ == "__main__":

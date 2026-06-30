@@ -45,15 +45,16 @@ Notes:
 | phase7_schnet_300k | `gnn_schnet_3d_300k.pt` | `PARAMS_SCHNET_300K` | no (raw eV) |
 | phase7_gps_2d | `gps_2d_300k.pt` | `PARAMS_GPS_2D` | no |
 | phase7_hybrid *(v1 fallback)* | `hybrid_fusion_optuna.pt` | `fusion_optuna_metrics.json` | no |
-| **phase8_replacement_hybrid** *(v2 default)* | `phase8_hybrid_fusion_replacement_300k.pt` | `fusion_replacement_300k_metrics.json` | no |
-| phase8_expansion_hybrid *(v3 candidate)* | `phase8_hybrid_fusion_expansion_500k.pt` | `fusion_expansion_500k_metrics.json` | no |
+| phase8_replacement_hybrid *(v2 prior base)* | `phase8_hybrid_fusion_replacement_300k.pt` | `fusion_replacement_300k_metrics.json` | no |
+| **phase8_expansion_hybrid** *(v3 default)* | `phase8_hybrid_fusion_expansion_500k.pt` | `fusion_expansion_500k_metrics.json` | no |
+| phase8_tail_probe_hybrid *(negative probe)* | `phase8_hybrid_fusion_tail_probe_30k.pt` | `fusion_tail_probe_30k_metrics.json` | no |
 | tensornet_300k *(unused)* | `tensornet_3d_300k.pt` | `PARAMS_TENSORNET_300K` | no |
 | hybrid_tensornet *(unused)* | `hybrid_fusion_tensornet.pt` | `fusion_tensornet_metrics.json` | no |
 
-`inference.load_hybrid()` defaults to `phase8_replacement_hybrid`.
-`phase8_expansion_hybrid` is available by explicit key while the default switch
-is pending. Historical Phase 7/9 scripts pin `key="phase7_hybrid"` when they
-reproduce v1 records.
+`inference.load_hybrid()` defaults to `phase8_expansion_hybrid`. Historical
+Phase 7/9 scripts pin `key="phase7_hybrid"` when they reproduce v1 records.
+`phase8_tail_probe_hybrid` is registered only to reproduce the negative tail
+fusion-head probe; do not use it as a default.
 
 ## Scripts
 
@@ -63,9 +64,10 @@ reproduce v1 records.
   `src/molgap/`, not redefine model classes.
 - `scripts/phase7/archive/` — superseded scripts/notebooks/diagnostics.
 - `scripts/phase8/` — v2 data coverage, retraining, and selection audits.
-- `scripts/phase9/` — Δ-learning to GW (currently v1 records; revalidate on v2).
+- `scripts/phase9/` — Δ-learning to GW; v3 records are in `results/phase9/v3_delta_decision.md`.
 - `scripts/phase10/` — M1 UQ: `train_ensemble.py` (Δ-ensemble + calibration),
-  `ood_score.py` (embedding-distance OOD flag). Feeds `inference.predict_smiles_with_uq`.
+  `ood_score.py` (embedding-distance OOD flag). Historical default bundle is
+  `results/phase10`; v3 bundle is explicit via `load_uq_bundle(results_subdir="phase10_v3")`.
 - `scripts/ab3d/` — closed A/B comparison. See `results/ab3d/comparison.md`.
 
 ## Data / outputs

@@ -30,8 +30,10 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
+from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")  # Windows GBK guard for σ/² etc.
@@ -43,6 +45,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from rdkit import Chem
+from rdkit.Chem import Crippen, Descriptors, Lipinski
 from scipy.stats import spearmanr
 from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import GroupShuffleSplit
@@ -61,6 +65,49 @@ CALIB_FRAC = 0.15
 K = 5  # neighbours for the distance score
 
 
+def descriptor_features(df: pd.DataFrame) -> np.ndarray:
+    rows = []
+    for smi in df["smiles"].astype(str):
+        mol = Chem.MolFromSmiles(smi)
+        if mol is None:
+            rows.append([0.0] * 13)
+            continue
+        atoms = mol.GetAtoms()
+        rows.append([
+            Descriptors.MolWt(mol),
+            Descriptors.TPSA(mol),
+            Lipinski.NumRotatableBonds(mol),
+            Lipinski.NumAromaticRings(mol),
+            Lipinski.RingCount(mol),
+            Lipinski.NumHAcceptors(mol),
+            Lipinski.NumHDonors(mol),
+            Descriptors.FractionCSP3(mol),
+            Crippen.MolLogP(mol),
+            mol.GetNumHeavyAtoms(),
+            sum(1 for a in atoms if a.GetSymbol() in {"N", "O", "S"}),
+            sum(1 for a in atoms if a.GetSymbol() in {"F", "Cl"}),
+            Chem.GetFormalCharge(mol),
+        ])
+    arr = np.asarray(rows, dtype=np.float32)
+    mu = np.nanmean(arr, axis=0)
+    sd = np.nanstd(arr, axis=0)
+    sd[sd < 1e-6] = 1.0
+    return (np.nan_to_num(arr, nan=0.0) - mu) / sd
+
+
+def build_features(df: pd.DataFrame, e2d: np.ndarray, e3d: np.ndarray, mode: str) -> np.ndarray:
+    parts = [e2d, e3d]
+    if mode in {"embedding_desc", "embedding_desc_pred"}:
+        parts.append(descriptor_features(df))
+    if mode == "embedding_desc_pred":
+        pred = df[["pred_homo", "pred_lumo", "pred_gap"]].to_numpy(dtype=np.float32)
+        mu = pred.mean(axis=0)
+        sd = pred.std(axis=0)
+        sd[sd < 1e-6] = 1.0
+        parts.append((pred - mu) / sd)
+    return np.hstack(parts).astype(np.float32)
+
+
 def knn_distance(ref, query, metric):
     """Mean distance from each query row to its K nearest neighbours in ref."""
     nn = NearestNeighbors(n_neighbors=K, metric=metric).fit(ref)
@@ -76,10 +123,23 @@ def self_distance_threshold(ref, metric, q=95.0):
     return float(np.percentile(self_d, q)), self_d
 
 
-def load_boosters(target):
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--csv", type=Path, default=CSV)
+    parser.add_argument("--npz", type=Path, default=NPZ)
+    parser.add_argument("--out-dir", type=Path, default=PHASE10)
+    parser.add_argument(
+        "--feature-mode",
+        choices=["embedding", "embedding_desc", "embedding_desc_pred"],
+        default="embedding",
+    )
+    return parser.parse_args()
+
+
+def load_boosters(target, out_dir: Path):
     """Reload the 10 saved LightGBM members for a target."""
     members = []
-    d = PHASE10 / "ensemble_lgbm"
+    d = out_dir / "ensemble_lgbm"
     k = 0
     while (d / f"{target}_m{k}.txt").exists():
         s = (d / f"{target}_m{k}.txt").read_text(encoding="utf-8")
@@ -89,12 +149,13 @@ def load_boosters(target):
 
 
 def main():
-    df = pd.read_csv(CSV)
-    npz = np.load(NPZ, allow_pickle=True)
+    args = parse_args()
+    df = pd.read_csv(args.csv)
+    npz = np.load(args.npz, allow_pickle=True)
     e2d, e3d = npz["emb_2d"], npz["emb_3d"]
     assert (npz["smiles"] == df["smiles"].to_numpy()).all(), "smiles order mismatch"
 
-    X = np.hstack([e2d, e3d]).astype(np.float32)
+    X = build_features(df, e2d, e3d, args.feature_mode)
     smiles = df["smiles"].tolist()
     scaffolds = np.array([murcko_scaffold_smiles(s) or "NONE" for s in smiles])
 
@@ -111,9 +172,15 @@ def main():
     Xf = (X[fit_idx] - mu) / sd
     Xt = (X[te] - mu) / sd
 
-    cfg = json.loads((PHASE10 / "ensemble_calibration.json").read_text())
+    cfg = json.loads((args.out_dir / "ensemble_calibration.json").read_text())
 
-    results = {"k": K, "n_fit": int(len(fit_idx)), "n_test": int(len(te))}
+    results = {
+        "k": K,
+        "feature_mode": args.feature_mode,
+        "feature_dim": int(X.shape[1]),
+        "n_fit": int(len(fit_idx)),
+        "n_test": int(len(te)),
+    }
     print(f"  {'tgt':4s} {'metric':7s} {'ρ(d,|e|)':>9s} {'ρ(d,σ)':>8s} "
           f"{'thr(p95)':>9s} {'OOD%':>6s}  binnedMAE(near→far)")
     print(f"  {'-'*86}")
@@ -128,7 +195,7 @@ def main():
     plot_payload = None
 
     for t in TARGETS:
-        members = load_boosters(t)
+        members = load_boosters(t, args.out_dir)
         pred_b3 = df[f"pred_{t}"].to_numpy()
         gw = df[f"gw_{t}"].to_numpy()
         scale = cfg[t]["scale"]
@@ -176,16 +243,16 @@ def main():
         ax.set_xticks(range(1, 11))
         ax.grid(axis="y", alpha=0.3)
         fig.tight_layout()
-        fig.savefig(PHASE10 / "ood_distance_vs_error.png", dpi=130)
+        fig.savefig(args.out_dir / "ood_distance_vs_error.png", dpi=130)
         plt.close(fig)
 
-    (PHASE10 / "ood_metrics.json").write_text(json.dumps(results, indent=2))
+    (args.out_dir / "ood_metrics.json").write_text(json.dumps(results, indent=2))
 
     # Reference bundle for inference: standardized fit embeddings + the
     # standardization stats + the euclidean OOD threshold. predict_smiles_with_uq
     # loads this to score a new molecule's distance without re-deriving splits.
     np.savez(
-        PHASE10 / "ood_reference.npz",
+        args.out_dir / "ood_reference.npz",
         ref_std=Xf.astype(np.float32),     # standardized fit-set embeddings [n_fit, 384]
         mu=mu.astype(np.float32), sd=sd.astype(np.float32),
         threshold=np.array([thr["euclidean"]], dtype=np.float32),
@@ -194,7 +261,7 @@ def main():
 
     print("\n  ρ(d,|e|)>0 + binned MAE rising near→far = distance predicts error (OOD signal real).")
     print("  ρ(d,σ)>0 = the distance flag and the ensemble σ agree on where the model is unsure.")
-    print(f"\nSaved ood_metrics.json + ood_reference.npz + ood_distance_vs_error.png to {PHASE10}")
+    print(f"\nSaved ood_metrics.json + ood_reference.npz + ood_distance_vs_error.png to {args.out_dir}")
 
 
 if __name__ == "__main__":

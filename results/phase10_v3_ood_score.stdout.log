@@ -1,0 +1,15 @@
+reference (fit) 2621 / test 695, K=5
+
+  tgt  metric   ρ(d,|e|)   ρ(d,σ)  thr(p95)   OOD%  binnedMAE(near→far)
+  --------------------------------------------------------------------------------------
+  homo euclidean     0.190    0.442    19.680   3.6%  0.163→0.352 (2.2x)
+  homo cosine      0.033   -0.141     0.450   5.5%  0.183→0.247 (1.4x)
+  lumo euclidean     0.148    0.469    19.680   3.6%  0.149→0.336 (2.3x)
+  lumo cosine      0.062   -0.025     0.450   5.5%  0.162→0.279 (1.7x)
+  gap  euclidean     0.195    0.465    19.680   3.6%  0.228→0.500 (2.2x)
+  gap  cosine      0.031   -0.015     0.450   5.5%  0.262→0.359 (1.4x)
+
+  ρ(d,|e|)>0 + binned MAE rising near→far = distance predicts error (OOD signal real).
+  ρ(d,σ)>0 = the distance flag and the ensemble σ agree on where the model is unsure.
+
+Saved ood_metrics.json + ood_reference.npz + ood_distance_vs_error.png to results\phase10_v3

@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from pathlib import Path
 
 # Windows consoles default to GBK and choke on σ/² in the progress table.
 if hasattr(sys.stdout, "reconfigure"):
@@ -49,6 +50,8 @@ import matplotlib
 
 matplotlib.use("Agg")  # headless: write PNG, never open a window
 import matplotlib.pyplot as plt
+from rdkit import Chem
+from rdkit.Chem import Crippen, Descriptors, Lipinski
 from scipy.special import erfinv
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import mean_absolute_error, r2_score
@@ -72,6 +75,49 @@ LGB_PARAMS = dict(
     subsample=0.8, subsample_freq=1, colsample_bytree=0.5,
     reg_lambda=2.0, min_child_samples=30, n_jobs=-1, verbose=-1,
 )
+
+
+def descriptor_features(df: pd.DataFrame) -> np.ndarray:
+    rows = []
+    for smi in df["smiles"].astype(str):
+        mol = Chem.MolFromSmiles(smi)
+        if mol is None:
+            rows.append([0.0] * 13)
+            continue
+        atoms = mol.GetAtoms()
+        rows.append([
+            Descriptors.MolWt(mol),
+            Descriptors.TPSA(mol),
+            Lipinski.NumRotatableBonds(mol),
+            Lipinski.NumAromaticRings(mol),
+            Lipinski.RingCount(mol),
+            Lipinski.NumHAcceptors(mol),
+            Lipinski.NumHDonors(mol),
+            Descriptors.FractionCSP3(mol),
+            Crippen.MolLogP(mol),
+            mol.GetNumHeavyAtoms(),
+            sum(1 for a in atoms if a.GetSymbol() in {"N", "O", "S"}),
+            sum(1 for a in atoms if a.GetSymbol() in {"F", "Cl"}),
+            Chem.GetFormalCharge(mol),
+        ])
+    arr = np.asarray(rows, dtype=np.float32)
+    mu = np.nanmean(arr, axis=0)
+    sd = np.nanstd(arr, axis=0)
+    sd[sd < 1e-6] = 1.0
+    return (np.nan_to_num(arr, nan=0.0) - mu) / sd
+
+
+def build_features(df: pd.DataFrame, e2d: np.ndarray, e3d: np.ndarray, mode: str) -> np.ndarray:
+    parts = [e2d, e3d]
+    if mode in {"embedding_desc", "embedding_desc_pred"}:
+        parts.append(descriptor_features(df))
+    if mode == "embedding_desc_pred":
+        pred = df[["pred_homo", "pred_lumo", "pred_gap"]].to_numpy(dtype=np.float32)
+        mu = pred.mean(axis=0)
+        sd = pred.std(axis=0)
+        sd[sd < 1e-6] = 1.0
+        parts.append((pred - mu) / sd)
+    return np.hstack(parts).astype(np.float32)
 
 
 def fit_member(X_tr, y_tr, seed):
@@ -144,16 +190,26 @@ def reliability_curve(errors, sigmas, target, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--members", type=int, default=10, help="ensemble size")
+    ap.add_argument("--csv", type=str, default=str(CSV))
+    ap.add_argument("--npz", type=str, default=str(NPZ))
+    ap.add_argument("--out-dir", type=str, default=str(PHASE10))
+    ap.add_argument(
+        "--feature-mode",
+        choices=["embedding", "embedding_desc", "embedding_desc_pred"],
+        default="embedding",
+    )
     args = ap.parse_args()
     n_members = args.members
+    out_dir = Path(args.out_dir)
+    ensemble_dir = out_dir / "ensemble_lgbm"
 
-    df = pd.read_csv(CSV)
-    npz = np.load(NPZ, allow_pickle=True)
+    df = pd.read_csv(args.csv)
+    npz = np.load(args.npz, allow_pickle=True)
     e2d, e3d = npz["emb_2d"], npz["emb_3d"]
     assert len(df) == len(e2d) == len(e3d), "row count mismatch csv vs npz"
     assert (npz["smiles"] == df["smiles"].to_numpy()).all(), "smiles order mismatch"
 
-    X = np.hstack([e2d, e3d]).astype(np.float32)  # [n, 384]
+    X = build_features(df, e2d, e3d, args.feature_mode)
     smiles = df["smiles"].tolist()
     scaffolds = np.array([murcko_scaffold_smiles(s) or "NONE" for s in smiles])
     print(f"{len(df)} molecules, feature dim {X.shape[1]}, "
@@ -170,9 +226,10 @@ def main():
     print(f"fit {len(fit_idx)} / calib {len(cal_idx)} / test {len(te)} "
           f"(all scaffold-disjoint)\n")
 
-    PHASE10.mkdir(parents=True, exist_ok=True)
-    (PHASE10 / "ensemble_lgbm").mkdir(exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ensemble_dir.mkdir(exist_ok=True)
     results = {"n": int(len(df)), "n_members": n_members,
+               "feature_mode": args.feature_mode, "feature_dim": int(X.shape[1]),
                "n_fit": int(len(fit_idx)), "n_calib": int(len(cal_idx)),
                "n_test": int(len(te))}
     calib_cfg = {}
@@ -213,9 +270,9 @@ def main():
         sig_mean = float((sig_te * scale).mean())
 
         reliability_curve(err_te, sig_te * scale, t,
-                          PHASE10 / f"reliability_{t}.png")
+                          out_dir / f"reliability_{t}.png")
         for k, m in enumerate(members):
-            (PHASE10 / "ensemble_lgbm" / f"{t}_m{k}.txt").write_text(
+            (ensemble_dir / f"{t}_m{k}.txt").write_text(
                 m.booster_.model_to_string(), encoding="utf-8")
 
         results[t] = {
@@ -230,11 +287,11 @@ def main():
               f"{ence_pre:9.3f} {ence_post:10.3f} {sig_mean:6.3f} "
               f"{cov1:6.3f} {cov2:6.3f}", flush=True)
 
-    (PHASE10 / "uq_ensemble_metrics.json").write_text(json.dumps(results, indent=2))
-    (PHASE10 / "ensemble_calibration.json").write_text(json.dumps(calib_cfg, indent=2))
+    (out_dir / "uq_ensemble_metrics.json").write_text(json.dumps(results, indent=2))
+    (out_dir / "ensemble_calibration.json").write_text(json.dumps(calib_cfg, indent=2))
     print("\n  MAE should track Phase 9 single-model (UQ must not cost accuracy).")
     print("  cov1σ→0.68 / cov2σ→0.95 after calibration = trustworthy σ.")
-    print(f"\nSaved uq_ensemble_metrics.json + reliability_*.png + boosters to {PHASE10}")
+    print(f"\nSaved uq_ensemble_metrics.json + reliability_*.png + boosters to {out_dir}")
 
 
 if __name__ == "__main__":

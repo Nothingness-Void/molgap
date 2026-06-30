@@ -1,0 +1,26 @@
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+D:\�ĵ�\molgap\.venv\lib\site-packages\sklearn\utils\validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+3736 molecules, feature dim 400
+3111 unique scaffolds -> train 3041 / test 695 (scaffold-disjoint)
+
+  tgt      raw   const  Δmodel   Yrand   R²(Δ)   verdict
+  ------------------------------------------------------------
+  homo   2.203   0.273   0.184   0.271   0.889   learns structure; signal real
+  lumo   1.009   0.301   0.212   0.303   0.877   learns structure; signal real
+  gap    3.190   0.470   0.288   0.468   0.904   learns structure; signal real
+
+  raw=no correction · const=B3LYP+mean(Δ) · Δmodel=B3LYP+LightGBM(Δ)
+  Want: Δmodel < const (learns structure) AND Yrand ≈ const (signal real)
+
+Saved D:\文档\molgap\results\phase9\delta_model_v3_desc_pred_metrics.json + delta_lgbm_v3_desc_pred_*.txt to D:\文档\molgap\results\phase9
+Saved predictions: results\phase9\delta_model_v3_desc_pred_predictions.csv

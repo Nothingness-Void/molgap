@@ -3,9 +3,8 @@
 Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
 
 Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp)
-B3LYP/6-31G\* data (~85M molecules). The current default B3LYP base is a Phase 8
-replacement300k hybrid: GPS 2D + SchNet 3D with ETKDG conformers. A stronger
-expansion500k candidate is available by explicit registry key.
+B3LYP/6-31G\* data (~85M molecules). The current default B3LYP base is the Phase 8
+expansion500k hybrid: GPS 2D + SchNet 3D with ETKDG conformers.
 
 ## Quick Start
 
@@ -16,7 +15,7 @@ pip install -e .
 # Predict with the current recommended B3LYP hybrid
 python -c "
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
-models = load_hybrid()  # defaults to phase8_replacement_hybrid
+models = load_hybrid()  # defaults to phase8_expansion_hybrid
 vi, preds = predict_smiles_batch_hybrid(
     ['c1ccc2c(c1)cc1ccc3ccccc3c1n2'], models=models
 )
@@ -58,11 +57,11 @@ thin CLI wrappers in `scripts/phase{N}/`, outputs in `results/`, checkpoints in
 ## Experiment History
 
 Per-phase background, experiments, and conclusions live in [`docs/phase{N}.md`](docs/).
-Phase 8 selected the replacement300k hybrid as the current v2 base; see
+Phase 8 selected the expansion500k hybrid as the current v3 B3LYP base; see
 [`docs/phase8.md`](docs/phase8.md) and
-[`results/phase8/v2_selection_decision.md`](results/phase8/v2_selection_decision.md).
-The 500k expansion candidate is summarized in
 [`results/phase8/full_expansion_500k_summary.md`](results/phase8/full_expansion_500k_summary.md).
+Phase 9 revalidated GW Delta-learning against v3; see
+[`results/phase9/v3_delta_decision.md`](results/phase9/v3_delta_decision.md).
 Task priorities are in [`ROADMAP.md`](ROADMAP.md).
 
 ## Requirements
@@ -83,12 +82,12 @@ pip install torch torch_geometric rdkit scikit-learn pandas numpy tqdm optuna li
 
 ```python
 # Current recommended B3LYP hybrid
-load_hybrid(key="phase8_replacement_hybrid")
+load_hybrid(key="phase8_expansion_hybrid")
 predict_smiles_batch_hybrid(smiles_list: list[str], models=...)
     -> (valid_idx, preds)
 
-# Explicit 500k candidate
-load_hybrid(key="phase8_expansion_hybrid")
+# Prior v2 base
+load_hybrid(key="phase8_replacement_hybrid")
 
 # Legacy 3D-only SchNet helpers
 predict_smiles(smiles: str) -> dict[str, float] | None
@@ -96,6 +95,10 @@ predict_smiles_batch(smiles_list: list[str]) -> pd.DataFrame
 
 # Ensemble prediction (multiple conformers, averaged)
 predict_smiles_ensemble(smiles: str, k: int = 8) -> dict[str, float] | None
+
+# v3 GW Delta + calibrated UQ/OOD bundle
+bundle = load_uq_bundle(results_subdir="phase10_v3")
+predict_smiles_with_uq(smiles, bundle=bundle)
 
 # Low-level: load model manually
 load_model(model_path=None, params=None, graphs_path=None)

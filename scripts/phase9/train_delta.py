@@ -22,16 +22,24 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import json
+import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
+from rdkit import Chem
+from rdkit.Chem import Crippen, Descriptors, Lipinski
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 
 from molgap.constants import RESULTS_DIR
 from molgap.utils import murcko_scaffold_smiles
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 PHASE9 = RESULTS_DIR / "phase9"
 CSV = PHASE9 / "delta_oe62.csv"
@@ -47,6 +55,65 @@ LGB_PARAMS = dict(
 )
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--csv", type=Path, default=CSV)
+    parser.add_argument("--npz", type=Path, default=NPZ)
+    parser.add_argument("--out-dir", type=Path, default=PHASE9)
+    parser.add_argument("--out-prefix", default="delta_model")
+    parser.add_argument("--model-prefix", default="delta_lgbm")
+    parser.add_argument("--predictions-out", type=Path, default=None)
+    parser.add_argument(
+        "--feature-mode",
+        choices=["embedding", "embedding_desc", "embedding_desc_pred"],
+        default="embedding",
+    )
+    return parser.parse_args()
+
+
+def descriptor_features(df: pd.DataFrame) -> np.ndarray:
+    rows = []
+    for smi in df["smiles"].astype(str):
+        mol = Chem.MolFromSmiles(smi)
+        if mol is None:
+            rows.append([0.0] * 13)
+            continue
+        atoms = mol.GetAtoms()
+        rows.append([
+            Descriptors.MolWt(mol),
+            Descriptors.TPSA(mol),
+            Lipinski.NumRotatableBonds(mol),
+            Lipinski.NumAromaticRings(mol),
+            Lipinski.RingCount(mol),
+            Lipinski.NumHAcceptors(mol),
+            Lipinski.NumHDonors(mol),
+            Descriptors.FractionCSP3(mol),
+            Crippen.MolLogP(mol),
+            mol.GetNumHeavyAtoms(),
+            sum(1 for a in atoms if a.GetSymbol() in {"N", "O", "S"}),
+            sum(1 for a in atoms if a.GetSymbol() in {"F", "Cl"}),
+            Chem.GetFormalCharge(mol),
+        ])
+    arr = np.asarray(rows, dtype=np.float32)
+    mu = np.nanmean(arr, axis=0)
+    sd = np.nanstd(arr, axis=0)
+    sd[sd < 1e-6] = 1.0
+    return (np.nan_to_num(arr, nan=0.0) - mu) / sd
+
+
+def build_features(df: pd.DataFrame, e2d: np.ndarray, e3d: np.ndarray, mode: str) -> np.ndarray:
+    parts = [e2d, e3d]
+    if mode in {"embedding_desc", "embedding_desc_pred"}:
+        parts.append(descriptor_features(df))
+    if mode == "embedding_desc_pred":
+        pred = df[["pred_homo", "pred_lumo", "pred_gap"]].to_numpy(dtype=np.float32)
+        mu = pred.mean(axis=0)
+        sd = pred.std(axis=0)
+        sd[sd < 1e-6] = 1.0
+        parts.append((pred - mu) / sd)
+    return np.hstack(parts).astype(np.float32)
+
+
 def fit_lgbm(X_tr, y_tr):
     """LightGBM with an internal validation split for early stopping."""
     Xa, Xv, ya, yv = train_test_split(X_tr, y_tr, test_size=0.1, random_state=SEED)
@@ -57,13 +124,15 @@ def fit_lgbm(X_tr, y_tr):
 
 
 def main():
-    df = pd.read_csv(CSV)
-    npz = np.load(NPZ, allow_pickle=True)
+    args = parse_args()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(args.csv)
+    npz = np.load(args.npz, allow_pickle=True)
     e2d, e3d = npz["emb_2d"], npz["emb_3d"]
     assert len(df) == len(e2d) == len(e3d), "row count mismatch csv vs npz"
     assert (npz["smiles"] == df["smiles"].to_numpy()).all(), "smiles order mismatch"
 
-    X = np.hstack([e2d, e3d]).astype(np.float32)  # [n, 384]
+    X = build_features(df, e2d, e3d, args.feature_mode)
     smiles = df["smiles"].tolist()
     print(f"{len(df)} molecules, feature dim {X.shape[1]}")
 
@@ -77,7 +146,9 @@ def main():
 
     rng = np.random.RandomState(SEED)
     results = {"n": int(len(df)), "n_scaffolds": int(n_scaf),
+               "feature_mode": args.feature_mode, "feature_dim": int(X.shape[1]),
                "n_train": int(len(tr)), "n_test": int(len(te))}
+    pred_df = df.iloc[te].reset_index(drop=True).copy()
 
     print(f"  {'tgt':4s} {'raw':>7s} {'const':>7s} {'Δmodel':>7s} {'Yrand':>7s} "
           f"{'R²(Δ)':>7s}   verdict")
@@ -116,17 +187,26 @@ def main():
         }
         print(f"  {t:4s} {mae_raw:7.3f} {mae_const:7.3f} {mae_model:7.3f} "
               f"{mae_yrand:7.3f} {r2_model:7.3f}   {verdict}")
+        pred_df[f"gw_pred_raw_{t}"] = pred_b3[te]
+        pred_df[f"gw_pred_const_{t}"] = pred_b3[te] + y[tr].mean()
+        pred_df[f"gw_pred_lgbm_delta_{t}"] = pred_b3[te] + dpred
 
         # Write via Python (pathlib handles non-ASCII paths; LightGBM's C
         # save_model does not — it mangles the "文档" path and fails).
-        (PHASE9 / f"delta_lgbm_{t}.txt").write_text(
+        (args.out_dir / f"{args.model_prefix}_{t}.txt").write_text(
             model.booster_.model_to_string(), encoding="utf-8")
 
     print("\n  raw=no correction · const=B3LYP+mean(Δ) · Δmodel=B3LYP+LightGBM(Δ)")
     print("  Want: Δmodel < const (learns structure) AND Yrand ≈ const (signal real)")
 
-    (PHASE9 / "delta_model_metrics.json").write_text(json.dumps(results, indent=2))
-    print(f"\nSaved delta_model_metrics.json + delta_lgbm_*.txt to {PHASE9}")
+    metrics_out = args.out_dir / f"{args.out_prefix}_metrics.json"
+    metrics_out.write_text(json.dumps(results, indent=2))
+    if args.predictions_out is not None:
+        args.predictions_out.parent.mkdir(parents=True, exist_ok=True)
+        pred_df.to_csv(args.predictions_out, index=False, encoding="utf-8")
+    print(f"\nSaved {metrics_out} + {args.model_prefix}_*.txt to {args.out_dir}")
+    if args.predictions_out is not None:
+        print(f"Saved predictions: {args.predictions_out}")
 
 
 if __name__ == "__main__":

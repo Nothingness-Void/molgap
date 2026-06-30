@@ -1,0 +1,35 @@
+{
+  "n": 3736,
+  "n_scaffolds": 3111,
+  "feature_mode": "embedding_desc_pred",
+  "feature_dim": 400,
+  "n_train": 3041,
+  "n_test": 695,
+  "homo": {
+    "mae_raw": 2.203444470647482,
+    "mae_const": 0.2726767089613311,
+    "mae_delta_model": 0.18437261076013536,
+    "mae_yrand": 0.2706788269331258,
+    "r2_delta_model": 0.8889102066664316,
+    "beats_const": true,
+    "signal_real": true
+  },
+  "lumo": {
+    "mae_raw": 1.0092572817423022,
+    "mae_const": 0.3008404556451015,
+    "mae_delta_model": 0.21159134303372246,
+    "mae_yrand": 0.3033002181455746,
+    "r2_delta_model": 0.8772358524253437,
+    "beats_const": true,
+    "signal_real": true
+  },
+  "gap": {
+    "mae_raw": 3.1896818715107917,
+    "mae_const": 0.4699111539620385,
+    "mae_delta_model": 0.28763927077729434,
+    "mae_yrand": 0.46823377109390274,
+    "r2_delta_model": 0.9038240099992634,
+    "beats_const": true,
+    "signal_real": true
+  }
+}

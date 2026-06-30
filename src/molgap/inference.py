@@ -359,7 +359,11 @@ def predict_smiles_ensemble(
 # scales, and the OOD reference bundle (standardized fit embeddings + threshold).
 
 
-def load_uq_bundle(device: torch.device | str | None = None) -> dict:
+def load_uq_bundle(
+    device: torch.device | str | None = None,
+    *,
+    results_subdir: str = "phase10",
+) -> dict:
     """Load everything predict_smiles_with_uq needs, once, for reuse across calls.
 
     Returns a dict with: the SchNet hybrid trio (for B3LYP + 384-d features —
@@ -372,11 +376,14 @@ def load_uq_bundle(device: torch.device | str | None = None) -> dict:
 
     from .constants import RESULTS_DIR
 
-    phase10 = RESULTS_DIR / "phase10"
-    # SchNet hybrid: the Δ embeddings (delta_oe62_embeddings.npz) are 192+192-d,
-    # produced by phase7_hybrid — not the 128-d tensornet hybrid. Train/inference
-    # feature consistency requires the same encoder here.
-    hybrid = load_hybrid(device, key="phase7_hybrid")
+    phase10 = RESULTS_DIR / results_subdir
+    cfg_path = phase10 / "feature_config.json"
+    feature_cfg = (
+        json.loads(cfg_path.read_text(encoding="utf-8"))
+        if cfg_path.exists()
+        else {"hybrid_key": "phase7_hybrid", "feature_mode": "embedding"}
+    )
+    hybrid = load_hybrid(device, key=feature_cfg.get("hybrid_key", "phase7_hybrid"))
 
     members = {}
     for t in TARGET_COLS:
@@ -396,15 +403,59 @@ def load_uq_bundle(device: torch.device | str | None = None) -> dict:
     ood = np.load(phase10 / "ood_reference.npz")
     return {
         "hybrid": hybrid, "members": members, "calib": calib,
+        "results_subdir": results_subdir,
+        "feature_cfg": feature_cfg,
         "ref_std": ood["ref_std"], "ood_mu": ood["mu"], "ood_sd": ood["sd"],
         "ood_threshold": float(ood["threshold"][0]), "ood_k": int(ood["k"][0]),
     }
+
+
+def _uq_descriptor_vector(smiles: str) -> np.ndarray:
+    from rdkit import Chem
+    from rdkit.Chem import Crippen, Descriptors, Lipinski
+
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        return np.zeros(13, dtype=np.float32)
+    atoms = mol.GetAtoms()
+    return np.array([
+        Descriptors.MolWt(mol),
+        Descriptors.TPSA(mol),
+        Lipinski.NumRotatableBonds(mol),
+        Lipinski.NumAromaticRings(mol),
+        Lipinski.RingCount(mol),
+        Lipinski.NumHAcceptors(mol),
+        Lipinski.NumHDonors(mol),
+        Descriptors.FractionCSP3(mol),
+        Crippen.MolLogP(mol),
+        mol.GetNumHeavyAtoms(),
+        sum(1 for a in atoms if a.GetSymbol() in {"N", "O", "S"}),
+        sum(1 for a in atoms if a.GetSymbol() in {"F", "Cl"}),
+        Chem.GetFormalCharge(mol),
+    ], dtype=np.float32)
+
+
+def _build_uq_feature(smiles: str, b3lyp: np.ndarray, e2d: np.ndarray, e3d: np.ndarray, cfg: dict) -> np.ndarray:
+    parts = [e2d, e3d]
+    mode = cfg.get("feature_mode", "embedding")
+    if mode in {"embedding_desc", "embedding_desc_pred"}:
+        desc = _uq_descriptor_vector(smiles)
+        desc_mu = np.asarray(cfg["desc_mu"], dtype=np.float32)
+        desc_sd = np.asarray(cfg["desc_sd"], dtype=np.float32)
+        parts.append((desc - desc_mu) / desc_sd)
+    if mode == "embedding_desc_pred":
+        pred_mu = np.asarray(cfg["pred_mu"], dtype=np.float32)
+        pred_sd = np.asarray(cfg["pred_sd"], dtype=np.float32)
+        parts.append((b3lyp.astype(np.float32) - pred_mu) / pred_sd)
+    return np.hstack(parts).astype(np.float32)[None, :]
 
 
 def predict_smiles_with_uq(
     smiles: str,
     bundle: dict | None = None,
     device: torch.device | str | None = None,
+    *,
+    results_subdir: str = "phase10",
 ) -> dict | None:
     """Predict GW-level HOMO/LUMO/Gap for one SMILES, with uncertainty.
 
@@ -427,7 +478,7 @@ def predict_smiles_with_uq(
     from sklearn.neighbors import NearestNeighbors
 
     if bundle is None:
-        bundle = load_uq_bundle(device)
+        bundle = load_uq_bundle(device, results_subdir=results_subdir)
 
     # B3LYP prediction + the 384-d fusion embedding (one forward pass).
     vi, preds, e2d, e3d = predict_smiles_batch_hybrid(
@@ -436,7 +487,7 @@ def predict_smiles_with_uq(
     if len(vi) == 0:
         return None
     b3lyp = preds[0]                       # [homo, lumo, gap] in eV
-    feat = np.hstack([e2d[0], e3d[0]]).astype(np.float32)[None, :]  # [1, 384]
+    feat = _build_uq_feature(smiles, b3lyp, e2d[0], e3d[0], bundle["feature_cfg"])
 
     out: dict = {}
     for i, t in enumerate(TARGET_COLS):

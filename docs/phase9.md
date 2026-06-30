@@ -249,3 +249,26 @@ LightGBM Δ baseline in any user-facing workflow.
 ## Conditional
 If P8.3 refinement shrinks the clean set too far, Phase 9 degrades to a
 structure-aware (but simpler) bias correction rather than a full Δ model.
+
+## v3 revalidation (2026-07-01)
+
+After Phase 8 promoted `phase8_expansion_hybrid` to the default B3LYP base, the
+GW Δ-learning stack was re-run with v3 embeddings and v3 B3LYP predictions.
+
+LightGBM Δ on OE62 scaffold split:
+
+| model | feature mode | HOMO MAE | LUMO MAE | Gap MAE | Gap R² |
+|---|---|---:|---:|---:|---:|
+| v1 LightGBM Δ | embedding | 0.197 | 0.217 | 0.303 | 0.885 |
+| v3 LightGBM Δ | embedding | 0.185 | 0.216 | 0.300 | 0.895 |
+| v3 LightGBM Δ | embedding + descriptors + B3LYP pred | **0.184** | **0.212** | **0.288** | **0.904** |
+
+Encoder LoRA was also re-run against v3 (`GPS + SchNet + Fusion`, r=4,
+3 seeds). It is the highest-accuracy GW candidate so far:
+HOMO/LUMO/Gap MAE = `0.184±0.003 / 0.186±0.002 / 0.260±0.006`.
+
+Phase 10 was re-calibrated for the descriptor-enhanced v3 LightGBM Δ baseline in
+`results/phase10_v3/`; load it explicitly with
+`load_uq_bundle(results_subdir="phase10_v3")`.
+
+Decision record: `results/phase9/v3_delta_decision.md`.
