@@ -108,12 +108,13 @@ def load_model(
 def load_hybrid(
     device: torch.device | str | None = None,
     *,
-    key: str = "phase8_replacement_hybrid",
+    key: str = "phase8_expansion_hybrid",
 ) -> tuple[GPSWrapper, SchNetWrapper | TensorNetWrapper, FusionHead, torch.device]:
     """Load a hybrid trio: (gps_2d, encoder_3d, fusion_head, device).
 
-    Default is the selected Phase 8 v2 base, ``"phase8_replacement_hybrid"``.
-    Pass ``key="phase7_hybrid"`` to load the frozen v1 fallback/control.
+    Default is the Phase 8 v3 base, ``"phase8_expansion_hybrid"`` (expansion500k).
+    Pass ``key="phase8_replacement_hybrid"`` for the v2 base or
+    ``key="phase7_hybrid"`` for the frozen v1 fallback/control.
 
     All are raw-eV (no normalization). The fusion head's architecture
     (fusion_type, hidden) is read from its Optuna metrics file so it always
@@ -174,7 +175,7 @@ def predict_smiles_batch_hybrid(
     bs_3d: int = 128,
     return_embeddings: bool = False,
     device: torch.device | str | None = None,
-    hybrid_key: str = "phase8_replacement_hybrid",
+    hybrid_key: str = "phase8_expansion_hybrid",
 ):
     """Batch-predict B3LYP HOMO/LUMO/Gap with the hybrid model (raw eV).
 

@@ -1,0 +1,29 @@
+{
+  "out_csv": "data\\raw\\phase8_tail_probe_30k.csv",
+  "include_buckets": [
+    "very_low_gap",
+    "low_gap_general",
+    "very_large_tail"
+  ],
+  "quotas": {
+    "very_low_gap": 18000,
+    "low_gap_general": 7200,
+    "very_large_tail": 4800
+  },
+  "counts": {
+    "very_low_gap": 3121,
+    "low_gap_general": 7200,
+    "very_large_tail": 2558
+  },
+  "resumed_rows": 9174,
+  "new_rows": 11655,
+  "total_rows": 20829,
+  "files_scanned": 430,
+  "windows_per_file": 4,
+  "chunk_bytes": 30000000,
+  "parsed_objects": 1977973,
+  "filter_passing_candidates_seen": 1669644,
+  "elapsed_s": 9389.271741390228,
+  "kept_rows_per_s": 1.241310329599034,
+  "parsed_objects_per_s": 210.66309022462377
+}

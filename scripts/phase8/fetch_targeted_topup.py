@@ -54,6 +54,12 @@ TRAIN_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
 DESC_CACHE = RESULTS_DIR / "phase8" / "training_gap_descriptors.csv"
 SPEC_JSON = RESULTS_DIR / "phase8" / "sampling_spec.json"
 OUT_CSV = RAW_DIR / "phase8_targeted_topup_200k.csv"
+EXTRA_BUCKET_QUOTAS = {
+    # Probe-only buckets for the expansion500k residual tail. These are not part
+    # of the original Phase 8 sampling spec, but keep the same CLI/fetch path.
+    "low_gap_general": 12_000,       # 2.5 <= gap < 3.2, no aromatic-edge gate
+    "very_large_tail": 8_000,        # MW >= 800 with low-gap or flexible signal
+}
 
 CSV_FIELDS = [
     "bucket", "cid", "mw", "formula", "smiles", "canonical_smiles",
@@ -185,7 +191,8 @@ def candidate_from_obj(obj: dict, active_buckets: set[str] | None = None) -> dic
     if active_buckets:
         if active_buckets <= {"very_low_gap"} and gap >= 2.5:
             return None
-        if active_buckets <= {"very_low_gap", "low_gap_aromatic_edge"} and gap >= 3.2:
+        low_gap_buckets = {"very_low_gap", "low_gap_aromatic_edge", "low_gap_general"}
+        if active_buckets <= low_gap_buckets and gap >= 3.2:
             return None
         if active_buckets <= {"large_aromatic_edge", "very_large_general", "large_mw_500_700"} and mw < 500:
             return None
@@ -242,6 +249,8 @@ def bucket_matches(bucket_id: str, row: dict) -> bool:
         return gap < 2.5
     if bucket_id == "low_gap_aromatic_edge":
         return 2.5 <= gap < 3.2 and aromatic_edge(row)
+    if bucket_id == "low_gap_general":
+        return 2.5 <= gap < 3.2
     if bucket_id == "large_aromatic_edge":
         return mw >= 500 and aromatic_edge(row)
     if bucket_id == "very_large_general":
@@ -254,6 +263,8 @@ def bucket_matches(bucket_id: str, row: dict) -> bool:
         return rot >= 8 and (gap < 3.5 or ar >= 4)
     if bucket_id == "large_mw_500_700":
         return 500 <= mw < 700
+    if bucket_id == "very_large_tail":
+        return mw >= 800 and (gap < 3.5 or rot >= 6)
     return False
 
 
@@ -319,15 +330,17 @@ def main() -> None:
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
     raw_quotas = {b["id"]: int(b["quota"]) for b in spec["priority_buckets"]}
     buckets = [b["id"] for b in spec["priority_buckets"]]
+    raw_quotas.update(EXTRA_BUCKET_QUOTAS)
     if args.general:
         buckets = ["general_indomain"]
         raw_quotas = {"general_indomain": args.max_kept}
     elif args.include_buckets:
         requested = set(args.include_buckets)
-        unknown = requested - set(buckets)
+        known = set(buckets).union(EXTRA_BUCKET_QUOTAS)
+        unknown = requested - known
         if unknown:
             raise ValueError(f"Unknown bucket(s): {sorted(unknown)}")
-        buckets = [b for b in buckets if b in requested]
+        buckets = [b for b in [*buckets, *EXTRA_BUCKET_QUOTAS] if b in requested]
         raw_quotas = {b: raw_quotas[b] for b in buckets}
     raw_total = sum(raw_quotas.values())
     if args.include_buckets or args.max_kept < raw_total:

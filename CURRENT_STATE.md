@@ -5,8 +5,15 @@
 > next actions change. Do NOT duplicate experiment details here — link to docs/.
 
 ## 1. Recommended model
+**Phase 8 expansion500k Hybrid (v3)** — registry key
+`phase8_expansion_hybrid`, now the **`load_hybrid()` default**, using:
+
+- `models/phase8_gps_expansion_500k.pt`
+- `models/phase8_schnet_expansion_500k.pt`
+- `models/phase8_hybrid_fusion_expansion_500k.pt`
+
 **Phase 8 replacement300k Hybrid (v2)** — registry key
-`phase8_replacement_hybrid`, using:
+`phase8_replacement_hybrid` — stays registered as the prior base, using:
 
 - `models/phase8_gps_replacement_300k.pt`
 - `models/phase8_schnet_replacement_300k.pt`
@@ -15,16 +22,11 @@
 **Phase 7 Hybrid** — `phase7_hybrid` / `models/hybrid_fusion_optuna.pt` — stays
 as the frozen v1 fallback and historical control.
 
-**Phase 8 expansion500k Hybrid (v3 candidate)** — registry key
-`phase8_expansion_hybrid`, using:
-
-- `models/phase8_gps_expansion_500k.pt`
-- `models/phase8_schnet_expansion_500k.pt`
-- `models/phase8_hybrid_fusion_expansion_500k.pt`
-
-It is registered for explicit inference/evaluation, but `load_hybrid()` still
-defaults to v2 until the default switch is intentional and downstream Delta/UQ
-assets are revalidated.
+v3 wins common eval over v2 (all avg/GAP MAE 0.12838/0.15609 -> 0.10560/0.12528;
+OOD-1000 0.12144/0.14478 -> 0.11373/0.13399; P8 hard 0.13548/0.16765 ->
+0.09729/0.11638). It is now the default loader. **This re-confirms that Phase
+9/10 Delta/UQ assets (built on v1's frozen 384-d embeddings) must be
+re-validated against v3 before any database build.**
 
 The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed**
 — TensorNet wins solo (Gap R² 0.906 vs 0.889) but **fusion-level differences
@@ -151,6 +153,13 @@ data mainly helps the P8.1 coverage gap rather than acting like a broad
 leaderboard optimization. This is not an OGB submission. Artifacts:
 `results/phase8/pcqm4mv2_proxy_p7_vs_p8_metrics.json`.
 
+The v3 three-way PCQM4Mv2 proxy audit is mixed: after excluding the union of
+Phase 7, replacement300k, and expansion500k training SMILES, Gap MAE is P7
+0.25882, v2 0.25194, v3 0.25306. v3 remains better than P7 but is slightly worse
+than v2 (+0.00112 eV), so expansion500k should be understood as a common
+OOD/P8-hard coverage win, not a PCQM leaderboard-style optimization. Artifacts:
+`results/phase8/pcqm4mv2_proxy_p7_v2_v3_metrics.json`.
+
 P8.7 decision record: select `phase8_replacement_hybrid` as v2, keep
 `phase7_hybrid` as fallback, and re-validate Phase 9/10 against v2 before any
 database build. See `results/phase8/v2_selection_decision.md`.
@@ -165,17 +174,21 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
 ## 5. Next actions (1-3)
-1. **Decide whether expansion500k becomes the default v3 base**: it is registered
-   as `phase8_expansion_hybrid` and wins common eval, but the default remains v2
-   until the switch is intentional.
-2. **Re-validate Phase 9/10 against the chosen Phase 8 base**: current GW
-   Δ-learning and UQ/k-NN assets are v1-based and must be regenerated or
-   rechecked before any database build.
-3. **Head-swap route is closed (MoE + layer fusion)**: re-tested on 500k and both
-   tie the single head (MoE avg -0.00003, layer fusion avg -0.00001 eV); MoE's
-   gain shrank vs 30k. Do not run full 300k/500k MoE or layer fusion by default.
-   Revisit MoE only if the single-head model exposes a specific router-fixable
-   failure mode. See `results/phase8/head_swap_500k_comparison.md`.
+1. **DONE — expansion500k is now the default v3 base**: `load_hybrid()` defaults
+   to `phase8_expansion_hybrid`. Residual analysis shows v3 already improves the
+   hard bins versus v2, but the remaining Gap error is still tail-heavy (worst
+   10% of molecules hold 37.7% of total error) and concentrated in narrow-gap
+   (<3 eV) and MW>800/flexible molecules. This makes another B3LYP-only targeted
+   round possible but lower ROI than Phase 9 GW Delta-learning. See
+   `results/phase8/residual_analysis_expansion500k.md`.
+2. **Re-validate Phase 9/10 against v3**: current GW Δ-learning and UQ/k-NN
+   assets are v1-based and must be regenerated or rechecked. The residual
+   analysis says this is now the **primary accuracy lever** — the dominant error
+   tail (narrow-gap / charge-transfer) is exactly what GW Δ-learning targets.
+3. **Head-swap + SchNet-retrain routes are closed**: MoE + layer fusion both tie
+   on 500k; SchNet 30ep continuation failed (overfit, val 0.1180->0.1239). Do not
+   re-run. See `results/phase8/head_swap_500k_comparison.md` and
+   `docs/phase8.md` P8.9.
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).

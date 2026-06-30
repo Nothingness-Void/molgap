@@ -1,11 +1,11 @@
 """
-Phase 8 final audit: compare Phase 7 vs replacement300k on the same PCQM4Mv2
+Phase 8 final audit: compare Phase 7, replacement300k, and expansion500k on the same PCQM4Mv2
 validation proxy used for the P8.1 coverage diagnosis.
 
 This is NOT an OGB leaderboard submission. It is a leakage-filtered, in-domain
 subset/sampling of PCQM4Mv2 valid, used as a coverage stress test:
   - official valid split only;
-  - drop molecules in either Phase 7 or replacement300k training CSV;
+  - drop molecules in Phase 7 / replacement300k / expansion500k training CSVs;
   - keep CHONSFCl, MW 200-1000;
   - deterministic sample;
   - evaluate both hybrid models on the identical molecules.
@@ -34,8 +34,11 @@ DATA_CSV = RAW_DIR / "pcqm4m-v2" / "raw" / "data.csv.gz"
 SPLIT_PT = RAW_DIR / "pcqm4m-v2" / "split_dict.pt"
 P7_TRAIN_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
 P8_TRAIN_CSV = RAW_DIR / "phase8_replacement_300k.csv"
+P8_EXPANSION_TRAIN_CSV = RAW_DIR / "phase8_expansion_500k.csv"
 OUT_METRICS = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_vs_p8_metrics.json"
 OUT_PREDICTIONS = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_vs_p8_predictions.csv"
+OUT_METRICS_3WAY = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_v2_v3_metrics.json"
+OUT_PREDICTIONS_3WAY = RESULTS_DIR / "phase8" / "pcqm4mv2_proxy_p7_v2_v3_predictions.csv"
 
 ALLOWED = {"C", "H", "O", "N", "S", "F", "Cl"}
 MW_MIN, MW_MAX = 200.0, 1000.0
@@ -48,12 +51,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--split-pt", type=Path, default=SPLIT_PT)
     parser.add_argument("--p7-train-csv", type=Path, default=P7_TRAIN_CSV)
     parser.add_argument("--p8-train-csv", type=Path, default=P8_TRAIN_CSV)
+    parser.add_argument("--p8-expansion-train-csv", type=Path, default=P8_EXPANSION_TRAIN_CSV)
     parser.add_argument("--n-sample", type=int, default=3000)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--p7-key", default="phase7_hybrid")
     parser.add_argument("--p8-key", default="phase8_replacement_hybrid")
-    parser.add_argument("--metrics-out", type=Path, default=OUT_METRICS)
-    parser.add_argument("--predictions-out", type=Path, default=OUT_PREDICTIONS)
+    parser.add_argument("--v3-key", default="phase8_expansion_hybrid")
+    parser.add_argument("--metrics-out", type=Path, default=OUT_METRICS_3WAY)
+    parser.add_argument("--predictions-out", type=Path, default=OUT_PREDICTIONS_3WAY)
     parser.add_argument("--skip-similarity", action="store_true")
     return parser.parse_args()
 
@@ -184,6 +189,16 @@ def metrics_for(df: pd.DataFrame, labels: list[str]) -> dict:
             "gap_mae": result["p8"]["gap_mae"] - result["p7"]["gap_mae"],
             "gap_err_median": result["p8"]["gap_err_median"] - result["p7"]["gap_err_median"],
         }
+    if "p7_gap_abs_err" in df and "v3_gap_abs_err" in df:
+        result["delta_v3_minus_p7"] = {
+            "gap_mae": result["v3"]["gap_mae"] - result["p7"]["gap_mae"],
+            "gap_err_median": result["v3"]["gap_err_median"] - result["p7"]["gap_err_median"],
+        }
+    if "p8_gap_abs_err" in df and "v3_gap_abs_err" in df:
+        result["delta_v3_minus_p8"] = {
+            "gap_mae": result["v3"]["gap_mae"] - result["p8"]["gap_mae"],
+            "gap_err_median": result["v3"]["gap_err_median"] - result["p8"]["gap_err_median"],
+        }
 
     if "p7_train_max_sim" in df:
         layers = []
@@ -197,6 +212,10 @@ def metrics_for(df: pd.DataFrame, labels: list[str]) -> dict:
                 )
             if row["n"] and "p7_gap_abs_err" in df and "p8_gap_abs_err" in df:
                 row["delta_p8_minus_p7"] = row["p8_gap_mae"] - row["p7_gap_mae"]
+            if row["n"] and "p8_gap_abs_err" in df and "v3_gap_abs_err" in df:
+                row["delta_v3_minus_p8"] = row["v3_gap_mae"] - row["p8_gap_mae"]
+            if row["n"] and "p7_gap_abs_err" in df and "v3_gap_abs_err" in df:
+                row["delta_v3_minus_p7"] = row["v3_gap_mae"] - row["p7_gap_mae"]
             layers.append(row)
         result["by_p7_train_similarity"] = layers
         result["mean_p7_train_max_sim"] = float(df["p7_train_max_sim"].mean())
@@ -209,18 +228,28 @@ def main() -> None:
     args.metrics_out.parent.mkdir(parents=True, exist_ok=True)
     args.predictions_out.parent.mkdir(parents=True, exist_ok=True)
 
-    train_canon, train_counts = load_train_canon([args.p7_train_csv, args.p8_train_csv])
+    train_paths = [args.p7_train_csv, args.p8_train_csv]
+    if args.p8_expansion_train_csv.exists():
+        train_paths.append(args.p8_expansion_train_csv)
+    else:
+        print(f"Warning: expansion train CSV not found, not excluding it: {args.p8_expansion_train_csv}")
+    train_canon, train_counts = load_train_canon(train_paths)
     subset, subset_stats = build_subset(args, train_canon)
     print(f"PCQM4Mv2 proxy subset: {len(subset)} molecules")
     print(
-        f"  overlaps removed using P7/P8 union: {subset_stats['n_train_overlap_union']}; "
+        f"  overlaps removed using train union: {subset_stats['n_train_overlap_union']}; "
         f"OOD removed: {subset_stats['n_ood']}"
     )
 
     p7 = predict_key(subset, args.p7_key, "p7")
     p8 = predict_key(subset, args.p8_key, "p8")
+    v3 = predict_key(subset, args.v3_key, "v3")
     common = p7.merge(
         p8[["pcqm_idx", "p8_homo_pred", "p8_lumo_pred", "p8_gap_pred", "p8_gap_abs_err"]],
+        on="pcqm_idx",
+        how="inner",
+    ).merge(
+        v3[["pcqm_idx", "v3_homo_pred", "v3_lumo_pred", "v3_gap_pred", "v3_gap_abs_err"]],
         on="pcqm_idx",
         how="inner",
     )
@@ -230,7 +259,7 @@ def main() -> None:
 
     metrics = {
         "note": "PCQM4Mv2 valid proxy audit, not an OGB leaderboard submission.",
-        "model_keys": {"p7": args.p7_key, "p8": args.p8_key},
+        "model_keys": {"p7": args.p7_key, "p8": args.p8_key, "v3": args.v3_key},
         "train_exclusion": {
             "csv_counts": train_counts,
             "union_canonical_smiles": len(train_canon),
@@ -239,20 +268,27 @@ def main() -> None:
         "prediction": {
             "n_p7_valid": int(len(p7)),
             "n_p8_valid": int(len(p8)),
+            "n_v3_valid": int(len(v3)),
             "n_common_valid": int(len(common)),
         },
-        "metrics": metrics_for(common, ["p7", "p8"]),
+        "metrics": metrics_for(common, ["p7", "p8", "v3"]),
     }
     common.to_csv(args.predictions_out, index=False)
     args.metrics_out.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
 
     p7_mae = metrics["metrics"]["p7"]["gap_mae"]
     p8_mae = metrics["metrics"]["p8"]["gap_mae"]
-    delta = metrics["metrics"]["delta_p8_minus_p7"]["gap_mae"]
+    v3_mae = metrics["metrics"]["v3"]["gap_mae"]
+    delta_p8 = metrics["metrics"]["delta_p8_minus_p7"]["gap_mae"]
+    delta_v3_p7 = metrics["metrics"]["delta_v3_minus_p7"]["gap_mae"]
+    delta_v3_p8 = metrics["metrics"]["delta_v3_minus_p8"]["gap_mae"]
     print("\nPCQM4Mv2 proxy Gap MAE")
     print(f"  P7: {p7_mae:.6f} eV")
-    print(f"  P8: {p8_mae:.6f} eV")
-    print(f"  delta P8-P7: {delta:+.6f} eV")
+    print(f"  v2: {p8_mae:.6f} eV")
+    print(f"  v3: {v3_mae:.6f} eV")
+    print(f"  delta v2-P7: {delta_p8:+.6f} eV")
+    print(f"  delta v3-P7: {delta_v3_p7:+.6f} eV")
+    print(f"  delta v3-v2: {delta_v3_p8:+.6f} eV")
     print(f"Saved metrics: {args.metrics_out}")
     print(f"Saved predictions: {args.predictions_out}")
 
