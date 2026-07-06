@@ -557,6 +557,42 @@ Best external delta is avg/GAP `-0.00037/-0.00011` eV, also below the practical
 threshold. The selected v3 FusionHead remains the B3LYP baseline. Record:
 `results/phase8/weighted_fusion_probe_decision.md`.
 
+## P8.11 ETKDG conformer-ensemble inference probe (done, 2026-07-06)
+
+One B3LYP-level route did show a small but real signal: inference-time conformer
+averaging. This keeps the trained v3 GPS, SchNet, and FusionHead checkpoints
+unchanged and uses only seeded ETKDG+MMFF conformers, so it does not violate the
+ETKDG training/inference consistency rule.
+
+Setup:
+
+- base: `phase8_expansion_hybrid`;
+- 2D graph: one per molecule;
+- 3D graph: up to k ETKDG+MMFF conformers per molecule;
+- prediction: run SchNet+Fusion per conformer, average final Hybrid outputs;
+- validation: Phase 8 common eval with B3LYP labels.
+
+Common-eval deltas versus stored v3 single-conformer predictions:
+
+| inference | all avg delta | all Gap delta | OOD avg delta | OOD Gap delta | P8 hard avg delta | P8 hard Gap delta |
+|---|---:|---:|---:|---:|---:|---:|
+| k=4 ETKDG ensemble | -0.00099 | -0.00152 | -0.00143 | -0.00179 | -0.00053 | -0.00124 |
+| k=8 ETKDG ensemble | **-0.00116** | **-0.00176** | **-0.00158** | **-0.00209** | **-0.00072** | **-0.00142** |
+
+k=8 common-eval MAE:
+
+| model | HOMO | LUMO | Gap | avg |
+|---|---:|---:|---:|---:|
+| stored v3 single | 0.0943 | 0.0972 | 0.1253 | 0.1056 |
+| k=8 ETKDG ensemble | **0.0933** | **0.0964** | **0.1235** | **0.1044** |
+
+Decision: weak-positive inference candidate. It is the only B3LYP-level probe in
+this round that clears the practical threshold, but it costs about 8x 3D
+conformer generation/SchNet work and should stay opt-in until speed is
+benchmarked. API:
+`predict_smiles_batch_hybrid_conformer_ensemble()`. Record:
+`results/phase8/v3_conformer_ensemble_k8_decision.md`.
+
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 

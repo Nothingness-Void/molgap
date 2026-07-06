@@ -69,6 +69,7 @@ def smiles_to_pyg_ensemble(
     *,
     use_charges: bool = True,
     mmff_iters: int = 200,
+    random_seed: int | None = None,
 ) -> list[Data]:
     """Generate k ETKDG conformers for one SMILES, return list of PyG Data."""
     require_rdkit()
@@ -82,9 +83,12 @@ def smiles_to_pyg_ensemble(
     mol_h = AllChem.AddHs(mol)
 
     results = []
-    for _ in range(k):
+    for i in range(k):
         mol_copy = Chem.RWMol(mol_h)
-        if AllChem.EmbedMolecule(mol_copy, AllChem.ETKDGv3()) != 0:
+        params = AllChem.ETKDGv3()
+        if random_seed is not None:
+            params.randomSeed = int(random_seed) + i
+        if AllChem.EmbedMolecule(mol_copy, params) != 0:
             continue
         if mmff_iters > 0:
             try:

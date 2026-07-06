@@ -20,6 +20,7 @@ _LAZY_API = {
     "predict_smiles",
     "predict_smiles_batch",
     "predict_smiles_batch_hybrid",
+    "predict_smiles_batch_hybrid_conformer_ensemble",
     "predict_smiles_ensemble",
     "load_model",
     "load_hybrid",

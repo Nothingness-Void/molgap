@@ -239,6 +239,96 @@ def predict_smiles_batch_hybrid(
     return valid_idx, preds
 
 
+def predict_smiles_batch_hybrid_conformer_ensemble(
+    smiles_list: list[str],
+    models: tuple | None = None,
+    *,
+    k: int = 8,
+    random_seed: int = 42,
+    bs_2d: int = 256,
+    bs_3d: int = 128,
+    bs_fusion: int = 2048,
+    device: torch.device | str | None = None,
+    hybrid_key: str = "phase8_expansion_hybrid",
+):
+    """Batch-predict B3LYP with ETKDG conformer averaging for the hybrid model.
+
+    Returns ``(valid_idx, mean_preds, std_preds, n_conformers)``. The 2D graph is
+    built once per molecule; the 3D SchNet leg sees up to ``k`` seeded ETKDG+MMFF
+    conformers, and the final Hybrid predictions are averaged after the
+    FusionHead. Existing single-conformer APIs remain unchanged.
+    """
+    from torch_geometric.loader import DataLoader
+
+    if models is None:
+        gps, encoder_3d, fusion, device = load_hybrid(device, key=hybrid_key)
+    else:
+        gps, encoder_3d, fusion, device = models
+
+    g2d_list, g3d_list, valid_idx, owner, n_confs = [], [], [], [], []
+    for i, smi in enumerate(smiles_list):
+        g2d = smiles_to_2d_pyg(smi)
+        if g2d is None:
+            continue
+        confs = smiles_to_pyg_ensemble(smi, k=k, random_seed=random_seed + i * 1000)
+        if not confs:
+            continue
+        local_idx = len(g2d_list)
+        g2d_list.append(g2d)
+        valid_idx.append(i)
+        n_confs.append(len(confs))
+        for conf in confs:
+            g3d_list.append(conf)
+            owner.append(local_idx)
+
+    if not valid_idx:
+        empty = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
+        return np.array([], dtype=int), empty, empty, np.array([], dtype=int)
+
+    emb_2d = []
+    with torch.no_grad():
+        for b in DataLoader(g2d_list, batch_size=bs_2d):
+            b = b.to(device)
+            emb_2d.append(gps.encode(b.x, b.edge_index, b.edge_attr, b.batch).cpu())
+    emb_2d = torch.cat(emb_2d)
+
+    emb_3d = []
+    with torch.no_grad():
+        for b in DataLoader(g3d_list, batch_size=bs_3d):
+            b = b.to(device)
+            charges = b.charges if hasattr(b, "charges") else None
+            emb_3d.append(encoder_3d.encode(b.z, b.pos, b.batch, charges=charges).cpu())
+    emb_3d = torch.cat(emb_3d)
+
+    owner_arr = np.asarray(owner, dtype=np.int64)
+    owner_t = torch.tensor(owner_arr, dtype=torch.long)
+    pred_conf = []
+    with torch.no_grad():
+        for start in range(0, len(owner_t), bs_fusion):
+            end = min(start + bs_fusion, len(owner_t))
+            pred_conf.append(
+                fusion(
+                    emb_2d[owner_t[start:end]].to(device),
+                    emb_3d[start:end].to(device),
+                ).cpu()
+            )
+    pred_conf_arr = torch.cat(pred_conf).numpy()
+
+    means = np.zeros((len(g2d_list), len(TARGET_COLS)), dtype=np.float32)
+    stds = np.zeros_like(means)
+    for i in range(len(g2d_list)):
+        rows = pred_conf_arr[owner_arr == i]
+        means[i] = rows.mean(axis=0)
+        stds[i] = rows.std(axis=0)
+
+    return (
+        np.asarray(valid_idx, dtype=int),
+        means,
+        stds,
+        np.asarray(n_confs, dtype=int),
+    )
+
+
 def predict_graphs(
     model: SchNetWrapper,
     pyg_list: list,
