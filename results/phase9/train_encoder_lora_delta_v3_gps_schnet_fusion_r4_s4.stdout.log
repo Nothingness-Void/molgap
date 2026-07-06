@@ -1,0 +1,27 @@
+Device: cuda | targets=('fusion', 'gps', 'schnet') | rank=4 | seed=4 split_seed=42
+OE62 graphs: n=3736 scaffolds=3111 train/val/test=2736/305/695
+LoRA layers={'gps': 33, 'schnet': 72, 'fusion': 6} trainable_params=130,368
+* epoch 001 train_mae=1.1481 val_mae=0.3316 best=0.3316 wait=0
+* epoch 002 train_mae=0.2773 val_mae=0.2495 best=0.2495 wait=0
+* epoch 003 train_mae=0.2370 val_mae=0.2221 best=0.2221 wait=0
+* epoch 004 train_mae=0.2181 val_mae=0.2062 best=0.2062 wait=0
+* epoch 005 train_mae=0.2023 val_mae=0.1989 best=0.1989 wait=0
+* epoch 006 train_mae=0.1905 val_mae=0.1927 best=0.1927 wait=0
+* epoch 008 train_mae=0.1738 val_mae=0.1831 best=0.1831 wait=0
+* epoch 010 train_mae=0.1546 val_mae=0.1814 best=0.1814 wait=0
+  epoch 015 train_mae=0.1232 val_mae=0.1854 best=0.1814 wait=5
+  epoch 020 train_mae=0.1009 val_mae=0.1849 best=0.1814 wait=10
+  epoch 025 train_mae=0.0899 val_mae=0.1871 best=0.1814 wait=15
+  epoch 030 train_mae=0.0772 val_mae=0.1865 best=0.1814 wait=20
+  epoch 035 train_mae=0.0718 val_mae=0.1878 best=0.1814 wait=25
+  epoch 040 train_mae=0.0672 val_mae=0.1891 best=0.1814 wait=30
+Early stop at epoch 40
+
+Scaffold-test GW MAE/R2
+raw_b3lyp        avg MAE=2.1341 R2=-4.1643 | H 2.2034 L 1.0093 G 3.1897
+const_delta      avg MAE=0.3478 R2=0.7776 | H 0.2726 L 0.3008 G 0.4699
+encoder_lora_gw  avg MAE=0.2099 R2=0.8867 | H 0.1762 L 0.1993 G 0.2542
+
+Saved checkpoint: D:\�ĵ�\molgap\models\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4_s4.pt
+Saved metrics: D:\�ĵ�\molgap\results\phase9\encoder_lora_delta_v3_gps_schnet_fusion_r4_s4_metrics.json
+Saved predictions: D:\�ĵ�\molgap\results\phase9\encoder_lora_delta_v3_gps_schnet_fusion_r4_s4_predictions.csv

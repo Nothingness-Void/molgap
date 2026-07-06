@@ -123,6 +123,14 @@ Phase 10 UQ/OOD has also been re-calibrated for the v3 LightGBM Δ baseline in
 `predict_smiles_with_uq(smiles)` still points to the historical `phase10` bundle
 for backward compatibility until the deployment default is switched.
 
+LoRA UQ has now been tested with a 5-member v3 Encoder-LoRA ensemble. It improves
+the calibrated LightGBM Δ baseline on OE62 scaffold test (HOMO/LUMO/Gap MAE
+`0.184/0.214/0.291 -> 0.170/0.177/0.237`) and has calibrated sigma/real OOD
+signal, but costs 5 full GNN forwards per molecule. Treat it as the high-accuracy
+candidate for small/medium inference; LightGBM Δ remains the cheaper database-scale
+baseline until speed is benchmarked. Decision:
+`results/phase10_lora_v3/lora_uq_decision.md`.
+
 30k common-eval is complete: replacement30k is neutral on Phase 7 OOD-1000
 (avg MAE +0.00033, Gap +0.00213 vs old30k) but better on the P8 targeted hard
 slice (avg MAE -0.00469, Gap -0.00422). Overall delta is avg -0.00216, Gap
@@ -188,9 +196,10 @@ standard replacement300k embeddings exist. Tables:
    (0.25306 -> 0.25227), so it does not justify a full encoder-level retrain
    yet. See `results/phase8/tail_probe_30k_decision.md`.
 2. **DONE — Re-validate Phase 9/10 against v3**: v3 descriptor-enhanced LightGBM
-   Δ + `phase10_v3` UQ/OOD is now the calibrated deployment baseline; v3
-   Encoder-LoRA is the higher-accuracy research candidate but lacks its own UQ
-   ensemble. See `results/phase9/v3_delta_decision.md`.
+   Δ + `phase10_v3` UQ/OOD is the cheap calibrated baseline; v3 Encoder-LoRA now
+   has a 5-member calibrated UQ probe and is the higher-accuracy candidate. See
+   `results/phase9/v3_delta_decision.md` and
+   `results/phase10_lora_v3/lora_uq_decision.md`.
 3. **Next deployment step**: decide whether to switch the default
    `predict_smiles_with_uq()` bundle from historical `phase10` to `phase10_v3`,
    or keep v3 explicit until the database pipeline is assembled.

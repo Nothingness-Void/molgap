@@ -1,0 +1,82 @@
+{
+  "hybrid_key": "phase8_expansion_hybrid",
+  "csv": "D:\\\u6587\u6863\\molgap\\results\\phase9\\delta_oe62_v3.csv",
+  "graph_cache": "D:\\\u6587\u6863\\molgap\\results\\phase9\\delta_oe62_v3_graphs.pt",
+  "embedding_npz": "D:\\\u6587\u6863\\molgap\\results\\phase9\\delta_oe62_v3_embeddings.npz",
+  "checkpoints": [
+    "models\\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4.pt",
+    "models\\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4_s1.pt",
+    "models\\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4_s2.pt",
+    "models\\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4_s3.pt",
+    "models\\hybrid_encoder_lora_gw_v3_gps_schnet_fusion_r4_s4.pt"
+  ],
+  "n_members": 5,
+  "n": 3736,
+  "n_scaffolds": 3111,
+  "n_train": 2736,
+  "n_val_calib": 305,
+  "n_test": 695,
+  "scale": {
+    "homo": 3.586946964263916,
+    "lumo": 4.333349704742432,
+    "gap": 3.2972049713134766
+  },
+  "metrics": {
+    "homo": {
+      "mae": 0.16980895400047302,
+      "r2": 0.8563023805618286,
+      "raw_sigma_mean": 0.08005538582801819,
+      "scale": 3.586946964263916,
+      "sigma_mean": 0.2871544361114502,
+      "ence_pre": 2.145120143890381,
+      "ence_post": 0.2707005441188812,
+      "coverage_1sigma": 0.7712230215827338,
+      "coverage_2sigma": 0.9510791366906475
+    },
+    "lumo": {
+      "mae": 0.17660750448703766,
+      "r2": 0.9136850833892822,
+      "raw_sigma_mean": 0.07338663190603256,
+      "scale": 4.333349704742432,
+      "sigma_mean": 0.31800997257232666,
+      "ence_pre": 2.929126262664795,
+      "ence_post": 0.2801792025566101,
+      "coverage_1sigma": 0.814388489208633,
+      "coverage_2sigma": 0.9525179856115108
+    },
+    "gap": {
+      "mae": 0.23652268946170807,
+      "r2": 0.908879280090332,
+      "raw_sigma_mean": 0.10914360731840134,
+      "scale": 3.2972049713134766,
+      "sigma_mean": 0.3598688244819641,
+      "ence_pre": 2.536745548248291,
+      "ence_post": 0.25910961627960205,
+      "coverage_1sigma": 0.7568345323741007,
+      "coverage_2sigma": 0.9165467625899281
+    },
+    "average": {
+      "mae": 0.19431304931640625,
+      "r2": 0.8929555813471476
+    }
+  },
+  "ood": {
+    "metric": "euclidean",
+    "k": 5,
+    "threshold_p95": 19.42216024398804,
+    "ood_fraction": 0.03597122302158273,
+    "spearman_dist_abs_gap_error": 0.17492091192394388,
+    "binned_gap_mae_deciles": [
+      0.18266595900058746,
+      0.17807424068450928,
+      0.1890612542629242,
+      0.21377313137054443,
+      0.21767057478427887,
+      0.20794972777366638,
+      0.2126234918832779,
+      0.2530985176563263,
+      0.29260677099227905,
+      0.42062169313430786
+    ]
+  }
+}

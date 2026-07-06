@@ -272,3 +272,21 @@ Phase 10 was re-calibrated for the descriptor-enhanced v3 LightGBM Δ baseline i
 `load_uq_bundle(results_subdir="phase10_v3")`.
 
 Decision record: `results/phase9/v3_delta_decision.md`.
+
+### LoRA UQ follow-up (2026-07-06)
+
+The v3 Encoder-LoRA path now has a 5-member ensemble UQ probe
+(`seed={42,1,2,3,4}`), calibrated on the scaffold-validation split.
+
+| target | v3 LightGBM Δ+UQ MAE | v3 LoRA ensemble MAE | LoRA ENCE | LoRA 1σ cov | LoRA 2σ cov |
+|---|---:|---:|---:|---:|---:|
+| HOMO | 0.184 | **0.170** | 0.271 | 0.771 | 0.951 |
+| LUMO | 0.214 | **0.177** | 0.280 | 0.814 | 0.953 |
+| Gap | 0.291 | **0.237** | 0.259 | 0.757 | 0.917 |
+
+The LoRA ensemble is now the highest-accuracy candidate with a usable calibrated
+uncertainty layer, but it requires 5 full GNN forwards per molecule. Keep
+LightGBM Δ as the cheap database-scale baseline until speed benchmarking and a
+batch inference wrapper are done.
+
+Decision record: `results/phase10_lora_v3/lora_uq_decision.md`.

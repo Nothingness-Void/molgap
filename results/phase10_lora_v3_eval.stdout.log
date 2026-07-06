@@ -1,0 +1,20 @@
+Device: cuda
+Members: 5
+Predicting member 1/5
+Predicting member 2/5
+Predicting member 3/5
+Predicting member 4/5
+Predicting member 5/5
+Predicting member 1/5
+Predicting member 2/5
+Predicting member 3/5
+Predicting member 4/5
+Predicting member 5/5
+
+LoRA ensemble UQ
+  homo: MAE=0.1698 R2=0.8563 sigma=0.2872 cov1=0.771 cov2=0.951 ENCE=0.271
+  lumo: MAE=0.1766 R2=0.9137 sigma=0.3180 cov1=0.814 cov2=0.953 ENCE=0.280
+  gap: MAE=0.2365 R2=0.9089 sigma=0.3599 cov1=0.757 cov2=0.917 ENCE=0.259
+  avg: MAE=0.1943 R2=0.8930
+  OOD gap rho=0.175 near->far=0.183->0.421
+Saved D:\�ĵ�\molgap\results\phase10_lora_v3
