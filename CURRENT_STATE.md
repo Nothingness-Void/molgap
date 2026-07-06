@@ -110,6 +110,17 @@ original 12ep checkpoint `phase8_schnet_expansion_500k.pt` stays as the v3 SchNe
 leg. Log: `results/phase8/_schnet_exp500k_30ep.log`. Same conclusion: B3LYP label
 ceiling, not training time.
 
+B3LYP-only post-hoc/fusion probes are also **negative**. Training residual
+calibrators and 2D/3D/Hybrid output stacks on the v3 expansion500k split, then
+evaluating on the external Phase 8 common eval, gives at best a tiny LightGBM
+residual gain: avg/GAP MAE `0.10559/0.12528 -> 0.10511/0.12500` (delta
+`-0.00049/-0.00029` eV). Tail-aware weighted FusionHead fine-tuning is also
+below threshold: best avg/GAP `0.10559/0.12528 -> 0.10522/0.12517` (delta
+`-0.00037/-0.00011` eV). Output stacks are worse. Do not promote these B3LYP
+probes; keep v3 single FusionHead as the B3LYP default. Records:
+`results/phase8/b3lyp_residual_calibrator_decision.md` and
+`results/phase8/weighted_fusion_probe_decision.md`.
+
 Phase 9 has now been re-run against the v3 B3LYP base. v3 descriptor-enhanced
 LightGBM Δ improves the old v1 LightGBM baseline on scaffold-test OE62 GW:
 HOMO/LUMO/Gap MAE `0.197/0.217/0.303 -> 0.184/0.212/0.288`. The v3
@@ -203,10 +214,15 @@ standard replacement300k embeddings exist. Tables:
 3. **Next deployment step**: decide whether to switch the default
    `predict_smiles_with_uq()` bundle from historical `phase10` to `phase10_v3`,
    or keep v3 explicit until the database pipeline is assembled.
-4. **Head-swap + SchNet-retrain routes are closed**: MoE + layer fusion both tie
-   on 500k; SchNet 30ep continuation failed (overfit, val 0.1180->0.1239). Do not
-   re-run. See `results/phase8/head_swap_500k_comparison.md` and
-   `docs/phase8.md` P8.9.
+4. **Head-swap, SchNet-retrain, and B3LYP post-hoc/fusion routes are closed**:
+   MoE + layer fusion both tie on 500k; SchNet 30ep continuation failed
+   (overfit, val 0.1180->0.1239); residual calibration/output stacking and
+   weighted FusionHead fine-tuning give <0.001 eV external gain. Do not re-run.
+   See
+   `results/phase8/head_swap_500k_comparison.md`,
+   `results/phase8/b3lyp_residual_calibrator_decision.md`,
+   `results/phase8/weighted_fusion_probe_decision.md`, and `docs/phase8.md`
+   P8.9/P8.10.
 
 ## 6. Constraints (do not break)
 - Python: always `.venv\Scripts\python.exe` (system Python lacks torch/pyg).

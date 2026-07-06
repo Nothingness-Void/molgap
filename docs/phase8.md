@@ -511,6 +511,52 @@ bottleneck is the **B3LYP label ceiling**, not training time or capacity. Log:
 `results/phase8/_schnet_exp500k_30ep.log` (kept as evidence; no model artifact
 retained).
 
+## P8.10 B3LYP post-hoc residual/stack probes (done, 2026-07-06)
+
+After the user clarified that the target was the B3LYP surrogate itself, not
+LoRA/GW Delta, a lightweight post-hoc B3LYP probe was run on the v3 base. This
+does not modify GPS, SchNet, or FusionHead checkpoints.
+
+Setup:
+
+- base: `phase8_expansion_hybrid`;
+- fit data: aligned expansion500k split (`398,062 / 49,757 / 49,759`);
+- residual features: v3 Hybrid HOMO/LUMO/Gap predictions + 16 lightweight RDKit
+  context descriptors;
+- stack features: v3 GPS, SchNet, and Hybrid B3LYP outputs + the same descriptors;
+- external validation: Phase 8 common eval (`ood1000` + `p8_targeted_hard`).
+
+Common-eval MAE:
+
+| model | HOMO | LUMO | Gap | avg |
+|---|---:|---:|---:|---:|
+| v3 baseline | 0.0943 | 0.0972 | 0.1253 | 0.1056 |
+| constant residual | 0.0943 | 0.0971 | 0.1251 | 0.1055 |
+| ridge residual | 0.0940 | 0.0970 | 0.1250 | 0.1053 |
+| LightGBM residual | **0.0935** | **0.0968** | **0.1250** | **0.1051** |
+| ridge output stack | 0.0952 | 0.0981 | 0.1283 | 0.1072 |
+| LightGBM output stack | 0.0960 | 0.1003 | 0.1298 | 0.1087 |
+
+Best external delta is only avg/GAP `-0.00049/-0.00029` eV, below the practical
+promotion threshold. Output stacking is worse than the v3 Hybrid baseline.
+
+Decision: **negative**. Do not promote B3LYP residual calibration/output stacking
+as a default or repeat this path without a materially different validation
+signal. Record: `results/phase8/b3lyp_residual_calibrator_decision.md`.
+
+The same B3LYP-only check also tested tail-aware FusionHead fine-tuning from the
+selected v3 FusionHead checkpoint, with GPS/SchNet encoders frozen:
+
+| model | HOMO | LUMO | Gap | avg |
+|---|---:|---:|---:|---:|
+| v3 baseline | 0.0943 | 0.0972 | 0.1253 | 0.1056 |
+| low-gap weighted FusionHead | 0.0940 | 0.0967 | 0.1251 | 0.1053 |
+| low-gap + MW weighted FusionHead | **0.0939** | **0.0966** | 0.1252 | **0.1052** |
+
+Best external delta is avg/GAP `-0.00037/-0.00011` eV, also below the practical
+threshold. The selected v3 FusionHead remains the B3LYP baseline. Record:
+`results/phase8/weighted_fusion_probe_decision.md`.
+
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 
