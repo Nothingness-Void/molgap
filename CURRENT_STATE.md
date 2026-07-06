@@ -126,9 +126,11 @@ inference**. Averaging the v3 Hybrid over 8 seeded ETKDG+MMFF conformers on the
 same common eval improves avg/GAP MAE `0.10560/0.12528 -> 0.10444/0.12352`
 (delta `-0.00116/-0.00176` eV), with both OOD-1000 and P8 hard Gap moving in the
 right direction. This is an inference-time option, not a new trained baseline:
-it costs ~8x 3D conformer generation/SchNet work and is not the default until
-speed is benchmarked. API: `predict_smiles_batch_hybrid_conformer_ensemble()`.
-Record: `results/phase8/v3_conformer_ensemble_k8_decision.md`.
+it costs ~6.8x wall time on a 100-molecule common-eval speed benchmark
+(`0.031 -> 0.207 s/valid mol`) and is not the database-scale default. API:
+`predict_smiles_batch_hybrid_conformer_ensemble()`. Records:
+`results/phase8/v3_conformer_ensemble_k8_decision.md` and
+`results/phase8/v3_conformer_ensemble_speed.md`.
 
 Phase 9 has now been re-run against the v3 B3LYP base. v3 descriptor-enhanced
 LightGBM Δ improves the old v1 LightGBM baseline on scaffold-test OE62 GW:
@@ -228,11 +230,12 @@ standard replacement300k embeddings exist. Tables:
    (overfit, val 0.1180->0.1239); residual calibration/output stacking and
    weighted FusionHead fine-tuning give <0.001 eV external gain. Do not re-run.
    The only weak-positive B3LYP option is k=8 ETKDG conformer-ensemble inference,
-   which remains opt-in pending speed benchmarking. See
+   which remains opt-in because the measured slowdown is ~6.8x. See
    `results/phase8/head_swap_500k_comparison.md`,
    `results/phase8/b3lyp_residual_calibrator_decision.md`,
    `results/phase8/weighted_fusion_probe_decision.md`,
-   `results/phase8/v3_conformer_ensemble_k8_decision.md`, and `docs/phase8.md`
+   `results/phase8/v3_conformer_ensemble_k8_decision.md`,
+   `results/phase8/v3_conformer_ensemble_speed.md`, and `docs/phase8.md`
    P8.9/P8.10/P8.11.
 
 ## 6. Constraints (do not break)

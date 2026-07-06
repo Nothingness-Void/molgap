@@ -587,11 +587,22 @@ k=8 common-eval MAE:
 | k=8 ETKDG ensemble | **0.0933** | **0.0964** | **0.1235** | **0.1044** |
 
 Decision: weak-positive inference candidate. It is the only B3LYP-level probe in
-this round that clears the practical threshold, but it costs about 8x 3D
-conformer generation/SchNet work and should stay opt-in until speed is
-benchmarked. API:
+this round that clears the practical threshold, but its extra 3D conformer
+generation/SchNet work makes it an opt-in path rather than the default. API:
 `predict_smiles_batch_hybrid_conformer_ensemble()`. Record:
 `results/phase8/v3_conformer_ensemble_k8_decision.md`.
+
+Speed benchmark on the first 100 common-eval molecules, excluding model load:
+
+| inference | valid n | wall time | s / valid mol | slowdown |
+|---|---:|---:|---:|---:|
+| v3 single conformer | 100 | 3.05 s | 0.031 | 1.0x |
+| k=8 ETKDG ensemble | 100 | 20.70 s | 0.207 | 6.8x |
+
+This confirms the deployment stance: k=8 ensemble is useful for small/medium
+candidate batches or uncertainty-sensitive molecules, not for the first-pass
+database-scale default. Speed record:
+`results/phase8/v3_conformer_ensemble_speed.md`.
 
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:

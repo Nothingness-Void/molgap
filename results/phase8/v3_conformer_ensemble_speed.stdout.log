@@ -1,0 +1,22 @@
+Loading v3 hybrid once
+Benchmark single conformer on n=100
+Benchmark k=8 conformer ensemble on n=100
+{
+  "hybrid_key": "phase8_expansion_hybrid",
+  "n_input": 100,
+  "k": 8,
+  "single": {
+    "n_valid": 100,
+    "wall_s": 3.053232999998727,
+    "s_per_input_mol": 0.03053232999998727,
+    "s_per_valid_mol": 0.03053232999998727
+  },
+  "ensemble": {
+    "n_valid": 100,
+    "wall_s": 20.700604300000123,
+    "s_per_input_mol": 0.20700604300000122,
+    "s_per_valid_mol": 0.20700604300000122,
+    "mean_conformers": 8.0
+  },
+  "speed_factor_valid_mol": 6.779896686564292
+}
