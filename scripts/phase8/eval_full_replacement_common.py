@@ -53,29 +53,53 @@ def _build_graphs(df: pd.DataFrame):
     return df.iloc[kept].reset_index(drop=True), graphs_2d, graphs_3d
 
 
-def _load_trio(gps_path: Path, schnet_path: Path, fusion_path: Path, device):
-    gps = GPSWrapper(**PARAMS_GPS_2D).to(device)
+def _load_trio(gps_path: Path, schnet_path: Path, fusion_path: Path, device,
+               gps_params: dict | None = None, gps_extra_path: Path | None = None,
+               gps_extra_params: dict | None = None):
+    gps_params = gps_params or PARAMS_GPS_2D
+    gps = GPSWrapper(**gps_params).to(device)
     gps.load_state_dict(torch.load(gps_path, weights_only=True, map_location=device))
     gps.eval()
+    gps_models = [gps]
+    if gps_extra_path is not None:
+        gps_extra_params = gps_extra_params or PARAMS_GPS_2D
+        gps_extra = GPSWrapper(**gps_extra_params).to(device)
+        gps_extra.load_state_dict(
+            torch.load(gps_extra_path, weights_only=True, map_location=device)
+        )
+        gps_extra.eval()
+        gps_models.append(gps_extra)
 
     schnet = SchNetWrapper(**PARAMS_SCHNET_300K, use_charges=True).to(device)
     schnet.load_state_dict(torch.load(schnet_path, weights_only=True, map_location=device))
     schnet.eval()
 
-    fusion = FusionHead("gate", 192, 0.0).to(device)
+    fusion = FusionHead(
+        "gate", 192, 0.0,
+        dim_2d=sum(int(model.head[0].in_features) for model in gps_models),
+        dim_3d=192,
+    ).to(device)
     fusion.load_state_dict(torch.load(fusion_path, weights_only=True, map_location=device))
     fusion.eval()
-    return gps, schnet, fusion
+    return gps_models, schnet, fusion
 
 
 @torch.no_grad()
-def _predict(gps, schnet, fusion, graphs_2d, graphs_3d, args, device):
+def _predict(gps_models, schnet, fusion, graphs_2d, graphs_3d, args, device):
     emb2, pred2 = [], []
     for batch in GeometricDataLoader(graphs_2d, batch_size=args.bs_2d, shuffle=False):
         batch = batch.to(device)
         with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
-            emb = gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
-            pred = gps(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+            model_embs = [
+                gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+                for gps in gps_models
+            ]
+            model_preds = [
+                gps.head(model_emb)
+                for gps, model_emb in zip(gps_models, model_embs)
+            ]
+            emb = torch.cat(model_embs, dim=-1)
+            pred = torch.stack(model_preds).mean(dim=0)
         emb2.append(emb.float().cpu())
         pred2.append(pred.float().cpu())
     emb2 = torch.cat(emb2)
@@ -136,6 +160,20 @@ def main():
     parser.add_argument("--bs-2d", type=int, default=256)
     parser.add_argument("--bs-3d", type=int, default=128)
     parser.add_argument("--bs-fusion", type=int, default=2048)
+    parser.add_argument("--candidate-name", type=str, default=None)
+    parser.add_argument("--candidate-gps", type=Path, default=None)
+    parser.add_argument("--candidate-gps-extra", type=Path, default=None)
+    parser.add_argument("--candidate-fusion", type=Path, default=None)
+    parser.add_argument("--candidate-gps-hidden", type=int, default=192)
+    parser.add_argument("--candidate-gps-layers", type=int, default=7)
+    parser.add_argument("--candidate-gps-heads", type=int, default=4)
+    parser.add_argument("--candidate-gps-dropout", type=float, default=0.05)
+    parser.add_argument("--candidate-gps-pooling", choices=["mean", "mean_max"], default="mean")
+    parser.add_argument("--candidate-gps-extra-hidden", type=int, default=192)
+    parser.add_argument("--candidate-gps-extra-layers", type=int, default=7)
+    parser.add_argument("--candidate-gps-extra-heads", type=int, default=4)
+    parser.add_argument("--candidate-gps-extra-dropout", type=float, default=0.05)
+    parser.add_argument("--candidate-gps-extra-pooling", choices=["mean", "mean_max"], default="mean")
     args = parser.parse_args()
 
     ensure_dirs(PHASE8_DIR)
@@ -176,6 +214,39 @@ def main():
     }
     if all(path.exists() for path in tail_probe.values()):
         model_specs["tail_probe30k_fusion"] = tail_probe
+    if args.candidate_name or args.candidate_gps or args.candidate_fusion:
+        if not (args.candidate_name and args.candidate_gps and args.candidate_fusion):
+            raise ValueError(
+                "--candidate-name, --candidate-gps, and --candidate-fusion must be provided together"
+            )
+        candidate = {
+            "gps": args.candidate_gps,
+            "schnet": MODELS_DIR / "phase8_schnet_expansion_500k.pt",
+            "fusion": args.candidate_fusion,
+            "gps_params": {
+                "hidden_channels": args.candidate_gps_hidden,
+                "num_layers": args.candidate_gps_layers,
+                "num_heads": args.candidate_gps_heads,
+                "dropout": args.candidate_gps_dropout,
+                "pooling": args.candidate_gps_pooling,
+            },
+        }
+        if args.candidate_gps_extra is not None:
+            candidate["gps_extra"] = args.candidate_gps_extra
+            candidate["gps_extra_params"] = {
+                "hidden_channels": args.candidate_gps_extra_hidden,
+                "num_layers": args.candidate_gps_extra_layers,
+                "num_heads": args.candidate_gps_extra_heads,
+                "dropout": args.candidate_gps_extra_dropout,
+                "pooling": args.candidate_gps_extra_pooling,
+            }
+        required = [candidate["gps"], candidate["schnet"], candidate["fusion"]]
+        if args.candidate_gps_extra is not None:
+            required.append(args.candidate_gps_extra)
+        missing = [str(path) for path in required if not path.exists()]
+        if missing:
+            raise FileNotFoundError(f"Missing candidate artifacts: {missing}")
+        model_specs[args.candidate_name] = candidate
 
     metrics = {
         "n_eval": int(len(eval_df)),
@@ -185,7 +256,12 @@ def main():
     pred_df = eval_df.copy()
     for name, paths in model_specs.items():
         print(f"Predicting {name}", flush=True)
-        trio = _load_trio(paths["gps"], paths["schnet"], paths["fusion"], device)
+        trio = _load_trio(
+            paths["gps"], paths["schnet"], paths["fusion"], device,
+            gps_params=paths.get("gps_params"),
+            gps_extra_path=paths.get("gps_extra"),
+            gps_extra_params=paths.get("gps_extra_params"),
+        )
         preds = _predict(*trio, graphs_2d, graphs_3d, args, device)
         metrics["models"][name] = {}
         for pred_name, pred in preds.items():

@@ -1,0 +1,17 @@
+{
+  "note": "Fixed leakage-filtered PCQM4Mv2 proxy; not an OGB submission.",
+  "n_input": 2988,
+  "n_valid": 2988,
+  "v3_gap_mae": 0.2530616432112835,
+  "dualgps_gap_mae": 0.25773328086025643,
+  "paired_bootstrap": {
+    "delta_mae": 0.004671637648972955,
+    "ci95": [
+      0.0024072826921699374,
+      0.006930553060730856
+    ],
+    "probability_candidate_better": 0.0,
+    "n_bootstrap": 10000,
+    "seed": 42
+  }
+}

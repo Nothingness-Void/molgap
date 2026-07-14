@@ -332,6 +332,58 @@ def save_json(data: dict, path: os.PathLike | str) -> None:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def load_embedding_payload(path: os.PathLike | str):
+    """Load an embedding tensor payload with its original source indices."""
+    import torch
+
+    payload = torch.load(Path(path), weights_only=False)
+    if not isinstance(payload, dict) or not {"embeddings", "source_idx"} <= set(payload):
+        raise ValueError(f"{path} must contain embeddings + source_idx")
+    return payload["embeddings"].float(), payload["source_idx"].long()
+
+
+def load_aligned_encoder_embeddings(
+    emb_2d_paths: Iterable[os.PathLike | str],
+    emb_3d_path: os.PathLike | str,
+    graph_3d_path: os.PathLike | str,
+):
+    """Align one or more 2D embeddings, 3D embeddings, and labels by source index."""
+    import torch
+
+    payloads_2d = [load_embedding_payload(path) for path in emb_2d_paths]
+    if not payloads_2d:
+        raise ValueError("At least one 2D embedding payload is required")
+    h3, idx3 = load_embedding_payload(emb_3d_path)
+
+    labels_by_idx = {}
+    for graph in torch.load(Path(graph_3d_path), weights_only=False):
+        source_idx = int(graph.source_idx.view(-1)[0].item())
+        labels_by_idx[source_idx] = graph.y.squeeze(0).float()
+
+    positions_2d = [
+        {int(value): i for i, value in enumerate(indices.tolist())}
+        for _, indices in payloads_2d
+    ]
+    pos3 = {int(value): i for i, value in enumerate(idx3.tolist())}
+    common = set(pos3).intersection(labels_by_idx)
+    for positions in positions_2d:
+        common.intersection_update(positions)
+    common = sorted(common)
+
+    aligned_2d = []
+    for (embeddings, _), positions in zip(payloads_2d, positions_2d):
+        indices = torch.tensor([positions[i] for i in common], dtype=torch.long)
+        aligned_2d.append(embeddings[indices])
+    indices_3d = torch.tensor([pos3[i] for i in common], dtype=torch.long)
+    labels = torch.stack([labels_by_idx[i] for i in common])
+    return (
+        torch.cat(aligned_2d, dim=-1),
+        h3[indices_3d],
+        labels,
+        torch.tensor(common, dtype=torch.long),
+    )
+
+
 def load_saved_split_indices(
     n_samples: int,
     split_path: os.PathLike | str = DEFAULT_SPLIT_PATH,

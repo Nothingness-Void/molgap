@@ -49,14 +49,49 @@ TRAIN_PARAMS = {
 }
 
 
-def _make_model(kind: str):
+def _model_params(kind: str, args) -> dict:
     if kind == "gps":
-        p = PARAMS_GPS_2D
-        return GPSWrapper(**p)
+        params = dict(PARAMS_GPS_2D)
+        overrides = {
+            "hidden_channels": args.hidden_channels,
+            "num_layers": args.num_layers,
+            "num_heads": args.num_heads,
+            "dropout": args.dropout,
+            "pooling": args.pooling,
+        }
+    else:
+        params = dict(PARAMS_SCHNET_300K)
+        overrides = {
+            "hidden_channels": args.hidden_channels,
+            "dropout": args.dropout,
+        }
+    params.update({key: value for key, value in overrides.items() if value is not None})
+    return params
+
+
+def _make_model(kind: str, model_params: dict):
+    if kind == "gps":
+        return GPSWrapper(**model_params)
     if kind == "schnet":
-        p = PARAMS_SCHNET_300K
-        return SchNetWrapper(**p, use_charges=True)
+        return SchNetWrapper(**model_params, use_charges=True)
     raise ValueError(kind)
+
+
+def _load_compatible_state(model, checkpoint: Path, device) -> dict:
+    source = torch.load(checkpoint, weights_only=True, map_location=device)
+    target = model.state_dict()
+    compatible = {
+        key: value for key, value in source.items()
+        if key in target and target[key].shape == value.shape
+    }
+    model.load_state_dict(compatible, strict=False)
+    return {
+        "loaded_tensors": len(compatible),
+        "source_tensors": len(source),
+        "target_tensors": len(target),
+        "missing_tensors": sorted(set(target) - set(compatible)),
+        "skipped_tensors": sorted(set(source) - set(compatible)),
+    }
 
 
 def _forward(kind: str, model, batch):
@@ -140,6 +175,19 @@ def main():
                         help="load --model-out, evaluate deterministic test split, and write embeddings")
     parser.add_argument("--init-from", type=Path, default=None,
                         help="optional same-architecture checkpoint for warm-starting")
+    parser.add_argument("--init-compatible", action="store_true",
+                        help="load only same-name, same-shape tensors (for architecture expansion)")
+    parser.add_argument("--hidden-channels", type=int, default=None)
+    parser.add_argument("--num-layers", type=int, default=None,
+                        help="GPS layer count override")
+    parser.add_argument("--num-heads", type=int, default=None,
+                        help="GPS attention head count override")
+    parser.add_argument("--dropout", type=float, default=None)
+    parser.add_argument("--pooling", choices=["mean", "mean_max"], default=None,
+                        help="GPS molecule-level pooling override")
+    parser.add_argument("--lr", type=float, default=None)
+    parser.add_argument("--weight-decay", type=float, default=None)
+    parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--eval-batch-size", type=int, default=None)
     parser.add_argument("--embedding-batch-size", type=int, default=None)
     args = parser.parse_args()
@@ -162,12 +210,26 @@ def main():
     if args.max_samples is not None:
         graphs = graphs[:args.max_samples]
     print(f"Loaded {len(graphs)} graphs from {graph_path}", flush=True)
-    p = TRAIN_PARAMS[args.kind]
+    model_params = _model_params(args.kind, args)
+    p = dict(TRAIN_PARAMS[args.kind])
+    p.update(model_params)
+    if args.lr is not None:
+        p["lr"] = args.lr
+    if args.weight_decay is not None:
+        p["weight_decay"] = args.weight_decay
+    if args.batch_size is not None:
+        p["batch_size"] = args.batch_size
+    print(f"Model params: {model_params}", flush=True)
+    print(
+        f"Training params: lr={p['lr']:.3g} weight_decay={p['weight_decay']:.3g} "
+        f"batch_size={p['batch_size']}",
+        flush=True,
+    )
     eval_bs = args.eval_batch_size or int(p["batch_size"])
     embed_bs = args.embedding_batch_size or int(p["batch_size"])
 
     if args.extract_only:
-        model = _make_model(args.kind).to(device)
+        model = _make_model(args.kind, model_params).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
         _extract_embeddings(args.kind, model, graphs, device, embeddings_out, embed_bs)
         return
@@ -176,7 +238,7 @@ def main():
         idx = np.random.RandomState(SEED).permutation(len(graphs))
         n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
         test_set = [graphs[i] for i in idx[n_train + n_val:]]
-        model = _make_model(args.kind).to(device)
+        model = _make_model(args.kind, model_params).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
         test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
         pred, true = _evaluate(args.kind, model, test_loader, device)
@@ -203,11 +265,22 @@ def main():
     test_set = [graphs[i] for i in idx[n_train + n_val:]]
     print(f"Split: train={len(train_set)} val={len(val_set)} test={len(test_set)}", flush=True)
 
-    model = _make_model(args.kind).to(device)
+    model = _make_model(args.kind, model_params).to(device)
+    init_report = None
     if args.init_from is not None:
-        state = torch.load(args.init_from, weights_only=True, map_location=device)
-        model.load_state_dict(state)
-        print(f"Warm-started from {args.init_from}", flush=True)
+        if args.init_compatible:
+            init_report = _load_compatible_state(model, args.init_from, device)
+            print(
+                f"Compatible warm-start from {args.init_from}: "
+                f"loaded={init_report['loaded_tensors']}/{init_report['target_tensors']} "
+                f"missing={len(init_report['missing_tensors'])} "
+                f"skipped={len(init_report['skipped_tensors'])}",
+                flush=True,
+            )
+        else:
+            state = torch.load(args.init_from, weights_only=True, map_location=device)
+            model.load_state_dict(state)
+            print(f"Warm-started from {args.init_from}", flush=True)
     optimizer = torch.optim.AdamW(model.parameters(), lr=p["lr"], weight_decay=p["weight_decay"])
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6)
     scaler = torch.amp.GradScaler("cuda", enabled=torch.cuda.is_available())
@@ -282,6 +355,9 @@ def main():
         "best_val_mae": float(best_val),
         "best_epoch": int(best_epoch),
         "init_from": str(args.init_from) if args.init_from is not None else None,
+        "init_compatible": bool(args.init_compatible),
+        "init_report": init_report,
+        "model_params": model_params,
         "params": p,
         "test_metrics": _metrics(pred, true),
         "log": log_rows,

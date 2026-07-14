@@ -1,0 +1,50 @@
+Device: cuda
+Aligned N=497578 split=398062/49757/49759
+
+Baseline FusionHead
+  ep000 val=0.0902 best=0.0902@0
+  ep001 val=0.0834 best=0.0834@1
+  ep002 val=0.0814 best=0.0814@2
+  ep003 val=0.0813 best=0.0813@3
+  ep004 val=0.0809 best=0.0809@4
+  ep005 val=0.0841 best=0.0809@4
+  ep006 val=0.0801 best=0.0801@6
+  ep007 val=0.0798 best=0.0798@7
+  ep008 val=0.0799 best=0.0798@7
+  ep009 val=0.0807 best=0.0798@7
+  ep010 val=0.0795 best=0.0795@10
+  ep011 val=0.0795 best=0.0795@10
+  ep012 val=0.0792 best=0.0792@12
+  ep013 val=0.0802 best=0.0792@12
+  ep014 val=0.0793 best=0.0792@12
+  ep015 val=0.0798 best=0.0792@12
+  ep016 val=0.0813 best=0.0792@12
+  ep017 val=0.0816 best=0.0792@12
+  ep018 val=0.0803 best=0.0792@12
+  ep019 val=0.0798 best=0.0792@12
+  ep020 val=0.0797 best=0.0792@12
+  ep021 val=0.0800 best=0.0792@12
+  ep022 val=0.0797 best=0.0792@12
+  ep023 val=0.0801 best=0.0792@12
+  ep024 val=0.0802 best=0.0792@12
+  ep025 val=0.0801 best=0.0792@12
+  ep026 val=0.0798 best=0.0792@12
+  ep027 val=0.0798 best=0.0792@12
+  ep028 val=0.0806 best=0.0792@12
+  ep029 val=0.0805 best=0.0792@12
+  ep030 val=0.0805 best=0.0792@12
+  ep031 val=0.0802 best=0.0792@12
+  ep032 val=0.0806 best=0.0792@12
+  ep033 val=0.0802 best=0.0792@12
+  ep034 val=0.0802 best=0.0792@12
+  ep035 val=0.0810 best=0.0792@12
+  ep036 val=0.0807 best=0.0792@12
+  ep037 val=0.0803 best=0.0792@12
+  ep038 val=0.0805 best=0.0792@12
+  ep039 val=0.0803 best=0.0792@12
+  ep040 val=0.0802 best=0.0792@12
+  ep041 val=0.0802 best=0.0792@12
+  ep042 val=0.0802 best=0.0792@12
+
+Metrics -> results\phase8\fusion_arch_dualgps_metrics.json
+Gap MAE baseline=0.0923 avg=0.0801

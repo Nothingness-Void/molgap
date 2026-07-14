@@ -187,7 +187,8 @@ def predict_smiles_batch_hybrid(
     B3LYP baseline and the Δ features.
 
     Pass ``models=(gps, encoder_3d, fusion, device)`` from ``load_hybrid`` to
-    reuse a loaded trio across calls.
+    reuse a loaded trio across calls. ``gps`` may also be a list/tuple of GPS
+    encoders; their embeddings are concatenated before fusion.
     """
     from torch_geometric.loader import DataLoader
 
@@ -195,6 +196,7 @@ def predict_smiles_batch_hybrid(
         gps, encoder_3d, fusion, device = load_hybrid(device, key=hybrid_key)
     else:
         gps, encoder_3d, fusion, device = models
+    gps_models = list(gps) if isinstance(gps, (list, tuple)) else [gps]
 
     g2d_list, g3d_list, valid_idx = [], [], []
     for i, smi in enumerate(smiles_list):
@@ -210,17 +212,25 @@ def predict_smiles_batch_hybrid(
 
     if not valid_idx:
         emb_dim_3d = 192
+        emb_dim_2d = sum(int(model.node_emb.out_features) for model in gps_models)
         empty = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
         return (np.array([], dtype=int), empty) + (
-            (np.empty((0, 192)), np.empty((0, emb_dim_3d))) if return_embeddings else ()
+            (np.empty((0, emb_dim_2d)), np.empty((0, emb_dim_3d)))
+            if return_embeddings else ()
         )
 
-    emb_2d = []
+    emb_2d_by_model = [[] for _ in gps_models]
     with torch.no_grad():
         for b in DataLoader(g2d_list, batch_size=bs_2d):
             b = b.to(device)
-            emb_2d.append(gps.encode(b.x, b.edge_index, b.edge_attr, b.batch).cpu())
-    emb_2d = torch.cat(emb_2d)
+            for model_idx, model in enumerate(gps_models):
+                emb_2d_by_model[model_idx].append(
+                    model.encode(b.x, b.edge_index, b.edge_attr, b.batch).cpu()
+                )
+    emb_2d = torch.cat(
+        [torch.cat(model_embeddings) for model_embeddings in emb_2d_by_model],
+        dim=-1,
+    )
 
     emb_3d = []
     with torch.no_grad():
@@ -237,6 +247,155 @@ def predict_smiles_batch_hybrid(
     if return_embeddings:
         return valid_idx, preds, emb_2d.numpy(), emb_3d.numpy()
     return valid_idx, preds
+
+
+def load_routed_dual_gps_hybrid(
+    device: torch.device | str | None = None,
+    *,
+    key: str = "phase8_routed_dualgps_hybrid",
+) -> dict:
+    """Load the fixed-data routed dual-GPS B3LYP candidate."""
+    device = _resolve_device(device)
+    spec = MODEL_REGISTRY[key]
+    if spec["kind"] != "routed_hybrid":
+        raise ValueError(f"Registry key {key!r} is not a routed hybrid")
+
+    base_gps, encoder_3d, base_fusion, device = load_hybrid(
+        device, key=spec["base_hybrid"]
+    )
+    extra_spec = MODEL_REGISTRY[spec["extra_gps"]]
+    extra_gps = GPSWrapper(**extra_spec["params"]).to(device)
+    extra_gps.load_state_dict(
+        torch.load(extra_spec["checkpoint"], weights_only=True, map_location=device)
+    )
+    extra_gps.eval()
+
+    base_dim = int(base_gps.node_emb.out_features)
+    extra_dim = int(extra_gps.node_emb.out_features)
+    dim_3d = int(encoder_3d.head[0].in_features)
+    dual_fusion = FusionHead(
+        spec.get("fusion_type", "gate"),
+        spec.get("hidden", 192),
+        spec.get("dropout", 0.0),
+        dim_2d=base_dim + extra_dim,
+        dim_3d=dim_3d,
+    ).to(device)
+    dual_fusion.load_state_dict(
+        torch.load(spec["checkpoint"], weights_only=True, map_location=device)
+    )
+    dual_fusion.eval()
+    return {
+        "base_gps": base_gps,
+        "extra_gps": extra_gps,
+        "encoder_3d": encoder_3d,
+        "base_fusion": base_fusion,
+        "dual_fusion": dual_fusion,
+        "threshold_eV": float(spec["threshold_eV"]),
+        "device": device,
+        "key": key,
+    }
+
+
+def predict_smiles_batch_routed_dual_gps(
+    smiles_list: list[str],
+    models: dict | None = None,
+    *,
+    bs_2d: int = 256,
+    bs_3d: int = 128,
+    return_embeddings: bool = False,
+    device: torch.device | str | None = None,
+    routed_key: str = "phase8_routed_dualgps_hybrid",
+):
+    """Predict with v3, then apply the dual-GPS expert to predicted Gap < 4 eV.
+
+    Returns ``(valid_idx, preds, routed_mask)``. The SchNet embedding is computed
+    once for every valid molecule; the extra 9-layer GPS runs only for routed
+    rows. With ``return_embeddings=True``, the base-v3 2D and 3D embeddings are
+    appended so downstream Delta models retain their existing feature contract.
+    """
+    from torch_geometric.loader import DataLoader
+
+    models = models or load_routed_dual_gps_hybrid(device, key=routed_key)
+    base_gps = models["base_gps"]
+    extra_gps = models["extra_gps"]
+    encoder_3d = models["encoder_3d"]
+    base_fusion = models["base_fusion"]
+    dual_fusion = models["dual_fusion"]
+    threshold = float(models["threshold_eV"])
+    device = models["device"]
+
+    g2d_list, g3d_list, valid_idx = [], [], []
+    for i, smiles in enumerate(smiles_list):
+        g3d = smiles_to_pyg(smiles)
+        if g3d is None:
+            continue
+        g2d = smiles_to_2d_pyg(smiles)
+        if g2d is None:
+            continue
+        g2d_list.append(g2d)
+        g3d_list.append(g3d)
+        valid_idx.append(i)
+
+    if not valid_idx:
+        empty_pred = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
+        empty_mask = np.empty((0,), dtype=bool)
+        result = (np.empty((0,), dtype=int), empty_pred, empty_mask)
+        if return_embeddings:
+            result += (
+                np.empty((0, int(base_gps.node_emb.out_features)), dtype=np.float32),
+                np.empty((0, int(encoder_3d.head[0].in_features)), dtype=np.float32),
+            )
+        return result
+
+    base_2d = []
+    with torch.no_grad():
+        for batch in DataLoader(g2d_list, batch_size=bs_2d, shuffle=False):
+            batch = batch.to(device)
+            base_2d.append(
+                base_gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch).cpu()
+            )
+    base_2d = torch.cat(base_2d)
+
+    emb_3d = []
+    with torch.no_grad():
+        for batch in DataLoader(g3d_list, batch_size=bs_3d, shuffle=False):
+            batch = batch.to(device)
+            charges = batch.charges if hasattr(batch, "charges") else None
+            emb_3d.append(
+                encoder_3d.encode(
+                    batch.z, batch.pos, batch.batch, charges=charges
+                ).cpu()
+            )
+    emb_3d = torch.cat(emb_3d)
+
+    with torch.no_grad():
+        preds = base_fusion(base_2d.to(device), emb_3d.to(device)).cpu()
+    routed_mask = preds[:, 2].numpy() < threshold
+    routed_pos = np.flatnonzero(routed_mask)
+    if len(routed_pos):
+        routed_graphs = [g2d_list[i] for i in routed_pos]
+        extra_2d = []
+        with torch.no_grad():
+            for batch in DataLoader(routed_graphs, batch_size=bs_2d, shuffle=False):
+                batch = batch.to(device)
+                extra_2d.append(
+                    extra_gps.encode(
+                        batch.x, batch.edge_index, batch.edge_attr, batch.batch
+                    ).cpu()
+                )
+        extra_2d = torch.cat(extra_2d)
+        routed_tensor = torch.as_tensor(routed_pos, dtype=torch.long)
+        dual_2d = torch.cat([base_2d[routed_tensor], extra_2d], dim=-1)
+        with torch.no_grad():
+            routed_preds = dual_fusion(
+                dual_2d.to(device), emb_3d[routed_tensor].to(device)
+            ).cpu()
+        preds[routed_tensor] = routed_preds
+
+    result = (np.asarray(valid_idx, dtype=int), preds.numpy(), routed_mask)
+    if return_embeddings:
+        result += (base_2d.numpy(), emb_3d.numpy())
+    return result
 
 
 def predict_smiles_batch_hybrid_conformer_ensemble(

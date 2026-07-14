@@ -1,0 +1,59 @@
+Device: cuda
+Aligned N=497578 split=398062/49757/49759
+
+Baseline FusionHead
+  ep000 val=0.0960 best=0.0960@0
+  ep001 val=0.0871 best=0.0871@1
+  ep002 val=0.0836 best=0.0836@2
+  ep003 val=0.0833 best=0.0833@3
+  ep004 val=0.0822 best=0.0822@4
+  ep005 val=0.0815 best=0.0815@5
+  ep006 val=0.0817 best=0.0815@5
+  ep007 val=0.0829 best=0.0815@5
+  ep008 val=0.0817 best=0.0815@5
+  ep009 val=0.0823 best=0.0815@5
+  ep010 val=0.0832 best=0.0815@5
+  ep011 val=0.0816 best=0.0815@5
+  ep012 val=0.0812 best=0.0812@12
+  ep013 val=0.0820 best=0.0812@12
+  ep014 val=0.0819 best=0.0812@12
+  ep015 val=0.0815 best=0.0812@12
+  ep016 val=0.0838 best=0.0812@12
+  ep017 val=0.0826 best=0.0812@12
+  ep018 val=0.0812 best=0.0812@18
+  ep019 val=0.0816 best=0.0812@18
+  ep020 val=0.0833 best=0.0812@18
+  ep021 val=0.0811 best=0.0811@21
+  ep022 val=0.0822 best=0.0811@21
+  ep023 val=0.0817 best=0.0811@21
+  ep024 val=0.0825 best=0.0811@21
+  ep025 val=0.0816 best=0.0811@21
+  ep026 val=0.0819 best=0.0811@21
+  ep027 val=0.0817 best=0.0811@21
+  ep028 val=0.0824 best=0.0811@21
+  ep029 val=0.0819 best=0.0811@21
+  ep030 val=0.0821 best=0.0811@21
+  ep031 val=0.0816 best=0.0811@21
+  ep032 val=0.0822 best=0.0811@21
+  ep033 val=0.0816 best=0.0811@21
+  ep034 val=0.0821 best=0.0811@21
+  ep035 val=0.0820 best=0.0811@21
+  ep036 val=0.0820 best=0.0811@21
+  ep037 val=0.0822 best=0.0811@21
+  ep038 val=0.0819 best=0.0811@21
+  ep039 val=0.0820 best=0.0811@21
+  ep040 val=0.0821 best=0.0811@21
+  ep041 val=0.0820 best=0.0811@21
+  ep042 val=0.0822 best=0.0811@21
+  ep043 val=0.0822 best=0.0811@21
+  ep044 val=0.0823 best=0.0811@21
+  ep045 val=0.0823 best=0.0811@21
+  ep046 val=0.0831 best=0.0811@21
+  ep047 val=0.0821 best=0.0811@21
+  ep048 val=0.0823 best=0.0811@21
+  ep049 val=0.0821 best=0.0811@21
+  ep050 val=0.0822 best=0.0811@21
+  ep051 val=0.0823 best=0.0811@21
+
+Metrics -> results\phase8\fusion_arch_meanmax_metrics.json
+Gap MAE baseline=0.0946 avg=0.0822

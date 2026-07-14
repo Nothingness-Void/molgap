@@ -50,6 +50,13 @@ MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
 FUSION_PHASE8_EXPANSION_METRICS = RESULTS_DIR / "phase8" / "fusion_expansion_500k_metrics.json"
 
+# Phase 8 fixed-data architecture candidate: the v3 GPS plus a 9-layer GPS and
+# a dual-GPS fusion head. Inference routes only base-predicted Gap < 4 eV rows.
+MODEL_PHASE8_EXPANSION_GPS_DEPTH9 = MODELS_DIR / "phase8_gps_expansion_500k_depth9.pt"
+MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
+    MODELS_DIR / "phase8_hybrid_fusion_expansion_500k_dualgps.pt"
+)
+
 # Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
 # appending the residual-tail probe pool. Experimental only; not a default.
 MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
@@ -192,6 +199,16 @@ MODEL_REGISTRY = {
         "kind": "hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_HYBRID,
         "metrics": FUSION_PHASE8_EXPANSION_METRICS, "normalized": False,
         "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    "phase8_expansion_gps_depth9": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_EXPANSION_GPS_DEPTH9,
+        "params": {**PARAMS_GPS_2D, "num_layers": 9}, "normalized": False,
+    },
+    "phase8_routed_dualgps_hybrid": {
+        "kind": "routed_hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID,
+        "normalized": False, "base_hybrid": "phase8_expansion_hybrid",
+        "extra_gps": "phase8_expansion_gps_depth9", "threshold_eV": 4.0,
         "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
     },
     "phase8_tail_probe_hybrid": {

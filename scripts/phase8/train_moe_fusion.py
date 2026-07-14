@@ -25,36 +25,12 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from molgap.constants import MODELS_DIR, RESULTS_DIR, SEED
 from molgap.fusion import FusionHead, MoEFusionHead
-from molgap.utils import ensure_dirs
+from molgap.utils import ensure_dirs, load_aligned_encoder_embeddings
 
 PHASE8_DIR = RESULTS_DIR / "phase8"
 EMB_2D = PHASE8_DIR / "gps_replacement_300k_embeddings.pt"
 EMB_3D = PHASE8_DIR / "schnet_replacement_300k_embeddings.pt"
 GRAPH_3D = PHASE8_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
-
-
-def _load_embedding_payload(path: Path):
-    payload = torch.load(path, weights_only=False)
-    if isinstance(payload, dict):
-        return payload["embeddings"].float(), payload["source_idx"].long()
-    raise ValueError(f"{path} must contain embeddings + source_idx")
-
-
-def load_aligned(emb_2d_path: Path, emb_3d_path: Path, graph_3d_path: Path):
-    h2, idx2 = _load_embedding_payload(emb_2d_path)
-    h3, idx3 = _load_embedding_payload(emb_3d_path)
-    labels_by_idx = {}
-    graphs = torch.load(graph_3d_path, weights_only=False)
-    for g in graphs:
-        labels_by_idx[int(g.source_idx.view(-1)[0].item())] = g.y.squeeze(0).float()
-
-    pos2 = {int(v): i for i, v in enumerate(idx2.tolist())}
-    pos3 = {int(v): i for i, v in enumerate(idx3.tolist())}
-    common = sorted(set(pos2).intersection(pos3).intersection(labels_by_idx))
-    ii2 = torch.tensor([pos2[i] for i in common], dtype=torch.long)
-    ii3 = torch.tensor([pos3[i] for i in common], dtype=torch.long)
-    y = torch.stack([labels_by_idx[i] for i in common])
-    return h2[ii2], h3[ii3], y, torch.tensor(common, dtype=torch.long)
 
 
 def make_split(n: int, max_samples: int | None):
@@ -145,6 +121,8 @@ def train_one(model, h2, h3, y, split, args, device):
 def main():
     parser = argparse.ArgumentParser(description="Phase 8 baseline/MoE fusion A/B")
     parser.add_argument("--emb-2d", type=Path, default=EMB_2D)
+    parser.add_argument("--emb-2d-extra", type=Path, default=None,
+                        help="optional second aligned 2D embedding payload to concatenate")
     parser.add_argument("--emb-3d", type=Path, default=EMB_3D)
     parser.add_argument("--graphs-3d", type=Path, default=GRAPH_3D)
     parser.add_argument("--head", choices=["baseline", "moe", "both"], default="both")
@@ -168,7 +146,10 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}", flush=True)
 
-    h2, h3, y, source_idx = load_aligned(args.emb_2d, args.emb_3d, args.graphs_3d)
+    emb_2d_paths = [args.emb_2d] + ([args.emb_2d_extra] if args.emb_2d_extra else [])
+    h2, h3, y, source_idx = load_aligned_encoder_embeddings(
+        emb_2d_paths, args.emb_3d, args.graphs_3d
+    )
     split = make_split(h2.shape[0], args.max_samples)
     print(f"Aligned N={h2.shape[0]} split={len(split['train'])}/{len(split['val'])}/{len(split['test'])}",
           flush=True)
@@ -180,11 +161,16 @@ def main():
         "source_idx_min": int(source_idx.min().item()),
         "source_idx_max": int(source_idx.max().item()),
         "head": args.head,
+        "embedding_dims": {"2d": int(h2.shape[1]), "3d": int(h3.shape[1])},
+        "emb_2d_extra": str(args.emb_2d_extra) if args.emb_2d_extra else None,
     }
     if args.head in {"baseline", "both"}:
         print("\nBaseline FusionHead", flush=True)
         base, base_metrics = train_one(
-            FusionHead("gate", args.hidden, 0.0),
+            FusionHead(
+                "gate", args.hidden, 0.0,
+                dim_2d=int(h2.shape[1]), dim_3d=int(h3.shape[1]),
+            ),
             h2, h3, y, split, args, device,
         )
         baseline_out = (

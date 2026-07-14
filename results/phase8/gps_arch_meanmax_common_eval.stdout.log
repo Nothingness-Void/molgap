@@ -1,0 +1,10 @@
+Device: cuda
+Common eval valid N=1977 sets={'ood1000': 999, 'p8_targeted_hard': 978}
+Predicting phase7_full
+Predicting replacement300k_full
+Predicting expansion500k_full
+Predicting tail_probe30k_fusion
+Predicting expansion500k_meanmax
+Metrics -> results\phase8\gps_arch_meanmax_common_eval_metrics.json
+Predictions -> results\phase8\gps_arch_meanmax_common_eval_predictions.csv
+Hybrid all avg: phase7_full=0.14529 replacement300k_full=0.12839 expansion500k_full=0.10559 tail_probe30k_fusion=0.10639 expansion500k_meanmax=0.10358

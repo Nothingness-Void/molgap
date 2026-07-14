@@ -1,0 +1,149 @@
+Device: cuda | kind=gps
+NVIDIA GeForce RTX 5060 | 8.5 GB
+Loaded 500000 graphs from results\phase8\pyg_2d_graphs_bond_expansion_500k.pt
+Model params: {'hidden_channels': 192, 'num_layers': 7, 'num_heads': 4, 'dropout': 0.05, 'pooling': 'mean_max'}
+Training params: lr=5e-05 weight_decay=1.31e-05 batch_size=256
+Split: train=400000 val=50000 test=50000
+Compatible warm-start from models\phase8_gps_expansion_500k.pt: loaded=220/222 missing=2 skipped=0
+ep000 train=0.0918 val=0.1116 best=0.1116@0 lr=4.99e-05 77.8s *
+ep001 train=0.0918 val=0.1114 best=0.1114@1 lr=4.97e-05 76.4s *
+ep002 train=0.0917 val=0.1114 best=0.1114@1 lr=4.93e-05 75.7s
+ep003 train=0.0915 val=0.1116 best=0.1114@1 lr=4.88e-05 76.0s
+ep004 train=0.0913 val=0.1118 best=0.1114@1 lr=4.81e-05 76.9s
+ep005 train=0.0912 val=0.1112 best=0.1112@5 lr=4.73e-05 76.8s *
+ep006 train=0.0909 val=0.1113 best=0.1112@5 lr=4.64e-05 75.9s
+ep007 train=0.0908 val=0.1116 best=0.1112@5 lr=4.53e-05 76.0s
+ep008 train=0.0907 val=0.1111 best=0.1111@8 lr=4.41e-05 76.9s *
+ep009 train=0.0905 val=0.1115 best=0.1111@8 lr=4.28e-05 75.8s
+ep010 train=0.0903 val=0.1119 best=0.1111@8 lr=4.14e-05 76.5s
+ep011 train=0.0901 val=0.1112 best=0.1111@8 lr=3.99e-05 80.3s
+ep012 train=0.0900 val=0.1116 best=0.1111@8 lr=3.83e-05 75.5s
+ep013 train=0.0896 val=0.1115 best=0.1111@8 lr=3.66e-05 77.2s
+ep014 train=0.0896 val=0.1110 best=0.1110@14 lr=3.49e-05 73.6s *
+ep015 train=0.0893 val=0.1112 best=0.1110@14 lr=3.31e-05 73.6s
+ep016 train=0.0892 val=0.1112 best=0.1110@14 lr=3.12e-05 77.6s
+ep017 train=0.0890 val=0.1114 best=0.1110@14 lr=2.93e-05 74.6s
+ep018 train=0.0889 val=0.1111 best=0.1110@14 lr=2.74e-05 74.7s
+ep019 train=0.0886 val=0.1112 best=0.1110@14 lr=2.55e-05 75.1s
+ep020 train=0.0884 val=0.1113 best=0.1110@14 lr=2.36e-05 74.5s
+ep021 train=0.0883 val=0.1111 best=0.1110@14 lr=2.17e-05 73.3s
+ep022 train=0.0880 val=0.1109 best=0.1109@22 lr=1.98e-05 73.6s *
+ep023 train=0.0879 val=0.1111 best=0.1109@22 lr=1.79e-05 73.4s
+ep024 train=0.0879 val=0.1114 best=0.1109@22 lr=1.61e-05 73.8s
+ep025 train=0.0877 val=0.1109 best=0.1109@25 lr=1.44e-05 73.8s *
+ep026 train=0.0875 val=0.1111 best=0.1109@25 lr=1.27e-05 73.4s
+ep027 train=0.0875 val=0.1107 best=0.1107@27 lr=1.11e-05 73.1s *
+ep028 train=0.0873 val=0.1111 best=0.1107@27 lr=9.59e-06 74.2s
+ep029 train=0.0871 val=0.1111 best=0.1107@27 lr=8.18e-06 73.4s
+ep030 train=0.0872 val=0.1108 best=0.1107@27 lr=6.87e-06 75.0s
+ep031 train=0.0870 val=0.1110 best=0.1107@27 lr=5.68e-06 74.6s
+ep032 train=0.0869 val=0.1109 best=0.1107@27 lr=4.61e-06 74.4s
+ep033 train=0.0868 val=0.1108 best=0.1107@27 lr=3.67e-06 74.3s
+ep034 train=0.0868 val=0.1107 best=0.1107@34 lr=2.86e-06 74.2s *
+ep035 train=0.0868 val=0.1110 best=0.1107@34 lr=2.20e-06 73.1s
+ep036 train=0.0867 val=0.1106 best=0.1106@36 lr=1.68e-06 74.1s *
+ep037 train=0.0867 val=0.1108 best=0.1106@36 lr=1.30e-06 73.5s
+ep038 train=0.0866 val=0.1108 best=0.1106@36 lr=1.08e-06 74.0s
+ep039 train=0.0866 val=0.1109 best=0.1106@36 lr=1.00e-06 73.4s
+Model -> models\phase8_gps_expansion_500k_meanmax.pt
+Metrics -> results\phase8\gps_arch_meanmax_metrics.json
+  embed batch 1/1954 (0s)
+  embed batch 21/1954 (0s)
+  embed batch 41/1954 (1s)
+  embed batch 61/1954 (1s)
+  embed batch 81/1954 (2s)
+  embed batch 101/1954 (2s)
+  embed batch 121/1954 (2s)
+  embed batch 141/1954 (3s)
+  embed batch 161/1954 (3s)
+  embed batch 181/1954 (4s)
+  embed batch 201/1954 (4s)
+  embed batch 221/1954 (4s)
+  embed batch 241/1954 (5s)
+  embed batch 261/1954 (5s)
+  embed batch 281/1954 (6s)
+  embed batch 301/1954 (6s)
+  embed batch 321/1954 (6s)
+  embed batch 341/1954 (6s)
+  embed batch 361/1954 (7s)
+  embed batch 381/1954 (7s)
+  embed batch 401/1954 (8s)
+  embed batch 421/1954 (8s)
+  embed batch 441/1954 (8s)
+  embed batch 461/1954 (9s)
+  embed batch 481/1954 (9s)
+  embed batch 501/1954 (9s)
+  embed batch 521/1954 (10s)
+  embed batch 541/1954 (10s)
+  embed batch 561/1954 (11s)
+  embed batch 581/1954 (11s)
+  embed batch 601/1954 (11s)
+  embed batch 621/1954 (12s)
+  embed batch 641/1954 (12s)
+  embed batch 661/1954 (12s)
+  embed batch 681/1954 (13s)
+  embed batch 701/1954 (13s)
+  embed batch 721/1954 (13s)
+  embed batch 741/1954 (14s)
+  embed batch 761/1954 (14s)
+  embed batch 781/1954 (15s)
+  embed batch 801/1954 (15s)
+  embed batch 821/1954 (15s)
+  embed batch 841/1954 (16s)
+  embed batch 861/1954 (16s)
+  embed batch 881/1954 (16s)
+  embed batch 901/1954 (17s)
+  embed batch 921/1954 (17s)
+  embed batch 941/1954 (17s)
+  embed batch 961/1954 (18s)
+  embed batch 981/1954 (18s)
+  embed batch 1001/1954 (18s)
+  embed batch 1021/1954 (19s)
+  embed batch 1041/1954 (19s)
+  embed batch 1061/1954 (20s)
+  embed batch 1081/1954 (20s)
+  embed batch 1101/1954 (21s)
+  embed batch 1121/1954 (21s)
+  embed batch 1141/1954 (21s)
+  embed batch 1161/1954 (22s)
+  embed batch 1181/1954 (22s)
+  embed batch 1201/1954 (23s)
+  embed batch 1221/1954 (23s)
+  embed batch 1241/1954 (23s)
+  embed batch 1261/1954 (24s)
+  embed batch 1281/1954 (24s)
+  embed batch 1301/1954 (25s)
+  embed batch 1321/1954 (25s)
+  embed batch 1341/1954 (25s)
+  embed batch 1361/1954 (26s)
+  embed batch 1381/1954 (26s)
+  embed batch 1401/1954 (27s)
+  embed batch 1421/1954 (27s)
+  embed batch 1441/1954 (28s)
+  embed batch 1461/1954 (28s)
+  embed batch 1481/1954 (28s)
+  embed batch 1501/1954 (29s)
+  embed batch 1521/1954 (29s)
+  embed batch 1541/1954 (30s)
+  embed batch 1561/1954 (30s)
+  embed batch 1581/1954 (31s)
+  embed batch 1601/1954 (31s)
+  embed batch 1621/1954 (31s)
+  embed batch 1641/1954 (32s)
+  embed batch 1661/1954 (32s)
+  embed batch 1681/1954 (33s)
+  embed batch 1701/1954 (33s)
+  embed batch 1721/1954 (33s)
+  embed batch 1741/1954 (34s)
+  embed batch 1761/1954 (34s)
+  embed batch 1781/1954 (34s)
+  embed batch 1801/1954 (35s)
+  embed batch 1821/1954 (35s)
+  embed batch 1841/1954 (36s)
+  embed batch 1861/1954 (36s)
+  embed batch 1881/1954 (36s)
+  embed batch 1901/1954 (37s)
+  embed batch 1921/1954 (37s)
+  embed batch 1941/1954 (37s)
+  embed batch 1954/1954 (38s)
+Embeddings -> results\phase8\gps_arch_meanmax_embeddings.pt (500000, 192)

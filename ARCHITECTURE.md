@@ -19,7 +19,7 @@ Code map and module boundaries. Answers one question: **to change X, edit which 
 | `gps.py` | `GPSWrapper` — 2D graph transformer, `forward`/`encode` | Changing the 2D model |
 | `fusion.py` | `FusionHead` — embedding-level gate/concat fusion (hybrid) | Changing how 2D+3D embeddings combine |
 | `hybrid.py` | `EndToEndHybrid` — joint GPS 2D + SchNet 3D + fusion training wrapper | Training the hybrid end-to-end instead of on frozen embeddings |
-| `inference.py` | Model loading + `predict_smiles`/`predict_smiles_batch` + `predict_smiles_with_uq` (GW value+σ+OOD) | Changing the prediction API |
+| `inference.py` | Model loading + single/routed hybrid batch APIs + `predict_smiles_with_uq` | Changing the prediction API |
 | `utils.py` | Splits, metrics, SMILES/fingerprint helpers | Shared numeric/IO helpers |
 | `tensornet.py` | `TensorNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — see `results/ab3d/comparison.md` |
 | `visnet.py` | `ViSNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — same |
@@ -47,6 +47,7 @@ Notes:
 | phase7_hybrid *(v1 fallback)* | `hybrid_fusion_optuna.pt` | `fusion_optuna_metrics.json` | no |
 | phase8_replacement_hybrid *(v2 prior base)* | `phase8_hybrid_fusion_replacement_300k.pt` | `fusion_replacement_300k_metrics.json` | no |
 | **phase8_expansion_hybrid** *(v3 default)* | `phase8_hybrid_fusion_expansion_500k.pt` | `fusion_expansion_500k_metrics.json` | no |
+| **phase8_routed_dualgps_hybrid** *(v4 accuracy)* | v3 + `phase8_gps_expansion_500k_depth9.pt` + dual FusionHead | Gap<4 eV route | no |
 | phase8_tail_probe_hybrid *(negative probe)* | `phase8_hybrid_fusion_tail_probe_30k.pt` | `fusion_tail_probe_30k_metrics.json` | no |
 | tensornet_300k *(unused)* | `tensornet_3d_300k.pt` | `PARAMS_TENSORNET_300K` | no |
 | hybrid_tensornet *(unused)* | `hybrid_fusion_tensornet.pt` | `fusion_tensornet_metrics.json` | no |
@@ -55,6 +56,9 @@ Notes:
 Phase 7/9 scripts pin `key="phase7_hybrid"` when they reproduce v1 records.
 `phase8_tail_probe_hybrid` is registered only to reproduce the negative tail
 fusion-head probe; do not use it as a default.
+The selected v4 accuracy path has a different two-stage contract; load it with
+`load_routed_dual_gps_hybrid()` and predict with
+`predict_smiles_batch_routed_dual_gps()`.
 
 ## Scripts
 

@@ -7,7 +7,7 @@ Tasks, milestones, and priorities only. For results/conclusions see
 A **property database of commercially available organic molecules** — a CSV of
 HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
 is one slice of the commercial-molecule set. Built on two layers:
-1. the Phase 8 replacement300k hybrid model — a fast B3LYP surrogate (v2 selected);
+1. the Phase 8 routed dual-GPS model — the selected B3LYP accuracy predictor (v4);
 2. a **Δ-learning correction toward GW**, trained on OE62 GW5000, to push predictions
    past the B3LYP method ceiling.
 
@@ -15,13 +15,11 @@ The database is the deliverable; the predictor is how we build it. Delivery targ
 end of Phase 11.
 
 ## Status snapshot
-B3LYP-surrogate model has a selected **v2 base** (Phase 8 replacement300k) and a
-stronger **v3 candidate** (Phase 8 expansion500k). Still in **model-optimization**
-mode — NOT building the database yet. Live work is the post-Phase-8 handoff:
-decide whether to promote expansion500k, then re-validate Phase 9/10 GW Delta/UQ
-assets against the chosen base before shipping database tooling. A 30k
-trainable-encoder MoE A/B tied the single fusion head, so MoE is no longer the
-default full run. The Phase 7 300k model is the **v1 fallback**. Horizon:
+B3LYP-surrogate inference now has a selected **v4 routed dual-GPS accuracy
+predictor** on the unchanged expansion500k data. The single-hybrid v3 remains
+the component/compatibility loader. Still in **model-optimization** mode — NOT
+building the database yet. Live work is re-validating Phase 9/10 GW Delta/UQ
+assets against routed v4 outputs before shipping database tooling. Horizon:
 **~6 months (2026 H2)**.
 
 ## Phase plan (8 → 11)
@@ -33,16 +31,15 @@ the DB (Phase 10–11).
 
 | Phase | Theme | Question | Exit artifact |
 |-------|-------|----------|---------------|
-| **Phase 8** | Scaling & architecture | *Does broader-coverage data + trainable encoder beat the 300k v1?* | **done** — replacement300k hybrid selected as v2 |
-| **Phase 9** | Δ-learning to GW (**next**) | *Can a small Delta model lift B3LYP to GW accuracy?* | Trained Delta model + validation (scaffold split, Y-rand) — re-validated on v2 |
+| **Phase 8** | Scaling & architecture | *Does broader data + fixed-data architecture beat v1?* | **done** — routed dual-GPS v4 selected |
+| **Phase 9** | Δ-learning to GW (**next**) | *Can Delta lift routed-v4 B3LYP to GW accuracy?* | Recomputed Delta model + validation/UQ against v4 |
 | **Phase 10** | Inference pipeline & property database | *Predict any organic molecule at near-GW accuracy, with trust tiers.* | Batch CLI (B3LYP + Δ → near-GW) + in-distribution screen + predicted-property DB |
 | **Phase 11** | Delivery | *Ship it.* | Versioned predictor + DB, queryable access, reproducible build, data card |
 
 The Phase 7 300k hybrid is the **v1 fallback** and stays frozen as a reference.
-Phase 8 selected `phase8_replacement_hybrid` as **v2** and produced
-`phase8_expansion_hybrid` as a stronger **v3 candidate**. Delta learning
-(Phase 9) and the database (Phase 10) get re-validated against whichever Phase 8
-base is chosen.
+Phase 8 selected replacement300k v2, expansion500k v3, then the fixed-data
+`phase8_routed_dualgps_hybrid` v4 accuracy path. Delta learning and UQ now get
+re-validated against routed v4 predictions.
 
 Why GW (not OLED-solid experiment): the target is *general* electronic structure,
 not solid-state OLED values — so GW gas-phase quasiparticle energies are the right
@@ -69,6 +66,7 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Select v2 production base | P8.7 | **done** | `phase8_replacement_hybrid` selected; see `results/phase8/v2_selection_decision.md` |
 | Expand from 300k to 500k with replay + broader in-domain top-up | P8.8 | **done** | `phase8_expansion_hybrid` v3 candidate; common eval beats replacement300k. See `results/phase8/full_expansion_500k_summary.md` |
 | Re-test head swaps (MoE, layer fusion) on 500k embeddings | P8.9 | **done** | Both still tie single head (MoE avg -0.00003, layer fusion avg -0.00001 eV). Head-swap route closed; bottleneck is the B3LYP label ceiling, not capacity. See `results/phase8/head_swap_500k_comparison.md` |
+| Fixed-data GPS architecture + routed dual-GPS | P8.12 | **done** | v4 route improves internal/common/OOD; PCQM ties; no measurable speed penalty. See `results/phase8/gps_arch_routed_decision.md` |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 
@@ -76,7 +74,7 @@ Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_expe
 | Task | ID | Notes |
 |------|----|-------|
 | Probe OE62 GW5000 ∩ training distribution | P9.1 | **done** — 3756 in-dist clean pairs (`results/phase9/oe62_indist.json`) |
-| Compute Δ labels | P9.2 | Δ = GW(OE62) − model-predicted B3LYP (baseline self-supplied); needs hybrid batch predict (P10.1) |
+| Recompute Δ labels for v4 | P9.2 | **next** — Δ = GW(OE62) − routed-v4 B3LYP; preserve v3 embeddings and add routed prediction/flag candidates |
 | Feature study | P9.3 | OEFP vs Morgan vs GNN-embedding (molecule- AND atom-level, cf. Mezei/vL atom-resolved) as Δ-model input |
 | Train Δ model | P9.4 | LightGBM / GP; scaffold split + Y-randomization; OOD molecules get Δ=const, never extrapolated. Compare external Δ vs **readout-only finetune to GW** (cf. d5sc09780k multifidelity) |
 | SHAP interpretability of Δ | P9.5 | Which features drive B3LYP→GW residual? Validate real physics + report asset (ref: Dr-Islam-Lab HOMO-LUMO) |

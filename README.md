@@ -3,8 +3,9 @@
 Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
 
 Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp)
-B3LYP/6-31G\* data (~85M molecules). The current default B3LYP base is the Phase 8
-expansion500k hybrid: GPS 2D + SchNet 3D with ETKDG conformers.
+B3LYP/6-31G\* data (~85M molecules). The current B3LYP accuracy predictor is the
+Phase 8 v4 routed dual-GPS model; its component/compatibility base is the
+expansion500k v3 GPS 2D + SchNet 3D hybrid with ETKDG conformers.
 
 ## Quick Start
 
@@ -12,11 +13,11 @@ expansion500k hybrid: GPS 2D + SchNet 3D with ETKDG conformers.
 # Install (editable mode)
 pip install -e .
 
-# Predict with the current recommended B3LYP hybrid
+# Predict with the current recommended B3LYP accuracy path
 python -c "
-from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
-models = load_hybrid()  # defaults to phase8_expansion_hybrid
-vi, preds = predict_smiles_batch_hybrid(
+from molgap.inference import load_routed_dual_gps_hybrid, predict_smiles_batch_routed_dual_gps
+models = load_routed_dual_gps_hybrid()
+vi, preds, routed = predict_smiles_batch_routed_dual_gps(
     ['c1ccc2c(c1)cc1ccc3ccccc3c1n2'], models=models
 )
 print(preds[0].tolist())
@@ -24,11 +25,11 @@ print(preds[0].tolist())
 
 # Batch prediction
 python -c "
-from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
-models = load_hybrid()
+from molgap.inference import load_routed_dual_gps_hybrid, predict_smiles_batch_routed_dual_gps
+models = load_routed_dual_gps_hybrid()
 smiles = ['c1ccccc1', 'c1ccc(cc1)N(c1ccccc1)c1ccccc1']
-valid_idx, preds = predict_smiles_batch_hybrid(smiles, models=models)
-print(valid_idx, preds)
+valid_idx, preds, routed = predict_smiles_batch_routed_dual_gps(smiles, models=models)
+print(valid_idx, preds, routed)
 "
 ```
 
@@ -81,10 +82,15 @@ pip install torch torch_geometric rdkit scikit-learn pandas numpy tqdm optuna li
 ### `molgap.inference`
 
 ```python
-# Current recommended B3LYP hybrid
+# v3 component/compatibility hybrid
 load_hybrid(key="phase8_expansion_hybrid")
 predict_smiles_batch_hybrid(smiles_list: list[str], models=...)
     -> (valid_idx, preds)
+
+# v4 accuracy predictor: v3 base + Gap<4 eV routed dual-GPS expert
+routed = load_routed_dual_gps_hybrid()
+predict_smiles_batch_routed_dual_gps(smiles_list, models=routed)
+    -> (valid_idx, preds, routed_mask)
 
 # Prior v2 base
 load_hybrid(key="phase8_replacement_hybrid")

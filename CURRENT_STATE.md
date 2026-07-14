@@ -5,6 +5,23 @@
 > next actions change. Do NOT duplicate experiment details here — link to docs/.
 
 ## 1. Recommended model
+**Phase 8 routed dual-GPS (v4)** — registry key
+`phase8_routed_dualgps_hybrid` — the current **B3LYP accuracy predictor**.
+It keeps the expansion500k v3 GPS+SchNet+Fusion path and, only when the base
+predicted Gap is `<4 eV`, runs a second 9-layer GPS and a dual-GPS FusionHead:
+
+- `models/phase8_gps_expansion_500k_depth9.pt`
+- `models/phase8_hybrid_fusion_expansion_500k_dualgps.pt`
+
+API: `load_routed_dual_gps_hybrid()` +
+`predict_smiles_batch_routed_dual_gps()`. The extra GPS is used for roughly
+one quarter of the common/internal molecules; SchNet runs once. On the fixed
+common eval, routed v4 improves v3 all avg/Gap MAE by `-0.00221/-0.00339` eV,
+OOD-1000 by `-0.00114/-0.00181`, and P8 hard by `-0.00330/-0.00500`. The
+independent 49,758-molecule internal test also improves avg/Gap by
+`-0.00204/-0.00267`; PCQM4Mv2 proxy Gap is statistically tied (`-0.00022`,
+95% CI crosses zero). See `results/phase8/gps_arch_routed_decision.md`.
+
 **Phase 8 expansion500k Hybrid (v3)** — registry key
 `phase8_expansion_hybrid`, now the **`load_hybrid()` default**, using:
 
@@ -24,9 +41,9 @@ as the frozen v1 fallback and historical control.
 
 v3 wins common eval over v2 (all avg/GAP MAE 0.12838/0.15609 -> 0.10560/0.12528;
 OOD-1000 0.12144/0.14478 -> 0.11373/0.13399; P8 hard 0.13548/0.16765 ->
-0.09729/0.11638). It is now the default loader. **This re-confirms that Phase
-9/10 Delta/UQ assets (built on v1's frozen 384-d embeddings) must be
-re-validated against v3 before any database build.**
+0.09729/0.11638). It remains the default component loader. Existing Phase 9/10
+Delta/UQ assets were revalidated against v3, but must now be re-run against v4
+routed B3LYP outputs before any database build.
 
 The ab3d 3D-encoder A/B (TensorNet vs ViSNet vs SchNet, 10k subset) is **closed**
 — TensorNet wins solo (Gap R² 0.906 vs 0.889) but **fusion-level differences
@@ -46,6 +63,11 @@ deployment-relevant accuracy, so production stays on SchNet. See
   0.10560/0.12528; OOD-1000 0.12144/0.14478 -> 0.11373/0.13399; P8 hard
   0.13548/0.16765 -> 0.09729/0.11638. See
   `results/phase8/full_expansion_500k_summary.md`.
+- Phase 8 fixed-data architecture optimization selected routed dual-GPS v4.
+  It significantly improves the held-out internal test and all common-eval
+  blocks without a significant PCQM proxy regression, while adding no measurable
+  wall-time in the 100-molecule benchmark. See
+  `results/phase8/gps_arch_routed_decision.md`.
 - Ranking flips by class: rigid OLED emitters → SchNet 3D wins; floppy donors → Hybrid.
 - B3LYP is the accuracy ceiling, not the model. Bias vs experiment: LUMO +0.85,
   Gap +0.74, HOMO +0.10 eV. Strong charge-transfer / narrow-gap (<2 eV) molecules
@@ -56,17 +78,19 @@ deployment-relevant accuracy, so production stays on SchNet. See
 A **property database of commercially available organic molecules** — a CSV of
 HOMO/LUMO/Gap at high (GW-level, **gas-phase**) accuracy. NOT limited to OLED — OLED
 is one slice of the commercial-molecule set. Built on two layers:
-1. the Phase 8 expansion500k hybrid model — the current fast B3LYP surrogate
-   (v3 default);
+1. the Phase 8 routed dual-GPS model — the current B3LYP accuracy predictor
+   (v4, built on the expansion500k v3 components);
 2. a **Δ-learning correction toward GW** (trained on OE62 GW5000) — lifts
    predictions past the B3LYP method ceiling.
 The database is the deliverable; the predictor is how we build it. Not built yet.
 
-## 4. Current focus — post-Phase 8 handoff
-**Still optimizing the model; NOT building the database yet.** Phase 8 selected
-the replacement300k hybrid as the **v2 B3LYP base**. The Phase 7 300k hybrid
-(`hybrid_fusion_optuna.pt`) is the **v1 fallback** and stays frozen as a
-reference. Phase 8 produced v2 by:
+## 4. Current focus — routed-v4 handoff
+**Still optimizing the model; NOT building the database yet.** Phase 8 progressed
+from replacement300k v2 to expansion500k v3 and has now selected routed dual-GPS
+v4 as the B3LYP accuracy predictor. Phase 7 v1 stays frozen as the historical
+fallback. The immediate focus is re-running Phase 9/10 against v4 outputs.
+
+The historical Phase 8 sequence began by:
 1. **expanding training coverage** (refetch to fill the P8.1 gaps — high-conjugation,
    narrow-gap, low S/Cl — NOT a same-source re-draw), and
 2. **A/B-testing a MoE head** on a **trainable** encoder.
@@ -121,7 +145,7 @@ probes; keep v3 single FusionHead as the B3LYP default. Records:
 `results/phase8/b3lyp_residual_calibrator_decision.md` and
 `results/phase8/weighted_fusion_probe_decision.md`.
 
-The only B3LYP-level weak-positive follow-up is **ETKDG conformer-ensemble
+The earlier B3LYP-level weak-positive follow-up was **ETKDG conformer-ensemble
 inference**. Averaging the v3 Hybrid over 8 seeded ETKDG+MMFF conformers on the
 same common eval improves avg/GAP MAE `0.10560/0.12528 -> 0.10444/0.12352`
 (delta `-0.00116/-0.00176` eV), with both OOD-1000 and P8 hard Gap moving in the
@@ -131,6 +155,18 @@ it costs ~6.8x wall time on a 100-molecule common-eval speed benchmark
 `predict_smiles_batch_hybrid_conformer_ensemble()`. Records:
 `results/phase8/v3_conformer_ensemble_k8_decision.md` and
 `results/phase8/v3_conformer_ensemble_speed.md`.
+
+A later fixed-data architecture round produced a stronger result: **routed
+dual-GPS v4**. A 9-layer GPS alone is tie-level internally but improves the P8
+hard representation; concatenating the original 7-layer and new 9-layer GPS
+embeddings makes a stronger FusionHead. Running that expert only when the base
+v3 predicted Gap is `<4 eV` gives significant internal/common/OOD gains while
+keeping the PCQM proxy tied. A 5-repeat speed benchmark measures `0.066` vs
+`0.064 s/valid mol` for v3 vs routed v4 (difference is timing noise), because
+SchNet/ETKDG dominate and the extra GPS runs for only ~23% of rows. This is now
+the selected B3LYP accuracy predictor. Records:
+`results/phase8/gps_arch_routed_decision.md` and
+`results/phase8/gps_arch_routed_speed.md`.
 
 Phase 9 has now been re-run against the v3 B3LYP base. v3 descriptor-enhanced
 LightGBM Δ improves the old v1 LightGBM baseline on scaffold-test OE62 GW:
@@ -205,31 +241,23 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
 ## 5. Next actions
-1. **DONE — expansion500k is now the default v3 base**: `load_hybrid()` defaults
-   to `phase8_expansion_hybrid`. Residual analysis shows v3 already improves the
-   hard bins versus v2, but the remaining Gap error is still tail-heavy (worst
-   10% of molecules hold 37.7% of total error) and concentrated in narrow-gap
-   (<3 eV) and MW>800/flexible molecules. This makes another B3LYP-only targeted
-   round possible but lower ROI than Phase 9 GW Delta-learning. See
-   `results/phase8/residual_analysis_expansion500k.md`. A follow-up tail-pool
-   fusion-head probe with 20,829 new tail rows is **negative for the primary
-   common eval** (v3 -> tail Gap MAE all 0.12528 -> 0.12661; OOD 0.13398 ->
-   0.13545; P8 hard 0.11638 -> 0.11758) despite a tiny PCQM proxy gain
-   (0.25306 -> 0.25227), so it does not justify a full encoder-level retrain
-   yet. See `results/phase8/tail_probe_30k_decision.md`.
-2. **DONE — Re-validate Phase 9/10 against v3**: v3 descriptor-enhanced LightGBM
-   Δ + `phase10_v3` UQ/OOD is the cheap calibrated baseline; v3 Encoder-LoRA now
-   has a 5-member calibrated UQ probe and is the higher-accuracy candidate. See
-   `results/phase9/v3_delta_decision.md` and
-   `results/phase10_lora_v3/lora_uq_decision.md`.
-3. **Next deployment step**: decide whether to switch the default
-   `predict_smiles_with_uq()` bundle from historical `phase10` to `phase10_v3`,
-   or keep v3 explicit until the database pipeline is assembled.
+1. **DONE — fixed-data architecture round**: routed dual-GPS v4 is selected as
+   the B3LYP accuracy predictor. Training data and SchNet are unchanged. The
+   original 7-layer v3 remains the `load_hybrid()` component/compatibility
+   default; use the routed API for v4 outputs. See
+   `results/phase8/gps_arch_routed_decision.md`.
+2. **Next — re-run Phase 9/10 against routed v4 outputs**: existing
+   descriptor-enhanced LightGBM Delta, Encoder-LoRA, and UQ bundles were built
+   against v3 outputs. Recompute Delta labels/prediction features and calibrate
+   UQ before any database build. Preserve the base v3 192+192 embeddings and
+   include routed B3LYP prediction/route flag as candidate Delta features.
+3. **Then** benchmark the v4-based LightGBM and LoRA GW paths and choose the
+   database-scale/default tier.
 4. **Head-swap, SchNet-retrain, and B3LYP post-hoc/fusion training routes are
    closed**: MoE + layer fusion both tie on 500k; SchNet 30ep continuation failed
    (overfit, val 0.1180->0.1239); residual calibration/output stacking and
    weighted FusionHead fine-tuning give <0.001 eV external gain. Do not re-run.
-   The only weak-positive B3LYP option is k=8 ETKDG conformer-ensemble inference,
+   The prior independent inference option is k=8 ETKDG conformer ensembling,
    which remains opt-in because the measured slowdown is ~6.8x. See
    `results/phase8/head_swap_500k_comparison.md`,
    `results/phase8/b3lyp_residual_calibrator_decision.md`,

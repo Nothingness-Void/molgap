@@ -604,6 +604,57 @@ candidate batches or uncertainty-sensitive molecules, not for the first-pass
 database-scale default. Speed record:
 `results/phase8/v3_conformer_ensemble_speed.md`.
 
+## P8.12 Fixed-data GPS architecture and routed dual-GPS (done, 2026-07-11)
+
+This round kept the expansion500k training rows, labels, split, ETKDG graph
+caches, SchNet checkpoint, and standard FusionHead family fixed. It tested
+whether the dominant 2D leg could provide more B3LYP accuracy without another
+data fetch.
+
+Candidates:
+
+- depth expansion: warm-start the v3 GPS from 7 to 9 GPSConv layers;
+- mean+max pooling: identity-initialized max-pooled signal beside mean pooling;
+- dual-GPS fusion: concatenate the original 7-layer and new 9-layer embeddings,
+  then fuse once with the unchanged SchNet embedding;
+- routed dual-GPS: use dual-GPS only when the base v3 predicted Gap is `<4 eV`.
+
+Common-eval Hybrid MAE:
+
+| architecture | all avg | all Gap | OOD avg | OOD Gap | P8 hard avg | P8 hard Gap |
+|---|---:|---:|---:|---:|---:|---:|
+| v3 7-layer base | 0.10560 | 0.12528 | 0.11373 | 0.13399 | 0.09729 | 0.11639 |
+| 9-layer GPS | 0.10226 | 0.12025 | 0.11433 | 0.13455 | 0.08993 | 0.10564 |
+| mean+max GPS | 0.10358 | 0.12243 | 0.11444 | 0.13447 | 0.09248 | 0.11013 |
+| dual-GPS full | **0.10220** | **0.11991** | 0.11395 | 0.13343 | **0.09019** | **0.10610** |
+| routed dual-GPS | 0.10338 | 0.12190 | **0.11259** | **0.13218** | 0.09398 | 0.11139 |
+
+The full dual model is strongest on the targeted common set but significantly
+worsens the leakage-filtered PCQM proxy (`0.25306 -> 0.25773`, delta +0.00467
+eV). It is therefore not a safe global replacement. The fixed `<4 eV` route
+retains the narrow-gap gain and removes that broad-distribution regression:
+
+- independent 49,758-molecule internal test avg/Gap delta:
+  `-0.00204/-0.00267` eV;
+- common all avg/Gap delta: `-0.00221/-0.00339` eV;
+- OOD-1000 avg/Gap delta: `-0.00114/-0.00181` eV;
+- P8 hard avg/Gap delta: `-0.00330/-0.00500` eV;
+- PCQM proxy Gap delta: `-0.00022` eV, 95% CI crosses zero (tie).
+
+All internal/common/OOD improvements have paired-bootstrap 95% confidence
+intervals below zero. The route activates for roughly one quarter of the
+internal/common rows and 12% of PCQM. A 100-molecule, five-repeat benchmark finds
+no measurable wall-time penalty (`0.066` vs `0.064 s/valid mol`; timing-noise
+equivalent), because ETKDG/SchNet dominate and SchNet is reused.
+
+Decision: **positive**. Promote routed dual-GPS as the v4 B3LYP accuracy
+predictor. Keep `phase8_expansion_hybrid` as the single-hybrid component and
+compatibility loader. API: `load_routed_dual_gps_hybrid()` and
+`predict_smiles_batch_routed_dual_gps()`. Re-run Phase 9/10 against v4 routed
+predictions before database construction. Records:
+`results/phase8/gps_arch_routed_decision.md` and
+`results/phase8/gps_arch_routed_speed.md`.
+
 ### Original selection rule
 Use one fixed split per candidate so the comparisons isolate each lever:
 
