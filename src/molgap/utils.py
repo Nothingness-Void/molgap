@@ -90,6 +90,17 @@ def murcko_scaffold_smiles(smiles: object) -> str | None:
         return None
 
 
+def scaffold_split_key(smiles: object) -> str:
+    """Return a scaffold grouping key without collapsing all acyclic molecules."""
+    scaffold = murcko_scaffold_smiles(smiles)
+    if scaffold is None:
+        return "INVALID"
+    if scaffold == "NO_SCAFFOLD":
+        canonical = canonicalize_smiles(smiles)
+        return f"ACYCLIC::{canonical}" if canonical else "INVALID"
+    return scaffold
+
+
 def calc_morgan_bits(mol, radius: int = 2, n_bits: int = 2048) -> np.ndarray:
     """Return Morgan fingerprint bits as a uint8 numpy array."""
     require_rdkit()

@@ -1,0 +1,475 @@
+{
+  "seed": 44,
+  "win_delta_eV": 0.002,
+  "selection": "R0-R3 and policy thresholds selected on weighted scaffold validation only",
+  "feature_ablation": {
+    "R0": {
+      "n_features": 1,
+      "features": [
+        "base_gap"
+      ],
+      "ood_threshold": 2.016700081281927,
+      "validation_policies": {
+        "full_replacement": {
+          "strategy": "full_replacement",
+          "alpha": 0.0,
+          "keep_utility": -0.0010233984048633792,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010233984048633792,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 153,
+          "route_fraction": 0.018429294145988918,
+          "weighted_gap_mae": 0.14760235728534557,
+          "weighted_gap_delta_vs_fixed": -4.933416754032693e-06
+        },
+        "suppress_only": {
+          "strategy": "suppress_only",
+          "alpha": 1.0,
+          "keep_utility": -0.016314455727033078,
+          "keep_probability": 0.45,
+          "add_utility": -0.016314455727033078,
+          "add_probability": 0.45,
+          "max_route_fraction": 0.25,
+          "route_n": 507,
+          "route_fraction": 0.061069621777884844,
+          "weighted_gap_mae": 0.14748725546727542,
+          "weighted_gap_delta_vs_fixed": -0.00012003523482417844
+        },
+        "add_only": {
+          "strategy": "add_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0010233984048633792,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010233984048633792,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 1077,
+          "route_fraction": 0.1297277764394122,
+          "weighted_gap_mae": 0.1476072907020996,
+          "weighted_gap_delta_vs_fixed": 0.0
+        },
+        "bidirectional": {
+          "strategy": "bidirectional",
+          "alpha": 1.0,
+          "keep_utility": -0.016314455727033078,
+          "keep_probability": 0.45,
+          "add_utility": -0.016278139742084887,
+          "add_probability": 0.55,
+          "max_route_fraction": 0.25,
+          "route_n": 507,
+          "route_fraction": 0.061069621777884844,
+          "weighted_gap_mae": 0.14748725546727542,
+          "weighted_gap_delta_vs_fixed": -0.00012003523482417844
+        }
+      }
+    },
+    "R1": {
+      "n_features": 7,
+      "features": [
+        "base_homo",
+        "base_lumo",
+        "base_gap",
+        "gap_consistency_signed",
+        "gap_consistency_abs",
+        "fixed_route_flag",
+        "fixed_route_margin"
+      ],
+      "ood_threshold": 3.429830086056569,
+      "validation_policies": {
+        "full_replacement": {
+          "strategy": "full_replacement",
+          "alpha": 0.0,
+          "keep_utility": -0.0009411680083312302,
+          "keep_probability": 0.5,
+          "add_utility": -0.0009411680083312302,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 326,
+          "route_fraction": 0.03926764635027704,
+          "weighted_gap_mae": 0.14745785361768338,
+          "weighted_gap_delta_vs_fixed": -0.00014943708441622627
+        },
+        "suppress_only": {
+          "strategy": "suppress_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0006324843424394494,
+          "keep_probability": 0.45,
+          "add_utility": -0.0006324843424394494,
+          "add_probability": 0.45,
+          "max_route_fraction": 0.25,
+          "route_n": 290,
+          "route_fraction": 0.03493134184533847,
+          "weighted_gap_mae": 0.14752900115696535,
+          "weighted_gap_delta_vs_fixed": -7.828954513425246e-05
+        },
+        "add_only": {
+          "strategy": "add_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0010684363577009946,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010684363577009946,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 1153,
+          "route_fraction": 0.13888219706094918,
+          "weighted_gap_mae": 0.14745629062446358,
+          "weighted_gap_delta_vs_fixed": -0.00015100007763602097
+        },
+        "bidirectional": {
+          "strategy": "bidirectional",
+          "alpha": 0.0,
+          "keep_utility": -0.0006324843424394494,
+          "keep_probability": 0.45,
+          "add_utility": -0.0009411680083312302,
+          "add_probability": 0.55,
+          "max_route_fraction": 0.25,
+          "route_n": 342,
+          "route_fraction": 0.041194892796916405,
+          "weighted_gap_mae": 0.147398158260106,
+          "weighted_gap_delta_vs_fixed": -0.00020913244199360914
+        }
+      }
+    },
+    "R2": {
+      "n_features": 29,
+      "features": [
+        "base_homo",
+        "base_lumo",
+        "base_gap",
+        "gap_consistency_signed",
+        "gap_consistency_abs",
+        "fixed_route_flag",
+        "fixed_route_margin",
+        "mw",
+        "heavy_atoms",
+        "ring_count",
+        "aromatic_rings",
+        "rotatable_bonds",
+        "tpsa",
+        "logp",
+        "fraction_csp3",
+        "hbd",
+        "hba",
+        "formal_charge",
+        "conjugated_bonds",
+        "aromatic_atom_fraction",
+        "n_N",
+        "n_O",
+        "n_S",
+        "n_F",
+        "n_Cl",
+        "n_Br",
+        "n_B",
+        "n_P",
+        "n_Si"
+      ],
+      "ood_threshold": 6.277600907178832,
+      "validation_policies": {
+        "full_replacement": {
+          "strategy": "full_replacement",
+          "alpha": 0.0,
+          "keep_utility": -0.0007390132568067684,
+          "keep_probability": 0.5,
+          "add_utility": -0.0007390132568067684,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 771,
+          "route_fraction": 0.09286918814743435,
+          "weighted_gap_mae": 0.1472582953890961,
+          "weighted_gap_delta_vs_fixed": -0.00034899531300350284
+        },
+        "suppress_only": {
+          "strategy": "suppress_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0011901293515864785,
+          "keep_probability": 0.45,
+          "add_utility": -0.0011901293515864785,
+          "add_probability": 0.45,
+          "max_route_fraction": 0.25,
+          "route_n": 665,
+          "route_fraction": 0.08010118043844856,
+          "weighted_gap_mae": 0.14756505789117866,
+          "weighted_gap_delta_vs_fixed": -4.223281092094466e-05
+        },
+        "add_only": {
+          "strategy": "add_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0010205845300720225,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010205845300720225,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 1802,
+          "route_fraction": 0.21705613105275837,
+          "weighted_gap_mae": 0.14719772293462915,
+          "weighted_gap_delta_vs_fixed": -0.0004095677674704479
+        },
+        "bidirectional": {
+          "strategy": "bidirectional",
+          "alpha": 0.0,
+          "keep_utility": -0.0011901293515864785,
+          "keep_probability": 0.45,
+          "add_utility": -0.0009272152896609239,
+          "add_probability": 0.55,
+          "max_route_fraction": 0.25,
+          "route_n": 764,
+          "route_fraction": 0.09202601782702963,
+          "weighted_gap_mae": 0.1474713768052009,
+          "weighted_gap_delta_vs_fixed": -0.00013591389689870947
+        }
+      }
+    },
+    "R3": {
+      "n_features": 38,
+      "features": [
+        "base_homo",
+        "base_lumo",
+        "base_gap",
+        "gap_consistency_signed",
+        "gap_consistency_abs",
+        "fixed_route_flag",
+        "fixed_route_margin",
+        "mw",
+        "heavy_atoms",
+        "ring_count",
+        "aromatic_rings",
+        "rotatable_bonds",
+        "tpsa",
+        "logp",
+        "fraction_csp3",
+        "hbd",
+        "hba",
+        "formal_charge",
+        "conjugated_bonds",
+        "aromatic_atom_fraction",
+        "n_N",
+        "n_O",
+        "n_S",
+        "n_F",
+        "n_Cl",
+        "n_Br",
+        "n_B",
+        "n_P",
+        "n_Si",
+        "gps_homo",
+        "schnet_homo",
+        "abs_gps_schnet_homo",
+        "gps_lumo",
+        "schnet_lumo",
+        "abs_gps_schnet_lumo",
+        "gps_gap",
+        "schnet_gap",
+        "abs_gps_schnet_gap"
+      ],
+      "ood_threshold": 7.150861781632581,
+      "validation_policies": {
+        "full_replacement": {
+          "strategy": "full_replacement",
+          "alpha": 0.0,
+          "keep_utility": -0.0010283232078442386,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010283232078442386,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 676,
+          "route_fraction": 0.08142616237051313,
+          "weighted_gap_mae": 0.14723332596515917,
+          "weighted_gap_delta_vs_fixed": -0.00037396473694042975
+        },
+        "suppress_only": {
+          "strategy": "suppress_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0010283232078442386,
+          "keep_probability": 0.45,
+          "add_utility": -0.0010283232078442386,
+          "add_probability": 0.45,
+          "max_route_fraction": 0.25,
+          "route_n": 831,
+          "route_fraction": 0.10009636232233197,
+          "weighted_gap_mae": 0.14759681751684942,
+          "weighted_gap_delta_vs_fixed": -1.0473185250187145e-05
+        },
+        "add_only": {
+          "strategy": "add_only",
+          "alpha": 0.0,
+          "keep_utility": -0.0010283232078442386,
+          "keep_probability": 0.5,
+          "add_utility": -0.0010283232078442386,
+          "add_probability": 0.5,
+          "max_route_fraction": 0.25,
+          "route_n": 1478,
+          "route_fraction": 0.17802939050831126,
+          "weighted_gap_mae": 0.14718349421665752,
+          "weighted_gap_delta_vs_fixed": -0.0004237964854420795
+        },
+        "bidirectional": {
+          "strategy": "bidirectional",
+          "alpha": 0.0,
+          "keep_utility": -0.0010283232078442386,
+          "keep_probability": 0.45,
+          "add_utility": -0.0009783727987440897,
+          "add_probability": 0.55,
+          "max_route_fraction": 0.25,
+          "route_n": 974,
+          "route_fraction": 0.11732112743917128,
+          "weighted_gap_mae": 0.1473730037440869,
+          "weighted_gap_delta_vs_fixed": -0.00023428695801269717
+        }
+      }
+    }
+  },
+  "selected_feature_set": "R1",
+  "selected_features": [
+    "base_homo",
+    "base_lumo",
+    "base_gap",
+    "gap_consistency_signed",
+    "gap_consistency_abs",
+    "fixed_route_flag",
+    "fixed_route_margin"
+  ],
+  "validation_gap_threshold_baseline": {
+    "threshold_eV": 2.9000000000000012,
+    "route_n": 62,
+    "route_fraction": 0.0074680799807275355,
+    "weighted_gap_mae": 0.14753577098652948
+  },
+  "dev_test": {
+    "full_replacement": {
+      "n": 4401,
+      "gap_mae": 0.1515529283802877,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": 0.00016263796797559612,
+      "bootstrap_gap_vs_fixed": {
+        "delta": 0.00016263796797559612,
+        "ci95": [
+          -0.0003153957240232568,
+          0.0006741874625943978
+        ],
+        "probability_better": 0.2548,
+        "n_bootstrap": 10000,
+        "seed": 44
+      },
+      "route_n": 153,
+      "route_fraction": 0.034764826175869123,
+      "expert_win_precision": 0.5359477124183006,
+      "expert_meaningful_win_precision": 0.5294117647058824,
+      "downside_p95": 0.1275684833526613,
+      "downside_p99": 0.29523436546325665
+    },
+    "suppress_only": {
+      "n": 4401,
+      "gap_mae": 0.15166286312147267,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": 0.00027257270916059413,
+      "bootstrap_gap_vs_fixed": {
+        "delta": 0.00027257270916059413,
+        "ci95": [
+          -0.00017309505135093363,
+          0.0007365668383249548
+        ],
+        "probability_better": 0.1138,
+        "n_bootstrap": 10000,
+        "seed": 45
+      },
+      "route_n": 146,
+      "route_fraction": 0.03317427857305158,
+      "expert_win_precision": 0.5273972602739726,
+      "expert_meaningful_win_precision": 0.5136986301369864,
+      "downside_p95": 0.1400892734527588,
+      "downside_p99": 0.2965964794158938
+    },
+    "add_only": {
+      "n": 4401,
+      "gap_mae": 0.15130287219727026,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": -8.741821504183416e-05,
+      "bootstrap_gap_vs_fixed": {
+        "delta": -8.741821504183416e-05,
+        "ci95": [
+          -0.00023518986049703275,
+          5.458797902437921e-05
+        ],
+        "probability_better": 0.8805,
+        "n_bootstrap": 10000,
+        "seed": 46
+      },
+      "route_n": 614,
+      "route_fraction": 0.13951374687571005,
+      "expert_win_precision": 0.5130293159609121,
+      "expert_meaningful_win_precision": 0.49185667752442996,
+      "downside_p95": 0.08198603391647341,
+      "downside_p99": 0.1607877004146576
+    },
+    "bidirectional": {
+      "n": 4401,
+      "gap_mae": 0.15160397153055527,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": 0.0002136811182431796,
+      "bootstrap_gap_vs_fixed": {
+        "delta": 0.0002136811182431796,
+        "ci95": [
+          -0.00025473023169457135,
+          0.0006800989180488127
+        ],
+        "probability_better": 0.1916,
+        "n_bootstrap": 10000,
+        "seed": 47
+      },
+      "route_n": 168,
+      "route_fraction": 0.038173142467621,
+      "expert_win_precision": 0.5297619047619048,
+      "expert_meaningful_win_precision": 0.5178571428571429,
+      "downside_p95": 0.12377376556396491,
+      "downside_p99": 0.2923155498504641
+    },
+    "optimized_gap_threshold": {
+      "threshold_eV": 2.9000000000000012,
+      "route_n": 24,
+      "route_fraction": 0.0054533060668029995,
+      "weighted_gap_mae": 0.14753577098652948,
+      "n": 4401,
+      "gap_mae": 0.1515190318273136,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": 0.0001287414150015068,
+      "bootstrap_gap_vs_fixed": {
+        "delta": 0.0001287414150015068,
+        "ci95": [
+          -0.00048445947141437413,
+          0.0007349110303369373
+        ],
+        "probability_better": 0.3408,
+        "n_bootstrap": 10000,
+        "seed": 54
+      },
+      "expert_win_precision": 0.4166666666666667,
+      "expert_meaningful_win_precision": 0.4166666666666667,
+      "downside_p95": 0.2671365022659299,
+      "downside_p99": 0.30087740898132326
+    },
+    "fixed_v4": {
+      "n": 4401,
+      "gap_mae": 0.15139029041231208,
+      "fixed_gap_mae": 0.15139029041231208,
+      "gap_delta_vs_fixed": 0.0,
+      "bootstrap_gap_vs_fixed": {
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 10000,
+        "seed": 55
+      },
+      "route_n": 578,
+      "route_fraction": 0.13133378777550556,
+      "expert_win_precision": 0.5103806228373703,
+      "expert_meaningful_win_precision": 0.48788927335640137,
+      "downside_p95": 0.08277052640914913,
+      "downside_p99": 0.17028062105178907
+    }
+  },
+  "sealed_metrics_opened": false
+}

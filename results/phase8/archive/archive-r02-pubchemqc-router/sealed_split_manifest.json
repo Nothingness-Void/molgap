@@ -1,0 +1,31 @@
+{
+  "pool_n": 200000,
+  "prior_probe_n": 20000,
+  "scaffold_rule": "Bemis-Murcko; acyclic rows use ACYCLIC::<canonical_smiles>",
+  "selection_uses_b3lyp_labels": false,
+  "counts": {
+    "probe_scaffolds": 10855,
+    "eligible_after_probe_scaffold_exclusion": 101998,
+    "sealed_random": 20000,
+    "sealed_hard": 10000,
+    "reserved_sealed_scaffolds": 24948,
+    "development_candidates_after_sealed_exclusion": 124160,
+    "development_expansion": 30000
+  },
+  "hard_sources": {
+    "large_aromatic": 2000,
+    "flexible": 2000,
+    "high_mw": 2000,
+    "property_extreme": 2000,
+    "rare_elements": 2000
+  },
+  "seed": 42,
+  "artifacts_sha256": {
+    "sealed_random_inputs.parquet": "fc8ab51f67a8b40b563fbcbd2037dff16b302ba5a6416a23fc19342768bc4441",
+    "sealed_random_labels.parquet": "e9866646b812c84b971f03fbc8d709d9a39ab5d3d4cbe46473fa1b7a05c1d1d3",
+    "sealed_hard_inputs.parquet": "12f9920745ce1e53ebd7d1e3a043075e4357cb3b08291994537907757fd292fe",
+    "sealed_hard_labels.parquet": "48dd60a137381bfc8ab8e03f413196849887e5397b35bc930685e1bf8eba233b",
+    "development_expansion_30k.parquet": "ab55cad38e346939caefb185feac427fe7540e8669da3655e7e8bba3cba2b5c0"
+  },
+  "sealed_policy": "Do not run or inspect sealed metrics until Router policy is locked."
+}

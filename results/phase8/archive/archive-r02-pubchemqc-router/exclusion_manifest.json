@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "path": "data\\raw\\phase7_chonsfcl_mw200_1000_300k.csv",
+      "rows": 300000,
+      "sha256": "836a9e41f68175a42ff1859c419526a48d4902f3edb8376dda6c384dfb10b85d"
+    },
+    {
+      "path": "data\\raw\\phase8_replacement_300k.csv",
+      "rows": 300000,
+      "sha256": "467b77a8aadd1933aadb3a311b833516342cfa56d33ed13891b04d7968368153"
+    },
+    {
+      "path": "data\\raw\\phase8_expansion_500k.csv",
+      "rows": 500000,
+      "sha256": "c10946260e293cf91e2d61caa575c404f95f9647aaeafc4fc7750b51b12ca999"
+    },
+    {
+      "path": "results\\phase8\\gps_arch_dualgps_common_eval_predictions.csv",
+      "rows": 1977,
+      "sha256": "72c542a8c5ccebd94ea03e1512e787c7a5ce35055c72780d6fb2ec1705673ab6"
+    },
+    {
+      "path": "results\\phase7\\ood_1000\\ood_molecules_1000.csv",
+      "rows": 1000,
+      "sha256": "51f244ccb1ef3b342a6f7de9fa4964fe79219db6550119d29c333259a5d8de03"
+    },
+    {
+      "path": "results\\phase8\\gps_arch_dualgps_pcqm_proxy_predictions.csv",
+      "rows": 2988,
+      "sha256": "3f88466c09bffd018ff6145fbe6179e6e220191627d2f5dd62628e96c4aa92b6"
+    }
+  ],
+  "counts": {
+    "cids": 538348,
+    "inchikeys": 541178,
+    "canonical_smiles": 541331,
+    "invalid_smiles_rows": 0
+  },
+  "output_sha256": {
+    "excluded_cids.parquet": "b7e86bb3c3577468a019ea1493b0ff3360a9d0733a15ed72ba70139fdf694074",
+    "excluded_inchikeys.parquet": "037f1a2b23f077570f129d3adcdead52ad70375e6a13b3fbc504b65456347a7b",
+    "excluded_smiles.parquet": "c5a0c6e982959673f03c0fa9c42165ac83dc3e475c7967cfbb286dd8430ddb3f"
+  }
+}

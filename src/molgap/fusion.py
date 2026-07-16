@@ -41,15 +41,17 @@ class FusionHead(nn.Module):
             nn.Linear(hidden // 2, n_targets),
         )
 
-    def forward(self, h_2d, h_3d):
+    def encode(self, h_2d, h_3d):
+        """Return the fused hidden representation before the regression head."""
         h_2d = self.proj_2d(h_2d)
         h_3d = self.proj_3d(h_3d)
         if self.fusion_type == "gate":
             g = self.gate(torch.cat([h_2d, h_3d], dim=-1))
-            h = g * h_2d + (1 - g) * h_3d
-        else:
-            h = torch.cat([h_2d, h_3d], dim=-1)
-        return self.head(h)
+            return g * h_2d + (1 - g) * h_3d
+        return torch.cat([h_2d, h_3d], dim=-1)
+
+    def forward(self, h_2d, h_3d):
+        return self.head(self.encode(h_2d, h_3d))
 
 
 class MoEFusionHead(nn.Module):

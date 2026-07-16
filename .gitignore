@@ -61,5 +61,13 @@ Thumbs.db
 data/raw/*.json
 data/raw/*.zip
 data/raw/pcqm4m-v2/
+data/raw/archive-r02-router-candidates/
+
+# Archived experiment payloads stay local; commit decisions and summary metrics only.
+results/phase8/archive/**/*.parquet
+results/phase8/archive/**/*.pkl
+results/phase8/archive/**/*.log
+results/phase8/archive/**/*.txt
+results/phase8/dual2d_static_candidate/*.parquet
 results/**/*.npz
 results/**/*.npy

@@ -1,0 +1,139 @@
+{
+  "win_delta_eV": 0.001,
+  "datasets": {
+    "common_all": {
+      "n": 1975,
+      "actual_mean_gain": 0.004310632694973151,
+      "predicted_mean_gain": 0.006991551047858145,
+      "actual_win_rate": 0.5240506329113924,
+      "predicted_mean_probability": 0.5813273924800418,
+      "gain_spearman": 0.09663742294331844,
+      "win_roc_auc": 0.5379756398396547,
+      "win_average_precision": 0.5537987453712948,
+      "learned_route_rate": 0.27341772151898736,
+      "learned_precision": 0.5666666666666667,
+      "fixed_route_rate": 0.27341772151898736,
+      "fixed_precision": 0.5703703703703704
+    },
+    "common_ood1000": {
+      "n": 998,
+      "actual_mean_gain": 0.0006160948087450558,
+      "predicted_mean_gain": 0.006668556236477235,
+      "actual_win_rate": 0.4849699398797595,
+      "predicted_mean_probability": 0.5790532609796271,
+      "gain_spearman": 0.01844216527986137,
+      "win_roc_auc": 0.5079308293404509,
+      "win_average_precision": 0.4974855156069882,
+      "learned_route_rate": 0.2905811623246493,
+      "learned_precision": 0.503448275862069,
+      "fixed_route_rate": 0.19138276553106212,
+      "fixed_precision": 0.5759162303664922
+    },
+    "common_p8_targeted_hard": {
+      "n": 977,
+      "actual_mean_gain": 0.008084582347435422,
+      "predicted_mean_gain": 0.007321488429391561,
+      "actual_win_rate": 0.563971340839304,
+      "predicted_mean_probability": 0.5836504050055425,
+      "gain_spearman": 0.16221713634742432,
+      "win_roc_auc": 0.5707250155500456,
+      "win_average_precision": 0.6147702869571767,
+      "learned_route_rate": 0.25588536335721596,
+      "learned_precision": 0.64,
+      "fixed_route_rate": 0.3572159672466735,
+      "fixed_precision": 0.5673352435530086
+    },
+    "pcqm_proxy": {
+      "n": 2988,
+      "actual_mean_gain": -0.00468595510924218,
+      "predicted_mean_gain": 0.008149920213947405,
+      "actual_win_rate": 0.44511378848728245,
+      "predicted_mean_probability": 0.585471315901264,
+      "gain_spearman": -0.022838645305667885,
+      "win_roc_auc": 0.5271672093381826,
+      "win_average_precision": 0.45716261069058456,
+      "learned_route_rate": 0.1214859437751004,
+      "learned_precision": 0.4380165289256198,
+      "fixed_route_rate": 0.1214859437751004,
+      "fixed_precision": 0.4738292011019284
+    }
+  },
+  "top_gain_features": [
+    {
+      "feature": "abs_gps_schnet_lumo",
+      "gain_importance": 9.135106198955327,
+      "split_importance": 78
+    },
+    {
+      "feature": "abs_gps_schnet_gap",
+      "gain_importance": 6.807791628874838,
+      "split_importance": 93
+    },
+    {
+      "feature": "base_homo",
+      "gain_importance": 3.2128499783575535,
+      "split_importance": 45
+    },
+    {
+      "feature": "gps_homo",
+      "gain_importance": 1.63923364225775,
+      "split_importance": 43
+    },
+    {
+      "feature": "logp",
+      "gain_importance": 1.2940135598182678,
+      "split_importance": 39
+    },
+    {
+      "feature": "abs_gps_schnet_homo",
+      "gain_importance": 1.2163500813767314,
+      "split_importance": 49
+    },
+    {
+      "feature": "conjugated_bonds",
+      "gain_importance": 1.1397729720920324,
+      "split_importance": 49
+    },
+    {
+      "feature": "base_gap",
+      "gain_importance": 0.9704176164232194,
+      "split_importance": 22
+    },
+    {
+      "feature": "gap_consistency_abs",
+      "gain_importance": 0.9622445600107312,
+      "split_importance": 63
+    },
+    {
+      "feature": "fraction_csp3",
+      "gain_importance": 0.827873551286757,
+      "split_importance": 49
+    },
+    {
+      "feature": "gap_consistency_signed",
+      "gain_importance": 0.8229104410856962,
+      "split_importance": 36
+    },
+    {
+      "feature": "tpsa",
+      "gain_importance": 0.7113526682369411,
+      "split_importance": 54
+    },
+    {
+      "feature": "gps_gap",
+      "gain_importance": 0.6988882850855589,
+      "split_importance": 30
+    },
+    {
+      "feature": "schnet_lumo",
+      "gain_importance": 0.6320960381999612,
+      "split_importance": 17
+    },
+    {
+      "feature": "schnet_gap",
+      "gain_importance": 0.6184656289406121,
+      "split_importance": 38
+    }
+  ],
+  "conclusion": "The internal router ranking does not transfer to PCQM: predicted gain remains positive while actual expert gain and route precision fall. This is domain-prior shift, so external thresholds must not be tuned post hoc."
+}

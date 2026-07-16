@@ -1,0 +1,14 @@
+{
+  "fit_rows": 37176,
+  "fit_split": "train only",
+  "reference": "aligned expansion500k GPS/SchNet embeddings",
+  "projector": {
+    "n_components": 16,
+    "n_clusters": 64,
+    "n_reference_fitted": 100000,
+    "distance_p95_2d": 1.8572527170181274,
+    "distance_p95_3d": 13.46891975402832,
+    "random_state": 42
+  },
+  "dataset_sha256": "613c4b56f3ac50fd5e44c532bf66f5bce63916cd0b06fbe40d3a3c370c06f8c7"
+}

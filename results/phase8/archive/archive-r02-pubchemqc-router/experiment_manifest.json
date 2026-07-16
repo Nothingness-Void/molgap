@@ -1,0 +1,67 @@
+{
+  "experiment": "archive-r02 PubChemQC Learned Router",
+  "frozen_at_utc": "2026-07-14T05:42:34.992517+00:00",
+  "git_head_before_archive_r02": "4589c291fe2eb9015b86965705d360df860d31a3",
+  "git_worktree_dirty": true,
+  "checkpoints_sha256": {
+    "models\\phase8_gps_expansion_500k.pt": "082764646a6ec846564a831b7d5c6d7dbbe3c5a0262d6066fc83305f481e2b80",
+    "models\\phase8_schnet_expansion_500k.pt": "f452c7b314ceae32ccccaa9f96ab31ca0da6f4ab5680ea98a10b2851c475b74b",
+    "models\\phase8_hybrid_fusion_expansion_500k.pt": "02eb38044ac25a68465f78657a416b1af86a5e0e38a2f310e099de423989aba2",
+    "models\\phase8_gps_expansion_500k_depth9.pt": "7f46f0d783a2da50f32c18874195ae9f4753e27d4b6c98dc3c9454758a88743b",
+    "models\\phase8_hybrid_fusion_expansion_500k_dualgps.pt": "3e418b0acc4742a349bc8c56071d47680164bf76eb37073d72162e889e99a47d"
+  },
+  "dataset": {
+    "repo": "molssiai-hub/pubchemqc-b3lyp",
+    "revision": "15c15ae6a80c7ed84ee45e966390564e71e2e0bf",
+    "last_modified": "2025-07-22T13:58:40.000Z",
+    "config": "b3lyp_pm6",
+    "smiles_field": "pubchem-isomeric-smiles",
+    "label_fields": [
+      "energy-alpha-homo",
+      "energy-alpha-lumo",
+      "energy-alpha-gap",
+      "energy-beta-homo",
+      "energy-beta-lumo",
+      "energy-beta-gap"
+    ]
+  },
+  "filter": {
+    "allowed_elements": [
+      "C",
+      "Cl",
+      "F",
+      "H",
+      "N",
+      "O",
+      "S"
+    ],
+    "min_mw": 200.0,
+    "max_mw": 1000.0,
+    "state": "S0",
+    "charge": 0,
+    "multiplicity": 1,
+    "alpha_beta_tolerance_ev": 1e-06,
+    "gap_consistency_tolerance_ev": 1e-05
+  },
+  "identity": {
+    "canonicalization": "RDKit canonical isomeric SMILES; no salt stripping",
+    "rdkit_version": "2026.03.2",
+    "dedup_keys": [
+      "cid",
+      "canonical_smiles",
+      "inchikey"
+    ]
+  },
+  "geometry": {
+    "inference": "ETKDGv3 + MMFF, max 200 iterations",
+    "pubchem_pm6_coordinates_used": false,
+    "random_seed": 42
+  },
+  "legacy_filter_note": "P7/P8 CSV fetches enforced CHONSFCl, MW 200-1000, positive alpha Gap, but did not retain state/charge/multiplicity. archive-r02 adds strict S0/neutral/singlet and alpha-beta consistency checks for Router-label quality.",
+  "exclusion_manifest_sha256": "a5a28cfc203bcc93efd55ff0d1d0a9408c9df5564d521e605074ceda24a24cae",
+  "exclusion_outputs_sha256": {
+    "excluded_cids.parquet": "b7e86bb3c3577468a019ea1493b0ff3360a9d0733a15ed72ba70139fdf694074",
+    "excluded_inchikeys.parquet": "037f1a2b23f077570f129d3adcdead52ad70375e6a13b3fbc504b65456347a7b",
+    "excluded_smiles.parquet": "c5a0c6e982959673f03c0fa9c42165ac83dc3e475c7967cfbb286dd8430ddb3f"
+  }
+}

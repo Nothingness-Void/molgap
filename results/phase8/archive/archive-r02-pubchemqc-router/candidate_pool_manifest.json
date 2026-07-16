@@ -1,0 +1,32 @@
+{
+  "config": "b3lyp_pm6",
+  "file_order": "seeded_shuffle",
+  "seed": 42,
+  "candidate_n": 200000,
+  "unique_cids": 200000,
+  "unique_canonical_smiles": 200000,
+  "unique_inchikeys": 200000,
+  "scanned_raw_records": 334037,
+  "downloaded_bytes": 8940000000,
+  "completed_windows": 298,
+  "rejected": {
+    "excluded": 72639,
+    "mw": 19628,
+    "elements": 39821,
+    "duplicate": 2428
+  },
+  "parts": {
+    "part-00000.parquet": "f13f4f80b1b2e186707d97423af8385cbbeab39ef0ab5c15aaf24cf1fadaca31",
+    "part-00001.parquet": "15a4639cb2ad0391b3a33b353cc723ed58cd71ed202a003110a551701720a55a",
+    "part-00002.parquet": "5c9812bd4a7bc577eaddb51985c460f7fc8b4b4ba13f1b3bcd3a78784df9b242",
+    "part-00003.parquet": "115e2bbe5253714911bb11e53d8d306524f194ac1b9e9c052e50c337bd68f3e4",
+    "part-00004.parquet": "6c53564ae5d7154997e52acb2edc43878926b9b135df29e407dd6468ff26fae0",
+    "part-00005.parquet": "01cea8e264bfc273775aca57ef1de582f9214cf56c437662122950bdc5570aa3",
+    "part-00006.parquet": "ad7234b84c642e57f221ada14566a3f09bd1c02f2f435a6b3886933b220d99b6",
+    "part-00007.parquet": "18ed2f8e84f9f53aeac063cf45334a551437df39d9063f6421841539de29d637",
+    "part-00008.parquet": "b3c4c3734a01f1ad3306d32f046d1fa6d7800f284dda34ff74ed3b9ea57094bd",
+    "part-00009.parquet": "6bc63827c888378cb1f0fa6ba7df18d50884465050a351fec1e5be23840d03db",
+    "part-00010.parquet": "22526e0573cfc260b411d7924086eef892c5ccd5ed3c682e2f77bf0c839f84c2"
+  },
+  "experiment_manifest_sha256": "5f3fdbb0bf8646d2dd1ef525224e7d84adabd2f15d6d3ed0f62e0d948c9545a8"
+}

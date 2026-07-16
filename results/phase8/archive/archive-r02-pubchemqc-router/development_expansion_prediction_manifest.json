@@ -1,0 +1,11 @@
+{
+  "probe_n": 30000,
+  "valid_n": 29903,
+  "failed_n": 97,
+  "chunk_size": 1000,
+  "random_seed_rule": "seed + probe_idx",
+  "seed": 42,
+  "geometry": "ETKDGv3 + MMFF; PubChemQC PM6 coordinates unused",
+  "device": "cuda",
+  "elapsed_seconds_this_run": 1476.9727062999991
+}

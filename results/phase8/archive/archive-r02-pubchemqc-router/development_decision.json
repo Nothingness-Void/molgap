@@ -1,0 +1,159 @@
+{
+  "experiment": "archive-r02 PubChemQC learned Router development gate",
+  "oracle": {
+    "n": 4401,
+    "fixed_route_fraction": 0.13133378777550556,
+    "expert_win_rate": 0.4926153147012043,
+    "fixed_gap_mae": 0.15139029041231208,
+    "budget_oracle_gap_delta_vs_fixed": -0.008460669870035771,
+    "unrestricted_oracle_gap_delta_vs_fixed": -0.014120046431599117
+  },
+  "seeds": [
+    {
+      "seed": 42,
+      "selected_feature_set": "R4",
+      "win_auc": 0.5338182720334832,
+      "gain_spearman": 0.016549439642548746,
+      "full_replacement": {
+        "gap_delta_vs_fixed": 0.00025822055025902604,
+        "ci95": [
+          -0.0003195809225525678,
+          0.0008628629126618045
+        ],
+        "route_fraction": 0.11860940695296524,
+        "expert_win_precision": 0.5019157088122606
+      },
+      "suppress_only": {
+        "gap_delta_vs_fixed": 7.733492181958646e-05,
+        "ci95": [
+          -0.0003061139751768656,
+          0.0004825724370374285
+        ],
+        "route_fraction": 0.05725971370143149,
+        "expert_win_precision": 0.5198412698412699
+      },
+      "add_only": {
+        "gap_delta_vs_fixed": -1.3378902087112426e-05,
+        "ci95": [
+          -0.00039365664109325236,
+          0.00036805208445384464
+        ],
+        "route_fraction": 0.2149511474664849,
+        "expert_win_precision": 0.5095137420718816
+      },
+      "bidirectional": {
+        "gap_delta_vs_fixed": -1.2238565523559092e-05,
+        "ci95": [
+          -0.0004517249692062472,
+          0.00045311683416866
+        ],
+        "route_fraction": 0.0813451488298114,
+        "expert_win_precision": 0.5279329608938548
+      }
+    },
+    {
+      "seed": 43,
+      "selected_feature_set": "R4",
+      "win_auc": 0.5207024016143631,
+      "gain_spearman": 0.02824893324076283,
+      "full_replacement": {
+        "gap_delta_vs_fixed": 0.00020041597333342545,
+        "ci95": [
+          -0.00030920878983144997,
+          0.0007128994019073699
+        ],
+        "route_fraction": 0.05248807089297887,
+        "expert_win_precision": 0.5108225108225108
+      },
+      "suppress_only": {
+        "gap_delta_vs_fixed": -3.6283945385607855e-06,
+        "ci95": [
+          -0.0003213743530702915,
+          0.0003606073174924752
+        ],
+        "route_fraction": 0.08225403317427857,
+        "expert_win_precision": 0.5303867403314917
+      },
+      "add_only": {
+        "gap_delta_vs_fixed": -6.358749049867858e-05,
+        "ci95": [
+          -0.00030958875727437555,
+          0.0001832447853795262
+        ],
+        "route_fraction": 0.15700977050670303,
+        "expert_win_precision": 0.5180897250361794
+      },
+      "bidirectional": {
+        "gap_delta_vs_fixed": -5.9076987877717923e-05,
+        "ci95": [
+          -0.00044548017834316353,
+          0.00035818260917449445
+        ],
+        "route_fraction": 0.10270393092478983,
+        "expert_win_precision": 0.5420353982300885
+      }
+    },
+    {
+      "seed": 44,
+      "selected_feature_set": "R4",
+      "win_auc": 0.5239619578305751,
+      "gain_spearman": 0.03553408816530888,
+      "full_replacement": {
+        "gap_delta_vs_fixed": 0.00010025526045017652,
+        "ci95": [
+          -0.00042690834993420275,
+          0.0006503175545905498
+        ],
+        "route_fraction": 0.07180186321290616,
+        "expert_win_precision": 0.5189873417721519
+      },
+      "suppress_only": {
+        "gap_delta_vs_fixed": -2.0134695752399077e-05,
+        "ci95": [
+          -0.00034927440297404194,
+          0.00034481442166983927
+        ],
+        "route_fraction": 0.08929788684389911,
+        "expert_win_precision": 0.5241730279898219
+      },
+      "add_only": {
+        "gap_delta_vs_fixed": -0.00014081387506708828,
+        "ci95": [
+          -0.0004364418266812659,
+          0.00015223551216451424
+        ],
+        "route_fraction": 0.17450579413769599,
+        "expert_win_precision": 0.5208333333333334
+      },
+      "bidirectional": {
+        "gap_delta_vs_fixed": -4.285552550252133e-05,
+        "ci95": [
+          -0.0004295922624742478,
+          0.00035813205686868423
+        ],
+        "route_fraction": 0.10452169961372415,
+        "expert_win_precision": 0.532608695652174
+      }
+    }
+  ],
+  "aggregate": {
+    "add_only": {
+      "mean_gap_delta_vs_fixed": -7.259342255095976e-05,
+      "std_gap_delta_vs_fixed": 5.2413409185687864e-05,
+      "all_seeds_better": true,
+      "all_ci_below_zero": false
+    },
+    "bidirectional": {
+      "mean_gap_delta_vs_fixed": -3.805702630126611e-05,
+      "std_gap_delta_vs_fixed": 1.9420412767583433e-05,
+      "all_seeds_better": true,
+      "all_ci_below_zero": false
+    }
+  },
+  "decision": {
+    "verdict": "stop",
+    "reason": "Oracle headroom is large, but no pre-Expert feature/policy combination reaches the 0.001 eV practical threshold or a CI below zero across seeds.",
+    "sealed_metrics_opened": false,
+    "next_step": "Keep fixed routed-v4; do not expand Router data."
+  }
+}

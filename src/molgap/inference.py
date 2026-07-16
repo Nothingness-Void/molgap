@@ -296,6 +296,142 @@ def load_routed_dual_gps_hybrid(
     }
 
 
+def predict_smiles_batch_dual_gps_candidates(
+    smiles_list: list[str],
+    models: dict | None = None,
+    *,
+    bs_2d: int = 256,
+    bs_3d: int = 128,
+    random_seed: int | None = None,
+    device: torch.device | str | None = None,
+    routed_key: str = "phase8_routed_dualgps_hybrid",
+):
+    """Run frozen base and dual-GPS candidates on the same ETKDG conformer.
+
+    This offline evaluation helper returns all cheap Router inputs before any
+    routing decision: base/expert predictions, base 2D/3D embeddings, and the
+    supervised 2D/3D branch predictions. The extra GPS is intentionally run for
+    every valid row so labels for Router evaluation are available.
+    """
+    from torch_geometric.loader import DataLoader
+
+    models = models or load_routed_dual_gps_hybrid(device, key=routed_key)
+    base_gps = models["base_gps"]
+    extra_gps = models["extra_gps"]
+    encoder_3d = models["encoder_3d"]
+    base_fusion = models["base_fusion"]
+    dual_fusion = models["dual_fusion"]
+    device = models["device"]
+
+    g2d_list, g3d_list, valid_idx = [], [], []
+    for i, smiles in enumerate(smiles_list):
+        seed = None if random_seed is None else int(random_seed) + i
+        graph_3d = smiles_to_pyg(smiles, random_seed=seed)
+        graph_2d = smiles_to_2d_pyg(smiles)
+        if graph_2d is None or graph_3d is None:
+            continue
+        g2d_list.append(graph_2d)
+        g3d_list.append(graph_3d)
+        valid_idx.append(i)
+
+    if not valid_idx:
+        empty_pred = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
+        return (
+            np.empty((0,), dtype=int), empty_pred, empty_pred.copy(),
+            np.empty((0, 192), dtype=np.float32),
+            np.empty((0, 192), dtype=np.float32),
+            empty_pred.copy(), empty_pred.copy(),
+        )
+
+    base_2d, extra_2d = [], []
+    with torch.no_grad():
+        for batch in DataLoader(g2d_list, batch_size=bs_2d, shuffle=False):
+            batch = batch.to(device)
+            base_2d.append(
+                base_gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch).cpu()
+            )
+            extra_2d.append(
+                extra_gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch).cpu()
+            )
+    base_2d = torch.cat(base_2d)
+    extra_2d = torch.cat(extra_2d)
+
+    emb_3d = []
+    with torch.no_grad():
+        for batch in DataLoader(g3d_list, batch_size=bs_3d, shuffle=False):
+            batch = batch.to(device)
+            charges = batch.charges if hasattr(batch, "charges") else None
+            emb_3d.append(
+                encoder_3d.encode(batch.z, batch.pos, batch.batch, charges=charges).cpu()
+            )
+    emb_3d = torch.cat(emb_3d)
+
+    with torch.no_grad():
+        base_pred = base_fusion(base_2d.to(device), emb_3d.to(device)).float().cpu()
+        expert_pred = dual_fusion(
+            torch.cat([base_2d, extra_2d], dim=-1).to(device), emb_3d.to(device)
+        ).float().cpu()
+        gps_pred = base_gps.head(base_2d.to(device)).float().cpu()
+        schnet_pred = encoder_3d.head(emb_3d.to(device)).float().cpu()
+    return (
+        np.asarray(valid_idx, dtype=int),
+        base_pred.numpy(),
+        expert_pred.numpy(),
+        base_2d.numpy(),
+        emb_3d.numpy(),
+        gps_pred.numpy(),
+        schnet_pred.numpy(),
+    )
+
+
+def encode_smiles_batch_dual_gps_2d(
+    smiles_list: list[str],
+    models: dict | None = None,
+    *,
+    batch_size: int = 256,
+    device: torch.device | str | None = None,
+    routed_key: str = "phase8_routed_dualgps_hybrid",
+):
+    """Encode the frozen 7/9-layer GPS pair without constructing 3D graphs."""
+    from torch_geometric.loader import DataLoader
+
+    models = models or load_routed_dual_gps_hybrid(device, key=routed_key)
+    base_gps = models["base_gps"]
+    extra_gps = models["extra_gps"]
+    device = models["device"]
+    graphs, valid_idx = [], []
+    for index, smiles in enumerate(smiles_list):
+        graph = smiles_to_2d_pyg(smiles)
+        if graph is None:
+            continue
+        graphs.append(graph)
+        valid_idx.append(index)
+    if not graphs:
+        empty_embedding = np.empty((0, 192), dtype=np.float32)
+        empty_prediction = np.empty((0, len(TARGET_COLS)), dtype=np.float32)
+        return np.empty((0,), dtype=int), empty_embedding, empty_embedding.copy(), empty_prediction, empty_prediction.copy()
+
+    base_embeddings, extra_embeddings = [], []
+    with torch.no_grad():
+        for batch in DataLoader(graphs, batch_size=batch_size, shuffle=False):
+            batch = batch.to(device)
+            base_embeddings.append(
+                base_gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch).cpu()
+            )
+            extra_embeddings.append(
+                extra_gps.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch).cpu()
+            )
+    base_embedding = torch.cat(base_embeddings)
+    extra_embedding = torch.cat(extra_embeddings)
+    with torch.no_grad():
+        base_prediction = base_gps.head(base_embedding.to(device)).float().cpu().numpy()
+        extra_prediction = extra_gps.head(extra_embedding.to(device)).float().cpu().numpy()
+    return (
+        np.asarray(valid_idx, dtype=int), base_embedding.numpy(), extra_embedding.numpy(),
+        base_prediction, extra_prediction,
+    )
+
+
 def predict_smiles_batch_routed_dual_gps(
     smiles_list: list[str],
     models: dict | None = None,

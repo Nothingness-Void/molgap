@@ -67,6 +67,10 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Expand from 300k to 500k with replay + broader in-domain top-up | P8.8 | **done** | `phase8_expansion_hybrid` v3 candidate; common eval beats replacement300k. See `results/phase8/full_expansion_500k_summary.md` |
 | Re-test head swaps (MoE, layer fusion) on 500k embeddings | P8.9 | **done** | Both still tie single head (MoE avg -0.00003, layer fusion avg -0.00001 eV). Head-swap route closed; bottleneck is the B3LYP label ceiling, not capacity. See `results/phase8/head_swap_500k_comparison.md` |
 | Fixed-data GPS architecture + routed dual-GPS | P8.12 | **done** | v4 route improves internal/common/OOD; PCQM ties; no measurable speed penalty. See `results/phase8/gps_arch_routed_decision.md` |
+| Learned utility Router for dual-GPS | AR-01 | **archived, negative** | Failed external transfer; keep fixed v4. See `results/phase8/archive/archive-r01-learned-router/decision.md` |
+| Independent PubChemQC Router dataset + Late Blend | AR-02 | **archived, negative** | Oracle headroom is large, but pre-Expert routing fails. Late Blend gains `0.000881` eV Gap, below its `0.001` gate; sealed sets stayed unopened. |
+| From-scratch three-expert GINE/GPS9/SchNet MoE | AR-03 | **archived, negative** | Three-expert Router fails and Geometry is removed. |
+| Local GINE/GPS static blend | P8-C1 | **candidate** | Three-seed static weights pass the internal gate (`+0.001303/+0.012029/+0.003400` eV); external transfer is next. This is not a production version. |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 

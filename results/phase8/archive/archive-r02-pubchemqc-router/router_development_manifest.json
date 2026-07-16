@@ -1,0 +1,39 @@
+{
+  "n": 49879,
+  "valid_by_source": {
+    "expansion_random": 14952,
+    "expansion_descriptor_diverse": 14951,
+    "random": 9991,
+    "descriptor_diverse": 9985
+  },
+  "split": {
+    "train": 37176,
+    "validation": 8302,
+    "dev_test": 4401
+  },
+  "unique_scaffolds": {
+    "train": 14696,
+    "validation": 4200,
+    "dev_test": 2100
+  },
+  "split_scaffold_overlap": {
+    "train_validation": 0,
+    "train_dev_test": 0,
+    "validation_dev_test": 0
+  },
+  "sealed_scaffold_overlap": {
+    "development_sealed_random": 0,
+    "development_sealed_hard": 0,
+    "sealed_random_hard": 0
+  },
+  "gain_target": "Gap absolute-error reduction: |base_gap-y| - |expert_gap-y|",
+  "sampling_weight": {
+    "used_for_train_validation_only": true,
+    "clip_quantile": 0.99,
+    "clip_value": 18.3125
+  },
+  "artifacts_sha256": {
+    "router_development_dataset.parquet": "e6bef6b6957b8c9062163d533f3075f8b8e7ec8e94fcb2a0146201b721a82209",
+    "router_development_embeddings.npz": "528fdc5e24cc1103db30fec4fcbff22e88ee23b6116ad26f256a0184068f0b34"
+  }
+}

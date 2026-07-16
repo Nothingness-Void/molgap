@@ -1,0 +1,64 @@
+{
+  "purpose": "architecture feasibility only; not a final 700k result",
+  "weights_initialization": "random; no old checkpoints",
+  "source_pool": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_expansion_500k.csv",
+  "source_pool_sha256": "c10946260e293cf91e2d61caa575c404f95f9647aaeafc4fc7750b51b12ca999",
+  "sampling_target": {
+    "random": 18000,
+    "descriptor_diverse": 6000,
+    "narrow_conjugated": 2400,
+    "flexible": 1800,
+    "large_heteroatom": 1800
+  },
+  "counts": {
+    "total": 30000,
+    "by_source": {
+      "random": 18000,
+      "descriptor_diverse": 6000,
+      "narrow_conjugated": 2400,
+      "flexible": 1800,
+      "large_heteroatom": 1800
+    },
+    "by_split": {
+      "train": 26774,
+      "validation": 1618,
+      "internal_test": 1608
+    },
+    "source_by_split": {
+      "internal_test": {
+        "descriptor_diverse": 307,
+        "flexible": 97,
+        "large_heteroatom": 90,
+        "narrow_conjugated": 120,
+        "random": 994
+      },
+      "train": {
+        "descriptor_diverse": 5384,
+        "flexible": 1609,
+        "large_heteroatom": 1620,
+        "narrow_conjugated": 2160,
+        "random": 16001
+      },
+      "validation": {
+        "descriptor_diverse": 309,
+        "flexible": 94,
+        "large_heteroatom": 90,
+        "narrow_conjugated": 120,
+        "random": 1005
+      }
+    }
+  },
+  "unique": {
+    "cid": 30000,
+    "canonical_smiles": 30000,
+    "scaffold": 21336
+  },
+  "scaffold_overlap": {
+    "internal_test_train": 0,
+    "internal_test_validation": 0,
+    "train_validation": 0
+  },
+  "label_consistency_max_abs_eV": 1.7763568394002505e-15,
+  "seed": 42,
+  "output_sha256": "e5e12dbaf024974e6bfcfbaca5d086f2ec13aafd5bfa93beba80877771d2a441"
+}

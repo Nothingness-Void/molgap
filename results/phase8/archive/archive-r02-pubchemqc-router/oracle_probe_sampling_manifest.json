@@ -1,0 +1,31 @@
+{
+  "candidate_pool_n": 100000,
+  "probe_n": 20000,
+  "random_n": 10000,
+  "descriptor_diverse_n": 10000,
+  "selection_uses_b3lyp_labels": false,
+  "features": [
+    "mw",
+    "heavy_atoms",
+    "aromatic_rings",
+    "rotatable_bonds",
+    "tpsa",
+    "logp",
+    "formal_charge",
+    "has_s",
+    "has_p",
+    "has_cl",
+    "has_f"
+  ],
+  "clusters": 500,
+  "seed": 42,
+  "candidate_cid_range": [
+    1200,
+    118718899
+  ],
+  "probe_cid_range": [
+    1200,
+    118718873
+  ],
+  "output_sha256": "0a71348248419928c1aa416bc48fc6b924194097670dabb575c17d6886cbba99"
+}

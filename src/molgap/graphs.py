@@ -18,6 +18,7 @@ def smiles_to_pyg(
     use_charges: bool = True,
     mmff_iters: int = 200,
     max_embed_attempts: int = 2,
+    random_seed: int | None = None,
 ) -> Data | None:
     """Convert a SMILES string to a PyG Data object with ETKDG 3D coordinates.
 
@@ -33,8 +34,11 @@ def smiles_to_pyg(
         return None
     mol_h = AllChem.AddHs(mol)
 
-    for _ in range(max_embed_attempts):
-        if AllChem.EmbedMolecule(mol_h, AllChem.ETKDGv3()) == 0:
+    for attempt in range(max_embed_attempts):
+        params = AllChem.ETKDGv3()
+        if random_seed is not None:
+            params.randomSeed = int(random_seed) + attempt
+        if AllChem.EmbedMolecule(mol_h, params) == 0:
             break
     else:
         return None
