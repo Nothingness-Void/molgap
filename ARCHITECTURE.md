@@ -22,9 +22,9 @@ Code map and module boundaries. Answers one question: **to change X, edit which 
 | `inference.py` | Model loading + single/routed hybrid batch APIs + 2D dual-GPS encoding + `predict_smiles_with_uq` | Changing the prediction API |
 | `router.py` | Router losses, Oracle/policy metrics, cheap descriptors, embedding projector | Changing learned-routing features or policy evaluation |
 | `router_sampling.py` | Descriptor-diverse selection and scaffold-key computation | Building leakage-safe Router development/sealed pools |
-| `dual2d_static_candidate/` | Active Local-GINE/GPS static-blend candidate and its frozen-embedding controls | Running the candidate external-transfer gate |
 | `archive/phase8_r01_router/` | Closed archive-r01 learned-Router and Late-Blend helpers | Reproducing archive-r01 only |
 | `archive/phase8_r03_three_expert/` | Closed archive-r03 three-expert model, Router, and losses | Reproducing archive-r03 only |
+| `archive/phase8_r04_static_dual2d/` | Closed Local-GINE/GPS static blend and external transfer audit | Reproducing archive-r04 only |
 | `pubchemqc.py` | PubChemQC range streaming, strict row filters, identity normalization | Building reproducible PubChemQC-derived pools |
 | `utils.py` | Splits, metrics, SMILES/fingerprint helpers | Shared numeric/IO helpers |
 | `tensornet.py` | `TensorNetWrapper` — vendored for the ab3d A/B (closed) | **Don't use in production** — see `results/ab3d/comparison.md` |
@@ -73,9 +73,7 @@ The selected v4 accuracy path has a different two-stage contract; load it with
   see `docs/phase7.md` for its pipeline. Each script should import from
   `src/molgap/`, not redefine model classes.
 - `scripts/phase7/archive/` — superseded scripts/notebooks/diagnostics.
-- `scripts/phase8/dual2d_static_candidate/` — the only active Phase 8 candidate: Local/GPS
-  pilot construction, expert seeds, cached embeddings, and static/gated controls.
-- `scripts/phase8/archive/` — closed archive-r01/r02/r03 scripts.
+- `scripts/phase8/archive/` — closed archive-r01/r02/r03/r04 scripts.
 - `scripts/phase9/` — Δ-learning to GW; v3 records are in `results/phase9/v3_delta_decision.md`.
 - `scripts/phase10/` — M1 UQ: `train_ensemble.py` (Δ-ensemble + calibration),
   `ood_score.py` (embedding-distance OOD flag). Historical default bundle is

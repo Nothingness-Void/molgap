@@ -56,4 +56,4 @@ The subsequent preliminary dual-2D candidate follow-up removed Geometry and retr
 GINE6 + Global GPS9 stacks for seeds 42/43/44. Target-wise static weights pass
 the requested `0.001 eV` all-seed rule, but concat Fusion and both soft-gate
 forms do not. This reopens only a static dual-2D candidate, not dynamic MoE.
-See `results/phase8/dual2d_static_candidate/dual2d_decision.md`.
+See `results/phase8/archive/archive-r04-static-dual2d/dual2d_decision.md`.

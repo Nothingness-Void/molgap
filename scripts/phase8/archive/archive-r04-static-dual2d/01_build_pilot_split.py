@@ -11,7 +11,7 @@ import pandas as pd
 from molgap.constants import RAW_DIR, RESULTS_DIR
 from molgap.pubchemqc import sha256_file
 from molgap.utils import ensure_dirs
-from molgap.dual2d_static_candidate.data import PILOT_COUNTS, scaffold_split_balanced, select_balanced_pilot
+from molgap.archive.phase8_r04_static_dual2d.data import PILOT_COUNTS, scaffold_split_balanced, select_balanced_pilot
 
 
 def main() -> None:
@@ -19,7 +19,7 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-    out_dir = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
+    out_dir = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
     ensure_dirs(out_dir)
     expansion_path = RAW_DIR / "phase8_expansion_500k.csv"
     topup_paths = [

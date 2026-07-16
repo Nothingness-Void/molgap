@@ -10,24 +10,12 @@ import pandas as pd
 import torch
 
 from molgap.constants import RESULTS_DIR
-from molgap.gps import GPSWrapper
 from molgap.utils import ensure_dirs
-from molgap.dual2d_static_candidate.local_gine import LocalGINEExpert
-from molgap.dual2d_static_candidate.training import train_expert
+from molgap.archive.phase8_r04_static_dual2d.models import make_expert
+from molgap.archive.phase8_r04_static_dual2d.training import train_expert
 
 
-OUT_DIR = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
-
-
-def make_model(kind: str):
-    if kind == "local":
-        return LocalGINEExpert()
-    if kind == "global":
-        return GPSWrapper(
-            hidden_channels=192, num_layers=9, num_heads=4,
-            dropout=0.05, pooling="mean_max",
-        )
-    raise ValueError(kind)
+OUT_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
 
 
 def sampling_weight(kind: str, source: str) -> float:
@@ -90,7 +78,7 @@ def main() -> None:
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = make_model(args.kind).to(device)
+    model = make_expert(args.kind).to(device)
     trained = train_expert(
         kind=args.kind,
         model=model,

@@ -15,12 +15,12 @@ from molgap.gps import GPSWrapper
 from molgap.pubchemqc import sha256_file
 from molgap.router import router_descriptor_row
 from molgap.schnet import SchNetWrapper
-from molgap.dual2d_static_candidate.local_gine import LocalGINEExpert
-from molgap.dual2d_static_candidate.training import encode_expert
+from molgap.archive.phase8_r04_static_dual2d.local_gine import LocalGINEExpert
+from molgap.archive.phase8_r04_static_dual2d.training import encode_expert
 
 
 OUT_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r03-three-expert-moe"
-DUAL2D_DIR = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
+DUAL2D_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
 EXPERTS = ("local", "global", "geometry")
 
 

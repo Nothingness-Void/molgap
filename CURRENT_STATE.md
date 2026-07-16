@@ -68,18 +68,13 @@ deployment-relevant accuracy, so production stays on SchNet. See
   blocks without a significant PCQM proxy regression, while adding no measurable
   wall-time in the 100-molecule benchmark. See
   `results/phase8/gps_arch_routed_decision.md`.
-- Recent negative routing experiments are archived as `archive-r01` through
-  `archive-r03`; none consumes a production model version. None changes routed-v4
-  and no sealed set was opened. Index: `results/phase8/archive/README.md`.
-- The **dual-2D static candidate** removes Geometry and retrains complete Local
-  GINE6/GPS9 stacks for three seeds. Target-wise static weights pass the
-  requested complementarity gate, improving each seed's best single Gap by
-  `0.001303/0.012029/0.003400 eV`. Equal averaging, embedding concat Fusion,
-  ordinary soft gating, and static-centered gating all regress for seed 42 and
-  fail the all-seed rule. Keep static dual-2D only as an external-transfer
-  candidate; dynamic MoE remains stopped, sealed sets remain closed, and v4
-  remains recommended. See
-  `results/phase8/dual2d_static_candidate/dual2d_decision.md`.
+- Recent negative routing and MoE experiments are archived as `archive-r01`
+  through `archive-r04`; none consumes a production model version. `archive-r04`
+  initially passes the 30k internal static-blend gate, but frozen transfer fails:
+  seed42 regresses on OOD-1000 by `0.000698 eV`, seed44 on P8-hard by `0.000571`
+  eV, and seed43 on PCQM-like by `0.000228 eV`. Do not scale, open sealed sets,
+  or revisit dynamic MoE. Routed-v4 remains recommended. Index:
+  `results/phase8/archive/README.md`.
 - Ranking flips by class: rigid OLED emitters → SchNet 3D wins; floppy donors → Hybrid.
 - B3LYP is the accuracy ceiling, not the model. Bias vs experiment: LUMO +0.85,
   Gap +0.74, HOMO +0.10 eV. Strong charge-transfer / narrow-gap (<2 eV) molecules
@@ -180,10 +175,11 @@ the selected B3LYP accuracy predictor. Records:
 `results/phase8/gps_arch_routed_decision.md` and
 `results/phase8/gps_arch_routed_speed.md`.
 
-The `archive-r01`/`archive-r02` Router and Late-Blend branches plus the
-`archive-r03` three-expert MoE are closed and physically archived. Their methods
-and exact metrics remain reproducible through `results/phase8/archive/README.md`;
-they are not active model paths or production model versions.
+The `archive-r01`/`archive-r02` Router and Late-Blend branches, `archive-r03`
+three-expert MoE, and `archive-r04` static dual-2D blend are closed and physically
+archived. Their methods and exact metrics remain reproducible through
+`results/phase8/archive/README.md`; they are not active model paths or production
+model versions.
 
 Phase 9 has now been re-run against the v3 B3LYP base. v3 descriptor-enhanced
 LightGBM Δ improves the old v1 LightGBM baseline on scaffold-test OE62 GW:
@@ -258,24 +254,23 @@ standard replacement300k embeddings exist. Tables:
 `results/phase8/intermediate_layer_fusion_comparison.md`.
 
 ## 5. Next actions
-1. **Next — dual-2D static candidate transfer gate**: the 30k three-seed static
-   Local/GPS blend passes internal complementarity, while every dynamic gate
-   fails. Evaluate the frozen three-seed static blends on common/OOD/P8-hard and
-   PCQM-like sets before considering larger training. Do not open sealed sets.
-2. **DONE — archive-r02 independent Router dataset**: Oracle headroom passed, but all
-   deployable R0-R5 policies failed the development learnability gate across
-   three seeds. The post-Expert late blend also missed its practical Gap gate.
-   Sealed sets stayed unopened. Do not expand or train further.
-3. **DONE — fixed-data architecture round**: routed dual-GPS v4 is selected as
-   the B3LYP accuracy predictor. Training data and SchNet are unchanged. The
-   original 7-layer v3 remains the `load_hybrid()` component/compatibility
-   default; use the routed API for v4 outputs. See
-   `results/phase8/gps_arch_routed_decision.md`.
-4. **Next — re-run Phase 9/10 against routed v4 outputs**: existing
+1. **Next — re-run Phase 9/10 against routed v4 outputs**: existing
    descriptor-enhanced LightGBM Delta, Encoder-LoRA, and UQ bundles were built
    against v3 outputs. Recompute Delta labels/prediction features and calibrate
    UQ before any database build. Preserve the base v3 192+192 embeddings and
    include routed B3LYP prediction/route flag as candidate Delta features.
+2. **DONE — archive-r02 independent Router dataset**: Oracle headroom passed, but all
+   deployable R0-R5 policies failed the development learnability gate across
+   three seeds. The post-Expert late blend also missed its practical Gap gate.
+   Sealed sets stayed unopened. Do not expand or train further.
+3. **DONE — archive-r04 static dual-2D candidate**: the 30k internal static
+   gain fails frozen external transfer. Do not scale, open sealed sets, or
+   allocate a production version.
+4. **DONE — fixed-data architecture round**: routed dual-GPS v4 is selected as
+   the B3LYP accuracy predictor. Training data and SchNet are unchanged. The
+   original 7-layer v3 remains the `load_hybrid()` component/compatibility
+   default; use the routed API for v4 outputs. See
+   `results/phase8/gps_arch_routed_decision.md`.
 5. Benchmark the v4-based LightGBM and LoRA GW paths and choose the
    database-scale/default tier.
 6. **Head-swap, SchNet-retrain, and B3LYP post-hoc/fusion training routes are

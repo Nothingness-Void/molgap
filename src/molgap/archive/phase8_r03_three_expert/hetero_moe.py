@@ -8,7 +8,7 @@ import torch.nn as nn
 from molgap.gps import GPSWrapper
 from molgap.schnet import SchNetWrapper
 
-from molgap.dual2d_static_candidate.local_gine import LocalGINEExpert
+from molgap.archive.phase8_r04_static_dual2d.local_gine import LocalGINEExpert
 from .target_router import TargetSpecificRouter
 
 

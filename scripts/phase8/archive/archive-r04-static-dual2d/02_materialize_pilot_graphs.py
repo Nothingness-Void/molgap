@@ -1,4 +1,4 @@
-"""Materialize the active dual-2D pilot cache from expansion500k."""
+"""Materialize the archived dual-2D pilot cache from expansion500k."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ def subset_cache(source, destination, needed):
 
 def main() -> None:
     phase8 = RESULTS_DIR / "phase8"
-    out_dir = phase8 / "dual2d_static_candidate"
+    out_dir = phase8 / "archive" / "archive-r04-static-dual2d"
     table = pd.read_parquet(out_dir / "pilot_30k.parquet")
     needed = set(table.source_idx.astype(int))
     records = {"2d": subset_cache(

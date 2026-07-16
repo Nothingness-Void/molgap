@@ -10,12 +10,12 @@ import torch
 
 from molgap.constants import RESULTS_DIR
 from molgap.router import paired_bootstrap_mean
-from molgap.dual2d_static_candidate.diagnostics import router_diagnostics
-from molgap.dual2d_static_candidate.dual2d_training import predict_dual2d, train_dual2d
-from molgap.dual2d_static_candidate.evaluation import apply_static_weights, fit_static_weights, metrics
+from molgap.archive.phase8_r04_static_dual2d.diagnostics import router_diagnostics
+from molgap.archive.phase8_r04_static_dual2d.dual2d_training import predict_dual2d, train_dual2d
+from molgap.archive.phase8_r04_static_dual2d.evaluation import apply_static_weights, fit_static_weights, metrics
 
 
-OUT_DIR = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
+OUT_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
 
 
 def main() -> None:

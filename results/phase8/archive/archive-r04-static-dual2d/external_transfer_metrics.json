@@ -1,0 +1,849 @@
+{
+  "experiment": "dual-2D static candidate external transfer",
+  "sealed_metrics_opened": false,
+  "weight_selection": "frozen internal validation target-wise weights",
+  "reference_selection": "frozen internal best single expert per seed",
+  "datasets": {
+    "common_all": {
+      "input_n": 1977,
+      "valid_n": 1977,
+      "invalid_n": 0,
+      "v4": {
+        "homo": {
+          "mae": 0.09296960863053869
+        },
+        "lumo": {
+          "mae": 0.09528546905321447
+        },
+        "gap": {
+          "mae": 0.12189649230408192
+        }
+      },
+      "seeds": {
+        "42": {
+          "n": 1977,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.18336478122917835
+              },
+              "lumo": {
+                "mae": 0.18792158202544323
+              },
+              "gap": {
+                "mae": 0.22875350831612265
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.21213582994681637
+              },
+              "lumo": {
+                "mae": 0.20835349700961484
+              },
+              "gap": {
+                "mae": 0.26090310861197635
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.1838094707910941
+              },
+              "lumo": {
+                "mae": 0.18665139863209296
+              },
+              "gap": {
+                "mae": 0.22849218993878218
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": 0.0004446895619157458,
+              "ci95": [
+                -0.00018561900584102378,
+                0.0010755902608555082
+              ],
+              "probability_better": 0.0854,
+              "n_bootstrap": 10000,
+              "seed": 430,
+              "improvement_eV": -0.0004446895619157458
+            },
+            "lumo": {
+              "delta": -0.0012701833933502981,
+              "ci95": [
+                -0.003055147908526913,
+                0.0004858073353343573
+              ],
+              "probability_better": 0.9232,
+              "n_bootstrap": 10000,
+              "seed": 431,
+              "improvement_eV": 0.0012701833933502981
+            },
+            "gap": {
+              "delta": -0.00026131837734050283,
+              "ci95": [
+                -0.002646032444986099,
+                0.002127926403208122
+              ],
+              "probability_better": 0.5872,
+              "n_bootstrap": 10000,
+              "seed": 432,
+              "improvement_eV": 0.00026131837734050283
+            }
+          }
+        },
+        "43": {
+          "n": 1977,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.21411417629343388
+              },
+              "lumo": {
+                "mae": 0.2270023633702015
+              },
+              "gap": {
+                "mae": 0.24327995045720743
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.2021926614407713
+              },
+              "lumo": {
+                "mae": 0.19883073591641837
+              },
+              "gap": {
+                "mae": 0.2566260826164287
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.20016710839873827
+              },
+              "lumo": {
+                "mae": 0.1981195072518256
+              },
+              "gap": {
+                "mae": 0.23648305704507233
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -0.013947067894695629,
+              "ci95": [
+                -0.018548187333768142,
+                -0.009405204487720463
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 440,
+              "improvement_eV": 0.013947067894695629
+            },
+            "lumo": {
+              "delta": -0.02888285611837593,
+              "ci95": [
+                -0.03402034232299246,
+                -0.023629613525710864
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 441,
+              "improvement_eV": 0.02888285611837593
+            },
+            "gap": {
+              "delta": -0.0067968934121351065,
+              "ci95": [
+                -0.009907967652509949,
+                -0.003732525717381867
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 442,
+              "improvement_eV": 0.0067968934121351065
+            }
+          }
+        },
+        "44": {
+          "n": 1977,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.17690883067475693
+              },
+              "lumo": {
+                "mae": 0.188714583562037
+              },
+              "gap": {
+                "mae": 0.23335947867829798
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.20423556466402842
+              },
+              "lumo": {
+                "mae": 0.20378336278166884
+              },
+              "gap": {
+                "mae": 0.25756790802065904
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.17687919399207985
+              },
+              "lumo": {
+                "mae": 0.18567728840052647
+              },
+              "gap": {
+                "mae": 0.23142519713658857
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -2.9636682677079172e-05,
+              "ci95": [
+                -0.0001023084852155345,
+                4.2492006863684235e-05
+              ],
+              "probability_better": 0.7869,
+              "n_bootstrap": 10000,
+              "seed": 450,
+              "improvement_eV": 2.9636682677079172e-05
+            },
+            "lumo": {
+              "delta": -0.0030372951615105243,
+              "ci95": [
+                -0.004927093890001283,
+                -0.0011283894275151882
+              ],
+              "probability_better": 0.9988,
+              "n_bootstrap": 10000,
+              "seed": 451,
+              "improvement_eV": 0.0030372951615105243
+            },
+            "gap": {
+              "delta": -0.0019342815417094342,
+              "ci95": [
+                -0.004955983673447141,
+                0.0011499575011613015
+              ],
+              "probability_better": 0.892,
+              "n_bootstrap": 10000,
+              "seed": 452,
+              "improvement_eV": 0.0019342815417094342
+            }
+          }
+        }
+      }
+    },
+    "common_ood1000": {
+      "input_n": 999,
+      "valid_n": 999,
+      "invalid_n": 0,
+      "v4": {
+        "homo": {
+          "mae": 0.10319977774408909
+        },
+        "lumo": {
+          "mae": 0.10238119833707708
+        },
+        "gap": {
+          "mae": 0.13217839098578077
+        }
+      },
+      "seeds": {
+        "42": {
+          "n": 999,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.17546369130190595
+              },
+              "lumo": {
+                "mae": 0.1788575735449238
+              },
+              "gap": {
+                "mae": 0.21292904385946096
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.2155374027512999
+              },
+              "lumo": {
+                "mae": 0.1986083370868836
+              },
+              "gap": {
+                "mae": 0.2502786869044059
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.177019579486071
+              },
+              "lumo": {
+                "mae": 0.17838023906335584
+              },
+              "gap": {
+                "mae": 0.21362654525156036
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": 0.0015558881841649956,
+              "ci95": [
+                0.0006747581192974493,
+                0.0024389213956974255
+              ],
+              "probability_better": 0.0001,
+              "n_bootstrap": 10000,
+              "seed": 434,
+              "improvement_eV": -0.0015558881841649956
+            },
+            "lumo": {
+              "delta": -0.0004773344815679319,
+              "ci95": [
+                -0.002757413463437816,
+                0.0017575488052229706
+              ],
+              "probability_better": 0.6667,
+              "n_bootstrap": 10000,
+              "seed": 435,
+              "improvement_eV": 0.0004773344815679319
+            },
+            "gap": {
+              "delta": 0.0006975013920994193,
+              "ci95": [
+                -0.002345215730285875,
+                0.0037570589846961703
+              ],
+              "probability_better": 0.3199,
+              "n_bootstrap": 10000,
+              "seed": 436,
+              "improvement_eV": -0.0006975013920994193
+            }
+          }
+        },
+        "43": {
+          "n": 999,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.2210700022200926
+              },
+              "lumo": {
+                "mae": 0.21541034030323944
+              },
+              "gap": {
+                "mae": 0.23248709374242546
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.19908666346704537
+              },
+              "lumo": {
+                "mae": 0.19046740003688603
+              },
+              "gap": {
+                "mae": 0.24718373714986247
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.19832869812259432
+              },
+              "lumo": {
+                "mae": 0.1887676556085863
+              },
+              "gap": {
+                "mae": 0.22703246960365742
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -0.022741304097498295,
+              "ci95": [
+                -0.02876391910514991,
+                -0.016638703190346056
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 444,
+              "improvement_eV": 0.022741304097498295
+            },
+            "lumo": {
+              "delta": -0.026642684694653116,
+              "ci95": [
+                -0.033623664982022766,
+                -0.01980830435999794
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 445,
+              "improvement_eV": 0.026642684694653116
+            },
+            "gap": {
+              "delta": -0.005454624138768022,
+              "ci95": [
+                -0.009422153732669181,
+                -0.001499518312566619
+              ],
+              "probability_better": 0.9963,
+              "n_bootstrap": 10000,
+              "seed": 446,
+              "improvement_eV": 0.005454624138768022
+            }
+          }
+        },
+        "44": {
+          "n": 999,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.1682326508454686
+              },
+              "lumo": {
+                "mae": 0.1856636009340911
+              },
+              "gap": {
+                "mae": 0.222144494243497
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.1947456121047913
+              },
+              "lumo": {
+                "mae": 0.19093124795749558
+              },
+              "gap": {
+                "mae": 0.2385076890450514
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.16820946543436563
+              },
+              "lumo": {
+                "mae": 0.1798193886804212
+              },
+              "gap": {
+                "mae": 0.21775779326971806
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -2.3185411102967402e-05,
+              "ci95": [
+                -0.00011605522188019163,
+                6.74983594389944e-05
+              ],
+              "probability_better": 0.6901,
+              "n_bootstrap": 10000,
+              "seed": 454,
+              "improvement_eV": 2.3185411102967402e-05
+            },
+            "lumo": {
+              "delta": -0.005844212253669895,
+              "ci95": [
+                -0.008463330028616592,
+                -0.0032034329351404833
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 455,
+              "improvement_eV": 0.005844212253669895
+            },
+            "gap": {
+              "delta": -0.004386700973778947,
+              "ci95": [
+                -0.008421215160933991,
+                -0.00037466054938236796
+              ],
+              "probability_better": 0.9842,
+              "n_bootstrap": 10000,
+              "seed": 456,
+              "improvement_eV": 0.004386700973778947
+            }
+          }
+        }
+      }
+    },
+    "common_p8_targeted_hard": {
+      "input_n": 978,
+      "valid_n": 978,
+      "invalid_n": 0,
+      "v4": {
+        "homo": {
+          "mae": 0.08251977330902861
+        },
+        "lumo": {
+          "mae": 0.08803737748411555
+        },
+        "gap": {
+          "mae": 0.11139381665682516
+        }
+      },
+      "seeds": {
+        "42": {
+          "n": 978,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.1914355157352393
+              },
+              "lumo": {
+                "mae": 0.1971802035992512
+              },
+              "gap": {
+                "mae": 0.24491774725997772
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.20866119334487385
+              },
+              "lumo": {
+                "mae": 0.21830790174761944
+              },
+              "gap": {
+                "mae": 0.2717556628053491
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.19074515000492204
+              },
+              "lumo": {
+                "mae": 0.19510014853468732
+              },
+              "gap": {
+                "mae": 0.24367702238556282
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -0.0006903657303172753,
+              "ci95": [
+                -0.0016106623669774557,
+                0.00020231723847196083
+              ],
+              "probability_better": 0.9364,
+              "n_bootstrap": 10000,
+              "seed": 443,
+              "improvement_eV": 0.0006903657303172753
+            },
+            "lumo": {
+              "delta": -0.0020800550645638884,
+              "ci95": [
+                -0.004826930649576639,
+                0.0006937561010732776
+              ],
+              "probability_better": 0.9311,
+              "n_bootstrap": 10000,
+              "seed": 444,
+              "improvement_eV": 0.0020800550645638884
+            },
+            "gap": {
+              "delta": -0.0012407248744149496,
+              "ci95": [
+                -0.004784236500933725,
+                0.002418563853523294
+              ],
+              "probability_better": 0.7488,
+              "n_bootstrap": 10000,
+              "seed": 445,
+              "improvement_eV": 0.0012407248744149496
+            }
+          }
+        },
+        "43": {
+          "n": 978,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.20700896386266984
+              },
+              "lumo": {
+                "mae": 0.2388432792449473
+              },
+              "gap": {
+                "mae": 0.25430456976839844
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.2053653565230305
+              },
+              "lumo": {
+                "mae": 0.20737364851390228
+              },
+              "gap": {
+                "mae": 0.26627117161584163
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.20204499672175957
+              },
+              "lumo": {
+                "mae": 0.2076721616502853
+              },
+              "gap": {
+                "mae": 0.2461365685202097
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -0.004963967140910296,
+              "ci95": [
+                -0.011854294485628887,
+                0.0016608894263561906
+              ],
+              "probability_better": 0.9262,
+              "n_bootstrap": 10000,
+              "seed": 453,
+              "improvement_eV": 0.004963967140910296
+            },
+            "lumo": {
+              "delta": -0.03117111759466201,
+              "ci95": [
+                -0.03883894595044754,
+                -0.023364923641790956
+              ],
+              "probability_better": 1.0,
+              "n_bootstrap": 10000,
+              "seed": 454,
+              "improvement_eV": 0.03117111759466201
+            },
+            "gap": {
+              "delta": -0.008168001248188719,
+              "ci95": [
+                -0.012748823478697663,
+                -0.0037640768742710036
+              ],
+              "probability_better": 0.9999,
+              "n_bootstrap": 10000,
+              "seed": 455,
+              "improvement_eV": 0.008168001248188719
+            }
+          }
+        },
+        "44": {
+          "n": 978,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "homo": {
+                "mae": 0.18577132298328108
+              },
+              "lumo": {
+                "mae": 0.19183107909250183
+              },
+              "gap": {
+                "mae": 0.24481529821212697
+              }
+            },
+            "global": {
+              "homo": {
+                "mae": 0.21392928189728047
+              },
+              "lumo": {
+                "mae": 0.21691143891540388
+              },
+              "gap": {
+                "mae": 0.27703739647700504
+              }
+            },
+            "static_weights": {
+              "homo": {
+                "mae": 0.18573509354366086
+              },
+              "lumo": {
+                "mae": 0.19166097154149864
+              },
+              "gap": {
+                "mae": 0.24538607683768954
+              }
+            }
+          },
+          "static_vs_reference": {
+            "homo": {
+              "delta": -3.622943962022716e-05,
+              "ci95": [
+                -0.00014740010145858272,
+                7.351866286219238e-05
+              ],
+              "probability_better": 0.7327,
+              "n_bootstrap": 10000,
+              "seed": 463,
+              "improvement_eV": 3.622943962022716e-05
+            },
+            "lumo": {
+              "delta": -0.00017010755100320898,
+              "ci95": [
+                -0.0029555074152246585,
+                0.0025726544532176706
+              ],
+              "probability_better": 0.5545,
+              "n_bootstrap": 10000,
+              "seed": 464,
+              "improvement_eV": 0.00017010755100320898
+            },
+            "gap": {
+              "delta": 0.00057077862556259,
+              "ci95": [
+                -0.003969763596747032,
+                0.005126867384648104
+              ],
+              "probability_better": 0.3994,
+              "n_bootstrap": 10000,
+              "seed": 465,
+              "improvement_eV": -0.00057077862556259
+            }
+          }
+        }
+      }
+    },
+    "pcqm_proxy": {
+      "input_n": 2988,
+      "valid_n": 2988,
+      "invalid_n": 0,
+      "v4": {
+        "gap": {
+          "mae": 0.2528384472213906
+        }
+      },
+      "seeds": {
+        "42": {
+          "n": 2988,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "gap": {
+                "mae": 0.31891007189329157
+              }
+            },
+            "global": {
+              "gap": {
+                "mae": 0.352220374798774
+              }
+            },
+            "static_weights": {
+              "gap": {
+                "mae": 0.3158611729683502
+              }
+            }
+          },
+          "static_vs_reference": {
+            "gap": {
+              "delta": -0.003048898924941416,
+              "ci95": [
+                -0.005459603731152035,
+                -0.0006392728548764699
+              ],
+              "probability_better": 0.9938,
+              "n_bootstrap": 10000,
+              "seed": 432,
+              "improvement_eV": 0.003048898924941416
+            }
+          }
+        },
+        "43": {
+          "n": 2988,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "gap": {
+                "mae": 0.33387017713285405
+              }
+            },
+            "global": {
+              "gap": {
+                "mae": 0.3662276533513443
+              }
+            },
+            "static_weights": {
+              "gap": {
+                "mae": 0.3340986139793448
+              }
+            }
+          },
+          "static_vs_reference": {
+            "gap": {
+              "delta": 0.0002284368464906839,
+              "ci95": [
+                -0.0027159765767413623,
+                0.003130912091071086
+              ],
+              "probability_better": 0.4393,
+              "n_bootstrap": 10000,
+              "seed": 442,
+              "improvement_eV": -0.0002284368464906839
+            }
+          }
+        },
+        "44": {
+          "n": 2988,
+          "reference": "local",
+          "methods": {
+            "local": {
+              "gap": {
+                "mae": 0.3202639533230816
+              }
+            },
+            "global": {
+              "gap": {
+                "mae": 0.35610643593246666
+              }
+            },
+            "static_weights": {
+              "gap": {
+                "mae": 0.3195071266415745
+              }
+            }
+          },
+          "static_vs_reference": {
+            "gap": {
+              "delta": -0.0007568266815071204,
+              "ci95": [
+                -0.0040212102649526335,
+                0.002558117383835299
+              ],
+              "probability_better": 0.6725,
+              "n_bootstrap": 10000,
+              "seed": 452,
+              "improvement_eV": 0.0007568266815071204
+            }
+          }
+        }
+      }
+    }
+  },
+  "decision": {
+    "gate": "all three seeds must not regress in Gap MAE on common, OOD, P8-hard, or PCQM proxy",
+    "all_seed_all_set_gap_non_regression": false,
+    "verdict": "stop static dual-2D candidate",
+    "reason": "At least one frozen seed/block regresses against its predeclared single-expert reference.",
+    "production_change": false
+  }
+}

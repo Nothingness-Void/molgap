@@ -8,21 +8,11 @@ import torch
 from torch_geometric.loader import DataLoader
 
 from molgap.constants import RESULTS_DIR
-from molgap.gps import GPSWrapper
-from molgap.dual2d_static_candidate.local_gine import LocalGINEExpert
-from molgap.dual2d_static_candidate.training import encode_expert
+from molgap.archive.phase8_r04_static_dual2d.models import make_expert
+from molgap.archive.phase8_r04_static_dual2d.training import encode_expert
 
 
-OUT_DIR = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
-
-
-def model_for(kind):
-    if kind == "local":
-        return LocalGINEExpert()
-    return GPSWrapper(
-        hidden_channels=192, num_layers=9, num_heads=4,
-        dropout=0.05, pooling="mean_max",
-    )
+OUT_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
 
 
 def main() -> None:
@@ -36,7 +26,7 @@ def main() -> None:
     for seed in (42, 43, 44):
         arrays = {"source_idx": table.source_idx.to_numpy(dtype=np.int64)}
         for kind in ("local", "global"):
-            model = model_for(kind).to(device)
+            model = make_expert(kind).to(device)
             model.load_state_dict(torch.load(
                 OUT_DIR / f"expert_{kind}" / f"seed{seed}.pt",
                 map_location=device,

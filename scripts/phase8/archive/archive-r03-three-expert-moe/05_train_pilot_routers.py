@@ -10,8 +10,8 @@ import torch
 
 from molgap.constants import RESULTS_DIR
 from molgap.router import paired_bootstrap_mean
-from molgap.dual2d_static_candidate.diagnostics import router_diagnostics
-from molgap.dual2d_static_candidate.evaluation import apply_static_weights, metrics
+from molgap.archive.phase8_r04_static_dual2d.diagnostics import router_diagnostics
+from molgap.archive.phase8_r04_static_dual2d.evaluation import apply_static_weights, metrics
 from molgap.archive.phase8_r03_three_expert.router_training import (
     predict_frozen_router, train_frozen_router,
 )

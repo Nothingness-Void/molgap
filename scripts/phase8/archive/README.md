@@ -10,6 +10,6 @@ results default to `results/phase8/archive/`.
 | `archive-r01-learned-router/` | `results/phase8/archive/archive-r01-learned-router/` |
 | `archive-r02-pubchemqc-router/` | `results/phase8/archive/archive-r02-pubchemqc-router/` |
 | `archive-r03-three-expert-moe/` | `results/phase8/archive/archive-r03-three-expert-moe/` |
+| `archive-r04-static-dual2d/` | `results/phase8/archive/archive-r04-static-dual2d/` |
 
-The only active Phase 8 candidate scripts are in
-`scripts/phase8/dual2d_static_candidate/`.
+There is no active Phase 8 architecture candidate.

@@ -13,15 +13,15 @@ from molgap.constants import RESULTS_DIR
 from molgap.gps import GPSWrapper
 from molgap.router import paired_bootstrap_mean
 from molgap.schnet import SchNetWrapper
-from molgap.dual2d_static_candidate.evaluation import (
+from molgap.archive.phase8_r04_static_dual2d.evaluation import (
     apply_static_weights, expert_complementarity, fit_static_weights, metrics,
 )
-from molgap.dual2d_static_candidate.local_gine import LocalGINEExpert
-from molgap.dual2d_static_candidate.training import predict_expert
+from molgap.archive.phase8_r04_static_dual2d.local_gine import LocalGINEExpert
+from molgap.archive.phase8_r04_static_dual2d.training import predict_expert
 
 
 OUT_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r03-three-expert-moe"
-DUAL2D_DIR = RESULTS_DIR / "phase8" / "dual2d_static_candidate"
+DUAL2D_DIR = RESULTS_DIR / "phase8" / "archive" / "archive-r04-static-dual2d"
 EXPERTS = ("local", "global", "geometry")
 
 

@@ -70,7 +70,7 @@ trainable encoders, validated on common OOD/hard evaluation.
 | Learned utility Router for dual-GPS | AR-01 | **archived, negative** | Failed external transfer; keep fixed v4. See `results/phase8/archive/archive-r01-learned-router/decision.md` |
 | Independent PubChemQC Router dataset + Late Blend | AR-02 | **archived, negative** | Oracle headroom is large, but pre-Expert routing fails. Late Blend gains `0.000881` eV Gap, below its `0.001` gate; sealed sets stayed unopened. |
 | From-scratch three-expert GINE/GPS9/SchNet MoE | AR-03 | **archived, negative** | Three-expert Router fails and Geometry is removed. |
-| Local GINE/GPS static blend | P8-C1 | **candidate** | Three-seed static weights pass the internal gate (`+0.001303/+0.012029/+0.003400` eV); external transfer is next. This is not a production version. |
+| Local GINE/GPS static blend | AR-04 | **archived, negative** | The 30k internal static gain does not transfer across all frozen seeds/blocks: OOD seed42, P8-hard seed44, and PCQM seed43 regress. Do not scale. |
 
 Frozen-encoder MoE / descriptor-fusion records (done): `docs/experiment_moe_experts_2026-06-24.md`.
 

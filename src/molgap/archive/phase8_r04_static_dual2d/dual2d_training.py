@@ -12,7 +12,7 @@ from .dual2d import Dual2DConcatFusion, Dual2DTargetGate
 
 
 def robust_score(y, prediction, sources):
-    """Validation score shared by the active dual-2D heads."""
+    """Validation score retained for archived dual-2D head controls."""
     error = np.abs(prediction - y)
     sources = np.asarray(sources)
     random_gap = float(error[sources == "random", 2].mean())

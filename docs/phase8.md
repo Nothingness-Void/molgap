@@ -658,7 +658,7 @@ predictions before database construction. Records:
 ## Archived post-v4 experiments
 
 Negative post-v4 routing and MoE experiments use the independent archive sequence
-(`archive-r01` through `archive-r03`) and do not consume a production model
+(`archive-r01` through `archive-r04`) and do not consume a production model
 version. See `results/phase8/archive/README.md`.
 
 ### Original selection rule
