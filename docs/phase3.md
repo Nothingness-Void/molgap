@@ -1,5 +1,7 @@
 # Phase 3: Data Scaling + ML Optimization
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Push traditional ML to its limit on the full element/MW scope before moving to GNN.
 

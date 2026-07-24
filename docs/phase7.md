@@ -1,5 +1,7 @@
 # Phase 7: 300k Scaling + Hybrid 2D+3D Fusion
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Break past the OOD R²≈0.8 ceiling from Phase 6, via (a) 10× more training data
 and (b) combining 2D topology and 3D geometry.
@@ -24,7 +26,7 @@ End-to-end, in run order. All scripts live in `scripts/phase7/` and use
 | 2 | `build_graphs_local.py` | `results/phase7/pyg_3d_graphs_etkdg_300k.pt` (3D ETKDG graphs) |
 | 3 | `build_2d_graphs_local.py` | `results/phase7/pyg_2d_graphs_bond_300k.pt` (2D bond graphs) |
 | 4 | `train_gps_2d_local.py` | `models/gps_2d_300k.pt` (GPS 2D model) |
-| 5 | `extract_gps_2d_embeddings.py` | `results/phase7/gps_2d_embeddings.pt` (192-d, regenerable) |
+| 5 | `extract_gps_2d_embeddings.py` | `results/phase7/gps_2d_embeddings_aligned.pt` (192-d, regenerable) |
 | 6 | `extract_schnet_3d_embeddings.py` | `results/phase7/schnet_3d_embeddings.pt` (192-d) |
 | 7 | `align_2d_to_3d.py` | `results/phase7/gps_2d_embeddings_aligned.pt` (3D dropped 371 ETKDG failures; two-pointer on labels, zero error) |
 | 8 | `fusion_optuna_local.py` | `models/hybrid_fusion_optuna.pt` + `fusion_optuna_metrics.json` (60-trial gate-fusion search) |

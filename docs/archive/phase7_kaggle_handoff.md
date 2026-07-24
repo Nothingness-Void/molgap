@@ -1,5 +1,7 @@
 # Phase 7 Kaggle Handoff
 
+> Archived Phase 7 remote handoff. It is not a supported Phase 8 remote guide.
+
 Historical note: this tracked Kaggle-notebook work for the Phase 7 3D SchNet
 300k run. It is a handoff note, not a project-wide source of truth. The current
 recommended model is selected in `CURRENT_STATE.md`.

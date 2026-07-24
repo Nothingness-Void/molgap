@@ -1,15 +1,18 @@
-# Closed Phase 8 Experiment Scripts
+# Phase 8 Archive
 
-These historical scripts support reproduction of experiments that failed their
-promotion gates. They are kept out of the active Phase 8 workflow and must not
-be used as production training or inference entry points. Their generated
-results default to `results/phase8/archive/`.
+This tree preserves completed and superseded experiment entry points. Nothing
+here is part of the supported active CLI surface, and active code must not
+import from it.
 
-| Directory | Result archive |
+| Path | Contents |
 |---|---|
-| `archive-r01-learned-router/` | `results/phase8/archive/archive-r01-learned-router/` |
-| `archive-r02-pubchemqc-router/` | `results/phase8/archive/archive-r02-pubchemqc-router/` |
-| `archive-r03-three-expert-moe/` | `results/phase8/archive/archive-r03-three-expert-moe/` |
-| `archive-r04-static-dual2d/` | `results/phase8/archive/archive-r04-static-dual2d/` |
+| `archive-r01-*` to `archive-r08-*` | Closed numbered experiment rounds retained with their exact reproduction payloads |
+| `scaleup/` | Completed 1M, repair, residual, and exact-2M data/evaluation drivers |
+| `remote/colab_1m/` | Historical Colab 1M fusion payload |
+| `remote/kaggle/` | Completed Kaggle training, replay, repair, and fusion payloads |
+| `remote/scnet/` | Completed SCNet experiment-specific jobs and environment probes |
+| `legacy/` | Superseded exploratory scripts retained for provenance only |
 
-There is no active Phase 8 architecture candidate.
+Use result summaries rather than rerunning an archive entry. If a new task
+needs old behavior, first check `src/molgap/`; only promote genuinely reusable
+logic back into the package.

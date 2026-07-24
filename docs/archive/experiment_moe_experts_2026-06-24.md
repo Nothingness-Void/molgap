@@ -1,5 +1,9 @@
 # MoE 专家头对照实验 — 执行 Handoff（给 5060 机器上的 agent）
 
+> Archived 2026-06-24 handoff. It is preserved as historical evidence and is
+> not part of the maintained reading path. Use `CURRENT_STATE.md` for live
+> project facts.
+
 ---
 tags: [molgap, experiment, moe, handoff]
 type: experiment-plan
@@ -23,7 +27,7 @@ TopExpert（Kim et al., AAAI 2023）的专家分组**只在分类任务**（BBBP
 用户最初设想「MW 200-300 一个专家、300-400 一个专家」。**该切法被否决，依据两条：**
 
 1. **文献依据**：两篇成功的分子 MoE 论文切专家的轴分别是**拓扑语义**（arXiv:2302.13693）和**相互作用尺度**（arXiv:2601.12637），且 gating **都是学出来的**（clustering-based / topological gating encoder）。**无人按分子量硬切。**
-2. **项目实测依据**：B3LYP 的误差盲区是「strong charge-transfer / narrow-gap (<2 eV) molecules」（`docs/CURRENT_STATE.md` L24-26）= 电子结构特征，**与分子量无关**。按 MW 切无法对齐真实误差结构，且会在区间边界（如 MW 299↔301）制造预测面阶跃不连续。
+2. **项目实测依据**：B3LYP 的误差盲区是「strong charge-transfer / narrow-gap (<2 eV) molecules」（historical `CURRENT_STATE.md` snapshot）= 电子结构特征，**与分子量无关**。按 MW 切无法对齐真实误差结构，且会在区间边界（如 MW 299↔301）制造预测面阶跃不连续。
 
 **结论**：专家要按物理子结构分、且让模型自己学路由，不能人手按 MW 切。本实验的 `router` 即学习式软路由。
 
@@ -266,7 +270,7 @@ the whole fusion head.
 | 2 | **"Topology-Aware Multiscale Mixture of Experts for Efficient Molecular Property Prediction." 2026.** arXiv:2601.12637 | 佐证 MoE 作 3D backbone 即插即用模块；按物理尺度分专家 | ✅ arXiv 元数据确认(cs.LG, v1)；⚠️ 全文未读，参数量/增益数字未核 |
 | 3 | **Hussain et al. EGT + Triplet Attention.** PCQM4Mv2 榜首 Val MAE 0.0671 | 同数据库(PubChemQC)精度标杆 | ✅ OGB-LSC 官方榜单实时抓取(2026-06-24) |
 | 4 | 项目内部 `docs/phase7.md` L78 | 异质性证据支持专家分组前提（rigid→3D, floppy→2D） | ✅ repo 文件已读 |
-| 5 | 项目内部 `docs/CURRENT_STATE.md` L24-26 | B3LYP 盲区=电子结构特征非分子量（否决 MW 切法） | ✅ repo 文件已读 |
+| 5 | Historical `CURRENT_STATE.md` snapshot | B3LYP 盲区=电子结构特征非分子量（否决 MW 切法） | ✅ repo 文件已读 |
 
 ## 10. 诚实声明（认知边界）
 

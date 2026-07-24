@@ -1,5 +1,7 @@
 # Phase 2: Generalization Study
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Test how model performance degrades when expanding element types and MW range.
 

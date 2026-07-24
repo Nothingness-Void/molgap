@@ -1,12 +1,13 @@
 # Virtual environment
 .venv/
+.scnet/
 
 # Large data files (regenerate with pipeline)
 results/phase3/phase3_features.csv
 data/raw/phase3_*.csv
 results/**/*.pt
 results/**/*.db
-models/*.pt
+models/**/*.pt
 
 # Large public datasets (download separately; referenced by path in code)
 data/commercial/*.data
@@ -21,11 +22,12 @@ dist/
 build/
 
 # Model files (binary, retrain is fast)
-models/*.joblib
+models/**/*.joblib
 
 # Large intermediate data (regenerate with pipeline)
 data/processed/*.csv
 data/raw/*.csv
+data/raw/**/*.csv
 !data/commercial/commercial_molecules_template.csv
 
 # Keep directory structure
@@ -62,6 +64,8 @@ data/raw/*.json
 data/raw/*.zip
 data/raw/pcqm4m-v2/
 data/raw/archive-r02-router-candidates/
+data/cache/*
+!data/cache/README.md
 
 # Archived experiment payloads stay local; commit decisions and summary metrics only.
 results/phase8/archive/**/*.parquet
@@ -70,5 +74,33 @@ results/phase8/archive/**/*.log
 results/phase8/archive/**/*.txt
 results/phase8/archive/archive-r04-static-dual2d/*.parquet
 results/phase8/archive/archive-r04-static-dual2d/external_transfer_predictions.csv
+results/phase8/archive/archive-r05-physics-consistency/p0_physics_consistency_common_predictions.csv
+results/scnet/
 results/**/*.npz
 results/**/*.npy
+results/phase8/repaired_2m/ledger/
+results/phase8/repaired_2m/*.parquet
+results/phase8/repaired_2m/*.tar.gz
+results/phase8/repaired_2m/upload_parts/
+
+# Remote execution payloads are local/retrievable artifacts, not source.
+results/**/*.log
+results/**/*.zip
+results/**/*.csv
+results/**/*.parquet
+results/**/*.joblib
+results/**/*.sqlite
+results/**/*.out
+results/**/*.err
+results/**/*.ipynb
+# Canonical executable code lives under scripts/ or src/molgap/, never results/.
+results/**/*.py
+results/**/*.slurm
+results/**/*.sh
+results/kaggle/**/*.csv
+results/phase8/remote/**/*.csv
+results/**/runtime_source/
+results/**/model_assets/
+results/kaggle/archive/audits/full_asset_audit/kernel_sources/
+results/phase8/*_audit.csv
+data/raw/phase8_repair_v2_checkpoint_dataset/

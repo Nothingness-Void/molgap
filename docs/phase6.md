@@ -1,5 +1,7 @@
 # Phase 6: MW Expansion (200-1000)
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Expand training data to MW 200-1000 so large commercial molecules (MW>500) become interpolation, not extrapolation.
 
@@ -11,7 +13,7 @@ Expand training data to MW 200-1000 so large commercial molecules (MW>500) becom
 ## Results
 | Experiment | MAE | R² | Notes |
 |------------|-----|-----|-------|
-| SchNet ETKDG default (P4 params) | 0.158 | 0.890 | cutoff=6.0, dropout=0.2 |
+| SchNet ETKDG baseline (P4 params) | 0.158 | 0.890 | cutoff=6.0, dropout=0.2 |
 | **SchNet ETKDG Optuna** | **0.162** | **0.882** | cutoff=8.0, dropout=0.1, Colab |
 
 ### Gaussian B3LYP validation (10 commercial OLED molecules)
@@ -30,7 +32,7 @@ Expand training data to MW 200-1000 so large commercial molecules (MW>500) becom
 ## Key findings
 - Internal test R² slightly dropped (0.896→0.882) due to increased data diversity
 - But external validation improved across the board (Gap MAE -37%, OOD R² +9%)
-- OOD R²≈0.8 is the current accuracy ceiling
+- At this checkpoint, OOD R²≈0.8 was the observed accuracy ceiling
 - Bottlenecks: ETKDG conformer noise (~0.1 eV) + limited training coverage (44k vs 85M)
 
 ## Scripts

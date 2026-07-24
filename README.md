@@ -1,133 +1,60 @@
 # MolGap
 
-Machine learning prediction of HOMO, LUMO, and HOMO-LUMO gap for organic electronic molecules (OLED, organic thin-film, OPV).
+Machine-learning prediction of gas-phase B3LYP and near-GW HOMO, LUMO, and
+HOMO-LUMO gap for organic molecules.
 
-Trained on [PubChemQC](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp)
-B3LYP/6-31G\* data (~85M molecules). The current B3LYP accuracy predictor is the
-Phase 8 v4 routed dual-GPS model; its component/compatibility base is the
-expansion500k v3 GPS 2D + SchNet 3D hybrid with ETKDG conformers.
+Predictions are electronic-structure values, not experimental solid-state
+IP/EA. The current recommended model, open decision gate, and remote jobs are
+listed only in `CURRENT_STATE.md`.
 
-## Quick Start
+## Install
 
-```bash
-# Install (editable mode)
-pip install -e .
+Use the repository virtual environment:
 
-# Predict with the current recommended B3LYP accuracy path
-python -c "
-from molgap.inference import load_routed_dual_gps_hybrid, predict_smiles_batch_routed_dual_gps
-models = load_routed_dual_gps_hybrid()
-vi, preds, routed = predict_smiles_batch_routed_dual_gps(
-    ['c1ccc2c(c1)cc1ccc3ccccc3c1n2'], models=models
+```powershell
+.venv\Scripts\python.exe -m pip install -e ".[test]"
+```
+
+Core runtime packages include PyTorch, PyTorch Geometric, RDKit, pandas, NumPy,
+scikit-learn, and Optuna. Platform-specific environments are documented by the
+relevant operations guide.
+
+## Basic Inference
+
+Choose the loader named in `CURRENT_STATE.md`. The routed-hybrid API, for
+example, is used as follows:
+
+```python
+from molgap.inference import (
+    load_routed_dual_gps_hybrid,
+    predict_smiles_batch_routed_dual_gps,
 )
-print(preds[0].tolist())
-"
 
-# Batch prediction
-python -c "
-from molgap.inference import load_routed_dual_gps_hybrid, predict_smiles_batch_routed_dual_gps
 models = load_routed_dual_gps_hybrid()
-smiles = ['c1ccccc1', 'c1ccc(cc1)N(c1ccccc1)c1ccccc1']
-valid_idx, preds, routed = predict_smiles_batch_routed_dual_gps(smiles, models=models)
-print(valid_idx, preds, routed)
-"
+valid_idx, predictions, routed = predict_smiles_batch_routed_dual_gps(
+    ["c1ccccc1"],
+    models=models,
+)
 ```
 
-> **Current recommended model, performance, and next steps:** see
-> [`CURRENT_STATE.md`](CURRENT_STATE.md). Per-phase history: [`docs/`](docs/).
-> This README only covers what is stable: what the project is, install, basic inference.
+Outputs are ordered as `homo`, `lumo`, and `gap` in eV. Runtime constraints are
+defined in `AGENTS.md`.
 
-## Prediction Pipeline
+## Navigation
 
-```
-SMILES ─┬─ 2D bond graph ───────────────→ GPS 2D ──┐
-        └─ ETKDG 3D conformer + charges → SchNet 3D ┴─ gate fusion → HOMO/LUMO/Gap (eV)
-```
+The complete reading protocol, document map, and hard constraints are in
+`AGENTS.md`. Do not reconstruct live status by scanning phase or result files.
 
-**Important**: Predicted values are B3LYP Kohn-Sham orbital energies, not experimental
-IP/EA. Known systematic offsets vs experiment exist (see `CURRENT_STATE.md`); Gap is
-the most reliable output.
+## Public API
 
-## Project Structure
+The lazy package exports and implementation live in `src/molgap/__init__.py`
+and `src/molgap/inference.py`. Supported families include:
 
-Code map and module boundaries ("to change X, edit which file") live in
-[`ARCHITECTURE.md`](ARCHITECTURE.md). In short: reusable logic in `src/molgap/`,
-thin CLI wrappers in `scripts/phase{N}/`, outputs in `results/`, checkpoints in
-`models/`, per-phase docs in `docs/`.
+- registry-based single-hybrid loading and batch prediction;
+- routed dual-GPS hybrid loading and batch prediction;
+- legacy 3D-only helpers;
+- conformer-ensemble helpers;
+- Delta/UQ helpers for explicitly selected historical bundles.
 
-## Experiment History
-
-Per-phase background, experiments, and conclusions live in [`docs/phase{N}.md`](docs/).
-Phase 8 selected the expansion500k hybrid as the current v3 B3LYP base; see
-[`docs/phase8.md`](docs/phase8.md) and
-[`results/phase8/full_expansion_500k_summary.md`](results/phase8/full_expansion_500k_summary.md).
-Phase 9 revalidated GW Delta-learning against v3; see
-[`results/phase9/v3_delta_decision.md`](results/phase9/v3_delta_decision.md).
-Task priorities are in [`ROADMAP.md`](ROADMAP.md).
-
-## Requirements
-
-- Python >= 3.9
-- PyTorch + PyTorch Geometric
-- RDKit
-- scikit-learn, pandas, numpy, tqdm, optuna
-
-```bash
-pip install -e .
-pip install torch torch_geometric rdkit scikit-learn pandas numpy tqdm optuna lightgbm
-```
-
-## API Reference
-
-### `molgap.inference`
-
-```python
-# v3 component/compatibility hybrid
-load_hybrid(key="phase8_expansion_hybrid")
-predict_smiles_batch_hybrid(smiles_list: list[str], models=...)
-    -> (valid_idx, preds)
-
-# v4 accuracy predictor: v3 base + Gap<4 eV routed dual-GPS expert
-routed = load_routed_dual_gps_hybrid()
-predict_smiles_batch_routed_dual_gps(smiles_list, models=routed)
-    -> (valid_idx, preds, routed_mask)
-
-# Prior v2 base
-load_hybrid(key="phase8_replacement_hybrid")
-
-# Legacy 3D-only SchNet helpers
-predict_smiles(smiles: str) -> dict[str, float] | None
-predict_smiles_batch(smiles_list: list[str]) -> pd.DataFrame
-
-# Ensemble prediction (multiple conformers, averaged)
-predict_smiles_ensemble(smiles: str, k: int = 8) -> dict[str, float] | None
-
-# v3 GW Delta + calibrated UQ/OOD bundle
-bundle = load_uq_bundle(results_subdir="phase10_v3")
-predict_smiles_with_uq(smiles, bundle=bundle)
-
-# Low-level: load model manually
-load_model(model_path=None, params=None, graphs_path=None)
-    -> (model, y_mean, y_std, device)
-```
-
-### `molgap.graphs`
-
-```python
-# Single SMILES → PyG Data
-smiles_to_pyg(smiles: str) -> Data | None
-
-# Batch conversion
-smiles_list_to_pyg(smiles_list: list[str]) -> (list[Data], list[int])
-
-# Build training graphs with labels
-build_labeled_graphs(smiles_list, targets) -> list[Data]
-```
-
-## Data Source
-
-[PubChemQC B3LYP/6-31G\*//PM6](https://huggingface.co/datasets/molssiai-hub/pubchemqc-b3lyp) — ~85 million molecules with DFT-computed electronic properties. Hosted on Hugging Face, fetched via streaming API.
-
-## License
-
-Research use. PubChemQC data is subject to its original license terms.
+Inspect function docstrings for return shapes and optional arguments. Do not
+infer the recommended registry key from an old experiment document.

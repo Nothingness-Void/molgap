@@ -1,5 +1,7 @@
 # Phase 4: GNN SchNet + ETKDG Consistency
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Introduce 3D GNN (SchNet) and establish train-inference consistency with ETKDG conformers.
 
@@ -11,9 +13,9 @@ Introduce 3D GNN (SchNet) and establish train-inference consistency with ETKDG c
 | Model | MAE | R² | Consistent? |
 |-------|-----|-----|-------------|
 | AttentiveFP (2D) | 0.163 | 0.879 | yes |
-| SchNet PM6 default | 0.113 | 0.930 | NO |
+| SchNet PM6 baseline | 0.113 | 0.930 | NO |
 | SchNet PM6 Optuna | 0.095 | 0.950 | NO |
-| SchNet ETKDG default | 0.155 | 0.885 | yes |
+| SchNet ETKDG baseline | 0.155 | 0.885 | yes |
 | **SchNet ETKDG Optuna** | **0.147** | **0.896** | **yes** |
 
 ## Critical finding: Train-inference consistency
@@ -22,7 +24,7 @@ PM6 conformers (from PubChemQC) give higher R² in testing, but at inference tim
 ## Scripts
 | Script | Purpose |
 |--------|---------|
-| `scripts/phase4/gnn_schnet_3d.py` | SchNet training (default params) |
+| `scripts/phase4/gnn_schnet_3d.py` | SchNet training (baseline parameters) |
 | `scripts/phase4/schnet_optuna.py` | Optuna hyperparameter search |
 | `scripts/phase4/_retrain_best.py` | Retrain with best Optuna params |
 

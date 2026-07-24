@@ -1,5 +1,7 @@
 # Phase 1: Traditional ML Baseline
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Establish ML upper bound on the simplest subset (CHON, MW 200-300).
 

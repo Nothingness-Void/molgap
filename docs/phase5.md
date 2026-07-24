@@ -1,5 +1,7 @@
 # Phase 5: Validation (OOD + Gaussian + Experimental)
 
+> Historical method and evidence. Live project state is in `CURRENT_STATE.md`.
+
 ## Goal
 Validate the Phase 4 model on external data: OOD PubChemQC molecules, Gaussian B3LYP single-point calculations, and experimental literature values.
 

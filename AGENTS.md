@@ -10,7 +10,8 @@ not a project description. One fact lives in one place — follow the links.
    conclusions, blocker, next actions. If anything conflicts, this wins.
 3. **`ROADMAP.md`** — task priorities / backlog (read the relevant section only).
 4. **`docs/phaseN.md`** — background, experiments, conclusions for one phase
-   (history & method, not live status). Phase 8 selected the current v2 base.
+   (history & method, not live status). Never infer the current model from a
+   phase document; use `CURRENT_STATE.md`.
 5. **`ARCHITECTURE.md`** — code map; tells you which file to edit for a change.
 6. The specific code files your task touches.
 
@@ -22,13 +23,20 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   method (ETKDG). Never mix PM6 training coords with ETKDG inference.
 - **Targets**: `homo`/`lumo`/`gap` (eV, B3LYP Kohn-Sham), NOT experimental values.
 - **Reuse, don't fork**: reusable logic lives in `src/molgap/` only; `scripts/` are
-  thin CLI wrappers. Don't redefine model classes in scripts. See `ARCHITECTURE.md`.
+  thin CLI wrappers. Public inference is implemented in `src/molgap/inference.py`
+  and lazily exported by `src/molgap/__init__.py`. Don't redefine model classes
+  in scripts. See `ARCHITECTURE.md`.
 - **Don't re-run completed experiments** — cite `results/phase{N}/`.
 - **Test scripts locally before delivering.**
+- **Remote durability**: every cloud job MUST checkpoint progress atomically and
+  produce independently retrievable output chunks. Never rely on a transient
+  worker filesystem or a single long-running task as the only copy of results.
 
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
 - Don't double-write a fact; if it must appear twice, the second is a link.
+- Phase documents use dated historical language. Never write `current`, `default`,
+  `running`, or `next` there; point to `CURRENT_STATE.md` or `ROADMAP.md`.
 - Comments explain *why*, not *what*.
 - Install: `pip install -e .` (editable, via pyproject.toml).
 
