@@ -1,0 +1,69 @@
+{
+  "experiment": "phase8_repaired_2m_retention_d_multiseed",
+  "control": "retention-B",
+  "seeds": [42, 43, 44],
+  "average_mae_delta_d_minus_b_eV": {
+    "seed42": {
+      "common": -0.0011625945037377766,
+      "ood1000": -0.001184046772023481,
+      "p8_targeted_hard": -0.0011406816039244427,
+      "pcqm_gap": 0.0005019688836337965,
+      "gate_passed": true
+    },
+    "seed43": {
+      "common": -0.001082563575716719,
+      "ood1000": -0.0011671359494732497,
+      "p8_targeted_hard": -0.0009961752307445504,
+      "pcqm_gap": 0.0002578642705079459,
+      "gate_passed": true
+    },
+    "seed44": {
+      "common": -0.0014046385890491286,
+      "ood1000": -0.00213556994209943,
+      "p8_targeted_hard": -0.0006580123909946806,
+      "pcqm_gap": 0.0024150410354747964,
+      "gate_passed": true
+    }
+  },
+  "aggregate_delta_d_minus_b_eV": {
+    "common_average": {
+      "mean": -0.001216598889501208,
+      "sample_std": 0.00016769148402507534,
+      "all_seeds_improved": true
+    },
+    "ood1000_average": {
+      "mean": -0.0014955842211987203,
+      "sample_std": 0.0005543083854655568,
+      "all_seeds_improved": true
+    },
+    "p8_targeted_hard_average": {
+      "mean": -0.0009316230752212246,
+      "sample_std": 0.00024772490360193856,
+      "all_seeds_improved": true
+    },
+    "pcqm_gap": {
+      "mean": 0.0010582913965388463,
+      "sample_std": 0.0011813018041982133,
+      "all_seeds_regressed": true
+    }
+  },
+  "artifact_acceptance": {
+    "remote_local_sha256_match": true,
+    "prediction_numeric_fields_finite": true,
+    "seed43_model": {
+      "bytes": 11779674,
+      "sha256": "35b76292203239e54899ea878209d8c2722bcbf9df61fce8088ecb55f10b2a80"
+    },
+    "seed44_model": {
+      "bytes": 11779674,
+      "sha256": "5c9022db70dda53c1ad8635f843d80a1eb6502d0386036d3f1b77c2c2d63909f"
+    },
+    "seed43_raw": "results/phase8/repaired_2m/retention_d_seed43_raw",
+    "seed44_raw": "results/phase8/repaired_2m/retention_d_seed44_raw"
+  },
+  "decision": "accept_retention_d_as_stable_general_base_recipe",
+  "deployment_checkpoint": "seed42",
+  "seed43_seed44_role": "stability_evidence_only",
+  "sealed_20k_opened": false,
+  "production_registry_changed": false
+}

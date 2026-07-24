@@ -1,6 +1,6 @@
 {
   "experiment": "phase8_repaired_2m_retention_d_gps7",
-  "status": "seed42_passed_repeat_seeds_submitted",
+  "status": "three_seed_general_gate_passed",
   "dataset": {
     "path": "/work1/share/$USER/molgap-data/phase8_repaired_2m.csv",
     "rows": 2000000,
@@ -38,6 +38,16 @@
     "p8_hard_average_delta_vs_retention_b_eV": -0.0011406816039244427,
     "pcqm_gap_delta_vs_retention_b_eV": 0.0005019688836337965,
     "evidence": "results/phase8/repaired_2m/retention_d_seed42_decision.md"
+  },
+  "multiseed_decision": {
+    "seeds": [42, 43, 44],
+    "all_seeds_passed_general_gate": true,
+    "mean_common_average_delta_vs_retention_b_eV": -0.001216598889501208,
+    "mean_ood_average_delta_vs_retention_b_eV": -0.0014955842211987203,
+    "mean_p8_hard_average_delta_vs_retention_b_eV": -0.0009316230752212246,
+    "mean_pcqm_gap_delta_vs_retention_b_eV": 0.0010582913965388463,
+    "deployment_checkpoint_seed": 42,
+    "evidence": "results/phase8/repaired_2m/retention_d_multiseed_decision.md"
   },
   "promotion_gate_candidate_minus_retention_b_eV": {
     "common_average_max_regression": 0.0005,

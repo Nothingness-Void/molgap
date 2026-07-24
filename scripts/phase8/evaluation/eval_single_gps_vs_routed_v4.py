@@ -1,4 +1,4 @@
-"""Evaluate one GPS7 checkpoint against fixed routed-v4 prediction artifacts."""
+"""Evaluate one GPS checkpoint against fixed routed-v4 prediction artifacts."""
 from __future__ import annotations
 
 import argparse
@@ -109,6 +109,8 @@ def main() -> None:
     parser.add_argument("--pcqm-baseline-csv", type=Path, required=True)
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--candidate-name", required=True)
+    parser.add_argument("--num-layers", type=int, default=7)
+    parser.add_argument("--hidden-channels", type=int, default=192)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=256)
     args = parser.parse_args()
@@ -117,8 +119,8 @@ def main() -> None:
         raise RuntimeError("A CUDA/DCU device is required")
     device = torch.device("cuda")
     model = GPSWrapper(
-        hidden_channels=192,
-        num_layers=7,
+        hidden_channels=args.hidden_channels,
+        num_layers=args.num_layers,
         num_heads=4,
         dropout=0.05,
     ).to(device)
