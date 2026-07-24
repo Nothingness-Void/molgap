@@ -1,0 +1,56 @@
+{
+  "blend": "validation_selected_global_prediction_weight",
+  "selection_role": "validation",
+  "grid_points": 101,
+  "first_weight": 0.45,
+  "second_weight": 0.55,
+  "validation_average_mae_eV": 0.07250647991895676,
+  "aligned_rows": {
+    "validation": 9233,
+    "test": 9238
+  },
+  "test_metrics": {
+    "first": {
+      "HOMO": {
+        "mae": 0.06678029149770737
+      },
+      "LUMO": {
+        "mae": 0.071668840944767
+      },
+      "Gap": {
+        "mae": 0.09050449728965759
+      },
+      "average": {
+        "mae": 0.07631786912679672
+      }
+    },
+    "second": {
+      "HOMO": {
+        "mae": 0.06714320182800293
+      },
+      "LUMO": {
+        "mae": 0.07161252945661545
+      },
+      "Gap": {
+        "mae": 0.09072855859994888
+      },
+      "average": {
+        "mae": 0.07649476081132889
+      }
+    },
+    "blend": {
+      "HOMO": {
+        "mae": 0.06350091844797134
+      },
+      "LUMO": {
+        "mae": 0.06755395978689194
+      },
+      "Gap": {
+        "mae": 0.08568970113992691
+      },
+      "average": {
+        "mae": 0.0722481906414032
+      }
+    }
+  }
+}

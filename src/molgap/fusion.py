@@ -54,6 +54,45 @@ class FusionHead(nn.Module):
         return self.head(self.encode(h_2d, h_3d))
 
 
+class BoundedResidualFusionHead(nn.Module):
+    """Correct a frozen baseline without replacing its prediction path."""
+
+    def __init__(
+        self,
+        hidden=192,
+        dropout=0.0,
+        dim_2d=192,
+        dim_3d=192,
+        n_targets=3,
+        max_abs_correction_eV=0.2,
+    ):
+        super().__init__()
+        self.norm_2d = nn.LayerNorm(dim_2d)
+        self.norm_3d = nn.LayerNorm(dim_3d)
+        self.proj_2d = nn.Linear(dim_2d, hidden)
+        self.proj_3d = nn.Linear(dim_3d, hidden)
+        self.delta_head = nn.Sequential(
+            nn.Linear(hidden * 2 + n_targets, hidden),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden, hidden // 2),
+            nn.SiLU(),
+            nn.Linear(hidden // 2, n_targets),
+        )
+        nn.init.zeros_(self.delta_head[-1].weight)
+        nn.init.zeros_(self.delta_head[-1].bias)
+        self.max_abs_correction_eV = float(max_abs_correction_eV)
+
+    def correction(self, h_2d, h_3d, baseline):
+        h_2d = self.proj_2d(self.norm_2d(h_2d))
+        h_3d = self.proj_3d(self.norm_3d(h_3d))
+        raw = self.delta_head(torch.cat((h_2d, h_3d, baseline), dim=-1))
+        return self.max_abs_correction_eV * torch.tanh(raw)
+
+    def forward(self, h_2d, h_3d, baseline):
+        return baseline + self.correction(h_2d, h_3d, baseline)
+
+
 class DualGPSFusionHead(nn.Module):
     """Fuse complementary GPS7/GPS9 embeddings without any 3D encoder.
 

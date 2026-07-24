@@ -1,0 +1,63 @@
+{
+  "experiment": "qm9_gps_multiscale_export",
+  "candidate": "gps9",
+  "layers": [
+    5,
+    7,
+    -1
+  ],
+  "split_seed": 42,
+  "split_fingerprint": "5b5622d0e7be92b0",
+  "checkpoint": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\gps9_topology\\seed42\\model.pt",
+  "embedding_output": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\gps9_multiscale_l579_topology\\seed42\\payload.pt",
+  "embedding_dim": 576,
+  "split_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.05713546276092529
+      },
+      "LUMO": {
+        "mae": 0.0652594193816185
+      },
+      "Gap": {
+        "mae": 0.0779714286327362
+      },
+      "average": {
+        "mae": 0.06678876280784607
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.07522698491811752
+      },
+      "LUMO": {
+        "mae": 0.08135548233985901
+      },
+      "Gap": {
+        "mae": 0.10374169796705246
+      },
+      "average": {
+        "mae": 0.08677472174167633
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.07529596239328384
+      },
+      "LUMO": {
+        "mae": 0.08025889843702316
+      },
+      "Gap": {
+        "mae": 0.10346971452236176
+      },
+      "average": {
+        "mae": 0.08634152263402939
+      }
+    }
+  }
+}

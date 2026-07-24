@@ -1,0 +1,156 @@
+{
+  "operation": "combine_embedding_payloads_on_intersection",
+  "primary_payload": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_eval_seed42\\model_seed42\\payload.pt",
+  "secondary_payload": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_eval_seed43\\model_seed42\\payload.pt",
+  "outputs": {
+    "primary": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_two_view_intersection\\model_seed42\\primary.pt",
+    "secondary": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_two_view_intersection\\model_seed42\\secondary.pt",
+    "average": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_two_view_intersection\\model_seed42\\average.pt",
+    "concat": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\schnet_etkdg_aug2_two_view_intersection\\model_seed42\\concat.pt"
+  },
+  "rows": {
+    "train": 92228,
+    "validation": 9233,
+    "test": 9238
+  },
+  "embedding_dims": {
+    "primary": 176,
+    "secondary": 176,
+    "average": 176,
+    "concat": 352
+  },
+  "prediction_metrics": {
+    "primary": {
+      "train": {
+        "HOMO": {
+          "mae": 0.03574260696768761
+        },
+        "LUMO": {
+          "mae": 0.046863581985235214
+        },
+        "Gap": {
+          "mae": 0.050677984952926636
+        },
+        "average": {
+          "mae": 0.044428057968616486
+        }
+      },
+      "validation": {
+        "HOMO": {
+          "mae": 0.07344169914722443
+        },
+        "LUMO": {
+          "mae": 0.08025611191987991
+        },
+        "Gap": {
+          "mae": 0.09808371216058731
+        },
+        "average": {
+          "mae": 0.08392717689275742
+        }
+      },
+      "test": {
+        "HOMO": {
+          "mae": 0.0741560310125351
+        },
+        "LUMO": {
+          "mae": 0.08392498642206192
+        },
+        "Gap": {
+          "mae": 0.10367652773857117
+        },
+        "average": {
+          "mae": 0.08725251257419586
+        }
+      }
+    },
+    "secondary": {
+      "train": {
+        "HOMO": {
+          "mae": 0.035757724195718765
+        },
+        "LUMO": {
+          "mae": 0.046867284923791885
+        },
+        "Gap": {
+          "mae": 0.050496090203523636
+        },
+        "average": {
+          "mae": 0.044373705983161926
+        }
+      },
+      "validation": {
+        "HOMO": {
+          "mae": 0.07443279027938843
+        },
+        "LUMO": {
+          "mae": 0.08135706931352615
+        },
+        "Gap": {
+          "mae": 0.09948733448982239
+        },
+        "average": {
+          "mae": 0.08509239554405212
+        }
+      },
+      "test": {
+        "HOMO": {
+          "mae": 0.07425160706043243
+        },
+        "LUMO": {
+          "mae": 0.08386915922164917
+        },
+        "Gap": {
+          "mae": 0.10323657095432281
+        },
+        "average": {
+          "mae": 0.08711910992860794
+        }
+      }
+    },
+    "average": {
+      "train": {
+        "HOMO": {
+          "mae": 0.033584341406822205
+        },
+        "LUMO": {
+          "mae": 0.04440651834011078
+        },
+        "Gap": {
+          "mae": 0.04770142212510109
+        },
+        "average": {
+          "mae": 0.04189743846654892
+        }
+      },
+      "validation": {
+        "HOMO": {
+          "mae": 0.07153162360191345
+        },
+        "LUMO": {
+          "mae": 0.07826674729585648
+        },
+        "Gap": {
+          "mae": 0.09570341557264328
+        },
+        "average": {
+          "mae": 0.08183392882347107
+        }
+      },
+      "test": {
+        "HOMO": {
+          "mae": 0.07166333496570587
+        },
+        "LUMO": {
+          "mae": 0.08114217221736908
+        },
+        "Gap": {
+          "mae": 0.1003485918045044
+        },
+        "average": {
+          "mae": 0.08438469469547272
+        }
+      }
+    }
+  }
+}

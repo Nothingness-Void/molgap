@@ -1,0 +1,108 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "egnn",
+  "geometry": "dft",
+  "seed": 321,
+  "split_seed": 42,
+  "split_fingerprint": "78b0cc01468b2b96",
+  "split_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "requested_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5655975341796875,
+    0.29296883940696716,
+    6.85861873626709
+  ],
+  "target_std": [
+    0.5754454135894775,
+    1.3222732543945312,
+    1.2885043621063232
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 128,
+    "num_layers": 4,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.05,
+    "batch_size": 128
+  },
+  "n_params": 467331,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8160282969474792,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.4042483866214752
+      },
+      "LUMO": {
+        "mae": 1.1085853576660156
+      },
+      "Gap": {
+        "mae": 1.0552144050598145
+      },
+      "average": {
+        "mae": 0.8560159802436829
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.3702799081802368
+      },
+      "LUMO": {
+        "mae": 1.0737062692642212
+      },
+      "Gap": {
+        "mae": 1.0040984153747559
+      },
+      "average": {
+        "mae": 0.8160282969474792
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.34081780910491943
+      },
+      "LUMO": {
+        "mae": 0.8913991451263428
+      },
+      "Gap": {
+        "mae": 0.9059216976165771
+      },
+      "average": {
+        "mae": 0.7127129435539246
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "dft",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7939604222774506,
+      "validation_average_mae_eV": 0.8160282969474792,
+      "elapsed_s": 0.4410071999991487,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n256_64_64\\egnn_dft\\seed321\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n256_64_64\\egnn_dft\\seed321\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n256_64_64\\egnn_dft\\seed321\\checkpoint.pt"
+  }
+}

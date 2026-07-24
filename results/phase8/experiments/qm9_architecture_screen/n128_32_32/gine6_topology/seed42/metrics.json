@@ -1,0 +1,106 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "gine6",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "28f779d1b620ec68",
+  "split_rows": {
+    "train": 128,
+    "validation": 32,
+    "test": 32
+  },
+  "requested_rows": {
+    "train": 128,
+    "validation": 32,
+    "test": 32
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.636155128479004,
+    0.38100191950798035,
+    7.017029762268066
+  ],
+  "target_std": [
+    0.5308793187141418,
+    1.3423041105270386,
+    1.313056230545044
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 192,
+    "num_layers": 6,
+    "dropout": 0.05,
+    "batch_size": 256
+  },
+  "n_params": 802371,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8532459139823914,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.36361098289489746
+      },
+      "LUMO": {
+        "mae": 1.1208723783493042
+      },
+      "Gap": {
+        "mae": 1.104849934577942
+      },
+      "average": {
+        "mae": 0.8631110787391663
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.4180966317653656
+      },
+      "LUMO": {
+        "mae": 1.093480110168457
+      },
+      "Gap": {
+        "mae": 1.0481610298156738
+      },
+      "average": {
+        "mae": 0.8532459139823914
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.5167607665061951
+      },
+      "LUMO": {
+        "mae": 0.9244856238365173
+      },
+      "Gap": {
+        "mae": 0.96307772397995
+      },
+      "average": {
+        "mae": 0.8014414310455322
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7948317527770996,
+      "validation_average_mae_eV": 0.8532459139823914,
+      "elapsed_s": 0.3278744999997798,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n128_32_32\\gine6_topology\\seed42\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n128_32_32\\gine6_topology\\seed42\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n128_32_32\\gine6_topology\\seed42\\checkpoint.pt"
+  }
+}

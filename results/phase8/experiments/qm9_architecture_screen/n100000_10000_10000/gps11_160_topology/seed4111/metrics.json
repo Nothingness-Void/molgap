@@ -1,0 +1,107 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "gps11_160",
+  "geometry": "topology",
+  "seed": 4111,
+  "split_seed": 42,
+  "split_fingerprint": "5b5622d0e7be92b0",
+  "split_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "requested_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.534321308135986,
+    0.32281485199928284,
+    6.857131481170654
+  ],
+  "target_std": [
+    0.5975539088249207,
+    1.273480772972107,
+    1.2833107709884644
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 160,
+    "num_layers": 11,
+    "num_heads": 4,
+    "dropout": 0.05,
+    "batch_size": 192
+  },
+  "n_params": 3167363,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.2072792798280716,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.17109636962413788
+      },
+      "LUMO": {
+        "mae": 0.19409720599651337
+      },
+      "Gap": {
+        "mae": 0.2445695698261261
+      },
+      "average": {
+        "mae": 0.20325438678264618
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.1741056591272354
+      },
+      "LUMO": {
+        "mae": 0.19701489806175232
+      },
+      "Gap": {
+        "mae": 0.25071728229522705
+      },
+      "average": {
+        "mae": 0.2072792798280716
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.1702873855829239
+      },
+      "LUMO": {
+        "mae": 0.19357265532016754
+      },
+      "Gap": {
+        "mae": 0.24343466758728027
+      },
+      "average": {
+        "mae": 0.2024315744638443
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.2742688028860092,
+      "validation_average_mae_eV": 0.2072792798280716,
+      "elapsed_s": 31.40550280000025,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\gps11_160_topology\\seed4111\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\gps11_160_topology\\seed4111\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\gps11_160_topology\\seed4111\\checkpoint.pt"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "schnet",
+  "geometry": "etkdg",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "28f779d1b620ec68",
+  "split_rows": {
+    "train": 117,
+    "validation": 31,
+    "test": 32
+  },
+  "requested_rows": {
+    "train": 128,
+    "validation": 32,
+    "test": 32
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.636155128479004,
+    0.38100191950798035,
+    7.017029762268066
+  ],
+  "target_std": [
+    0.5308793187141418,
+    1.3423041105270386,
+    1.313056230545044
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 10.0,
+    "dropout": 0.05,
+    "batch_size": 128
+  },
+  "n_params": 809668,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8308988213539124,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.35727575421333313
+      },
+      "LUMO": {
+        "mae": 1.113440752029419
+      },
+      "Gap": {
+        "mae": 1.1022520065307617
+      },
+      "average": {
+        "mae": 0.8576561808586121
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.395478218793869
+      },
+      "LUMO": {
+        "mae": 1.0435142517089844
+      },
+      "Gap": {
+        "mae": 1.053704023361206
+      },
+      "average": {
+        "mae": 0.8308988213539124
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.522978663444519
+      },
+      "LUMO": {
+        "mae": 0.9041023850440979
+      },
+      "Gap": {
+        "mae": 0.9508947134017944
+      },
+      "average": {
+        "mae": 0.7926585674285889
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "etkdg",
+    "requested": 192,
+    "succeeded": 180,
+    "failed": 12,
+    "failure_indices": [
+      96635,
+      50928,
+      19815,
+      61014,
+      39929,
+      76128,
+      117986,
+      78659,
+      45448,
+      35600,
+      14137,
+      57568
+    ],
+    "seed": 42,
+    "mmff_iters": 200,
+    "sdf_sanitize": false,
+    "cache_version": 2,
+    "elapsed_s": 5.831202399999711,
+    "index_sha256": "28f779d1b620ec68e0538919a80f582e20a025f7b83ef5fabbc7d8641f45767d"
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7932511568069458,
+      "validation_average_mae_eV": 0.8308988213539124,
+      "elapsed_s": 0.3733523000000787,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.7804862856864929,
+      "validation_average_mae_eV": 0.8309165239334106,
+      "elapsed_s": 0.36465750000024855,
+      "selected": false
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n128_32_32\\schnet_etkdg\\seed42\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n128_32_32\\schnet_etkdg\\seed42\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n128_32_32\\schnet_etkdg\\seed42\\checkpoint.pt"
+  }
+}

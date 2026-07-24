@@ -1,0 +1,60 @@
+{
+  "fusion": "standard_embedding_gate",
+  "seed": 42,
+  "aligned_rows": {
+    "train": 117,
+    "validation": 31,
+    "test": 32
+  },
+  "best_epoch": 2,
+  "best_validation_average_mae_eV": 0.8854588270187378,
+  "test_metrics": {
+    "HOMO": {
+      "mae": 0.5436789989471436
+    },
+    "LUMO": {
+      "mae": 1.2772462368011475
+    },
+    "Gap": {
+      "mae": 0.8318603038787842
+    },
+    "average": {
+      "mae": 0.8842618465423584
+    }
+  },
+  "aligned_topology_baseline_metrics": {
+    "HOMO": {
+      "mae": 1.3188519477844238
+    },
+    "LUMO": {
+      "mae": 1.6864420175552368
+    },
+    "Gap": {
+      "mae": 11.244612693786621
+    },
+    "average": {
+      "mae": 4.749969005584717
+    }
+  },
+  "fusion_minus_topology_average_mae_eV": -3.8657071590423584,
+  "log": [
+    {
+      "epoch": 0,
+      "validation_average_mae_eV": 1.573718786239624,
+      "elapsed_s": 0.1395910000001095,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "validation_average_mae_eV": 0.9115539789199829,
+      "elapsed_s": 0.003309100000478793,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "validation_average_mae_eV": 0.8854588270187378,
+      "elapsed_s": 0.0028075000000171713,
+      "selected": true
+    }
+  ]
+}

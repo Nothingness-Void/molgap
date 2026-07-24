@@ -1,0 +1,79 @@
+{
+  "protocol": {
+    "split_rows_requested": {
+      "train": 100000,
+      "validation": 10000,
+      "test": 10000
+    },
+    "split_seed": 42,
+    "targets": ["HOMO", "LUMO", "Gap"],
+    "primary_geometry": "ETKDG",
+    "compute_gate_schnet_multiple": 2.0,
+    "two_view_intersection_rows": {
+      "train": 92228,
+      "validation": 9233,
+      "test": 9238
+    }
+  },
+  "compute": {
+    "schnet_reference_training_s": 594.9,
+    "schnet_aug2_training_s": 1114.9347871,
+    "schnet_aug2_ratio": 1.8741,
+    "schnet_duplicate_control_training_s": 1061.1890328,
+    "gps7_epoch_s": 15.3,
+    "gps9_epoch_s": 24.14,
+    "gps11_160_epoch_s": 31.16
+  },
+  "schnet_two_view_test": {
+    "single_conformer_trained_prediction_average": {
+      "average_mae_eV": 0.0914622545,
+      "gap_mae_eV": 0.107738778
+    },
+    "augmented_prediction_average": {
+      "average_mae_eV": 0.0843846947,
+      "gap_mae_eV": 0.1003485918
+    },
+    "duplicate_control_prediction_average": {
+      "average_mae_eV": 0.0889680013,
+      "gap_mae_eV": 0.1052020863
+    }
+  },
+  "promoted_qm9_candidates": {
+    "minimal": {
+      "inputs": ["GPS9", "SchNet-light-single-conformer-trained", "SchNet-light-two-conformer-trained"],
+      "three_head_seed_average_mae_eV": 0.0718840758,
+      "three_head_seed_gap_mae_eV": 0.0854777644,
+      "average_mae_sample_std_eV": 0.0003442162,
+      "gap_mae_sample_std_eV": 0.0002138683,
+      "single_conformer_schnet_weight_range": [0.45, 0.45]
+    },
+    "cost": {
+      "inputs": ["GPS9", "GPS7", "SchNet-light-single-conformer-trained", "SchNet-light-two-conformer-trained"],
+      "three_head_seed_average_mae_eV": 0.071456785,
+      "three_head_seed_gap_mae_eV": 0.084925664,
+      "average_mae_sample_std_eV": 0.0001643422,
+      "gap_mae_sample_std_eV": 0.0002845371,
+      "single_conformer_schnet_weight_range": [0.46, 0.47]
+    },
+    "precision": {
+      "inputs": ["GPS9", "GPS11-160", "SchNet-light-single-conformer-trained", "SchNet-light-two-conformer-trained"],
+      "three_head_seed_average_mae_eV": 0.0708138843,
+      "three_head_seed_gap_mae_eV": 0.084272936,
+      "average_mae_sample_std_eV": 0.0005311407,
+      "gap_mae_sample_std_eV": 0.0004897165,
+      "single_conformer_schnet_weight_range": [0.46, 0.49]
+    }
+  },
+  "closed_or_not_promoted": {
+    "tensornet": "above 2x compute gate",
+    "egnn": "accuracy failure",
+    "gps9_160": "slower and less accurate than GPS9-192",
+    "gps9_128": "no runtime gain",
+    "gps9_meanmax": "no accuracy gain",
+    "gps9_multiscale": "insufficient replacement for second GPS",
+    "fusion_concat": "worse than gate",
+    "per_target_prediction_blend": "no gain over one global weight",
+    "affine_prediction_calibration": "0.00003 eV gain is below seed variation",
+    "three_gps_two_schnet": "only 0.00040 eV gain for a full extra GPS7 forward"
+  }
+}

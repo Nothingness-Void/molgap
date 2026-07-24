@@ -1,0 +1,108 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "tensornet",
+  "geometry": "dft",
+  "seed": 123,
+  "split_seed": 42,
+  "split_fingerprint": "78b0cc01468b2b96",
+  "split_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "requested_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5655975341796875,
+    0.29296883940696716,
+    6.85861873626709
+  ],
+  "target_std": [
+    0.5754454135894775,
+    1.3222732543945312,
+    1.2885043621063232
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 128,
+    "num_layers": 2,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+    "batch_size": 32
+  },
+  "n_params": 786563,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8096395134925842,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.4077669382095337
+      },
+      "LUMO": {
+        "mae": 1.1079623699188232
+      },
+      "Gap": {
+        "mae": 1.067236065864563
+      },
+      "average": {
+        "mae": 0.860988438129425
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.366415798664093
+      },
+      "LUMO": {
+        "mae": 1.058711051940918
+      },
+      "Gap": {
+        "mae": 1.0037916898727417
+      },
+      "average": {
+        "mae": 0.8096395134925842
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.3416248857975006
+      },
+      "LUMO": {
+        "mae": 0.8822154402732849
+      },
+      "Gap": {
+        "mae": 0.9039746522903442
+      },
+      "average": {
+        "mae": 0.7092716693878174
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "dft",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7979135289788246,
+      "validation_average_mae_eV": 0.8096395134925842,
+      "elapsed_s": 0.7405754999999772,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n256_64_64\\tensornet_dft\\seed123\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n256_64_64\\tensornet_dft\\seed123\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n256_64_64\\tensornet_dft\\seed123\\checkpoint.pt"
+  }
+}

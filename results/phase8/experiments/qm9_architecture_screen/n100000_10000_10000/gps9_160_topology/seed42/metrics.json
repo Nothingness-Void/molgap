@@ -1,0 +1,310 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "gps9_160",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "5b5622d0e7be92b0",
+  "split_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "requested_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.534321308135986,
+    0.32281485199928284,
+    6.857131481170654
+  ],
+  "target_std": [
+    0.5975539088249207,
+    1.273480772972107,
+    1.2833107709884644
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 160,
+    "num_layers": 9,
+    "num_heads": 4,
+    "dropout": 0.05,
+    "batch_size": 192
+  },
+  "n_params": 2599043,
+  "best_epoch": 28,
+  "best_validation_average_mae_eV": 0.08881296217441559,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.060748711228370667
+      },
+      "LUMO": {
+        "mae": 0.06889507174491882
+      },
+      "Gap": {
+        "mae": 0.08313556015491486
+      },
+      "average": {
+        "mae": 0.07092645019292831
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.07746598869562149
+      },
+      "LUMO": {
+        "mae": 0.08278664201498032
+      },
+      "Gap": {
+        "mae": 0.10618627816438675
+      },
+      "average": {
+        "mae": 0.08881296217441559
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.07778320461511612
+      },
+      "LUMO": {
+        "mae": 0.08168704807758331
+      },
+      "Gap": {
+        "mae": 0.10620597004890442
+      },
+      "average": {
+        "mae": 0.08855874091386795
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.28372749342918396,
+      "validation_average_mae_eV": 0.27580153942108154,
+      "elapsed_s": 24.471150899997156,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.20889526711940765,
+      "validation_average_mae_eV": 0.19866590201854706,
+      "elapsed_s": 23.739142599999468,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_normalized_l1": 0.18956171227931976,
+      "validation_average_mae_eV": 0.17342017590999603,
+      "elapsed_s": 23.652765999999247,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_normalized_l1": 0.17723539470672608,
+      "validation_average_mae_eV": 0.18391035497188568,
+      "elapsed_s": 27.99333050000132,
+      "selected": false
+    },
+    {
+      "epoch": 4,
+      "train_normalized_l1": 0.16647486375808715,
+      "validation_average_mae_eV": 0.16949908435344696,
+      "elapsed_s": 28.779720300000918,
+      "selected": true
+    },
+    {
+      "epoch": 5,
+      "train_normalized_l1": 0.159238882894516,
+      "validation_average_mae_eV": 0.14790023863315582,
+      "elapsed_s": 24.97863430000143,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_normalized_l1": 0.15329213535785674,
+      "validation_average_mae_eV": 0.1617814600467682,
+      "elapsed_s": 23.784419399999024,
+      "selected": false
+    },
+    {
+      "epoch": 7,
+      "train_normalized_l1": 0.14596412769794465,
+      "validation_average_mae_eV": 0.13733576238155365,
+      "elapsed_s": 23.83281740000166,
+      "selected": true
+    },
+    {
+      "epoch": 8,
+      "train_normalized_l1": 0.14148874956607818,
+      "validation_average_mae_eV": 0.13081654906272888,
+      "elapsed_s": 24.34159510000245,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_normalized_l1": 0.13601515065193176,
+      "validation_average_mae_eV": 0.13578930497169495,
+      "elapsed_s": 24.024885600003472,
+      "selected": false
+    },
+    {
+      "epoch": 10,
+      "train_normalized_l1": 0.13217345258712768,
+      "validation_average_mae_eV": 0.12644436955451965,
+      "elapsed_s": 24.66221399999995,
+      "selected": true
+    },
+    {
+      "epoch": 11,
+      "train_normalized_l1": 0.12841201205253602,
+      "validation_average_mae_eV": 0.1172511950135231,
+      "elapsed_s": 23.539625299999898,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_normalized_l1": 0.1248075708580017,
+      "validation_average_mae_eV": 0.11976692080497742,
+      "elapsed_s": 23.86397450000004,
+      "selected": false
+    },
+    {
+      "epoch": 13,
+      "train_normalized_l1": 0.12058377808332443,
+      "validation_average_mae_eV": 0.12618695199489594,
+      "elapsed_s": 24.53658340000038,
+      "selected": false
+    },
+    {
+      "epoch": 14,
+      "train_normalized_l1": 0.11784066976070404,
+      "validation_average_mae_eV": 0.10989943146705627,
+      "elapsed_s": 23.392738999998983,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_normalized_l1": 0.11416865681648254,
+      "validation_average_mae_eV": 0.11003061383962631,
+      "elapsed_s": 27.183422199999768,
+      "selected": false
+    },
+    {
+      "epoch": 16,
+      "train_normalized_l1": 0.11088356004238129,
+      "validation_average_mae_eV": 0.10915037244558334,
+      "elapsed_s": 28.1457840999974,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_normalized_l1": 0.10864416670799255,
+      "validation_average_mae_eV": 0.10111621022224426,
+      "elapsed_s": 26.815552600000956,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_normalized_l1": 0.10484925974607467,
+      "validation_average_mae_eV": 0.10490044951438904,
+      "elapsed_s": 26.416697199998453,
+      "selected": false
+    },
+    {
+      "epoch": 19,
+      "train_normalized_l1": 0.10244192057847977,
+      "validation_average_mae_eV": 0.09981712698936462,
+      "elapsed_s": 26.40577950000079,
+      "selected": true
+    },
+    {
+      "epoch": 20,
+      "train_normalized_l1": 0.10065490385293961,
+      "validation_average_mae_eV": 0.10068702697753906,
+      "elapsed_s": 26.530453899998975,
+      "selected": false
+    },
+    {
+      "epoch": 21,
+      "train_normalized_l1": 0.0978954145002365,
+      "validation_average_mae_eV": 0.09513326734304428,
+      "elapsed_s": 26.34268869999869,
+      "selected": true
+    },
+    {
+      "epoch": 22,
+      "train_normalized_l1": 0.09587428181171417,
+      "validation_average_mae_eV": 0.09380924701690674,
+      "elapsed_s": 26.12432329999865,
+      "selected": true
+    },
+    {
+      "epoch": 23,
+      "train_normalized_l1": 0.09397867145299911,
+      "validation_average_mae_eV": 0.09234122931957245,
+      "elapsed_s": 26.240988300000026,
+      "selected": true
+    },
+    {
+      "epoch": 24,
+      "train_normalized_l1": 0.09249729880332946,
+      "validation_average_mae_eV": 0.09166330099105835,
+      "elapsed_s": 26.7973811999982,
+      "selected": true
+    },
+    {
+      "epoch": 25,
+      "train_normalized_l1": 0.09084283641338349,
+      "validation_average_mae_eV": 0.0907820537686348,
+      "elapsed_s": 26.048149700000067,
+      "selected": true
+    },
+    {
+      "epoch": 26,
+      "train_normalized_l1": 0.08981909567832946,
+      "validation_average_mae_eV": 0.0903044119477272,
+      "elapsed_s": 26.402882399997907,
+      "selected": true
+    },
+    {
+      "epoch": 27,
+      "train_normalized_l1": 0.08934945704698563,
+      "validation_average_mae_eV": 0.08912602066993713,
+      "elapsed_s": 26.102068500000314,
+      "selected": true
+    },
+    {
+      "epoch": 28,
+      "train_normalized_l1": 0.08874943301200866,
+      "validation_average_mae_eV": 0.08881296217441559,
+      "elapsed_s": 26.301780599998892,
+      "selected": true
+    },
+    {
+      "epoch": 29,
+      "train_normalized_l1": 0.08820145899534225,
+      "validation_average_mae_eV": 0.08891469985246658,
+      "elapsed_s": 26.020679900000687,
+      "selected": false
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\gps9_160_topology\\seed42\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\gps9_160_topology\\seed42\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\gps9_160_topology\\seed42\\checkpoint.pt"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "egnn",
+  "geometry": "dft",
+  "seed": 4242,
+  "split_seed": 42,
+  "split_fingerprint": "5b5622d0e7be92b0",
+  "split_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "requested_rows": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.534321308135986,
+    0.32281485199928284,
+    6.857131481170654
+  ],
+  "target_std": [
+    0.5975539088249207,
+    1.273480772972107,
+    1.2833107709884644
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 128,
+    "num_layers": 4,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.05,
+    "batch_size": 128
+  },
+  "n_params": 467331,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.4102277159690857,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.2934019863605499
+      },
+      "LUMO": {
+        "mae": 0.439485639333725
+      },
+      "Gap": {
+        "mae": 0.5028589367866516
+      },
+      "average": {
+        "mae": 0.41191551089286804
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.2936514914035797
+      },
+      "LUMO": {
+        "mae": 0.4348234236240387
+      },
+      "Gap": {
+        "mae": 0.5022081136703491
+      },
+      "average": {
+        "mae": 0.4102277159690857
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.29174214601516724
+      },
+      "LUMO": {
+        "mae": 0.4444498121738434
+      },
+      "Gap": {
+        "mae": 0.5071278810501099
+      },
+      "average": {
+        "mae": 0.41443994641304016
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "dft",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.5473109403610229,
+      "validation_average_mae_eV": 0.4102277159690857,
+      "elapsed_s": 14.765770400001202,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n100000_10000_10000\\egnn_dft\\seed4242\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\egnn_dft\\seed4242\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n100000_10000_10000\\egnn_dft\\seed4242\\checkpoint.pt"
+  }
+}

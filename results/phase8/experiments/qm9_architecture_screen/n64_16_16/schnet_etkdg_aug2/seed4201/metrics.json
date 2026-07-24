@@ -1,0 +1,208 @@
+{
+  "experiment": "qm9_schnet_two_conformer_augmentation",
+  "candidate": "schnet_etkdg_aug2",
+  "seed": 4201,
+  "split_seed": 4201,
+  "split_fingerprint": "86a104798fe12d7a",
+  "geometry_seeds": [
+    42,
+    43
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 10.0,
+    "dropout": 0.05,
+    "batch_size": 128
+  },
+  "n_params": 809668,
+  "paired_rows": {
+    "train": 56,
+    "validation": 14,
+    "test": 14
+  },
+  "training_graphs_per_epoch": 112,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.6682188510894775,
+  "metrics": {
+    "train": {
+      "first": {
+        "HOMO": {
+          "mae": 0.5021809339523315
+        },
+        "LUMO": {
+          "mae": 1.245493769645691
+        },
+        "Gap": {
+          "mae": 1.2618099451065063
+        },
+        "average": {
+          "mae": 1.0031615495681763
+        }
+      },
+      "second": {
+        "HOMO": {
+          "mae": 0.5019530653953552
+        },
+        "LUMO": {
+          "mae": 1.2450313568115234
+        },
+        "Gap": {
+          "mae": 1.261222243309021
+        },
+        "average": {
+          "mae": 1.0027356147766113
+        }
+      },
+      "average": {
+        "HOMO": {
+          "mae": 0.502066969871521
+        },
+        "LUMO": {
+          "mae": 1.2452627420425415
+        },
+        "Gap": {
+          "mae": 1.2615162134170532
+        },
+        "average": {
+          "mae": 1.002948522567749
+        }
+      }
+    },
+    "validation": {
+      "first": {
+        "HOMO": {
+          "mae": 0.37401071190834045
+        },
+        "LUMO": {
+          "mae": 0.7894306778907776
+        },
+        "Gap": {
+          "mae": 0.8425971269607544
+        },
+        "average": {
+          "mae": 0.6686795353889465
+        }
+      },
+      "second": {
+        "HOMO": {
+          "mae": 0.37447285652160645
+        },
+        "LUMO": {
+          "mae": 0.7872697114944458
+        },
+        "Gap": {
+          "mae": 0.8415317535400391
+        },
+        "average": {
+          "mae": 0.6677581071853638
+        }
+      },
+      "average": {
+        "HOMO": {
+          "mae": 0.37424182891845703
+        },
+        "LUMO": {
+          "mae": 0.7883502840995789
+        },
+        "Gap": {
+          "mae": 0.8420644998550415
+        },
+        "average": {
+          "mae": 0.6682187914848328
+        }
+      }
+    },
+    "test": {
+      "first": {
+        "HOMO": {
+          "mae": 0.4549880027770996
+        },
+        "LUMO": {
+          "mae": 1.097295880317688
+        },
+        "Gap": {
+          "mae": 0.951217770576477
+        },
+        "average": {
+          "mae": 0.8345005512237549
+        }
+      },
+      "second": {
+        "HOMO": {
+          "mae": 0.4549173414707184
+        },
+        "LUMO": {
+          "mae": 1.0985968112945557
+        },
+        "Gap": {
+          "mae": 0.9504477381706238
+        },
+        "average": {
+          "mae": 0.8346540331840515
+        }
+      },
+      "average": {
+        "HOMO": {
+          "mae": 0.4549526274204254
+        },
+        "LUMO": {
+          "mae": 1.097946286201477
+        },
+        "Gap": {
+          "mae": 0.9508328437805176
+        },
+        "average": {
+          "mae": 0.834577202796936
+        }
+      }
+    }
+  },
+  "geometry_reports": [
+    {
+      "geometry": "etkdg",
+      "requested": 96,
+      "succeeded": 84,
+      "failed": 12,
+      "seed": 42,
+      "mmff_iters": 200,
+      "shard_size": 2000,
+      "resumed_shards": 0,
+      "sdf_sanitize": false,
+      "cache_version": 3,
+      "elapsed_s": 5.036124599999312,
+      "index_sha256": "86a104798fe12d7a28e7cf56a5f54d042f4507773ae75891acab62625637f9c2"
+    },
+    {
+      "geometry": "etkdg",
+      "requested": 96,
+      "succeeded": 86,
+      "failed": 10,
+      "seed": 43,
+      "mmff_iters": 200,
+      "shard_size": 2000,
+      "resumed_shards": 0,
+      "sdf_sanitize": false,
+      "cache_version": 3,
+      "elapsed_s": 4.584941599998274,
+      "index_sha256": "86a104798fe12d7a28e7cf56a5f54d042f4507773ae75891acab62625637f9c2"
+    }
+  ],
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.827622652053833,
+      "validation_average_mae_eV": 0.6682188510894775,
+      "elapsed_s": 0.3911398999989615,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n64_16_16\\schnet_etkdg_aug2\\seed4201\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n64_16_16\\schnet_etkdg_aug2\\seed4201\\model.pt",
+    "checkpoint": "models\\experiments\\qm9_architecture_screen\\n64_16_16\\schnet_etkdg_aug2\\seed4201\\checkpoint.pt"
+  }
+}

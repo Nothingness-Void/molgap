@@ -1,0 +1,108 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "schnet",
+  "geometry": "dft",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "28f779d1b620ec68",
+  "split_rows": {
+    "train": 128,
+    "validation": 32,
+    "test": 32
+  },
+  "requested_rows": {
+    "train": 128,
+    "validation": 32,
+    "test": 32
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.636155128479004,
+    0.38100191950798035,
+    7.017029762268066
+  ],
+  "target_std": [
+    0.5308793187141418,
+    1.3423041105270386,
+    1.313056230545044
+  ],
+  "model_config": {
+    "kind": "geometry",
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 10.0,
+    "dropout": 0.05,
+    "batch_size": 128
+  },
+  "n_params": 809668,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8366373181343079,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.3612702488899231
+      },
+      "LUMO": {
+        "mae": 1.1101760864257812
+      },
+      "Gap": {
+        "mae": 1.099647045135498
+      },
+      "average": {
+        "mae": 0.8570311665534973
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.41878437995910645
+      },
+      "LUMO": {
+        "mae": 1.0540494918823242
+      },
+      "Gap": {
+        "mae": 1.0370781421661377
+      },
+      "average": {
+        "mae": 0.8366373181343079
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.5230985283851624
+      },
+      "LUMO": {
+        "mae": 0.9029092788696289
+      },
+      "Gap": {
+        "mae": 0.9544234275817871
+      },
+      "average": {
+        "mae": 0.7934770584106445
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "dft",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7947549819946289,
+      "validation_average_mae_eV": 0.8366373181343079,
+      "elapsed_s": 0.3487830000003669,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n128_32_32\\schnet_dft\\seed42\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n128_32_32\\schnet_dft\\seed42\\model.pt"
+  }
+}

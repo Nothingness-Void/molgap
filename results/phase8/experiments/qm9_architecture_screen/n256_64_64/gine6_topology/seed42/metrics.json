@@ -1,0 +1,105 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "gine6",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "78b0cc01468b2b96",
+  "split_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "requested_rows": {
+    "train": 256,
+    "validation": 64,
+    "test": 64
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5655975341796875,
+    0.29296883940696716,
+    6.85861873626709
+  ],
+  "target_std": [
+    0.5754454135894775,
+    1.3222732543945312,
+    1.2885043621063232
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 192,
+    "num_layers": 6,
+    "dropout": 0.05,
+    "batch_size": 256
+  },
+  "n_params": 802371,
+  "best_epoch": 0,
+  "best_validation_average_mae_eV": 0.8085777163505554,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.40367329120635986
+      },
+      "LUMO": {
+        "mae": 1.1072149276733398
+      },
+      "Gap": {
+        "mae": 1.075556993484497
+      },
+      "average": {
+        "mae": 0.8621482849121094
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.3692186176776886
+      },
+      "LUMO": {
+        "mae": 1.052672266960144
+      },
+      "Gap": {
+        "mae": 1.0038423538208008
+      },
+      "average": {
+        "mae": 0.8085777163505554
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.34076380729675293
+      },
+      "LUMO": {
+        "mae": 0.8796901702880859
+      },
+      "Gap": {
+        "mae": 0.8963725566864014
+      },
+      "average": {
+        "mae": 0.7056088447570801
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.7970685362815857,
+      "validation_average_mae_eV": 0.8085777163505554,
+      "elapsed_s": 1.0176503000002413,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "data\\cache\\qm9\\embeddings\\n256_64_64\\gine6_topology\\seed42\\payload.pt",
+    "model": "models\\experiments\\qm9_architecture_screen\\n256_64_64\\gine6_topology\\seed42\\model.pt"
+  }
+}

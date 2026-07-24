@@ -1,0 +1,55 @@
+{
+  "route_feature": "base_predicted_gap_eV",
+  "selection_role": "validation",
+  "selected": {
+    "mode": "below",
+    "threshold_eV": 11.301733016967773,
+    "validation_average_mae_eV": 0.07594496011734009,
+    "validation_route_fraction": 1.0
+  },
+  "test_route_fraction": 1.0,
+  "test_metrics": {
+    "base": {
+      "HOMO": {
+        "mae": 0.06722625344991684
+      },
+      "LUMO": {
+        "mae": 0.07177796214818954
+      },
+      "Gap": {
+        "mae": 0.09140177816152573
+      },
+      "average": {
+        "mae": 0.07680200785398483
+      }
+    },
+    "always_dual": {
+      "HOMO": {
+        "mae": 0.06625790894031525
+      },
+      "LUMO": {
+        "mae": 0.07006180286407471
+      },
+      "Gap": {
+        "mae": 0.08930908888578415
+      },
+      "average": {
+        "mae": 0.0752096027135849
+      }
+    },
+    "routed": {
+      "HOMO": {
+        "mae": 0.06625790894031525
+      },
+      "LUMO": {
+        "mae": 0.07006180286407471
+      },
+      "Gap": {
+        "mae": 0.08930908888578415
+      },
+      "average": {
+        "mae": 0.0752096027135849
+      }
+    }
+  }
+}
