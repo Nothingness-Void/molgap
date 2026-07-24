@@ -1,0 +1,59 @@
+{
+  "experiment": "pubchemqc100k_architecture_screen",
+  "status": "split_frozen_2d_queued_conformer_prep_running",
+  "split": {
+    "source": "original phase8 expansion 1M",
+    "train_rows": 100003,
+    "validation_rows": 10000,
+    "test_rows": 9997,
+    "scaffold_disjoint": true,
+    "sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "two_dimensional_candidates": [
+    "GPS9-192",
+    "GPS7-192",
+    "GPS11-160"
+  ],
+  "remote_jobs": {
+    "scnet": {
+      "graph_subset": 709051,
+      "gps7": 709052,
+      "gps9": 709053,
+      "gps11_160": 709054,
+      "queue_note": "Queued behind repaired-2M GPS9 because of the 16-CPU account concurrency limit"
+    },
+    "kaggle_second_conformer": {
+      "version": 3,
+      "kernels": [
+        "nothingnessvoid/molgap-pc100k-conformer-r0",
+        "nothingnessvoid/molgap-pc100k-conformer-r1",
+        "nothingnessvoid/molgap-pc100k-conformer-r2",
+        "nothingnessvoid/molgap-pc100k-conformer-r3"
+      ],
+      "startup_status": "all_running",
+      "version_1_failure": "variant.json sidecar was not included by Kaggle code_file packaging",
+      "version_2_failure": "Kaggle CPU image did not contain RDKit",
+      "version_3_fix": "Embed shard identity and install rdkit==2025.3.5 before worker launch",
+      "durability": "5000-row graph shards with atomic progress and completion manifests"
+    }
+  },
+  "geometry_contract": {
+    "method": "ETKDGv3 plus MMFF",
+    "single_conformer_trained_lightweight_schnet": "one primary conformer per molecule",
+    "two_conformer_trained_lightweight_schnet": "primary plus independently seeded second conformer during training",
+    "inference_schnet_calls": 2,
+    "architecture": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6
+    },
+    "legacy_192_192_6_allowed": false
+  },
+  "fusion_candidates": [
+    "GPS9 plus two SchNet",
+    "GPS9 plus GPS7 plus two SchNet",
+    "GPS9 plus GPS11-160 plus two SchNet"
+  ],
+  "sealed_20k_used": false,
+  "production_registry_change_authorized": false
+}

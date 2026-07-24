@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import csv
 import gc
 import hashlib
 import json
@@ -147,6 +148,50 @@ def _make_train_loader(train_set, batch_size: int, replay_boundary: int | None,
             "expected_old_draw_fraction": old_probability,
         },
     )
+
+
+def _explicit_split(graphs, split_csv: Path):
+    rows = []
+    with split_csv.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        if not {"source_idx", "split"}.issubset(reader.fieldnames or ()):
+            raise ValueError("Explicit split CSV needs source_idx and split columns")
+        rows = [
+            (int(row["source_idx"]), row["split"].strip().lower())
+            for row in reader
+        ]
+    if not rows:
+        raise ValueError("Explicit split CSV is empty")
+    source_indices = [value for value, _ in rows]
+    if len(source_indices) != len(set(source_indices)):
+        raise ValueError("Explicit split CSV contains duplicate source_idx values")
+    allowed = {"train", "validation", "test"}
+    unknown = sorted(set(role for _, role in rows) - allowed)
+    if unknown:
+        raise ValueError(f"Unknown explicit split roles: {unknown}")
+
+    graph_map = {
+        int(graph.source_idx.view(-1)[0]): graph
+        for graph in graphs
+    }
+    if len(graph_map) != len(graphs):
+        raise ValueError("Graph cache contains duplicate source_idx values")
+    missing = [value for value in source_indices if value not in graph_map]
+    if missing:
+        raise ValueError(
+            f"Explicit split references {len(missing)} unavailable graph rows"
+        )
+    split_sets = {
+        role: [graph_map[value] for value, assigned in rows if assigned == role]
+        for role in ("train", "validation", "test")
+    }
+    if any(not values for values in split_sets.values()):
+        raise ValueError("Explicit split must contain train, validation, and test rows")
+    return split_sets, {
+        "path": str(split_csv),
+        "sha256": _sha256(split_csv),
+        "rows": {role: len(values) for role, values in split_sets.items()},
+    }
 
 
 @torch.no_grad()
@@ -664,6 +709,12 @@ def main():
                         help="model, sampler, and training-order seed")
     parser.add_argument("--split-seed", type=int, default=SEED,
                         help="fixed train/validation/test partition seed")
+    parser.add_argument(
+        "--split-csv",
+        type=Path,
+        default=None,
+        help="explicit source_idx,split CSV; overrides the random 80/10/10 split",
+    )
     parser.add_argument("--max-samples", type=int, default=None)
     parser.add_argument("--no-embeddings", action="store_true")
     parser.add_argument("--extract-only", action="store_true",
@@ -717,6 +768,8 @@ def main():
 
     if args.graph_manifest is not None and args.graphs is not None:
         parser.error("--graphs and --graph-manifest are mutually exclusive")
+    if args.graph_manifest is not None and args.split_csv is not None:
+        parser.error("--split-csv is not supported with --graph-manifest")
     retention_values = (
         args.retention_teacher,
         args.retention_boundary,
@@ -780,9 +833,17 @@ def main():
         return
 
     if args.postprocess_only:
-        idx = np.random.RandomState(args.split_seed).permutation(len(graphs))
-        n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
-        test_set = [graphs[i] for i in idx[n_train + n_val:]]
+        if args.split_csv is not None:
+            split_sets, split_contract = _explicit_split(graphs, args.split_csv)
+            test_set = split_sets["test"]
+        else:
+            idx = np.random.RandomState(args.split_seed).permutation(len(graphs))
+            n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
+            test_set = [graphs[i] for i in idx[n_train + n_val:]]
+            split_contract = {
+                "kind": "random_80_10_10",
+                "seed": int(args.split_seed),
+            }
         model = _make_model(args.kind, model_params).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
         test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
@@ -795,6 +856,7 @@ def main():
             "model_path": str(model_out),
             "eval_batch_size": eval_bs,
             "embedding_batch_size": embed_bs,
+            "split_contract": split_contract,
             "test_metrics": _metrics(pred, true),
         }
         _atomic_json_write(result, metrics_out)
@@ -803,11 +865,21 @@ def main():
             _extract_embeddings(args.kind, model, graphs, device, embeddings_out, embed_bs)
         return
 
-    idx = np.random.RandomState(args.split_seed).permutation(len(graphs))
-    n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
-    train_set = [graphs[i] for i in idx[:n_train]]
-    val_set = [graphs[i] for i in idx[n_train:n_train + n_val]]
-    test_set = [graphs[i] for i in idx[n_train + n_val:]]
+    if args.split_csv is not None:
+        split_sets, split_contract = _explicit_split(graphs, args.split_csv)
+        train_set = split_sets["train"]
+        val_set = split_sets["validation"]
+        test_set = split_sets["test"]
+    else:
+        idx = np.random.RandomState(args.split_seed).permutation(len(graphs))
+        n_train, n_val = int(0.8 * len(graphs)), int(0.1 * len(graphs))
+        train_set = [graphs[i] for i in idx[:n_train]]
+        val_set = [graphs[i] for i in idx[n_train:n_train + n_val]]
+        test_set = [graphs[i] for i in idx[n_train + n_val:]]
+        split_contract = {
+            "kind": "random_80_10_10",
+            "seed": int(args.split_seed),
+        }
     print(f"Split: train={len(train_set)} val={len(val_set)} test={len(test_set)}", flush=True)
 
     model = _make_model(args.kind, model_params).to(device)
@@ -887,6 +959,8 @@ def main():
             or int(resume.get("split_seed", args.split_seed)) != args.split_seed
         ):
             raise ValueError("Resume checkpoint seed configuration differs")
+        if resume.get("split_contract") != split_contract:
+            raise ValueError("Resume checkpoint explicit split contract differs")
         if resume.get("replay_sampling") != replay_report:
             raise ValueError("Resume checkpoint replay configuration differs")
         if resume.get("retention_distillation") != retention_config:
@@ -1001,6 +1075,7 @@ def main():
                 "n_graphs": len(graphs),
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "split_contract": split_contract,
                 "next_epoch": epoch + 1,
                 "model_state": model.state_dict(),
                 "optimizer_state": optimizer.state_dict(),
@@ -1021,6 +1096,7 @@ def main():
                 "n_graphs": len(graphs),
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "split_contract": split_contract,
                 "next_epoch": epoch + 1,
                 "best_val_mae": best_val,
                 "best_epoch": best_epoch,
@@ -1050,6 +1126,7 @@ def main():
         "best_epoch": int(best_epoch),
         "seed": int(args.seed),
         "split_seed": int(args.split_seed),
+        "split_contract": split_contract,
         "init_from": str(args.init_from) if args.init_from is not None else None,
         "init_compatible": bool(args.init_compatible),
         "init_report": init_report,
