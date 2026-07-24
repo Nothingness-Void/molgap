@@ -14,8 +14,8 @@ The predictor is an implementation dependency; the database is the deliverable.
 
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
-| P0 | P8.20-S | Complete retention-D seeds 43 and 44 and compare all three seeds | Seed 42 passed; require all seeds to improve in the same direction | `results/phase8/repaired_2m/retention_d_seed42_decision.md` |
-| P1 | P8.20-G9 | Recompute GPS7/GPS9 complementarity on repaired-2M | Trigger only after the three-seed GPS7 gate | `results/phase8/repaired_2m/one_week_plan_20260723.md` |
+| P0 | P8.20-G9 | Recompute GPS7/GPS9 complementarity on repaired-2M | Compare the active GPS9 route against accepted retention-D GPS7 | `results/phase8/repaired_2m/one_week_plan_20260723.md` |
+| P1 | P8-100K | Transfer the three QM9 architecture candidates to PubChemQC 100K | Use the frozen scaffold split and lightweight SchNet only | `results/phase8/experiments/pubchemqc100k_architecture/experiment_manifest.json` |
 | P1 | P9.2 | Recompute Delta labels against the selected B3LYP base | Start after the Phase 8 compression decision freezes the base | `docs/phase9.md` |
 | P1 | P10-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `docs/phase10.md` |
 | P2 | P9-AB | Benchmark descriptor LightGBM against encoder LoRA | Compare accuracy, calibration, throughput, and deployment size on one split | `results/phase9/v3_delta_decision.md` |
@@ -59,8 +59,11 @@ its local output has not arrived.
 
 ## Completed Work
 
-- P8.20-D repaired-2M retention-D seed 42 passed the general-model gate:
-  `results/phase8/repaired_2m/retention_d_seed42_decision.md`.
+- P8.20-D repaired-2M retention-D passed its three-seed general-model gate:
+  `results/phase8/repaired_2m/retention_d_multiseed_decision.md`.
+- P8-QM9 eliminated weak architectures and promoted three candidates to the
+  PubChemQC 100K transfer gate:
+  `results/phase8/experiments/qm9_architecture_screen/README.md`.
 - Phase 1-7 history: `docs/phase1.md` through `docs/phase7.md`.
 - Phase 8 decision timeline: `docs/phase8.md`.
 - Closed Phase 8 code and results: `scripts/phase8/archive/README.md` and

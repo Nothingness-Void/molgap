@@ -18,8 +18,14 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 |---|---|---|
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
+| `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
+| `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
 | `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
+| `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |
+| `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
+| `qm9_payloads.py` | Cached embedding alignment and view combination | Changing architecture-screen payload operations |
+| `qm9_fusion.py` | Frozen embedding gates, residual heads, and routing | Changing QM9 fusion or route screens |
 | `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
 | `hybrid.py` | `EndToEndHybrid` | Jointly training 2D, 3D, and fusion components |
@@ -29,6 +35,7 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `multi2d_data.py` | Accepted pools, exclusions, scaffold caches, quota selection | Changing pure-2D dataset assembly |
 | `data_repair.py` | Durable row ledgers, quality flags, identity reconciliation, and fixed-size repair manifests | Repairing a scaled B3LYP corpus without overwriting raw data |
 | `distillation.py` | Chunked teacher embeddings, soft targets, and fusion-compatible student exports | Changing multi-expert compression |
+| `hierarchical_oracle.py` | Budgeted expert-switch upper bounds and gain-label evidence | Changing hierarchical routing feasibility analysis |
 | `experiment_db.py` | Normalized model, evaluation-protocol, artifact, failure-cause, and reuse database builds | Changing cross-experiment inventory or comparison rules |
 | `pubchemqc.py` | PubChemQC streaming, filtering, identity normalization | Changing source acquisition |
 | `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |
@@ -56,6 +63,7 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `scripts/phase1/` through `scripts/phase7/` | Historical phase commands |
 | `scripts/phase8/README.md` | Supported Phase 8 command map |
 | `scripts/phase8/archive/` | Closed Phase 8 local and remote commands |
+| `scripts/architecture/` | Cross-phase architecture-elimination entrypoints |
 | `scripts/phase9/` | Delta-learning commands |
 | `scripts/phase10/` | Calibration and OOD commands |
 | `scripts/ab3d/` | Closed 3D encoder comparison |

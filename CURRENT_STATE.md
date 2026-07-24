@@ -58,19 +58,48 @@ the strongest deployable candidate under review.
 - Evidence: `results/phase8/multi2d_final_eval/decision.md` and
   `results/phase8/distilled_2m_scnet/decision.md`.
 
+## P8.20 Hierarchical Oracle
+
+- The predeclared Oracle-only gate passed. Retention-D seed 42 remains the
+  general base, the accepted original-1M plus repair-v2 equal ensemble is the
+  hard teacher, and PCQM GINE v4 is a deterministic task-level Gap expert.
+- The molecular gain survives the 10% hard-teacher call budget on P8-hard
+  without a common-set regression. This authorizes genuine scaffold-disjoint
+  OOF gain-label generation, not Router training or deployment.
+- The saved external gain labels are evaluation evidence only and are
+  explicitly forbidden as Router training labels. The OOF manifest remains
+  `pending_generation`.
+- No sealed-20K rows were opened and the production registry is unchanged.
+  Exact metrics, input hashes, cost accounting, and the decision are in
+  `results/phase8/hierarchical_oracle_20260725/decision.md`.
+
 ## Active Remote Work
 
 ### SCNet
 
-- Repaired-2M retention-D seed 42 completed. Relative to retention-B, common,
-  OOD, and P8-hard average MAE improved by
-  `0.001163/0.001184/0.001141 eV`; PCQM Gap regressed `0.000502 eV` and remains
-  a separately routed specialist domain. Seed 42 passes the predeclared
-  general-model gate. SCNet `707264` -> `707265` repeats seed 43 and
-  `707266` -> `707267` repeats seed 44 with split seed fixed at 42. No GPS9,
-  fusion, sealed evaluation, or registry change is authorized until the three
-  GPS7 seeds agree. Decision:
-  `results/phase8/repaired_2m/retention_d_seed42_decision.md`. Manifest:
+- Two model-improvement routes are active in parallel without changing the
+  production registry. Route A job `709046` trains repaired-2M Retention-D
+  GPS9-192 from the accepted 1.5M GPS9 checkpoint; dependent job `709047`
+  performs common/OOD/P8-hard/PCQM evaluation. Route B uses a frozen
+  scaffold-disjoint PubChemQC 100K/10K/9,997 split. Its graph-subset job
+  `709051` and GPS7/GPS9/GPS11-160 jobs `709052`/`709053`/`709054` are queued
+  behind Route A because the account's 16-CPU concurrency limit is occupied.
+  Pending jobs must not be relaunched merely for being quiet.
+- Route B's SchNet contract is the lightweight `176/160/6` architecture for
+  both conformer branches. The legacy `192/192/6` SchNet is explicitly
+  forbidden. Full 3D/fusion training remains gated on the pure-2D comparison.
+  Manifest:
+  `results/phase8/experiments/pubchemqc100k_architecture/experiment_manifest.json`.
+- Repaired-2M retention-D passed the three-seed general-model gate against
+  retention-B. Mean common/OOD/P8-hard average-MAE improvements are
+  `0.001217/0.001496/0.000932 eV`, and every domain improves for each of seeds
+  42, 43, and 44. PCQM Gap regresses by `0.001058 eV` on average and remains a
+  separately routed specialist domain. Seed 43/44 models and evaluation
+  artifacts were retrieved; remote/local SHA256 values match and predictions
+  are finite. Keep seed 42 as the single-pass general-base checkpoint; the
+  repeat seeds are stability evidence, not an automatic deployment ensemble.
+  No sealed-set access or registry change occurred. Decision:
+  `results/phase8/repaired_2m/retention_d_multiseed_decision.md`. Manifest:
   `results/phase8/repaired_2m/retention_d_experiment_manifest.json`.
 - Retention-aware exact-2M GPS7 controls were run as the first experiment
   authorized after the scale-up failure analysis. Existing uniform exact-2M is
@@ -116,6 +145,17 @@ the strongest deployable candidate under review.
 
 ### Kaggle
 
+- PubChemQC 100K Route B second-conformer preparation is running as four
+  bounded CPU kernels, version 3:
+  `nothingnessvoid/molgap-pc100k-conformer-r0` through `r3`. Version 1 failed
+  before data processing because Kaggle did not include the sidecar
+  `variant.json`. Version 2 embedded the shard identity but exposed that the
+  CPU image did not contain RDKit. Version 3 installs the pinned RDKit
+  dependency and embeds the shard identity. All four version-3 workers
+  remained `RUNNING` after the first-minute startup check. Each writes 5K graph
+  shards plus atomic progress and completion manifests. The immutable split
+  input is the private dataset
+  `nothingnessvoid/molgap-pubchemqc100k-arch-split-20260725`.
 - The benchmark-specific PCQM4Mv2 Gap expert pilot completed as Kaggle kernel
   `nothingnessvoid/molgap-pcqm-gin-expert-pilot`, version 3. Its 11 graph
   shards and all declared artifacts passed count, uniqueness, finite-label,
@@ -126,6 +166,17 @@ the strongest deployable candidate under review.
   Official test splits and the future sealed 20K were not accessed.
   Decision: `results/phase8/pcqm_gine_expert_pilot/decision.md`.
   Acceptance: `results/phase8/pcqm_gine_expert_pilot/acceptance.json`.
+- The bounded version 4 continuation passed. It resumed the accepted epoch-29
+  optimizer/scheduler/scaler state, reused all 11 validated graph shards, and
+  selected epoch 48. Fixed official-valid 5K Gap MAE is `0.196598 eV`, improving
+  routed v4 by `0.095092 eV` and passing the predeclared `0.20 eV` gate by
+  `0.003402 eV`. It is accepted only as the task-level PCQM Gap prerequisite
+  for the planned Oracle study; no learned Router, GPS9/fusion expansion,
+  sealed-set access, or registry change is authorized.
+  Accepted private artifacts:
+  `nothingnessvoid/molgap-pcqm-gin-v4-accepted-20260724`.
+  Decision:
+  `results/phase8/pcqm_gine_expert_pilot/continuation_v4_decision.md`.
 - The original-1M late-blend gate completed and closed at validation. Fixed
   alpha improved average/Gap by only `0.000024/0.000017 eV`; learned alpha
   regressed. The `0.001 eV` dual-target gate failed, so the original test and
@@ -169,12 +220,12 @@ quality-filtered accepted candidates. The materialized 2M table has unique
 CID/SMILES identities and no sealed-source rows. Decision:
 `results/phase8/repaired_2m/decision.md`.
 
-The active general-model experiment is retention-D GPS7 using the
-exact retention-B initialization, 50% targeted replay, split, optimizer,
-epochs, and seed. D must be compared directly with B. No Router, GPS9,
-distillation, 3D, or fusion submission is authorized before D passes its fixed
-common/OOD/P8-hard gate. The PCQM frozen-head pilot is closed and consumes no
-further compute.
+Retention-D GPS7 passed its fixed multi-seed gate. The active Route A test is
+the matched repaired-2M GPS9 run and external comparison described above.
+Route B independently tests the PubChemQC 100K architecture candidates under
+one frozen scaffold split. Its two lightweight SchNet branches and fusion
+stage may proceed only after the pure-2D comparison is accepted. The PCQM
+frozen-head pilot is closed and consumes no further compute.
 The one-week critical path and stop rules are fixed in
 `results/phase8/repaired_2m/one_week_plan_20260723.md`.
 
