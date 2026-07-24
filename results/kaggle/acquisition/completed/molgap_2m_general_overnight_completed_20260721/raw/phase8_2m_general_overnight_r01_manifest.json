@@ -1,0 +1,346 @@
+{
+  "chunk_target_rows": 100000,
+  "chunks": [
+    {
+      "archive": "phase8_2m_general_overnight_r01_chunk01.zip",
+      "chunk_index": 1,
+      "csv": "phase8_2m_general_overnight_r01_chunk01.csv",
+      "latest_progress": {
+        "checkpoint_every": 500,
+        "counts": {
+          "general_indomain": 97000
+        },
+        "elapsed_s": 536.5238218307495,
+        "files_scanned": 12,
+        "filter_passing_candidates_seen": 107274,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 180.79346350179281,
+        "new_rows": 97000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk01.csv",
+        "parsed_objects": 122722,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "state": "running",
+        "total_rows": 97000
+      },
+      "progress": "phase8_2m_general_overnight_r01_chunk01_progress.json",
+      "report": "phase8_2m_general_overnight_r01_chunk01_report.json",
+      "report_summary": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "download_workers": 4,
+        "elapsed_s": 549.1395275592804,
+        "files_scanned": 12,
+        "filter_passing_candidates_seen": 110311,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 182.1030812414152,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk01.csv",
+        "parsed_objects": 128385,
+        "parsed_objects_per_s": 233.79304085179092,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "total_rows": 100000,
+        "windows_per_file": 20
+      },
+      "return_code": 0,
+      "rows": 100000,
+      "sha256": "fedd657c3b6181cb9b0d28d19e66efe9bf74114dbc8e182643944a80339c93ef",
+      "state": "complete",
+      "target_rows": 100000
+    },
+    {
+      "archive": "phase8_2m_general_overnight_r01_chunk02.zip",
+      "chunk_index": 2,
+      "csv": "phase8_2m_general_overnight_r01_chunk02.csv",
+      "latest_progress": {
+        "checkpoint_every": 500,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "elapsed_s": 537.0546543598175,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 108147,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 186.2007882963094,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk02.csv",
+        "parsed_objects": 128525,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "state": "complete",
+        "total_rows": 100000
+      },
+      "progress": "phase8_2m_general_overnight_r01_chunk02_progress.json",
+      "report": "phase8_2m_general_overnight_r01_chunk02_report.json",
+      "report_summary": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "download_workers": 4,
+        "elapsed_s": 537.0565857887268,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 108147,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 186.20011865814655,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk02.csv",
+        "parsed_objects": 128525,
+        "parsed_objects_per_s": 239.31370250538288,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "total_rows": 100000,
+        "windows_per_file": 20
+      },
+      "return_code": 0,
+      "rows": 100000,
+      "sha256": "ffcc6b7ccf028f0da306688fade31ea8f031291ceb2347064f8e6e4fd9b30db2",
+      "state": "complete",
+      "target_rows": 100000
+    },
+    {
+      "archive": "phase8_2m_general_overnight_r01_chunk03.zip",
+      "chunk_index": 3,
+      "csv": "phase8_2m_general_overnight_r01_chunk03.csv",
+      "latest_progress": {
+        "checkpoint_every": 500,
+        "counts": {
+          "general_indomain": 96500
+        },
+        "elapsed_s": 530.3447856903076,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 106321,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 181.9571015002884,
+        "new_rows": 96500,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk03.csv",
+        "parsed_objects": 125854,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "state": "running",
+        "total_rows": 96500
+      },
+      "progress": "phase8_2m_general_overnight_r01_chunk03_progress.json",
+      "report": "phase8_2m_general_overnight_r01_chunk03_report.json",
+      "report_summary": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "download_workers": 4,
+        "elapsed_s": 562.7321262359619,
+        "files_scanned": 12,
+        "filter_passing_candidates_seen": 110220,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 177.7044446864733,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk03.csv",
+        "parsed_objects": 130269,
+        "parsed_objects_per_s": 231.49380304862188,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "total_rows": 100000,
+        "windows_per_file": 20
+      },
+      "return_code": 0,
+      "rows": 100000,
+      "sha256": "0f0d890cd7b27f8b049a54662c702ee1b86cd8b09975f4a60dccf60e945d964a",
+      "state": "complete",
+      "target_rows": 100000
+    },
+    {
+      "archive": "phase8_2m_general_overnight_r01_chunk04.zip",
+      "chunk_index": 4,
+      "csv": "phase8_2m_general_overnight_r01_chunk04.csv",
+      "latest_progress": {
+        "checkpoint_every": 500,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "elapsed_s": 531.3835709095001,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 108358,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 188.18797846693494,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk04.csv",
+        "parsed_objects": 131883,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "state": "complete",
+        "total_rows": 100000
+      },
+      "progress": "phase8_2m_general_overnight_r01_chunk04_progress.json",
+      "report": "phase8_2m_general_overnight_r01_chunk04_report.json",
+      "report_summary": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "download_workers": 4,
+        "elapsed_s": 531.3858828544617,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 108358,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 188.1871597017726,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk04.csv",
+        "parsed_objects": 131883,
+        "parsed_objects_per_s": 248.18687182948875,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "total_rows": 100000,
+        "windows_per_file": 20
+      },
+      "return_code": 0,
+      "rows": 100000,
+      "sha256": "b0f1ce8f1410087ec628e9a86fac524b16c5b03a06552dd7832e82241730d3e0",
+      "state": "complete",
+      "target_rows": 100000
+    },
+    {
+      "archive": "phase8_2m_general_overnight_r01_chunk05.zip",
+      "chunk_index": 5,
+      "csv": "phase8_2m_general_overnight_r01_chunk05.csv",
+      "latest_progress": {
+        "checkpoint_every": 500,
+        "counts": {
+          "general_indomain": 91500
+        },
+        "elapsed_s": 471.45939779281616,
+        "files_scanned": 10,
+        "filter_passing_candidates_seen": 99795,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 194.07821846030922,
+        "new_rows": 91500,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk05.csv",
+        "parsed_objects": 124496,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "state": "running",
+        "total_rows": 91500
+      },
+      "progress": "phase8_2m_general_overnight_r01_chunk05_progress.json",
+      "report": "phase8_2m_general_overnight_r01_chunk05_report.json",
+      "report_summary": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "general_indomain": 100000
+        },
+        "download_workers": 4,
+        "elapsed_s": 525.5867066383362,
+        "files_scanned": 11,
+        "filter_passing_candidates_seen": 109456,
+        "include_buckets": [
+          "general_indomain"
+        ],
+        "kept_rows_per_s": 190.2635640075491,
+        "new_rows": 100000,
+        "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk05.csv",
+        "parsed_objects": 137679,
+        "parsed_objects_per_s": 261.9529722899535,
+        "quotas": {
+          "general_indomain": 100000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 1,
+          "index": 0
+        },
+        "total_rows": 100000,
+        "windows_per_file": 20
+      },
+      "return_code": 0,
+      "rows": 100000,
+      "sha256": "06e21e8a7ebbf14cb4b73233bbdadf0d099c85537a66813eac294199b68bfc73",
+      "state": "complete",
+      "target_rows": 100000
+    }
+  ],
+  "completed_target_rows": 500000,
+  "elapsed_s": 2761.6952245235443,
+  "mounted_checkpoint_csvs": [
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_aromatic_large.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_balanced.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_rare.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_topology_elements.csv"
+  ],
+  "state": "complete",
+  "tag": "phase8_2m_general_overnight_r01",
+  "total_target_rows": 500000
+}

@@ -1,0 +1,28 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "general_indomain": 100000
+  },
+  "download_workers": 4,
+  "elapsed_s": 525.5867066383362,
+  "files_scanned": 11,
+  "filter_passing_candidates_seen": 109456,
+  "include_buckets": [
+    "general_indomain"
+  ],
+  "kept_rows_per_s": 190.2635640075491,
+  "new_rows": 100000,
+  "out_csv": "/kaggle/working/phase8_2m_general_overnight_r01/phase8_2m_general_overnight_r01_chunk05.csv",
+  "parsed_objects": 137679,
+  "parsed_objects_per_s": 261.9529722899535,
+  "quotas": {
+    "general_indomain": 100000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 1,
+    "index": 0
+  },
+  "total_rows": 100000,
+  "windows_per_file": 20
+}

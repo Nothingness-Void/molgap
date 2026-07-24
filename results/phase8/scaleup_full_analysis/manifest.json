@@ -1,0 +1,28 @@
+{
+  "complete": true,
+  "common_rows": 1977,
+  "pcqm_rows": 4981,
+  "models": [
+    "additive_1p5m_2d",
+    "broad_1p098m_2d",
+    "coverage_2m_2d",
+    "distilled_2m_2d",
+    "ensemble_three_2m_2d",
+    "ensemble_two_1m_2d",
+    "fusion_1m",
+    "repair_v2_1m_2d",
+    "routed_v4_500k"
+  ],
+  "distribution_segments": [
+    "base500k",
+    "original1m_general_topup500k",
+    "repair_targeted_topup500k",
+    "broad_residual_topup97798",
+    "exact2m_mixed_topup500k",
+    "combined_original1m",
+    "combined_repair1m",
+    "combined_additive1p5m",
+    "combined_exact2m"
+  ],
+  "sealed_opened": false
+}

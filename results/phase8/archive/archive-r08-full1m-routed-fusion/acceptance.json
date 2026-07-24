@@ -1,0 +1,42 @@
+{
+  "accepted": true,
+  "decision": "closed_negative_fixed_route",
+  "kernel": "nothingnessvoid/molgap-1m-routed-dualgps-fusion",
+  "run": "molgap_1m_routed_dualgps_fusion_v2",
+  "n_aligned": 997445,
+  "test_rows": 99745,
+  "split_sha256": "3703312b168589a66ef25c8323cd695fe2baa6b8317cb793d573841fe25a38b2",
+  "checks": {
+    "completion_manifest": true,
+    "prediction_arrays_finite": true,
+    "prediction_rows_aligned": true,
+    "source_idx_unique": true,
+    "checkpoint_tensors_finite": true,
+    "train_log_rows": 150,
+    "reference_reproduced": true,
+    "sealed_20k_accessed": false
+  },
+  "metrics_eV": {
+    "base_average_mae": 0.0805045614639918,
+    "base_gap_mae": 0.09193063527345657,
+    "always_dual_average_mae": 0.07880705098311107,
+    "always_dual_gap_mae": 0.08978461474180222,
+    "routed_average_mae": 0.08002928644418716,
+    "routed_gap_mae": 0.09133123606443405,
+    "routed_minus_dual_average_mae": 0.001222235461076096,
+    "routed_minus_dual_gap_mae": 0.001546621322631836
+  },
+  "route": {
+    "threshold_eV": 4.0,
+    "test_count": 17148,
+    "test_fraction": 0.17191839189934333
+  },
+  "artifact_sha256": {
+    "base_best_pt": "1de253ccb9123ce636e487bc4890b7fcb3e375c42ebd369ab3d7eb4fd5942e4d",
+    "base_last_pt": "9f72767d5ca2eae5864112436a5d93e5649585c2b7b727efbaaad1d220a73053",
+    "train_log_csv": "8d2bc6797558df637724a5a2db4bdcec33daaab00a1dcdb5ebde6ff1aa2fbc22",
+    "manifest_json": "7a7f6f2a68a25a103f9f523b2fe637f8c15e985be6eff4d25d0c6c23d8bc1d49",
+    "metrics_json": "822b1eee563475369537f74c8dda6c76cd00fefe465f9d97422559ceaf74da5b",
+    "predictions_npz": "7037ef1b35361970d48022d6ea50e709e5018d9ee7691907d2e4c124a9086e75"
+  }
+}

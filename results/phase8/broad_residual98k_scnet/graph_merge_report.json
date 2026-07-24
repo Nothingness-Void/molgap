@@ -1,0 +1,13 @@
+{
+  "base": "results/phase8/pyg_2d_graphs_bond_expansion_1m.pt",
+  "append": "results/phase8/broad_residual98k_scnet/pyg_2d_graphs_broad_residual98k_topup.pt",
+  "out": "results/phase8/broad_residual98k_scnet/pyg_2d_graphs_expansion_1m_broad_residual.pt",
+  "base_graphs": 1000000,
+  "append_graphs": 97798,
+  "total_graphs": 1097798,
+  "source_idx_min": 0,
+  "source_idx_max": 1097797,
+  "contiguous_source_idx": true,
+  "output_bytes": 4987368570,
+  "append_cache_deleted_after_success": true
+}

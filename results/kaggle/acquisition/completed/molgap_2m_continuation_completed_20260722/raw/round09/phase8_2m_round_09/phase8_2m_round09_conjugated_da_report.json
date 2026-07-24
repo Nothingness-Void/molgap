@@ -1,0 +1,31 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "conjugated_midgap": 7059,
+    "donor_acceptor_conjugated": 7941
+  },
+  "download_workers": 2,
+  "elapsed_s": 317.0730211734772,
+  "files_scanned": 4,
+  "filter_passing_candidates_seen": 37030,
+  "include_buckets": [
+    "donor_acceptor_conjugated",
+    "conjugated_midgap"
+  ],
+  "kept_rows_per_s": 47.30771462196776,
+  "new_rows": 15000,
+  "out_csv": "/kaggle/working/phase8_2m_round_09/phase8_2m_round09_conjugated_da.csv",
+  "parsed_objects": 45715,
+  "parsed_objects_per_s": 144.17814492955043,
+  "quotas": {
+    "conjugated_midgap": 7059,
+    "donor_acceptor_conjugated": 7941
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "total_rows": 15000,
+  "windows_per_file": 24
+}

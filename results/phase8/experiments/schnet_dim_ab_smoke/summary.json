@@ -1,0 +1,30 @@
+{
+  "arms": {
+    "128": {
+      "n_params": 722180,
+      "training_time_s": 0.4992518424987793,
+      "best_val_mae": 3.6021568775177,
+      "test_average_mae": 3.682868798573812,
+      "test_homo_mae": 5.542815685272217,
+      "test_lumo_mae": 0.9132113456726074,
+      "test_gap_mae": 4.592579364776611
+    },
+    "192": {
+      "n_params": 1041028,
+      "training_time_s": 0.8518335819244385,
+      "best_val_mae": 3.714775800704956,
+      "test_average_mae": 3.7960246404012046,
+      "test_homo_mae": 5.731663703918457,
+      "test_lumo_mae": 0.9653067588806152,
+      "test_gap_mae": 4.691103458404541
+    }
+  },
+  "candidate_128_minus_baseline_192": {
+    "test_average_mae": -0.11315584182739258,
+    "test_gap_mae": -0.09852409362792969,
+    "parameter_ratio": 0.6937181324613747,
+    "training_time_ratio": 0.5860908199590859
+  },
+  "screening_pass": true,
+  "screening_rule": "average MAE delta <= 0.005 eV and params <= 75% or time <= 85%"
+}

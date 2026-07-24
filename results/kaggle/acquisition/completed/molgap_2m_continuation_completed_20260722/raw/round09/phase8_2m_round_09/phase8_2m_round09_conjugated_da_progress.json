@@ -1,0 +1,29 @@
+{
+  "checkpoint_every": 250,
+  "counts": {
+    "conjugated_midgap": 7059,
+    "donor_acceptor_conjugated": 7941
+  },
+  "elapsed_s": 317.07058572769165,
+  "files_scanned": 4,
+  "filter_passing_candidates_seen": 37030,
+  "include_buckets": [
+    "donor_acceptor_conjugated",
+    "conjugated_midgap"
+  ],
+  "kept_rows_per_s": 47.30807799649503,
+  "new_rows": 15000,
+  "out_csv": "/kaggle/working/phase8_2m_round_09/phase8_2m_round09_conjugated_da.csv",
+  "parsed_objects": 45715,
+  "quotas": {
+    "conjugated_midgap": 7059,
+    "donor_acceptor_conjugated": 7941
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "state": "complete",
+  "total_rows": 15000
+}

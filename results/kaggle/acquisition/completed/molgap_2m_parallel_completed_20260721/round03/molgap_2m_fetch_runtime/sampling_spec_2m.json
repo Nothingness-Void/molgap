@@ -1,0 +1,32 @@
+{
+  "dataset": "phase8_additive_2m_candidate_pool",
+  "purpose": "Prepare a broad additive top-up from 1.5M to 2M without replacing the original 1M distribution.",
+  "excluded_training_csv": "data/raw/phase8_repair_v3_1p5m.csv",
+  "candidate_pool_target": 360000,
+  "selection_target": 500000,
+  "hard_filters": {
+    "allowed_elements": ["C", "H", "N", "O", "S", "F", "Cl"],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_existing_1p5m_cids_and_canonical_smiles": true,
+    "exclude_prior_repair_candidate_union": true
+  },
+  "priority_buckets": [
+    {"id": "very_low_gap", "quota": 3000, "predicate": "gap < 2.5"},
+    {"id": "low_gap_aromatic_edge", "quota": 3000, "predicate": "2.5 <= gap < 3.2 and aromatic edge"},
+    {"id": "large_aromatic_edge", "quota": 12000, "predicate": "mw >= 500 and aromatic edge"},
+    {"id": "very_large_general", "quota": 9000, "predicate": "mw >= 700"},
+    {"id": "s_or_cl_hard", "quota": 10000, "predicate": "S/Cl with low-gap or aromatic-hard signal"},
+    {"id": "aromatic_edge_general", "quota": 15000, "predicate": "gap >= 3.2 and aromatic edge"},
+    {"id": "flexible_hard", "quota": 8000, "predicate": "rotatable bonds >= 8 with low-gap or aromatic signal"},
+    {"id": "large_mw_500_700", "quota": 13000, "predicate": "500 <= mw < 700"},
+    {"id": "balanced_general", "quota": 288000, "predicate": "3.2 <= gap < 5.5, 200 <= mw < 500, aromatic rings <= 4, rotatable bonds <= 7"}
+  ],
+  "selection_rules": [
+    "Combine the fresh 360K pool with the approximately 227K unused prior candidates before selecting 500K.",
+    "Preserve all 1.5M training rows and append only CID/canonical-SMILES-disjoint molecules.",
+    "Favor balanced general coverage; targeted buckets are capped at 20 percent of each fresh round.",
+    "Run a controlled pure-2D external gate before any 2M 3D allocation."
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "complete": true,
+  "elapsed_s": 1775.214411497116,
+  "groups": {
+    "aromatic_large": {
+      "buckets": [
+        "large_aromatic_edge",
+        "very_large_general",
+        "aromatic_edge_general"
+      ],
+      "csv": "phase8_repair_v2_round03_aromatic_large.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "aromatic_edge_general": 2844,
+          "large_aromatic_edge": 3000,
+          "very_large_general": 1906
+        },
+        "elapsed_s": 1592.680959224701,
+        "files_scanned": 34,
+        "filter_passing_candidates_seen": 274908,
+        "include_buckets": [
+          "large_aromatic_edge",
+          "very_large_general",
+          "aromatic_edge_general"
+        ],
+        "kept_rows_per_s": 4.86600907426721,
+        "new_rows": 7750,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_aromatic_large.csv",
+        "parsed_objects": 318909,
+        "quotas": {
+          "aromatic_edge_general": 3000,
+          "large_aromatic_edge": 3000,
+          "very_large_general": 2000
+        },
+        "resumed_rows": 0,
+        "state": "running",
+        "total_rows": 7750
+      },
+      "log": "phase8_repair_v2_round03_aromatic_large.log",
+      "original_target_rows": 8000,
+      "pid": 29,
+      "progress": "phase8_repair_v2_round03_aromatic_large_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "aromatic_edge_general": 3000,
+          "large_aromatic_edge": 3000,
+          "very_large_general": 2000
+        },
+        "download_workers": 2,
+        "elapsed_s": 1761.1922047138214,
+        "files_scanned": 39,
+        "filter_passing_candidates_seen": 308365,
+        "include_buckets": [
+          "large_aromatic_edge",
+          "very_large_general",
+          "aromatic_edge_general"
+        ],
+        "kept_rows_per_s": 4.542377588651621,
+        "new_rows": 8000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_aromatic_large.csv",
+        "parsed_objects": 358689,
+        "parsed_objects_per_s": 203.66260936198265,
+        "quotas": {
+          "aromatic_edge_general": 3000,
+          "large_aromatic_edge": 3000,
+          "very_large_general": 2000
+        },
+        "resumed_rows": 0,
+        "total_rows": 8000,
+        "windows_per_file": 16
+      },
+      "return_code": 0,
+      "sha256": "63f97997e51bdb3e933d9fa3ac289a3a3a58b57cb6fa0b35c421205a58b108a0",
+      "target_rows": 8000
+    },
+    "balanced": {
+      "buckets": [
+        "balanced_general"
+      ],
+      "csv": "phase8_repair_v2_round03_balanced.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "balanced_general": 39000
+        },
+        "elapsed_s": 500.0840644836426,
+        "files_scanned": 8,
+        "filter_passing_candidates_seen": 65622,
+        "include_buckets": [
+          "balanced_general"
+        ],
+        "kept_rows_per_s": 77.9868881450344,
+        "new_rows": 39000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_balanced.csv",
+        "parsed_objects": 76959,
+        "quotas": {
+          "balanced_general": 39000
+        },
+        "resumed_rows": 0,
+        "state": "complete",
+        "total_rows": 39000
+      },
+      "log": "phase8_repair_v2_round03_balanced.log",
+      "original_target_rows": 39000,
+      "pid": 31,
+      "progress": "phase8_repair_v2_round03_balanced_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "balanced_general": 39000
+        },
+        "download_workers": 2,
+        "elapsed_s": 500.08710956573486,
+        "files_scanned": 8,
+        "filter_passing_candidates_seen": 65622,
+        "include_buckets": [
+          "balanced_general"
+        ],
+        "kept_rows_per_s": 77.98641327481282,
+        "new_rows": 39000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_balanced.csv",
+        "parsed_objects": 76959,
+        "parsed_objects_per_s": 153.89118921067487,
+        "quotas": {
+          "balanced_general": 39000
+        },
+        "resumed_rows": 0,
+        "total_rows": 39000,
+        "windows_per_file": 16
+      },
+      "return_code": 0,
+      "sha256": "554bb1ae7d491ac24e4deb16e265ed6fad7ed6d171d6ad61848b64ed5bc486ae",
+      "target_rows": 39000
+    },
+    "rare": {
+      "buckets": [
+        "very_low_gap",
+        "low_gap_aromatic_edge"
+      ],
+      "csv": "phase8_repair_v2_round03_rare.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "low_gap_aromatic_edge": 500,
+          "very_low_gap": 500
+        },
+        "elapsed_s": 1606.4520168304443,
+        "files_scanned": 42,
+        "filter_passing_candidates_seen": 7647,
+        "include_buckets": [
+          "very_low_gap",
+          "low_gap_aromatic_edge"
+        ],
+        "kept_rows_per_s": 0.6224898033201242,
+        "new_rows": 1000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_rare.csv",
+        "parsed_objects": 391512,
+        "quotas": {
+          "low_gap_aromatic_edge": 500,
+          "very_low_gap": 500
+        },
+        "resumed_rows": 0,
+        "state": "complete",
+        "total_rows": 1000
+      },
+      "log": "phase8_repair_v2_round03_rare.log",
+      "original_target_rows": 1000,
+      "pid": 28,
+      "progress": "phase8_repair_v2_round03_rare_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "low_gap_aromatic_edge": 500,
+          "very_low_gap": 500
+        },
+        "download_workers": 2,
+        "elapsed_s": 1606.4548587799072,
+        "files_scanned": 42,
+        "filter_passing_candidates_seen": 7647,
+        "include_buckets": [
+          "very_low_gap",
+          "low_gap_aromatic_edge"
+        ],
+        "kept_rows_per_s": 0.6224887020849711,
+        "new_rows": 1000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_rare.csv",
+        "parsed_objects": 391512,
+        "parsed_objects_per_s": 243.71179673069122,
+        "quotas": {
+          "low_gap_aromatic_edge": 500,
+          "very_low_gap": 500
+        },
+        "resumed_rows": 0,
+        "total_rows": 1000,
+        "windows_per_file": 16
+      },
+      "return_code": 0,
+      "sha256": "2d79a478c698cd56ec438c93d26cf6d5abea3c1ae90bd8fbb8df0bb22fa30061",
+      "target_rows": 1000
+    },
+    "topology_elements": {
+      "buckets": [
+        "s_or_cl_hard",
+        "flexible_hard",
+        "large_mw_500_700"
+      ],
+      "csv": "phase8_repair_v2_round03_topology_elements.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "flexible_hard": 3000,
+          "large_mw_500_700": 5000,
+          "s_or_cl_hard": 4000
+        },
+        "elapsed_s": 929.387528181076,
+        "files_scanned": 17,
+        "filter_passing_candidates_seen": 135575,
+        "include_buckets": [
+          "s_or_cl_hard",
+          "flexible_hard",
+          "large_mw_500_700"
+        ],
+        "kept_rows_per_s": 12.911729107754924,
+        "new_rows": 12000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_topology_elements.csv",
+        "parsed_objects": 167069,
+        "quotas": {
+          "flexible_hard": 3000,
+          "large_mw_500_700": 5000,
+          "s_or_cl_hard": 4000
+        },
+        "resumed_rows": 0,
+        "state": "complete",
+        "total_rows": 12000
+      },
+      "log": "phase8_repair_v2_round03_topology_elements.log",
+      "original_target_rows": 12000,
+      "pid": 30,
+      "progress": "phase8_repair_v2_round03_topology_elements_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "flexible_hard": 3000,
+          "large_mw_500_700": 5000,
+          "s_or_cl_hard": 4000
+        },
+        "download_workers": 2,
+        "elapsed_s": 929.3944773674011,
+        "files_scanned": 17,
+        "filter_passing_candidates_seen": 135575,
+        "include_buckets": [
+          "s_or_cl_hard",
+          "flexible_hard",
+          "large_mw_500_700"
+        ],
+        "kept_rows_per_s": 12.911632565314084,
+        "new_rows": 12000,
+        "out_csv": "/kaggle/working/phase8_repair_v2_round_03/phase8_repair_v2_round03_topology_elements.csv",
+        "parsed_objects": 167069,
+        "parsed_objects_per_s": 179.7611284212049,
+        "quotas": {
+          "flexible_hard": 3000,
+          "large_mw_500_700": 5000,
+          "s_or_cl_hard": 4000
+        },
+        "resumed_rows": 0,
+        "total_rows": 12000,
+        "windows_per_file": 16
+      },
+      "return_code": 0,
+      "sha256": "58b32e4149a5b8be2fb78812cf9bcd992f0f858ab14569f6e3774617806cc036",
+      "target_rows": 11999
+    }
+  },
+  "prior_checkpoint_csvs": [
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round01_aromatic_large.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round01_balanced.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round01_rare.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round01_topology_elements.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round02_aromatic_large.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round02_balanced.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round02_rare.csv",
+    "/kaggle/input/molgap-phase8-repair-v2-checkpoints/phase8_repair_v2_round02_topology_elements.csv"
+  ],
+  "reconciliation": {
+    "aromatic_large": {
+      "accepted_rows": 8000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 8000
+    },
+    "balanced": {
+      "accepted_rows": 39000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 39000
+    },
+    "rare": {
+      "accepted_rows": 1000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 1000
+    },
+    "topology_elements": {
+      "accepted_rows": 11999,
+      "dropped_duplicate_rows": 1,
+      "dropped_examples": [
+        {
+          "canonical_smiles": "O=C(NCc1ccccc1)C(c1ccncc1)N(Cc1cccs1)C(=O)Cn1nnc(-c2ccccc2F)n1",
+          "cid": "23742292"
+        }
+      ],
+      "original_rows": 12000
+    }
+  },
+  "round_index": 3,
+  "round_target_rows": 59999,
+  "state": "complete",
+  "tag": "phase8_repair_1m_v2_candidate_pool"
+}

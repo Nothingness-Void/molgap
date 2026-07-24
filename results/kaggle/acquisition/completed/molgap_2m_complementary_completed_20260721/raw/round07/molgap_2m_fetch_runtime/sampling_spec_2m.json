@@ -1,0 +1,30 @@
+{
+  "dataset": "phase8_complementary_rare_candidate_pool",
+  "purpose": "Acquire rare PubChemQC regions not explicitly targeted by the broad or residual-hard rounds.",
+  "candidate_pool_target": 120000,
+  "hard_filters": {
+    "allowed_elements": ["C", "H", "N", "O", "S", "F", "Cl"],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_all_accepted_acquisition_checkpoints": true
+  },
+  "priority_buckets": [
+    {"id": "high_gap_hetero", "quota": 18000, "predicate": "gap >= 5.5 and N+O+S >= 2 and mw < 700"},
+    {"id": "high_gap_rigid", "quota": 12000, "predicate": "gap >= 5.5 and rings >= 1 and rotatable_bonds <= 2"},
+    {"id": "small_hetero_dense", "quota": 10000, "predicate": "200 <= mw <= 300 and N+O+S >= 3"},
+    {"id": "hetero_dense_midgap", "quota": 12000, "predicate": "3.2 <= gap <= 5.5 and heteroatom fraction >= 0.25 and N+O+S >= 3"},
+    {"id": "sulfur_rich", "quota": 8000, "predicate": "at least two sulfur atoms"},
+    {"id": "halogen_rich", "quota": 6000, "predicate": "F+Cl >= 3 and 2.5 < gap <= 5.5"},
+    {"id": "bridged_polycyclic", "quota": 10000, "predicate": "bridgeheads >= 2 and rings >= 2"},
+    {"id": "fused_rigid", "quota": 10000, "predicate": "rings >= 4, rotatable_bonds <= 2, and 2 <= aromatic_rings <= 4"},
+    {"id": "donor_acceptor_conjugated", "quota": 18000, "predicate": "conjugated_bonds >= 8, N >= 1, O+S+F+Cl >= 1, and gap <= 4.5"},
+    {"id": "conjugated_midgap", "quota": 16000, "predicate": "conjugated_bonds >= 10, 3.2 < gap <= 5.0, and aromatic_rings <= 4"}
+  ],
+  "selection_rules": [
+    "Exclude the complete 1.5M table, repair union, residual round, and all 824K accepted broad/general/hard candidates by CID and canonical SMILES.",
+    "Use two stable source-file shards so concurrent kernels scan disjoint source files.",
+    "Keep source exhaustion visible; never fill a rare quota with balanced-general rows.",
+    "Treat this output as candidate inventory only until residual-guided selection and a fixed pure-2D gate are complete."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "accepted_rows": 59997,
+  "reconciliation": {
+    "aromatic_large": {
+      "accepted_rows": 8000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 8000
+    },
+    "balanced": {
+      "accepted_rows": 38997,
+      "dropped_duplicate_rows": 3,
+      "dropped_examples": [
+        {
+          "canonical_smiles": "Nc1ncccc1-c1cc(Cc2ccc(Cc3ccccc3)cc2)no1",
+          "cid": "58076251"
+        },
+        {
+          "canonical_smiles": "Nc1ccc(-c2cc(Cc3ccc(Cc4ccccc4)cc3)no2)c(N)n1",
+          "cid": "58076252"
+        },
+        {
+          "canonical_smiles": "Nc1ncccc1-c1cc(Cc2ccc(CCc3ccccc3)cc2)no1",
+          "cid": "58076253"
+        }
+      ],
+      "original_rows": 39000
+    },
+    "rare": {
+      "accepted_rows": 1000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 1000
+    },
+    "topology_elements": {
+      "accepted_rows": 12000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 12000
+    }
+  },
+  "round_dir": "results\\phase8\\remote\\kaggle\\repair_v2_round_02\\phase8_repair_v2_round_02",
+  "round_index": 2
+}

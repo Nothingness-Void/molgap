@@ -1,0 +1,31 @@
+{
+  "dataset": "phase8_repair_1m_v2",
+  "purpose": "Replace the rejected general-in-domain 1M top-up with a disjoint coverage-targeted candidate pool while preserving the validated expansion500K base.",
+  "excluded_training_csv": "data/raw/phase8_expansion_1m.csv",
+  "candidate_pool_target": 600000,
+  "selection_target": 500000,
+  "hard_filters": {
+    "allowed_elements": ["C", "H", "N", "O", "S", "F", "Cl"],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_existing_1m_cids_and_canonical_smiles": true
+  },
+  "priority_buckets": [
+    {"id": "very_low_gap", "quota": 5000, "predicate": "gap < 2.5"},
+    {"id": "low_gap_aromatic_edge", "quota": 5000, "predicate": "2.5 <= gap < 3.2 and aromatic edge"},
+    {"id": "large_aromatic_edge", "quota": 30000, "predicate": "mw >= 500 and aromatic edge"},
+    {"id": "very_large_general", "quota": 20000, "predicate": "mw >= 700"},
+    {"id": "s_or_cl_hard", "quota": 40000, "predicate": "S/Cl with low-gap or aromatic-hard signal"},
+    {"id": "aromatic_edge_general", "quota": 30000, "predicate": "gap >= 3.2 and aromatic edge"},
+    {"id": "flexible_hard", "quota": 30000, "predicate": "rotatable bonds >= 8 with low-gap or aromatic signal"},
+    {"id": "large_mw_500_700", "quota": 50000, "predicate": "500 <= mw < 700"},
+    {"id": "balanced_general", "quota": 390000, "predicate": "3.2 <= gap < 5.5, 200 <= mw < 500, aromatic rings <= 4, rotatable bonds <= 7"}
+  ],
+  "selection_rules": [
+    "Select no more than 500000 rows after scaffold/fingerprint novelty scoring against expansion500K.",
+    "Preserve every validated expansion500K row as the first half of 1M-v2.",
+    "Use old:new replay sampling of 2:1 for the first 2D gate; do not use equal sampling.",
+    "Do not build 3D graphs unless the single-head 2D gate is non-regressive on PCQM and OOD."
+  ]
+}

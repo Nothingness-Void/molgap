@@ -1,0 +1,91 @@
+{
+  "dataset": "phase8_multi2d_2m_hard20k_rescue",
+  "assembly_report": "results\\phase8\\multi2d_2m_coverage\\assembly_report.json",
+  "source_families": [
+    "broad",
+    "hard"
+  ],
+  "candidate_rows": 324940,
+  "used_csvs": [
+    "data\\raw\\phase8_repair_v3_1p5m.csv",
+    "data\\raw\\phase8_multi2d_2m_topup_500k.csv"
+  ],
+  "evaluation_exclusions": [
+    {
+      "path": "results\\phase8\\remote\\kaggle\\external_eval_1m\\datasets\\labels\\external_common_labels.csv",
+      "rows": 1980,
+      "unique_scaffolds": 1483
+    },
+    {
+      "path": "results\\kaggle\\molgap_pcqm4mv2_valid_5k\\pcqm4mv2_valid_5k.csv",
+      "rows": 5000,
+      "unique_scaffolds": 2808
+    },
+    {
+      "path": "results\\phase8\\multi2d_final_sealed\\sealed_10k.csv",
+      "rows": 10000,
+      "unique_scaffolds": 10000
+    },
+    {
+      "path": "results\\phase8\\multi2d_2m_coverage\\future_sealed_20k.csv",
+      "rows": 20000,
+      "unique_scaffolds": 20000
+    }
+  ],
+  "used_identity_cids": 2000000,
+  "used_identity_canonical_smiles": 2000000,
+  "evaluation_scaffolds": 34219,
+  "candidate_exact_excluded_rows": 170007,
+  "candidate_eval_scaffold_excluded_rows": 80727,
+  "eligible_rows": 120644,
+  "eligible_unique_scaffolds": 71975,
+  "available_by_bucket": {
+    "flexible_hard": 1436,
+    "large_aromatic_edge": 2211,
+    "very_large_general": 1306,
+    "s_or_cl_hard": 1840,
+    "aromatic_edge_general": 2905,
+    "large_mw_500_700": 2185,
+    "low_mid_gap_flexible": 24493,
+    "flexible_very_large": 10730,
+    "multi_amide_very_large": 8298,
+    "high_sp3_non_aromatic": 13028,
+    "macrocycle_very_large": 1698,
+    "high_sp3_very_large": 2081
+  },
+  "available_scaffolds_by_bucket": {
+    "flexible_hard": 1000,
+    "large_aromatic_edge": 1788,
+    "very_large_general": 829,
+    "s_or_cl_hard": 1307,
+    "aromatic_edge_general": 2195,
+    "large_mw_500_700": 1523,
+    "low_mid_gap_flexible": 14230,
+    "flexible_very_large": 7146,
+    "multi_amide_very_large": 3791,
+    "high_sp3_non_aromatic": 8741,
+    "macrocycle_very_large": 1220,
+    "high_sp3_very_large": 1653
+  },
+  "quotas": {
+    "flexible_hard": 1000,
+    "large_aromatic_edge": 2000,
+    "very_large_general": 1000,
+    "s_or_cl_hard": 1500,
+    "aromatic_edge_general": 1000,
+    "large_mw_500_700": 500,
+    "low_mid_gap_flexible": 4000,
+    "flexible_very_large": 3500,
+    "multi_amide_very_large": 2000,
+    "high_sp3_non_aromatic": 1500,
+    "macrocycle_very_large": 1000,
+    "high_sp3_very_large": 1000
+  },
+  "selected_rows": 20000,
+  "selected_unique_scaffolds": 15116,
+  "topup_sha256": "374d0f64ed511e3736a9ee0b89b0512ab70c8177276daadaa8dbc22c684f556e",
+  "gap_identity_max_abs_eV": 1.7763568394002505e-15,
+  "scaffold_disjoint_evaluation": true,
+  "future_sealed_training_use_forbidden": true,
+  "seed": 20260722
+}

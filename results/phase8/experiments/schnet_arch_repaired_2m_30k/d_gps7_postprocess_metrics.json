@@ -1,0 +1,27 @@
+{
+  "kind": "gps",
+  "graph_path": "data\\cache\\phase8\\repaired_2m_schnet_ab_30k\\pyg_2d_graphs.pt",
+  "n_graphs": 30000,
+  "postprocess_only": true,
+  "model_path": "models\\phase8\\phase8_repaired_2m_d_gps7_seed42.pt",
+  "eval_batch_size": 256,
+  "embedding_batch_size": 256,
+  "test_metrics": {
+    "HOMO": {
+      "mae": 0.08939005434513092,
+      "r2": 0.9256762266159058
+    },
+    "LUMO": {
+      "mae": 0.08576087653636932,
+      "r2": 0.9722567200660706
+    },
+    "Gap": {
+      "mae": 0.1142391562461853,
+      "r2": 0.9555636644363403
+    },
+    "average": {
+      "mae": 0.09646336237589519,
+      "r2": 0.9511655370394388
+    }
+  }
+}

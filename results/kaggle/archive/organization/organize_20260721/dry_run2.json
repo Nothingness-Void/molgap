@@ -1,0 +1,161 @@
+{
+  "applied": false,
+  "datasets": [
+    {
+      "ref": "nothingnessvoid/1m-full",
+      "changed": false,
+      "applied": false,
+      "title": "MolGap | Reference | Original 1M Assets",
+      "subtitle": "Unpromoted 1M continuation assets retained for reproducibility",
+      "description": "Reference-only Phase 8 bundle: original 1M CSV, 2D embeddings, ETKDG 3D graphs, SchNet checkpoint, and dual-GPS fusion checkpoint. The 1M candidate failed the global acceptance gate and is not the production model.",
+      "keywords": [
+        "chemistry",
+        "graph neural network",
+        "pre-trained model"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-1m-external-eval-models",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Eval | 1M Model Assets",
+      "subtitle": "Frozen checkpoints used by paired Phase 8 acceptance evaluations",
+      "description": "Evaluation-only checkpoint bundle for original 500K, original 1M, repair-v2, SchNet, GPS7, GPS9, and fusion comparisons. Keep private and immutable for reproducible paired metrics.",
+      "keywords": [
+        "chemistry",
+        "model evaluation",
+        "pre-trained model"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-1m-replay-fusion-model",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Archive | Replay Fusion Negative",
+      "subtitle": "Rejected replay-weighted 1M fusion checkpoint",
+      "description": "Archived negative experiment. Replay-weighted frozen-embedding fusion did not repair the 1M PCQM regression and must not be used as a production model.",
+      "keywords": [
+        "chemistry",
+        "model evaluation",
+        "pre-trained model"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Eval | PCQM4Mv2 Valid 5K",
+      "subtitle": "Fixed external Gap proxy labels for paired acceptance tests",
+      "description": "Immutable 5K PCQM4Mv2 validation subset used only for paired external Gap evaluation. This is a local proxy test, not an OGB leaderboard submission.",
+      "keywords": [
+        "chemistry",
+        "benchmark",
+        "model evaluation"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-1m-external-eval",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Eval | Common OOD and Hard Labels",
+      "subtitle": "Fixed common, OOD-1000, and P8-hard labeled evaluation table",
+      "description": "Immutable B3LYP evaluation labels used for paired Phase 8 model comparisons. The common table is development evidence after residual-guided acquisition and is not a newly sealed promotion set.",
+      "keywords": [
+        "chemistry",
+        "out-of-distribution",
+        "model evaluation"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-runtime-source",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Active | Phase 8 Runtime Source",
+      "subtitle": "Reusable inference and evaluation source bundle for cloud jobs",
+      "description": "Small private source bundle used by Kaggle evaluation kernels. Reusable model logic mirrors src/molgap; experiment-specific wrappers remain in scripts/phase8/remote/kaggle.",
+      "keywords": [
+        "chemistry",
+        "python",
+        "graph neural network"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-phase8-repair-v2-checkpoints",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Archive | Repair V2 Fetch Checkpoints",
+      "subtitle": "Durable acquisition rounds retained for reconstruction only",
+      "description": "Archived repair-v2 acquisition checkpoints. The reconciled 726,966-row candidate union supplied the rejected repair-v2 and additive 1.5M experiments. Do not treat these files as a new training set.",
+      "keywords": [
+        "chemistry",
+        "dataset",
+        "checkpoint"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/pyg-3d-graphs-etkdg-300k",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Archive | ETKDG 3D Graphs 300K",
+      "subtitle": "Historical Phase 7/8 ETKDG graph cache",
+      "description": "Archived 300K ETKDG PyG graph cache retained for historical reproduction. Current scaling experiments use the named Phase 8 caches instead.",
+      "keywords": [
+        "chemistry",
+        "3d",
+        "graph neural network"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/pyg-2d-graphs-bond-300k",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Archive | Bond 2D Graphs 300K",
+      "subtitle": "Historical Phase 7/8 molecular graph cache",
+      "description": "Archived 300K bond-aware PyG graph cache retained for historical reproduction. It is not the current 1M training cache.",
+      "keywords": [
+        "chemistry",
+        "dataset",
+        "graph neural network"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-hybrid",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Archive | Legacy Hybrid Graph Cache",
+      "subtitle": "Historical 300K hybrid experiment asset",
+      "description": "Legacy descriptor-enhanced 3D graph asset from the early hybrid experiment. Retained only for Phase 7/early Phase 8 reproducibility.",
+      "keywords": [
+        "chemistry",
+        "3d",
+        "graph neural network"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-2m-fetch-base",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Reference | Acquisition Exclusion Base",
+      "subtitle": "Rejected 1.5M table plus prior repair-union identities",
+      "description": "Reference bundle for future acquisition exclusion. It contains the rejected additive 1.5M labeled table and the 726,966-row prior repair identity union. Despite the historical slug, this is not a completed 2M dataset.",
+      "keywords": [
+        "chemistry",
+        "dataset",
+        "data cleaning"
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/molgap-residual-target-round01-recovered",
+      "changed": true,
+      "applied": false,
+      "title": "MolGap | Active | Residual Target Round 01",
+      "subtitle": "Recovered 45,457-row residual-focused B3LYP acquisition",
+      "description": "Recovered residual-target acquisition with 45,457 unique labeled molecules. It contributes to the controlled original-1M plus 97,798-row uniform pilot; use the newer scaffold-sealed split for promotion evaluation.",
+      "keywords": [
+        "chemistry",
+        "dataset",
+        "out-of-distribution"
+      ]
+    }
+  ]
+}

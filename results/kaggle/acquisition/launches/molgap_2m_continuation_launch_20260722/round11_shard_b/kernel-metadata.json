@@ -1,0 +1,24 @@
+{
+  "id": "nothingnessvoid/active-molgap-complementary-rare-fetch-r11-b",
+  "title": "ACTIVE | MolGap Complementary Rare Fetch R11 B",
+  "code_file": "fetch_2m_parallel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-2m-fetch-base",
+    "nothingnessvoid/molgap-2m-broad-round01",
+    "nothingnessvoid/molgap-2m-broad-round02-03",
+    "nothingnessvoid/molgap-2m-general-overnight-r01-accepted",
+    "nothingnessvoid/molgap-2m-hard-round04-05-accepted",
+    "nothingnessvoid/molgap-residual-target-round01-recovered",
+    "nothingnessvoid/molgap-2m-complementary-round06-07-accepted",
+    "nothingnessvoid/molgap-2m-complementary-round08-09-accepted",
+    "nothingnessvoid/molgap-2m-general-overnight-r02-accepted"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

@@ -1,0 +1,108 @@
+{
+  "experiment": "phase8_repaired_2m_retention_d_seed42",
+  "decision": "seed42_passed_general_gate_repeat_two_fixed_seeds",
+  "scopes": {
+    "all": {
+      "homo": {
+        "retention_b_mae_eV": 0.09407402760197774,
+        "retention_d_mae_eV": 0.09265058562101162,
+        "delta_d_minus_b_eV": -0.0014234419809661114
+      },
+      "lumo": {
+        "retention_b_mae_eV": 0.09233680868242387,
+        "retention_d_mae_eV": 0.09065441780138761,
+        "delta_d_minus_b_eV": -0.0016823908810362637
+      },
+      "gap": {
+        "retention_b_mae_eV": 0.11729991767145927,
+        "retention_d_mae_eV": 0.11691796702224835,
+        "delta_d_minus_b_eV": -0.00038195064921091315
+      },
+      "average": {
+        "retention_b_mae_eV": 0.10123691798528697,
+        "retention_d_mae_eV": 0.1000743234815492,
+        "delta_d_minus_b_eV": -0.0011625945037377766
+      }
+    },
+    "ood1000": {
+      "homo": {
+        "retention_b_mae_eV": 0.10499048197277776,
+        "retention_d_mae_eV": 0.10332758350938438,
+        "delta_d_minus_b_eV": -0.0016628984633933752
+      },
+      "lumo": {
+        "retention_b_mae_eV": 0.0985472481737385,
+        "retention_d_mae_eV": 0.09678232143061097,
+        "delta_d_minus_b_eV": -0.0017649267431275317
+      },
+      "gap": {
+        "retention_b_mae_eV": 0.1286794670262212,
+        "retention_d_mae_eV": 0.1285551519166717,
+        "delta_d_minus_b_eV": -0.00012431510954952207
+      },
+      "average": {
+        "retention_b_mae_eV": 0.11073906572424583,
+        "retention_d_mae_eV": 0.10955501895222235,
+        "delta_d_minus_b_eV": -0.001184046772023481
+      }
+    },
+    "p8_targeted_hard": {
+      "homo": {
+        "retention_b_mae_eV": 0.08292317083671268,
+        "retention_d_mae_eV": 0.08174432704178425,
+        "delta_d_minus_b_eV": -0.0011788437949284275
+      },
+      "lumo": {
+        "retention_b_mae_eV": 0.08599301619589698,
+        "retention_d_mae_eV": 0.08439493341938953,
+        "delta_d_minus_b_eV": -0.0015980827765074562
+      },
+      "gap": {
+        "retention_b_mae_eV": 0.10567602216490796,
+        "retention_d_mae_eV": 0.10503090392457054,
+        "delta_d_minus_b_eV": -0.0006451182403374167
+      },
+      "average": {
+        "retention_b_mae_eV": 0.09153073639917254,
+        "retention_d_mae_eV": 0.0903900547952481,
+        "delta_d_minus_b_eV": -0.0011406816039244427
+      }
+    }
+  },
+  "pcqm": {
+    "retention_b_gap_mae_eV": 0.3087139012476451,
+    "retention_d_gap_mae_eV": 0.3092158701312789,
+    "delta_d_minus_b_eV": 0.0005019688836337965,
+    "disposition": "recorded_specialist_domain_not_seed42_general_gate"
+  },
+  "gate": {
+    "common_average_max_regression_eV": 0.0005,
+    "ood_or_p8_hard_minimum_improvement_eV": -0.001,
+    "other_hard_domain_max_regression_eV": 0.0005,
+    "passed": true
+  },
+  "training": {
+    "best_val_mae_eV": 0.10449014163970947,
+    "best_epoch": 39,
+    "strict_warm_start_loaded": true,
+    "init_from": "models/scnet/phase8_repair_v3_1p5m_gps7.pt",
+    "note": "init_compatible=false denotes strict full-state loading mode, not a failed initialization"
+  },
+  "graph_acceptance": {
+    "state": "accepted",
+    "path": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/pyg_2d_graphs_repaired_2m.pt",
+    "rows": 2000000,
+    "source_idx_min": 0,
+    "source_idx_max": 1999999,
+    "source_idx_unique": 2000000,
+    "finite_labels": true,
+    "size_bytes": 9440424670
+  },
+  "model": {
+    "path": "models/phase8/phase8_repaired_2m_d_gps7_seed42.pt",
+    "bytes": 11779674,
+    "sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+  },
+  "sealed_20k_opened": false,
+  "production_registry_changed": false
+}

@@ -1,0 +1,45 @@
+{
+  "errors": [],
+  "groups": {
+    "aromatic_large": {
+      "cross_or_within_pool_duplicates": 0,
+      "csv": "phase8_repair_v2_aromatic_large.csv",
+      "examples": [],
+      "rejected_1m_overlaps": 0,
+      "rows": 75951,
+      "sha256": "f22cf50ef88832885535432cad80d793dd635d418af75fe9e44f681bc84128ac",
+      "target_rows": 75951
+    },
+    "balanced": {
+      "cross_or_within_pool_duplicates": 0,
+      "csv": "phase8_repair_v2_balanced.csv",
+      "examples": [],
+      "rejected_1m_overlaps": 0,
+      "rows": 366240,
+      "sha256": "3df80d78699ea3e5c6fe9c40591b4df3f4af7afc1111477e3f45796d06d1276b",
+      "target_rows": 366240
+    },
+    "rare": {
+      "cross_or_within_pool_duplicates": 0,
+      "csv": "phase8_repair_v2_rare.csv",
+      "examples": [],
+      "rejected_1m_overlaps": 0,
+      "rows": 10000,
+      "sha256": "79ac6e7fe657d040e5fe1cb5ca69f66cc8ff2be193d8f152b095966434a6f335",
+      "target_rows": 10000
+    },
+    "topology_elements": {
+      "cross_or_within_pool_duplicates": 0,
+      "csv": "phase8_repair_v2_topology_elements.csv",
+      "examples": [],
+      "rejected_1m_overlaps": 0,
+      "rows": 98508,
+      "sha256": "ff0a186adc77880e8c3451d755df86dc61e9be322756b76170590601fd9c7300",
+      "target_rows": 98508
+    }
+  },
+  "manifest": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\repair_1m_v2_manifest.json",
+  "pool_dir": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719",
+  "unique_rows": 550699,
+  "valid": true
+}

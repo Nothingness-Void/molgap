@@ -1,0 +1,157 @@
+{
+  "n_valid": 5000,
+  "metrics": {
+    "control_a": {
+      "gap": {
+        "mae_eV": 0.3130064210504746,
+        "r2": 0.7980759556316193
+      }
+    },
+    "control_b": {
+      "gap": {
+        "mae_eV": 0.31299173799448315,
+        "r2": 0.7983123550564257
+      }
+    },
+    "repair_v2": {
+      "gap": {
+        "mae_eV": 0.3172687279140091,
+        "r2": 0.7941956518975383
+      }
+    },
+    "broad98k": {
+      "gap": {
+        "mae_eV": 0.31342122188956334,
+        "r2": 0.7978311422946371
+      }
+    },
+    "mean_control_repair": {
+      "gap": {
+        "mae_eV": 0.31246346962086574,
+        "r2": 0.7990147745801127
+      }
+    },
+    "mean_controls_repair": {
+      "gap": {
+        "mae_eV": 0.3120671950759015,
+        "r2": 0.7994059931808617
+      }
+    },
+    "mean_control_broad_repair": {
+      "gap": {
+        "mae_eV": 0.3121275283312044,
+        "r2": 0.7992931455503087
+      }
+    },
+    "mean_all4": {
+      "gap": {
+        "mae_eV": 0.31210582929306724,
+        "r2": 0.7993073235026271
+      }
+    },
+    "targetwise_oracle": {
+      "gap": {
+        "mae_eV": 0.2734977235971541,
+        "r2": 0.8214333255827926
+      }
+    }
+  },
+  "delta_vs_baseline": {
+    "control_b": {
+      "gap": {
+        "delta": -1.4683055991507388e-05,
+        "ci95": [
+          -0.0005201233517335028,
+          0.0004815940636649665
+        ],
+        "probability_better": 0.5207,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "repair_v2": {
+      "gap": {
+        "delta": 0.004262306863534484,
+        "ci95": [
+          0.0011366794497842134,
+          0.007445651885977209
+        ],
+        "probability_better": 0.0037,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "broad98k": {
+      "gap": {
+        "delta": 0.000414800839088754,
+        "ci95": [
+          -0.0004954821166325679,
+          0.0013077480298807666
+        ],
+        "probability_better": 0.1853,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "mean_control_repair": {
+      "gap": {
+        "delta": -0.0005429514296088644,
+        "ci95": [
+          -0.0023367333333872073,
+          0.0012246387041794972
+        ],
+        "probability_better": 0.7269,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "mean_controls_repair": {
+      "gap": {
+        "delta": -0.0009392259745730728,
+        "ci95": [
+          -0.0022060733939602267,
+          0.000277191231211191
+        ],
+        "probability_better": 0.9316,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "mean_control_broad_repair": {
+      "gap": {
+        "delta": -0.0008788927192702582,
+        "ci95": [
+          -0.002202692944104843,
+          0.00039079462538964
+        ],
+        "probability_better": 0.9127,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    },
+    "mean_all4": {
+      "gap": {
+        "delta": -0.000900591757407365,
+        "ci95": [
+          -0.0019376509540556047,
+          9.315010536084962e-05
+        ],
+        "probability_better": 0.9606,
+        "n_bootstrap": 10000,
+        "seed": 42
+      }
+    }
+  },
+  "oracle_usage": {
+    "gap": {
+      "control_a": 856,
+      "control_b": 796,
+      "repair_v2": 2018,
+      "broad98k": 1097,
+      "mean_control_repair": 119,
+      "mean_controls_repair": 35,
+      "mean_control_broad_repair": 38,
+      "mean_all4": 41
+    }
+  }
+}

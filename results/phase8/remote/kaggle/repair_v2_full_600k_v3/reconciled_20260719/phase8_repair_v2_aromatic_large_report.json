@@ -1,0 +1,30 @@
+{
+  "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_aromatic_large.csv",
+  "include_buckets": [
+    "large_aromatic_edge",
+    "very_large_general",
+    "aromatic_edge_general"
+  ],
+  "quotas": {
+    "large_aromatic_edge": 30000,
+    "very_large_general": 20000,
+    "aromatic_edge_general": 30000
+  },
+  "counts": {
+    "large_aromatic_edge": 30000,
+    "very_large_general": 20000,
+    "aromatic_edge_general": 30000
+  },
+  "resumed_rows": 0,
+  "new_rows": 80000,
+  "total_rows": 80000,
+  "files_scanned": 430,
+  "windows_per_file": 16,
+  "chunk_bytes": 16000000,
+  "download_workers": 2,
+  "parsed_objects": 3371089,
+  "filter_passing_candidates_seen": 2854518,
+  "elapsed_s": 16255.566093683243,
+  "kept_rows_per_s": 4.9213912046463415,
+  "parsed_objects_per_s": 207.38059693350039
+}

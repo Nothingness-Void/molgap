@@ -1,0 +1,19 @@
+{
+  "state": "accepted",
+  "round02_rows": 60000,
+  "round03_raw_rows": 60000,
+  "round03_cross_bucket_duplicates_removed": 3,
+  "round03_accepted_rows": 59997,
+  "dataset_rows": 119997,
+  "strict_pool_rows_including_round01": 179997,
+  "dedup_keys": [
+    "cid",
+    "canonical_smiles"
+  ],
+  "exclusions_validated": [
+    "phase8_repair_v3_1p5m",
+    "phase8_repair_v2_candidate_union",
+    "phase8_2m_round01",
+    "phase8_2m_round02"
+  ]
+}

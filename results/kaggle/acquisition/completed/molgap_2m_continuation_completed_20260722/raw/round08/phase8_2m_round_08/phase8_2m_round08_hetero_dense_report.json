@@ -1,0 +1,37 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "halogen_rich": 3000,
+    "hetero_dense_midgap": 6000,
+    "small_hetero_dense": 5000,
+    "sulfur_rich": 4000
+  },
+  "download_workers": 2,
+  "elapsed_s": 429.45488023757935,
+  "files_scanned": 9,
+  "filter_passing_candidates_seen": 103787,
+  "include_buckets": [
+    "small_hetero_dense",
+    "hetero_dense_midgap",
+    "sulfur_rich",
+    "halogen_rich"
+  ],
+  "kept_rows_per_s": 41.913599840901085,
+  "new_rows": 18000,
+  "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_hetero_dense.csv",
+  "parsed_objects": 128799,
+  "parsed_objects_per_s": 299.91276366156774,
+  "quotas": {
+    "halogen_rich": 3000,
+    "hetero_dense_midgap": 6000,
+    "small_hetero_dense": 5000,
+    "sulfur_rich": 4000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 0
+  },
+  "total_rows": 18000,
+  "windows_per_file": 24
+}

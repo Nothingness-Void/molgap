@@ -1,0 +1,22 @@
+{
+  "pass": false,
+  "student_minus_teacher_mae_eV": {
+    "common_all_average": 0.004815953463696096,
+    "common_all_gap": 0.005697584563876895,
+    "ood_average": -0.0021074828531416514,
+    "ood_gap": -0.003246723854349915,
+    "p8_hard_average": 0.01186642530928316,
+    "p8_hard_gap": 0.014806008732896857,
+    "pcqm_gap": -0.003226977732203126
+  },
+  "maximum_allowed_regression_eV": {
+    "common_all_average": 0.001,
+    "common_all_gap": 0.001,
+    "ood_average": 0.002,
+    "ood_gap": 0.002,
+    "p8_hard_average": 0.002,
+    "p8_hard_gap": 0.002,
+    "pcqm_gap": 0.002
+  },
+  "sealed_opened": false
+}

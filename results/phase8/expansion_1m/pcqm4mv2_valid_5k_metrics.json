@@ -1,0 +1,23 @@
+{
+  "note": "Local deterministic 5K sample from official PCQM4Mv2 public valid; Gap only, not an OGB submission.",
+  "official_valid_rows": 73545,
+  "sample_requested": 5000,
+  "sample_seed": 42,
+  "n_valid_etkdg": 4981,
+  "routed_v4": {
+    "mae_eV": 0.29168975837530003,
+    "r2": 0.8284319195062748
+  },
+  "candidate_1m": {
+    "mae_eV": 0.30468503905956107,
+    "r2": 0.808709722414534
+  },
+  "candidate_minus_routed_v4": {
+    "mae_delta_eV": 0.012995280684260965,
+    "ci95_eV": [
+      0.009410861990992803,
+      0.0167370766254253
+    ],
+    "p_candidate_better": 0.0
+  }
+}

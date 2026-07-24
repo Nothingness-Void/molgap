@@ -1,0 +1,44 @@
+{
+  "accepted_rows": 59997,
+  "reconciliation": {
+    "aromatic_large": {
+      "accepted_rows": 6000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 6000
+    },
+    "balanced": {
+      "accepted_rows": 47997,
+      "dropped_duplicate_rows": 3,
+      "dropped_examples": [
+        {
+          "canonical_smiles": "Cc1ccc(C(Cc2ccccc2)n2nnc3ccccc32)s1",
+          "cid": "3735042"
+        },
+        {
+          "canonical_smiles": "Oc1cc(-c2ccc(Cl)cc2)oc1-n1cccc1",
+          "cid": "3735200"
+        },
+        {
+          "canonical_smiles": "Cc1cc(=O)c2cc3c(cc2[nH]1)oc1ccccc13",
+          "cid": "3735474"
+        }
+      ],
+      "original_rows": 48000
+    },
+    "rare": {
+      "accepted_rows": 1000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 1000
+    },
+    "topology_elements": {
+      "accepted_rows": 5000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 5000
+    }
+  },
+  "round_dir": "results\\kaggle\\molgap_2m_parallel_completed_20260721\\round03_accepted",
+  "round_index": 3
+}

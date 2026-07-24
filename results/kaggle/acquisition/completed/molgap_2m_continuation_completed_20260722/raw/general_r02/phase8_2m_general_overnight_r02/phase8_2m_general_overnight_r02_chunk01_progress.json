@@ -1,0 +1,26 @@
+{
+  "checkpoint_every": 500,
+  "counts": {
+    "general_indomain": 100000
+  },
+  "elapsed_s": 541.1759748458862,
+  "files_scanned": 12,
+  "filter_passing_candidates_seen": 113877,
+  "include_buckets": [
+    "general_indomain"
+  ],
+  "kept_rows_per_s": 184.7827779651112,
+  "new_rows": 100000,
+  "out_csv": "/kaggle/working/phase8_2m_general_overnight_r02/phase8_2m_general_overnight_r02_chunk01.csv",
+  "parsed_objects": 127933,
+  "quotas": {
+    "general_indomain": 100000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 1,
+    "index": 0
+  },
+  "state": "complete",
+  "total_rows": 100000
+}

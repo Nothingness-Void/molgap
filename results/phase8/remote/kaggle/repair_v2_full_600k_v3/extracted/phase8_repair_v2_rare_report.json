@@ -1,0 +1,27 @@
+{
+  "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_rare.csv",
+  "include_buckets": [
+    "very_low_gap",
+    "low_gap_aromatic_edge"
+  ],
+  "quotas": {
+    "very_low_gap": 5000,
+    "low_gap_aromatic_edge": 5000
+  },
+  "counts": {
+    "very_low_gap": 5000,
+    "low_gap_aromatic_edge": 5000
+  },
+  "resumed_rows": 0,
+  "new_rows": 10000,
+  "total_rows": 10000,
+  "files_scanned": 430,
+  "windows_per_file": 16,
+  "chunk_bytes": 16000000,
+  "download_workers": 2,
+  "parsed_objects": 3787504,
+  "filter_passing_candidates_seen": 70880,
+  "elapsed_s": 17188.912735939026,
+  "kept_rows_per_s": 0.5817703628858235,
+  "parsed_objects_per_s": 220.3457576511508
+}

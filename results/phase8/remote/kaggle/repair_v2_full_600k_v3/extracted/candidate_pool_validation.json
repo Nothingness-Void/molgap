@@ -1,0 +1,292 @@
+{
+  "errors": [
+    "aromatic_large: 4,049 duplicate rows within/cross pool",
+    "topology_elements: 21,492 duplicate rows within/cross pool",
+    "balanced: 23,760 duplicate rows within/cross pool"
+  ],
+  "groups": {
+    "aromatic_large": {
+      "cross_or_within_pool_duplicates": 4049,
+      "csv": "phase8_repair_v2_aromatic_large.csv",
+      "examples": [
+        {
+          "canonical_smiles": "O=C(Nc1cnc(Oc2ccc(-c3cnn4ccc(N5CCC5)nc34)cc2)nc1)Nc1cc(C(F)(F)F)ccc1-n1ccc(C(F)(F)F)n1",
+          "cid": "118596529"
+        },
+        {
+          "canonical_smiles": "CN(C)c1ccn2ncc(-c3ccc(Oc4ncc(NC(=O)Nc5cc(C(F)(F)F)ccc5-n5cnc(C(F)(F)F)n5)cn4)cc3)c2n1",
+          "cid": "118596616"
+        },
+        {
+          "canonical_smiles": "CN(C)c1ccn2ncc(-c3ccc(Oc4ncc(NC(=O)Nc5cc(C(F)(F)F)ccc5-n5ccc(C(F)(F)F)n5)cn4)cc3)c2n1",
+          "cid": "118596636"
+        },
+        {
+          "canonical_smiles": "c1ccc(-c2nc(-c3ccccc3)nc(-c3cccc4c3-c3c(cccc3-c3nc(-c5ccccc5)nc(-c5ccccc5)n3)Oc3ccccc3-c3ccccc3O4)n2)cc1",
+          "cid": "118700592"
+        },
+        {
+          "canonical_smiles": "c1ccc(-c2cccc3c2-c2c(cccc2-c2cccc4c5ccccc5n(-c5ccccc5)c24)Oc2ccccc2-c2ccccc2O3)cc1",
+          "cid": "118700604"
+        },
+        {
+          "canonical_smiles": "c1ccc(-c2cccc3c2-c2cccc(-c4ccc5c6ccccc6n(-c6ccccc6)c5c4)c2Sc2ccccc2-c2ccccc2S3)cc1",
+          "cid": "118700620"
+        },
+        {
+          "canonical_smiles": "c1ccc(-c2cccc3c2-c2ccccc2Sc2ccccc2-c2ccc(-c4cccc5c6ccccc6n(-c6ccccc6)c45)cc2S3)cc1",
+          "cid": "118700621"
+        },
+        {
+          "canonical_smiles": "c1ccc(-n2c3ccccc3c3ccc(-c4cccc5c4-c4ccccc4Oc4ccccc4-c4ccc(-c6ccccn6)cc4O5)cc32)cc1",
+          "cid": "118700630"
+        },
+        {
+          "canonical_smiles": "CCN1CCN(c2cc3[nH]c(Nc4ncc(F)c(-c5cc(F)c6nc(C)n(C(C)C)c6c5)n4)nc3o2)CC1",
+          "cid": "118700787"
+        },
+        {
+          "canonical_smiles": "CCN1CCN(c2ccc3nc(Nc4ncc(F)c(-c5cc(F)c6nc(C)n(C(C)C)c6c5)n4)[nH]c3c2)CC1",
+          "cid": "118700804"
+        },
+        {
+          "canonical_smiles": "Cc1nc2c(F)cc(-c3nc(Nc4nc5ccc(N6CCNCC6)cc5[nH]4)ncc3F)cc2n1C(C)C",
+          "cid": "118700869"
+        },
+        {
+          "canonical_smiles": "O.O.c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c%12c%13c%14c%15c%16c%17c%14c%14c%18c%13c%11c1c1c5c%10c5c(c%14c%10c%17c%11c%13c%16c%14c%16c%15c%12c%12c%16c(c2c7c%126)c2c8c3c(c%13c%142)c2c9c4c5c%10c%112)c%181",
+          "cid": "118701006"
+        },
+        {
+          "canonical_smiles": "CC[C@H](C)[C@H](NC(=O)[C@H](Cc1c[nH]c2ccccc12)NC(=O)[C@H](Cc1c[nH]c2ccccc12)NC(=O)c1cc2ccc(O)cc2oc1=O)C(=O)OCc1ccccc1",
+          "cid": "118714927"
+        },
+        {
+          "canonical_smiles": "O=C(N[C@@H](Cc1c[nH]c2ccccc12)C(=O)N[C@@H](Cc1c[nH]c2ccccc12)C(=O)N[C@@H](CO)C(=O)OCc1ccccc1)c1cc2ccc(O)cc2oc1=O",
+          "cid": "118714928"
+        },
+        {
+          "canonical_smiles": "O=C(OCC1CC(c2nc(-c3ccc4ccc(-c5ccccc5)nc4c3)c3c(Cl)nccn23)C1)c1ccc([N+](=O)[O-])cc1",
+          "cid": "53629055"
+        },
+        {
+          "canonical_smiles": "O=C(Nc1ccccc1)C1=Cc2ccccc2C(=NNc2ccc(C=Cc3ccc(NN=C4C(=O)C(C(=O)Nc5ccccc5)=Cc5ccccc54)cc3)cc2)C1=O",
+          "cid": "53684468"
+        },
+        {
+          "canonical_smiles": "Cc1ccc2c(NC(=O)Nc3c4ccc(C)c3S(=O)(=O)N4c3cc(S(=O)(=O)O)cc4cccc(O)c34)c1S(=O)(=O)N2c1cc(S(=O)(=O)O)cc2cccc(O)c12",
+          "cid": "53684532"
+        },
+        {
+          "canonical_smiles": "CCCCc1nnc(S(=O)C(=O)c2ccc([N+](=O)[O-])cc2)n1Cc1ccc(OC(c2ccccc2)c2nn[nH]n2)cc1",
+          "cid": "53685210"
+        },
+        {
+          "canonical_smiles": "COc1ccc(C(OC[C@H]2O[C@@H](n3cnc4c(N)ncnc43)[C@H](O)[C@@H]2OCC[N+]2([O-])C(=O)c3ccccc3C2=O)(c2ccccc2)c2ccc(OC)cc2)cc1",
+          "cid": "53648375"
+        },
+        {
+          "canonical_smiles": "O=C([C@H](Cc1ccc(OS(=O)(=O)c2cccc3cnccc23)cc1)NS(=O)(=O)c1cccc2cnccc12)N1CCN(c2ccccc2)CC1",
+          "cid": "53823674"
+        }
+      ],
+      "rejected_1m_overlaps": 0,
+      "rows": 80000,
+      "sha256": "5bcd31a66f3ec648dbe5c2b2a52b051cf28973ee1883c8ad7172c76919e378d7",
+      "target_rows": 80000
+    },
+    "balanced": {
+      "cross_or_within_pool_duplicates": 23760,
+      "csv": "phase8_repair_v2_balanced.csv",
+      "examples": [
+        {
+          "canonical_smiles": "Cc1nnc(CN(Cc2ccccc2)Cc2scnc2C)s1",
+          "cid": "118769335"
+        },
+        {
+          "canonical_smiles": "Cc1nnc(CN(C)Cc2cc(-c3ccccc3)no2)s1",
+          "cid": "118775465"
+        },
+        {
+          "canonical_smiles": "Cc1nnc(CN(C)Cc2cc(-c3ccccc3)on2)s1",
+          "cid": "118775944"
+        },
+        {
+          "canonical_smiles": "Cc1ccc(/C(C#N)=C2\\C=CC(=NOS(C)(=O)=O)S2)cc1",
+          "cid": "118596125"
+        },
+        {
+          "canonical_smiles": "CS(=O)(=O)ON=C1C=C/C(=C(/C#N)c2c(Cl)cccc2Cl)S1",
+          "cid": "118596126"
+        },
+        {
+          "canonical_smiles": "CS(=O)(=O)ON=C1C=C/C(=C(/C#N)c2ccccc2Cl)S1",
+          "cid": "118596127"
+        },
+        {
+          "canonical_smiles": "CS(=O)(=O)ON=C1C=C/C(=C(/C#N)c2ccc(OS(C)(=O)=O)cc2)S1",
+          "cid": "118596129"
+        },
+        {
+          "canonical_smiles": "Cc1ccc(-c2nnnn2C)c(Cl)c1",
+          "cid": "118596137"
+        },
+        {
+          "canonical_smiles": "Cc1cc(Cl)c(-n2ccccc2=O)c(Cl)c1",
+          "cid": "118596138"
+        },
+        {
+          "canonical_smiles": "NN(C1=NC(c2ccccc2)CS1)c1ccc(-c2ncn(-c3ccc(OC(F)(F)F)cc3)n2)cc1",
+          "cid": "118596357"
+        },
+        {
+          "canonical_smiles": "Clc1nc(-c2ccccc2)cc(-c2ccc(-c3cccnc3)cc2)n1",
+          "cid": "118596384"
+        },
+        {
+          "canonical_smiles": "[2H]c1c([2H])c([2H])c(-c2ccc(Nc3ccccc3)cc2)c([2H])c1[2H]",
+          "cid": "118596403"
+        },
+        {
+          "canonical_smiles": "Clc1nc(-c2ccccc2)cc(-c2cccc(-c3cccnc3)c2)n1",
+          "cid": "118596404"
+        },
+        {
+          "canonical_smiles": "Nc1ncc(Cl)cc1-c1ccc(Oc2ncc(NC(=O)Nc3cc(F)ccc3F)cn2)cc1",
+          "cid": "118596471"
+        },
+        {
+          "canonical_smiles": "Nc1ncc(Cl)cc1-c1ccc(Oc2ncc(NC(=O)Nc3ccc4c(c3)CCO4)cn2)cc1",
+          "cid": "118596476"
+        },
+        {
+          "canonical_smiles": "Nc1ncc(Cl)cc1-c1ccc(Oc2ncc(NC(=O)Nc3cc(F)cc(F)c3)cn2)cc1",
+          "cid": "118596477"
+        },
+        {
+          "canonical_smiles": "COc1ccc(Cl)cc1NC(=O)Nc1cnc(Oc2ccc(-c3cc(Cl)cnc3N)cc2)nc1",
+          "cid": "118596490"
+        },
+        {
+          "canonical_smiles": "Cc1ccc(Cl)cc1NC(=O)Nc1cnc(Oc2ccc(-c3cc(F)cnc3N)cc2)nc1",
+          "cid": "118596507"
+        },
+        {
+          "canonical_smiles": "Nc1ncc(Cl)cc1-c1ccc(Oc2ncc(NC(=O)Nc3cccc(C(F)F)c3)cn2)cc1",
+          "cid": "118596509"
+        },
+        {
+          "canonical_smiles": "CS(=O)(=O)c1ccccc1NC(=O)Nc1cnc(Oc2ccc(-c3cc(F)cnc3N)cc2)nc1",
+          "cid": "118596565"
+        }
+      ],
+      "rejected_1m_overlaps": 0,
+      "rows": 390000,
+      "sha256": "81de81649fca8c04b5eb077758d548ad8e7771e5e6abdc61cd414464bf4b5c54",
+      "target_rows": 390000
+    },
+    "rare": {
+      "cross_or_within_pool_duplicates": 0,
+      "csv": "phase8_repair_v2_rare.csv",
+      "examples": [],
+      "rejected_1m_overlaps": 0,
+      "rows": 10000,
+      "sha256": "79ac6e7fe657d040e5fe1cb5ca69f66cc8ff2be193d8f152b095966434a6f335",
+      "target_rows": 10000
+    },
+    "topology_elements": {
+      "cross_or_within_pool_duplicates": 21492,
+      "csv": "phase8_repair_v2_topology_elements.csv",
+      "examples": [
+        {
+          "canonical_smiles": "COc1ccc(-c2c(Cl)cc(N=S)cc2Cl)cn1",
+          "cid": "118596132"
+        },
+        {
+          "canonical_smiles": "C/C(=N\\Nc1cc(C(F)(F)F)cc(C(F)(F)F)c1)c1c(-c2c(Oc3ccccc3)ccc3ccccc23)noc1C",
+          "cid": "118596139"
+        },
+        {
+          "canonical_smiles": "C/C(=N\\Nc1cc(C(F)(F)F)cc(C(F)(F)F)c1)c1c(-c2c(Oc3ccccc3)ccc3ccccc23)noc1Cc1ccc(C(F)(F)F)cc1",
+          "cid": "118596141"
+        },
+        {
+          "canonical_smiles": "S=Nc1cc(Cl)c(-n2cccn2)c(Cl)c1",
+          "cid": "118596143"
+        },
+        {
+          "canonical_smiles": "CC(C)(C)OC(=O)N1CC=C(c2c(Cl)cc(N=S)cc2C(F)(F)F)CC1",
+          "cid": "118596144"
+        },
+        {
+          "canonical_smiles": "COc1ccc(Nc2ncnc3c2ccn3[C@@H]2C[C@H](CN(C)C3CC(CCc4nc5ccc(C(C)(C)C)cc5[nH]4)C3)[C@H]3OC(C)(C)OC23)c(OC)c1",
+          "cid": "118596145"
+        },
+        {
+          "canonical_smiles": "CC(C)(C)OC(=O)N1CC=C(c2c(Cl)cc(N=S)cc2Cl)CC1",
+          "cid": "118596146"
+        },
+        {
+          "canonical_smiles": "C/C=C\\C(=C/c1ccc(-c2ccc3c(ccc4ccccc43)c2)cc1)c1ccc2c(c1)-c1cccc3c1c(cc1ccccc13)O2",
+          "cid": "118596154"
+        },
+        {
+          "canonical_smiles": "CC[C@](C)(c1ccc([C@](C)(CC)c2cccc3c2sc2ccccc23)cc1)c1ccc2c3ccccc3c3ccccc3c2c1",
+          "cid": "118596158"
+        },
+        {
+          "canonical_smiles": "COc1ccc(CNc2ncnc3c2ncn3[C@@H]2C[C@H](CN(C(C)C)C3CC(CCC(=O)Nc4nc5ccc(C(C)(C)C)cc5[nH]4)C3)[C@H]3OC(C)(C)O[C@H]32)c(OC)c1",
+          "cid": "118596167"
+        },
+        {
+          "canonical_smiles": "C=C1/C=C\\C=C/CN(c2ccc3ccc4c5cc(-c6ccc7c(c6)C(C)(C)c6ccccc6-7)ccc5ccc4c3c2)c2ccccc21",
+          "cid": "118596175"
+        },
+        {
+          "canonical_smiles": "C=C1/C=C\\C=C/CN(c2ccc(-c3cccc(-c4cccc5c4sc4ccccc45)c3)cc2)c2ccccc21",
+          "cid": "118596183"
+        },
+        {
+          "canonical_smiles": "C=C1/C=C\\C=C/Cc2cc(-c3cccc(-c4ccc(-c5cccc6c5sc5ccccc56)cc4)c3)ccc2-c2ccccc21",
+          "cid": "118596193"
+        },
+        {
+          "canonical_smiles": "C=C(/C=C\\C(=C/C)c1ccc(-c2cccc3c2sc2ccccc23)cc1)n1c2ccccc2c2ccccc21",
+          "cid": "118596195"
+        },
+        {
+          "canonical_smiles": "CC(C)[C@H](NC(=O)CCCCCN1C(=O)C=CC1=O)C(=O)N[C@@H](CCCNC(N)=O)C(=O)Nc1ccc(COC(=O)N(C=N)CCSC2=C(C(=O)O)N3C(=O)[C@H]([C@@H](C)O)[C@H]3C2)cc1",
+          "cid": "118596229"
+        },
+        {
+          "canonical_smiles": "CC(C)[C@H](NC(=O)CCCCCN1C(=O)C=CC1=O)C(=O)N[C@@H](CCCNC(N)=O)C(=O)Nc1ccc(COC(=O)OC[C@H]2O[C@@H](n3ccc(N)nc3=O)C(F)(F)[C@@H]2O)cc1",
+          "cid": "118596230"
+        },
+        {
+          "canonical_smiles": "COC(=O)N[C@@H](C(=O)[C@@]1(c2nc3c(ccc4c5c(ccc43)-c3ccc(-c4cnc([C@H]6CCCN6C(=O)[C@@H](NC(=O)O)C(C)C)[nH]4)cc3CO5)[nH]2)CCCN1)c1ccccc1",
+          "cid": "118596306"
+        },
+        {
+          "canonical_smiles": "CNC(=O)c1c(-c2ccc(F)cc2)nn2cc(N(C)S(C)(=O)=O)c(-c3ccc4c(n3)C3Cc5c(F)cccc5N3C(CN3CC(F)C3)=N4)cc12",
+          "cid": "118596347"
+        },
+        {
+          "canonical_smiles": "CNC(=O)c1c(-n2ccc(C)cc2=O)oc2nc(N(C)S(C)(=O)=O)c(-c3ccc4ncn5c6cccc(F)c6cc5c4n3)cc12",
+          "cid": "118596349"
+        },
+        {
+          "canonical_smiles": "CNC(=O)c1c(-c2ccc(F)cc2)oc2cc(N(C)S(C)(=O)=O)c(-c3ccc4nc(CN5CC[C@](O)(OC)C5)n5c6cccc(F)c6cc5c4n3)cc12",
+          "cid": "118596351"
+        }
+      ],
+      "rejected_1m_overlaps": 0,
+      "rows": 120000,
+      "sha256": "96ab84c4cab8b7ab8279f89c99837c5a13cf1cb339de4e66cd10823c53514725",
+      "target_rows": 120000
+    }
+  },
+  "manifest": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\extracted\\repair_1m_v2_manifest.json",
+  "pool_dir": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\extracted",
+  "unique_rows": 550699,
+  "valid": false
+}

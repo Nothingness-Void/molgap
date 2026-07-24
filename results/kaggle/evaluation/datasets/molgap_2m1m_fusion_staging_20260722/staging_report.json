@@ -1,0 +1,28 @@
+{
+  "format": "molgap-dual-gps-prefix-v1",
+  "rows": 1000000,
+  "experts": [
+    {
+      "expert": "coverage2m",
+      "gps7_source": "results/phase8/multi2d_2m_scnet/gps7/embeddings.pt",
+      "gps9_source": "results/phase8/multi2d_2m_scnet/gps9/embeddings.pt",
+      "rows": 1000000,
+      "embedding_dim_each": 192,
+      "dtype": "float16",
+      "path": "results/phase8/multi2d_2m_1m3d_fusion_staging/coverage2m_1m_fp16.pt",
+      "bytes": 776001917,
+      "sha256": "ae5ff955762d0b79c2264a4bf475eaf5110f0fcf4da30b0fe52b2f6b2a6797c1"
+    },
+    {
+      "expert": "hard20k",
+      "gps7_source": "results/phase8/multi2d_2m_hard20k_scnet/gps7/embeddings.pt",
+      "gps9_source": "results/phase8/multi2d_2m_hard20k_scnet/gps9/embeddings.pt",
+      "rows": 1000000,
+      "embedding_dim_each": 192,
+      "dtype": "float16",
+      "path": "results/phase8/multi2d_2m_1m3d_fusion_staging/hard20k_1m_fp16.pt",
+      "bytes": 776001832,
+      "sha256": "839d63e361609e99f303b0ac68983902c38146b853c1985578c13d8153ce1632"
+    }
+  ]
+}

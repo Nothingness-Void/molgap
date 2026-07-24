@@ -1,0 +1,31 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "low_gap_aromatic_edge": 500,
+    "very_low_gap": 500
+  },
+  "download_workers": 2,
+  "elapsed_s": 1806.5946621894836,
+  "files_scanned": 34,
+  "filter_passing_candidates_seen": 7078,
+  "include_buckets": [
+    "very_low_gap",
+    "low_gap_aromatic_edge"
+  ],
+  "kept_rows_per_s": 0.5535275958294156,
+  "new_rows": 1000,
+  "out_csv": "/kaggle/working/phase8_2m_round_03/phase8_2m_round03_rare.csv",
+  "parsed_objects": 321835,
+  "parsed_objects_per_s": 178.14455380375995,
+  "quotas": {
+    "low_gap_aromatic_edge": 500,
+    "very_low_gap": 500
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "total_rows": 1000,
+  "windows_per_file": 16
+}

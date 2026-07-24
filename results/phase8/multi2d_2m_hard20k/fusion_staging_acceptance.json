@@ -1,0 +1,38 @@
+{
+  "stage": "p8.19-frozen-2d-prefix",
+  "source_job": 702370,
+  "source_state": "COMPLETED",
+  "rows": 1000000,
+  "source_idx": {
+    "dtype": "torch.int64",
+    "minimum": 0,
+    "maximum": 999999,
+    "exact_arange": true
+  },
+  "labels": {
+    "source": "data/raw/phase8_expansion_1m.csv",
+    "rows": 1000000,
+    "columns": ["homo", "lumo", "gap"],
+    "finite": true
+  },
+  "experts": {
+    "coverage2m": {
+      "gps7_shape": [1000000, 192],
+      "gps9_shape": [1000000, 192],
+      "dtype": "torch.float16",
+      "finite": true,
+      "bytes": 776001917,
+      "sha256": "ae5ff955762d0b79c2264a4bf475eaf5110f0fcf4da30b0fe52b2f6b2a6797c1"
+    },
+    "hard20k": {
+      "gps7_shape": [1000000, 192],
+      "gps9_shape": [1000000, 192],
+      "dtype": "torch.float16",
+      "finite": true,
+      "bytes": 776001832,
+      "sha256": "839d63e361609e99f303b0ac68983902c38146b853c1985578c13d8153ce1632"
+    }
+  },
+  "sealed_future_20k_opened": false,
+  "accepted_for_kaggle_fusion_input": true
+}

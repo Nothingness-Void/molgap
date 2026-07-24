@@ -1,0 +1,24 @@
+{
+  "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_balanced.csv",
+  "include_buckets": [
+    "balanced_general"
+  ],
+  "quotas": {
+    "balanced_general": 390000
+  },
+  "counts": {
+    "balanced_general": 390000
+  },
+  "resumed_rows": 0,
+  "new_rows": 390000,
+  "total_rows": 390000,
+  "files_scanned": 430,
+  "windows_per_file": 16,
+  "chunk_bytes": 16000000,
+  "download_workers": 2,
+  "parsed_objects": 854043,
+  "filter_passing_candidates_seen": 719360,
+  "elapsed_s": 5582.306059837341,
+  "kept_rows_per_s": 69.86360042239674,
+  "parsed_objects_per_s": 152.991074091141
+}

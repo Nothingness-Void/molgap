@@ -1,0 +1,31 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "bridged_polycyclic": 6000,
+    "fused_rigid": 6000
+  },
+  "download_workers": 2,
+  "elapsed_s": 2704.4407579898834,
+  "files_scanned": 41,
+  "filter_passing_candidates_seen": 507827,
+  "include_buckets": [
+    "bridged_polycyclic",
+    "fused_rigid"
+  ],
+  "kept_rows_per_s": 4.437146557767153,
+  "new_rows": 12000,
+  "out_csv": "/kaggle/working/phase8_2m_round_09/phase8_2m_round09_bridged_rigid.csv",
+  "parsed_objects": 594349,
+  "parsed_objects_per_s": 219.76780162186245,
+  "quotas": {
+    "bridged_polycyclic": 6000,
+    "fused_rigid": 6000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "total_rows": 12000,
+  "windows_per_file": 24
+}

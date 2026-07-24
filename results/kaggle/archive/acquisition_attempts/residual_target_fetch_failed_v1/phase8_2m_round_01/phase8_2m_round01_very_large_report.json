@@ -1,0 +1,30 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "flexible_very_large": 8640,
+    "high_sp3_very_large": 3768,
+    "non_aromatic_very_large": 469
+  },
+  "download_workers": 2,
+  "elapsed_s": 16652.515177726746,
+  "files_scanned": 430,
+  "filter_passing_candidates_seen": 41105,
+  "include_buckets": [
+    "high_sp3_very_large",
+    "non_aromatic_very_large",
+    "flexible_very_large"
+  ],
+  "kept_rows_per_s": 0.7732765808989255,
+  "new_rows": 12877,
+  "out_csv": "/kaggle/working/phase8_2m_round_01/phase8_2m_round01_very_large.csv",
+  "parsed_objects": 4141882,
+  "parsed_objects_per_s": 248.72410898864666,
+  "quotas": {
+    "flexible_very_large": 8640,
+    "high_sp3_very_large": 8640,
+    "non_aromatic_very_large": 6720
+  },
+  "resumed_rows": 0,
+  "total_rows": 12877,
+  "windows_per_file": 16
+}

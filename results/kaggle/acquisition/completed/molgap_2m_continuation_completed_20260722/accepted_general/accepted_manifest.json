@@ -1,0 +1,76 @@
+{
+  "accepted_rows": 498279,
+  "chunks": [
+    {
+      "accepted_csv": "phase8_2m_general_overnight_r02_chunk01.csv",
+      "accepted_rows": 99617,
+      "accepted_sha256": "d23514cba4bc2aa2eb43fa1927bc05934859312cbfc46de928f9f28d9bbe3aa3",
+      "chunk_index": 1,
+      "expected_rows": 100000,
+      "prior_overlap_rows": 383,
+      "source_csv": "phase8_2m_general_overnight_r02_chunk01.csv",
+      "source_rows": 100000,
+      "source_sha256": "bcaee6d6d43f8f0fe91a3f0ee9a37348a04a0efaa55e6e1891473412c60d3bd3",
+      "within_pool_duplicate_rows": 0
+    },
+    {
+      "accepted_csv": "phase8_2m_general_overnight_r02_chunk02.csv",
+      "accepted_rows": 99956,
+      "accepted_sha256": "504312cc9aaff1bbff64331ed84245aaaad8340a204f7b08c80e7bc4e2aceed1",
+      "chunk_index": 2,
+      "expected_rows": 100000,
+      "prior_overlap_rows": 44,
+      "source_csv": "phase8_2m_general_overnight_r02_chunk02.csv",
+      "source_rows": 100000,
+      "source_sha256": "8f1f1e16468f5a294a7a85d1cc8b826b66396133e37fcc05af098d3fb8385991",
+      "within_pool_duplicate_rows": 0
+    },
+    {
+      "accepted_csv": "phase8_2m_general_overnight_r02_chunk03.csv",
+      "accepted_rows": 99792,
+      "accepted_sha256": "1d957641ceb54ecc8d57b15f798a66dc24f3afb201b7451bedc1ee5394dab1a1",
+      "chunk_index": 3,
+      "expected_rows": 100000,
+      "prior_overlap_rows": 208,
+      "source_csv": "phase8_2m_general_overnight_r02_chunk03.csv",
+      "source_rows": 100000,
+      "source_sha256": "5c710260edc98a5253d6cb32ea4744f2e96837900365b8347bdaf481b9aa4ca7",
+      "within_pool_duplicate_rows": 0
+    },
+    {
+      "accepted_csv": "phase8_2m_general_overnight_r02_chunk04.csv",
+      "accepted_rows": 99225,
+      "accepted_sha256": "c4fe09d3e8ebf058bf2ab15994be0bc5e1bbe763c9f2a188f1495c7298292efb",
+      "chunk_index": 4,
+      "expected_rows": 100000,
+      "prior_overlap_rows": 775,
+      "source_csv": "phase8_2m_general_overnight_r02_chunk04.csv",
+      "source_rows": 100000,
+      "source_sha256": "d796d566bfa0456183532611d5b3d0ee981d248ad188400b5984d052579c13a4",
+      "within_pool_duplicate_rows": 0
+    },
+    {
+      "accepted_csv": "phase8_2m_general_overnight_r02_chunk05.csv",
+      "accepted_rows": 99689,
+      "accepted_sha256": "12ba07af811b6b98d7ce33426f30da327a0860f748821e0913671ab9ceb22fd3",
+      "chunk_index": 5,
+      "expected_rows": 100000,
+      "prior_overlap_rows": 311,
+      "source_csv": "phase8_2m_general_overnight_r02_chunk05.csv",
+      "source_rows": 100000,
+      "source_sha256": "cefa208e47a74a89b442747b40c64223f2c29a08beac980b41636b14ed565af5",
+      "within_pool_duplicate_rows": 0
+    }
+  ],
+  "dedup_keys": [
+    "cid",
+    "canonical_smiles"
+  ],
+  "errors": [],
+  "prior_overlap_rows": 1721,
+  "source_manifest": "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_continuation_completed_20260722\\raw\\general_r02\\phase8_2m_general_overnight_r02_manifest.json",
+  "source_rows": 500000,
+  "source_state": "complete",
+  "state": "accepted",
+  "within_pool_duplicate_rows": 0
+}

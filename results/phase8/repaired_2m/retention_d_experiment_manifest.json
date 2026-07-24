@@ -1,0 +1,50 @@
+{
+  "experiment": "phase8_repaired_2m_retention_d_gps7",
+  "status": "seed42_passed_repeat_seeds_submitted",
+  "dataset": {
+    "path": "/work1/share/$USER/molgap-data/phase8_repaired_2m.csv",
+    "rows": 2000000,
+    "sha256": "0c7d19de211016bebc2aa8b3030665e8c5f239baebbdf21c01598e0ddf3777c3",
+    "decision": "results/phase8/repaired_2m/decision.md"
+  },
+  "control": "retention-B",
+  "shared_training": {
+    "init_from": "models/scnet/phase8_repair_v3_1p5m_gps7.pt",
+    "architecture": "GPS7 hidden192 heads4 dropout0.05",
+    "epochs": 40,
+    "patience": 12,
+    "learning_rate": 0.00008,
+    "batch_size": 256,
+    "split_seed": 42,
+    "targeted_source_idx_boundary": 500000,
+    "targeted_replay_weight": 3.0,
+    "expected_targeted_draw_fraction": 0.5,
+    "checkpoint_every_epochs": 1
+  },
+  "scnet_jobs": {
+    "build_graphs": 706229,
+    "train_gps7_seed42": 706230,
+    "external_eval": 706231,
+    "train_gps7_seed43": 707264,
+    "external_eval_seed43": 707265,
+    "train_gps7_seed44": 707266,
+    "external_eval_seed44": 707267,
+    "dependency": "afterok"
+  },
+  "seed42_decision": {
+    "passed_general_gate": true,
+    "common_average_delta_vs_retention_b_eV": -0.0011625945037377766,
+    "ood_average_delta_vs_retention_b_eV": -0.001184046772023481,
+    "p8_hard_average_delta_vs_retention_b_eV": -0.0011406816039244427,
+    "pcqm_gap_delta_vs_retention_b_eV": 0.0005019688836337965,
+    "evidence": "results/phase8/repaired_2m/retention_d_seed42_decision.md"
+  },
+  "promotion_gate_candidate_minus_retention_b_eV": {
+    "common_average_max_regression": 0.0005,
+    "ood_or_p8_hard_minimum_improvement": -0.001,
+    "other_domain_max_regression": 0.0005,
+    "three_seed_repeat_required_after_seed42_pass": true
+  },
+  "sealed_20k_opened": false,
+  "production_registry_change_authorized": false
+}

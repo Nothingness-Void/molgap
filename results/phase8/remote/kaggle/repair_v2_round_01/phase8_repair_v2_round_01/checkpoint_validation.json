@@ -1,0 +1,33 @@
+{
+  "errors": [],
+  "groups": {
+    "aromatic_large": {
+      "csv": "phase8_repair_v2_round01_aromatic_large.csv",
+      "rows": 8000,
+      "sha256": "b78913c1d23556d9a381fa5720258b4038111d83fb63bcebebdecf44193b9a71",
+      "target_rows": 8000
+    },
+    "balanced": {
+      "csv": "phase8_repair_v2_round01_balanced.csv",
+      "rows": 39000,
+      "sha256": "18f32d03c2be08a99bdd74a89c3aac0e388f4131f8150de9a67a25045460fa5f",
+      "target_rows": 39000
+    },
+    "rare": {
+      "csv": "phase8_repair_v2_round01_rare.csv",
+      "rows": 1000,
+      "sha256": "c333e3922dd24d60e6a92d91cca1c8eca5ff81425958928718eb3bd8772f7962",
+      "target_rows": 1000
+    },
+    "topology_elements": {
+      "csv": "phase8_repair_v2_round01_topology_elements.csv",
+      "rows": 12000,
+      "sha256": "1c96cfe3bfc27464c4301f8a034744ef29ee8d876715661a941366273b04fc6e",
+      "target_rows": 12000
+    }
+  },
+  "round_dir": "results\\phase8\\remote\\kaggle\\repair_v2_round_01\\phase8_repair_v2_round_01",
+  "round_index": 1,
+  "total_rows": 60000,
+  "valid": true
+}

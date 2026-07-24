@@ -2,7 +2,7 @@
 
 Date: 2026-06-30
 
-Script: `scripts/phase8/residual_analysis_expansion500k.py`
+Script: `scripts/phase8/archive/legacy/data_coverage/residual_analysis_expansion500k.py`
 Input: `results\phase8\full_expansion500k_common_eval_predictions.csv` (1977 molecules; buckets: {'ood1000': 999, 'p8_targeted_hard': 978}).
 
 ## Why this analysis

@@ -1,0 +1,30 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "aromatic_edge_general": 2500,
+    "large_aromatic_edge": 2000,
+    "very_large_general": 1500
+  },
+  "download_workers": 2,
+  "elapsed_s": 3276.8475348949432,
+  "files_scanned": 78,
+  "filter_passing_candidates_seen": 651187,
+  "include_buckets": [
+    "large_aromatic_edge",
+    "very_large_general",
+    "aromatic_edge_general"
+  ],
+  "kept_rows_per_s": 1.8310281256928733,
+  "new_rows": 6000,
+  "out_csv": "/kaggle/working/phase8_2m_round_01/phase8_2m_round01_aromatic_large.csv",
+  "parsed_objects": 773534,
+  "parsed_objects_per_s": 236.06041836328518,
+  "quotas": {
+    "aromatic_edge_general": 2500,
+    "large_aromatic_edge": 2000,
+    "very_large_general": 1500
+  },
+  "resumed_rows": 0,
+  "total_rows": 6000,
+  "windows_per_file": 16
+}

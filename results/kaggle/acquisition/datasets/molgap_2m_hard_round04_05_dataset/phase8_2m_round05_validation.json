@@ -1,0 +1,58 @@
+{
+  "errors": [],
+  "exclusion_csvs": [
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v3_1p5m.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_candidate_union_exclusion.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round02_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round02_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round02_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round02_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round03_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round03_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round03_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round02_03_dataset\\phase8_2m_round03_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_general_overnight_completed_20260721\\accepted\\phase8_2m_general_overnight_r01_chunk01.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_general_overnight_completed_20260721\\accepted\\phase8_2m_general_overnight_r01_chunk02.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_general_overnight_completed_20260721\\accepted\\phase8_2m_general_overnight_r01_chunk03.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_general_overnight_completed_20260721\\accepted\\phase8_2m_general_overnight_r01_chunk04.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_general_overnight_completed_20260721\\accepted\\phase8_2m_general_overnight_r01_chunk05.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_hard_parallel_completed_20260721\\accepted_round04\\phase8_2m_round04_flexible_lowmid.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_hard_parallel_completed_20260721\\accepted_round04\\phase8_2m_round04_macro_amide.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_hard_parallel_completed_20260721\\accepted_round04\\phase8_2m_round04_sp3_nonaromatic.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_hard_parallel_completed_20260721\\accepted_round04\\phase8_2m_round04_very_large.csv"
+  ],
+  "groups": {
+    "flexible_lowmid": {
+      "csv": "phase8_2m_round05_flexible_lowmid.csv",
+      "rows": 24916,
+      "sha256": "b3c69c210036aabf944f1ce946e39d3fd90950f975150dd6368fdf136a6eae98",
+      "target_rows": 24916
+    },
+    "macro_amide": {
+      "csv": "phase8_2m_round05_macro_amide.csv",
+      "rows": 12066,
+      "sha256": "338a8a214eb4b989a6b17ed3dfa6e212c93d2d79bbeea7689aa27e371af6b0a2",
+      "target_rows": 12066
+    },
+    "sp3_nonaromatic": {
+      "csv": "phase8_2m_round05_sp3_nonaromatic.csv",
+      "rows": 19978,
+      "sha256": "14e2f4824d4f3ff249747014ad6eac51d3a77fef403e046447648e0ed29edb0c",
+      "target_rows": 19978
+    },
+    "very_large": {
+      "csv": "phase8_2m_round05_very_large.csv",
+      "rows": 15384,
+      "sha256": "6f5199169a8d92fb52af804cd8218aa0ac573de5466f73b1dfabec0863817a11",
+      "target_rows": 15384
+    }
+  },
+  "round_dir": "results\\kaggle\\molgap_2m_hard_parallel_completed_20260721\\accepted_round05",
+  "round_index": 5,
+  "total_rows": 72344,
+  "valid": true
+}

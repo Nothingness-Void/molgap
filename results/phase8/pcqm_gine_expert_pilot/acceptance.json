@@ -1,0 +1,48 @@
+{
+  "experiment": "pcqm_gine_expert_pilot",
+  "accepted_at": "2026-07-24",
+  "kernel": "nothingnessvoid/molgap-pcqm-gin-expert-pilot",
+  "kernel_version": 3,
+  "terminal_status": "complete",
+  "raw_evidence": "results/kaggle/pcqm_gine_expert_pilot/v3_raw_20260724",
+  "integrity": {
+    "completion_manifest_status": "complete",
+    "artifact_hashes_match": true,
+    "graph_shard_hashes_match": true,
+    "graph_shards": 11,
+    "source_rows": 255000,
+    "valid_graph_rows": 254997,
+    "invalid_rows": 3,
+    "unique_sample_idx": 254997,
+    "duplicate_sample_idx": 0,
+    "finite_graph_labels": true,
+    "split_rows": {
+      "train": 229335,
+      "scaffold_dev": 20662,
+      "official_valid": 5000
+    },
+    "official_valid_prediction_rows": 5000,
+    "official_valid_unique_idx": 5000,
+    "checkpoint_best_loadable": true,
+    "checkpoint_last_loadable": true
+  },
+  "metrics": {
+    "best_epoch": 29,
+    "best_scaffold_dev_gap_mae_eV": 0.21234302301049612,
+    "official_valid_5k_gap_mae_eV": 0.21350379638671876,
+    "official_valid_5k_gap_mae_recomputed_from_csv_eV": 0.21350379996400065,
+    "csv_rounding_delta_eV": 3.57728189e-09,
+    "routed_v4_reference_gap_mae_eV": 0.2916897588074544,
+    "delta_vs_routed_v4_eV": -0.07818596242073564
+  },
+  "gate": {
+    "required_official_valid_5k_gap_mae_eV": 0.2,
+    "passed": false
+  },
+  "data_access": {
+    "official_test_used": false,
+    "sealed_20k_used": false
+  },
+  "decision": "reject_as_pcqm_router_prerequisite",
+  "registry_changed": false
+}

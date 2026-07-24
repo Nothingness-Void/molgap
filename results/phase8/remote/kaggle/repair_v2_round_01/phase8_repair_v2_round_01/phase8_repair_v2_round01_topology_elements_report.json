@@ -1,0 +1,30 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "flexible_hard": 3000,
+    "large_mw_500_700": 5000,
+    "s_or_cl_hard": 4000
+  },
+  "download_workers": 2,
+  "elapsed_s": 684.9675061702728,
+  "files_scanned": 13,
+  "filter_passing_candidates_seen": 96279,
+  "include_buckets": [
+    "s_or_cl_hard",
+    "flexible_hard",
+    "large_mw_500_700"
+  ],
+  "kept_rows_per_s": 17.519079214564925,
+  "new_rows": 12000,
+  "out_csv": "/kaggle/working/phase8_repair_v2_round_01/phase8_repair_v2_round01_topology_elements.csv",
+  "parsed_objects": 109580,
+  "parsed_objects_per_s": 159.9783916943354,
+  "quotas": {
+    "flexible_hard": 3000,
+    "large_mw_500_700": 5000,
+    "s_or_cl_hard": 4000
+  },
+  "resumed_rows": 0,
+  "total_rows": 12000,
+  "windows_per_file": 16
+}

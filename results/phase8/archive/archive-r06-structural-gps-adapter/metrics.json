@@ -1,0 +1,223 @@
+{
+  "input": "results\\phase8\\gps_arch_dualgps_common_eval_predictions.csv",
+  "base_prefix": "expansion500k_full_hybrid",
+  "dual_prefix": "expansion500k_dualgps_hybrid",
+  "route_threshold_eV": 4.0,
+  "coverage": {
+    "input_rows": 1977,
+    "valid_smiles": 1977,
+    "invalid_smiles": 0,
+    "finite_feature_rows": 1977
+  },
+  "routed_v4_gap": {
+    "mae": 0.12189649230408192,
+    "route_n": 540
+  },
+  "deciles": [
+    {
+      "error_decile": 1,
+      "n": 198,
+      "gap_mae": 0.005453177474873704,
+      "has_ring": 0.98989898989899,
+      "atom_in_ring_fraction": 0.6271137536814394,
+      "smallest_ring_size": 5.267676767676767,
+      "max_ring_membership_count": 1.4848484848484849,
+      "has_fused_ring_atom": 0.45454545454545453,
+      "fused_ring_atom_fraction": 0.05143184389314798,
+      "ring_bond_fraction": 0.5964525031923044,
+      "has_conjugated_bond": 0.9949494949494949,
+      "conjugated_bond_fraction": 0.651489473427787
+    },
+    {
+      "error_decile": 2,
+      "n": 198,
+      "gap_mae": 0.016975626678181775,
+      "has_ring": 0.9797979797979798,
+      "atom_in_ring_fraction": 0.6263914856334755,
+      "smallest_ring_size": 5.232323232323233,
+      "max_ring_membership_count": 1.4848484848484849,
+      "has_fused_ring_atom": 0.47474747474747475,
+      "fused_ring_atom_fraction": 0.0494184621603714,
+      "ring_bond_fraction": 0.5941943647434013,
+      "has_conjugated_bond": 0.98989898989899,
+      "conjugated_bond_fraction": 0.6588423193404169
+    },
+    {
+      "error_decile": 3,
+      "n": 197,
+      "gap_mae": 0.030511539862588807,
+      "has_ring": 0.9593908629441624,
+      "atom_in_ring_fraction": 0.6189854453335368,
+      "smallest_ring_size": 5.187817258883249,
+      "max_ring_membership_count": 1.4060913705583757,
+      "has_fused_ring_atom": 0.4263959390862944,
+      "fused_ring_atom_fraction": 0.04171960684450335,
+      "ring_bond_fraction": 0.5847237325713114,
+      "has_conjugated_bond": 0.9847715736040609,
+      "conjugated_bond_fraction": 0.6514517678902839
+    },
+    {
+      "error_decile": 4,
+      "n": 198,
+      "gap_mae": 0.04573822882020201,
+      "has_ring": 0.9797979797979798,
+      "atom_in_ring_fraction": 0.6189189376230363,
+      "smallest_ring_size": 5.257575757575758,
+      "max_ring_membership_count": 1.4646464646464648,
+      "has_fused_ring_atom": 0.4494949494949495,
+      "fused_ring_atom_fraction": 0.0474748319526587,
+      "ring_bond_fraction": 0.5882057080967258,
+      "has_conjugated_bond": 0.98989898989899,
+      "conjugated_bond_fraction": 0.657226023537041
+    },
+    {
+      "error_decile": 5,
+      "n": 198,
+      "gap_mae": 0.06465995889848482,
+      "has_ring": 0.98989898989899,
+      "atom_in_ring_fraction": 0.6169052471939936,
+      "smallest_ring_size": 5.328282828282828,
+      "max_ring_membership_count": 1.393939393939394,
+      "has_fused_ring_atom": 0.3838383838383838,
+      "fused_ring_atom_fraction": 0.045693543690633456,
+      "ring_bond_fraction": 0.5847571845156978,
+      "has_conjugated_bond": 0.9949494949494949,
+      "conjugated_bond_fraction": 0.6362687942731862
+    },
+    {
+      "error_decile": 6,
+      "n": 197,
+      "gap_mae": 0.08671112618862944,
+      "has_ring": 0.9796954314720813,
+      "atom_in_ring_fraction": 0.6267163890077918,
+      "smallest_ring_size": 5.238578680203045,
+      "max_ring_membership_count": 1.4923857868020305,
+      "has_fused_ring_atom": 0.4873096446700508,
+      "fused_ring_atom_fraction": 0.05124276560373092,
+      "ring_bond_fraction": 0.5955076850761617,
+      "has_conjugated_bond": 0.9949238578680203,
+      "conjugated_bond_fraction": 0.6447866215621154
+    },
+    {
+      "error_decile": 7,
+      "n": 198,
+      "gap_mae": 0.11684308858727274,
+      "has_ring": 0.9747474747474747,
+      "atom_in_ring_fraction": 0.5835236210048383,
+      "smallest_ring_size": 5.212121212121212,
+      "max_ring_membership_count": 1.3282828282828283,
+      "has_fused_ring_atom": 0.3434343434343434,
+      "fused_ring_atom_fraction": 0.03321933967752216,
+      "ring_bond_fraction": 0.5553206899626688,
+      "has_conjugated_bond": 0.9747474747474747,
+      "conjugated_bond_fraction": 0.6035216679100437
+    },
+    {
+      "error_decile": 8,
+      "n": 197,
+      "gap_mae": 0.1573962382342893,
+      "has_ring": 0.9593908629441624,
+      "atom_in_ring_fraction": 0.5826626682644837,
+      "smallest_ring_size": 5.137055837563452,
+      "max_ring_membership_count": 1.380710659898477,
+      "has_fused_ring_atom": 0.40609137055837563,
+      "fused_ring_atom_fraction": 0.041910747437005486,
+      "ring_bond_fraction": 0.5566212856754433,
+      "has_conjugated_bond": 0.9898477157360406,
+      "conjugated_bond_fraction": 0.6163368500050554
+    },
+    {
+      "error_decile": 9,
+      "n": 198,
+      "gap_mae": 0.22853418978393936,
+      "has_ring": 0.9444444444444444,
+      "atom_in_ring_fraction": 0.548176408685089,
+      "smallest_ring_size": 5.045454545454546,
+      "max_ring_membership_count": 1.3080808080808082,
+      "has_fused_ring_atom": 0.3434343434343434,
+      "fused_ring_atom_fraction": 0.04004832811499535,
+      "ring_bond_fraction": 0.5247208002315025,
+      "has_conjugated_bond": 0.9797979797979798,
+      "conjugated_bond_fraction": 0.566448024238902
+    },
+    {
+      "error_decile": 10,
+      "n": 198,
+      "gap_mae": 0.4656817961253536,
+      "has_ring": 0.9747474747474747,
+      "atom_in_ring_fraction": 0.5207998171416596,
+      "smallest_ring_size": 5.222222222222222,
+      "max_ring_membership_count": 1.3232323232323233,
+      "has_fused_ring_atom": 0.3383838383838384,
+      "fused_ring_atom_fraction": 0.03157800368117954,
+      "ring_bond_fraction": 0.5019920543588773,
+      "has_conjugated_bond": 0.9747474747474747,
+      "conjugated_bond_fraction": 0.5611365496961758
+    }
+  ],
+  "top_decile_enrichment": [
+    {
+      "feature": "has_ring",
+      "overall_mean": 0.9731917046029337,
+      "top_decile_mean": 0.9747474747474747,
+      "top_minus_overall": 0.0015557701445410022,
+      "top_over_overall": 1.0015986265986265
+    },
+    {
+      "feature": "atom_in_ring_fraction",
+      "overall_mean": 0.5970005071644533,
+      "top_decile_mean": 0.5207998171416596,
+      "top_minus_overall": -0.07620069002279373,
+      "top_over_overall": 0.8723607616604536
+    },
+    {
+      "feature": "smallest_ring_size",
+      "overall_mean": 5.212948912493677,
+      "top_decile_mean": 5.222222222222222,
+      "top_minus_overall": 0.009273309728545343,
+      "top_over_overall": 1.0017788990232228
+    },
+    {
+      "feature": "max_ring_membership_count",
+      "overall_mean": 1.4066767830045523,
+      "top_decile_mean": 1.3232323232323233,
+      "top_minus_overall": -0.08344445977222903,
+      "top_over_overall": 0.9406797206149957
+    },
+    {
+      "feature": "has_fused_ring_atom",
+      "overall_mean": 0.4107233181588265,
+      "top_decile_mean": 0.3383838383838384,
+      "top_minus_overall": -0.07233947977498811,
+      "top_over_overall": 0.8238729661143455
+    },
+    {
+      "feature": "fused_ring_atom_fraction",
+      "overall_mean": 0.04337134372541877,
+      "top_decile_mean": 0.03157800368117954,
+      "top_minus_overall": -0.011793340044239237,
+      "top_over_overall": 0.7280845131545353
+    },
+    {
+      "feature": "ring_bond_fraction",
+      "overall_mean": 0.5682333621470146,
+      "top_decile_mean": 0.5019920543588773,
+      "top_minus_overall": -0.0662413077881373,
+      "top_over_overall": 0.8834258735920556
+    },
+    {
+      "feature": "has_conjugated_bond",
+      "overall_mean": 0.986848760748609,
+      "top_decile_mean": 0.9747474747474747,
+      "top_minus_overall": -0.01210128600113436,
+      "top_over_overall": 0.9877374462202755
+    },
+    {
+      "feature": "conjugated_bond_fraction",
+      "overall_mean": 0.6247314248624086,
+      "top_decile_mean": 0.5611365496961758,
+      "top_minus_overall": -0.06359487516623286,
+      "top_over_overall": 0.8982044561305059
+    }
+  ]
+}

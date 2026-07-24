@@ -1,0 +1,40 @@
+{
+  "errors": [],
+  "exclusion_csvs": [
+    "data\\raw\\phase8_expansion_1m.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_topology_elements.csv"
+  ],
+  "groups": {
+    "aromatic_large": {
+      "csv": "phase8_repair_v2_round02_aromatic_large.csv",
+      "rows": 8000,
+      "sha256": "a74df786a1bd178dbdf685c5d03bd93e73fbd49f6d48e41bc9e5d4bdeb54d517",
+      "target_rows": 8000
+    },
+    "balanced": {
+      "csv": "phase8_repair_v2_round02_balanced.csv",
+      "rows": 38997,
+      "sha256": "48e68c8d34b41ec4bba460567debf628eff5a2a0aa34de9df3b8a703247e4b40",
+      "target_rows": 38997
+    },
+    "rare": {
+      "csv": "phase8_repair_v2_round02_rare.csv",
+      "rows": 1000,
+      "sha256": "48258571416d05e012aa9a58e9e3e6311d4411819eb8e6f71444a794324f1ce3",
+      "target_rows": 1000
+    },
+    "topology_elements": {
+      "csv": "phase8_repair_v2_round02_topology_elements.csv",
+      "rows": 12000,
+      "sha256": "d8fd1b8c3378349a648a7e243d5e9494055e8d7bf4fd7dfdbe950a589c0ea1c2",
+      "target_rows": 12000
+    }
+  },
+  "round_dir": "results\\phase8\\remote\\kaggle\\repair_v2_round_02\\phase8_repair_v2_round_02",
+  "round_index": 2,
+  "total_rows": 59997,
+  "valid": true
+}

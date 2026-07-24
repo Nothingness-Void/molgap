@@ -1,0 +1,90 @@
+{
+  "accepted_at": "2026-07-22",
+  "shared_input": {
+    "n_aligned": 997445,
+    "split_seed": 42,
+    "split_sha256": "3703312b168589a66ef25c8323cd695fe2baa6b8317cb793d573841fe25a38b2",
+    "train": 797956,
+    "val": 99744,
+    "test": 99745,
+    "embedding_dims": {
+      "2d": 384,
+      "3d": 192
+    }
+  },
+  "reference_1m_fusion": {
+    "average_mae_eV": 0.07880732665459315,
+    "gap_mae_eV": 0.08978520333766937
+  },
+  "controls": {
+    "coverage2m": {
+      "kernel": "nothingnessvoid/molgap-2m-2d-1m-3d-fusion-coverage2m",
+      "kernel_version": 5,
+      "complete": true,
+      "best_epoch": 67,
+      "best_val_mae_eV": 0.07969828293248557,
+      "test_average_mae_eV": 0.08002833276987076,
+      "test_gap_mae_eV": 0.09181486815214157,
+      "delta_average_mae_eV": 0.0012210061152776036,
+      "delta_gap_mae_eV": 0.0020296648144721985,
+      "best_checkpoint": {
+        "bytes": 968495,
+        "sha256": "f334f8911bd4c0f44b69d309bfae1fa7c00dc1d62321022871dd6fd2d621cccc"
+      },
+      "last_checkpoint": {
+        "bytes": 2913379,
+        "sha256": "5230fb0d7b98e78bdf8e5cf15cba3b99ed0c15f319bd807ccd43ef5b0a39e215"
+      },
+      "finite_checkpoint_tensors": true,
+      "passes_reference_gate": false
+    },
+    "hard20k": {
+      "kernel": "nothingnessvoid/molgap-2m-2d-1m-3d-fusion-hard20k",
+      "kernel_version": 4,
+      "complete": true,
+      "best_epoch": 65,
+      "best_val_mae_eV": 0.08019429274120887,
+      "test_average_mae_eV": 0.08047293871641159,
+      "test_gap_mae_eV": 0.09247124195098877,
+      "delta_average_mae_eV": 0.0016656120618184361,
+      "delta_gap_mae_eV": 0.002686038613319397,
+      "best_checkpoint": {
+        "bytes": 968441,
+        "sha256": "238840251e64347ed34f535bbf8577327654ff50f896ded437efd54eb83b31be"
+      },
+      "last_checkpoint": {
+        "bytes": 2913025,
+        "sha256": "d85b714ce24e52679ff0d3bc3d333670c3d95b6ef0f333337b7bfa51b99c4137"
+      },
+      "finite_checkpoint_tensors": true,
+      "passes_reference_gate": false
+    },
+    "multi2d": {
+      "kernel": "nothingnessvoid/molgap-p819-multi2d-1m3d",
+      "kernel_version": 1,
+      "complete": true,
+      "best_epoch": 62,
+      "best_val_mae_eV": 0.07958591773862214,
+      "test_average_mae_eV": 0.07995244363943736,
+      "test_gap_mae_eV": 0.09180102497339249,
+      "delta_average_mae_eV": 0.0011451169848442078,
+      "delta_gap_mae_eV": 0.002015821635723114,
+      "embedding_dims": {
+        "2d": 768,
+        "3d": 192
+      },
+      "best_checkpoint": {
+        "bytes": 1263353,
+        "sha256": "f205a4fbf0faa4cf267157b1984b4472dbff1a913dd740a3d99e8ba1c5dcc1c1"
+      },
+      "last_checkpoint": {
+        "bytes": 3797505,
+        "sha256": "9c5690d411f590493ee1c4632eece95013ca0fbe435faa264f786077b8d13280"
+      },
+      "finite_checkpoint_tensors": true,
+      "passes_reference_gate": false
+    }
+  },
+  "sealed_20k_opened": false,
+  "production_registry_changed": false
+}

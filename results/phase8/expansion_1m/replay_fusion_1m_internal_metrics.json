@@ -1,0 +1,37 @@
+{
+  "tag": "gate_2gps_expansion_1m_replay2_n997445",
+  "n_aligned": 997445,
+  "split": {
+    "seed": 42,
+    "train": 797956,
+    "val": 99744,
+    "test": 99745
+  },
+  "replay_sampling": {
+    "source_idx_lt": 500000,
+    "old_train_rows": 398187,
+    "new_train_rows": 399769,
+    "old_weight": 2.0,
+    "expected_old_draw_fraction": 0.6657849437734451
+  },
+  "best_epoch": 126,
+  "best_val_mae_eV": 0.07830014728776989,
+  "test_metrics": {
+    "HOMO": {
+      "mae_eV": 0.07421567291021347,
+      "r2": 0.9412561655044556
+    },
+    "LUMO": {
+      "mae_eV": 0.07229680567979813,
+      "r2": 0.9818418025970459
+    },
+    "Gap": {
+      "mae_eV": 0.08973591774702072,
+      "r2": 0.9715719819068909
+    },
+    "average": {
+      "mae_eV": 0.07874946544567744,
+      "r2": 0.9648899833361307
+    }
+  }
+}

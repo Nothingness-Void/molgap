@@ -1,0 +1,31 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "high_gap_hetero": 9000,
+    "high_gap_rigid": 6000
+  },
+  "download_workers": 2,
+  "elapsed_s": 2003.2071523666382,
+  "files_scanned": 38,
+  "filter_passing_candidates_seen": 85713,
+  "include_buckets": [
+    "high_gap_hetero",
+    "high_gap_rigid"
+  ],
+  "kept_rows_per_s": 7.487992433672489,
+  "new_rows": 15000,
+  "out_csv": "/kaggle/working/phase8_2m_round_06/phase8_2m_round06_high_gap.csv",
+  "parsed_objects": 529912,
+  "parsed_objects_per_s": 264.53180310081706,
+  "quotas": {
+    "high_gap_hetero": 9000,
+    "high_gap_rigid": 6000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 0
+  },
+  "total_rows": 15000,
+  "windows_per_file": 24
+}

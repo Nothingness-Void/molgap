@@ -1,0 +1,237 @@
+{
+  "base_csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_expansion_500k.csv",
+  "bucket_selection": {
+    "aromatic_edge_general": {
+      "available": 38674,
+      "requested": 25000,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 25000,
+      "shortfall": 0
+    },
+    "balanced_general": {
+      "available": 480994,
+      "requested": 325000,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 325000,
+      "shortfall": 0
+    },
+    "flexible_hard": {
+      "available": 28005,
+      "requested": 25000,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 25000,
+      "shortfall": 0
+    },
+    "large_aromatic_edge": {
+      "available": 34855,
+      "requested": 25000,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 25000,
+      "shortfall": 0
+    },
+    "large_mw_500_700": {
+      "available": 60565,
+      "requested": 41666,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 41666,
+      "shortfall": 0
+    },
+    "low_gap_aromatic_edge": {
+      "available": 6463,
+      "requested": 4167,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 4167,
+      "shortfall": 0
+    },
+    "s_or_cl_hard": {
+      "available": 45401,
+      "requested": 33333,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 33333,
+      "shortfall": 0
+    },
+    "very_large_general": {
+      "available": 25539,
+      "requested": 16667,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 16667,
+      "shortfall": 0
+    },
+    "very_low_gap": {
+      "available": 6470,
+      "requested": 4167,
+      "selected_as_top_up": 0,
+      "selected_by_quota": 4167,
+      "shortfall": 0
+    }
+  },
+  "candidate_csvs": [
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_balanced.csv"
+  ],
+  "dataset": "phase8_repair_1m_v2",
+  "filtering": {
+    "excluded_base_overlap": 0,
+    "excluded_invalid_or_nonpositive_gap": 0,
+    "excluded_rejected_1m_overlap": 0,
+    "input_rows": 726966,
+    "usable_rows": 726966
+  },
+  "outputs": {
+    "audit_csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\repair_v2_selected_500k_audit.csv",
+    "selected_csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_selected_500k.csv"
+  },
+  "post_selection_checks": {
+    "base_overlap_rows": 0,
+    "duplicate_canonical_smiles_rows": 0,
+    "duplicate_cid_rows": 0,
+    "rejected_overlap_rows": 0
+  },
+  "quota_method": "proportional scaling of candidate-pool quotas from 600K to 500K, then deterministic top-up on shortages",
+  "rejected_csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_expansion_1m.csv",
+  "scaled_quotas": {
+    "aromatic_edge_general": 25000,
+    "balanced_general": 325000,
+    "flexible_hard": 25000,
+    "large_aromatic_edge": 25000,
+    "large_mw_500_700": 41666,
+    "low_gap_aromatic_edge": 4167,
+    "s_or_cl_hard": 33333,
+    "very_large_general": 16667,
+    "very_low_gap": 4167
+  },
+  "seed": 42,
+  "selected_bucket_counts": {
+    "aromatic_edge_general": 25000,
+    "balanced_general": 325000,
+    "flexible_hard": 25000,
+    "large_aromatic_edge": 25000,
+    "large_mw_500_700": 41666,
+    "low_gap_aromatic_edge": 4167,
+    "s_or_cl_hard": 33333,
+    "very_large_general": 16667,
+    "very_low_gap": 4167
+  },
+  "selected_rows": 500000,
+  "selected_scaffold_novelty": {
+    "method": "Bemis-Murcko scaffold novelty and frequency ranking; no exhaustive all-pairs Morgan calculation",
+    "seen_base_scaffold_rows": 72870,
+    "unique_base_scaffolds": 207135,
+    "unique_selected_scaffolds": 286380,
+    "unseen_base_scaffold_rows": 427130
+  },
+  "selection_target": 500000,
+  "strict_union_rows": 726966,
+  "strict_union_sources": [
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_rare.csv",
+      "new_unique_rows": 10000,
+      "overlap_rows": 0,
+      "rows": 10000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_aromatic_large.csv",
+      "new_unique_rows": 75951,
+      "overlap_rows": 0,
+      "rows": 75951
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_topology_elements.csv",
+      "new_unique_rows": 98508,
+      "overlap_rows": 0,
+      "rows": 98508
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_balanced.csv",
+      "new_unique_rows": 366240,
+      "overlap_rows": 0,
+      "rows": 366240
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_rare.csv",
+      "new_unique_rows": 982,
+      "overlap_rows": 18,
+      "rows": 1000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_aromatic_large.csv",
+      "new_unique_rows": 7648,
+      "overlap_rows": 352,
+      "rows": 8000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_topology_elements.csv",
+      "new_unique_rows": 11900,
+      "overlap_rows": 100,
+      "rows": 12000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_balanced.csv",
+      "new_unique_rows": 38717,
+      "overlap_rows": 283,
+      "rows": 39000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_rare.csv",
+      "new_unique_rows": 974,
+      "overlap_rows": 26,
+      "rows": 1000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_aromatic_large.csv",
+      "new_unique_rows": 7799,
+      "overlap_rows": 201,
+      "rows": 8000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_topology_elements.csv",
+      "new_unique_rows": 11757,
+      "overlap_rows": 243,
+      "rows": 12000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_balanced.csv",
+      "new_unique_rows": 37038,
+      "overlap_rows": 1959,
+      "rows": 38997
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_rare.csv",
+      "new_unique_rows": 977,
+      "overlap_rows": 23,
+      "rows": 1000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_aromatic_large.csv",
+      "new_unique_rows": 7670,
+      "overlap_rows": 330,
+      "rows": 8000
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_topology_elements.csv",
+      "new_unique_rows": 11806,
+      "overlap_rows": 193,
+      "rows": 11999
+    },
+    {
+      "csv": "D:\\\u6587\u6863\\molgap\\results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_balanced.csv",
+      "new_unique_rows": 38999,
+      "overlap_rows": 1,
+      "rows": 39000
+    }
+  ]
+}

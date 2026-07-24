@@ -1,0 +1,35 @@
+{
+  "official_split": "train",
+  "scanned_rows": 3378606,
+  "predicted_rows": 3378573,
+  "invalid_graph_rows": 33,
+  "raw_hard_pool_rows": 200000,
+  "historical_repair_v3_1p5m_overlap": 0,
+  "raw_hard_error_eV": {
+    "min": 0.7849392891,
+    "median": 1.1212120056,
+    "p90": 2.499565,
+    "max": 41.3546714783
+  },
+  "raw_flags": {
+    "disconnected": 344,
+    "radical": 103440,
+    "heavy_atoms_lt_5": 1148,
+    "noble_gas": 3,
+    "gap_gt_12_eV": 28,
+    "teacher_error_gt_5_eV": 1315
+  },
+  "recommended_clean_pool": {
+    "rows": 95909,
+    "filter": "valid and connected and closed-shell and heavy_atoms>=5 and no_noble_gas and gap<=12_eV",
+    "error_eV": {
+      "min": 0.7849392891,
+      "median": 0.972449,
+      "p90": 1.554525,
+      "p99": 2.472695,
+      "max": 6.522278
+    },
+    "teacher_overpredict_fraction": 0.2684836668,
+    "error_disagreement_correlation": 0.2088850142
+  }
+}

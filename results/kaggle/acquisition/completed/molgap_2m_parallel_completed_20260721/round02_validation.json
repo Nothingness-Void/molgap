@@ -1,0 +1,41 @@
+{
+  "errors": [],
+  "exclusion_csvs": [
+    "data\\raw\\phase8_repair_v3_1p5m.csv",
+    "data\\raw\\phase8_repair_v2_candidate_union_exclusion.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\results\\kaggle\\molgap_2m_broad_round01_dataset\\phase8_2m_round01_topology_elements.csv"
+  ],
+  "groups": {
+    "aromatic_large": {
+      "csv": "phase8_2m_round02_aromatic_large.csv",
+      "rows": 6000,
+      "sha256": "dfb2d88ca613b523d606957bf3fa2e4b36b914457b9722b72390ddcb7a3f3f72",
+      "target_rows": 6000
+    },
+    "balanced": {
+      "csv": "phase8_2m_round02_balanced.csv",
+      "rows": 48000,
+      "sha256": "6234f11287af38e9e2ee5ece211e431f0d722fb202f7046eb3a91d56479ebdf8",
+      "target_rows": 48000
+    },
+    "rare": {
+      "csv": "phase8_2m_round02_rare.csv",
+      "rows": 1000,
+      "sha256": "6c7e95e696c6c556bdfda50f299fb81fbda50da1b9df78a7789077c79e4ec679",
+      "target_rows": 1000
+    },
+    "topology_elements": {
+      "csv": "phase8_2m_round02_topology_elements.csv",
+      "rows": 5000,
+      "sha256": "f8b56c34a07be0c1609aca86048192206fd0350a193a5ba1ab3e3dab82e3a144",
+      "target_rows": 5000
+    }
+  },
+  "round_dir": "results\\kaggle\\molgap_2m_parallel_completed_20260721\\round02\\phase8_2m_round_02",
+  "round_index": 2,
+  "total_rows": 60000,
+  "valid": true
+}

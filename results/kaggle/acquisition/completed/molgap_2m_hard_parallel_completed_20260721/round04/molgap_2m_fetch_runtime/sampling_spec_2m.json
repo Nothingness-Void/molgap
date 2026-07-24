@@ -1,0 +1,27 @@
+{
+  "dataset": "phase8_residual_hard_candidate_pool",
+  "purpose": "Acquire PubChemQC rows in the original-1M model's highest fixed-external residual regions.",
+  "candidate_pool_target": 200000,
+  "hard_filters": {
+    "allowed_elements": ["C", "H", "N", "O", "S", "F", "Cl"],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_all_accepted_acquisition_checkpoints": true
+  },
+  "priority_buckets": [
+    {"id": "high_sp3_very_large", "quota": 45000, "predicate": "mw >= 700 and fraction_csp3 > 0.7"},
+    {"id": "non_aromatic_very_large", "quota": 35000, "predicate": "mw >= 700 and aromatic_rings == 0"},
+    {"id": "flexible_very_large", "quota": 45000, "predicate": "mw >= 700 and rotatable_bonds >= 8"},
+    {"id": "macrocycle_very_large", "quota": 30000, "predicate": "mw >= 700 and has ring size >= 8"},
+    {"id": "multi_amide_very_large", "quota": 30000, "predicate": "mw >= 700 and amide_bonds >= 3"},
+    {"id": "low_mid_gap_flexible", "quota": 45000, "predicate": "2.5 < gap <= 4.0 and rotatable_bonds >= 8"},
+    {"id": "high_sp3_non_aromatic", "quota": 30000, "predicate": "fraction_csp3 > 0.7 and aromatic_rings == 0"}
+  ],
+  "selection_rules": [
+    "Exclude the complete 1.5M table, repair union, and every accepted acquisition checkpoint by CID and canonical SMILES.",
+    "Use stable source-file shards for concurrent workers.",
+    "Treat source exhaustion as a valid partial result and reconcile cross-bucket duplicates after retrieval.",
+    "Do not train 3D before a controlled pure-2D additive gate passes."
+  ]
+}

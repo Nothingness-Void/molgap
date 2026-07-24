@@ -1,0 +1,32 @@
+{
+  "checkpoint_every": 250,
+  "counts": {
+    "flexible_hard": 1290,
+    "large_mw_500_700": 2097,
+    "s_or_cl_hard": 1613
+  },
+  "elapsed_s": 366.29636549949646,
+  "files_scanned": 6,
+  "filter_passing_candidates_seen": 42177,
+  "include_buckets": [
+    "s_or_cl_hard",
+    "flexible_hard",
+    "large_mw_500_700"
+  ],
+  "kept_rows_per_s": 13.650149089472396,
+  "new_rows": 5000,
+  "out_csv": "/kaggle/working/phase8_2m_round_03/phase8_2m_round03_topology_elements.csv",
+  "parsed_objects": 49845,
+  "quotas": {
+    "flexible_hard": 1290,
+    "large_mw_500_700": 2097,
+    "s_or_cl_hard": 1613
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "state": "complete",
+  "total_rows": 5000
+}

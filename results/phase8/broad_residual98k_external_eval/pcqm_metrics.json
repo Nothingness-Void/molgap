@@ -1,0 +1,25 @@
+{
+  "n_valid": 5000,
+  "original1m_equal_cost_control": {
+    "gap": {
+      "mae_eV": 0.31300642448370214,
+      "r2": 0.7980759495093026
+    }
+  },
+  "broad_residual98k_uniform": {
+    "gap": {
+      "mae_eV": 0.3134212199822147,
+      "r2": 0.797831142200667
+    }
+  },
+  "candidate_minus_baseline": {
+    "gap": {
+      "mae_delta_eV": 0.00041479549851258216,
+      "ci95_eV": [
+        -0.0004651874820269382,
+        0.0013076561946128915
+      ],
+      "p_candidate_better": 0.1776
+    }
+  }
+}

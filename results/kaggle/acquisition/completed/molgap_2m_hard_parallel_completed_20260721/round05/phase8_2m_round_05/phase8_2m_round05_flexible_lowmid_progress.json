@@ -1,0 +1,26 @@
+{
+  "checkpoint_every": 250,
+  "counts": {
+    "low_mid_gap_flexible": 25000
+  },
+  "elapsed_s": 5818.972923755646,
+  "files_scanned": 72,
+  "filter_passing_candidates_seen": 883288,
+  "include_buckets": [
+    "low_mid_gap_flexible"
+  ],
+  "kept_rows_per_s": 4.296290827877689,
+  "new_rows": 25000,
+  "out_csv": "/kaggle/working/phase8_2m_round_05/phase8_2m_round05_flexible_lowmid.csv",
+  "parsed_objects": 1039715,
+  "quotas": {
+    "low_mid_gap_flexible": 25000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "state": "complete",
+  "total_rows": 25000
+}

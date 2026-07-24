@@ -1,0 +1,108 @@
+{
+  "experiment": "routed_v4_exact2m_encoder_transplant",
+  "device": "cuda",
+  "n_aligned": 2000,
+  "source_idx_min": 88,
+  "source_idx_max": 499777,
+  "split_seed": 42,
+  "split": {
+    "train": 1600,
+    "val": 200,
+    "test": 200
+  },
+  "threshold_eV": 4.0,
+  "fixed_route_n": 57,
+  "production_reference": {
+    "HOMO": {
+      "mae": 0.07569101452827454
+    },
+    "LUMO": {
+      "mae": 0.06749867647886276
+    },
+    "Gap": {
+      "mae": 0.08933204412460327
+    },
+    "average": {
+      "mae": 0.07750725001096725
+    }
+  },
+  "seeds": {
+    "42": {
+      "candidate": {
+        "base_training": {
+          "best_val_mae": 2.9191250801086426,
+          "best_epoch": 1,
+          "epochs_completed": 2,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\preflight\\seed42\\candidate_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\preflight\\seed42\\candidate_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 2.8184330463409424,
+          "best_epoch": 1,
+          "epochs_completed": 2,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\preflight\\seed42\\candidate_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\preflight\\seed42\\candidate_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 4.6592631340026855
+          },
+          "LUMO": {
+            "mae": 0.5314404964447021
+          },
+          "Gap": {
+            "mae": 3.762005567550659
+          },
+          "average": {
+            "mae": 2.984236717224121
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 5.145893096923828
+          },
+          "LUMO": {
+            "mae": 0.37652766704559326
+          },
+          "Gap": {
+            "mae": 3.1694061756134033
+          },
+          "average": {
+            "mae": 2.897275447845459
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 4.8475661277771
+          },
+          "LUMO": {
+            "mae": 0.44568172097206116
+          },
+          "Gap": {
+            "mae": 3.554805040359497
+          },
+          "average": {
+            "mae": 2.9493510723114014
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 5.145893096923828
+          },
+          "LUMO": {
+            "mae": 0.37652766704559326
+          },
+          "Gap": {
+            "mae": 3.1694061756134033
+          },
+          "average": {
+            "mae": 2.897275447845459
+          }
+        },
+        "self_route_n": 200
+      }
+    }
+  }
+}

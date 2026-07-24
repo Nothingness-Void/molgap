@@ -1,0 +1,56 @@
+{
+  "source_shards": [
+    "results\\kaggle\\residual_target_fetch_failed_v1\\phase8_2m_round_01\\phase8_2m_round01_flexible_lowmid.csv",
+    "results\\kaggle\\residual_target_fetch_failed_v1\\phase8_2m_round_01\\phase8_2m_round01_macro_amide.csv",
+    "results\\kaggle\\residual_target_fetch_failed_v1\\phase8_2m_round_01\\phase8_2m_round01_sp3_balanced.csv",
+    "results\\kaggle\\residual_target_fetch_failed_v1\\phase8_2m_round_01\\phase8_2m_round01_very_large.csv"
+  ],
+  "raw_rows": 45520,
+  "deduplicated_rows": 45457,
+  "duplicate_rows_removed": 63,
+  "development_rows": 40457,
+  "sealed_rows": 5000,
+  "development_unique_scaffolds": 22200,
+  "sealed_unique_scaffolds": 2690,
+  "scaffold_overlap": 0,
+  "bucket_counts_all": {
+    "low_mid_gap_flexible": 14000,
+    "flexible_very_large": 8612,
+    "multi_amide_very_large": 5999,
+    "residual_balanced": 5714,
+    "high_sp3_non_aromatic": 4286,
+    "high_sp3_very_large": 3746,
+    "macrocycle_very_large": 2641,
+    "non_aromatic_very_large": 459
+  },
+  "bucket_counts_development": {
+    "low_mid_gap_flexible": 12563,
+    "flexible_very_large": 7705,
+    "multi_amide_very_large": 5424,
+    "residual_balanced": 4990,
+    "high_sp3_non_aromatic": 3865,
+    "high_sp3_very_large": 3180,
+    "macrocycle_very_large": 2342,
+    "non_aromatic_very_large": 388
+  },
+  "bucket_counts_sealed": {
+    "low_mid_gap_flexible": 1437,
+    "flexible_very_large": 907,
+    "residual_balanced": 724,
+    "multi_amide_very_large": 575,
+    "high_sp3_very_large": 566,
+    "high_sp3_non_aromatic": 421,
+    "macrocycle_very_large": 299,
+    "non_aromatic_very_large": 71
+  },
+  "exclusion_validation": {
+    "phase8_repair_v3_1p5m.csv": {
+      "cid_overlap": 0,
+      "canonical_smiles_overlap": 0
+    },
+    "phase8_repair_v2_candidate_union_exclusion.csv": {
+      "cid_overlap": 0,
+      "canonical_smiles_overlap": 0
+    }
+  }
+}

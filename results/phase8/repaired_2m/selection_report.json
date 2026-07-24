@@ -1,0 +1,18 @@
+{
+  "state": "manifest_ready",
+  "target_rows": 2000000,
+  "immutable_rows": 500000,
+  "immutable_quality_warning_rows": 14572,
+  "mutable_rows": 1500000,
+  "ledger_rows_including_overlaps": 3437037,
+  "eligible_pool_rows_before_dedup": 2847610,
+  "eligible_pool_rows_after_dedup": 2431316,
+  "selection_strategy": "targeted500k_joint_distribution_match",
+  "joint_bucket_target_shortfall_rows": 164669,
+  "nearest_bucket_fill_rows": 164669,
+  "nearest_bucket_weighted_distance": 401331,
+  "exact_joint_bucket_rows": 1335331,
+  "seed": 20260723,
+  "manifest": "D:\\\u6587\u6863\\molgap\\results\\phase8\\repaired_2m\\repaired_2m_manifest.parquet",
+  "manifest_sha256": "9904b9118a62da7b0f3480918916d3c34c74036dd3aacacf3f173a9c12c914ec"
+}

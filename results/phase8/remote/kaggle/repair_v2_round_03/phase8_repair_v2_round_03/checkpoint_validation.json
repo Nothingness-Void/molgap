@@ -1,0 +1,44 @@
+{
+  "errors": [],
+  "exclusion_csvs": [
+    "data\\raw\\phase8_expansion_1m.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_topology_elements.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_aromatic_large.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_balanced.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_rare.csv",
+    "D:\\\u6587\u6863\\molgap\\data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_topology_elements.csv"
+  ],
+  "groups": {
+    "aromatic_large": {
+      "csv": "phase8_repair_v2_round03_aromatic_large.csv",
+      "rows": 8000,
+      "sha256": "63f97997e51bdb3e933d9fa3ac289a3a3a58b57cb6fa0b35c421205a58b108a0",
+      "target_rows": 8000
+    },
+    "balanced": {
+      "csv": "phase8_repair_v2_round03_balanced.csv",
+      "rows": 39000,
+      "sha256": "554bb1ae7d491ac24e4deb16e265ed6fad7ed6d171d6ad61848b64ed5bc486ae",
+      "target_rows": 39000
+    },
+    "rare": {
+      "csv": "phase8_repair_v2_round03_rare.csv",
+      "rows": 1000,
+      "sha256": "2d79a478c698cd56ec438c93d26cf6d5abea3c1ae90bd8fbb8df0bb22fa30061",
+      "target_rows": 1000
+    },
+    "topology_elements": {
+      "csv": "phase8_repair_v2_round03_topology_elements.csv",
+      "rows": 11999,
+      "sha256": "58b32e4149a5b8be2fb78812cf9bcd992f0f858ab14569f6e3774617806cc036",
+      "target_rows": 11999
+    }
+  },
+  "round_dir": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03",
+  "round_index": 3,
+  "total_rows": 59999,
+  "valid": true
+}

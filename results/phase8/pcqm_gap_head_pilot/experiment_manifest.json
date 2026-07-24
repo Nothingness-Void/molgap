@@ -1,0 +1,44 @@
+{
+  "experiment": "phase8_pcqm_gap_specialist_from_retention_b",
+  "status": "completed_rejected",
+  "purpose": "Separate PCQM Gap specialist; no production registry change",
+  "base_model": "models/scnet/phase8_retention_2m_replay_gps7.pt",
+  "base_model_role": "variant B with improved common, OOD, and P8-hard",
+  "pcqm_training_pool": {
+    "source": "PCQM4Mv2 official train only",
+    "raw_hard_pool_rows": 200000,
+    "clean_rows_expected": 95909,
+    "filter": "connected and closed-shell and heavy_atoms>=5 and no_noble_gas and gap<=12_eV",
+    "official_valid_and_test_excluded": true,
+    "split": "scaffold-disjoint"
+  },
+  "training": {
+    "encoder": "frozen GPS7",
+    "trainable_component": "three-target output head",
+    "pcqm_objective": "Gap-only",
+    "pcqm_weight": 0.3,
+    "b3lyp_rehearsal_rows": 200000,
+    "b3lyp_validation_rows": 20000,
+    "b3lyp_embedding_prefix_rows": 220000,
+    "epochs": 50,
+    "patience": 10,
+    "checkpoint_every_epoch": true
+  },
+  "scnet_jobs": {
+    "clean_graph_embed": 706147,
+    "train_head": 706148,
+    "external_eval": 706149,
+    "dependency": "released after retention C was cancelled by decision"
+  },
+  "external_evaluation": {
+    "common_ood_p8hard": true,
+    "pcqm_official_valid_local_5k": true,
+    "pcqm_official_test": false,
+    "future_sealed_20k": false
+  },
+  "deployment": {
+    "global_replacement": false,
+    "intended_route": "explicit PCQM Gap specialist",
+    "production_registry_change_authorized": false
+  }
+}

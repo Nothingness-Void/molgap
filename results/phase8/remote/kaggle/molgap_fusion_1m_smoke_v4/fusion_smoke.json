@@ -1,0 +1,59 @@
+{
+  "cuda_available": true,
+  "gpu": "Tesla P100-PCIE-16GB",
+  "torch": "2.10.0+cu128",
+  "mounts": {
+    "/kaggle/input/datasets": [
+      "nothingnessvoid"
+    ]
+  },
+  "input_root": "/kaggle/input/datasets/nothingnessvoid/1m-full",
+  "missing": [],
+  "input_files": {
+    "pyg_3d_graphs_etkdg_expansion_1m.pt": 2773232637,
+    "gps_expansion_1m_embeddings.pt": 776001680,
+    "gps_expansion_1m_depth9_embeddings.pt": 776001722,
+    "schnet_expansion_1m_embeddings.pt": 774019421
+  },
+  "embedding_checks": {
+    "gps_expansion_1m_embeddings.pt": {
+      "shape": [
+        1000000,
+        192
+      ],
+      "dtype": "torch.float32",
+      "source_rows": 1000000,
+      "source_bounds": [
+        0,
+        999999
+      ],
+      "strictly_sorted": true
+    },
+    "gps_expansion_1m_depth9_embeddings.pt": {
+      "shape": [
+        1000000,
+        192
+      ],
+      "dtype": "torch.float32",
+      "source_rows": 1000000,
+      "source_bounds": [
+        0,
+        999999
+      ],
+      "strictly_sorted": true
+    },
+    "schnet_expansion_1m_embeddings.pt": {
+      "shape": [
+        997445,
+        192
+      ],
+      "dtype": "torch.float32",
+      "source_rows": 997445,
+      "source_bounds": [
+        0,
+        999999
+      ],
+      "strictly_sorted": true
+    }
+  }
+}

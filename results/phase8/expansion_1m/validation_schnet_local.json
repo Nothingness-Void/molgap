@@ -1,0 +1,50 @@
+{
+  "checkpoint": "D:\\\u4e0b\u8f7d\\extend_1m_n997445_best.pt",
+  "device": "cuda",
+  "n_base_graphs": 497578,
+  "n_topup_graphs": 499867,
+  "n_total_graphs": 997445,
+  "n_test_graphs": 99745,
+  "test_metrics": {
+    "HOMO": {
+      "mae_eV": 0.10462233424186707,
+      "r2": 0.8930748105049133
+    },
+    "LUMO": {
+      "mae_eV": 0.1021551862359047,
+      "r2": 0.9666128158569336
+    },
+    "Gap": {
+      "mae_eV": 0.1363126039505005,
+      "r2": 0.9423974752426147
+    },
+    "average": {
+      "mae_eV": 0.11436337480942409,
+      "r2": 0.9340283672014872
+    }
+  },
+  "gps_embedding": {
+    "path": "D:\\\u4e0b\u8f7d\\gps_expansion_1m_embeddings.pt",
+    "embedding_shape": [
+      1000000,
+      192
+    ],
+    "source_min": 0,
+    "source_max": 999999,
+    "unique_source_idx": 1000000,
+    "covers_all_3d_graphs": true,
+    "covered_3d_graphs": 997445
+  },
+  "gps_depth9_embedding": {
+    "path": "D:\\\u4e0b\u8f7d\\gps_expansion_1m_depth9_embeddings.pt",
+    "embedding_shape": [
+      1000000,
+      192
+    ],
+    "source_min": 0,
+    "source_max": 999999,
+    "unique_source_idx": 1000000,
+    "covers_all_3d_graphs": true,
+    "covered_3d_graphs": 997445
+  }
+}

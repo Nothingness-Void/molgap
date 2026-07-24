@@ -1,0 +1,72 @@
+{
+  "created_at": "2026-06-25",
+  "dataset": "Phase 7 original 300k, ETKDG-aligned N=299629 for B3LYP fusion comparison",
+  "b3lyp_surrogate_comparison": [
+    {
+      "method": "P7 ordinary FusionHead baseline",
+      "task": "B3LYP surrogate, original 300k internal test",
+      "best_val_mae": 0.0670931265066458,
+      "homo_mae": 0.06400411576032639,
+      "lumo_mae": 0.061708807945251465,
+      "gap_mae": 0.0756288468837738,
+      "avg_mae": 0.06711392352978389,
+      "delta_avg_vs_baseline": 0.0,
+      "delta_gap_vs_baseline": 0.0,
+      "n_aligned": 299629
+    },
+    {
+      "method": "Intermediate-layer fusion (2/4/final)",
+      "task": "B3LYP surrogate, original 300k internal test",
+      "best_val_mae": 0.06752062449924905,
+      "homo_mae": 0.06436698138713837,
+      "lumo_mae": 0.061892230063676834,
+      "gap_mae": 0.07594183087348938,
+      "avg_mae": 0.06740034744143486,
+      "delta_avg_vs_baseline": 0.0002864239116509709,
+      "delta_gap_vs_baseline": 0.00031298398971557617,
+      "n_aligned": 299629,
+      "n_params": 351363,
+      "best_epoch": 37
+    }
+  ],
+  "gw_delta_lora_context": [
+    {
+      "method": "LightGBM external Delta reference",
+      "task": "OE62 GW scaffold-test Delta learning",
+      "homo_mae": 0.19667193828723742,
+      "lumo_mae": 0.21662725800189636,
+      "gap_mae": 0.3028717676439667,
+      "avg_mae": 0.23872365464436685,
+      "trainable_params": null,
+      "train_time_s": null
+    },
+    {
+      "method": "LoRA FusionHead r8",
+      "task": "OE62 GW scaffold-test Delta learning",
+      "homo_mae": 0.18644027411937714,
+      "lumo_mae": 0.21805858612060547,
+      "gap_mae": 0.3029162883758545,
+      "avg_mae": 0.23580504953861237,
+      "trainable_params": 16920,
+      "train_time_s": 10.402915716171265
+    },
+    {
+      "method": "Encoder LoRA GPS+SchNet+Fusion r4",
+      "task": "OE62 GW scaffold-test Delta learning",
+      "homo_mae": 0.1824779510498047,
+      "lumo_mae": 0.19736045598983765,
+      "gap_mae": 0.2716881036758423,
+      "avg_mae": 0.21717550357182822,
+      "trainable_params": 130368,
+      "train_time_s": 431.0222690105438
+    }
+  ],
+  "decision": "On original P7 300k, intermediate-layer fusion is a tie/slight loss versus the ordinary FusionHead; it is not an upgrade to P7 baseline. Existing LoRA results are GW Delta-learning results and should be interpreted separately.",
+  "artifacts": {
+    "baseline_metrics": "results/phase7/fusion_optuna_metrics.json",
+    "layer_metrics": "results/phase8/archive/legacy/head_posthoc/layer_fusion_phase7_300k_metrics.json",
+    "layer_model": "results/phase8/archive/legacy/head_posthoc/layer_fusion_phase7_300k.pt",
+    "lora_metrics": "results/phase9/lora_fusion_delta_metrics.json",
+    "encoder_lora_metrics": "results/phase9/encoder_lora_delta_gps_schnet_fusion_r4_metrics.json"
+  }
+}

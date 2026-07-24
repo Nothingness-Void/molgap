@@ -1,0 +1,126 @@
+{
+  "distillation": {
+    "student_gps7": {
+      "checks": {
+        "model": true,
+        "test_predictions": true,
+        "fusion_prefix": true,
+        "embedding_parts": true,
+        "embedding_part_hashes": true,
+        "finite_metrics": true
+      },
+      "all_pass": true,
+      "best_epoch": 0,
+      "test": {
+        "homo": {
+          "mae_eV": 0.09662033641338348,
+          "r2": 0.908975320064261
+        },
+        "lumo": {
+          "mae_eV": 0.0932103400985524,
+          "r2": 0.9693073543275905
+        },
+        "gap": {
+          "mae_eV": 0.12503545704752206,
+          "r2": 0.9467693902837624
+        },
+        "average": {
+          "mae_eV": 0.10495537785315265,
+          "r2": 0.9416840215585379
+        }
+      },
+      "teacher_test": {
+        "homo": {
+          "mae_eV": 0.0978650426530838,
+          "r2": 0.9078820778599473
+        },
+        "lumo": {
+          "mae_eV": 0.09536891040579881,
+          "r2": 0.9685752385152634
+        },
+        "gap": {
+          "mae_eV": 0.12732972140043974,
+          "r2": 0.9460812328993061
+        },
+        "average": {
+          "mae_eV": 0.10685455815310745,
+          "r2": 0.9408461830915056
+        }
+      }
+    },
+    "student_gps7_w30": {
+      "checks": {
+        "model": true,
+        "test_predictions": true,
+        "fusion_prefix": true,
+        "embedding_parts": true,
+        "embedding_part_hashes": true,
+        "finite_metrics": true
+      },
+      "all_pass": true,
+      "best_epoch": 22,
+      "test": {
+        "homo": {
+          "mae_eV": 0.09419130610227584,
+          "r2": 0.9116517089435854
+        },
+        "lumo": {
+          "mae_eV": 0.09154013883016537,
+          "r2": 0.969883710948577
+        },
+        "gap": {
+          "mae_eV": 0.12178433895736933,
+          "r2": 0.9481287744460664
+        },
+        "average": {
+          "mae_eV": 0.10250526129660352,
+          "r2": 0.943221398112743
+        }
+      },
+      "teacher_test": {
+        "homo": {
+          "mae_eV": 0.0978650426530838,
+          "r2": 0.9078820778599473
+        },
+        "lumo": {
+          "mae_eV": 0.09536891040579881,
+          "r2": 0.9685752385152634
+        },
+        "gap": {
+          "mae_eV": 0.12732972140043974,
+          "r2": 0.9460812328993061
+        },
+        "average": {
+          "mae_eV": 0.10685455815310745,
+          "r2": 0.9408461830915056
+        }
+      }
+    }
+  },
+  "pcqm": {
+    "checks": {
+      "part_counts": true,
+      "accounted_rows": true,
+      "part_hashes": true,
+      "idx_range": true,
+      "idx_unique": true,
+      "finite": true,
+      "hard_rows": true,
+      "hard_unique_canonical": true,
+      "hard_idx_train_only": true,
+      "hard_hash": true
+    },
+    "all_pass": true,
+    "rows": 3378573,
+    "invalid": 33,
+    "hard_error": {
+      "min": 0.7849392890930176,
+      "median": 1.1212120056152344,
+      "max": 41.354671478271484
+    },
+    "hard_disagreement": {
+      "median": 0.08282637596130371,
+      "max": 5.459201335906982
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "cuda_available": true,
+  "gpu": "Tesla P100-PCIE-16GB",
+  "torch": "2.10.0+cu128",
+  "mounts": {
+    "/kaggle/input/datasets": [
+      "nothingnessvoid"
+    ]
+  },
+  "input_root": null,
+  "missing": [
+    "pyg_3d_graphs_etkdg_expansion_1m.pt",
+    "gps_expansion_1m_embeddings.pt",
+    "gps_expansion_1m_depth9_embeddings.pt",
+    "schnet_expansion_1m_embeddings.pt"
+  ],
+  "input_files": {}
+}

@@ -1,0 +1,36 @@
+{
+  "accepted_rows": 59999,
+  "reconciliation": {
+    "aromatic_large": {
+      "accepted_rows": 8000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 8000
+    },
+    "balanced": {
+      "accepted_rows": 39000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 39000
+    },
+    "rare": {
+      "accepted_rows": 1000,
+      "dropped_duplicate_rows": 0,
+      "dropped_examples": [],
+      "original_rows": 1000
+    },
+    "topology_elements": {
+      "accepted_rows": 11999,
+      "dropped_duplicate_rows": 1,
+      "dropped_examples": [
+        {
+          "canonical_smiles": "O=C(NCc1ccccc1)C(c1ccncc1)N(Cc1cccs1)C(=O)Cn1nnc(-c2ccccc2F)n1",
+          "cid": "23742292"
+        }
+      ],
+      "original_rows": 12000
+    }
+  },
+  "round_dir": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03",
+  "round_index": 3
+}

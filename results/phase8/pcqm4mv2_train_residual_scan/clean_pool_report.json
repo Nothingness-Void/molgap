@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "input_rows": 200000,
+  "output_rows": 95909,
+  "excluded_rows": 104091,
+  "overlapping_exclusion_counts": {
+    "invalid": 0,
+    "disconnected": 344,
+    "radical": 103440,
+    "heavy_atoms_lt_5": 1148,
+    "noble_gas": 3,
+    "gap_gt_12_eV": 28
+  },
+  "filter": "valid and connected and closed-shell and heavy_atoms>=5 and no_noble_gas and gap<=12_eV",
+  "output_sha256": "d846c8d4cdbb61d1c29919be0030caa5790832db5d811ff9f9a9cbbc187688b8"
+}

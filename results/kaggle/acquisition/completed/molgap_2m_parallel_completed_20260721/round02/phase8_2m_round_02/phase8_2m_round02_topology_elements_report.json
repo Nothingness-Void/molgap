@@ -1,0 +1,34 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "flexible_hard": 1290,
+    "large_mw_500_700": 2097,
+    "s_or_cl_hard": 1613
+  },
+  "download_workers": 2,
+  "elapsed_s": 297.7058074474335,
+  "files_scanned": 5,
+  "filter_passing_candidates_seen": 35806,
+  "include_buckets": [
+    "s_or_cl_hard",
+    "flexible_hard",
+    "large_mw_500_700"
+  ],
+  "kept_rows_per_s": 16.795104008452572,
+  "new_rows": 5000,
+  "out_csv": "/kaggle/working/phase8_2m_round_02/phase8_2m_round02_topology_elements.csv",
+  "parsed_objects": 42890,
+  "parsed_objects_per_s": 144.06840218450617,
+  "quotas": {
+    "flexible_hard": 1290,
+    "large_mw_500_700": 2097,
+    "s_or_cl_hard": 1613
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 0
+  },
+  "total_rows": 5000,
+  "windows_per_file": 16
+}

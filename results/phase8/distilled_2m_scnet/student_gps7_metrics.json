@@ -1,0 +1,543 @@
+{
+  "complete": true,
+  "config": {
+    "graphs": "results/phase8/multi2d_2m_scnet/pyg_2d_graphs_multi2d_coverage_2m.pt",
+    "n_graphs": 2000000,
+    "student_init_sha256": "0cf31ec47bc746c911f33d041956613056e4a09e5992bb773785f3ee057ea0f6",
+    "teacher_manifest_sha256": "ab0056d0da740d3b7277ce3fad1e093be5a0590afee849b8d119dab4dfbc30d3",
+    "teacher_weight": 0.7,
+    "seed": 42
+  },
+  "split": {
+    "train": 1600000,
+    "val": 200000,
+    "test": 200000
+  },
+  "training": {
+    "best_epoch": 0,
+    "best_val_label_mae_eV": 0.10321482773780823,
+    "epochs_completed": 11
+  },
+  "test_metrics": {
+    "homo": {
+      "mae_eV": 0.09662033641338348,
+      "r2": 0.908975320064261
+    },
+    "lumo": {
+      "mae_eV": 0.0932103400985524,
+      "r2": 0.9693073543275905
+    },
+    "gap": {
+      "mae_eV": 0.12503545704752206,
+      "r2": 0.9467693902837624
+    },
+    "average": {
+      "mae_eV": 0.10495537785315265,
+      "r2": 0.9416840215585379
+    }
+  },
+  "teacher_test_metrics": {
+    "homo": {
+      "mae_eV": 0.0978650426530838,
+      "r2": 0.9078820778599473
+    },
+    "lumo": {
+      "mae_eV": 0.09536891040579881,
+      "r2": 0.9685752385152634
+    },
+    "gap": {
+      "mae_eV": 0.12732972140043974,
+      "r2": 0.9460812328993061
+    },
+    "average": {
+      "mae_eV": 0.10685455815310745,
+      "r2": 0.9408461830915056
+    }
+  },
+  "student_teacher_mae_eV": 0.035581670701503754,
+  "model": {
+    "path": "models/scnet/phase8_distilled_teacher_2m_gps7.pt",
+    "sha256": "29e3ff558a2d43f812d7812a51e994f48c065ec43a85f29bafb478e5ac69564d"
+  },
+  "test_predictions": {
+    "path": "results/phase8/distilled_2m_scnet/student_gps7/test_predictions.npz",
+    "sha256": "6d74147eb717be78296fb41ec84a7692472a6aabe2ed3faa4f7af037b9efa29b"
+  },
+  "teacher_targets": {
+    "format": "molgap-distillation-target-manifest-v1",
+    "complete": true,
+    "rows": 2000000,
+    "experts": [
+      "control_a",
+      "repair_v2"
+    ],
+    "head_sha256": {
+      "control_a": "a7933e494b30ff798fa680723bd8f4f1ddd7e41d3388153a3e274e78a24e1cee",
+      "repair_v2": "8062e9244c49213640ae6ad3c0400374a5cca845961285f7339d0a0e86fe80fd"
+    },
+    "parts": [
+      {
+        "part": 0,
+        "start": 0,
+        "end": 50000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-000.pt",
+        "bytes": 1001718,
+        "sha256": "4182ff4ebf8e6f3c08f36fa488b15a28e2997a29aa11c58cee8dbcefa76d7a89"
+      },
+      {
+        "part": 1,
+        "start": 50000,
+        "end": 100000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-001.pt",
+        "bytes": 1001718,
+        "sha256": "07eceea021ee8cb5be8132d0c805199b92ddce5ae4179729ed53022e7dec2b05"
+      },
+      {
+        "part": 2,
+        "start": 100000,
+        "end": 150000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-002.pt",
+        "bytes": 1001718,
+        "sha256": "b0558dabb00d96f4073d3926fe04ba91979bcf0d89854641d5dd5386b03b56ed"
+      },
+      {
+        "part": 3,
+        "start": 150000,
+        "end": 200000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-003.pt",
+        "bytes": 1001718,
+        "sha256": "8cdbb1bf1aac0a029d11b692a41a28dd679f77f1e63d752c3afdf32332d2d61e"
+      },
+      {
+        "part": 4,
+        "start": 200000,
+        "end": 250000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-004.pt",
+        "bytes": 1001718,
+        "sha256": "29a0251637586e8d5396b1bf24f8e8b5bd84392a3a64cd6fb705b343d6ed4605"
+      },
+      {
+        "part": 5,
+        "start": 250000,
+        "end": 300000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-005.pt",
+        "bytes": 1001718,
+        "sha256": "3405867ce1e721b7b3416d6e2722d93affd4afe255053c0c375f194b3304475b"
+      },
+      {
+        "part": 6,
+        "start": 300000,
+        "end": 350000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-006.pt",
+        "bytes": 1001718,
+        "sha256": "ed4ea933b5d79dba89ea24b128aecd198f7410577e246a7b113b62adcd6264f8"
+      },
+      {
+        "part": 7,
+        "start": 350000,
+        "end": 400000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-007.pt",
+        "bytes": 1001718,
+        "sha256": "dea065a353680f4b433e48b998fd8c564935608d65c503e40b5e99a5b2246818"
+      },
+      {
+        "part": 8,
+        "start": 400000,
+        "end": 450000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-008.pt",
+        "bytes": 1001718,
+        "sha256": "6f061fa419a2ad0a1af0a3bad177f1d0ed9b5ce5ec949681d1eebce791daa9d0"
+      },
+      {
+        "part": 9,
+        "start": 450000,
+        "end": 500000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-009.pt",
+        "bytes": 1001718,
+        "sha256": "0edf904b7a7477dbda4fb748a4483eba3cec0611c197a706520b2d59adc774b5"
+      },
+      {
+        "part": 10,
+        "start": 500000,
+        "end": 550000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-010.pt",
+        "bytes": 1001718,
+        "sha256": "81f886f04b47ee63acf7fac6740bbc63d92b97815501f13140987ce51af9e36c"
+      },
+      {
+        "part": 11,
+        "start": 550000,
+        "end": 600000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-011.pt",
+        "bytes": 1001718,
+        "sha256": "8dbc282fb09c29fe0ed2f967b18327c19a4f402b86d7516babf96760a61ba884"
+      },
+      {
+        "part": 12,
+        "start": 600000,
+        "end": 650000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-012.pt",
+        "bytes": 1001718,
+        "sha256": "ce5aa31903a7fbb1941903c96a0633152340b1425a68ca0c83b784d5c20f07a9"
+      },
+      {
+        "part": 13,
+        "start": 650000,
+        "end": 700000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-013.pt",
+        "bytes": 1001718,
+        "sha256": "60c623d31bd61661bea7357258a63d552bc393ce360c9e5c01675c3642f9636e"
+      },
+      {
+        "part": 14,
+        "start": 700000,
+        "end": 750000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-014.pt",
+        "bytes": 1001718,
+        "sha256": "1d5f0d3cb92490040be642180eb88132b688c5c81f4a325aa956819f5d9ab0b4"
+      },
+      {
+        "part": 15,
+        "start": 750000,
+        "end": 800000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-015.pt",
+        "bytes": 1001718,
+        "sha256": "8f3ffd314aab29b08671ae7f5c132eaf464d88ac6cd8444d3618b01f833feeeb"
+      },
+      {
+        "part": 16,
+        "start": 800000,
+        "end": 850000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-016.pt",
+        "bytes": 1001718,
+        "sha256": "03c9d8199f027dcfb6e744e6e51830965aa30f0b13936657ba9396c5ed5ba3b4"
+      },
+      {
+        "part": 17,
+        "start": 850000,
+        "end": 900000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-017.pt",
+        "bytes": 1001718,
+        "sha256": "28e8ebc857457c2f3a21c3368006fffdfcac7d3e4e321fdb1cc1ad6aa5c5c902"
+      },
+      {
+        "part": 18,
+        "start": 900000,
+        "end": 950000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-018.pt",
+        "bytes": 1001718,
+        "sha256": "419c4f6f101003364ebe2cab5ed7dc6d029d009565eab0c85d25d49f852cfa06"
+      },
+      {
+        "part": 19,
+        "start": 950000,
+        "end": 1000000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-019.pt",
+        "bytes": 1001718,
+        "sha256": "35423e32fdb378288c038b57fd93d47900071e54ffd53e03484009829c0d1bd1"
+      },
+      {
+        "part": 20,
+        "start": 1000000,
+        "end": 1050000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-020.pt",
+        "bytes": 1001718,
+        "sha256": "d4b437ac7f2e32cef7dc8a6b50143723c563716cbd4bed08b5ac9b49a490a051"
+      },
+      {
+        "part": 21,
+        "start": 1050000,
+        "end": 1100000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-021.pt",
+        "bytes": 1001718,
+        "sha256": "00e7c72131f033a93b257926610a747a46b7ec27f43a6c0102e4c88bed3bed31"
+      },
+      {
+        "part": 22,
+        "start": 1100000,
+        "end": 1150000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-022.pt",
+        "bytes": 1001718,
+        "sha256": "d57e2cb8a0fa82bed42e41148bf5a70c499230e4cf5e5fb526c4ecd2918513bd"
+      },
+      {
+        "part": 23,
+        "start": 1150000,
+        "end": 1200000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-023.pt",
+        "bytes": 1001718,
+        "sha256": "4e71bb69abfe353439cd81ec85e781302814f8f163d275594980ad931aa2435a"
+      },
+      {
+        "part": 24,
+        "start": 1200000,
+        "end": 1250000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-024.pt",
+        "bytes": 1001718,
+        "sha256": "222f762a56cc4339336e42dfadba7093fe89176ed7864bca95c773b43b27ccc3"
+      },
+      {
+        "part": 25,
+        "start": 1250000,
+        "end": 1300000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-025.pt",
+        "bytes": 1001718,
+        "sha256": "0c2f522cb6fe332d17439afe559b8c4ac17e50795c6d5b9b353bf7ab301933c1"
+      },
+      {
+        "part": 26,
+        "start": 1300000,
+        "end": 1350000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-026.pt",
+        "bytes": 1001718,
+        "sha256": "01b77d5acbacbd42fad8c012854be9b269e9a9a9bfecc84846614acc3dc12b82"
+      },
+      {
+        "part": 27,
+        "start": 1350000,
+        "end": 1400000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-027.pt",
+        "bytes": 1001718,
+        "sha256": "f16a7ab5a5f856cd52f5168338369bce15d3390aa051c91fda253f9555e62a38"
+      },
+      {
+        "part": 28,
+        "start": 1400000,
+        "end": 1450000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-028.pt",
+        "bytes": 1001718,
+        "sha256": "6fbff1eb9405efb0ab03bb26db05c850de3827ea05909ebd2a4cb6a776627e59"
+      },
+      {
+        "part": 29,
+        "start": 1450000,
+        "end": 1500000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-029.pt",
+        "bytes": 1001718,
+        "sha256": "0d3a69df8842c6bfd07a7f5cba0a6b616327066777fe48030fda140b315087ac"
+      },
+      {
+        "part": 30,
+        "start": 1500000,
+        "end": 1550000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-030.pt",
+        "bytes": 1001718,
+        "sha256": "7f0de17fa46c50182da2195d4fdf17bebaf6b77fdc4910a3c466043ea39adae7"
+      },
+      {
+        "part": 31,
+        "start": 1550000,
+        "end": 1600000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-031.pt",
+        "bytes": 1001718,
+        "sha256": "77c78e77894a47166beb47c7a955dad145520c61ffda6062f3f8ad42934ad4bb"
+      },
+      {
+        "part": 32,
+        "start": 1600000,
+        "end": 1650000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-032.pt",
+        "bytes": 1001718,
+        "sha256": "7efe39cad97a09a34122113b03cbeb1f1c81aee1f9775ab5cd9dd101daa910ef"
+      },
+      {
+        "part": 33,
+        "start": 1650000,
+        "end": 1700000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-033.pt",
+        "bytes": 1001718,
+        "sha256": "9c9354730c2f8d848a56ff8a5ef5bc870a8a88f23a44f9e700ccfb514f64d1a3"
+      },
+      {
+        "part": 34,
+        "start": 1700000,
+        "end": 1750000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-034.pt",
+        "bytes": 1001718,
+        "sha256": "8d9f211f3511cdee9a246e09044cad2e952bcdd5952c47732f8b2b27bf48bca9"
+      },
+      {
+        "part": 35,
+        "start": 1750000,
+        "end": 1800000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-035.pt",
+        "bytes": 1001718,
+        "sha256": "b88384063e9170266470313aaf70f14fbd35ed8e5534505aeb28073e2b228964"
+      },
+      {
+        "part": 36,
+        "start": 1800000,
+        "end": 1850000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-036.pt",
+        "bytes": 1001718,
+        "sha256": "870d0f5ca2c0c5014ee047d4bbe28a95230e113636fe70eb002087f98748f43a"
+      },
+      {
+        "part": 37,
+        "start": 1850000,
+        "end": 1900000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-037.pt",
+        "bytes": 1001718,
+        "sha256": "e4d8f4608887542274ca4c11fac2566e49ee43cebbebbcd9141bc397ebd30d1a"
+      },
+      {
+        "part": 38,
+        "start": 1900000,
+        "end": 1950000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-038.pt",
+        "bytes": 1001718,
+        "sha256": "ff6200d1b991ac930d220064fd7aceb6823fe807ad8eb903d1f3abdf48a709d9"
+      },
+      {
+        "part": 39,
+        "start": 1950000,
+        "end": 2000000,
+        "rows": 50000,
+        "path": "results/phase8/distilled_2m_scnet/student_gps7/teacher_targets/part-039.pt",
+        "bytes": 1001718,
+        "sha256": "a284b900ecd0bfdbe8936bb5958963ec66fa983de408fd4292d20816dad411de"
+      }
+    ]
+  },
+  "student_embeddings": {
+    "manifest": "results/phase8/distilled_2m_scnet/student_gps7/student_embeddings/manifest.json",
+    "rows": 2000000
+  },
+  "fusion_prefix": {
+    "path": "results/phase8/distilled_2m_scnet/student_gps7/student_1m_embeddings_fp16.pt",
+    "rows": 997445,
+    "embedding_dim": 192,
+    "dtype": "float16",
+    "bytes": 391000226,
+    "sha256": "cd4995fe2f331aebe9f87f0af0e27f1ff20f096e87de0e207001c541049ba4ce"
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_distillation_loss": 0.0647356062823534,
+      "val_label_mae_eV": 0.10321482773780823,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.989317695968133e-05,
+      "seconds": 414.2040841579437
+    },
+    {
+      "epoch": 1,
+      "train_distillation_loss": 0.06265410360336304,
+      "val_label_mae_eV": 0.10377280358314514,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.957387821430921e-05,
+      "seconds": 408.4895107746124
+    },
+    {
+      "epoch": 2,
+      "train_distillation_loss": 0.061714526589512826,
+      "val_label_mae_eV": 0.10403068380355834,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.90456020677555e-05,
+      "seconds": 408.00911808013916
+    },
+    {
+      "epoch": 3,
+      "train_distillation_loss": 0.061071384974122046,
+      "val_label_mae_eV": 0.10416597262859345,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.8314136424030716e-05,
+      "seconds": 408.718327999115
+    },
+    {
+      "epoch": 4,
+      "train_distillation_loss": 0.06057642036318779,
+      "val_label_mae_eV": 0.10442599380016326,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.738749537379656e-05,
+      "seconds": 408.8154499530792
+    },
+    {
+      "epoch": 5,
+      "train_distillation_loss": 0.060207291914820674,
+      "val_label_mae_eV": 0.10434849561691284,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.627583139031148e-05,
+      "seconds": 408.5903880596161
+    },
+    {
+      "epoch": 6,
+      "train_distillation_loss": 0.059850520236492157,
+      "val_label_mae_eV": 0.10480465655326843,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.4991324096809195e-05,
+      "seconds": 407.90358543395996
+    },
+    {
+      "epoch": 7,
+      "train_distillation_loss": 0.05956203447461128,
+      "val_label_mae_eV": 0.104569250664711,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.354804682399774e-05,
+      "seconds": 408.04798698425293
+    },
+    {
+      "epoch": 8,
+      "train_distillation_loss": 0.05935132490336895,
+      "val_label_mae_eV": 0.10456582023143768,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.196181241970323e-05,
+      "seconds": 408.7757053375244
+    },
+    {
+      "epoch": 9,
+      "train_distillation_loss": 0.05911632073640823,
+      "val_label_mae_eV": 0.10470698633670807,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 3.0250000000000007e-05,
+      "seconds": 408.2979004383087
+    },
+    {
+      "epoch": 10,
+      "train_distillation_loss": 0.058872891649603847,
+      "val_label_mae_eV": 0.10436808687210083,
+      "best_val_label_mae_eV": 0.10321482773780823,
+      "lr": 2.8431364539978115e-05,
+      "seconds": 408.252943277359
+    }
+  ]
+}

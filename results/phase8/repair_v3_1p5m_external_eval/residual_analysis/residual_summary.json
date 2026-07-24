@@ -1,0 +1,229 @@
+{
+  "source": "results\\phase8\\repair_v3_1p5m_external_eval\\common_predictions.csv",
+  "n": 1977,
+  "development_set_warning": "These external rows are now used for acquisition design and cannot remain a sealed acceptance set.",
+  "base_gap_mae_eV": 0.11918760753290339,
+  "candidate_gap_mae_eV": 0.1222680629414264,
+  "top_strata_min_n40": [
+    {
+      "family": "aromatic_rings",
+      "bucket": "(-inf, 0.0]",
+      "n": 169,
+      "base_gap_mae_eV": 0.1832926503242308,
+      "base_gap_p90_eV": 0.41909265072000096,
+      "candidate_minus_base_gap_eV": 0.0012724703882840442,
+      "candidate_win_rate": 0.48520710059171596,
+      "share_of_base_gap_error": 30.976457904795005,
+      "error_contribution_fraction": 0.13146010778851588
+    },
+    {
+      "family": "fraction_csp3",
+      "bucket": "(0.7, inf]",
+      "n": 186,
+      "base_gap_mae_eV": 0.15935188921204305,
+      "base_gap_p90_eV": 0.3831081956975,
+      "candidate_minus_base_gap_eV": 0.008744601967365612,
+      "candidate_win_rate": 0.46774193548387094,
+      "share_of_base_gap_error": 29.639451393440005,
+      "error_contribution_fraction": 0.12578602392015117
+    },
+    {
+      "family": "mw",
+      "bucket": "(700.0, inf]",
+      "n": 216,
+      "base_gap_mae_eV": 0.15071847786567127,
+      "base_gap_p90_eV": 0.3991784576674997,
+      "candidate_minus_base_gap_eV": 0.010458050579444503,
+      "candidate_win_rate": 0.4398148148148148,
+      "share_of_base_gap_error": 32.555191218984994,
+      "error_contribution_fraction": 0.13816004915336155
+    },
+    {
+      "family": "true_gap",
+      "bucket": "(2.5, 3.2]",
+      "n": 124,
+      "base_gap_mae_eV": 0.14616530696729835,
+      "base_gap_p90_eV": 0.30187720848949967,
+      "candidate_minus_base_gap_eV": 0.00750123069233866,
+      "candidate_win_rate": 0.47580645161290325,
+      "share_of_base_gap_error": 18.124498063944994,
+      "error_contribution_fraction": 0.07691804132099087
+    },
+    {
+      "family": "eval_set",
+      "bucket": "ood1000",
+      "n": 999,
+      "base_gap_mae_eV": 0.13490808243883384,
+      "base_gap_p90_eV": 0.32724475902100036,
+      "candidate_minus_base_gap_eV": -0.004560636967617616,
+      "candidate_win_rate": 0.5305305305305306,
+      "share_of_base_gap_error": 134.773174356395,
+      "error_contribution_fraction": 0.5719600375984105
+    },
+    {
+      "family": "true_gap",
+      "bucket": "(5.5, inf]",
+      "n": 295,
+      "base_gap_mae_eV": 0.13336954998338987,
+      "base_gap_p90_eV": 0.30440696611399987,
+      "candidate_minus_base_gap_eV": 0.0003831111280338835,
+      "candidate_win_rate": 0.5288135593220339,
+      "share_of_base_gap_error": 39.34401724510001,
+      "error_contribution_fraction": 0.16697095464467063
+    },
+    {
+      "family": "n_N",
+      "bucket": "no_n_N",
+      "n": 165,
+      "base_gap_mae_eV": 0.13081292368187883,
+      "base_gap_p90_eV": 0.32855090734100023,
+      "candidate_minus_base_gap_eV": -0.0028376968000000105,
+      "candidate_win_rate": 0.5575757575757576,
+      "share_of_base_gap_error": 21.584132407510005,
+      "error_contribution_fraction": 0.09160028501430566
+    },
+    {
+      "family": "rotatable_bonds",
+      "bucket": "(7.0, inf]",
+      "n": 832,
+      "base_gap_mae_eV": 0.1290639827688161,
+      "base_gap_p90_eV": 0.3228820007460002,
+      "candidate_minus_base_gap_eV": 0.006175694393701941,
+      "candidate_win_rate": 0.4723557692307692,
+      "share_of_base_gap_error": 107.381233663655,
+      "error_contribution_fraction": 0.45571216035332285
+    },
+    {
+      "family": "amide_bonds",
+      "bucket": "(0.0, 2.0]",
+      "n": 742,
+      "base_gap_mae_eV": 0.12743946818948115,
+      "base_gap_p90_eV": 0.30923065525350035,
+      "candidate_minus_base_gap_eV": 0.0049471291793800505,
+      "candidate_win_rate": 0.49595687331536387,
+      "share_of_base_gap_error": 94.56008539659501,
+      "error_contribution_fraction": 0.401300854246586
+    },
+    {
+      "family": "aromatic_rings",
+      "bucket": "(0.0, 2.0]",
+      "n": 791,
+      "base_gap_mae_eV": 0.12710897401581542,
+      "base_gap_p90_eV": 0.30413266176000064,
+      "candidate_minus_base_gap_eV": 0.000511832517420993,
+      "candidate_win_rate": 0.5195954487989887,
+      "share_of_base_gap_error": 100.54319844650999,
+      "error_contribution_fraction": 0.42669241737720937
+    },
+    {
+      "family": "amide_bonds",
+      "bucket": "(2.0, 5.0]",
+      "n": 216,
+      "base_gap_mae_eV": 0.1264783135864352,
+      "base_gap_p90_eV": 0.31082534128249995,
+      "candidate_minus_base_gap_eV": 0.003000955616990774,
+      "candidate_win_rate": 0.4675925925925926,
+      "share_of_base_gap_error": 27.31931573467,
+      "error_contribution_fraction": 0.11593966625319949
+    },
+    {
+      "family": "fraction_csp3",
+      "bucket": "(0.4, 0.7]",
+      "n": 529,
+      "base_gap_mae_eV": 0.12494502808890355,
+      "base_gap_p90_eV": 0.3026484666800009,
+      "candidate_minus_base_gap_eV": -0.0009049810289602887,
+      "candidate_win_rate": 0.5368620037807184,
+      "share_of_base_gap_error": 66.09591985902998,
+      "error_contribution_fraction": 0.2805025925092674
+    },
+    {
+      "family": "n_O",
+      "bucket": "has_n_O",
+      "n": 1777,
+      "base_gap_mae_eV": 0.12346071020164603,
+      "base_gap_p90_eV": 0.3037728509640004,
+      "candidate_minus_base_gap_eV": 0.0026312129941474505,
+      "candidate_win_rate": 0.49296567248171075,
+      "share_of_base_gap_error": 219.389682028325,
+      "error_contribution_fraction": 0.9310616254374063
+    },
+    {
+      "family": "n_F",
+      "bucket": "no_n_F",
+      "n": 1535,
+      "base_gap_mae_eV": 0.12254884009889903,
+      "base_gap_p90_eV": 0.30621686839200046,
+      "candidate_minus_base_gap_eV": 0.0015884447539804467,
+      "candidate_win_rate": 0.4977198697068404,
+      "share_of_base_gap_error": 188.11246955181002,
+      "error_contribution_fraction": 0.7983251538845855
+    },
+    {
+      "family": "mw",
+      "bucket": "(-inf, 300.0]",
+      "n": 465,
+      "base_gap_mae_eV": 0.12231199639088172,
+      "base_gap_p90_eV": 0.2969418976869994,
+      "candidate_minus_base_gap_eV": 0.00010249270030107666,
+      "candidate_win_rate": 0.513978494623656,
+      "share_of_base_gap_error": 56.87507832176,
+      "error_contribution_fraction": 0.2413705256307397
+    },
+    {
+      "family": "fraction_csp3",
+      "bucket": "(0.1, 0.4]",
+      "n": 963,
+      "base_gap_mae_eV": 0.12077279921220146,
+      "base_gap_p90_eV": 0.3028912790409998,
+      "candidate_minus_base_gap_eV": 0.002692859192710286,
+      "candidate_win_rate": 0.48078920041536866,
+      "share_of_base_gap_error": 116.30420564135001,
+      "error_contribution_fraction": 0.49358010708845024
+    },
+    {
+      "family": "n_S",
+      "bucket": "has_n_S",
+      "n": 684,
+      "base_gap_mae_eV": 0.12059961860114767,
+      "base_gap_p90_eV": 0.3017288314015005,
+      "candidate_minus_base_gap_eV": 0.0051940377750000245,
+      "candidate_win_rate": 0.48099415204678364,
+      "share_of_base_gap_error": 82.490139123185,
+      "error_contribution_fraction": 0.35007755289364273
+    },
+    {
+      "family": "n_Cl",
+      "bucket": "no_n_Cl",
+      "n": 1570,
+      "base_gap_mae_eV": 0.11979759326692675,
+      "base_gap_p90_eV": 0.2991857317539996,
+      "candidate_minus_base_gap_eV": 0.0031862099702929985,
+      "candidate_win_rate": 0.49872611464968153,
+      "share_of_base_gap_error": 188.082221429075,
+      "error_contribution_fraction": 0.798196784737688
+    },
+    {
+      "family": "true_gap",
+      "bucket": "(3.2, 4.0]",
+      "n": 396,
+      "base_gap_mae_eV": 0.11918850610445707,
+      "base_gap_p90_eV": 0.31142094224250005,
+      "candidate_minus_base_gap_eV": 0.00800445253984848,
+      "candidate_win_rate": 0.4595959595959596,
+      "share_of_base_gap_error": 47.198648417365,
+      "error_contribution_fraction": 0.2003050002517752
+    },
+    {
+      "family": "mw",
+      "bucket": "(300.0, 500.0]",
+      "n": 841,
+      "base_gap_mae_eV": 0.11857513125305587,
+      "base_gap_p90_eV": 0.2994878677999999,
+      "candidate_minus_base_gap_eV": -0.00010477816791914448,
+      "candidate_win_rate": 0.5053507728894173,
+      "share_of_base_gap_error": 99.72168538381999,
+      "error_contribution_fraction": 0.4232060214793044
+    }
+  ]
+}

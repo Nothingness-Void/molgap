@@ -1,0 +1,65 @@
+{
+  "tag": "original1m_late_router_seed42",
+  "split_sha256": "3703312b168589a66ef25c8323cd695fe2baa6b8317cb793d573841fe25a38b2",
+  "selection_baseline": {
+    "HOMO": {
+      "mae_eV": 0.07377941906452179
+    },
+    "LUMO": {
+      "mae_eV": 0.07130521535873413
+    },
+    "Gap": {
+      "mae_eV": 0.08996829390525818
+    },
+    "average": {
+      "mae_eV": 0.0783509761095047
+    }
+  },
+  "selection_candidates": {
+    "fixed_alpha": {
+      "HOMO": {
+        "mae_eV": 0.07373702526092529
+      },
+      "LUMO": {
+        "mae_eV": 0.07129106670618057
+      },
+      "Gap": {
+        "mae_eV": 0.08995170146226883
+      },
+      "average": {
+        "mae_eV": 0.07832659780979156
+      }
+    },
+    "gap_bin_alpha": {
+      "HOMO": {
+        "mae_eV": 0.07374797016382217
+      },
+      "LUMO": {
+        "mae_eV": 0.07129785418510437
+      },
+      "Gap": {
+        "mae_eV": 0.0899515226483345
+      },
+      "average": {
+        "mae_eV": 0.07833244899908702
+      }
+    },
+    "hgb_alpha_3seed": {
+      "HOMO": {
+        "mae_eV": 0.0738997870720208
+      },
+      "LUMO": {
+        "mae_eV": 0.07150347097534289
+      },
+      "Gap": {
+        "mae_eV": 0.09022392736370298
+      },
+      "average": {
+        "mae_eV": 0.07854239513702223
+      }
+    }
+  },
+  "pass_threshold_eV": 0.001,
+  "selected": null,
+  "test_opened": false
+}

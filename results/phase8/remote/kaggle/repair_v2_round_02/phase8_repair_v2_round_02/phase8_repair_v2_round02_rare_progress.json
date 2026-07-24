@@ -1,0 +1,25 @@
+{
+  "checkpoint_every": 250,
+  "counts": {
+    "low_gap_aromatic_edge": 500,
+    "very_low_gap": 500
+  },
+  "elapsed_s": 1242.3866198062897,
+  "files_scanned": 26,
+  "filter_passing_candidates_seen": 3792,
+  "include_buckets": [
+    "very_low_gap",
+    "low_gap_aromatic_edge"
+  ],
+  "kept_rows_per_s": 0.8049024225292429,
+  "new_rows": 1000,
+  "out_csv": "/kaggle/working/phase8_repair_v2_round_02/phase8_repair_v2_round02_rare.csv",
+  "parsed_objects": 261362,
+  "quotas": {
+    "low_gap_aromatic_edge": 500,
+    "very_low_gap": 500
+  },
+  "resumed_rows": 0,
+  "state": "complete",
+  "total_rows": 1000
+}

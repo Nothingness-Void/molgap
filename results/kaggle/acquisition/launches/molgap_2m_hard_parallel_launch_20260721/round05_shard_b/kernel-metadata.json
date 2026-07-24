@@ -1,0 +1,19 @@
+{
+  "id": "nothingnessvoid/active-molgap-hard-candidate-fetch-r05-b",
+  "title": "ACTIVE | MolGap Hard Candidate Fetch R05 B",
+  "code_file": "fetch_2m_parallel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-2m-fetch-base",
+    "nothingnessvoid/molgap-2m-broad-round01",
+    "nothingnessvoid/molgap-2m-broad-round02-03",
+    "nothingnessvoid/molgap-2m-general-overnight-r01-accepted"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

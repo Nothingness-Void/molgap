@@ -1,0 +1,60 @@
+{
+  "experiment": "phase8_retention_aware_2m_gps7",
+  "status": "variant_b_accepted_for_common_ood_hard",
+  "baseline_a": {
+    "name": "uniform_exact2m_gps7",
+    "source": "results/phase8/multi2d_2m_scnet/gps7/metrics.json",
+    "rerun": false
+  },
+  "shared_training": {
+    "graphs": "results/phase8/multi2d_2m_scnet/pyg_2d_graphs_multi2d_coverage_2m.pt",
+    "rows": 2000000,
+    "init_from": "models/scnet/phase8_repair_v3_1p5m_gps7.pt",
+    "architecture": "GPS7 hidden192 heads4 dropout0.05",
+    "epochs": 40,
+    "patience": 12,
+    "learning_rate": 0.00008,
+    "batch_size": 256,
+    "split_seed": 42,
+    "targeted_source_idx_boundary": 500000,
+    "targeted_replay_weight": 3.0,
+    "expected_targeted_draw_fraction": 0.5,
+    "checkpoint_every_epochs": 1
+  },
+  "variant_b": {
+    "name": "replay",
+    "retention_teacher": null,
+    "scnet_train_job": 705497,
+    "scnet_external_eval_job": 705498,
+    "status": "completed_failed_global_gate",
+    "common_average_delta_eV": -0.0024169015443690858,
+    "ood_average_delta_eV": -0.002043658498303398,
+    "p8_hard_average_delta_eV": -0.002798159011669313,
+    "pcqm_gap_delta_eV": 0.01702306187350531
+  },
+  "variant_c": {
+    "name": "replay_distill",
+    "retention_teacher": "models/phase8_gps_expansion_500k.pt",
+    "retention_boundary": 500000,
+    "retention_weight": 0.25,
+    "retention_targets": "atomically cached once and reused",
+    "scnet_train_job": 706141,
+    "scnet_external_eval_job": 706142,
+    "status": "cancelled_by_decision_after_variant_b_accepted",
+    "superseded_jobs": [705499, 705500, 705528, 705529],
+    "retention_cache_reused": true
+  },
+  "external_evaluation": {
+    "baseline": "phase8_routed_dualgps_hybrid",
+    "common_rows_expected": 1977,
+    "pcqm_rows_expected": 4981,
+    "sealed_20k_opened": false
+  },
+  "promotion_gate_candidate_minus_routed_v4_eV": {
+    "common_average_max": 0.0,
+    "ood_or_p8_hard_minimum_improvement": -0.001,
+    "other_domain_max_regression": 0.0005,
+    "pcqm_gap_max_regression": 0.0
+  },
+  "production_registry_change_authorized": false
+}

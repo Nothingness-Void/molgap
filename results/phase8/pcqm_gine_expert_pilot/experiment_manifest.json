@@ -1,0 +1,56 @@
+{
+  "experiment": "pcqm_gine_expert_pilot",
+  "status": "complete_rejected_by_scale_gate",
+  "date": "2026-07-24",
+  "hypothesis": "A benchmark-native OGB-feature GIN virtual-node Gap specialist trained on official PCQM4Mv2 train molecules can outperform the B3LYP routed-v4 transfer baseline on official PCQM validation.",
+  "training_source": {
+    "dataset": "PCQM4Mv2 official train split",
+    "sample_rows": 250000,
+    "sample_seed": 42,
+    "development_split": "scaffold_hash_disjoint_90_10"
+  },
+  "final_evaluation": {
+    "dataset": "PCQM4Mv2 official validation",
+    "fixed_rows": 5000,
+    "selection": "first_5000_official_indices",
+    "baseline_gap_mae_eV": 0.2916897588074544
+  },
+  "excluded": [
+    "official PCQM4Mv2 test-dev",
+    "official PCQM4Mv2 test-challenge",
+    "future MolGap sealed 20K"
+  ],
+  "model": {
+    "type": "GIN virtual node",
+    "target": "homolumogap",
+    "num_layers": 5,
+    "hidden_channels": 256,
+    "dropout": 0.1,
+    "epochs": 30,
+    "batch_size": 512
+  },
+  "kaggle": {
+    "input_datasets": [
+      "piero0/pcqm4mv2",
+      "nothingnessvoid/molgap-pcqm4mv2-valid-5k"
+    ],
+    "kernel": "nothingnessvoid/molgap-pcqm-gin-expert-pilot",
+    "kernel_version": 3,
+    "submitted_at": "2026-07-24T01:18:00+09:00",
+    "resumed_at": "2026-07-24T13:14:00+09:00",
+    "terminal_status": "complete",
+    "resume_dataset": "nothingnessvoid/molgap-pcqm-gin-resume-200k-20260724",
+    "resume_source_rows": 200000,
+    "version_2_failure": "One invalid phosphorus-valence SMILES raised inside ogb.smiles2graph after eight complete 25K shards; the accepted shards were preserved and mounted for version 3."
+  },
+  "result": {
+    "valid_graph_rows": 254997,
+    "invalid_rows": 3,
+    "best_scaffold_dev_gap_mae_eV": 0.21234302301049612,
+    "official_valid_5k_gap_mae_eV": 0.21350379638671876,
+    "scale_gate_pass": false,
+    "acceptance": "results/phase8/pcqm_gine_expert_pilot/acceptance.json",
+    "decision": "results/phase8/pcqm_gine_expert_pilot/decision.md"
+  },
+  "promotion_scope": "rejected PCQM specialist evidence only; no production registry change"
+}

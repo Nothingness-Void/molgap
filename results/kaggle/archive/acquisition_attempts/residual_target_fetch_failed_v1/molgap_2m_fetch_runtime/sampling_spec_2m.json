@@ -1,0 +1,31 @@
+{
+  "dataset": "phase8_residual_target_candidate_pool",
+  "purpose": "Acquire candidates around the original 1M model's highest fixed-external residual regions.",
+  "excluded_training_csv": "data/raw/phase8_repair_v3_1p5m.csv",
+  "candidate_pool_target": 300000,
+  "selection_target": 100000,
+  "hard_filters": {
+    "allowed_elements": ["C", "H", "N", "O", "S", "F", "Cl"],
+    "mw_min": 200,
+    "mw_max": 1000,
+    "gap_positive": true,
+    "exclude_existing_1p5m_cids_and_canonical_smiles": true,
+    "exclude_prior_repair_candidate_union": true
+  },
+  "priority_buckets": [
+    {"id": "high_sp3_very_large", "quota": 45000, "predicate": "mw >= 700 and fraction_csp3 > 0.7"},
+    {"id": "macrocycle_very_large", "quota": 30000, "predicate": "mw >= 700 and has ring size >= 8"},
+    {"id": "non_aromatic_very_large", "quota": 35000, "predicate": "mw >= 700 and aromatic_rings == 0"},
+    {"id": "flexible_very_large", "quota": 45000, "predicate": "mw >= 700 and rotatable_bonds >= 8"},
+    {"id": "low_mid_gap_flexible", "quota": 45000, "predicate": "2.5 < gap <= 4.0 and rotatable_bonds >= 8"},
+    {"id": "multi_amide_very_large", "quota": 30000, "predicate": "mw >= 700 and amide_bonds >= 3"},
+    {"id": "high_sp3_non_aromatic", "quota": 30000, "predicate": "fraction_csp3 > 0.7 and aromatic_rings == 0"},
+    {"id": "residual_balanced", "quota": 40000, "predicate": "2.5 < gap <= 5.5, 300 <= mw < 700, moderate topology"}
+  ],
+  "selection_rules": [
+    "Exclude all original 1M, rejected repair candidates, and prior fetch rounds by CID and canonical SMILES.",
+    "Reserve scaffold-disjoint molecules before any training selection.",
+    "Run 50K then 100K additive pilots; do not jump directly to a 500K retrain.",
+    "The used common/OOD/P8-hard rows are development data; promotion requires a new sealed scaffold set."
+  ]
+}

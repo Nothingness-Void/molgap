@@ -1,0 +1,60 @@
+{
+  "kind": "schnet",
+  "graph_path": "results\\phase8\\experiments\\schnet_dim_ab_smoke\\graphs_50k.pt",
+  "n_graphs": 200,
+  "n_params": 722180,
+  "training_time_s": 0.4992518424987793,
+  "best_val_mae": 3.6021568775177,
+  "best_epoch": 0,
+  "init_from": null,
+  "init_compatible": false,
+  "init_report": null,
+  "model_params": {
+    "hidden_channels": 128,
+    "num_filters": 192,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 6.0,
+    "dropout": 0.0
+  },
+  "params": {
+    "hidden_channels": 128,
+    "num_filters": 192,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 6.0,
+    "dropout": 0.0,
+    "lr": 0.00021150972021685588,
+    "weight_decay": 1.4656553886225336e-05,
+    "batch_size": 32,
+    "scheduler": "cosine"
+  },
+  "replay_sampling": null,
+  "test_metrics": {
+    "HOMO": {
+      "mae": 5.542815685272217,
+      "r2": -208.4387969970703
+    },
+    "LUMO": {
+      "mae": 0.9132113456726074,
+      "r2": -2.5327908992767334
+    },
+    "Gap": {
+      "mae": 4.592579364776611,
+      "r2": -38.15408706665039
+    },
+    "average": {
+      "mae": 3.682868798573812,
+      "r2": -83.04189165433247
+    }
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_loss": 3.7155564785003663,
+      "val_mae": 3.6021568775177,
+      "lr": 1e-06,
+      "time_s": 0.4992518424987793
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "dataset": "phase8_original1m_plus_broad_residual_uniform",
+  "base_rows": 1000000,
+  "broad_rows": 60000,
+  "residual_rows": 45457,
+  "candidate_input_rows": 105457,
+  "candidate_unique_disjoint_rows": 102798,
+  "candidate_novel_scaffold_rows": 60315,
+  "topup_rows": 97798,
+  "sealed_rows": 5000,
+  "sealed_scaffolds": 3381,
+  "total_train_rows": 1097798,
+  "topup_csv": "data\\raw\\phase8_broad_residual_topup_97798.csv",
+  "base_prefix_preserved": true,
+  "sealed_disjoint_from_base_and_topup_by_scaffold": true,
+  "sampling": "uniform; no replay weighting",
+  "sources": {
+    "base": "data\\raw\\phase8_expansion_1m.csv",
+    "broad_dir": "results\\kaggle\\molgap_2m_candidate_fetch_check\\phase8_2m_round_01",
+    "residual": "results\\phase8\\residual_target_round01_recovered\\residual_target_round01_recovered.csv"
+  }
+}

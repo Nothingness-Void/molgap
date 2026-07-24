@@ -1,0 +1,15 @@
+{
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "gpu": "Tesla P100-PCIE-16GB",
+  "architectures": [
+    "sm_50",
+    "sm_60",
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90"
+  ],
+  "probe_sum": 1073741824.0
+}

@@ -1,0 +1,105 @@
+{
+  "complete": true,
+  "tag": "routed_1m_dualgps_seed42",
+  "n_aligned": 2000,
+  "split": {
+    "seed": 42,
+    "sha256": "0a56e5f21f0d7ab12210a88bdb71718792f0f60ff78886287f280d01b1f72d08",
+    "train": 1600,
+    "val": 200,
+    "test": 200
+  },
+  "route": {
+    "threshold_eV": 4.0,
+    "count": 200,
+    "fraction": 1.0
+  },
+  "training": {
+    "best_epoch": 1,
+    "best_val_mae_eV": 3.870337724685669,
+    "epochs_completed": 2,
+    "best_checkpoint": "routed_1m_dualgps_seed42_base_best.pt",
+    "last_checkpoint": "routed_1m_dualgps_seed42_base_last.pt",
+    "train_log": "routed_1m_dualgps_seed42_base_train_log.csv"
+  },
+  "base_metrics": {
+    "HOMO": {
+      "mae_eV": 5.6563615798950195,
+      "r2": -135.323974609375
+    },
+    "LUMO": {
+      "mae_eV": 1.091677188873291,
+      "r2": -1.5818469524383545
+    },
+    "Gap": {
+      "mae_eV": 4.682149887084961,
+      "r2": -26.412872314453125
+    },
+    "average": {
+      "mae_eV": 3.810062885284424,
+      "r2": -54.43956462542216
+    }
+  },
+  "always_dual_metrics": {
+    "HOMO": {
+      "mae_eV": 0.0793016254901886,
+      "r2": 0.8978408575057983
+    },
+    "LUMO": {
+      "mae_eV": 0.06923734396696091,
+      "r2": 0.9825252890586853
+    },
+    "Gap": {
+      "mae_eV": 0.09181183576583862,
+      "r2": 0.971524178981781
+    },
+    "average": {
+      "mae_eV": 0.08011693507432938,
+      "r2": 0.9506301085154215
+    }
+  },
+  "routed_metrics": {
+    "HOMO": {
+      "mae_eV": 0.0793016254901886,
+      "r2": 0.8978408575057983
+    },
+    "LUMO": {
+      "mae_eV": 0.06923734396696091,
+      "r2": 0.9825252890586853
+    },
+    "Gap": {
+      "mae_eV": 0.09181183576583862,
+      "r2": 0.971524178981781
+    },
+    "average": {
+      "mae_eV": 0.08011693507432938,
+      "r2": 0.9506301085154215
+    }
+  },
+  "oracle_molecule_metrics": {
+    "HOMO": {
+      "mae_eV": 0.0793016254901886,
+      "r2": 0.8978408575057983
+    },
+    "LUMO": {
+      "mae_eV": 0.06923734396696091,
+      "r2": 0.9825252890586853
+    },
+    "Gap": {
+      "mae_eV": 0.09181183576583862,
+      "r2": 0.971524178981781
+    },
+    "average": {
+      "mae_eV": 0.08011693507432938,
+      "r2": 0.9506301085154215
+    }
+  },
+  "reference_check": {
+    "average_delta_eV": 0.0013096084197362218,
+    "gap_delta_eV": 0.0020266324281692505
+  },
+  "delta_routed_minus_always_dual": {
+    "average_mae_eV": 0.0,
+    "gap_mae_eV": 0.0
+  }
+}

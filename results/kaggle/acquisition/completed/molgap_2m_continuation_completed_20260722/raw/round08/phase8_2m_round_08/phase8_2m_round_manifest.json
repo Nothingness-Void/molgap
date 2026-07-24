@@ -1,0 +1,356 @@
+{
+  "acquisition_profile": "complementary",
+  "elapsed_s": 1885.1490740776062,
+  "groups": {
+    "bridged_rigid": {
+      "buckets": [
+        "bridged_polycyclic",
+        "fused_rigid"
+      ],
+      "csv": "phase8_2m_round08_bridged_rigid.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "bridged_polycyclic": 6000,
+          "fused_rigid": 5750
+        },
+        "elapsed_s": 1736.4351694583893,
+        "files_scanned": 39,
+        "filter_passing_candidates_seen": 478609,
+        "include_buckets": [
+          "bridged_polycyclic",
+          "fused_rigid"
+        ],
+        "kept_rows_per_s": 6.766736937069143,
+        "new_rows": 11750,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_bridged_rigid.csv",
+        "parsed_objects": 571899,
+        "quotas": {
+          "bridged_polycyclic": 6000,
+          "fused_rigid": 6000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "state": "running",
+        "total_rows": 11750
+      },
+      "log": "phase8_2m_round08_bridged_rigid.log",
+      "pid": 30,
+      "progress": "phase8_2m_round08_bridged_rigid_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "bridged_polycyclic": 6000,
+          "fused_rigid": 6000
+        },
+        "download_workers": 2,
+        "elapsed_s": 1860.8336448669434,
+        "files_scanned": 42,
+        "filter_passing_candidates_seen": 508525,
+        "include_buckets": [
+          "bridged_polycyclic",
+          "fused_rigid"
+        ],
+        "kept_rows_per_s": 6.4487226104824895,
+        "new_rows": 12000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_bridged_rigid.csv",
+        "parsed_objects": 610406,
+        "parsed_objects_per_s": 328.02824781451454,
+        "quotas": {
+          "bridged_polycyclic": 6000,
+          "fused_rigid": 6000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "total_rows": 12000,
+        "windows_per_file": 24
+      },
+      "return_code": 0,
+      "sha256": "927bd20f9314439926e5a37d9c40f413092781ffd83f2fbb99b48df483fe2a96",
+      "target_rows": 12000
+    },
+    "conjugated_da": {
+      "buckets": [
+        "donor_acceptor_conjugated",
+        "conjugated_midgap"
+      ],
+      "csv": "phase8_2m_round08_conjugated_da.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "conjugated_midgap": 7059,
+          "donor_acceptor_conjugated": 7941
+        },
+        "elapsed_s": 145.90854740142822,
+        "files_scanned": 3,
+        "filter_passing_candidates_seen": 26718,
+        "include_buckets": [
+          "donor_acceptor_conjugated",
+          "conjugated_midgap"
+        ],
+        "kept_rows_per_s": 102.8041212605011,
+        "new_rows": 15000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_conjugated_da.csv",
+        "parsed_objects": 28621,
+        "quotas": {
+          "conjugated_midgap": 7059,
+          "donor_acceptor_conjugated": 7941
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "state": "complete",
+        "total_rows": 15000
+      },
+      "log": "phase8_2m_round08_conjugated_da.log",
+      "pid": 31,
+      "progress": "phase8_2m_round08_conjugated_da_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "conjugated_midgap": 7059,
+          "donor_acceptor_conjugated": 7941
+        },
+        "download_workers": 2,
+        "elapsed_s": 145.91090536117554,
+        "files_scanned": 3,
+        "filter_passing_candidates_seen": 26718,
+        "include_buckets": [
+          "donor_acceptor_conjugated",
+          "conjugated_midgap"
+        ],
+        "kept_rows_per_s": 102.80245991805936,
+        "new_rows": 15000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_conjugated_da.csv",
+        "parsed_objects": 28621,
+        "parsed_objects_per_s": 196.15394702098513,
+        "quotas": {
+          "conjugated_midgap": 7059,
+          "donor_acceptor_conjugated": 7941
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "total_rows": 15000,
+        "windows_per_file": 24
+      },
+      "return_code": 0,
+      "sha256": "8c19ac45aee3fee1ea429de1d17d7f57e654f9c12e5e532d3b7c70caf059050c",
+      "target_rows": 15000
+    },
+    "hetero_dense": {
+      "buckets": [
+        "small_hetero_dense",
+        "hetero_dense_midgap",
+        "sulfur_rich",
+        "halogen_rich"
+      ],
+      "csv": "phase8_2m_round08_hetero_dense.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "halogen_rich": 3000,
+          "hetero_dense_midgap": 6000,
+          "small_hetero_dense": 5000,
+          "sulfur_rich": 4000
+        },
+        "elapsed_s": 429.4515645503998,
+        "files_scanned": 9,
+        "filter_passing_candidates_seen": 103787,
+        "include_buckets": [
+          "small_hetero_dense",
+          "hetero_dense_midgap",
+          "sulfur_rich",
+          "halogen_rich"
+        ],
+        "kept_rows_per_s": 41.91392344523069,
+        "new_rows": 18000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_hetero_dense.csv",
+        "parsed_objects": 128799,
+        "quotas": {
+          "halogen_rich": 3000,
+          "hetero_dense_midgap": 6000,
+          "small_hetero_dense": 5000,
+          "sulfur_rich": 4000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "state": "complete",
+        "total_rows": 18000
+      },
+      "log": "phase8_2m_round08_hetero_dense.log",
+      "pid": 29,
+      "progress": "phase8_2m_round08_hetero_dense_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "halogen_rich": 3000,
+          "hetero_dense_midgap": 6000,
+          "small_hetero_dense": 5000,
+          "sulfur_rich": 4000
+        },
+        "download_workers": 2,
+        "elapsed_s": 429.45488023757935,
+        "files_scanned": 9,
+        "filter_passing_candidates_seen": 103787,
+        "include_buckets": [
+          "small_hetero_dense",
+          "hetero_dense_midgap",
+          "sulfur_rich",
+          "halogen_rich"
+        ],
+        "kept_rows_per_s": 41.913599840901085,
+        "new_rows": 18000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_hetero_dense.csv",
+        "parsed_objects": 128799,
+        "parsed_objects_per_s": 299.91276366156774,
+        "quotas": {
+          "halogen_rich": 3000,
+          "hetero_dense_midgap": 6000,
+          "small_hetero_dense": 5000,
+          "sulfur_rich": 4000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "total_rows": 18000,
+        "windows_per_file": 24
+      },
+      "return_code": 0,
+      "sha256": "51d14c51187da61eadb6364c81c95241627448e81ed3313cb651c33ad91765f3",
+      "target_rows": 18000
+    },
+    "high_gap": {
+      "buckets": [
+        "high_gap_hetero",
+        "high_gap_rigid"
+      ],
+      "csv": "phase8_2m_round08_high_gap.csv",
+      "latest_progress": {
+        "checkpoint_every": 250,
+        "counts": {
+          "high_gap_hetero": 9000,
+          "high_gap_rigid": 6000
+        },
+        "elapsed_s": 1168.4882171154022,
+        "files_scanned": 29,
+        "filter_passing_candidates_seen": 75031,
+        "include_buckets": [
+          "high_gap_hetero",
+          "high_gap_rigid"
+        ],
+        "kept_rows_per_s": 12.83709992132387,
+        "new_rows": 15000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_high_gap.csv",
+        "parsed_objects": 411489,
+        "quotas": {
+          "high_gap_hetero": 9000,
+          "high_gap_rigid": 6000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "state": "complete",
+        "total_rows": 15000
+      },
+      "log": "phase8_2m_round08_high_gap.log",
+      "pid": 28,
+      "progress": "phase8_2m_round08_high_gap_progress.json",
+      "report": {
+        "chunk_bytes": 16000000,
+        "counts": {
+          "high_gap_hetero": 9000,
+          "high_gap_rigid": 6000
+        },
+        "download_workers": 2,
+        "elapsed_s": 1168.4911375045776,
+        "files_scanned": 29,
+        "filter_passing_candidates_seen": 75031,
+        "include_buckets": [
+          "high_gap_hetero",
+          "high_gap_rigid"
+        ],
+        "kept_rows_per_s": 12.837067837787718,
+        "new_rows": 15000,
+        "out_csv": "/kaggle/working/phase8_2m_round_08/phase8_2m_round08_high_gap.csv",
+        "parsed_objects": 411489,
+        "parsed_objects_per_s": 352.15414716689537,
+        "quotas": {
+          "high_gap_hetero": 9000,
+          "high_gap_rigid": 6000
+        },
+        "resumed_rows": 0,
+        "source_file_shard": {
+          "count": 2,
+          "index": 0
+        },
+        "total_rows": 15000,
+        "windows_per_file": 24
+      },
+      "return_code": 0,
+      "sha256": "19e3b7290be0c464e9cd741a33f7784ec6737bd764ef63bdb8f222a1ecdc2cd0",
+      "target_rows": 15000
+    }
+  },
+  "prior_checkpoint_csvs": [
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-fetch-base/phase8_repair_v2_candidate_union_exclusion.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_aromatic_large.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_balanced.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_rare.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round01/phase8_2m_round01_topology_elements.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round02_aromatic_large.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round02_balanced.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round02_rare.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round02_topology_elements.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round03_aromatic_large.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round03_balanced.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round03_rare.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-broad-round02-03/phase8_2m_round03_topology_elements.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round06_bridged_rigid.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round06_conjugated_da.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round06_hetero_dense.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round06_high_gap.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round07_bridged_rigid.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round07_conjugated_da.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round07_hetero_dense.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-complementary-round06-07-accepted/phase8_2m_round07_high_gap.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-general-overnight-r01-accepted/phase8_2m_general_overnight_r01_chunk01.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-general-overnight-r01-accepted/phase8_2m_general_overnight_r01_chunk02.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-general-overnight-r01-accepted/phase8_2m_general_overnight_r01_chunk03.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-general-overnight-r01-accepted/phase8_2m_general_overnight_r01_chunk04.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-general-overnight-r01-accepted/phase8_2m_general_overnight_r01_chunk05.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round04_flexible_lowmid.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round04_macro_amide.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round04_sp3_nonaromatic.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round04_very_large.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round05_flexible_lowmid.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round05_macro_amide.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round05_sp3_nonaromatic.csv",
+    "/kaggle/input/datasets/nothingnessvoid/molgap-2m-hard-round04-05-accepted/phase8_2m_round05_very_large.csv"
+  ],
+  "round_index": 8,
+  "round_target_rows": 60000,
+  "source_file_shard": {
+    "count": 2,
+    "index": 0
+  },
+  "state": "complete",
+  "tag": "phase8_2m_complementary_candidate_pool"
+}

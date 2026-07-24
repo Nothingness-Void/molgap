@@ -1,0 +1,31 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "macrocycle_very_large": 2066,
+    "multi_amide_very_large": 10000
+  },
+  "download_workers": 2,
+  "elapsed_s": 12217.813571691513,
+  "files_scanned": 215,
+  "filter_passing_candidates_seen": 31400,
+  "include_buckets": [
+    "macrocycle_very_large",
+    "multi_amide_very_large"
+  ],
+  "kept_rows_per_s": 0.9875744075811352,
+  "new_rows": 12066,
+  "out_csv": "/kaggle/working/phase8_2m_round_05/phase8_2m_round05_macro_amide.csv",
+  "parsed_objects": 3105280,
+  "parsed_objects_per_s": 254.1600411382022,
+  "quotas": {
+    "macrocycle_very_large": 10000,
+    "multi_amide_very_large": 10000
+  },
+  "resumed_rows": 0,
+  "source_file_shard": {
+    "count": 2,
+    "index": 1
+  },
+  "total_rows": 12066,
+  "windows_per_file": 24
+}

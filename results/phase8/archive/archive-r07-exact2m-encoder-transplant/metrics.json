@@ -1,0 +1,615 @@
+{
+  "experiment": "routed_v4_exact2m_encoder_transplant",
+  "device": "cuda",
+  "n_aligned": 497578,
+  "source_idx_min": 0,
+  "source_idx_max": 499999,
+  "split_seed": 42,
+  "split": {
+    "train": 398062,
+    "val": 49757,
+    "test": 49759
+  },
+  "threshold_eV": 4.0,
+  "fixed_route_n": 12693,
+  "production_reference": {
+    "HOMO": {
+      "mae": 0.07702887058258057
+    },
+    "LUMO": {
+      "mae": 0.0780540406703949
+    },
+    "Gap": {
+      "mae": 0.09776564687490463
+    },
+    "average": {
+      "mae": 0.08428285270929337
+    }
+  },
+  "seeds": {
+    "42": {
+      "control": {
+        "base_training": {
+          "best_val_mae": 0.08503510424667782,
+          "best_epoch": 13,
+          "epochs_completed": 35,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\control_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\control_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.0794128211492568,
+          "best_epoch": 17,
+          "epochs_completed": 38,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\control_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\control_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.07869099825620651
+          },
+          "LUMO": {
+            "mae": 0.07943133264780045
+          },
+          "Gap": {
+            "mae": 0.10015342384576797
+          },
+          "average": {
+            "mae": 0.08609191328287125
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.07431662082672119
+          },
+          "LUMO": {
+            "mae": 0.074287049472332
+          },
+          "Gap": {
+            "mae": 0.09276270866394043
+          },
+          "average": {
+            "mae": 0.08045545965433121
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.07725892961025238
+          },
+          "LUMO": {
+            "mae": 0.07793059200048447
+          },
+          "Gap": {
+            "mae": 0.09784329682588577
+          },
+          "average": {
+            "mae": 0.08434426784515381
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.07726337760686874
+          },
+          "LUMO": {
+            "mae": 0.07794591039419174
+          },
+          "Gap": {
+            "mae": 0.09786630421876907
+          },
+          "average": {
+            "mae": 0.08435854315757751
+          }
+        },
+        "self_route_n": 12562
+      },
+      "candidate": {
+        "base_training": {
+          "best_val_mae": 0.08977905369040681,
+          "best_epoch": 11,
+          "epochs_completed": 32,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\candidate_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\candidate_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.08707529400837374,
+          "best_epoch": 11,
+          "epochs_completed": 32,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\candidate_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed42\\candidate_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.08300668746232986
+          },
+          "LUMO": {
+            "mae": 0.08214705437421799
+          },
+          "Gap": {
+            "mae": 0.10630876570940018
+          },
+          "average": {
+            "mae": 0.09048750251531601
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.08027748763561249
+          },
+          "LUMO": {
+            "mae": 0.08003856241703033
+          },
+          "Gap": {
+            "mae": 0.10299209505319595
+          },
+          "average": {
+            "mae": 0.08776938170194626
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.08236154168844223
+          },
+          "LUMO": {
+            "mae": 0.08150439709424973
+          },
+          "Gap": {
+            "mae": 0.10511759668588638
+          },
+          "average": {
+            "mae": 0.08966118097305298
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.08234473317861557
+          },
+          "LUMO": {
+            "mae": 0.08148574829101562
+          },
+          "Gap": {
+            "mae": 0.1051517203450203
+          },
+          "average": {
+            "mae": 0.08966074883937836
+          }
+        },
+        "self_route_n": 12543
+      },
+      "paired_delta_candidate_minus_control": {
+        "fixed_route": {
+          "HOMO": 0.00510261207818985,
+          "LUMO": 0.003573805093765259,
+          "Gap": 0.00727429986000061,
+          "average": 0.00531691312789917
+        },
+        "self_route": {
+          "HOMO": 0.005081355571746826,
+          "LUMO": 0.003539837896823883,
+          "Gap": 0.007285416126251221,
+          "average": 0.005302205681800842
+        }
+      }
+    },
+    "43": {
+      "control": {
+        "base_training": {
+          "best_val_mae": 0.0849155721975623,
+          "best_epoch": 9,
+          "epochs_completed": 30,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\control_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\control_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.07897443737323556,
+          "best_epoch": 11,
+          "epochs_completed": 32,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\control_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\control_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.07861287891864777
+          },
+          "LUMO": {
+            "mae": 0.07925767451524734
+          },
+          "Gap": {
+            "mae": 0.09987612068653107
+          },
+          "average": {
+            "mae": 0.08591556549072266
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.07407236099243164
+          },
+          "LUMO": {
+            "mae": 0.07411709427833557
+          },
+          "Gap": {
+            "mae": 0.09182742238044739
+          },
+          "average": {
+            "mae": 0.08000562340021133
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.07714089006185532
+          },
+          "LUMO": {
+            "mae": 0.07778522372245789
+          },
+          "Gap": {
+            "mae": 0.0974680483341217
+          },
+          "average": {
+            "mae": 0.0841313898563385
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.07712743431329727
+          },
+          "LUMO": {
+            "mae": 0.07780148833990097
+          },
+          "Gap": {
+            "mae": 0.09748584777116776
+          },
+          "average": {
+            "mae": 0.08413826674222946
+          }
+        },
+        "self_route_n": 12347
+      },
+      "candidate": {
+        "base_training": {
+          "best_val_mae": 0.08993950247468703,
+          "best_epoch": 7,
+          "epochs_completed": 28,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\candidate_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\candidate_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.08681009811418225,
+          "best_epoch": 5,
+          "epochs_completed": 26,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\candidate_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed43\\candidate_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.08312717080116272
+          },
+          "LUMO": {
+            "mae": 0.08247648924589157
+          },
+          "Gap": {
+            "mae": 0.10631296783685684
+          },
+          "average": {
+            "mae": 0.09063888341188431
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.0811401829123497
+          },
+          "LUMO": {
+            "mae": 0.079824298620224
+          },
+          "Gap": {
+            "mae": 0.10182797908782959
+          },
+          "average": {
+            "mae": 0.08759748935699463
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.08255726844072342
+          },
+          "LUMO": {
+            "mae": 0.08144129812717438
+          },
+          "Gap": {
+            "mae": 0.10492958128452301
+          },
+          "average": {
+            "mae": 0.0896427258849144
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.08253281563520432
+          },
+          "LUMO": {
+            "mae": 0.08149348199367523
+          },
+          "Gap": {
+            "mae": 0.10498480498790741
+          },
+          "average": {
+            "mae": 0.08967036008834839
+          }
+        },
+        "self_route_n": 12514
+      },
+      "paired_delta_candidate_minus_control": {
+        "fixed_route": {
+          "HOMO": 0.005416378378868103,
+          "LUMO": 0.0036560744047164917,
+          "Gap": 0.007461532950401306,
+          "average": 0.005511336028575897
+        },
+        "self_route": {
+          "HOMO": 0.0054053813219070435,
+          "LUMO": 0.0036919936537742615,
+          "Gap": 0.0074989572167396545,
+          "average": 0.005532093346118927
+        }
+      }
+    },
+    "44": {
+      "control": {
+        "base_training": {
+          "best_val_mae": 0.08519544015818835,
+          "best_epoch": 8,
+          "epochs_completed": 29,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\control_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\control_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.07947251858480908,
+          "best_epoch": 13,
+          "epochs_completed": 34,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\control_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\control_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.07903750985860825
+          },
+          "LUMO": {
+            "mae": 0.07911316305398941
+          },
+          "Gap": {
+            "mae": 0.1000732034444809
+          },
+          "average": {
+            "mae": 0.08607463538646698
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.07446051388978958
+          },
+          "LUMO": {
+            "mae": 0.07424772530794144
+          },
+          "Gap": {
+            "mae": 0.0924910306930542
+          },
+          "average": {
+            "mae": 0.08039975166320801
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.07748323678970337
+          },
+          "LUMO": {
+            "mae": 0.07783155888319016
+          },
+          "Gap": {
+            "mae": 0.09757727384567261
+          },
+          "average": {
+            "mae": 0.08429734408855438
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.07752183079719543
+          },
+          "LUMO": {
+            "mae": 0.07784038037061691
+          },
+          "Gap": {
+            "mae": 0.09763944149017334
+          },
+          "average": {
+            "mae": 0.0843338817358017
+          }
+        },
+        "self_route_n": 12533
+      },
+      "candidate": {
+        "base_training": {
+          "best_val_mae": 0.09004892976285057,
+          "best_epoch": 7,
+          "epochs_completed": 28,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\candidate_base_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\candidate_base_last.pt",
+          "n_params": 203907
+        },
+        "dual_training": {
+          "best_val_mae": 0.08704022806799123,
+          "best_epoch": 9,
+          "epochs_completed": 30,
+          "best_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\candidate_dual_best.pt",
+          "last_checkpoint": "results\\phase8\\archive\\archive-r07-exact2m-encoder-transplant\\seed44\\candidate_dual_last.pt",
+          "n_params": 240771
+        },
+        "base": {
+          "HOMO": {
+            "mae": 0.08317254483699799
+          },
+          "LUMO": {
+            "mae": 0.08257054537534714
+          },
+          "Gap": {
+            "mae": 0.10664010047912598
+          },
+          "average": {
+            "mae": 0.0907944068312645
+          }
+        },
+        "dual": {
+          "HOMO": {
+            "mae": 0.08071443438529968
+          },
+          "LUMO": {
+            "mae": 0.0797426626086235
+          },
+          "Gap": {
+            "mae": 0.1029515415430069
+          },
+          "average": {
+            "mae": 0.08780289441347122
+          }
+        },
+        "fixed_route": {
+          "HOMO": {
+            "mae": 0.0826151892542839
+          },
+          "LUMO": {
+            "mae": 0.08161376416683197
+          },
+          "Gap": {
+            "mae": 0.10528017580509186
+          },
+          "average": {
+            "mae": 0.08983638882637024
+          }
+        },
+        "self_route": {
+          "HOMO": {
+            "mae": 0.08257953822612762
+          },
+          "LUMO": {
+            "mae": 0.08164475113153458
+          },
+          "Gap": {
+            "mae": 0.10531193763017654
+          },
+          "average": {
+            "mae": 0.08984540402889252
+          }
+        },
+        "self_route_n": 12536
+      },
+      "paired_delta_candidate_minus_control": {
+        "fixed_route": {
+          "HOMO": 0.005131952464580536,
+          "LUMO": 0.003782205283641815,
+          "Gap": 0.0077029019594192505,
+          "average": 0.005539044737815857
+        },
+        "self_route": {
+          "HOMO": 0.00505770742893219,
+          "LUMO": 0.0038043707609176636,
+          "Gap": 0.007672496140003204,
+          "average": 0.00551152229309082
+        }
+      }
+    }
+  },
+  "paired_summary": {
+    "fixed_route": {
+      "HOMO": {
+        "mean_delta_mae": 0.0052169809738794965,
+        "std_delta_mae": 0.00017330524633008527,
+        "all_seeds_better": false,
+        "values": [
+          0.00510261207818985,
+          0.005416378378868103,
+          0.005131952464580536
+        ]
+      },
+      "LUMO": {
+        "mean_delta_mae": 0.0036706949273745217,
+        "std_delta_mae": 0.00010496656394891504,
+        "all_seeds_better": false,
+        "values": [
+          0.003573805093765259,
+          0.0036560744047164917,
+          0.003782205283641815
+        ]
+      },
+      "Gap": {
+        "mean_delta_mae": 0.007479578256607056,
+        "std_delta_mae": 0.00021487011126157337,
+        "all_seeds_better": false,
+        "values": [
+          0.00727429986000061,
+          0.007461532950401306,
+          0.0077029019594192505
+        ]
+      },
+      "average": {
+        "mean_delta_mae": 0.005455764631430308,
+        "std_delta_mae": 0.0001210444057632545,
+        "all_seeds_better": false,
+        "values": [
+          0.00531691312789917,
+          0.005511336028575897,
+          0.005539044737815857
+        ]
+      }
+    },
+    "self_route": {
+      "HOMO": {
+        "mean_delta_mae": 0.00518148144086202,
+        "std_delta_mae": 0.00019426316226610528,
+        "all_seeds_better": false,
+        "values": [
+          0.005081355571746826,
+          0.0054053813219070435,
+          0.00505770742893219
+        ]
+      },
+      "LUMO": {
+        "mean_delta_mae": 0.0036787341038386026,
+        "std_delta_mae": 0.00013276396647730443,
+        "all_seeds_better": false,
+        "values": [
+          0.003539837896823883,
+          0.0036919936537742615,
+          0.0038043707609176636
+        ]
+      },
+      "Gap": {
+        "mean_delta_mae": 0.007485623160998027,
+        "std_delta_mae": 0.00019388419750833124,
+        "all_seeds_better": false,
+        "values": [
+          0.007285416126251221,
+          0.0074989572167396545,
+          0.007672496140003204
+        ]
+      },
+      "average": {
+        "mean_delta_mae": 0.00544860710700353,
+        "std_delta_mae": 0.00012720387192104214,
+        "all_seeds_better": false,
+        "values": [
+          0.005302205681800842,
+          0.005532093346118927,
+          0.00551152229309082
+        ]
+      }
+    }
+  }
+}

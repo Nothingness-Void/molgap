@@ -1,0 +1,101 @@
+{
+  "sources": [
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_rare.csv",
+      "new_unique_rows": 10000,
+      "overlap_rows": 0,
+      "rows": 10000
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_aromatic_large.csv",
+      "new_unique_rows": 75951,
+      "overlap_rows": 0,
+      "rows": 75951
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_topology_elements.csv",
+      "new_unique_rows": 98508,
+      "overlap_rows": 0,
+      "rows": 98508
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_full_600k_v3\\reconciled_20260719\\phase8_repair_v2_balanced.csv",
+      "new_unique_rows": 366240,
+      "overlap_rows": 0,
+      "rows": 366240
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_rare.csv",
+      "new_unique_rows": 982,
+      "overlap_rows": 18,
+      "rows": 1000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_aromatic_large.csv",
+      "new_unique_rows": 7648,
+      "overlap_rows": 352,
+      "rows": 8000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_topology_elements.csv",
+      "new_unique_rows": 11900,
+      "overlap_rows": 100,
+      "rows": 12000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round01_balanced.csv",
+      "new_unique_rows": 38717,
+      "overlap_rows": 283,
+      "rows": 39000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_rare.csv",
+      "new_unique_rows": 974,
+      "overlap_rows": 26,
+      "rows": 1000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_aromatic_large.csv",
+      "new_unique_rows": 7799,
+      "overlap_rows": 201,
+      "rows": 8000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_topology_elements.csv",
+      "new_unique_rows": 11757,
+      "overlap_rows": 243,
+      "rows": 12000
+    },
+    {
+      "csv": "data\\raw\\phase8_repair_v2_checkpoint_dataset\\phase8_repair_v2_round02_balanced.csv",
+      "new_unique_rows": 37038,
+      "overlap_rows": 1959,
+      "rows": 38997
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_rare.csv",
+      "new_unique_rows": 977,
+      "overlap_rows": 23,
+      "rows": 1000
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_aromatic_large.csv",
+      "new_unique_rows": 7670,
+      "overlap_rows": 330,
+      "rows": 8000
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_topology_elements.csv",
+      "new_unique_rows": 11806,
+      "overlap_rows": 193,
+      "rows": 11999
+    },
+    {
+      "csv": "results\\phase8\\remote\\kaggle\\repair_v2_round_03\\phase8_repair_v2_round_03\\phase8_repair_v2_round03_balanced.csv",
+      "new_unique_rows": 38999,
+      "overlap_rows": 1,
+      "rows": 39000
+    }
+  ],
+  "unique_rows": 726966
+}

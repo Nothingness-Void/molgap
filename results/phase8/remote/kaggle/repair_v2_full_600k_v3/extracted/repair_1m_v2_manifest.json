@@ -1,0 +1,156 @@
+{
+  "tag": "phase8_repair_1m_v2_candidate_pool",
+  "source_dataset": "/kaggle/input/datasets/nothingnessvoid/1m-full/phase8_expansion_1m.csv",
+  "groups": {
+    "rare": {
+      "target_rows": 10000,
+      "buckets": [
+        "very_low_gap",
+        "low_gap_aromatic_edge"
+      ],
+      "pid": 28,
+      "return_code": 0,
+      "report": {
+        "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_rare.csv",
+        "include_buckets": [
+          "very_low_gap",
+          "low_gap_aromatic_edge"
+        ],
+        "quotas": {
+          "very_low_gap": 5000,
+          "low_gap_aromatic_edge": 5000
+        },
+        "counts": {
+          "very_low_gap": 5000,
+          "low_gap_aromatic_edge": 5000
+        },
+        "resumed_rows": 0,
+        "new_rows": 10000,
+        "total_rows": 10000,
+        "files_scanned": 430,
+        "windows_per_file": 16,
+        "chunk_bytes": 16000000,
+        "download_workers": 2,
+        "parsed_objects": 3787504,
+        "filter_passing_candidates_seen": 70880,
+        "elapsed_s": 17188.912735939026,
+        "kept_rows_per_s": 0.5817703628858235,
+        "parsed_objects_per_s": 220.3457576511508
+      }
+    },
+    "aromatic_large": {
+      "target_rows": 80000,
+      "buckets": [
+        "large_aromatic_edge",
+        "very_large_general",
+        "aromatic_edge_general"
+      ],
+      "pid": 29,
+      "return_code": 0,
+      "report": {
+        "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_aromatic_large.csv",
+        "include_buckets": [
+          "large_aromatic_edge",
+          "very_large_general",
+          "aromatic_edge_general"
+        ],
+        "quotas": {
+          "large_aromatic_edge": 30000,
+          "very_large_general": 20000,
+          "aromatic_edge_general": 30000
+        },
+        "counts": {
+          "large_aromatic_edge": 30000,
+          "very_large_general": 20000,
+          "aromatic_edge_general": 30000
+        },
+        "resumed_rows": 0,
+        "new_rows": 80000,
+        "total_rows": 80000,
+        "files_scanned": 430,
+        "windows_per_file": 16,
+        "chunk_bytes": 16000000,
+        "download_workers": 2,
+        "parsed_objects": 3371089,
+        "filter_passing_candidates_seen": 2854518,
+        "elapsed_s": 16255.566093683243,
+        "kept_rows_per_s": 4.9213912046463415,
+        "parsed_objects_per_s": 207.38059693350039
+      }
+    },
+    "topology_elements": {
+      "target_rows": 120000,
+      "buckets": [
+        "s_or_cl_hard",
+        "flexible_hard",
+        "large_mw_500_700"
+      ],
+      "pid": 30,
+      "return_code": 0,
+      "report": {
+        "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_topology_elements.csv",
+        "include_buckets": [
+          "s_or_cl_hard",
+          "flexible_hard",
+          "large_mw_500_700"
+        ],
+        "quotas": {
+          "s_or_cl_hard": 40000,
+          "flexible_hard": 30000,
+          "large_mw_500_700": 50000
+        },
+        "counts": {
+          "s_or_cl_hard": 40000,
+          "flexible_hard": 30000,
+          "large_mw_500_700": 50000
+        },
+        "resumed_rows": 0,
+        "new_rows": 120000,
+        "total_rows": 120000,
+        "files_scanned": 430,
+        "windows_per_file": 16,
+        "chunk_bytes": 16000000,
+        "download_workers": 2,
+        "parsed_objects": 1264618,
+        "filter_passing_candidates_seen": 1071725,
+        "elapsed_s": 7614.470543622971,
+        "kept_rows_per_s": 15.759467360537442,
+        "parsed_objects_per_s": 166.0808841212345
+      }
+    },
+    "balanced": {
+      "target_rows": 390000,
+      "buckets": [
+        "balanced_general"
+      ],
+      "pid": 31,
+      "return_code": 0,
+      "report": {
+        "out_csv": "/kaggle/working/repair_1m_v2/phase8_repair_v2_balanced.csv",
+        "include_buckets": [
+          "balanced_general"
+        ],
+        "quotas": {
+          "balanced_general": 390000
+        },
+        "counts": {
+          "balanced_general": 390000
+        },
+        "resumed_rows": 0,
+        "new_rows": 390000,
+        "total_rows": 390000,
+        "files_scanned": 430,
+        "windows_per_file": 16,
+        "chunk_bytes": 16000000,
+        "download_workers": 2,
+        "parsed_objects": 854043,
+        "filter_passing_candidates_seen": 719360,
+        "elapsed_s": 5582.306059837341,
+        "kept_rows_per_s": 69.86360042239674,
+        "parsed_objects_per_s": 152.991074091141
+      }
+    }
+  },
+  "elapsed_s": 17200.19244337082,
+  "complete": true
+}
