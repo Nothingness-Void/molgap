@@ -1,6 +1,6 @@
 {
   "experiment": "pcqm_gine_expert_pilot",
-  "status": "complete_rejected_by_scale_gate",
+  "status": "continuation_v4_accepted",
   "date": "2026-07-24",
   "hypothesis": "A benchmark-native OGB-feature GIN virtual-node Gap specialist trained on official PCQM4Mv2 train molecules can outperform the B3LYP routed-v4 transfer baseline on official PCQM validation.",
   "training_source": {
@@ -52,5 +52,21 @@
     "acceptance": "results/phase8/pcqm_gine_expert_pilot/acceptance.json",
     "decision": "results/phase8/pcqm_gine_expert_pilot/decision.md"
   },
-  "promotion_scope": "rejected PCQM specialist evidence only; no production registry change"
+  "continuation_v4": {
+    "kernel_version": 4,
+    "input_dataset": "nothingnessvoid/molgap-pcqm-gin-v3-complete-20260724",
+    "resume_epoch": 30,
+    "maximum_epoch": 49,
+    "graph_rebuild": false,
+    "submitted_at": "2026-07-24T15:17:00+09:00",
+    "terminal_status": "complete",
+    "best_epoch": 48,
+    "best_scaffold_dev_gap_mae_eV": 0.19994715261454735,
+    "official_valid_5k_gap_mae_eV": 0.1965981658935547,
+    "scale_gate_pass": true,
+    "accepted_private_dataset": "nothingnessvoid/molgap-pcqm-gin-v4-accepted-20260724",
+    "acceptance": "results/phase8/pcqm_gine_expert_pilot/continuation_v4_acceptance.json",
+    "decision": "results/phase8/pcqm_gine_expert_pilot/continuation_v4_decision.md"
+  },
+  "promotion_scope": "accepted task-level PCQM specialist prerequisite only; no production registry change"
 }
