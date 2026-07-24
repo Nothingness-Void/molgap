@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/eval-molgap-1m-common-ood-hard",
+  "title": "EVAL | MolGap 1M Common OOD Hard",
+  "code_file": "external_eval_1m.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-1m-external-eval",
+    "nothingnessvoid/molgap-1m-external-eval-models",
+    "nothingnessvoid/molgap-runtime-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

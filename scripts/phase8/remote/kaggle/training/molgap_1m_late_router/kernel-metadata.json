@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-original-1m-late-router",
+  "title": "MolGap Original 1M Late Router",
+  "code_file": "late_router_1m.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "nothingnessvoid/1m-full",
+    "nothingnessvoid/molgap-original1m-router-assets-20260723",
+    "nothingnessvoid/molgap-runtime-late-router-20260723"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

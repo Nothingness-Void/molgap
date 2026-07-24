@@ -42,9 +42,9 @@ MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.p
 MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
 FUSION_PHASE8_REPLACEMENT_METRICS = RESULTS_DIR / "phase8" / "fusion_replacement_300k_metrics.json"
 
-# Phase 8 expansion500k v3 candidate (raw eV — no normalization). This is
-# registered for explicit evaluation; default inference remains on v2 until
-# downstream Delta/UQ assets are revalidated.
+# Phase 8 expansion500k v3 component (raw eV - no normalization). The routed v4
+# production path below reuses this hybrid; ``load_hybrid`` keeps v3 as its
+# compatibility default because that API returns one hybrid trio.
 MODEL_PHASE8_EXPANSION_GPS = MODELS_DIR / "phase8_gps_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
@@ -60,7 +60,9 @@ MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
 # Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
 # appending the residual-tail probe pool. Experimental only; not a default.
 MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
-FUSION_PHASE8_TAIL_PROBE_METRICS = RESULTS_DIR / "phase8" / "fusion_tail_probe_30k_metrics.json"
+FUSION_PHASE8_TAIL_PROBE_METRICS = (
+    RESULTS_DIR / "phase8" / "archive" / "legacy" / "pilots_30k" / "fusion_tail_probe_30k_metrics.json"
+)
 
 # TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x

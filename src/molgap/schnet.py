@@ -102,7 +102,9 @@ class SchNetWrapper(nn.Module):
         return torch.cat(pooled, dim=-1)
 
     def _radius_graph(self, pos, batch):
-        from torch_geometric.nn.models.schnet import radius_graph
+        # Call the extension directly: newer PyG wrappers may require pyg-lib even
+        # when the compatible torch-cluster radius implementation is installed.
+        from torch_cluster import radius_graph
         edge_index = radius_graph(pos, r=self.schnet.cutoff, batch=batch,
                                   max_num_neighbors=32)
         row, col = edge_index

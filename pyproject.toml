@@ -7,5 +7,8 @@ name = "molgap"
 version = "0.1.0"
 requires-python = ">=3.9"
 
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
 [tool.setuptools.packages.find]
 where = ["src"]

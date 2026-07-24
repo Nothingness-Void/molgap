@@ -1,0 +1,19 @@
+{
+  "id": "nothingnessvoid/archive-molgap-1m-pcqm-replay-fusion-negative",
+  "title": "ARCHIVE | MolGap 1M PCQM Replay Fusion (Negative)",
+  "code_file": "pcqm_replay_fusion_1m.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+    "nothingnessvoid/molgap-1m-external-eval-models",
+    "nothingnessvoid/molgap-runtime-source",
+    "nothingnessvoid/molgap-1m-replay-fusion-model"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

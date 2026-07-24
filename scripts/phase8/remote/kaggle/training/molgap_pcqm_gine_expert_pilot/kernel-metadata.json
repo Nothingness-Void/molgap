@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-gin-expert-pilot",
+  "title": "MolGap PCQM GIN Expert Pilot",
+  "code_file": "pcqm_gine_expert_pilot.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "piero0/pcqm4mv2",
+    "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+    "nothingnessvoid/molgap-pcqm-gin-v3-complete-20260724"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/eval-molgap-1m-pcqm4mv2",
+  "title": "EVAL | MolGap 1M PCQM4Mv2",
+  "code_file": "pcqm_valid_1m.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+    "nothingnessvoid/molgap-1m-external-eval-models",
+    "nothingnessvoid/molgap-runtime-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

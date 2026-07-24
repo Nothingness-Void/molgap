@@ -1,0 +1,19 @@
+{
+  "id": "nothingnessvoid/archive-molgap-repair-v2-2d-eval-negative",
+  "title": "ARCHIVE | MolGap Repair V2 2D Eval (Negative)",
+  "code_file": "external_eval_2d_control.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-1m-external-eval",
+    "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+    "nothingnessvoid/molgap-1m-external-eval-models",
+    "nothingnessvoid/molgap-runtime-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

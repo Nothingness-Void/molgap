@@ -1,0 +1,17 @@
+{
+  "id": "nothingnessvoid/archive-molgap-1m-fusion-probe",
+  "title": "ARCHIVE | MolGap 1M Fusion Probe",
+  "code_file": "p100_torch_probe.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/1m-full"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

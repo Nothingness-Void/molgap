@@ -356,9 +356,9 @@ def load_embedding_payload(path: os.PathLike | str):
 def load_aligned_encoder_embeddings(
     emb_2d_paths: Iterable[os.PathLike | str],
     emb_3d_path: os.PathLike | str,
-    graph_3d_path: os.PathLike | str,
+    graph_3d_path: os.PathLike | str | Iterable[os.PathLike | str],
 ):
-    """Align one or more 2D embeddings, 3D embeddings, and labels by source index."""
+    """Align embeddings and labels, accepting one or more 3D graph caches."""
     import torch
 
     payloads_2d = [load_embedding_payload(path) for path in emb_2d_paths]
@@ -366,10 +366,18 @@ def load_aligned_encoder_embeddings(
         raise ValueError("At least one 2D embedding payload is required")
     h3, idx3 = load_embedding_payload(emb_3d_path)
 
+    graph_paths = (
+        [graph_3d_path]
+        if isinstance(graph_3d_path, (str, os.PathLike))
+        else list(graph_3d_path)
+    )
     labels_by_idx = {}
-    for graph in torch.load(Path(graph_3d_path), weights_only=False):
-        source_idx = int(graph.source_idx.view(-1)[0].item())
-        labels_by_idx[source_idx] = graph.y.squeeze(0).float()
+    for path in graph_paths:
+        for graph in torch.load(Path(path), weights_only=False):
+            source_idx = int(graph.source_idx.view(-1)[0].item())
+            if source_idx in labels_by_idx:
+                raise ValueError(f"Duplicate 3D graph source_idx: {source_idx}")
+            labels_by_idx[source_idx] = graph.y.squeeze(0).float()
 
     positions_2d = [
         {int(value): i for i, value in enumerate(indices.tolist())}

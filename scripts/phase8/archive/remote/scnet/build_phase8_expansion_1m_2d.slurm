@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Build the 1M 2D cache on a compute node; it deliberately never invokes ETKDG.
+# Submit with: sbatch scripts/phase8/archive/remote/scnet/build_phase8_expansion_1m_2d.slurm
+#SBATCH --job-name=molgap-p8-1m-2d-graphs
+#SBATCH --partition=hx1hdnormal
+#SBATCH --gres=dcu:Hygon:1
+#SBATCH --output=results/scnet/logs/%x-%j.out
+#SBATCH --error=results/scnet/logs/%x-%j.err
+#SBATCH --time=02:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=59G
+
+set -euo pipefail
+
+PROJECT_DIR="${PROJECT_DIR:-$PWD}"
+cd "$PROJECT_DIR"
+mkdir -p results/scnet/logs
+
+module purge
+module load compiler/dtk/25.04
+module load sghpcdas/25.6
+source /public/software/sghpc_sdk/Linux_x86_64/25.6/das/conda/etc/profile.d/conda.sh
+conda activate pytorch-python3.10
+export PYTHONPATH="$PROJECT_DIR/src:$PROJECT_DIR/.scnet/site${PYTHONPATH:+:$PYTHONPATH}"
+
+python scripts/phase8/data/build_graphs.py \
+  --csv data/raw/phase8_expansion_1m.csv \
+  --which 2d \
+  --tag expansion_1m \
+  --out-2d results/phase8/pyg_2d_graphs_bond_expansion_1m.pt
+
+python - <<'PY'
+from pathlib import Path
+
+import torch
+
+path = Path("results/phase8/pyg_2d_graphs_bond_expansion_1m.pt")
+graphs = torch.load(path, weights_only=False)
+indices = torch.tensor([int(graph.source_idx.item()) for graph in graphs])
+assert len(graphs) == 1_000_000, len(graphs)
+assert indices.unique().numel() == 1_000_000
+assert int(indices.min()) == 0 and int(indices.max()) == 999_999
+print(f"validated_2d_graphs={len(graphs)} path={path}", flush=True)
+PY
