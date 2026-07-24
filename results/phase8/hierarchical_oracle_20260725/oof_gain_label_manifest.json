@@ -1,0 +1,20 @@
+{
+  "status": "pending_generation",
+  "purpose": "future conservative hard-router training",
+  "required_contract": {
+    "domain": "repaired-2M training identity manifest",
+    "predictions": [
+      "Retention-D out-of-fold predictions",
+      "M07 hard-teacher out-of-fold predictions"
+    ],
+    "split": "scaffold-disjoint folds",
+    "targets": [
+      "homo",
+      "lumo",
+      "gap"
+    ],
+    "sealed_20k_used": false
+  },
+  "external_gain_labels_are_training_eligible": false,
+  "router_training_authorized": false
+}
