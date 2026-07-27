@@ -1,0 +1,266 @@
+{
+  "experiment": "fixed_gps7_gps9_equal_ablation",
+  "status": "accepted_robust_control_for_hierarchical_3d_ab",
+  "encoder_passes": 2.0,
+  "weights": [
+    0.5,
+    0.5,
+    0.0
+  ],
+  "internal_test": {
+    "metrics": {
+      "homo": {
+        "mae_eV": 0.0960012936782837
+      },
+      "lumo": {
+        "mae_eV": 0.09316313301804009
+      },
+      "gap": {
+        "mae_eV": 0.12551863599985838
+      },
+      "average": {
+        "mae_eV": 0.10489435423206073
+      }
+    },
+    "delta_vs_gps9": {
+      "homo": {
+        "delta": -0.0007351886880397797,
+        "ci95": [
+          -0.0008130104607641696,
+          -0.000655258816331625
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 10000,
+        "seed": 42
+      },
+      "lumo": {
+        "delta": -0.0010801460265996866,
+        "ci95": [
+          -0.001158510256912181,
+          -0.0010007186043176045
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 10000,
+        "seed": 43
+      },
+      "gap": {
+        "delta": -0.0011818958747386932,
+        "ci95": [
+          -0.0012923329837918282,
+          -0.0010731680325865747
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 10000,
+        "seed": 44
+      },
+      "average": {
+        "delta": -0.0009990768670747638,
+        "ci95": [
+          -0.00106488409114557,
+          -0.000933136365334518
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 10000,
+        "seed": 45
+      }
+    }
+  },
+  "external": {
+    "all": {
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.09137787430589103
+        },
+        "lumo": {
+          "mae_eV": 0.08940595093081466
+        },
+        "gap": {
+          "mae_eV": 0.11488028017631612
+        },
+        "average": {
+          "mae_eV": 0.0985547018043406
+        }
+      },
+      "delta_vs_gps9": {
+        "homo": {
+          "delta": -0.0006854052970550491,
+          "ci95": [
+            -0.0014670461974001677,
+            0.00012005161744630484
+          ],
+          "probability_better": 0.9542,
+          "n_bootstrap": 10000,
+          "seed": 42
+        },
+        "lumo": {
+          "delta": -0.001193342542913627,
+          "ci95": [
+            -0.002003457449041175,
+            -0.00037568075102827026
+          ],
+          "probability_better": 0.9986,
+          "n_bootstrap": 10000,
+          "seed": 43
+        },
+        "gap": {
+          "delta": -0.0012528364502786685,
+          "ci95": [
+            -0.002350824435190173,
+            -0.00015752970358308817
+          ],
+          "probability_better": 0.9876,
+          "n_bootstrap": 10000,
+          "seed": 44
+        },
+        "average": {
+          "delta": -0.0010438612251239606,
+          "ci95": [
+            -0.0017017682447801516,
+            -0.00039905546222812025
+          ],
+          "probability_better": 0.9996,
+          "n_bootstrap": 10000,
+          "seed": 45
+        }
+      }
+    },
+    "ood1000": {
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.10276971994577586
+        },
+        "lumo": {
+          "mae_eV": 0.09614317917388056
+        },
+        "gap": {
+          "mae_eV": 0.12780529588789075
+        },
+        "average": {
+          "mae_eV": 0.10890606500251572
+        }
+      },
+      "delta_vs_gps9": {
+        "homo": {
+          "delta": -0.0015443423846820453,
+          "ci95": [
+            -0.0027031089689161206,
+            -0.0003647832421807794
+          ],
+          "probability_better": 0.9957,
+          "n_bootstrap": 10000,
+          "seed": 42
+        },
+        "lumo": {
+          "delta": -0.0017214318489407873,
+          "ci95": [
+            -0.0029204982615358478,
+            -0.0005770545022131445
+          ],
+          "probability_better": 0.9984,
+          "n_bootstrap": 10000,
+          "seed": 43
+        },
+        "gap": {
+          "delta": -0.002014816940964402,
+          "ci95": [
+            -0.0036868581184753787,
+            -0.0003737902736759298
+          ],
+          "probability_better": 0.9928,
+          "n_bootstrap": 10000,
+          "seed": 44
+        },
+        "average": {
+          "delta": -0.0017601969049175132,
+          "ci95": [
+            -0.002774035998053049,
+            -0.0007666451817630582
+          ],
+          "probability_better": 0.9999,
+          "n_bootstrap": 10000,
+          "seed": 45
+        }
+      }
+    },
+    "p8_targeted_hard": {
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.0797414184835547
+        },
+        "lumo": {
+          "mae_eV": 0.08252405827762159
+        },
+        "gap": {
+          "mae_eV": 0.10167773345252976
+        },
+        "average": {
+          "mae_eV": 0.08798107007123535
+        }
+      },
+      "delta_vs_gps9": {
+        "homo": {
+          "delta": 0.00019197522496884587,
+          "ci95": [
+            -0.0008366210085238903,
+            0.001193411413633506
+          ],
+          "probability_better": 0.3592,
+          "n_bootstrap": 10000,
+          "seed": 42
+        },
+        "lumo": {
+          "delta": -0.0006539138959595031,
+          "ci95": [
+            -0.0017558092902774458,
+            0.00043834202421985267
+          ],
+          "probability_better": 0.8827,
+          "n_bootstrap": 10000,
+          "seed": 43
+        },
+        "gap": {
+          "delta": -0.0004744944153144072,
+          "ci95": [
+            -0.001931412697813506,
+            0.0009756870918234918
+          ],
+          "probability_better": 0.739,
+          "n_bootstrap": 10000,
+          "seed": 44
+        },
+        "average": {
+          "delta": -0.00031214410435324554,
+          "ci95": [
+            -0.0011550855161329343,
+            0.0005321114438603551
+          ],
+          "probability_better": 0.7603,
+          "n_bootstrap": 10000,
+          "seed": 45
+        }
+      }
+    }
+  },
+  "sealed_20k_used": false,
+  "production_registry_changed": false,
+  "inputs": {
+    "holdout": {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\remote\\holdout_predictions.pt",
+      "sha256": "e45e037a9215124ef391a8f920261fbbf1febaf7c922411d81b16fd359963a3d"
+    },
+    "common": [
+      {
+        "path": "results\\phase8\\repaired_2m\\retention_d_seed42_raw\\common_predictions.csv",
+        "sha256": "643313c4fe9a5d214de9020066ca328585a9d5cd003e915af0f51679c5b67596"
+      },
+      {
+        "path": "results\\phase8\\repaired_2m\\gps9_seed42_raw\\external\\common_predictions.csv",
+        "sha256": "6c567d03883d7f163a62e30c8a19fc40a326671382336557636b178e98964960"
+      },
+      {
+        "path": "results\\phase8\\repaired_2m\\gps11_160_seed42_raw\\external\\common_predictions.csv",
+        "sha256": "332e11c96e22d35440a2ddc07d4dc23c993c09df465d7948692710edd27a7be6"
+      }
+    ]
+  }
+}

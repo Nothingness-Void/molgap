@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "source_rows": 255000,
+  "processed_rows": 255000,
+  "accepted_rows": 254997,
+  "invalid_rows": 3,
+  "shards": [
+    "graph_shard_000.pt",
+    "graph_shard_001.pt",
+    "graph_shard_002.pt",
+    "graph_shard_003.pt",
+    "graph_shard_004.pt",
+    "graph_shard_005.pt",
+    "graph_shard_006.pt",
+    "graph_shard_007.pt",
+    "graph_shard_008.pt",
+    "graph_shard_009.pt",
+    "graph_shard_010.pt"
+  ],
+  "invalid_source_idx": [
+    2980839,
+    3003839,
+    3143920
+  ],
+  "shard_sha256": {
+    "graph_shard_000.pt": "365b5c8a4a7f52088e7d85e23f102e07c8d1a94bf10f7b65f1530729149d035f",
+    "graph_shard_001.pt": "615a99e4e11b5692e4ca5e4cd07d7deb1f244b7873d79ca95ed27f567d314844",
+    "graph_shard_002.pt": "83fb935708537ea56c5fe9b8247567bacfab944803b30a901497d4649f0f8b1b",
+    "graph_shard_003.pt": "5f2008c8b2470339790748a2926e826b3de4ec31a5ecddad268466b6fbd3a170",
+    "graph_shard_004.pt": "7d8f4a863f12f52d13c48b9cb4213f38031b9bd82fee9fd69953dace2f9316e0",
+    "graph_shard_005.pt": "12cfeca23469dd933fca3a493824bd6e3bf75acee3e459ba3798eb19a84b8a56",
+    "graph_shard_006.pt": "6d697b24f555d9f186c0d1377f0518cf65c6e8ab557faafa5c32fb9dddffc378",
+    "graph_shard_007.pt": "728deac4d203370704e6af06c9eb19d38a716964089e32d6777f759bf52565a5",
+    "graph_shard_008.pt": "386621970e596d8af7f79d30b64a7e278b114f6cb8722e97a5a3d0eed42cc5e7",
+    "graph_shard_009.pt": "552ff48fb8e86f99dfb9b98d83e6e657399f267e0ad03210d1d612a93deff855",
+    "graph_shard_010.pt": "58e5a2b48128219991d512290eb35251686dcd8f4b64ee6c12faa05e5c3c7a58"
+  }
+}

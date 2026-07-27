@@ -1,0 +1,17 @@
+{
+  "kernel": "nothingnessvoid/molgap-pcqm-gin-expert-continuation-v5",
+  "kernel_version": 1,
+  "submitted_date": "2026-07-26",
+  "status_at_record": "RUNNING",
+  "resume_dataset": "nothingnessvoid/molgap-pcqm-gin-v4-accepted-20260724",
+  "resume_epoch": 50,
+  "maximum_final_epoch": 69,
+  "early_stop_patience": 7,
+  "training_rows": 250000,
+  "fixed_official_valid_rows": 5000,
+  "v4_reference_official_valid_gap_mae_eV": 0.1965981658935547,
+  "acceptance_rule": "official-valid 5K Gap MAE must improve on the frozen v4 reference",
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

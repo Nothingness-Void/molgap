@@ -1,0 +1,27 @@
+{
+  "kernel": "nothingnessvoid/molgap-pcqm-gps9-architecture-pilot",
+  "kernel_version": 1,
+  "submitted_date": "2026-07-26",
+  "status_at_record": "RUNNING",
+  "graph_dataset": "nothingnessvoid/molgap-pcqm-gin-v4-accepted-20260724",
+  "training_rows": 229335,
+  "scaffold_development_rows": 20662,
+  "fixed_official_valid_rows": 5000,
+  "architecture": {
+    "encoder": "GPS",
+    "layers": 9,
+    "hidden_channels": 320,
+    "attention_heads": 8,
+    "parameters": 12243841,
+    "positional_encoding": "none",
+    "batch_size": 128
+  },
+  "maximum_epochs": 40,
+  "early_stop_patience": 7,
+  "gine_v4_reference_official_valid_gap_mae_eV": 0.1965981658935547,
+  "acceptance_rule": "official-valid 5K Gap MAE must improve on the frozen GINE v4 reference",
+  "scope": "architecture gate before 1M or full-PCQM scaling",
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

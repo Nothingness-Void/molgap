@@ -1,0 +1,584 @@
+{
+  "experiment": "repaired_2m_gps7_gps9_oracle",
+  "inputs": {
+    "gps7": "results\\phase8\\repaired_2m\\retention_d_seed42_raw\\common_predictions.csv",
+    "gps7_sha256": "643313c4fe9a5d214de9020066ca328585a9d5cd003e915af0f51679c5b67596",
+    "gps9": "results\\phase8\\repaired_2m\\gps9_seed42_raw\\external\\common_predictions.csv",
+    "gps9_sha256": "6c567d03883d7f163a62e30c8a19fc40a326671382336557636b178e98964960"
+  },
+  "alignment": {
+    "gps7_rows": 1977,
+    "gps9_rows": 1977,
+    "aligned_rows": 1977
+  },
+  "reports": {
+    "common": {
+      "n": 1977,
+      "target_names": [
+        "homo",
+        "lumo",
+        "gap"
+      ],
+      "cost_contract": {
+        "base_encoder_passes": 1.0,
+        "hard_teacher_encoder_passes_when_called": 1.0
+      },
+      "methods": {
+        "base": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.09265058526693981
+            },
+            "lumo": {
+              "mae_eV": 0.09065441690558522
+            },
+            "gap": {
+              "mae_eV": 0.11691796622558676
+            }
+          },
+          "average_mae_eV": 0.10007432279937059
+        },
+        "expert": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.09206328184292362
+            },
+            "lumo": {
+              "mae_eV": 0.09059929153232422
+            },
+            "gap": {
+              "mae_eV": 0.11613311496201062
+            }
+          },
+          "average_mae_eV": 0.09959856277908614
+        },
+        "unconstrained_switch": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08028107552678299
+            },
+            "lumo": {
+              "mae_eV": 0.07864167414800455
+            },
+            "gap": {
+              "mae_eV": 0.10033754460109509
+            }
+          },
+          "average_mae_eV": 0.0864200980919609
+        },
+        "unconstrained_residual": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07930201746995445
+            },
+            "lumo": {
+              "mae_eV": 0.07742076949691958
+            },
+            "gap": {
+              "mae_eV": 0.09869228356294386
+            }
+          },
+          "average_mae_eV": 0.08513835684327263
+        },
+        "switch_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08994854848340919
+            },
+            "lumo": {
+              "mae_eV": 0.08786069053928781
+            },
+            "gap": {
+              "mae_eV": 0.11218554311680577
+            }
+          },
+          "average_mae_eV": 0.09666492737983425
+        },
+        "residual_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08988603782060443
+            },
+            "lumo": {
+              "mae_eV": 0.08764135673872131
+            },
+            "gap": {
+              "mae_eV": 0.11196170790782245
+            }
+          },
+          "average_mae_eV": 0.09649636748904941
+        },
+        "switch_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08840476759497218
+            },
+            "lumo": {
+              "mae_eV": 0.08608657524033485
+            },
+            "gap": {
+              "mae_eV": 0.10966648634431207
+            }
+          },
+          "average_mae_eV": 0.09471927639320636
+        },
+        "residual_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08813810458744309
+            },
+            "lumo": {
+              "mae_eV": 0.08590197763898179
+            },
+            "gap": {
+              "mae_eV": 0.10933867059122407
+            }
+          },
+          "average_mae_eV": 0.09445958427254963
+        },
+        "switch_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08588154607076377
+            },
+            "lumo": {
+              "mae_eV": 0.08388696163235812
+            },
+            "gap": {
+              "mae_eV": 0.10607725290693729
+            }
+          },
+          "average_mae_eV": 0.09194858687001972
+        },
+        "residual_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.0855804266538796
+            },
+            "lumo": {
+              "mae_eV": 0.08340043362972535
+            },
+            "gap": {
+              "mae_eV": 0.1056052485220612
+            }
+          },
+          "average_mae_eV": 0.09152870293522204
+        }
+      },
+      "budgets": {
+        "5pct": {
+          "requested_fraction": 0.05,
+          "called_molecules": 99,
+          "actual_fraction": 0.05007587253414264,
+          "expected_encoder_passes_per_molecule": 1.0500758725341426
+        },
+        "10pct": {
+          "requested_fraction": 0.1,
+          "called_molecules": 198,
+          "actual_fraction": 0.10015174506828528,
+          "expected_encoder_passes_per_molecule": 1.1001517450682852
+        },
+        "20pct": {
+          "requested_fraction": 0.2,
+          "called_molecules": 396,
+          "actual_fraction": 0.20030349013657056,
+          "expected_encoder_passes_per_molecule": 1.2003034901365706
+        }
+      },
+      "expert_win_rate_by_target": {
+        "homo": 0.5027819929185635,
+        "lumo": 0.49418310571573093,
+        "gap": 0.5068285280728376
+      },
+      "unconstrained_any_target_call_fraction": 0.8098128477491148,
+      "mean_optimal_alpha_by_target": {
+        "homo": 0.49752501242478453,
+        "lumo": 0.49507477047702897,
+        "gap": 0.5077785864125208
+      }
+    },
+    "ood1000": {
+      "n": 999,
+      "target_names": [
+        "homo",
+        "lumo",
+        "gap"
+      ],
+      "cost_contract": {
+        "base_encoder_passes": 1.0,
+        "hard_teacher_encoder_passes_when_called": 1.0
+      },
+      "methods": {
+        "base": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.10332758320908408
+            },
+            "lumo": {
+              "mae_eV": 0.09678232020755455
+            },
+            "gap": {
+              "mae_eV": 0.12855515129104605
+            }
+          },
+          "average_mae_eV": 0.10955501823589489
+        },
+        "expert": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.10431406797412912
+            },
+            "lumo": {
+              "mae_eV": 0.09786460976175175
+            },
+            "gap": {
+              "mae_eV": 0.12982011045645145
+            }
+          },
+          "average_mae_eV": 0.11066626273077744
+        },
+        "unconstrained_switch": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.09090483893445944
+            },
+            "lumo": {
+              "mae_eV": 0.08468809317257257
+            },
+            "gap": {
+              "mae_eV": 0.11162426107713212
+            }
+          },
+          "average_mae_eV": 0.09573906439472138
+        },
+        "unconstrained_residual": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08985373475076575
+            },
+            "lumo": {
+              "mae_eV": 0.08350780605075575
+            },
+            "gap": {
+              "mae_eV": 0.11024192691979481
+            }
+          },
+          "average_mae_eV": 0.09453448924043877
+        },
+        "switch_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.10020420464084583
+            },
+            "lumo": {
+              "mae_eV": 0.09402872954250951
+            },
+            "gap": {
+              "mae_eV": 0.12338242551061564
+            }
+          },
+          "average_mae_eV": 0.105871786564657
+        },
+        "residual_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.10018010996736737
+            },
+            "lumo": {
+              "mae_eV": 0.09367603962299499
+            },
+            "gap": {
+              "mae_eV": 0.12322974155643644
+            }
+          },
+          "average_mae_eV": 0.10569529704893293
+        },
+        "switch_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.09870258709534033
+            },
+            "lumo": {
+              "mae_eV": 0.09215303514170871
+            },
+            "gap": {
+              "mae_eV": 0.12079682613763265
+            }
+          },
+          "average_mae_eV": 0.10388414945822723
+        },
+        "residual_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.0983828318603153
+            },
+            "lumo": {
+              "mae_eV": 0.09196641326238938
+            },
+            "gap": {
+              "mae_eV": 0.12043233269534535
+            }
+          },
+          "average_mae_eV": 0.10359385927268336
+        },
+        "switch_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.09628812873298798
+            },
+            "lumo": {
+              "mae_eV": 0.08978932465261961
+            },
+            "gap": {
+              "mae_eV": 0.11723487972758259
+            }
+          },
+          "average_mae_eV": 0.10110411103773005
+        },
+        "residual_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.0958963131518919
+            },
+            "lumo": {
+              "mae_eV": 0.08933786011841043
+            },
+            "gap": {
+              "mae_eV": 0.11674245425689689
+            }
+          },
+          "average_mae_eV": 0.10065887584239973
+        }
+      },
+      "budgets": {
+        "5pct": {
+          "requested_fraction": 0.05,
+          "called_molecules": 50,
+          "actual_fraction": 0.05005005005005005,
+          "expected_encoder_passes_per_molecule": 1.05005005005005
+        },
+        "10pct": {
+          "requested_fraction": 0.1,
+          "called_molecules": 100,
+          "actual_fraction": 0.1001001001001001,
+          "expected_encoder_passes_per_molecule": 1.1001001001001
+        },
+        "20pct": {
+          "requested_fraction": 0.2,
+          "called_molecules": 200,
+          "actual_fraction": 0.2002002002002002,
+          "expected_encoder_passes_per_molecule": 1.2002002002002001
+        }
+      },
+      "expert_win_rate_by_target": {
+        "homo": 0.48148148148148145,
+        "lumo": 0.4804804804804805,
+        "gap": 0.47847847847847846
+      },
+      "unconstrained_any_target_call_fraction": 0.7767767767767768,
+      "mean_optimal_alpha_by_target": {
+        "homo": 0.4770863984551157,
+        "lumo": 0.47949625018448544,
+        "gap": 0.478978482876863
+      }
+    },
+    "p8_targeted_hard": {
+      "n": 978,
+      "target_names": [
+        "homo",
+        "lumo",
+        "gap"
+      ],
+      "cost_contract": {
+        "base_encoder_passes": 1.0,
+        "hard_teacher_encoder_passes_when_called": 1.0
+      },
+      "methods": {
+        "base": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.08174432663278629
+            },
+            "lumo": {
+              "mae_eV": 0.0843949328578681
+            },
+            "gap": {
+              "mae_eV": 0.10503090295320038
+            }
+          },
+          "average_mae_eV": 0.09039005414795159
+        },
+        "expert": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07954944202178425
+            },
+            "lumo": {
+              "mae_eV": 0.08317796953723415
+            },
+            "gap": {
+              "mae_eV": 0.10215222692627811
+            }
+          },
+          "average_mae_eV": 0.08829321282843218
+        },
+        "unconstrained_switch": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.0694291944999233
+            },
+            "lumo": {
+              "mae_eV": 0.0724654240400869
+            },
+            "gap": {
+              "mae_eV": 0.08880847531729036
+            }
+          },
+          "average_mae_eV": 0.07690103128576686
+        },
+        "unconstrained_residual": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.06852372957268404
+            },
+            "lumo": {
+              "mae_eV": 0.07120302970419734
+            },
+            "gap": {
+              "mae_eV": 0.08689464172910531
+            }
+          },
+          "average_mae_eV": 0.07554046700199556
+        },
+        "switch_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07946868478066973
+            },
+            "lumo": {
+              "mae_eV": 0.08143601149789877
+            },
+            "gap": {
+              "mae_eV": 0.10092397807445808
+            }
+          },
+          "average_mae_eV": 0.08727622478434217
+        },
+        "residual_5pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07942282016663599
+            },
+            "lumo": {
+              "mae_eV": 0.08136990487894681
+            },
+            "gap": {
+              "mae_eV": 0.10061093566811348
+            }
+          },
+          "average_mae_eV": 0.08713455357123209
+        },
+        "switch_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07786313154497441
+            },
+            "lumo": {
+              "mae_eV": 0.0798416090407004
+            },
+            "gap": {
+              "mae_eV": 0.09838533343986706
+            }
+          },
+          "average_mae_eV": 0.08536335800851395
+        },
+        "residual_10pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07763622976902862
+            },
+            "lumo": {
+              "mae_eV": 0.07967910783257667
+            },
+            "gap": {
+              "mae_eV": 0.0980746668201738
+            }
+          },
+          "average_mae_eV": 0.08513000147392637
+        },
+        "switch_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07523952686875766
+            },
+            "lumo": {
+              "mae_eV": 0.07787783134888036
+            },
+            "gap": {
+              "mae_eV": 0.09467205690098156
+            }
+          },
+          "average_mae_eV": 0.08259647170620653
+        },
+        "residual_20pct": {
+          "targets": {
+            "homo": {
+              "mae_eV": 0.07499510384047035
+            },
+            "lumo": {
+              "mae_eV": 0.07739206661747443
+            },
+            "gap": {
+              "mae_eV": 0.09422091198923822
+            }
+          },
+          "average_mae_eV": 0.08220269414906099
+        }
+      },
+      "budgets": {
+        "5pct": {
+          "requested_fraction": 0.05,
+          "called_molecules": 49,
+          "actual_fraction": 0.050102249488752554,
+          "expected_encoder_passes_per_molecule": 1.0501022494887526
+        },
+        "10pct": {
+          "requested_fraction": 0.1,
+          "called_molecules": 98,
+          "actual_fraction": 0.10020449897750511,
+          "expected_encoder_passes_per_molecule": 1.100204498977505
+        },
+        "20pct": {
+          "requested_fraction": 0.2,
+          "called_molecules": 196,
+          "actual_fraction": 0.20040899795501022,
+          "expected_encoder_passes_per_molecule": 1.20040899795501
+        }
+      },
+      "expert_win_rate_by_target": {
+        "homo": 0.5245398773006135,
+        "lumo": 0.5081799591002045,
+        "gap": 0.5357873210633947
+      },
+      "unconstrained_any_target_call_fraction": 0.843558282208589,
+      "mean_optimal_alpha_by_target": {
+        "homo": 0.5184024923385874,
+        "lumo": 0.5109877988740136,
+        "gap": 0.5371970970793125
+      }
+    }
+  },
+  "gate": {
+    "required_p8_hard_improvement_eV": 0.001,
+    "maximum_common_regression_eV": 0.0005,
+    "maximum_ood_regression_eV": 0.0005,
+    "p8_hard_10pct_improvement_eV": 0.005026696139437639,
+    "common_10pct_regression_eV": -0.0053550464061642294,
+    "ood_10pct_regression_eV": -0.005670868777667662,
+    "passed": true,
+    "decision": "prepare_scaffold_disjoint_oof_gain_labels"
+  },
+  "external_labels_training_eligible": false,
+  "sealed_20k_used": false,
+  "registry_changed": false
+}

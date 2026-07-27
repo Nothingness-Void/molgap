@@ -1,0 +1,77 @@
+{
+  "experiment": "pubchemqc100k_route_b_fusion",
+  "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "aligned_rows": {
+    "train": 99641,
+    "validation": 9970,
+    "test": 9954
+  },
+  "seeds": [42, 43, 44],
+  "schnet": {
+    "primary_test_average_mae_eV": 0.15952466428279877,
+    "primary_test_gap_mae_eV": 0.19215914607048035,
+    "augmented_primary_view_test_average_mae_eV": 0.1503637433052063,
+    "augmented_primary_view_test_gap_mae_eV": 0.18168118596076965,
+    "augmented_two_view_test_average_mae_eV": 0.1450948417186737,
+    "augmented_two_view_test_gap_mae_eV": 0.17553389072418213
+  },
+  "three_schnet_pass_fusion": {
+    "minimal": {
+      "seed_count": 3,
+      "validation_average_mae_eV": 0.13994055489699045,
+      "test_average_mae_eV": 0.14057745536168417,
+      "test_gap_mae_eV": 0.17024818559487662
+    },
+    "cost": {
+      "seed_count": 3,
+      "validation_average_mae_eV": 0.13729565838972727,
+      "test_average_mae_eV": 0.13832504053910574,
+      "test_gap_mae_eV": 0.1668557027975718
+    },
+    "precision": {
+      "seed_count": 3,
+      "validation_average_mae_eV": 0.13679922123750052,
+      "test_average_mae_eV": 0.1373468687136968,
+      "test_gap_mae_eV": 0.1650651345650355
+    }
+  },
+  "two_schnet_pass_fusion": {
+    "minimal": {
+      "seed_count": 1,
+      "validation_average_mae_eV": 0.14168494939804077,
+      "test_average_mae_eV": 0.1419980227947235,
+      "test_gap_mae_eV": 0.1715882271528244
+    },
+    "cost": {
+      "seed_count": 3,
+      "validation_average_mae_eV": 0.13857196271419525,
+      "test_average_mae_eV": 0.13882474104563394,
+      "test_gap_mae_eV": 0.16727587083975473
+    },
+    "precision": {
+      "seed_count": 3,
+      "validation_average_mae_eV": 0.13811745742956796,
+      "test_average_mae_eV": 0.13804551462332407,
+      "test_gap_mae_eV": 0.16581928730010986,
+      "test_average_mae_std_eV": 0.00023830786456901005
+    }
+  },
+  "selected": "two_schnet_pass_precision",
+  "selected_inputs": [
+    "GPS9",
+    "GPS11-160",
+    "primary SchNet",
+    "two-conformer-trained augmented SchNet with primary-view inference"
+  ],
+  "selected_encoder_passes": 4,
+  "delta_selected_vs_gps11_160_test": {
+    "average_mae_eV": -0.00442376236120861,
+    "gap_mae_eV": -0.0052211731672287
+  },
+  "delta_three_vs_two_schnet_pass_precision": {
+    "average_mae_eV": -0.00069864590962727,
+    "gap_mae_eV": -0.00075415273507436
+  },
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

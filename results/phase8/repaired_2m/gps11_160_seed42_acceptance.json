@@ -1,0 +1,82 @@
+{
+  "experiment": "repaired_2m_retention_d_gps11_160_seed42",
+  "status": "accepted_artifacts_rejected_model",
+  "jobs": {
+    "train": 709534,
+    "finalize": 709562,
+    "external_eval": 709563
+  },
+  "architecture": {
+    "layers": 11,
+    "hidden_channels": 160,
+    "heads": 4,
+    "parameters": 3167043,
+    "init_from": null
+  },
+  "training": {
+    "seconds": 23310.985720157623,
+    "best_epoch": 39,
+    "best_val_average_mae_eV": 0.1123155307674408,
+    "test_average_mae_eV": 0.11326664437850316,
+    "test_gap_mae_eV": 0.13720595836639404
+  },
+  "external": {
+    "common": {
+      "rows": 1977,
+      "average_mae_eV": 0.11363106829352944,
+      "gap_mae_eV": 0.1361221218813885
+    },
+    "ood1000": {
+      "rows": 999,
+      "average_mae_eV": 0.11897162006501917,
+      "gap_mae_eV": 0.14191142509485988
+    },
+    "p8_targeted_hard": {
+      "rows": 978,
+      "average_mae_eV": 0.10817584209749852,
+      "gap_mae_eV": 0.1302085084762168
+    },
+    "pcqm_valid": {
+      "rows": 4981,
+      "gap_mae_eV": 0.30285439746570375
+    }
+  },
+  "delta_vs_gps7_seed42_eV": {
+    "common_average": 0.01355674481198024,
+    "common_gap": 0.01920415485914015,
+    "ood1000_average": 0.00941660111279682,
+    "ood1000_gap": 0.01335627317818818,
+    "p8_targeted_hard_average": 0.01778578730225042,
+    "p8_targeted_hard_gap": 0.02517760455164626,
+    "pcqm_gap": -0.00636147266557513
+  },
+  "delta_vs_gps9_seed42_eV": {
+    "common_average": 0.01403250589270666,
+    "common_gap": 0.01998900797527064,
+    "ood1000_average": 0.00830535867241701,
+    "ood1000_gap": 0.01209131631508507,
+    "p8_targeted_hard_average": 0.01988262866680621,
+    "p8_targeted_hard_gap": 0.02805628197171784,
+    "pcqm_gap": -0.00739672456627585
+  },
+  "artifact_acceptance": {
+    "model_sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a",
+    "metrics_sha256": "61f938a08d73b0487996dc8a59c6e0f02bd2098d07af7f31cc854cb58f2722c5",
+    "training_state_sha256": "290c09b21da2001ddb4a4d05f7075c6c9bb538263a65181cdc0f4c096c999544",
+    "embeddings_sha256": "e762e4bbec1c1bfe5524c3fd5625e3843e543556221996c16eb3fe06f0ea5034",
+    "embedding_shape": [
+      2000000,
+      160
+    ],
+    "local_model_state_tensors": 340,
+    "predictions_finite": true
+  },
+  "decision": {
+    "global_replacement": "reject",
+    "hard_expert": "reject",
+    "pcqm_expert": "reject",
+    "gps11_identity_path_for_full_scale_fusion": "blocked",
+    "production_registry_changed": false,
+    "sealed_20k_opened": false
+  }
+}

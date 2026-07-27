@@ -67,29 +67,148 @@ the strongest deployable candidate under review.
   without a common-set regression. This authorizes genuine scaffold-disjoint
   OOF gain-label generation, not Router training or deployment.
 - The saved external gain labels are evaluation evidence only and are
-  explicitly forbidden as Router training labels. The OOF manifest remains
-  `pending_generation`.
+  explicitly forbidden as Router training labels. Five repaired-2M
+  scaffold-disjoint OOF folds are now frozen at exactly 400,000 rows each with
+  zero cross-fold scaffold overlap. Prediction and gain-label contracts plus
+  ten SCNet job configurations are prepared but not submitted:
+  `results/phase8/repaired_2m/gps7_gps9_oof/manifest.json`.
+- The Retention-D seed42/43/44 equal ensemble is retained only as a three-pass
+  accuracy-mode candidate; it does not replace the default or one-pass seed42:
+  `results/phase8/repaired_2m/retention_d_three_seed_equal_ensemble_decision.md`.
 - No sealed-20K rows were opened and the production registry is unchanged.
   Exact metrics, input hashes, cost accounting, and the decision are in
   `results/phase8/hierarchical_oracle_20260725/decision.md`.
+
+## PCQM Specialist Candidate
+
+- Local GINE v7 is the strongest task-level PCQM Gap specialist candidate.
+  The nested 1M run selected epoch 2 at `0.187982 eV` scaffold-dev and reached
+  `0.184618 eV` on the fixed official-validation 5K, improving local v6 by
+  `0.000654 eV`.
+- This is a leaderboard-oriented local validation result, not a leaderboard
+  score. Official test, sealed 20K, and the production registry remain
+  untouched.
+- Decision and artifact pointers:
+  `results/phase8/pcqm_gine_expert_pilot/local_scaleup_1m_v7_decision.md`.
+- The local PCQM 1M Route B aligned graph cache is complete and accepted:
+  1,001,954 of 1,005,000 rows passed all three aligned views, with all 1,203
+  declared files present and matching SHA256. Four compatible checkpoints will
+  warm-start GPS9, GPS11-160, primary SchNet, and augmented SchNet on Kaggle.
+  GPS and warm-start assets are published; paired 3D assets are uploading.
+  GPU training has not started because the two existing QM9 jobs occupy both
+  Kaggle batch GPU slots. A one-shot local submitter waits for real slot
+  release and will not stop those jobs. This does not yet have a model-quality
+  result. Live stage contract:
+  `results/phase8/pcqm_route_b_1m/run_plan.json`.
 
 ## Active Remote Work
 
 ### SCNet
 
-- Two model-improvement routes are active in parallel without changing the
-  production registry. Route A job `709046` trains repaired-2M Retention-D
-  GPS9-192 from the accepted 1.5M GPS9 checkpoint; dependent job `709047`
-  performs common/OOD/P8-hard/PCQM evaluation. Route B uses a frozen
-  scaffold-disjoint PubChemQC 100K/10K/9,997 split. Its graph-subset job
-  `709051` and GPS7/GPS9/GPS11-160 jobs `709052`/`709053`/`709054` are queued
-  behind Route A because the account's 16-CPU concurrency limit is occupied.
-  Pending jobs must not be relaunched merely for being quiet.
+- Full repaired-2M GPS embedding and residual-head chain completed and passed
+  artifact acceptance. GPS7/GPS9 each produced 40 contiguous, hash-verified
+  50K-row embedding parts. The three `+-0.10 eV` residual-head seeds improve
+  the fixed GPS7+GPS9 equal identity on internal exact-2M test by a mean
+  `0.001821 eV` average MAE and `0.002062 eV` Gap MAE; all targets improve for
+  all seeds and the average-MAE seed standard deviation is `0.000012 eV`.
+  This passes the internal gate only. The three-pass candidate still requires
+  frozen common/OOD/P8-hard evaluation and compute-cost accounting before any
+  promotion. No sealed-20K rows were used and production is unchanged.
+  Decision:
+  `results/phase8/repaired_2m/three_gps_embedding_residual/decision.md`.
+- Three-GPS learned routing pilot job `709815` completed and all holdout,
+  checkpoint, prediction, identity, finite-value, and SHA256 checks passed.
+  The learned pre-dispatch Router is rejected: it collapses to GPS9 for every
+  molecule, uses GPS7 only for part of LUMO, and never calls GPS11-160. The
+  three-pass dense gate is positive on internal test/common/OOD versus GPS9 by
+  `0.002828/0.001865/0.003912 eV`; P8-hard average regresses a statistically
+  inconclusive `0.000226 eV`, driven by `+0.000623 eV` Gap. A fixed GPS7+GPS9
+  equal blend is the robust two-pass control: common/OOD/P8-hard average
+  improves by `0.001044/0.001760/0.000312 eV` versus GPS9. GPS11 contributes
+  useful correlated-error diversity to dense/mean blending despite its weak
+  standalone result. For PCQM-valid, dense and equal-three reach
+  `0.302120/0.299602 eV`, still behind routed v4 and the accepted PCQM GINE
+  expert, so PCQM remains deterministically specialist-routed. Advance only
+  the two-pass equal GPS7+GPS9 base and three-pass dense base to the bounded
+  dual-SchNet A/B; do not advance the hard Router. This is accepted pilot
+  evidence, not production registration or a substitute for formal OOF.
+  Decision:
+  `results/phase8/repaired_2m/three_gps_router_fusion/decision.md`.
+- The follow-on hierarchical 2D+3D contract is implemented but not submitted:
+  either the fixed GPS7+GPS9 equal blend or frozen three-GPS dense prediction
+  is the exact identity path, and primary plus augmented lightweight SchNet
+  embeddings can only add a `+-0.10 eV` bounded correction. It uses a new
+  scaffold-disjoint split inside the untouched base model test rows and stops
+  if fewer than 95% of those rows have both 3D views.
+  This stage remains blocked on accepted primary/secondary repaired-2M graph
+  caches, two trained SchNet checkpoints, and their embedding parts.
+- Repaired-2M GPS11-160 jobs `709534`, `709562`, and `709563` completed and
+  their checkpoint, metrics, predictions, and complete `2,000,000 x 160`
+  embeddings passed artifact acceptance. The model is rejected as a global
+  replacement, hard expert, PCQM expert, and automatic full-scale Fusion
+  identity path. Relative to repaired-2M GPS9, average MAE regresses by
+  `0.01403/0.00831/0.01988 eV` on common/OOD/P8-hard; PCQM Gap improves by
+  `0.00740 eV` but remains `0.01116 eV` worse than routed v4 500K and far
+  behind the accepted PCQM GINE specialist. GPS11 trained from scratch, unlike
+  the warm-started GPS7/GPS9 controls, but its late plateau and broad external
+  regressions do not justify continuation. Keep it only as bounded diversity
+  evidence. Any later Route B pilot must compare a GPS9 identity path against
+  GPS11 identity before using the full-scale Fusion protocol. Decision:
+  `results/phase8/repaired_2m/gps11_160_seed42_decision.md`.
+- The two parallel model-improvement routes completed their first gates
+  without changing the production registry. Route A jobs `709046`/`709047`
+  found that repaired-2M GPS9 improves common and P8-hard over Retention-D
+  GPS7 but regresses OOD and PCQM. It is rejected as a global replacement and
+  retained only as a hard-expert candidate. The target-specific Oracle then
+  passed at a 10% GPS9 call budget, authorizing scaffold-disjoint OOF
+  gain-label generation but not Router training. Decisions:
+  `results/phase8/repaired_2m/gps9_seed42_decision.md`.
+  `results/phase8/repaired_2m/gps7_gps9_oracle_20260725/decision.md`.
+- Route B jobs `709051`-`709054` completed on the frozen scaffold-disjoint
+  PubChemQC 100K/10K/9,997 split. GPS11-160 has the best pure-2D validation and
+  test average MAE and the best test Gap MAE, so it advances with GPS7/GPS9
+  controls to the two-SchNet fusion screen. Acceptance:
+  `results/phase8/experiments/pubchemqc100k_architecture/remote_acceptance.json`.
 - Route B's SchNet contract is the lightweight `176/160/6` architecture for
   both conformer branches. The legacy `192/192/6` SchNet is explicitly
-  forbidden. Full 3D/fusion training remains gated on the pure-2D comparison.
+  forbidden. The pure-2D comparison passed and Kaggle kernels
+  `nothingnessvoid/molgap-pc100k-light-schnet-primary` and
+  `nothingnessvoid/molgap-pc100k-light-schnet-augmented` version 1 both failed
+  before epoch 0 because Kaggle assigned P100 GPUs while stock
+  `torch 2.10.0+cu128` omitted `sm_60`. Version 2 conditionally installs the
+  previously validated `torch 2.7.1+cu126` compatibility runtime and both
+  kernels completed and both checkpoints plus embedding payloads passed strict
+  artifact acceptance. The augmented model is materially stronger than the
+  primary-only model even under one-view inference. The three-seed frozen
+  Fusion screen selected the strict two-SchNet-pass Precision architecture:
+  GPS9 + GPS11-160 + primary SchNet + two-conformer-trained augmented SchNet,
+  with both SchNets evaluated on one primary conformer. Its PubChemQC 100K
+  test average/Gap MAE is `0.138046/0.165819 eV`, improving pure GPS11-160 by
+  `0.004424/0.005221 eV`. A third SchNet forward improves only
+  `0.000699/0.000754 eV` and is rejected on cost. This authorizes a frozen
+  full-scale protocol, not production promotion. A subsequent three-seed
+  head A/B replaced the shared gated-sum bottleneck with a GPS11-160 identity
+  path plus a bounded residual correction. A validation-only three-scale,
+  three-seed A/B selected a `+-0.10 eV` correction bound. The frozen head
+  reaches PubChemQC 100K test average/Gap `0.134463/0.160809 eV`, improving
+  the original gated head by `0.003583/0.005010 eV`. It is the retained
+  full-scale Fusion protocol; external common/OOD/P8-hard evidence is still
+  required.
   Manifest:
   `results/phase8/experiments/pubchemqc100k_architecture/experiment_manifest.json`.
+  Decision:
+  `results/phase8/experiments/pubchemqc100k_architecture/route_b_fusion_decision.md`.
+  Head decision:
+  `results/phase8/experiments/pubchemqc100k_architecture/route_b_head_ab_decision.md`.
+  Scale decision:
+  `results/phase8/experiments/pubchemqc100k_architecture/route_b_residual_scale_decision.md`.
+- A local paired 50K construction A/B keeps `ETKDGv3 + MMFF(maxIters=200)`:
+  versus bare ETKDG it costs `1.589x` construction wall time but improves the
+  frozen Route B equal-seed ensemble average/Gap MAE by
+  `0.009868/0.008612 eV`. At measured 12-worker throughput the extra cost
+  extrapolates to `0.90 h/1M`, so bare ETKDG is rejected as a default
+  acceleration path. This does not change the production registry. Decision:
+  `results/phase8/experiments/conformer_protocol_50k/decision.md`.
 - Repaired-2M retention-D passed the three-seed general-model gate against
   retention-B. Mean common/OOD/P8-hard average-MAE improvements are
   `0.001217/0.001496/0.000932 eV`, and every domain improves for each of seeds
@@ -143,19 +262,97 @@ the strongest deployable candidate under review.
 - Local handoff: `results/phase8/multi2d_2m_hard20k/`.
 - The future sealed 20K remains locked.
 
+### Repaired-2M 3D Handoff
+
+- Kunshan primary graph job `117854186` stopped after 36/100 atomic shards
+  because the original-1M cache was loaded before `fork`, causing copy-on-write
+  memory amplification. The isolated-`spawn` repair job `117872652` resumed the
+  same immutable directory and completed all 100 shards in `07:32:46` with
+  `23.47 GB` peak RSS. Its completion report reconciles 2,000,000 requested
+  rows as 869,142 reused, 1,119,974 newly built, and 10,884 failed conformers,
+  leaving 1,989,116 graphs. Formal graph acceptance remains the first step of
+  the already queued secondary job; do not treat process completion alone as
+  accepted scientific evidence. Incident and completion records:
+  `results/phase8/remote/kunshan_repaired_2m_3d/primary_oom_recovery_20260726.json`.
+  `results/phase8/remote/kunshan_repaired_2m_3d/primary_build_completion_20260726.json`.
+- Kunshan secondary-conformer job `117857094` failed before construction
+  because the primary acceptance code incorrectly required graph-local `cid`
+  and SMILES attributes. Repaired-2M graphs intentionally store `source_idx`,
+  coordinates, and labels; identity lives in the immutable source CSV. The
+  acceptance code now resolves CID/SMILES by `source_idx`, verifies optional
+  embedded identity when present, and checks all three labels against the CSV.
+  Replacement `117950883` exposed a second validator-only mismatch before
+  construction: the real builder stores all 100 sidecars under
+  `graph_shards/reports/`, not beside the graph files. The remote schema and
+  sidecar fields were inspected directly, and the validator now checks that
+  exact schema. Acceptance-only job `117958648` then completed in `00:30:21`
+  and strictly accepted all 100 primary shards: 1,989,116 unique graphs,
+  10,884 recorded conformer failures, complete source-target alignment, and
+  matching graph/sidecar hashes. The retrieved manifest SHA256 matches the
+  remote copy. Seed-`314159` secondary build `117966453` is now running on
+  compute node `j05r4n04` with atomic 20K-row shards and resume enabled. Both
+  earlier failed jobs produced no secondary shards and did not modify the
+  primary cache. Incident and accepted relaunch:
+  `results/phase8/remote/kunshan_repaired_2m_3d/secondary_acceptance_fix_20260727.json`.
+  `results/phase8/remote/kunshan_repaired_2m_3d/secondary_relaunch_after_acceptance_20260727.json`.
+  Do not duplicate the running secondary build.
+  Launch record:
+  `results/phase8/remote/kunshan_repaired_2m_3d/secondary_launch_20260726.json`.
+- The repaired-2M primary graph build was stopped on Colab after 25/100
+  durable shards (500,000 source rows) because the capped eight-worker CPU
+  path was too slow. No complete shard was lost. Kunshan input and code hashes
+  passed, and a real compute-node ETKDG preflight passed with torch 2.1.2,
+  PyG 2.5.3, and RDKit 2023.09.6. The resumed CPU-only job retains 32 CPUs,
+  110 GB RAM, 28 isolated workers, and the same 20K atomic-shard contract.
+  Do not duplicate it while pending or running.
+  Upload and execution handoff:
+  `results/phase8/remote/kunshan_repaired_2m_3d/`.
+- A second notebook builds an independently seeded conformer view only after
+  all 100 primary shards pass strict acceptance.
+- The full-scale Route B primary SchNet protocol is frozen at
+  `176/160/6`, cutoff `10 A`, dropout `0.05`. Its split now reproduces the GPS
+  seed-42 roles on all 2,000,000 source rows before filtering failed ETKDG
+  molecules; the previous filtered-list split is forbidden for fusion because
+  it misaligns encoder roles.
+- Notebook, wheel hashes, acceptance gate, and paths:
+  `results/phase8/repaired_2m/3d_colab_plan.json`.
+
 ### Kaggle
 
-- PubChemQC 100K Route B second-conformer preparation is running as four
+- PCQM GINE continuation v5 completed and remains the accepted remote warm
+  start for the local v6/v7 branch. Best epoch 68 reaches `0.191690 eV` on the
+  frozen scaffold development split and `0.187320 eV` on the fixed
+  official-validation 5K, improving accepted v4 by `0.009278 eV`. Prediction
+  MAE was independently reproduced and all downloaded artifact hashes match.
+  This remains a 250K-sample local protocol result, not a leaderboard score;
+  official test, sealed 20K, and the production registry remain untouched.
+  Decision:
+  `results/phase8/pcqm_gine_expert_pilot/continuation_v5_decision.md`.
+  Accepted checkpoints are published privately as
+  `nothingnessvoid/molgap-pcqm-gin-v5-accepted-20260726`.
+- The same-data PCQM GPS9-320 architecture pilot is rejected. Its best
+  development MAE was `0.462255 eV`, training became non-finite from epoch 15,
+  and fixed official-validation 5K Gap MAE was `0.491629 eV`. This invalidates
+  the implementation/training configuration, not GPS as a model family; it
+  lacked the published positional-encoding and optimization protocol. Do not
+  resume or scale this checkpoint. Decision:
+  `results/phase8/pcqm_gine_expert_pilot/gps9_320_pilot_decision.md`.
+- PubChemQC 100K Route B second-conformer preparation completed as four
   bounded CPU kernels, version 3:
   `nothingnessvoid/molgap-pc100k-conformer-r0` through `r3`. Version 1 failed
   before data processing because Kaggle did not include the sidecar
   `variant.json`. Version 2 embedded the shard identity but exposed that the
   CPU image did not contain RDKit. Version 3 installs the pinned RDKit
-  dependency and embeds the shard identity. All four version-3 workers
-  remained `RUNNING` after the first-minute startup check. Each writes 5K graph
-  shards plus atomic progress and completion manifests. The immutable split
-  input is the private dataset
-  `nothingnessvoid/molgap-pubchemqc100k-arch-split-20260725`.
+  dependency and embeds the shard identity. Local acceptance loaded and hashed
+  all 24 graph parts: 119,602 of 120,000 molecules succeeded, all retained
+  `source_idx` values are unique, and labels/coordinates are finite. The
+  immutable split input is the private dataset
+  `nothingnessvoid/molgap-pubchemqc100k-arch-split-20260725`. Exact counts:
+  `results/phase8/experiments/pubchemqc100k_architecture/remote_acceptance.json`.
+- The accepted second-conformer cache is published as private dataset
+  `nothingnessvoid/molgap-pc100k-second-conformer-v3-20260725`, version 2.
+  Version 1 is incomplete because the CLI skipped nested directories and must
+  never be mounted for training.
 - The benchmark-specific PCQM4Mv2 Gap expert pilot completed as Kaggle kernel
   `nothingnessvoid/molgap-pcqm-gin-expert-pilot`, version 3. Its 11 graph
   shards and all declared artifacts passed count, uniqueness, finite-label,
@@ -193,6 +390,22 @@ the strongest deployable candidate under review.
   fusion reference. This round is closed without sealed-set access or a model
   promotion. Decision and exact accepted metrics:
   `results/phase8/multi2d_2m_1m3d_fusion/decision.md`.
+
+### Colab
+
+- Repaired-2M ETKDG graph construction is authorized and its resumable
+  notebook/wheel bundle is ready under
+  `scripts/phase8/remote/colab/repaired_2m_3d/`. Identity audit found 871,693
+  repaired rows in the original 1M corpus, so the builder remaps reusable
+  original coordinates by CID plus canonical SMILES and constructs only the
+  missing identities. It writes 100 atomic 20K-row graph shards with SHA256
+  reports and strict final validation.
+- Full repaired-2M SchNet training remains disabled in the notebook. The fixed
+  30K pilot showed ordinary FusionHead regression, so training requires the
+  explicit bounded-residual gate token after the active PubChemQC 100K
+  two-SchNet screen is accepted. The eventual model contract is lightweight
+  `176/160/6`, cutoff 6.0, dropout 0.0. Plan:
+  `results/phase8/repaired_2m/3d_colab_plan.json`.
 
 ## Closed Decisions
 

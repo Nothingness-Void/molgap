@@ -1,0 +1,45 @@
+{
+  "remote_input_dir": "$HOME/molgap-inputs/repaired_2m_3d",
+  "remote_code_archive": "$HOME/molgap_repaired_2m_3d_code_patch.zip",
+  "code_archive": {
+    "local": "results/phase8/remote/kunshan_repaired_2m_3d/molgap_repaired_2m_3d_code_patch.zip",
+    "bytes": 9338,
+    "sha256": "d9b05e75b4998b30319b653c6b1d582f90454b27662d5a37d740863ed8c95215"
+  },
+  "files": [
+    {
+      "local": "data/raw/phase8_repaired_2m.csv",
+      "remote_name": "phase8_repaired_2m.csv",
+      "bytes": 392708554,
+      "sha256": "0c7d19de211016bebc2aa8b3030665e8c5f239baebbdf21c01598e0ddf3777c3"
+    },
+    {
+      "local": "data/raw/phase8_expansion_1m.csv",
+      "remote_name": "phase8_expansion_1m.csv",
+      "bytes": 184238755,
+      "sha256": "f5df806cb6884f9698947611cb3b5eb367e6c60c0f98b985388b0d6654b6ccc1"
+    },
+    {
+      "local": "data/cache/phase8/expansion_1m/graphs/pyg_3d_graphs_etkdg_expansion_1m.pt",
+      "remote_name": "pyg_3d_graphs_etkdg_expansion_1m.pt",
+      "bytes": 2773232637,
+      "sha256": "f17dcd1743e6ead9423ddf3b411b87d3b15b0b9e5951612b738da13b3e69ea45"
+    }
+  ],
+  "code_files": [
+    {
+      "path": "src/molgap/repaired_2m_3d_colab.py",
+      "sha256": "cacf9cbb0373ce50f3b90e093fbfd44bf5cf63ec7c695deffa06ccb9aa4dd667"
+    },
+    {
+      "path": "scripts/phase8/data/build_repaired_2m_3d_shards.py",
+      "sha256": "8db49f7b68dfa195b69616e9aa37f9bf36c913df6746f492bba8ee3a26bb3dd2"
+    },
+    {
+      "path": "scripts/phase8/remote/scnet/build_phase8_repaired_2m_3d_kunshan_cpu.slurm",
+      "sha256": "0c9288b4e021319fe4e8c958ecf10cf1598da804a31db067a8ace11fa5b3d371"
+    }
+  ],
+  "colab_complete_shards": 25,
+  "colab_complete_rows": 500000
+}

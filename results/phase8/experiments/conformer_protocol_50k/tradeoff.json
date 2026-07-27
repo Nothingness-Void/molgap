@@ -1,0 +1,51 @@
+{
+  "format": "molgap-conformer-tradeoff-v1",
+  "speed": {
+    "bare_wall_s_50k": 275.0845382999996,
+    "mmff_wall_s_50k": 437.04109909999715,
+    "mmff_to_bare_ratio": 1.5887519589464245,
+    "extra_s_per_molecule": 0.0032392607864314077,
+    "extrapolated_extra_hours": {
+      "100k": 0.08997946628976133,
+      "1m": 0.8997946628976132
+    }
+  },
+  "accuracy": {
+    "bare": {
+      "homo": 0.14175617694854736,
+      "lumo": 0.14289619028568268,
+      "gap": 0.1880618929862976,
+      "average": 0.15757142007350922
+    },
+    "mmff": {
+      "homo": 0.13124476373195648,
+      "lumo": 0.13241519033908844,
+      "gap": 0.17944997549057007,
+      "average": 0.14770330488681793
+    },
+    "mmff_minus_bare_mae_eV": {
+      "homo": -0.010511413216590881,
+      "lumo": -0.010480999946594238,
+      "gap": -0.008611917495727539,
+      "average": -0.009868115186691284
+    },
+    "mmff_relative_average_mae_improvement": 0.0626263010264658,
+    "paired_test": {
+      "rows": 5000,
+      "mean_average_absolute_error_delta_eV": -0.009868106804788113,
+      "normal_95pct_ci_eV": [
+        -0.011206612975802272,
+        -0.008529600633773953
+      ],
+      "fraction_molecules_improved": 0.5885999798774719,
+      "fraction_molecules_improved_by_gt_1e-4_eV": 0.5820000171661377,
+      "fraction_molecules_degraded_by_gt_1e-4_eV": 0.3935999870300293,
+      "target_mae_delta_eV": {
+        "homo": -0.010511405766010284,
+        "lumo": -0.010480997152626514,
+        "gap": -0.00861191563308239
+      }
+    }
+  },
+  "interpretation": "Negative MAE deltas favor MMFF; positive deltas favor bare ETKDG. This is a frozen-checkpoint inference A/B, not a retrained ceiling test."
+}

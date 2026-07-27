@@ -1,0 +1,15 @@
+{
+  "experiment": "pcqm_gps9_architecture_pilot",
+  "train_rows": 229335,
+  "scaffold_dev_rows": 20662,
+  "official_valid_rows": 5000,
+  "best_epoch": 11,
+  "best_scaffold_dev_mae_eV": 0.46225485516914544,
+  "official_valid_5k_gap_mae_eV": 0.4916286834716797,
+  "routed_v4_reference_gap_mae_eV": 0.2916897588074544,
+  "delta_vs_routed_v4_eV": 0.1999389246642253,
+  "scale_gate_mae_eV": 0.2,
+  "scale_gate_pass": false,
+  "official_test_used": false,
+  "sealed_20k_used": false
+}

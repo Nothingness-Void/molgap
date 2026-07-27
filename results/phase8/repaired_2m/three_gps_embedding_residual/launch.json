@@ -1,0 +1,80 @@
+{
+  "experiment": "repaired_2m_three_gps_embedding_bounded_residual",
+  "status": "queued",
+  "submitted_at": "2026-07-26",
+  "jobs": {
+    "embedding_array": 709889,
+    "embedding_tasks": [
+      {
+        "array_task": 0,
+        "model": "gps7"
+      },
+      {
+        "array_task": 1,
+        "model": "gps9"
+      }
+    ],
+    "fusion_array": 709890,
+    "fusion_tasks": [
+      {
+        "array_task": 0,
+        "seed": 42
+      },
+      {
+        "array_task": 1,
+        "seed": 43
+      },
+      {
+        "array_task": 2,
+        "seed": 44
+      }
+    ],
+    "dependency": "afterok:709889"
+  },
+  "embedding_contract": {
+    "rows": 2000000,
+    "part_rows": 50000,
+    "parts_per_model": 40,
+    "dtype": "float16",
+    "contains": [
+      "embeddings",
+      "predictions",
+      "targets",
+      "source_idx"
+    ],
+    "atomic_parts": true,
+    "graph_sha256": "2c7011880457e5583899217f05fafe81c27aeba13dde0a8bd540346f4705e9f8"
+  },
+  "fusion_contract": {
+    "identity": "equal_gps7_gps9",
+    "context": [
+      "gps7_predictions",
+      "gps9_predictions",
+      "gps11_160_predictions",
+      "gps7_embeddings",
+      "gps9_embeddings",
+      "gps11_160_embeddings"
+    ],
+    "correction_scale_eV": 0.1,
+    "head_seeds": [
+      42,
+      43,
+      44
+    ],
+    "split_seed": 42,
+    "epochs": 60,
+    "patience": 10,
+    "checkpoint_every_epoch": true,
+    "resume": true
+  },
+  "source_sha256": {
+    "src/molgap/hierarchical_fusion.py": "9ad9fdba364f0185da8f444052cbecfc6d4a017255b46f7e8cebfecc6d6e2eb1",
+    "scripts/phase8/evaluation/extract_gps_embeddings_chunked.py": "49f69b18b97c1005041ec89bedb86a6cf5af58ddf70ab73c752904bc4ea0e655",
+    "scripts/phase8/experiments/train_three_gps_embedding_residual.py": "a402a6b664e716582cc81c5129caba99751befce4faebb78f1668534058b70c4",
+    "scripts/phase8/remote/scnet/extract_repaired_2m_gps_embeddings.slurm": "aa8e05492fbddd288ad11e714455fe4849fe29f49a4c07f573f343c39ddc8626",
+    "scripts/phase8/remote/scnet/train_repaired_2m_three_gps_embedding_residual.slurm": "1c3fcc8a3b9baebdb928420e331da279f3bb68b35c08ce6c51dde4bae87b93ef"
+  },
+  "external_evaluation_required": true,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

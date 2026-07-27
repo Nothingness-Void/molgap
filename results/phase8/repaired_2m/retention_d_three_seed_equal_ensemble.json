@@ -1,0 +1,94 @@
+{
+  "experiment": "retention_d_three_seed_equal_ensemble",
+  "status": "accuracy_mode_candidate",
+  "seeds": 3,
+  "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "compute": {
+    "gps7_encoder_passes_per_molecule": 3.0
+  },
+  "common": {
+    "common": {
+      "n": 1977,
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.09206565206138435
+        },
+        "lumo": {
+          "mae_eV": 0.0902872759493511
+        },
+        "gap": {
+          "mae_eV": 0.11540066801369987
+        },
+        "average": {
+          "mae_eV": 0.09925119867481176
+        }
+      }
+    },
+    "ood1000": {
+      "n": 999,
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.10254738795282109
+        },
+        "lumo": {
+          "mae_eV": 0.09631188612603472
+        },
+        "gap": {
+          "mae_eV": 0.12670044981445935
+        },
+        "average": {
+          "mae_eV": 0.10851990796443839
+        }
+      }
+    },
+    "p8_targeted_hard": {
+      "n": 978,
+      "metrics": {
+        "homo": {
+          "mae_eV": 0.08135884822135818
+        },
+        "lumo": {
+          "mae_eV": 0.08413330297746252
+        },
+        "gap": {
+          "mae_eV": 0.10385825286139054
+        },
+        "average": {
+          "mae_eV": 0.08978346802007042
+        }
+      }
+    }
+  },
+  "pcqm": {
+    "n": 4981,
+    "gap": {
+      "mae_eV": 0.3088593830846872
+    }
+  },
+  "inputs": [
+    {
+      "common_path": "results/phase8/repaired_2m/retention_d_seed42_raw/common_predictions.csv",
+      "common_sha256": "643313c4fe9a5d214de9020066ca328585a9d5cd003e915af0f51679c5b67596",
+      "pcqm_path": "results/phase8/repaired_2m/retention_d_seed42_raw/pcqm_predictions.csv",
+      "pcqm_sha256": "9f228b96334afa28f50cec4fceff8f256e11a761aa33a221b1a8177778d504a6"
+    },
+    {
+      "common_path": "results/phase8/repaired_2m/retention_d_seed43_raw/common_predictions.csv",
+      "common_sha256": "75ba5c55cc4cef15892ea3f7ce34f7bc0271084fe37b479bf2fa335826d4ecd4",
+      "pcqm_path": "results/phase8/repaired_2m/retention_d_seed43_raw/pcqm_predictions.csv",
+      "pcqm_sha256": "c486328d4cd22d28c9fe7019c4f4b2b2fb361e32591a5f5286daf023579e6091"
+    },
+    {
+      "common_path": "results/phase8/repaired_2m/retention_d_seed44_raw/common_predictions.csv",
+      "common_sha256": "bfc3f1c0c1be5fc3389858f23c48d4e46a1287152ec4d58137769ee2fcbdcc75",
+      "pcqm_path": "results/phase8/repaired_2m/retention_d_seed44_raw/pcqm_predictions.csv",
+      "pcqm_sha256": "ed0626e1f227c17ce2fd6d58e2038c1dc5b28ba67a4597bea3f5e94d864163e8"
+    }
+  ],
+  "production_registry_changed": false,
+  "sealed_20k_used": false
+}

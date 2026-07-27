@@ -1,0 +1,26 @@
+{
+  "accepted": true,
+  "view": "primary_conformer_only",
+  "device": "cuda",
+  "checkpoint_sha256": "04eb0751426808da0b360112fe0e634b80a4d9079ab552a6c39bc2684415eab6",
+  "graph_cache_sha256": "f17dcd1743e6ead9423ddf3b411b87d3b15b0b9e5951612b738da13b3e69ea45",
+  "reference_payload_sha256": "f7fa81195b65d3bbe38bbd6fa8b7e1005f47087e04af21ed98c0ccbe2d76af19",
+  "accepted_payload_sha256": "e4717882fd9b13afb8957db361050aa36f8be5239c09a0dd2c7516814dbc8c51",
+  "roles": {
+    "train": {
+      "rows": 99641,
+      "embedding_dim": 176,
+      "embedding_sha256": "83cfe7098e123ed7526eca58eaba80e322b6486c3d64cc8dc859e5f6eb6b3a07"
+    },
+    "validation": {
+      "rows": 9970,
+      "embedding_dim": 176,
+      "embedding_sha256": "2eaa8b5678f40c9cbf27365017fe7fcd17c212c3243381ff53c7d42bbe02545f"
+    },
+    "test": {
+      "rows": 9954,
+      "embedding_dim": 176,
+      "embedding_sha256": "6fe39fbef1a5a2e44cc5ff7a37d5c604fed1eb3d158eadee64e512f5a13b62cd"
+    }
+  }
+}

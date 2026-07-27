@@ -1,0 +1,99 @@
+{
+  "status": "complete",
+  "shard_id": 3,
+  "shard_count": 4,
+  "split_csv_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "partition_start": 90000,
+  "partition_stop": 120000,
+  "requested": 30000,
+  "succeeded": 29979,
+  "failed": 21,
+  "unique_source_idx": true,
+  "finite_labels": true,
+  "parts": [
+    {
+      "start": 0,
+      "stop": 5000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_000000_005000.pt",
+      "sha256": "003f41a02057af0eba82c92c4be8f0f3a2f91bc56a00b14b744617a8668d2002"
+    },
+    {
+      "start": 5000,
+      "stop": 10000,
+      "requested": 5000,
+      "succeeded": 4988,
+      "failed": 12,
+      "failure_source_idx": [
+        818073,
+        822517,
+        825285,
+        825292,
+        825596,
+        828458,
+        828462,
+        832274,
+        832278,
+        832296,
+        832317,
+        832330
+      ],
+      "path": "graphs_005000_010000.pt",
+      "sha256": "d5b050e3fbbd6ed4b0bce2621a571213dcd81e88dcbf2162961531f525e89b9b"
+    },
+    {
+      "start": 10000,
+      "stop": 15000,
+      "requested": 5000,
+      "succeeded": 4996,
+      "failed": 4,
+      "failure_source_idx": [
+        833358,
+        833467,
+        835417,
+        840251
+      ],
+      "path": "graphs_010000_015000.pt",
+      "sha256": "287a33ce3539550970f9a8cb3b75a9fa8d52d1f0f570a110880c99bfccde61f6"
+    },
+    {
+      "start": 15000,
+      "stop": 20000,
+      "requested": 5000,
+      "succeeded": 4995,
+      "failed": 5,
+      "failure_source_idx": [
+        892002,
+        897598,
+        897722,
+        904229,
+        905080
+      ],
+      "path": "graphs_015000_020000.pt",
+      "sha256": "9dad626cf9b65820a593d4c8ab22bd9f90120437dc19ca0a7061b6678a4fa991"
+    },
+    {
+      "start": 20000,
+      "stop": 25000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_020000_025000.pt",
+      "sha256": "fded5945b1082fbb360069be406b21aaa3ed502bee55a9f0ec1c14d3108604f8"
+    },
+    {
+      "start": 25000,
+      "stop": 30000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_025000_030000.pt",
+      "sha256": "fb904b7f70cfd0f338f854a22d0e03aa64401fce585d64984d5e2a943ede926f"
+    }
+  ]
+}

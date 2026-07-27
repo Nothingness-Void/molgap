@@ -1,0 +1,107 @@
+{
+  "experiment": "repaired_2m_three_gps_learned_router_fusion",
+  "status": "accepted_pilot_evidence",
+  "scnet_job_id": 709815,
+  "remote_exit_code": "0:0",
+  "remote_elapsed": "00:12:28",
+  "remote_max_rss_kb": 28443644,
+  "holdout": {
+    "validation_rows": 200000,
+    "test_rows": 200000,
+    "split_seed": 42,
+    "unique_source_idx": true,
+    "finite": true
+  },
+  "router_split": {
+    "train_rows": 155700,
+    "validation_rows": 44300,
+    "scaffold_overlap": 0
+  },
+  "artifacts": [
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\remote\\completion_manifest.json",
+      "bytes": 1535,
+      "sha256": "0f00c00956183eb1bd406fdf593c527ebd2c1b8ce152434526ff7a75cc557fbb"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\remote\\holdout_predictions.pt",
+      "bytes": 22402984,
+      "sha256": "e45e037a9215124ef391a8f920261fbbf1febaf7c922411d81b16fd359963a3d",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\metrics.json",
+      "bytes": 67231,
+      "sha256": "6e4757e093a918bc1d43055e5fa1b6afdb7a00035ee52e585840f9fc6dd8b234"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\external_predictions.csv",
+      "bytes": 594899,
+      "sha256": "67c42a93af2f399dbca3b5af46f199239df1898598e857806a049e19163a3467"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\frozen_2d_test_payload.pt",
+      "bytes": 30404055,
+      "sha256": "23fffd29ce005ae0605b1e2ffb45bf86d53b0b53c07118da510c6bd0d70d2e12",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\fixed_gps7_gps9_equal_ablation.json",
+      "bytes": 7017,
+      "sha256": "6c064c93b1853dd7ea1d058e7666994c7b27b0d30aa94457331a5bd706bfc039"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\static_convex_baseline.json",
+      "bytes": 2110,
+      "sha256": "af395543cb0878c174d29d6d4a7ed2a2e380140328a56fc4457d5adbdd0dc994"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\pcqm_valid\\metrics.json",
+      "bytes": 2122,
+      "sha256": "82a6d4037dc18fd5d91316bafa10bd33731d54025f0d65dc67d8e99a272d5eb0"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\pcqm_valid\\predictions.csv",
+      "bytes": 545492,
+      "sha256": "36d094dced1af63e71139982c56907d68f4ea3ba6a8f66728230f4460aa31c57"
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed42.pt",
+      "bytes": 30219,
+      "sha256": "fde9ccbbfb947643b2c7f15c0841fd9ce00fcad77b341ec7243dfbff2c785708",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed43.pt",
+      "bytes": 30219,
+      "sha256": "b521102222a4b22b3efb8f889ad98048a97666782504708fb5aa92e78e1374e2",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed44.pt",
+      "bytes": 30219,
+      "sha256": "aefdabf07e14bc694f7c8ae858597d1ce0ae8c81af120601c36d064748341f97",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\predispatch_seed42.pt",
+      "bytes": 25759,
+      "sha256": "fbe16dfa4c8be0ae7ef82304f9041aa2ea9849372ad82ebc7f5dbb50b20092b4",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\predispatch_seed43.pt",
+      "bytes": 25759,
+      "sha256": "b66249fcbd4b64bb93e06d8117734c0ea0d01f95bc54e93b49054c841ac13cf8",
+      "finite": true
+    },
+    {
+      "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\predispatch_seed44.pt",
+      "bytes": 25759,
+      "sha256": "b33ca15aafd14236ee9960afc06220f378f1eaa41d8e6dde06ba373672014279",
+      "finite": true
+    }
+  ],
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

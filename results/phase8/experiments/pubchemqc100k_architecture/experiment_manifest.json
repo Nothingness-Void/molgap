@@ -1,6 +1,6 @@
 {
   "experiment": "pubchemqc100k_architecture_screen",
-  "status": "split_frozen_2d_queued_conformer_prep_running",
+  "status": "route_b_two_schnet_pass_precision_accepted_for_scale_up",
   "split": {
     "source": "original phase8 expansion 1M",
     "train_rows": 100003,
@@ -30,11 +30,14 @@
         "nothingnessvoid/molgap-pc100k-conformer-r2",
         "nothingnessvoid/molgap-pc100k-conformer-r3"
       ],
-      "startup_status": "all_running",
+      "terminal_status": "all_complete",
       "version_1_failure": "variant.json sidecar was not included by Kaggle code_file packaging",
       "version_2_failure": "Kaggle CPU image did not contain RDKit",
       "version_3_fix": "Embed shard identity and install rdkit==2025.3.5 before worker launch",
-      "durability": "5000-row graph shards with atomic progress and completion manifests"
+      "durability": "5000-row graph shards with atomic progress and completion manifests",
+      "accepted_rows": 119602,
+      "failed_rows": 398,
+      "acceptance": "results/phase8/experiments/pubchemqc100k_architecture/remote_acceptance.json"
     }
   },
   "geometry_contract": {
@@ -49,11 +52,55 @@
     },
     "legacy_192_192_6_allowed": false
   },
+  "accepted_second_conformer_dataset": {
+    "slug": "nothingnessvoid/molgap-pc100k-second-conformer-v3-20260725",
+    "version": 2,
+    "note": "Version 1 skipped nested graph directories; version 2 contains all 24 accepted parts"
+  },
+  "training_code_dataset": "nothingnessvoid/molgap-pc100k-schnet-code-20260725",
+  "schnet_kernels": {
+    "primary": "nothingnessvoid/molgap-pc100k-light-schnet-primary",
+    "augmented": "nothingnessvoid/molgap-pc100k-light-schnet-augmented",
+    "version": 2,
+    "version_1_failure": {
+      "terminal_status": "both_error",
+      "cause": "Kaggle assigned Tesla P100 sm_60, but stock torch 2.10.0+cu128 supported only sm_70 and newer",
+      "failure_point": "first CUDA tensor operation before epoch 0",
+      "recoverable_checkpoint": false,
+      "data_inputs_loaded": {
+        "primary_graphs": 997445,
+        "secondary_graphs": 119602,
+        "secondary_parts": 24
+      },
+      "raw_logs": [
+        "results/kaggle/pubchemqc100k_architecture/light_schnet_primary_v1_error",
+        "results/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v1_error"
+      ]
+    },
+    "version_2_fix": "Conditionally install torch 2.7.1+cu126 for P100 and validate CUDA plus torch_cluster radius_graph before loading graph caches",
+    "startup_status": "version_2_complete_and_strictly_accepted",
+    "accepted_aligned_rows": {
+      "train": 99641,
+      "validation": 9970,
+      "test": 9954
+    },
+    "fusion_submission_status": "completed"
+  },
   "fusion_candidates": [
     "GPS9 plus two SchNet",
     "GPS9 plus GPS7 plus two SchNet",
     "GPS9 plus GPS11-160 plus two SchNet"
   ],
+  "fusion_decision": {
+    "selected": "GPS11-160 identity path plus bounded residual from GPS9 and two single-view SchNet passes",
+    "correction_bound_eV": 0.1,
+    "test_average_mae_eV_three_seed_mean": 0.13446256518363953,
+    "test_gap_mae_eV_three_seed_mean": 0.16080920894940695,
+    "encoder_passes": 4,
+    "architecture_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_fusion_decision.md",
+    "head_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_head_ab_decision.md",
+    "scale_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_residual_scale_decision.md"
+  },
   "sealed_20k_used": false,
   "production_registry_change_authorized": false
 }

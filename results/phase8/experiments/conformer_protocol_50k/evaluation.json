@@ -1,0 +1,209 @@
+{
+  "format": "molgap-conformer-frozen-route-b-ab-v1",
+  "evaluation_role": "test",
+  "device": "cuda",
+  "frozen_architecture": [
+    "GPS9-192",
+    "GPS11-160",
+    "SchNet-176/160/6-primary",
+    "SchNet-176/160/6-two-conformer-trained-primary-view",
+    "bounded-residual-head-0.10eV"
+  ],
+  "protocols": {
+    "bare_etkdg": {
+      "rows": 5000,
+      "standalone_schnet": {
+        "schnet_primary": {
+          "homo": 0.19395342469215393,
+          "lumo": 0.2203802466392517,
+          "gap": 0.27986544370651245,
+          "average": 0.23139970004558563
+        },
+        "schnet_augmented": {
+          "homo": 0.17935623228549957,
+          "lumo": 0.21568913757801056,
+          "gap": 0.2648821771144867,
+          "average": 0.21997584402561188
+        }
+      },
+      "route_b_by_seed": [
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed42\\best.pt",
+          "metrics": {
+            "homo": 0.14300285279750824,
+            "lumo": 0.1434144228696823,
+            "gap": 0.18943604826927185,
+            "average": 0.1586177796125412
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed43\\best.pt",
+          "metrics": {
+            "homo": 0.14230239391326904,
+            "lumo": 0.14360448718070984,
+            "gap": 0.18826913833618164,
+            "average": 0.15805867314338684
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed44\\best.pt",
+          "metrics": {
+            "homo": 0.14339658617973328,
+            "lumo": 0.1435007005929947,
+            "gap": 0.18915271759033203,
+            "average": 0.15868334472179413
+          }
+        }
+      ],
+      "route_b_seed_metric_mean": {
+        "homo": 0.1429006109635035,
+        "lumo": 0.14350653688112894,
+        "gap": 0.1889526347319285,
+        "average": 0.15845326582590738
+      },
+      "route_b_equal_seed_ensemble": {
+        "homo": 0.14175617694854736,
+        "lumo": 0.14289619028568268,
+        "gap": 0.1880618929862976,
+        "average": 0.15757142007350922
+      }
+    },
+    "etkdgv3_mmff200": {
+      "rows": 5000,
+      "standalone_schnet": {
+        "schnet_primary": {
+          "homo": 0.15207964181900024,
+          "lumo": 0.166661337018013,
+          "gap": 0.2223852276802063,
+          "average": 0.18037539720535278
+        },
+        "schnet_augmented": {
+          "homo": 0.14412912726402283,
+          "lumo": 0.1572277843952179,
+          "gap": 0.20894180238246918,
+          "average": 0.17009957134723663
+        }
+      },
+      "route_b_by_seed": [
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed42\\best.pt",
+          "metrics": {
+            "homo": 0.13233593106269836,
+            "lumo": 0.13310518860816956,
+            "gap": 0.1807692050933838,
+            "average": 0.14873677492141724
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed43\\best.pt",
+          "metrics": {
+            "homo": 0.13172583281993866,
+            "lumo": 0.1334252804517746,
+            "gap": 0.17979863286018372,
+            "average": 0.14831657707691193
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed44\\best.pt",
+          "metrics": {
+            "homo": 0.13304346799850464,
+            "lumo": 0.1329329013824463,
+            "gap": 0.18052691221237183,
+            "average": 0.14883442223072052
+          }
+        }
+      ],
+      "route_b_seed_metric_mean": {
+        "homo": 0.1323684106270472,
+        "lumo": 0.13315445681413016,
+        "gap": 0.18036491672197977,
+        "average": 0.14862925807634988
+      },
+      "route_b_equal_seed_ensemble": {
+        "homo": 0.13124476373195648,
+        "lumo": 0.13241519033908844,
+        "gap": 0.17944997549057007,
+        "average": 0.14770330488681793
+      }
+    },
+    "accepted_current_mmff": {
+      "rows": 5000,
+      "standalone_schnet": null,
+      "route_b_by_seed": [
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed42\\best.pt",
+          "metrics": {
+            "homo": 0.1313321590423584,
+            "lumo": 0.13241589069366455,
+            "gap": 0.18029209971427917,
+            "average": 0.1480133831501007
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed43\\best.pt",
+          "metrics": {
+            "homo": 0.13102835416793823,
+            "lumo": 0.1322133094072342,
+            "gap": 0.1789383739233017,
+            "average": 0.1473933458328247
+          }
+        },
+        {
+          "checkpoint": "D:\\\u6587\u6863\\molgap\\results\\phase8\\experiments\\pubchemqc100k_architecture\\route_b_residual_scale_ab\\scale_0p10_seed44\\best.pt",
+          "metrics": {
+            "homo": 0.1328240931034088,
+            "lumo": 0.13211162388324738,
+            "gap": 0.18017986416816711,
+            "average": 0.1483718603849411
+          }
+        }
+      ],
+      "route_b_seed_metric_mean": {
+        "homo": 0.13172820210456848,
+        "lumo": 0.1322469413280487,
+        "gap": 0.17980344593524933,
+        "average": 0.1479261964559555
+      },
+      "route_b_equal_seed_ensemble": {
+        "homo": 0.13044872879981995,
+        "lumo": 0.13139961659908295,
+        "gap": 0.1787959784269333,
+        "average": 0.14688144624233246
+      }
+    }
+  },
+  "paired_comparisons": {
+    "etkdgv3_mmff200_minus_bare_etkdg": {
+      "rows": 5000,
+      "mean_average_absolute_error_delta_eV": -0.009868106804788113,
+      "normal_95pct_ci_eV": [
+        -0.011206612975802272,
+        -0.008529600633773953
+      ],
+      "fraction_molecules_improved": 0.5885999798774719,
+      "fraction_molecules_improved_by_gt_1e-4_eV": 0.5820000171661377,
+      "fraction_molecules_degraded_by_gt_1e-4_eV": 0.3935999870300293,
+      "target_mae_delta_eV": {
+        "homo": -0.010511405766010284,
+        "lumo": -0.010480997152626514,
+        "gap": -0.00861191563308239
+      }
+    },
+    "accepted_current_mmff_minus_bare_etkdg": {
+      "rows": 5000,
+      "mean_average_absolute_error_delta_eV": -0.010689978487789631,
+      "normal_95pct_ci_eV": [
+        -0.012105671369936318,
+        -0.009274285605642944
+      ],
+      "fraction_molecules_improved": 0.5899999737739563,
+      "fraction_molecules_improved_by_gt_1e-4_eV": 0.5885999798774719,
+      "fraction_molecules_degraded_by_gt_1e-4_eV": 0.4074000120162964,
+      "target_mae_delta_eV": {
+        "homo": -0.011307436972856522,
+        "lumo": -0.011496580205857754,
+        "gap": -0.009265917353332043
+      }
+    }
+  }
+}

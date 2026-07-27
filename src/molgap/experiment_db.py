@@ -55,6 +55,14 @@ MODEL_ENRICHMENT = {
     "M24": (6.8, "optional_inference", "Reusable for flagged high-value rows only."),
     "M25": (1.0, "general_candidate", "Fine-tune/replay compatible after the three-seed gate."),
     "M26": (1.0, "control_only", "Valid warm-start control; external ranking is incomplete."),
+    "M27": (1.0, "stability_evidence", "Do not ensemble by default; seed42 remains the one-pass candidate."),
+    "M28": (1.0, "stability_evidence", "Do not ensemble by default; seed42 remains the one-pass candidate."),
+    "M29": (1.0, "hard_expert_candidate", "Generate genuine OOF gains before any Router training."),
+    "M30": (1.0, "task_expert", "PCQM Gap only; never replace the general HOMO/LUMO/Gap model."),
+    "M31": (1.0, "route_b_candidate", "Frozen PubChemQC 100K control input; not production."),
+    "M32": (1.0, "route_b_candidate", "Frozen PubChemQC 100K input; not production."),
+    "M33": (1.0, "route_b_candidate", "Frozen PubChemQC 100K precision input; not production."),
+    "M34": (1.0, "leaderboard_candidate", "PCQM Gap only; official test remains unread."),
 }
 
 CAUSES = {
@@ -199,7 +207,13 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 
 def _relative(path: Path, repo: Path) -> str:
-    return path.resolve().relative_to(repo.resolve()).as_posix()
+    resolved_path = str(path.resolve())
+    resolved_repo = str(repo.resolve())
+    if resolved_path.startswith("\\\\?\\"):
+        resolved_path = resolved_path[4:]
+    if resolved_repo.startswith("\\\\?\\"):
+        resolved_repo = resolved_repo[4:]
+    return Path(resolved_path).relative_to(Path(resolved_repo)).as_posix()
 
 
 def _sha256(path: Path) -> str:

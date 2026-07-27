@@ -1,0 +1,16 @@
+{
+  "experiment": "pcqm_gine_local_scaleup_1m_v7",
+  "split_counts": {
+    "train": 917746,
+    "dev": 82240,
+    "official": 5000
+  },
+  "best_epoch": -1,
+  "best_scaffold_dev_mae_eV": 0.18892728294959793,
+  "official_valid_5k_gap_mae_eV": 0.18528798828125,
+  "delta_vs_v6_250k_eV": 1.5515136718768918e-05,
+  "device": "cuda",
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

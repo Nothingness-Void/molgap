@@ -1,0 +1,26 @@
+{
+  "experiment": "route_b_frozen_embedding_fusion",
+  "candidate": "precision",
+  "inputs": [
+    "gps9",
+    "gps11_160",
+    "schnet_primary",
+    "schnet_augmented"
+  ],
+  "contract_hash": "71d46201de74943e885e955e9fd8ef29e17a7b884e8f0716d8e7b2bad365fb60",
+  "best_epoch": 49,
+  "best_validation_average_mae_eV": 0.13799308240413666,
+  "test": {
+    "homo": 0.12415062636137009,
+    "lumo": 0.12402176856994629,
+    "gap": 0.1665365844964981,
+    "average": 0.13823632895946503
+  },
+  "device": "cuda",
+  "checkpoints": {
+    "best": "best.pt",
+    "last": "last.pt"
+  },
+  "resume_supported": true,
+  "production_registry_changed": false
+}

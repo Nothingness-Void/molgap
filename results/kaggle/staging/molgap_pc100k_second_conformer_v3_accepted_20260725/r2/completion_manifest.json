@@ -1,0 +1,75 @@
+{
+  "status": "complete",
+  "shard_id": 2,
+  "shard_count": 4,
+  "split_csv_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "partition_start": 60000,
+  "partition_stop": 90000,
+  "requested": 30000,
+  "succeeded": 30000,
+  "failed": 0,
+  "unique_source_idx": true,
+  "finite_labels": true,
+  "parts": [
+    {
+      "start": 0,
+      "stop": 5000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_000000_005000.pt",
+      "sha256": "201addbd0b317e4440f1707b719896cf91046a4403bd28938583ac8bbe553a5e"
+    },
+    {
+      "start": 5000,
+      "stop": 10000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_005000_010000.pt",
+      "sha256": "444d208279c840757478d6888c34e05a3e45b4881ebe3ca0709058570aa8aa0f"
+    },
+    {
+      "start": 10000,
+      "stop": 15000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_010000_015000.pt",
+      "sha256": "6a9b198c6c560cc0b722341a0e2191443a054c69d14fffcef8c66cdad5bcc70d"
+    },
+    {
+      "start": 15000,
+      "stop": 20000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_015000_020000.pt",
+      "sha256": "6edc109e868b71c0ff7efeb33edceb053afac03f36ec61a97618d270d41d4d9e"
+    },
+    {
+      "start": 20000,
+      "stop": 25000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_020000_025000.pt",
+      "sha256": "73ea40e73e2d62ec33df5e0ea14e72c9520a0675f01e7dde69252f8da5e8f5d4"
+    },
+    {
+      "start": 25000,
+      "stop": 30000,
+      "requested": 5000,
+      "succeeded": 5000,
+      "failed": 0,
+      "failure_source_idx": [],
+      "path": "graphs_025000_030000.pt",
+      "sha256": "7ebdc9ce31c38a71b3ce3b4c392702c56206b8879004f8487267f990e515c935"
+    }
+  ]
+}

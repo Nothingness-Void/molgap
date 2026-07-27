@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-pc100k-light-schnet-augmented",
+  "title": "MolGap PC100K Light SchNet Augmented",
+  "code_file": "run_light_schnet.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/1m-full",
+    "nothingnessvoid/molgap-pc100k-second-conformer-v3-20260725",
+    "nothingnessvoid/molgap-pc100k-schnet-code-20260725"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

@@ -1,0 +1,48 @@
+{
+  "experiment": "repaired_2m_light_schnet_colab",
+  "status": "graph_build_authorized_route_b_primary_training_after_acceptance",
+  "data": {
+    "repaired_csv": "data/raw/phase8_repaired_2m.csv",
+    "repaired_csv_sha256": "0c7d19de211016bebc2aa8b3030665e8c5f239baebbdf21c01598e0ddf3777c3",
+    "original_csv": "data/raw/phase8_expansion_1m.csv",
+    "original_graph_cache": "pyg_3d_graphs_etkdg_expansion_1m.pt",
+    "repaired_rows": 2000000,
+    "original_identity_overlap": 871693,
+    "new_identities_requiring_etkdg": 1128307,
+    "same_position_prefix_rows": 500000,
+    "reuse_note": "Actual reused graph count may be lower because the original cache contains 997445 successful graphs rather than all 1M rows"
+  },
+  "graph_build": {
+    "authorized": true,
+    "shard_rows": 20000,
+    "expected_shards": 100,
+    "atomic_progress": true,
+    "per_shard_sha256": true,
+    "strict_final_validation": true
+  },
+  "training": {
+    "authorized": true,
+    "gate_token": "P8_BOUNDED_RESIDUAL_PASSED",
+    "authorizing_evidence": "results/phase8/experiments/pubchemqc100k_architecture/route_b_residual_scale_decision.md",
+    "start_condition": "all 100 primary graph shards pass strict acceptance",
+    "split_contract": "assign roles on all 2000000 source_idx rows with seed 42, then filter ETKDG failures",
+    "model": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6,
+      "num_gaussians": 50,
+      "cutoff": 10.0,
+      "dropout": 0.05
+    }
+  },
+  "artifacts": {
+    "notebook": "scripts/phase8/remote/colab/repaired_2m_3d/molgap_repaired_2m_3d.ipynb",
+    "notebook_sha256": "326e291fbe7403601bb615f5dc6ae275eef146fe8820c6ba78ef58c1416c535a",
+    "secondary_notebook": "scripts/phase8/remote/colab/repaired_2m_3d/molgap_repaired_2m_second_conformer.ipynb",
+    "secondary_notebook_sha256": "3452f44b309641fc00d595735556e65986422eba3c14880027a48d607ade77c8",
+    "wheel": "scripts/phase8/remote/colab/repaired_2m_3d/bundle/molgap-0.1.0-py3-none-any.whl",
+    "wheel_sha256": "fde98882402d46edf958a6c581b2180bc4a54a496dcfb2798306396b36938a8f"
+  },
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

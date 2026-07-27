@@ -1,0 +1,29 @@
+{
+  "accepted": true,
+  "name": "gps9",
+  "raw_rows": 120000,
+  "embedding_dim": 192,
+  "raw_sha256": "945d2baff6ccfe9ad2dc48ba38e57d9dfa28d3a1eaf1eb5810a8d0c5e1a3436b",
+  "reference_payload_sha256": "f7fa81195b65d3bbe38bbd6fa8b7e1005f47087e04af21ed98c0ccbe2d76af19",
+  "accepted_payload_sha256": "f7f7708170656889f3b4d971a7d18d065a79b2da801a961a48a0e270ff882bf5",
+  "roles": {
+    "train": {
+      "rows": 99641,
+      "embedding_dim": 192,
+      "identity_sha256": "70cc40c1bb10a2174ffa518a3310726c63785a73ffcd377bd9b5cb1ea35e144b",
+      "targets_sha256": "69993c7c900071db14239e00730301a71a543718d7711a0d6c78e4eb5e55ba5c"
+    },
+    "validation": {
+      "rows": 9970,
+      "embedding_dim": 192,
+      "identity_sha256": "e41799bea478311446500adf02ebeef284a068e721e86359e235a73a2c286a6d",
+      "targets_sha256": "df41eac0f4d1a7871503ae7f5018834f2ce273cafe98f91e0821a6b38de955dc"
+    },
+    "test": {
+      "rows": 9954,
+      "embedding_dim": 192,
+      "identity_sha256": "907f07139b543f1913949a277044b7aecd2bd36509a9c011e831498332771896",
+      "targets_sha256": "19a960ca11dc1f9f081aa7166e737ebc10d0e56006dbe0184be38d93385bdf90"
+    }
+  }
+}

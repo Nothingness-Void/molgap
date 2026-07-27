@@ -1,0 +1,37 @@
+{
+  "format": "molgap-three-gps-holdout-v1",
+  "complete": true,
+  "graph_path": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/pyg_2d_graphs_repaired_2m.pt",
+  "graph_sha256": "2c7011880457e5583899217f05fafe81c27aeba13dde0a8bd540346f4705e9f8",
+  "graph_rows": 2000000,
+  "split_seed": 42,
+  "validation_rows": 200000,
+  "test_rows": 200000,
+  "experts": [
+    {
+      "name": "gps7",
+      "layers": 7,
+      "hidden_channels": 192,
+      "checkpoint": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/phase8_repaired_2m_d_gps7_seed42.pt",
+      "checkpoint_sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+    },
+    {
+      "name": "gps9",
+      "layers": 9,
+      "hidden_channels": 192,
+      "checkpoint": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/phase8_repaired_2m_d_gps9_seed42.pt",
+      "checkpoint_sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+    },
+    {
+      "name": "gps11_160",
+      "layers": 11,
+      "hidden_channels": 160,
+      "checkpoint": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/phase8_repaired_2m_d_gps11_160_seed42.pt",
+      "checkpoint_sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a"
+    }
+  ],
+  "payload": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/three_gps_router_seed42/holdout_predictions.pt",
+  "payload_bytes": 22402984,
+  "payload_sha256": "e45e037a9215124ef391a8f920261fbbf1febaf7c922411d81b16fd359963a3d",
+  "finite": true
+}

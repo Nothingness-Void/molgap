@@ -1,0 +1,57 @@
+{
+  "experiment": "repaired_2m_three_gps_learned_router_fusion",
+  "status": "completed_accepted_pilot_evidence",
+  "submitted_at": "2026-07-26",
+  "scnet_job_id": 709815,
+  "experts": [
+    {
+      "name": "gps7",
+      "layers": 7,
+      "hidden_channels": 192
+    },
+    {
+      "name": "gps9",
+      "layers": 9,
+      "hidden_channels": 192
+    },
+    {
+      "name": "gps11_160",
+      "layers": 11,
+      "hidden_channels": 160
+    }
+  ],
+  "base_split": {
+    "kind": "random_80_10_10",
+    "seed": 42,
+    "router_source": "base_model_validation_rows",
+    "frozen_evaluation": "base_model_test_rows"
+  },
+  "router_protocol": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "dense": "target-specific soft weights after all three encoder passes",
+    "predispatch": "GPS7 prediction plus cheap descriptors selects target experts",
+    "external_sets": [
+      "common",
+      "ood1000",
+      "p8_targeted_hard"
+    ],
+    "formal_oof_replacement": false
+  },
+  "durability": {
+    "output": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/three_gps_router_seed42/holdout_predictions.pt",
+    "completion_manifest": "/work1/share/acf9jvb3sm/molgap-results/phase8/repaired_2m_d/three_gps_router_seed42/completion_manifest.json",
+    "atomic_outputs": true
+  },
+  "source_sha256": {
+    "src/molgap/multi2d_router_fusion.py": "48a930ae5ef1c7612f9e1a199d8d2574375be4777a22ae0d73a0a9a59e998c61",
+    "scripts/phase8/evaluation/extract_three_gps_holdout.py": "b7e7e9add07b23b40bbf748752a0bc52afecfb51aeaf17e7e4e72ceb39512705",
+    "scripts/phase8/experiments/train_three_gps_router_fusion.py": "2dbf7b099ce3a82e1d28836b2733ae19e6bbd1a807445fa191099b3b420e51ab",
+    "scripts/phase8/remote/scnet/extract_phase8_repaired_2m_three_gps_holdout.slurm": "a5e6a18995a40e044eae37f4d7770cc40acd17c7f77f70827a92959853190aad"
+  },
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

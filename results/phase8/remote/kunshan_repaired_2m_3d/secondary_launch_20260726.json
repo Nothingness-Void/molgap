@@ -1,0 +1,22 @@
+{
+  "platform": "SCNet Kunshan CPU",
+  "primary_job_id": 117854186,
+  "primary_resume_job_id": 117872652,
+  "secondary_job_id": 117857094,
+  "primary_resume_dependency": "afterany:117854186",
+  "dependency": "afterok:117872652",
+  "status_at_record": "PENDING_DEPENDENCY",
+  "resources": {
+    "cpus": 32,
+    "memory_gb": 110,
+    "time_limit": "3-00:00:00",
+    "workers": 28
+  },
+  "secondary_seed": 314159,
+  "shard_count": 100,
+  "durability": "atomic 20K-row shards with per-shard reports and hashes",
+  "preconditions": [
+    "the bounded primary job exits and the 72-hour resume job completes",
+    "100 primary shards pass identity and checksum acceptance"
+  ]
+}

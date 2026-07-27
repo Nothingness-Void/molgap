@@ -1,0 +1,27 @@
+{
+  "status": "accepted",
+  "checks": {
+    "completion_status": true,
+    "graph_cache_status": true,
+    "graph_rows_reconcile": true,
+    "split_counts_match": true,
+    "official_test_unused": true,
+    "sealed_20k_unused": true,
+    "production_registry_unchanged": true,
+    "artifact_pcqm_gine_best.pt": true,
+    "artifact_pcqm_gine_last.pt": true,
+    "artifact_pcqm_gine_train_log.csv": true,
+    "artifact_pcqm_official_valid_5k_predictions.csv": true,
+    "artifact_metrics.json": true,
+    "prediction_rows": true,
+    "prediction_idx_unique": true,
+    "prediction_idx_hash": true,
+    "predictions_finite": true,
+    "absolute_errors_match": true,
+    "prediction_mae_matches": true,
+    "checkpoint_config": true,
+    "checkpoint_parameters_finite": true
+  },
+  "recomputed_official_valid_5k_gap_mae_eV": 0.1846183382536,
+  "best_checkpoint_sha256": "9b971c1c9f770b80966af38107b30da21143c75b5567879a941173afb2d5955e"
+}

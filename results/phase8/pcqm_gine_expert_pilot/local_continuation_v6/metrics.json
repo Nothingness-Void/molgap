@@ -1,0 +1,14 @@
+{
+  "experiment": "pcqm_gine_local_continuation_v6",
+  "train_rows": 229335,
+  "scaffold_dev_rows": 20662,
+  "official_valid_rows": 5000,
+  "best_epoch": 93,
+  "best_scaffold_dev_mae_eV": 0.18867129963834292,
+  "official_valid_5k_gap_mae_eV": 0.18527247314453124,
+  "delta_vs_accepted_v5_eV": -0.0020475372314453233,
+  "device": "cuda",
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

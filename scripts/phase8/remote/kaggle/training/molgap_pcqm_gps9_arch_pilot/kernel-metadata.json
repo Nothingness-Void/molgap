@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-gps9-architecture-pilot",
+  "title": "MolGap PCQM GPS9 Architecture Pilot",
+  "code_file": "pcqm_gps9_arch_pilot.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "piero0/pcqm4mv2",
+    "nothingnessvoid/molgap-pcqm4mv2-valid-5k",
+    "nothingnessvoid/molgap-pcqm-gin-v4-accepted-20260724"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

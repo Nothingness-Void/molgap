@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "metrics": {
+    "experiment": "pcqm_gine_local_scaleup_1m_v7",
+    "split_counts": {
+      "train": 917746,
+      "dev": 82240,
+      "official": 5000
+    },
+    "best_epoch": -1,
+    "best_scaffold_dev_mae_eV": 0.18892728294959793,
+    "official_valid_5k_gap_mae_eV": 0.18528798828125,
+    "delta_vs_v6_250k_eV": 1.5515136718768918e-05,
+    "device": "cuda",
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "artifacts": {
+    "pcqm_gine_best.pt": {
+      "bytes": 10116905,
+      "sha256": "b8f5c9bdfaba665e66e1554eee0e5553f087f42ed22b3f4db946208703367162"
+    },
+    "pcqm_gine_last.pt": {
+      "bytes": 30240739,
+      "sha256": "483fbaeff4b08fc5de60b86c465826f98d35234ab5c7bad58a216f79cb6c7e94"
+    },
+    "pcqm_gine_train_log.csv": {
+      "bytes": 395,
+      "sha256": "43fc0049aebf5eb6d343b4ad59d73f2b3c7f9f3ec2c645d4e9624fae613499dd"
+    },
+    "pcqm_official_valid_5k_predictions.csv": {
+      "bytes": 225060,
+      "sha256": "54e9c8b34872231b4e09c01b6ba9728d4a36543400d4cf6bda813d158ac9f6a9"
+    },
+    "metrics.json": {
+      "bytes": 444,
+      "sha256": "06efc91f27f1179165324bcca7538ad22621730edf82e084db776df86f63a1a4"
+    }
+  }
+}

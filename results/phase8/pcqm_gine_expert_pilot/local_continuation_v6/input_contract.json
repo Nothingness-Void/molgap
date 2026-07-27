@@ -1,0 +1,13 @@
+{
+  "format": "molgap-pcqm-gine-250k-local-contract-v1",
+  "source_rows": 255000,
+  "train_sample_rows": 250000,
+  "official_valid_rows": 5000,
+  "train_idx_sha256": "a7fb6eae4530ebbb64a536d4739a5d8232aeb7462fc50d7933224c8be842ba8c",
+  "valid_idx_sha256": "81c31cd49328cccacb6ab0dc2881da7351a5e81e717381566a444f3b65c34fcf",
+  "valid_label_max_abs_delta_eV": 4.66970000445599e-07,
+  "raw_csv": "D:\\\u6587\u6863\\molgap\\data\\raw\\pcqm4m-v2\\raw\\data.csv.gz",
+  "raw_csv_sha256": "ab89a4707d5e37f19c3b5e69d1c5cbb7fc1a9665d38783c0c89df6675f34286b",
+  "accepted_valid_predictions": "D:\\\u6587\u6863\\molgap\\results\\kaggle\\staging\\molgap_pcqm_gin_v5_accepted_20260726\\pcqm_official_valid_5k_predictions.csv",
+  "accepted_valid_predictions_sha256": "e83e13a643af08b09915c4633d2be6daa085d14b8d91c405ff3cf57ef7028217"
+}

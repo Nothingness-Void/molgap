@@ -1,0 +1,30 @@
+{
+  "format": "parquet",
+  "required_columns": [
+    "source_idx",
+    "fold",
+    "cid",
+    "canonical_smiles",
+    "homo",
+    "lumo",
+    "gap",
+    "gps7_homo",
+    "gps7_lumo",
+    "gps7_gap",
+    "gps9_homo",
+    "gps9_lumo",
+    "gps9_gap"
+  ],
+  "identity_key": [
+    "source_idx",
+    "cid",
+    "canonical_smiles"
+  ],
+  "one_row_per_source": true,
+  "gain_label_formula": {
+    "per_target": "abs(gps7_target - target) - abs(gps9_target - target)",
+    "average": "mean(gain_homo, gain_lumo, gain_gap)",
+    "interpretation": "positive means GPS9 improves over GPS7"
+  },
+  "training_rule": "predictions for each row must come only from its held-out fold"
+}

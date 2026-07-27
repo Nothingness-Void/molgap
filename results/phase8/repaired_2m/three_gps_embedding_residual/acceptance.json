@@ -1,0 +1,104 @@
+{
+  "experiment": "repaired_2m_three_gps_embedding_bounded_residual",
+  "status": "accepted_internal_gate",
+  "accepted_at": "2026-07-26",
+  "scnet_jobs": {
+    "embedding_tasks": [
+      {
+        "job_id": 709893,
+        "model": "gps7",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:13:17"
+      },
+      {
+        "job_id": 709889,
+        "model": "gps9",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:13:25"
+      }
+    ],
+    "residual_tasks": [
+      {
+        "job_id": 709950,
+        "seed": 42,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:30:11"
+      },
+      {
+        "job_id": 709982,
+        "seed": 43,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:30:04"
+      },
+      {
+        "job_id": 709890,
+        "seed": 44,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:28:59"
+      }
+    ]
+  },
+  "embedding_acceptance": {
+    "gps7": {
+      "rows": 2000000,
+      "parts": 40,
+      "hidden_channels": 192,
+      "bytes": 832091840,
+      "bad_parts": []
+    },
+    "gps9": {
+      "rows": 2000000,
+      "parts": 40,
+      "hidden_channels": 192,
+      "bytes": 832091840,
+      "bad_parts": []
+    },
+    "checks": [
+      "contiguous row ranges",
+      "manifest byte counts",
+      "all part SHA256 hashes",
+      "shared graph identity"
+    ]
+  },
+  "test_metrics_mean_eV": {
+    "identity_equal_gps7_gps9": {
+      "homo": 0.09600080637931824,
+      "lumo": 0.09316370137289633,
+      "gap": 0.12551713506430387,
+      "average": 0.10489388093883949
+    },
+    "bounded_residual": {
+      "homo": 0.09412238574584325,
+      "lumo": 0.0916422822109542,
+      "gap": 0.12345483741929135,
+      "average": 0.10307316845869625
+    },
+    "delta": {
+      "homo": -0.0018784206334749864,
+      "lumo": -0.0015214191619421318,
+      "gap": -0.0020622976450125293,
+      "average": -0.0018207124801432096
+    }
+  },
+  "fusion_average_mae_seed_std_eV": 0.000012304305290223585,
+  "fusion_gap_mae_seed_std_eV": 0.00001232153517179166,
+  "checkpoint_sha256": {
+    "seed42_best": "847d83a5cb708a11a88f831fdf0eca14344209e6edbef3acfa93a2f15b8335fb",
+    "seed42_last": "7fd7fcc2bc79ebe800ad79086648f97007920830b7f627b36c6e3149e9512f17",
+    "seed43_best": "5a9dee3b509232f8e67d96fe4c1a3c72d94ab69d09add5d8310ff0432ac5ce93",
+    "seed43_last": "760b6c152d512ab1ee29051315abff21dd4eddb8eb49f7b70709e09f091f8097",
+    "seed44_best": "63a55e0e21b3c3a347f10185bd62f4e700d633ec2c4f597f2033aa0300223fbc",
+    "seed44_last": "6385d3e5162f0f0df8627dbfc015d600d23fb417674dac8df5427a6f660459f2"
+  },
+  "checkpoint_loadability": true,
+  "finite_state_dicts": true,
+  "shared_contract": true,
+  "external_evaluation_required": true,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

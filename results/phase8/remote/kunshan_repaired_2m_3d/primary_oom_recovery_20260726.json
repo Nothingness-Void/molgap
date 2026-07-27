@@ -1,0 +1,50 @@
+{
+  "platform": "SCNet Kunshan CPU",
+  "failed_job_id": 117854186,
+  "failed_job_state": "CANCELLED",
+  "failed_batch_state": "OUT_OF_MEMORY",
+  "failed_at": "2026-07-26T12:29:05+08:00",
+  "elapsed": "10:39:08",
+  "accepted_progress": {
+    "shards": 36,
+    "total_shards": 100,
+    "processed_source_rows": 720000,
+    "last_completed_shard": "graphs_0700000_0720000.pt",
+    "atomic_shards_preserved": true
+  },
+  "live_failure_evidence": {
+    "allocated_cpus": 32,
+    "workers": 28,
+    "node_memory_total_gb": 129.6,
+    "node_memory_used_gb": 126.6,
+    "node_memory_available_gb": 0.77,
+    "swap_used_gb": 2.22,
+    "cpu_idle_percent": 99.5,
+    "worker_wait_channel": "futex_wait_queue"
+  },
+  "root_cause": "The parent loaded the complete original-1M PyG cache before forking 28 workers. Fork copy-on-write amplification exhausted node memory and left the pool waiting on futexes.",
+  "repair": {
+    "start_method": "spawn",
+    "imap_mode": "unordered",
+    "chunksize": 16,
+    "heartbeat_results": 1000,
+    "applies_to": [
+      "primary repaired-2M graph construction",
+      "secondary conformer construction"
+    ],
+    "local_tests": "5 passed",
+    "remote_python_compile": "passed",
+    "local_remote_sha256_match": true,
+    "code_sha256": "089d9f8db04ea70b96b99ab6a736de7bb4dcef417635f0bcae1a9610fd2889d9"
+  },
+  "resume": {
+    "job_id": 117872652,
+    "dependency_released": true,
+    "status_at_record": "PENDING_PRIORITY",
+    "time_limit": "3-00:00:00",
+    "output_directory_reused": true,
+    "expected_resume_shard": 37
+  },
+  "secondary_job_id": 117857094,
+  "secondary_dependency": "afterok:117872652"
+}

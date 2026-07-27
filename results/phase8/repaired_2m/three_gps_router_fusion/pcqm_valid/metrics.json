@@ -1,0 +1,63 @@
+{
+  "experiment": "three_gps_fusion_pcqm_valid",
+  "status": "complete",
+  "n_input": 4981,
+  "n_valid": 4981,
+  "device": "cuda",
+  "metrics": {
+    "gps7": {
+      "gap_mae_eV": 0.3091096843899338
+    },
+    "gps9": {
+      "gap_mae_eV": 0.310234598501564
+    },
+    "gps11_160": {
+      "gap_mae_eV": 0.3027993876640535
+    },
+    "equal_gps7_gps9": {
+      "gap_mae_eV": 0.30797879406051
+    },
+    "equal_three": {
+      "gap_mae_eV": 0.29960210783254126
+    },
+    "dense_soft_gate": {
+      "gap_mae_eV": 0.3021195682129812
+    }
+  },
+  "inputs": {
+    "pcqm": {
+      "path": "results\\phase8\\expansion_1m\\pcqm4mv2_valid_5k_component_predictions.csv",
+      "sha256": "b8afb8c097bbe3b9034eafaae130bde10fb891108d7935b09d6e83901f614c64"
+    },
+    "checkpoints": {
+      "gps7": {
+        "path": "models\\phase8\\phase8_repaired_2m_d_gps7_seed42.pt",
+        "sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+      },
+      "gps9": {
+        "path": "results\\phase8\\repaired_2m\\gps9_seed42_raw\\model.pt",
+        "sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+      },
+      "gps11_160": {
+        "path": "results\\phase8\\repaired_2m\\gps11_160_seed42_raw\\model.pt",
+        "sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a"
+      }
+    },
+    "dense_gates": [
+      {
+        "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed42.pt",
+        "sha256": "fde9ccbbfb947643b2c7f15c0841fd9ce00fcad77b341ec7243dfbff2c785708"
+      },
+      {
+        "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed43.pt",
+        "sha256": "b521102222a4b22b3efb8f889ad98048a97666782504708fb5aa92e78e1374e2"
+      },
+      {
+        "path": "results\\phase8\\repaired_2m\\three_gps_router_fusion\\run_seed42_44\\dense_seed44.pt",
+        "sha256": "aefdabf07e14bc694f7c8ae858597d1ce0ae8c81af120601c36d064748341f97"
+      }
+    ]
+  },
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

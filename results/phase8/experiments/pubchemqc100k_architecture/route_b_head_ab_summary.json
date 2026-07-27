@@ -1,0 +1,48 @@
+{
+  "experiment": "pubchemqc100k_route_b_precision_head_ab",
+  "candidate": "two_schnet_pass_precision",
+  "inputs": [
+    "GPS9",
+    "GPS11-160",
+    "primary SchNet",
+    "two-conformer-trained augmented SchNet with primary-view inference"
+  ],
+  "seeds": [42, 43, 44],
+  "heads": {
+    "gated": {
+      "validation_average_mae_eV": 0.13811745742956796,
+      "test_average_mae_eV": 0.13804551462332407,
+      "test_average_mae_std_eV": 0.00023830786456901005,
+      "test_homo_mae_eV": 0.12502218037843704,
+      "test_lumo_mae_eV": 0.1232950786749522,
+      "test_gap_mae_eV": 0.16581928730010986
+    },
+    "concat": {
+      "validation_average_mae_eV": 0.13784213364124298,
+      "test_average_mae_eV": 0.1376780072848002,
+      "test_average_mae_std_eV": 0.00018816968222996845,
+      "test_homo_mae_eV": 0.12529141455888748,
+      "test_lumo_mae_eV": 0.12208571036656697,
+      "test_gap_mae_eV": 0.16565688947836557
+    },
+    "bounded_residual": {
+      "validation_average_mae_eV": 0.13565697272618613,
+      "test_average_mae_eV": 0.13590122759342194,
+      "test_average_mae_std_eV": 0.0003382941868978742,
+      "test_homo_mae_eV": 0.12369784464438756,
+      "test_lumo_mae_eV": 0.12198038895924886,
+      "test_gap_mae_eV": 0.16202545166015625,
+      "base": "GPS11-160",
+      "correction_bound_eV": 0.25
+    }
+  },
+  "selected": "bounded_residual",
+  "delta_selected_vs_gated": {
+    "validation_average_mae_eV": -0.00246048470338183,
+    "test_average_mae_eV": -0.00214428702990213,
+    "test_gap_mae_eV": -0.00379383563995361
+  },
+  "all_three_seeds_improve_test_average": true,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

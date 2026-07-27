@@ -1,0 +1,72 @@
+{
+  "experiment": "pubchemqc100k_architecture_screen",
+  "status": "2d_complete_second_conformer_accepted",
+  "scnet_jobs": {
+    "graph_subset": 709051,
+    "gps7": 709052,
+    "gps9": 709053,
+    "gps11_160": 709054
+  },
+  "split": {
+    "sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+    "train": 100003,
+    "validation": 10000,
+    "test": 9997,
+    "scaffold_disjoint": true
+  },
+  "gps_results": {
+    "gps7": {
+      "best_validation_average_mae_eV": 0.14211774320602416,
+      "test_average_mae_eV": 0.1437689463297526,
+      "test_gap_mae_eV": 0.17250221967697144,
+      "parameters": 2918787,
+      "training_time_s": 970.4475357532501,
+      "model_sha256": "9da00133b5d681bb54a3bb71e713fb81d92e7e29adfc98b9bd434b63f0781645",
+      "embeddings_sha256": "5a2cbd831398f246970e2509f273d458e2a3404738dea7d1b91d789801abe9b4"
+    },
+    "gps9": {
+      "best_validation_average_mae_eV": 0.14264464473724364,
+      "test_average_mae_eV": 0.14428775509198508,
+      "test_gap_mae_eV": 0.17155303061008453,
+      "parameters": 3735939,
+      "training_time_s": 1178.461655139923,
+      "model_sha256": "351e12b9f842cde61b05aed4cd6911321fce7f131e84e2b89ceb6d2421e2aa36",
+      "embeddings_sha256": "945d2baff6ccfe9ad2dc48ba38e57d9dfa28d3a1eaf1eb5810a8d0c5e1a3436b"
+    },
+    "gps11_160": {
+      "best_validation_average_mae_eV": 0.14036226329803467,
+      "test_average_mae_eV": 0.14246927698453268,
+      "test_gap_mae_eV": 0.17104046046733856,
+      "parameters": 3167043,
+      "training_time_s": 1367.0779962539673,
+      "model_sha256": "b95f55e774cac486731edbc7618c12be12495a0303164515dd9754286996429f",
+      "embeddings_sha256": "c9347c7942aa11a55acf25abfb5e075a1dfae5754e6d3a0bab50adc827f4875b"
+    }
+  },
+  "pure_2d_winner": "gps11_160",
+  "second_conformer": {
+    "kaggle_kernel_version": 3,
+    "requested": 120000,
+    "succeeded": 119602,
+    "failed": 398,
+    "success_rate": 0.9966833333333334,
+    "unique_source_idx": true,
+    "finite_labels_and_coordinates": true,
+    "accepted_split_rows": {
+      "train": 99674,
+      "validation": 9971,
+      "test": 9957
+    },
+    "parts": 24,
+    "part_sha256_verified": true
+  },
+  "schnet_contract": {
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "legacy_192_192_6_allowed": false
+  },
+  "next_gate": "train primary-conformer and two-view lightweight SchNet under the fixed split, then evaluate validation-selected fusion",
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

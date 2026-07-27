@@ -1,0 +1,39 @@
+{
+  "status": "complete",
+  "metrics": {
+    "experiment": "pcqm_gine_local_continuation_v6",
+    "train_rows": 229335,
+    "scaffold_dev_rows": 20662,
+    "official_valid_rows": 5000,
+    "best_epoch": 93,
+    "best_scaffold_dev_mae_eV": 0.18867129963834292,
+    "official_valid_5k_gap_mae_eV": 0.18527247314453124,
+    "delta_vs_accepted_v5_eV": -0.0020475372314453233,
+    "device": "cuda",
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "artifacts": {
+    "pcqm_gine_best.pt": {
+      "bytes": 10116777,
+      "sha256": "973eb9d74dd02327a96356fc6da84914c5dc95e5383af64beaa04ea0ef231ba3"
+    },
+    "pcqm_gine_last.pt": {
+      "bytes": 30241827,
+      "sha256": "280cd52062b5b345a856682263dd28d48bbfc7b53d207a405787ce1aa8b154c9"
+    },
+    "pcqm_gine_train_log.csv": {
+      "bytes": 5582,
+      "sha256": "28e106aa10066eb060137339051c8578b6a6300105247e807ae56be9beb091c9"
+    },
+    "pcqm_official_valid_5k_predictions.csv": {
+      "bytes": 225060,
+      "sha256": "462255bf77287a79e2ef5a15dccef49bc9f9b1659448fea586fca165736eaa2d"
+    },
+    "metrics.json": {
+      "bytes": 451,
+      "sha256": "95275d6972270c9b1863bf6be8a9f3e2a95adf69c4a5e5baf351c6b3883115e3"
+    }
+  }
+}

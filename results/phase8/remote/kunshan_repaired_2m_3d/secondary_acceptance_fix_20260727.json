@@ -1,0 +1,71 @@
+{
+  "incident": "repaired_2m_primary_graph_acceptance_missing_graph_cid",
+  "date": "2026-07-27",
+  "failed_job": {
+    "job_id": 117857094,
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:01:47",
+    "stage": "primary_graph_acceptance_before_secondary_construction",
+    "error": "GlobalStorage has no attribute cid"
+  },
+  "diagnosis": {
+    "graph_cache_corruption": false,
+    "cause": "The acceptance code required cid and SMILES attributes that the repaired-2M graph contract does not store. Graph identity is source_idx plus the immutable source CSV.",
+    "secondary_shards_started": false
+  },
+  "fix": {
+    "identity_source": "source_csv_by_source_idx",
+    "checks": [
+      "source_idx bounds and uniqueness",
+      "source CSV CID uniqueness",
+      "optional embedded CID and SMILES agreement",
+      "finite positions and labels",
+      "three-target alignment to source CSV",
+      "sidecar row reconciliation",
+      "per-shard SHA256"
+    ],
+    "local_tests": "11 passed",
+    "local_remote_source_sha256": "c5112f6c64d4fd185280e27cdc34f39b4038ccf2884c2b10b0b20f7ef31161b5",
+    "remote_python38_compile": true
+  },
+  "replacement_job": {
+    "job_id": 117950883,
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:02:39",
+    "stage": "primary_graph_acceptance_before_secondary_construction",
+    "error": "The validator searched for sidecars beside graph files, but the builder stores all 100 sidecars under graph_shards/reports.",
+    "preserves_primary_shards": true,
+    "secondary_shards_started": false
+  },
+  "verified_remote_schema": {
+    "graph_parts": 100,
+    "sidecars": 100,
+    "sidecar_directory": "graph_shards/reports",
+    "sidecar_fields": [
+      "status",
+      "start",
+      "stop",
+      "requested",
+      "reused",
+      "built",
+      "failed",
+      "failure_source_idx",
+      "graphs",
+      "path",
+      "bytes",
+      "sha256"
+    ]
+  },
+  "acceptance_only_job": {
+    "job_id": 117958648,
+    "state": "RUNNING",
+    "compute_node": "a02r3n10",
+    "peak_rss_observed_bytes": 2804301824,
+    "builds_secondary_graphs": false,
+    "required_before_secondary_resubmission": true
+  },
+  "production_registry_changed": false,
+  "sealed_20k_used": false
+}

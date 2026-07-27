@@ -1,0 +1,23 @@
+{
+  "experiment": "route_b_fusion_local_smoke",
+  "status": "passed",
+  "input": "synthetic identity-aligned frozen embeddings",
+  "candidate": "minimal",
+  "input_dimensions": {
+    "gps9": 7,
+    "schnet_primary": 5,
+    "schnet_augmented": 6
+  },
+  "checks": {
+    "full_train_validation_test_flow": true,
+    "different_embedding_dimensions": true,
+    "best_checkpoint_written": true,
+    "last_checkpoint_written": true,
+    "atomic_training_log_written": true,
+    "resume_contract_validated": true,
+    "second_epoch_resumed": true
+  },
+  "test": "tests/test_route_b_fusion.py::test_route_b_fusion_end_to_end_and_resume",
+  "production_registry_changed": false,
+  "remote_job_submitted": false
+}

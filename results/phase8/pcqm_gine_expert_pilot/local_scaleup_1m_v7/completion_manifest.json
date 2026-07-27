@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "metrics": {
+    "experiment": "pcqm_gine_local_scaleup_1m_v7",
+    "split_counts": {
+      "train": 917746,
+      "dev": 82240,
+      "official": 5000
+    },
+    "best_epoch": -1,
+    "best_scaffold_dev_mae_eV": 0.18892850563335975,
+    "official_valid_5k_gap_mae_eV": 0.18526688232421876,
+    "delta_vs_v6_250k_eV": -5.590820312484368e-06,
+    "device": "cuda",
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "artifacts": {
+    "pcqm_gine_best.pt": {
+      "bytes": 10116905,
+      "sha256": "80b4bba4c055286e5491016956e1bd071c3321477253b49f8130329910684c2b"
+    },
+    "pcqm_gine_last.pt": {
+      "bytes": 30240739,
+      "sha256": "c6e8df6bf8cff4b5d02ae4f4aac454b405537d7341047bef77ab5ff1d4acc0a8"
+    },
+    "pcqm_gine_train_log.csv": {
+      "bytes": 395,
+      "sha256": "1df2c6e2b40fd71ca0d4139937b96fd2935487275a634ada1087499351396535"
+    },
+    "pcqm_official_valid_5k_predictions.csv": {
+      "bytes": 225060,
+      "sha256": "3e6adc5cca14f234cbb03893c89e40c3374d701babb131c06e2f58fa8405c140"
+    },
+    "metrics.json": {
+      "bytes": 447,
+      "sha256": "355b559817a657a9c5e81f240668115aac70c0cb864efd21243b58258faad299"
+    }
+  }
+}

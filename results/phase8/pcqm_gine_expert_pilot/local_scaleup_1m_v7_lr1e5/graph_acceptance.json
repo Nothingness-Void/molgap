@@ -1,0 +1,563 @@
+{
+  "format": "molgap-pcqm-packed-graph-cache-v1",
+  "status": "complete",
+  "source_rows": 1005000,
+  "processed_rows": 1005000,
+  "accepted_rows": 1004986,
+  "invalid_rows": 14,
+  "invalid_source_idx": [
+    142541,
+    155174,
+    155180,
+    411357,
+    2064546,
+    2100882,
+    2119947,
+    2539039,
+    2980839,
+    2992920,
+    3003839,
+    3132432,
+    3143920,
+    3208535
+  ],
+  "split_counts": {
+    "train": 917746,
+    "dev": 82240,
+    "official": 5000
+  },
+  "source_shards": [
+    {
+      "source_begin": 0,
+      "source_end": 25000,
+      "counts": {
+        "train": 23123,
+        "dev": 1877,
+        "official": 0
+      },
+      "files": {
+        "train_shard_000.pt": "3be68743d04dd06da4c2eab9c7e61a6586adda20a33a283f2b15c9c08efff206",
+        "dev_shard_000.pt": "f6b2fd6a8de5e8ec4254e927a1951d3c3f8de4ae4b7041bc97ac78f9b799e1fc"
+      }
+    },
+    {
+      "source_begin": 25000,
+      "source_end": 50000,
+      "counts": {
+        "train": 23098,
+        "dev": 1899,
+        "official": 0
+      },
+      "files": {
+        "train_shard_001.pt": "6de8bf8a339bbbd461ad541ed7eb8875fcdef332b04ba7a5939b17b2241889da",
+        "dev_shard_001.pt": "d8fc81e0c67a08bc255da4a3db93a316a090226aed4d5626bc7f8233cbb74b38"
+      }
+    },
+    {
+      "source_begin": 50000,
+      "source_end": 75000,
+      "counts": {
+        "train": 23119,
+        "dev": 1881,
+        "official": 0
+      },
+      "files": {
+        "train_shard_002.pt": "cf9ae81f43bd4cab96dc50d03bc5ef3595a9f952e7dc9b004e5823170c80f1f2",
+        "dev_shard_002.pt": "a5611a2538b3cf6f357a4fe4853ff7824cff0a91e5e3234c516b04ea432f2426"
+      }
+    },
+    {
+      "source_begin": 75000,
+      "source_end": 100000,
+      "counts": {
+        "train": 22991,
+        "dev": 2009,
+        "official": 0
+      },
+      "files": {
+        "train_shard_003.pt": "a1c6c285d9aabbddcdd031b1bd692495272a8a1fa3d9d428ce5e3be40d86e013",
+        "dev_shard_003.pt": "a039cac9de51d547d964dea0a665d18f4146a06f2c53187fb80b97955d2dc6f1"
+      }
+    },
+    {
+      "source_begin": 100000,
+      "source_end": 125000,
+      "counts": {
+        "train": 22802,
+        "dev": 2197,
+        "official": 0
+      },
+      "files": {
+        "train_shard_004.pt": "30f66cb67283bfd841ed9945718b5cc264c66591253a539472f726cb919b14d7",
+        "dev_shard_004.pt": "827870477062a7113ab626d35b6b029190bbe621d2ced0a87b84a5570957a02c"
+      }
+    },
+    {
+      "source_begin": 125000,
+      "source_end": 150000,
+      "counts": {
+        "train": 22934,
+        "dev": 2066,
+        "official": 0
+      },
+      "files": {
+        "train_shard_005.pt": "c659a5ca8580ad456bacdee1d03ddc26a8ed06d6e0f99a07a6b8c727d1873369",
+        "dev_shard_005.pt": "2981539fe3e0e59c2ebc1a7b59ca8be51aa63a79f12ff3b306542c13ef1a4364"
+      }
+    },
+    {
+      "source_begin": 150000,
+      "source_end": 175000,
+      "counts": {
+        "train": 23040,
+        "dev": 1960,
+        "official": 0
+      },
+      "files": {
+        "train_shard_006.pt": "1d5f25ca1bd6d1723bccf39119b144d94e1a1eacda66802137fbd28998212de1",
+        "dev_shard_006.pt": "aa151fe59348f89bce1f55bbb605f7b7899337558126990c31feb538a2ca14c3"
+      }
+    },
+    {
+      "source_begin": 175000,
+      "source_end": 200000,
+      "counts": {
+        "train": 22773,
+        "dev": 2227,
+        "official": 0
+      },
+      "files": {
+        "train_shard_007.pt": "5e1465f228ad1e496fd10143525da21e337279aa288cde6d4ef6f9be3d4107c2",
+        "dev_shard_007.pt": "ee457e1e9d09739ffb475ad6c6f731ce5b8a2cbc09f8e8cd1f1534c0a42aac87"
+      }
+    },
+    {
+      "source_begin": 200000,
+      "source_end": 225000,
+      "counts": {
+        "train": 22943,
+        "dev": 2057,
+        "official": 0
+      },
+      "files": {
+        "train_shard_008.pt": "425bb38a2bed0c6af294f3f7f8915f77c5ba7fc08c09ecc3c418ccf2090d129a",
+        "dev_shard_008.pt": "9711c0d92dafbbd6eaa5082a734bdd4288d7467290dda1ae0a558235256d4460"
+      }
+    },
+    {
+      "source_begin": 225000,
+      "source_end": 250000,
+      "counts": {
+        "train": 22869,
+        "dev": 2131,
+        "official": 0
+      },
+      "files": {
+        "train_shard_009.pt": "7fcc4a3334a48e9a38451270713c2aee77752f5325bc8e07ed3681c91950e962",
+        "dev_shard_009.pt": "ed475c2df69fa343da5495bf92135fd879bcbcb865d02888d4a781609754ea4f"
+      }
+    },
+    {
+      "source_begin": 250000,
+      "source_end": 275000,
+      "counts": {
+        "train": 22675,
+        "dev": 2325,
+        "official": 0
+      },
+      "files": {
+        "train_shard_010.pt": "57fe94d5b179340bbc34f52abd12de8a704dabf19f620fb74262d4bcca1bf5b5",
+        "dev_shard_010.pt": "2a9737950322e15a71e8dd3f294895372ee1e22a1632642e8eb57071b7ef4551"
+      }
+    },
+    {
+      "source_begin": 275000,
+      "source_end": 300000,
+      "counts": {
+        "train": 22798,
+        "dev": 2202,
+        "official": 0
+      },
+      "files": {
+        "train_shard_011.pt": "2665d7150523930bdddc8256c4311dc85b17de6a689e756710ed6939e29b5a8d",
+        "dev_shard_011.pt": "f3420db204603b070ba3e1cff797d45324b5196905d62fea72f5cab446b66d54"
+      }
+    },
+    {
+      "source_begin": 300000,
+      "source_end": 325000,
+      "counts": {
+        "train": 22764,
+        "dev": 2236,
+        "official": 0
+      },
+      "files": {
+        "train_shard_012.pt": "fc9273bd3a417e521b5ce7865bda3e8e0b3688c7423b2f18686ef2693b8d609b",
+        "dev_shard_012.pt": "46ea3c5af4fb233f2e32b3bc4cbd5863b819e1672f22ff637b125d6495b2d85d"
+      }
+    },
+    {
+      "source_begin": 325000,
+      "source_end": 350000,
+      "counts": {
+        "train": 22470,
+        "dev": 2530,
+        "official": 0
+      },
+      "files": {
+        "train_shard_013.pt": "b485ad461d56402db97615fdb8d03d1d569299d26d2f5c5f793dd2eb0fae4907",
+        "dev_shard_013.pt": "d7b50ca3614590f886686f7665bb208db1e9c045282d35f3f9021d3abd35b046"
+      }
+    },
+    {
+      "source_begin": 350000,
+      "source_end": 375000,
+      "counts": {
+        "train": 22803,
+        "dev": 2197,
+        "official": 0
+      },
+      "files": {
+        "train_shard_014.pt": "9478b26b675acb9a641385c5fd18866e5995892eea95bd2b30f8bb296a81fda1",
+        "dev_shard_014.pt": "73bab4310e0a459e06451cee3bb3cac23a4936c05eb439f99314a2da23cce64d"
+      }
+    },
+    {
+      "source_begin": 375000,
+      "source_end": 400000,
+      "counts": {
+        "train": 22852,
+        "dev": 2148,
+        "official": 0
+      },
+      "files": {
+        "train_shard_015.pt": "0629294fa3b94445868847d29309d68340d70d4ce4b27544f83ea438771f5999",
+        "dev_shard_015.pt": "528f64abe87ccdcb763ed34f40576df227b7ea052a6d18111582a9ee24d854fd"
+      }
+    },
+    {
+      "source_begin": 400000,
+      "source_end": 425000,
+      "counts": {
+        "train": 22833,
+        "dev": 2167,
+        "official": 0
+      },
+      "files": {
+        "train_shard_016.pt": "0d00c96ae50f85787016a9a4ce6067ff885f4ecdfa61b374cf32de1326b25bf2",
+        "dev_shard_016.pt": "3e40be969b924d804b37d9a118e7095f58dca3c0ab4238f47b3b74462d8f504f"
+      }
+    },
+    {
+      "source_begin": 425000,
+      "source_end": 450000,
+      "counts": {
+        "train": 22680,
+        "dev": 2320,
+        "official": 0
+      },
+      "files": {
+        "train_shard_017.pt": "ea447262ae8cfc83f4a8c0c5dc79595fe1b50f69285d01f04d427c0801c9aa12",
+        "dev_shard_017.pt": "ac712b1e718b6fb3a92981c732da59e8ed4026875ada1a3421e1c0e4a2a08381"
+      }
+    },
+    {
+      "source_begin": 450000,
+      "source_end": 475000,
+      "counts": {
+        "train": 22856,
+        "dev": 2144,
+        "official": 0
+      },
+      "files": {
+        "train_shard_018.pt": "0a8a0dabc0218a28bbeb216174eefb519ed0f3e24d4b62c0d9a1e60f0755d400",
+        "dev_shard_018.pt": "1ac0e0d3c1fa9cb6d9c785db4bf90a7be7fa0fdf1f06ab08fbeeecdd557459d1"
+      }
+    },
+    {
+      "source_begin": 475000,
+      "source_end": 500000,
+      "counts": {
+        "train": 22947,
+        "dev": 2053,
+        "official": 0
+      },
+      "files": {
+        "train_shard_019.pt": "6dda23602dcd1bbe97835c64296687087359c1aa98160b7d4792e7c953f13766",
+        "dev_shard_019.pt": "5f4c869dac5fcb6ce3ea0eedbe287c588bc5c6f24e3ec884cb73993ede23449f"
+      }
+    },
+    {
+      "source_begin": 500000,
+      "source_end": 525000,
+      "counts": {
+        "train": 22868,
+        "dev": 2132,
+        "official": 0
+      },
+      "files": {
+        "train_shard_020.pt": "b2378e1ad1cdb1b7debb2425c50fb3b71e88e91ed22d0a58d544bbbccda799ae",
+        "dev_shard_020.pt": "7299370f632eb6e8486003a1b43f71caa4c7eeaeddd941f1c2faf358444293b4"
+      }
+    },
+    {
+      "source_begin": 525000,
+      "source_end": 550000,
+      "counts": {
+        "train": 22698,
+        "dev": 2302,
+        "official": 0
+      },
+      "files": {
+        "train_shard_021.pt": "d6dbeb833f8a173b8c2a7196c7edd855bd087491eae1b6324fa6193574d66cc9",
+        "dev_shard_021.pt": "e20a1e596de41fb40e356c94f17a9a5adaa7b4ac38ae42b827f3f90d8d215192"
+      }
+    },
+    {
+      "source_begin": 550000,
+      "source_end": 575000,
+      "counts": {
+        "train": 23005,
+        "dev": 1995,
+        "official": 0
+      },
+      "files": {
+        "train_shard_022.pt": "77ac35d7d3cb740c439bff0329a5de9270bc31d15f07dbfb5940a591c17bf7f7",
+        "dev_shard_022.pt": "330539edd35313dde14fdfb56f12d4220e23444b2b69a3c75e1b7ee0ac5c08ec"
+      }
+    },
+    {
+      "source_begin": 575000,
+      "source_end": 600000,
+      "counts": {
+        "train": 23207,
+        "dev": 1793,
+        "official": 0
+      },
+      "files": {
+        "train_shard_023.pt": "f10563048a983fc837734ac59be4e4ed2e661d7c4e237fc0462071c0a7f554c9",
+        "dev_shard_023.pt": "34813ca9fceb7e5be70512ad50a89ebe948a777792858fc1252338de30c55ecc"
+      }
+    },
+    {
+      "source_begin": 600000,
+      "source_end": 625000,
+      "counts": {
+        "train": 22975,
+        "dev": 2023,
+        "official": 0
+      },
+      "files": {
+        "train_shard_024.pt": "1b81a092878db5ae63f7892a0664875ccbf3f47659d37cd1c147e7e914eb836b",
+        "dev_shard_024.pt": "468bbef3773414c02ed460eedddd1e906be2e0d45aae21b384d70fe03bb9c74f"
+      }
+    },
+    {
+      "source_begin": 625000,
+      "source_end": 650000,
+      "counts": {
+        "train": 23075,
+        "dev": 1924,
+        "official": 0
+      },
+      "files": {
+        "train_shard_025.pt": "badeb74baa821a9f25b096d7e16cbf457bc008ac8bd9acc72ac2d9ea15a1e885",
+        "dev_shard_025.pt": "d6094c27887852d3327d4df53226a65f03bd3d99c4652650ae8ab741a3bdb8ed"
+      }
+    },
+    {
+      "source_begin": 650000,
+      "source_end": 675000,
+      "counts": {
+        "train": 22939,
+        "dev": 2061,
+        "official": 0
+      },
+      "files": {
+        "train_shard_026.pt": "cb9af41b2c60e361e12bf0f717ec35026ef708db594ac365ba7ff09683190ac7",
+        "dev_shard_026.pt": "5cd845981116d846ebd2b10a2a8cfea51582e06ea80f1beab27f607bcc76acd5"
+      }
+    },
+    {
+      "source_begin": 675000,
+      "source_end": 700000,
+      "counts": {
+        "train": 22853,
+        "dev": 2147,
+        "official": 0
+      },
+      "files": {
+        "train_shard_027.pt": "2aee629ff7d034637d7001462c4c45caf59e0927ba434aa6c7ac52f46f24b0f8",
+        "dev_shard_027.pt": "56f411c3e3cc17bc6ce606eb44425a4a40d4f647aa760818560f7fb703933373"
+      }
+    },
+    {
+      "source_begin": 700000,
+      "source_end": 725000,
+      "counts": {
+        "train": 22986,
+        "dev": 2014,
+        "official": 0
+      },
+      "files": {
+        "train_shard_028.pt": "cc4515279422ba0b0097e81658c396de6f258f8dd96f3e8c72276050a612e504",
+        "dev_shard_028.pt": "4355436c9c9a75e583eb8f4698281fd532f0db335e1cfb8b78ef4a74370eea0a"
+      }
+    },
+    {
+      "source_begin": 725000,
+      "source_end": 750000,
+      "counts": {
+        "train": 23109,
+        "dev": 1891,
+        "official": 0
+      },
+      "files": {
+        "train_shard_029.pt": "47497c70ce9e77ab71c278dae2dc490d06caa2346ad391947820929485b11f4d",
+        "dev_shard_029.pt": "2423871b4771e5dde04f254eebf3b081a2a7fb30a76c11df2bd09d4897203b58"
+      }
+    },
+    {
+      "source_begin": 750000,
+      "source_end": 775000,
+      "counts": {
+        "train": 23144,
+        "dev": 1855,
+        "official": 0
+      },
+      "files": {
+        "train_shard_030.pt": "4e8dc2f69f21f8b74227be3ec0143bd5d086b7d2667a6d2571e0e2515036cfe1",
+        "dev_shard_030.pt": "93468398617c3d5bef69a2f5f16cbf1cfe9235ce7666c81369923e5e7e2168be"
+      }
+    },
+    {
+      "source_begin": 775000,
+      "source_end": 800000,
+      "counts": {
+        "train": 23000,
+        "dev": 2000,
+        "official": 0
+      },
+      "files": {
+        "train_shard_031.pt": "76eb51b42f9f95411675451e152f33055a1c381bbdb14e6ed05f34e76848adfd",
+        "dev_shard_031.pt": "7720d0f603d29712072520c650ca558871c4be58327ab6413ee06bc70029de85"
+      }
+    },
+    {
+      "source_begin": 800000,
+      "source_end": 825000,
+      "counts": {
+        "train": 22901,
+        "dev": 2099,
+        "official": 0
+      },
+      "files": {
+        "train_shard_032.pt": "a77d2809a5e7c4db4738c66ab8273f59f63af7bbac85e0feb194b5b24840f55d",
+        "dev_shard_032.pt": "f761e38b7d95c43b52650d63632ce5d98f5f1cfe8b7cd54b021c50504f32c2bf"
+      }
+    },
+    {
+      "source_begin": 825000,
+      "source_end": 850000,
+      "counts": {
+        "train": 23121,
+        "dev": 1879,
+        "official": 0
+      },
+      "files": {
+        "train_shard_033.pt": "ce0d06f738a854abc93305c80120c0850690d1644029ccaeb553d155da13eb6a",
+        "dev_shard_033.pt": "5d6a1f0bc9b0afeab2de3a6502d3d13d7a401cab9dc7be4afc6c2f30b761bcba"
+      }
+    },
+    {
+      "source_begin": 850000,
+      "source_end": 875000,
+      "counts": {
+        "train": 23080,
+        "dev": 1920,
+        "official": 0
+      },
+      "files": {
+        "train_shard_034.pt": "d51534b6e5a362756472502519fc25519866607d9bc02ea381a585ce59dc7d17",
+        "dev_shard_034.pt": "3f6e33ad12cb0c503da5a1bfe3a1faf9e8755cf15884b5e6241ce34378c640b5"
+      }
+    },
+    {
+      "source_begin": 875000,
+      "source_end": 900000,
+      "counts": {
+        "train": 23028,
+        "dev": 1969,
+        "official": 0
+      },
+      "files": {
+        "train_shard_035.pt": "ac7518b3a58c88f148afb45c86156056c52ca13d302b17c09946ff56bebf59a8",
+        "dev_shard_035.pt": "e9ffdcad34d40a3ae36fd786c4e3a733ca1f5b720159ff5cf6856e842669a4c7"
+      }
+    },
+    {
+      "source_begin": 900000,
+      "source_end": 925000,
+      "counts": {
+        "train": 23021,
+        "dev": 1979,
+        "official": 0
+      },
+      "files": {
+        "train_shard_036.pt": "d2786317f0d327ea3627d3d4aa45c75206a3cb55163225d4a7f7b557d288b9f8",
+        "dev_shard_036.pt": "b316882983b7037bdb69abb4d381814a6ae474c9dcfdf651515ebdd849d3b8fd"
+      }
+    },
+    {
+      "source_begin": 925000,
+      "source_end": 950000,
+      "counts": {
+        "train": 23040,
+        "dev": 1957,
+        "official": 0
+      },
+      "files": {
+        "train_shard_037.pt": "d2a0824e87b7213ee0794bd53118ae9fc0f663cc24fdcef1286bea689ccbc42d",
+        "dev_shard_037.pt": "a612620e0df6d128d2a80df25f774f4039e5a7cffa79c821de5344cfff205525"
+      }
+    },
+    {
+      "source_begin": 950000,
+      "source_end": 975000,
+      "counts": {
+        "train": 23155,
+        "dev": 1845,
+        "official": 0
+      },
+      "files": {
+        "train_shard_038.pt": "a4f9a22f6cbaf885ab898d324dd20dc3f22201dc76b45c3d0683d71e5dfeeeaf",
+        "dev_shard_038.pt": "b91bcdedcc777257762224c04ef5989ffa9daa0c96c00d51e4717eccc1b82035"
+      }
+    },
+    {
+      "source_begin": 975000,
+      "source_end": 1000000,
+      "counts": {
+        "train": 23171,
+        "dev": 1829,
+        "official": 0
+      },
+      "files": {
+        "train_shard_039.pt": "d95e4889322b748d292f2b34875db226a21a7c6f05e687f525559954d8478f22",
+        "dev_shard_039.pt": "f96be4dd196546bc9e9e9e70e64f98061cdad1a5b4bde1e399d63a4659b4f071"
+      }
+    },
+    {
+      "source_begin": 1000000,
+      "source_end": 1005000,
+      "counts": {
+        "train": 0,
+        "dev": 0,
+        "official": 5000
+      },
+      "files": {
+        "official_shard_040.pt": "dd5768c1c91a39a8e27a765a455e9c88210c7f96f32775ec4f17f4bfe2861d53"
+      }
+    }
+  ]
+}
