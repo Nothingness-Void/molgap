@@ -30,5 +30,16 @@ An experiment CLI resolves paths from `molgap.constants` roots, never from
 `Path(__file__).parents[n]`; `tests/test_repository_layout.py` enforces this so a
 future move cannot silently break an entrypoint.
 
+## File roles inside an experiment
+
+| File | Holds |
+|---|---|
+| `decision.md` | What the experiment concluded. The entry point. |
+| `STATUS.md` | Live operational state of its remote jobs, when it has any |
+| `results/REMOTE_LOG.md` | Finished remote rounds, so `CURRENT_STATE.md` need not restate them |
+| `results/*.json` | Exact metrics behind the decision |
+
+`CURRENT_STATE.md` lists only running or blocked work and links here for the rest.
+
 Live status and the recommended model are in `CURRENT_STATE.md`; task order is in
 `ROADMAP.md`. Compute-environment adapters are in `platforms/`.

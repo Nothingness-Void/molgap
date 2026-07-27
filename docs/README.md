@@ -1,7 +1,9 @@
 # Docs
 
-Dated narrative history and operational runbooks. Nothing here is live status or
-the code map:
+Operational runbooks and superseded narrative. The phase-1-7 narrative moved to
+`production/history/`, and method contracts moved beside the work they describe,
+so this directory is now small on purpose. Nothing here is live status or the code
+map:
 
 | Question | Read instead |
 |---|---|
