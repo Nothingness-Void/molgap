@@ -1,0 +1,97 @@
+{
+  "experiment": "pcqm_route_b_precision_1m",
+  "status": "graph_cache_accepted_remote_assets_publishing",
+  "handoff": "results/phase8/pcqm_route_b_1m/HANDOFF.md",
+  "execution_strategy": {
+    "graph_build": "local Ryzen 9700X CPU",
+    "graph_publication": "private immutable Kaggle datasets after local acceptance",
+    "gpu_platform": "Kaggle",
+    "verified_parallelism": 2,
+    "wave_1": [
+      "gps9_pcqm_continuation",
+      "augmented_schnet_pcqm_continuation"
+    ],
+    "wave_2": [
+      "gps11_160_pcqm_continuation",
+      "primary_schnet_pcqm_continuation"
+    ],
+    "fusion_trigger": "all four encoder outputs independently accepted and published"
+  },
+  "objective": "Measure the PCQM-only ceiling of the accepted Route B precision architecture on the same nested 1M sample as GINE v7.",
+  "architecture": {
+    "identity": "GPS11-160",
+    "correction_inputs": [
+      "GPS9-192",
+      "primary SchNet-176/160/6",
+      "two-conformer-trained SchNet-176/160/6"
+    ],
+    "fusion": "bounded residual",
+    "correction_bound_eV": 0.1,
+    "inference_3d_passes": 2
+  },
+  "pcqm_adaptation": {
+    "target": "Gap only",
+    "train_sample_rows": 1000000,
+    "fixed_official_valid_rows": 5000,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false,
+    "expanded_2d_atom_list": [
+      6,
+      7,
+      8,
+      9,
+      16,
+      17,
+      15,
+      35,
+      14,
+      5,
+      34,
+      32,
+      33,
+      12,
+      2
+    ]
+  },
+  "stages": [
+    {
+      "name": "aligned_graph_cache",
+      "status": "accepted",
+      "manifest": "data/cache/phase8/pcqm_route_b_1m/manifest.json",
+      "acceptance": "results/phase8/pcqm_route_b_1m/graph_acceptance.json",
+      "stdout": "results/phase8/pcqm_route_b_1m/build_stdout.log",
+      "stderr": "results/phase8/pcqm_route_b_1m/build_stderr.log"
+    },
+    {
+      "name": "gps9_pcqm_continuation",
+      "status": "queued_waiting_for_gpu_slot",
+      "warm_start": "results/phase8/repaired_2m/gps9_seed42_raw/model.pt"
+    },
+    {
+      "name": "gps11_160_pcqm_continuation",
+      "status": "package_ready_wave_2",
+      "warm_start": "results/phase8/repaired_2m/gps11_160_seed42_raw/model.pt"
+    },
+    {
+      "name": "primary_schnet_pcqm_continuation",
+      "status": "package_ready_wave_2_pending_primary_dataset",
+      "warm_start": "results/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt"
+    },
+    {
+      "name": "augmented_schnet_pcqm_continuation",
+      "status": "queued_waiting_for_3d_datasets_and_gpu_slot",
+      "warm_start": "results/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt"
+    },
+    {
+      "name": "bounded_residual_fusion",
+      "status": "blocked_on_four_encoder_embeddings"
+    }
+  ],
+  "stopping_rules": {
+    "per_encoder_wall_time_hours": 12,
+    "selection": "scaffold development only",
+    "official_valid": "read once after the full architecture is frozen",
+    "promotion": "must beat PCQM GINE v7 fixed-valid MAE 0.1846183411 eV"
+  }
+}

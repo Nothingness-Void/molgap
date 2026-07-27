@@ -1,0 +1,26 @@
+{
+  "format": "molgap-pcqm-route-b-graph-acceptance-v1",
+  "state": "accepted",
+  "accepted_at": "2026-07-27T02:21:06+09:00",
+  "manifest": "data/cache/phase8/pcqm_route_b_1m/manifest.json",
+  "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae",
+  "source_rows": 1005000,
+  "processed_rows": 1005000,
+  "accepted_rows": 1001954,
+  "failed_rows": 3046,
+  "failure_rate": 0.003031,
+  "split_counts": {
+    "train": 915012,
+    "dev": 81961,
+    "official": 4981
+  },
+  "shard_count": 201,
+  "declared_graph_files": 1203,
+  "missing_graph_files": 0,
+  "sha256_mismatches": 0,
+  "cache_size_gib": 3.313,
+  "test": {
+    "command": ".venv\\Scripts\\python.exe -m pytest tests/test_pcqm_route_b.py -q",
+    "result": "1 passed"
+  }
+}

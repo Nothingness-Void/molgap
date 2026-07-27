@@ -1,0 +1,17 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-route-b-gps11-160-1m-r1-20260727",
+  "title": "MolGap PCQM Route B gps11_160 1M R1 20260727",
+  "code_file": "run_route_b_encoder.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm-route-b-gps-1m-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-warmstarts-20260727"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
