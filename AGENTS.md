@@ -31,6 +31,10 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
 - **Remote durability**: every cloud job MUST checkpoint progress atomically and
   produce independently retrievable output chunks. Never rely on a transient
   worker filesystem or a single long-running task as the only copy of results.
+- **Remote resource separation**: use high-memory CPU jobs for parsing,
+  ETKDG/graph construction, and graph acceptance. Submit GPU/DCU jobs only
+  after an immutable graph cache passes acceptance; GPU/DCU time is reserved
+  for encoder training, embedding extraction, and fusion.
 
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.

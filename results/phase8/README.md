@@ -14,6 +14,9 @@ task; use `CURRENT_STATE.md` and `ROADMAP.md` for those questions.
 | Exact-2M coverage expert | `multi2d_2m_coverage/`, `multi2d_2m_dev_eval/` |
 | Hard20K rescue and fusion protocol | `multi2d_2m_hard20k/`, `multi2d_2m_1m3d_fusion_plan.md` |
 | SchNet architecture screening | `experiments/schnet_dim_ab_50k/decision.md`, `experiments/schnet_arch_screen_50k/decision.md` |
+| QM9 architecture elimination | `experiments/qm9_architecture_screen/README.md` and its `conformer_scaling/`, `encoder_seeds/` records |
+| PubChemQC 100K transfer gate | `experiments/pubchemqc100k_architecture/` |
+| PCQM Route B 1M ceiling | `pcqm_route_b_1m/` |
 | Numbered closed branches | `archive/archive-r*/` |
 | Earlier pilots | `archive/legacy/` |
 | Remote downloads | `remote/` and `../kaggle/README.md` |

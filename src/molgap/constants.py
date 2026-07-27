@@ -219,14 +219,19 @@ MODEL_REGISTRY = {
         "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
         "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
     },
+    # Closed ab3d branch: the checkpoints are no longer retained locally, so
+    # these entries resolve to absent files. Kept as provenance for
+    # `results/ab3d/comparison.md`; loading them raises FileNotFoundError.
     "tensornet_300k": {
         "kind": "tensornet", "checkpoint": MODEL_TENSORNET_300K,
         "params": PARAMS_TENSORNET_300K, "normalized": False, "use_charges": False,
+        "artifact_retained": False,
     },
     "hybrid_tensornet": {
         "kind": "hybrid", "checkpoint": MODEL_HYBRID_TENSORNET,
         "metrics": FUSION_TENSORNET_METRICS,
         "normalized": False, "components": ["phase7_gps_2d", "tensornet_300k"],
+        "artifact_retained": False,
     },
 }
 

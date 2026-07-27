@@ -112,7 +112,12 @@ def load_hybrid(
 ) -> tuple[GPSWrapper, SchNetWrapper | TensorNetWrapper, FusionHead, torch.device]:
     """Load a hybrid trio: (gps_2d, encoder_3d, fusion_head, device).
 
-    Default is the Phase 8 v3 base, ``"phase8_expansion_hybrid"`` (expansion500k).
+    This loads a single 2D+3D+fusion trio. The default ``"phase8_expansion_hybrid"``
+    is the v3 base, which is also the component base of the routed candidate — it
+    is a component/compatibility loader, **not** the recommended predictor. For
+    the recommended model read `CURRENT_STATE.md` and use
+    ``load_routed_dual_gps_hybrid``.
+
     Pass ``key="phase8_replacement_hybrid"`` for the v2 base or
     ``key="phase7_hybrid"`` for the frozen v1 fallback/control.
 
@@ -177,7 +182,10 @@ def predict_smiles_batch_hybrid(
     device: torch.device | str | None = None,
     hybrid_key: str = "phase8_expansion_hybrid",
 ):
-    """Batch-predict B3LYP HOMO/LUMO/Gap with the hybrid model (raw eV).
+    """Batch-predict B3LYP HOMO/LUMO/Gap with one hybrid trio (raw eV).
+
+    ``hybrid_key`` defaults to the v3 component base, not the recommended
+    predictor; see ``load_hybrid`` and `CURRENT_STATE.md`.
 
     Builds both 2D and 3D graphs, keeps only molecules where BOTH succeed (3D
     ETKDG can fail), encodes each with its frozen encoder, and fuses. Returns

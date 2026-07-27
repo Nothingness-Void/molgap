@@ -64,3 +64,16 @@ Two-conformer SchNet augmentation:
 
 Training uses both aligned ETKDG views. Validation and test metrics report each
 view and their averaged prediction separately.
+
+Inference-time conformer-averaging curve:
+
+```powershell
+.venv\Scripts\python.exe scripts\architecture\qm9_conformer_scaling.py `
+  --view-seeds 42 43 44 45 46 47 --bootstrap 2000
+```
+
+`qm9_conformer_scaling.py` scores one trained SchNet checkpoint over K
+independent ETKDG views of the test split and reports the K-versus-MAE curve with
+paired bootstrap intervals. It trains nothing. Views are read from
+`--cache-dir` and built on demand, so supplying a prebuilt conformer cache makes
+the run CPU-cheap. Verdict: `results/phase8/experiments/qm9_architecture_screen/conformer_scaling/decision.md`.

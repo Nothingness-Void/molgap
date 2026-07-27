@@ -104,3 +104,5 @@ results/**/model_assets/
 results/kaggle/archive/audits/full_asset_audit/kernel_sources/
 results/phase8/*_audit.csv
 data/raw/phase8_repair_v2_checkpoint_dataset/
+# Row-level selection payloads are regenerable; their decision/summary stays tracked.
+results/phase8/experiments/**/selection.json
