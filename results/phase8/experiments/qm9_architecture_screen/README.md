@@ -171,4 +171,17 @@ frozen-head seeds 42/43/44; encoder seeds have not been repeated.
   MAE was 0.09301 eV versus SchNet-DFT's 0.05638 eV. It passes compute and
   fails accuracy, so no ETKDG arm is authorized.
 
+## Closed sub-experiments
+
+| Question | Verdict | Record |
+|---|---|---|
+| Does conformer averaging pay past K=2? | Saturates as 1/K; K=6 buys -0.00511 eV, more than any architecture change, but cannot close the systematic geometry gap | `conformer_scaling/decision.md` |
+| Do encoder seeds change the architecture ordering? | Encoder-seed noise reaches 0.00097 eV, twice the head-seed spread; GPS9 and GPS11-160 are indistinguishable on accuracy | `encoder_seeds/decision.md` |
+
+## Uncertainty caveat
+
+Unless a row cites `encoder_seeds/decision.md`, its `+/-` is a **frozen-head**
+spread and understates true noise. Differences below 0.001 eV average MAE in this
+file are not established; see that record for the measured encoder-seed spread.
+
 Entrypoint and exact commands: `scripts/architecture/README.md`.

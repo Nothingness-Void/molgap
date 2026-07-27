@@ -1,0 +1,163 @@
+{
+  "experiment": "qm9_encoder_seed_repeats",
+  "geometry": "topology",
+  "epochs": 30,
+  "split": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000,
+    "split_seed": 42
+  },
+  "seed42_reference": {
+    "gps7": {
+      "average": 0.0916,
+      "Gap": 0.10947
+    },
+    "gps9": {
+      "average": 0.08634,
+      "Gap": 0.10347
+    },
+    "gps11_160": {
+      "average": 0.08642,
+      "Gap": 0.10308
+    }
+  },
+  "runs": [
+    {
+      "candidate": "gps7",
+      "seed": 43,
+      "n_params": 2919171,
+      "best_epoch": 29,
+      "best_validation_average_mae_eV": 0.09267646819353104,
+      "test_average_mae": 0.09218486398458481,
+      "test_gap_mae": 0.10987372696399689,
+      "test_homo_mae": 0.08055820316076279,
+      "test_lumo_mae": 0.08612266927957535,
+      "seconds": 905.1
+    },
+    {
+      "candidate": "gps7",
+      "seed": 44,
+      "n_params": 2919171,
+      "best_epoch": 28,
+      "best_validation_average_mae_eV": 0.09279506653547287,
+      "test_average_mae": 0.09349223971366882,
+      "test_gap_mae": 0.11259692162275314,
+      "test_homo_mae": 0.08162418007850647,
+      "test_lumo_mae": 0.08625558763742447,
+      "seconds": 1001.8
+    },
+    {
+      "candidate": "gps9",
+      "seed": 43,
+      "n_params": 3736323,
+      "best_epoch": 28,
+      "best_validation_average_mae_eV": 0.08582274615764618,
+      "test_average_mae": 0.08560259640216827,
+      "test_gap_mae": 0.10207120329141617,
+      "test_homo_mae": 0.07501427084207535,
+      "test_lumo_mae": 0.07972230017185211,
+      "seconds": 1456.7
+    },
+    {
+      "candidate": "gps9",
+      "seed": 44,
+      "n_params": 3736323,
+      "best_epoch": 28,
+      "best_validation_average_mae_eV": 0.0865359678864479,
+      "test_average_mae": 0.08704620599746704,
+      "test_gap_mae": 0.10460280627012253,
+      "test_homo_mae": 0.07569722831249237,
+      "test_lumo_mae": 0.08083858340978622,
+      "seconds": 1445.6
+    },
+    {
+      "candidate": "gps11_160",
+      "seed": 43,
+      "n_params": 3167363,
+      "best_epoch": 29,
+      "best_validation_average_mae_eV": 0.08647478371858597,
+      "test_average_mae": 0.08591620624065399,
+      "test_gap_mae": 0.10273299366235733,
+      "test_homo_mae": 0.07522429525852203,
+      "test_lumo_mae": 0.07979131489992142,
+      "seconds": 1625.5
+    },
+    {
+      "candidate": "gps11_160",
+      "seed": 44,
+      "n_params": 3167363,
+      "best_epoch": 28,
+      "best_validation_average_mae_eV": 0.08642235398292542,
+      "test_average_mae": 0.08608844131231308,
+      "test_gap_mae": 0.10319118946790695,
+      "test_homo_mae": 0.07448603212833405,
+      "test_lumo_mae": 0.08058812469244003,
+      "seconds": 1613.5
+    }
+  ],
+  "summary": [
+    {
+      "candidate": "gps7",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "avg_mae_values": [
+        0.0916,
+        0.092185,
+        0.093492
+      ],
+      "avg_mae_mean": 0.092426,
+      "avg_mae_std": 0.000969,
+      "avg_mae_range": 0.001892,
+      "gap_mae_mean": 0.110647,
+      "gap_mae_std": 0.001701
+    },
+    {
+      "candidate": "gps9",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "avg_mae_values": [
+        0.08634,
+        0.085603,
+        0.087046
+      ],
+      "avg_mae_mean": 0.08633,
+      "avg_mae_std": 0.000722,
+      "avg_mae_range": 0.001444,
+      "gap_mae_mean": 0.103381,
+      "gap_mae_std": 0.001268
+    },
+    {
+      "candidate": "gps11_160",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "avg_mae_values": [
+        0.08642,
+        0.085916,
+        0.086088
+      ],
+      "avg_mae_mean": 0.086142,
+      "avg_mae_std": 0.000256,
+      "avg_mae_range": 0.000504,
+      "gap_mae_mean": 0.103001,
+      "gap_mae_std": 0.000239
+    }
+  ],
+  "contrasts": {
+    "gps9_minus_gps11": 0.000188,
+    "gps7_minus_gps11": 0.006284,
+    "max_encoder_seed_std": 0.000969,
+    "head_seed_std_reference": 0.0005,
+    "second_expert_gap_under_test": 0.00115
+  },
+  "total_seconds": 8048.2
+}
