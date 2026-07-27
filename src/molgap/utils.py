@@ -27,11 +27,14 @@ except Exception:  # pragma: no cover - scripts will fail clearly when RDKit is 
 
 
 from .constants import (
-    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR, RESULTS_DIR,
+    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR,
+    PRODUCTION_DIR, EXPERIMENTS_DIR, PLATFORMS_DIR, PRODUCTION_HISTORY_DIR,
+    ACQUIRE_DIR, GRAPHS_DIR, TRAIN_DIR, EVALUATE_DIR, DELTA_GW_DIR, UQ_DIR,
+    DATABASE_DIR,
     TARGET_COLS, METADATA_COLS,
 )
 
-DEFAULT_SPLIT_PATH = RESULTS_DIR / "common" / "train_valid_test_split_indices.npz"
+DEFAULT_SPLIT_PATH = GRAPHS_DIR / "splits" / "train_valid_test_split_indices.npz"
 
 
 def ensure_dirs(*paths: os.PathLike | str) -> None:

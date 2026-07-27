@@ -1,0 +1,39 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=1
+#PBS -l walltime=06:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-phase8-secondary
+SHARD_INDEX="${SHARD_INDEX:-${PBS_ARRAY_INDEX:-}}"
+if [ -z "$SHARD_INDEX" ]; then
+  echo "SHARD_INDEX or PBS_ARRAY_INDEX is required" >&2
+  exit 2
+fi
+
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test -x "$PYTHON"
+test -s "$ROOT/environment.json"
+test -s "$ROOT/input/manifest.json"
+export PYTHONPATH="$ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+cd "$ROOT"
+mkdir -p output/graph_shards/reports logs
+echo "host=$(hostname)"
+echo "job=${PBS_JOBID:-local}"
+echo "shard_index=$SHARD_INDEX"
+echo "start=$(date -Is)"
+
+"$PYTHON" \
+  code/production/02_graphs/scripts/data/build_repaired_2m_secondary_raw_array_shard.py \
+  --manifest input/manifest.json \
+  --output-dir output/graph_shards \
+  --shard-index "$SHARD_INDEX" \
+  --workers 14
+
+echo "end=$(date -Is)"

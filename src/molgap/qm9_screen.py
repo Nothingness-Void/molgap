@@ -32,7 +32,7 @@ QM9_RAW_URL = (
 TARGET_NAMES = ("HOMO", "LUMO", "Gap")
 TARGET_COLUMNS = (2, 3, 4)
 DEFAULT_CACHE = Path("data/cache/qm9")
-DEFAULT_RESULTS = Path("results/phase8/experiments/qm9_architecture_screen")
+DEFAULT_RESULTS = Path("experiments/qm9_architecture")
 DEFAULT_MODELS = Path("models/experiments/qm9_architecture_screen")
 
 ENCODER_CONFIGS = {

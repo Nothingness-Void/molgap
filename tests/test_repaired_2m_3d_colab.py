@@ -1,3 +1,7 @@
+import hashlib
+import json
+
+import pandas as pd
 import torch
 
 from molgap.repaired_2m_3d_colab import (
@@ -7,6 +11,8 @@ from molgap.repaired_2m_3d_colab import (
     ROUTE_B_SCHNET_CONFIG,
     _build_etkdg,
     _build_etkdg_parallel,
+    build_secondary_graph_shard_from_array_manifest,
+    prepare_secondary_array_inputs,
     split_graphs_by_source_idx,
 )
 
@@ -91,3 +97,120 @@ def test_source_aligned_split_filters_after_role_assignment():
     expected[permutation[:8]] = 0
     expected[permutation[8:9]] = 1
     assert roles == {index: int(expected[index]) for index in roles}
+
+
+def test_secondary_array_shard_is_hash_bound_and_resumable(tmp_path, monkeypatch):
+    repaired_csv = tmp_path / "repaired.csv"
+    rows = pd.DataFrame(
+        {
+            "canonical_smiles": ["CCO", "CCN", "CCC", "CCCl"],
+            "homo": [-5.0, -5.1, -5.2, -5.3],
+            "lumo": [-1.0, -1.1, -1.2, -1.3],
+            "gap": [4.0, 4.0, 4.0, 4.0],
+        }
+    )
+    rows.to_csv(repaired_csv, index=False)
+    source_sha = hashlib.sha256(repaired_csv.read_bytes()).hexdigest()
+
+    metadata_root = tmp_path / "metadata"
+    reports_dir = metadata_root / "reports"
+    reports_dir.mkdir(parents=True)
+    accepted_shards = []
+    for index, (start, stop, failures) in enumerate(
+        ((0, 2, [1]), (2, 4, []))
+    ):
+        graph_name = f"graphs_{start:07d}_{stop:07d}.pt"
+        graph_sha = f"{index + 1:064x}"
+        sidecar = {
+            "status": "complete",
+            "start": start,
+            "stop": stop,
+            "failed": len(failures),
+            "failure_source_idx": failures,
+            "graphs": stop - start - len(failures),
+            "sha256": graph_sha,
+        }
+        sidecar_path = reports_dir / graph_name.replace(".pt", ".json")
+        sidecar_path.write_text(json.dumps(sidecar), encoding="utf-8")
+        accepted_shards.append(
+            {
+                "path": graph_name,
+                "rows": sidecar["graphs"],
+                "sha256": graph_sha,
+                "sidecar_path": f"reports/{sidecar_path.name}",
+                "sidecar_sha256": hashlib.sha256(
+                    sidecar_path.read_bytes()
+                ).hexdigest(),
+            }
+        )
+    acceptance_path = tmp_path / "acceptance.json"
+    acceptance_path.write_text(
+        json.dumps(
+            {
+                "accepted": True,
+                "immutable": True,
+                "expected_shards": 2,
+                "source_csv_sha256": source_sha,
+                "shards": accepted_shards,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        "molgap.repaired_2m_3d_colab.REPAIRED_2M_SHA256", source_sha
+    )
+    monkeypatch.setattr(
+        "molgap.repaired_2m_3d_colab._build_etkdg_parallel",
+        lambda work, **_: (
+            (source_idx, Data_for_test(source_idx, target))
+            for source_idx, _, target, _ in work
+        ),
+    )
+    array_root = tmp_path / "array"
+    manifest = prepare_secondary_array_inputs(
+        repaired_csv=repaired_csv,
+        primary_acceptance=acceptance_path,
+        primary_metadata_root=metadata_root,
+        output_dir=array_root,
+        start_shard=0,
+        stop_shard=2,
+        expected_shards=2,
+        expected_source_rows=4,
+    )
+    assert len(manifest["shards"]) == 2
+    assert manifest["shards"][0]["primary_failure_source_idx"] == [1]
+
+    output_dir = tmp_path / "output"
+    first = build_secondary_graph_shard_from_array_manifest(
+        manifest_path=array_root / "manifest.json",
+        output_dir=output_dir,
+        shard_index=0,
+        workers=1,
+    )
+    second = build_secondary_graph_shard_from_array_manifest(
+        manifest_path=array_root / "manifest.json",
+        output_dir=output_dir,
+        shard_index=0,
+        workers=1,
+    )
+    assert first == second
+    assert first["requested"] == first["graphs"] == 1
+    graph = torch.load(
+        output_dir / "graphs_0000000_0000002.pt",
+        map_location="cpu",
+        weights_only=False,
+    )[0]
+    assert int(graph.source_idx.item()) == 0
+
+
+def Data_for_test(source_idx, target):
+    from torch_geometric.data import Data
+
+    return Data(
+        z=torch.tensor([6], dtype=torch.long),
+        pos=torch.zeros((1, 3), dtype=torch.float32),
+        charges=torch.zeros(1, dtype=torch.float32),
+        y=torch.tensor(target, dtype=torch.float32).view(1, 3),
+        source_idx=torch.tensor([source_idx], dtype=torch.long),
+    )

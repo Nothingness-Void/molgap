@@ -2,16 +2,6 @@
 .venv/
 .scnet/
 
-# Large data files (regenerate with pipeline)
-results/phase3/phase3_features.csv
-data/raw/phase3_*.csv
-results/**/*.pt
-results/**/*.db
-models/**/*.pt
-
-# Large public datasets (download separately; referenced by path in code)
-data/commercial/*.data
-
 # Python
 __pycache__/
 *.pyc
@@ -21,24 +11,42 @@ __pycache__/
 dist/
 build/
 
-# Model files (binary, retrain is fast)
-models/**/*.joblib
+# IDE / OS / tooling
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
+catboost_info/
 
-# Large intermediate data (regenerate with pipeline)
+# ── Binary and bulk artifacts ────────────────────────────────────────────────
+# Rule of thumb: a decision record and its compact metrics are tracked; the raw
+# payload that backs them is regenerable or retrievable, and stays local.
+
+# Model weights and caches
+models/**/*.pt
+models/**/*.joblib
+data/cache/*
+!data/cache/README.md
+
+# Large inputs: downloaded or produced by the pipeline
+data/commercial/*.data
 data/processed/*.csv
 data/raw/*.csv
 data/raw/**/*.csv
+data/raw/*.json
+data/raw/*.zip
+data/raw/pcqm4m-v2/
+data/raw/phase3_*.csv
+data/raw/archive-r02-router-candidates/
+data/raw/phase8_repair_v2_checkpoint_dataset/
 !data/commercial/commercial_molecules_template.csv
 
-# Keep directory structure
+# Keep empty directory structure
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/commercial/.gitkeep
 !models/.gitkeep
-!results/.gitkeep
-
-# CatBoost cache
-catboost_info/
 
 # Gaussian temp files
 *.chk
@@ -48,61 +56,77 @@ catboost_info/
 fort.7
 H-*.sh
 
-# IDE
-.vscode/
-.idea/
+# ── Evidence trees: production/, experiments/, platforms/ ────────────────────
+# Same rule for all three, so moving a directory between them changes nothing.
 
-# OS
-.DS_Store
-Thumbs.db
+# Tensors, arrays, databases
+production/**/*.pt
+experiments/**/*.pt
+platforms/**/*.pt
+production/**/*.npz
+experiments/**/*.npz
+platforms/**/*.npz
+production/**/*.npy
+experiments/**/*.npy
+platforms/**/*.npy
+production/**/*.db
+experiments/**/*.db
+platforms/**/*.db
+production/**/*.sqlite
+experiments/**/*.sqlite
+platforms/**/*.sqlite
 
-# Claude Code
-.claude/
+# Row-level tables, logs, and archives
+production/**/*.csv
+experiments/**/*.csv
+platforms/**/*.csv
+production/**/*.parquet
+experiments/**/*.parquet
+platforms/**/*.parquet
+production/**/*.pkl
+experiments/**/*.pkl
+platforms/**/*.pkl
+production/**/*.log
+experiments/**/*.log
+platforms/**/*.log
+production/**/*.out
+experiments/**/*.out
+platforms/**/*.out
+production/**/*.err
+experiments/**/*.err
+platforms/**/*.err
+production/**/*.zip
+experiments/**/*.zip
+platforms/**/*.zip
+production/**/*.tar.gz
+experiments/**/*.tar.gz
+platforms/**/*.tar.gz
+production/**/*.joblib
+experiments/**/*.joblib
+platforms/**/*.joblib
+production/**/*.ipynb
+experiments/**/*.ipynb
 
-# Large downloaded datasets / binaries (download or regenerate separately)
-data/raw/*.json
-data/raw/*.zip
-data/raw/pcqm4m-v2/
-data/raw/archive-r02-router-candidates/
-data/cache/*
-!data/cache/README.md
+# Row-level selection payloads: regenerable; the decision beside them is tracked.
+experiments/**/selection.json
 
-# Archived experiment payloads stay local; commit decisions and summary metrics only.
-results/phase8/archive/**/*.parquet
-results/phase8/archive/**/*.pkl
-results/phase8/archive/**/*.log
-results/phase8/archive/**/*.txt
-results/phase8/archive/archive-r04-static-dual2d/*.parquet
-results/phase8/archive/archive-r04-static-dual2d/external_transfer_predictions.csv
-results/phase8/archive/archive-r05-physics-consistency/p0_physics_consistency_common_predictions.csv
-results/scnet/
-results/**/*.npz
-results/**/*.npy
-results/phase8/repaired_2m/ledger/
-results/phase8/repaired_2m/*.parquet
-results/phase8/repaired_2m/*.tar.gz
-results/phase8/repaired_2m/upload_parts/
+# Runtime snapshots uploaded to a remote platform are copies, not sources.
+platforms/**/runtime_source/
+platforms/**/model_assets/
+platforms/**/_molgap_runtime/
+platforms/**/kernel_sources/
 
-# Remote execution payloads are local/retrievable artifacts, not source.
-results/**/*.log
-results/**/*.zip
-results/**/*.csv
-results/**/*.parquet
-results/**/*.joblib
-results/**/*.sqlite
-results/**/*.out
-results/**/*.err
-results/**/*.ipynb
-# Canonical executable code lives under scripts/ or src/molgap/, never results/.
-results/**/*.py
-results/**/*.slurm
-results/**/*.sh
-results/kaggle/**/*.csv
-results/phase8/remote/**/*.csv
-results/**/runtime_source/
-results/**/model_assets/
-results/kaggle/archive/audits/full_asset_audit/kernel_sources/
-results/phase8/*_audit.csv
-data/raw/phase8_repair_v2_checkpoint_dataset/
-# Row-level selection payloads are regenerable; their decision/summary stays tracked.
-results/phase8/experiments/**/selection.json
+# Canonical executable code lives in src/molgap/ or a stage's scripts/ folder.
+# Evidence directories must not become a second copy of it.
+production/**/results/**/*.py
+experiments/**/results/**/*.py
+platforms/_records/**/*.py
+platforms/_records/**/*.slurm
+platforms/_records/**/*.sh
+
+# Local-only remote outputs
+platforms/scnet/records/**/*.txt
+
+# Split upload payloads and row ledgers: transport artifacts, not evidence.
+experiments/**/upload_parts/
+experiments/**/ledger/

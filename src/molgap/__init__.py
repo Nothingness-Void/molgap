@@ -6,7 +6,8 @@ so ``import molgap`` does not pull in torch / torch_geometric until you
 actually run a prediction.
 """
 from .constants import (
-    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR, RESULTS_DIR,
+    REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR,
+    PRODUCTION_DIR, EXPERIMENTS_DIR, PLATFORMS_DIR,
     TARGET_COLS, METADATA_COLS,
     DATA_PHASE3, DATA_PHASE6_LARGE,
     GRAPHS_PHASE4, GRAPHS_PHASE6,

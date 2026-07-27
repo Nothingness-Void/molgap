@@ -1,7 +1,7 @@
 # Roadmap - Priorities and Backlog
 
 This file answers one question: **what should be done, and in what order?**
-Live model/job state is in `CURRENT_STATE.md`; methods are in `docs/phaseN.md`;
+Live model/job state is in `CURRENT_STATE.md`; methods live in each experiment's
 metrics and decisions are under `results/`.
 
 ## Goal
@@ -14,12 +14,12 @@ The predictor is an implementation dependency; the database is the deliverable.
 
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
-| P0 | P8.20-OOF | Generate held-out GPS7/GPS9 predictions on the frozen repaired-2M folds | Submit only after immutable graph-cache acceptance | `results/phase8/repaired_2m/gps7_gps9_oof/manifest.json` |
-| P1 | PCQM-RB1M | Run the PCQM-only Route B precision ceiling experiment | Continue only from accepted aligned graph shards; stop any encoder above 12 h | `results/phase8/pcqm_route_b_1m/run_plan.json` |
-| P1 | P8-100K | Accept both lightweight SchNet branches and run Route B Fusion | Both branch reports must pass before Fusion | `results/phase8/experiments/pubchemqc100k_architecture/experiment_manifest.json` |
-| P1 | P9.2 | Recompute Delta labels against the selected B3LYP base | Start after the Phase 8 compression decision freezes the base | `docs/phase9.md` |
-| P1 | P10-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `docs/phase10.md` |
-| P2 | P9-AB | Benchmark descriptor LightGBM against encoder LoRA | Compare accuracy, calibration, throughput, and deployment size on one split | `results/phase9/v3_delta_decision.md` |
+| P0 | P8.20-OOF | Generate held-out GPS7/GPS9 predictions on the frozen repaired-2M folds | Submit only after immutable graph-cache acceptance | `experiments/repaired_2m_scaling/results/gps7_gps9_oof/manifest.json` |
+| P1 | PCQM-RB1M | Run the PCQM-only Route B precision ceiling experiment | Continue only from accepted aligned graph shards; stop any encoder above 12 h | `experiments/pcqm_route_b/results/run_plan.json` |
+| P1 | P8-100K | Accept both lightweight SchNet branches and run Route B Fusion | Both branch reports must pass before Fusion | `experiments/pubchemqc100k_architecture/results/experiment_manifest.json` |
+| P1 | P9.2 | Recompute Delta labels against the selected B3LYP base | Start after the Phase 8 compression decision freezes the base | `production/05_delta_gw/` |
+| P1 | P10-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `production/06_uq/` |
+| P2 | P9-AB | Benchmark descriptor LightGBM against encoder LoRA | Compare accuracy, calibration, throughput, and deployment size on one split | `production/05_delta_gw/results/v3_delta_decision.md` |
 
 Do not tune against any sealed set. Do not relaunch a remote task merely because
 its local output has not arrived.
@@ -62,17 +62,17 @@ its local output has not arrived.
 
 - The local PCQM GINE expert was scaled to a nested 1M sample and accepted as a
   task-only leaderboard candidate:
-  `results/phase8/pcqm_gine_expert_pilot/local_scaleup_1m_v7_decision.md`.
+  `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
 - P8.20-D repaired-2M retention-D passed its three-seed general-model gate:
-  `results/phase8/repaired_2m/retention_d_multiseed_decision.md`.
+  `experiments/repaired_2m_scaling/results/retention_d_multiseed_decision.md`.
 - P8-QM9 eliminated weak architectures and promoted three candidates to the
   PubChemQC 100K transfer gate:
-  `results/phase8/experiments/qm9_architecture_screen/README.md`.
-- Phase 1-7 history: `docs/phase1.md` through `docs/phase7.md`.
-- Phase 8 decision timeline: `docs/phase8.md`.
-- Closed Phase 8 code and results: `scripts/phase8/archive/README.md` and
-  `results/phase8/archive/README.md`.
-- Closed 3D encoder comparison: `results/ab3d/comparison.md`.
+  `experiments/qm9_architecture/README.md`.
+- Phase 1-7 history: `production/history/` and `docs/phase1.md` through `docs/phase7.md`.
+- Per-question decision records: `experiments/README.md`.
+- Closed code and evidence: `experiments/_closed/README.md` and
+  `experiments/_closed/SCRIPTS_ARCHIVE.md`.
+- Closed 3D encoder comparison: `experiments/_closed/ab3d/comparison.md`.
 
 Use these records; do not recreate completed experiments to rediscover their
 conclusions.

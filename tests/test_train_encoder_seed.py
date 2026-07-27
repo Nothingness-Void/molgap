@@ -9,8 +9,9 @@ import numpy as np
 def _load_train_encoder():
     path = (
         Path(__file__).parents[1]
+        / "production"
+        / "03_train"
         / "scripts"
-        / "phase8"
         / "training"
         / "train_encoder.py"
     )

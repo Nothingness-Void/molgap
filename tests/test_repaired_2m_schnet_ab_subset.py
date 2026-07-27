@@ -8,8 +8,9 @@ import pandas as pd
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
+    / "production"
+    / "02_graphs"
     / "scripts"
-    / "phase8"
     / "data"
     / "build_repaired_2m_schnet_ab_subset.py"
 )

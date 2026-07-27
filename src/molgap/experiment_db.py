@@ -112,29 +112,40 @@ class BuildPaths:
 
     @classmethod
     def from_repo(cls, repo: Path) -> "BuildPaths":
-        phase8 = repo / "results" / "phase8"
+        # Inputs span both trees: model inventory is a production selection
+        # artifact, the scaling/retention comparisons are experiment evidence.
+        evaluate = repo / "production" / "04_evaluate"
+        scaling = repo / "experiments" / "repaired_2m_scaling"
+        multi2d = repo / "experiments" / "multi2d_experts"
         return cls(
             repo=repo,
-            inventory_csv=phase8 / "model_inventory_audit" / "model_inventory.csv",
-            unified_common_csv=phase8 / "scaleup_full_analysis" / "unified_common_metrics.csv",
-            unified_pcqm_csv=phase8 / "scaleup_full_analysis" / "unified_pcqm_metrics.csv",
-            retention_b_common_json=phase8
+            inventory_csv=evaluate
+            / "inventory"
+            / "model_inventory_audit"
+            / "model_inventory.csv",
+            unified_common_csv=scaling
+            / "scaleup_full_analysis"
+            / "unified_common_metrics.csv",
+            unified_pcqm_csv=scaling
+            / "scaleup_full_analysis"
+            / "unified_pcqm_metrics.csv",
+            retention_b_common_json=scaling
             / "retention_2m_external_eval"
             / "replay"
             / "common_metrics.json",
-            retention_b_pcqm_json=phase8
+            retention_b_pcqm_json=scaling
             / "retention_2m_external_eval"
             / "replay"
             / "pcqm_metrics.json",
-            retention_d_json=phase8
-            / "repaired_2m"
+            retention_d_json=scaling
+            / "results"
             / "retention_d_seed42_comparison.json",
-            uniform_a_internal_json=phase8
+            uniform_a_internal_json=multi2d
             / "multi2d_2m_scnet"
             / "gps7"
             / "metrics.json",
-            retention_d_internal_json=phase8
-            / "repaired_2m"
+            retention_d_internal_json=scaling
+            / "results"
             / "retention_d_seed42_raw"
             / "train_metrics.json",
         )

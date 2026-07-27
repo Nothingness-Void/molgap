@@ -1,6 +1,6 @@
 import pytest
 
-from scripts.phase8.evaluation.eval_multi2d_experts import validate_baseline_name
+from cli.eval_multi2d_experts import validate_baseline_name
 
 
 def test_ensemble_can_be_the_baseline():

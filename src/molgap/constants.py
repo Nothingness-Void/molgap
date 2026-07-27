@@ -9,8 +9,24 @@ RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 COMMERCIAL_DIR = DATA_DIR / "commercial"
 MODELS_DIR = REPO_ROOT / "models"
-RESULTS_DIR = REPO_ROOT / "results"
-SCRIPTS_DIR = REPO_ROOT / "scripts"
+
+# The tree is organized by role, not by calendar phase: `production/` is the
+# delivery line in data-flow order, `experiments/` answers one question per
+# directory, `platforms/` adapts a run to a compute environment.
+PRODUCTION_DIR = REPO_ROOT / "production"
+EXPERIMENTS_DIR = REPO_ROOT / "experiments"
+PLATFORMS_DIR = REPO_ROOT / "platforms"
+PRODUCTION_HISTORY_DIR = PRODUCTION_DIR / "history"
+
+# Stage output roots. Thin CLIs write here instead of composing paths from a
+# calendar phase number, so a stage can be renamed in one place.
+ACQUIRE_DIR = PRODUCTION_DIR / "01_acquire"
+GRAPHS_DIR = PRODUCTION_DIR / "02_graphs"
+TRAIN_DIR = PRODUCTION_DIR / "03_train"
+EVALUATE_DIR = PRODUCTION_DIR / "04_evaluate"
+DELTA_GW_DIR = PRODUCTION_DIR / "05_delta_gw"
+UQ_DIR = PRODUCTION_DIR / "06_uq"
+DATABASE_DIR = PRODUCTION_DIR / "07_database"
 
 TARGET_COLS = ["homo", "lumo", "gap"]
 METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
@@ -22,8 +38,8 @@ DATA_PHASE6_LARGE = RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv"
 
 # ── Graph caches ──
 
-GRAPHS_PHASE4 = RESULTS_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
-GRAPHS_PHASE6 = RESULTS_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt"
+GRAPHS_PHASE4 = PRODUCTION_HISTORY_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
+GRAPHS_PHASE6 = PRODUCTION_HISTORY_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt"
 
 # ── Model checkpoints ──
 
@@ -34,13 +50,15 @@ MODEL_PHASE6 = MODELS_DIR / "gnn_schnet_3d_optuna_expanded.pt"
 MODEL_SCHNET_300K = MODELS_DIR / "gnn_schnet_3d_300k.pt"
 MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
 MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
-FUSION_METRICS = RESULTS_DIR / "phase7" / "fusion_optuna_metrics.json"
+FUSION_METRICS = PRODUCTION_HISTORY_DIR / "phase7" / "fusion_optuna_metrics.json"
 
 # Phase 8 replacement300k v2 candidate (raw eV — no normalization)
 MODEL_PHASE8_REPLACEMENT_GPS = MODELS_DIR / "phase8_gps_replacement_300k.pt"
 MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.pt"
 MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
-FUSION_PHASE8_REPLACEMENT_METRICS = RESULTS_DIR / "phase8" / "fusion_replacement_300k_metrics.json"
+FUSION_PHASE8_REPLACEMENT_METRICS = (
+    PRODUCTION_DIR / "03_train" / "b3lyp_base_v2_v3" / "fusion_replacement_300k_metrics.json"
+)
 
 # Phase 8 expansion500k v3 component (raw eV - no normalization). The routed v4
 # production path below reuses this hybrid; ``load_hybrid`` keeps v3 as its
@@ -48,7 +66,9 @@ FUSION_PHASE8_REPLACEMENT_METRICS = RESULTS_DIR / "phase8" / "fusion_replacement
 MODEL_PHASE8_EXPANSION_GPS = MODELS_DIR / "phase8_gps_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
-FUSION_PHASE8_EXPANSION_METRICS = RESULTS_DIR / "phase8" / "fusion_expansion_500k_metrics.json"
+FUSION_PHASE8_EXPANSION_METRICS = (
+    PRODUCTION_DIR / "03_train" / "b3lyp_base_v2_v3" / "fusion_expansion_500k_metrics.json"
+)
 
 # Phase 8 fixed-data architecture candidate: the v3 GPS plus a 9-layer GPS and
 # a dual-GPS fusion head. Inference routes only base-predicted Gap < 4 eV rows.
@@ -61,16 +81,16 @@ MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
 # appending the residual-tail probe pool. Experimental only; not a default.
 MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
 FUSION_PHASE8_TAIL_PROBE_METRICS = (
-    RESULTS_DIR / "phase8" / "archive" / "legacy" / "pilots_30k" / "fusion_tail_probe_30k_metrics.json"
+    EXPERIMENTS_DIR / "_closed" / "legacy" / "pilots_30k" / "fusion_tail_probe_30k_metrics.json"
 )
 
 # TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
 # training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
-# and results/ab3d/comparison.md. These artifacts are kept for the A/B record.
+# and experiments/_closed/ab3d/comparison.md. These artifacts are kept for the A/B record.
 MODEL_TENSORNET_300K = MODELS_DIR / "tensornet_3d_300k.pt"
 MODEL_HYBRID_TENSORNET = MODELS_DIR / "hybrid_fusion_tensornet.pt"
-FUSION_TENSORNET_METRICS = RESULTS_DIR / "phase7" / "fusion_tensornet_metrics.json"
+FUSION_TENSORNET_METRICS = PRODUCTION_HISTORY_DIR / "phase7" / "fusion_tensornet_metrics.json"
 
 # ── Model hyperparameters ──
 
@@ -108,7 +128,7 @@ PARAMS_GPS_2D = {
     "dropout": 0.05,
 }
 
-# ── A/B 3D-encoder comparison (scripts/ab3d) ──
+# ── A/B 3D-encoder comparison (experiments/_closed/ab3d_scripts) ──
 # Same hidden=192 across encoders for capacity parity; layer counts follow each
 # architecture's convention. Param counts are reported by train_encoder.py.
 PARAMS_AB_SCHNET = dict(PARAMS_SCHNET_300K)  # invariant baseline, deployed form
@@ -145,7 +165,8 @@ PARAMS_TENSORNET_300K = {
 }
 
 # Single source of truth for the A/B arms. `kind` selects the wrapper class in
-# scripts/ab3d/train_encoder.py; `use_charges` is each encoder's native form
+# experiments/_closed/ab3d_scripts/train_encoder.py; `use_charges` is each
+# encoder's native form
 # (SchNet uses Gasteiger charges = deployed form; equivariant nets use Z+geometry).
 AB_ENCODERS = {
     "schnet":    {"kind": "schnet",    "params": PARAMS_AB_SCHNET,  "use_charges": True},
@@ -221,7 +242,7 @@ MODEL_REGISTRY = {
     },
     # Closed ab3d branch: the checkpoints are no longer retained locally, so
     # these entries resolve to absent files. Kept as provenance for
-    # `results/ab3d/comparison.md`; loading them raises FileNotFoundError.
+    # `experiments/_closed/ab3d/comparison.md`; loading them raises FileNotFoundError.
     "tensornet_300k": {
         "kind": "tensornet", "checkpoint": MODEL_TENSORNET_300K,
         "params": PARAMS_TENSORNET_300K, "normalized": False, "use_charges": False,

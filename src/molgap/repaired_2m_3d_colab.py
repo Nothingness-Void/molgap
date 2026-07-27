@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import copy
+import csv
+import gzip
 import hashlib
 import json
 import multiprocessing as mp
 import os
 import random
+import re
 import time
 from pathlib import Path
 
@@ -44,6 +47,7 @@ ROUTE_B_SCHNET_CONFIG = {
 GRAPH_BUILD_START_METHOD = "spawn"
 GRAPH_BUILD_CHUNKSIZE = 16
 GRAPH_BUILD_HEARTBEAT = 1_000
+GRAPH_SHARD_PATTERN = re.compile(r"graphs_(\d{7})_(\d{7})\.pt$")
 
 
 def atomic_json(value: object, path: Path) -> None:
@@ -68,7 +72,7 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _build_etkdg(item):
+def _build_etkdg_record(item):
     source_idx, smiles, target, seed = item
     from rdkit import Chem
     from rdkit.Chem import AllChem
@@ -103,20 +107,37 @@ def _build_etkdg(item):
                 else 0.0
             )
             charges.append(value if np.isfinite(value) and abs(value) < 1e6 else 0.0)
-        return source_idx, Data(
-            z=torch.tensor(
+        return source_idx, {
+            "z": np.asarray(
                 [atom.GetAtomicNum() for atom in molecule.GetAtoms()],
-                dtype=torch.long,
+                dtype=np.int16,
             ),
-            pos=torch.tensor(
-                molecule.GetConformer().GetPositions(), dtype=torch.float32
+            "pos": np.asarray(
+                molecule.GetConformer().GetPositions(), dtype=np.float32
             ),
-            charges=torch.tensor(charges, dtype=torch.float32),
-            y=torch.tensor(target, dtype=torch.float32).view(1, 3),
-            source_idx=torch.tensor([source_idx], dtype=torch.long),
-        )
+            "charges": np.asarray(charges, dtype=np.float32),
+            "y": np.asarray(target, dtype=np.float32),
+        }
     except Exception:
         return source_idx, None
+
+
+def _record_to_data(source_idx: int, record: dict) -> Data:
+    return Data(
+        z=torch.from_numpy(record["z"].astype(np.int64, copy=False)),
+        pos=torch.from_numpy(record["pos"]),
+        charges=torch.from_numpy(record["charges"]),
+        y=torch.from_numpy(record["y"]).view(1, 3),
+        source_idx=torch.tensor([source_idx], dtype=torch.long),
+    )
+
+
+def _build_etkdg(item):
+    source_idx, record = _build_etkdg_record(item)
+    return (
+        source_idx,
+        None if record is None else _record_to_data(source_idx, record),
+    )
 
 
 def _build_etkdg_parallel(
@@ -143,6 +164,40 @@ def _build_etkdg_parallel(
     with context.Pool(processes=workers) as pool:
         iterator = pool.imap_unordered(
             _build_etkdg,
+            work,
+            chunksize=GRAPH_BUILD_CHUNKSIZE,
+        )
+        for completed, result in enumerate(iterator, start=1):
+            if completed % GRAPH_BUILD_HEARTBEAT == 0 or completed == len(work):
+                print(
+                    f"{progress_label} completed={completed}/{len(work)}",
+                    flush=True,
+                )
+            yield result
+
+
+def _build_etkdg_record_parallel(
+    work: list[tuple],
+    *,
+    workers: int,
+    progress_label: str,
+):
+    if not work:
+        return
+    if workers <= 1:
+        iterator = map(_build_etkdg_record, work)
+        for completed, result in enumerate(iterator, start=1):
+            if completed % GRAPH_BUILD_HEARTBEAT == 0 or completed == len(work):
+                print(
+                    f"{progress_label} completed={completed}/{len(work)}",
+                    flush=True,
+                )
+            yield result
+        return
+    context = mp.get_context(GRAPH_BUILD_START_METHOD)
+    with context.Pool(processes=workers) as pool:
+        iterator = pool.imap_unordered(
+            _build_etkdg_record,
             work,
             chunksize=GRAPH_BUILD_CHUNKSIZE,
         )
@@ -465,6 +520,434 @@ def build_secondary_graph_shards(
     }
     atomic_json(completion, output_dir / "build_completion.json")
     return completion
+
+
+def prepare_secondary_array_inputs(
+    *,
+    repaired_csv: Path,
+    primary_acceptance: Path,
+    primary_metadata_root: Path,
+    output_dir: Path,
+    start_shard: int = 40,
+    stop_shard: int = 100,
+    seed: int = 314_159,
+    expected_shards: int = 100,
+    expected_source_rows: int = 2_000_000,
+) -> dict:
+    """Materialize hash-bound CSV inputs for independent secondary array jobs."""
+    source_sha = sha256(repaired_csv)
+    if source_sha != REPAIRED_2M_SHA256:
+        raise ValueError(f"repaired-2M SHA256 mismatch: {source_sha}")
+    acceptance = json.loads(primary_acceptance.read_text(encoding="utf-8"))
+    if not acceptance.get("accepted") or not acceptance.get("immutable"):
+        raise ValueError("primary graph acceptance is not accepted and immutable")
+    shards = acceptance.get("shards", [])
+    if (
+        acceptance.get("expected_shards") != expected_shards
+        or len(shards) != expected_shards
+    ):
+        raise ValueError(
+            f"expected {expected_shards} accepted primary shards, "
+            f"found {len(shards)}"
+        )
+    if acceptance.get("source_csv_sha256") != source_sha:
+        raise ValueError("primary acceptance source CSV SHA256 mismatch")
+    if not (0 <= start_shard < stop_shard <= len(shards)):
+        raise ValueError(
+            f"invalid shard interval: start={start_shard} stop={stop_shard}"
+        )
+
+    table = pd.read_csv(repaired_csv, usecols=["canonical_smiles", *TARGETS])
+    if len(table) != expected_source_rows:
+        raise ValueError(f"unexpected repaired rows: {len(table)}")
+    table.insert(0, "source_idx", np.arange(len(table), dtype=np.int64))
+
+    inputs_dir = output_dir / "inputs"
+    inputs_dir.mkdir(parents=True, exist_ok=True)
+    manifest_shards = []
+    for shard_index in range(start_shard, stop_shard):
+        accepted = shards[shard_index]
+        match = GRAPH_SHARD_PATTERN.fullmatch(str(accepted["path"]))
+        if match is None:
+            raise ValueError(f"invalid primary shard path: {accepted['path']}")
+        start, stop = (int(value) for value in match.groups())
+        sidecar_path = primary_metadata_root / accepted["sidecar_path"]
+        if not sidecar_path.is_file():
+            raise FileNotFoundError(sidecar_path)
+        sidecar_sha = sha256(sidecar_path)
+        if sidecar_sha != accepted["sidecar_sha256"]:
+            raise ValueError(f"primary sidecar SHA256 mismatch: {sidecar_path}")
+        sidecar = json.loads(sidecar_path.read_text(encoding="utf-8"))
+        if (
+            sidecar.get("status") != "complete"
+            or sidecar.get("start") != start
+            or sidecar.get("stop") != stop
+            or sidecar.get("sha256") != accepted["sha256"]
+            or sidecar.get("graphs") != accepted["rows"]
+        ):
+            raise ValueError(f"primary sidecar contract mismatch: {sidecar_path}")
+        failures = sorted(int(value) for value in sidecar["failure_source_idx"])
+        if len(failures) != int(sidecar["failed"]):
+            raise ValueError(f"primary failure count mismatch: {sidecar_path}")
+
+        input_path = inputs_dir / f"rows_{start:07d}_{stop:07d}.csv.gz"
+        temporary = input_path.with_suffix(input_path.suffix + ".tmp")
+        table.iloc[start:stop].to_csv(
+            temporary,
+            index=False,
+            compression={"method": "gzip", "mtime": 0},
+        )
+        os.replace(temporary, input_path)
+        manifest_shards.append(
+            {
+                "shard_index": shard_index,
+                "start": start,
+                "stop": stop,
+                "input_path": str(input_path.relative_to(output_dir)),
+                "input_rows": stop - start,
+                "input_bytes": input_path.stat().st_size,
+                "input_sha256": sha256(input_path),
+                "output_path": accepted["path"],
+                "primary_graph_sha256": accepted["sha256"],
+                "primary_sidecar_path": accepted["sidecar_path"],
+                "primary_sidecar_sha256": sidecar_sha,
+                "primary_graphs": int(accepted["rows"]),
+                "primary_failure_source_idx": failures,
+            }
+        )
+
+    manifest = {
+        "format": "molgap-secondary-etkdg-array-v1",
+        "status": "prepared",
+        "seed": int(seed),
+        "source_rows": len(table),
+        "source_csv_sha256": source_sha,
+        "primary_acceptance_sha256": sha256(primary_acceptance),
+        "start_shard": start_shard,
+        "stop_shard": stop_shard,
+        "shards": manifest_shards,
+    }
+    atomic_json(manifest, output_dir / "manifest.json")
+    return manifest
+
+
+def build_secondary_graph_shard_from_array_manifest(
+    *,
+    manifest_path: Path,
+    output_dir: Path,
+    shard_index: int,
+    workers: int = 8,
+) -> dict:
+    """Build one secondary shard without loading the primary graph cache."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("format") != "molgap-secondary-etkdg-array-v1":
+        raise ValueError("unsupported secondary array manifest")
+    matches = [
+        item for item in manifest.get("shards", [])
+        if int(item["shard_index"]) == int(shard_index)
+    ]
+    if len(matches) != 1:
+        raise ValueError(f"shard index {shard_index} is absent or duplicated")
+    contract = matches[0]
+    input_path = manifest_path.parent / contract["input_path"]
+    if sha256(input_path) != contract["input_sha256"]:
+        raise ValueError(f"array input SHA256 mismatch: {input_path}")
+
+    graph_path = output_dir / contract["output_path"]
+    report_path = output_dir / "reports" / (
+        Path(contract["output_path"]).stem + ".json"
+    )
+    if graph_path.is_file() and report_path.is_file():
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        if (
+            report.get("status") == "complete"
+            and report.get("seed") == manifest["seed"]
+            and report.get("input_sha256") == contract["input_sha256"]
+            and report.get("primary_shard_sha256")
+            == contract["primary_graph_sha256"]
+            and report.get("sha256") == sha256(graph_path)
+        ):
+            print(f"reuse completed array shard: {graph_path.name}", flush=True)
+            return report
+
+    table = pd.read_csv(input_path)
+    expected_source_idx = np.arange(
+        int(contract["start"]), int(contract["stop"]), dtype=np.int64
+    )
+    actual_source_idx = table["source_idx"].to_numpy(dtype=np.int64)
+    if (
+        len(table) != int(contract["input_rows"])
+        or not np.array_equal(actual_source_idx, expected_source_idx)
+    ):
+        raise ValueError(f"array input identity mismatch: {input_path}")
+    primary_failures = set(
+        int(value) for value in contract["primary_failure_source_idx"]
+    )
+    work = []
+    for row in table.itertuples(index=False):
+        source_idx = int(row.source_idx)
+        if source_idx in primary_failures:
+            continue
+        work.append(
+            (
+                source_idx,
+                str(row.canonical_smiles),
+                [float(row.homo), float(row.lumo), float(row.gap)],
+                int(manifest["seed"]),
+            )
+        )
+    if len(work) != int(contract["primary_graphs"]):
+        raise ValueError(
+            "primary alignment mismatch: "
+            f"requested={len(work)} expected={contract['primary_graphs']}"
+        )
+
+    secondary = []
+    failures = []
+    progress_label = f"secondary array shard {shard_index + 1}/100 ETKDG"
+    for source_idx, graph in _build_etkdg_parallel(
+        work,
+        workers=max(1, workers),
+        progress_label=progress_label,
+    ):
+        if graph is None:
+            failures.append(int(source_idx))
+        else:
+            secondary.append(graph)
+    secondary.sort(key=lambda graph: int(graph.source_idx.view(-1)[0]))
+    atomic_torch_save(secondary, graph_path)
+    report = {
+        "status": "complete",
+        "view": "independent_secondary_etkdg",
+        "array_manifest_format": manifest["format"],
+        "shard_index": int(shard_index),
+        "start": int(contract["start"]),
+        "stop": int(contract["stop"]),
+        "seed": int(manifest["seed"]),
+        "requested": len(work),
+        "reused": 0,
+        "built": len(secondary),
+        "failed": len(failures),
+        "failure_source_idx": sorted(failures),
+        "graphs": len(secondary),
+        "path": graph_path.name,
+        "bytes": graph_path.stat().st_size,
+        "sha256": sha256(graph_path),
+        "input_sha256": contract["input_sha256"],
+        "source_csv_sha256": manifest["source_csv_sha256"],
+        "primary_acceptance_sha256": manifest["primary_acceptance_sha256"],
+        "primary_shard_sha256": contract["primary_graph_sha256"],
+        "primary_sidecar_sha256": contract["primary_sidecar_sha256"],
+    }
+    atomic_json(report, report_path)
+    print(
+        f"secondary array shard {shard_index + 1}/100 "
+        f"requested={len(work)} built={len(secondary)} "
+        f"failed={len(failures)}",
+        flush=True,
+    )
+    return report
+
+
+def build_secondary_raw_shard_from_array_manifest(
+    *,
+    manifest_path: Path,
+    output_dir: Path,
+    shard_index: int,
+    workers: int = 8,
+) -> dict:
+    """Build one framework-neutral secondary shard for later PyG conversion."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("format") != "molgap-secondary-etkdg-array-v1":
+        raise ValueError("unsupported secondary array manifest")
+    matches = [
+        item for item in manifest.get("shards", [])
+        if int(item["shard_index"]) == int(shard_index)
+    ]
+    if len(matches) != 1:
+        raise ValueError(f"shard index {shard_index} is absent or duplicated")
+    contract = matches[0]
+    input_path = manifest_path.parent / contract["input_path"]
+    if sha256(input_path) != contract["input_sha256"]:
+        raise ValueError(f"array input SHA256 mismatch: {input_path}")
+
+    raw_path = output_dir / Path(contract["output_path"]).with_suffix(".npz")
+    report_path = output_dir / "reports" / (
+        Path(contract["output_path"]).stem + ".json"
+    )
+    if raw_path.is_file() and report_path.is_file():
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        if (
+            report.get("status") == "complete"
+            and report.get("format") == "molgap-secondary-etkdg-raw-v1"
+            and report.get("seed") == manifest["seed"]
+            and report.get("input_sha256") == contract["input_sha256"]
+            and report.get("sha256") == sha256(raw_path)
+        ):
+            print(f"reuse completed raw array shard: {raw_path.name}", flush=True)
+            return report
+
+    primary_failures = set(
+        int(value) for value in contract["primary_failure_source_idx"]
+    )
+    work = []
+    actual_source_idx = []
+    with gzip.open(input_path, "rt", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            source_idx = int(row["source_idx"])
+            actual_source_idx.append(source_idx)
+            if source_idx in primary_failures:
+                continue
+            work.append(
+                (
+                    source_idx,
+                    row["canonical_smiles"],
+                    [float(row[target]) for target in TARGETS],
+                    int(manifest["seed"]),
+                )
+            )
+    expected_source_idx = list(
+        range(int(contract["start"]), int(contract["stop"]))
+    )
+    if actual_source_idx != expected_source_idx:
+        raise ValueError(f"array input identity mismatch: {input_path}")
+    if len(work) != int(contract["primary_graphs"]):
+        raise ValueError(
+            "primary alignment mismatch: "
+            f"requested={len(work)} expected={contract['primary_graphs']}"
+        )
+
+    records = []
+    failures = []
+    for source_idx, record in _build_etkdg_record_parallel(
+        work,
+        workers=max(1, workers),
+        progress_label=f"secondary raw shard {shard_index + 1}/100 ETKDG",
+    ):
+        if record is None:
+            failures.append(int(source_idx))
+        else:
+            records.append((int(source_idx), record))
+    records.sort(key=lambda item: item[0])
+    atom_counts = np.asarray(
+        [len(record["z"]) for _, record in records], dtype=np.int64
+    )
+    atom_ptr = np.empty(len(records) + 1, dtype=np.int64)
+    atom_ptr[0] = 0
+    np.cumsum(atom_counts, out=atom_ptr[1:])
+    arrays = {
+        "source_idx": np.asarray(
+            [source_idx for source_idx, _ in records], dtype=np.int64
+        ),
+        "atom_ptr": atom_ptr,
+        "z": np.concatenate(
+            [record["z"] for _, record in records], dtype=np.int16
+        ),
+        "pos": np.concatenate(
+            [record["pos"] for _, record in records], dtype=np.float32
+        ),
+        "charges": np.concatenate(
+            [record["charges"] for _, record in records], dtype=np.float32
+        ),
+        "y": np.stack(
+            [record["y"] for _, record in records]
+        ).astype(np.float32, copy=False),
+    }
+    raw_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = raw_path.with_suffix(raw_path.suffix + ".tmp")
+    with temporary.open("wb") as handle:
+        np.savez(handle, **arrays)
+    os.replace(temporary, raw_path)
+    report = {
+        "status": "complete",
+        "format": "molgap-secondary-etkdg-raw-v1",
+        "view": "independent_secondary_etkdg",
+        "shard_index": int(shard_index),
+        "start": int(contract["start"]),
+        "stop": int(contract["stop"]),
+        "seed": int(manifest["seed"]),
+        "requested": len(work),
+        "built": len(records),
+        "failed": len(failures),
+        "failure_source_idx": sorted(failures),
+        "graphs": len(records),
+        "atoms": int(atom_ptr[-1]),
+        "path": raw_path.name,
+        "bytes": raw_path.stat().st_size,
+        "sha256": sha256(raw_path),
+        "input_sha256": contract["input_sha256"],
+        "source_csv_sha256": manifest["source_csv_sha256"],
+        "primary_acceptance_sha256": manifest["primary_acceptance_sha256"],
+        "primary_shard_sha256": contract["primary_graph_sha256"],
+        "primary_sidecar_sha256": contract["primary_sidecar_sha256"],
+    }
+    atomic_json(report, report_path)
+    return report
+
+
+def convert_secondary_raw_shard_to_pyg(
+    *,
+    raw_path: Path,
+    raw_report_path: Path,
+    output_dir: Path,
+) -> dict:
+    """Convert an accepted framework-neutral shard to the standard PyG form."""
+    report = json.loads(raw_report_path.read_text(encoding="utf-8"))
+    if (
+        report.get("status") != "complete"
+        or report.get("format") != "molgap-secondary-etkdg-raw-v1"
+        or report.get("sha256") != sha256(raw_path)
+    ):
+        raise ValueError("raw secondary shard report or SHA256 is invalid")
+    with np.load(raw_path, allow_pickle=False) as arrays:
+        source_idx = arrays["source_idx"]
+        atom_ptr = arrays["atom_ptr"]
+        z = arrays["z"]
+        pos = arrays["pos"]
+        charges = arrays["charges"]
+        y = arrays["y"]
+    if (
+        len(source_idx) != int(report["graphs"])
+        or len(atom_ptr) != len(source_idx) + 1
+        or int(atom_ptr[-1]) != len(z)
+        or len(z) != len(pos)
+        or len(z) != len(charges)
+        or y.shape != (len(source_idx), 3)
+        or np.any(np.diff(source_idx) <= 0)
+    ):
+        raise ValueError("raw secondary shard array contract is invalid")
+    graphs = []
+    for index, value in enumerate(source_idx):
+        start, stop = int(atom_ptr[index]), int(atom_ptr[index + 1])
+        graphs.append(
+            Data(
+                z=torch.from_numpy(z[start:stop].astype(np.int64, copy=False)),
+                pos=torch.from_numpy(pos[start:stop]),
+                charges=torch.from_numpy(charges[start:stop]),
+                y=torch.from_numpy(y[index]).view(1, 3),
+                source_idx=torch.tensor([int(value)], dtype=torch.long),
+            )
+        )
+    graph_path = output_dir / Path(report["path"]).with_suffix(".pt")
+    atomic_torch_save(graphs, graph_path)
+    pyg_report = {
+        key: value for key, value in report.items()
+        if key not in {"format", "atoms", "path", "bytes", "sha256"}
+    }
+    pyg_report.update(
+        {
+            "path": graph_path.name,
+            "bytes": graph_path.stat().st_size,
+            "sha256": sha256(graph_path),
+            "raw_path": raw_path.name,
+            "raw_sha256": report["sha256"],
+        }
+    )
+    atomic_json(
+        pyg_report,
+        output_dir / "reports" / f"{graph_path.stem}.json",
+    )
+    return pyg_report
 
 
 def validate_graph_shards(output_dir: Path) -> dict:

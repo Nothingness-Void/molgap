@@ -7,7 +7,7 @@ import torch
 
 
 def test_embedding_subset_alignment(tmp_path: Path):
-    from scripts.phase8.experiments.train_hierarchical_2d3d_fusion import (
+    from cli.train_hierarchical_2d3d_fusion import (
         load_embedding_subset,
     )
 

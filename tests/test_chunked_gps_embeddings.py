@@ -4,7 +4,7 @@ from pathlib import Path
 
 import torch
 
-from scripts.phase8.experiments.train_three_gps_embedding_residual import (
+from cli.train_three_gps_embedding_residual import (
     load_chunked,
 )
 

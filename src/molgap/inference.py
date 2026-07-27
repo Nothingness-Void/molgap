@@ -748,14 +748,14 @@ def predict_smiles_ensemble(
 # ── M1: GW prediction with uncertainty (Δ-ensemble + calibration + OOD) ──
 # The frozen-embedding Δ-learning path (Phase 9/10), wrapped so a single SMILES
 # yields a GW-level (value, σ, ood_flag) instead of a bare number. Artifacts come
-# from scripts/phase10: the 10 LightGBM members per target, the σ-recalibration
+# from production/06_uq/scripts: the 10 LightGBM members per target, the σ-recalibration
 # scales, and the OOD reference bundle (standardized fit embeddings + threshold).
 
 
 def load_uq_bundle(
     device: torch.device | str | None = None,
     *,
-    results_subdir: str = "phase10",
+    results_subdir: str = "results",
 ) -> dict:
     """Load everything predict_smiles_with_uq needs, once, for reuse across calls.
 
@@ -767,10 +767,12 @@ def load_uq_bundle(
     import json
     import lightgbm as lgb
 
-    from .constants import RESULTS_DIR
+    from .constants import PRODUCTION_DIR
 
-    phase10 = RESULTS_DIR / results_subdir
-    cfg_path = phase10 / "feature_config.json"
+    # UQ assets live under the calibration stage; `results_subdir` selects which
+    # trained variant (results, results_v3, results_lora_v3) to load.
+    uq_dir = PRODUCTION_DIR / "06_uq" / results_subdir
+    cfg_path = uq_dir / "feature_config.json"
     feature_cfg = (
         json.loads(cfg_path.read_text(encoding="utf-8"))
         if cfg_path.exists()
@@ -781,19 +783,19 @@ def load_uq_bundle(
     members = {}
     for t in TARGET_COLS:
         m, k = [], 0
-        while (phase10 / "ensemble_lgbm" / f"{t}_m{k}.txt").exists():
-            s = (phase10 / "ensemble_lgbm" / f"{t}_m{k}.txt").read_text(encoding="utf-8")
+        while (uq_dir / "ensemble_lgbm" / f"{t}_m{k}.txt").exists():
+            s = (uq_dir / "ensemble_lgbm" / f"{t}_m{k}.txt").read_text(encoding="utf-8")
             m.append(lgb.Booster(model_str=s))
             k += 1
         if not m:
             raise FileNotFoundError(
-                f"No ensemble boosters for '{t}' in {phase10/'ensemble_lgbm'}. "
-                "Run scripts/phase10/train_ensemble.py first."
+                f"No ensemble boosters for '{t}' in {uq_dir / 'ensemble_lgbm'}. "
+                "Run production/06_uq/scripts/train_ensemble.py first."
             )
         members[t] = m
 
-    calib = json.loads((phase10 / "ensemble_calibration.json").read_text())
-    ood = np.load(phase10 / "ood_reference.npz")
+    calib = json.loads((uq_dir / "ensemble_calibration.json").read_text())
+    ood = np.load(uq_dir / "ood_reference.npz")
     return {
         "hybrid": hybrid, "members": members, "calib": calib,
         "results_subdir": results_subdir,
@@ -848,7 +850,7 @@ def predict_smiles_with_uq(
     bundle: dict | None = None,
     device: torch.device | str | None = None,
     *,
-    results_subdir: str = "phase10",
+    results_subdir: str = "results",
 ) -> dict | None:
     """Predict GW-level HOMO/LUMO/Gap for one SMILES, with uncertainty.
 

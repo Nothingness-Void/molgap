@@ -4,7 +4,7 @@ import pytest
 import torch
 from torch_geometric.data import Data
 
-from scripts.phase8.training.train_encoder import _explicit_split
+from cli.train_encoder import _explicit_split
 
 
 def graph(source_idx: int) -> Data:

@@ -58,7 +58,7 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |
 | `router_sampling.py` | Diverse selection and scaffold keys | Changing Router sampling |
 | `utils.py` | Shared splits, metrics, SMILES, fingerprints, and IO | Changing cross-cutting utilities |
-| `tensornet.py`, `visnet.py` | Vendored closed 3D A/B implementations | Reproducing `results/ab3d/comparison.md` only |
+| `tensornet.py`, `visnet.py` | Vendored closed 3D A/B implementations | Reproducing `experiments/_closed/ab3d/comparison.md` only |
 | `late_router.py` | Conservative late blending between frozen predictors | Reproducing the closed late-blend branch only |
 | `archive/phase8_*` | Closed reusable experiment snapshots | Reproducing the linked archive branch only |
 
@@ -76,18 +76,24 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 - Registry structure and exact asset paths are authoritative in
   `src/molgap/constants.py`.
 
-## Script Map
+## Tree Map
 
-| Path | Role |
-|---|---|
-| `scripts/pipeline/` | Shared acquisition, cleaning, and feature CLIs |
-| `scripts/phase1/` through `scripts/phase7/` | Historical phase commands |
-| `scripts/phase8/README.md` | Supported Phase 8 command map |
-| `scripts/phase8/archive/` | Closed Phase 8 local and remote commands |
-| `scripts/architecture/` | Cross-phase architecture-elimination entrypoints |
-| `scripts/phase9/` | Delta-learning commands |
-| `scripts/phase10/` | Calibration and OOD commands |
-| `scripts/ab3d/` | Closed 3D encoder comparison |
+Three top-level trees, split by role rather than by calendar phase. A phase
+number ages; a role does not.
+
+| Tree | Answers | Entry point |
+|---|---|---|
+| `production/` | What ships, in data-flow order | `production/README.md` |
+| `experiments/` | One directory per open or closed question | `experiments/README.md` |
+| `platforms/` | How a run reaches a given compute environment | `platforms/README.md` |
+
+Each production stage keeps its own `scripts/` for argument parsing and output
+persistence; the reusable behavior stays in `src/molgap/`. Stage roots are
+constants (`ACQUIRE_DIR` through `DATABASE_DIR`) so renaming a stage is a
+one-line change in `constants.py`.
+
+`production/history/` holds the frozen phase 1-7 line. It is reproducibility
+evidence and is not extended.
 
 ## Asset Map
 
@@ -96,7 +102,6 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `data/raw/` | Source tables and downloaded raw inputs |
 | `data/cache/` | Regenerable local graph/embedding caches |
 | `models/README.md` | Checkpoint asset map |
-| `results/README.md` | Evidence asset map |
 
-For experiment method and conclusions, follow `docs/phaseN.md` to its linked
-decision record instead of adding them here.
+Experiment method and conclusions live in each experiment's own decision record;
+follow `experiments/README.md` rather than restating them here.
