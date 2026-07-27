@@ -4,11 +4,18 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
-
+from molgap.constants import EXPERIMENTS_DIR, PLATFORMS_DIR, RAW_DIR, REPO_ROOT
 from molgap.pcqm_expert import run_local_scaleup
 
-ROOT = Path(__file__).resolve().parents[3]
+CACHE_ROOT = REPO_ROOT / "data" / "cache" / "phase8"
+EXPERIMENT_RESULTS = EXPERIMENTS_DIR / "pcqm_gine_expert" / "results"
+ACCEPTED = (
+    PLATFORMS_DIR
+    / "_records"
+    / "kaggle"
+    / "staging"
+    / "molgap_pcqm_gin_v5_accepted_20260726"
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -32,39 +39,16 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    accepted = (
-        ROOT
-        / "results"
-        / "kaggle"
-        / "staging"
-        / "molgap_pcqm_gin_v5_accepted_20260726"
-    )
-    output = (
-        ROOT
-        / "results"
-        / "phase8"
-        / "pcqm_gine_expert_pilot"
-        / args.output_name
-    )
+    accepted = ACCEPTED
+    output = EXPERIMENT_RESULTS / args.output_name
     metrics = run_local_scaleup(
-        raw_csv=ROOT
-        / "data"
-        / "raw"
-        / "pcqm4m-v2"
-        / "raw"
-        / "data.csv.gz",
+        raw_csv=RAW_DIR / "pcqm4m-v2" / "raw" / "data.csv.gz",
         accepted_valid_predictions=accepted
         / "pcqm_official_valid_5k_predictions.csv",
-        initial_best=ROOT
-        / "results"
-        / "phase8"
-        / "pcqm_gine_expert_pilot"
+        initial_best=EXPERIMENT_RESULTS
         / "local_continuation_v6"
         / "pcqm_gine_best.pt",
-        cache_dir=ROOT
-        / "data"
-        / "cache"
-        / "phase8"
+        cache_dir=CACHE_ROOT
         / f"pcqm_gine_{args.train_rows}_nested_seed42_43",
         output_dir=output,
         total_train_rows=args.train_rows,

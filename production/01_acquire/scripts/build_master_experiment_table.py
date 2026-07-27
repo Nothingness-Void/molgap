@@ -1,15 +1,14 @@
-"""
-17_build_master_experiment_table.py — build the master experiment log.
+r"""
+build_master_experiment_table.py — build the master experiment log.
 
-Collects ALL experiment results across phases into one CSV:
-  results/master_experiment_log.csv
+Collects experiment results into:
+  production/04_evaluate/master_experiment_log.csv
 
 Two sources of data:
-  1. Hard-coded collectors for historical experiments (Phase 1.1-1.5, Phase 2.1-2.5)
-  2. Auto-scan: any JSON file in results/experiments/ with the standard schema
-     is automatically included. This is the preferred way to add new experiments.
+  1. Hard-coded collectors for frozen phase-1/2 history.
+  2. Auto-scan: one `experiment.json` at an experiment directory root.
 
-Standard experiment JSON schema (place in results/experiments/):
+Standard experiment JSON schema (place at `experiments/<question>/experiment.json`):
   {
     "phase": "3",
     "sub_stage": "3.1",
@@ -29,20 +28,20 @@ Standard experiment JSON schema (place in results/experiments/):
   }
 
 Regenerate the table at any time:
-  python scripts/experiments/17_build_master_experiment_table.py
+  .venv\Scripts\python.exe production/01_acquire/scripts/build_master_experiment_table.py
 """
 
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 import pandas as pd
 
-REPO = Path(__file__).resolve().parents[2]
-RESULTS = REPO / "results"
-AUTO_DIR = RESULTS / "experiments"
-OUT = RESULTS / "master_experiment_log.csv"
+from molgap.constants import EVALUATE_DIR, EXPERIMENTS_DIR, PRODUCTION_HISTORY_DIR
+
+HISTORY = PRODUCTION_HISTORY_DIR
+AUTO_DIR = EXPERIMENTS_DIR
+OUT = EVALUATE_DIR / "master_experiment_log.csv"
 
 COL_ORDER = [
     "phase", "sub_stage", "experiment", "model", "data_desc",
@@ -78,7 +77,7 @@ def make_row(phase, sub, experiment, model, data_desc, elements, mw_range,
 
 def collect_phase1_1(rows):
     """1.1 Baseline models — 10k CHON MW200-300."""
-    csv_path = RESULTS / "phase1" / "baseline" / "model_comparison_baseline.csv"
+    csv_path = HISTORY / "phase1" / "baseline" / "model_comparison_baseline.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -109,7 +108,7 @@ def collect_phase1_2(rows):
 
 def collect_phase1_3(rows):
     """1.3 Embedding experiments — 10k CHON."""
-    csv_path = RESULTS / "phase1" / "embeddings" / "embedding_model_comparison.csv"
+    csv_path = HISTORY / "phase1" / "embeddings" / "embedding_model_comparison.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -124,7 +123,7 @@ def collect_phase1_3(rows):
 
 def collect_phase1_4(rows):
     """1.4 Advanced models — 30k CHON."""
-    csv_path = RESULTS / "phase1" / "advanced" / "advanced_model_comparison.csv"
+    csv_path = HISTORY / "phase1" / "advanced" / "advanced_model_comparison.csv"
     if not csv_path.exists():
         return
     df = pd.read_csv(csv_path)
@@ -139,7 +138,7 @@ def collect_phase1_4(rows):
 
 def collect_phase1_5(rows):
     """1.5 Data scaling — 30k tuned LightGBM."""
-    json_path = RESULTS / "phase1" / "tuning" / "tuning_result_summary.json"
+    json_path = HISTORY / "phase1" / "tuning" / "tuning_result_summary.json"
     if not json_path.exists():
         return
     d = json.load(open(json_path, encoding="utf-8"))
@@ -153,7 +152,7 @@ def collect_phase1_5(rows):
 
 def collect_phase2(rows):
     """2.x Generalization steps."""
-    gen_dir = RESULTS / "phase2" / "generalization"
+    gen_dir = HISTORY / "phase2" / "generalization"
     if not gen_dir.exists():
         return
     step_map = {
@@ -176,11 +175,11 @@ def collect_phase2(rows):
 # ── Auto-scan collector ─────────────────────────────────────
 
 def collect_auto(rows):
-    """Scan results/experiments/*.json for new experiments in standard schema."""
+    """Scan one standard `experiment.json` per experiment directory."""
     if not AUTO_DIR.exists():
         return
     seen = {r["experiment"] for r in rows}
-    for json_file in sorted(AUTO_DIR.glob("*.json")):
+    for json_file in sorted(AUTO_DIR.glob("*/experiment.json")):
         if json_file.name.startswith("_"):
             continue
         try:

@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 
+from molgap.constants import EXPERIMENTS_DIR, PLATFORMS_DIR, REPO_ROOT
 from molgap.conformer_ab import (
     PROTOCOLS,
     analyze_tradeoff,
@@ -16,24 +17,11 @@ from molgap.conformer_ab import (
     write_selection,
 )
 
-ROOT = Path(__file__).resolve().parents[3]
-EXPERIMENT = (
-    ROOT
-    / "results"
-    / "phase8"
-    / "experiments"
-    / "conformer_protocol_50k"
-)
-CACHE = ROOT / "data" / "cache" / "phase8" / "conformer_protocol_50k"
-PC100K = (
-    ROOT
-    / "results"
-    / "phase8"
-    / "experiments"
-    / "pubchemqc100k_architecture"
-)
+EXPERIMENT = EXPERIMENTS_DIR / "conformer_protocol" / "results"
+CACHE = REPO_ROOT / "data" / "cache" / "phase8" / "conformer_protocol_50k"
+PC100K = EXPERIMENTS_DIR / "pubchemqc100k_architecture" / "results"
 ACCEPTED = PC100K / "schnet_v2_acceptance"
-KAGGLE = ROOT / "results" / "kaggle" / "pubchemqc100k_architecture"
+KAGGLE = PLATFORMS_DIR / "_records" / "kaggle" / "pubchemqc100k_architecture"
 
 
 def parse_args() -> argparse.Namespace:

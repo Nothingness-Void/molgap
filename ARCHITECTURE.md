@@ -92,6 +92,11 @@ persistence; the reusable behavior stays in `src/molgap/`. Stage roots are
 constants (`ACQUIRE_DIR` through `DATABASE_DIR`) so renaming a stage is a
 one-line change in `constants.py`.
 
+Every active CLI must resolve paths from those constants rather than from
+`Path(__file__).parents[n]`, because a depth-derived root breaks the moment a
+file moves. `tests/test_repository_layout.py` enforces this, checks the
+test-time CLI alias table still resolves, and runs `--help` on one CLI per tree.
+
 `production/history/` holds the frozen phase 1-7 line. It is reproducibility
 evidence and is not extended.
 

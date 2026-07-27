@@ -35,10 +35,10 @@ CLI_MODULES = {
 def _load(alias: str, relative: str) -> None:
     path = REPO_ROOT / relative
     if not path.exists():
-        return
+        raise FileNotFoundError(f"CLI alias {alias!r} points to missing file: {path}")
     spec = importlib.util.spec_from_file_location(alias, path)
     if spec is None or spec.loader is None:
-        return
+        raise ImportError(f"Cannot create module spec for CLI alias {alias!r}: {path}")
     module = importlib.util.module_from_spec(spec)
     sys.modules[alias] = module
     spec.loader.exec_module(module)

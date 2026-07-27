@@ -96,10 +96,10 @@ SchNet checkpoints match `176/160/6` strictly.
 
 - reusable cache logic: `src/molgap/pcqm_route_b.py`
 - thin builder:
-  `production/02_graphs/scripts/data/build_pcqm_route_b_1m.py`
+  `experiments/pcqm_route_b/build_pcqm_route_b_1m.py`
 - tests: `tests/test_pcqm_route_b.py`
 - machine-readable stage plan:
-  `experiments/pcqm_route_b/run_plan.json`
+  `experiments/pcqm_route_b/results/run_plan.json`
 
 The cache builder, row-level three-view alignment, graph-cache acceptance,
 streaming encoder continuation, and chunked embedding extraction are
@@ -108,11 +108,12 @@ implemented yet.
 
 ## Next Steps
 
-1. Let `submit_wave1_when_ready.ps1` submit GPS9 and augmented SchNet only
-   after the two active QM9 GPU jobs release their slots and all mounted
-   datasets exist. State is in `wave1_submission.json`.
-2. Submit the second verified parallel wave: GPS11-160 plus primary SchNet.
-   Do not assume four-way account capacity.
+1. Wave 1 is running on Kaggle:
+   - GPS9: `nothingnessvoid/molgap-rb-gps9-probe-20260727`
+   - augmented SchNet: `nothingnessvoid/molgap-rb-aug-schnet-r1-20260727`
+2. When either slot is free, submit wave 2: GPS11-160 plus primary SchNet. Kaggle
+   rejects a third concurrent batch GPU session rather than retaining it in a
+   durable server-side queue, so submit only after a real slot release.
 3. Select every encoder only on primary-view scaffold development.
 4. Download and independently accept each output; publish accepted checkpoints
    and chunked embeddings as private datasets.
@@ -131,7 +132,7 @@ implemented yet.
 - Do not modify the production registry/default.
 - Do not clean or revert the dirty worktree; it contains user and prior Agent
   work.
-- Local CPU graph construction and acceptance are complete. GPS and warm-start
-  datasets are published; primary and secondary 3D datasets are uploading.
-  GPU training has not started because two existing QM9 kernels occupy both
-  batch GPU slots. The one-shot wave-1 submitter waits without stopping them.
+- Local CPU graph construction, acceptance, and publication are complete. Wave 1
+  is running on Kaggle under the two kernel refs above. The old local
+  `submit_wave1_when_ready.ps1` helper is archived because its one-shot role is
+  finished; it is not part of the live execution contract.

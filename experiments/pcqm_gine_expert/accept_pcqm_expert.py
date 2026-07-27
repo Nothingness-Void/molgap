@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 
+from molgap.constants import EXPERIMENTS_DIR, REPO_ROOT
 from molgap.pcqm_expert import accept_pcqm_expert_artifacts
 
-ROOT = Path(__file__).resolve().parents[3]
+CACHE_ROOT = REPO_ROOT / "data" / "cache" / "phase8"
+EXPERIMENT_RESULTS = EXPERIMENTS_DIR / "pcqm_gine_expert" / "results"
 
 
 def parse_args() -> argparse.Namespace:
@@ -24,16 +25,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     report = accept_pcqm_expert_artifacts(
-        ROOT
-        / "results"
-        / "phase8"
-        / "pcqm_gine_expert_pilot"
-        / args.run_name,
-        ROOT
-        / "data"
-        / "cache"
-        / "phase8"
-        / f"pcqm_gine_{args.train_rows}_nested_seed42_43",
+        EXPERIMENT_RESULTS / args.run_name,
+        CACHE_ROOT / f"pcqm_gine_{args.train_rows}_nested_seed42_43",
     )
     print(json.dumps(report, indent=2))
 

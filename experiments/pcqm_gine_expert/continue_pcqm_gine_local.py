@@ -6,12 +6,14 @@ import argparse
 import json
 from pathlib import Path
 
+from molgap.constants import EXPERIMENTS_DIR, PLATFORMS_DIR, RAW_DIR, REPO_ROOT
 from molgap.pcqm_expert import run_local_continuation
 
-ROOT = Path(__file__).resolve().parents[3]
+CACHE_ROOT = REPO_ROOT / "data" / "cache" / "phase8"
+EXPERIMENT_RESULTS = EXPERIMENTS_DIR / "pcqm_gine_expert" / "results"
 ACCEPTED = (
-    ROOT
-    / "results"
+    PLATFORMS_DIR
+    / "_records"
     / "kaggle"
     / "staging"
     / "molgap_pcqm_gin_v5_accepted_20260726"
@@ -23,23 +25,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--raw-csv",
         type=Path,
-        default=ROOT / "data" / "raw" / "pcqm4m-v2" / "raw" / "data.csv.gz",
+        default=RAW_DIR / "pcqm4m-v2" / "raw" / "data.csv.gz",
     )
     parser.add_argument(
         "--cache-dir",
         type=Path,
-        default=ROOT / "data" / "cache" / "phase8" / "pcqm_gine_250k_seed42",
+        default=CACHE_ROOT / "pcqm_gine_250k_seed42",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=(
-            ROOT
-            / "results"
-            / "phase8"
-            / "pcqm_gine_expert_pilot"
-            / "local_continuation_v6"
-        ),
+        default=EXPERIMENT_RESULTS / "local_continuation_v6",
     )
     parser.add_argument("--max-epoch", type=int, default=100)
     parser.add_argument("--patience", type=int, default=12)

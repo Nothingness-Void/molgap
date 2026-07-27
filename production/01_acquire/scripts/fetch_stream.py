@@ -38,7 +38,6 @@ import sys
 import time
 import urllib.request
 import urllib.error
-from pathlib import Path
 
 import ijson
 from tqdm import tqdm
@@ -67,9 +66,10 @@ HARTREE_TO_EV = 27.2114
 USER_AGENT = "curl/8"
 DEFAULT_CHUNK_BYTES = 12_000_000  # 12 MB, proven to yield real records in brief
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-OUT_DIR = os.path.join(REPO_ROOT, "data", "raw")
-OUT_CSV = os.path.join(OUT_DIR, "pubchemqc_chon_mw200_300.csv")
+from molgap.constants import RAW_DIR
+
+OUT_DIR = str(RAW_DIR)
+OUT_CSV = str(RAW_DIR / "pubchemqc_chon_mw200_300.csv")
 
 CSV_FIELDS = ["cid", "mw", "formula", "smiles", "homo", "lumo", "gap"]
 

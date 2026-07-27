@@ -1,7 +1,7 @@
 {
   "experiment": "pcqm_route_b_precision_1m",
-  "status": "graph_cache_accepted_remote_assets_publishing",
-  "handoff": "results/phase8/pcqm_route_b_1m/HANDOFF.md",
+  "status": "wave_1_running",
+  "handoff": "experiments/pcqm_route_b/results/HANDOFF.md",
   "execution_strategy": {
     "graph_build": "local Ryzen 9700X CPU",
     "graph_publication": "private immutable Kaggle datasets after local acceptance",
@@ -59,29 +59,31 @@
       "name": "aligned_graph_cache",
       "status": "accepted",
       "manifest": "data/cache/phase8/pcqm_route_b_1m/manifest.json",
-      "acceptance": "results/phase8/pcqm_route_b_1m/graph_acceptance.json",
-      "stdout": "results/phase8/pcqm_route_b_1m/build_stdout.log",
-      "stderr": "results/phase8/pcqm_route_b_1m/build_stderr.log"
+      "acceptance": "experiments/pcqm_route_b/results/graph_acceptance.json",
+      "stdout": "experiments/pcqm_route_b/results/build_stdout.log",
+      "stderr": "experiments/pcqm_route_b/results/build_stderr.log"
     },
     {
       "name": "gps9_pcqm_continuation",
-      "status": "queued_waiting_for_gpu_slot",
-      "warm_start": "results/phase8/repaired_2m/gps9_seed42_raw/model.pt"
+      "status": "running",
+      "warm_start": "experiments/repaired_2m_scaling/results/gps9_seed42_raw/model.pt",
+      "kernel": "nothingnessvoid/molgap-rb-gps9-probe-20260727"
     },
     {
       "name": "gps11_160_pcqm_continuation",
       "status": "package_ready_wave_2",
-      "warm_start": "results/phase8/repaired_2m/gps11_160_seed42_raw/model.pt"
+      "warm_start": "experiments/repaired_2m_scaling/results/gps11_160_seed42_raw/model.pt"
     },
     {
       "name": "primary_schnet_pcqm_continuation",
-      "status": "package_ready_wave_2_pending_primary_dataset",
-      "warm_start": "results/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt"
+      "status": "package_ready_wave_2",
+      "warm_start": "platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt"
     },
     {
       "name": "augmented_schnet_pcqm_continuation",
-      "status": "queued_waiting_for_3d_datasets_and_gpu_slot",
-      "warm_start": "results/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt"
+      "status": "running",
+      "warm_start": "platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt",
+      "kernel": "nothingnessvoid/molgap-rb-aug-schnet-r1-20260727"
     },
     {
       "name": "bounded_residual_fusion",

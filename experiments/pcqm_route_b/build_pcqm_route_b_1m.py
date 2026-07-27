@@ -4,11 +4,18 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 
+from molgap.constants import PLATFORMS_DIR, RAW_DIR, REPO_ROOT
 from molgap.pcqm_route_b import build_route_b_cache
 
-ROOT = Path(__file__).resolve().parents[3]
+CACHE_ROOT = REPO_ROOT / "data" / "cache" / "phase8"
+ACCEPTED = (
+    PLATFORMS_DIR
+    / "_records"
+    / "kaggle"
+    / "staging"
+    / "molgap_pcqm_gin_v5_accepted_20260726"
+)
 
 
 def main() -> None:
@@ -17,17 +24,12 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=12)
     parser.add_argument("--shard-rows", type=int, default=5_000)
     args = parser.parse_args()
-    accepted = (
-        ROOT
-        / "results/kaggle/staging/molgap_pcqm_gin_v5_accepted_20260726"
-    )
     result = build_route_b_cache(
-        raw_csv=ROOT / "data/raw/pcqm4m-v2/raw/data.csv.gz",
-        accepted_valid_predictions=accepted
+        raw_csv=RAW_DIR / "pcqm4m-v2" / "raw" / "data.csv.gz",
+        accepted_valid_predictions=ACCEPTED
         / "pcqm_official_valid_5k_predictions.csv",
-        gine_cache=ROOT
-        / "data/cache/phase8/pcqm_gine_1000000_nested_seed42_43",
-        cache_dir=ROOT / "data/cache/phase8/pcqm_route_b_1m",
+        gine_cache=CACHE_ROOT / "pcqm_gine_1000000_nested_seed42_43",
+        cache_dir=CACHE_ROOT / "pcqm_route_b_1m",
         total_train_rows=args.train_rows,
         workers=args.workers,
         shard_rows=args.shard_rows,

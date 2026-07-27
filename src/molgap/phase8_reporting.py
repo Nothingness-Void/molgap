@@ -12,7 +12,7 @@ def _read(path: Path) -> dict:
 
 
 def build_comparison_rows(repo: Path) -> list[dict]:
-    repaired = repo / "results" / "phase8" / "repaired_2m"
+    repaired = repo / "experiments" / "repaired_2m_scaling" / "results"
     seed42 = _read(repaired / "retention_d_seed42_raw" / "common_metrics.json")
     seed42_pcqm = _read(repaired / "retention_d_seed42_raw" / "pcqm_metrics.json")
     oracle = _read(
@@ -24,18 +24,16 @@ def build_comparison_rows(repo: Path) -> list[dict]:
     ensemble = _read(repaired / "retention_d_three_seed_equal_ensemble.json")
     route_b = _read(
         repo
-        / "results"
-        / "phase8"
         / "experiments"
         / "pubchemqc100k_architecture"
+        / "results"
         / "route_b_fusion_summary.json"
     )
     route_b_residual = _read(
         repo
-        / "results"
-        / "phase8"
         / "experiments"
         / "pubchemqc100k_architecture"
+        / "results"
         / "route_b_residual_scale_summary.json"
     )
 

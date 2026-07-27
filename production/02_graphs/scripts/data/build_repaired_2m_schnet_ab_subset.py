@@ -11,17 +11,16 @@ import numpy as np
 import pandas as pd
 
 
-REPO = Path(__file__).resolve().parents[3]
+from molgap.constants import EXPERIMENTS_DIR, RAW_DIR
+
 DEFAULT_MANIFEST = (
-    REPO / "results" / "phase8" / "repaired_2m" / "repaired_2m_manifest.parquet"
+    EXPERIMENTS_DIR / "repaired_2m_scaling" / "results" / "repaired_2m_manifest.parquet"
 )
-DEFAULT_CSV = REPO / "data" / "raw" / "phase8_repaired_2m.csv"
-DEFAULT_OUT = REPO / "data" / "raw" / "phase8_repaired_2m_schnet_ab_30k.csv"
+DEFAULT_CSV = RAW_DIR / "phase8_repaired_2m.csv"
+DEFAULT_OUT = RAW_DIR / "phase8_repaired_2m_schnet_ab_30k.csv"
 DEFAULT_REPORT = (
-    REPO
-    / "results"
-    / "phase8"
-    / "experiments"
+    EXPERIMENTS_DIR
+    / "schnet_arch"
     / "schnet_arch_repaired_2m_30k"
     / "subset_manifest.json"
 )

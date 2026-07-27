@@ -11,7 +11,7 @@ first; the metrics beside it are backup, not the entry point.
 |---|---|---|
 | Which architecture family survives cheap elimination? | GPS9/GPS11-160 advance; GPS7, TensorNet, EGNN eliminated | `qm9_architecture/` |
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |
-| What is the PCQM-only Gap ceiling of that architecture? | In progress; graph cache accepted | `pcqm_route_b/` |
+| What is the PCQM-only Gap ceiling of that architecture? | In progress; graph cache accepted, wave 1 encoders running | `pcqm_route_b/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Retention-D seed42 is the general base; PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |
@@ -23,7 +23,12 @@ first; the metrics beside it are backup, not the entry point.
 
 `_closed/` holds branches that are settled and must not be rerun without a
 materially new hypothesis. `_scripts/` holds entrypoints shared by more than one
-experiment; single-use runners live with their experiment.
+experiment; single-use runners live with their experiment, at its directory root
+(for example `pcqm_route_b/build_pcqm_route_b_1m.py`).
+
+An experiment CLI resolves paths from `molgap.constants` roots, never from
+`Path(__file__).parents[n]`; `tests/test_repository_layout.py` enforces this so a
+future move cannot silently break an entrypoint.
 
 Live status and the recommended model are in `CURRENT_STATE.md`; task order is in
 `ROADMAP.md`. Compute-environment adapters are in `platforms/`.

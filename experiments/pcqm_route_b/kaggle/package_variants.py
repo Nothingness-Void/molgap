@@ -6,7 +6,9 @@ import json
 import shutil
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[6]
+from molgap.constants import REPO_ROOT
+
+ROOT = REPO_ROOT
 HERE = Path(__file__).resolve().parent
 DATASETS = {
     "gps": "nothingnessvoid/molgap-pcqm-route-b-gps-1m-20260727",

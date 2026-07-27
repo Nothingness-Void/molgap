@@ -92,13 +92,11 @@ the strongest deployable candidate under review.
   `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
 - The local PCQM 1M Route B aligned graph cache is complete and accepted:
   1,001,954 of 1,005,000 rows passed all three aligned views, with all 1,203
-  declared files present and matching SHA256. Four compatible checkpoints will
-  warm-start GPS9, GPS11-160, primary SchNet, and augmented SchNet on Kaggle.
-  GPS and warm-start assets are published; paired 3D assets are uploading.
-  GPU training has not started because the two existing QM9 jobs occupy both
-  Kaggle batch GPU slots. A one-shot local submitter waits for real slot
-  release and will not stop those jobs. This does not yet have a model-quality
-  result. Live stage contract:
+  declared files present and matching SHA256. Wave 1 is now running on Kaggle:
+  GPS9 (`nothingnessvoid/molgap-rb-gps9-probe-20260727`) and augmented SchNet
+  (`nothingnessvoid/molgap-rb-aug-schnet-r1-20260727`). GPS11-160 plus primary
+  SchNet are the next verified parallel wave after a real GPU-slot release. This
+  does not yet have a model-quality result. Live stage contract:
   `experiments/pcqm_route_b/results/run_plan.json`.
 
 ## Active Remote Work

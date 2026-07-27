@@ -6,11 +6,12 @@ import argparse
 import sqlite3
 from pathlib import Path
 
+from molgap.constants import EVALUATE_DIR, REPO_ROOT
 from molgap.experiment_db import build_database, export_query
 
 
-REPO = Path(__file__).resolve().parents[2]
-DEFAULT_DIR = REPO / "results" / "phase8" / "model_inventory_audit"
+REPO = REPO_ROOT
+DEFAULT_DIR = EVALUATE_DIR / "inventory" / "model_inventory_audit"
 
 
 def parse_args() -> argparse.Namespace:
