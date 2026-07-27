@@ -5,4 +5,4 @@
 training entry point and not evidence that the 1M model is production-default.
 
 Completed outputs are under
-`results/kaggle/evaluation/runs/molgap_1m_pcqm4mv2_valid_v2/`.
+`platforms/_records/kaggle/evaluation/runs/molgap_1m_pcqm4mv2_valid_v2/`.

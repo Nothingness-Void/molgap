@@ -13,7 +13,7 @@ test rows.
 - Input split: official `train`, 3,378,606 rows; official valid/test excluded.
 - Input copies: team-share `molgap-data/pcqm4m-v2/`, with local/remote SHA256
   equality checked for `raw/data.csv.gz` and `split_dict.pt`.
-- Output: team-share `molgap-results/phase8/pcqm4mv2_train_residual_scan/`.
+- Output: team-share `molgap-experiments/pcqm_gine_expert/pcqm4mv2_train_residual_scan/`.
 - Durability: 136 independently readable 25K-row Parquet parts, one JSON report
   per part, atomic progress, final manifest, and a 200K residual-hard pool.
 - Historical exclusion: canonical-SMILES deduplication against repair-v3 1.5M.

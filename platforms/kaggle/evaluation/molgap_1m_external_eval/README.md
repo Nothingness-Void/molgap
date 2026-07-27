@@ -6,7 +6,7 @@ candidate against routed-v4 on the shared OOD-1000 and targeted-hard labels.
 ## Inputs
 
 The three private Kaggle datasets are packaged locally under
-`results/phase8/remote/kaggle/external_eval_1m/datasets/`:
+`production/02_graphs/remote/kaggle/external_eval_1m/datasets/`:
 
 - `labels/`: shared external labels.
 - `model_assets/`: v4 baseline and complete 1M candidate weights.
@@ -18,7 +18,7 @@ The three private Kaggle datasets are packaged locally under
 2. Keep `RUN_MODE = "preflight"` until CUDA, RDKit, graph construction, and all
    checkpoint loads finish.
 3. Change only `RUN_MODE` to `"full"`, resubmit, and download metrics plus
-   predictions to `results/phase8/remote/kaggle/external_eval_1m/`.
+   predictions to `production/02_graphs/remote/kaggle/external_eval_1m/`.
 4. Add a decision record before changing `CURRENT_STATE.md` or the model registry.
 
 The first P100 preflight reached graph construction but failed after Torch

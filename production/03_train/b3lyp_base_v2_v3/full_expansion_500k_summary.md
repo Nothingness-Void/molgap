@@ -19,14 +19,14 @@ and appends 200,000 non-duplicate rows:
 - element/MW/label filters inherited from Phase 8
 - no duplicate canonical SMILES in the final 500k CSV
 
-Assembly report: `results/phase8/expansion_500k_report.md`.
+Assembly report: `production/02_graphs/expansion_500k_report.md`.
 
 ## Graph caches
 
 - 2D bond graphs: 500,000 / 500,000 succeeded,
-  `results/phase8/pyg_2d_graphs_bond_expansion_500k.pt`
+  `production/02_graphs/pyg_2d_graphs_bond_expansion_500k.pt`
 - 3D ETKDG graphs: 497,578 / 500,000 succeeded,
-  `results/phase8/pyg_3d_graphs_etkdg_expansion_500k.pt`
+  `production/02_graphs/pyg_3d_graphs_etkdg_expansion_500k.pt`
 
 The 3D failures are expected for a small fraction of larger/heteroatom-rich
 molecules under ETKDG. Training and inference both use ETKDG.
@@ -71,8 +71,8 @@ Expansion500k delta vs Replacement300k:
 
 Artifacts:
 
-- `results/phase8/full_expansion500k_common_eval_metrics.json`
-- `results/phase8/full_expansion500k_common_eval_predictions.csv`
+- `production/02_graphs/full_expansion500k_common_eval_metrics.json`
+- `production/02_graphs/full_expansion500k_common_eval_predictions.csv`
 
 ## Notes
 

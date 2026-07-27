@@ -8,8 +8,8 @@ Dataset: `data/raw/phase8_replacement_300k.csv`
 
 | kind | processed | graphs | failed | elapsed min | output |
 |---|---:|---:|---:|---:|---|
-| 2d | 300,000 | 300,000 | 0 | 4.0 | `D:/文档/molgap/results/phase8/pyg_2d_graphs_bond_replacement_300k.pt` |
-| 3d | 300,000 | 298,957 | 1,043 | 59.0 | `D:/文档/molgap/results/phase8/pyg_3d_graphs_etkdg_replacement_300k.pt` |
+| 2d | 300,000 | 300,000 | 0 | 4.0 | `D:/文档/molgap/production/02_graphs/pyg_2d_graphs_bond_replacement_300k.pt` |
+| 3d | 300,000 | 298,957 | 1,043 | 59.0 | `D:/文档/molgap/production/02_graphs/pyg_3d_graphs_etkdg_replacement_300k.pt` |
 
 ## Internal replacement300k test
 
@@ -36,9 +36,9 @@ Conclusion: full replacement300k standard FusionHead became the selected v2 base
 - `models/phase8_gps_replacement_300k.pt`
 - `models/phase8_schnet_replacement_300k.pt`
 - `models/phase8_hybrid_fusion_replacement_300k.pt`
-- `results/phase8/gps_replacement_300k_embeddings.pt`
-- `results/phase8/schnet_replacement_300k_embeddings.pt`
-- `results/phase8/fusion_replacement_300k_metrics.json`
-- `results/phase8/full_replacement_common_eval_metrics.json`
-- `results/phase8/full_replacement_common_eval_predictions.csv`
-- `results/phase8/full_replacement_300k_summary.json`
+- `production/02_graphs/gps_replacement_300k_embeddings.pt`
+- `production/02_graphs/schnet_replacement_300k_embeddings.pt`
+- `production/02_graphs/fusion_replacement_300k_metrics.json`
+- `production/02_graphs/full_replacement_common_eval_metrics.json`
+- `production/02_graphs/full_replacement_common_eval_predictions.csv`
+- `production/02_graphs/full_replacement_300k_summary.json`

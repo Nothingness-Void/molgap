@@ -184,4 +184,4 @@ Unless a row cites `encoder_seeds/decision.md`, its `+/-` is a **frozen-head**
 spread and understates true noise. Differences below 0.001 eV average MAE in this
 file are not established; see that record for the measured encoder-seed spread.
 
-Entrypoint and exact commands: `scripts/architecture/README.md`.
+Entrypoint and exact commands: `experiments/qm9_architecture/README.md`.

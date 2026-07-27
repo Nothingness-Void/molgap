@@ -31,7 +31,7 @@ PCQM GINE local v7:
 - scaffold development MAE: `0.187981982 eV`
 - fixed official-valid 5K MAE: `0.184618341 eV`
 - decision:
-  `results/phase8/pcqm_gine_expert_pilot/local_scaleup_1m_v7_decision.md`
+  `experiments/pcqm_gine_expert/local_scaleup_1m_v7_decision.md`
 
 This is not a leaderboard score.
 
@@ -43,8 +43,8 @@ It ran from 2026-07-26 23:29 to 2026-07-27 01:11 JST.
 Always read the live values here instead of copying this handoff snapshot:
 
 - manifest: `data/cache/phase8/pcqm_route_b_1m/manifest.json`
-- stdout: `results/phase8/pcqm_route_b_1m/build_stdout.log`
-- stderr: `results/phase8/pcqm_route_b_1m/build_stderr.log`
+- stdout: `experiments/pcqm_route_b/build_stdout.log`
+- stderr: `experiments/pcqm_route_b/build_stderr.log`
 
 Final result: `1,005,000 / 1,005,000` rows processed, `1,001,954`
 accepted, `3,046` failed, and 201 atomic 5K shards. The accepted split contains
@@ -56,7 +56,7 @@ accepted only when expanded 2D, primary 3D, and secondary 3D all succeed.
 
 Strict acceptance checked all 1,203 declared graph files: no file was missing
 and no SHA256 differed. Machine-readable evidence:
-`results/phase8/pcqm_route_b_1m/graph_acceptance.json`.
+`experiments/pcqm_route_b/graph_acceptance.json`.
 
 ## Important PCQM Adaptation
 
@@ -81,13 +81,13 @@ Do not silently return to the 9-wide input.
 ## Warm Starts
 
 - GPS9:
-  `results/phase8/repaired_2m/gps9_seed42_raw/model.pt`
+  `experiments/repaired_2m_scaling/results/gps9_seed42_raw/model.pt`
 - GPS11-160:
-  `results/phase8/repaired_2m/gps11_160_seed42_raw/model.pt`
+  `experiments/repaired_2m_scaling/results/gps11_160_seed42_raw/model.pt`
 - primary SchNet:
-  `results/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt`
+  `platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt`
 - augmented SchNet:
-  `results/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt`
+  `platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt`
 
 Both GPS checkpoints load strictly before the input-width expansion. Both
 SchNet checkpoints match `176/160/6` strictly.
@@ -96,10 +96,10 @@ SchNet checkpoints match `176/160/6` strictly.
 
 - reusable cache logic: `src/molgap/pcqm_route_b.py`
 - thin builder:
-  `scripts/phase8/data/build_pcqm_route_b_1m.py`
+  `production/02_graphs/scripts/data/build_pcqm_route_b_1m.py`
 - tests: `tests/test_pcqm_route_b.py`
 - machine-readable stage plan:
-  `results/phase8/pcqm_route_b_1m/run_plan.json`
+  `experiments/pcqm_route_b/run_plan.json`
 
 The cache builder, row-level three-view alignment, graph-cache acceptance,
 streaming encoder continuation, and chunked embedding extraction are

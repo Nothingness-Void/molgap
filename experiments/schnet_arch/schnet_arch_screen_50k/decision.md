@@ -67,4 +67,4 @@ the parameter and runtime reductions are the robust part of this result.
 - Compact fusion metrics: `fusion_summary.json`
 - Full per-arm metrics and weights: `h*/metrics.json`,
   `h*/fusion_metrics.json`, and `h*/model.pt`
-- Reproduction: `scripts/phase8/training/run_schnet_arch_screen.py`
+- Reproduction: `production/03_train/scripts/training/run_schnet_arch_screen.py`

@@ -68,7 +68,7 @@ its local output has not arrived.
 - P8-QM9 eliminated weak architectures and promoted three candidates to the
   PubChemQC 100K transfer gate:
   `experiments/qm9_architecture/README.md`.
-- Phase 1-7 history: `production/history/` and `docs/phase1.md` through `docs/phase7.md`.
+- Phase 1-7 history: `production/history/` (`phase1.md` through `phase7.md`).
 - Per-question decision records: `experiments/README.md`.
 - Closed code and evidence: `experiments/_closed/README.md` and
   `experiments/_closed/SCRIPTS_ARCHIVE.md`.

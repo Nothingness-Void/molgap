@@ -43,7 +43,7 @@ SCNet jobs were dependency-gated and resumable:
 
 The first durable graph shard and progress marker were verified at 50,000 /
 500,000 rows. Large outputs live through
-`results/phase8/multi2d_2m_scnet`, a symlink into the 400 GB team allocation.
+`experiments/multi2d_experts/multi2d_2m_scnet`, a symlink into the 400 GB team allocation.
 
 ## Gate
 

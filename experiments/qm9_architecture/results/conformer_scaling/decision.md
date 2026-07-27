@@ -3,7 +3,7 @@
 Date: 2026-07-27
 
 Metrics: `scaling.json`. Per-view predictions: `predictions.npz`.
-Command: `scripts/architecture/qm9_conformer_scaling.py`. Protocol: `../README.md`.
+Command: `experiments/qm9_architecture/qm9_conformer_scaling.py`. Protocol: `../README.md`.
 
 ## Question
 

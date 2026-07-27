@@ -46,7 +46,7 @@ evidence; GPS11 may only enter as a bounded residual feature.
   warning.
 
 Machine-readable acceptance:
-`results/phase8/repaired_2m/gps11_160_seed42_acceptance.json`.
+`experiments/repaired_2m_scaling/results/gps11_160_seed42_acceptance.json`.
 Raw bounded artifacts:
-`results/phase8/repaired_2m/gps11_160_seed42_raw/`.
+`experiments/repaired_2m_scaling/results/gps11_160_seed42_raw/`.
 No sealed rows were opened and the production registry was not changed.

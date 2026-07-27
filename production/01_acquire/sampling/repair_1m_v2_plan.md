@@ -3,7 +3,7 @@
 > **Status: closed at the pure-2D external gate.** The plan is retained as
 > reproducibility context. Controlled dual-GPS evaluation regressed P8-hard and
 > PCQM4Mv2-valid Gap, so the conditional 3D/fusion stage must not run. See
-> `results/phase8/repair_v2_2d_external_eval/decision.md`.
+> `experiments/data_repair/repair_v2_2d_external_eval/decision.md`.
 
 ## Objective
 

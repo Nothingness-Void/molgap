@@ -6,7 +6,7 @@ GPS9 is rejected as a global replacement for the accepted Retention-D GPS7
 base. The follow-up GPS7/GPS9 Oracle passed and authorizes scaffold-disjoint
 OOF gain-label generation before any learned Router or additional 3D
 allocation. Decision:
-`results/phase8/repaired_2m/gps7_gps9_oracle_20260725/decision.md`.
+`experiments/repaired_2m_scaling/results/gps7_gps9_oracle_20260725/decision.md`.
 
 ## GPS9 Minus GPS7
 
@@ -30,7 +30,7 @@ run.
 - SCNet external evaluation job: `709047`
 - Checkpoint SHA256:
   `e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040`
-- Local raw metrics: `results/phase8/repaired_2m/gps9_seed42_raw/`
+- Local raw metrics: `experiments/repaired_2m_scaling/results/gps9_seed42_raw/`
 
 The strict GPS9 warm start loaded the aligned repair-v3 1.5M GPS9 checkpoint.
 No sealed-20K rows or production-registry changes were involved.

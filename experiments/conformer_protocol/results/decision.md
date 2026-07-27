@@ -71,7 +71,7 @@ than no optimization.
 - Frozen-model metrics and paired statistics: `evaluation.json`
 - Cost/accuracy summary: `tradeoff.json`
 - Reusable implementation: `src/molgap/conformer_ab.py`
-- Thin entrypoint: `scripts/phase8/experiments/run_conformer_ab.py`
+- Thin entrypoint: `experiments/_scripts/run_conformer_ab.py`
 
 No sealed rows were used, no model was retrained, and the production registry
 was not changed.

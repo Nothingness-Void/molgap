@@ -65,7 +65,7 @@ The fixed gate rejects a global promotion. The candidate improves sealed
 broad/residual average/Gap MAE by `-0.00724/-0.00993` eV, but significantly
 regresses P8-hard by `+0.00091/+0.00171` eV; common and PCQM do not improve.
 Do not allocate 3D. See
-`results/phase8/broad_residual98k_external_eval/decision.md`.
+`experiments/data_repair/broad_residual98k_external_eval/decision.md`.
 
 ## Local durable artifacts
 

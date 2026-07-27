@@ -41,5 +41,5 @@ PCQM-like transfer set.
 - `molgap-repair-v2-pure-2d-control-eval.log`
 
 The SCNet encoder/head checkpoints and their per-run metrics remain under
-`results/phase8/repair_v2_scnet/controlled_2d/`. The Kaggle evaluator is
-`scripts/phase8/archive/remote/kaggle/molgap_repair_v2_2d_control_eval/`.
+`experiments/data_repair/repair_v2_scnet/controlled_2d/`. The Kaggle evaluator is
+`experiments/_closed/remote_scripts/kaggle/molgap_repair_v2_2d_control_eval/`.

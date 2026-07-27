@@ -32,7 +32,7 @@ Formal first-seed encoders:
 ```
 
 Encoder embeddings are cached under `data/cache/qm9/embeddings/`; metrics are
-written under `results/phase8/experiments/qm9_architecture_screen/`. Blend and
+written under `experiments/qm9_architecture/`. Blend and
 fusion commands consume those payloads without retraining an encoder. ETKDG
 graphs are atomically cached in resumable 2,000-molecule shards.
 
@@ -76,4 +76,4 @@ Inference-time conformer-averaging curve:
 independent ETKDG views of the test split and reports the K-versus-MAE curve with
 paired bootstrap intervals. It trains nothing. Views are read from
 `--cache-dir` and built on demand, so supplying a prebuilt conformer cache makes
-the run CPU-cheap. Verdict: `results/phase8/experiments/qm9_architecture_screen/conformer_scaling/decision.md`.
+the run CPU-cheap. Verdict: `experiments/qm9_architecture/conformer_scaling/decision.md`.

@@ -45,8 +45,8 @@ engineering gate is speed benchmarking and a batch inference wrapper.
 
 ## Artifacts
 
-- Metrics: `results/phase10_lora_v3/lora_uq_metrics.json`
-- Predictions: `results/phase10_lora_v3/lora_uq_predictions.csv`
-- Reliability plots: `results/phase10_lora_v3/reliability_{homo,lumo,gap}.png`
-- OOD reference: `results/phase10_lora_v3/ood_reference.npz`
-- Evaluation script: `scripts/phase9/eval_encoder_lora_uq.py`
+- Metrics: `production/06_uq/results_lora_v3/lora_uq_metrics.json`
+- Predictions: `production/06_uq/results_lora_v3/lora_uq_predictions.csv`
+- Reliability plots: `production/06_uq/results_lora_v3/reliability_{homo,lumo,gap}.png`
+- OOD reference: `production/06_uq/results_lora_v3/ood_reference.npz`
+- Evaluation script: `production/05_delta_gw/scripts/eval_encoder_lora_uq.py`

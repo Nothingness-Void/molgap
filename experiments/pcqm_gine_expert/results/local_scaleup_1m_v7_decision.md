@@ -51,7 +51,7 @@ running statistics removed the failure: a 250K packed control remained at
 
 ## Artifacts
 
-- Run: `results/phase8/pcqm_gine_expert_pilot/local_scaleup_1m_v7_frozen_bn/`
+- Run: `experiments/pcqm_gine_expert/local_scaleup_1m_v7_frozen_bn/`
 - Metrics: `local_scaleup_1m_v7_frozen_bn/metrics.json`
 - Acceptance: `local_scaleup_1m_v7_frozen_bn/acceptance.json`
 - Best checkpoint: `local_scaleup_1m_v7_frozen_bn/pcqm_gine_best.pt`

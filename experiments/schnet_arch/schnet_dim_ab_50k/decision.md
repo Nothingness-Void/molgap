@@ -52,4 +52,4 @@ The follow-up compute-shape search is recorded in
 - Full encoder metrics: `hidden_*/metrics.json`
 - Full fusion metrics: `hidden_192/fusion_metrics.json` and
   `hidden_160/fusion_metrics.json`
-- Reproduction command: `scripts/phase8/training/run_schnet_dim_ab.py`
+- Reproduction command: `production/03_train/scripts/training/run_schnet_dim_ab.py`

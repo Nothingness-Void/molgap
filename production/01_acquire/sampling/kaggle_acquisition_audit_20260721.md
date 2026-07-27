@@ -44,7 +44,7 @@ CID/canonical-SMILES deduplication. Scaffold keys were computed for all original
 - Final training table: 1,097,798 rows with the original 1M as an exact prefix.
 - No replay weighting is used.
 
-Assembly evidence: `results/phase8/broad_residual_pilot/assembly_report.json`.
+Assembly evidence: `experiments/data_repair/broad_residual_pilot/assembly_report.json`.
 
 Separately, future broad rounds 01-03 now provide 179,997 strict unique rows.
 They are acquisition inventory only and were not part of the 1.098M pilot above.
@@ -75,4 +75,4 @@ Candidate encoders and embeddings are complete, but no comparable candidate
 head or external metrics exist yet. Promotion still requires a stable Gap
 improvement of at least 0.001 eV without a significant P8-hard or PCQM
 regression. No 3D compute is allocated before this gate passes. Current SCNet
-blocker: `results/phase8/broad_residual98k_scnet/README.md`.
+blocker: `experiments/data_repair/broad_residual98k_scnet/README.md`.

@@ -1,9 +1,7 @@
 # Docs
 
-Dated narrative history. These files record **how a period of work unfolded**,
-in the vocabulary used at the time.
-
-They are not the code map and not live status:
+Dated narrative history and operational runbooks. Nothing here is live status or
+the code map:
 
 | Question | Read instead |
 |---|---|
@@ -12,11 +10,17 @@ They are not the code map and not live status:
 | Which file owns a behavior? | `ARCHITECTURE.md` |
 | What did one experiment conclude? | that experiment's `decision.md`, indexed by `experiments/README.md` |
 | What ships, in what order? | `production/README.md` |
+| How was a phase-1-7 result obtained? | `production/history/phaseN.md` |
 
-`phase1.md` through `phase7.md` describe the frozen line now kept under
-`production/history/`. `phase8.md` through `phase10.md` describe the scaling,
-Delta-learning, and calibration periods; the work they cover has since been split
-by role into `production/` and `experiments/`, so paths quoted inside them are
-historical. Follow the current index rather than a path in a dated document.
+Contents:
 
-`operations/` holds runbooks. `archive/` holds superseded notes.
+| Path | Role |
+|---|---|
+| `operations/` | Platform runbooks (e.g. SCNet DCU environment) |
+| `archive/` | Superseded narrative documents, kept for provenance |
+
+Method documents now live beside the work they describe: the Delta-learning and
+calibration contracts are `production/05_delta_gw/METHOD.md` and
+`production/06_uq/METHOD.md`; the phase-8 decision timeline is
+`experiments/_closed/PHASE8_TIMELINE.md`. Paths quoted inside archived documents
+are historical — follow the current index instead.

@@ -42,7 +42,7 @@ UQ/OOD bundle is LightGBM-based.
 
 ## UQ / OOD Recalibration
 
-Phase 10 v3 artifacts live in `results/phase10_v3/` and use the
+Phase 10 v3 artifacts live in `production/06_uq/results_v3/` and use the
 `embedding_desc_pred` feature mode.
 
 | target | ensemble MAE | R2 | ENCE after calibration | 1-sigma coverage | 2-sigma coverage |

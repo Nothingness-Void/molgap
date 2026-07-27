@@ -14,8 +14,8 @@ not a project description. One fact lives in one place — follow the links.
    `experiments/`, or `platforms/`. Then the specific decision record it links.
 6. The specific code files your task touches.
 
-`docs/phaseN.md` is retained history for the frozen phase 1-7 line. Never infer
-the current model or an open question from it.
+`production/history/phaseN.md` is retained history for the frozen phase 1-7
+line. Never infer the current model or an open question from it.
 
 Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
 
