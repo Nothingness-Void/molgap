@@ -3,7 +3,8 @@
 Date: 2026-06-30
 
 Script: `experiments/_closed/legacy_scripts/data_coverage/residual_analysis_expansion500k.py`
-Input: `results\phase8\full_expansion500k_common_eval_predictions.csv` (1977 molecules; buckets: {'ood1000': 999, 'p8_targeted_hard': 978}).
+Input: `production/03_train/b3lyp_base_v2_v3/full_expansion500k_common_eval_predictions.csv`
+(1977 molecules; buckets: {'ood1000': 999, 'p8_targeted_hard': 978}).
 
 ## Why this analysis
 
@@ -110,7 +111,8 @@ replacement300k. The remaining residual persists despite that broader coverage.
 
 ## Worst Gap offenders
 
-Full table: `results\phase8\residual_analysis_expansion500k_worst.csv`.
+Full table:
+`production/03_train/b3lyp_base_v2_v3/residual_analysis_expansion500k_worst.csv`.
 
 | eval_set | cid | mw | gap | expansion500k_full_hybrid_gap | gap_abserr | n_rotatable | n_aromatic_rings | n_S | n_Cl | n_N | n_O | canonical_smiles |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|

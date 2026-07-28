@@ -1,0 +1,64 @@
+{
+  "format": "molgap-pcqm-route-b-ims-submission-v1",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-route-b",
+  "queue": "H",
+  "environment_job": "1091836",
+  "input_acceptance_job": "1091837",
+  "cuda_preflight_job": "1091840",
+  "training_jobs": {
+    "gps9": "1091900",
+    "gps11_160": "1091901",
+    "primary_schnet": "1091902",
+    "augmented_schnet": "1091903"
+  },
+  "environment": {
+    "torch": "2.7.1+cu126",
+    "torch_geometric": "2.6.1",
+    "radius_backend": "molgap_portable_torch_radius_v1"
+  },
+  "accepted_rows": {
+    "train": 915012,
+    "dev": 81961,
+    "official": 4981
+  },
+  "first_epoch": {
+    "gps9": {
+      "dev_gap_mae_eV": 0.20841073989868164,
+      "elapsed_s": 460.0
+    },
+    "gps11_160": {
+      "dev_gap_mae_eV": 0.20571136474609375,
+      "elapsed_s": 487.0
+    },
+    "primary_schnet": {
+      "dev_gap_mae_eV": 0.19008825719356537,
+      "elapsed_s": 398.3
+    },
+    "augmented_schnet": {
+      "dev_gap_mae_eV": 0.167885,
+      "elapsed_s": 746.3
+    }
+  },
+  "durability_verified": {
+    "last_checkpoint": true,
+    "atomic_progress": true,
+    "independent_output_directories": true
+  },
+  "final_encoder_metrics": {
+    "gps9": 0.17576296627521515,
+    "gps11_160": 0.17321431636810303,
+    "primary_schnet": 0.13057228922843933,
+    "augmented_schnet": 0.1283137947320938
+  },
+  "encoder_acceptance": {
+    "status": "accepted",
+    "job": "1096720",
+    "local_sha256": "e49d08b839b90537fc4244e654b4876b624c50dfb0be2e91b0e6e35451dff90b",
+    "cross_encoder_source_idx_aligned": true,
+    "cross_encoder_train_dev_targets_aligned": true
+  },
+  "quality_accepted": false,
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "production_registry_changed": false
+}

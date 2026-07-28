@@ -1,5 +1,5 @@
 #!/bin/bash
-# Prepared OOF array only. Do not submit before the frozen cache is staged.
+# Non-executable OOF design placeholder. This is not a Fusion dependency.
 #SBATCH --job-name=molgap-oof
 #SBATCH --array=0-9
 #SBATCH --output=logs/oof_%A_%a.out
@@ -19,6 +19,6 @@ else
   LAYERS=9
 fi
 
-echo "Prepared only: fold=${FOLD} kind=${KIND} layers=${LAYERS}"
-echo "Submission requires an accepted immutable graph cache and explicit launch record."
+echo "Design only: fold=${FOLD} kind=${KIND} layers=${LAYERS}"
+echo "Do not submit: genuine OOF requires leakage-free scratch training, held-out prediction export, acceptance, and an explicit Router-research authorization."
 exit 64

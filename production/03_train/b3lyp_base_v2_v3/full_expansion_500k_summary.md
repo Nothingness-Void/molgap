@@ -19,7 +19,7 @@ and appends 200,000 non-duplicate rows:
 - element/MW/label filters inherited from Phase 8
 - no duplicate canonical SMILES in the final 500k CSV
 
-Assembly report: `production/02_graphs/expansion_500k_report.md`.
+Assembly report: `production/01_acquire/sampling/expansion_500k_report.md`.
 
 ## Graph caches
 
@@ -71,8 +71,8 @@ Expansion500k delta vs Replacement300k:
 
 Artifacts:
 
-- `production/02_graphs/full_expansion500k_common_eval_metrics.json`
-- `production/02_graphs/full_expansion500k_common_eval_predictions.csv`
+- `production/03_train/b3lyp_base_v2_v3/full_expansion500k_common_eval_metrics.json`
+- `production/03_train/b3lyp_base_v2_v3/full_expansion500k_common_eval_predictions.csv`
 
 ## Notes
 

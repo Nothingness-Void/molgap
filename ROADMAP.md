@@ -3,6 +3,7 @@
 This file answers one question: **what should be done, and in what order?**
 Live model/job state is in `CURRENT_STATE.md`; methods live in each experiment's
 metrics and decisions are under `results/`.
+Track ownership is defined only in `TRACKS.md`.
 
 ## Goal
 
@@ -14,11 +15,10 @@ The predictor is an implementation dependency; the database is the deliverable.
 
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
-| P0 | P8.20-OOF | Generate held-out GPS7/GPS9 predictions on the frozen repaired-2M folds | Submit only after immutable graph-cache acceptance | `experiments/repaired_2m_scaling/results/gps7_gps9_oof/manifest.json` |
-| P1 | PCQM-RB1M | Run the PCQM-only Route B precision ceiling experiment | Continue only from accepted aligned graph shards; stop any encoder above 12 h | `experiments/pcqm_route_b/results/run_plan.json` |
-| P1 | P8-100K | Accept both lightweight SchNet branches and run Route B Fusion | Both branch reports must pass before Fusion | `experiments/pubchemqc100k_architecture/results/experiment_manifest.json` |
-| P1 | P9.2 | Recompute Delta labels against the selected B3LYP base | Start after the Phase 8 compression decision freezes the base | `production/05_delta_gw/` |
-| P1 | P10-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `production/06_uq/` |
+| P0 | A-3D | Complete the repaired-2M bounded 2D+3D fusion gate | Accept the secondary cache, both SchNet checkpoints, and aligned embeddings before fusion | `experiments/repaired_2m_scaling/STATUS.md` |
+| P1 | B-PCQM1M | Complete the PCQM-only leaderboard ceiling experiment | Accept all four encoder outputs; stop any encoder above 12 h; then run bounded residual fusion | `experiments/pcqm_route_b/results/run_plan.json` |
+| P1 | A-P9.2 | Recompute Delta labels against the selected B3LYP base | Start after Track A freezes the B3LYP base | `production/05_delta_gw/` |
+| P1 | A-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `production/06_uq/` |
 | P2 | P9-AB | Benchmark descriptor LightGBM against encoder LoRA | Compare accuracy, calibration, throughput, and deployment size on one split | `production/05_delta_gw/results/v3_delta_decision.md` |
 
 Do not tune against any sealed set. Do not relaunch a remote task merely because
@@ -51,6 +51,7 @@ its local output has not arrived.
 
 | Task | Trigger |
 |---|---|
+| GPS7/GPS9 OOF gain labels | A molecule-level Router is explicitly reopened; this is not required by fixed-identity bounded fusion |
 | Experimental solid-state Delta head | A specific OLED experimental target is requested |
 | Extend elements beyond CHONSFCl | Rejected-use analysis justifies refetch and retraining |
 | Conformer ensemble for flagged rows | Residual analysis shows geometry/flexibility dominance |
@@ -68,6 +69,9 @@ its local output has not arrived.
 - P8-QM9 eliminated weak architectures and promoted three candidates to the
   PubChemQC 100K transfer gate:
   `experiments/qm9_architecture/README.md`.
+- The Track C PubChemQC 100K transfer gate accepted GPS11-160 identity plus a
+  `+-0.10 eV` bounded correction from GPS9 and two lightweight SchNet branches:
+  `experiments/pubchemqc100k_architecture/results/experiment_manifest.json`.
 - Phase 1-7 history: `production/history/` (`phase1.md` through `phase7.md`).
 - Per-question decision records: `experiments/README.md`.
 - Closed code and evidence: `experiments/_closed/README.md` and

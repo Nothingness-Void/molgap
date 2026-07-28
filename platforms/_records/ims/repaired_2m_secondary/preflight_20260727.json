@@ -1,0 +1,29 @@
+{
+  "status": "accepted",
+  "platform": "IMS CPU",
+  "root": "/lustre/home/users/sm2/chou/molgap-phase8-secondary",
+  "environment_job": "1090975",
+  "preflight_job": "1091036",
+  "shard_index": 99,
+  "start": 1980000,
+  "stop": 2000000,
+  "seed": 314159,
+  "requested": 19825,
+  "built": 19818,
+  "failed": 7,
+  "graphs": 19818,
+  "atoms": 865451,
+  "bytes": 16134504,
+  "sha256": "8eeddccda88752057c3476d2d5b3e777aa8d3e1f3780b6d6db23574ea5e03b77",
+  "source_min": 1980000,
+  "source_max": 1999999,
+  "finite_arrays": true,
+  "labels_exact": true,
+  "source_idx_strictly_increasing": true,
+  "versions": {
+    "python": "3.10.5",
+    "numpy": "1.26.4",
+    "rdkit": "2023.09.6"
+  },
+  "elapsed": "00:06:31"
+}

@@ -1,12 +1,14 @@
 {
   "experiment": "pcqm_route_b_precision_1m",
-  "status": "wave_1_running",
+  "track": "B - PCQM leaderboard",
+  "status": "fixed_config_encoders_accepted_hparam_50k_in_progress",
   "handoff": "experiments/pcqm_route_b/results/HANDOFF.md",
   "execution_strategy": {
     "graph_build": "local Ryzen 9700X CPU",
-    "graph_publication": "private immutable Kaggle datasets after local acceptance",
-    "gpu_platform": "Kaggle",
-    "verified_parallelism": 2,
+    "graph_publication": "immutable IMS Lustre cache after local and remote acceptance",
+    "gpu_platform": "IMS A100",
+    "verified_parallelism": 4,
+    "queue_contract": "RCCS H queue with atomic checkpoints and embedding parts",
     "wave_1": [
       "gps9_pcqm_continuation",
       "augmented_schnet_pcqm_continuation"
@@ -15,11 +17,11 @@
       "gps11_160_pcqm_continuation",
       "primary_schnet_pcqm_continuation"
     ],
-    "fusion_trigger": "all four encoder outputs independently accepted and published"
+    "fusion_trigger": "satisfied: all four encoder outputs independently accepted"
   },
-  "objective": "Measure the PCQM-only ceiling of the accepted Route B precision architecture on the same nested 1M sample as GINE v7.",
+  "objective": "Measure the PCQM-only ceiling of the accepted bounded 2D+3D fusion architecture on the same nested 1M sample as GINE v7.",
   "architecture": {
-    "identity": "GPS11-160",
+    "identity": "development reselection required; GPS11-160 was the preregistered candidate",
     "correction_inputs": [
       "GPS9-192",
       "primary SchNet-176/160/6",
@@ -65,29 +67,77 @@
     },
     {
       "name": "gps9_pcqm_continuation",
-      "status": "running",
+      "status": "accepted",
       "warm_start": "experiments/repaired_2m_scaling/results/gps9_seed42_raw/model.pt",
-      "kernel": "nothingnessvoid/molgap-rb-gps9-probe-20260727"
+      "ims_job": "1091900",
+      "best_dev_gap_mae_eV": 0.17576296627521515
     },
     {
       "name": "gps11_160_pcqm_continuation",
-      "status": "package_ready_wave_2",
-      "warm_start": "experiments/repaired_2m_scaling/results/gps11_160_seed42_raw/model.pt"
+      "status": "accepted",
+      "warm_start": "experiments/repaired_2m_scaling/results/gps11_160_seed42_raw/model.pt",
+      "ims_job": "1091901",
+      "best_dev_gap_mae_eV": 0.17321431636810303
     },
     {
       "name": "primary_schnet_pcqm_continuation",
-      "status": "package_ready_wave_2",
-      "warm_start": "platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt"
+      "status": "accepted",
+      "warm_start": "platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_primary_v2_complete/light_schnet_primary/best.pt",
+      "ims_job": "1091902",
+      "best_dev_gap_mae_eV": 0.13057228922843933
     },
     {
       "name": "augmented_schnet_pcqm_continuation",
-      "status": "running",
+      "status": "accepted",
       "warm_start": "platforms/_records/kaggle/pubchemqc100k_architecture/light_schnet_augmented_v2_complete/light_schnet_augmented/best.pt",
-      "kernel": "nothingnessvoid/molgap-rb-aug-schnet-r1-20260727"
+      "ims_job": "1091903",
+      "best_dev_gap_mae_eV": 0.1283137947320938
     },
     {
       "name": "bounded_residual_fusion",
-      "status": "blocked_on_four_encoder_embeddings"
+      "status": "blocked_on_encoder_hparam_search"
+    },
+    {
+      "name": "nested_encoder_hparam_search",
+      "status": "cuda_preflight_passed_gps9_50k_complete_others_running",
+      "ims_subset_job": "1096890",
+      "ims_preflight_job": "1096935",
+      "ims_50k_jobs": {
+        "gps9": "1096955",
+        "gps11_160": "1096957",
+        "primary_schnet": "1096961",
+        "augmented_schnet": "1096965"
+      },
+      "ims_100k_jobs": {
+        "gps9": "1097066",
+        "gps11_160": "1097069",
+        "primary_schnet": "1097070",
+        "augmented_schnet": "1097072"
+      },
+      "ims_100k_confirm_jobs": {
+        "gps9": "1097108",
+        "gps11_160": "1097109",
+        "primary_schnet": "1097110",
+        "augmented_schnet": "1097111"
+      },
+      "dependency": "preflight -> four 50K jobs -> matching top-four 100K jobs -> matching top-two three-seed confirmation jobs",
+      "subset_manifest_sha256": "49ea94f83fdba603f559c6e2d514b03a89c0b83f440b70a0688cb0e27560bccc",
+      "subset_rows": {
+        "train_core": 50000,
+        "train_extension": 50000,
+        "scaffold_dev": 10000
+      },
+      "protocol": [
+        "12 fixed trials per encoder on nested 50K",
+        "top 4 per encoder promoted to 100K",
+        "top 2 per encoder confirmed with seeds 42, 43, and 44",
+        "winning encoder configuration may then be authorized for 1M retraining",
+        "fusion hyperparameters are searched only after encoder identity freezes"
+      ],
+      "schnet_cutoff_A": 6.0,
+      "official_valid_metric_read": false,
+      "official_test_used": false,
+      "sealed_20k_used": false
     }
   ],
   "stopping_rules": {

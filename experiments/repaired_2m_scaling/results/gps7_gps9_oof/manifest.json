@@ -1,6 +1,6 @@
 {
   "experiment": "repaired_2m_gps7_gps9_oof_plan",
-  "status": "folds_frozen_jobs_prepared_not_submitted",
+  "status": "folds_frozen_runner_not_implemented_not_submitted",
   "seed": 42,
   "n_folds": 5,
   "rows": 2000000,
@@ -111,6 +111,9 @@
   },
   "prediction_contract": "prediction_contract.json",
   "scnet_jobs": "scnet_jobs.json",
+  "fusion_dependency": false,
+  "execution_ready": false,
+  "execution_blocker": "Genuine OOF requires leakage-free scratch training and held-out prediction export; the current Slurm file is a non-executable design placeholder.",
   "router_training_authorized": false,
   "sealed_20k_used": false,
   "production_registry_changed": false

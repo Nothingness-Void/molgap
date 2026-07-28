@@ -36,9 +36,9 @@ Conclusion: full replacement300k standard FusionHead became the selected v2 base
 - `models/phase8_gps_replacement_300k.pt`
 - `models/phase8_schnet_replacement_300k.pt`
 - `models/phase8_hybrid_fusion_replacement_300k.pt`
-- `production/02_graphs/gps_replacement_300k_embeddings.pt`
-- `production/02_graphs/schnet_replacement_300k_embeddings.pt`
-- `production/02_graphs/fusion_replacement_300k_metrics.json`
-- `production/02_graphs/full_replacement_common_eval_metrics.json`
-- `production/02_graphs/full_replacement_common_eval_predictions.csv`
-- `production/02_graphs/full_replacement_300k_summary.json`
+- `production/03_train/b3lyp_base_v2_v3/gps_replacement_300k_embeddings.pt`
+- `production/03_train/b3lyp_base_v2_v3/schnet_replacement_300k_embeddings.pt`
+- `production/03_train/b3lyp_base_v2_v3/fusion_replacement_300k_metrics.json`
+- `production/03_train/b3lyp_base_v2_v3/full_replacement_common_eval_metrics.json`
+- `production/03_train/b3lyp_base_v2_v3/full_replacement_common_eval_predictions.csv`
+- `production/03_train/b3lyp_base_v2_v3/full_replacement_300k_summary.json`

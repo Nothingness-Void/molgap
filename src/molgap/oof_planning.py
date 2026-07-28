@@ -169,8 +169,13 @@ def build_oof_plan(
         "training_rule": "predictions for each row must come only from its held-out fold",
     }
     _atomic_json(out_dir / "prediction_contract.json", prediction_contract)
+    execution_blocker = (
+        "Do not warm-start from checkpoints trained on any held-out row. "
+        "Implement scratch training, held-out prediction export, and acceptance "
+        "before submission."
+    )
     scnet_plan = {
-        "status": "prepared_not_submitted",
+        "status": "design_only_runner_not_implemented",
         "array": {"folds": list(range(n_folds)), "models": ["gps7", "gps9"]},
         "jobs": [
             {
@@ -185,12 +190,15 @@ def build_oof_plan(
             for model in ("gps7", "gps9")
         ],
         "submitted": False,
+        "fusion_dependency": False,
+        "execution_ready": False,
+        "execution_blocker": execution_blocker,
         "sealed_20k_used": False,
     }
     _atomic_json(out_dir / "scnet_jobs.json", scnet_plan)
     report = {
         "experiment": "repaired_2m_gps7_gps9_oof_plan",
-        "status": "folds_frozen_jobs_prepared_not_submitted",
+        "status": "folds_frozen_runner_not_implemented_not_submitted",
         "seed": seed,
         "n_folds": n_folds,
         "rows": len(fold_frame),
@@ -204,6 +212,13 @@ def build_oof_plan(
         "scaffold_overlap": overlap,
         "prediction_contract": "prediction_contract.json",
         "scnet_jobs": "scnet_jobs.json",
+        "fusion_dependency": False,
+        "execution_ready": False,
+        "execution_blocker": (
+            "Genuine OOF requires leakage-free scratch training and held-out "
+            "prediction export; the current Slurm file is a non-executable "
+            "design placeholder."
+        ),
         "router_training_authorized": False,
         "sealed_20k_used": False,
         "production_registry_changed": False,

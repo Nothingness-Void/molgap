@@ -603,7 +603,7 @@ def prepare_secondary_array_inputs(
                 "shard_index": shard_index,
                 "start": start,
                 "stop": stop,
-                "input_path": str(input_path.relative_to(output_dir)),
+                "input_path": input_path.relative_to(output_dir).as_posix(),
                 "input_rows": stop - start,
                 "input_bytes": input_path.stat().st_size,
                 "input_sha256": sha256(input_path),

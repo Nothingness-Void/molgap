@@ -6,6 +6,8 @@
 > is in `ARCHITECTURE.md`, and each experiment's own decision record holds its
 > method and numbers.
 
+Track A/B/C ownership is defined only in `TRACKS.md`.
+
 ## Production Baseline
 
 - **Recommended model:** routed dual-GPS v4.
@@ -62,7 +64,7 @@ Contracts and job configs: `experiments/repaired_2m_scaling/results/gps7_gps9_oo
 Three-seed ensemble: `experiments/repaired_2m_scaling/results/retention_d_three_seed_equal_ensemble_decision.md`.
 Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchical_oracle_20260725/decision.md`.
 
-## PCQM Specialist Candidate
+## Track B - PCQM Leaderboard
 
 - Local GINE v7 is the strongest task-level PCQM Gap specialist candidate.
   The nested 1M run selected epoch 2 at `0.187982 eV` scaffold-dev and reached
@@ -73,13 +75,28 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
   untouched.
 - Decision and artifact pointers:
   `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
-- The local PCQM 1M Route B aligned graph cache is complete and accepted:
+- The local PCQM 1M bounded-fusion aligned graph cache is complete and accepted:
   1,001,954 of 1,005,000 rows passed all three aligned views, with all 1,203
-  declared files present and matching SHA256. Wave 1 is now running on Kaggle:
+  declared files present and matching SHA256. Kaggle wave 1 reached terminal
+  `COMPLETE` for:
   GPS9 (`nothingnessvoid/molgap-rb-gps9-probe-20260727`) and augmented SchNet
-  (`nothingnessvoid/molgap-rb-aug-schnet-r1-20260727`). GPS11-160 plus primary
-  SchNet are the next verified parallel wave after a real GPU-slot release. This
-  does not yet have a model-quality result. Live stage contract:
+  (`nothingnessvoid/molgap-rb-aug-schnet-r1-20260727`). Their output manifests
+  require independent acceptance before they count as quality evidence.
+  All four encoders were completed and independently accepted on the IMS A100
+  queue under the isolated
+  `/lustre/home/users/sm2/chou/molgap-pcqm-route-b` root. The offline
+  Torch/PyG environment, all 1,203 graph files, four warm-starts, and four real
+  CUDA forward/backward/checkpoint preflights are accepted. Scaffold-dev Gap
+  MAE is `0.175763/0.173214/0.130572/0.128314 eV` for GPS9, GPS11-160,
+  primary SchNet, and augmented SchNet respectively. All four embedding sets
+  contain aligned `915,012/81,961/4,981` train/dev/official rows and passed
+  independent artifact hashes. These four runs are fixed-hyperparameter
+  baselines, not tuned architecture ceilings. A nested encoder search is now
+  authorized: deterministic `50K` broad search, top-four `100K` promotion, and
+  top-two three-seed confirmation for all four encoders. SchNet cutoff is fixed
+  at `6.0 Angstrom`; it is not searched. Fixed official-valid labels remain
+  unread. Fusion identity and head hyperparameters must be selected on
+  development evidence before the architecture is frozen. Live stage contract:
   `experiments/pcqm_route_b/results/run_plan.json`.
 
 ## Active Remote Work
@@ -89,11 +106,9 @@ in each experiment's own log, so this section stays short enough to read at once
 
 | Workstream | Platform | State | Detail |
 |---|---|---|---|
-| PCQM Route B 1M wave 1 | Kaggle | **running** — GPS9 and augmented SchNet | `experiments/pcqm_route_b/results/run_plan.json` |
-| PCQM Route B 1M wave 2 | Kaggle | packaged, waiting on a real GPU-slot release | same run plan |
-| Repaired-2M secondary 3D view | SCNet Kunshan | **running** — seed `314159`, job `117966453`; do not duplicate | `experiments/repaired_2m_scaling/STATUS.md` |
-| Hierarchical 2D+3D fusion | — | blocked on accepted 3D caches, two SchNet checkpoints, and embedding parts | `experiments/repaired_2m_scaling/STATUS.md` |
-| Repaired-2M OOF prediction | SCNet | prepared, ten job configs not submitted | `experiments/repaired_2m_scaling/results/gps7_gps9_oof/manifest.json` |
+| Track B PCQM encoder hyperparameter search | IMS | CUDA preflight passed; GPS9 completed all twelve 50K trials and promoted four configurations, while GPS11-160, primary SchNet, and augmented SchNet remain active in their dependency chains | `experiments/pcqm_route_b/results/run_plan.json` |
+| Track B PCQM 1M fusion | IMS | blocked on encoder search and later development-only fusion tuning; four original fixed-config embeddings remain accepted baselines | `platforms/_records/ims/pcqm_route_b_migration/remote_acceptance/encoder_acceptance.json` |
+| Track A hierarchical 2D+3D fusion | — | 3D caches no longer block it: both views are accepted and 99.34% of source rows carry both. Still blocked on two trained repaired-2M SchNet checkpoints and their embedding parts | `experiments/repaired_2m_scaling/STATUS.md` |
 | Full repaired-2M SchNet training | Colab | disabled pending the bounded-residual gate token | `experiments/repaired_2m_scaling/STATUS.md` |
 
 Completed-round records:
@@ -139,12 +154,22 @@ The repaired-2M data gate is complete and accepted: the row ledger reconciles
 quality-filtered candidates. The materialized 2M table has unique CID/SMILES
 identities and no sealed-source rows.
 
-Retention-D GPS7 passed its fixed multi-seed gate. Route A's active test is the
-matched repaired-2M GPS9 run and its external comparison. Route B tests the
-PubChemQC 100K candidates under one frozen scaffold split. The PCQM frozen-head
-pilot is closed and consumes no further compute. The masked PCQM Gap-only chain is
-authorized as an explicit specialist only; it cannot replace routed v4 or
-retention B without separate deployment routing.
+Track A's matched repaired-2M GPS9 comparison is complete: GPS9 is rejected as
+a global replacement and retained as a hard expert. The active Track A gate is
+the fixed-identity bounded 2D+3D fusion path described in
+`experiments/repaired_2m_scaling/STATUS.md`.
+
+GPS7/GPS9 OOF is an optional prerequisite for reopening a molecule-level
+Router, not for completing fixed-identity fusion. Its ten-job SCNet file is a
+non-executable placeholder and must not be submitted as prepared work. Router
+training remains forbidden until genuine held-out gain labels exist.
+
+Track C's QM9 screen and PubChemQC 100K transfer screen are complete. Their
+bounded 2D+3D fusion result is an accepted architecture input to Tracks A and B,
+not a production promotion. Track B's PCQM 1M run is the active leaderboard
+test. The masked PCQM Gap-only chain remains an explicit specialist and cannot
+replace routed v4 or the Track A general base without a separate deployment
+gate.
 
 | Question | Record |
 |---|---|

@@ -116,6 +116,11 @@ platforms/**/model_assets/
 platforms/**/_molgap_runtime/
 platforms/**/kernel_sources/
 
+# Vendored dependency payloads for offline clusters: retrievable from PyPI, and
+# their SHA256SUMS manifest is what actually pins the environment.
+platforms/**/wheels/*.whl
+platforms/**/wheels/*.tar.gz
+
 # Canonical executable code lives in src/molgap/ or a stage's scripts/ folder.
 # Evidence directories must not become a second copy of it.
 production/**/results/**/*.py
@@ -130,3 +135,9 @@ platforms/scnet/records/**/*.txt
 # Split upload payloads and row ledgers: transport artifacts, not evidence.
 experiments/**/upload_parts/
 experiments/**/ledger/
+
+# Transferred dependency wheels and per-shard row payloads: retrievable from the
+# upstream index or regenerable from the source CSV. Their SHA256SUMS manifest is
+# what the acceptance record actually needs, and that stays tracked.
+platforms/_records/**/wheels/*.whl
+platforms/_records/**/inputs/**

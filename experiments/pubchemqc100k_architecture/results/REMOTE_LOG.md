@@ -40,14 +40,14 @@ kernels completed and both checkpoints plus embedding payloads passed strict
 acceptance. The augmented model is materially stronger than the primary-only
 model even under one-view inference.
 
-## Fusion screen (Precision architecture selected)
+## Fusion screen (precision architecture selected)
 
 The three-seed frozen Fusion screen selected the strict two-SchNet-pass Precision
 architecture: GPS9 + GPS11-160 + primary SchNet + two-conformer-trained augmented
 SchNet, with both SchNets evaluated on one primary conformer. Test average/Gap MAE
 `0.138046/0.165819 eV`, improving pure GPS11-160 by `0.004424/0.005221 eV`. A
 third SchNet forward improves only `0.000699/0.000754 eV` and is rejected on cost.
-Decision: `route_b_fusion_decision.md`.
+Decision: `route_b_fusion_decision.md` (legacy artifact identifier).
 
 ## Head A/B and correction bound
 
@@ -55,7 +55,7 @@ A three-seed head A/B replaced the shared gated-sum bottleneck with a GPS11-160
 identity path plus a bounded residual correction. A validation-only three-scale,
 three-seed A/B selected a `+-0.10 eV` bound. The frozen head reaches test
 average/Gap `0.134463/0.160809 eV`, improving the original gated head by
-`0.003583/0.005010 eV`. This is the retained full-scale Fusion protocol;
+`0.003583/0.005010 eV`. This is the retained full-scale bounded 2D+3D fusion protocol;
 external common/OOD/P8-hard evidence is still required.
 Decisions: `route_b_head_ab_decision.md`, `route_b_residual_scale_decision.md`.
 Manifest: `experiment_manifest.json`.

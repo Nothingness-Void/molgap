@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+cd "$ROOT"
+
+test "$(realpath "$ROOT")" = "$ROOT"
+for name in gps9 gps11_160 primary_schnet augmented_schnet; do
+  test -f "outputs/$name/completion_manifest.json"
+done
+export PYTHONPATH="$ROOT/code/platforms/ims/pcqm_route_b/shims:$ROOT/vendor:$ROOT/code/src"
+"$PYTHON" code/platforms/ims/pcqm_route_b/accept_encoders.py \
+  --root "$ROOT"

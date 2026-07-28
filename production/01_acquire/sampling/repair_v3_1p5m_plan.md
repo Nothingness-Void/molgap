@@ -17,7 +17,8 @@ registry.
 - Cross-set CID/SMILES overlaps: 0/0.
 - Output SHA-256: `6f70965b20c58a89d52fc77c77bf251286042ab4f98d5c2a8b6ae6dbd10db44a`.
 
-Assembly evidence: `production/02_graphs/repair_v3_1p5m_assembly_report.json`.
+Assembly evidence:
+`production/01_acquire/sampling/repair_v3_1p5m_assembly_report.json`.
 
 ## Controlled 2D run
 

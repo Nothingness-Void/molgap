@@ -4,8 +4,10 @@ Date: 2026-06-30
 
 Inputs:
 
-- common eval predictions: `results\phase8\full_expansion500k_common_eval_predictions.csv`
-- PCQM4Mv2 proxy predictions: `results\phase8\pcqm4mv2_proxy_p7_v2_v3_predictions.csv`
+- common eval predictions:
+  `production/03_train/b3lyp_base_v2_v3/full_expansion500k_common_eval_predictions.csv`
+- PCQM4Mv2 proxy predictions:
+  `production/04_evaluate/pcqm_proxy/pcqm4mv2_proxy_p7_v2_v3_predictions.csv`
 
 ## Recommended PPT Table
 
@@ -75,7 +77,10 @@ because the datasets/splits differ. Use them only as provenance.
 
 ## Files
 
-- JSON: `results\phase8\v1_v2_v3_ppt_metrics.json`
-- common eval CSV: `results\phase8\v1_v2_v3_common_eval_metrics.csv`
-- PCQM proxy CSV: `results\phase8\v1_v2_v3_pcqm_proxy_metrics.csv`
-- internal CSV: `results\phase8\v1_v2_v3_internal_test_metrics.csv`
+- JSON: `production/03_train/b3lyp_base_v2_v3/v1_v2_v3_ppt_metrics.json`
+- common eval CSV:
+  `production/03_train/b3lyp_base_v2_v3/v1_v2_v3_common_eval_metrics.csv`
+- PCQM proxy CSV:
+  `production/03_train/b3lyp_base_v2_v3/v1_v2_v3_pcqm_proxy_metrics.csv`
+- internal CSV:
+  `production/03_train/b3lyp_base_v2_v3/v1_v2_v3_internal_test_metrics.csv`

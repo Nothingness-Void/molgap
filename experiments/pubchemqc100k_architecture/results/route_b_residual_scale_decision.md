@@ -1,8 +1,9 @@
-# Route B Residual-Correction Bound
+# Bounded-Fusion Residual-Correction Bound
 
 ## Decision
 
-Freeze the Route B Precision bounded-residual correction at `+-0.10 eV`.
+Freeze the precision architecture's bounded-residual correction at
+`+-0.10 eV`.
 
 Selection used only the three-seed validation average MAE. The test split was
 read once after selecting the smallest validation value. The encoder contract
@@ -33,7 +34,7 @@ The monotonic degradation as the correction range grows supports a restricted
 interpretation: the additional encoders are useful as bounded corrections to
 the GPS11-160 identity path, not as an unconstrained replacement predictor.
 
-This freezes a full-scale Route B training protocol. It does not authorize
+This freezes a full-scale bounded 2D+3D fusion protocol. It does not authorize
 production promotion; common/OOD/P8-hard evaluation remains required.
 
 Machine-readable evidence: `route_b_residual_scale_summary.json`.

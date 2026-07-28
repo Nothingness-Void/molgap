@@ -7,6 +7,9 @@ Only work that feeds the shipped predictor or database belongs here. A question
 being investigated belongs in `experiments/`. Which model is recommended right
 now is in `CURRENT_STATE.md`, never here.
 
+This is the delivery line for **Track A - Production**. Track definitions live
+only in `TRACKS.md`.
+
 | Stage | Question it answers | Contents |
 |---|---|---|
 | `01_acquire/` | Which molecules do we train on? | Sampling specs, fetch and feature-selection CLIs |

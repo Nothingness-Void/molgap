@@ -2,11 +2,12 @@
 
 ## Decision
 
-Keep `ETKDGv3 + MMFF(maxIters=200)` for Route B construction and inference.
+Keep `ETKDGv3 + MMFF(maxIters=200)` for bounded 2D+3D fusion construction and
+inference.
 Reject bare ETKDG as the default acceleration path.
 
 On this machine, MMFF adds only `161.96 s` for 50K molecules while improving
-the frozen four-encoder Route B equal-seed ensemble average/Gap MAE by
+the frozen four-encoder bounded-fusion equal-seed ensemble average/Gap MAE by
 `0.009868/0.008612 eV`. This is a favorable one-time CPU-cache tradeoff.
 
 ## Fixed Protocol

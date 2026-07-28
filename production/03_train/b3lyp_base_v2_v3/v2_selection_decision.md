@@ -18,7 +18,8 @@ historical control. Do not overwrite Phase 7 artifacts.
 
 ### Shared common eval
 
-Source: `production/02_graphs/full_replacement_common_eval_metrics.json`
+Source:
+`production/03_train/b3lyp_base_v2_v3/full_replacement_common_eval_metrics.json`
 
 | eval set | P7 avg MAE | P8 avg MAE | delta avg | P7 Gap MAE | P8 Gap MAE | delta Gap |
 |---|---:|---:|---:|---:|---:|---:|
@@ -31,7 +32,8 @@ baseline and strongly improves the chemistry that P8 intentionally added.
 
 ### PCQM4Mv2 valid proxy audit
 
-Source: `production/02_graphs/pcqm4mv2_proxy_p7_vs_p8_metrics.json`
+Source:
+`production/04_evaluate/pcqm_proxy/pcqm4mv2_proxy_p7_vs_p8_metrics.json`
 
 This is the Phase 7-era PCQM4Mv2 valid coverage stress test, not an OGB
 leaderboard submission. It uses official valid molecules, excludes the union of
@@ -59,7 +61,7 @@ P8.1 coverage-gap hypothesis. High-similarity chemistry is effectively tied.
 
 ### Error-mode audit
 
-Source: `production/02_graphs/v2_error_mode_analysis.md`
+Source: `production/03_train/b3lyp_base_v2_v3/v2_error_mode_analysis.md`
 
 The remaining common-eval worst cases are mostly flexible, large-conjugated,
 S/Cl/F-containing, and narrow-gap molecules. The PCQM proxy remaining worst cases

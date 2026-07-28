@@ -9,10 +9,11 @@ not a project description. One fact lives in one place — follow the links.
 2. **`CURRENT_STATE.md`** — the only source of "what's true now": recommended model,
    conclusions, blocker, next actions. If anything conflicts, this wins.
 3. **`ROADMAP.md`** — task priorities / backlog (read the relevant section only).
-4. **`ARCHITECTURE.md`** — tree and code map; tells you which file owns a change.
-5. The one `README.md` for the tree you are working in: `production/`,
+4. **`TRACKS.md`** — read only when a task is labeled A, B, or C.
+5. **`ARCHITECTURE.md`** — tree and code map; tells you which file owns a change.
+6. The one `README.md` for the tree you are working in: `production/`,
    `experiments/`, or `platforms/`. Then the specific decision record it links.
-6. The specific code files your task touches.
+7. The specific code files your task touches.
 
 `production/history/phaseN.md` is retained history for the frozen phase 1-7
 line. Never infer the current model or an open question from it.
@@ -56,6 +57,7 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
 |----------|------|
 | What's true now? | `CURRENT_STATE.md` |
 | What to do next? | `ROADMAP.md` |
+| What do Track A/B/C mean? | `TRACKS.md` |
 | How was it done? | the experiment's `decision.md` under `experiments/` |
 | What ships, and in what order? | `production/README.md` |
 | How do I run this remotely? | `platforms/README.md` |

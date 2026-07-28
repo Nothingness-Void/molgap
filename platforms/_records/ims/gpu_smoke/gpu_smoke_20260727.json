@@ -1,0 +1,18 @@
+{
+  "status": "accepted",
+  "job_id": "1091307",
+  "queue": "H",
+  "node": "ccg004",
+  "requested_gpus": 1,
+  "requested_cpus": 4,
+  "gpu": {
+    "name": "NVIDIA A100-SXM4-80GB",
+    "memory_mib": 81920,
+    "driver_version": "610.43.02",
+    "compute_capability": "8.0",
+    "cuda_visible": true
+  },
+  "group": "ew6",
+  "group_gpu_run_limit": 12,
+  "active_jobs_after_smoke": 0
+}

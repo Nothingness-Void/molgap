@@ -29,7 +29,7 @@ An evaluation-only target-specific Oracle shows GPS11 differs from GPS9, but
 that ceiling uses true external labels and cannot supply Router training
 labels. Because the existing GPS7/GPS9 Oracle already passed with a stronger
 base and lower complexity, GPS11 must not expand the OOF plan at this stage.
-If full-scale Route B Fusion is revisited after 3D assets exist, first compare a
+If full-scale bounded 2D+3D fusion is revisited after 3D assets exist, first compare a
 GPS9 identity path against the original GPS11 identity path on development
 evidence; GPS11 may only enter as a bounded residual feature.
 

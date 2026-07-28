@@ -6,9 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
-from molgap.repaired_2m_3d_colab import (
-    build_secondary_raw_shard_from_array_manifest,
-)
+from molgap.etkdg_array import build_secondary_raw_shard
 
 
 def main() -> None:
@@ -18,7 +16,7 @@ def main() -> None:
     parser.add_argument("--shard-index", type=int, required=True)
     parser.add_argument("--workers", type=int, default=14)
     args = parser.parse_args()
-    result = build_secondary_raw_shard_from_array_manifest(
+    result = build_secondary_raw_shard(
         manifest_path=args.manifest,
         output_dir=args.output_dir,
         shard_index=args.shard_index,

@@ -1,5 +1,6 @@
 {
   "experiment": "pubchemqc100k_architecture_screen",
+  "track": "C - architecture discovery and transfer",
   "status": "route_b_two_schnet_pass_precision_accepted_for_scale_up",
   "split": {
     "source": "original phase8 expansion 1M",
@@ -37,7 +38,7 @@
       "durability": "5000-row graph shards with atomic progress and completion manifests",
       "accepted_rows": 119602,
       "failed_rows": 398,
-      "acceptance": "results/phase8/experiments/pubchemqc100k_architecture/remote_acceptance.json"
+      "acceptance": "experiments/pubchemqc100k_architecture/results/remote_acceptance.json"
     }
   },
   "geometry_contract": {
@@ -97,9 +98,9 @@
     "test_average_mae_eV_three_seed_mean": 0.13446256518363953,
     "test_gap_mae_eV_three_seed_mean": 0.16080920894940695,
     "encoder_passes": 4,
-    "architecture_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_fusion_decision.md",
-    "head_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_head_ab_decision.md",
-    "scale_decision": "results/phase8/experiments/pubchemqc100k_architecture/route_b_residual_scale_decision.md"
+    "architecture_decision": "experiments/pubchemqc100k_architecture/results/route_b_fusion_decision.md",
+    "head_decision": "experiments/pubchemqc100k_architecture/results/route_b_head_ab_decision.md",
+    "scale_decision": "experiments/pubchemqc100k_architecture/results/route_b_residual_scale_decision.md"
   },
   "sealed_20k_used": false,
   "production_registry_change_authorized": false

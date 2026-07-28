@@ -1,9 +1,9 @@
-# Route B Precision Fusion-Head A/B
+# Bounded-Fusion Head A/B
 
 ## Decision
 
 Replace the shared gated-sum bottleneck with a bounded residual head for the
-full-scale Route B Precision experiment.
+full-scale precision architecture.
 
 The retained head preserves GPS11-160 as a direct prediction path and adds a
 small multi-expert correction. A subsequent validation-only scale A/B selected

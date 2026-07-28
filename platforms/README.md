@@ -4,6 +4,9 @@ How a run reaches a compute environment. These directories adapt package
 behavior to a platform; they do not define model logic and do not declare live
 job status.
 
+For cross-platform takeover, connection-independent resume rules, and the
+bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
+
 | Platform | Path | Role |
 |---|---|---|
 | Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |

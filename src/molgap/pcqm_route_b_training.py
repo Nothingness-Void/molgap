@@ -224,6 +224,8 @@ def make_model(
     else:
         if payload.get("model_config") != SCHNET_CONFIG:
             raise RuntimeError("SchNet warm start is not the 176/160/6 contract")
+        import torch_cluster
+
         model = SchNetWrapper(**SCHNET_CONFIG, use_charges=True, n_targets=3)
         model.load_state_dict(source, strict=True)
         mean = torch.as_tensor(payload["target_mean"]).view(-1)
@@ -232,10 +234,105 @@ def make_model(
         report = {
             "strict": True,
             "model_config": SCHNET_CONFIG,
+            "radius_backend": getattr(
+                torch_cluster, "BACKEND", "torch_cluster_extension"
+            ),
             "target_mean_gap": target_mean,
             "target_std_gap": target_std,
         }
     return model.to(device), report, target_mean, target_std
+
+
+def preflight_encoder(
+    *,
+    config: EncoderConfig,
+    root: Path,
+    warm_start: Path,
+    output_path: Path,
+    batch_size: int = 8,
+) -> dict:
+    """Run one real CUDA optimization step against an accepted graph shard."""
+    set_seed(config.seed)
+    if not torch.cuda.is_available():
+        raise RuntimeError("Route B preflight requires a CUDA GPU")
+    device = torch.device("cuda")
+    modalities = [config.modality]
+    if config.augmented:
+        modalities.append("secondary")
+    model, warm_report, target_mean, target_std = make_model(
+        config, warm_start, device
+    )
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=config.learning_rate,
+        weight_decay=config.weight_decay,
+    )
+    scaler = torch.amp.GradScaler("cuda", enabled=True)
+    torch.cuda.reset_peak_memory_stats()
+    shard_reports = []
+    losses = []
+    predictions_finite = True
+    for modality in modalities:
+        shard = _shards(root, modality, "train")[0]
+        dataset = PackedGraphDataset(shard)
+        loader = DataLoader(
+            dataset,
+            batch_size=min(batch_size, config.batch_size),
+            shuffle=False,
+        )
+        batch = next(iter(loader)).to(device)
+        optimizer.zero_grad(set_to_none=True)
+        with torch.amp.autocast("cuda", enabled=True):
+            prediction = _forward(config, model, batch)
+            target = batch.y.view(-1)
+            if config.kind == "schnet":
+                target = (target - target_mean) / target_std
+            loss = nn.functional.l1_loss(prediction, target)
+        scaler.scale(loss).backward()
+        scaler.unscale_(optimizer)
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        scaler.step(optimizer)
+        scaler.update()
+        predictions_finite &= bool(torch.isfinite(prediction).all())
+        losses.append(float(loss.detach()))
+        shard_reports.append(
+            {
+                "modality": modality,
+                "name": shard.name,
+                "sha256": sha256_file(shard),
+                "batch_rows": int(batch.num_graphs),
+            }
+        )
+        del batch, dataset, loader
+    torch.cuda.synchronize()
+    report = {
+        "format": "molgap-pcqm-route-b-cuda-preflight-v1",
+        "status": "complete",
+        "config": asdict(config),
+        "device_name": torch.cuda.get_device_name(0),
+        "torch_version": torch.__version__,
+        "cuda_version": torch.version.cuda,
+        "steps": len(losses),
+        "losses": losses,
+        "prediction_finite": predictions_finite,
+        "peak_cuda_bytes": int(torch.cuda.max_memory_allocated()),
+        "graph_shards": shard_reports,
+        "warm_start_sha256": sha256_file(warm_start),
+        "warm_start_report": warm_report,
+    }
+    if not report["prediction_finite"]:
+        raise RuntimeError(f"{config.name} produced non-finite predictions")
+    atomic_torch(
+        output_path.with_suffix(".pt"),
+        {
+            "format": "molgap-pcqm-route-b-cuda-preflight-checkpoint-v1",
+            "config": asdict(config),
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+        },
+    )
+    atomic_json(output_path.with_suffix(".json"), report)
+    return report
 
 
 def _forward(config: EncoderConfig, model: nn.Module, batch) -> torch.Tensor:

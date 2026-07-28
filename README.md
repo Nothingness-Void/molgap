@@ -44,6 +44,7 @@ defined in `AGENTS.md`.
 
 The complete reading protocol, document map, and hard constraints are in
 `AGENTS.md`. Do not reconstruct live status by scanning phase or result files.
+Track A/B/C ownership is defined only in `TRACKS.md`.
 
 ## Public API
 

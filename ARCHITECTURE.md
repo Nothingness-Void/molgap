@@ -2,6 +2,7 @@
 
 This file answers one question: **to change behavior X, which code owns it?**
 Model recommendations and job status belong in `CURRENT_STATE.md`.
+Track A/B/C ownership belongs in `TRACKS.md`.
 
 ## Boundary
 
@@ -26,14 +27,14 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
 | `qm9_payloads.py` | Cached embedding alignment and view combination | Changing architecture-screen payload operations |
 | `qm9_fusion.py` | Frozen embedding gates, residual heads, and routing | Changing QM9 fusion or route screens |
-| `conformer_ab.py` | Resumable paired ETKDG/MMFF timing and frozen Route B evaluation | Comparing conformer construction cost against final-model accuracy |
+| `conformer_ab.py` | Resumable paired ETKDG/MMFF timing and frozen bounded-fusion evaluation | Comparing conformer construction cost against final-model accuracy |
 | `pcqm_expert.py` | PCQM GINE graph contracts, packed scale-up, checkpoints, and artifact acceptance | Continuing or validating the benchmark-only PCQM Gap specialist |
-| `pcqm_route_b.py` | Aligned expanded-2D and paired ETKDGv3+MMFF PCQM caches | Preparing the PCQM-only Route B precision experiment |
+| `pcqm_route_b.py` | Aligned expanded-2D and paired ETKDGv3+MMFF PCQM caches | Preparing the Track B PCQM precision experiment |
 | `ensemble_evaluation.py` | Identity-aligned equal-seed evaluation | Changing multi-seed accuracy-mode evidence |
 | `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing GPS7/GPS9 Router-label preparation |
-| `route_b_fusion.py` | Recoverable multi-expert Route B fusion | Changing minimal/cost/precision fusion candidates |
+| `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
 | `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
-| `artifact_acceptance.py` | SchNet and repaired-2M 3D artifact gates | Changing remote-output acceptance contracts |
+| `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
 | `phase8_reporting.py` | Evidence-backed comparison tables | Changing Phase 8 reporting layout |
 | `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
@@ -50,8 +51,11 @@ Model recommendations and job status belong in `CURRENT_STATE.md`.
 | `retention.py` | Retention losses and replay weighting for controlled scale-up | Changing retention-aware encoder objectives |
 | `gap_specialization.py` | Gap-only graph caches, embedding parts, and specialist head training | Changing frozen-embedding Gap specialization |
 | `pubchemqc_architecture.py` | PubChemQC scaffold-screen SchNet training over one or two ETKDG views | Changing the 100K architecture-screen 3D protocol |
-| `pcqm_route_b.py` | Accepted aligned expanded-GPS and paired-conformer PCQM graph construction | Changing Route B row or graph contracts |
-| `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export for Route B encoders | Changing the PCQM Route B encoder protocol |
+| `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
+| `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
+| `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
+| `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where the `torch_cluster` wheel is ABI-incompatible |
+| `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU-only clusters | Building conformer shards without PyG on the worker |
 | `repaired_2m_3d_colab.py` | Durable Colab repaired-2M graph shards and lightweight SchNet | Changing the remote repaired-2M 3D workflow |
 | `residual_attribution.py` | Paired residual attribution and molecular descriptors | Changing model-versus-model residual diagnosis |
 | `pubchemqc.py` | PubChemQC streaming, filtering, identity normalization | Changing source acquisition |

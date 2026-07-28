@@ -4,6 +4,27 @@ Dated record of finished SCNet rounds for this experiment. Each entry states wha
 was measured and links its decision; none of these changed the production
 registry, and no sealed-20K rows were used.
 
+## Both 3D graph views accepted (2026-07-28)
+
+Primary build `117872652` and acceptance `117958648` fixed the view at 1,989,116
+graphs from 2,000,000 source rows. Secondary build `117966453` then produced all
+100 seed-`314159` shards, and acceptance `118050455` accepted 1,986,868 graphs
+with 2,248 conformer failures in `00:44:56`.
+
+The secondary view needed its own contract, because its shards are keyed to the
+primary's per-shard graph counts rather than to source-index spans and therefore
+carry no `start`/`stop` sidecar fields. Beyond the shared checks it proves two
+things: every shard names the `primary_shard_sha256` it derives from, and **all
+1,986,868 paired molecules have coordinates differing from the primary view**
+(distinct fraction `1.0`). The second is the only check a byte-copied cache could
+not pass, so it is what establishes conformer independence.
+
+99.34% of source rows now carry both views, clearing the hierarchical fusion
+contract's 95% floor. Manifest:
+`platforms/_records/scnet/kunshan_repaired_2m_3d/secondary_acceptance_20260728.json`
+(local SHA256 matches the remote copy).
+Operational detail: `../STATUS.md`.
+
 ## Three-GPS embedding residual head (accepted, internal gate only)
 
 GPS7/GPS9 each produced 40 contiguous hash-verified 50K-row embedding parts. The
@@ -48,11 +69,11 @@ identity path. Versus repaired-2M GPS9, average MAE regresses by
 accepted PCQM GINE specialist. GPS11 trained from scratch unlike the warm-started
 GPS7/GPS9 controls, but its late plateau and broad external regressions do not
 justify continuation. Keep it only as bounded diversity evidence. Any later
-Route B pilot must compare a GPS9 identity path against GPS11 identity before
+bounded-fusion pilot must compare a GPS9 identity path against GPS11 identity before
 using the full-scale Fusion protocol.
 Decision: `gps11_160_seed42_decision.md`.
 
-## Route A first gate (GPS9 hard-expert candidate)
+## Track A first gate (GPS9 hard-expert candidate)
 
 Jobs `709046`/`709047`: repaired-2M GPS9 improves common and P8-hard over
 Retention-D GPS7 but regresses OOD and PCQM, so it is rejected as a global

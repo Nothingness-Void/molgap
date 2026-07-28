@@ -4,6 +4,7 @@
 
 Use QM9 as a cheap architecture-elimination gate before PubChemQC 100K and
 learning-curve validation. This experiment does not select a production model.
+It is Track C discovery work as defined in `TRACKS.md`.
 
 ## Fixed first-level protocol
 

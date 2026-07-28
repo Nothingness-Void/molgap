@@ -1,0 +1,34 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+: "${ENCODER_NAME:?submit with ENCODER_NAME}"
+: "${SEARCH_STAGE:=50k}"
+case "$ENCODER_NAME" in
+  gps9|gps11_160|primary_schnet|augmented_schnet) ;;
+  *) echo "unsupported ENCODER_NAME=$ENCODER_NAME" >&2; exit 2 ;;
+esac
+case "$SEARCH_STAGE" in
+  50k|100k|100k_confirm) ;;
+  *) echo "unsupported SEARCH_STAGE=$SEARCH_STAGE" >&2; exit 2 ;;
+esac
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+cd "$ROOT"
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f search/subsets/manifest.json
+test -f search/preflight.json
+mkdir -p "search/outputs/$SEARCH_STAGE/$ENCODER_NAME" logs/search
+export PYTHONPATH="$ROOT/code/platforms/ims/pcqm_route_b/shims:$ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+"$PYTHON" code/platforms/ims/pcqm_route_b/run_hparam_search.py \
+  --root "$ROOT" \
+  --encoder "$ENCODER_NAME" \
+  --stage "$SEARCH_STAGE" 2>&1 | tee \
+  "logs/search/${SEARCH_STAGE}_${ENCODER_NAME}.log"

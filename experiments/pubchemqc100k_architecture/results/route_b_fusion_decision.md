@@ -1,4 +1,4 @@
-# PubChemQC 100K Route B Fusion Decision
+# PubChemQC 100K Bounded-Fusion Decision
 
 ## Decision
 
@@ -33,6 +33,9 @@ This is a PubChemQC 100K architecture-transfer result, not a production-model
 promotion. Full-scale training still requires a frozen repaired-2M protocol
 and external common/OOD/P8-hard validation. No sealed-20K rows were accessed
 and the production registry is unchanged.
+
+This is Track C transfer evidence. The `route_b_*` filename is a stable legacy
+artifact identifier, not the Track B ownership label.
 
 Machine-readable evidence: `route_b_fusion_summary.json`.
 

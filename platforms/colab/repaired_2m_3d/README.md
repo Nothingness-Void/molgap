@@ -13,7 +13,7 @@ Required Drive inputs:
 
 Run cells 0-3 to build and validate the graph cache. Full training remains
 disabled by default. The bounded-residual decision has passed, so the primary
-Route B SchNet may start only after all 100 shards pass acceptance.
+Track A SchNet may start only after all 100 shards pass acceptance.
 
 The graph builder reuses original-1M coordinates by CID plus canonical SMILES,
 updates labels and repaired-2M `source_idx`, and builds only missing rows. It
@@ -22,9 +22,9 @@ strict final validation record to Drive.
 
 Training reproduces the GPS split on the complete 2M `source_idx` space before
 filtering failed ETKDG rows. This is required for leakage-free embedding
-alignment. The Route B contract is `176/160/6`, 50 Gaussians, cutoff 10 A, and
-dropout 0.05; it is intentionally distinct from the historical Route A
-cutoff-6/dropout-0 contract.
+alignment. The active SchNet contract is `176/160/6`, 50 Gaussians, cutoff
+10 A, and dropout 0.05; it is intentionally distinct from the legacy
+cutoff-6/dropout-0 SchNet contract.
 
 After the primary cache passes acceptance, generate
 `molgap_repaired_2m_second_conformer.ipynb` with

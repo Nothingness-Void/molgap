@@ -1,0 +1,66 @@
+{
+  "format": "molgap-pcqm-route-b-cuda-preflight-v1",
+  "status": "complete",
+  "config": {
+    "name": "gps9",
+    "kind": "gps",
+    "modality": "gps",
+    "hidden_channels": 192,
+    "num_layers": 9,
+    "batch_size": 256,
+    "learning_rate": 8e-05,
+    "weight_decay": 1e-05,
+    "max_epochs": 40,
+    "patience": 6,
+    "seed": 42,
+    "augmented": false,
+    "training_budget_s": 32400,
+    "hard_budget_s": 43200
+  },
+  "device_name": "NVIDIA A100-SXM4-80GB",
+  "torch_version": "2.7.1+cu126",
+  "cuda_version": "12.6",
+  "steps": 1,
+  "losses": [
+    0.5939637422561646
+  ],
+  "prediction_finite": true,
+  "peak_cuda_bytes": 49608192,
+  "graph_shards": [
+    {
+      "modality": "gps",
+      "name": "train_shard_000.pt",
+      "sha256": "017b40419a98b70da70ec283a7e7ad7e78b6e808f89e8af3ba6c304847cb215d",
+      "batch_rows": 8
+    }
+  ],
+  "warm_start_sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040",
+  "warm_start_report": {
+    "source_input_dim": 9,
+    "target_input_dim": 18,
+    "copied_old_element_columns": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "copied_old_scalar_columns_to": [
+      15,
+      16,
+      17
+    ],
+    "zero_initialized_new_element_columns": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  }
+}

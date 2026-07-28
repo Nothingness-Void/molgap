@@ -7,11 +7,15 @@ change the recommended predictor belongs here rather than in `production/`.
 Each directory holds its own decision record and evidence. Read the decision
 first; the metrics beside it are backup, not the entry point.
 
+Track ownership is defined only in `TRACKS.md`: general-model work belongs to
+Track A, PCQM leaderboard specialists to Track B, and architecture discovery to
+Track C.
+
 | Question | Verdict | Directory |
 |---|---|---|
-| Which architecture family survives cheap elimination? | GPS9/GPS11-160 advance; GPS7, TensorNet, EGNN eliminated | `qm9_architecture/` |
+| Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |
-| What is the PCQM-only Gap ceiling of that architecture? | In progress; graph cache accepted, wave 1 encoders running | `pcqm_route_b/` |
+| What is the PCQM-only Gap ceiling of that architecture? | Track B; graph cache accepted, wave 1 encoders running | `pcqm_route_b/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Retention-D seed42 is the general base; PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |

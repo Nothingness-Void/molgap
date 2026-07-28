@@ -1,0 +1,21 @@
+{
+  "status": "stopped_for_shared_cluster_throttle",
+  "platform": "IMS CPU",
+  "job_id": "1091138[]",
+  "queue": "H",
+  "shard_start": 62,
+  "shard_stop_inclusive": 98,
+  "cpus_per_shard": 16,
+  "workers_per_shard": 14,
+  "observed_running_tasks": 23,
+  "observed_queued_tasks": 14,
+  "accepted_raw_reports_after_stop": 24,
+  "active_tasks_after_stop": 0,
+  "future_concurrency_cap": 4,
+  "future_cpu_cap": 64,
+  "seed": 314159,
+  "output_format": "molgap-secondary-etkdg-raw-v1",
+  "durability": "one atomic NPZ and JSON report per 20000-row shard",
+  "preflight_job": "1091036",
+  "preflight_accepted": true
+}

@@ -4,6 +4,9 @@ This directory contains thin entrypoints for architecture elimination before
 expensive PubChemQC scaling. Reusable model and training logic stays under
 `src/molgap/`.
 
+This is Track C discovery work. Track definitions live in `TRACKS.md`; this
+experiment cannot promote a production or leaderboard model directly.
+
 ## QM9
 
 `qm9_screen.py` predicts QM9 HOMO, LUMO, and Gap in eV on one deterministic
@@ -14,7 +17,7 @@ are a diagnostic upper-quality geometry arm, not the deployment ranking.
 Smoke test:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder `
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder `
   --candidate gine6 --geometry topology `
   --train-size 256 --validation-size 64 --test-size 64 --epochs 1
 ```
@@ -22,13 +25,13 @@ Smoke test:
 Formal first-seed encoders:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate gine6 --geometry topology
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate gps7 --geometry topology
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate gps9 --geometry topology
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate schnet --geometry dft
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate schnet --geometry etkdg
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate tensornet --geometry dft
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py encoder --candidate tensornet --geometry etkdg
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate gine6 --geometry topology
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate gps7 --geometry topology
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate gps9 --geometry topology
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate schnet --geometry dft
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate schnet --geometry etkdg
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate tensornet --geometry dft
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py encoder --candidate tensornet --geometry etkdg
 ```
 
 Encoder embeddings are cached under `data/cache/qm9/embeddings/`; metrics are
@@ -39,7 +42,7 @@ graphs are atomically cached in resumable 2,000-molecule shards.
 Fair two-view conformer comparison:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py intersect-payloads `
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py intersect-payloads `
   --primary-payload <conformer-a.pt> --secondary-payload <conformer-b.pt> `
   --output-dir <combined-payload-dir> --output <summary.json>
 ```
@@ -50,7 +53,7 @@ embedding-concatenation payloads on the exact `source_idx` intersection.
 Frozen GPS9 layer export:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py gps-multiscale `
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py gps-multiscale `
   --checkpoint <gps9-model.pt> --embedding-output <payload.pt> `
   --output <metrics.json> --layers 2 4 -1
 ```
@@ -58,7 +61,7 @@ Frozen GPS9 layer export:
 Two-conformer SchNet augmentation:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_screen.py schnet-conformer-aug `
+.venv\Scripts\python.exe experiments\qm9_architecture\qm9_screen.py schnet-conformer-aug `
   --geometry-seeds 42 43 --epochs 30 --seed 42 --resume
 ```
 
@@ -68,12 +71,13 @@ view and their averaged prediction separately.
 Inference-time conformer-averaging curve:
 
 ```powershell
-.venv\Scripts\python.exe scripts\architecture\qm9_conformer_scaling.py `
+.venv\Scripts\python.exe experiments\qm9_architecture\conformer_scaling.py `
   --view-seeds 42 43 44 45 46 47 --bootstrap 2000
 ```
 
-`qm9_conformer_scaling.py` scores one trained SchNet checkpoint over K
+`conformer_scaling.py` scores one trained SchNet checkpoint over K
 independent ETKDG views of the test split and reports the K-versus-MAE curve with
 paired bootstrap intervals. It trains nothing. Views are read from
 `--cache-dir` and built on demand, so supplying a prebuilt conformer cache makes
-the run CPU-cheap. Verdict: `experiments/qm9_architecture/conformer_scaling/decision.md`.
+the run CPU-cheap. Verdict:
+`experiments/qm9_architecture/results/conformer_scaling/decision.md`.

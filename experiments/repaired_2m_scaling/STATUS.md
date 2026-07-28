@@ -27,12 +27,31 @@ checks all three labels against the CSV. The second was a sidecar-location
 mismatch: the real builder writes all 100 sidecars under
 `graph_shards/reports/`, not beside the graph files.
 
-**Secondary view: running.** Seed-`314159` build `117966453` is on compute node
-`j05r4n04` with atomic 20K-row shards and resume enabled. **Do not duplicate
-it.** The two earlier failed attempts (`117857094`, `117950883`) produced no
-secondary shards and did not modify the primary cache.
+**Secondary view: accepted.** Seed-`314159` build `117966453` finished all 100
+atomic 20K-row shards on Kunshan in `11:16:59`; acceptance job `118050455` then
+accepted them in `00:44:56` — 1,986,868 unique graphs from 1,989,116 requested
+(2,248 conformer failures), `source_idx` and CID unique, every label matching the
+source CSV.
 
-Records: `platforms/_records/scnet/kunshan_repaired_2m_3d/`.
+That acceptance needed its own contract. Secondary shards are keyed to the
+primary view's per-shard graph counts rather than to source-index spans, so their
+sidecars carry no `start`/`stop` and the primary function raises `KeyError`. Two
+properties matter only here: each shard names the `primary_shard_sha256` it
+derives from, proving both views cover the same molecule set; and **all 1,986,868
+paired coordinates differ from the primary view** (distinct fraction `1.0`), which
+is the one check a copied cache could not pass. Contract:
+`src/molgap/artifact_acceptance.py`.
+
+Two earlier Kunshan attempts (`117857094`, `117950883`) produced no secondary
+shards and did not modify the primary cache. The IMS CPU array was a parallel
+route: preflight `1091036` accepted framework-neutral shard 99, but array
+`1091138[]` briefly reached 23 concurrent 16-CPU tasks and was stopped to respect
+the shared-cluster boundary. Twenty-four raw shard reports survived and are no
+longer needed now that Kunshan completed the view; any future IMS array stays
+capped at four concurrent tasks.
+
+Records: `platforms/_records/scnet/kunshan_repaired_2m_3d/` and
+`platforms/_records/ims/repaired_2m_secondary/`.
 
 ## Colab fallback
 
@@ -50,17 +69,23 @@ accepted. Plan: `results/3d_colab_plan.json`.
 
 ## Frozen 3D protocol
 
-The full-scale Route B primary SchNet is frozen at `176/160/6`, cutoff `10 A`,
+The Track A full-scale primary SchNet is frozen at `176/160/6`, cutoff `10 A`,
 dropout `0.05`. Its split reproduces the GPS seed-42 roles across all 2,000,000
 source rows **before** filtering failed ETKDG molecules; the previously used
 filtered-list split is forbidden for fusion because it misaligns encoder roles.
 
-## Blocked next stage
+## Next stage
 
-The hierarchical 2D+3D contract is implemented but not submitted. Either the
+Both 3D views are now accepted, so the graph-cache half of the hierarchical
+2D+3D gate is satisfied. 1,986,868 of 2,000,000 source rows (99.34%) carry both
+views, well past the contract's 95% floor.
+
+The hierarchical contract itself is implemented but not submitted. Either the
 fixed GPS7+GPS9 equal blend or the frozen three-GPS dense prediction is the exact
 identity path, and primary plus augmented lightweight SchNet embeddings may only
-add a `+-0.10 eV` bounded correction. It uses a new scaffold-disjoint split
-inside untouched base-model test rows and stops if fewer than 95% of those rows
-carry both 3D views. It stays blocked on accepted primary/secondary caches, two
-trained SchNet checkpoints, and their embedding parts.
+add a `+-0.10 eV` bounded correction, on a new scaffold-disjoint split inside
+untouched base-model test rows.
+
+Remaining blockers: two trained repaired-2M SchNet checkpoints and their
+embedding parts. SchNet training itself is still gated on the bounded-residual
+token described under Colab fallback.

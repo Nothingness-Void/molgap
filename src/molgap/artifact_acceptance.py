@@ -565,3 +565,224 @@ def accept_repaired_3d_graphs(
     }
     _atomic_json(output_manifest, manifest)
     return manifest
+
+
+def _read_source_rows(source_csv: Path) -> list[tuple[str, str, torch.Tensor]]:
+    with source_csv.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        required = {"cid", "canonical_smiles", "homo", "lumo", "gap"}
+        if reader.fieldnames is None or not required.issubset(reader.fieldnames):
+            raise ValueError(f"Source CSV requires columns {sorted(required)}")
+        return [
+            (
+                str(row["cid"]),
+                str(row["canonical_smiles"]),
+                torch.tensor(
+                    [float(row["homo"]), float(row["lumo"]), float(row["gap"])],
+                    dtype=torch.float32,
+                ),
+            )
+            for row in reader
+        ]
+
+
+def accept_repaired_3d_secondary_graphs(
+    shard_dir: Path,
+    source_csv: Path,
+    primary_manifest: Path,
+    output_manifest: Path,
+    *,
+    expected_shards: int = 100,
+    expected_seed: int = 314159,
+    pattern: str = "graphs_*.pt",
+    min_distinct_fraction: float = 0.999,
+    primary_shard_dir: Path | None = None,
+) -> dict:
+    """Accept an independently seeded secondary ETKDG view of repaired-2M.
+
+    The secondary view is NOT a re-slice of the source CSV: it only rebuilds
+    molecules the primary view already produced, so a shard's ``requested`` count
+    is the primary's per-shard graph count rather than a source index span. The
+    primary contract in ``accept_repaired_3d_graphs`` therefore cannot be reused,
+    and its sidecars carry no ``start``/``stop`` fields.
+
+    Two properties matter here and nowhere else:
+
+    - every shard must name the accepted ``primary_shard_sha256`` it derives
+      from, so the two views are provably the same molecule set;
+    - coordinates must actually differ from the primary view, otherwise a copied
+      cache would pass every count and hash check while carrying no independent
+      conformer information.
+    """
+    shards = sorted(shard_dir.glob(pattern))
+    if len(shards) != expected_shards:
+        raise ValueError(f"Expected {expected_shards} graph shards, found {len(shards)}")
+
+    primary = json.loads(primary_manifest.read_text(encoding="utf-8"))
+    if not primary.get("accepted"):
+        raise ValueError(f"Primary manifest is not accepted: {primary_manifest}")
+    primary_by_name = {entry["path"]: entry for entry in primary["shards"]}
+    if primary_shard_dir is None:
+        primary_shard_dir = primary_manifest.parent / "graph_shards"
+
+    source_rows = _read_source_rows(source_csv)
+    source_cids = [row[0] for row in source_rows]
+    if len(set(source_cids)) != len(source_cids):
+        raise ValueError("Source CSV contains duplicate CID values")
+
+    seen_source: set[int] = set()
+    seen_cid: set[str] = set()
+    rows = requested = built = failed = 0
+    compared = distinct = 0
+    entries = []
+    for path in shards:
+        sidecar = path.parent / "reports" / f"{path.stem}.json"
+        if not sidecar.is_file():
+            raise FileNotFoundError(f"Missing secondary sidecar: {sidecar}")
+        report = json.loads(sidecar.read_text(encoding="utf-8"))
+        required_report = {
+            "status",
+            "view",
+            "seed",
+            "requested",
+            "reused",
+            "built",
+            "failed",
+            "failure_source_idx",
+            "graphs",
+            "path",
+            "bytes",
+            "sha256",
+            "primary_shard_sha256",
+        }
+        if not required_report.issubset(report):
+            missing = sorted(required_report - set(report))
+            raise ValueError(f"Secondary sidecar missing {missing}: {sidecar}")
+        if (
+            report["status"] != "complete"
+            or report["view"] != "independent_secondary_etkdg"
+            or int(report["seed"]) != expected_seed
+            or str(report["path"]) != path.name
+            or int(report["bytes"]) != path.stat().st_size
+            or str(report["sha256"]) != sha256_file(path)
+        ):
+            raise ValueError(f"Secondary sidecar contract mismatch: {sidecar}")
+        # Reusing coordinates is the primary view's job; here it would defeat the point.
+        if int(report["reused"]) != 0:
+            raise ValueError(f"Secondary shard reports reused coordinates: {sidecar}")
+
+        primary_entry = primary_by_name.get(path.name)
+        if primary_entry is None:
+            raise ValueError(f"No accepted primary shard named {path.name}")
+        if str(report["primary_shard_sha256"]) != primary_entry["sha256"]:
+            raise ValueError(
+                f"Secondary shard {path.name} is bound to an unaccepted primary hash"
+            )
+        if int(report["requested"]) != int(primary_entry["rows"]):
+            raise ValueError(
+                f"Secondary requested count does not match accepted primary rows: {sidecar}"
+            )
+
+        failure_source_idx = [int(value) for value in report["failure_source_idx"]]
+        shard_failed = int(report["failed"])
+        if (
+            len(failure_source_idx) != shard_failed
+            or len(set(failure_source_idx)) != shard_failed
+        ):
+            raise ValueError(f"Invalid failure_source_idx in {sidecar}")
+        failure_set = set(failure_source_idx)
+
+        graphs = torch.load(path, map_location="cpu", weights_only=False)
+        if int(report["graphs"]) != len(graphs):
+            raise ValueError(f"Sidecar row count mismatch for {path.name}")
+        if int(report["built"]) != len(graphs):
+            raise ValueError(f"Sidecar built count mismatch for {path.name}")
+
+        primary_pos = {}
+        primary_path = primary_shard_dir / path.name
+        if primary_path.is_file():
+            for graph in torch.load(primary_path, map_location="cpu", weights_only=False):
+                primary_pos[int(graph.source_idx.view(-1)[0])] = graph.pos
+
+        for graph in graphs:
+            index = int(graph.source_idx.view(-1)[0])
+            if index < 0 or index >= len(source_rows):
+                raise ValueError(f"source_idx outside source CSV in {path.name}")
+            if index in failure_set:
+                raise ValueError(
+                    f"Failed source_idx also present as a graph in {path.name}"
+                )
+            cid, smiles, expected_target = source_rows[index]
+            if index in seen_source or cid in seen_cid:
+                raise ValueError(f"Duplicate graph identity in {path.name}")
+            if not cid or not smiles or graph.pos.ndim != 2 or graph.pos.shape[1] != 3:
+                raise ValueError(f"Invalid graph structure in {path.name}")
+            if not torch.isfinite(graph.pos).all() or not torch.isfinite(graph.y).all():
+                raise ValueError(f"Non-finite graph values in {path.name}")
+            observed_target = graph.y.detach().cpu().float().view(-1)
+            if observed_target.shape != expected_target.shape or not torch.allclose(
+                observed_target, expected_target, atol=1e-6, rtol=0.0
+            ):
+                raise ValueError(f"Target/source_idx mismatch in {path.name}")
+            reference = primary_pos.get(index)
+            if reference is not None and reference.shape == graph.pos.shape:
+                compared += 1
+                if not torch.allclose(reference, graph.pos, atol=1e-6, rtol=0.0):
+                    distinct += 1
+            seen_source.add(index)
+            seen_cid.add(cid)
+
+        requested += int(report["requested"])
+        built += int(report["built"])
+        failed += shard_failed
+        rows += len(graphs)
+        entries.append(
+            {
+                "path": path.name,
+                "rows": len(graphs),
+                "sha256": str(report["sha256"]),
+                "primary_shard_sha256": str(report["primary_shard_sha256"]),
+                "sidecar_path": sidecar.relative_to(shard_dir).as_posix(),
+                "sidecar_sha256": sha256_file(sidecar),
+            }
+        )
+
+    if built + failed != requested:
+        raise ValueError("Built + failed does not reconcile requested rows")
+    if rows != built:
+        raise ValueError("Accepted graph rows do not reconcile built rows")
+    if requested != int(primary["accepted_rows"]):
+        raise ValueError("Secondary requested rows do not reconcile accepted primary rows")
+    distinct_fraction = (distinct / compared) if compared else 0.0
+    if compared and distinct_fraction < min_distinct_fraction:
+        raise ValueError(
+            "Secondary coordinates are not independent of the primary view: "
+            f"{distinct}/{compared} differ"
+        )
+
+    manifest = {
+        "accepted": True,
+        "immutable": True,
+        "view": "independent_secondary_etkdg",
+        "seed": expected_seed,
+        "expected_shards": expected_shards,
+        "shards": entries,
+        "source_rows": len(source_rows),
+        "requested_rows": requested,
+        "accepted_rows": rows,
+        "built": built,
+        "failed": failed,
+        "unique_source_idx": len(seen_source),
+        "unique_cid": len(seen_cid),
+        "identity_source": "source_csv_by_source_idx",
+        "primary_manifest_sha256": sha256_file(primary_manifest),
+        "primary_accepted_rows": int(primary["accepted_rows"]),
+        "paired_rows": len(seen_source),
+        "coordinates_compared": compared,
+        "coordinates_distinct": distinct,
+        "coordinates_distinct_fraction": round(distinct_fraction, 6),
+        "target_alignment": True,
+        "source_csv_sha256": sha256_file(source_csv),
+    }
+    _atomic_json(output_manifest, manifest)
+    return manifest
