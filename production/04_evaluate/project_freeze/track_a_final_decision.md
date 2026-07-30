@@ -51,4 +51,3 @@ Source evidence:
 
 - `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md`
 - `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/acceptance.json`
-

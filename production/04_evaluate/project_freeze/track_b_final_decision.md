@@ -58,4 +58,3 @@ Source evidence:
 
 - `experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md`
 - `experiments/pcqm_route_b/results/official_valid_5k_fusion/metrics.json`
-
