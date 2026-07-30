@@ -1,0 +1,39 @@
+{
+  "format": "molgap-repaired-2m-schnet-ims-resubmission-v1",
+  "submitted_on": "2026-07-29",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d",
+  "diagnosis": {
+    "failed_jobs": [
+      "1102071.ccpbs1",
+      "1102072.ccpbs1"
+    ],
+    "failure_stage": "gpu_preflight_import",
+    "root_cause": "repaired-2M code payload omitted src/molgap/portable_radius.py",
+    "graph_cache_implicated": false
+  },
+  "repair": {
+    "path": "code/src/molgap/portable_radius.py",
+    "sha256": "17c9dbf7f0679de8f439ad83bb1517c94677802dd3f9b93a00440913aa1acf56",
+    "source": "/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/src/molgap/portable_radius.py"
+  },
+  "jobs": {
+    "primary_preflight": "1106727.ccpbs1",
+    "augmented_preflight": "1106728.ccpbs1",
+    "primary_train": "1106729.ccpbs1",
+    "augmented_train": "1106730.ccpbs1",
+    "primary_embedding_export": "1106731.ccpbs1",
+    "augmented_embedding_export": "1106732.ccpbs1",
+    "embedding_acceptance": "1106733.ccpbs1"
+  },
+  "dependencies": {
+    "1106729.ccpbs1": "afterok:1106727.ccpbs1",
+    "1106730.ccpbs1": "afterok:1106728.ccpbs1",
+    "1106731.ccpbs1": "afterok:1106729.ccpbs1",
+    "1106732.ccpbs1": "afterok:1106730.ccpbs1",
+    "1106733.ccpbs1": "afterok:1106731.ccpbs1:1106732.ccpbs1"
+  },
+  "source_assets_moved_or_deleted": false,
+  "production_registry_changed": false,
+  "sealed_20k_used": false
+}

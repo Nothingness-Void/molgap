@@ -1,0 +1,52 @@
+{
+  "format": "molgap-track-a-hierarchical-dual-schnet-fusion-v1",
+  "submitted_at": "2026-07-30T15:10:00+09:00",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d",
+  "resource_decision": {
+    "gpu_free": 0,
+    "gpu_nodes_checked": 16,
+    "cpu_execution_selected": true,
+    "reason": "The final frozen-embedding residual head does not require encoder forward passes, while every A100 was occupied."
+  },
+  "jobs": {
+    "rejected_preflight_missing_parquet_engine": "1118087.ccpbs1",
+    "cancelled_by_failed_dependency": "1118090.ccpbs1",
+    "superseded_preflight_missing_training_import_probe": "1118147.ccpbs1",
+    "rejected_training_incomplete_runtime_source": "1118149.ccpbs1",
+    "preflight": "1118215.ccpbs1",
+    "training": "1118217.ccpbs1"
+  },
+  "dependencies": {
+    "1118217.ccpbs1": "afterok:1118215.ccpbs1"
+  },
+  "inputs": {
+    "frozen_2d_test_payload": {
+      "bytes": 30404055,
+      "sha256": "23fffd29ce005ae0605b1e2ffb45bf86d53b0b53c07118da510c6bd0d70d2e12"
+    },
+    "repaired_2m_scaffold_groups": {
+      "bytes": 7457258,
+      "rows": 2000000,
+      "groups": 792197,
+      "sha256": "b352e9455939bc3308bb041e67eadf1f0fd8d902769f4a50173b438c7d2a8f32"
+    },
+    "dual_schnet_embedding_acceptance": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/embeddings/acceptance.json"
+  },
+  "code_sha256": {
+    "experiments/_scripts/preflight_hierarchical_2d3d_fusion.py": "56937a731c196fd98b9136eda8f4c3f0d98b267be819d4ce41f2f45263df5473",
+    "experiments/_scripts/train_hierarchical_2d3d_fusion.py": "d6046232032e7e10d4fdeb0f061f4c453b81807212f4aab4cd1d8a2956fb1803",
+    "src/molgap/constants.py": "4aaf112f6452012d32220d4c2ff5330d1bfc3cae8984b9958a31c8a3bd20d86b",
+    "src/molgap/hierarchical_fusion.py": "9ad9fdba364f0185da8f444052cbecfc6d4a017255b46f7e8cebfecc6d6e2eb1",
+    "platforms/ims/repaired_2m_3d/preflight_hierarchical_fusion_cpu.pbs": "74e8b6df83603a1d71324b5f618b896a1bc87538af8dcf68ecfe19bdc290836e",
+    "platforms/ims/repaired_2m_3d/train_hierarchical_fusion_cpu.pbs": "fadcc865ae73cf931bf2fee6b001191011eae2907705654b71d23e977cacc2ba"
+  },
+  "durability": {
+    "preflight_afterok_gate": true,
+    "atomic_per_base_seed_checkpoint": true,
+    "exact_resume_contract": true,
+    "dedicated_output_directory": "fusion_outputs/hierarchical_dual_schnet_v1"
+  },
+  "production_registry_changed": false,
+  "sealed_20k_used": false
+}

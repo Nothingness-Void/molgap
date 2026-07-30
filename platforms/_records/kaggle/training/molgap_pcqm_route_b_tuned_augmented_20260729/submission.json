@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-07-29T01:00:00+09:00",
+  "purpose": "Track B tuned full-scale augmented SchNet migration",
+  "kernel": "nothingnessvoid/molgap-rb-tuned-augmented-schnet-20260729",
+  "version": 3,
+  "status": "running_waiting_for_first_retrievable_artifact",
+  "encoder": "augmented_schnet",
+  "winner": {
+    "trial_id": "trial_09",
+    "learning_rate": 0.0008,
+    "weight_decay": 0.000001,
+    "dropout": 0.0,
+    "batch_size": 192,
+    "warmup_ratio": 0.1,
+    "grad_clip": 0.5,
+    "schnet_cutoff_A": 6.0
+  },
+  "datasets": [
+    "nothingnessvoid/molgap-pcqm-route-b-primary-1m-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-secondary-1m-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-warmstarts-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-tuned-runtime-20260728"
+  ],
+  "durability": {
+    "atomic_checkpoint_each_epoch": true,
+    "best_and_last_separate": true,
+    "training_budget_hours": 9,
+    "hard_budget_hours": 12
+  },
+  "safety": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "ims_fallback": {
+    "job_id": 1102122,
+    "state": "cancelled_after_kaggle_v3_passed_startup"
+  },
+  "diagnosed_versions": {
+    "1": "Preflight received the secondary dataset root while requesting both primary and secondary modalities.",
+    "2": "Preflight received the primary dataset root while requesting both primary and secondary modalities.",
+    "3": "A read-only combined preflight root links the independently mounted primary and secondary graph views."
+  }
+}

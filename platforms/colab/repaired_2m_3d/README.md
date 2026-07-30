@@ -32,3 +32,20 @@ After the primary cache passes acceptance, generate
 seeded ETKDG view only for accepted primary identities, keeps a separate Drive
 directory, and uses the same 100-shard durability contract. It does not start
 SchNet training.
+
+## Verified Primary Recovery Bundle
+
+`upload_primary_recovery/` contains the fail-closed replacement bundle:
+
+- `molgap_repaired_2m_primary_stable_recovery.ipynb`
+- `molgap-0.1.0-py3-none-any.whl`
+
+Exact file and required-input hashes are in
+`primary_recovery_bundle_manifest.json`.
+The notebook requires wheel SHA256
+`f38a93f558dd5c13e879740e7af7eb5e6135b520a3b220b53ff5863e6ed7cce5`
+and writes only to
+`MyDrive/MolGap/checkpoints/molgap_repaired_2m_primary_verified_recovery_v2`.
+The rejected `molgap_repaired_2m_primary_stable_recovery` directory is not a
+resume source. The incident and controls are recorded in
+`experiments/repaired_2m_scaling/results/dual_schnet_full_2m/colab_recovery_incident.md`.

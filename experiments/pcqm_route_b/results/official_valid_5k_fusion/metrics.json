@@ -1,0 +1,54 @@
+{
+  "format": "molgap-pcqm-route-b-official-valid-evaluation-v1",
+  "status": "complete",
+  "selection_scope": "scaffold-development-only",
+  "selected_base_identity": "augmented_schnet",
+  "n_source": 5000,
+  "n_valid": 4981,
+  "gap_mae_eV": {
+    "components": {
+      "gps9": 0.1815955936908722,
+      "gps11_160": 0.18196579813957214,
+      "primary_schnet": 0.12619982659816742,
+      "augmented_schnet": 0.12244950979948044
+    },
+    "fusion_seeds": {
+      "42": 0.11211791634559631,
+      "43": 0.11211996525526047,
+      "44": 0.11198479682207108
+    },
+    "fusion_equal_seed_ensemble": 0.11201111227273941,
+    "gine_v7_fixed_valid_reference": 0.1846183411
+  },
+  "fusion_ensemble_minus_gine_v7_eV": -0.07260722882726059,
+  "passes_track_b_gate": true,
+  "artifacts": {
+    "labels_sha256": "38025d214fba7995086ac0c24e54fb276d87ecaab7ebe97b10922081f0596877",
+    "payload_manifest_sha256": "b9b8106e4558d4d3d1988dd43923bfac2b3b21cd4f15408a6e960f4f2bb0939a",
+    "fusion_manifest_sha256": "483972e13b50b942f476cbcc1ce7b99706e235e79416a23302c705f6dc10abe1",
+    "development_selection_sha256": "b441e166a67d233b788b40cdd5235e3a16b2b16d9aa4b85bdd95cd94bd37e455",
+    "graph_manifest_sha256": "f81f1ff90345a96aed6158a321939d4be957fb9ab5da5e6c8d4fc774ee3062c7",
+    "encoder_checkpoints": {
+      "gps9": "6414e7fcc58e4f76e89083ac34e8df477373d164d8c502f932176e3d05c6dc83",
+      "gps11_160": "737c596d92e4efbc5045e8b26582a2829bb2fbecbadcf773971c894cd1238638",
+      "primary_schnet": "aee8d788d6c028c8127139e40be91773a7e5cd7de336782ea50c38a3cb265b1a",
+      "augmented_schnet": "c6fe686273f14b237e464ff045776ea0d18f010042e257496d950eaed4b9985a"
+    },
+    "fusion_checkpoints": {
+      "seed_42": "6babebcb8e232ce3ee281b86dc50c22573584787347643b3d8a318382f5ba46e",
+      "seed_43": "43ed3a50f7c2ea3b63c46e28e2ea94fe2c4e149b11951d96859ce7891419cd57",
+      "seed_44": "d26117de44932ca6e69e06ed3ac43a1428e138c5c7680dd6ea24f64571a74bff"
+    }
+  },
+  "graph_contract": {
+    "method": "ETKDGv3+MMFF200",
+    "primary_seed": 42,
+    "secondary_seed": 43,
+    "secondary_built_for_acceptance_only": true
+  },
+  "radius_backend": "molgap_portable_torch_radius_v1",
+  "official_valid_metric_read": true,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

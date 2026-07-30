@@ -178,6 +178,7 @@ frozen-head seeds 42/43/44; encoder seeds have not been repeated.
 |---|---|---|
 | Does conformer averaging pay past K=2? | Saturates as 1/K; K=6 buys -0.00511 eV, more than any architecture change, but cannot close the systematic geometry gap | `conformer_scaling/decision.md` |
 | Do encoder seeds change the architecture ordering? | Encoder-seed noise reaches 0.00097 eV, twice the head-seed spread; GPS9 and GPS11-160 are indistinguishable on accuracy | `encoder_seeds/decision.md` |
+| Do explicit angle and dihedral features improve lightweight SchNet? | Passes the 1.15x compute gate but fails the 0.003 eV accuracy gate; no PubChemQC transfer | `local_geometry_augmentation/decision.md` |
 
 ## Uncertainty caveat
 

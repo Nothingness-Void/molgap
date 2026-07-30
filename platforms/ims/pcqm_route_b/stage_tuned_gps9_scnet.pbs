@@ -1,0 +1,55 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=01:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+BOUNDARY=/lustre/home/users/sm2/chou
+ARCHIVE="$ROOT/incoming/pcqm-route-b-tuned-gps9-accepted-20260729.tar"
+EXPECTED_SHA=a484a4835525d844c0f9a2ecb945a68fbe7b2e92f11a92acab001a758f21b0ca
+STAGED="$ROOT/staged_tuned_gps9_scnet_20260729"
+TEMPORARY="$ROOT/.staged_tuned_gps9_scnet_20260729.tmp"
+ACCEPT_ROOT="$ROOT/acceptance_tuned_gps9_scnet_20260729"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+case "$(realpath "$ARCHIVE")" in
+  "$BOUNDARY"/*) ;;
+  *) echo "archive escapes user boundary" >&2; exit 1 ;;
+esac
+test "$(sha256sum "$ARCHIVE" | awk '{print $1}')" = "$EXPECTED_SHA"
+tar -tf "$ARCHIVE" | awk \
+  '/^(\/|\.\.\/)|\/\.\.\// {bad=1; print} END{exit bad}'
+test ! -e "$TEMPORARY"
+test ! -e "$STAGED"
+test ! -e "$ACCEPT_ROOT"
+
+mkdir "$TEMPORARY"
+tar -xf "$ARCHIVE" -C "$TEMPORARY"
+test -f "$TEMPORARY/outputs_tuned/gps9/single_encoder_acceptance.json"
+test -f "$TEMPORARY/outputs_tuned/gps9/completion_manifest.json"
+mv "$TEMPORARY" "$STAGED"
+
+mkdir -p "$ACCEPT_ROOT/outputs" "$ACCEPT_ROOT/logs"
+ln -s "$STAGED/outputs_tuned/gps9" "$ACCEPT_ROOT/outputs/gps9"
+ln -s "$ROOT/outputs_tuned/gps11_160" "$ACCEPT_ROOT/outputs/gps11_160"
+ln -s "$ROOT/outputs/primary_schnet" "$ACCEPT_ROOT/outputs/primary_schnet"
+ln -s "$ROOT/outputs/augmented_schnet" "$ACCEPT_ROOT/outputs/augmented_schnet"
+for name in gps9 gps11_160 primary_schnet augmented_schnet; do
+  case "$(realpath "$ACCEPT_ROOT/outputs/$name")" in
+    "$BOUNDARY"/*) ;;
+    *) echo "$name target escapes user boundary" >&2; exit 1 ;;
+  esac
+  test -f "$ACCEPT_ROOT/outputs/$name/completion_manifest.json"
+done
+
+cat > "$ACCEPT_ROOT/logs/staging_manifest.txt" <<EOF
+status=complete
+archive_bytes=$(stat -c %s "$ARCHIVE")
+archive_sha256=$EXPECTED_SHA
+source_archive_deleted=false
+existing_encoder_outputs_modified=false
+EOF
+cat "$ACCEPT_ROOT/logs/staging_manifest.txt"

@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=16
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+ROUTE_B_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+INPUTS="$ROOT/fusion_inputs"
+OUTPUT="$ROOT/fusion_outputs/hierarchical_dual_schnet_v1"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f "$INPUTS/frozen_2d_test_payload.pt"
+test -f "$INPUTS/repaired_2m_scaffold_groups.npz"
+test -f "$ROOT/preflight/hierarchical_dual_schnet_v1.json"
+test -f "$ROOT/embeddings/acceptance.json"
+test "$(find "$ROOT/embeddings/primary" -maxdepth 1 -name 'embeddings_*.pt' | wc -l)" -eq 100
+test "$(find "$ROOT/embeddings/augmented" -maxdepth 1 -name 'embeddings_*.pt' | wc -l)" -eq 100
+
+mkdir -p "$OUTPUT" logs
+export PYTHONPATH="$ROUTE_B_ROOT/code/platforms/ims/pcqm_route_b/shims:$ROUTE_B_ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=16
+export MKL_NUM_THREADS=16
+export OPENBLAS_NUM_THREADS=16
+
+"$PYTHON" "$ROOT/code/experiments/train_hierarchical_2d3d_fusion.py" \
+  --frozen-2d "$INPUTS/frozen_2d_test_payload.pt" \
+  --manifest "$INPUTS/repaired_2m_scaffold_groups.npz" \
+  --primary-embeddings "$ROOT/embeddings/primary" \
+  --augmented-embeddings "$ROOT/embeddings/augmented" \
+  --out-dir "$OUTPUT" \
+  --device cpu 2>&1 | tee "logs/hierarchical_dual_schnet_v1.log"

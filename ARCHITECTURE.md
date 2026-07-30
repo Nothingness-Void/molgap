@@ -1,5 +1,8 @@
 # Architecture
 
+Repository and artifact names follow `NAMING.md`. This file owns placement and
+code boundaries; it does not duplicate naming rules.
+
 This file answers one question: **to change behavior X, which code owns it?**
 Model recommendations and job status belong in `CURRENT_STATE.md`.
 Track A/B/C ownership belongs in `TRACKS.md`.
@@ -35,7 +38,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
 | `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
 | `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
-| `phase8_reporting.py` | Evidence-backed comparison tables | Changing Phase 8 reporting layout |
+| `model_reporting.py` | Evidence-backed comparison tables | Changing production-model reporting layout |
 | `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
 | `hybrid.py` | `EndToEndHybrid` | Jointly training 2D, 3D, and fusion components |
@@ -54,9 +57,12 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
+| `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
+| `pcqm_route_b_evaluation.py` | Fixed official-valid graph replay, downloaded Fusion acceptance, deterministic inference, and Gap metrics | Evaluating a frozen Track B Fusion without reopening development selection |
 | `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where the `torch_cluster` wheel is ABI-incompatible |
 | `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU-only clusters | Building conformer shards without PyG on the worker |
 | `repaired_2m_3d_colab.py` | Durable Colab repaired-2M graph shards and lightweight SchNet | Changing the remote repaired-2M 3D workflow |
+| `repaired_2m_schnet.py` | Shard-streamed primary and dual-conformer repaired-2M SchNet training | Training accepted repaired-2M 3D views without loading the full cache into RAM |
 | `residual_attribution.py` | Paired residual attribution and molecular descriptors | Changing model-versus-model residual diagnosis |
 | `pubchemqc.py` | PubChemQC streaming, filtering, identity normalization | Changing source acquisition |
 | `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |

@@ -11,8 +11,6 @@ import json
 import tempfile
 from pathlib import Path
 
-from kaggle.api.kaggle_api_extended import KaggleApi
-
 
 DATASETS = {
     "nothingnessvoid/1m-full": {
@@ -118,6 +116,8 @@ def values_match(key: str, current, desired) -> bool:
 
 def main() -> None:
     args = parse_args()
+    from kaggle.api.kaggle_api_extended import KaggleApi
+
     api = KaggleApi()
     api.authenticate()
     rows = []

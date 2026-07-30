@@ -1,0 +1,23 @@
+{
+  "status": "verified",
+  "bundle_role": "repaired_2m_primary_verified_recovery_v2",
+  "notebook": {
+    "path": "upload_primary_recovery/molgap_repaired_2m_primary_stable_recovery.ipynb",
+    "bytes": 9214,
+    "sha256": "8635a6439153eda6729b9acb406688ccea9236a1275bc19adc7ba4b1dca5be9f"
+  },
+  "wheel": {
+    "path": "upload_primary_recovery/molgap-0.1.0-py3-none-any.whl",
+    "bytes": 232807,
+    "sha256": "f38a93f558dd5c13e879740e7af7eb5e6135b520a3b220b53ff5863e6ed7cce5"
+  },
+  "required_inputs": {
+    "primary_acceptance_sha256": "9b0080b2da897880a3b51111dbf914af16db98b0dacf90353fdb800104f2e659",
+    "recovery_checkpoint_sha256": "858f48dd8455e07c89d2631fe99dbc91d75ff326faaaa566e45b8fce0641320a",
+    "graph_shards": 100,
+    "accepted_rows": 1989116,
+    "source_rows": 2000000
+  },
+  "rejected_resume_directory": "molgap_repaired_2m_primary_stable_recovery",
+  "output_directory": "molgap_repaired_2m_primary_verified_recovery_v2"
+}

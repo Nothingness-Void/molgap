@@ -1,0 +1,60 @@
+{
+  "format": "molgap-pcqm-route-b-tuned-1m-encoder-gate-v1",
+  "status": "complete",
+  "selection_scope": "scaffold-development-only",
+  "encoders": {
+    "gps9": {
+      "selected_source": "tuned_scnet",
+      "selected_dev_gap_mae_eV": 0.17248056828975677,
+      "fixed_dev_gap_mae_eV": 0.17576296627521515,
+      "tuned_dev_gap_mae_eV": 0.17248056828975677,
+      "delta_tuned_minus_fixed_eV": -0.003282397985458374,
+      "tuned_best_epoch": 38,
+      "tuned_result_accepted": true
+    },
+    "gps11_160": {
+      "selected_source": "tuned_ims",
+      "fixed_dev_gap_mae_eV": 0.17321431636810303,
+      "tuned_dev_gap_mae_eV": 0.17045912146568298,
+      "delta_tuned_minus_fixed_eV": -0.002755194902420044,
+      "tuned_best_epoch": 27,
+      "tuned_result_accepted": true
+    },
+    "primary_schnet": {
+      "selected_source": "fixed_config_ims",
+      "fixed_dev_gap_mae_eV": 0.13057228922843933,
+      "tuned_dev_gap_mae_eV": 0.13138210773468018,
+      "delta_tuned_minus_fixed_eV": 0.0008098185062408447,
+      "tuned_best_epoch": 32,
+      "tuned_result_accepted": true
+    },
+    "augmented_schnet": {
+      "selected_source": "fixed_config_ims",
+      "fixed_dev_gap_mae_eV": 0.1283137947320938,
+      "tuned_dev_gap_mae_eV": 0.15367916226387024,
+      "delta_tuned_minus_fixed_eV": 0.025365367531776428,
+      "tuned_best_epoch": 8,
+      "tuned_result_accepted": true
+    }
+  },
+  "selected_fusion_inputs": [
+    "tuned_gps9",
+    "tuned_gps11_160",
+    "fixed_config_primary_schnet",
+    "fixed_config_augmented_schnet"
+  ],
+  "alignment": {
+    "rows": {
+      "train": 915012,
+      "dev": 81961,
+      "official": 4981
+    },
+    "parts_per_encoder": 401,
+    "source_idx_aligned": true,
+    "train_dev_targets_aligned": true
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

@@ -1,0 +1,28 @@
+{
+  "format": "molgap-pcqm-route-b-tuned-1m-submission-v1",
+  "submitted_at": "2026-07-28T22:28:00+09:00",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-route-b",
+  "search_dependency": "1097111.ccpbs1",
+  "jobs": {
+    "gps9": "1102119.ccpbs1",
+    "gps11_160": "1102120.ccpbs1",
+    "primary_schnet": "1102121.ccpbs1",
+    "augmented_schnet": "1102122.ccpbs1"
+  },
+  "dependency_policy": "afterok:1097111.ccpbs1",
+  "output_namespace": "outputs_tuned",
+  "winner_source": "search/outputs/100k_confirm/<encoder>/summary.json",
+  "code_sha256": {
+    "src/molgap/pcqm_route_b_training.py": "1370e8c52aec92a173bbd955faf6be255ede2c2259bee0d41be86b515c29ccd9",
+    "platforms/ims/pcqm_route_b/train_tuned_encoder.py": "4516943d64a8e9b3b12904b79437004e04596c7ba673d6853bfb8fd173d346cc",
+    "platforms/ims/pcqm_route_b/train_tuned_encoder.pbs": "09d029de14277c5e33b226eccfb7f14d4b6230a7eb801ced3afcddf84ef1a436"
+  },
+  "guards": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false,
+    "accepted_baseline_overwritten": false
+  }
+}

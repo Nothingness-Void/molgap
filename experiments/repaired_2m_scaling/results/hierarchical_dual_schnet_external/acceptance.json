@@ -1,0 +1,54 @@
+{
+  "experiment": "repaired_2m_same_molecule_external_comparison",
+  "status": "pure_2d_passed_hierarchical_dual_schnet_rejected",
+  "source_rows": 1977,
+  "aligned_etkdg_rows": 1973,
+  "scopes": {
+    "all": 1973,
+    "ood1000": 998,
+    "p8_targeted_hard": 975
+  },
+  "average_mae_eV": {
+    "routed_v4_500k": {
+      "all": 0.103579580783844,
+      "ood1000": 0.11272121220827103,
+      "p8_targeted_hard": 0.0942222997546196
+    },
+    "repaired_2m_equal_2d": {
+      "all": 0.09846681356430054,
+      "ood1000": 0.10879790037870407,
+      "p8_targeted_hard": 0.08789201080799103
+    },
+    "repaired_2m_dense_2d": {
+      "all": 0.09763771295547485,
+      "ood1000": 0.10665547847747803,
+      "p8_targeted_hard": 0.08840722590684891
+    },
+    "repaired_2m_equal_dual_schnet": {
+      "all": 0.12171754986047745,
+      "ood1000": 0.12670229375362396,
+      "p8_targeted_hard": 0.11661520600318909
+    },
+    "repaired_2m_dense_dual_schnet": {
+      "all": 0.12187682092189789,
+      "ood1000": 0.12721580266952515,
+      "p8_targeted_hard": 0.11641189455986023
+    }
+  },
+  "paired_average_delta_vs_routed_v4_500k_eV": {
+    "repaired_2m_equal_2d": {
+      "all": -0.005112765445404634,
+      "ood1000": -0.003923318165453348,
+      "p8_targeted_hard": -0.006330271481703489
+    },
+    "repaired_2m_dense_2d": {
+      "all": -0.005941863640957808,
+      "ood1000": -0.006065740254716966,
+      "p8_targeted_hard": -0.0058150648096433055
+    }
+  },
+  "metrics_sha256": "ee40c4c6ed70ae00d7bddfec23e91edd5e7070d3629bddf35ca12997c2a342ed",
+  "predictions_sha256": "c3c3c501a76f9940fe2b920bbfaa61de9a72c7a4422e61f273b37a22254e0af1",
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

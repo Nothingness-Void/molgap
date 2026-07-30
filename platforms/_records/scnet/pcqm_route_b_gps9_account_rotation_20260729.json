@@ -1,0 +1,67 @@
+{
+  "format": "molgap-scnet-account-rotation-v1",
+  "recorded_at": "2026-07-29T13:31:04+09:00",
+  "workload": "pcqm_route_b_tuned_gps9_1m",
+  "status": "accepted_and_staged_to_ims",
+  "source_account_label": "scnet_a_zone_previous",
+  "destination_account_label": "scnet_a_zone_replacement",
+  "handoff": {
+    "archive_bytes": 2114805760,
+    "archive_sha256": "e88a812f1b23596d052c01cedda8fb2961d1faad4e5bd11d3f7032b06c3dbe9b",
+    "archive_members": 412,
+    "gps_graph_parts": 401,
+    "source_archive_deleted": false,
+    "acceptance_job": 716458
+  },
+  "runtime": {
+    "torch": "2.4.1",
+    "torch_geometric": "2.7.0",
+    "device": "BW",
+    "environment_gate_job": 716494,
+    "prediction_preflight_job": 716499,
+    "prediction_finite": true
+  },
+  "resume_checkpoint": {
+    "bytes": 60253406,
+    "sha256": "36fc132e6563889d484979ec7233bcd56bbce5ce10a5b788bdd10e8b232e3209",
+    "completed_epoch": 31,
+    "resume_epoch": 32,
+    "max_epochs": 40,
+    "best_epoch": 30,
+    "best_dev_gap_mae_eV": 0.17314542829990387,
+    "config_identity": true,
+    "training_overrides_identity": true,
+    "model_state_strict": true,
+    "best_state_strict": true
+  },
+  "resume_job": 716500,
+  "result": {
+    "best_epoch": 38,
+    "best_dev_gap_mae_eV": 0.17248056828975677,
+    "fixed_config_dev_gap_mae_eV": 0.17576296627521515,
+    "delta_tuned_minus_fixed_eV": -0.003282397985458374,
+    "single_encoder_acceptance_job": 716775,
+    "parts": 401,
+    "rows": {
+      "train": 915012,
+      "dev": 81961,
+      "official": 4981
+    },
+    "completion_manifest_sha256": "dc0426ce6ccec38d856bf063b2895fcfce05c1e13a103abdeba1e14d516e126d"
+  },
+  "ims_handoff": {
+    "archive_bytes": 473569280,
+    "archive_sha256": "a484a4835525d844c0f9a2ecb945a68fbe7b2e92f11a92acab001a758f21b0ca",
+    "package_job": 716777,
+    "staging_job": 1108648,
+    "cross_encoder_acceptance_job": 1108650,
+    "cross_encoder_source_idx_aligned": true,
+    "cross_encoder_train_dev_targets_aligned": true
+  },
+  "safety": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  }
+}

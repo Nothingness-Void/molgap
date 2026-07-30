@@ -1,0 +1,60 @@
+{
+  "format": "molgap-repaired-2m-schnet-stable-recovery-v1",
+  "recorded_on": "2026-07-29",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d",
+  "diagnosis": {
+    "failed_primary_job": "1106729.ccpbs1",
+    "stopped_augmented_job": "1106730.ccpbs1",
+    "first_nonfinite_epoch": 9,
+    "second_nonfinite_epoch": 10,
+    "learning_rate_at_first_nonfinite": 0.00010625486010842795,
+    "learning_rate_at_second_nonfinite": 0.00008978937237448172,
+    "model_state_finite": true,
+    "best_state_finite": true,
+    "best_epoch": 7,
+    "best_validation_average_mae_eV": 0.13174483227474543,
+    "diagnosis": "batch-level FP16 AMP non-finite loss; not whole-model parameter corruption"
+  },
+  "preserved_failure_evidence": {
+    "root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/failure_evidence/fp16_nan_20260729",
+    "primary_checkpoint_sha256": "858f48dd8455e07c89d2631fe99dbc91d75ff326faaaa566e45b8fce0641320a",
+    "source_assets_moved_or_deleted": false
+  },
+  "stable_protocol": {
+    "amp_dtype": "bfloat16",
+    "grad_clip": 1.0,
+    "primary_learning_rate": 0.00005,
+    "primary_epochs": 6,
+    "primary_recovery": "epoch-7 best_state with fresh optimizer",
+    "augmented_learning_rate": 0.0001,
+    "augmented_epochs": 10,
+    "augmented_recovery": "fresh initialization",
+    "max_nonfinite_batches_per_epoch": 8,
+    "nonfinite_policy": "skip and record source_idx; fail above threshold"
+  },
+  "code_sha256": {
+    "src/molgap/repaired_2m_schnet.py": "addbf17293c90c78085e72f6727a5e7cb9b1ccdc4b2e61b6826dabbb2b804342",
+    "run_schnet.py": "8368e462dd2c36b8860a62839e4c5bb6fb989b8d9c711da9e1cf762a59be6258",
+    "preflight_schnet_stable.pbs": "a5d6aa2229c48f22ef0963ed2256940ce7e2d726fa313434534316d6ee8eb3d4",
+    "train_schnet_stable.pbs": "c2f6bdb2ec93a1c6519ed27e8f37d0237479ef64c3dde409edf1f3e2f6b0543a"
+  },
+  "jobs": {
+    "primary_preflight": "1114617.ccpbs1",
+    "augmented_preflight": "1114618.ccpbs1",
+    "primary_train": "1114619.ccpbs1",
+    "augmented_train": "1114620.ccpbs1",
+    "primary_embedding_export": "1114621.ccpbs1",
+    "augmented_embedding_export": "1114622.ccpbs1",
+    "embedding_acceptance": "1114623.ccpbs1"
+  },
+  "dependencies": {
+    "1114619.ccpbs1": "afterok:1114617.ccpbs1",
+    "1114620.ccpbs1": "afterok:1114618.ccpbs1",
+    "1114621.ccpbs1": "afterok:1114619.ccpbs1",
+    "1114622.ccpbs1": "afterok:1114620.ccpbs1",
+    "1114623.ccpbs1": "afterok:1114621.ccpbs1:1114622.ccpbs1"
+  },
+  "production_registry_changed": false,
+  "sealed_20k_used": false
+}

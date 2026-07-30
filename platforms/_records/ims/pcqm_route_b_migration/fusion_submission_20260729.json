@@ -1,0 +1,51 @@
+{
+  "format": "molgap-pcqm-route-b-fusion-ims-submission-v1",
+  "submitted_on": "2026-07-29",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-route-b",
+  "encoder_root": "acceptance_tuned_gps11_20260729/outputs",
+  "output_dir": "fusion_tuned_mix_20260729",
+  "jobs": {
+    "cuda_preflight": "1106783.ccpbs1",
+    "development_fusion_screen": "1106784.ccpbs1"
+  },
+  "dependencies": {
+    "1106784.ccpbs1": "afterok:1106783.ccpbs1"
+  },
+  "protocol": {
+    "encoder_inputs": [
+      "fixed_config_gps9",
+      "tuned_gps11_160",
+      "fixed_config_primary_schnet",
+      "fixed_config_augmented_schnet"
+    ],
+    "base_identity_candidates": [
+      "gps11_160",
+      "augmented_schnet"
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "correction_bound_eV": 0.1,
+    "selection": "mean scaffold-development Gap MAE",
+    "official_valid_metric_read": false,
+    "official_evaluation": "separate job only after development selection freezes"
+  },
+  "durability": {
+    "checkpoint_frequency": "each completed epoch for every identity and seed",
+    "atomic_best_last_and_log": true,
+    "resume_contract_hash": true,
+    "completion_manifest": true
+  },
+  "code_sha256": {
+    "src/molgap/pcqm_route_b_fusion.py": "d9b78715d020607a9037ba11af5919bbba6c90b9aefb6df0505302b9fe1fe113",
+    "platforms/ims/pcqm_route_b/train_fusion.py": "7345878e30b1efb703b50e5b05c0314b922a3b1c73e7157fe9f78761d7509774",
+    "platforms/ims/pcqm_route_b/preflight_fusion.pbs": "735ea7e39fbb61d01a30b39a4aa016e0131688b33717973960c209a4f7f59a04",
+    "platforms/ims/pcqm_route_b/train_fusion.pbs": "774084833bd828fb048aee051a20d5c9f1d0382b55fe59d23af19a593ae479e9"
+  },
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

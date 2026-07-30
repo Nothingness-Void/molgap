@@ -15,7 +15,7 @@ Track A/B/C ownership is defined only in `TRACKS.md`.
 - **Inference:** `src/molgap/inference.py`, lazily exported by
   `src/molgap/__init__.py`.
 - **Registry:** `src/molgap/constants.py`.
-- **Decision:** `production/03_train/routed_dual_gps_v4/gps_arch_routed_decision.md`.
+- **Decision:** `production/03_train/routed_gps7_gps9_schnet_500k_v4/gps_arch_routed_decision.md`.
 
 The v3 single hybrid remains a component/compatibility loader. v2 and v1 are
 historical fallbacks, not recommended defaults.
@@ -24,6 +24,11 @@ historical fallbacks, not recommended defaults.
 
 - One local Agent is active. There are no parallel Agent-owned worktrees or
   handoffs to reconcile.
+- The project is in its final freeze sprint. All unfinished compute stops on
+  **2026-08-04 at 12:00 JST**, after which only verification, documentation,
+  packaging, figures, and correctness fixes are allowed. The authoritative
+  schedule and stop rules are in
+  `production/04_evaluate/project_freeze/README.md`.
 - The P8.19 SCNet-to-Kaggle handoff is complete. Do not rename, relocate, or
   delete its accepted inputs, raw downloads, or result records.
 - The local Agent may continue documentation and bounded local work while
@@ -43,7 +48,7 @@ or hyperparameters.
 | Do not launch full-2M ordinary fusion | 30K compute-shape A/B: `176/160/6` costs 77.8% params and 48.2% time of `192/192/6` at a `+0.000154 eV` fused delta, but both ordinary FusionHeads regress against Retention-D by over `0.002 eV`; a positive bounded-residual identity pilot is required first | `experiments/schnet_arch/schnet_arch_repaired_2m_30k/decision.md` |
 | Compression is closed | The 30%-teacher student passed internal exact-2M but failed fixed external retention (common `+0.00482/+0.00570 eV`, P8-hard `+0.01187/+0.01481 eV`); retained only as specialist evidence | `experiments/distillation/distilled_2m_scnet/decision.md` |
 | Treat the 2M coverage expert as domain-opposed, not better | Paired residual attribution: it improves OOD but damages P8-hard, and the wider frozen fusion compresses correlated 2D features through the same 192-d bottleneck | `experiments/repaired_2m_scaling/scaling_residual_attribution/decision.md` |
-| Sealed comparison result | Ensemble accepted under the frozen protocol | `experiments/multi2d_experts/multi2d_final_eval/decision.md` |
+| Sealed comparison result | Ensemble accepted under the frozen protocol | `experiments/multi2d_experts/multi2d_external_eval/decision.md` |
 
 ## Hierarchical Oracle Authorization
 
@@ -62,7 +67,7 @@ accuracy-mode candidate and does not replace one-pass seed42.
 
 Contracts and job configs: `experiments/repaired_2m_scaling/results/gps7_gps9_oof/manifest.json`.
 Three-seed ensemble: `experiments/repaired_2m_scaling/results/retention_d_three_seed_equal_ensemble_decision.md`.
-Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchical_oracle_20260725/decision.md`.
+Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchical_oracle/decision.md`.
 
 ## Track B - PCQM Leaderboard
 
@@ -73,6 +78,12 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
 - This is a leaderboard-oriented local validation result, not a leaderboard
   score. Official test, sealed 20K, and the production registry remain
   untouched.
+- The frozen four-encoder bounded Fusion selected the fixed augmented SchNet
+  identity on scaffold development and passed the one-time fixed
+  official-validation gate. Its three-seed equal ensemble reached `0.112011 eV`
+  Gap MAE on 4,981 aligned rows. It remains a Track B specialist and is not a
+  leaderboard submission. Decision:
+  `experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md`.
 - Decision and artifact pointers:
   `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
 - The local PCQM 1M bounded-fusion aligned graph cache is complete and accepted:
@@ -92,12 +103,12 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
   contain aligned `915,012/81,961/4,981` train/dev/official rows and passed
   independent artifact hashes. These four runs are fixed-hyperparameter
   baselines, not tuned architecture ceilings. A nested encoder search is now
-  authorized: deterministic `50K` broad search, top-four `100K` promotion, and
-  top-two three-seed confirmation for all four encoders. SchNet cutoff is fixed
-  at `6.0 Angstrom`; it is not searched. Fixed official-valid labels remain
-  unread. Fusion identity and head hyperparameters must be selected on
-  development evidence before the architecture is frozen. Live stage contract:
-  `experiments/pcqm_route_b/results/run_plan.json`.
+  complete. Full-1M tuned GPS11-160 improved development Gap MAE, while both
+  tuned SchNet branches regressed and were rejected despite passing artifact
+  acceptance. The development-only fusion set is therefore fixed-config GPS9,
+  tuned GPS11-160, fixed-config primary SchNet, and fixed-config augmented
+  SchNet. Fixed official-valid labels remain unread. Decision:
+  `experiments/pcqm_route_b/results/tuned_1m_encoder_gate/decision.md`.
 
 ## Active Remote Work
 
@@ -106,10 +117,14 @@ in each experiment's own log, so this section stays short enough to read at once
 
 | Workstream | Platform | State | Detail |
 |---|---|---|---|
-| Track B PCQM encoder hyperparameter search | IMS | CUDA preflight passed; GPS9 completed all twelve 50K trials and promoted four configurations, while GPS11-160, primary SchNet, and augmented SchNet remain active in their dependency chains | `experiments/pcqm_route_b/results/run_plan.json` |
-| Track B PCQM 1M fusion | IMS | blocked on encoder search and later development-only fusion tuning; four original fixed-config embeddings remain accepted baselines | `platforms/_records/ims/pcqm_route_b_migration/remote_acceptance/encoder_acceptance.json` |
-| Track A hierarchical 2D+3D fusion | — | 3D caches no longer block it: both views are accepted and 99.34% of source rows carry both. Still blocked on two trained repaired-2M SchNet checkpoints and their embedding parts | `experiments/repaired_2m_scaling/STATUS.md` |
-| Full repaired-2M SchNet training | Colab | disabled pending the bounded-residual gate token | `experiments/repaired_2m_scaling/STATUS.md` |
+| Track B PCQM encoder hyperparameter search | IMS | Complete and locally accepted across seeds 42/43/44. Winners are GPS9 `trial_02` (`0.204502`), GPS11-160 `trial_09` (`0.200543`), primary SchNet `trial_11` (`0.172015`), and augmented SchNet `trial_09` (`0.162460 eV` development Gap MAE). No official-valid, official-test, or sealed-20K labels were used | `experiments/pcqm_route_b/results/hparam_search_100k_confirm/decision.md` |
+| Track B PCQM tuned 1M encoders | Kaggle / IMS / SCNet | Tuned GPS9 and GPS11-160 are complete, independently accepted, and improve development Gap MAE; both tuned SchNet branches remain rejected. The tuned GPS9 account rotation, 401-part embedding export, SCNet acceptance, IMS transfer, and four-encoder source/target alignment all passed without reading official-validation labels | `experiments/pcqm_route_b/results/tuned_1m_encoder_gate/decision.md` |
+| Track B PCQM 1M fusion | Colab / local | Complete. Scaffold development selected the augmented-SchNet identity; the downloaded six-head bundle passed manifest and hash acceptance, and deterministic local evaluation read the fixed official-valid subset once. The three-seed equal ensemble reached `0.112011 eV` Gap MAE on 4,981 aligned rows. Official test and sealed 20K remained unread | `experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md` |
+| Track A repaired-2M SchNet training | IMS | Complete and accepted. Primary selected stable recovery epoch 4 at `0.120416 eV` test average MAE; Augmented selected epoch 7 at `0.127012 eV`. Both used the frozen `176/160/6`, cutoff-10-A protocol and recorded no non-finite batches | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/decision.md` |
+| Track A repaired-2M embedding handoff | IMS | Complete and accepted. Both variants contain 100 aligned 176-dimensional parts over 1,989,116 rows (`99.4558%` source coverage); source identity, targets, finite tensors, dimensions, counts, and per-file SHA256 passed | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/decision.md` |
+| Track A repaired-2M same-molecule gate | Local | Complete on 1,973 common ETKDG-valid rows. Repaired-2M dense/equal pure-2D improve routed-v4 500K average MAE by `0.005942/0.005113 eV` overall, `0.006066/0.003923 eV` on OOD, and `0.005815/0.006330 eV` on P8-hard; all average-MAE 95% intervals are below zero. Dense is the accuracy candidate and equal is the lower-cost candidate. Encoder-pass and latency accounting remain required before promotion | `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md` |
+| Track A hierarchical 2D+3D fusion | IMS / local | Rejected after external transfer. Although its internal scaffold gate improved, on the same common molecules the equal/dense dual-SchNet residual increased average MAE by `0.023251/0.024239 eV` versus its own 2D base. The SchNet checkpoints remain accepted assets, but these residual heads must not ship | `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md` |
+| Track A Primary SchNet recovery fallback | Colab | Closed as invalid evaluation evidence. Its reported `0.623343 eV` test MAE contradicted a complete 198,925-row local recomputation of the same recovery source state (`0.132068 eV`). It did not replace the accepted IMS Primary checkpoint. The replacement adapter now fails closed on wheel/input hashes, recovery replay, split consistency, and repeated final evaluation | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/colab_recovery_incident.md` |
 
 Completed-round records:
 
@@ -175,7 +190,7 @@ gate.
 |---|---|
 | What did the data gate decide? | `experiments/repaired_2m_scaling/results/decision.md` |
 | What is the unified scale-up evidence? | `experiments/repaired_2m_scaling/scaleup_full_analysis/decision.md` |
-| What is the critical path and stop rule? | `experiments/repaired_2m_scaling/results/one_week_plan_20260723.md` |
+| What is the hard freeze path and stop rule? | `production/04_evaluate/project_freeze/README.md` |
 | Which assets exist and what needs repair? | `production/04_evaluate/inventory/model_inventory_audit/decision.md` |
 
 Hard constraints and the reading protocol remain authoritative in `AGENTS.md`.

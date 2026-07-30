@@ -3,6 +3,12 @@
 This directory holds large graph and embedding payloads that can be regenerated
 from tracked scripts and source data. Its binary contents are ignored by Git.
 
+## Production encoder embeddings
+
+`production/<model-name>/embeddings/` mirrors the high-information model name
+from `production/03_train/`. Training directories retain compact metrics,
+decisions, and logs; large regenerable tensors live here.
+
 ## Phase 8 expansion_1m
 
 `phase8/expansion_1m/` contains the downloaded 1M continuation handoff:
@@ -20,3 +26,7 @@ the top-up to the already-combined full cache.
 `cleanup_20260722/python_caches/` is a reversible holding area for generated
 `__pycache__` and `.pytest_cache` directories removed from the readable source
 tree. It is ignored by Git and safe to delete after backup review.
+
+`cleanup_20260728/generated/` is the newer reversible holding area for root
+build output, editable-install metadata, pytest state, and regenerated
+`__pycache__` directories. None of these files are project source or evidence.

@@ -10,12 +10,15 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 
-from molgap.constants import MODELS_DIR, SEED, EVALUATE_DIR
+from molgap.constants import CACHE_DIR, GRAPHS_DIR, MODELS_DIR, SEED, TRAIN_DIR
 from molgap.fusion import FusionHead
 from molgap.utils import load_aligned_encoder_embeddings
 
 
-EVAL_OUT_DIR = EVALUATE_DIR
+V3_DIR = TRAIN_DIR / "gps7_schnet_500k_v3"
+V4_DIR = TRAIN_DIR / "routed_gps7_gps9_schnet_500k_v4"
+V3_CACHE_DIR = CACHE_DIR / "production" / V3_DIR.name / "embeddings"
+V4_CACHE_DIR = CACHE_DIR / "production" / V4_DIR.name / "embeddings"
 TARGETS = ["homo", "lumo", "gap"]
 
 
@@ -23,17 +26,17 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--threshold", type=float, default=4.0)
     parser.add_argument(
-        "--emb-base", type=Path, default=PHASE8 / "gps_expansion_500k_embeddings.pt"
+        "--emb-base", type=Path, default=V3_CACHE_DIR / "gps_expansion_500k_embeddings.pt"
     )
     parser.add_argument(
-        "--emb-extra", type=Path, default=PHASE8 / "gps_arch_depth9_embeddings.pt"
+        "--emb-extra", type=Path, default=V4_CACHE_DIR / "gps_arch_depth9_embeddings.pt"
     )
     parser.add_argument(
-        "--emb-3d", type=Path, default=PHASE8 / "schnet_expansion_500k_embeddings.pt"
+        "--emb-3d", type=Path, default=V3_CACHE_DIR / "schnet_expansion_500k_embeddings.pt"
     )
     parser.add_argument(
         "--graphs-3d", type=Path,
-        default=PHASE8 / "pyg_3d_graphs_etkdg_expansion_500k.pt",
+        default=GRAPHS_DIR / "pyg_3d_graphs_etkdg_expansion_500k.pt",
     )
     parser.add_argument(
         "--fusion-base", type=Path,
@@ -45,17 +48,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--common-predictions", type=Path,
-        default=PHASE8 / "gps_arch_dualgps_common_eval_predictions.csv",
+        default=V4_DIR / "gps_arch_dualgps_common_eval_predictions.csv",
     )
     parser.add_argument(
         "--pcqm-predictions", type=Path,
-        default=PHASE8 / "gps_arch_dualgps_pcqm_proxy_predictions.csv",
+        default=V4_DIR / "gps_arch_dualgps_pcqm_proxy_predictions.csv",
     )
     parser.add_argument(
-        "--metrics-out", type=Path, default=PHASE8 / "gps_arch_routed_metrics.json"
+        "--metrics-out", type=Path, default=V4_DIR / "gps_arch_routed_metrics.json"
     )
     parser.add_argument(
-        "--decision-out", type=Path, default=PHASE8 / "gps_arch_routed_decision.md"
+        "--decision-out", type=Path, default=V4_DIR / "gps_arch_routed_decision.md"
     )
     return parser.parse_args()
 

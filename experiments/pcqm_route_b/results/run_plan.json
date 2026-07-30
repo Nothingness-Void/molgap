@@ -1,7 +1,7 @@
 {
   "experiment": "pcqm_route_b_precision_1m",
   "track": "B - PCQM leaderboard",
-  "status": "fixed_config_encoders_accepted_hparam_50k_in_progress",
+  "status": "fixed_config_encoders_accepted_hparam_100k_confirmation_complete",
   "handoff": "experiments/pcqm_route_b/results/HANDOFF.md",
   "execution_strategy": {
     "graph_build": "local Ryzen 9700X CPU",
@@ -95,11 +95,22 @@
     },
     {
       "name": "bounded_residual_fusion",
-      "status": "blocked_on_encoder_hparam_search"
+      "status": "accepted_fixed_official_valid",
+      "selected_identity": "augmented_schnet",
+      "three_seed_equal_ensemble_gap_mae_eV": 0.11201111227273941,
+      "valid_rows": 4981,
+      "decision": "experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md"
     },
     {
       "name": "nested_encoder_hparam_search",
-      "status": "cuda_preflight_passed_gps9_50k_complete_others_running",
+      "status": "complete",
+      "decision": "experiments/pcqm_route_b/results/hparam_search_100k_confirm/decision.md",
+      "winners": {
+        "gps9": "trial_02",
+        "gps11_160": "trial_09",
+        "primary_schnet": "trial_11",
+        "augmented_schnet": "trial_09"
+      },
       "ims_subset_job": "1096890",
       "ims_preflight_job": "1096935",
       "ims_50k_jobs": {

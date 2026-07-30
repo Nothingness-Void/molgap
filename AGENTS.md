@@ -11,6 +11,7 @@ not a project description. One fact lives in one place — follow the links.
 3. **`ROADMAP.md`** — task priorities / backlog (read the relevant section only).
 4. **`TRACKS.md`** — read only when a task is labeled A, B, or C.
 5. **`ARCHITECTURE.md`** — tree and code map; tells you which file owns a change.
+   Naming rules are in **`NAMING.md`**.
 6. The one `README.md` for the tree you are working in: `production/`,
    `experiments/`, or `platforms/`. Then the specific decision record it links.
 7. The specific code files your task touches.
@@ -62,4 +63,5 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
 | What ships, and in what order? | `production/README.md` |
 | How do I run this remotely? | `platforms/README.md` |
 | Where to edit code? | `ARCHITECTURE.md` |
+| How should paths and artifacts be named? | `NAMING.md` |
 | How to install / basic inference? | `README.md` |

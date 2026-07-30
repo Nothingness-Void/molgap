@@ -15,7 +15,8 @@ The predictor is an implementation dependency; the database is the deliverable.
 
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
-| P0 | A-3D | Complete the repaired-2M bounded 2D+3D fusion gate | Accept the secondary cache, both SchNet checkpoints, and aligned embeddings before fusion | `experiments/repaired_2m_scaling/STATUS.md` |
+| P0 | FREEZE | Freeze the project by 2026-08-04 12:00 JST | Stop unfinished compute, archive atomic partials, and permit only packaging or correctness fixes | `production/04_evaluate/project_freeze/README.md` |
+| P0 | A-3D | Complete the repaired-2M bounded 2D+3D fusion gate | Both caches are accepted; accept both SchNet checkpoints and aligned embeddings before fusion | `experiments/repaired_2m_scaling/STATUS.md` |
 | P1 | B-PCQM1M | Complete the PCQM-only leaderboard ceiling experiment | Accept all four encoder outputs; stop any encoder above 12 h; then run bounded residual fusion | `experiments/pcqm_route_b/results/run_plan.json` |
 | P1 | A-P9.2 | Recompute Delta labels against the selected B3LYP base | Start after Track A freezes the B3LYP base | `production/05_delta_gw/` |
 | P1 | A-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `production/06_uq/` |
@@ -23,6 +24,10 @@ The predictor is an implementation dependency; the database is the deliverable.
 
 Do not tune against any sealed set. Do not relaunch a remote task merely because
 its local output has not arrived.
+
+The freeze sprint overrides the broader backlog. No new acquisition,
+architecture family, Router, MoE, OOF, compression, or scale-up experiment may
+start before the hard stop.
 
 ## Phase Order
 
@@ -51,6 +56,7 @@ its local output has not arrived.
 
 | Task | Trigger |
 |---|---|
+| OGB-compliant PCQM4Mv2 submission retrain | Reopen after the project freeze and presentation work; train every encoder from scratch on official PCQM4Mv2 data only, then evaluate full validation and test-dev under the four-hour inference rule |
 | GPS7/GPS9 OOF gain labels | A molecule-level Router is explicitly reopened; this is not required by fixed-identity bounded fusion |
 | Experimental solid-state Delta head | A specific OLED experimental target is requested |
 | Extend elements beyond CHONSFCl | Rejected-use analysis justifies refetch and retraining |

@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-07-28T23:07:00+09:00",
+  "purpose": "Track B tuned full-scale GPS9 and GPS11-160 migration",
+  "platform": "SCNet A-zone BW-1 DCU",
+  "root": "/work1/share/acf9jvb3sm/molgap-results/pcqm-route-b",
+  "graph_view": {
+    "rows": 1001954,
+    "train_rows": 915012,
+    "development_rows": 81961,
+    "official_valid_rows": 4981,
+    "parts": 401,
+    "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae"
+  },
+  "warmstarts": {
+    "gps9_sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040",
+    "gps11_160_sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a"
+  },
+  "winner_summaries": {
+    "gps9_sha256": "32004dd89433a3bb245507843b9ae42cece983a8a42dffcd05ae483789bdd1e0",
+    "gps11_160_sha256": "82f3874bd0649883a09bb8bc286104896a4d2fec8be4841b4a008fddf1e690ff"
+  },
+  "jobs": {
+    "gps9_preflight": 715502,
+    "gps11_160_preflight": 715503,
+    "gps9_train_afterok": 715504,
+    "gps11_160_train_afterok": 715505
+  },
+  "status": "gps9_running_gps11_queued",
+  "preflight_acceptance": {
+    "gps9": {
+      "status": "complete",
+      "prediction_finite": true,
+      "warm_start_sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+    },
+    "gps11_160": {
+      "status": "complete",
+      "prediction_finite": true,
+      "warm_start_sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a"
+    }
+  },
+  "safety": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "ims_fallbacks": {
+    "gps9_job": 1102119,
+    "gps11_160_job": 1102120,
+    "gps9_state": "cancelled after SCNet full training started",
+    "gps11_160_state": "held until SCNet full training starts"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-07-28T23:05:00+09:00",
+  "purpose": "Track B tuned full-scale primary SchNet migration",
+  "kernel": "nothingnessvoid/molgap-rb-tuned-primary-schnet-20260728",
+  "formal_version": 3,
+  "accelerator": "Tesla P100-PCIE-16GB",
+  "status": "running",
+  "startup_evidence": {
+    "runtime_dataset_mounted": true,
+    "p100_compatible_torch_installed": true,
+    "encoder": "primary_schnet",
+    "winner": "trial_11"
+  },
+  "datasets": [
+    "nothingnessvoid/molgap-pcqm-route-b-primary-1m-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-warmstarts-20260727",
+    "nothingnessvoid/molgap-pcqm-route-b-tuned-runtime-20260728"
+  ],
+  "failed_packaging_versions": {
+    "1": "Script-kernel support modules were not uploaded.",
+    "2": "The new private runtime dataset had not become visible when submitted."
+  },
+  "safety": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  },
+  "ims_fallback": {
+    "job_id": 1102121,
+    "cancelled_after_kaggle_startup": true
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "format": "molgap-pcqm-route-b-tuned-gps9-fusion-submission-v1",
+  "recorded_at": "2026-07-29T15:08:02+09:00",
+  "platform": "IMS",
+  "status": "queued",
+  "purpose": "development-only tuned-GPS9 versus fixed-GPS9 fusion A/B",
+  "selected_encoder_set": [
+    "tuned_gps9",
+    "tuned_gps11_160",
+    "fixed_config_primary_schnet",
+    "fixed_config_augmented_schnet"
+  ],
+  "cross_encoder_acceptance": {
+    "status": "accepted",
+    "job": 1108650,
+    "source_idx_aligned": true,
+    "train_dev_targets_aligned": true,
+    "report_sha256": "48d059ec77af7189f2343dc3fb587db916eb9db05a42b61c7ac29d0606878e36"
+  },
+  "jobs": {
+    "tuned_gps9_preflight": 1108669,
+    "tuned_gps9_development_screen": 1108670,
+    "fixed_gps9_control_preflight": 1106783,
+    "fixed_gps9_control_development_screen": 1106784
+  },
+  "dependencies": {
+    "1108670": "afterok:1108669",
+    "1106784": "afterok:1106783"
+  },
+  "protocol": {
+    "base_identity_candidates": [
+      "gps11_160",
+      "augmented_schnet"
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "correction_bound_eV": 0.1,
+    "selection": "mean scaffold-development Gap MAE"
+  },
+  "safety": {
+    "official_valid_metric_read": false,
+    "official_test_used": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  }
+}

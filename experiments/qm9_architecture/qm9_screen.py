@@ -48,6 +48,8 @@ def parse_args():
             "gps9_meanmax",
             "gps11_160",
             "schnet",
+            "schnet_angle",
+            "schnet_angle_dihedral",
             "tensornet",
             "egnn",
         ],

@@ -187,7 +187,7 @@ def unified_pcqm_predictions() -> pd.DataFrame:
             "broad_1p098m_2d_gap",
         ),
         (
-            "production/02_graphs/multi2d_final_eval/pcqm_predictions.csv",
+            "experiments/multi2d_experts/multi2d_external_eval/pcqm_predictions.csv",
             "mean_control_repair_gap",
             "ensemble_two_1m_2d_gap",
         ),

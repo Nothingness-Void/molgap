@@ -86,6 +86,23 @@ identity path, and primary plus augmented lightweight SchNet embeddings may only
 add a `+-0.10 eV` bounded correction, on a new scaffold-disjoint split inside
 untouched base-model test rows.
 
-Remaining blockers: two trained repaired-2M SchNet checkpoints and their
-embedding parts. SchNet training itself is still gated on the bounded-residual
-token described under Colab fallback.
+The bounded-residual execution gate is now open for the final freeze sprint.
+Shard-streamed SchNet jobs were submitted on IMS: primary and augmented
+preflights `1102071/1102072`, followed by full training jobs `1102073/1102074`
+with scheduler `afterok` dependencies. Each full job writes an atomic
+epoch-level checkpoint and refuses a resume whose input/model contract changed.
+
+Remaining blockers: independently accept both checkpoints, export and accept
+their source-aligned embedding parts, then run the bounded residual fusion gate.
+The export jobs are already dependency-chained as `1102137/1102139`; CPU
+acceptance job `1102141` starts only if both exports succeed.
+
+Both accepted views were subsequently staged to the IMS root
+`/lustre/home/users/sm2/chou/molgap-repaired-2m-3d`. A full transfer audit
+rehashed all 100 graph shards and 100 sidecars in each view against the Kunshan
+acceptance manifests. One secondary shard affected by a duplicate local transfer
+process was recopied and the entire secondary view was rehashed; the final audit
+has zero mismatches. Evidence:
+`platforms/_records/ims/repaired_2m_graph_transfer/acceptance.json`.
+Submission evidence:
+`platforms/_records/ims/repaired_2m_graph_transfer/submission.json`.

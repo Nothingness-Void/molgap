@@ -6,7 +6,7 @@ GPS9 is rejected as a global replacement for the accepted Retention-D GPS7
 base. The follow-up GPS7/GPS9 Oracle passed and authorizes scaffold-disjoint
 OOF gain-label generation before any learned Router or additional 3D
 allocation. Decision:
-`experiments/repaired_2m_scaling/results/gps7_gps9_oracle_20260725/decision.md`.
+`experiments/repaired_2m_scaling/results/gps7_gps9_oracle/decision.md`.
 
 ## GPS9 Minus GPS7
 

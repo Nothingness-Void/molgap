@@ -1,0 +1,55 @@
+{
+  "experiment": "repaired_2m_hierarchical_dual_schnet_fusion",
+  "status": "internal_gate_passed_external_benchmark_required",
+  "platform": "IMS",
+  "jobs": {
+    "preflight": "1118215",
+    "training": "1118217"
+  },
+  "aligned_rows": 198932,
+  "split": {
+    "train": 160057,
+    "validation": 19501,
+    "test": 19374,
+    "scaffold_overlap": 0
+  },
+  "results_eV": {
+    "equal_gps7_gps9": {
+      "base_average_mae": 0.1061142321727748,
+      "fusion_average_mae": 0.10201187581877705,
+      "delta_average_mae": -0.004102356337735575,
+      "delta_average_ci95": [
+        -0.004433170296387154,
+        -0.0037659920893265315
+      ]
+    },
+    "dense": {
+      "base_average_mae": 0.10436106105954708,
+      "fusion_average_mae": 0.10190559727522105,
+      "delta_average_mae": -0.002455463821246364,
+      "delta_average_ci95": [
+        -0.002725016457170063,
+        -0.0021802408386018754
+      ],
+      "fusion_homo_mae": 0.09207555183724893,
+      "fusion_lumo_mae": 0.09162077504912235,
+      "fusion_gap_mae": 0.12202046493929189
+    }
+  },
+  "artifact_validation": {
+    "best_heads": 6,
+    "last_checkpoints": 6,
+    "finite_state_tensors": true,
+    "resume_contracts_match": true,
+    "remote_local_sha256_match": true,
+    "metrics_sha256": "31018796e407fbcfed65b1061f9d779c5bad6a54bd6e60b2d6759df27bc74fd9"
+  },
+  "external_evaluation_required": [
+    "common",
+    "OOD",
+    "P8-hard",
+    "encoder_pass_and_latency_accounting"
+  ],
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

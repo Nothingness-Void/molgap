@@ -3,7 +3,7 @@ Build project-progress visualizations for the current MolGap repository state.
 
 Outputs:
   results/overview/phase_summary.csv
-  results/overview/phase2_generalization_curve.png
+  production/04_evaluate/overview/generalization_curve.png
   results/overview/hard_task_progress.png
   results/overview/model_family_snapshot.png
 """
@@ -109,7 +109,7 @@ def plot_phase2_generalization(phase2: pd.DataFrame) -> None:
 
     fig.suptitle("Phase 2: Chemistry Expansion Does Not Cause a Cliff-Edge Failure", fontsize=13)
     fig.tight_layout()
-    fig.savefig(OUT_DIR / "phase2_generalization_curve.png", bbox_inches="tight")
+    fig.savefig(OUT_DIR / "generalization_curve.png", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -208,7 +208,7 @@ def main() -> int:
 
     print("Wrote:")
     print(f"  {OUT_DIR / 'phase_summary.csv'}")
-    print(f"  {OUT_DIR / 'phase2_generalization_curve.png'}")
+    print(f"  {OUT_DIR / 'generalization_curve.png'}")
     print(f"  {OUT_DIR / 'hard_task_progress.png'}")
     print(f"  {OUT_DIR / 'model_family_snapshot.png'}")
     return 0

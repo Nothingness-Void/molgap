@@ -1,0 +1,35 @@
+{
+  "status": "accepted",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d",
+  "source": {
+    "platform": "SCNet Kunshan",
+    "primary_root": "/public/home/scnaqkfcy3/molgap-results/phase8/repaired_2m_3d",
+    "secondary_root": "/public/home/scnaqkfcy3/molgap-results/phase8/repaired_2m_3d_secondary"
+  },
+  "primary": {
+    "graph_shards": 100,
+    "sidecars": 100,
+    "accepted_rows": 1989116,
+    "manifest_sha256": "9b0080b2da897880a3b51111dbf914af16db98b0dacf90353fdb800104f2e659",
+    "transfer_hash_errors": 0
+  },
+  "secondary": {
+    "graph_shards": 100,
+    "sidecars": 100,
+    "accepted_rows": 1986868,
+    "manifest_sha256": "6e3ac00d0cb5da94649a0dd7d2cbc0142489b027e7dad6c6141e5571e056b981",
+    "transfer_hash_errors": 0
+  },
+  "recovery": {
+    "duplicate_transfer_process_detected": true,
+    "affected_path": "secondary/graph_shards/graphs_0860000_0880000.pt",
+    "action": "stopped the newer duplicate process, recopied only the mismatched shard, and reran all secondary shard and sidecar hashes",
+    "final_sha256": "80eb308e45240758b402dacf140b66d01b7f7eb83312b8318103aeb6a4ff6540"
+  },
+  "validation": {
+    "primary_all_declared_files_match": true,
+    "secondary_all_declared_files_match": true,
+    "source_assets_moved_or_deleted": false
+  }
+}

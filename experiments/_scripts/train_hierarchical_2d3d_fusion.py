@@ -44,6 +44,15 @@ def atomic_torch(payload: object, path: Path) -> None:
     os.replace(temporary, path)
 
 
+def contract_digest(payload: object) -> str:
+    encoded = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def load_frozen_2d(path: Path) -> dict[str, np.ndarray]:
     payload = torch.load(path, map_location="cpu", weights_only=False)
     if payload.get("format") != "molgap-three-gps-frozen-2d-test-v1":
@@ -142,6 +151,34 @@ def load_embedding_subset(
     return output, present, reports
 
 
+def load_scaffold_groups(
+    path: Path,
+    source_idx: np.ndarray,
+) -> np.ndarray:
+    if path.suffix == ".npz":
+        with np.load(path, allow_pickle=False) as payload:
+            manifest_row = payload["manifest_row"].astype(np.int64)
+            scaffold_group = payload["scaffold_group"].astype(np.int64)
+        if (
+            len(manifest_row) != 2_000_000
+            or scaffold_group.shape != manifest_row.shape
+            or not np.array_equal(
+                manifest_row,
+                np.arange(len(manifest_row), dtype=np.int64),
+            )
+        ):
+            raise ValueError("Numeric scaffold manifest contract differs")
+        return scaffold_group[source_idx]
+    manifest = pd.read_parquet(path).set_index("manifest_row", drop=False)
+    rows = manifest.loc[source_idx].reset_index(drop=True)
+    if not np.array_equal(
+        rows.manifest_row.to_numpy(np.int64),
+        source_idx.astype(np.int64),
+    ):
+        raise ValueError("Manifest does not align to frozen 2D source_idx")
+    return rows.scaffold.fillna("").astype(str).to_numpy()
+
+
 def scaffold_three_way_split(
     scaffolds: np.ndarray,
     *,
@@ -224,14 +261,10 @@ def main() -> None:
     frozen = {key: value[aligned] for key, value in frozen.items()}
     primary = primary[aligned]
     augmented = augmented[aligned]
-    manifest = pd.read_parquet(args.manifest).set_index("manifest_row", drop=False)
-    rows = manifest.loc[frozen["source_idx"]].reset_index(drop=True)
-    if not np.array_equal(
-        rows.manifest_row.to_numpy(np.int64),
+    scaffolds = load_scaffold_groups(
+        args.manifest,
         frozen["source_idx"].astype(np.int64),
-    ):
-        raise ValueError("Manifest does not align to frozen 2D source_idx")
-    scaffolds = rows.scaffold.fillna("").astype(str).to_numpy()
+    )
     train, validation, test = scaffold_three_way_split(scaffolds)
     context = hierarchical_context(
         frozen["expert_predictions"],
@@ -239,6 +272,21 @@ def main() -> None:
         primary,
         augmented,
     )
+    input_contract = {
+        "frozen_2d_sha256": sha256(args.frozen_2d),
+        "manifest_sha256": sha256(args.manifest),
+        "primary_parts": [
+            {"path": Path(item["path"]).name, "sha256": item["sha256"]}
+            for item in primary_reports
+        ],
+        "augmented_parts": [
+            {"path": Path(item["path"]).name, "sha256": item["sha256"]}
+            for item in augmented_reports
+        ],
+        "aligned_source_idx_sha256": hashlib.sha256(
+            frozen["source_idx"].astype(np.int64).tobytes()
+        ).hexdigest(),
+    }
     atomic_json(
         {
             "status": "training",
@@ -260,6 +308,19 @@ def main() -> None:
         predictions, corrections, training = [], [], {}
         for seed in (42, 43, 44):
             config = HierarchicalFusionConfig(seed=seed)
+            checkpoint_path = (
+                args.out_dir / f"{base_name}_seed{seed}.last.pt"
+            )
+            progress_path = (
+                args.out_dir / f"{base_name}_seed{seed}.progress.json"
+            )
+            contract_id = contract_digest(
+                {
+                    "input": input_contract,
+                    "base": base_name,
+                    "seed": seed,
+                }
+            )
             model, report = fit_hierarchical_fusion(
                 base,
                 context,
@@ -268,6 +329,10 @@ def main() -> None:
                 validation,
                 config=config,
                 device=args.device,
+                checkpoint_path=checkpoint_path,
+                progress_path=progress_path,
+                resume=checkpoint_path.is_file(),
+                contract_id=contract_id,
             )
             prediction, correction = predict_hierarchical_fusion(
                 model,
@@ -282,6 +347,7 @@ def main() -> None:
                     "kind": "hierarchical_2d_3d_bounded_residual",
                     "base": base_name,
                     "seed": seed,
+                    "contract_id": contract_id,
                     "config": report["config"],
                     "state_dict": {
                         name: value.detach().cpu()
@@ -334,6 +400,7 @@ def main() -> None:
             },
             "primary_embedding_parts": primary_reports,
             "augmented_embedding_parts": augmented_reports,
+            "contract": input_contract,
         },
         "external_evaluation_required": True,
         "sealed_20k_used": False,

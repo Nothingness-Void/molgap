@@ -10,6 +10,7 @@ __pycache__/
 .eggs/
 dist/
 build/
+.wheel-build*/
 
 # IDE / OS / tooling
 .vscode/
@@ -141,3 +142,6 @@ experiments/**/ledger/
 # what the acceptance record actually needs, and that stays tracked.
 platforms/_records/**/wheels/*.whl
 platforms/_records/**/inputs/**
+
+# Local Codex artifact build workspaces.
+.codex_tmp/

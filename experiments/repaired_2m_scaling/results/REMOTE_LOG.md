@@ -80,7 +80,7 @@ Retention-D GPS7 but regresses OOD and PCQM, so it is rejected as a global
 replacement and retained only as a hard-expert candidate. The target-specific
 Oracle then passed at a 10% GPS9 call budget, authorizing scaffold-disjoint OOF
 gain-label generation but not Router training.
-Decisions: `gps9_seed42_decision.md`, `gps7_gps9_oracle_20260725/decision.md`.
+Decisions: `gps9_seed42_decision.md`, `gps7_gps9_oracle/decision.md`.
 
 ## Retention-D three-seed gate (accepted general base)
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+: "${ACCEPT_ROOT:?submit with an acceptance root below the user boundary}"
+PROJECT_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+BOUNDARY=/lustre/home/users/sm2/chou
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+
+resolved="$(realpath "$ACCEPT_ROOT")"
+case "$resolved/" in
+  "$BOUNDARY"/*) ;;
+  *) echo "acceptance root escapes user boundary: $resolved" >&2; exit 1 ;;
+esac
+
+cd "$resolved"
+for name in gps9 gps11_160 primary_schnet augmented_schnet; do
+  test -f "outputs/$name/completion_manifest.json"
+done
+mkdir -p logs
+export PYTHONPATH="$PROJECT_ROOT/code/platforms/ims/pcqm_route_b/shims:$PROJECT_ROOT/vendor:$PROJECT_ROOT/code/src"
+"$PYTHON" "$PROJECT_ROOT/code/platforms/ims/pcqm_route_b/accept_encoders.py" \
+  --root "$resolved"

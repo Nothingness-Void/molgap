@@ -80,7 +80,7 @@ def main() -> None:
     parser.add_argument(
         "--out-dir",
         type=Path,
-        default=Path("experiments/repaired_2m_scaling/hierarchical_oracle_20260725"),
+        default=Path("experiments/repaired_2m_scaling/hierarchical_oracle"),
     )
     args = parser.parse_args()
 

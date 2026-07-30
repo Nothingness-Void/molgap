@@ -8,6 +8,7 @@ DATA_DIR = REPO_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 COMMERCIAL_DIR = DATA_DIR / "commercial"
+CACHE_DIR = DATA_DIR / "cache"
 MODELS_DIR = REPO_ROOT / "models"
 
 # The tree is organized by role, not by calendar phase: `production/` is the
@@ -57,7 +58,8 @@ MODEL_PHASE8_REPLACEMENT_GPS = MODELS_DIR / "phase8_gps_replacement_300k.pt"
 MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.pt"
 MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
 FUSION_PHASE8_REPLACEMENT_METRICS = (
-    TRAIN_DIR / "b3lyp_base_v2_v3" / "fusion_replacement_300k_metrics.json"
+    TRAIN_DIR / "_retired" / "gps7_schnet_300k_v2"
+    / "fusion_replacement_300k_metrics.json"
 )
 
 # Phase 8 expansion500k v3 component (raw eV - no normalization). The routed v4
@@ -67,7 +69,7 @@ MODEL_PHASE8_EXPANSION_GPS = MODELS_DIR / "phase8_gps_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
 MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
 FUSION_PHASE8_EXPANSION_METRICS = (
-    TRAIN_DIR / "b3lyp_base_v2_v3" / "fusion_expansion_500k_metrics.json"
+    TRAIN_DIR / "gps7_schnet_500k_v3" / "fusion_expansion_500k_metrics.json"
 )
 
 # Phase 8 fixed-data architecture candidate: the v3 GPS plus a 9-layer GPS and

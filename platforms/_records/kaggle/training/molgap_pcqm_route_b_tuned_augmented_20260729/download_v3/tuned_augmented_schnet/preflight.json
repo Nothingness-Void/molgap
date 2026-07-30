@@ -1,0 +1,74 @@
+{
+  "format": "molgap-pcqm-route-b-cuda-preflight-v1",
+  "status": "complete",
+  "config": {
+    "name": "augmented_schnet",
+    "kind": "schnet",
+    "modality": "primary",
+    "hidden_channels": 176,
+    "num_layers": 6,
+    "batch_size": 192,
+    "learning_rate": 0.0008,
+    "weight_decay": 1e-06,
+    "max_epochs": 40,
+    "patience": 6,
+    "seed": 42,
+    "augmented": true,
+    "training_budget_s": 32400,
+    "hard_budget_s": 43200
+  },
+  "training_overrides": {
+    "dropout": 0.0,
+    "warmup_ratio": 0.1,
+    "grad_clip": 0.5,
+    "schnet_cutoff": 6.0
+  },
+  "device_name": "Tesla P100-PCIE-16GB",
+  "torch_version": "2.7.1+cu126",
+  "cuda_version": "12.6",
+  "steps": 2,
+  "losses": [
+    1.0384355783462524,
+    1.0539098978042603
+  ],
+  "prediction_finite": true,
+  "peak_cuda_bytes": 106336256,
+  "graph_shards": [
+    {
+      "modality": "primary",
+      "name": "train_shard_000.pt",
+      "sha256": "bf6651919e924e56851bec48bb32655b26efcc61f639f14573f7bd8576d7e184",
+      "batch_rows": 8
+    },
+    {
+      "modality": "secondary",
+      "name": "train_shard_000.pt",
+      "sha256": "4e0da0debd07b2df57839d9c1bfe0d26163a1882e03868644ca5a49ddc11aefe",
+      "batch_rows": 8
+    }
+  ],
+  "warm_start_sha256": "04eb0751426808da0b360112fe0e634b80a4d9079ab552a6c39bc2684415eab6",
+  "warm_start_report": {
+    "strict": true,
+    "source_model_config": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6,
+      "num_gaussians": 50,
+      "cutoff": 10.0,
+      "dropout": 0.05
+    },
+    "target_model_config": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6,
+      "num_gaussians": 50,
+      "cutoff": 6.0,
+      "dropout": 0.0
+    },
+    "distance_basis_reinitialized": true,
+    "radius_backend": "torch_cluster_extension",
+    "target_mean_gap": 4.77017879486084,
+    "target_std_gap": 0.8894968032836914
+  }
+}

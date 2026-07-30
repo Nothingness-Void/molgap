@@ -1,0 +1,42 @@
+{
+  "format": "molgap-repaired-2m-schnet-ims-submission-v1",
+  "submitted_at": "2026-07-28T22:21:29+09:00",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d",
+  "jobs": {
+    "primary_preflight": "1102071.ccpbs1",
+    "augmented_preflight": "1102072.ccpbs1",
+    "primary_train": "1102073.ccpbs1",
+    "augmented_train": "1102074.ccpbs1",
+    "primary_embedding_export": "1102137.ccpbs1",
+    "augmented_embedding_export": "1102139.ccpbs1",
+    "embedding_acceptance": "1102141.ccpbs1"
+  },
+  "dependencies": {
+    "1102073.ccpbs1": "afterok:1102071.ccpbs1",
+    "1102074.ccpbs1": "afterok:1102072.ccpbs1",
+    "1102137.ccpbs1": "afterok:1102073.ccpbs1",
+    "1102139.ccpbs1": "afterok:1102074.ccpbs1",
+    "1102141.ccpbs1": "afterok:1102137.ccpbs1:1102139.ccpbs1"
+  },
+  "inputs": {
+    "graph_transfer_acceptance": "platforms/_records/ims/repaired_2m_graph_transfer/acceptance.json",
+    "primary_graph_shards": 100,
+    "secondary_graph_shards": 100
+  },
+  "code_sha256": {
+    "src/molgap/repaired_2m_schnet.py": "93a67bc7bae02d036f25b306a5f3f17d8c05986a5c0040f96e25ee5ab6e1a776",
+    "platforms/ims/repaired_2m_3d/run_schnet.py": "75b7f235cb9f3a642d1a63633c10d2ec37df74c0c03968112c3f8d9194e66803",
+    "platforms/ims/repaired_2m_3d/preflight_schnet.pbs": "37d687fa47da5e0fe0be6c4dfa299225ed6c4ff234b8160f91a9e7b2ea2b0fcd",
+    "platforms/ims/repaired_2m_3d/train_schnet.pbs": "9fd766325d29ea586681af1e5a1e5238b35111622689a45f8665c99fbb99665c",
+    "platforms/ims/repaired_2m_3d/export_embeddings.pbs": "59655dfbcd040b3b80e96cf129338dcd213a084abe60085f4a8dc18d1e312374",
+    "platforms/ims/repaired_2m_3d/accept_embeddings.pbs": "4bc7bbf1c6d95f04d5515a018d910e46cfa5f469f0b723aa22007e551fabc10d"
+  },
+  "durability": {
+    "checkpoint_frequency": "one atomic checkpoint per completed epoch",
+    "resume_contract_checked": true,
+    "source_assets_moved_or_deleted": false
+  },
+  "production_registry_changed": false,
+  "sealed_data_opened": false
+}

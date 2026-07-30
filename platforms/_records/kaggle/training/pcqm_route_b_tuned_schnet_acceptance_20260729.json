@@ -1,0 +1,42 @@
+{
+  "format": "molgap-pcqm-route-b-tuned-schnet-kaggle-acceptance-v1",
+  "status": "accepted",
+  "encoders": {
+    "primary_schnet": {
+      "status": "accepted",
+      "best_epoch": 32,
+      "best_dev_gap_mae_eV": 0.13138210773468018,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "embedding_dim": 176,
+      "parts": 401,
+      "artifacts": 408,
+      "completion_manifest_sha256": "2cf21e8aa99ffb46219d32df4be247924e8ff9ebcc7b4fea31c73473defb5130",
+      "best_pt_sha256": "2422291d2c3260c7e209ba00f20be72fdd91e85d900ff7f9c516215890fd637e"
+    },
+    "augmented_schnet": {
+      "status": "accepted",
+      "best_epoch": 8,
+      "best_dev_gap_mae_eV": 0.15367916226387024,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "embedding_dim": 176,
+      "parts": 401,
+      "artifacts": 408,
+      "completion_manifest_sha256": "d705f9a90ccd9bd3bc144945fb7933a7a0b5d048ebe2ffa5714e43bbbc7a40e8",
+      "best_pt_sha256": "66a7fcdcaf11e5ecaaed9e0310f7c7122fd140bdbc64a0b2c4c4359de17430ef"
+    }
+  },
+  "cross_encoder_source_idx_aligned": true,
+  "cross_encoder_train_dev_targets_aligned": true,
+  "official_targets_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

@@ -1,0 +1,60 @@
+{
+  "date": "2026-07-28",
+  "split": {
+    "train": 100000,
+    "validation": 10000,
+    "test": 10000,
+    "split_seed": 42,
+    "paired_test_rows": 9306
+  },
+  "geometry": "ETKDGv3 + MMFF200",
+  "geometry_seed": 42,
+  "encoder_seed": 42,
+  "epochs": 30,
+  "acceptance_gate": {
+    "minimum_average_mae_gain_eV": 0.003,
+    "maximum_epoch_time_ratio": 2.0
+  },
+  "results": {
+    "schnet": {
+      "parameters": 809668,
+      "seconds_per_epoch": 17.73,
+      "cost_ratio": 1.0,
+      "test_mae_eV": {
+        "HOMO": 0.0805362,
+        "LUMO": 0.0913635,
+        "Gap": 0.1112960,
+        "average": 0.0943986
+      }
+    },
+    "schnet_angle": {
+      "parameters": 842580,
+      "seconds_per_epoch": 20.51,
+      "cost_ratio": 1.157,
+      "test_mae_eV": {
+        "HOMO": 0.0802186,
+        "LUMO": 0.0910005,
+        "Gap": 0.1102957,
+        "average": 0.0938383
+      },
+      "paired_average_delta_eV": -0.0005603,
+      "paired_bootstrap_95ci_eV": [-0.0016488, 0.0005771],
+      "molecule_win_rate": 0.5027
+    },
+    "schnet_angle_dihedral": {
+      "parameters": 843460,
+      "seconds_per_epoch": 20.39,
+      "cost_ratio": 1.150,
+      "test_mae_eV": {
+        "HOMO": 0.0806539,
+        "LUMO": 0.0900275,
+        "Gap": 0.1096414,
+        "average": 0.0934409
+      },
+      "paired_average_delta_eV": -0.0009576,
+      "paired_bootstrap_95ci_eV": [-0.0020630, 0.0002095],
+      "molecule_win_rate": 0.5042
+    }
+  },
+  "decision": "reject_accuracy_gate"
+}

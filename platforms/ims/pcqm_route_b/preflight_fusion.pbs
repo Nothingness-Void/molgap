@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=2:ngpus=1
+#PBS -l walltime=00:30:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+: "${ENCODER_ROOT:=$ROOT/acceptance_tuned_gps11_20260729/outputs}"
+: "${OUTPUT_DIR:=$ROOT/fusion_tuned_mix_20260729}"
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+LOG_TAG="$(basename "$OUTPUT_DIR")"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test "$(realpath "$ENCODER_ROOT")" = "$ENCODER_ROOT"
+mkdir -p "$OUTPUT_DIR" logs
+export PYTHONPATH="$ROOT/code/platforms/ims/pcqm_route_b/shims:$ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=2
+export MKL_NUM_THREADS=2
+"$PYTHON" code/platforms/ims/pcqm_route_b/train_fusion.py \
+  --encoder-root "$ENCODER_ROOT" \
+  --output-dir "$OUTPUT_DIR" \
+  --preflight 2>&1 | tee "logs/${LOG_TAG}_preflight.log"

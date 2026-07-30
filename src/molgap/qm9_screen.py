@@ -21,6 +21,12 @@ from .egnn import EGNNWrapper
 from .gine import GINEWrapper
 from .gps import GPSWrapper
 from .graphs import smiles_to_pyg
+from .geometry_features import (
+    ANGLE_FEATURE_DIM,
+    FULL_FEATURE_DIM,
+    local_geometry_features,
+    select_geometry_features,
+)
 from .schnet import SchNetWrapper
 from .tensornet import TensorNetWrapper
 
@@ -32,7 +38,7 @@ QM9_RAW_URL = (
 TARGET_NAMES = ("HOMO", "LUMO", "Gap")
 TARGET_COLUMNS = (2, 3, 4)
 DEFAULT_CACHE = Path("data/cache/qm9")
-DEFAULT_RESULTS = Path("experiments/qm9_architecture")
+DEFAULT_RESULTS = Path("experiments/qm9_architecture/results")
 DEFAULT_MODELS = Path("models/experiments/qm9_architecture_screen")
 
 ENCODER_CONFIGS = {
@@ -100,6 +106,30 @@ ENCODER_CONFIGS = {
         "num_gaussians": 50,
         "cutoff": 10.0,
         "dropout": 0.05,
+        "batch_size": 128,
+    },
+    "schnet_angle": {
+        "kind": "geometry",
+        "hidden_channels": 176,
+        "num_filters": 160,
+        "num_interactions": 6,
+        "num_gaussians": 50,
+        "cutoff": 10.0,
+        "dropout": 0.05,
+        "n_atom_geom": ANGLE_FEATURE_DIM,
+        "atom_geom_mode": "angle",
+        "batch_size": 128,
+    },
+    "schnet_angle_dihedral": {
+        "kind": "geometry",
+        "hidden_channels": 176,
+        "num_filters": 160,
+        "num_interactions": 6,
+        "num_gaussians": 50,
+        "cutoff": 10.0,
+        "dropout": 0.05,
+        "n_atom_geom": FULL_FEATURE_DIM,
+        "atom_geom_mode": "angle_dihedral",
         "batch_size": 128,
     },
     "tensornet": {
@@ -391,11 +421,12 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     config = dict(ENCODER_CONFIGS[candidate])
     config.pop("batch_size")
     kind = config.pop("kind")
+    config.pop("atom_geom_mode", None)
     if candidate == "gine6":
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("gps"):
         return GPSWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
-    if candidate == "schnet":
+    if candidate.startswith("schnet"):
         return SchNetWrapper(**config, use_charges=False), kind
     if candidate == "tensornet":
         return TensorNetWrapper(**config, use_charges=False), kind
@@ -407,13 +438,55 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
 def _forward(kind: str, model, batch):
     if kind == "topology":
         return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
-    return model(batch.z, batch.pos, batch.batch)
+    return model(
+        batch.z,
+        batch.pos,
+        batch.batch,
+        atom_geom=getattr(batch, "atom_geom", None),
+    )
 
 
 def _encode(kind: str, model, batch):
     if kind == "topology":
         return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
-    return model.encode(batch.z, batch.pos, batch.batch)
+    return model.encode(
+        batch.z,
+        batch.pos,
+        batch.batch,
+        atom_geom=getattr(batch, "atom_geom", None),
+    )
+
+
+def attach_local_geometry_features(
+    graph_splits: dict[str, list[Data]],
+    *,
+    mode: str,
+    cache_path: Path,
+) -> dict:
+    """Attach cached invariant atom features to geometry graph splits."""
+    if cache_path.exists():
+        cached = torch.load(cache_path, map_location="cpu", weights_only=False)
+        cache_status = "reused"
+    else:
+        cached = {}
+        for graphs in graph_splits.values():
+            for graph in graphs:
+                source_idx = int(graph.source_idx.view(-1)[0])
+                cached[source_idx] = local_geometry_features(graph.z, graph.pos)
+        _atomic_torch_save(cache_path, cached)
+        cache_status = "built"
+
+    for graphs in graph_splits.values():
+        for graph in graphs:
+            source_idx = int(graph.source_idx.view(-1)[0])
+            graph.atom_geom = select_geometry_features(cached[source_idx], mode)
+    return {
+        "mode": mode,
+        "feature_dim": int(next(iter(graph_splits["train"])).atom_geom.shape[1]),
+        "cache": str(cache_path),
+        "cache_status": cache_status,
+        "rows": len(cached),
+    }
 
 
 def _metrics(prediction: np.ndarray, target: np.ndarray) -> dict:
@@ -478,6 +551,18 @@ def train_encoder(
     graph_splits, geometry_report = make_graph_splits(
         records, split, geometry, mean, std, cache_dir, seed
     )
+    atom_geom_mode = ENCODER_CONFIGS[candidate].get("atom_geom_mode")
+    if atom_geom_mode:
+        feature_cache = (
+            cache_dir
+            / "geometry_features"
+            / f"{geometry}_{split.fingerprint}_seed{seed}_v1.pt"
+        )
+        geometry_report["local_geometry_features"] = attach_local_geometry_features(
+            graph_splits,
+            mode=atom_geom_mode,
+            cache_path=feature_cache,
+        )
     model, kind = make_encoder(candidate)
     model = model.to(device)
     batch_size = int(ENCODER_CONFIGS[candidate]["batch_size"])
