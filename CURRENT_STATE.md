@@ -20,11 +20,23 @@ Track A/B/C ownership is defined only in `TRACKS.md`.
 The v3 single hybrid remains a component/compatibility loader. v2 and v1 are
 historical fallbacks, not recommended defaults.
 
+Track A model research is frozen. The selected scientific successor is the
+repaired-2M three-GPS dense pure-2D model; repaired-2M GPS7/GPS9 equal is the
+lower-cost preset. The registry remains on routed-v4 only until the selected
+repaired-2M checkpoints, tested inference loader, latency record, and smoke
+tests are packaged. This is a delivery boundary, not an open architecture
+decision. Final decision:
+`production/04_evaluate/project_freeze/track_a_final_decision.md`.
+
 ## Execution Context
 
 - One local Agent is active. There are no parallel Agent-owned worktrees or
   handoffs to reconcile.
-- The project is in its final freeze sprint. All unfinished compute stops on
+- Track A and Track B scientific decisions were frozen on 2026-07-30. No new
+  architecture, dataset, Router, MoE, seed, or fusion experiment is authorized.
+  Remaining work is packaging, inference verification, reporting, and
+  presentation preparation.
+- All unfinished compute stops on
   **2026-08-04 at 12:00 JST**, after which only verification, documentation,
   packaging, figures, and correctness fixes are allowed. The authoritative
   schedule and stop rules are in
@@ -35,13 +47,14 @@ historical fallbacks, not recommended defaults.
   monitoring those remote jobs; it must not relaunch them without evidence of
   failure.
 
-## Active Model Candidate
+## Frozen Track A Decision
 
-The fixed equal ensemble of the original-1M and repair-v2 dual-GPS experts is the
-strongest deployable candidate under review. It passed the independent sealed
-comparison but needs four GPS encoder passes, so it is not registered as the
-default. The sealed set is read-only and can never select architecture, weights,
-or hyperparameters.
+The final Track A accuracy identity is repaired-2M three-GPS dense pure 2D. The
+repaired-2M GPS7/GPS9 equal model is retained as the lower-cost preset and gives
+the best P8-hard result. Both passed a same-molecule common/OOD/P8-hard
+comparison against routed-v4. The dual-SchNet residual failed external transfer
+and is closed. Full metrics and claim boundaries:
+`production/04_evaluate/project_freeze/track_a_final_decision.md`.
 
 | Constraint in force | Why | Evidence |
 |---|---|---|
@@ -69,7 +82,7 @@ Contracts and job configs: `experiments/repaired_2m_scaling/results/gps7_gps9_oo
 Three-seed ensemble: `experiments/repaired_2m_scaling/results/retention_d_three_seed_equal_ensemble_decision.md`.
 Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchical_oracle/decision.md`.
 
-## Track B - PCQM Leaderboard
+## Frozen Track B - PCQM Specialist
 
 - Local GINE v7 is the strongest task-level PCQM Gap specialist candidate.
   The nested 1M run selected epoch 2 at `0.187982 eV` scaffold-dev and reached
@@ -84,6 +97,11 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
   Gap MAE on 4,981 aligned rows. It remains a Track B specialist and is not a
   leaderboard submission. Decision:
   `experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md`.
+- This is the final Track B scientific identity. All four encoder checkpoints,
+  all three selected fusion heads, and both manifests have local copies whose
+  SHA256 values match the accepted metrics. No further Track B tuning or
+  training is authorized before the presentation. Final decision:
+  `production/04_evaluate/project_freeze/track_b_final_decision.md`.
 - Decision and artifact pointers:
   `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
 - The local PCQM 1M bounded-fusion aligned graph cache is complete and accepted:
@@ -110,10 +128,10 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
   SchNet. Fixed official-valid labels remain unread. Decision:
   `experiments/pcqm_route_b/results/tuned_1m_encoder_gate/decision.md`.
 
-## Active Remote Work
+## Frozen Acceptance Summary
 
-Only jobs that are running or blocked appear here. Finished rounds are recorded
-in each experiment's own log, so this section stays short enough to read at once.
+No remote job is required to support the frozen Track A or Track B claims.
+Finished rounds are retained below as provenance.
 
 | Workstream | Platform | State | Detail |
 |---|---|---|---|
@@ -161,7 +179,7 @@ finishes. The future sealed 20K remains locked.
 Do not rerun a closed branch unless `ROADMAP.md` records a materially new
 hypothesis.
 
-## Immediate Decision Gate
+## Delivery Gate
 
 The repaired-2M data gate is complete and accepted: the row ledger reconciles
 3,437,037 source rows, the fixed-size manifest keeps the targeted 500K, retains
@@ -169,15 +187,11 @@ The repaired-2M data gate is complete and accepted: the row ledger reconciles
 quality-filtered candidates. The materialized 2M table has unique CID/SMILES
 identities and no sealed-source rows.
 
-Track A's matched repaired-2M GPS9 comparison is complete: GPS9 is rejected as
-a global replacement and retained as a hard expert. The active Track A gate is
-the fixed-identity bounded 2D+3D fusion path described in
-`experiments/repaired_2m_scaling/STATUS.md`.
-
-GPS7/GPS9 OOF is an optional prerequisite for reopening a molecule-level
-Router, not for completing fixed-identity fusion. Its ten-job SCNet file is a
-non-executable placeholder and must not be submitted as prepared work. Router
-training remains forbidden until genuine held-out gain labels exist.
+Track A and Track B model selection is complete. Remaining work is limited to
+artifact packaging, tested inference loaders, latency and encoder-pass
+accounting, public API smoke tests, normalized comparison tables, figures, and
+presentation material. The production registry must not change until the Track
+A packaging gate passes.
 
 Track C's QM9 screen and PubChemQC 100K transfer screen are complete. Their
 bounded 2D+3D fusion result is an accepted architecture input to Tracks A and B,

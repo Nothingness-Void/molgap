@@ -1,0 +1,30 @@
+{
+  "format": "molgap-project-freeze-decisions-v1",
+  "frozen_at": "2026-07-30",
+  "research_frozen": true,
+  "track_a": {
+    "role": "general_b3lyp",
+    "selected_accuracy_model": "repaired_2m_three_gps_dense_2d",
+    "selected_lower_cost_model": "repaired_2m_gps7_gps9_equal_2d",
+    "rejected_component": "dual_schnet_bounded_residual",
+    "registered_default_unchanged_until_packaging": "phase8_routed_dualgps_hybrid",
+    "sealed_20k_used": false
+  },
+  "track_b": {
+    "role": "pcqm_gap_specialist",
+    "selected_model": "four_encoder_bounded_fusion_three_seed_equal_ensemble",
+    "fixed_official_valid_rows": 4981,
+    "fixed_official_valid_gap_mae_eV": 0.11201111227273941,
+    "official_test_used": false,
+    "sealed_20k_used": false
+  },
+  "authorized_remaining_work": [
+    "artifact_packaging",
+    "tested_inference_loaders",
+    "latency_and_encoder_pass_accounting",
+    "valid_invalid_ood_smiles_smoke_tests",
+    "comparison_tables",
+    "figures",
+    "presentation_material"
+  ]
+}

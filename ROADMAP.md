@@ -16,18 +16,16 @@ The predictor is an implementation dependency; the database is the deliverable.
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
 | P0 | FREEZE | Freeze the project by 2026-08-04 12:00 JST | Stop unfinished compute, archive atomic partials, and permit only packaging or correctness fixes | `production/04_evaluate/project_freeze/README.md` |
-| P0 | A-3D | Complete the repaired-2M bounded 2D+3D fusion gate | Both caches are accepted; accept both SchNet checkpoints and aligned embeddings before fusion | `experiments/repaired_2m_scaling/STATUS.md` |
-| P1 | B-PCQM1M | Complete the PCQM-only leaderboard ceiling experiment | Accept all four encoder outputs; stop any encoder above 12 h; then run bounded residual fusion | `experiments/pcqm_route_b/results/run_plan.json` |
-| P1 | A-P9.2 | Recompute Delta labels against the selected B3LYP base | Start after Track A freezes the B3LYP base | `production/05_delta_gw/` |
-| P1 | A-UQ | Refit calibration and OOD assets | Trigger after P9.2 selects the Delta path | `production/06_uq/` |
-| P2 | P9-AB | Benchmark descriptor LightGBM against encoder LoRA | Compare accuracy, calibration, throughput, and deployment size on one split | `production/05_delta_gw/results/v3_delta_decision.md` |
+| P0 | PACKAGE-A | Package the frozen Track A pure-2D models | Retrieve and hash all selected checkpoints; add a tested inference loader, latency record, and valid/invalid/OOD smoke test | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
+| P0 | PACKAGE-B | Package the frozen Track B PCQM specialist | Preserve the seven accepted checkpoints; add reproducible inference and cost records | `production/04_evaluate/project_freeze/track_b_final_decision.md` |
+| P0 | REPORT | Build the final comparison and presentation package | Normalize common/OOD/P8-hard/PCQM metrics, cost, limitations, and architecture figures | `production/04_evaluate/project_freeze/README.md` |
 
 Do not tune against any sealed set. Do not relaunch a remote task merely because
 its local output has not arrived.
 
-The freeze sprint overrides the broader backlog. No new acquisition,
+The scientific decisions are frozen. No new acquisition,
 architecture family, Router, MoE, OOF, compression, or scale-up experiment may
-start before the hard stop.
+start before the presentation.
 
 ## Phase Order
 
@@ -66,6 +64,14 @@ start before the hard stop.
 | Paper figures and write-up | An academic delivery is requested |
 
 ## Completed Work
+
+- Track A froze the repaired-2M three-GPS dense pure-2D model as its accuracy
+  identity and the GPS7/GPS9 equal model as its lower-cost preset. The
+  dual-SchNet residual was rejected:
+  `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+- Track B froze the four-encoder, three-seed bounded PCQM Gap Fusion at
+  `0.112011 eV` on the fixed official-validation subset:
+  `production/04_evaluate/project_freeze/track_b_final_decision.md`.
 
 - The local PCQM GINE expert was scaled to a nested 1M sample and accepted as a
   task-only leaderboard candidate:

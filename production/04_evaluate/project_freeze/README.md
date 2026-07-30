@@ -1,5 +1,18 @@
 # Project Freeze Sprint
 
+## Frozen Decisions
+
+Model research was frozen early on 2026-07-30:
+
+- Track A: `track_a_final_decision.md`;
+- Track B: `track_b_final_decision.md`;
+- machine-readable status: `final_decisions.json`.
+
+Only packaging, inference verification, cost accounting, figures,
+documentation, and correctness fixes remain. The later deadline below is the
+absolute stop for any already-running work, not authorization for more model
+research.
+
 ## Deadline
 
 The project enters a hard freeze on **2026-08-04 at 12:00 JST**. At that time:
