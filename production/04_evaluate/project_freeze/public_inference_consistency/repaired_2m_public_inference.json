@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "check": "public_inference_reproduces_accepted_external_metrics",
+  "note": "The accepted table was produced under CUDA autocast; the public path runs fp32, so per-row differences are expected and only aggregate average MAE is gated.",
+  "scope_mae_tolerance_eV": 0.0001,
+  "environment": {
+    "platform": "Windows-10-10.0.26220-SP0",
+    "python": "3.10.6",
+    "torch": "2.7.1+cu128",
+    "device": "cuda"
+  },
+  "accepted_predictions": {
+    "path": "D:\\\u6587\u6863\\molgap\\experiments\\repaired_2m_scaling\\results\\hierarchical_dual_schnet_external\\predictions.csv",
+    "sha256": "c3c3c501a76f9940fe2b920bbfaa61de9a72c7a4422e61f273b37a22254e0af1",
+    "rows": 1973
+  },
+  "presets": {
+    "repaired_2m_dense_2d": {
+      "registry_key": "repaired_2m_dense_2d",
+      "accepted_column_prefix": "repaired_2m_dense_2d",
+      "rows": 1973,
+      "row_difference_eV": {
+        "max": 0.008539188336182058,
+        "mean": 0.0006520078384809181
+      },
+      "scopes": {
+        "all": {
+          "rows": 1973,
+          "public_average_mae_eV": 0.0976391134679521,
+          "accepted_average_mae_eV": 0.09763771582007097,
+          "delta_eV": 1.3976478811239534e-06,
+          "within_tolerance": true
+        },
+        "ood1000": {
+          "rows": 998,
+          "public_average_mae_eV": 0.10666248360512436,
+          "accepted_average_mae_eV": 0.10665547685467935,
+          "delta_eV": 7.006750445001653e-06,
+          "within_tolerance": true
+        },
+        "p8_targeted_hard": {
+          "rows": 975,
+          "public_average_mae_eV": 0.08840288434292862,
+          "accepted_average_mae_eV": 0.08840722811490255,
+          "delta_eV": -4.343771973933097e-06,
+          "within_tolerance": true
+        }
+      },
+      "artifacts": {
+        "kind": "multi2d_dense",
+        "encoder_passes": 3,
+        "experts": {
+          "repaired_2m_gps7": {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps7_seed42.pt",
+            "sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+          },
+          "repaired_2m_gps9": {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps9_seed42.pt",
+            "sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+          },
+          "repaired_2m_gps11_160": {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps11_160_seed42.pt",
+            "sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a"
+          }
+        },
+        "gates": [
+          {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_dense_gate_seed42.pt",
+            "sha256": "fde9ccbbfb947643b2c7f15c0841fd9ce00fcad77b341ec7243dfbff2c785708"
+          },
+          {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_dense_gate_seed43.pt",
+            "sha256": "b521102222a4b22b3efb8f889ad98048a97666782504708fb5aa92e78e1374e2"
+          },
+          {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_dense_gate_seed44.pt",
+            "sha256": "aefdabf07e14bc694f7c8ae858597d1ce0ae8c81af120601c36d064748341f97"
+          }
+        ]
+      }
+    },
+    "repaired_2m_equal_2d": {
+      "registry_key": "repaired_2m_equal_2d",
+      "accepted_column_prefix": "repaired_2m_equal_2d",
+      "rows": 1973,
+      "row_difference_eV": {
+        "max": 0.005286166735840148,
+        "mean": 0.000513880026901087
+      },
+      "scopes": {
+        "all": {
+          "rows": 1973,
+          "public_average_mae_eV": 0.09847736839736011,
+          "accepted_average_mae_eV": 0.09846681371421523,
+          "delta_eV": 1.0554683144883836e-05,
+          "within_tolerance": true
+        },
+        "ood1000": {
+          "rows": 998,
+          "public_average_mae_eV": 0.10882149730752749,
+          "accepted_average_mae_eV": 0.10879790294231462,
+          "delta_eV": 2.3594365212875612e-05,
+          "within_tolerance": true
+        },
+        "p8_targeted_hard": {
+          "rows": 975,
+          "public_average_mae_eV": 0.08788922413854261,
+          "accepted_average_mae_eV": 0.0878920167402222,
+          "delta_eV": -2.792601679596496e-06,
+          "within_tolerance": true
+        }
+      },
+      "artifacts": {
+        "kind": "multi2d_equal",
+        "encoder_passes": 2,
+        "experts": {
+          "repaired_2m_gps7": {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps7_seed42.pt",
+            "sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+          },
+          "repaired_2m_gps9": {
+            "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps9_seed42.pt",
+            "sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+          }
+        }
+      }
+    }
+  },
+  "sealed_20k_used": false
+}

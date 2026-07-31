@@ -77,9 +77,13 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 ## Loading Structure
 
+- `load_repaired_2m_2d(key=...)` loads a pure-2D multi-expert registry entry:
+  several direct-output GPS predictors plus either a dense soft gate
+  (`kind: multi2d_dense`) or a fixed equal average (`kind: multi2d_equal`). It
+  has no 3D or fusion component.
 - `load_hybrid(key=...)` loads one registry-defined 2D + 3D + fusion trio.
 - `load_routed_dual_gps_hybrid(key=...)` loads a routed hybrid registry entry.
-- `predict_smiles_batch_hybrid()` and
+- `predict_smiles_batch_repaired_2m_2d()`, `predict_smiles_batch_hybrid()`, and
   `predict_smiles_batch_routed_dual_gps()` are the corresponding batch paths.
 - The registry key recommended for use is intentionally not repeated here; read
   `CURRENT_STATE.md`. A loader default is a component/compatibility choice and

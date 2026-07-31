@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "model": "repaired_2m_equal_2d",
+  "registry_key": "repaired_2m_equal_2d",
+  "encoder_passes": 2,
+  "measurement": {
+    "scope": "warm_end_to_end_new_smiles_inference",
+    "included": [
+      "RDKit_SMILES_parsing",
+      "2D_PyG_graph_construction",
+      "2_GPS_expert_forward_passes",
+      "fixed_equal_average"
+    ],
+    "excluded": [
+      "model_checkpoint_load",
+      "ETKDG_3D_conformer_construction",
+      "precomputed_catalog_lookup"
+    ],
+    "model_load_s": 4.190214400005061,
+    "warmup_batches_per_size": 1,
+    "timed_repeats_per_size": 3,
+    "batch_2d": 256
+  },
+  "hardware": {
+    "platform": "Windows-10-10.0.26220-SP0",
+    "python": "3.10.6",
+    "torch": "2.7.1+cu128",
+    "device": "cuda",
+    "cuda": {
+      "name": "NVIDIA GeForce RTX 5060",
+      "total_memory_bytes": 8546484224,
+      "cuda_runtime": "12.8"
+    }
+  },
+  "input_suite": {
+    "source_unique_smiles": 16,
+    "source_sha256": "d7c6bdb09b4953013d1c3a5993b62c4733f59d17da267a3a0ac7272db0f32fb3"
+  },
+  "artifacts": {
+    "repaired_2m_gps7": {
+      "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps7_seed42.pt",
+      "sha256": "5d0078eb5eb10b31fa0fd952fa32ba4a1422f62b85f78a6ed5cb74f3584c3605"
+    },
+    "repaired_2m_gps9": {
+      "path": "D:\\\u6587\u6863\\molgap\\models\\phase8\\phase8_repaired_2m_d_gps9_seed42.pt",
+      "sha256": "e69599603140821cd9b1a3965d61202b4832db0fe036e3ea2a5780e245e18040"
+    }
+  },
+  "results": [
+    {
+      "input_rows": 1,
+      "valid_rows": 1,
+      "samples_s": [
+        0.027430900001490954,
+        0.023129799999878742,
+        0.029593400002340786
+      ],
+      "median_batch_s": 0.027430900001490954,
+      "p95_batch_s": 0.029377150002255804,
+      "median_ms_per_molecule": 27.430900001490954,
+      "median_molecules_per_s": 36.455238433505535,
+      "peak_memory_bytes": 36398592
+    },
+    {
+      "input_rows": 16,
+      "valid_rows": 16,
+      "samples_s": [
+        0.03131089999806136,
+        0.02854259999730857,
+        0.02525459999742452
+      ],
+      "median_batch_s": 0.02854259999730857,
+      "p95_batch_s": 0.03103406999798608,
+      "median_ms_per_molecule": 1.7839124998317857,
+      "median_molecules_per_s": 560.5656107540561,
+      "peak_memory_bytes": 37783040
+    },
+    {
+      "input_rows": 64,
+      "valid_rows": 64,
+      "samples_s": [
+        0.0430936999982805,
+        0.03399800000624964,
+        0.03569509999942966
+      ],
+      "median_batch_s": 0.03569509999942966,
+      "p95_batch_s": 0.04235383999839541,
+      "median_ms_per_molecule": 0.5577359374910884,
+      "median_molecules_per_s": 1792.9631798488476,
+      "peak_memory_bytes": 42012672
+    }
+  ]
+}

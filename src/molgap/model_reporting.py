@@ -37,11 +37,19 @@ def build_comparison_rows(repo: Path) -> list[dict]:
         / "route_b_residual_scale_summary.json"
     )
 
+    hierarchical = _read(
+        repaired / "hierarchical_dual_schnet_external" / "metrics.json"
+    )
+    three_gps_pcqm = _read(
+        repaired / "three_gps_router_fusion" / "pcqm_valid" / "metrics.json"
+    )
+
     def common_model(model: str, cost: float, role: str) -> dict:
         scopes = seed42["scopes"]
         return {
             "model": model,
             "role": role,
+            "common_eval_rows": seed42["n_valid"],
             "common_average_mae_eV": scopes["all"][model]["average"]["mae_eV"],
             "ood_average_mae_eV": scopes["ood1000"][model]["average"]["mae_eV"],
             "p8_hard_average_mae_eV": scopes["p8_targeted_hard"][model]["average"]["mae_eV"],
@@ -51,8 +59,30 @@ def build_comparison_rows(repo: Path) -> list[dict]:
             "encoder_passes": cost,
         }
 
+    def paired_2d_model(
+        method: str, model: str, cost: float, role: str, pcqm_method: str
+    ) -> dict:
+        # The hierarchical external comparison dropped 4 ETKDG failures so every
+        # method shared identical rows; its 1,973 rows are therefore not directly
+        # comparable to the 1,977-row single-model runs above.
+        scopes = hierarchical["metrics"]
+        return {
+            "model": model,
+            "role": role,
+            "common_eval_rows": hierarchical["aligned_rows"],
+            "common_average_mae_eV": scopes["all"]["methods"][method]["average"]["mae_eV"],
+            "ood_average_mae_eV": scopes["ood1000"]["methods"][method]["average"]["mae_eV"],
+            "p8_hard_average_mae_eV": scopes["p8_targeted_hard"]["methods"][method][
+                "average"
+            ]["mae_eV"],
+            "pcqm_gap_mae_eV": three_gps_pcqm["metrics"][pcqm_method]["gap_mae_eV"],
+            "pubchemqc100k_average_mae_eV": None,
+            "pubchemqc100k_gap_mae_eV": None,
+            "encoder_passes": cost,
+        }
+
     rows = [
-        common_model("routed_v4_500k", 3.0, "production"),
+        common_model("routed_v4_500k", 3.0, "previous production baseline"),
         common_model(
             "repaired_2m_d_gps7_seed42",
             1.0,
@@ -67,6 +97,7 @@ def build_comparison_rows(repo: Path) -> list[dict]:
         {
             "model": "repaired_2m_d_gps9_seed42",
             "role": "hard expert candidate",
+            "common_eval_rows": oracle["reports"]["common"]["n"],
             "common_average_mae_eV": oracle["reports"]["common"]["methods"]["expert"][
                 "average_mae_eV"
             ],
@@ -88,6 +119,7 @@ def build_comparison_rows(repo: Path) -> list[dict]:
         {
             "model": "retention_d_three_seed_equal_ensemble",
             "role": "accuracy mode candidate",
+            "common_eval_rows": ensemble["common"]["common"]["n"],
             "common_average_mae_eV": ensemble["common"]["common"]["metrics"][
                 "average"
             ]["mae_eV"],
@@ -113,6 +145,7 @@ def build_comparison_rows(repo: Path) -> list[dict]:
                     if candidate == "precision"
                     else "architecture control"
                 ),
+                "common_eval_rows": None,
                 "common_average_mae_eV": None,
                 "ood_average_mae_eV": None,
                 "p8_hard_average_mae_eV": None,
@@ -129,6 +162,7 @@ def build_comparison_rows(repo: Path) -> list[dict]:
         {
             "model": "route_b_precision_bounded_residual",
             "role": "accepted scale-up protocol",
+            "common_eval_rows": None,
             "common_average_mae_eV": None,
             "ood_average_mae_eV": None,
             "p8_hard_average_mae_eV": None,
@@ -139,6 +173,24 @@ def build_comparison_rows(repo: Path) -> list[dict]:
             "pubchemqc100k_gap_mae_eV": selected["test_gap_mae_eV"],
             "encoder_passes": 4.0,
         }
+    )
+    rows.extend(
+        (
+            paired_2d_model(
+                "repaired_2m_dense_2d",
+                "repaired_2m_three_gps_dense_2d",
+                3.0,
+                "production",
+                "dense_soft_gate",
+            ),
+            paired_2d_model(
+                "repaired_2m_equal_2d",
+                "repaired_2m_gps7_gps9_equal_2d",
+                2.0,
+                "production lower-cost preset",
+                "equal_gps7_gps9",
+            ),
+        )
     )
     return rows
 
@@ -155,13 +207,19 @@ def write_comparison(rows: list[dict], csv_path: Path, markdown_path: Path) -> N
         "",
         "Generated from accepted result artifacts. Blank cells indicate that a model was not evaluated on that domain.",
         "",
-        "| Model | Role | Common | OOD | P8-hard | PCQM Gap | PC100K avg | PC100K Gap | Encoder passes |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        "Common/OOD/P8-hard columns are only comparable within the same `Rows` "
+        "value: the paired repaired-2M comparison dropped the 4 rows where "
+        "ETKDG failed so every method shared identical molecules, while the "
+        "single-model runs kept all 1,977.",
+        "",
+        "| Model | Role | Rows | Common | OOD | P8-hard | PCQM Gap | PC100K avg | PC100K Gap | Encoder passes |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
         values = [
             row["model"],
             row["role"],
+            "" if row["common_eval_rows"] is None else f"{row['common_eval_rows']:,}",
             *[
                 "" if row[key] is None else f"{row[key]:.6f}"
                 for key in (

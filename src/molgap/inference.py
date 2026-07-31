@@ -542,6 +542,139 @@ def predict_smiles_batch_routed_dual_gps(
     return result
 
 
+def load_repaired_2m_2d(
+    device: torch.device | str | None = None,
+    *,
+    key: str = "repaired_2m_dense_2d",
+) -> dict:
+    """Load a frozen repaired-2M pure-2D preset.
+
+    ``key="repaired_2m_dense_2d"`` is the accuracy preset: three direct-output
+    GPS experts plus a three-seed dense soft gate that blends their predictions
+    per target. ``key="repaired_2m_equal_2d"`` is the lower-cost preset: GPS7
+    and GPS9 averaged with fixed equal weights and no gate checkpoint.
+
+    Both are pure 2D — no ETKDG conformer, no SchNet branch, and no fusion head.
+    The rejected dual-SchNet residual is deliberately unreachable from here; see
+    `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+    """
+    from .multi2d_router_fusion import EXPERTS, load_dense_gate_checkpoint
+
+    device = _resolve_device(device)
+    spec = MODEL_REGISTRY[key]
+    if spec["kind"] not in ("multi2d_dense", "multi2d_equal"):
+        raise ValueError(f"Registry key {key!r} is not a repaired-2M 2D preset")
+
+    experts = []
+    for expert_key in spec["experts"]:
+        expert_spec = MODEL_REGISTRY[expert_key]
+        model = GPSWrapper(**expert_spec["params"]).to(device)
+        model.load_state_dict(
+            torch.load(
+                expert_spec["checkpoint"], weights_only=True, map_location=device
+            )
+        )
+        experts.append(model.eval())
+
+    gates = []
+    if spec["kind"] == "multi2d_dense":
+        # The gate consumes all three experts in a fixed order; a shorter expert
+        # list would silently mis-index its features.
+        if len(experts) != len(EXPERTS):
+            raise ValueError(
+                f"Dense gate needs {len(EXPERTS)} experts, found {len(experts)}"
+            )
+        gates = [
+            load_dense_gate_checkpoint(path, device=device)
+            for path in spec["gates"]
+        ]
+
+    return {
+        "experts": experts,
+        "gates": gates,
+        "kind": spec["kind"],
+        "encoder_passes": int(spec["encoder_passes"]),
+        "device": device,
+        "key": key,
+    }
+
+
+def predict_smiles_batch_repaired_2m_2d(
+    smiles_list: list[str],
+    models: dict | None = None,
+    *,
+    batch_size: int = 256,
+    return_expert_predictions: bool = False,
+    device: torch.device | str | None = None,
+    key: str = "repaired_2m_dense_2d",
+):
+    """Batch-predict B3LYP HOMO/LUMO/Gap with a repaired-2M pure-2D preset.
+
+    Returns ``(valid_idx, preds)`` in raw eV, where ``preds[i]`` aligns with
+    ``smiles_list[valid_idx[i]]``. Rows whose 2D graph cannot be built (invalid
+    SMILES) are dropped rather than imputed. With
+    ``return_expert_predictions=True`` the per-expert stack
+    ``[rows, n_experts, 3]`` is appended for residual or routing analysis.
+
+    Pass ``models=`` from ``load_repaired_2m_2d`` to reuse loaded weights.
+    """
+    from torch_geometric.loader import DataLoader
+
+    from .multi2d_router_fusion import predict_dense_gate
+
+    models = models or load_repaired_2m_2d(device, key=key)
+    experts = models["experts"]
+    device = models["device"]
+
+    graphs, valid_idx = [], []
+    for index, smiles in enumerate(smiles_list):
+        graph = smiles_to_2d_pyg(smiles)
+        if graph is None:
+            continue
+        graphs.append(graph)
+        valid_idx.append(index)
+
+    n_targets = len(TARGET_COLS)
+    if not valid_idx:
+        empty_pred = np.empty((0, n_targets), dtype=np.float32)
+        result = (np.empty((0,), dtype=int), empty_pred)
+        if return_expert_predictions:
+            result += (
+                np.empty((0, len(experts), n_targets), dtype=np.float32),
+            )
+        return result
+
+    chunks = [[] for _ in experts]
+    with torch.no_grad():
+        for batch in DataLoader(graphs, batch_size=batch_size, shuffle=False):
+            batch = batch.to(device)
+            for position, model in enumerate(experts):
+                chunks[position].append(
+                    model(
+                        batch.x, batch.edge_index, batch.edge_attr, batch.batch
+                    ).float().cpu()
+                )
+    expert_predictions = np.stack(
+        [torch.cat(chunk).numpy() for chunk in chunks], axis=1
+    ).astype(np.float32)
+
+    if models["kind"] == "multi2d_dense":
+        # Each gate seed is an accepted member of one ensemble; averaging their
+        # blended predictions is the frozen accepted identity.
+        blended = [
+            predict_dense_gate(gate, expert_predictions)[0]
+            for gate in models["gates"]
+        ]
+        predictions = np.mean(blended, axis=0).astype(np.float32)
+    else:
+        predictions = expert_predictions.mean(axis=1).astype(np.float32)
+
+    result = (np.asarray(valid_idx, dtype=int), predictions)
+    if return_expert_predictions:
+        result += (expert_predictions,)
+    return result
+
+
 def predict_smiles_batch_hybrid_conformer_ensemble(
     smiles_list: list[str],
     models: tuple | None = None,

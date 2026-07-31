@@ -21,24 +21,26 @@ relevant operations guide.
 
 ## Basic Inference
 
-Choose the loader named in `CURRENT_STATE.md`. The routed-hybrid API, for
+Choose the loader named in `CURRENT_STATE.md`. The repaired-2M pure-2D API, for
 example, is used as follows:
 
 ```python
 from molgap.inference import (
-    load_routed_dual_gps_hybrid,
-    predict_smiles_batch_routed_dual_gps,
+    load_repaired_2m_2d,
+    predict_smiles_batch_repaired_2m_2d,
 )
 
-models = load_routed_dual_gps_hybrid()
-valid_idx, predictions, routed = predict_smiles_batch_routed_dual_gps(
-    ["c1ccccc1"],
+models = load_repaired_2m_2d()
+valid_idx, predictions = predict_smiles_batch_repaired_2m_2d(
+    ["Clc1ccc(cc1)C(=O)Nc1ccccc1"],
     models=models,
 )
 ```
 
-Outputs are ordered as `homo`, `lumo`, and `gap` in eV. Runtime constraints are
-defined in `AGENTS.md`.
+Outputs are ordered as `homo`, `lumo`, and `gap` in eV. `predictions[i]` belongs
+to the input at `valid_idx[i]`; rows whose graph cannot be built are omitted
+rather than filled, so join on `valid_idx` instead of assuming positional
+alignment. Runtime constraints are defined in `AGENTS.md`.
 
 ## Navigation
 
@@ -51,6 +53,7 @@ Track A/B/C ownership is defined only in `TRACKS.md`.
 The lazy package exports and implementation live in `src/molgap/__init__.py`
 and `src/molgap/inference.py`. Supported families include:
 
+- repaired-2M pure-2D preset loading and batch prediction;
 - registry-based single-hybrid loading and batch prediction;
 - routed dual-GPS hybrid loading and batch prediction;
 - legacy 3D-only helpers;

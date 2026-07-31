@@ -13,6 +13,28 @@ documentation, and correctness fixes remain. The later deadline below is the
 absolute stop for any already-running work, not authorization for more model
 research.
 
+The Track A packaging gate and the `2026-08-01 12:00` registry control point
+were both met early, on 2026-07-31: the repaired-2M presets have hashed
+checkpoints, a tested public loader, cost accounting, and a valid/invalid/OOD
+smoke test, so the recommendation moved off routed v4. The schedule and
+missed-gate rows below are the plan as written on 2026-07-28 and are retained
+unedited as provenance; where a fallback says "keep routed v4 registered", that
+branch was not taken. Live registry state is only in `CURRENT_STATE.md`.
+
+Packaging evidence added under this directory:
+
+- `public_inference_consistency/` - the public path reproduces the accepted
+  external metrics within `1e-4 eV`;
+- `inference_latency/` - latency, parameter, and encoder-pass accounting for
+  both presets and both routed-v4 measurement modes;
+- `public_api_smoke_test/` - valid, invalid, and out-of-domain SMILES behavior;
+- `cost_comparison/` - DFT versus ML cost on one shared ten-molecule set, with
+  the three DFT scopes kept separate;
+- `experimental_offset/` - size and sign of the gap against literature
+  experimental values, recorded as a limitation rather than an accuracy result;
+- `presentation_evidence/` - every number the 2026-08-19 interview deck quotes,
+  resolved to a local file, plus the outline claims that need correcting.
+
 ## Deadline
 
 The project enters a hard freeze on **2026-08-04 at 12:00 JST**. At that time:
@@ -186,3 +208,17 @@ The final package must contain:
 8. a limitations section that separates production, accuracy-mode, specialist,
    negative, and incomplete evidence;
 9. a tagged repository state with no active remote job required for the claims.
+
+Status of those items as of 2026-07-31:
+
+| Item | State |
+|---|---|
+| 1 production B3LYP decision and registry identity | done: `track_a_final_decision.md`, key `repaired_2m_dense_2d` |
+| 2 PCQM Gap-specialist decision | done: `track_b_final_decision.md` |
+| 3 Delta/UQ compatibility decision | done: not refitted; stays on its v3 base |
+| 4 metric, latency, parameter, encoder-pass tables | Track A done, plus a DFT-versus-ML cost record; PCQM and one normalized cross-track table remain |
+| 5 checkpoint manifests with hashes | done for Track A; Track B custody copy already hashed |
+| 6 valid/invalid/OOD inference smoke test | done: `public_api_smoke_test/` |
+| 7 slide-ready figures | open; the numbers behind them are collected in `presentation_evidence/` |
+| 8 limitations section | Track A boundaries done (`track_a_final_decision.md` claim boundary, `experimental_offset/`); one consolidated section remains |
+| 9 tagged repository state | open |

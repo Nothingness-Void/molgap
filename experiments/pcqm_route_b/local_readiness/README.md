@@ -15,9 +15,13 @@ before the active remote outputs arrive?
 
 ## Safety Locks
 
+These are constraints on **this** preparation work, recorded when it ran. Live
+project truth, including which model is registered, is only in
+`CURRENT_STATE.md`.
+
 - Router training remains forbidden until genuine held-out OOF predictions
   populate the frozen gain-label contract.
 - Full repaired-2M SchNet training remains forbidden.
 - The sealed 20K remains unopened.
-- The production registry/default remains unchanged.
+- No work in this directory changes the production registry/default.
 - No remote job is submitted by these local preparation scripts.

@@ -79,6 +79,23 @@ MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
     MODELS_DIR / "phase8_hybrid_fusion_expansion_500k_dualgps.pt"
 )
 
+# Repaired-2M pure-2D Track A models. The three GPS encoders are direct
+# three-target predictors (no SchNet branch, no fusion head): the dense gate
+# blends their predictions per target, and the equal preset averages GPS7/GPS9
+# only. The rejected dual-SchNet residual is deliberately absent — see
+# `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+MODEL_REPAIRED_2M_GPS7 = MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps7_seed42.pt"
+MODEL_REPAIRED_2M_GPS9 = MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps9_seed42.pt"
+MODEL_REPAIRED_2M_GPS11_160 = (
+    MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps11_160_seed42.pt"
+)
+# Three dense-gate seeds are averaged; this is the accepted gate ensemble, not a
+# seed-selection choice.
+MODELS_REPAIRED_2M_DENSE_GATES = tuple(
+    MODELS_DIR / "phase8" / f"phase8_repaired_2m_dense_gate_seed{seed}.pt"
+    for seed in (42, 43, 44)
+)
+
 # Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
 # appending the residual-tail probe pool. Experimental only; not a default.
 MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
@@ -235,6 +252,35 @@ MODEL_REGISTRY = {
         "normalized": False, "base_hybrid": "phase8_expansion_hybrid",
         "extra_gps": "phase8_expansion_gps_depth9", "threshold_eV": 4.0,
         "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    # Repaired-2M pure-2D experts. Each is a direct three-target GPS predictor,
+    # so `kind` is "gps" and no 3D or fusion component exists.
+    "repaired_2m_gps7": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS7,
+        "params": PARAMS_GPS_2D, "normalized": False,
+    },
+    "repaired_2m_gps9": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS9,
+        "params": {**PARAMS_GPS_2D, "num_layers": 9}, "normalized": False,
+    },
+    "repaired_2m_gps11_160": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS11_160,
+        "params": {**PARAMS_GPS_2D, "hidden_channels": 160, "num_layers": 11},
+        "normalized": False,
+    },
+    # Accuracy preset: all three experts run, then a three-seed dense soft gate
+    # blends their predictions per target.
+    "repaired_2m_dense_2d": {
+        "kind": "multi2d_dense", "normalized": False,
+        "experts": ["repaired_2m_gps7", "repaired_2m_gps9", "repaired_2m_gps11_160"],
+        "gates": list(MODELS_REPAIRED_2M_DENSE_GATES),
+        "encoder_passes": 3,
+    },
+    # Lower-cost preset: two experts, fixed equal average, no gate checkpoint.
+    "repaired_2m_equal_2d": {
+        "kind": "multi2d_equal", "normalized": False,
+        "experts": ["repaired_2m_gps7", "repaired_2m_gps9"],
+        "encoder_passes": 2,
     },
     "phase8_tail_probe_hybrid": {
         "kind": "hybrid", "checkpoint": MODEL_PHASE8_TAIL_PROBE_HYBRID,

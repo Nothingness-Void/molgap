@@ -22,10 +22,12 @@ _LAZY_API = {
     "predict_smiles_batch",
     "predict_smiles_batch_hybrid",
     "predict_smiles_batch_hybrid_conformer_ensemble",
+    "predict_smiles_batch_repaired_2m_2d",
     "predict_smiles_batch_routed_dual_gps",
     "predict_smiles_ensemble",
     "load_model",
     "load_hybrid",
+    "load_repaired_2m_2d",
     "load_routed_dual_gps_hybrid",
 }
 

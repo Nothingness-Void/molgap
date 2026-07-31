@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "comparison": "same_ten_commercial_oled_molecules",
+  "repeats": 5,
+  "environment": {
+    "platform": "Windows-10-10.0.26220-SP0",
+    "python": "3.10.6",
+    "torch": "2.7.1+cu128"
+  },
+  "dft": {
+    "engine": "Gaussian 16",
+    "route": "B3LYP/6-31G(d) opt freq",
+    "recomputed": false,
+    "source": "D:\\\u6587\u6863\\molgap\\production\\history\\phase5\\gaussian_validation\\gjf",
+    "molecules": 10,
+    "processors_used": "8-16",
+    "per_molecule": [
+      {
+        "molecule": "BCP",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 8,
+        "optimization_steps": 6,
+        "opt_wall_s": 161.2,
+        "freq_wall_s": 287.8,
+        "opt_cpu_s": 1184.4,
+        "freq_cpu_s": 2263.9,
+        "opt_freq_wall_s": 449.0,
+        "opt_freq_cpu_s": 3448.3,
+        "geometry_step_wall_s": 26.866666666666664
+      },
+      {
+        "molecule": "CBP",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 8,
+        "optimization_steps": 7,
+        "opt_wall_s": 308.3,
+        "freq_wall_s": 644.6,
+        "opt_cpu_s": 2299.5,
+        "freq_cpu_s": 5081.5,
+        "opt_freq_wall_s": 952.9000000000001,
+        "opt_freq_cpu_s": 7381.0,
+        "geometry_step_wall_s": 44.042857142857144
+      },
+      {
+        "molecule": "Coumarin-6",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 8,
+        "optimization_steps": 16,
+        "opt_wall_s": 742.1,
+        "freq_wall_s": 579.9,
+        "opt_cpu_s": 5534.0,
+        "freq_cpu_s": 4564.2,
+        "opt_freq_wall_s": 1322.0,
+        "opt_freq_cpu_s": 10098.2,
+        "geometry_step_wall_s": 46.38125
+      },
+      {
+        "molecule": "CzSi",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 16,
+        "opt_wall_s": 1105.2,
+        "freq_wall_s": 1307.8,
+        "opt_cpu_s": 16196.1,
+        "freq_cpu_s": 20479.1,
+        "opt_freq_wall_s": 2413.0,
+        "opt_freq_cpu_s": 36675.2,
+        "geometry_step_wall_s": 69.075
+      },
+      {
+        "molecule": "DPEPO",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 12,
+        "opt_wall_s": 712.8,
+        "freq_wall_s": 1185.4,
+        "opt_cpu_s": 10335.8,
+        "freq_cpu_s": 18563.8,
+        "opt_freq_wall_s": 1898.2,
+        "opt_freq_cpu_s": 28899.6,
+        "geometry_step_wall_s": 59.4
+      },
+      {
+        "molecule": "mCP",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 8,
+        "optimization_steps": 7,
+        "opt_wall_s": 218.6,
+        "freq_wall_s": 283.0,
+        "opt_cpu_s": 1605.9,
+        "freq_cpu_s": 2219.5,
+        "opt_freq_wall_s": 501.6,
+        "opt_freq_cpu_s": 3825.4,
+        "geometry_step_wall_s": 31.228571428571428
+      },
+      {
+        "molecule": "NPB",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 11,
+        "opt_wall_s": 519.3,
+        "freq_wall_s": 937.3,
+        "opt_cpu_s": 7701.9,
+        "freq_cpu_s": 14640.7,
+        "opt_freq_wall_s": 1456.6,
+        "opt_freq_cpu_s": 22342.6,
+        "geometry_step_wall_s": 47.209090909090904
+      },
+      {
+        "molecule": "Spiro-OMeTAD",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 10,
+        "opt_wall_s": 740.3,
+        "freq_wall_s": 1633.8,
+        "opt_cpu_s": 10878.8,
+        "freq_cpu_s": 24977.2,
+        "opt_freq_wall_s": 2374.1,
+        "opt_freq_cpu_s": 35856.0,
+        "geometry_step_wall_s": 74.03
+      },
+      {
+        "molecule": "TCTA",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 10,
+        "opt_wall_s": 785.5,
+        "freq_wall_s": 1731.8,
+        "opt_cpu_s": 11540.8,
+        "freq_cpu_s": 27200.7,
+        "opt_freq_wall_s": 2517.3,
+        "opt_freq_cpu_s": 38741.5,
+        "geometry_step_wall_s": 78.55
+      },
+      {
+        "molecule": "TPBi",
+        "route": "B3LYP/6-31G(d) opt freq",
+        "processors": 16,
+        "optimization_steps": 18,
+        "opt_wall_s": 651.6,
+        "freq_wall_s": 558.9,
+        "opt_cpu_s": 9530.2,
+        "freq_cpu_s": 8764.4,
+        "opt_freq_wall_s": 1210.5,
+        "opt_freq_cpu_s": 18294.6,
+        "geometry_step_wall_s": 36.2
+      }
+    ],
+    "summary": {
+      "opt_wall_s": {
+        "median": 682.2,
+        "mean": 594.49,
+        "min": 161.2,
+        "max": 1105.2
+      },
+      "freq_wall_s": {
+        "median": 790.95,
+        "mean": 915.03,
+        "min": 283.0,
+        "max": 1731.8
+      },
+      "opt_cpu_s": {
+        "median": 8616.05,
+        "mean": 7680.74,
+        "min": 1184.4,
+        "max": 16196.1
+      },
+      "freq_cpu_s": {
+        "median": 11702.55,
+        "mean": 12875.5,
+        "min": 2219.5,
+        "max": 27200.7
+      },
+      "opt_freq_wall_s": {
+        "median": 1389.3,
+        "mean": 1509.52,
+        "min": 449.0,
+        "max": 2517.3
+      },
+      "opt_freq_cpu_s": {
+        "median": 20318.6,
+        "mean": 20556.239999999998,
+        "min": 3448.3,
+        "max": 38741.5
+      },
+      "geometry_step_wall_s": {
+        "median": 46.795170454545456,
+        "mean": 51.29834361471861,
+        "min": 26.866666666666664,
+        "max": 78.55
+      },
+      "opt_freq_core_h": {
+        "median": 5.644055555555555,
+        "mean": 5.710066666666666,
+        "min": 0.9578611111111112,
+        "max": 10.761527777777777
+      }
+    }
+  },
+  "ml": [
+    {
+      "registry_key": "repaired_2m_dense_2d",
+      "device": "cuda",
+      "single_molecule_s": {
+        "median": 0.04114589999880991,
+        "mean": 0.041436669998802245,
+        "min": 0.03624439999839524,
+        "max": 0.046167599997716025
+      },
+      "batch_of_set": {
+        "rows": 10,
+        "total_s": 0.04340550000051735,
+        "s_per_molecule": 0.004340550000051735
+      },
+      "batch_scaled": {
+        "rows": 1000,
+        "total_s": 0.754137099997024,
+        "s_per_molecule": 0.000754137099997024
+      },
+      "encoder_passes": 3,
+      "speedup": {
+        "vs_opt_freq_wall_batched": 1842237.969734525,
+        "vs_opt_freq_wall_single_call": 33765.21111557126,
+        "vs_geometry_step_wall_batched": 62051.27748618934
+      },
+      "projected_one_million_gpu_hours": 0.20948252777695112
+    },
+    {
+      "registry_key": "repaired_2m_equal_2d",
+      "device": "cuda",
+      "single_molecule_s": {
+        "median": 0.02161520000299788,
+        "mean": 0.021533640001143793,
+        "min": 0.020361100003356114,
+        "max": 0.02241469999717083
+      },
+      "batch_of_set": {
+        "rows": 10,
+        "total_s": 0.026264700005413033,
+        "s_per_molecule": 0.0026264700005413032
+      },
+      "batch_scaled": {
+        "rows": 1000,
+        "total_s": 0.5991030000004685,
+        "s_per_molecule": 0.0005991030000004684
+      },
+      "encoder_passes": 2,
+      "speedup": {
+        "vs_opt_freq_wall_batched": 2318966.855447083,
+        "vs_opt_freq_wall_single_call": 64274.21443277478,
+        "vs_geometry_step_wall_batched": 78108.72329884655
+      },
+      "projected_one_million_gpu_hours": 0.16641750000013011
+    }
+  ],
+  "accuracy": {
+    "Phase 5 SchNet (historical)": {
+      "homo_mae_eV": 0.2157645164596369,
+      "lumo_mae_eV": 0.19622153512076973,
+      "gap_mae_eV": 0.3518124285257074,
+      "average_mae_eV": 0.2545994933687047
+    },
+    "repaired-2M equal": {
+      "homo_mae_eV": 0.07684183524169512,
+      "lumo_mae_eV": 0.10029762711110848,
+      "gap_mae_eV": 0.1387736901903342,
+      "average_mae_eV": 0.10530438418104593
+    },
+    "repaired-2M dense": {
+      "homo_mae_eV": 0.07510586441258979,
+      "lumo_mae_eV": 0.09943107690397042,
+      "gap_mae_eV": 0.12623822121979916,
+      "average_mae_eV": 0.10025838751211978
+    }
+  },
+  "out_of_domain_molecules": [
+    {
+      "molecule": "DPEPO",
+      "unsupported_elements": [
+        "P"
+      ]
+    },
+    {
+      "molecule": "CzSi",
+      "unsupported_elements": [
+        "Si"
+      ]
+    }
+  ]
+}

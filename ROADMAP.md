@@ -16,7 +16,6 @@ The predictor is an implementation dependency; the database is the deliverable.
 | Priority | ID | Task | Exit or trigger | Detail |
 |---|---|---|---|---|
 | P0 | FREEZE | Freeze the project by 2026-08-04 12:00 JST | Stop unfinished compute, archive atomic partials, and permit only packaging or correctness fixes | `production/04_evaluate/project_freeze/README.md` |
-| P0 | PACKAGE-A | Package the frozen Track A pure-2D models | Retrieve and hash all selected checkpoints; add a tested inference loader, latency record, and valid/invalid/OOD smoke test | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
 | P0 | PACKAGE-B | Package the frozen Track B PCQM specialist | Preserve the seven accepted checkpoints; add reproducible inference and cost records | `production/04_evaluate/project_freeze/track_b_final_decision.md` |
 | P0 | REPORT | Build the final comparison and presentation package | Normalize common/OOD/P8-hard/PCQM metrics, cost, limitations, and architecture figures | `production/04_evaluate/project_freeze/README.md` |
 
@@ -69,6 +68,11 @@ start before the presentation.
   identity and the GPS7/GPS9 equal model as its lower-cost preset. The
   dual-SchNet residual was rejected:
   `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+- PACKAGE-A closed on 2026-07-31. Both presets are registered, loadable through
+  `molgap.inference`, reproduce their accepted external metrics within
+  `1e-4 eV`, and have latency, encoder-pass, and valid/invalid/OOD smoke-test
+  records under `production/04_evaluate/project_freeze/`. Delta/UQ was not
+  refitted and stays calibrated to its v3 base.
 - Track B froze the four-encoder, three-seed bounded PCQM Gap Fusion at
   `0.112011 eV` on the fixed official-validation subset:
   `production/04_evaluate/project_freeze/track_b_final_decision.md`.

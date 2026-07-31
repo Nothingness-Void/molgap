@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "check": "known_limitation_not_an_accuracy_claim",
+  "quantity_predicted": "gas-phase B3LYP/6-31G* Kohn-Sham eigenvalues",
+  "quantity_referenced": "thin-film / solution CV and UPS literature values",
+  "why_not_comparable": "Kohn-Sham eigenvalues are not quasiparticle levels, and a gas-phase calculation is not a condensed-phase measurement. Polarization, packing, and the measurement technique all shift the reference. A large offset is expected; only its size and consistency are informative.",
+  "reference": {
+    "path": "D:\\\u6587\u6863\\molgap\\data\\commercial\\oled_experimental_v2.csv",
+    "rows": 17,
+    "homo_methods": [
+      "CV",
+      "UPS"
+    ],
+    "lumo_methods": [
+      "CV",
+      "HOMO+optical",
+      "UPS"
+    ],
+    "conditions": [
+      "Solution (DCM)",
+      "Thin Film"
+    ]
+  },
+  "environment": {
+    "platform": "Windows-10-10.0.26220-SP0",
+    "python": "3.10.6",
+    "torch": "2.7.1+cu128",
+    "device": "cuda"
+  },
+  "presets": {
+    "repaired_2m_dense_2d": {
+      "rows": 17,
+      "offset": {
+        "homo": {
+          "mean_signed_offset_eV": 0.5465164453843061,
+          "median_signed_offset_eV": 0.5875337600708006,
+          "mae_eV": 0.5465164453843061,
+          "std_eV": 0.19460825363465362,
+          "min_signed_eV": 0.09151849746704066,
+          "max_signed_eV": 0.8640108108520508,
+          "systematic_fraction": 0.7374149668844391
+        },
+        "lumo": {
+          "mean_signed_offset_eV": 1.2574642085327823,
+          "median_signed_offset_eV": 1.3037783384323118,
+          "mae_eV": 1.2574642085327823,
+          "std_eV": 0.3909675007171342,
+          "min_signed_eV": 0.42400784492492694,
+          "max_signed_eV": 1.930477726459503,
+          "systematic_fraction": 0.7628245692416123
+        },
+        "gap": {
+          "mean_signed_offset_eV": 0.7187864825304817,
+          "median_signed_offset_eV": 0.7236413955688477,
+          "mae_eV": 0.7355322686363669,
+          "std_eV": 0.32841830001069416,
+          "min_signed_eV": -0.1423391819000246,
+          "max_signed_eV": 1.191578540802002,
+          "systematic_fraction": 0.6863857905482963
+        }
+      },
+      "per_molecule": [
+        {
+          "name": "CBP",
+          "homo_predicted_eV": -5.2820587158203125,
+          "lumo_predicted_eV": -0.9753720760345459,
+          "gap_predicted_eV": 4.305470943450928,
+          "homo_experimental_eV": -5.63,
+          "lumo_experimental_eV": -2.23,
+          "gap_experimental_eV": 3.4
+        },
+        {
+          "name": "mCP",
+          "homo_predicted_eV": -5.399274826049805,
+          "lumo_predicted_eV": -0.8695222735404968,
+          "gap_predicted_eV": 4.531578540802002,
+          "homo_experimental_eV": -6.14,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.34
+        },
+        {
+          "name": "TAPC",
+          "homo_predicted_eV": -4.635989189147949,
+          "lumo_predicted_eV": -0.2814711034297943,
+          "gap_predicted_eV": 4.362373352050781,
+          "homo_experimental_eV": -5.5,
+          "lumo_experimental_eV": -2.0,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "TCTA",
+          "homo_predicted_eV": -5.031223773956299,
+          "lumo_predicted_eV": -1.034164547920227,
+          "gap_predicted_eV": 3.9965293407440186,
+          "homo_experimental_eV": -5.7,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.3
+        },
+        {
+          "name": "NPB",
+          "homo_predicted_eV": -4.787604331970215,
+          "lumo_predicted_eV": -1.063874363899231,
+          "gap_predicted_eV": 3.7236413955688477,
+          "homo_experimental_eV": -5.4,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "TPBi",
+          "homo_predicted_eV": -5.7118821144104,
+          "lumo_predicted_eV": -1.5416454076766968,
+          "gap_predicted_eV": 4.17311429977417,
+          "homo_experimental_eV": -6.2,
+          "lumo_experimental_eV": -2.7,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "4CzIPN",
+          "homo_predicted_eV": -5.713582515716553,
+          "lumo_predicted_eV": -2.621670722961426,
+          "gap_predicted_eV": 3.091130495071411,
+          "homo_experimental_eV": -6.07,
+          "lumo_experimental_eV": -3.39,
+          "gap_experimental_eV": 2.68
+        },
+        {
+          "name": "CDBP",
+          "homo_predicted_eV": -5.293670654296875,
+          "lumo_predicted_eV": -0.7341411113739014,
+          "gap_predicted_eV": 4.561572074890137,
+          "homo_experimental_eV": -5.64,
+          "lumo_experimental_eV": -2.24,
+          "gap_experimental_eV": 3.4
+        },
+        {
+          "name": "MADN",
+          "homo_predicted_eV": -5.212466239929199,
+          "lumo_predicted_eV": -1.496221661567688,
+          "gap_predicted_eV": 3.7128543853759766,
+          "homo_experimental_eV": -5.8,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "ADN",
+          "homo_predicted_eV": -5.173650741577148,
+          "lumo_predicted_eV": -1.5401440858840942,
+          "gap_predicted_eV": 3.635662078857422,
+          "homo_experimental_eV": -5.8,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "DCM",
+          "homo_predicted_eV": -5.258481502532959,
+          "lumo_predicted_eV": -2.235647678375244,
+          "gap_predicted_eV": 3.0296220779418945,
+          "homo_experimental_eV": -5.35,
+          "lumo_experimental_eV": -3.25,
+          "gap_experimental_eV": 2.1
+        },
+        {
+          "name": "PBD",
+          "homo_predicted_eV": -5.786379337310791,
+          "lumo_predicted_eV": -1.774752140045166,
+          "gap_predicted_eV": 4.011205196380615,
+          "homo_experimental_eV": -6.2,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.8
+        },
+        {
+          "name": "OXD-7",
+          "homo_predicted_eV": -5.8383660316467285,
+          "lumo_predicted_eV": -2.2759921550750732,
+          "gap_predicted_eV": 3.5576608180999756,
+          "homo_experimental_eV": -6.4,
+          "lumo_experimental_eV": -2.7,
+          "gap_experimental_eV": 3.7
+        },
+        {
+          "name": "BCP",
+          "homo_predicted_eV": -6.023797512054443,
+          "lumo_predicted_eV": -1.7252129316329956,
+          "gap_predicted_eV": 4.30314302444458,
+          "homo_experimental_eV": -6.5,
+          "lumo_experimental_eV": -2.9,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "BPhen",
+          "homo_predicted_eV": -5.805189609527588,
+          "lumo_predicted_eV": -1.5377117395401,
+          "gap_predicted_eV": 4.266297817230225,
+          "homo_experimental_eV": -6.4,
+          "lumo_experimental_eV": -2.9,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "TPD",
+          "homo_predicted_eV": -4.649007320404053,
+          "lumo_predicted_eV": -0.5387902855873108,
+          "gap_predicted_eV": 4.118602275848389,
+          "homo_experimental_eV": -5.4,
+          "lumo_experimental_eV": -2.3,
+          "gap_experimental_eV": 3.1
+        },
+        {
+          "name": "m-MTDATA",
+          "homo_predicted_eV": -4.3365960121154785,
+          "lumo_predicted_eV": -0.5867741703987122,
+          "gap_predicted_eV": 3.7589120864868164,
+          "homo_experimental_eV": -5.1,
+          "lumo_experimental_eV": -2.0,
+          "gap_experimental_eV": 3.1
+        }
+      ]
+    },
+    "repaired_2m_equal_2d": {
+      "rows": 17,
+      "offset": {
+        "homo": {
+          "mean_signed_offset_eV": 0.5312698016447179,
+          "median_signed_offset_eV": 0.5803788185119627,
+          "mae_eV": 0.5312698016447179,
+          "std_eV": 0.19307584280572243,
+          "min_signed_eV": 0.05490074157714808,
+          "max_signed_eV": 0.8548192977905273,
+          "systematic_fraction": 0.7334479135962656
+        },
+        "lumo": {
+          "mean_signed_offset_eV": 1.2528084634332097,
+          "median_signed_offset_eV": 1.3067832469940184,
+          "mae_eV": 1.2528084634332097,
+          "std_eV": 0.39162732137526457,
+          "min_signed_eV": 0.4418692111968996,
+          "max_signed_eV": 1.905519413948059,
+          "systematic_fraction": 0.7618469964025522
+        },
+        "gap": {
+          "mean_signed_offset_eV": 0.7277352013307459,
+          "median_signed_offset_eV": 0.7506866455078125,
+          "mae_eV": 0.742933510612039,
+          "std_eV": 0.32769156622231355,
+          "min_signed_eV": -0.1291856288909914,
+          "max_signed_eV": 1.1815063095092775,
+          "systematic_fraction": 0.6895174764403162
+        }
+      },
+      "per_molecule": [
+        {
+          "name": "CBP",
+          "homo_predicted_eV": -5.306960105895996,
+          "lumo_predicted_eV": -1.0030063390731812,
+          "gap_predicted_eV": 4.305963516235352,
+          "homo_experimental_eV": -5.63,
+          "lumo_experimental_eV": -2.23,
+          "gap_experimental_eV": 3.4
+        },
+        {
+          "name": "mCP",
+          "homo_predicted_eV": -5.414181709289551,
+          "lumo_predicted_eV": -0.8944805860519409,
+          "gap_predicted_eV": 4.521506309509277,
+          "homo_experimental_eV": -6.14,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.34
+        },
+        {
+          "name": "TAPC",
+          "homo_predicted_eV": -4.645180702209473,
+          "lumo_predicted_eV": -0.274003267288208,
+          "gap_predicted_eV": 4.369106292724609,
+          "homo_experimental_eV": -5.5,
+          "lumo_experimental_eV": -2.0,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "TCTA",
+          "homo_predicted_eV": -5.080376625061035,
+          "lumo_predicted_eV": -1.0158071517944336,
+          "gap_predicted_eV": 4.0633368492126465,
+          "homo_experimental_eV": -5.7,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.3
+        },
+        {
+          "name": "NPB",
+          "homo_predicted_eV": -4.812742710113525,
+          "lumo_predicted_eV": -1.0623246431350708,
+          "gap_predicted_eV": 3.7506866455078125,
+          "homo_experimental_eV": -5.4,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "TPBi",
+          "homo_predicted_eV": -5.74436092376709,
+          "lumo_predicted_eV": -1.514422059059143,
+          "gap_predicted_eV": 4.23239803314209,
+          "homo_experimental_eV": -6.2,
+          "lumo_experimental_eV": -2.7,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "4CzIPN",
+          "homo_predicted_eV": -5.703682899475098,
+          "lumo_predicted_eV": -2.652377128601074,
+          "gap_predicted_eV": 3.054128646850586,
+          "homo_experimental_eV": -6.07,
+          "lumo_experimental_eV": -3.39,
+          "gap_experimental_eV": 2.68
+        },
+        {
+          "name": "CDBP",
+          "homo_predicted_eV": -5.298100471496582,
+          "lumo_predicted_eV": -0.7376449108123779,
+          "gap_predicted_eV": 4.562250137329102,
+          "homo_experimental_eV": -5.64,
+          "lumo_experimental_eV": -2.24,
+          "gap_experimental_eV": 3.4
+        },
+        {
+          "name": "MADN",
+          "homo_predicted_eV": -5.219621181488037,
+          "lumo_predicted_eV": -1.4932167530059814,
+          "gap_predicted_eV": 3.7267494201660156,
+          "homo_experimental_eV": -5.8,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "ADN",
+          "homo_predicted_eV": -5.195258617401123,
+          "lumo_predicted_eV": -1.534914255142212,
+          "gap_predicted_eV": 3.661513328552246,
+          "homo_experimental_eV": -5.8,
+          "lumo_experimental_eV": -2.8,
+          "gap_experimental_eV": 3.0
+        },
+        {
+          "name": "DCM",
+          "homo_predicted_eV": -5.295099258422852,
+          "lumo_predicted_eV": -2.2661242485046387,
+          "gap_predicted_eV": 3.0311403274536133,
+          "homo_experimental_eV": -5.35,
+          "lumo_experimental_eV": -3.25,
+          "gap_experimental_eV": 2.1
+        },
+        {
+          "name": "PBD",
+          "homo_predicted_eV": -5.790802955627441,
+          "lumo_predicted_eV": -1.7819392681121826,
+          "gap_predicted_eV": 4.0083699226379395,
+          "homo_experimental_eV": -6.2,
+          "lumo_experimental_eV": -2.4,
+          "gap_experimental_eV": 3.8
+        },
+        {
+          "name": "OXD-7",
+          "homo_predicted_eV": -5.829301834106445,
+          "lumo_predicted_eV": -2.2581307888031006,
+          "gap_predicted_eV": 3.570814371109009,
+          "homo_experimental_eV": -6.4,
+          "lumo_experimental_eV": -2.7,
+          "gap_experimental_eV": 3.7
+        },
+        {
+          "name": "BCP",
+          "homo_predicted_eV": -6.0054779052734375,
+          "lumo_predicted_eV": -1.7635481357574463,
+          "gap_predicted_eV": 4.241587162017822,
+          "homo_experimental_eV": -6.5,
+          "lumo_experimental_eV": -2.9,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "BPhen",
+          "homo_predicted_eV": -5.80479621887207,
+          "lumo_predicted_eV": -1.533027172088623,
+          "gap_predicted_eV": 4.271512985229492,
+          "homo_experimental_eV": -6.4,
+          "lumo_experimental_eV": -2.9,
+          "gap_experimental_eV": 3.5
+        },
+        {
+          "name": "TPD",
+          "homo_predicted_eV": -4.6696271896362305,
+          "lumo_predicted_eV": -0.5380357503890991,
+          "gap_predicted_eV": 4.130168914794922,
+          "homo_experimental_eV": -5.4,
+          "lumo_experimental_eV": -2.3,
+          "gap_experimental_eV": 3.1
+        },
+        {
+          "name": "m-MTDATA",
+          "homo_predicted_eV": -4.382842063903809,
+          "lumo_predicted_eV": -0.5892536640167236,
+          "gap_predicted_eV": 3.7902655601501465,
+          "homo_experimental_eV": -5.1,
+          "lumo_experimental_eV": -2.0,
+          "gap_experimental_eV": 3.1
+        }
+      ]
+    }
+  }
+}

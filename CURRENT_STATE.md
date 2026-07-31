@@ -10,29 +10,40 @@ Track A/B/C ownership is defined only in `TRACKS.md`.
 
 ## Production Baseline
 
-- **Recommended model:** routed dual-GPS v4.
-- **Registry key:** `phase8_routed_dualgps_hybrid`.
-- **Inference:** `src/molgap/inference.py`, lazily exported by
-  `src/molgap/__init__.py`.
+- **Recommended model:** repaired-2M three-GPS dense pure 2D.
+- **Registry key:** `repaired_2m_dense_2d`.
+- **Lower-cost preset:** `repaired_2m_equal_2d` (two GPS passes).
+- **Loader:** `load_repaired_2m_2d` /
+  `predict_smiles_batch_repaired_2m_2d` in `src/molgap/inference.py`, lazily
+  exported by `src/molgap/__init__.py`.
 - **Registry:** `src/molgap/constants.py`.
-- **Decision:** `production/03_train/routed_gps7_gps9_schnet_500k_v4/gps_arch_routed_decision.md`.
+- **Decision:** `production/04_evaluate/project_freeze/track_a_final_decision.md`.
 
-The v3 single hybrid remains a component/compatibility loader. v2 and v1 are
-historical fallbacks, not recommended defaults.
+The Track A packaging gate closed on 2026-07-31 and the recommendation moved off
+routed-v4. Both presets are pure 2D: no ETKDG conformer, no SchNet branch, and
+no fusion head. The rejected dual-SchNet residual is unreachable from the public
+loader.
 
-Track A model research is frozen. The selected scientific successor is the
-repaired-2M three-GPS dense pure-2D model; repaired-2M GPS7/GPS9 equal is the
-lower-cost preset. The registry remains on routed-v4 only until the selected
-repaired-2M checkpoints, tested inference loader, latency record, and smoke
-tests are packaged. This is a delivery boundary, not an open architecture
-decision. Final decision:
-`production/04_evaluate/project_freeze/track_a_final_decision.md`.
+`phase8_routed_dualgps_hybrid` (routed dual-GPS v4) remains registered and
+loadable as the previous production baseline and as the Delta/UQ compatibility
+base. The v3 single hybrid remains a component/compatibility loader; v2 and v1
+are historical fallbacks. None of these is the recommended predictor.
 
-The local routed-v4 new-SMILES latency baseline is recorded, including separate
-base-only and forced-route measurements. It does not satisfy the selected
-repaired-2M packaging gate because its checkpoints and public loader are still
-absent from the local inventory. Record:
-`production/04_evaluate/project_freeze/inference_latency/README.md`.
+Packaging evidence, all local and reproducible:
+
+| Requirement | Record |
+|---|---|
+| Selected checkpoints in the local inventory with matching hashes | `models/README.md`, `production/04_evaluate/project_freeze/public_inference_consistency/repaired_2m_public_inference.json` |
+| Public loader reproduces the accepted external metrics | `production/04_evaluate/project_freeze/public_inference_consistency/README.md` |
+| Latency and encoder-pass accounting for both presets and routed-v4 | `production/04_evaluate/project_freeze/inference_latency/README.md` |
+| Valid / invalid / OOD public-API smoke test | `production/04_evaluate/project_freeze/public_api_smoke_test/README.md` |
+| DFT-versus-ML cost comparison on one shared molecule set | `production/04_evaluate/project_freeze/cost_comparison/README.md` |
+| Slide-indexed evidence pack for the 2026-08-19 interview | `production/04_evaluate/project_freeze/presentation_evidence/README.md` |
+| Size and sign of the unmeasured experimental-value gap | `production/04_evaluate/project_freeze/experimental_offset/experimental_value_offset.md` |
+
+Delta and UQ remain calibrated to their historical v3 B3LYP base and were not
+refitted against this base. Do not present the accepted v3 uncertainty as
+calibrated for the repaired-2M presets.
 
 ## Execution Context
 
@@ -58,8 +69,10 @@ absent from the local inventory. Record:
 The final Track A accuracy identity is repaired-2M three-GPS dense pure 2D. The
 repaired-2M GPS7/GPS9 equal model is retained as the lower-cost preset and gives
 the best P8-hard result. Both passed a same-molecule common/OOD/P8-hard
-comparison against routed-v4. The dual-SchNet residual failed external transfer
-and is closed. Full metrics and claim boundaries:
+comparison against routed-v4 and are now packaged and recommended. The
+dual-SchNet residual failed external transfer and is closed. Both presets are
+knowingly worse than routed-v4 on the PCQM proxy; that domain belongs to the
+Track B specialist. Full metrics and claim boundaries:
 `production/04_evaluate/project_freeze/track_a_final_decision.md`.
 
 | Constraint in force | Why | Evidence |
@@ -193,18 +206,18 @@ The repaired-2M data gate is complete and accepted: the row ledger reconciles
 quality-filtered candidates. The materialized 2M table has unique CID/SMILES
 identities and no sealed-source rows.
 
-Track A and Track B model selection is complete. Remaining work is limited to
-artifact packaging, tested inference loaders, latency and encoder-pass
-accounting, public API smoke tests, normalized comparison tables, figures, and
-presentation material. The production registry must not change until the Track
-A packaging gate passes.
+Track A and Track B model selection is complete. The Track A packaging gate
+passed on 2026-07-31: checkpoints, tested public loader, latency and
+encoder-pass accounting, and the valid/invalid/OOD smoke test are all in the
+repository, so the recommendation moved to `repaired_2m_dense_2d`. Remaining
+work is limited to Track B packaging, normalized comparison tables, figures, and
+presentation material.
 
 Track C's QM9 screen and PubChemQC 100K transfer screen are complete. Their
 bounded 2D+3D fusion result is an accepted architecture input to Tracks A and B,
 not a production promotion. Track B's PCQM 1M run is the active leaderboard
 test. The masked PCQM Gap-only chain remains an explicit specialist and cannot
-replace routed v4 or the Track A general base without a separate deployment
-gate.
+replace the Track A general base without a separate deployment gate.
 
 | Question | Record |
 |---|---|

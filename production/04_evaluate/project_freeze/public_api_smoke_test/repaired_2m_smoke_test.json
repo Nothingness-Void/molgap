@@ -1,0 +1,519 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "check": "public_api_valid_invalid_ood_smoke_test",
+  "trained_mw_range": [
+    200.0,
+    1000.0
+  ],
+  "trained_elements": [
+    "C",
+    "Cl",
+    "F",
+    "H",
+    "N",
+    "O",
+    "S"
+  ],
+  "note": "Out-of-domain rows still return finite predictions; the loader reports applicability rather than refusing them. Do not present an out-of-domain value as a calibrated prediction.",
+  "environment": {
+    "platform": "Windows-10-10.0.26220-SP0",
+    "python": "3.10.6",
+    "torch": "2.7.1+cu128",
+    "device": "cuda"
+  },
+  "presets": {
+    "repaired_2m_dense_2d": {
+      "encoder_passes": 3,
+      "cases": {
+        "valid": {
+          "input_rows": 6,
+          "valid_rows": 6,
+          "dropped_rows": 0,
+          "dropped_inputs": [],
+          "all_finite": true,
+          "predictions": [
+            {
+              "input_index": 0,
+              "smiles": "Clc1ccc(cc1)C(=O)Nc1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 231.68200000000002,
+                "elements": [
+                  "C",
+                  "Cl",
+                  "N",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.983242034912109,
+              "lumo": -1.039965033531189,
+              "gap": 4.944084167480469
+            },
+            {
+              "input_index": 1,
+              "smiles": "O=C(Nc1ccccc1)c1ccc(cc1)S(=O)(=O)N",
+              "applicability": {
+                "parsed": true,
+                "mw": 276.317,
+                "elements": [
+                  "C",
+                  "N",
+                  "O",
+                  "S"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -6.122226715087891,
+              "lumo": -1.5110583305358887,
+              "gap": 4.609632968902588
+            },
+            {
+              "input_index": 2,
+              "smiles": "COc1ccc(cc1)C(=O)Nc1ccc(F)cc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 245.253,
+                "elements": [
+                  "C",
+                  "F",
+                  "N",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.706884860992432,
+              "lumo": -0.6489543914794922,
+              "gap": 5.06355619430542
+            },
+            {
+              "input_index": 3,
+              "smiles": "c1ccc(cc1)c1ccc(cc1)c1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 230.31,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.9720611572265625,
+              "lumo": -0.655348539352417,
+              "gap": 5.31571626663208
+            },
+            {
+              "input_index": 4,
+              "smiles": "O=C1c2ccccc2C(=O)c2ccccc21",
+              "applicability": {
+                "parsed": true,
+                "mw": 208.21599999999998,
+                "elements": [
+                  "C",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -6.854421138763428,
+              "lumo": -2.7330563068389893,
+              "gap": 4.120296955108643
+            },
+            {
+              "input_index": 5,
+              "smiles": "c1ccc2c(c1)[nH]c1ccc3c(c21)cccc3",
+              "applicability": {
+                "parsed": true,
+                "mw": 217.271,
+                "elements": [
+                  "C",
+                  "N"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.295477867126465,
+              "lumo": -1.0621594190597534,
+              "gap": 4.235987186431885
+            }
+          ]
+        },
+        "invalid": {
+          "input_rows": 5,
+          "valid_rows": 0,
+          "dropped_rows": 5,
+          "dropped_inputs": [
+            "not_a_smiles",
+            "c1ccccc",
+            "C(C)(C)(C)(C)C",
+            "",
+            "[Xx]"
+          ],
+          "all_finite": true,
+          "predictions": []
+        },
+        "ood": {
+          "input_rows": 5,
+          "valid_rows": 5,
+          "dropped_rows": 0,
+          "dropped_inputs": [],
+          "all_finite": true,
+          "predictions": [
+            {
+              "input_index": 0,
+              "smiles": "CC[Si](C)(C)C",
+              "applicability": {
+                "parsed": true,
+                "mw": 102.25299999999999,
+                "elements": [
+                  "C",
+                  "Si"
+                ],
+                "unsupported_elements": [
+                  "Si"
+                ],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -4.646144390106201,
+              "lumo": 2.177556037902832,
+              "gap": 7.386190891265869
+            },
+            {
+              "input_index": 1,
+              "smiles": "c1ccc(cc1)[Se]c1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 233.172,
+                "elements": [
+                  "C",
+                  "Se"
+                ],
+                "unsupported_elements": [
+                  "Se"
+                ],
+                "mw_in_trained_range": true,
+                "in_domain": false
+              },
+              "homo": -5.899755954742432,
+              "lumo": -0.24412791430950165,
+              "gap": 5.665731906890869
+            },
+            {
+              "input_index": 2,
+              "smiles": "CC(=O)O[B-](F)(F)F",
+              "applicability": {
+                "parsed": true,
+                "mw": 126.85000000000002,
+                "elements": [
+                  "B",
+                  "C",
+                  "F",
+                  "O"
+                ],
+                "unsupported_elements": [
+                  "B"
+                ],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -8.254866600036621,
+              "lumo": -1.087930679321289,
+              "gap": 7.129610538482666
+            },
+            {
+              "input_index": 3,
+              "smiles": "C",
+              "applicability": {
+                "parsed": true,
+                "mw": 16.043,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -8.09970760345459,
+              "lumo": -3.401798963546753,
+              "gap": 4.647878170013428
+            },
+            {
+              "input_index": 4,
+              "smiles": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+              "applicability": {
+                "parsed": true,
+                "mw": 703.3659999999998,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -7.203573703765869,
+              "lumo": 2.4456300735473633,
+              "gap": 9.625300407409668
+            }
+          ]
+        }
+      }
+    },
+    "repaired_2m_equal_2d": {
+      "encoder_passes": 2,
+      "cases": {
+        "valid": {
+          "input_rows": 6,
+          "valid_rows": 6,
+          "dropped_rows": 0,
+          "dropped_inputs": [],
+          "all_finite": true,
+          "predictions": [
+            {
+              "input_index": 0,
+              "smiles": "Clc1ccc(cc1)C(=O)Nc1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 231.68200000000002,
+                "elements": [
+                  "C",
+                  "Cl",
+                  "N",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.97517204284668,
+              "lumo": -1.040532112121582,
+              "gap": 4.9369916915893555
+            },
+            {
+              "input_index": 1,
+              "smiles": "O=C(Nc1ccccc1)c1ccc(cc1)S(=O)(=O)N",
+              "applicability": {
+                "parsed": true,
+                "mw": 276.317,
+                "elements": [
+                  "C",
+                  "N",
+                  "O",
+                  "S"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -6.117679119110107,
+              "lumo": -1.5008234977722168,
+              "gap": 4.618306636810303
+            },
+            {
+              "input_index": 2,
+              "smiles": "COc1ccc(cc1)C(=O)Nc1ccc(F)cc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 245.253,
+                "elements": [
+                  "C",
+                  "F",
+                  "N",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.716083526611328,
+              "lumo": -0.6472591757774353,
+              "gap": 5.071187973022461
+            },
+            {
+              "input_index": 3,
+              "smiles": "c1ccc(cc1)c1ccc(cc1)c1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 230.31,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.968589782714844,
+              "lumo": -0.6551216840744019,
+              "gap": 5.314891338348389
+            },
+            {
+              "input_index": 4,
+              "smiles": "O=C1c2ccccc2C(=O)c2ccccc21",
+              "applicability": {
+                "parsed": true,
+                "mw": 208.21599999999998,
+                "elements": [
+                  "C",
+                  "O"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -6.846956729888916,
+              "lumo": -2.723855495452881,
+              "gap": 4.125833511352539
+            },
+            {
+              "input_index": 5,
+              "smiles": "c1ccc2c(c1)[nH]c1ccc3c(c21)cccc3",
+              "applicability": {
+                "parsed": true,
+                "mw": 217.271,
+                "elements": [
+                  "C",
+                  "N"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -5.27812385559082,
+              "lumo": -1.0650336742401123,
+              "gap": 4.213605880737305
+            }
+          ]
+        },
+        "invalid": {
+          "input_rows": 5,
+          "valid_rows": 0,
+          "dropped_rows": 5,
+          "dropped_inputs": [
+            "not_a_smiles",
+            "c1ccccc",
+            "C(C)(C)(C)(C)C",
+            "",
+            "[Xx]"
+          ],
+          "all_finite": true,
+          "predictions": []
+        },
+        "ood": {
+          "input_rows": 5,
+          "valid_rows": 5,
+          "dropped_rows": 0,
+          "dropped_inputs": [],
+          "all_finite": true,
+          "predictions": [
+            {
+              "input_index": 0,
+              "smiles": "CC[Si](C)(C)C",
+              "applicability": {
+                "parsed": true,
+                "mw": 102.25299999999999,
+                "elements": [
+                  "C",
+                  "Si"
+                ],
+                "unsupported_elements": [
+                  "Si"
+                ],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -4.8901519775390625,
+              "lumo": 2.18025541305542,
+              "gap": 7.067440032958984
+            },
+            {
+              "input_index": 1,
+              "smiles": "c1ccc(cc1)[Se]c1ccccc1",
+              "applicability": {
+                "parsed": true,
+                "mw": 233.172,
+                "elements": [
+                  "C",
+                  "Se"
+                ],
+                "unsupported_elements": [
+                  "Se"
+                ],
+                "mw_in_trained_range": true,
+                "in_domain": false
+              },
+              "homo": -5.839654445648193,
+              "lumo": -0.26774388551712036,
+              "gap": 5.571389675140381
+            },
+            {
+              "input_index": 2,
+              "smiles": "CC(=O)O[B-](F)(F)F",
+              "applicability": {
+                "parsed": true,
+                "mw": 126.85000000000002,
+                "elements": [
+                  "B",
+                  "C",
+                  "F",
+                  "O"
+                ],
+                "unsupported_elements": [
+                  "B"
+                ],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -8.383851051330566,
+              "lumo": -1.2001819610595703,
+              "gap": 7.174658298492432
+            },
+            {
+              "input_index": 3,
+              "smiles": "C",
+              "applicability": {
+                "parsed": true,
+                "mw": 16.043,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": false,
+                "in_domain": false
+              },
+              "homo": -8.19630241394043,
+              "lumo": -3.4180374145507812,
+              "gap": 4.787656307220459
+            },
+            {
+              "input_index": 4,
+              "smiles": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+              "applicability": {
+                "parsed": true,
+                "mw": 703.3659999999998,
+                "elements": [
+                  "C"
+                ],
+                "unsupported_elements": [],
+                "mw_in_trained_range": true,
+                "in_domain": true
+              },
+              "homo": -7.183238983154297,
+              "lumo": 2.4372611045837402,
+              "gap": 9.610859870910645
+            }
+          ]
+        }
+      }
+    }
+  }
+}

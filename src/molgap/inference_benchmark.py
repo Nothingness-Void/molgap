@@ -85,6 +85,24 @@ def routed_v4_artifacts() -> dict[str, dict[str, str]]:
     }
 
 
+def repaired_2m_artifacts(key: str) -> dict[str, dict[str, str]]:
+    """Return the exact checkpoint identity for a repaired-2M 2D preset."""
+    spec = MODEL_REGISTRY[key]
+    paths = {
+        expert: Path(MODEL_REGISTRY[expert]["checkpoint"])
+        for expert in spec["experts"]
+    }
+    for index, gate in enumerate(spec.get("gates", ())):
+        paths[f"dense_gate_{index}"] = Path(gate)
+    missing = [name for name, path in paths.items() if not path.is_file()]
+    if missing:
+        raise FileNotFoundError(f"{key} checkpoint assets missing: {missing}")
+    return {
+        name: {"path": str(path), "sha256": _sha256_file(path)}
+        for name, path in paths.items()
+    }
+
+
 def _synchronize(device: torch.device) -> None:
     if device.type == "cuda":
         torch.cuda.synchronize(device)
@@ -224,40 +242,178 @@ def benchmark_routed_v4(
     }
 
 
+def benchmark_repaired_2m_2d(
+    *,
+    key: str = "repaired_2m_dense_2d",
+    device: str | torch.device | None = None,
+    batch_sizes: Iterable[int] = (1, 16, 64),
+    repeats: int = 3,
+    warmups: int = 1,
+    batch_2d: int = 256,
+    smiles_source: Iterable[str] = DEFAULT_SMILES,
+) -> dict[str, object]:
+    """Measure warm end-to-end repaired-2M pure-2D new-SMILES inference.
+
+    The timed path includes RDKit parsing, 2D PyG graph creation, every GPS
+    encoder pass, and the dense gate when the preset uses one. It builds no
+    conformer, so unlike routed v4 there is no ETKDG cost to amortize.
+    """
+    if repeats < 1 or warmups < 0:
+        raise ValueError("repeats must be positive and warmups cannot be negative")
+    sizes = [int(value) for value in batch_sizes]
+    if not sizes or any(value < 1 for value in sizes):
+        raise ValueError("at least one positive batch size is required")
+
+    from .inference import load_repaired_2m_2d, predict_smiles_batch_repaired_2m_2d
+
+    spec = MODEL_REGISTRY[key]
+    resolved_device = torch.device(
+        device or ("cuda" if torch.cuda.is_available() else "cpu")
+    )
+    _synchronize(resolved_device)
+    load_start = time.perf_counter()
+    models = load_repaired_2m_2d(resolved_device, key=key)
+    _synchronize(resolved_device)
+    load_s = time.perf_counter() - load_start
+
+    results: list[dict[str, object]] = []
+    source_values = [value.strip() for value in smiles_source if value.strip()]
+    for rows in sizes:
+        smiles = benchmark_smiles(source_values, rows)
+
+        def run_once():
+            return predict_smiles_batch_repaired_2m_2d(
+                smiles,
+                models=models,
+                batch_size=batch_2d,
+            )
+
+        for _ in range(warmups):
+            run_once()
+            _synchronize(resolved_device)
+
+        if resolved_device.type == "cuda":
+            torch.cuda.reset_peak_memory_stats(resolved_device)
+        samples_s: list[float] = []
+        for _ in range(repeats):
+            _synchronize(resolved_device)
+            start = time.perf_counter()
+            valid_idx, predictions = run_once()
+            _synchronize(resolved_device)
+            samples_s.append(time.perf_counter() - start)
+            if len(valid_idx) != rows or not np.isfinite(predictions).all():
+                raise RuntimeError(
+                    "benchmark inference did not produce finite predictions for every input"
+                )
+        record: dict[str, object] = {
+            "input_rows": rows,
+            "valid_rows": rows,
+            **_summary(samples_s, rows),
+        }
+        if resolved_device.type == "cuda":
+            record["peak_memory_bytes"] = int(
+                torch.cuda.max_memory_allocated(resolved_device)
+            )
+        results.append(record)
+
+    included = [
+        "RDKit_SMILES_parsing",
+        "2D_PyG_graph_construction",
+        f"{len(spec['experts'])}_GPS_expert_forward_passes",
+    ]
+    if spec["kind"] == "multi2d_dense":
+        included.append("three_seed_dense_soft_gate_blend")
+    else:
+        included.append("fixed_equal_average")
+    return {
+        "schema_version": 1,
+        "status": "complete",
+        "model": key,
+        "registry_key": key,
+        "encoder_passes": int(spec["encoder_passes"]),
+        "measurement": {
+            "scope": "warm_end_to_end_new_smiles_inference",
+            "included": included,
+            "excluded": [
+                "model_checkpoint_load",
+                "ETKDG_3D_conformer_construction",
+                "precomputed_catalog_lookup",
+            ],
+            "model_load_s": float(load_s),
+            "warmup_batches_per_size": warmups,
+            "timed_repeats_per_size": repeats,
+            "batch_2d": batch_2d,
+        },
+        "hardware": _hardware(resolved_device),
+        "input_suite": {
+            "source_unique_smiles": len(source_values),
+            "source_sha256": _sha256_text(source_values),
+        },
+        "artifacts": repaired_2m_artifacts(key),
+        "results": results,
+    }
+
+
 def benchmark_markdown(result: dict[str, object]) -> str:
     """Render a compact human-readable companion to the machine record."""
     measurement = result["measurement"]
     hardware = result["hardware"]
+    routed = any("routed_fraction" in row for row in result["results"])
+    title = (
+        "Routed V4 Local Inference Latency"
+        if routed
+        else f"Local Inference Latency - `{result['model']}`"
+    )
     lines = [
-        "# Routed V4 Local Inference Latency",
+        f"# {title}",
         "",
         "This measures warm end-to-end inference for new SMILES, including "
-        "ETKDG and graph construction. It is not a precomputed-catalog lookup benchmark.",
+        "graph construction. It is not a precomputed-catalog lookup benchmark.",
         "",
         f"- Model: `{result['model']}`",
         f"- Device: `{hardware['device']}`",
         f"- Model load: `{measurement['model_load_s']:.3f} s` (excluded from warm timings)",
         f"- Timed repeats per batch: `{measurement['timed_repeats_per_size']}`",
-        "",
-        "| Inputs | Median batch s | P95 batch s | Median ms/mol | Molecules/s | Routed fraction | Peak GPU MiB |",
-        "|---:|---:|---:|---:|---:|---:|---:|",
     ]
+    if "encoder_passes" in result:
+        lines.append(f"- Encoder passes per molecule: `{result['encoder_passes']}`")
+    header = "| Inputs | Median batch s | P95 batch s | Median ms/mol | Molecules/s |"
+    divider = "|---:|---:|---:|---:|---:|"
+    if routed:
+        header += " Routed fraction |"
+        divider += "---:|"
+    header += " Peak GPU MiB |"
+    divider += "---:|"
+    lines.extend(["", header, divider])
     for row in result["results"]:
         memory = row.get("peak_memory_bytes")
         memory_mib = "" if memory is None else f"{memory / 1024**2:.1f}"
-        lines.append(
-            "| {input_rows} | {median_batch_s:.4f} | {p95_batch_s:.4f} | "
-            "{median_ms_per_molecule:.2f} | {median_molecules_per_s:.2f} | "
-            "{routed_fraction:.3f} | {memory} |".format(**row, memory=memory_mib)
+        cells = (
+            f"| {row['input_rows']} | {row['median_batch_s']:.4f} | "
+            f"{row['p95_batch_s']:.4f} | {row['median_ms_per_molecule']:.2f} | "
+            f"{row['median_molecules_per_s']:.2f} |"
         )
-    lines.extend(
-        [
-            "",
-            "The selected repaired-2M dense/equal pure-2D checkpoints are not "
-            "included until their local inventory and public inference loader are accepted.",
-            "",
-        ]
-    )
+        if routed:
+            cells += f" {row['routed_fraction']:.3f} |"
+        cells += f" {memory_mib} |"
+        lines.append(cells)
+    if routed:
+        lines.extend(
+            [
+                "",
+                "The repaired-2M dense/equal pure-2D presets are measured "
+                "separately; this table is the routed-v4 baseline only.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "",
+                "This preset builds no ETKDG conformer, so its cost is 2D graph "
+                "construction plus its GPS encoder passes.",
+            ]
+        )
+    lines.append("")
     return "\n".join(lines)
 
 

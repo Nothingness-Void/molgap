@@ -12,7 +12,11 @@ No new training or remote workload was submitted by this audit.
 
 It is incorrect to describe every post-500K model as a technical failure.
 
-- Routed v4 is a confirmed positive production result.
+- Routed v4 was a confirmed positive production result and held the registry
+  until 2026-07-31, when the repaired-2M pure-2D presets replaced it.
+- The repaired-2M multi-expert pure-2D route is the first candidate to win on
+  accuracy *and* cost, because dropping the 3D branch removes conformer
+  generation. This is the direct counterexample to failure cause F8 below.
 - The fixed two-expert 1M ensemble and three-expert 2M ensemble are accuracy
   positive but fail the deployment-cost gate.
 - Retention-B is positive on common, OOD, and P8-hard and is accepted as the
@@ -30,9 +34,13 @@ common + OOD + P8-hard + PCQM + cost contract", not "learned nothing".
 
 ### Accepted Or Reusable
 
+- [x] **M35 repaired-2M three-GPS dense pure 2D**: production general B3LYP
+  predictor since 2026-07-31.
+- [x] **M36 repaired-2M GPS7/GPS9 equal pure 2D**: production lower-cost preset.
 - [x] **M00 Expansion500K v3 component**: retained as a stable component and
   compatibility loader.
-- [x] **M01 routed-v4**: production general B3LYP predictor.
+- [x] **M01 routed-v4**: superseded production baseline; still registered and the
+  Delta/UQ compatibility base.
 - [x] **M07 two-expert 1M ensemble**: confirmed accuracy gain; four GPS passes
   prevent default deployment.
 - [x] **M09 three-expert 2M ensemble**: strongest common aggregate among the
@@ -143,6 +151,13 @@ The two- and three-expert ensembles are accuracy-positive. They were not
 promoted because they require four or six GPS passes. These are cost
 rejections, not model-quality failures.
 
+The repaired-2M pure-2D route later resolved this by attacking the wrong cost
+term. Those earlier ensembles counted GPS passes while keeping the SchNet branch
+and its ETKDG conformer. Removing the 3D branch entirely made a three-GPS
+ensemble cheaper per molecule than the one-GPS-plus-SchNet production path,
+because conformer generation dominated. Encoder count was never the binding
+constraint.
+
 ### F9. The old product objective was over-coupled
 
 One model was required to win common, OOD, P8-hard, PCQM, and inference cost.
@@ -155,6 +170,8 @@ conflict without hiding a metric regression.
 ### P0. Freeze contracts
 
 - [x] Keep routed-v4 unchanged as production until a complete deployment gate.
+  The gate completed on 2026-07-31 and the registry moved to the repaired-2M
+  pure-2D presets; see `../../project_freeze/track_a_final_decision.md`.
 - [x] Preserve the raw 2M corpus; never overwrite it during repair.
 - [x] Separate the general B3LYP contract from the PCQM Gap-specialist contract.
 - [ ] Record one immutable identity/split manifest for every new comparison.
