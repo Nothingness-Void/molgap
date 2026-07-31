@@ -38,11 +38,14 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
 | `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
 | `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
+| `hierarchical_external_eval.py` | Paired same-molecule external evaluation of the hierarchical Fusion | Changing how a hierarchical candidate is compared against its own 2D base |
+| `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set fed to a 3D encoder |
 | `model_reporting.py` | Evidence-backed comparison tables | Changing production-model reporting layout |
 | `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
 | `hybrid.py` | `EndToEndHybrid` | Jointly training 2D, 3D, and fusion components |
 | `inference.py` | Model loading, batch prediction, routing, embeddings, UQ API | Changing prediction behavior |
+| `inference_benchmark.py` | Warm new-SMILES latency, throughput, and checkpoint-hash evidence | Changing how inference cost is measured |
 | `__init__.py` | Lazy package-level public exports | Changing the public import surface |
 | `multi2d.py` | Aligned experts, fixed ensembles, bootstrap/oracle metrics | Changing multi-expert evaluation or serving |
 | `multi2d_router_fusion.py` | Frozen-GPS dense gates and pre-dispatch target routers | Changing learned GPS7/GPS9/GPS11 prediction routing |

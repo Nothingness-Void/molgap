@@ -28,6 +28,12 @@ tests are packaged. This is a delivery boundary, not an open architecture
 decision. Final decision:
 `production/04_evaluate/project_freeze/track_a_final_decision.md`.
 
+The local routed-v4 new-SMILES latency baseline is recorded, including separate
+base-only and forced-route measurements. It does not satisfy the selected
+repaired-2M packaging gate because its checkpoints and public loader are still
+absent from the local inventory. Record:
+`production/04_evaluate/project_freeze/inference_latency/README.md`.
+
 ## Execution Context
 
 - One local Agent is active. There are no parallel Agent-owned worktrees or
@@ -140,7 +146,7 @@ Finished rounds are retained below as provenance.
 | Track B PCQM 1M fusion | Colab / local | Complete. Scaffold development selected the augmented-SchNet identity; the downloaded six-head bundle passed manifest and hash acceptance, and deterministic local evaluation read the fixed official-valid subset once. The three-seed equal ensemble reached `0.112011 eV` Gap MAE on 4,981 aligned rows. Official test and sealed 20K remained unread | `experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md` |
 | Track A repaired-2M SchNet training | IMS | Complete and accepted. Primary selected stable recovery epoch 4 at `0.120416 eV` test average MAE; Augmented selected epoch 7 at `0.127012 eV`. Both used the frozen `176/160/6`, cutoff-10-A protocol and recorded no non-finite batches | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/decision.md` |
 | Track A repaired-2M embedding handoff | IMS | Complete and accepted. Both variants contain 100 aligned 176-dimensional parts over 1,989,116 rows (`99.4558%` source coverage); source identity, targets, finite tensors, dimensions, counts, and per-file SHA256 passed | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/decision.md` |
-| Track A repaired-2M same-molecule gate | Local | Complete on 1,973 common ETKDG-valid rows. Repaired-2M dense/equal pure-2D improve routed-v4 500K average MAE by `0.005942/0.005113 eV` overall, `0.006066/0.003923 eV` on OOD, and `0.005815/0.006330 eV` on P8-hard; all average-MAE 95% intervals are below zero. Dense is the accuracy candidate and equal is the lower-cost candidate. Encoder-pass and latency accounting remain required before promotion | `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md` |
+| Track A repaired-2M same-molecule gate | Local | Complete on 1,973 common ETKDG-valid rows. Repaired-2M dense/equal pure-2D improve routed-v4 500K average MAE by `0.005942/0.005113 eV` overall, `0.006066/0.003923 eV` on OOD, and `0.005815/0.006330 eV` on P8-hard; all average-MAE 95% intervals are below zero. Dense is the accuracy candidate and equal is the lower-cost candidate. Encoder-pass accounting is complete; latency waits for the selected local checkpoint inventory and public loader | `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md` |
 | Track A hierarchical 2D+3D fusion | IMS / local | Rejected after external transfer. Although its internal scaffold gate improved, on the same common molecules the equal/dense dual-SchNet residual increased average MAE by `0.023251/0.024239 eV` versus its own 2D base. The SchNet checkpoints remain accepted assets, but these residual heads must not ship | `experiments/repaired_2m_scaling/results/hierarchical_dual_schnet_external/decision.md` |
 | Track A Primary SchNet recovery fallback | Colab | Closed as invalid evaluation evidence. Its reported `0.623343 eV` test MAE contradicted a complete 198,925-row local recomputation of the same recovery source state (`0.132068 eV`). It did not replace the accepted IMS Primary checkpoint. The replacement adapter now fails closed on wheel/input hashes, recovery replay, split consistency, and repeated final evaluation | `experiments/repaired_2m_scaling/results/dual_schnet_full_2m/colab_recovery_incident.md` |
 

@@ -3,9 +3,15 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
-from torch_scatter import scatter_mean
 from torch_geometric.nn import global_max_pool, global_mean_pool
+from torch_geometric.utils import scatter
 from torch_cluster import radius_graph
+
+
+def scatter_mean(src, index, dim=0, dim_size=None):
+    # PyG ships this natively; the separate torch_scatter wheel is a compiled
+    # extension that is absent on several of our targets, so do not depend on it.
+    return scatter(src, index, dim=dim, dim_size=dim_size, reduce="mean")
 
 
 class _EGNNLayer(nn.Module):
