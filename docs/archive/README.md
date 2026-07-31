@@ -16,5 +16,8 @@ are not sources of live state.
 | `ideation_2026-06-25.md` | Archived literature ideation snapshot |
 | `phase7_kaggle_handoff.md` | Archived Phase 7 Kaggle handoff |
 
-Start from `docs/phaseN.md`; open an archive document only when its pointer is
-relevant to the task.
+Start from `CURRENT_STATE.md` and the reading protocol in `AGENTS.md`; open an
+archive document only when its pointer is relevant to the task. Paths quoted
+inside these documents are historical — the phase-1-7 narrative now lives in
+`production/history/`, and the Phase 8 decision timeline is
+`experiments/_closed/PHASE8_TIMELINE.md`.

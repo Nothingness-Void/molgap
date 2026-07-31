@@ -38,12 +38,12 @@ Expand training data to MW 200-1000 so large commercial molecules (MW>500) becom
 ## Scripts
 | Script | Purpose |
 |--------|---------|
-| `scripts/phase6/fetch_large_mw.py` | Fetch MW 500-1000 molecules |
+| `production/history/scripts_phase6/fetch_large_mw.py` | Fetch MW 500-1000 molecules |
 | `scripts/phase6/colab_optuna.ipynb` | Optuna tuning on Colab |
-| `scripts/phase6/retrain_expanded.py` | Retrain on merged 44.8k dataset |
-| `scripts/phase6/test_full_dataset.py` | Test on full dataset |
-| `scripts/phase6/predict_commercial_p6.py` | Commercial molecule prediction |
-| `scripts/phase6/ood_validation_p6.py` | 500-mol OOD evaluation |
+| `production/history/scripts_phase6/retrain_expanded.py` | Retrain on merged 44.8k dataset |
+| `production/history/scripts_phase6/test_full_dataset.py` | Test on full dataset |
+| `production/history/scripts_phase6/predict_commercial_p6.py` | Commercial molecule prediction |
+| `production/history/scripts_phase6/ood_validation_p6.py` | 500-mol OOD evaluation |
 
 ## Results
 `results/phase6/`

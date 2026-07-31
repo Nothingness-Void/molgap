@@ -48,7 +48,7 @@ Report JSON: `results/phase8/archive/legacy/pilots_30k/tail_probe_30k_fetch_repo
 
 - Exact `very_low_gap` + `low_gap_aromatic_edge` priority scanning produced no
   new rows after 48 HF files / 211k parsed objects, so the probe was relaxed.
-- Added probe-only fetch buckets in `scripts/phase8/archive/legacy/data_coverage/fetch_targeted_topup.py`:
+- Added probe-only fetch buckets in `experiments/_closed/legacy_scripts/data_coverage/fetch_targeted_topup.py`:
   `low_gap_general` and `very_large_tail`.
 - `low_gap_general` filled its scaled quota (7,200 rows). `very_low_gap` and
   `very_large_tail` remained sparse after the full scan.

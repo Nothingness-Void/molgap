@@ -26,9 +26,9 @@ Validate the Phase 4 model on external data: OOD PubChemQC molecules, Gaussian B
 ## Scripts
 | Script | Purpose |
 |--------|---------|
-| `scripts/phase5/gaussian_validation.py` | Gaussian B3LYP comparison |
-| `scripts/phase5/parse_gaussian_outputs.py` | Parse Gaussian log files |
-| `scripts/phase5/ood_validation.py` | OOD 100-mol evaluation |
+| `production/history/scripts_phase5/gaussian_validation.py` | Gaussian B3LYP comparison |
+| `production/history/scripts_phase5/parse_gaussian_outputs.py` | Parse Gaussian log files |
+| `production/history/scripts_phase5/ood_validation.py` | OOD 100-mol evaluation |
 
 ## Results
 `results/phase5/`

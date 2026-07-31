@@ -15,8 +15,20 @@ being present here does not make it active.
 Large `.pt` files are local assets and may be ignored by Git. Their supporting
 metrics and decisions belong under `results/`.
 
-The five repaired-2M files above are hardlinks to the accepted experiment
+Five of the six repaired-2M files above are hardlinks to the accepted experiment
 outputs under `experiments/repaired_2m_scaling/results/`, so the registry has a
-stable path without duplicating bytes or forking provenance. Their SHA256 values
-are recorded in
+stable path without duplicating bytes or forking provenance:
+
+| Registered path under `phase8/` | Shares bytes with |
+|---|---|
+| `phase8_repaired_2m_d_gps9_seed42.pt` | `results/gps9_seed42_raw/model.pt` |
+| `phase8_repaired_2m_d_gps11_160_seed42.pt` | `results/gps11_160_seed42_raw/model.pt` |
+| `phase8_repaired_2m_dense_gate_seed{42,43,44}.pt` | `results/three_gps_router_fusion/run_seed42_44/dense_seed{42,43,44}.pt` |
+
+`phase8_repaired_2m_d_gps7_seed42.pt` is the exception: this path is itself the
+accepted retrieval target, so no second copy exists under `experiments/`. Its
+provenance is `experiments/repaired_2m_scaling/results/retention_d_seed42_comparison.json`,
+whose `model.path` and `model.sha256` name exactly this file.
+
+All six SHA256 values are recorded in
 `production/04_evaluate/project_freeze/public_inference_consistency/repaired_2m_public_inference.json`.

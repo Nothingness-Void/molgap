@@ -2,8 +2,8 @@
 
 > Archived narrative snapshot through P8.12 (2026-07-11). Words such as
 > `current`, `default`, `production`, and `next` describe that historical
-> checkpoint only. Use `CURRENT_STATE.md`, `ROADMAP.md`, and `docs/phase8.md`
-> for the maintained project view.
+> checkpoint only. Use `CURRENT_STATE.md`, `ROADMAP.md`, and
+> `experiments/_closed/PHASE8_TIMELINE.md` for the maintained project view.
 
 ## Goal
 Produce a better **v2 B3LYP base model** than the Phase 7 300k hybrid, or prove

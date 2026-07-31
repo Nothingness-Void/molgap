@@ -1,7 +1,9 @@
 # Routed GPS7 + GPS9 + SchNet 500K V4
 
-This directory contains the selection and evaluation evidence for the
-recommended B3LYP predictor.
+This directory contains the selection and evaluation evidence for the routed
+dual-GPS v4 B3LYP predictor. It is still registered and loadable, but it is the
+previous production baseline; the recommended predictor is only in
+`CURRENT_STATE.md`.
 
 - Base path: GPS7 + SchNet 500K v3.
 - Routed expert: GPS9.

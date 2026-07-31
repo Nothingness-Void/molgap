@@ -26,5 +26,6 @@ and does not consume archive experiment numbers:
 | Head and post-hoc probes | Layer fusion, residual calibration, weighted fusion, and head swaps failed promotion gates | [`legacy/head_posthoc/`](legacy/head_posthoc/) |
 | Conformer ensemble | Accuracy improved, but roughly 6.8x inference cost keeps it opt-in | [`legacy/conformer_ensemble/`](legacy/conformer_ensemble/) |
 
-The production recommendation remains the routed dual-GPS v4 recorded in
-`CURRENT_STATE.md`.
+None of these branches changed the model registry. The recommended predictor is
+recorded only in `CURRENT_STATE.md`; the routed dual-GPS v4 that these records
+compare against is now the previous production baseline.

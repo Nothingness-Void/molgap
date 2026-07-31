@@ -46,8 +46,8 @@ LoRA conclusion: encoder LoRA is useful for Phase 9 GW Delta after the base mode
 
 Artifacts:
 
-- trainer: `scripts/phase8/archive/legacy/head_probes/train_layer_fusion.py`
-- common evaluator: `scripts/phase8/archive/legacy/head_probes/eval_layer_fusion_common.py`
+- trainer: `experiments/_closed/legacy_scripts/head_probes/train_layer_fusion.py`
+- common evaluator: `experiments/_closed/legacy_scripts/head_probes/eval_layer_fusion_common.py`
 - internal metrics: `results/phase8/archive/legacy/head_posthoc/layer_fusion_replacement30k_metrics.json`
 - common metrics: `results/phase8/archive/legacy/head_posthoc/layer_fusion_common_eval_metrics.json`
 - machine-readable summary: `results/phase8/archive/legacy/head_posthoc/intermediate_layer_fusion_comparison.json`

@@ -2,7 +2,7 @@
 
 > Archived v1 M1-UQ narrative. Words such as `current`, `default`, and `next`
 > describe that historical checkpoint only. Use `CURRENT_STATE.md`,
-> `ROADMAP.md`, and `docs/phase10.md` for the maintained project view.
+> `ROADMAP.md`, and `production/06_uq/METHOD.md` for the maintained project view.
 
 ## Goal
 Build the user-facing prediction layer and the commercial-molecule property

@@ -63,6 +63,6 @@ head-only transplant with external sets is not warranted.
 - Atomic per-epoch logs and resumable checkpoints: `seed42/`, `seed43/`,
   `seed44/`
 - Reusable entry point:
-  `scripts/phase8/archive/archive-r07-exact2m-encoder-transplant/train_routed_v4_encoder_transplant.py`
+  `experiments/_closed/archive-r07-exact2m-encoder-transplant/scripts/train_routed_v4_encoder_transplant.py`
 
 No production registry entry or default checkpoint changed.

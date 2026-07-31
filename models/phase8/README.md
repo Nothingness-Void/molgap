@@ -7,7 +7,7 @@
 
 They are closed candidates, not registered defaults. Their completed validation
 driver is archived at
-`scripts/phase8/archive/scaleup/validation/validate_expansion_1m_schnet.py` and
+`experiments/_closed/scaleup_scripts/validation/validate_expansion_1m_schnet.py` and
 the decision is recorded under `results/phase8/expansion_1m/`.
 
 The matching 1M GPS7/GPS9 checkpoints remain in the downloaded Kaggle

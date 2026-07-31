@@ -24,9 +24,9 @@ PM6 conformers (from PubChemQC) give higher R² in testing, but at inference tim
 ## Scripts
 | Script | Purpose |
 |--------|---------|
-| `scripts/phase4/gnn_schnet_3d.py` | SchNet training (baseline parameters) |
-| `scripts/phase4/schnet_optuna.py` | Optuna hyperparameter search |
-| `scripts/phase4/_retrain_best.py` | Retrain with best Optuna params |
+| `production/history/scripts_phase4/gnn_schnet_3d.py` | SchNet training (baseline parameters) |
+| `production/history/scripts_phase4/schnet_optuna.py` | Optuna hyperparameter search |
+| `production/history/scripts_phase4/_retrain_best.py` | Retrain with best Optuna params |
 
 ## Results
 `results/phase4/`

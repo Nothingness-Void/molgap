@@ -31,7 +31,8 @@ tested topology measures.
 
 **STOP at G0.** Do not train the 30k residual adaptor, add a separate 2D expert,
 or introduce static blending, routing, or descriptor fusion under this
-hypothesis. The production recommendation remains routed dual-GPS v4.
+hypothesis. This branch changed no registry selection; the recommended predictor
+is only in `CURRENT_STATE.md`.
 
 Complete artifacts: `pre_registration.md`, `g0_coverage_report.md`,
 `metrics.json`, `g0_rows.csv`, archived feature code, and archived tests.

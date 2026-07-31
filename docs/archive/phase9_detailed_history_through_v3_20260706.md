@@ -2,8 +2,8 @@
 
 > Archived narrative snapshot through the v3/LoRA experiments on 2026-07-06.
 > Words such as `current`, `default`, and `next` describe that historical
-> checkpoint only. Use `CURRENT_STATE.md`, `ROADMAP.md`, and `docs/phase9.md`
-> for the maintained project view.
+> checkpoint only. Use `CURRENT_STATE.md`, `ROADMAP.md`, and
+> `production/05_delta_gw/METHOD.md` for the maintained project view.
 
 ## Goal
 Lift predictions past the B3LYP method ceiling toward **GW gas-phase** accuracy,

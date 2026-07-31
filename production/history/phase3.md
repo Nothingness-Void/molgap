@@ -19,8 +19,8 @@ LightGBM Optuna + feature selection: MAE=0.160, R²=0.885
 ## Scripts
 | Script | Purpose |
 |--------|---------|
-| `scripts/phase3/scaleup.py` | Fetch 30k + feature engineering |
-| `scripts/phase3/select_and_optimize.py` | Feature selection + Optuna retuning |
+| `production/history/scripts_phase3/scaleup.py` | Fetch 30k + feature engineering |
+| `production/history/scripts_phase3/select_and_optimize.py` | Feature selection + Optuna retuning |
 
 ## Results
 `results/phase3/`

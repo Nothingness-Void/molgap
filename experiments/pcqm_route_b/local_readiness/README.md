@@ -11,7 +11,7 @@ before the active remote outputs arrive?
 | SchNet acceptance | Ready; both branches required | `../../../src/molgap/artifact_acceptance.py` |
 | Repaired-2M 3D acceptance | Ready; expects 100 immutable shards | `../../../src/molgap/artifact_acceptance.py` |
 | Model database | Updated; production/candidate/expert roles separated | `../../../production/04_evaluate/inventory/model_inventory_audit/model_inventory.csv` |
-| Report table | Generated with blank bounded-fusion cells | `../../../production/04_evaluate/inventory/reporting/model_comparison.md` |
+| Report table | Generated with blank bounded-fusion cells | `../../../production/04_evaluate/overview/production_model_reporting/model_comparison.md` |
 
 ## Safety Locks
 

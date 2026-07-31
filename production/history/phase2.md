@@ -23,7 +23,7 @@ Test how model performance degrades when expanding element types and MW range.
 - HOMO most sensitive to chemical diversity, LUMO most stable
 
 ## Scripts
-`scripts/phase2/generalization_study.py`
+`production/history/scripts_phase2/generalization_study.py`
 
 ## Results
 `results/phase2/generalization/`

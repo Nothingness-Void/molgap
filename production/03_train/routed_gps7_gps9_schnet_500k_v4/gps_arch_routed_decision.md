@@ -12,5 +12,7 @@ Training data and SchNet are unchanged.
 | PCQM proxy | 365 / 2988 | n/a | -0.000223 | [-0.001358, +0.000851] |
 
 
-**Decision: positive. Promote as the v4 B3LYP accuracy predictor; keep the v3 single hybrid as the component/compatibility loader.**
-The next gate is re-running Phase 9/10 Delta and UQ against routed v4 outputs.
+**Decision: positive. Promoted as the v4 B3LYP accuracy predictor; the v3 single hybrid was kept as the component/compatibility loader.**
+The gate this decision opened was re-running Phase 9/10 Delta and UQ against
+routed v4 outputs. Task order is in `ROADMAP.md`; the recommended predictor is in
+`CURRENT_STATE.md`.
