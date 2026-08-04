@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=13.333in,paperheight=7.5in,margin=0.25in]{geometry}
+\pagestyle{empty}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1in,y=1in]
+  \node[title,font=\sffamily\bfseries\fontsize{108}{120}\selectfont,anchor=west] at (0,6.25) {Three 2D encoders. One fusion.};
+  \node[subtitle,font=\sffamily\fontsize{38}{45}\selectfont,anchor=west] at (0,5.45) {SMILES $\rightarrow$ three graph encoders $\rightarrow$ target-wise fusion.};
+
+  \node[box,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.4cm,minimum height=1.0cm] (smiles) at (1.4,3.70) {SMILES\\molecular identity};
+  \node[box,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.4cm,minimum height=1.0cm] (rdkit) at (4.0,3.70) {RDKit + PyG\\2D atom/bond graph};
+  \node[model,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.25cm,minimum height=1.0cm] (g7) at (7.0,4.85) {GPS7\\192 hidden};
+  \node[model,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.25cm,minimum height=1.0cm] (g9) at (7.0,3.70) {GPS9\\192 hidden};
+  \node[model,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.25cm,minimum height=1.0cm] (g11) at (7.0,2.60) {GPS11\\160 hidden};
+  \node[model,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.7cm,minimum height=1.15cm] (gate) at (9.8,3.70) {dense soft gate\\27 input features\\3 seed average};
+  \node[specialist,font=\sffamily\fontsize{14}{17}\selectfont,minimum width=2.55cm,minimum height=1.15cm] (out) at (11.85,3.70) {HOMO\\LUMO\\Gap\\B3LYP estimate};
+
+  \draw[arrow] (smiles.east) -- (rdkit.west);
+  \draw[arrow] (rdkit.east) -- ++(0.65,0) |- (g7.west);
+  \draw[arrow] (rdkit.east) -- ++(0.65,0) -- (g9.west);
+  \draw[arrow] (rdkit.east) -- ++(0.65,0) |- (g11.west);
+  \draw[arrow] (g7.east) -- ++(0.45,0) |- (gate.west);
+  \draw[arrow] (g9.east) -- (gate.west);
+  \draw[arrow] (g11.east) -- ++(0.45,0) |- (gate.west);
+  \draw[arrow] (gate.east) -- (out.west);
+
+  \node[note,font=\sffamily\fontsize{23}{28}\selectfont,text width=3.8cm] at (3.0,1.70) {Pure 2D.};
+  \node[note,font=\sffamily\fontsize{23}{28}\selectfont,text width=5.2cm] at (7.1,1.62) {Dense: 3 GPS.\\Equal:\\GPS7/GPS9.};
+  \node[note,font=\sffamily\fontsize{23}{28}\selectfont,text width=3.8cm] at (11.35,1.70) {Fast path.\\SMILES.};
+  \node[draw=grid, fill=futureFill, text=muted, rounded corners=3pt, minimum width=12.65in, minimum height=.55in, align=left, inner sep=7pt, text width=11.95in] at (6.65,0.52) {\sffamily\fontsize{16}{19}\selectfont\textcolor{blue}{\bfseries Takeaway:} one SMILES input $\rightarrow$ two pure-2D presets $\rightarrow$ one HOMO/LUMO/gap prediction.};
+\end{tikzpicture}
+\end{document}

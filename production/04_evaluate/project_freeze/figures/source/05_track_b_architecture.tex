@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=13.333in,paperheight=7.5in,margin=0.25in]{geometry}
+\pagestyle{empty}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1in,y=1in]
+  \node[title,anchor=west] at (0,6.85) {Track B specialist: PCQM Gap-only bounded fusion};
+  \node[subtitle,anchor=west] at (0,6.48) {This is a benchmark specialist, not the general B3LYP production predictor.};
+
+  \node[data,minimum width=2.65cm,minimum height=1.0cm] (input) at (1.35,4.45) {PCQM molecule\\graph + ETKDG views};
+  \node[model,minimum width=2.25cm,minimum height=0.95cm] (g9) at (4.45,5.45) {GPS9\\192 hidden};
+  \node[model,minimum width=2.25cm,minimum height=0.95cm] (g11) at (4.45,4.45) {GPS11\\160 hidden};
+  \node[model,minimum width=2.25cm,minimum height=0.95cm] (s1) at (4.45,3.45) {Primary\\SchNet 176/160/6};
+  \node[model,minimum width=2.25cm,minimum height=0.95cm] (s2) at (4.45,2.45) {Augmented\\SchNet 176/160/6};
+  \node[specialist,minimum width=2.75cm,minimum height=1.15cm] (fusion) at (8.0,4.45) {bounded correction\\identity path\\+/- 0.10 eV};
+  \node[specialist,minimum width=2.7cm,minimum height=1.15cm] (ens) at (11.05,4.45) {3 seed equal\\Gap only\\0.112011 eV\\fixed valid subset};
+
+  \draw[arrow] (input.east) -- ++(0.55,0) |- (g9.west);
+  \draw[arrow] (input.east) -- ++(0.55,0) |- (g11.west);
+  \draw[arrow] (input.east) -- ++(0.55,0) |- (s1.west);
+  \draw[arrow] (input.east) -- ++(0.55,0) |- (s2.west);
+  \draw[arrow] (g9.east) -- ++(0.55,0) |- (fusion.west);
+  \draw[arrow] (g11.east) -- ++(0.55,0) |- (fusion.west);
+  \draw[arrow] (s1.east) -- (fusion.west);
+  \draw[arrow] (s2.east) -- ++(0.55,0) |- (fusion.west);
+  \draw[arrow] (fusion.east) -- (ens.west);
+
+  \node[note,text width=4.4cm] at (2.2,0.95) {Evidence boundary: 4,981 fixed official-validation rows were read once. Official test, sealed 20K and leaderboard submission were not used.};
+  \node[future,text width=3.5cm,minimum height=0.85cm] at (8.0,1.0) {Future only: OGB-compliant\\from-scratch retrain};
+\end{tikzpicture}
+\end{document}

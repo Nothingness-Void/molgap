@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=13.333in,paperheight=7.5in,margin=0.25in]{geometry}
+\pagestyle{empty}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1in,y=1in]
+  \node[title,anchor=west] at (0,6.85) {Track C discovery funnel: spend cheap compute before expensive scale-up};
+  \node[subtitle,anchor=west] at (0,6.48) {QM9 ranks candidates; PubChemQC transfer decides whether a result is relevant to the target domain.};
+
+  \node[data,minimum width=2.85cm,minimum height=1.0cm] (q) at (1.75,4.45) {QM9 screen\\100K-scale candidates};
+  \node[box,minimum width=2.85cm,minimum height=1.0cm] (keep) at (5.0,4.45) {retain GPS9\\GPS11-160\\lightweight SchNet};
+  \node[data,minimum width=3.0cm,minimum height=1.0cm] (t) at (8.45,4.45) {PubChemQC 100K\\same label / split rules};
+  \node[model,minimum width=3.0cm,minimum height=1.0cm] (f) at (11.85,4.45) {accepted input\\to Track A / B\\bounded fusion};
+  \draw[arrow] (q.east) -- (keep.west);
+  \draw[arrow] (keep.east) -- (t.west);
+  \draw[arrow] (t.east) -- (f.west);
+
+  \node[future,minimum width=2.25cm,minimum height=0.8cm] (x1) at (1.75,2.2) {TensorNet\\eliminated};
+  \node[future,minimum width=2.25cm,minimum height=0.8cm] (x2) at (4.55,2.2) {EGNN\\eliminated};
+  \node[future,minimum width=2.25cm,minimum height=0.8cm] (x3) at (7.35,2.2) {ordinary Fusion\\not promoted};
+  \node[future,minimum width=2.25cm,minimum height=0.8cm] (x4) at (10.15,2.2) {dual-SchNet\\external regression};
+  \draw[dashedarrow] (q.south) -- (x1.north);
+  \draw[dashedarrow] (keep.south) -- (x2.north);
+  \draw[dashedarrow] (t.south) -- (x3.north);
+  \draw[dashedarrow] (f.south) -- (x4.north);
+
+  \node[note,text width=11.8cm] at (6.65,0.75) {Key lesson: an architecture can be internally strong and still fail external transfer. Track C is therefore an evidence filter, not a production registry.};
+\end{tikzpicture}
+\end{document}
