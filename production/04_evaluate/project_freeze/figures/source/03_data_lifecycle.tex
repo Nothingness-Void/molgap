@@ -1,0 +1,30 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=13.333in,paperheight=7.5in,margin=0.25in]{geometry}
+\pagestyle{empty}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1in,y=1in]
+  \node[title,anchor=west] at (0,6.85) {From quantum-chemistry records to a usable predictor};
+  \node[subtitle,anchor=west] at (0,6.48) {The database is the deliverable; the neural predictor is the reproducible dependency that produces it.};
+
+  \node[data,minimum width=2.55cm,minimum height=1.0cm] (pc) at (1.7,4.7) {PubChemQC\\B3LYP/6-31G*};
+  \node[data,minimum width=2.55cm,minimum height=1.0cm] (qm) at (1.7,2.8) {QM9\\architecture screen};
+  \node[data,minimum width=2.55cm,minimum height=1.0cm] (pcqm) at (1.7,0.9) {PCQM4Mv2\\Gap benchmark};
+  \node[data,minimum width=2.55cm,minimum height=1.0cm] (oled) at (4.9,0.9) {OLED literature\\offset check only};
+
+  \node[box,minimum width=2.9cm,minimum height=1.15cm] (gate) at (5.0,4.7) {schema + CID\\canonical SMILES\\label / split checks};
+  \node[data,minimum width=3.0cm,minimum height=1.15cm] (repair) at (8.4,4.7) {repaired-2M\\2,000,000 unique rows\\CHONSFCl, MW 200--1000};
+  \node[model,minimum width=3.0cm,minimum height=1.15cm] (graph) at (11.8,4.7) {2D molecular graph\\atoms + bonds\\no ETKDG in production};
+  \node[model,minimum width=3.0cm,minimum height=1.15cm] (pred) at (11.8,2.6) {GPS7 + GPS9 + GPS11-160\\dense gate\\HOMO / LUMO / Gap};
+  \node[model,minimum width=3.0cm,minimum height=1.15cm] (db) at (11.8,0.55) {versioned output\\prediction + model version\\applicability / OOD fields};
+
+  \draw[arrow] (pc.east) -- (gate.west);
+  \draw[arrow] (gate.east) -- (repair.west);
+  \draw[arrow] (repair.east) -- (graph.west);
+  \draw[arrow] (graph.south) -- (pred.north);
+  \draw[arrow] (pred.south) -- (db.north);
+  \draw[dashedarrow] (qm.east) to[out=0,in=180] node[above,note] {screen} (gate.west);
+  \draw[dashedarrow] (pcqm.east) to[out=0,in=180] node[below,note] {specialist validation} (pred.west);
+  \draw[dashedarrow] (oled.east) to[out=0,in=180] node[below,note] {physical mismatch documented} (db.west);
+\end{tikzpicture}
+\end{document}

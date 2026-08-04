@@ -145,3 +145,18 @@ platforms/_records/**/inputs/**
 
 # Local Codex artifact build workspaces.
 .codex_tmp/
+
+# Presentation outputs live on the dedicated presentation-assets branch. Keep
+# source diagrams and the builder in the main branch without accumulating
+# generated light/dark variants or inspection workspaces here.
+production/04_evaluate/project_freeze/figures/*.pdf
+production/04_evaluate/project_freeze/figures/*.png
+production/04_evaluate/project_freeze/figures/*.svg
+production/04_evaluate/project_freeze/figures/figure_manifest.json
+production/04_evaluate/project_freeze/figures/source/*.aux
+production/04_evaluate/project_freeze/figures/source/*.log
+production/04_evaluate/project_freeze/figures/source/*.pdf
+production/04_evaluate/project_freeze/figures/source/*.png
+production/04_evaluate/project_freeze/figures_dark/
+production/04_evaluate/project_freeze/figures_dark_final/
+tmp/

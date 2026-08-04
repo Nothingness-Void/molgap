@@ -1,0 +1,23 @@
+\documentclass[11pt]{article}
+\usepackage[paperwidth=13.333in,paperheight=7.5in,margin=0.25in]{geometry}
+\pagestyle{empty}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1in,y=1in]
+  \node[title,anchor=west] at (0,6.85) {Three routes, three different success criteria};
+  \node[subtitle,anchor=west] at (0,6.48) {The tracks are deliberately separated: a better benchmark specialist is not automatically a better production model.};
+
+  \node[data,minimum width=3.1cm,minimum height=1.15cm] (c) at (2.0,4.75) {C -- Discovery\\QM9 + PubChemQC 100K\\cheap architecture elimination};
+  \node[model,minimum width=3.1cm,minimum height=1.15cm] (a) at (6.65,4.75) {A -- Production\\general B3LYP model\\repaired-2M pure 2D};
+  \node[specialist,minimum width=3.1cm,minimum height=1.15cm] (b) at (11.3,4.75) {B -- Leaderboard\\PCQM Gap specialist\\bounded 2D+3D fusion};
+
+  \draw[arrow] (c.east) -- node[above,note] {transfer evidence} (a.west);
+  \draw[arrow] (c.east) to[out=-15,in=-165] node[below,note] {architecture input} (b.west);
+  \node[model,minimum width=2.35cm,minimum height=0.95cm] (db) at (11.65,2.35) {Versioned\\B3LYP database};
+  \draw[arrow] (a.south) to[out=-90,in=170] (db.west);
+  \node[future,minimum width=3.1cm,minimum height=0.9cm] (future) at (6.65,2.2) {Future: Delta / GW\\not a current dependency};
+  \draw[dashedarrow] (a.south) -- (future.north);
+
+  \node[note,text width=12.2cm] at (6.65,0.65) {Frozen boundary: C has finished its screening role; A owns the production registry and database; B remains task-routed and cannot replace A without a separate deployment gate.};
+\end{tikzpicture}
+\end{document}
