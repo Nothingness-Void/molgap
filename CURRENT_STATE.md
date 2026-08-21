@@ -45,24 +45,36 @@ Delta and UQ remain calibrated to their historical v3 B3LYP base and were not
 refitted against this base. Do not present the accepted v3 uncertainty as
 calibrated for the repaired-2M presets.
 
+## Post-Presentation Execution
+
+- The presentation package is complete as of 2026-08-22. Figures and comparison
+  records are no longer an active workstream.
+- The active delivery line is now Track A: a versioned B3LYP-only batch
+  prediction database built from `repaired_2m_dense_2d`. The equal preset is the
+  lower-cost fallback; it is not a second database product.
+- `production/07_database/` is not implemented yet. Its first exit is a small
+  accepted pilot, not a full commercial-universe run.
+- Existing Delta and UQ bundles are historical compatibility evidence. They are
+  not calibrated for the recommended repaired-2M model and do not block the
+  B3LYP-only MVP. Refit them only after the database pilot if time and a clear
+  use case remain.
+- Track B packaging is optional follow-up work for the PCQM Gap specialist and
+  is not allowed to delay Track A. Track C is closed as an architecture screen.
+- The concrete order of work is maintained only in `ROADMAP.md`.
+
 ## Execution Context
 
 - One local Agent is active. There are no parallel Agent-owned worktrees or
   handoffs to reconcile.
-- Track A and Track B scientific decisions were frozen on 2026-07-30. No new
-  architecture, dataset, Router, MoE, seed, or fusion experiment is authorized.
-  Remaining work is packaging, inference verification, reporting, and
-  presentation preparation.
-- All unfinished compute stops on
-  **2026-08-04 at 12:00 JST**, after which only verification, documentation,
-  packaging, figures, and correctness fixes are allowed. The authoritative
-  schedule and stop rules are in
-  `production/04_evaluate/project_freeze/README.md`.
+- The 2026-07-30 scientific freeze remains in force for architecture, dataset,
+  Router, MoE, seed, and fusion exploration. The presentation has now completed;
+  the allowed work is delivery engineering, validation, and bounded corrections.
+- Do not relaunch remote training or acquisition for the current plan. Use
+  existing accepted checkpoints and graph/embedding artifacts.
 - The P8.19 SCNet-to-Kaggle handoff is complete. Do not rename, relocate, or
   delete its accepted inputs, raw downloads, or result records.
-- The local Agent may continue documentation and bounded local work while
-  monitoring those remote jobs; it must not relaunch them without evidence of
-  failure.
+- Any future remote job must be added to `ROADMAP.md` with a bounded exit
+  condition before submission.
 
 ## Frozen Track A Decision
 
@@ -119,7 +131,8 @@ Metrics, hashes, and cost accounting: `experiments/repaired_2m_scaling/hierarchi
 - This is the final Track B scientific identity. All four encoder checkpoints,
   all three selected fusion heads, and both manifests have local copies whose
   SHA256 values match the accepted metrics. No further Track B tuning or
-  training is authorized before the presentation. Final decision:
+  training is planned unless a separate leaderboard objective is approved.
+  Final decision:
   `production/04_evaluate/project_freeze/track_b_final_decision.md`.
 - Decision and artifact pointers:
   `experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md`.
@@ -209,15 +222,16 @@ identities and no sealed-source rows.
 Track A and Track B model selection is complete. The Track A packaging gate
 passed on 2026-07-31: checkpoints, tested public loader, latency and
 encoder-pass accounting, and the valid/invalid/OOD smoke test are all in the
-repository, so the recommendation moved to `repaired_2m_dense_2d`. Remaining
-work is limited to Track B packaging, normalized comparison tables, figures, and
-presentation material.
+repository, so the recommendation moved to `repaired_2m_dense_2d`. The
+presentation package is complete; the next delivery gate is the database pilot
+under `production/07_database/`.
 
 Track C's QM9 screen and PubChemQC 100K transfer screen are complete. Their
 bounded 2D+3D fusion result is an accepted architecture input to Tracks A and B,
-not a production promotion. Track B's PCQM 1M run is the active leaderboard
-test. The masked PCQM Gap-only chain remains an explicit specialist and cannot
-replace the Track A general base without a separate deployment gate.
+not a production promotion. Track B's PCQM 1M run is retained as a completed
+leaderboard-specialist result. The masked PCQM Gap-only chain remains an
+explicit specialist and cannot replace the Track A general base without a
+separate deployment gate. Track B is not a blocker for the Track A database MVP.
 
 | Question | Record |
 |---|---|
