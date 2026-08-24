@@ -25,6 +25,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
 | `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
 | `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
+| `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
 | `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |
 | `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
@@ -37,6 +38,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing GPS7/GPS9 Router-label preparation |
 | `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
 | `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
+| `conservative_fusion_payload.py` | Compact aligned frozen-2D/dual-SchNet training and external payloads | Changing the Drive handoff or scaffold-split contract for conservative Fusion |
+| `conservative_fusion_runner.py` | Resumable multi-seed conservative Fusion training, predictions, and external gate | Changing the Colab P1 execution or acceptance artifacts |
 | `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
 | `hierarchical_external_eval.py` | Paired same-molecule external evaluation of the hierarchical Fusion | Changing how a hierarchical candidate is compared against its own 2D base |
 | `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set fed to a 3D encoder |

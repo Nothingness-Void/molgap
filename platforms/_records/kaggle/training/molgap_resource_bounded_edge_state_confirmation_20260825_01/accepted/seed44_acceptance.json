@@ -1,0 +1,96 @@
+{
+  "format": "molgap-edge-state-structural-feasibility-acceptance-v1",
+  "status": "accepted",
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "seed": 44,
+  "runs": {
+    "baseline": {
+      "seed": 44,
+      "kind": "structural_gps",
+      "parameters": 3776259,
+      "training_time_s": 2141.549344062805,
+      "best_epoch": 39,
+      "validation_average_mae_eV": 0.13617320146560669,
+      "target_mode": "all",
+      "test_mae_eV": {
+        "HOMO": 0.12270238995552063,
+        "LUMO": 0.12262120842933655,
+        "Gap": 0.16448752582073212,
+        "average": 0.13660370806852976
+      },
+      "test_rows": 9997,
+      "artifacts": {
+        "model": {
+          "bytes": 15232267,
+          "sha256": "f23de2736ca03e9f3616ec404c83c301ea668e2ba808c02f8d552ab9c6ed0ce7"
+        },
+        "last_checkpoint": {
+          "bytes": 60867397,
+          "sha256": "b1306c6a34e6c283ca3deaedb73a253c30b213730a30bd2c15b2fb3c7ccfefe3"
+        },
+        "metrics": {
+          "bytes": 13452,
+          "sha256": "220593416834ad214c7f73243c9f4da734040935643a2804cfee09334de41f32"
+        },
+        "predictions": {
+          "bytes": 322454,
+          "sha256": "110026096c75eafc2df69d824335312f73531d90308e6a52c21145969ed46853"
+        }
+      }
+    },
+    "candidate": {
+      "seed": 44,
+      "kind": "edge_state_structural_gps",
+      "parameters": 4739267,
+      "training_time_s": 3227.8261766433716,
+      "best_epoch": 38,
+      "validation_average_mae_eV": 0.12893346743583678,
+      "target_mode": "all",
+      "test_mae_eV": {
+        "HOMO": 0.11810913681983948,
+        "LUMO": 0.11610367894172668,
+        "Gap": 0.15581436455249786,
+        "average": 0.13000906010468802
+      },
+      "test_rows": 9997,
+      "artifacts": {
+        "model": {
+          "bytes": 19114891,
+          "sha256": "ba0179b187b8d47b7dc5dc8738270f50d691409a45e52d2eb0b2ff8e97b1ca3b"
+        },
+        "last_checkpoint": {
+          "bytes": 76439593,
+          "sha256": "df4128ad80be7edd4c73ad89446f99ba28acf5d25974825ca59ae519f8e9bca0"
+        },
+        "metrics": {
+          "bytes": 13564,
+          "sha256": "1686f53b850440798adb1fc39fdd87ebc12e47139e14d12c8c875a9d5444c2d9"
+        },
+        "predictions": {
+          "bytes": 322518,
+          "sha256": "97ef1083ea5868c7dc1a1c815db1c2df699d1d8979e19ceb1aabb53dac5999fb"
+        }
+      }
+    }
+  },
+  "paired_delta_eV": {
+    "validation_average": -0.007239734029769906,
+    "test": {
+      "HOMO": -0.004593253135681152,
+      "LUMO": -0.006517529487609863,
+      "Gap": -0.008673161268234253,
+      "average": -0.006594647963841738
+    }
+  },
+  "feasibility_gate": {
+    "validation_improved": true,
+    "required_validation_improvement_eV": 0.001,
+    "max_training_time_s": 4500.0,
+    "training_time_passed": true,
+    "passed": true
+  }
+}

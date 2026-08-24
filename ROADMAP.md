@@ -7,33 +7,58 @@ Track ownership is defined only in `TRACKS.md`.
 
 ## Goal
 
-Deliver a versioned property database of commercially available organic
-molecules with auditable B3LYP gas-phase HOMO/LUMO/Gap predictions and trust
-signals. A near-GW Delta extension is optional follow-up work, not a database
-MVP dependency. The predictor is an implementation dependency; the database is
-the deliverable.
+Run an iterative architecture tournament against the frozen repaired-2M
+production comparator without destabilizing the shipped Track A contract.
+Structural GPS9 is the first positive baseline, not the end of the search. The
+B3LYP general-model objective and official PCQM Gap objective remain separate;
+an experimental encoder cannot enter production before fixed external
+promotion.
 
-## Short-Term Plan (2026-08-22 to 2026-09-05)
+## Short-Term Plan (from 2026-08-25)
 
-The presentation is complete. The next deliverable is a small, reproducible
-B3LYP-only database pilot. It must use the accepted Track A model and must not
-wait for Delta/UQ refits or Track B leaderboard work.
+The active research line is Track C. Persistent EdgeState Structural GPS passed
+the controlled three-seed 100K screen and replaced plain RWSE16 Structural GPS9
+as the sole repaired-2M scale-up candidate. Accept its complete immutable 2M
+input, measure one epoch, train it once, and open the fixed external blocks once.
+Conservative 2D+3D and PCQM transfer are conditional follow-ups. Track A
+database work remains isolated. Router and MoE are not reopened by this
+architecture search.
 
 | Priority | ID | Task | Exit condition | Owner path |
 |---|---|---|---|---|
-| P0 | DOCS-POST-PRESENTATION | Replace freeze-era live status with the delivery plan | `CURRENT_STATE.md`, this file, and the database README agree | `CURRENT_STATE.md`, `ROADMAP.md`, `production/07_database/README.md` |
-| P0 | A-CONTRACT | Define the B3LYP-only row contract and provenance fields | Schema, model key, split/version, applicability fields, and SHA256 manifest are written before inference | `production/07_database/README.md` |
-| P0 | A-BATCH-MVP | Implement reusable batch inference with a thin production CLI | 1K dry run produces atomic output, rejected-row reasons, manifest, and finite-value checks | `src/molgap/`, `production/07_database/` |
-| P1 | A-APPLICABILITY | Report structural applicability without silent filtering | Every row records valid parse, allowed elements, MW range, graph success, and `in_domain` | `production/04_evaluate/`, `production/07_database/` |
-| P1 | A-OOD-SIGNAL | Add a clearly labeled screening signal for model disagreement | Per-expert disagreement is reproducible and validated on existing common/OOD/P8-hard evidence; do not call it calibrated UQ | `src/molgap/inference.py`, `production/07_database/` |
-| P1 | A-PILOT-CATALOG | Run and accept a 10K pilot before scaling | Counts, deduplication, finite predictions, coverage, manifest, and checksum all reconcile | `production/07_database/` |
-| P1 | B-PACKAGE | Preserve a reproducible Track B Gap-specialist package if cheap | Checkpoint custody, inference smoke test, and cost record; never blocks A | `experiments/pcqm_route_b/`, `production/04_evaluate/` |
-| P2 | DELTA-REFIT | Refit Delta only against the repaired-2M base | A concrete downstream use case and time budget exist after the database pilot | `production/05_delta_gw/` |
+| Complete | C-EDGE-STATE-GPS | Accept the independent seed-43/44 confirmations after seed 42 passed its GPS++-lite gate | All three seeds improved and the mean validation gain exceeded `0.001 eV`; EdgeState won | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
+| P0 | C-FULL-2M | Package the accepted immutable repaired-2M EdgeState input, measure one epoch, then scale exactly this winner once | Do not submit before complete input acceptance; projected run stays below 10 hours; common/OOD/P8-hard opens once after training | `experiments/resource_bounded_architecture/` |
+| P1 | C-CONSERVATIVE-3D | After the 2D candidate is frozen, test an exact-identity, low-gate, `0.03 eV` bounded 3D correction | Internal validation must select a non-identity head; then common/OOD/P8-hard must improve without a `>0.0005 eV` common regression | `src/molgap/hierarchical_fusion.py`, `experiments/resource_bounded_architecture/` |
+| P2 | B-PCQM-STRUCTURAL | Train the winning lightweight architecture on official PCQM4Mv2 as a Gap-only model | Official train/validation protocol only; no PubChemQC labels or production claims | `experiments/resource_bounded_architecture/` |
+| Closed | C-GAP-ONLY | Gap-only regressed against the accepted three-output Structural GPS9 Gap head in all three seeds | Decision and exact artifacts accepted; no scale-up | `experiments/resource_bounded_architecture/results/gap_rwse_100k_screen/decision.md` |
+| Closed | C-NORMALIZED-RWSE | Normalized/gated RWSE beat Gap-only locally but remained worse than the accepted three-output model | Retain as component evidence; no standalone scale-up | `experiments/resource_bounded_architecture/results/gap_rwse_100k_screen/decision.md` |
+| Closed | C-GATED-RWSE | Edge-aware residual GatedGCN improved seeds 42/44 and the mean but regressed on seed 43 | Strict direction-consistency gate failed; retain as diversity evidence, no 2M scale-up | `experiments/resource_bounded_architecture/results/gated_structural_100k_multiseed/decision.md` |
+
+### Execution Schedule
+
+| Window | Platform | Work | Hard stop |
+|---|---|---|---|
+| Complete | Kaggle P100 | EdgeState seeds 42/43/44 passed strict acceptance | Evidence: `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
+| Next | Local plus target accelerator | Package and accept the immutable repaired-2M input, then run one measured epoch | Do not train if the projected total exceeds 10 hours |
+| After timing gate | SCNet BW-1 when allocated; Colab A100 fallback | Train the repaired-2M winner from random initialization with atomic per-epoch resume | One full run only; no ensemble or second architecture |
+| After full training | Local evaluation | Run the one-time common/OOD/P8-hard acceptance against `repaired_2m_dense_2d` | Require common improvement of at least `0.001 eV`; OOD and P8-hard may not regress by more than `0.0005 eV` |
+| Conditional | Colab A100 | Run the conservative 2D+3D internal gate after the 2D identity is frozen | Stop at the identity fallback unless internal validation selects a non-identity correction |
+| Conditional | Kaggle or Colab | Transfer the lightweight winner to official PCQM Gap-only training | Keep Track B data, metrics, and registry isolated from Track A |
 
 ### Operating Rules
 
-- Do not start new architecture, Router, MoE, OOF, compression, conformer, or
-  full-scale 3D training experiments. Track C is closed.
+- Do not modify the production registry or public default while Track C is in
+  screening. Promotion still requires the fixed Track A external gate.
+- Train candidates from random initialization. Do not use pretrained weights,
+  warm starts, distillation, or fine-tuning to claim an architecture gain.
+- Do not rerun the rejected `0.10 eV` frozen-2D plus dual-SchNet residual. The
+  P1 repair is a distinct exact-identity model with robust normalization,
+  correction regularization, and an explicit pure-2D fallback. Any geometry
+  input still preserves ETKDGv3+MMFF train-inference consistency.
+- Use the accepted 100K scaffold split for selection. Common/OOD/P8-hard are a
+  one-time full-candidate acceptance gate, not tuning data; sealed data stays locked.
+- A remote run requires a local import/forward/backward check, a measured timing
+  projection, an atomic resume contract, and independently retrievable outputs.
 - Do not use the historical v3 Delta/UQ outputs as calibrated fields for the
   repaired-2M model. They remain historical evidence until refit and revalidated.
 - Do not silently discard invalid, unsupported-element, out-of-range, or graph-
@@ -43,14 +68,14 @@ wait for Delta/UQ refits or Track B leaderboard work.
 - Do not tune against sealed data or promote Track B into the production
   registry without a separate deployment decision.
 
-## Phase Order
+## Workstream Order
 
-| Phase | Scope | Exit artifact |
+| Stage | Scope | Exit artifact |
 |---|---|---|
-| Phase 8 | Freeze the B3LYP base and bounded specialists | Selected deployable B3LYP path |
-| Phase 9 | Optional Delta learning toward GW | Validated Delta model against the repaired-2M base; deferred, not a delivery gate |
-| Phase 10 | B3LYP batch inference, applicability, OOD screening, and database build | Versioned B3LYP prediction pipeline and database |
-| Phase 11 | Delivery | Queryable release, reproducible build, and data card |
+| Frozen production | Keep the accepted B3LYP base and specialists reproducible | `repaired_2m_dense_2d` remains loadable and externally evidenced |
+| Architecture refresh | 100K controlled screen, then at most one repaired-2M winner | Standalone candidate accepted or question closed with a decision record |
+| Database delivery | B3LYP batch inference, applicability, OOD screening, and database build | Versioned B3LYP prediction pipeline and database |
+| Optional extensions | Delta/UQ refit or leaderboard submission | Separate approved objective and validation contract |
 
 ## Delivery Backlog
 
@@ -81,6 +106,15 @@ wait for Delta/UQ refits or Track B leaderboard work.
 
 ## Completed Work
 
+- The paired PubChemQC 100K screen accepted RWSE16 Structural GPS9 over the
+  same-run GPS9-192 control for all three seeds and retained exact checkpoints,
+  predictions, hashes, and timing evidence:
+  `experiments/resource_bounded_architecture/decision.md`.
+- The 2026-08-24 stage transition separated the frozen Track A production
+  identity from the reopened, resource-bounded Track C architecture question.
+  The live state, task order, track ownership, experiment index, and dated
+  feasibility decision now point to one another without reopening closed work:
+  `experiments/resource_bounded_architecture/decision.md`.
 - Track A froze the repaired-2M three-GPS dense pure-2D model as its accuracy
   identity and the GPS7/GPS9 equal model as its lower-cost preset. The
   dual-SchNet residual was rejected:

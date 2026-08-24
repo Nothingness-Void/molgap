@@ -1,0 +1,35 @@
+{
+  "status": "accepted",
+  "kind": "normalized_structural_gps",
+  "seed": 43,
+  "target_mode": "gap",
+  "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+  "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "test_rows": 9997,
+  "best_epoch": 39,
+  "best_validation_average_mae_eV": 0.17031036801338195,
+  "test_average_mae_eV": 0.17413708567619324,
+  "test_gap_mae_eV": 0.17413708567619324,
+  "artifacts": {
+    "model": {
+      "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/model.pt",
+      "bytes": 15234891,
+      "sha256": "d86d205f29145e04e1301b384699ebf0455446ea44eac9b44705bb7e8c6e6477"
+    },
+    "last_checkpoint": {
+      "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/training_state.pt",
+      "bytes": 60877143,
+      "sha256": "c91c193d4dcba6fe4bd8a56904fa4314217a0df151b1c7519ef9f21ba79a347d"
+    },
+    "metrics": {
+      "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/metrics.json",
+      "bytes": 13403,
+      "sha256": "743a5e4d0e74d03578fc4869e4e3455a3ddf75cfa37ea11b9a1e58bdc595fc13"
+    },
+    "predictions": {
+      "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/test_predictions.pt",
+      "bytes": 162646,
+      "sha256": "8e9571618f1ae30dbf878fca9bac3454693efe75e21632261ea9752b37f67fd3"
+    }
+  }
+}

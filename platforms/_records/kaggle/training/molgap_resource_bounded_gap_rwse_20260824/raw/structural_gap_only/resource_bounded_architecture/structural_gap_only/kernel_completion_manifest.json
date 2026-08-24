@@ -1,0 +1,153 @@
+{
+  "format": "molgap-architecture-screen-kaggle-completion-v1",
+  "status": "accepted",
+  "variant": "structural_gap_only",
+  "kind": "structural_gps",
+  "target_mode": "gap",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "preflight": {
+    "status": "accepted",
+    "rows": 120000,
+    "split_counts": {
+      "train": 100003,
+      "validation": 10000,
+      "test": 9997
+    },
+    "base_graph_sha256": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+    "rwse_dim": 16,
+    "model_config": {
+      "hidden_channels": 192,
+      "num_layers": 9,
+      "num_heads": 4,
+      "dropout": 0.05
+    },
+    "shared_initialization_exact": true,
+    "normalized_shared_initialization_exact": true,
+    "normalized_gap_output_shape": [
+      8,
+      1
+    ],
+    "rwse_alpha_init": 0.25,
+    "forward_backward_finite": true,
+    "torch_version": "2.7.1+cu126",
+    "device": "Tesla P100-PCIE-16GB"
+  },
+  "runs": [
+    {
+      "status": "accepted",
+      "kind": "structural_gps",
+      "seed": 42,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 39,
+      "best_validation_average_mae_eV": 0.1718111078262329,
+      "test_average_mae_eV": 0.17639215290546417,
+      "test_gap_mae_eV": 0.17639215290546417,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed42/model.pt",
+          "bytes": 15231499,
+          "sha256": "88718cb31a83de25d749006b19c0abd309ba3275fea08d8246b7bba786fb83b7"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed42/training_state.pt",
+          "bytes": 60864325,
+          "sha256": "bdc85f6e8f030374ac16d7e3cfb74a18021524a7e2920b4f988b64ab9901a3b4"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed42/metrics.json",
+          "bytes": 13339,
+          "sha256": "3f70512ba96775da16ee2d7cdb32481071842701dcdc436948e4d123b8e21877"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed42/test_predictions.pt",
+          "bytes": 162582,
+          "sha256": "ec29247ea34cc5be6b83d1338e452f3e7217acbb99e4acbcd7e2703301fe4e72"
+        }
+      }
+    },
+    {
+      "status": "accepted",
+      "kind": "structural_gps",
+      "seed": 43,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 39,
+      "best_validation_average_mae_eV": 0.1724464077949524,
+      "test_average_mae_eV": 0.1747756451368332,
+      "test_gap_mae_eV": 0.1747756451368332,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed43/model.pt",
+          "bytes": 15231499,
+          "sha256": "5373925ec637a7cc5bdaaf09a53efd4122dd66747588ea2931b435e3edf43cde"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed43/training_state.pt",
+          "bytes": 60864325,
+          "sha256": "f0c33b7e67ae1e31653a5bf164d887f94db40638c5a3a67c352cbb1ea34b4f95"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed43/metrics.json",
+          "bytes": 13324,
+          "sha256": "b114fa88dcd48eab21c74f85296283d1b3cf19b41557c6ac221eddac5ea8caad"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed43/test_predictions.pt",
+          "bytes": 162582,
+          "sha256": "3745cea9f3e32d5a0c712005a612694b693b8952e476ffb09e72643bb7832349"
+        }
+      }
+    },
+    {
+      "status": "accepted",
+      "kind": "structural_gps",
+      "seed": 44,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 38,
+      "best_validation_average_mae_eV": 0.17556991119384766,
+      "test_average_mae_eV": 0.17842374742031097,
+      "test_gap_mae_eV": 0.17842374742031097,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed44/model.pt",
+          "bytes": 15231499,
+          "sha256": "93fdfb35e1438952ac4de9d1c352826b7181ff64e27f66a650e313926ce0281f"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed44/training_state.pt",
+          "bytes": 60864325,
+          "sha256": "9f320c03a922f49ccb2a578293f3d0c6416c4c96fbbf400eec54e69a64e0b58b"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed44/metrics.json",
+          "bytes": 13321,
+          "sha256": "3b400f88152c6d5b045551603372f41d3ec03a7584c6b559ecc59ee3da852ed1"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/structural_gap_only/seed44/test_predictions.pt",
+          "bytes": 162582,
+          "sha256": "7ccdf36495698e5437e65a19028a6400ecdeb547a3103ac76ab26809b405ee9f"
+        }
+      }
+    }
+  ]
+}

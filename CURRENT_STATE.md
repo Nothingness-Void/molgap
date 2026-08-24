@@ -45,36 +45,95 @@ Delta and UQ remain calibrated to their historical v3 B3LYP base and were not
 refitted against this base. Do not present the accepted v3 uncertainty as
 calibrated for the repaired-2M presets.
 
-## Post-Presentation Execution
+## Active Stage
 
 - The presentation package is complete as of 2026-08-22. Figures and comparison
   records are no longer an active workstream.
-- The active delivery line is now Track A: a versioned B3LYP-only batch
-  prediction database built from `repaired_2m_dense_2d`. The equal preset is the
-  lower-cost fallback; it is not a second database product.
+- The active objective is now iterative architecture discovery and score
+  improvement. Presentation-driven stopping rules no longer bound Track C.
+  Structural GPS9 is the first positive search baseline, not a final model.
+- Track C has reopened for a resource-bounded, from-scratch architecture
+  refresh. Its frozen comparator is `repaired_2m_dense_2d`; it cannot change the
+  production registry without the existing Track A external promotion gate.
+- The feasibility review selected two P0 hypotheses: pure-2D Structural GPS
+  with RWSE and an integrated geometry-biased Structural GPS. The previous
+  frozen 2D plus dual-SchNet residual remains rejected; its external correction
+  saturation is recorded under `experiments/resource_bounded_architecture/`.
+- The paired PubChemQC 100K screen accepted RWSE16 Structural GPS9 across seeds
+  42/43/44. It cleared the predeclared direction and magnitude gate with almost
+  unchanged parameter and training cost. This authorizes one repaired-2M
+  standalone scale-up, not production promotion. Exact evidence:
+  `experiments/resource_bounded_architecture/decision.md`.
+- The paired Gap-only and normalized/gated RWSE16 screens completed and passed
+  strict artifact acceptance. Gap-only regressed against the accepted
+  three-output Structural GPS Gap head in all three seeds. Normalized/gated
+  RWSE improved Gap-only in all three validation seeds but remained worse than
+  the three-output model, so neither branch received repaired-2M authorization.
+  Exact evidence is in
+  `experiments/resource_bounded_architecture/results/gap_rwse_100k_screen/decision.md`.
+- The three-target edge-aware GatedGCN plus RWSE16 Structural GPS completed all
+  three seeds and passed artifact acceptance. Seeds 42/44 and the aggregate
+  improved, but seed 43 regressed, so the predeclared direction-consistency
+  gate failed. It is retained as diversity evidence and is not authorized for
+  repaired-2M scale-up. Decision:
+  `experiments/resource_bounded_architecture/results/gated_structural_100k_multiseed/decision.md`.
+- Persistent edge-state Structural GPS passed strict artifact acceptance and
+  the predeclared three-seed direction, mean-gain, and runtime gates. It is the
+  single repaired-2M scale-up winner. Submission remains blocked until its
+  complete immutable repaired-2M input and measured timing projection pass the
+  remote-run contract. Decision:
+  `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
+- The P1 2D+3D repair is implemented and locally tested as a separate
+  exact-identity conservative head. Its fixed 1,973-row external payload is
+  accepted locally. IMS CPU job `1327453.ccpbs1` produced a 198,932-row compact
+  scaffold-disjoint training payload; its remote hash and full local replay
+  passed despite a post-write two-core cgroup memory warning. The Drive-backed
+  A100 notebook, wheel, manifests, and all four immutable inputs are packaged;
+  model training has not started. The rejected historical residual remains
+  unchanged and closed.
+- The Track A delivery line remains a versioned B3LYP-only batch prediction
+  database built from `repaired_2m_dense_2d`. The equal preset is the lower-cost
+  fallback; it is not a second database product and is not invalidated by Track C.
 - `production/07_database/` is not implemented yet. Its first exit is a small
   accepted pilot, not a full commercial-universe run.
 - Existing Delta and UQ bundles are historical compatibility evidence. They are
   not calibrated for the recommended repaired-2M model and do not block the
   B3LYP-only MVP. Refit them only after the database pilot if time and a clear
   use case remain.
-- Track B packaging is optional follow-up work for the PCQM Gap specialist and
-  is not allowed to delay Track A. Track C is closed as an architecture screen.
+- Track B remains isolated from Track A data and claims. A new PCQM score run is
+  permitted only as an official-data-only Gap experiment with its own split,
+  evaluator, and registry boundary.
 - The concrete order of work is maintained only in `ROADMAP.md`.
 
 ## Execution Context
 
 - One local Agent is active. There are no parallel Agent-owned worktrees or
   handoffs to reconcile.
-- The 2026-07-30 scientific freeze remains in force for architecture, dataset,
-  Router, MoE, seed, and fusion exploration. The presentation has now completed;
-  the allowed work is delivery engineering, validation, and bounded corrections.
-- Do not relaunch remote training or acquisition for the current plan. Use
-  existing accepted checkpoints and graph/embedding artifacts.
+- The 2026-08-25 07:52 JST sequential Kaggle inspection found no pending or
+  running MolGap kernel. All 10 architecture-tournament kernels remain
+  `COMPLETE`; no new output requires retrieval or acceptance. The repaired-2M
+  EdgeState submission remains blocked by its missing complete immutable input
+  acceptance and measured one-epoch timing projection.
+- The 2026-07-30 freeze remains in force for the shipped Track A identity,
+  closed experiments, dataset replacement, Router, MoE, and old late-fusion
+  branches. It does not prohibit the newly scoped Track C architecture question.
+- RWSE16 Structural GPS9 is the first architecture candidate to pass the 100K
+  training gate. Its repaired-2M run must still be bounded and recorded in
+  `ROADMAP.md` before submission.
+- Reuse accepted splits, graph caches, checkpoints used as comparators, and
+  external evaluation blocks. Do not tune on common/OOD/P8-hard or sealed data.
 - The P8.19 SCNet-to-Kaggle handoff is complete. Do not rename, relocate, or
   delete its accepted inputs, raw downloads, or result records.
+- The Track C P0 GPS9 versus RWSE Structural GPS screen completed as two private
+  three-seed Kaggle kernels and passed local artifact and prediction acceptance.
+  Live slugs, immutable input hashes, and incident provenance are in
+  `experiments/resource_bounded_architecture/STATUS.md`.
 - Any future remote job must be added to `ROADMAP.md` with a bounded exit
   condition before submission.
+- Kaggle kernels `nothingnessvoid/molgap-pc100k-structural-gap-only-r1` and
+  `nothingnessvoid/molgap-pc100k-normalized-rwse-gap-r1` reached terminal
+  `COMPLETE`; all per-seed checkpoints, metrics, and aligned predictions were
+  retrieved and accepted. Their completion did not change production.
 
 ## Frozen Track A Decision
 
@@ -223,12 +282,15 @@ Track A and Track B model selection is complete. The Track A packaging gate
 passed on 2026-07-31: checkpoints, tested public loader, latency and
 encoder-pass accounting, and the valid/invalid/OOD smoke test are all in the
 repository, so the recommendation moved to `repaired_2m_dense_2d`. The
-presentation package is complete; the next delivery gate is the database pilot
-under `production/07_database/`.
+presentation package is complete. The Track A delivery gate remains the database
+pilot under `production/07_database/`; Track C has a separate architecture gate
+and does not alter that delivery contract.
 
-Track C's QM9 screen and PubChemQC 100K transfer screen are complete. Their
-bounded 2D+3D fusion result is an accepted architecture input to Tracks A and B,
-not a production promotion. Track B's PCQM 1M run is retained as a completed
+Track C's earlier QM9 and PubChemQC 100K screens are complete. The resource-
+bounded architecture refresh is now open and must reuse those results rather
+than rerun them. Its first controlled target is a fresh GPS9 control versus
+Structural GPS on the same 100K scaffold split; integrated geometry is a
+separate arm. Track B's PCQM 1M run is retained as a completed
 leaderboard-specialist result. The masked PCQM Gap-only chain remains an
 explicit specialist and cannot replace the Track A general base without a
 separate deployment gate. Track B is not a blocker for the Track A database MVP.

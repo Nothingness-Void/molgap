@@ -1,0 +1,86 @@
+{
+  "format": "molgap-architecture-screen-kaggle-completion-v1",
+  "status": "accepted",
+  "variant": "gated_structural_seed43",
+  "kind": "gated_structural_gps",
+  "target_mode": "all",
+  "seeds": [
+    43
+  ],
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "preflight": {
+    "status": "accepted",
+    "rows": 120000,
+    "split_counts": {
+      "train": 100003,
+      "validation": 10000,
+      "test": 9997
+    },
+    "base_graph_sha256": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+    "rwse_dim": 16,
+    "model_config": {
+      "hidden_channels": 192,
+      "num_layers": 9,
+      "num_heads": 4,
+      "dropout": 0.05
+    },
+    "shared_initialization_exact": true,
+    "normalized_shared_initialization_exact": true,
+    "normalized_gap_output_shape": [
+      8,
+      1
+    ],
+    "gated_output_shape": [
+      8,
+      3
+    ],
+    "gated_parameters": 5105091,
+    "rwse_alpha_init": 0.25,
+    "forward_backward_finite": true,
+    "torch_version": "2.7.1+cu126",
+    "device": "Tesla P100-PCIE-16GB"
+  },
+  "runs": [
+    {
+      "status": "accepted",
+      "kind": "gated_structural_gps",
+      "seed": 43,
+      "target_mode": "all",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 38,
+      "best_validation_average_mae_eV": 0.13868856983184816,
+      "test_average_mae_eV": 0.14122905333836874,
+      "test_gap_mae_eV": 0.16850987076759338,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/gated_structural_seed43/seed43/model.pt",
+          "bytes": 20550731,
+          "sha256": "a2dcf8879bbdb659d27aaf4262b29a2c2267681dbe6d8af5b8b6223a675e5a22"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/gated_structural_seed43/seed43/training_state.pt",
+          "bytes": 82151637,
+          "sha256": "7522fd5958c55e5cc3902842afa62105bd00c937e396533d9c7b09e50ff2cb37"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/gated_structural_seed43/seed43/metrics.json",
+          "bytes": 13488,
+          "sha256": "f425e1c78cb64182ded970c1e7056cd6cc246281a0675356ffe1ece4da9d9efc"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/gated_structural_seed43/seed43/test_predictions.pt",
+          "bytes": 322454,
+          "sha256": "af2abf7770a0704d45f3143948fcebb93d59d954799346e6d95ebf8a2035a080"
+        }
+      }
+    }
+  ]
+}

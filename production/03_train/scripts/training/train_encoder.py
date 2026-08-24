@@ -27,7 +27,13 @@ from sklearn.metrics import mean_absolute_error, r2_score
 from torch_geometric.loader import DataLoader
 
 from molgap.constants import MODELS_DIR, PARAMS_GPS_2D, PARAMS_SCHNET_300K, SEED, TRAIN_DIR
-from molgap.gps import GPSWrapper
+from molgap.gps import (
+    EdgeStateStructuralGPSWrapper,
+    GatedStructuralGPSWrapper,
+    GPSWrapper,
+    NormalizedStructuralGPSWrapper,
+    StructuralGPSWrapper,
+)
 from molgap.retention import retention_loss
 from molgap.schnet import SchNetWrapper
 from molgap.utils import ensure_dirs
@@ -35,9 +41,50 @@ from molgap.utils import ensure_dirs
 TRAIN_OUT_DIR = TRAIN_DIR
 GRAPH_2D = TRAIN_OUT_DIR / "pyg_2d_graphs_bond_replacement_300k.pt"
 GRAPH_3D = TRAIN_OUT_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
+GPS_KINDS = {
+    "gps",
+    "structural_gps",
+    "normalized_structural_gps",
+    "gated_structural_gps",
+    "edge_state_structural_gps",
+}
+RWSE_KINDS = {
+    "structural_gps",
+    "normalized_structural_gps",
+    "gated_structural_gps",
+    "edge_state_structural_gps",
+}
 
 TRAIN_PARAMS = {
     "gps": {
+        **PARAMS_GPS_2D,
+        "lr": 0.0004754654349367296,
+        "weight_decay": 1.3094136884618282e-05,
+        "batch_size": 256,
+        "scheduler": "cosine",
+    },
+    "structural_gps": {
+        **PARAMS_GPS_2D,
+        "lr": 0.0004754654349367296,
+        "weight_decay": 1.3094136884618282e-05,
+        "batch_size": 256,
+        "scheduler": "cosine",
+    },
+    "normalized_structural_gps": {
+        **PARAMS_GPS_2D,
+        "lr": 0.0004754654349367296,
+        "weight_decay": 1.3094136884618282e-05,
+        "batch_size": 256,
+        "scheduler": "cosine",
+    },
+    "gated_structural_gps": {
+        **PARAMS_GPS_2D,
+        "lr": 0.0004754654349367296,
+        "weight_decay": 1.3094136884618282e-05,
+        "batch_size": 256,
+        "scheduler": "cosine",
+    },
+    "edge_state_structural_gps": {
         **PARAMS_GPS_2D,
         "lr": 0.0004754654349367296,
         "weight_decay": 1.3094136884618282e-05,
@@ -55,7 +102,7 @@ TRAIN_PARAMS = {
 
 
 def _model_params(kind: str, args) -> dict:
-    if kind == "gps":
+    if kind in GPS_KINDS:
         params = dict(PARAMS_GPS_2D)
         overrides = {
             "hidden_channels": args.hidden_channels,
@@ -64,6 +111,13 @@ def _model_params(kind: str, args) -> dict:
             "dropout": args.dropout,
             "pooling": args.pooling,
         }
+        params["n_targets"] = 1 if args.target_mode == "gap" else 3
+        if kind in RWSE_KINDS:
+            overrides["rwse_dim"] = args.rwse_dim
+        if kind == "normalized_structural_gps":
+            overrides["rwse_alpha_init"] = args.rwse_alpha_init
+        if kind == "edge_state_structural_gps":
+            overrides["edge_state_channels"] = args.edge_state_channels
     else:
         params = dict(PARAMS_SCHNET_300K)
         overrides = {
@@ -81,6 +135,14 @@ def _model_params(kind: str, args) -> dict:
 def _make_model(kind: str, model_params: dict):
     if kind == "gps":
         return GPSWrapper(**model_params)
+    if kind == "structural_gps":
+        return StructuralGPSWrapper(**model_params)
+    if kind == "normalized_structural_gps":
+        return NormalizedStructuralGPSWrapper(**model_params)
+    if kind == "gated_structural_gps":
+        return GatedStructuralGPSWrapper(**model_params)
+    if kind == "edge_state_structural_gps":
+        return EdgeStateStructuralGPSWrapper(**model_params)
     if kind == "schnet":
         return SchNetWrapper(**model_params, use_charges=True)
     raise ValueError(kind)
@@ -106,6 +168,14 @@ def _load_compatible_state(model, checkpoint: Path, device) -> dict:
 def _forward(kind: str, model, batch):
     if kind == "gps":
         return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if kind in RWSE_KINDS:
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            getattr(batch, "random_walk_pe", None),
+        )
     charges = batch.charges if hasattr(batch, "charges") else None
     return model(batch.z, batch.pos, batch.batch, charges=charges)
 
@@ -113,6 +183,14 @@ def _forward(kind: str, model, batch):
 def _encode(kind: str, model, batch):
     if kind == "gps":
         return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if kind in RWSE_KINDS:
+        return model.encode(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            getattr(batch, "random_walk_pe", None),
+        )
     charges = batch.charges if hasattr(batch, "charges") else None
     return model.encode(batch.z, batch.pos, batch.batch, charges=charges)
 
@@ -194,19 +272,35 @@ def _explicit_split(graphs, split_csv: Path):
     }
 
 
+def _select_targets(targets: torch.Tensor, target_mode: str) -> torch.Tensor:
+    if targets.ndim != 2 or targets.shape[1] != 3:
+        raise ValueError("source labels must have shape [rows, 3]")
+    if target_mode == "all":
+        return targets
+    if target_mode == "gap":
+        return targets[:, 2:3]
+    raise ValueError(f"Unknown target mode: {target_mode}")
+
+
 @torch.no_grad()
-def _evaluate(kind: str, model, loader, device):
+def _evaluate(kind: str, model, loader, device, target_mode: str):
     model.eval()
     pred, true = [], []
     for batch in loader:
         batch = batch.to(device)
         out = _forward(kind, model, batch)
         pred.append(out.float().cpu().numpy())
-        true.append(batch.y.float().cpu().numpy())
+        true.append(_select_targets(batch.y, target_mode).float().cpu().numpy())
     return np.concatenate(pred), np.concatenate(true)
 
 
-def _metrics(pred, true):
+def _metrics(pred, true, target_mode: str):
+    if target_mode == "gap":
+        gap = {
+            "mae": float(mean_absolute_error(true[:, 0], pred[:, 0])),
+            "r2": float(r2_score(true[:, 0], pred[:, 0])),
+        }
+        return {"Gap": gap, "average": dict(gap)}
     out = {}
     for i, name in enumerate(["HOMO", "LUMO", "Gap"]):
         out[name] = {
@@ -387,7 +481,8 @@ def _release(*values) -> None:
 
 @torch.no_grad()
 def _evaluate_shards(kind: str, model, shards: list[dict], roles: np.ndarray,
-                     role: int, batch_size: int, device, *, predictions: bool = False):
+                     role: int, batch_size: int, device, target_mode: str, *,
+                     predictions: bool = False):
     model.eval()
     total, count = 0.0, 0
     pred, true = [], []
@@ -401,12 +496,13 @@ def _evaluate_shards(kind: str, model, shards: list[dict], roles: np.ndarray,
             batch = batch.to(device)
             with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                 output = _forward(kind, model, batch)
-                loss = criterion(output, batch.y)
+                selected_targets = _select_targets(batch.y, target_mode)
+                loss = criterion(output, selected_targets)
             total += loss.item() * batch.num_graphs
             count += batch.num_graphs
             if predictions:
                 pred.append(output.float().cpu().numpy())
-                true.append(batch.y.float().cpu().numpy())
+                true.append(selected_targets.float().cpu().numpy())
         print(f"  eval shard {shard_number + 1}/{len(shards)} rows={len(subset):,}", flush=True)
         del loader, subset, indices, graphs
         gc.collect()
@@ -505,7 +601,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
         model.load_state_dict(torch.load(model_out, weights_only=True, map_location=device))
         if args.postprocess_only:
             prediction, target = _evaluate_shards(
-                args.kind, model, shards, roles, 2, eval_bs, device, predictions=True
+                args.kind, model, shards, roles, 2, eval_bs, device,
+                args.target_mode, predictions=True
             )
             _atomic_json_write({
                 "kind": args.kind,
@@ -513,7 +610,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 "n_graphs": n_graphs,
                 "postprocess_only": True,
                 "model_path": str(model_out),
-                "test_metrics": _metrics(prediction, target),
+                "target_mode": args.target_mode,
+                "test_metrics": _metrics(prediction, target, args.target_mode),
             }, metrics_out)
         if not args.no_embeddings:
             _extract_embeddings_sharded(
@@ -547,6 +645,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
             or resume.get("n_graphs") != n_graphs
             or int(resume.get("seed", args.seed)) != args.seed
             or int(resume.get("split_seed", args.split_seed)) != args.split_seed
+            or resume.get("target_mode", "all") != args.target_mode
+            or resume.get("model_params") != model_params
         ):
             raise ValueError(
                 "Resume checkpoint does not match kind, graph manifest, or seeds"
@@ -580,7 +680,10 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 batch = batch.to(device)
                 optimizer.zero_grad(set_to_none=True)
                 with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
-                    loss = criterion(_forward(args.kind, model, batch), batch.y)
+                    loss = criterion(
+                        _forward(args.kind, model, batch),
+                        _select_targets(batch.y, args.target_mode),
+                    )
                 scaler.scale(loss).backward()
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0)
@@ -596,7 +699,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
             gc.collect()
         train_loss = total / max(count, 1)
         val_loss, val_count = _evaluate_shards(
-            args.kind, model, shards, roles, 1, eval_bs, device
+            args.kind, model, shards, roles, 1, eval_bs, device, args.target_mode
         )
         scheduler.step()
         improved = val_loss < best_val
@@ -628,6 +731,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 "n_graphs": n_graphs,
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "target_mode": args.target_mode,
+                "model_params": model_params,
                 "next_epoch": epoch + 1,
                 "model_state": model.state_dict(),
                 "optimizer_state": optimizer.state_dict(),
@@ -647,6 +752,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 "n_graphs": n_graphs,
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "target_mode": args.target_mode,
+                "model_params": model_params,
                 "next_epoch": epoch + 1,
                 "best_val_mae": best_val,
                 "best_epoch": best_epoch,
@@ -661,7 +768,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
     model.load_state_dict(best_state)
     _atomic_torch_save(best_state, model_out)
     prediction, target = _evaluate_shards(
-        args.kind, model, shards, roles, 2, eval_bs, device, predictions=True
+        args.kind, model, shards, roles, 2, eval_bs, device,
+        args.target_mode, predictions=True
     )
     result = {
         "kind": args.kind,
@@ -683,7 +791,8 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
         "init_report": init_report,
         "model_params": model_params,
         "params": training_params,
-        "test_metrics": _metrics(prediction, target),
+        "target_mode": args.target_mode,
+        "test_metrics": _metrics(prediction, target, args.target_mode),
         "log": log_rows,
     }
     _atomic_json_write(result, metrics_out)
@@ -696,13 +805,32 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
 
 def main():
     parser = argparse.ArgumentParser(description="Train a Phase 8 encoder")
-    parser.add_argument("--kind", choices=["gps", "schnet"], required=True)
+    parser.add_argument(
+        "--kind",
+        choices=[
+            "gps",
+            "structural_gps",
+            "normalized_structural_gps",
+            "gated_structural_gps",
+            "edge_state_structural_gps",
+            "schnet",
+        ],
+        required=True,
+    )
+    parser.add_argument(
+        "--target-mode",
+        choices=["all", "gap"],
+        default="all",
+        help="train all three B3LYP targets or a dedicated scalar Gap head",
+    )
     parser.add_argument("--graphs", type=Path, default=None)
     parser.add_argument("--graph-manifest", type=Path, default=None,
                         help="stream a molgap-pyg-shards-v1 manifest instead of one graph cache")
     parser.add_argument("--model-out", type=Path, default=None)
     parser.add_argument("--metrics-out", type=Path, default=None)
     parser.add_argument("--embeddings-out", type=Path, default=None)
+    parser.add_argument("--predictions-out", type=Path, default=None,
+                        help="optional atomic test prediction payload")
     parser.add_argument("--epochs", type=int, default=150)
     parser.add_argument("--patience", type=int, default=25)
     parser.add_argument("--seed", type=int, default=SEED,
@@ -741,6 +869,12 @@ def main():
     parser.add_argument("--dropout", type=float, default=None)
     parser.add_argument("--pooling", choices=["mean", "mean_max"], default=None,
                         help="GPS molecule-level pooling override")
+    parser.add_argument("--rwse-dim", type=int, default=16,
+                        help="Structural GPS random-walk encoding dimension")
+    parser.add_argument("--rwse-alpha-init", type=float, default=0.25,
+                        help="initial normalized Structural GPS RWSE gate")
+    parser.add_argument("--edge-state-channels", type=int, default=64,
+                        help="persistent Structural GPS edge-state width")
     parser.add_argument("--lr", type=float, default=None)
     parser.add_argument("--weight-decay", type=float, default=None)
     parser.add_argument("--batch-size", type=int, default=None)
@@ -782,11 +916,15 @@ def main():
         )
     if args.retention_teacher is not None and args.kind != "gps":
         parser.error("retention distillation currently supports --kind gps only")
+    if args.retention_teacher is not None and args.target_mode != "all":
+        parser.error("retention distillation currently requires --target-mode all")
     if args.retention_targets_cache is not None and args.retention_teacher is None:
         parser.error("--retention-targets-cache requires --retention-teacher")
 
     ensure_dirs(TRAIN_OUT_DIR, MODELS_DIR)
-    graph_path = args.graphs or (GRAPH_2D if args.kind == "gps" else GRAPH_3D)
+    graph_path = args.graphs or (
+        GRAPH_2D if args.kind in GPS_KINDS else GRAPH_3D
+    )
     model_out = args.model_out or MODELS_DIR / f"phase8_{args.kind}_replacement_300k.pt"
     metrics_out = args.metrics_out or TRAIN_OUT_DIR / f"{args.kind}_replacement_300k_metrics.json"
     embeddings_out = args.embeddings_out or TRAIN_OUT_DIR / f"{args.kind}_replacement_300k_embeddings.pt"
@@ -825,6 +963,12 @@ def main():
     if args.max_samples is not None:
         graphs = graphs[:args.max_samples]
     print(f"Loaded {len(graphs)} graphs from {graph_path}", flush=True)
+    graph_contract = None
+    if args.kind in RWSE_KINDS:
+        graph_contract = {
+            "sha256": _sha256(graph_path),
+            "rwse_dim": int(model_params["rwse_dim"]),
+        }
 
     if args.extract_only:
         model = _make_model(args.kind, model_params).to(device)
@@ -847,7 +991,7 @@ def main():
         model = _make_model(args.kind, model_params).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
         test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
-        pred, true = _evaluate(args.kind, model, test_loader, device)
+        pred, true = _evaluate(args.kind, model, test_loader, device, args.target_mode)
         result = {
             "kind": args.kind,
             "graph_path": str(graph_path),
@@ -857,7 +1001,8 @@ def main():
             "eval_batch_size": eval_bs,
             "embedding_batch_size": embed_bs,
             "split_contract": split_contract,
-            "test_metrics": _metrics(pred, true),
+            "target_mode": args.target_mode,
+            "test_metrics": _metrics(pred, true, args.target_mode),
         }
         _atomic_json_write(result, metrics_out)
         print(f"Metrics -> {metrics_out}", flush=True)
@@ -954,6 +1099,13 @@ def main():
         resume = torch.load(args.resume_from, weights_only=False, map_location=device)
         if resume.get("kind") != args.kind or resume.get("graph_path") != str(graph_path) or resume.get("n_graphs") != len(graphs):
             raise ValueError("Resume checkpoint does not match kind, graph cache, or graph count")
+        if args.kind in RWSE_KINDS and (
+            resume.get("model_params") != model_params
+            or resume.get("graph_contract") != graph_contract
+        ):
+            raise ValueError("Structural GPS resume model or graph contract differs")
+        if resume.get("target_mode", "all") != args.target_mode:
+            raise ValueError("Resume checkpoint target mode differs")
         if (
             int(resume.get("seed", args.seed)) != args.seed
             or int(resume.get("split_seed", args.split_seed)) != args.split_seed
@@ -986,7 +1138,10 @@ def main():
             with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                 prediction = _forward(args.kind, model, batch)
                 if retention_teacher is None and retention_targets is None:
-                    loss = criterion(prediction, batch.y)
+                    loss = criterion(
+                        prediction,
+                        _select_targets(batch.y, args.target_mode),
+                    )
                     label_loss = loss
                     distillation_loss = prediction.sum() * 0.0
                     retained_rows = 0
@@ -1039,7 +1194,10 @@ def main():
             for batch in val_loader:
                 batch = batch.to(device)
                 with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
-                    loss = criterion(_forward(args.kind, model, batch), batch.y)
+                    loss = criterion(
+                        _forward(args.kind, model, batch),
+                        _select_targets(batch.y, args.target_mode),
+                    )
                 vtotal += loss.item() * batch.num_graphs
                 vn += batch.num_graphs
         val_loss = vtotal / max(vn, 1)
@@ -1075,7 +1233,10 @@ def main():
                 "n_graphs": len(graphs),
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "target_mode": args.target_mode,
                 "split_contract": split_contract,
+                "model_params": model_params,
+                "graph_contract": graph_contract,
                 "next_epoch": epoch + 1,
                 "model_state": model.state_dict(),
                 "optimizer_state": optimizer.state_dict(),
@@ -1096,7 +1257,10 @@ def main():
                 "n_graphs": len(graphs),
                 "seed": int(args.seed),
                 "split_seed": int(args.split_seed),
+                "target_mode": args.target_mode,
                 "split_contract": split_contract,
+                "model_params": model_params,
+                "graph_contract": graph_contract,
                 "next_epoch": epoch + 1,
                 "best_val_mae": best_val,
                 "best_epoch": best_epoch,
@@ -1115,7 +1279,7 @@ def main():
     print(f"Model -> {model_out}", flush=True)
 
     test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
-    pred, true = _evaluate(args.kind, model, test_loader, device)
+    pred, true = _evaluate(args.kind, model, test_loader, device, args.target_mode)
     result = {
         "kind": args.kind,
         "graph_path": str(graph_path),
@@ -1127,6 +1291,7 @@ def main():
         "seed": int(args.seed),
         "split_seed": int(args.split_seed),
         "split_contract": split_contract,
+        "graph_contract": graph_contract,
         "init_from": str(args.init_from) if args.init_from is not None else None,
         "init_compatible": bool(args.init_compatible),
         "init_report": init_report,
@@ -1134,9 +1299,28 @@ def main():
         "params": p,
         "replay_sampling": replay_report,
         "retention_distillation": retention_config,
-        "test_metrics": _metrics(pred, true),
+        "target_mode": args.target_mode,
+        "test_metrics": _metrics(pred, true, args.target_mode),
         "log": log_rows,
     }
+    if args.predictions_out is not None:
+        test_source_idx = torch.cat(
+            [graph.source_idx.view(-1).long().cpu() for graph in test_set]
+        )
+        prediction_payload = {
+            "format": "molgap-encoder-test-predictions-v1",
+            "kind": args.kind,
+            "seed": int(args.seed),
+            "target_mode": args.target_mode,
+            "split_contract": split_contract,
+            "source_idx": test_source_idx,
+            "targets": torch.from_numpy(true).float(),
+            "predictions": torch.from_numpy(pred).float(),
+        }
+        _atomic_torch_save(prediction_payload, args.predictions_out)
+        result["predictions_path"] = str(args.predictions_out)
+        result["predictions_sha256"] = _sha256(args.predictions_out)
+        print(f"Predictions -> {args.predictions_out}", flush=True)
     _atomic_json_write(result, metrics_out)
     print(f"Metrics -> {metrics_out}", flush=True)
 

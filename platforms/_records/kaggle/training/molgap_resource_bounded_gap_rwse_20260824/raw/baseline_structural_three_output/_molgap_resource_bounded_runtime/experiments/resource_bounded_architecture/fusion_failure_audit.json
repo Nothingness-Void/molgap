@@ -1,0 +1,41 @@
+{
+  "question": "Why did repaired-2M frozen 2D plus dual-SchNet residual fusion regress externally?",
+  "external_prediction_source": "../repaired_2m_scaling/results/hierarchical_dual_schnet_external/predictions.csv",
+  "external_rows": 1973,
+  "correction_bound_eV": 0.1,
+  "systems": {
+    "equal_gps7_gps9_plus_dual_schnet": {
+      "internal_mean_absolute_correction_eV": 0.0268002581,
+      "external_mean_absolute_correction_eV": 0.0706714414,
+      "external_to_internal_ratio": 2.636969,
+      "external_p95_absolute_correction_eV": 0.099994746
+    },
+    "dense_three_gps_plus_dual_schnet": {
+      "internal_mean_absolute_correction_eV": 0.020702824,
+      "external_mean_absolute_correction_eV": 0.0689467596,
+      "external_to_internal_ratio": 3.330307,
+      "external_p95_absolute_correction_eV": 0.099995,
+      "target_corrections": {
+        "homo": {
+          "mean_eV": -0.0278824475,
+          "mean_absolute_eV": 0.0595829291,
+          "fraction_absolute_at_least_0p09": 0.2944754181,
+          "fraction_negative": 0.6761277243
+        },
+        "lumo": {
+          "mean_eV": -0.0705809095,
+          "mean_absolute_eV": 0.0763962151,
+          "fraction_absolute_at_least_0p09": 0.5818550431,
+          "fraction_negative": 0.8854536239
+        },
+        "gap": {
+          "mean_eV": -0.0475600133,
+          "mean_absolute_eV": 0.0708611347,
+          "fraction_absolute_at_least_0p09": 0.4683223517,
+          "fraction_negative": 0.7592498733
+        }
+      }
+    }
+  },
+  "interpretation": "External feature shift drove the bounded correction head into broad, directionally biased saturation. This rejects the late frozen-embedding residual design, not 3D information itself."
+}

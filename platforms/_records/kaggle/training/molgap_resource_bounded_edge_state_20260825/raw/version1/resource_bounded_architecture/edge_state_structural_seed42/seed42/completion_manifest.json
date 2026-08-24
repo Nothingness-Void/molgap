@@ -1,0 +1,35 @@
+{
+  "status": "accepted",
+  "kind": "edge_state_structural_gps",
+  "seed": 42,
+  "target_mode": "all",
+  "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+  "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "test_rows": 9997,
+  "best_epoch": 38,
+  "best_validation_average_mae_eV": 0.13000285313129425,
+  "test_average_mae_eV": 0.13090507437785467,
+  "test_gap_mae_eV": 0.15673312544822693,
+  "artifacts": {
+    "model": {
+      "path": "/kaggle/working/resource_bounded_architecture/edge_state_structural_seed42/seed42/model.pt",
+      "bytes": 19114891,
+      "sha256": "12b7176e0ee452d78b198bc4f00244ca03c7942434f5daa4098d956800e20190"
+    },
+    "last_checkpoint": {
+      "path": "/kaggle/working/resource_bounded_architecture/edge_state_structural_seed42/seed42/training_state.pt",
+      "bytes": 76439593,
+      "sha256": "42ac6d720f276b11fa1e708cc2757ef0c9783d05dfb7b4b2f8a430b8e51b3f2a"
+    },
+    "metrics": {
+      "path": "/kaggle/working/resource_bounded_architecture/edge_state_structural_seed42/seed42/metrics.json",
+      "bytes": 13594,
+      "sha256": "6cd7b5cc9b94f3cdce7b7013df77dc288898a687b30e04a9297013f6c028d774"
+    },
+    "predictions": {
+      "path": "/kaggle/working/resource_bounded_architecture/edge_state_structural_seed42/seed42/test_predictions.pt",
+      "bytes": 322518,
+      "sha256": "6c3bccb2d44fd4b0d4f68dbc2263d505168cd65ac9fb964a9244fd2d8b6e1691"
+    }
+  }
+}

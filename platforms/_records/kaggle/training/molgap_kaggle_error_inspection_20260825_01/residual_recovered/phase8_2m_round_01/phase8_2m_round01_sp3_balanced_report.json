@@ -1,0 +1,27 @@
+{
+  "chunk_bytes": 16000000,
+  "counts": {
+    "high_sp3_non_aromatic": 4286,
+    "residual_balanced": 5714
+  },
+  "download_workers": 2,
+  "elapsed_s": 451.5929641723633,
+  "files_scanned": 8,
+  "filter_passing_candidates_seen": 64095,
+  "include_buckets": [
+    "high_sp3_non_aromatic",
+    "residual_balanced"
+  ],
+  "kept_rows_per_s": 22.143834810019793,
+  "new_rows": 10000,
+  "out_csv": "/kaggle/working/phase8_2m_round_01/phase8_2m_round01_sp3_balanced.csv",
+  "parsed_objects": 71979,
+  "parsed_objects_per_s": 159.38910857904148,
+  "quotas": {
+    "high_sp3_non_aromatic": 4286,
+    "residual_balanced": 5714
+  },
+  "resumed_rows": 0,
+  "total_rows": 10000,
+  "windows_per_file": 16
+}

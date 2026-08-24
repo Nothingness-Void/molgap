@@ -1,0 +1,22 @@
+{
+  "experiment": "pubchemqc100k_architecture_screen",
+  "source_csv": "data\\raw\\phase8_expansion_1m.csv",
+  "source_csv_sha256": "f5df806cb6884f9698947611cb3b5eb367e6c60c0f98b985388b0d6654b6ccc1",
+  "source_rows": 1000000,
+  "selected_rows": 120000,
+  "split_rows": {
+    "train": 100003,
+    "validation": 10000,
+    "test": 9997
+  },
+  "split_seed": 42,
+  "scaffold_rule": "Bemis-Murcko; acyclic molecules keyed by canonical SMILES",
+  "scaffold_overlap": {
+    "train_validation": 0,
+    "train_test": 0,
+    "validation_test": 0
+  },
+  "split_csv": "results\\phase8\\experiments\\pubchemqc100k_architecture\\split.csv",
+  "split_csv_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "sealed_20k_used": false
+}

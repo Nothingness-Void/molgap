@@ -1,0 +1,153 @@
+{
+  "format": "molgap-architecture-screen-kaggle-completion-v1",
+  "status": "accepted",
+  "variant": "normalized_rwse_gap",
+  "kind": "normalized_structural_gps",
+  "target_mode": "gap",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "preflight": {
+    "status": "accepted",
+    "rows": 120000,
+    "split_counts": {
+      "train": 100003,
+      "validation": 10000,
+      "test": 9997
+    },
+    "base_graph_sha256": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+    "rwse_dim": 16,
+    "model_config": {
+      "hidden_channels": 192,
+      "num_layers": 9,
+      "num_heads": 4,
+      "dropout": 0.05
+    },
+    "shared_initialization_exact": true,
+    "normalized_shared_initialization_exact": true,
+    "normalized_gap_output_shape": [
+      8,
+      1
+    ],
+    "rwse_alpha_init": 0.25,
+    "forward_backward_finite": true,
+    "torch_version": "2.7.1+cu126",
+    "device": "Tesla P100-PCIE-16GB"
+  },
+  "runs": [
+    {
+      "status": "accepted",
+      "kind": "normalized_structural_gps",
+      "seed": 42,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 39,
+      "best_validation_average_mae_eV": 0.1686801688194275,
+      "test_average_mae_eV": 0.17130988836288452,
+      "test_gap_mae_eV": 0.17130988836288452,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed42/model.pt",
+          "bytes": 15234891,
+          "sha256": "6b76f848604a8134858fc85100fd4d1046d71005afafea96829b3ea97a0e2422"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed42/training_state.pt",
+          "bytes": 60877143,
+          "sha256": "f6e04016729d01076d45356b4e33ad67a413423a70265b6f736f41c9719e6989"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed42/metrics.json",
+          "bytes": 13405,
+          "sha256": "caf231b6ca43ad8779f79153fe399efcadc353a41708f130b5fa0b42bc8f5855"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed42/test_predictions.pt",
+          "bytes": 162646,
+          "sha256": "12153e0794e2ad50cfae18271e4aee058ee1cc833e98d98feda57eb5fa589761"
+        }
+      }
+    },
+    {
+      "status": "accepted",
+      "kind": "normalized_structural_gps",
+      "seed": 43,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 39,
+      "best_validation_average_mae_eV": 0.17031036801338195,
+      "test_average_mae_eV": 0.17413708567619324,
+      "test_gap_mae_eV": 0.17413708567619324,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/model.pt",
+          "bytes": 15234891,
+          "sha256": "d86d205f29145e04e1301b384699ebf0455446ea44eac9b44705bb7e8c6e6477"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/training_state.pt",
+          "bytes": 60877143,
+          "sha256": "c91c193d4dcba6fe4bd8a56904fa4314217a0df151b1c7519ef9f21ba79a347d"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/metrics.json",
+          "bytes": 13403,
+          "sha256": "743a5e4d0e74d03578fc4869e4e3455a3ddf75cfa37ea11b9a1e58bdc595fc13"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed43/test_predictions.pt",
+          "bytes": 162646,
+          "sha256": "8e9571618f1ae30dbf878fca9bac3454693efe75e21632261ea9752b37f67fd3"
+        }
+      }
+    },
+    {
+      "status": "accepted",
+      "kind": "normalized_structural_gps",
+      "seed": 44,
+      "target_mode": "gap",
+      "graph_sha256": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "test_rows": 9997,
+      "best_epoch": 39,
+      "best_validation_average_mae_eV": 0.1669272225856781,
+      "test_average_mae_eV": 0.17081879079341888,
+      "test_gap_mae_eV": 0.17081879079341888,
+      "artifacts": {
+        "model": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed44/model.pt",
+          "bytes": 15234891,
+          "sha256": "c9c0c5c1c4b92e2a67e9beedb24ce06c14d06efa1f72e24ab5ff7ea257e424d9"
+        },
+        "last_checkpoint": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed44/training_state.pt",
+          "bytes": 60877143,
+          "sha256": "ba0f8a32f2b830e4d51f01beb49ccd57e28a5e4b527ed8c0caf7e1d53d363f69"
+        },
+        "metrics": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed44/metrics.json",
+          "bytes": 13411,
+          "sha256": "2fcd9d7a41faa47a34445161e3bde0df65297cc53c3784b64566be8462d5416a"
+        },
+        "predictions": {
+          "path": "/kaggle/working/resource_bounded_architecture/normalized_rwse_gap/seed44/test_predictions.pt",
+          "bytes": 162646,
+          "sha256": "8c3f2b227dcaa2230e63d454d115c9ff787379493ec0d20ca80243ea80e702a0"
+        }
+      }
+    }
+  ]
+}

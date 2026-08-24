@@ -1,0 +1,327 @@
+{
+  "format": "molgap-edge-state-structural-multiseed-acceptance-v1",
+  "status": "accepted",
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "runs": {
+    "baseline": [
+      {
+        "seed": 42,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2111.795576810837,
+        "best_epoch": 38,
+        "validation_average_mae_eV": 0.13494544899463654,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.1244918555021286,
+          "LUMO": 0.12210381776094437,
+          "Gap": 0.16389970481395721,
+          "average": 0.13683179269234338
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "90bb46d933c8b1a7e07e140c787226f882a5f98ae0cd28a060d44804bb18ac9d"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "d49546f9b5ea968ac2246bb5e0b07dd9aa29447724c9fa2e308661e9e418deba"
+          },
+          "metrics": {
+            "bytes": 13438,
+            "sha256": "b3c1f46638427cc213887cd7445e084bc606b2f4ac4e4ce4b347f9da8b935eb5"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "f06f257fc3289a1c86ac2b9b229184c5cd415b173cbe681060c96119c1994ff5"
+          }
+        }
+      },
+      {
+        "seed": 43,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2107.715615749359,
+        "best_epoch": 37,
+        "validation_average_mae_eV": 0.13695567800998687,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.12672586739063263,
+          "LUMO": 0.12235961854457855,
+          "Gap": 0.1658180207014084,
+          "average": 0.1383011688788732
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "5ccdab2f05323e237f1d89e73b27d56347873e72f5acc6c637172940cf16c54b"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "4a202fc3295dbe0b6f82b72de41ab21fa79a3a6e1adb8f8f53ada663bb7c1fda"
+          },
+          "metrics": {
+            "bytes": 13428,
+            "sha256": "b70231582e95bb6457a78a7567425384ce3a4d010704f65cdf669139bf0f81a6"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "d2d46b8ccd776059e484018da2106d88901357684e417cbcc02437136dd66efe"
+          }
+        }
+      },
+      {
+        "seed": 44,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2141.549344062805,
+        "best_epoch": 39,
+        "validation_average_mae_eV": 0.13617320146560669,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.12270238995552063,
+          "LUMO": 0.12262120842933655,
+          "Gap": 0.16448752582073212,
+          "average": 0.13660370806852976
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "f23de2736ca03e9f3616ec404c83c301ea668e2ba808c02f8d552ab9c6ed0ce7"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "b1306c6a34e6c283ca3deaedb73a253c30b213730a30bd2c15b2fb3c7ccfefe3"
+          },
+          "metrics": {
+            "bytes": 13452,
+            "sha256": "220593416834ad214c7f73243c9f4da734040935643a2804cfee09334de41f32"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "110026096c75eafc2df69d824335312f73531d90308e6a52c21145969ed46853"
+          }
+        }
+      }
+    ],
+    "candidate": [
+      {
+        "seed": 42,
+        "kind": "edge_state_structural_gps",
+        "parameters": 4739267,
+        "training_time_s": 3335.3950123786926,
+        "best_epoch": 38,
+        "validation_average_mae_eV": 0.13000285313129425,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.11966493725776672,
+          "LUMO": 0.11631716787815094,
+          "Gap": 0.15673312544822693,
+          "average": 0.13090507686138153
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 19114891,
+            "sha256": "12b7176e0ee452d78b198bc4f00244ca03c7942434f5daa4098d956800e20190"
+          },
+          "last_checkpoint": {
+            "bytes": 76439593,
+            "sha256": "42ac6d720f276b11fa1e708cc2757ef0c9783d05dfb7b4b2f8a430b8e51b3f2a"
+          },
+          "metrics": {
+            "bytes": 13594,
+            "sha256": "6cd7b5cc9b94f3cdce7b7013df77dc288898a687b30e04a9297013f6c028d774"
+          },
+          "predictions": {
+            "bytes": 322518,
+            "sha256": "6c3bccb2d44fd4b0d4f68dbc2263d505168cd65ac9fb964a9244fd2d8b6e1691"
+          }
+        }
+      },
+      {
+        "seed": 43,
+        "kind": "edge_state_structural_gps",
+        "parameters": 4739267,
+        "training_time_s": 3236.6863925457,
+        "best_epoch": 36,
+        "validation_average_mae_eV": 0.1289462769985199,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.11851026117801666,
+          "LUMO": 0.11626502871513367,
+          "Gap": 0.15589681267738342,
+          "average": 0.13022403419017792
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 19114891,
+            "sha256": "8698aa2e03bfd9b9a0e276724f0cc6a5839964826fbecd7d8192ec311a5571c1"
+          },
+          "last_checkpoint": {
+            "bytes": 76439593,
+            "sha256": "13903e392cf97effc010f2132d38feae68b113292217aeae176109de5e8a30c1"
+          },
+          "metrics": {
+            "bytes": 13576,
+            "sha256": "8c78b9ff1ed19d16e269fae51bf440611652aef3adb499838ddaede7516ce055"
+          },
+          "predictions": {
+            "bytes": 322518,
+            "sha256": "61353d90af4a949fbf6ef875da836e7a23beac0a5e39d5a2dc33ed266fc9f2d7"
+          }
+        }
+      },
+      {
+        "seed": 44,
+        "kind": "edge_state_structural_gps",
+        "parameters": 4739267,
+        "training_time_s": 3227.8261766433716,
+        "best_epoch": 38,
+        "validation_average_mae_eV": 0.12893346743583678,
+        "target_mode": "all",
+        "test_mae_eV": {
+          "HOMO": 0.11810913681983948,
+          "LUMO": 0.11610367894172668,
+          "Gap": 0.15581436455249786,
+          "average": 0.13000906010468802
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 19114891,
+            "sha256": "ba0179b187b8d47b7dc5dc8738270f50d691409a45e52d2eb0b2ff8e97b1ca3b"
+          },
+          "last_checkpoint": {
+            "bytes": 76439593,
+            "sha256": "df4128ad80be7edd4c73ad89446f99ba28acf5d25974825ca59ae519f8e9bca0"
+          },
+          "metrics": {
+            "bytes": 13564,
+            "sha256": "1686f53b850440798adb1fc39fdd87ebc12e47139e14d12c8c875a9d5444c2d9"
+          },
+          "predictions": {
+            "bytes": 322518,
+            "sha256": "97ef1083ea5868c7dc1a1c815db1c2df699d1d8979e19ceb1aabb53dac5999fb"
+          }
+        }
+      }
+    ]
+  },
+  "paired_comparison": [
+    {
+      "seed": 42,
+      "validation_delta_eV": -0.004942595863342281,
+      "test_delta_eV": {
+        "HOMO": -0.0048269182443618774,
+        "LUMO": -0.0057866498827934265,
+        "Gap": -0.007166579365730286,
+        "average": -0.005926715830961854
+      },
+      "training_time_s": 3335.3950123786926
+    },
+    {
+      "seed": 43,
+      "validation_delta_eV": -0.008009401011466966,
+      "test_delta_eV": {
+        "HOMO": -0.008215606212615967,
+        "LUMO": -0.006094589829444885,
+        "Gap": -0.009921208024024963,
+        "average": -0.008077134688695281
+      },
+      "training_time_s": 3236.6863925457
+    },
+    {
+      "seed": 44,
+      "validation_delta_eV": -0.007239734029769906,
+      "test_delta_eV": {
+        "HOMO": -0.004593253135681152,
+        "LUMO": -0.006517529487609863,
+        "Gap": -0.008673161268234253,
+        "average": -0.006594647963841738
+      },
+      "training_time_s": 3227.8261766433716
+    }
+  ],
+  "aggregate": {
+    "validation_delta_eV": {
+      "mean": -0.006730576968193051,
+      "population_sd": 0.0013027545532847446,
+      "values": [
+        -0.004942595863342281,
+        -0.008009401011466966,
+        -0.007239734029769906
+      ]
+    },
+    "test_delta_eV": {
+      "HOMO": {
+        "mean": -0.0058785925308863325,
+        "population_sd": 0.001655269274609083,
+        "values": [
+          -0.0048269182443618774,
+          -0.008215606212615967,
+          -0.004593253135681152
+        ]
+      },
+      "LUMO": {
+        "mean": -0.006132923066616058,
+        "population_sd": 0.00029960899740403185,
+        "values": [
+          -0.0057866498827934265,
+          -0.006094589829444885,
+          -0.006517529487609863
+        ]
+      },
+      "Gap": {
+        "mean": -0.0085869828859965,
+        "population_sd": 0.0011262222387102886,
+        "values": [
+          -0.007166579365730286,
+          -0.009921208024024963,
+          -0.008673161268234253
+        ]
+      },
+      "average": {
+        "mean": -0.006866166161166291,
+        "population_sd": 0.0008986534053915208,
+        "values": [
+          -0.005926715830961854,
+          -0.008077134688695281,
+          -0.006594647963841738
+        ]
+      }
+    },
+    "baseline_equal_seed_ensemble_test_mae_eV": {
+      "HOMO": 0.11937941610813141,
+      "LUMO": 0.11637374013662338,
+      "Gap": 0.15656769275665283,
+      "average": 0.13077361633380255
+    },
+    "candidate_equal_seed_ensemble_test_mae_eV": {
+      "HOMO": 0.11321684718132019,
+      "LUMO": 0.11053701490163803,
+      "Gap": 0.1483694314956665,
+      "average": 0.12404109785954158
+    }
+  },
+  "selection_gate": {
+    "required_validation_improvement_eV": 0.001,
+    "direction_consistent": true,
+    "max_training_time_s": 4500.0,
+    "training_time_passed": true,
+    "passed": true
+  }
+}

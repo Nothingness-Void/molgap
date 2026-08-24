@@ -6,7 +6,7 @@ This file answers one question: **what do Track A, B, and C mean?**
 |---|---|---|---|
 | **A - Production** | Build the general PubChemQC/B3LYP model and the shipped database | May change the production registry only after fixed external acceptance | `production/` and production-directed experiments |
 | **B - Leaderboard** | Maximize PCQM Gap accuracy for benchmark submission | Remains a task-routed specialist; never replaces Track A without a separate production gate | `experiments/pcqm_gine_expert/`, `experiments/pcqm_route_b/` |
-| **C - Discovery** | Use QM9 and bounded transfer screens to eliminate or discover architectures cheaply | A result must transfer to the target domain before entering Track A or B | `experiments/qm9_architecture/`, `experiments/pubchemqc100k_architecture/` |
+| **C - Discovery** | Use bounded screens to eliminate or discover architectures cheaply | A result must transfer to the target domain before entering Track A or B | `experiments/resource_bounded_architecture/`, `experiments/qm9_architecture/`, `experiments/pubchemqc100k_architecture/` |
 
 The flow is directional:
 

@@ -1,0 +1,321 @@
+{
+  "format": "molgap-paired-architecture-screen-acceptance-v1",
+  "status": "accepted",
+  "input_sha256": {
+    "base_graph": "5c348c28c8f75f09d6072ebf88de28f8513feec6e7a20c8439edc12d4b18d936",
+    "rwse_graph": "71d61923ea008b02eb902003c73eaf9aee9f6ff488be5f88482f0e11d700e017",
+    "split_csv": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05"
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "test_alignment": {
+    "rows": 9997,
+    "source_idx_exact": true,
+    "targets_exact": true
+  },
+  "runs": {
+    "control": [
+      {
+        "seed": 42,
+        "kind": "gps",
+        "parameters": 3735939,
+        "training_time_s": 2115.423919439316,
+        "best_epoch": 39,
+        "validation_average_mae_eV": 0.1430066806793213,
+        "test_mae_eV": {
+          "HOMO": 0.1320350021123886,
+          "LUMO": 0.12973114848136902,
+          "Gap": 0.17313997447490692,
+          "average": 0.14496870835622153
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15069835,
+            "sha256": "7e9cbf624247fe76985423de2ce475bff8ca3e053780d1a34f690fa90a43100f"
+          },
+          "last_checkpoint": {
+            "bytes": 60215933,
+            "sha256": "22969bc1a51c085a3da3474c1f8d08d64f7cc271c065b6080fc93d227eeb9097"
+          },
+          "metrics": {
+            "bytes": 13270,
+            "sha256": "a01f9cc8d1e4640b6fa1d3e56597a028c28d13705a86f809fb817a6389cdb2c6"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "370e79042d00f1684f8f2d6affe80b59c277b028595c8f4abf268d2b430413b7"
+          }
+        }
+      },
+      {
+        "seed": 43,
+        "kind": "gps",
+        "parameters": 3735939,
+        "training_time_s": 2108.1614696979523,
+        "best_epoch": 39,
+        "validation_average_mae_eV": 0.15582310740947725,
+        "test_mae_eV": {
+          "HOMO": 0.14024421572685242,
+          "LUMO": 0.14013110101222992,
+          "Gap": 0.18817119300365448,
+          "average": 0.1561821699142456
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15069835,
+            "sha256": "6c4ee4453c6f3065e75e68245078955ae28179deb75026282f1bf8faae8b73bd"
+          },
+          "last_checkpoint": {
+            "bytes": 60215933,
+            "sha256": "825d486a52a4ff15c220c37a00d2779d15d587621b3348d0896eaf5962ed3dd3"
+          },
+          "metrics": {
+            "bytes": 13296,
+            "sha256": "4446bd465d0ef81552d9fe40a26967f8e24ca98fee16bf97fadb37aef0c152d2"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "cfd3b380a3b39cd816f5237ddfe1c4f12283042c4d7da937e2c3a5c5a3412c58"
+          }
+        }
+      },
+      {
+        "seed": 44,
+        "kind": "gps",
+        "parameters": 3735939,
+        "training_time_s": 2103.2999906539917,
+        "best_epoch": 39,
+        "validation_average_mae_eV": 0.13858485448360444,
+        "test_mae_eV": {
+          "HOMO": 0.12834522128105164,
+          "LUMO": 0.1261381208896637,
+          "Gap": 0.16814401745796204,
+          "average": 0.14087578654289246
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15069835,
+            "sha256": "20e3ed0f9f4e521a054016249ec6c731685115a3d977e8e9963224ef4d700b8e"
+          },
+          "last_checkpoint": {
+            "bytes": 60215933,
+            "sha256": "523876779a138508e917760c8e4e8e9117dbaa246a7f20f6d7c7e2b5426f0bb4"
+          },
+          "metrics": {
+            "bytes": 13303,
+            "sha256": "d2a293c07c258d0213a133ed5dbf8eaebe895fb3c5f48a8ca494af1b077426cb"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "9a75ffcc67ca93e1cf6f87245937b51eba4ab5431384b05100d4e3bf2c1bca6b"
+          }
+        }
+      }
+    ],
+    "structural": [
+      {
+        "seed": 42,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2111.795576810837,
+        "best_epoch": 38,
+        "validation_average_mae_eV": 0.13494544899463654,
+        "test_mae_eV": {
+          "HOMO": 0.1244918555021286,
+          "LUMO": 0.12210381776094437,
+          "Gap": 0.16389970481395721,
+          "average": 0.13683179269234338
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "90bb46d933c8b1a7e07e140c787226f882a5f98ae0cd28a060d44804bb18ac9d"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "d49546f9b5ea968ac2246bb5e0b07dd9aa29447724c9fa2e308661e9e418deba"
+          },
+          "metrics": {
+            "bytes": 13438,
+            "sha256": "b3c1f46638427cc213887cd7445e084bc606b2f4ac4e4ce4b347f9da8b935eb5"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "f06f257fc3289a1c86ac2b9b229184c5cd415b173cbe681060c96119c1994ff5"
+          }
+        }
+      },
+      {
+        "seed": 43,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2107.715615749359,
+        "best_epoch": 37,
+        "validation_average_mae_eV": 0.13695567800998687,
+        "test_mae_eV": {
+          "HOMO": 0.12672586739063263,
+          "LUMO": 0.12235961854457855,
+          "Gap": 0.1658180207014084,
+          "average": 0.1383011688788732
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "5ccdab2f05323e237f1d89e73b27d56347873e72f5acc6c637172940cf16c54b"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "4a202fc3295dbe0b6f82b72de41ab21fa79a3a6e1adb8f8f53ada663bb7c1fda"
+          },
+          "metrics": {
+            "bytes": 13428,
+            "sha256": "b70231582e95bb6457a78a7567425384ce3a4d010704f65cdf669139bf0f81a6"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "d2d46b8ccd776059e484018da2106d88901357684e417cbcc02437136dd66efe"
+          }
+        }
+      },
+      {
+        "seed": 44,
+        "kind": "structural_gps",
+        "parameters": 3776259,
+        "training_time_s": 2141.549344062805,
+        "best_epoch": 39,
+        "validation_average_mae_eV": 0.13617320146560669,
+        "test_mae_eV": {
+          "HOMO": 0.12270238995552063,
+          "LUMO": 0.12262120842933655,
+          "Gap": 0.16448752582073212,
+          "average": 0.13660370806852976
+        },
+        "test_rows": 9997,
+        "artifacts": {
+          "model": {
+            "bytes": 15232267,
+            "sha256": "f23de2736ca03e9f3616ec404c83c301ea668e2ba808c02f8d552ab9c6ed0ce7"
+          },
+          "last_checkpoint": {
+            "bytes": 60867397,
+            "sha256": "b1306c6a34e6c283ca3deaedb73a253c30b213730a30bd2c15b2fb3c7ccfefe3"
+          },
+          "metrics": {
+            "bytes": 13452,
+            "sha256": "220593416834ad214c7f73243c9f4da734040935643a2804cfee09334de41f32"
+          },
+          "predictions": {
+            "bytes": 322454,
+            "sha256": "110026096c75eafc2df69d824335312f73531d90308e6a52c21145969ed46853"
+          }
+        }
+      }
+    ]
+  },
+  "paired_comparison": [
+    {
+      "seed": 42,
+      "validation_delta_eV": -0.008061231684684755,
+      "test_delta_eV": {
+        "HOMO": -0.00754314661026001,
+        "LUMO": -0.007627330720424652,
+        "Gap": -0.009240269660949707,
+        "average": -0.008136915663878141
+      }
+    },
+    {
+      "seed": 43,
+      "validation_delta_eV": -0.018867429399490376,
+      "test_delta_eV": {
+        "HOMO": -0.013518348336219788,
+        "LUMO": -0.017771482467651367,
+        "Gap": -0.022353172302246094,
+        "average": -0.017881001035372407
+      }
+    },
+    {
+      "seed": 44,
+      "validation_delta_eV": -0.0024116530179977558,
+      "test_delta_eV": {
+        "HOMO": -0.005642831325531006,
+        "LUMO": -0.0035169124603271484,
+        "Gap": -0.0036564916372299194,
+        "average": -0.0042720784743627005
+      }
+    }
+  ],
+  "aggregate": {
+    "validation_delta_eV": {
+      "mean": -0.009780104700724296,
+      "population_sd": 0.006827104677356487,
+      "values": [
+        -0.008061231684684755,
+        -0.018867429399490376,
+        -0.0024116530179977558
+      ]
+    },
+    "test_delta_eV": {
+      "HOMO": {
+        "mean": -0.008901442090670267,
+        "population_sd": 0.0033555592683872427,
+        "values": [
+          -0.00754314661026001,
+          -0.013518348336219788,
+          -0.005642831325531006
+        ]
+      },
+      "LUMO": {
+        "mean": -0.00963857521613439,
+        "population_sd": 0.005990660500009929,
+        "values": [
+          -0.007627330720424652,
+          -0.017771482467651367,
+          -0.0035169124603271484
+        ]
+      },
+      "Gap": {
+        "mean": -0.011749977866808573,
+        "population_sd": 0.007836472141268412,
+        "values": [
+          -0.009240269660949707,
+          -0.022353172302246094,
+          -0.0036564916372299194
+        ]
+      },
+      "average": {
+        "mean": -0.010096665057871082,
+        "population_sd": 0.0057260315858560385,
+        "values": [
+          -0.008136915663878141,
+          -0.017881001035372407,
+          -0.0042720784743627005
+        ]
+      }
+    },
+    "control_equal_seed_ensemble_test_mae_eV": {
+      "HOMO": 0.1267162412405014,
+      "LUMO": 0.12383606284856796,
+      "Gap": 0.16640006005764008,
+      "average": 0.13898412138223648
+    },
+    "structural_equal_seed_ensemble_test_mae_eV": {
+      "HOMO": 0.11937941610813141,
+      "LUMO": 0.11637374013662338,
+      "Gap": 0.15656769275665283,
+      "average": 0.13077361633380255
+    }
+  },
+  "selection_gate": {
+    "required_improvement_eV": 0.001,
+    "direction_consistent": true,
+    "passed": true
+  }
+}
