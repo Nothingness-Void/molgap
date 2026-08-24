@@ -1,0 +1,46 @@
+#!/bin/bash
+# Four core slots provide the memory allowance required by both aligned views.
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=4
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+HANDOFF="$ROOT/colab_handoff/conservative_2d3d_fusion_r1"
+CODE_ROOT="$HANDOFF"
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+INPUTS="$ROOT/fusion_inputs"
+OUTPUT="$HANDOFF/payload/training_payload.pt"
+MANIFEST="$HANDOFF/payload/training_manifest.json"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+mkdir -p "$HANDOFF/payload" "$ROOT/logs"
+export PYTHONPATH="$CODE_ROOT/src:/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=4
+
+if test -f "$OUTPUT" -a -f "$MANIFEST"; then
+  "$PYTHON" - "$OUTPUT" "$MANIFEST" <<'PY'
+import hashlib, json, sys
+from pathlib import Path
+payload, manifest = map(Path, sys.argv[1:])
+record = json.loads(manifest.read_text())
+digest = hashlib.sha256(payload.read_bytes()).hexdigest()
+if record.get("status") != "accepted" or digest != record["payload"]["sha256"]:
+    raise SystemExit("Existing payload does not pass its manifest")
+print("accepted payload already exists; nothing to rebuild")
+PY
+  exit 0
+fi
+
+LOG="$ROOT/logs/conservative_colab_payload_r1_${PBS_JOBID}.log"
+"$PYTHON" "$CODE_ROOT/experiments/resource_bounded_architecture/build_conservative_fusion_payload.py" \
+  --frozen-2d "$INPUTS/frozen_2d_test_payload.pt" \
+  --scaffold-manifest "$INPUTS/repaired_2m_scaffold_groups.npz" \
+  --primary-embeddings "$ROOT/embeddings/primary" \
+  --augmented-embeddings "$ROOT/embeddings/augmented" \
+  --output "$OUTPUT" \
+  --manifest "$MANIFEST" 2>&1 | tee "$LOG"

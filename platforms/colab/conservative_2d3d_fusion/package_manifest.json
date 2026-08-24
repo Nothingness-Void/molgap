@@ -1,0 +1,35 @@
+{
+  "format": "molgap-conservative-fusion-colab-package-v1",
+  "wheel": {
+    "name": "molgap-0.1.0-py3-none-any.whl",
+    "sha256": "8f17c61e077e44556758d5b65898440236b6fd16dbf96be13fd46e189ae0c6c8"
+  },
+  "notebook": {
+    "name": "molgap_conservative_2d3d_fusion.ipynb",
+    "sha256": "7b7960b963211c252c4dc68b794c0814be8fec6bb7a89d9a30c5c2d94210f301"
+  },
+  "drive_paths": {
+    "notebook_dir": "MolGap/notebooks/molgap_conservative_2d3d_fusion_r1",
+    "input_dir": "MolGap/results/molgap_conservative_2d3d_fusion_r1/inputs",
+    "checkpoint_dir": "MolGap/checkpoints/molgap_conservative_2d3d_fusion_r1",
+    "result_dir": "MolGap/results/molgap_conservative_2d3d_fusion_r1/run"
+  },
+  "inputs": {
+    "training_payload.pt": {
+      "bytes": 161138371,
+      "sha256": "0b3c5e77e4a5a69672b11f77dd2ebf462c6d0ea5a1cc09732f46796343cce02c"
+    },
+    "training_manifest.json": {
+      "bytes": 41822,
+      "sha256": "5c1a526603d71113bb7fae9917384404b88b125d9c53bd4ac6e63d060afa1d3a"
+    },
+    "external_payload.pt": {
+      "bytes": 1611386,
+      "sha256": "a3b8276d6520c49f21b7509ddd5492920afa7c1a9fa6a5974fcb67406799cce9"
+    },
+    "external_manifest.json": {
+      "bytes": 1194,
+      "sha256": "0bd0dfc966ce372b7fb735bc13a256b0757e02f01cdfb4cd87701f1f54324c3d"
+    }
+  }
+}

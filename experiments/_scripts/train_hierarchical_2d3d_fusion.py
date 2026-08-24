@@ -13,9 +13,12 @@ import torch
 from sklearn.model_selection import GroupShuffleSplit
 
 from molgap.hierarchical_fusion import (
+    ConservativeFusionConfig,
     HierarchicalFusionConfig,
+    fit_conservative_hierarchical_fusion,
     fit_hierarchical_fusion,
     hierarchical_context,
+    predict_conservative_hierarchical_fusion,
     predict_hierarchical_fusion,
 )
 from molgap.multi2d_router_fusion import metric_block
@@ -238,6 +241,11 @@ def main() -> None:
     parser.add_argument("--augmented-embeddings", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument(
+        "--fusion-kind",
+        choices=["legacy", "conservative"],
+        default="legacy",
+    )
     args = parser.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
     atomic_json({"status": "loading"}, args.out_dir / "progress.json")
@@ -305,9 +313,16 @@ def main() -> None:
     }
     for base_name, base_key in base_keys.items():
         base = frozen[base_key].astype(np.float32)
-        predictions, corrections, training = [], [], {}
+        predictions, corrections, confidences, training = [], [], [], {}
         for seed in (42, 43, 44):
-            config = HierarchicalFusionConfig(seed=seed)
+            if args.fusion_kind == "conservative":
+                config = ConservativeFusionConfig(seed=seed)
+                fit = fit_conservative_hierarchical_fusion
+                predict = predict_conservative_hierarchical_fusion
+            else:
+                config = HierarchicalFusionConfig(seed=seed)
+                fit = fit_hierarchical_fusion
+                predict = predict_hierarchical_fusion
             checkpoint_path = (
                 args.out_dir / f"{base_name}_seed{seed}.last.pt"
             )
@@ -319,9 +334,10 @@ def main() -> None:
                     "input": input_contract,
                     "base": base_name,
                     "seed": seed,
+                    "fusion_kind": args.fusion_kind,
                 }
             )
-            model, report = fit_hierarchical_fusion(
+            model, report = fit(
                 base,
                 context,
                 frozen["targets"],
@@ -334,17 +350,16 @@ def main() -> None:
                 resume=checkpoint_path.is_file(),
                 contract_id=contract_id,
             )
-            prediction, correction = predict_hierarchical_fusion(
-                model,
-                base[test],
-                context[test],
-            )
+            prediction_result = predict(model, base[test], context[test])
+            prediction, correction = prediction_result[:2]
+            if len(prediction_result) == 3:
+                confidences.append(prediction_result[2])
             predictions.append(prediction)
             corrections.append(correction)
             training[str(seed)] = report
             atomic_torch(
                 {
-                    "kind": "hierarchical_2d_3d_bounded_residual",
+                    "kind": report["kind"],
                     "base": base_name,
                     "seed": seed,
                     "contract_id": contract_id,
@@ -375,9 +390,21 @@ def main() -> None:
             },
             "training": training,
         }
+        if confidences:
+            confidence = np.mean(confidences, axis=0)
+            result[base_name]["confidence"] = {
+                "mean": float(confidence.mean()),
+                "p95": float(np.quantile(confidence, 0.95)),
+                "max": float(confidence.max()),
+            }
 
     metrics = {
-        "experiment": "repaired_2m_hierarchical_three_gps_dual_schnet_fusion",
+        "experiment": (
+            "repaired_2m_conservative_three_gps_dual_schnet_fusion"
+            if args.fusion_kind == "conservative"
+            else "repaired_2m_hierarchical_three_gps_dual_schnet_fusion"
+        ),
+        "fusion_kind": args.fusion_kind,
         "status": "internal_gate_complete_not_production",
         "aligned_rows": int(aligned.sum()),
         "split": {
@@ -387,7 +414,11 @@ def main() -> None:
             "test": len(test),
             "scaffold_overlap": 0,
         },
-        "correction_scale_eV": 0.10,
+        "correction_scale_eV": (
+            ConservativeFusionConfig().correction_scale_eV
+            if args.fusion_kind == "conservative"
+            else HierarchicalFusionConfig().correction_scale_eV
+        ),
         "results": result,
         "inputs": {
             "frozen_2d": {

@@ -15,9 +15,12 @@ from torch_geometric.loader import DataLoader
 
 from .graphs import smiles_to_pyg
 from .hierarchical_fusion import (
+    ConservativeFusionConfig,
+    ConservativeHierarchicalResidualHead,
     HierarchicalBoundedResidualHead,
     HierarchicalFusionConfig,
     hierarchical_context,
+    predict_conservative_hierarchical_fusion,
     predict_hierarchical_fusion,
 )
 from .multi2d_router_fusion import (
@@ -272,20 +275,27 @@ def extract_external_schnet_embeddings(
     )
 
 
-def load_hierarchical_ensemble(
-    paths: list[Path],
-) -> list[HierarchicalBoundedResidualHead]:
+def load_hierarchical_ensemble(paths: list[Path]) -> list[torch.nn.Module]:
     models = []
     for path in paths:
         payload = torch.load(path, map_location="cpu", weights_only=False)
-        config = HierarchicalFusionConfig(**payload["config"])
         state = payload["state_dict"]
-        model = HierarchicalBoundedResidualHead(
-            len(state["feature_mean"]),
-            state["feature_mean"].numpy(),
-            state["feature_std"].numpy(),
-            config,
-        )
+        if payload.get("kind") == "conservative_hierarchical_2d_3d_residual":
+            config = ConservativeFusionConfig(**payload["config"])
+            model = ConservativeHierarchicalResidualHead(
+                len(state["feature_center"]),
+                state["feature_center"].numpy(),
+                state["feature_scale"].numpy(),
+                config,
+            )
+        else:
+            config = HierarchicalFusionConfig(**payload["config"])
+            model = HierarchicalBoundedResidualHead(
+                len(state["feature_mean"]),
+                state["feature_mean"].numpy(),
+                state["feature_std"].numpy(),
+                config,
+            )
         model.load_state_dict(state)
         models.append(model.eval())
     return models
@@ -359,10 +369,15 @@ def evaluate_paired_external(
                 for seed in (42, 43, 44)
             ]
         )
-        predictions = [
-            predict_hierarchical_fusion(model, base, context)[0]
-            for model in models
-        ]
+        predictions = []
+        for model in models:
+            if isinstance(model, ConservativeHierarchicalResidualHead):
+                prediction = predict_conservative_hierarchical_fusion(
+                    model, base, context
+                )[0]
+            else:
+                prediction = predict_hierarchical_fusion(model, base, context)[0]
+            predictions.append(prediction)
         methods[f"repaired_2m_{base_name}_dual_schnet"] = np.mean(
             predictions, axis=0
         )

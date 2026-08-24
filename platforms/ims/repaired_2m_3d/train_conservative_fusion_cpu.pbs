@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=16
+#PBS -l walltime=08:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+ROUTE_B_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+CODE_ROOT="$ROOT/architecture_repair_r1"
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+INPUTS="$ROOT/fusion_inputs"
+OUTPUT="$ROOT/fusion_outputs/conservative_hierarchical_fusion_r1"
+PREFLIGHT="$ROOT/preflight/conservative_hierarchical_fusion_r1.json"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f "$PREFLIGHT"
+mkdir -p "$OUTPUT" logs
+export PYTHONPATH="$ROUTE_B_ROOT/code/platforms/ims/pcqm_route_b/shims:$ROUTE_B_ROOT/vendor:$CODE_ROOT/src"
+export OMP_NUM_THREADS=16
+export MKL_NUM_THREADS=16
+export OPENBLAS_NUM_THREADS=16
+
+"$PYTHON" "$CODE_ROOT/experiments/_scripts/train_hierarchical_2d3d_fusion.py" \
+  --frozen-2d "$INPUTS/frozen_2d_test_payload.pt" \
+  --manifest "$INPUTS/repaired_2m_scaffold_groups.npz" \
+  --primary-embeddings "$ROOT/embeddings/primary" \
+  --augmented-embeddings "$ROOT/embeddings/augmented" \
+  --out-dir "$OUTPUT" \
+  --fusion-kind conservative \
+  --device cpu 2>&1 | tee "logs/conservative_hierarchical_fusion_r1.log"

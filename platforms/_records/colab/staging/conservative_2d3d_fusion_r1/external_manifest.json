@@ -1,0 +1,28 @@
+{
+  "format": "molgap-conservative-fusion-external-manifest-v1",
+  "status": "accepted",
+  "payload": {
+    "name": "external_payload.pt",
+    "bytes": 1611386,
+    "sha256": "a3b8276d6520c49f21b7509ddd5492920afa7c1a9fa6a5974fcb67406799cce9"
+  },
+  "rows": 1973,
+  "context_dim": 379,
+  "scope_rows": {
+    "all": 1973,
+    "ood1000": 998,
+    "p8_targeted_hard": 975
+  },
+  "inputs": {
+    "three_gps_predictions_sha256": "67c42a93af2f399dbca3b5af46f199239df1898598e857806a049e19163a3467",
+    "accepted_external_predictions_sha256": "c3c3c501a76f9940fe2b920bbfaa61de9a72c7a4422e61f273b37a22254e0af1",
+    "dense_gate_sha256": [
+      "fde9ccbbfb947643b2c7f15c0841fd9ce00fcad77b341ec7243dfbff2c785708",
+      "b521102222a4b22b3efb8f889ad98048a97666782504708fb5aa92e78e1374e2",
+      "aefdabf07e14bc694f7c8ae858597d1ce0ae8c81af120601c36d064748341f97"
+    ],
+    "graph_completion_sha256": "7fd9ad864add094b098d57625780f3b13c4ab281d34423bc2f670806d805fdc9",
+    "primary_checkpoint_sha256": "b965ae664751b2a98b40a564cf79b24e29c13de53f0c2d0e11d79bf555a08249",
+    "augmented_checkpoint_sha256": "70375e8974284b81be5c44cd922a22eda87dbdf675d54390063880920c54db6c"
+  }
+}

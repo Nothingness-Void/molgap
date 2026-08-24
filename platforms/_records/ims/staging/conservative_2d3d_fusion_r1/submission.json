@@ -1,0 +1,65 @@
+{
+  "format": "molgap-ims-conservative-fusion-staging-v1",
+  "submitted_date": "2026-08-24",
+  "job": {
+    "id": "1327453.ccpbs1",
+    "name": "molgap-cons-payload",
+    "queue": "H",
+    "resources": {
+      "cpus": 2,
+      "gpus": 0,
+      "walltime": "02:00:00"
+    },
+    "observed_state": "terminal_with_memory_warning",
+    "observed_reason": "The scheduler reported the two-core cgroup memory limit after both atomic outputs were written. Independent remote and local artifact acceptance passed."
+  },
+  "superseded_job": {
+    "id": "1327349.ccpbs1",
+    "reason": "The ew6 group was using 1597 of 1600 core-job slots; the four-core staging request could not start. It was cancelled only after this diagnosis and replaced by the equivalent two-core staging request."
+  },
+  "failed_job": {
+    "id": "1327434.ccpbs1",
+    "cause": "The staging PBS omitted the accepted Route B offline vendor path, so the selected base virtual environment could not import torch.",
+    "effect": "Failed before reading or writing the training payload; no accepted input or PairGPS artifact was changed."
+  },
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/colab_handoff/conservative_2d3d_fusion_r1",
+  "source_archive": {
+    "name": "payload_builder.tar.gz",
+    "bytes": 213672,
+    "sha256": "c0a1c9908ffc8dce135c45b7a316a0682899cf4b57bf3d456a8224378f60ddad"
+  },
+  "pbs_override": {
+    "name": "stage_conservative_colab_payload_cpu.pbs",
+    "sha256": "e3563d2825982d1c6829e1011b36b6271a593fed862798921ad2ed92c045dd06",
+    "cpus": 2
+  },
+  "accepted_artifact": {
+    "rows": 198932,
+    "context_dim": 379,
+    "payload_bytes": 161138371,
+    "payload_sha256": "0b3c5e77e4a5a69672b11f77dd2ebf462c6d0ea5a1cc09732f46796343cce02c",
+    "split": {
+      "train": 160057,
+      "validation": 19501,
+      "test": 19374,
+      "scaffold_overlap": 0
+    },
+    "retrieved_and_revalidated_locally": true
+  },
+  "future_template": {
+    "cpus": 4,
+    "reason": "Four core slots provide the approximately 7.6 GB memory allowance needed to avoid the two-core cgroup warning."
+  },
+  "durability": {
+    "payload": "payload/training_payload.pt",
+    "manifest": "payload/training_manifest.json",
+    "atomic_writes": true
+  },
+  "safety": {
+    "write_boundary": "/lustre/home/users/sm2/chou",
+    "pairgps_job": "1322114.ccpbs1",
+    "pairgps_modified": false,
+    "sealed_20k_used": false,
+    "production_registry_changed": false
+  }
+}
