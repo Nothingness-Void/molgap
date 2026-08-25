@@ -13,6 +13,7 @@ from molgap.gps import (
     reconstruct_frontier_orbitals,
 )
 from molgap.structural_encoding import add_random_walk_pe
+from molgap.pair_gps_2d import PairGPS2DR2Wrapper
 
 
 def _chain() -> Data:
@@ -160,6 +161,46 @@ def test_edge_state_structural_gps_updates_compact_edge_state() -> None:
     output.square().mean().backward()
     assert model.edge_updates[0].source.weight.grad is not None
     assert torch.isfinite(model.edge_updates[0].source.weight.grad).all()
+
+
+def test_pair_gps_r2_is_compact_and_runs_sparse_triplet_backward() -> None:
+    model = PairGPS2DR2Wrapper(
+        hidden_channels=16,
+        pair_channels=8,
+        num_layers=3,
+        num_heads=4,
+        dropout=0.0,
+        distance_cap=3,
+        triplet_rank=4,
+        triplet_interval=3,
+        rwse_dim=4,
+    )
+    assert sum(layer.use_triplet for layer in model.layers) == 1
+    batch = Batch.from_data_list(
+        [
+            add_random_walk_pe(_chain(), walk_length=4),
+            add_random_walk_pe(_chain(), walk_length=4),
+        ]
+    )
+    output = model(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    assert output.shape == (2, 3)
+    assert torch.isfinite(output).all()
+    output.abs().mean().backward()
+    triplet_layer = model.layers[2]
+    assert triplet_layer.triplet_left.weight.grad is not None
+    assert torch.isfinite(triplet_layer.triplet_left.weight.grad).all()
+
+
+def test_pair_gps_r2_default_parameter_budget() -> None:
+    model = PairGPS2DR2Wrapper()
+    parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    assert 4_000_000 < parameter_count < 4_740_000
 
 
 def test_orbital_center_reconstruction_is_exact() -> None:
