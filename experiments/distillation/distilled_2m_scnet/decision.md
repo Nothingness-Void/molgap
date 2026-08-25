@@ -27,7 +27,9 @@ B3LYP-label loss was necessary.
 SCNet jobs `703633` and `703653` completed with exit code 0. Independent job
 `704402` recomputed hashes and accepted both model files, test predictions,
 all 40 embedding parts per student, and each 997,445-row FP16 fusion prefix.
-The acceptance record is `../remote/overnight_20260723_acceptance.json`.
+The acceptance record is
+`platforms/_records/scnet/overnight_20260723_acceptance.json`. Internal metrics
+are `student_gps7_metrics.json` and `student_gps7_w30_metrics.json`.
 
 ## External Outcome
 

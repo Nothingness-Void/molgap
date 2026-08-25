@@ -35,6 +35,22 @@ An experiment CLI resolves paths from `molgap.constants` roots, never from
 `Path(__file__).parents[n]`; `tests/test_repository_layout.py` enforces this so a
 future move cannot silently break an entrypoint.
 
+## Evidence Contract
+
+Every active experiment must satisfy this chain:
+
+1. its row in this file points to the experiment directory;
+2. the experiment `README.md` points to at least one dated decision owned by
+   that directory;
+3. the decision points to compact machine evidence such as `metrics.json`,
+   `summary.json`, `acceptance.json`, or `manifest.json`;
+4. remote submission and retrieval provenance stays under `platforms/` or the
+   experiment's `STATUS.md`/`results/REMOTE_LOG.md`;
+5. live state links to the decision and never copies its metrics.
+
+`tests/test_repository_layout.py` enforces index coverage, decision reachability,
+machine-evidence presence, and size limits on the two live control documents.
+
 ## File roles inside an experiment
 
 | File | Holds |
@@ -44,7 +60,8 @@ future move cannot silently break an entrypoint.
 | `results/REMOTE_LOG.md` | Finished remote rounds, so `CURRENT_STATE.md` need not restate them |
 | `results/*.json` | Exact metrics behind the decision |
 
-`CURRENT_STATE.md` lists only running or blocked work and links here for the rest.
+`CURRENT_STATE.md` lists only the live production identity, active or blocked
+work, and pointers here for the rest.
 
 Live status and the recommended model are in `CURRENT_STATE.md`; task order is in
 `ROADMAP.md`. Compute-environment adapters are in `platforms/`.

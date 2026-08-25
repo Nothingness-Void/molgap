@@ -29,5 +29,9 @@ Gap regression CI is `[+0.01120, +0.01853] eV`. The PCQM Gap improvement CI is
 - No sealed set was mounted or opened.
 - The precommitted retention gate failed.
 
-Raw metrics, paired predictions, gate, and progress are stored beside this
-decision.
+Machine evidence beside this decision:
+
+- `common_metrics.json` - common/OOD/P8-hard metrics and paired deltas;
+- `pcqm_metrics.json` - fixed PCQM validation-proxy result;
+- `gate.json` - precommitted acceptance decision;
+- `progress.json` - completed evaluation progress.

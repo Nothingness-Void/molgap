@@ -11,8 +11,8 @@ bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
 |---|---|---|
 | Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |
 | SCNet | `scnet/` | Slurm job files, DCU environment checks, storage migration |
-| Colab | `colab/` | Durable notebook bundles for long CPU graph builds |
-| IMS | `ims/` | Secondary-conformer construction adapters |
+| Colab | `colab/` | Drive-backed resumable notebooks for graph construction, GPU training, and fusion |
+| IMS | `ims/` | Shared-cluster CPU/GPU queue adapters, bounded arrays, and staged handoffs |
 | — | `_records/` | Retrieved outputs, staging payloads, acceptance records |
 
 Two placement rules keep this from re-accumulating:
