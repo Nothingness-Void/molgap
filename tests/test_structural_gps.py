@@ -4,6 +4,7 @@ import torch
 from torch_geometric.data import Batch, Data
 
 from molgap.gps import (
+    EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
     FrontierCenterGapHead,
     GatedStructuralGPSWrapper,
@@ -203,6 +204,51 @@ def test_pair_gps_r2_default_parameter_budget() -> None:
     model = PairGPS2DR2Wrapper()
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     assert 4_000_000 < parameter_count < 4_740_000
+
+
+def test_edge_readout_starts_at_edge_state_mean_pooling() -> None:
+    kwargs = {
+        "in_channels": 9,
+        "hidden_channels": 16,
+        "num_layers": 2,
+        "num_heads": 4,
+        "dropout": 0.0,
+        "rwse_dim": 4,
+        "edge_state_channels": 8,
+    }
+    torch.manual_seed(17)
+    baseline = EdgeStateStructuralGPSWrapper(**kwargs)
+    torch.manual_seed(17)
+    candidate = EdgeReadoutStructuralGPSWrapper(
+        **kwargs, readout_channels=4
+    )
+    batch = Batch.from_data_list(
+        [
+            add_random_walk_pe(_chain(), walk_length=4),
+            add_random_walk_pe(_chain(), walk_length=4),
+        ]
+    )
+    baseline.eval()
+    candidate.eval()
+    expected = baseline(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    actual = candidate(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    torch.testing.assert_close(actual, expected, rtol=0.0, atol=0.0)
+    actual.square().mean().backward()
+    final_projection = candidate.readout_delta[-1]
+    assert final_projection.weight.grad is not None
+    assert torch.isfinite(final_projection.weight.grad).all()
 
 
 def test_frontier_center_gap_head_enforces_exact_identity() -> None:

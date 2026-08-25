@@ -366,7 +366,7 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
                 )
             )
 
-    def encode(
+    def _encode_states(
         self,
         x,
         edge_index,
@@ -391,7 +391,77 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
         for edge_update, conv in zip(self.edge_updates, self.convs):
             edge_state = edge_update(h, edge_index, edge_state)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+        return h, edge_state
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+    ):
+        h, _ = self._encode_states(
+            x, edge_index, edge_attr, batch, random_walk_pe
+        )
         return self._pool(h, batch)
+
+
+class EdgeReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Persistent-edge GPS with an identity-initialized node/edge readout.
+
+    The encoder is identical to :class:`EdgeStateStructuralGPSWrapper`. The
+    readout can learn where frontier-orbital information is concentrated and
+    can expose the final bond state directly to the graph representation. Its
+    final projection is zero-initialized, so initialization exactly preserves
+    the accepted mean-pooled encoder rather than perturbing its optimization.
+    """
+
+    def __init__(self, *args, readout_channels: int = 32, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        if readout_channels <= 0:
+            raise ValueError("readout_channels must be positive")
+        hidden_channels = self.node_emb.out_features
+        self.node_readout_score = nn.Linear(hidden_channels, 1)
+        nn.init.zeros_(self.node_readout_score.weight)
+        nn.init.zeros_(self.node_readout_score.bias)
+        self.edge_readout_norm = nn.LayerNorm(self.edge_state_channels)
+        self.readout_delta = nn.Sequential(
+            nn.Linear(
+                hidden_channels + self.edge_state_channels,
+                readout_channels,
+            ),
+            nn.SiLU(),
+            nn.Linear(readout_channels, hidden_channels),
+        )
+        nn.init.zeros_(self.readout_delta[-1].weight)
+        nn.init.zeros_(self.readout_delta[-1].bias)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+    ):
+        from torch_geometric.nn import global_add_pool, global_mean_pool
+        from torch_geometric.utils import softmax
+
+        h, edge_state = self._encode_states(
+            x, edge_index, edge_attr, batch, random_walk_pe
+        )
+        mean = global_mean_pool(h, batch)
+        weights = softmax(self.node_readout_score(h), batch)
+        attended = global_add_pool(h * weights, batch, size=mean.shape[0])
+        edge_batch = batch[edge_index[0]]
+        edge_mean = global_mean_pool(
+            edge_state, edge_batch, size=mean.shape[0]
+        )
+        delta_input = torch.cat(
+            (attended - mean, self.edge_readout_norm(edge_mean)), dim=-1
+        )
+        return mean + self.readout_delta(delta_input)
 
 
 class OrbitalCenterHead(nn.Module):

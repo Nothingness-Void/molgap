@@ -21,6 +21,7 @@ from .egnn import EGNNWrapper
 from .edge_global_2d import EdgeGlobal2DWrapper
 from .gine import GINEWrapper
 from .gps import (
+    EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
     FrontierCenterGapHead,
     GPSWrapper,
@@ -213,6 +214,19 @@ ENCODER_CONFIGS = {
         "rwse_dim": 16,
         "edge_state_channels": 64,
         "consistent_head": True,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "edge_state_structural_readout": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "readout_channels": 32,
         "batch_size": 48,
         "amp": False,
     },
@@ -1053,10 +1067,14 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     if candidate in {
         "edge_state_structural_gps",
         "edge_state_structural_orbital",
+        "edge_state_structural_readout",
     }:
-        model = EdgeStateStructuralGPSWrapper(
-            in_channels=in_channels, edge_dim=edge_dim, **config
+        model_class = (
+            EdgeReadoutStructuralGPSWrapper
+            if candidate == "edge_state_structural_readout"
+            else EdgeStateStructuralGPSWrapper
         )
+        model = model_class(in_channels=in_channels, edge_dim=edge_dim, **config)
         if consistent_head:
             model.head = FrontierCenterGapHead(
                 model.node_emb.out_features,

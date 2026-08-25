@@ -73,6 +73,7 @@ def parse_args():
             "pair_gps_2d_r2",
             "edge_state_structural_gps",
             "edge_state_structural_orbital",
+            "edge_state_structural_readout",
             "pair_gps_2d_r3_orbital",
             "pair_gps_2d_r3_triplet",
             "pair_gps_2d_r3_combined",
