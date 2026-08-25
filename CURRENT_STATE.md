@@ -56,6 +56,12 @@ but did not improve both required accuracy metrics. It does not authorize seed
 repeats, PubChemQC-100K, or full-data work. The exact result is owned by
 `experiments/top20_architecture_qm9/pair_gps_2d_r2_decision.md`.
 
+A separate pure-2D R3 tournament is authorized to test bounded architectural
+repairs under a validation-only QM9 contract. Candidate definitions, frozen
+gates, resource bounds, and the single permitted test read are owned by
+`experiments/top20_architecture_qm9/pair_gps_2d_r3_protocol.md`. This work does
+not reopen R2 and does not change the accepted EdgeState scale-up decision.
+
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
 contract are implemented and locally tested. Model training has not started.
@@ -68,8 +74,10 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No MolGap Kaggle architecture kernel is pending or running after the
-  PairGPS-R2 Lite seed-42 result was retrieved and closed.
+- Kaggle2 kernel `kaseichou/molgap-pure2d-r3-qm9-validation` version 1 is the
+  only running architecture screen. It may read train and validation only;
+  no QM9 test, PubChemQC-100K, or full-data task is authorized until its frozen
+  validation gate is resolved.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.

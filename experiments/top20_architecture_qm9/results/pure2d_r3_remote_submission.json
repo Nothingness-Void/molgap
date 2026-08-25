@@ -1,0 +1,31 @@
+{
+  "experiment": "pure2d_r3_qm9_validation_tournament",
+  "submitted_at": "2026-08-25T15:46:26+09:00",
+  "source": {
+    "git_commit": "b56205967f12f517c7eea4428c0dfe8571c54996",
+    "dataset": "kaseichou/molgap-pure2d-r3-source",
+    "dataset_status_at_submission": "ready"
+  },
+  "cache": {
+    "kernel": "kaseichou/molgap-pairgps-r2-qm9-rwse-prep",
+    "split_fingerprint": "01656b1a538f89c8",
+    "rwse_output_sha256": "09943454c2e2aae7cf8eeaa828cca79c14be4b920c4c348e0de13a4263331ca5"
+  },
+  "run": {
+    "kernel": "kaseichou/molgap-pure2d-r3-qm9-validation",
+    "version": 1,
+    "status_at_record": "RUNNING",
+    "candidate_count": 5,
+    "parameter_budget": 4800000,
+    "gpu_hour_budget": 30,
+    "stop_bound_hours": 6,
+    "test_role_read": false,
+    "automatic_followup_submission": false
+  },
+  "selection": {
+    "validation_only": true,
+    "reference_average_mae_eV": 0.11006919294595718,
+    "reference_gap_mae_eV": 0.1318935602903366,
+    "winner_rule": "strictly improve both metrics, then minimize validation average"
+  }
+}
