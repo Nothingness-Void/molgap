@@ -20,7 +20,11 @@ from torch_geometric.loader import DataLoader
 from .egnn import EGNNWrapper
 from .edge_global_2d import EdgeGlobal2DWrapper
 from .gine import GINEWrapper
-from .gps import GPSWrapper
+from .gps import (
+    EdgeStateStructuralGPSWrapper,
+    FrontierCenterGapHead,
+    GPSWrapper,
+)
 from .graphs import smiles_to_pyg
 from .geometry_features import (
     ANGLE_FEATURE_DIM,
@@ -35,7 +39,11 @@ from .tgt_hybrid import TGTLiteHybridWrapper
 from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
 from .pair_triplet_2d import PairTriplet2DWrapper
 from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
-from .pair_gps_2d import PairGPS2DR2Wrapper, PairGPS2DWrapper
+from .pair_gps_2d import (
+    PairGPS2DR2Wrapper,
+    PairGPS2DR3Wrapper,
+    PairGPS2DWrapper,
+)
 from .structural_encoding import build_rwse_graph_cache, sha256
 from .tgt_egt_hybrid import TGTEGTHybridWrapper
 from .tgt_egt_compact import TGTCompactEGTWrapper
@@ -180,6 +188,85 @@ ENCODER_CONFIGS = {
         "triplet_interval": 3,
         "rwse_dim": 16,
         "gate_init": 0.1,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "edge_state_structural_gps": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "edge_state_structural_orbital": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "consistent_head": True,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "pair_gps_2d_r3_orbital": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "distance_cap": 5,
+        "triplet_rank": 8,
+        "triplet_interval": 3,
+        "rwse_dim": 16,
+        "gate_init": 0.1,
+        "attentive_triplet": False,
+        "consistent_head": True,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "pair_gps_2d_r3_triplet": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "distance_cap": 5,
+        "triplet_rank": 8,
+        "triplet_interval": 3,
+        "rwse_dim": 16,
+        "gate_init": 0.1,
+        "attentive_triplet": True,
+        "consistent_head": False,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "pair_gps_2d_r3_combined": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "distance_cap": 5,
+        "triplet_rank": 8,
+        "triplet_interval": 3,
+        "rwse_dim": 16,
+        "gate_init": 0.1,
+        "attentive_triplet": True,
+        "consistent_head": True,
         "batch_size": 48,
         "amp": False,
     },
@@ -504,6 +591,32 @@ def target_stats(records: list[dict], train_indices: np.ndarray) -> tuple[torch.
     mean = targets.mean(dim=0)
     std = targets.std(dim=0).clamp_min(1e-6)
     return mean, std
+
+
+def frontier_center_stats(
+    records: list[dict], train_indices: np.ndarray
+) -> tuple[torch.Tensor, torch.Tensor]:
+    targets = torch.stack([target_tensor(records[int(i)]) for i in train_indices])
+    centers = 0.5 * (targets[:, 0] + targets[:, 1])
+    return centers.mean().view(1), centers.std().clamp_min(1e-6).view(1)
+
+
+def configure_frontier_head(
+    model,
+    records: list[dict],
+    train_indices: np.ndarray,
+    mean: torch.Tensor,
+    std: torch.Tensor,
+) -> dict | None:
+    if not isinstance(model.head, FrontierCenterGapHead):
+        return None
+    center_mean, center_std = frontier_center_stats(records, train_indices)
+    model.head.configure_target_stats(mean, std, center_mean, center_std)
+    return {
+        "constraint": "lumo_minus_homo_equals_gap",
+        "center_mean": center_mean.tolist(),
+        "center_std": center_std.tolist(),
+    }
 
 
 def _topology_graph(record: dict, source_idx: int, mean: torch.Tensor, std: torch.Tensor) -> Data:
@@ -915,6 +1028,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     kind = config.pop("kind")
     config.pop("atom_geom_mode", None)
     config.pop("input_channels", None)
+    consistent_head = bool(config.pop("consistent_head", False))
     if candidate == "gine6":
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "edge_global_2d":
@@ -929,6 +1043,27 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         return PairGPS2DR2Wrapper(
             in_channels=in_channels, edge_dim=edge_dim, **config
         ), kind
+    if candidate.startswith("pair_gps_2d_r3_"):
+        return PairGPS2DR3Wrapper(
+            in_channels=in_channels,
+            edge_dim=edge_dim,
+            consistent_head=consistent_head,
+            **config,
+        ), kind
+    if candidate in {
+        "edge_state_structural_gps",
+        "edge_state_structural_orbital",
+    }:
+        model = EdgeStateStructuralGPSWrapper(
+            in_channels=in_channels, edge_dim=edge_dim, **config
+        )
+        if consistent_head:
+            model.head = FrontierCenterGapHead(
+                model.node_emb.out_features,
+                hidden_channels=model.node_emb.out_features,
+                dropout=float(ENCODER_CONFIGS[candidate]["dropout"]),
+            )
+        return model, kind
     if candidate == "tgt_egt_hybrid":
         return TGTEGTHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate in {"tgt_egt_compact", "tgt_egt_stable"}:
@@ -1149,12 +1284,18 @@ def train_encoder(
     cache_dir: Path = DEFAULT_CACHE,
     results_dir: Path = DEFAULT_RESULTS,
     models_dir: Path = DEFAULT_MODELS,
+    embeddings_dir: Path | None = None,
+    evaluate_test: bool = True,
 ) -> dict:
     expected = ENCODER_CONFIGS[candidate]["kind"]
     if expected in {"topology", "structural_topology"} and geometry != "topology":
         raise ValueError(f"{candidate} requires --geometry topology")
     if expected == "geometry" and geometry not in {"dft", "etkdg"}:
         raise ValueError(f"{candidate} requires --geometry dft or etkdg")
+    if not evaluate_test and expected != "structural_topology":
+        raise ValueError(
+            "validation-only mode is implemented only for accepted structural caches"
+        )
     set_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     records = load_qm9_records(cache_dir)
@@ -1204,6 +1345,9 @@ def train_encoder(
         )
     input_channels = int(ENCODER_CONFIGS[candidate].get("input_channels", 11))
     model, kind = make_encoder(candidate, in_channels=input_channels)
+    frontier_head_report = configure_frontier_head(
+        model, records, split.train, mean, std
+    )
     if init_checkpoint is not None:
         loaded = torch.load(init_checkpoint, map_location="cpu", weights_only=True)
         state = loaded.get("model", loaded) if isinstance(loaded, dict) else loaded
@@ -1278,7 +1422,8 @@ def train_encoder(
         f"{candidate}_{geometry}/seed{seed}"
     )
     result_path = results_dir / run_name / "metrics.json"
-    embedding_path = cache_dir / "embeddings" / run_name / "payload.pt"
+    effective_embeddings_dir = embeddings_dir or (cache_dir / "embeddings")
+    embedding_path = effective_embeddings_dir / run_name / "payload.pt"
     model_path = models_dir / run_name / "model.pt"
     checkpoint_path = models_dir / run_name / "checkpoint.pt"
     best_mae = float("inf")
@@ -1393,7 +1538,7 @@ def train_encoder(
         raise RuntimeError("Training produced no checkpoint")
     model.load_state_dict(best_state)
 
-    if expected == "structural_topology":
+    if expected == "structural_topology" and evaluate_test:
         graph_splits["test"] = [
             _topology_graph(records[int(i)], int(i), mean, std)
             for i in split.test
@@ -1405,6 +1550,8 @@ def train_encoder(
             walk_length=int(ENCODER_CONFIGS[candidate]["rwse_dim"]),
         )
         geometry_report["test_role_read_after_selection"] = True
+    elif expected == "structural_topology":
+        geometry_report["test_role_read_after_selection"] = False
 
     role_payloads = {}
     role_metrics = {}
@@ -1417,8 +1564,8 @@ def train_encoder(
 
     embedding_path.parent.mkdir(parents=True, exist_ok=True)
     model_path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(role_payloads, embedding_path)
-    torch.save(best_state, model_path)
+    _atomic_torch_save(embedding_path, role_payloads)
+    _atomic_torch_save(model_path, best_state)
     result = {
         "experiment": "qm9_architecture_screen",
         "candidate": candidate,
@@ -1432,6 +1579,7 @@ def train_encoder(
             "validation": validation_size,
             "test": test_size,
         },
+        "test_role_evaluated": "test" in graph_splits,
         "target_names": list(TARGET_NAMES),
         "target_units": "eV",
         "target_mean": mean.tolist(),
@@ -1442,6 +1590,7 @@ def train_encoder(
         "best_validation_average_mae_eV": best_mae,
         "metrics": role_metrics,
         "geometry_report": geometry_report,
+        "frontier_head": frontier_head_report,
         "log": log,
         "artifacts": {
             "embeddings": str(embedding_path),
@@ -1450,6 +1599,74 @@ def train_encoder(
         },
     }
     _atomic_json(result_path, result)
+    return result
+
+
+def evaluate_structural_checkpoint_test(
+    *,
+    candidate: str,
+    checkpoint: Path,
+    output: Path,
+    payload_output: Path,
+    train_size: int,
+    validation_size: int,
+    test_size: int,
+    split_seed: int = 42,
+    cache_dir: Path = DEFAULT_CACHE,
+) -> dict:
+    """Evaluate one validation-selected structural checkpoint on QM9 test once."""
+    if ENCODER_CONFIGS[candidate]["kind"] != "structural_topology":
+        raise ValueError(f"{candidate} is not a structural topology encoder")
+    checkpoint = Path(checkpoint)
+    if not checkpoint.is_file():
+        raise FileNotFoundError(checkpoint)
+    records = load_qm9_records(cache_dir)
+    split = fixed_split(
+        len(records), train_size, validation_size, test_size, split_seed
+    )
+    mean, std = target_stats(records, split.train)
+    test_graphs = [
+        _topology_graph(records[int(i)], int(i), mean, std)
+        for i in split.test
+    ]
+    acceptance = attach_accepted_qm9_rwse(
+        {"test": test_graphs},
+        cache_dir=cache_dir,
+        split=split,
+        walk_length=int(ENCODER_CONFIGS[candidate]["rwse_dim"]),
+    )
+    input_channels = int(ENCODER_CONFIGS[candidate].get("input_channels", 11))
+    model, kind = make_encoder(candidate, in_channels=input_channels)
+    frontier_head_report = configure_frontier_head(
+        model, records, split.train, mean, std
+    )
+    state = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    model.load_state_dict(state)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
+    batch_size = int(ENCODER_CONFIGS[candidate]["batch_size"])
+    payload = evaluate_encoder(
+        kind, model, test_graphs, batch_size, device, mean, std
+    )
+    metrics = _metrics(
+        payload["predictions"].numpy(), payload["targets"].numpy()
+    )
+    _atomic_torch_save(payload_output, {"test": payload})
+    result = {
+        "experiment": "qm9_structural_single_test",
+        "candidate": candidate,
+        "checkpoint": str(checkpoint),
+        "checkpoint_sha256": sha256(checkpoint),
+        "split_seed": split_seed,
+        "split_fingerprint": split.fingerprint,
+        "test_rows": len(test_graphs),
+        "test_role_read_once": True,
+        "rwse_output_sha256": acceptance["output_sha256"],
+        "frontier_head": frontier_head_report,
+        "metrics": metrics,
+        "payload": str(payload_output),
+    }
+    _atomic_json(output, result)
     return result
 
 

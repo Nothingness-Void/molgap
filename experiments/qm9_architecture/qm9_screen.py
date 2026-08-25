@@ -71,6 +71,11 @@ def parse_args():
             "pair_triplet_2d_rich",
             "pair_gps_2d",
             "pair_gps_2d_r2",
+            "edge_state_structural_gps",
+            "edge_state_structural_orbital",
+            "pair_gps_2d_r3_orbital",
+            "pair_gps_2d_r3_triplet",
+            "pair_gps_2d_r3_combined",
             "tgt_egt_hybrid",
             "tgt_egt_compact",
             "tgt_egt_stable",
@@ -90,6 +95,7 @@ def parse_args():
     encoder.add_argument("--seed", type=int, default=42)
     encoder.add_argument("--split-seed", type=int, default=42)
     encoder.add_argument("--resume", action="store_true")
+    encoder.add_argument("--validation-only", action="store_true")
     encoder.add_argument("--init-checkpoint", type=Path, default=None)
     encoder.add_argument("--expert-init-checkpoint", type=Path, default=None)
     encoder.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
@@ -97,6 +103,7 @@ def parse_args():
     encoder.add_argument(
         "--models-dir", type=Path, default=Path("models/experiments/qm9_architecture_screen")
     )
+    encoder.add_argument("--embeddings-dir", type=Path, default=None)
 
     geometry_eval = subparsers.add_parser("evaluate-geometry")
     geometry_eval.add_argument("--candidate", choices=["schnet", "tensornet", "egnn", "tgt_lite"], required=True)
@@ -225,8 +232,11 @@ def main():
             cache_dir=args.cache_dir,
             results_dir=args.results_dir,
             models_dir=args.models_dir,
+            embeddings_dir=args.embeddings_dir,
+            evaluate_test=not args.validation_only,
         )
-        print(json.dumps(result["metrics"]["test"], indent=2))
+        selected_role = "test" if "test" in result["metrics"] else "validation"
+        print(json.dumps(result["metrics"][selected_role], indent=2))
         return
     if args.command == "evaluate-geometry":
         result = evaluate_encoder_on_geometry(
