@@ -29,6 +29,19 @@ def find_one(pattern: str) -> Path:
     return matches[0]
 
 
+def source_python_root() -> Path:
+    matches = list(Path("/kaggle/input").rglob("src/molgap/qm9_screen.py"))
+    if len(matches) == 1:
+        return matches[0].parents[1]
+    archive = find_one("src.zip")
+    extracted = Path("/kaggle/working/_molgap_source")
+    shutil.unpack_archive(archive, extracted)
+    modules = list(extracted.rglob("molgap/qm9_screen.py"))
+    if len(modules) != 1:
+        raise FileNotFoundError(f"Unexpected source archive layout: {modules}")
+    return modules[0].parents[1]
+
+
 def ensure_pascal_compatible_torch() -> None:
     import torch
 
@@ -85,18 +98,19 @@ def install_dependencies() -> None:
     )
 
 
-def stage_inputs() -> Path:
-    source = find_one("src/molgap/qm9_screen.py").parents[2]
+def stage_inputs() -> tuple[Path, str]:
+    python_root = source_python_root()
     acceptance = find_one("acceptance.json")
     source_cache = acceptance.parents[2]
     if CACHE.exists():
         shutil.rmtree(CACHE)
     shutil.copytree(source_cache, CACHE)
-    sys.path.insert(0, str(source / "src"))
-    return source
+    sys.path.insert(0, str(python_root))
+    source_commit = find_one("SOURCE_COMMIT.txt").read_text().strip()
+    return python_root, source_commit
 
 
-def remote_preflight(source: Path) -> dict:
+def remote_preflight(source_commit: str) -> dict:
     import torch
     import torch.nn.functional as functional
     from torch_geometric.loader import DataLoader
@@ -148,7 +162,7 @@ def remote_preflight(source: Path) -> dict:
     result = {
         "format": "molgap-pairgps-r2-preflight-v1",
         "complete": True,
-        "source_commit": (source / "SOURCE_COMMIT.txt").read_text().strip(),
+        "source_commit": source_commit,
         "candidate": "pair_gps_2d_r2",
         "parameter_count": parameter_count,
         "parameter_budget": 4_740_000,
@@ -184,8 +198,8 @@ def main() -> None:
     try:
         ensure_pascal_compatible_torch()
         install_dependencies()
-        source = stage_inputs()
-        preflight = remote_preflight(source)
+        _, source_commit = stage_inputs()
+        preflight = remote_preflight(source_commit)
         from molgap.qm9_screen import train_encoder
 
         result = train_encoder(

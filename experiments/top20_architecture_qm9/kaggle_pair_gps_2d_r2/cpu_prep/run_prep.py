@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -18,11 +19,21 @@ def atomic_json(path: Path, value: dict) -> None:
     os.replace(temporary, path)
 
 
-def source_root() -> Path:
+def source_python_root() -> Path:
     matches = list(Path("/kaggle/input").rglob("src/molgap/qm9_screen.py"))
-    if len(matches) != 1:
-        raise FileNotFoundError(f"Expected one pinned source tree, found {matches}")
-    return matches[0].parents[2]
+    if len(matches) == 1:
+        return matches[0].parents[1]
+    archives = list(Path("/kaggle/input").rglob("src.zip"))
+    if len(archives) != 1:
+        raise FileNotFoundError(
+            f"Expected one pinned source tree or src.zip, found {matches + archives}"
+        )
+    extracted = Path("/kaggle/working/_molgap_source")
+    shutil.unpack_archive(archives[0], extracted)
+    modules = list(extracted.rglob("molgap/qm9_screen.py"))
+    if len(modules) != 1:
+        raise FileNotFoundError(f"Unexpected source archive layout: {modules}")
+    return modules[0].parents[1]
 
 
 def install_dependencies() -> None:
@@ -51,8 +62,8 @@ def install_dependencies() -> None:
 
 def main() -> None:
     started = time.perf_counter()
-    root = source_root()
-    sys.path.insert(0, str(root / "src"))
+    python_root = source_python_root()
+    sys.path.insert(0, str(python_root))
     install_dependencies()
     from molgap.qm9_screen import build_qm9_rwse_screen_cache
 
@@ -68,7 +79,9 @@ def main() -> None:
         )
         result = {
             "experiment": "pair_gps_2d_r2_qm9_rwse_prep",
-            "source_commit": (root / "SOURCE_COMMIT.txt").read_text().strip(),
+            "source_commit": list(Path("/kaggle/input").rglob("SOURCE_COMMIT.txt"))[
+                0
+            ].read_text().strip(),
             "test_role_labels_read": False,
             "acceptance": acceptance,
             "elapsed_s": time.perf_counter() - started,
