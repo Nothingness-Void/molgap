@@ -63,15 +63,18 @@ fusion after an immutable graph cache passes acceptance.
 
 ### Safety boundary
 
-All project writes must remain below:
+The only server directory the user owns and authorizes access to is:
 
 `/lustre/home/users/sm2/chou`
 
-Resolve the destination with `realpath` before a write, move, or deletion.
-Never modify other users, system packages, services, queues, or host
-configuration. Sustained work must go through the scheduler, not the login
-node. Recursive deletion requires explicit user approval and resolved-path
-proof.
+Do not list, search, stat, read, copy, write, move, or otherwise probe any path
+outside that directory tree. This prohibition applies even to read-only
+diagnostics and paths that appear technically accessible. Resolve every
+destination with `realpath` before a write, move, or deletion and verify that
+it remains below the authorized root. Never modify other users, system
+packages, services, queues, or host configuration. Sustained work must go
+through the scheduler, not the login node. Recursive deletion requires
+explicit user approval and resolved-path proof.
 
 ### Scheduler
 

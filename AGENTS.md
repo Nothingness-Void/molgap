@@ -40,6 +40,9 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   ETKDG/graph construction, and graph acceptance. Submit GPU/DCU jobs only
   after an immutable graph cache passes acceptance; GPU/DCU time is reserved
   for encoder training, embedding extraction, and fusion.
+- **IMS access boundary**: before any molecular-research-server command, read
+  and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
+  all path access, including read-only discovery and metadata probes.
 
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
