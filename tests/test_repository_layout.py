@@ -369,6 +369,7 @@ def test_argparse_clis_have_a_guarded_entrypoint() -> None:
         "production/04_evaluate/scripts/evaluation/compare_dft_vs_ml_cost.py",
         "production/04_evaluate/scripts/evaluation/benchmark_experimental_values.py",
         "production/04_evaluate/scripts/evaluation/build_presentation_evidence.py",
+        "production/07_database/scripts/build_database.py",
         "experiments/pcqm_route_b/build_pcqm_route_b_1m.py",
         "experiments/pcqm_gine_expert/continue_pcqm_gine_local.py",
         "experiments/_scripts/run_conformer_ab.py",

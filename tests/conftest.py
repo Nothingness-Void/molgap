@@ -29,6 +29,7 @@ CLI_MODULES = {
     "cli.train_hierarchical_2d3d_fusion": (
         "experiments/_scripts/train_hierarchical_2d3d_fusion.py"
     ),
+    "cli.build_database": "production/07_database/scripts/build_database.py",
 }
 
 

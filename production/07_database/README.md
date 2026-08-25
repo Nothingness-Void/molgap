@@ -52,6 +52,32 @@ directory should contain thin production entry points, manifests, and build
 records. Delta and UQ fields must remain absent or explicitly non-authoritative
 until they are refit and revalidated against the repaired-2M base.
 
+## Batch Entry Point
+
+The reusable implementation is `src/molgap/database.py`; the production
+adapter is `scripts/build_database.py`. The input CSV must contain a `smiles`
+column. If no `--id-column` is supplied, the builder uses `source_id`, `cid`,
+`id`, or `name` when present, then creates a deterministic
+`input_row_{row:08d}` identifier. All input columns are retained in the raw
+ledger.
+
+Example 1K dry run after the accepted model bundle is present:
+
+```powershell
+.venv\Scripts\python.exe production\07_database\scripts\build_database.py `
+  --input data\commercial\commercial_molecules_template.csv `
+  --out-dir production\07_database\runs\dry_run_1k `
+  --max-rows 1000 `
+  --model-key repaired_2m_dense_2d
+```
+
+The output directory contains `predictions.csv` and `manifest.json`. The CSV
+is an audit ledger: invalid SMILES and graph failures remain as rejected rows;
+unsupported elements and molecular weights outside 200-1000 Da remain as
+finite predictions with `in_domain=false` and an applicability reason. The
+expert disagreement columns are population standard deviations across the
+direct GPS experts and are explicitly uncalibrated screening signals, not UQ.
+
 ## Pointers
 
 - Execution order: `ROADMAP.md`
