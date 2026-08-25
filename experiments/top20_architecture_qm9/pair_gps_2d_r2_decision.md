@@ -11,7 +11,7 @@ model selection.
 The remote preflight passed a 48-graph FP32 forward/backward with finite
 predictions, loss, and gradients. PyTorch measured 4,585,458 trainable
 parameters, below the 4,740,000 budget by 154,542 parameters. This was 64.5%
-fewer parameters than the 12,929,523-parameter PairGPS2D refinement. The
+fewer parameters than the 12,925,715-parameter QM9 PairGPS2D refinement. The
 P100 preflight reserved 1.926 GiB at batch 48.
 
 ## Frozen comparison

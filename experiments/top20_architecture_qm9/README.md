@@ -54,3 +54,7 @@ comparison is specified in `pair_gps_2d_r2_protocol.md`. It is a separate
 candidate and does not alter the completed PairGPS2D implementation or its
 decision record. Its completed seed-42 outcome and stop decision are in
 `pair_gps_2d_r2_decision.md`.
+
+The separately authorized validation-only R3 tournament is frozen in
+`pair_gps_2d_r3_protocol.md`. It does not reopen R2 or permit repeated reads of
+the QM9 test role.
