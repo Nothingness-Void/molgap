@@ -40,6 +40,16 @@ The live execution contract and remote provenance are in
 
 ## Parallel Workstream
 
+The independent PairGPS2D line completed its matched PubChemQC-100K
+validation-only search and passed that stage against the fixed GPS7 plus GPS9
+equal comparator. Its test role remains sealed, and neither full-data training
+nor Track B transfer is authorized. A train-role-only A100 benchmark selected a
+safer higher-throughput configuration but did not establish an accuracy result.
+The decisions are owned by
+`experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md`
+and
+`experiments/pubchemqc100k_architecture/results/pair_gps_2d_a100_benchmark/decision.md`.
+
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
 contract are implemented and locally tested. Model training has not started.
@@ -81,6 +91,8 @@ must not be represented as this new conservative head.
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
 | What did the active architecture tournament decide? | `experiments/resource_bounded_architecture/README.md` |
 | What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
+| What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
+| Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
 | Where are rejected branches indexed? | `experiments/_closed/README.md` |
 | How are remote jobs packaged and retained? | `platforms/README.md` |

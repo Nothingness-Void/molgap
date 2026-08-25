@@ -15,6 +15,9 @@ bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
 | IMS | `ims/` | Shared-cluster CPU/GPU queue adapters, bounded arrays, and staged handoffs |
 | — | `_records/` | Retrieved outputs, staging payloads, acceptance records |
 
+The complete 2026-08-25 IMS experiment-record snapshot and its remote/local
+SHA-256 verification are indexed in `_records/ims/README.md`.
+
 Two placement rules keep this from re-accumulating:
 
 - A package used by **one** experiment lives with that experiment

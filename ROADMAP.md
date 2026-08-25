@@ -44,6 +44,9 @@ decision is
 - Architecture claims use random initialization; no pretraining, warm start,
   fine-tuning, or distillation may be credited as an architecture gain.
 - Do not tune on common/OOD/P8-hard or sealed data.
+- New pure-2D architecture questions use the fixed sequence QM9, matched
+  PubChemQC-100K validation, one frozen intermediate test, then at most one
+  authorized full-data run.
 - Do not rerun the rejected `0.10 eV` frozen-2D plus dual-SchNet residual.
 - Geometry paths must preserve ETKDGv3+MMFF train-inference consistency.
 - Router, MoE, OOF gain labels, and dataset replacement remain closed unless a
@@ -71,6 +74,7 @@ experiment unless the project objective changes.
 
 | Task | Trigger |
 |---|---|
+| PairGPS2D sealed-test disposition | Explicit authorization to reopen the independent branch after its validation-only decision; arithmetic equivalence must be established before using benchmark-selected TF32 for an accuracy claim |
 | OGB-compliant PCQM4Mv2 submission retrain | A separate leaderboard objective and compute budget are approved |
 | Experimental solid-state Delta head | A specific experimental target is requested |
 | Extend the supported element set | Rejected-use analysis justifies refetch and retraining |
