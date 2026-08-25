@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pairgps-r2-preflight-v1",
+  "complete": true,
+  "source_commit": "0a975d66afc275dbd64c4980300c377fea9f7dcd",
+  "candidate": "pair_gps_2d_r2",
+  "parameter_count": 4585458,
+  "parameter_budget": 4740000,
+  "prediction_shape": [
+    48,
+    3
+  ],
+  "finite_prediction": true,
+  "finite_loss": true,
+  "finite_gradients": true,
+  "peak_memory_bytes": 2067791872,
+  "elapsed_s": 0.6763455610000051,
+  "gpu": "Tesla P100-PCIE-16GB",
+  "split_fingerprint": "01656b1a538f89c8",
+  "rwse_output_sha256": "09943454c2e2aae7cf8eeaa828cca79c14be4b920c4c348e0de13a4263331ca5",
+  "validation_role_read": false,
+  "test_role_read": false
+}

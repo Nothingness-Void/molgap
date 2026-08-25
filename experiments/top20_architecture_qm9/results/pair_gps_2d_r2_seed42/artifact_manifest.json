@@ -1,0 +1,45 @@
+{
+  "format": "molgap-retrieved-artifact-manifest-v1",
+  "recorded_at": "2026-08-25",
+  "kernel": "kaseichou/molgap-pairgps-r2-qm9-seed42",
+  "kernel_version": 1,
+  "source_commit": "0a975d66afc275dbd64c4980300c377fea9f7dcd",
+  "record_root": "platforms/_records/kaggle/training/pair_gps_2d_r2_qm9_seed42_v1",
+  "files": [
+    {
+      "path": "pair_gps_2d_r2/preflight.json",
+      "bytes": 647,
+      "sha256": "954093a95f7a4bb89503dc4fa06d2bc79622fbb79fba8b63d0ea695be52ea69f"
+    },
+    {
+      "path": "pair_gps_2d_r2/run_summary.json",
+      "bytes": 1279,
+      "sha256": "5e1ff3698bde1512c7aad14d95979a24459d5acba314a4493f8cb5deab403dcb"
+    },
+    {
+      "path": "pair_gps_2d_r2/results/n30000_3000_3000/pair_gps_2d_r2_topology/seed42/metrics.json",
+      "bytes": 7160,
+      "sha256": "5c3a1c6d80ad24826c5bddc1c9102f36e4e09e901c7f3ff171cb13dab07060df"
+    },
+    {
+      "path": "pair_gps_2d_r2/models/n30000_3000_3000/pair_gps_2d_r2_topology/seed42/checkpoint.pt",
+      "bytes": 73099771,
+      "sha256": "d6a72f1bdd6252455cbdd1bfd355fc69931273ff9be42a4a295363cba51d773d"
+    },
+    {
+      "path": "pair_gps_2d_r2/models/n30000_3000_3000/pair_gps_2d_r2_topology/seed42/model.pt",
+      "bytes": 18481079,
+      "sha256": "c3891c6cfe2a1cafafd14b4ee727356f006437a152ce7f2ce4e7720fde401ec4"
+    },
+    {
+      "path": "qm9_r2_cache/embeddings/n30000_3000_3000/pair_gps_2d_r2_topology/seed42/payload.pt",
+      "bytes": 28803903,
+      "sha256": "b6e6a3d8d9cdad4645551ed992d467dd1da26fc1bc87ccf30daea029a17b292f"
+    },
+    {
+      "path": "molgap-pairgps-r2-qm9-seed42.log",
+      "bytes": 10356,
+      "sha256": "54822b045b2e3bc0b3889a46056d272e518a6d5d7c667ffc97782ce6f99d068b"
+    }
+  ]
+}

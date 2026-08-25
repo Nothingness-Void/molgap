@@ -52,4 +52,5 @@ payloads below the approved project root.
 The bounded lightweight repair requested after the PairGPS2D/EdgeState
 comparison is specified in `pair_gps_2d_r2_protocol.md`. It is a separate
 candidate and does not alter the completed PairGPS2D implementation or its
-decision record.
+decision record. Its completed seed-42 outcome and stop decision are in
+`pair_gps_2d_r2_decision.md`.
