@@ -35,7 +35,8 @@ from .tgt_hybrid import TGTLiteHybridWrapper
 from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
 from .pair_triplet_2d import PairTriplet2DWrapper
 from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
-from .pair_gps_2d import PairGPS2DWrapper
+from .pair_gps_2d import PairGPS2DR2Wrapper, PairGPS2DWrapper
+from .structural_encoding import build_rwse_graph_cache, sha256
 from .tgt_egt_hybrid import TGTEGTHybridWrapper
 from .tgt_egt_compact import TGTCompactEGTWrapper
 from .tgt_egt_rich import TGTEGTRichWrapper
@@ -163,6 +164,22 @@ ENCODER_CONFIGS = {
         "pooling": "mean",
         "path_steps": 5,
         "triplet_rank": 16,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "pair_gps_2d_r2": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "distance_cap": 5,
+        "triplet_rank": 8,
+        "triplet_interval": 3,
+        "rwse_dim": 16,
+        "gate_init": 0.1,
         "batch_size": 48,
         "amp": False,
     },
@@ -447,15 +464,20 @@ def _download(url: str, destination: Path) -> None:
     os.replace(temporary, destination)
 
 
-def prepare_qm9_files(cache_dir: Path = DEFAULT_CACHE) -> dict[str, Path]:
+def prepare_qm9_processed(cache_dir: Path = DEFAULT_CACHE) -> Path:
     processed = cache_dir / "preprocessed" / "qm9_v3.pt"
-    raw_sdf = cache_dir / "raw" / "gdb9.sdf"
     if not processed.exists():
         archive = cache_dir / "download" / "qm9_v3.zip"
         _download(QM9_PROCESSED_URL, archive)
         processed.parent.mkdir(parents=True, exist_ok=True)
         with zipfile.ZipFile(archive) as source:
             source.extractall(processed.parent)
+    return processed
+
+
+def prepare_qm9_files(cache_dir: Path = DEFAULT_CACHE) -> dict[str, Path]:
+    processed = prepare_qm9_processed(cache_dir)
+    raw_sdf = cache_dir / "raw" / "gdb9.sdf"
     if not raw_sdf.exists():
         archive = cache_dir / "download" / "qm9_raw.zip"
         _download(QM9_RAW_URL, archive)
@@ -466,10 +488,10 @@ def prepare_qm9_files(cache_dir: Path = DEFAULT_CACHE) -> dict[str, Path]:
 
 
 def load_qm9_records(cache_dir: Path = DEFAULT_CACHE) -> list[dict]:
-    paths = prepare_qm9_files(cache_dir)
-    records = torch.load(paths["processed"], map_location="cpu", weights_only=False)
+    processed = prepare_qm9_processed(cache_dir)
+    records = torch.load(processed, map_location="cpu", weights_only=False)
     if not isinstance(records, list) or not records:
-        raise ValueError(f"Unexpected QM9 payload: {paths['processed']}")
+        raise ValueError(f"Unexpected QM9 payload: {processed}")
     return records
 
 
@@ -689,6 +711,166 @@ def make_graph_splits(
     return graph_splits, {"geometry": "etkdg", **report}
 
 
+def qm9_rwse_cache_paths(
+    cache_dir: Path,
+    split: ScreenSplit,
+    *,
+    walk_length: int = 16,
+) -> dict[str, Path]:
+    root = cache_dir / "structural" / (
+        f"topology_{split.fingerprint}_rwse{walk_length}_v1"
+    )
+    return {
+        "input": root / "topology_graphs.pt",
+        "output": root / "topology_graphs_rwse.pt",
+        "progress": root / "parts",
+        "acceptance": root / "acceptance.json",
+    }
+
+
+def build_qm9_rwse_screen_cache(
+    *,
+    train_size: int,
+    validation_size: int,
+    test_size: int,
+    split_seed: int = 42,
+    walk_length: int = 16,
+    shard_size: int = 5_000,
+    cache_dir: Path = DEFAULT_CACHE,
+) -> dict:
+    """Build and accept the CPU-only RWSE cache required by structural screens."""
+    records = load_qm9_records(cache_dir)
+    split = fixed_split(
+        len(records), train_size, validation_size, test_size, split_seed
+    )
+    expected_indices = split.all_indices.astype(np.int64)
+    # RWSE depends only on topology.  In particular, this CPU stage does not
+    # copy validation/test labels into the accepted GPU input cache.
+    ordered_graphs = [
+        Data(
+            x=records[int(source_idx)]["x"].float(),
+            edge_index=records[int(source_idx)]["edge_index"].long(),
+            edge_attr=records[int(source_idx)]["edge_attr"].float(),
+            source_idx=torch.tensor([int(source_idx)], dtype=torch.long),
+        )
+        for source_idx in expected_indices
+    ]
+    paths = qm9_rwse_cache_paths(
+        cache_dir, split, walk_length=walk_length
+    )
+    if paths["input"].is_file():
+        existing = torch.load(
+            paths["input"], map_location="cpu", weights_only=False
+        )
+        existing_indices = np.asarray(
+            [int(graph.source_idx.view(-1)[0]) for graph in existing],
+            dtype=np.int64,
+        )
+        if not np.array_equal(existing_indices, expected_indices):
+            raise ValueError("Existing QM9 RWSE input has a different split order")
+    else:
+        _atomic_torch_save(paths["input"], ordered_graphs)
+
+    manifest = build_rwse_graph_cache(
+        paths["input"],
+        paths["output"],
+        paths["progress"],
+        walk_length=walk_length,
+        shard_size=shard_size,
+    )
+    encoded = torch.load(paths["output"], map_location="cpu", weights_only=False)
+    encoded_indices = np.asarray(
+        [int(graph.source_idx.view(-1)[0]) for graph in encoded],
+        dtype=np.int64,
+    )
+    if not np.array_equal(encoded_indices, expected_indices):
+        raise RuntimeError("RWSE output source indices do not match the fixed split")
+    for graph in encoded:
+        positional = getattr(graph, "random_walk_pe", None)
+        if positional is None or positional.shape != (graph.num_nodes, walk_length):
+            raise RuntimeError("RWSE output contains a missing or malformed encoding")
+        if not torch.isfinite(positional).all():
+            raise RuntimeError("RWSE output contains non-finite values")
+    acceptance = {
+        "format": "molgap-qm9-rwse-acceptance-v1",
+        "complete": True,
+        "split_seed": split_seed,
+        "split_fingerprint": split.fingerprint,
+        "index_sha256": hashlib.sha256(expected_indices.tobytes()).hexdigest(),
+        "roles": {
+            "train": train_size,
+            "validation": validation_size,
+            "test": test_size,
+        },
+        "walk_length": walk_length,
+        "rows": len(encoded),
+        "output_path": str(paths["output"]),
+        "output_sha256": sha256(paths["output"]),
+        "cache_manifest": str(paths["output"].with_suffix(".manifest.json")),
+        "parts": len(manifest["parts"]),
+    }
+    _atomic_json(paths["acceptance"], acceptance)
+    return acceptance
+
+
+def attach_accepted_qm9_rwse(
+    graph_splits: dict[str, list[Data]],
+    *,
+    cache_dir: Path,
+    split: ScreenSplit,
+    walk_length: int = 16,
+) -> dict:
+    """Attach an accepted cache, refusing any silent GPU-side construction."""
+    paths = qm9_rwse_cache_paths(
+        cache_dir, split, walk_length=walk_length
+    )
+    if not paths["acceptance"].is_file() or not paths["output"].is_file():
+        raise FileNotFoundError(
+            "Accepted QM9 RWSE cache is required; run the CPU build-rwse step first"
+        )
+    acceptance = json.loads(paths["acceptance"].read_text(encoding="utf-8"))
+    expected_indices = split.all_indices.astype(np.int64)
+    expected_contract = {
+        "format": "molgap-qm9-rwse-acceptance-v1",
+        "complete": True,
+        "split_seed": split.seed,
+        "split_fingerprint": split.fingerprint,
+        "index_sha256": hashlib.sha256(expected_indices.tobytes()).hexdigest(),
+        "walk_length": walk_length,
+        "rows": int(len(expected_indices)),
+        "output_sha256": sha256(paths["output"]),
+    }
+    mismatches = {
+        key: (acceptance.get(key), value)
+        for key, value in expected_contract.items()
+        if acceptance.get(key) != value
+    }
+    if mismatches:
+        raise ValueError(f"QM9 RWSE acceptance mismatch: {mismatches}")
+    encoded = torch.load(paths["output"], map_location="cpu", weights_only=False)
+    if len(encoded) != len(expected_indices):
+        raise ValueError("QM9 RWSE accepted cache has the wrong row count")
+    positional_by_source = {}
+    for graph in encoded:
+        source_idx = int(graph.source_idx.view(-1)[0])
+        positional = graph.random_walk_pe
+        if positional.shape != (graph.num_nodes, walk_length):
+            raise ValueError("QM9 RWSE accepted cache has a malformed row")
+        if not torch.isfinite(positional).all():
+            raise ValueError("QM9 RWSE accepted cache contains non-finite values")
+        positional_by_source[source_idx] = positional
+    if set(positional_by_source) != set(expected_indices.tolist()):
+        raise ValueError("QM9 RWSE accepted cache has different source indices")
+    for graphs in graph_splits.values():
+        for graph in graphs:
+            source_idx = int(graph.source_idx.view(-1)[0])
+            positional = positional_by_source[source_idx]
+            if positional.shape[0] != graph.num_nodes:
+                raise ValueError("QM9 RWSE node count differs from topology graph")
+            graph.random_walk_pe = positional.clone()
+    return acceptance
+
+
 def _pcqm_transfer_features(graph: Data) -> Data:
     """Map QM9's processed 11-wide features to the PCQM 18-wide GPS contract.
 
@@ -743,6 +925,10 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         return PairTriplet2DRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "pair_gps_2d":
         return PairGPS2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "pair_gps_2d_r2":
+        return PairGPS2DR2Wrapper(
+            in_channels=in_channels, edge_dim=edge_dim, **config
+        ), kind
     if candidate == "tgt_egt_hybrid":
         return TGTEGTHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate in {"tgt_egt_compact", "tgt_egt_stable"}:
@@ -776,6 +962,14 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
 def _forward(kind: str, model, batch):
     if kind == "topology":
         return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if kind == "structural_topology":
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+        )
     if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
         return model(
             batch.x,
@@ -822,6 +1016,14 @@ def _forward(kind: str, model, batch):
 def _encode(kind: str, model, batch):
     if kind == "topology":
         return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if kind == "structural_topology":
+        return model.encode(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+        )
     if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
         return model.encode(
             batch.x,
@@ -949,7 +1151,7 @@ def train_encoder(
     models_dir: Path = DEFAULT_MODELS,
 ) -> dict:
     expected = ENCODER_CONFIGS[candidate]["kind"]
-    if expected == "topology" and geometry != "topology":
+    if expected in {"topology", "structural_topology"} and geometry != "topology":
         raise ValueError(f"{candidate} requires --geometry topology")
     if expected == "geometry" and geometry not in {"dft", "etkdg"}:
         raise ValueError(f"{candidate} requires --geometry dft or etkdg")
@@ -958,9 +1160,33 @@ def train_encoder(
     records = load_qm9_records(cache_dir)
     split = fixed_split(len(records), train_size, validation_size, test_size, split_seed)
     mean, std = target_stats(records, split.train)
-    graph_splits, geometry_report = make_graph_splits(
-        records, split, geometry, mean, std, cache_dir, seed
-    )
+    if expected == "structural_topology":
+        graph_splits = {
+            "train": [
+                _topology_graph(records[int(i)], int(i), mean, std)
+                for i in split.train
+            ],
+            "validation": [
+                _topology_graph(records[int(i)], int(i), mean, std)
+                for i in split.validation
+            ],
+        }
+        geometry_report = {
+            "geometry": "topology",
+            "failed": 0,
+            "test_role_read_during_selection": False,
+        }
+        rwse_dim = int(ENCODER_CONFIGS[candidate]["rwse_dim"])
+        geometry_report["rwse_cache"] = attach_accepted_qm9_rwse(
+            graph_splits,
+            cache_dir=cache_dir,
+            split=split,
+            walk_length=rwse_dim,
+        )
+    else:
+        graph_splits, geometry_report = make_graph_splits(
+            records, split, geometry, mean, std, cache_dir, seed
+        )
     if candidate == "gps9_pcqm_transfer":
         _remap_pcqm_transfer_graphs(graph_splits)
         geometry_report["node_feature_adapter"] = "pcqm_18w_v2_exact_atom_order"
@@ -1166,6 +1392,19 @@ def train_encoder(
     if best_state is None:
         raise RuntimeError("Training produced no checkpoint")
     model.load_state_dict(best_state)
+
+    if expected == "structural_topology":
+        graph_splits["test"] = [
+            _topology_graph(records[int(i)], int(i), mean, std)
+            for i in split.test
+        ]
+        attach_accepted_qm9_rwse(
+            {"test": graph_splits["test"]},
+            cache_dir=cache_dir,
+            split=split,
+            walk_length=int(ENCODER_CONFIGS[candidate]["rwse_dim"]),
+        )
+        geometry_report["test_role_read_after_selection"] = True
 
     role_payloads = {}
     role_metrics = {}

@@ -23,6 +23,7 @@ from molgap.qm9_payloads import (
 from molgap.qm9_screen import (
     DEFAULT_CACHE,
     DEFAULT_RESULTS,
+    build_qm9_rwse_screen_cache,
     prepare_qm9_files,
     evaluate_encoder_on_geometry,
     export_gps_multiscale_embeddings,
@@ -35,6 +36,15 @@ def parse_args():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("prepare")
+
+    rwse = subparsers.add_parser("build-rwse")
+    rwse.add_argument("--train-size", type=int, default=30_000)
+    rwse.add_argument("--validation-size", type=int, default=3_000)
+    rwse.add_argument("--test-size", type=int, default=3_000)
+    rwse.add_argument("--split-seed", type=int, default=42)
+    rwse.add_argument("--walk-length", type=int, default=16)
+    rwse.add_argument("--shard-size", type=int, default=5_000)
+    rwse.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
 
     encoder = subparsers.add_parser("encoder")
     encoder.add_argument(
@@ -60,6 +70,7 @@ def parse_args():
             "pair_triplet_2d",
             "pair_triplet_2d_rich",
             "pair_gps_2d",
+            "pair_gps_2d_r2",
             "tgt_egt_hybrid",
             "tgt_egt_compact",
             "tgt_egt_stable",
@@ -185,6 +196,18 @@ def main():
     args = parse_args()
     if args.command == "prepare":
         print(prepare_qm9_files())
+        return
+    if args.command == "build-rwse":
+        result = build_qm9_rwse_screen_cache(
+            train_size=args.train_size,
+            validation_size=args.validation_size,
+            test_size=args.test_size,
+            split_seed=args.split_seed,
+            walk_length=args.walk_length,
+            shard_size=args.shard_size,
+            cache_dir=args.cache_dir,
+        )
+        print(json.dumps(result, indent=2))
         return
     if args.command == "encoder":
         result = train_encoder(
