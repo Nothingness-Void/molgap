@@ -1,0 +1,123 @@
+{
+  "format": "molgap-pure2d-r3-validation-acceptance-v1",
+  "recorded_at": "2026-08-26T02:04:42+09:00",
+  "accepted": true,
+  "source_commit": "b56205967f12f517c7eea4428c0dfe8571c54996",
+  "acceptance_fix_commit": "4335ea2",
+  "split_fingerprint": "01656b1a538f89c8",
+  "rwse_output_sha256": "09943454c2e2aae7cf8eeaa828cca79c14be4b920c4c348e0de13a4263331ca5",
+  "test_role_read": false,
+  "parameter_budget": 4800000,
+  "reference": {
+    "candidate": "pair_gps_2d",
+    "validation_average_mae_eV": 0.11006919294595718,
+    "validation_gap_mae_eV": 0.1318935602903366
+  },
+  "remote_runs": {
+    "validation": {
+      "kernel": "kaseichou/molgap-pure2d-r3-qm9-validation",
+      "version": 1,
+      "gpu": "Tesla P100-PCIE-16GB",
+      "elapsed_s": 7561.184206240001
+    },
+    "tensor_acceptance_failed": {
+      "kernel": "kaseichou/molgap-pure2d-r3-tensor-acceptance",
+      "version": 1,
+      "failure": "invalid hard gate on independently rounded QM9 target identity"
+    },
+    "tensor_acceptance": {
+      "kernel": "kaseichou/molgap-pure2d-r3-tensor-acceptance",
+      "version": 2,
+      "device": "cpu",
+      "model_inference_executed": false,
+      "report_sha256": "595ad6179f7b2a1a26613d91bd68543beff089c71568a9d6b430f6215e9d7437"
+    }
+  },
+  "acceptance_checks": {
+    "candidate_count": 5,
+    "metrics_recomputed": true,
+    "source_indices_exact_across_candidates": true,
+    "targets_exact_across_candidates": true,
+    "train_validation_disjoint": true,
+    "model_equals_checkpoint_best_state": true,
+    "artifact_sha256_matched": true,
+    "target_identity_policy": "measured_not_gated",
+    "target_identity_train_max_eV": 0.0027227401733398438,
+    "target_identity_validation_max_eV": 0.0027222633361816406
+  },
+  "candidates": [
+    {
+      "candidate": "edge_state_structural_gps",
+      "parameter_count": 4739651,
+      "best_epoch": 19,
+      "validation": {
+        "HOMO": 0.09078216552734375,
+        "LUMO": 0.09890981763601303,
+        "Gap": 0.1261376142501831,
+        "average": 0.10527653247117996
+      },
+      "eligible": true
+    },
+    {
+      "candidate": "edge_state_structural_orbital",
+      "parameter_count": 4739554,
+      "best_epoch": 19,
+      "validation": {
+        "HOMO": 0.09119457006454468,
+        "LUMO": 0.09974470734596252,
+        "Gap": 0.12657992541790009,
+        "average": 0.10583972930908203
+      },
+      "eligible": true
+    },
+    {
+      "candidate": "pair_gps_2d_r3_orbital",
+      "parameter_count": 4585361,
+      "best_epoch": 18,
+      "validation": {
+        "HOMO": 0.0964345708489418,
+        "LUMO": 0.10639306902885437,
+        "Gap": 0.13706229627132416,
+        "average": 0.11329665035009384
+      },
+      "eligible": false
+    },
+    {
+      "candidate": "pair_gps_2d_r3_triplet",
+      "parameter_count": 4584696,
+      "best_epoch": 19,
+      "validation": {
+        "HOMO": 0.09713728725910187,
+        "LUMO": 0.10715919733047485,
+        "Gap": 0.13788346946239471,
+        "average": 0.11405998468399048
+      },
+      "eligible": false
+    },
+    {
+      "candidate": "pair_gps_2d_r3_combined",
+      "parameter_count": 4584599,
+      "best_epoch": 19,
+      "validation": {
+        "HOMO": 0.09879882633686066,
+        "LUMO": 0.1118239238858223,
+        "Gap": 0.14093612134456635,
+        "average": 0.1171862855553627
+      },
+      "eligible": false
+    }
+  ],
+  "selected_candidate": "edge_state_structural_gps",
+  "selected_artifacts": {
+    "model_sha256": "c99883ba5efb247121cce6d83f64d95f5d493e82862ec040eed4a5206c86e186",
+    "checkpoint_sha256": "b064be30be6a5fd517562acb1a33d39e19be57b2d2f3f6dde683d18f12f99329",
+    "payload_sha256": "0595d3907986a15d4cfe7d12e2c7b3dd4e14e82a6077659ac1a0bb32bf767be8",
+    "metrics_sha256": "7398c8a1148a8f82a97b6f5dddcdea16ebce3c797d05bbcac886b4dfcc3e37f1"
+  },
+  "test_gate": {
+    "submitted": false,
+    "test_role_read": false,
+    "average_mae_eV_strictly_below": 0.11177898943424225,
+    "gap_mae_eV_strictly_below": 0.1340952217578888
+  }
+}
