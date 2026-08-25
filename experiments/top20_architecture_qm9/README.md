@@ -58,3 +58,7 @@ decision record. Its completed seed-42 outcome and stop decision are in
 The separately authorized validation-only R3 tournament is frozen in
 `pair_gps_2d_r3_protocol.md`. It does not reopen R2 or permit repeated reads of
 the QM9 test role.
+
+The conditional readout fallback is frozen in
+`edge_state_readout_protocol.md`. It may run only when R3 has no eligible
+validation winner and does not alter the accepted PubChemQC EdgeState record.
