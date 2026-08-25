@@ -71,3 +71,7 @@ The explicitly authorized R5 optimization is frozen in
 `edge_state_jk_readout_r5_protocol.md`. It tests one zero-initialized,
 multi-depth readout against the accepted R3 winner without reopening PairGPS or
 reading QM9 test.
+
+Its completed validation disposition is recorded in
+`edge_state_jk_readout_r5_decision.md`. R5 failed both gates, so the accepted R3
+EdgeState checkpoint remains the sole validation winner.
