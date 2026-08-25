@@ -1,0 +1,52 @@
+{
+  "format": "molgap-pubchemqc100k-pairgps-validation-decision-v1",
+  "decision_date": "2026-08-25",
+  "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+  "cache_acceptance_sha256": "815cab3dbce32fde340ad998a9d8b1bb1128b08b541e4fd22181d0e3d857e9cc",
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 64,
+  "test_role_read": false,
+  "configurations": [
+    {
+      "candidate": "gps7_gps9_equal",
+      "learning_rate": 0.0001,
+      "validation": {"homo": 0.13470371627807617, "lumo": 0.15482507786750793, "gap": 0.21062235379219058, "average": 0.16671704931259157}
+    },
+    {
+      "candidate": "gps7_gps9_equal",
+      "learning_rate": 0.0002,
+      "validation": {"homo": 0.13079440379142762, "lumo": 0.1413361661911011, "gap": 0.1980200037956238, "average": 0.15671685792605083}
+    },
+    {
+      "candidate": "gps7_gps9_equal",
+      "learning_rate": 0.0004,
+      "validation": {"homo": 0.13470027384757996, "lumo": 0.14321335968971252, "gap": 0.20228168110847475, "average": 0.1600651048819224}
+    },
+    {
+      "candidate": "pair_gps_2d",
+      "learning_rate": 0.0001,
+      "best_epoch": 38,
+      "validation": {"homo": 0.11909706931114197, "lumo": 0.11715940209627151, "gap": 0.15711112339496613, "average": 0.1311225316007932}
+    },
+    {
+      "candidate": "pair_gps_2d",
+      "learning_rate": 0.0002,
+      "best_epoch": 34,
+      "validation": {"homo": 0.1173540906906128, "lumo": 0.11789233934879303, "gap": 0.15565187911987305, "average": 0.1302994363864263}
+    },
+    {
+      "candidate": "pair_gps_2d",
+      "learning_rate": 0.0004,
+      "best_epoch": 35,
+      "validation": {"homo": 0.12371548295021058, "lumo": 0.12191025050878525, "gap": 0.16361614940166475, "average": 0.13641396095355351}
+    }
+  ],
+  "selected": {
+    "gps7_gps9_equal": {"learning_rate": 0.0002, "validation_average_mae_eV": 0.15671685792605083, "validation_gap_mae_eV": 0.1980200037956238},
+    "pair_gps_2d": {"learning_rate": 0.0002, "validation_average_mae_eV": 0.1302994363864263, "validation_gap_mae_eV": 0.15565187911987305},
+    "pair_minus_equal": {"validation_average_mae_eV": -0.026417421539624536, "validation_gap_mae_eV": -0.04236812467575074}
+  },
+  "decision": "pair_gps_2d_passed_validation_only_test_remained_sealed"
+}
+

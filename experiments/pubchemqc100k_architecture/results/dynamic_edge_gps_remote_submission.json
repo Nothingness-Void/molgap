@@ -1,0 +1,42 @@
+{
+  "candidate": "DynamicEdgeGPS",
+  "status": "blocked_before_preflight",
+  "platform": "SCNet A-zone",
+  "contract": {
+    "graph_cache": "/work1/share/acf9jvb3sm/molgap-results/phase8/pubchemqc100k_architecture/pyg_2d_graphs_pubchemqc100k_architecture.pt",
+    "split": "/work1/share/acf9jvb3sm/molgap-results/phase8/pubchemqc100k_architecture/split.csv",
+    "seed": 42,
+    "split_seed": 42,
+    "epochs": 40,
+    "batch_size": 256,
+    "output_dir": "/work1/share/acf9jvb3sm/molgap-results/phase8/pubchemqc100k_architecture/dynamic_edge_gps_seed42"
+  },
+  "remote_code": {
+    "model": "/public/home/acf9jvb3sm/molgap/src/molgap/edge_state_gps.py",
+    "training": "/public/home/acf9jvb3sm/molgap/src/molgap/pubchemqc_direct_training.py",
+    "cli": "/public/home/acf9jvb3sm/molgap/experiments/pubchemqc100k_architecture/train_dynamic_edge_gps.py"
+  },
+  "checks": {
+    "local_py_compile": "passed",
+    "remote_py_compile": "passed",
+    "active_jobs_before_submission": 0,
+    "full_training_submitted": false
+  },
+  "submission_attempts": [
+    {
+      "interface": "sbatch",
+      "result": "rejected_before_job_creation",
+      "error": "Invalid account or account/partition combination specified"
+    },
+    {
+      "interface": "qsub_compatibility_wrapper",
+      "result": "rejected_before_job_creation",
+      "error": "Invalid account or account/partition combination specified"
+    }
+  ],
+  "promotion_gate": {
+    "average_mae_eV_lt": 0.14246927698453268,
+    "gap_mae_eV_lt": 0.17104046046733856,
+    "seed_43_44_or_route_b_authorized": false
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "experiment": "pubchemqc100k_pair_gps_2d_fair_screen",
+  "status": "validation_search_complete_test_role_unread",
+  "platform": "IMS",
+  "jobs": {
+    "cache_build_and_accept": "1328962.ccpbs1",
+    "validation_search": "1329353.ccpbs1",
+    "validation_search_atomic_resume": "1335828.ccpbs1",
+    "a100_parameter_benchmark": "1336321.ccpbs1"
+  },
+  "cancelled_searches": [
+    {
+      "job": "1329076.ccpbs1",
+      "reason": "incorrectly used GPS11-160 instead of the user-specified GPS7+GPS9 equal control",
+      "elapsed_before_cancel": "approximately 2 minutes",
+      "training_artifacts_written": 0,
+      "startup_log_preserved": true
+    }
+  ],
+  "cache_acceptance": {
+    "job": "1328962.ccpbs1",
+    "accepted": true,
+    "accepted_rows": 120000,
+    "failed_rows": 0,
+    "shards": 24,
+    "input_contract_sha256": "c99f561348d514c48c13043ca002cbf238011ace9fecf4ce853e4e39705b5987"
+  },
+  "failed_cache_attempts": [
+    {
+      "job": "1328100.ccpbs1",
+      "stage": "pre-build import",
+      "reason": "isolated remote code package was missing molgap.gps",
+      "cache_shards_written": 0,
+      "log_preserved": true
+    },
+    {
+      "job": "1328642.ccpbs1",
+      "stage": "pre-build split validation",
+      "reason": "screen incorrectly required frozen original source_idx values to be contiguous",
+      "cache_shards_written": 0,
+      "log_preserved": true
+    }
+  ],
+  "deployment_fix": {
+    "file": "code/src/molgap/gps.py",
+    "sha256": "63f5ee168fe3a0da0d82921a263dba10ac222376957983253eabda2d6a437d0c",
+    "local_remote_hash_match": true,
+    "remote_import_check": "passed",
+    "split_identity_fix_sha256": "64ba06dfe1706b805e8636323c98a3617f58dea914c0dd3fc24d890cc0ed752e",
+    "remote_split_read_check": "120000 unique rows; first source_idx 0; last source_idx 999991",
+    "corrected_screen_source_sha256": "dd1d9543ce40d40351271b492ba6834a4fc9f245dcce01dd9208fa75bcba6f22",
+    "corrected_remote_import_check": "passed"
+  },
+  "frozen_split": {
+    "sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+    "train": 100003,
+    "validation": 10000,
+    "test": 9997,
+    "scaffold_disjoint": true
+  },
+  "shared_input": {
+    "geometry": "none",
+    "node_feature_dim": 18,
+    "edge_feature_dim": 4,
+    "targets": [
+      "homo",
+      "lumo",
+      "gap"
+    ]
+  },
+  "candidates": [
+    {
+      "name": "gps7_gps9_equal",
+      "components": [
+        "gps7_192",
+        "gps9_192"
+      ],
+      "fusion": "fixed prediction average 0.5/0.5"
+    },
+    {
+      "name": "pair_gps_2d"
+    }
+  ],
+  "shared_search": {
+    "seed": 42,
+    "precision": "fp32",
+    "batch_size": 64,
+    "epochs": 40,
+    "patience": 10,
+    "optimizer": "AdamW",
+    "weight_decay": 1e-05,
+    "learning_rates": [
+      0.0001,
+      0.0002,
+      0.0004
+    ],
+    "selection_role": "validation",
+    "test_role_read_during_search": false,
+    "architecture_configurations": {
+      "gps7_gps9_equal": 3,
+      "pair_gps_2d": 3
+    },
+    "encoder_training_trials": {
+      "gps7": 3,
+      "gps9": 3,
+      "pair_gps_2d": 3
+    }
+  },
+  "validation_decision": {
+    "selected_learning_rate": 0.0002,
+    "gps7_gps9_equal_validation_average_mae_eV": 0.15671685792605083,
+    "gps7_gps9_equal_validation_gap_mae_eV": 0.1980200037956238,
+    "pair_gps_2d_validation_average_mae_eV": 0.1302994363864263,
+    "pair_gps_2d_validation_gap_mae_eV": 0.15565187911987305,
+    "pair_gps_2d_minus_equal_average_mae_eV": -0.026417421539624536,
+    "pair_gps_2d_minus_equal_gap_mae_eV": -0.04236812467575074,
+    "test_role_read": false,
+    "decision": "pair_gps_2d_passed_validation_only"
+  },
+  "throughput_decision": {
+    "recommended_key": "tf32_bs128_workers4",
+    "graphs_per_s": 859.1339005127866,
+    "speedup_vs_fp32_bs64_workers0": 1.911200390489036,
+    "peak_reserved_bytes": 61377347584,
+    "test_role_read": false,
+    "long_training_authorized_by_benchmark": false
+  },
+  "full_data_gate": {
+    "stopped_job": "1322114.ccpbs1",
+    "best_validation_average_mae_eV": 0.474529,
+    "automatic_resume_deleted": true,
+    "full_training_allowed": false,
+    "required": "PairGPS2D must beat the rerun GPS7+GPS9 fixed equal control on selected validation average and one-shot test average/Gap"
+  },
+  "terminal_tests": {
+    "track_a": {
+      "dataset": "repaired-2M PubChemQC frozen test role",
+      "rows": 198925,
+      "targets": [
+        "homo",
+        "lumo",
+        "gap"
+      ],
+      "metric": "per-target and average MAE in eV"
+    },
+    "track_b": {
+      "dataset": "official PCQM4Mv2 test-dev",
+      "rows": 147037,
+      "target": "homolumogap",
+      "metric": "hidden official Gap MAE in eV",
+      "submission_file": "y_pred_pcqm4m-v2_test-dev.npz",
+      "training_contract": "new weights trained only on official PCQM4Mv2 train/valid; no PubChemQC data or checkpoints",
+      "historical_valid_4981_is_official_test": false
+    }
+  }
+}
