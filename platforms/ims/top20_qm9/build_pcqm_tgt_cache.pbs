@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=8
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+SOURCE=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/inputs/pcqm_route_b_1m
+TARGET=$ROOT/pcqm_tgt_lite_graphs
+cd "$ROOT"
+mkdir -p logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=8
+export MKL_NUM_THREADS=8
+
+"$PYTHON" -u experiments/top20_architecture_qm9/build_pcqm_tgt_cache.py \
+  --source-root "$SOURCE" --output-root "$TARGET" 2>&1 | tee logs/build_pcqm_tgt_cache.log

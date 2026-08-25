@@ -1,0 +1,130 @@
+{
+  "experiment": "qm9_pair_gps_2d_architecture_screen",
+  "submitted_at": "2026-08-23T13:32:10+09:00",
+  "remote_host": "ccfep.ims.ac.jp",
+  "scheduler_queue": "H",
+  "dataset": "QM9",
+  "split": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000,
+    "split_seed": 42,
+    "encoder_seed": 42
+  },
+  "reference": {
+    "job_id": "1318030.ccpbs1",
+    "architecture": "GPS9 + GPS11-160 pure-2D standard gate",
+    "pbs_script": "platforms/ims/top20_qm9/train_pure2d_gps_fusion_reference_seed42.pbs",
+    "output_dir": "outputs/fusion_pure2d_gps_reference_seed42",
+    "log": "logs/pure2d_gps_reference_seed42.log",
+    "status": "completed",
+    "purpose": "same-contract comparator only",
+    "completed_epoch": 79,
+    "metrics": {
+      "HOMO_mae_eV": 0.1018308923,
+      "LUMO_mae_eV": 0.1067165956,
+      "Gap_mae_eV": 0.1414195895,
+      "average_mae_eV": 0.1166556925
+    }
+  },
+  "candidate": {
+    "initial_attempt_job_id": "1318031.ccpbs1",
+    "initial_attempt_status": "failed_before_epoch0",
+    "initial_attempt_failure": "The PBS job used the stale root experiments/qm9_architecture/qm9_screen.py; the updated CLI had first been copied only under code/experiments, so pair_gps_2d was rejected as an invalid choice. No checkpoint or metrics were written; the log is retained.",
+    "completed_attempt_job_id": "1318042.ccpbs1",
+    "name": "pair_gps_2d",
+    "architecture": "persistent 2D pair state + low-rank triplet + pair-to-node + bond-local pair message + pair-biased global attention",
+    "pbs_script": "platforms/ims/top20_qm9/train_pair_gps_2d_preflight_retry2.pbs",
+    "output_dir": "outputs/results_pair_gps_2d_retry2",
+    "model_dir": "outputs/models_pair_gps_2d_retry2",
+    "log": "logs/pair_gps_2d_preflight_retry2_seed42.log",
+    "status": "complete_failed_gate",
+    "completed_epoch": 19,
+    "n_params": 4707939,
+    "metrics": {
+      "HOMO_mae_eV": 0.1051761061,
+      "LUMO_mae_eV": 0.1137967110,
+      "Gap_mae_eV": 0.1466797441,
+      "average_mae_eV": 0.1218841970
+    },
+    "gate_comparison": {
+      "reference_average_eV": 0.1166556925,
+      "reference_Gap_eV": 0.1414195895,
+      "average_delta_eV": 0.0052285045,
+      "Gap_delta_eV": 0.0052601546
+    },
+    "uses_3d": false,
+    "uses_target_residual": false,
+    "uses_old_predictions_or_fusion": false,
+    "retry3": {
+      "job_id": "1318196.ccpbs1",
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_gps_2d_preflight_retry3.pbs",
+      "output_dir": "outputs/results_pair_gps_2d_retry3",
+      "model_dir": "outputs/models_pair_gps_2d_retry3",
+      "log": "logs/pair_gps_2d_preflight_retry3_seed42.log",
+      "status": "failed_before_epoch0",
+      "submitted_at": "2026-08-23T14:04:10+09:00",
+      "n_params": 12925715,
+      "failure": "AMP GINE output was Half while the dense node buffer was Float during masked index assignment. The implementation fix casts the local GINE output back to the node buffer dtype; no checkpoint or metrics were written and the log is retained."
+    },
+    "retry4": {
+      "job_id": "1318215.ccpbs1",
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_gps_2d_preflight_retry4.pbs",
+      "output_dir": "outputs/results_pair_gps_2d_retry4",
+      "model_dir": "outputs/models_pair_gps_2d_retry4",
+      "log": "logs/pair_gps_2d_preflight_retry4_seed42.log",
+      "status": "canceled_numeric_instability",
+      "submitted_at": "2026-08-23T14:06:26+09:00",
+      "n_params": 12925715,
+      "completed_epoch": 11,
+      "failure": "AMP training produced train=nan at epochs 10 and 11 while validation remained finite. The job was canceled after the repeated NaN signal; its log and checkpoints remain retained."
+    },
+    "retry5": {
+      "job_id": "1318341.ccpbs1",
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_gps_2d_preflight_retry5.pbs",
+      "output_dir": "outputs/results_pair_gps_2d_retry5",
+      "model_dir": "outputs/models_pair_gps_2d_retry5",
+      "log": "logs/pair_gps_2d_preflight_retry5_seed42.log",
+      "status": "failed_before_epoch0",
+      "submitted_at": "2026-08-23T14:39:01+09:00",
+      "n_params": 12925715,
+      "amp": false,
+      "failure": "The training-only amp key was not removed before constructing PairGPS2DWrapper. No checkpoint or metrics were written; the log is retained."
+    },
+    "retry6": {
+      "job_id": "1318345.ccpbs1",
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_gps_2d_preflight_retry6.pbs",
+      "output_dir": "outputs/results_pair_gps_2d_retry6",
+      "model_dir": "outputs/models_pair_gps_2d_retry6",
+      "log": "logs/pair_gps_2d_preflight_retry6_seed42.log",
+      "status": "complete_passed_primary_gate",
+      "submitted_at": "2026-08-23T14:41:33+09:00",
+      "n_params": 12925715,
+      "amp": false,
+      "completed_epoch": 19,
+      "artifact_dir": "outputs/results_pair_gps_2d_retry6/n30000_3000_3000/pair_gps_2d_topology/seed42",
+      "metrics": {
+        "HOMO_mae_eV": 0.0957187265,
+        "LUMO_mae_eV": 0.1055229977,
+        "Gap_mae_eV": 0.1340952218,
+        "average_mae_eV": 0.1117789894
+      },
+      "gate_comparison": {
+        "reference_average_eV": 0.1166556925,
+        "reference_Gap_eV": 0.1414195895,
+        "average_delta_eV": -0.0048767030,
+        "Gap_delta_eV": -0.0073243678,
+        "passed": true
+      },
+      "uses_3d": false,
+      "uses_target_residual": false,
+      "uses_old_predictions_or_fusion": false
+    }
+  },
+  "promotion_rule": "Only if the new candidate is strictly lower than the same-contract pure-2D GPS reference on both average MAE and Gap MAE may target-domain PubChemQC B3LYP seed42 training be submitted.",
+  "promotion_decision": {
+    "status": "go_target_domain_seed42",
+    "reason": "retry6 is lower than the primary GPS9 + GPS11-160 comparator on both average and Gap MAE",
+    "pubchemqc_job_id": "1322114.ccpbs1"
+  }
+}

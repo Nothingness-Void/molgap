@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=01:00:00
+#PBS -j oe
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+mkdir -p outputs/fusion_gps_precision_physics logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export CUDA_LAUNCH_BLOCKING=1
+
+"$PYTHON" -u experiments/qm9_architecture/multi_expert_fusion_preflight.py \
+  --gps9-payload "$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/gps9_topology/seed42/payload.pt" \
+  --gps11-payload "$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/gps11_160_topology/seed42/payload.pt" \
+  --schnet-primary-payload "$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/schnet_etkdg/seed42/payload.pt" \
+  --schnet-augmented-payload "$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/schnet_etkdg_aug2/seed42/payload.pt" \
+  --output-dir "$ROOT/outputs/fusion_gps_precision_physics" \
+  --epochs 100 --hidden 256 --seed "${SEED:-42}" \
+  --variants physics_exact_gate 2>&1 \
+  | tee "logs/gps_precision_physics_seed${SEED:-42}.log"

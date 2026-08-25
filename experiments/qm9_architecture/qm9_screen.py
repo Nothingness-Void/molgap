@@ -43,6 +43,7 @@ def parse_args():
             "gine6",
             "gps7",
             "gps9",
+            "gps9_pcqm_transfer",
             "gps9_160",
             "gps9_128",
             "gps9_meanmax",
@@ -52,6 +53,21 @@ def parse_args():
             "schnet_angle_dihedral",
             "tensornet",
             "egnn",
+            "tgt_lite",
+            "tgt_hybrid",
+            "tgt_hybrid_v2",
+            "edge_global_2d",
+            "pair_triplet_2d",
+            "pair_triplet_2d_rich",
+            "pair_gps_2d",
+            "tgt_egt_hybrid",
+            "tgt_egt_compact",
+            "tgt_egt_stable",
+            "tgt_egt_rich",
+            "tgt_egt_hybrid_plus",
+            "tgt_egt_hybrid_frozen",
+            "tgt_egt_hybrid_warmblend",
+            "tgt_egt_hybrid_warmblend_frozen",
         ],
         required=True,
     )
@@ -63,9 +79,16 @@ def parse_args():
     encoder.add_argument("--seed", type=int, default=42)
     encoder.add_argument("--split-seed", type=int, default=42)
     encoder.add_argument("--resume", action="store_true")
+    encoder.add_argument("--init-checkpoint", type=Path, default=None)
+    encoder.add_argument("--expert-init-checkpoint", type=Path, default=None)
+    encoder.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
+    encoder.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
+    encoder.add_argument(
+        "--models-dir", type=Path, default=Path("models/experiments/qm9_architecture_screen")
+    )
 
     geometry_eval = subparsers.add_parser("evaluate-geometry")
-    geometry_eval.add_argument("--candidate", choices=["schnet", "tensornet", "egnn"], required=True)
+    geometry_eval.add_argument("--candidate", choices=["schnet", "tensornet", "egnn", "tgt_lite"], required=True)
     geometry_eval.add_argument("--geometry", choices=["dft", "etkdg"], required=True)
     geometry_eval.add_argument("--checkpoint", type=Path, required=True)
     geometry_eval.add_argument("--output", type=Path, required=True)
@@ -174,6 +197,11 @@ def main():
             seed=args.seed,
             split_seed=args.split_seed,
             resume=args.resume,
+            init_checkpoint=args.init_checkpoint,
+            expert_init_checkpoint=args.expert_init_checkpoint,
+            cache_dir=args.cache_dir,
+            results_dir=args.results_dir,
+            models_dir=args.models_dir,
         )
         print(json.dumps(result["metrics"]["test"], indent=2))
         return

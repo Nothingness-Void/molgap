@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=06:00:00
+#PBS -j oe
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+mkdir -p outputs/results_gps_precision_two_view outputs/models_gps_precision_two_view \
+  outputs/fusion_gps_precision_two_view logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export CUDA_LAUNCH_BLOCKING=1
+
+"$PYTHON" -u experiments/qm9_architecture/schnet_two_view_preflight.py \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results_gps_precision_two_view" \
+  --models-dir "$ROOT/outputs/models_gps_precision_two_view" \
+  --train-size 30000 --validation-size 3000 --test-size 3000 \
+  --epochs 30 --seed "${SEED:-42}" --split-seed 42 --geometry-seeds 42 43 2>&1 \
+  | tee "logs/gps_precision_two_view_schnet_seed${SEED:-42}.log"
+
+GPS_PAYLOAD="$ROOT/outputs/fusion_gps_precision_late_fusion/gps9_gps11_concat_seed${SEED:-42}.pt"
+SCHNET_PAYLOAD="$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/schnet_etkdg_aug2/seed${SEED:-42}/payload.pt"
+test -f "$GPS_PAYLOAD"
+test -f "$SCHNET_PAYLOAD"
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py fusion \
+  --gps-payload "$GPS_PAYLOAD" --schnet-payload "$SCHNET_PAYLOAD" \
+  --epochs 100 --seed "${SEED:-42}" --hidden 256 --fusion-type gate \
+  --output "$ROOT/outputs/fusion_gps_precision_two_view/metrics_seed${SEED:-42}.json" 2>&1 \
+  | tee "logs/gps_precision_two_view_fusion_seed${SEED:-42}.log"

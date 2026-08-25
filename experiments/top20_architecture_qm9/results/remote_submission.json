@@ -1,0 +1,1129 @@
+{
+  "format": "molgap-top20-qm9-remote-submission-v1",
+  "status": "paused_needs_replan",
+  "platform": "IMS/RCCS",
+  "root": "/lustre/home/users/sm2/chou/molgap-top20-qm9",
+  "stages": {
+    "cpu_etkdg_cache": {
+      "job_id": "1309279.ccpbs1",
+      "pbs_script": "platforms/ims/top20_qm9/prepare_etkdg.pbs",
+      "status": "complete",
+      "protocol": "QM9 100000/10000/10000, split seed 42, ETKDGv3+MMFF200 seed 42",
+      "cache_acceptance": "outputs/cache/cache_acceptance.json",
+      "requested": 120000,
+      "succeeded": 111452,
+      "failed": 8548
+    },
+    "gpu_tgt_lite": {
+      "job_id": "1309391.ccpbs1",
+      "status": "complete",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_lite.pbs",
+      "cache_verification": "outputs/cache/cache_verified.json",
+      "metrics": "outputs/results/n100000_10000_10000/tgt_lite_etkdg/seed42/metrics.json",
+      "average_mae_eV": 0.08791939914226532,
+      "gap_mae_eV": 0.10315053164958954,
+      "gate": "fail"
+    },
+    "gpu_tgt_hybrid": {
+      "job_id": "1309662.ccpbs1",
+      "status": "failed",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_hybrid.pbs",
+      "cache_verification": "outputs/cache/cache_verified.json",
+      "failure_log": "logs/tgt_hybrid_seed42.log",
+      "failure": "CUDA CUBLAS_STATUS_EXECUTION_FAILED in the PyG GINEConv topology branch before metrics"
+    },
+    "gpu_tgt_hybrid_v2": {
+      "job_id": "1309783.ccpbs1",
+      "status": "failed",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_hybrid_v2.pbs",
+      "cache_verification": "outputs/cache/cache_verified.json",
+      "architecture": "GINE-free edge-aware global topology attention plus TGT-lite ETKDG pair/triplet geometry",
+      "failure_log": "logs/tgt_hybrid_v2_seed42.log",
+      "failure": "Mixed 2D and explicit-H node views reused one PyG batch vector; topology branch failed before metrics"
+    },
+    "gpu_tgt_hybrid_v3": {
+      "job_id": "1309959.ccpbs1",
+      "status": "complete",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_hybrid_v3.pbs",
+      "cache_verification": "outputs/cache/cache_verified.json",
+      "architecture": "GINE-free edge-aware global topology attention plus TGT-lite ETKDG pair/triplet geometry with explicit topology and geometry batch metadata",
+      "node": "ccg004",
+      "last_log": "logs/tgt_hybrid_v3_seed42.log",
+      "metrics": "outputs/results/n100000_10000_10000/tgt_hybrid_v2_etkdg/seed42/metrics.json",
+      "test_homo_mae_eV": 0.08125187456607819,
+      "test_lumo_mae_eV": 0.0882476419210434,
+      "test_gap_mae_eV": 0.10951218754053116,
+      "test_average_mae_eV": 0.09300390630960464,
+      "gate": "fail",
+      "last_observed": "2026-08-22T13:41:32+09:00",
+      "last_observed_epoch": 29,
+      "last_observed_val_mae_eV": 0.09233321994543076
+    },
+    "gpu_edge_global_2d_preflight": {
+      "job_id": "1311419.ccpbs1",
+      "status": "complete",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_edge_global_2d_preflight_retry2.pbs",
+      "geometry": "topology",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "pure-2D GPTrans-T/EGT-style sparse edge state with edge-biased global attention and mean/max pooling",
+      "gate": "preflight_only",
+      "log": "logs/edge_global_2d_preflight_retry2_seed42.log",
+      "metrics": "outputs/results_edge_global_2d_retry2/n30000_3000_3000/edge_global_2d_topology/seed42/metrics.json",
+      "node": "ccg011",
+      "best_epoch": 18,
+      "test_homo_mae_eV": 0.11869215965270996,
+      "test_lumo_mae_eV": 0.12750418484210968,
+      "test_gap_mae_eV": 0.16683457791805267,
+      "test_average_mae_eV": 0.13767696917057037,
+      "gate_result": "fail_preflight",
+      "retry_of": "1311369.ccpbs1",
+      "previous_attempts": [
+        {
+          "job_id": "1311296.ccpbs1",
+          "failure_log": "logs/edge_global_2d_preflight_seed42_entrypoint_failed.log",
+          "failure": "The remote experiment wrapper had a stale argparse candidate list and rejected edge_global_2d before training; no metrics were produced."
+        },
+        {
+          "job_id": "1311369.ccpbs1",
+          "failure_log": "logs/edge_global_2d_preflight_retry_seed42_dtype_failed.log",
+          "failure": "Mixed-precision forward attempted to index a Half tensor with Float edge-bias values before metrics; no metrics were produced."
+        }
+      ],
+      "last_observed": "2026-08-22T16:38:01+09:00",
+      "last_state": "complete",
+      "last_node": "ccg011",
+      "last_observed_epoch": 19,
+      "last_observed_train_mae_eV": 0.13047,
+      "last_observed_val_mae_eV": 0.13681,
+      "retry_fix": "Aligned edge-bias values to the dense bias dtype for mixed precision, uploaded the corrected source, and isolated retry2 outputs; local static checks and remote PBS syntax checks pass."
+    },
+    "gpu_pair_triplet_2d_preflight": {
+      "job_id": "1311867.ccpbs1",
+      "status": "failed",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_triplet_2d_preflight.pbs",
+      "geometry": "topology",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "pure-2D all-pairs topology state with short-walk channels, low-rank triplet updates, bond-local messages, and global attention",
+      "gate": "preflight_only",
+      "log": "logs/pair_triplet_2d_preflight_seed42.log",
+      "metrics": "outputs/results_pair_triplet_2d/n30000_3000_3000/pair_triplet_2d_topology/seed42/metrics.json",
+      "failure_log": "logs/pair_triplet_2d_preflight_seed42_shape_failed.log",
+      "failure": "The pair input projection expected 8 features but dense topology construction produced 7 (4 bond features plus 3 path features); the job failed before the first epoch and wrote no metrics.",
+      "last_observed": "2026-08-22T17:26:29+09:00",
+      "last_state": "failed"
+    },
+    "gpu_pair_triplet_2d_preflight_retry2": {
+      "job_id": "1312240.ccpbs1",
+      "status": "failed",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_triplet_2d_preflight_retry2.pbs",
+      "geometry": "topology",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "pure-2D all-pairs topology state with short-walk channels, low-rank triplet updates, bond-local messages, and global attention",
+      "gate": "preflight_only",
+      "log": "logs/pair_triplet_2d_preflight_retry2_seed42.log",
+      "metrics": "outputs/results_pair_triplet_2d_retry2/n30000_3000_3000/pair_triplet_2d_topology/seed42/metrics.json",
+      "retry_of": "1311867.ccpbs1",
+      "fix": "Changed pair_input_dim from edge_dim + 1 + path_steps to edge_dim + path_steps; preserved the failed log and isolated retry outputs.",
+      "last_observed": "2026-08-22T18:13:09+09:00",
+      "last_state": "completed_gate_failed",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg004",
+      "completed_epoch": 19,
+      "best_epoch": 19,
+      "latest_log": "pair_triplet_2d/topology ep19 train=0.11516 val=0.12418eV 26.0s *",
+      "wait_reason": null,
+      "queue_free_gpus": 0,
+      "queue_waiting_gpu_jobs": 35,
+      "queue_requested_gpus": 51,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.10252831876277924,
+        "LUMO_mae_eV": 0.11864106357097626,
+        "Gap_mae_eV": 0.14925839006900787,
+        "average_mae_eV": 0.12347592413425446
+      },
+      "gate": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.05566203983425446,
+        "Gap_margin_eV": -0.06698545406900786
+      },
+      "failure": "The 30k/3k/3k pure-2D preflight completed stably on ccg004 but failed the replacement gate; topology-only pair/triplet features did not recover the orbital-sensitive error of the old precision-fusion reference."
+    },
+    "gpu_pair_triplet_2d_rich_preflight": {
+      "job_id": "1312364.ccpbs1",
+      "status": "complete",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_pair_triplet_2d_rich_preflight.pbs",
+      "geometry": "topology",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "pure-2D rich pair/triplet transformer with atom-pair descriptors, multi-scale path counts, pair-to-node propagation, and low-rank triplet updates",
+      "gate": "preflight_only",
+      "log": "logs/pair_triplet_2d_rich_preflight_seed42.log",
+      "metrics": "outputs/results_pair_triplet_2d_rich/n30000_3000_3000/pair_triplet_2d_rich_topology/seed42/metrics.json",
+      "based_on": "1312240.ccpbs1",
+      "design_change": "Added symmetric atom-pair sum/absolute-difference/product channels, reachability plus log path-count channels through order 5, and pair-state value pooling back into node updates; scaled to hidden 256, pair 96, 10 layers, rank 16, batch 48.",
+      "last_observed": "2026-08-22T19:30:19+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg014",
+      "completed_epoch": 19,
+      "latest_log": "pair_triplet_2d_rich/topology ep19 train=0.09550 val=0.11788eV 103.8s *",
+      "queue_free_gpus": 0,
+      "queue_waiting_gpu_jobs": 32,
+      "queue_requested_gpus": 48,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.09876591712236404,
+        "LUMO_mae_eV": 0.1143094152212143,
+        "Gap_mae_eV": 0.14285248517990112,
+        "average_mae_eV": 0.11864262074232101
+      },
+      "gate": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.05082873644232101,
+        "Gap_margin_eV": -0.06057954917990112
+      },
+      "failure": "The 30k/3k/3k pure-2D rich preflight completed stably on ccg014 but failed the replacement gate; topology-only pair/triplet features remained far above the old precision-fusion reference. Logs, checkpoint, model, payload, and metrics are retained."
+    },
+    "gpu_tgt_egt_hybrid_preflight": {
+      "job_id": "1312784.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "GINE-free GPS-like local/global topology branch fused with an ETKDG EGT/TGT pair-state branch with bond channels, triplet updates, and pair-to-node values",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid/n30000_3000_3000/tgt_egt_hybrid_etkdg/seed42/metrics.json",
+      "static_checks": "local and remote py_compile plus remote bash -n passed",
+      "submission_condition": "Submitted only after 1312364.ccpbs1 retained its failed metrics",
+      "last_observed": "2026-08-22T21:38:32+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg002",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_hybrid/etkdg ep19 train=0.08696 val=0.11207eV 163.5s *; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.0984002947807312,
+        "LUMO_mae_eV": 0.10589730739593506,
+        "Gap_mae_eV": 0.13586018979549408,
+        "average_mae_eV": 0.11338592320680618
+      },
+      "gate": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.04557203890680618,
+        "Gap_margin_eV": -0.05358725379549408
+      },
+      "gate_passed": false,
+      "failure": "Final 30k/3k/3k ETKDG preflight metrics missed the replacement gate; seed43/44 and Route B remain unauthorized. Logs and artifacts are retained."
+    },
+    "gpu_tgt_egt_compact_preflight": {
+      "job_id": "1313997.ccpbs1",
+      "status": "failed_startup",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_compact_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "Measured tgt_lite ETKDG pair/triplet geometry path with explicit EGT heavy-atom bond channels and zero-initialized pair-to-node residual",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_compact_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_compact/n30000_3000_3000/tgt_egt_compact_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, bash -n, and import passed",
+      "submission_condition": "Submitted only after 1312784.ccpbs1 completed and failed the replacement gate; no overlapping GPU job was active",
+      "last_observed": "2026-08-22T22:04:16+09:00",
+      "last_state": "exit_before_epoch",
+      "scheduler_queue": "H",
+      "scheduler_status": "Exit",
+      "node": "ccg015",
+      "completed_epoch": null,
+      "latest_log": "startup TypeError: encode() got unexpected keyword argument topology_x",
+      "checkpoint_present": false,
+      "log_present": true,
+      "metrics_present": false,
+      "gate_passed": null,
+      "failure": "The first compact preflight exited before epoch 0 because the wrapper did not accept the shared topology_x compatibility argument. The traceback is retained and retry2 uses isolated artifacts after the interface fix."
+    },
+    "gpu_tgt_egt_compact_preflight_retry2": {
+      "job_id": "1314176.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_compact_preflight_retry2.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "Measured tgt_lite ETKDG pair/triplet geometry path with explicit EGT heavy-atom bond channels and zero-initialized pair-to-node residual; topology_x interface fixed",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_compact_preflight_retry2_seed42.log",
+      "metrics": "outputs/results_tgt_egt_compact_retry2/n30000_3000_3000/tgt_egt_compact_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, bash -n, and remote signature check passed",
+      "submission_condition": "Submitted only after 1313997.ccpbs1 exited before epoch 0; source interface was fixed and retry artifacts are isolated",
+      "last_observed": "2026-08-22T22:40:20+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg013",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_compact/etkdg ep19 train=0.13333 val=0.14079eV 32.9s *; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.1265980750322342,
+        "LUMO_mae_eV": 0.14196988940238953,
+        "Gap_mae_eV": 0.17667372524738312,
+        "average_mae_eV": 0.14841389656066895
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.08060001236066895,
+        "Gap_margin_eV": -0.09440078924738312
+      },
+      "gate_passed": false,
+      "failure": "The corrected 30k/3k/3k compact preflight completed normally but missed the replacement gate; no seed43/44 or Route B submission is authorized. All retry2 artifacts are retained."
+    },
+    "gpu_tgt_egt_stable_preflight_retry3": {
+      "job_id": "1314400.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_stable_preflight_retry3.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "tgt_lite-compatible ETKDG pair/triplet path with EGT heavy-atom bond channels, zero-initialized pair-value residual, and zero-initialized new bond projection columns",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_stable_preflight_retry3_seed42.log",
+      "metrics": "outputs/results_tgt_egt_stable_retry3/n30000_3000_3000/tgt_egt_stable_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, bash -n, and stable-config checks passed",
+      "submission_condition": "Submitted only after 1314176.ccpbs1 completed and failed the gate; no active GPU job remained",
+      "last_observed": "2026-08-22T23:09:44+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg011",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_stable/etkdg ep19 train=0.13710 val=0.14414eV 33.8s *; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.12935350835323334,
+        "LUMO_mae_eV": 0.14393150806427002,
+        "Gap_mae_eV": 0.18222938477993011,
+        "average_mae_eV": 0.15183813869953156
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.08402425439953156,
+        "Gap_margin_eV": -0.09995644877993011
+      },
+      "gate_passed": false,
+      "failure": "Stable retry3 completed normally but missed the replacement gate; no seed43/44 or Route B submission is authorized. All retry3 artifacts are retained."
+    },
+    "gpu_tgt_egt_rich_preflight_retry4": {
+      "job_id": "1314542.ccpbs1",
+      "status": "failed_runtime",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_rich_preflight_retry4.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "rich pure-2D pair/triplet/path encoder fused with the measured ETKDG EGT/TGT pair-state and bond-channel geometry encoder at molecule level",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_rich_preflight_retry4_seed42.log",
+      "metrics": "outputs/results_tgt_egt_rich_retry4/n30000_3000_3000/tgt_egt_rich_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, bash -n, remote parameter instantiation, and remote finite synthetic forward passed",
+      "submission_condition": "Submitted once after 1314400.ccpbs1 completed and failed the gate; no active GPU job remained",
+      "last_observed": "2026-08-23T01:34:15+09:00",
+      "last_state": "exit",
+      "scheduler_queue": "H",
+      "scheduler_status": "Exit",
+      "node": "ccg009",
+      "completed_epoch": 0,
+      "latest_log": "tgt_egt_rich/etkdg ep00 train=nan val=0.60973eV 331.3s *",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": false,
+      "gate_passed": null,
+      "failure": "Retry4 exited after epoch 0 on a retained CUDA device-side index assertion in geometry bond densification. The epoch-0 checkpoint tensors were finite; the out-of-range edge guard and FP32/lower-rate retry were validated before retry5."
+    },
+    "gpu_tgt_egt_rich_preflight_retry5": {
+      "job_id": "1314619.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_rich_preflight_retry5.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "tgt_egt_rich with guarded topology bond densification, FP32 pair/triplet training, and learning rate 2e-4",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_rich_preflight_retry5_seed42.log",
+      "metrics": "outputs/results_tgt_egt_rich_retry5/n30000_3000_3000/tgt_egt_rich_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, bash -n, remote parameter instantiation, and remote finite synthetic forward passed",
+      "submission_condition": "Submitted once after 1314542.ccpbs1 exited on a device-side index assert; retry4 log and checkpoint were retained and no active GPU job remained",
+      "last_observed": "2026-08-23T01:34:15+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg013",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_rich/etkdg ep19 train=0.09878 val=0.11796eV 280.9s; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.10236172378063202,
+        "LUMO_mae_eV": 0.11764214932918549,
+        "Gap_mae_eV": 0.1445249617099762,
+        "average_mae_eV": 0.1215096116065979
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.0536957273065979,
+        "Gap_margin_eV": -0.06225202570997619
+      },
+      "gate_passed": false,
+      "failure": "The guarded FP32/lower-rate 30k/3k/3k rich hybrid completed normally but missed the replacement gate. Its pure-2D branch did not add enough complementary signal; no seed43/44 or Route B submission is authorized. All retry5 artifacts are retained."
+    },
+    "gpu_tgt_egt_hybrid_plus_preflight": {
+      "job_id": "1315094.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_plus_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "warm-started measured tgt_egt_hybrid identity path plus a conformer-free pair_triplet_2d_rich residual expert with zero-initialized correction",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_plus_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid_plus/n30000_3000_3000/tgt_egt_hybrid_plus_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, PBS bash -n, remote parameter instantiation, finite mismatched-view forward, and warm-start key matching passed",
+      "submission_condition": "Submitted once after retry5 failed the gate and a read-only no-overlap scheduler check; output paths are isolated",
+      "last_observed": "2026-08-23T04:14:09+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg004",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_hybrid_plus/etkdg ep19 train=0.06287 val=0.10682eV 393.4s",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.09198199212551117,
+        "LUMO_mae_eV": 0.10160534083843231,
+        "Gap_mae_eV": 0.1254395842552185,
+        "average_mae_eV": 0.10634230822324753
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03852842392324753,
+        "Gap_margin_eV": -0.0431666482552185
+      },
+      "failure": "The warm-started tgt_egt_hybrid identity path plus conformer-free pure-2D residual expert completed stably on ccg004, improving over the prior hybrid preflight but still missing the replacement gate; seed43/44 and Route B remain unauthorized. Logs, checkpoint, model, payload, and metrics are retained."
+    },
+    "gpu_tgt_egt_hybrid_frozen_preflight": {
+      "job_id": "1315582.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_frozen_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "frozen warm-started tgt_egt_hybrid identity path plus a conformer-free pair_triplet_2d_rich residual expert",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_frozen_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid_frozen/n30000_3000_3000/tgt_egt_hybrid_frozen_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, PBS bash -n, frozen parameter-count check, and warm-start key matching passed",
+      "submission_condition": "Submitted once after 1315094.ccpbs1 completed with retained metrics/model/log and a read-only no-overlap check; output paths are isolated",
+      "last_observed": "2026-08-23T05:05:04+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg004",
+      "completed_epoch": 10,
+      "latest_log": "tgt_egt_hybrid_frozen/etkdg ep10 train=0.08609 val=0.11211eV 241.0s",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.09841975569725037,
+        "LUMO_mae_eV": 0.1054147481918335,
+        "Gap_mae_eV": 0.1355123668909073,
+        "average_mae_eV": 0.11311562359333038
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.04530173929333038,
+        "Gap_margin_eV": -0.0532394308909073
+      },
+      "failure": "The frozen-base warm-started hybrid plus pure-2D residual completed stably on ccg004 but did not improve the measured hybrid gate; seed43/44 and Route B remain unauthorized. Logs, checkpoint, model, payload, and metrics are retained."
+    },
+    "gpu_tgt_egt_hybrid_warmblend_preflight": {
+      "job_id": "1315750.ccpbs1",
+      "status": "failed_startup",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_warmblend_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "warm-started measured tgt_egt_hybrid plus a warm-started rich pure-2D expert, target-specific prediction blend, and zero-initialized embedding/prediction residual",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_warmblend_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid_warmblend/n30000_3000_3000/tgt_egt_hybrid_warmblend_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, PBS bash -n, 21.2M-parameter instantiation, head shape check, and base/expert checkpoint load checks passed",
+      "submission_condition": "Submitted once after 1315582.ccpbs1 completed with retained metrics/model/log and a read-only no-overlap check; output paths are isolated",
+      "last_observed": "2026-08-23T05:08:48+09:00",
+      "last_state": "exit",
+      "scheduler_queue": "H",
+      "scheduler_status": "Exit",
+      "node": "ccg007",
+      "completed_epoch": null,
+      "checkpoint_present": false,
+      "log_present": true,
+      "metrics_present": false,
+      "gate_passed": null,
+      "failure": "The first warmblend submission exited before epoch 0 because its new PBS script used a nonexistent underscore shim path; the retained log shows the resulting GLIBC/torch-cluster import failure. No model, checkpoint, payload, or metrics were produced. Retry2 uses the verified hyphenated shim path and isolated output directories."
+    },
+    "gpu_tgt_egt_hybrid_warmblend_preflight_retry2": {
+      "job_id": "1315767.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_warmblend_preflight_retry2.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "warm-started measured tgt_egt_hybrid plus a warm-started rich pure-2D expert, target-specific prediction blend, and zero-initialized embedding/prediction residual",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_warmblend_preflight_retry2_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid_warmblend_retry2/n30000_3000_3000/tgt_egt_hybrid_warmblend_etkdg/seed42/metrics.json",
+      "static_checks": "corrected hyphenated shim path, remote PBS bash -n, and no-overlap scheduler check passed; original startup log retained",
+      "submission_condition": "Submitted once after 1315750.ccpbs1 startup failure was retained and a read-only no-overlap check passed",
+      "last_observed": "2026-08-23T08:05:08+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg007",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_hybrid_warmblend/etkdg ep19 train=0.05402 val=0.10057eV 490.3s *; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.08599615842103958,
+        "LUMO_mae_eV": 0.09499666839838028,
+        "Gap_mae_eV": 0.12119536101818085,
+        "average_mae_eV": 0.10072939097881317
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03291550667881317,
+        "Gap_margin_eV": -0.03892242501818085
+      },
+      "failure": "The warm-started measured tgt_egt_hybrid plus warm-started rich pure-2D expert completed stably on ccg007 and improved over the prior warmblend preflight, but still missed the replacement gate. Seed43/44 and Route B remain unauthorized. Logs, checkpoint, model, and metrics are retained."
+    },
+    "gpu_tgt_egt_hybrid_warmblend_frozen_preflight": {
+      "job_id": "1316416.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_tgt_egt_hybrid_warmblend_frozen_preflight.pbs",
+      "geometry": "etkdg",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "frozen warm-started measured tgt_egt_hybrid and frozen warm-started rich pure-2D expert with target-specific prediction blend and trainable residual head",
+      "gate": "preflight_only",
+      "log": "logs/tgt_egt_hybrid_warmblend_frozen_preflight_seed42.log",
+      "metrics": "outputs/results_tgt_egt_hybrid_warmblend_frozen/n30000_3000_3000/tgt_egt_hybrid_warmblend_frozen_etkdg/seed42/metrics.json",
+      "static_checks": "local py_compile plus remote py_compile, PBS bash -n, 21.2M-parameter instantiation, 107,090 trainable-parameter check, and verified hyphenated shim path passed",
+      "submission_condition": "Submitted once after 1315767.ccpbs1 completed and failed the gate; retained retry2 artifacts and a read-only no-overlap check passed",
+      "last_observed": "2026-08-23T09:24:53+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg007",
+      "completed_epoch": 19,
+      "latest_log": "tgt_egt_hybrid_warmblend_frozen/etkdg ep19 train=0.07801 val=0.10498eV 218.8s; final metrics written",
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "best_epoch": 13,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.09021221846342087,
+        "LUMO_mae_eV": 0.10051201283931732,
+        "Gap_mae_eV": 0.12591640651226044,
+        "average_mae_eV": 0.10554687678813934
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03773299248813934,
+        "Gap_margin_eV": -0.04364347051226044
+      },
+      "failure": "The frozen warmblend completed all 20 epochs stably on ccg007 with both encoders frozen and the head-only initialization preserved, but it still missed the replacement gate. Seed43/44 and Route B remain unauthorized. Logs, checkpoint, model, and metrics are retained."
+    },
+    "gpu_payload_stack_calibrator_preflight": {
+      "job_id": "1316923.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_payload_stack_calibrator_preflight.pbs",
+      "geometry": "etkdg-compatible retained payloads",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "leakage-free payload stack using six retained 30k seed-42 experts, warmblend embedding and prediction features, and a zero-initialized 128-channel correction head",
+      "sources": [
+        "tgt_egt_hybrid_warmblend_etkdg",
+        "tgt_egt_hybrid_plus_etkdg",
+        "tgt_egt_hybrid_warmblend_frozen_etkdg",
+        "tgt_egt_hybrid_etkdg",
+        "tgt_egt_rich_etkdg",
+        "pair_triplet_2d_rich_topology"
+      ],
+      "gate": "preflight_only",
+      "log": "logs/payload_stack_calibrator_preflight_seed42.log",
+      "metrics": "outputs/results_payload_stack_calibrator/n30000_3000_3000/payload_stack_calibrator/seed42/metrics.json",
+      "model": "outputs/models_payload_stack_calibrator/n30000_3000_3000/payload_stack_calibrator/seed42/model.pt",
+      "checkpoint": "outputs/models_payload_stack_calibrator/n30000_3000_3000/payload_stack_calibrator/seed42/checkpoint.pt",
+      "static_checks": "local py_compile and git diff --check, local PBS bash -n, remote py_compile, remote PBS bash -n, remote import-only instantiation, and all six retained payload existence checks passed",
+      "submission_condition": "Submitted once after 1316416.ccpbs1 completed and failed the gate; a read-only no-overlap scheduler check and isolated-output existence checks passed",
+      "last_observed": "2026-08-23T09:50:03+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg004",
+      "completed_epoch": 39,
+      "best_epoch": 6,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.08526606112718582,
+        "LUMO_mae_eV": 0.09025480598211288,
+        "Gap_mae_eV": 0.11770841479301453,
+        "average_mae_eV": 0.09774309396743774
+      },
+      "validation_metrics": {
+        "average_mae_eV": 0.09813759475946426
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.02992920966743774,
+        "Gap_margin_eV": -0.03543547879301453
+      },
+      "failure": "The leakage-free six-payload calibrator completed all 40 epochs with atomic artifacts, but its fixed-test average and Gap remained above the replacement gates; no seed-43/44 or Route B job is authorized."
+    },
+    "gpu_payload_multistack_calibrator_preflight": {
+      "job_id": "1316955.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_payload_multistack_calibrator_preflight.pbs",
+      "geometry": "union of retained pure-2D and ETKDG-compatible payloads",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "common_etkdg_rows": {
+        "train": 27877,
+        "validation": 2827,
+        "test": 2794
+      },
+      "architecture": "11-payload embedding and prediction stack with explicit source-availability masks, train-only standardization, and a zero-initialized 256-channel correction head",
+      "gate": "preflight_only",
+      "log": "logs/payload_multistack_calibrator_preflight_seed42.log",
+      "metrics": "outputs/results_payload_multistack_calibrator/n30000_3000_3000/payload_multistack_calibrator/seed42/metrics.json",
+      "model": "outputs/models_payload_multistack_calibrator/n30000_3000_3000/payload_multistack_calibrator/seed42/model.pt",
+      "checkpoint": "outputs/models_payload_multistack_calibrator/n30000_3000_3000/payload_multistack_calibrator/seed42/checkpoint.pt",
+      "static_checks": "local py_compile and git diff --check, local PBS bash -n, remote py_compile, remote PBS bash -n, remote import/parameter check, all eleven payload existence checks, and remote union alignment check passed",
+      "submission_condition": "Submitted once after 1316923.ccpbs1 completed and failed the gate; a read-only no-overlap scheduler check and isolated-output existence checks passed",
+      "last_observed": "2026-08-23T09:58:13+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg004",
+      "completed_epoch": 39,
+      "best_epoch": 1,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.0851697251200676,
+        "LUMO_mae_eV": 0.09003373980522156,
+        "Gap_mae_eV": 0.11710552871227264,
+        "average_mae_eV": 0.0974363312125206
+      },
+      "common_etkdg_metrics": {
+        "HOMO_mae_eV": 0.0851697251200676,
+        "LUMO_mae_eV": 0.09003373980522156,
+        "Gap_mae_eV": 0.11710552871227264,
+        "average_mae_eV": 0.0974363312125206
+      },
+      "all_row_test_metrics": {
+        "HOMO_mae_eV": 0.0869603380560875,
+        "LUMO_mae_eV": 0.09194855391979218,
+        "Gap_mae_eV": 0.1212492361664772,
+        "average_mae_eV": 0.10005270689725876
+      },
+      "validation_common_average_mae_eV": 0.0980711579322815,
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.029622446912520597,
+        "Gap_margin_eV": -0.03483259271227264
+      },
+      "failure": "The 11-payload union calibrator completed all 40 epochs with atomic artifacts, but its ETKDG common test average and Gap remained above the replacement gates; no seed-43/44 or Route B job is authorized."
+    },
+    "gpu_gps_precision_late_fusion_preflight": {
+      "job_id": "1316994.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_gps_precision_late_fusion_preflight.pbs",
+      "geometry": "topology GPS9/GPS11-160 plus one ETKDG SchNet view",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "late fusion of two pure-2D GPS encoders and one single-conformer ETKDG SchNet encoder with a 256-channel gated head",
+      "gate": "preflight_only",
+      "log": "logs/gps_precision_late_fusion_*_seed42.log",
+      "metrics": "outputs/fusion_gps_precision_late_fusion/metrics_seed42.json",
+      "encoder_results": {
+        "gps9": "outputs/results_gps_precision_late_fusion/gps9/n30000_3000_3000/gps9_topology/seed42/metrics.json",
+        "gps11_160": "outputs/results_gps_precision_late_fusion/gps11_160/n30000_3000_3000/gps11_160_topology/seed42/metrics.json",
+        "schnet": "outputs/results_gps_precision_late_fusion/schnet/n30000_3000_3000/schnet_etkdg/seed42/metrics.json"
+      },
+      "static_checks": "local PBS bash -n and git diff --check, remote PBS bash -n, remote qm9_screen py_compile, no-overlap scheduler check, and isolated-output checks passed",
+      "submission_condition": "Submitted once after 1316955.ccpbs1 completed and failed the multistack gate; one ETKDG view is used and no second conformer is constructed",
+      "last_observed": "2026-08-23T10:29:07+09:00",
+      "last_state": "complete",
+      "scheduler_queue": "H",
+      "scheduler_status": "Complete",
+      "node": "ccg001",
+      "completed_epoch": 29,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "encoder_metrics": {
+        "gps9": {
+          "best_epoch": 28,
+          "best_validation_average_mae_eV": 0.1208372414112091,
+          "test_average_mae_eV": 0.12064454704523087,
+          "test_gap_mae_eV": 0.14711728692054749
+        },
+        "gps11_160": {
+          "best_epoch": 29,
+          "best_validation_average_mae_eV": 0.12032714486122131,
+          "test_average_mae_eV": 0.12148342281579971,
+          "test_gap_mae_eV": 0.14815297722816467
+        },
+        "schnet": {
+          "best_epoch": 29,
+          "best_validation_average_mae_eV": 0.13357044756412506,
+          "test_average_mae_eV": 0.1368548572063446,
+          "test_gap_mae_eV": 0.16221652925014496
+        }
+      },
+      "fusion_metrics": {
+        "aligned_rows": {
+          "train": 27877,
+          "validation": 2827,
+          "test": 2794
+        },
+        "best_epoch": 30,
+        "best_validation_average_mae_eV": 0.10340435802936554,
+        "HOMO_mae_eV": 0.09213678538799286,
+        "LUMO_mae_eV": 0.09549368172883987,
+        "Gap_mae_eV": 0.12641172111034393,
+        "average_mae_eV": 0.10468073189258575,
+        "fusion_minus_gps9_average_mae_eV": -0.013163134455680847
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03686684759258575,
+        "Gap_margin_eV": -0.04413878511034393
+      },
+      "failure": "The GPS9/GPS11-160 plus one-ETKDG-SchNet late-fusion pipeline completed all encoder and head stages with isolated artifacts, but its common test average and Gap remained above the replacement gates; no seed-43/44 or Route B job is authorized."
+    },
+    "gpu_gps_precision_two_view_preflight": {
+      "job_id": "1317128.ccpbs1",
+      "status": "complete",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_gps_precision_two_view_preflight.pbs",
+      "geometry": "topology GPS9/GPS11-160 plus two ETKDG SchNet views averaged before late fusion",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "reuse completed pure-2D GPS9/GPS11 payloads, train SchNet on ETKDG seeds 42 and 43, average the two SchNet embeddings/predictions, and retrain a 256-channel gated head",
+      "gate": "preflight_only",
+      "log": "logs/gps_precision_two_view_*_seed42.log",
+      "metrics": "outputs/fusion_gps_precision_two_view/metrics_seed42.json",
+      "schnet_metrics": "outputs/results_gps_precision_two_view/n30000_3000_3000/schnet_etkdg_aug2/seed42/metrics.json",
+      "schnet_payload": "data/cache/qm9/embeddings/n30000_3000_3000/schnet_etkdg_aug2/seed42/payload.pt",
+      "static_checks": "local wrapper py_compile and PBS bash -n, remote qm9_conformer/wrapper py_compile, remote PBS bash -n, seed42 GPS payload and raw-data checks, and isolated-output checks passed",
+      "submission_condition": "Submitted once after 1316994.ccpbs1 completed and failed the gate; this is the first additional ETKDG view in the Route-C retry chain",
+      "last_observed": "2026-08-23T11:38:41+09:00",
+      "last_state": "complete_failed_gate",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg005",
+      "completed_epoch": 29,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "schnet_cache": {
+        "seed42_requested": 36000,
+        "seed42_succeeded": 33498,
+        "seed42_failed": 2502,
+        "seed43_requested": 36000,
+        "seed43_succeeded": 33498,
+        "seed43_failed": 2502,
+        "paired_rows": {
+          "train": 27714,
+          "validation": 2806,
+          "test": 2770
+        }
+      },
+      "schnet_best_epoch": 29,
+      "schnet_best_validation_average_mae_eV": 0.11474622786045074,
+      "schnet_test_average_mae_eV": 0.11714509129524231,
+      "fusion_best_epoch": 26,
+      "fusion_best_validation_average_mae_eV": 0.10142123699188232,
+      "fusion_test_metrics": {
+        "HOMO_mae_eV": 0.09239830076694489,
+        "LUMO_mae_eV": 0.09487679600715637,
+        "Gap_mae_eV": 0.12143854051828384,
+        "average_mae_eV": 0.1029045507311821
+      },
+      "gate_margins_eV": {
+        "average": -0.0350906664311821,
+        "Gap": -0.03916560451828384
+      },
+      "failure": "The two-view ETKDG SchNet plus GPS9/GPS11 gated fusion completed on ccg005. It improved the aligned topology baseline by 0.0148339644 eV average, but its common test average 0.1029045507 eV and Gap 0.1214385405 eV remained above the replacement gates; no seed-43/44 or Route B job is authorized from this candidate."
+    },
+    "gpu_gps_precision_four_expert_preflight": {
+      "job_id": "1317483.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_multi_expert_fusion_preflight.pbs",
+      "geometry": "frozen GPS9, GPS11-160, independent one-view SchNet, and independent two-view SchNet embeddings",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "preserve four expert identities; compare standard softmax gate, concat head, and prediction-aware gate without re-running encoders",
+      "gate": "preflight_only",
+      "log": "logs/gps_precision_four_expert_seed42.log",
+      "metrics": "outputs/fusion_gps_precision_four_expert/summary.json",
+      "aligned_payload": "outputs/fusion_gps_precision_four_expert/aligned_payload.pt",
+      "static_checks": "local py_compile and diff check, remote PBS bash -n and Python py_compile, remote payload metadata alignment passed",
+      "submission_condition": "Submitted once after 1317128.ccpbs1 completed and failed the gate; no encoder or ETKDG work was repeated",
+      "last_observed": "2026-08-23T12:00:00+09:00",
+      "last_state": "complete_failed_gate",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg004",
+      "completed_epoch": 63,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "best_variant": "standard_gate",
+      "variants": {
+        "standard_gate": {
+          "best_epoch": 63,
+          "best_validation_average_mae_eV": 0.1016538068652153,
+          "HOMO_mae_eV": 0.09180717170238495,
+          "LUMO_mae_eV": 0.09517771750688553,
+          "Gap_mae_eV": 0.12209111452102661,
+          "average_mae_eV": 0.10302533954381943
+        },
+        "concat": {
+          "best_epoch": 53,
+          "best_validation_average_mae_eV": 0.10183023661375046,
+          "HOMO_mae_eV": 0.09331318736076355,
+          "LUMO_mae_eV": 0.0958234891295433,
+          "Gap_mae_eV": 0.12276128679513931,
+          "average_mae_eV": 0.10396599024534225
+        },
+        "prediction_aware_gate": {
+          "best_epoch": 6,
+          "best_validation_average_mae_eV": 0.1024257019162178,
+          "HOMO_mae_eV": 0.0916464775800705,
+          "LUMO_mae_eV": 0.09662538021802902,
+          "Gap_mae_eV": 0.12205085903406143,
+          "average_mae_eV": 0.10344090312719345
+        }
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03521145524381943,
+        "Gap_margin_eV": -0.03981817852102661
+      },
+      "failure": "All three frozen four-expert heads completed, but the best standard gate remained above the replacement gates; no seed43/44 or Route B job is authorized."
+    },
+    "gpu_gps_precision_physics_preflight": {
+      "job_id": "1317542.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_physics_consistent_fusion_preflight.pbs",
+      "geometry": "frozen four-expert payloads; exact Gap=LUMO-HOMO output constraint",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "one 256-channel four-expert gate with two normalized HOMO/LUMO outputs and algebraically generated Gap; no new encoder or conformer",
+      "gate": "preflight_only",
+      "log": "logs/gps_precision_physics_seed42.log",
+      "metrics": "outputs/fusion_gps_precision_physics/summary.json",
+      "static_checks": "local py_compile and diff check, remote PBS bash -n and Python py_compile passed",
+      "submission_condition": "Submitted once after four-expert fusion 1317483.ccpbs1 completed and failed; isolated output path",
+      "last_observed": "2026-08-23T12:05:00+09:00",
+      "last_state": "complete_failed_gate",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg007",
+      "completed_epoch": 55,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "best_epoch": 55,
+      "best_validation_average_mae_eV": 0.10251550376415253,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.09258529543876648,
+        "LUMO_mae_eV": 0.09492634981870651,
+        "Gap_mae_eV": 0.12262752652168274,
+        "average_mae_eV": 0.10337972640991211
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.03556584210991211,
+        "Gap_margin_eV": -0.04035459052168274
+      },
+      "failure": "The physics-consistent four-expert head completed, but exact Gap=LUMO-HOMO did not recover the replacement gate; no seed43/44 or Route B job is authorized."
+    },
+    "gpu_gps9_pcqm_transfer_preflight": {
+      "job_id": "1317660.ccpbs1",
+      "status": "failed",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_gps9_pcqm_transfer_preflight.pbs",
+      "geometry": "pure 2D GPS9 with PCQM-trained warm-start and explicit 11-to-18 node-feature adapter",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "GPS9-192 topology encoder; PCQM C/N/O/F/S/Cl plus hydrogen and degree/formal/aromatic adapter; QM9 target head fine-tuned on seed42",
+      "gate": "preflight_only",
+      "log": "logs/gps9_pcqm_transfer_seed42.log",
+      "metrics": "outputs/results_gps9_pcqm_transfer/n30000_3000_3000/gps9_pcqm_transfer/seed42/metrics.json",
+      "checkpoint": "outputs/models_gps9_pcqm_transfer/n30000_3000_3000/gps9_pcqm_transfer/seed42/checkpoint.pt",
+      "static_checks": "local py_compile and diff check, remote PBS bash -n and Python py_compile, remote warm-start load with zero missing/unexpected keys passed",
+      "submission_condition": "Submitted once after 1317542.ccpbs1 completed and failed; isolated output path; no ETKDG or prior encoder rerun",
+      "last_observed": "2026-08-23T12:10:31+09:00",
+      "last_state": "failed_before_epoch0",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg002",
+      "completed_epoch": null,
+      "checkpoint_present": false,
+      "log_present": true,
+      "metrics_present": false,
+      "gate_passed": null,
+      "failure": "The first PCQM-transfer implementation exited before epoch 0 on ccg002 because the new feature-remap helper was inserted inside make_graph_splits and referenced an out-of-scope roles variable; the full traceback is retained in logs/gps9_pcqm_transfer_seed42.log."
+    },
+    "gpu_gps9_pcqm_transfer_retry2_preflight": {
+      "job_id": "1317684.ccpbs1",
+      "status": "failed_gate",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_gps9_pcqm_transfer_retry2_preflight.pbs",
+      "geometry": "pure 2D GPS9 with PCQM-trained warm-start and corrected 11-to-18 node-feature adapter",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "same transfer hypothesis as 1317660 with corrected graph-split remap but incorrect PCQM element-column placement; no ETKDG or prior encoder output is overwritten",
+      "gate": "preflight_only",
+      "log": "logs/gps9_pcqm_transfer_retry2_seed42.log",
+      "metrics": "outputs/results_gps9_pcqm_transfer_retry2/n30000_3000_3000/gps9_pcqm_transfer/seed42/metrics.json",
+      "checkpoint": "outputs/models_gps9_pcqm_transfer_retry2/n30000_3000_3000/gps9_pcqm_transfer/seed42/checkpoint.pt",
+      "static_checks": "local py_compile and diff check, remote PBS bash -n and Python py_compile passed after diagnosis",
+      "submission_condition": "Retry submitted once after 1317660.ccpbs1 failed before epoch 0; separate PBS, log, model, and results paths",
+      "last_observed": "2026-08-23T12:23:56+09:00",
+      "last_state": "complete_failed_gate",
+      "scheduler_queue": "H",
+      "scheduler_status": "Completed",
+      "node": "ccg004",
+      "completed_epoch": 34,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": true,
+      "gate_passed": false,
+      "best_epoch": 26,
+      "best_validation_average_mae_eV": 0.14321540296077728,
+      "test_metrics": {
+        "HOMO_mae_eV": 0.1225428655743599,
+        "LUMO_mae_eV": 0.1185457855463028,
+        "Gap_mae_eV": 0.190924271941185,
+        "average_mae_eV": 0.14400431513786316
+      },
+      "gate_comparison": {
+        "average_max_eV": 0.0678138843,
+        "Gap_max_eV": 0.082272936,
+        "average_margin_eV": -0.07619043083786316,
+        "Gap_margin_eV": -0.108651335941185
+      },
+      "failure": "The retry completed normally but used a misaligned PCQM feature adapter: PCQM columns 6-14 are P, Br, Si, B, Se, Ge, As, Mg, H, while this run placed H at column 6 and left the remaining element columns zero. It is retained as an invalid adapter diagnostic; corrected retry3 is isolated."
+    },
+    "gpu_gps9_pcqm_transfer_retry3_preflight": {
+      "job_id": "1317790.ccpbs1",
+      "status": "canceled_by_user",
+      "seed": 42,
+      "pbs_script": "platforms/ims/top20_qm9/train_gps9_pcqm_transfer_retry3_preflight.pbs",
+      "geometry": "topology_only",
+      "requested_rows": {
+        "train": 30000,
+        "validation": 3000,
+        "test": 3000
+      },
+      "architecture": "pure-2D PCQM GPS9 warm-start with the exact 15-element PCQM column order and no conformer input",
+      "gate": "preflight_only",
+      "log": "logs/gps9_pcqm_transfer_retry3_seed42.log",
+      "checkpoint": "outputs/models_gps9_pcqm_transfer_retry3/n30000_3000_3000/gps9_pcqm_transfer_topology/seed42/checkpoint.pt",
+      "metrics": "outputs/results_gps9_pcqm_transfer_retry3/n30000_3000_3000/gps9_pcqm_transfer_topology/seed42/metrics.json",
+      "static_checks": "local py_compile and diff check, remote PBS bash -n, remote py_compile, and exact PCQM adapter smoke check passed",
+      "submission_condition": "Submitted after the user narrowed the scope to Route A/B-style pure 2D; no 3D or conformer architecture was used",
+      "last_observed": "2026-08-23T12:40:04+09:00",
+      "last_state": "canceled",
+      "scheduler_queue": "H",
+      "scheduler_status": "Canceled",
+      "node": "ccg006",
+      "completed_epoch": 22,
+      "checkpoint_present": true,
+      "log_present": true,
+      "metrics_present": false,
+      "gate_passed": null,
+      "warm_start_validation_average_mae_eV": 3.72023,
+      "best_observed_validation_average_mae_eV": 0.14852,
+      "failure": "The user requested an immediate stop and replan. jdel canceled the active job; the epoch-22 checkpoint and full log are retained, and no final metrics were produced."
+    }
+  },
+  "input_archives": {
+    "qm9_v3.zip": {
+      "sha256": "21feb47bd6bd8fb4afb8644a354a983f5c4ed25a0cdc79781da2f82c7026bc07"
+    },
+    "qm9_raw.zip": {
+      "sha256": "f11d3f8ecc3097a72656a35c4847767852e6f346bf99a54619a1a3b6389ddc02"
+    }
+  },
+  "notes": [
+    "The first CPU attempt was rejected before cache construction because the native torch-cluster extension was ABI-incompatible; no cache acceptance was produced.",
+    "The second attempt uses the accepted portable radius shim and is the authoritative run.",
+    "GPU job 1309362.ccpbs1 stopped before producing metrics because the legacy 2D x/edge view was not node-aligned with explicit-H ETKDG graphs; its log is retained as tgt_lite_seed42_failed_alignment.log.",
+    "GPU job 1309391.ccpbs1 completed the fixed seed-42 tgt_lite screen with average 0.0879193991 eV and Gap 0.1031505316 eV, failing the predeclared promotion gate; no seeds 43/44 or PCQM job were submitted.",
+    "GPU job 1309662.ccpbs1 is the materially new tgt_hybrid screen: GPS 2D topology plus TGT-lite ETKDG pair/triplet geometry fused at molecule level; it failed on the first CUDA GINEConv matmul before metrics and its full traceback is retained.",
+    "GPU job 1309783.ccpbs1 is the corrective tgt_hybrid_v2 screen using a GINE-free edge-aware global-attention topology branch and a smaller topology stack/batch.",
+    "The v3 correction separates topology and explicit-H geometry batch metadata; a deliberately mismatched remote synthetic forward passed. GPU job 1309959.ccpbs1 completed on ccg004 at 2026-08-22 13:41 JST with test average MAE 0.0930039063 eV and Gap MAE 0.1095121875 eV, failing the replacement gate; no seed-43/44 or Route B submission followed.",
+    "IMS H queue inspection at 2026-08-22 11:06 JST showed zero free GPUs and 34 waiting GPU jobs; job 1309959.ccpbs1 was queued without a hold or failure state.",
+    "The accepted PCQM source cache contains separate GPS 2D and primary ETKDG explicit-H views, but pcqm_tgt_hybrid_v3_graphs has not been built and no Route B job is authorized. A matching v3 cache/training adapter was prepared without submission; the older isolated tgt_lite PCQM script is not a valid continuation.",
+    "The user explicitly reauthorized unlimited Route C attempts. Pure-2D edge_global_2d was statically checked and passed a remote synthetic forward. Job 1311296.ccpbs1 failed before training on the stale remote argparse list; job 1311369.ccpbs1 then reached ccg010 but failed on mixed-precision Float-to-Half edge-bias indexing before metrics. Both logs are retained under distinct names. The dtype fix passed local static checks and remote PBS syntax checks, and isolated retry2 job 1311419.ccpbs1 is queued with separate output paths.",
+    "The leakage-free payload_stack_calibrator used only train rows from six retained 30k seed-42 payloads and explicitly excluded overlapping 100k payloads. Job 1316923.ccpbs1 ran on ccg004 for 40 epochs and wrote atomic checkpoint, model, payload, log, and metrics. Its best validation average was 0.0981375948 eV at epoch 6; fixed-test HOMO, LUMO, Gap, and average MAE were 0.0852660611, 0.0902548060, 0.1177084148, and 0.0977430940 eV. It missed the replacement gates by 0.0299292097 eV average and 0.0354354788 eV Gap; no seed-43/44 or Route B job was submitted."
+  ]
+}

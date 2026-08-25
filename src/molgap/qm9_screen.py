@@ -18,6 +18,7 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
 from .egnn import EGNNWrapper
+from .edge_global_2d import EdgeGlobal2DWrapper
 from .gine import GINEWrapper
 from .gps import GPSWrapper
 from .graphs import smiles_to_pyg
@@ -29,6 +30,17 @@ from .geometry_features import (
 )
 from .schnet import SchNetWrapper
 from .tensornet import TensorNetWrapper
+from .tgt_lite import TGTLiteWrapper
+from .tgt_hybrid import TGTLiteHybridWrapper
+from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
+from .pair_triplet_2d import PairTriplet2DWrapper
+from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
+from .pair_gps_2d import PairGPS2DWrapper
+from .tgt_egt_hybrid import TGTEGTHybridWrapper
+from .tgt_egt_compact import TGTCompactEGTWrapper
+from .tgt_egt_rich import TGTEGTRichWrapper
+from .tgt_egt_hybrid_plus import TGTEGTHybridPlusWrapper
+from .tgt_egt_hybrid_warmblend import TGTEGTHybridWarmBlendWrapper
 
 QM9_PROCESSED_URL = "https://data.pyg.org/datasets/qm9_v3.zip"
 QM9_RAW_URL = (
@@ -98,6 +110,199 @@ ENCODER_CONFIGS = {
         "dropout": 0.05,
         "batch_size": 192,
     },
+    "gps9_pcqm_transfer": {
+        "kind": "topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "input_channels": 18,
+        "batch_size": 192,
+    },
+    "edge_global_2d": {
+        "kind": "topology",
+        "hidden_channels": 192,
+        "edge_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean_max",
+        "batch_size": 128,
+    },
+    "pair_triplet_2d": {
+        "kind": "topology",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 6,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean_max",
+        "path_steps": 3,
+        "triplet_rank": 8,
+        "batch_size": 96,
+    },
+    "pair_triplet_2d_rich": {
+        "kind": "topology",
+        "hidden_channels": 256,
+        "pair_channels": 96,
+        "num_layers": 10,
+        "num_heads": 8,
+        "dropout": 0.05,
+        "pooling": "mean_max",
+        "path_steps": 5,
+        "triplet_rank": 16,
+        "batch_size": 48,
+    },
+    "pair_gps_2d": {
+        "kind": "topology",
+        "hidden_channels": 256,
+        "pair_channels": 96,
+        "num_layers": 10,
+        "num_heads": 8,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "path_steps": 5,
+        "triplet_rank": 16,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "tgt_egt_hybrid": {
+        "kind": "hybrid_egt",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "dropout": 0.05,
+        "batch_size": 32,
+    },
+    "tgt_egt_compact": {
+        "kind": "geometry",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 32,
+        "cutoff": 12.0,
+        "dropout": 0.05,
+        "batch_size": 96,
+    },
+    "tgt_egt_stable": {
+        "kind": "geometry",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 32,
+        "cutoff": 12.0,
+        "dropout": 0.05,
+        "zero_init_bond_channels": True,
+        "batch_size": 96,
+    },
+    "tgt_egt_rich": {
+        "kind": "hybrid_egt_rich",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 8,
+        "topology_hidden_channels": 256,
+        "topology_pair_channels": 96,
+        "topology_heads": 8,
+        "topology_path_steps": 5,
+        "topology_triplet_rank": 16,
+        "dropout": 0.05,
+        "learning_rate": 2e-4,
+        "amp": False,
+        "batch_size": 16,
+    },
+    "tgt_egt_hybrid_plus": {
+        "kind": "hybrid_egt_plus",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "expert_hidden_channels": 192,
+        "expert_pair_channels": 64,
+        "expert_layers": 6,
+        "expert_heads": 4,
+        "expert_path_steps": 5,
+        "expert_triplet_rank": 8,
+        "dropout": 0.05,
+        "learning_rate": 2e-4,
+        "amp": False,
+        "batch_size": 16,
+    },
+    "tgt_egt_hybrid_frozen": {
+        "kind": "hybrid_egt_plus",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "expert_hidden_channels": 192,
+        "expert_pair_channels": 64,
+        "expert_layers": 6,
+        "expert_heads": 4,
+        "expert_path_steps": 5,
+        "expert_triplet_rank": 8,
+        "dropout": 0.05,
+        "learning_rate": 5e-4,
+        "amp": False,
+        "freeze_base": True,
+        "batch_size": 16,
+    },
+    "tgt_egt_hybrid_warmblend": {
+        "kind": "hybrid_egt_warmblend",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "expert_hidden_channels": 256,
+        "expert_pair_channels": 96,
+        "expert_layers": 10,
+        "expert_heads": 8,
+        "expert_path_steps": 5,
+        "expert_triplet_rank": 16,
+        "dropout": 0.05,
+        "learning_rate": 1e-4,
+        "amp": False,
+        "batch_size": 16,
+    },
+    "tgt_egt_hybrid_warmblend_frozen": {
+        "kind": "hybrid_egt_warmblend",
+        "hidden_channels": 192,
+        "pair_channels": 64,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 64,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "expert_hidden_channels": 256,
+        "expert_pair_channels": 96,
+        "expert_layers": 10,
+        "expert_heads": 8,
+        "expert_path_steps": 5,
+        "expert_triplet_rank": 16,
+        "dropout": 0.05,
+        "learning_rate": 5e-4,
+        "amp": False,
+        "freeze_base": True,
+        "freeze_expert": True,
+        "batch_size": 16,
+    },
     "schnet": {
         "kind": "geometry",
         "hidden_channels": 176,
@@ -149,6 +354,41 @@ ENCODER_CONFIGS = {
         "cutoff": 5.0,
         "dropout": 0.05,
         "batch_size": 128,
+    },
+    "tgt_lite": {
+        "kind": "geometry",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 32,
+        "cutoff": 12.0,
+        "dropout": 0.05,
+        "batch_size": 96,
+    },
+    "tgt_hybrid": {
+        "kind": "hybrid",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 32,
+        "cutoff": 12.0,
+        "topology_layers": 9,
+        "dropout": 0.05,
+        "batch_size": 64,
+    },
+    "tgt_hybrid_v2": {
+        "kind": "hybrid_v2",
+        "hidden_channels": 192,
+        "pair_channels": 48,
+        "num_layers": 8,
+        "num_heads": 4,
+        "num_rbf": 32,
+        "cutoff": 12.0,
+        "topology_layers": 6,
+        "dropout": 0.05,
+        "batch_size": 48,
     },
 }
 
@@ -260,6 +500,9 @@ def _topology_graph(record: dict, source_idx: int, mean: torch.Tensor, std: torc
 def _dft_graph(record: dict, source_idx: int, mean: torch.Tensor, std: torch.Tensor) -> Data:
     target = target_tensor(record)
     return Data(
+        x=record["x"].float(),
+        edge_index=record["edge_index"].long(),
+        edge_attr=record["edge_attr"].float(),
         z=record["z"].long(),
         pos=record["pos"].float(),
         y=((target - mean) / std).view(1, -1),
@@ -344,6 +587,9 @@ def build_etkdg_cache(
                 target = target_tensor(record)
                 graph.y = ((target - mean) / std).view(1, -1)
                 graph.y_eV = target.view(1, -1)
+                graph.x = record["x"].float()
+                graph.edge_index = record["edge_index"].long()
+                graph.edge_attr = record["edge_attr"].float()
                 graph.source_idx = torch.tensor([source_idx], dtype=torch.long)
                 shard_graphs[source_idx] = graph
             _atomic_torch_save(
@@ -411,19 +657,105 @@ def make_graph_splits(
     graphs, report = build_etkdg_cache(
         records, split.all_indices, mean, std, cache_dir=cache_dir, seed=seed
     )
-    return {
+    graph_splits = {
         role: [graphs[int(i)] for i in indices if int(i) in graphs]
         for role, indices in roles.items()
-    }, {"geometry": "etkdg", **report}
+    }
+    # Older ETKDG cache shards predate the pair/triplet candidate and contain
+    # only z/pos.  Attach the immutable processed 2D view in memory so a cache
+    # migration never changes the geometry or split identity.
+    for role_graphs in graph_splits.values():
+        for graph in role_graphs:
+            source_idx = int(graph.source_idx.view(-1)[0])
+            if not hasattr(graph, "x"):
+                graph.x = records[source_idx]["x"].float()
+                graph.edge_index = records[source_idx]["edge_index"].long()
+                graph.edge_attr = records[source_idx]["edge_attr"].float()
+            # ETKDG nodes/coordinates and the legacy 2D view can have
+            # different node counts.  Keep a separately collatable 2D view
+            # so hybrid encoders never reuse the 3D batch vector for it.
+            graph.topology_x = graph.x.float().contiguous()
+            graph.topology_edges = graph.edge_index.t().contiguous()
+            graph.topology_edge_attr = graph.edge_attr.float().contiguous()
+            graph.topology_node_count = torch.tensor(
+                [graph.x.shape[0]], dtype=torch.long
+            )
+            graph.topology_edge_count = torch.tensor(
+                [graph.edge_index.shape[1]], dtype=torch.long
+            )
+            graph.geometry_node_count = torch.tensor(
+                [graph.z.shape[0]], dtype=torch.long
+            )
+    return graph_splits, {"geometry": "etkdg", **report}
+
+
+def _pcqm_transfer_features(graph: Data) -> Data:
+    """Map QM9's processed 11-wide features to the PCQM 18-wide GPS contract.
+
+    PCQM's checkpoint uses its declared 15-element order followed by degree,
+    formal charge, and aromaticity.  Keeping this order exact is required for
+    a warm start: the source checkpoint copies the original six element
+    channels into columns 0--5 and its three scalar channels into 15--17.
+    """
+    z = graph.z.view(-1).long()
+    features = torch.zeros((len(z), 18), dtype=torch.float32)
+    pcqm_atom_order = (6, 7, 8, 9, 16, 17, 15, 35, 14, 5, 34, 32, 33, 12, 1)
+    for column, atomic_number in enumerate(pcqm_atom_order):
+        features[:, column] = (z == atomic_number).float()
+    degree = torch.bincount(
+        graph.edge_index[0].long(), minlength=len(z)
+    ).float()
+    features[:, 15] = degree / 4.0
+    aromatic = torch.zeros(len(z), dtype=torch.float32)
+    if graph.edge_attr.numel() and graph.edge_attr.shape[1] >= 4:
+        aromatic_edges = graph.edge_attr[:, 3] > 0.5
+        if aromatic_edges.any():
+            aromatic_nodes = graph.edge_index[:, aromatic_edges].reshape(-1)
+            aromatic[aromatic_nodes.unique()] = 1.0
+    features[:, 17] = aromatic
+    graph.x = features
+    return graph
+
+
+def _remap_pcqm_transfer_graphs(graph_splits: dict[str, list[Data]]) -> None:
+    for graphs in graph_splits.values():
+        for graph in graphs:
+            _pcqm_transfer_features(graph)
 
 
 def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     config = dict(ENCODER_CONFIGS[candidate])
     config.pop("batch_size")
+    # Training-only switches are consumed by train_encoder, not model
+    # constructors.  Keeping them in the config lets each architecture choose
+    # a stable precision mode without changing its module signature.
+    config.pop("amp", None)
     kind = config.pop("kind")
     config.pop("atom_geom_mode", None)
+    config.pop("input_channels", None)
     if candidate == "gine6":
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "edge_global_2d":
+        return EdgeGlobal2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "pair_triplet_2d":
+        return PairTriplet2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "pair_triplet_2d_rich":
+        return PairTriplet2DRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "pair_gps_2d":
+        return PairGPS2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "tgt_egt_hybrid":
+        return TGTEGTHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate in {"tgt_egt_compact", "tgt_egt_stable"}:
+        return TGTCompactEGTWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "tgt_egt_rich":
+        return TGTEGTRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate in {"tgt_egt_hybrid_plus", "tgt_egt_hybrid_frozen"}:
+        return TGTEGTHybridPlusWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate in {
+        "tgt_egt_hybrid_warmblend",
+        "tgt_egt_hybrid_warmblend_frozen",
+    }:
+        return TGTEGTHybridWarmBlendWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("gps"):
         return GPSWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("schnet"):
@@ -432,12 +764,53 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         return TensorNetWrapper(**config, use_charges=False), kind
     if candidate == "egnn":
         return EGNNWrapper(**config), kind
+    if candidate == "tgt_lite":
+        return TGTLiteWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "tgt_hybrid":
+        return TGTLiteHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
+    if candidate == "tgt_hybrid_v2":
+        return TGTLiteHybridV2Wrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     raise ValueError(candidate)
 
 
 def _forward(kind: str, model, batch):
     if kind == "topology":
         return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.z,
+            batch.pos,
+            batch.batch,
+            topology_x=getattr(batch, "topology_x", None),
+            topology_edges=getattr(batch, "topology_edges", None),
+            topology_edge_attr=getattr(batch, "topology_edge_attr", None),
+            topology_node_counts=getattr(batch, "topology_node_count", None),
+            topology_edge_counts=getattr(batch, "topology_edge_count", None),
+            geometry_node_counts=getattr(batch, "geometry_node_count", None),
+        )
+    if isinstance(model, (TGTLiteWrapper, TGTLiteHybridWrapper, TGTLiteHybridV2Wrapper)):
+        topology_kwargs = {}
+        if isinstance(model, TGTLiteHybridV2Wrapper):
+            topology_kwargs = {
+                "topology_x": getattr(batch, "topology_x", None),
+                "topology_edges": getattr(batch, "topology_edges", None),
+                "topology_edge_attr": getattr(batch, "topology_edge_attr", None),
+                "topology_node_counts": getattr(batch, "topology_node_count", None),
+                "topology_edge_counts": getattr(batch, "topology_edge_count", None),
+                "geometry_node_counts": getattr(batch, "geometry_node_count", None),
+            }
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.z,
+            batch.pos,
+            batch.batch,
+            **topology_kwargs,
+        )
     return model(
         batch.z,
         batch.pos,
@@ -449,6 +822,41 @@ def _forward(kind: str, model, batch):
 def _encode(kind: str, model, batch):
     if kind == "topology":
         return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+    if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
+        return model.encode(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.z,
+            batch.pos,
+            batch.batch,
+            topology_x=getattr(batch, "topology_x", None),
+            topology_edges=getattr(batch, "topology_edges", None),
+            topology_edge_attr=getattr(batch, "topology_edge_attr", None),
+            topology_node_counts=getattr(batch, "topology_node_count", None),
+            topology_edge_counts=getattr(batch, "topology_edge_count", None),
+            geometry_node_counts=getattr(batch, "geometry_node_count", None),
+        )
+    if isinstance(model, (TGTLiteWrapper, TGTLiteHybridWrapper, TGTLiteHybridV2Wrapper)):
+        topology_kwargs = {}
+        if isinstance(model, TGTLiteHybridV2Wrapper):
+            topology_kwargs = {
+                "topology_x": getattr(batch, "topology_x", None),
+                "topology_edges": getattr(batch, "topology_edges", None),
+                "topology_edge_attr": getattr(batch, "topology_edge_attr", None),
+                "topology_node_counts": getattr(batch, "topology_node_count", None),
+                "topology_edge_counts": getattr(batch, "topology_edge_count", None),
+                "geometry_node_counts": getattr(batch, "geometry_node_count", None),
+            }
+        return model.encode(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.z,
+            batch.pos,
+            batch.batch,
+            **topology_kwargs,
+        )
     return model.encode(
         batch.z,
         batch.pos,
@@ -534,6 +942,8 @@ def train_encoder(
     weight_decay: float = 1e-5,
     patience: int = 8,
     resume: bool = False,
+    init_checkpoint: Path | None = None,
+    expert_init_checkpoint: Path | None = None,
     cache_dir: Path = DEFAULT_CACHE,
     results_dir: Path = DEFAULT_RESULTS,
     models_dir: Path = DEFAULT_MODELS,
@@ -551,6 +961,9 @@ def train_encoder(
     graph_splits, geometry_report = make_graph_splits(
         records, split, geometry, mean, std, cache_dir, seed
     )
+    if candidate == "gps9_pcqm_transfer":
+        _remap_pcqm_transfer_graphs(graph_splits)
+        geometry_report["node_feature_adapter"] = "pcqm_18w_v2_exact_atom_order"
     atom_geom_mode = ENCODER_CONFIGS[candidate].get("atom_geom_mode")
     if atom_geom_mode:
         feature_cache = (
@@ -563,7 +976,50 @@ def train_encoder(
             mode=atom_geom_mode,
             cache_path=feature_cache,
         )
-    model, kind = make_encoder(candidate)
+    input_channels = int(ENCODER_CONFIGS[candidate].get("input_channels", 11))
+    model, kind = make_encoder(candidate, in_channels=input_channels)
+    if init_checkpoint is not None:
+        loaded = torch.load(init_checkpoint, map_location="cpu", weights_only=True)
+        state = loaded.get("model", loaded) if isinstance(loaded, dict) else loaded
+        if candidate in {
+            "tgt_egt_hybrid_plus",
+            "tgt_egt_hybrid_frozen",
+            "tgt_egt_hybrid_warmblend",
+            "tgt_egt_hybrid_warmblend_frozen",
+        }:
+            state = {f"base.{key}": value for key, value in state.items()}
+        missing, unexpected = model.load_state_dict(state, strict=False)
+        print(
+            f"initialized {candidate} from {init_checkpoint} "
+            f"missing={len(missing)} unexpected={len(unexpected)}",
+            flush=True,
+        )
+    if expert_init_checkpoint is not None:
+        loaded_expert = torch.load(
+            expert_init_checkpoint, map_location="cpu", weights_only=True
+        )
+        expert_state = (
+            loaded_expert.get("model", loaded_expert)
+            if isinstance(loaded_expert, dict)
+            else loaded_expert
+        )
+        if candidate not in {
+            "tgt_egt_hybrid_warmblend",
+            "tgt_egt_hybrid_warmblend_frozen",
+        }:
+            raise ValueError(
+                "expert_init_checkpoint is only supported by "
+                "tgt_egt_hybrid_warmblend"
+            )
+        expert_state = {
+            f"expert.{key}": value for key, value in expert_state.items()
+        }
+        missing, unexpected = model.load_state_dict(expert_state, strict=False)
+        print(
+            f"initialized {candidate} expert from {expert_init_checkpoint} "
+            f"missing={len(missing)} unexpected={len(unexpected)}",
+            flush=True,
+        )
     model = model.to(device)
     batch_size = int(ENCODER_CONFIGS[candidate]["batch_size"])
     train_loader = DataLoader(
@@ -572,13 +1028,24 @@ def train_encoder(
     validation_loader = DataLoader(
         graph_splits["validation"], batch_size=batch_size, shuffle=False, num_workers=0
     )
+    effective_learning_rate = float(
+        ENCODER_CONFIGS[candidate].get("learning_rate", learning_rate)
+    )
+    effective_weight_decay = float(
+        ENCODER_CONFIGS[candidate].get("weight_decay", weight_decay)
+    )
+    use_amp = device.type == "cuda" and bool(
+        ENCODER_CONFIGS[candidate].get("amp", True)
+    )
     optimizer = torch.optim.AdamW(
-        model.parameters(), lr=learning_rate, weight_decay=weight_decay
+        model.parameters(),
+        lr=effective_learning_rate,
+        weight_decay=effective_weight_decay,
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=max(epochs, 1), eta_min=1e-6
     )
-    scaler = torch.amp.GradScaler("cuda", enabled=device.type == "cuda")
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     criterion = nn.L1Loss()
     run_name = (
         f"n{train_size}_{validation_size}_{test_size}/"
@@ -593,6 +1060,29 @@ def train_encoder(
     best_epoch = -1
     wait = 0
     log = []
+    if init_checkpoint is not None and (
+        not resume or not checkpoint_path.exists()
+    ):
+        initial_validation = evaluate_encoder(
+            kind,
+            model,
+            graph_splits["validation"],
+            batch_size,
+            device,
+            mean,
+            std,
+        )
+        initial_metrics = _metrics(
+            initial_validation["predictions"].numpy(),
+            initial_validation["targets"].numpy(),
+        )
+        best_mae = float(initial_metrics["average"]["mae"])
+        best_state = copy.deepcopy(model.state_dict())
+        print(
+            f"warm-start validation={best_mae:.5f}eV; "
+            "retained as initial best checkpoint",
+            flush=True,
+        )
     start_epoch = 0
     if resume and checkpoint_path.exists():
         checkpoint = torch.load(
@@ -616,7 +1106,7 @@ def train_encoder(
         for batch in train_loader:
             batch = batch.to(device)
             optimizer.zero_grad(set_to_none=True)
-            with torch.amp.autocast("cuda", enabled=device.type == "cuda"):
+            with torch.amp.autocast("cuda", enabled=use_amp):
                 loss = criterion(_forward(kind, model, batch), batch.y.view(-1, 3))
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
