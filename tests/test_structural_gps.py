@@ -5,6 +5,7 @@ from torch_geometric.data import Batch, Data
 
 from molgap.gps import (
     EdgeStateStructuralGPSWrapper,
+    FrontierCenterGapHead,
     GatedStructuralGPSWrapper,
     GPSWrapper,
     NormalizedStructuralGPSWrapper,
@@ -14,6 +15,7 @@ from molgap.gps import (
 )
 from molgap.structural_encoding import add_random_walk_pe
 from molgap.pair_gps_2d import PairGPS2DR2Wrapper
+from molgap.pair_gps_2d import PairGPS2DR3Wrapper
 
 
 def _chain() -> Data:
@@ -201,6 +203,65 @@ def test_pair_gps_r2_default_parameter_budget() -> None:
     model = PairGPS2DR2Wrapper()
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     assert 4_000_000 < parameter_count < 4_740_000
+
+
+def test_frontier_center_gap_head_enforces_exact_identity() -> None:
+    head = FrontierCenterGapHead(8, hidden_channels=8, dropout=0.0)
+    mean = torch.tensor([-6.5, 0.3, 6.8])
+    std = torch.tensor([0.6, 1.2, 1.3])
+    head.configure_target_stats(
+        mean,
+        std,
+        center_mean=torch.tensor([-3.1]),
+        center_std=torch.tensor([0.5]),
+    )
+    normalized = head(torch.randn(5, 8))
+    values_eV = normalized * std + mean
+    torch.testing.assert_close(
+        values_eV[:, 1] - values_eV[:, 0], values_eV[:, 2]
+    )
+
+
+def test_pair_gps_r3_attentive_triplet_and_consistent_head_backward() -> None:
+    model = PairGPS2DR3Wrapper(
+        in_channels=9,
+        hidden_channels=16,
+        pair_channels=8,
+        num_layers=3,
+        num_heads=4,
+        dropout=0.0,
+        distance_cap=3,
+        triplet_rank=4,
+        triplet_interval=3,
+        rwse_dim=4,
+        attentive_triplet=True,
+        consistent_head=True,
+    )
+    model.head.configure_target_stats(
+        torch.tensor([-6.5, 0.3, 6.8]),
+        torch.tensor([0.6, 1.2, 1.3]),
+        center_mean=torch.tensor([-3.1]),
+        center_std=torch.tensor([0.5]),
+    )
+    batch = Batch.from_data_list(
+        [
+            add_random_walk_pe(_chain(), walk_length=4),
+            add_random_walk_pe(_chain(), walk_length=4),
+        ]
+    )
+    output = model(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    assert output.shape == (2, 3)
+    assert torch.isfinite(output).all()
+    output.square().mean().backward()
+    triplet_layer = model.layers[2]
+    assert triplet_layer.triplet_left_score.weight.grad is not None
+    assert torch.isfinite(triplet_layer.triplet_left_score.weight.grad).all()
 
 
 def test_orbital_center_reconstruction_is_exact() -> None:

@@ -413,6 +413,74 @@ class OrbitalCenterHead(nn.Module):
         return self.network(embedding)
 
 
+class FrontierCenterGapHead(nn.Module):
+    """Predict center and Gap, then reconstruct a consistent frontier triple.
+
+    The network returns values in the normalized three-target contract used by
+    the existing trainers, while reconstruction happens in eV so every output
+    satisfies ``LUMO - HOMO == Gap`` up to floating-point precision.
+    """
+
+    def __init__(
+        self,
+        embedding_dim: int,
+        hidden_channels: int | None = None,
+        dropout: float = 0.05,
+    ) -> None:
+        super().__init__()
+        hidden_channels = int(hidden_channels or embedding_dim)
+        if embedding_dim <= 0 or hidden_channels <= 0:
+            raise ValueError("embedding dimensions must be positive")
+        self.network = nn.Sequential(
+            nn.Linear(embedding_dim, hidden_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_channels, hidden_channels // 2),
+            nn.SiLU(),
+            nn.Linear(hidden_channels // 2, 2),
+        )
+        self.register_buffer("target_mean", torch.zeros(3))
+        self.register_buffer("target_std", torch.ones(3))
+        self.register_buffer("center_mean", torch.zeros(1))
+        self.register_buffer("center_std", torch.ones(1))
+        self.register_buffer("stats_configured", torch.tensor(False))
+
+    def configure_target_stats(
+        self,
+        target_mean: torch.Tensor,
+        target_std: torch.Tensor,
+        center_mean: torch.Tensor,
+        center_std: torch.Tensor,
+    ) -> None:
+        target_mean = torch.as_tensor(target_mean).float().view(-1)
+        target_std = torch.as_tensor(target_std).float().view(-1)
+        center_mean = torch.as_tensor(center_mean).float().view(-1)
+        center_std = torch.as_tensor(center_std).float().view(-1)
+        if target_mean.shape != (3,) or target_std.shape != (3,):
+            raise ValueError("target statistics must each contain three values")
+        if center_mean.shape != (1,) or center_std.shape != (1,):
+            raise ValueError("center statistics must each contain one value")
+        values = torch.cat((target_mean, target_std, center_mean, center_std))
+        if not torch.isfinite(values).all():
+            raise ValueError("frontier target statistics must be finite")
+        if not (target_std > 0).all() or not (center_std > 0).all():
+            raise ValueError("frontier target standard deviations must be positive")
+        self.target_mean.copy_(target_mean)
+        self.target_std.copy_(target_std)
+        self.center_mean.copy_(center_mean)
+        self.center_std.copy_(center_std)
+        self.stats_configured.fill_(True)
+
+    def forward(self, embedding: torch.Tensor) -> torch.Tensor:
+        if not bool(self.stats_configured):
+            raise RuntimeError("FrontierCenterGapHead target statistics are unset")
+        latent = self.network(embedding)
+        center = latent[:, :1] * self.center_std + self.center_mean
+        gap = latent[:, 1:] * self.target_std[2] + self.target_mean[2]
+        values_eV = reconstruct_frontier_orbitals(gap, center)
+        return (values_eV - self.target_mean) / self.target_std
+
+
 def reconstruct_frontier_orbitals(
     gap: torch.Tensor,
     center: torch.Tensor,

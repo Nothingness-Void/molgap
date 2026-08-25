@@ -22,6 +22,8 @@ import torch.nn as nn
 from torch_geometric.nn import GINEConv
 from torch_geometric.utils import to_dense_batch
 
+from .gps import FrontierCenterGapHead
+
 
 class _PairGPSBlock(nn.Module):
     """One node/pair block with explicit bidirectional state exchange."""
@@ -372,6 +374,8 @@ class _PairGPSR2Block(nn.Module):
         *,
         use_triplet: bool,
         gate_init: float,
+        triplet_attention: bool = False,
+        pre_norm_pair_residual: bool = False,
     ) -> None:
         super().__init__()
         if hidden_channels % num_heads:
@@ -382,6 +386,8 @@ class _PairGPSR2Block(nn.Module):
         self.num_heads = int(num_heads)
         self.head_channels = hidden_channels // num_heads
         self.use_triplet = bool(use_triplet)
+        self.triplet_attention = bool(triplet_attention)
+        self.pre_norm_pair_residual = bool(pre_norm_pair_residual)
         self.dropout = nn.Dropout(dropout)
         gate_logit = math.log(gate_init / (1.0 - gate_init))
 
@@ -430,6 +436,9 @@ class _PairGPSR2Block(nn.Module):
             self.triplet_norm = nn.LayerNorm(triplet_rank)
             self.triplet_out = nn.Linear(triplet_rank, pair_channels)
             self.triplet_out_gate = nn.Linear(pair_channels, pair_channels)
+            if self.triplet_attention:
+                self.triplet_left_score = nn.Linear(pair_channels, 1)
+                self.triplet_right_score = nn.Linear(pair_channels, 1)
             pair_update_channels = pair_channels * 3
         else:
             pair_update_channels = pair_channels * 2
@@ -441,7 +450,11 @@ class _PairGPSR2Block(nn.Module):
         )
         self.pair_update_norm = nn.LayerNorm(pair_channels)
         self.pair_gate_logit = nn.Parameter(torch.tensor(gate_logit))
-        self.pair_output_norm = nn.LayerNorm(pair_channels)
+        self.pair_output_norm = (
+            nn.Identity()
+            if self.pre_norm_pair_residual
+            else nn.LayerNorm(pair_channels)
+        )
 
     @staticmethod
     def _gate(logit: torch.Tensor) -> torch.Tensor:
@@ -516,11 +529,24 @@ class _PairGPSR2Block(nn.Module):
             right = right * torch.sigmoid(self.triplet_right_gate(pair_normalized))
             left = left * mask
             right = right * mask
-            triplet = torch.einsum("bikd,bkjd->bijd", left, right)
-            valid_intermediates = torch.einsum(
-                "bik,bkj->bij", pair_mask.float(), pair_mask.float()
-            ).clamp_min(1.0)
-            triplet = triplet / valid_intermediates.unsqueeze(-1)
+            if self.triplet_attention:
+                left_score = self.triplet_left_score(pair_normalized).squeeze(-1)
+                right_score = self.triplet_right_score(pair_normalized).squeeze(-1)
+                logits = left_score.unsqueeze(3) + right_score.unsqueeze(1)
+                valid = pair_mask.unsqueeze(3) & pair_mask.unsqueeze(1)
+                logits = logits.masked_fill(
+                    ~valid, torch.finfo(logits.dtype).min
+                )
+                weights = torch.softmax(logits, dim=2) * valid
+                triplet = torch.einsum(
+                    "bikj,bikd,bkjd->bijd", weights, left, right
+                )
+            else:
+                triplet = torch.einsum("bikd,bkjd->bijd", left, right)
+                valid_intermediates = torch.einsum(
+                    "bik,bkj->bij", pair_mask.float(), pair_mask.float()
+                ).clamp_min(1.0)
+                triplet = triplet / valid_intermediates.unsqueeze(-1)
             triplet = self.triplet_out(self.triplet_norm(triplet))
             triplet = triplet * torch.sigmoid(
                 self.triplet_out_gate(pair_normalized)
@@ -558,6 +584,8 @@ class PairGPS2DR2Wrapper(nn.Module):
         triplet_interval: int = 3,
         rwse_dim: int = 16,
         gate_init: float = 0.1,
+        triplet_attention: bool = False,
+        pre_norm_pair_residual: bool = False,
     ) -> None:
         super().__init__()
         if pooling not in {"mean", "mean_max"}:
@@ -599,6 +627,8 @@ class PairGPS2DR2Wrapper(nn.Module):
                     triplet_rank,
                     use_triplet=(layer_index + 1) % triplet_interval == 0,
                     gate_init=gate_init,
+                    triplet_attention=triplet_attention,
+                    pre_norm_pair_residual=pre_norm_pair_residual,
                 )
                 for layer_index in range(num_layers)
             ]
@@ -767,3 +797,36 @@ class PairGPS2DR2Wrapper(nn.Module):
         return self.head(
             self.encode(x, edge_index, edge_attr, batch, random_walk_pe)
         )
+
+
+class PairGPS2DR3Wrapper(PairGPS2DR2Wrapper):
+    """R2 backbone with bounded relational and/or frontier-head repairs."""
+
+    def __init__(
+        self,
+        *args,
+        attentive_triplet: bool = False,
+        consistent_head: bool = False,
+        **kwargs,
+    ) -> None:
+        n_targets = int(kwargs.get("n_targets", 3))
+        if n_targets != 3:
+            raise ValueError("PairGPS2D R3 requires three frontier targets")
+        super().__init__(
+            *args,
+            triplet_attention=attentive_triplet,
+            pre_norm_pair_residual=attentive_triplet,
+            **kwargs,
+        )
+        self.attentive_triplet = bool(attentive_triplet)
+        self.consistent_head = bool(consistent_head)
+        if self.consistent_head:
+            embedding_dim = self.node_input.out_features
+            dropout = next(
+                module.p for module in self.head if isinstance(module, nn.Dropout)
+            )
+            self.head = FrontierCenterGapHead(
+                embedding_dim,
+                hidden_channels=embedding_dim,
+                dropout=dropout,
+            )
