@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-edge-state-readout-r4-qm9-validation",
+  "title": "MolGap EdgeState Readout R4 QM9 Validation",
+  "code_file": "run_validation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-edge-state-readout-r4-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pairgps-r2-qm9-rwse-prep",
+    "kaseichou/molgap-pure2d-r3-qm9-validation"
+  ],
+  "model_sources": []
+}
