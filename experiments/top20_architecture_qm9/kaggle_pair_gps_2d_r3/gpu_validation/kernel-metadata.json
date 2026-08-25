@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pure2d-r3-qm9-validation",
+  "title": "MolGap Pure2D R3 QM9 Validation",
+  "code_file": "run_validation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pairgps-r2-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pairgps-r2-qm9-rwse-prep"
+  ],
+  "model_sources": []
+}
