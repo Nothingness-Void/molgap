@@ -100,6 +100,9 @@ def test_r5_runner_is_validation_only_and_anchors_accepted_r3() -> None:
     assert "EXPECTED_PARAMETER_COUNT = 4_767_779" in source
 
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == (
+        "kaseichou/molgap-edgestate-jk-readout-r5-qm9-validation"
+    )
     assert metadata["enable_gpu"] == "true"
     assert metadata["enable_internet"] == "true"
     assert metadata["kernel_sources"] == [
