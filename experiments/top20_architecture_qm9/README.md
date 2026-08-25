@@ -46,3 +46,10 @@ authorized from this candidate.
 No local model training is part of this experiment. The IMS adapter is
 resumable and writes checkpoints, per-epoch progress, metrics, and independent
 payloads below the approved project root.
+
+## PairGPS-R2 repair
+
+The bounded lightweight repair requested after the PairGPS2D/EdgeState
+comparison is specified in `pair_gps_2d_r2_protocol.md`. It is a separate
+candidate and does not alter the completed PairGPS2D implementation or its
+decision record.
