@@ -59,8 +59,10 @@ repeats, PubChemQC-100K, or full-data work. The exact result is owned by
 The pure-2D R3 validation tournament completed and independently accepted its
 frozen winner, `edge_state_structural_gps`. The dense PairGPS repairs did not
 pass, and the conditional R4 trigger was not met. The QM9 test role remains
-sealed; the one permitted test gate has not been submitted. The exact decision
-and artifact hashes are owned by
+sealed; the one permitted test gate has not been submitted. One R5
+identity-start multi-depth readout is being evaluated on validation only. R3
+remains the frozen winner unless R5 strictly improves both validation gates.
+The accepted R3 decision and artifact hashes are owned by
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
@@ -75,9 +77,10 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No architecture-training job is active. The R3 validation and CPU tensor
-  acceptance are complete; no QM9 test, PubChemQC-100K, or full-data follow-up
-  has been submitted from that result.
+- Kaggle2 kernel
+  `kaseichou/molgap-edgestate-jk-readout-r5-qm9-validation`, version 1, is the
+  only active architecture-training job. It is validation-only and cannot read
+  or trigger QM9 test, PubChemQC-100K, or full-data follow-up.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
