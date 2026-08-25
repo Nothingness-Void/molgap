@@ -60,10 +60,11 @@ The pure-2D R3 validation tournament completed and independently accepted its
 frozen winner, `edge_state_structural_gps`. The dense PairGPS repairs did not
 pass, and the conditional R4 trigger was not met. The QM9 test role remains
 sealed; the one permitted test gate has not been submitted. One R5
-identity-start multi-depth readout is being evaluated on validation only. R3
-remains the frozen winner unless R5 strictly improves both validation gates.
-The accepted R3 decision and artifact hashes are owned by
-`experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`.
+identity-start multi-depth readout was evaluated on validation only and failed
+both gates. R3 remains the sole frozen winner. The exact decisions and artifact
+hashes are owned by
+`experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` and
+`experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -77,10 +78,8 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- Kaggle2 kernel
-  `kaseichou/molgap-edgestate-jk-readout-r5-qm9-validation`, version 1, is the
-  only active architecture-training job. It is validation-only and cannot read
-  or trigger QM9 test, PubChemQC-100K, or full-data follow-up.
+- No architecture-training job is active. R5 completed and retained R3; no QM9
+  test, PubChemQC-100K, or full-data follow-up was submitted.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
@@ -110,6 +109,7 @@ must not be represented as this new conservative head.
 | What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
 | What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
 | What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
+| Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
 | Where are rejected branches indexed? | `experiments/_closed/README.md` |
