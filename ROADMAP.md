@@ -15,7 +15,6 @@ general B3LYP model and official PCQM Gap specialist remain separate objectives.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | C-PAIRGPS-R2-QM9 | Run one bounded PairGPS-R2 Lite seed-42 QM9 repair screen on Kaggle2 | Accepted RWSE16 input and remote forward/backward pass first; then both average and Gap MAE beat the frozen PairGPS2D refinement with no more than 4.74M parameters |
 | P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
 | P0 | C-FULL-2M-TRAIN | Train exactly one EdgeState candidate from random initialization | P0 input gate passes; one complete resumable checkpoint and aligned predictions are accepted | `experiments/resource_bounded_architecture/` |
 | P1 | C-FULL-2M-EVAL | Compare the frozen candidate once on common/OOD/P8-hard | Common improves by at least `0.001 eV`; OOD and P8-hard do not regress by more than `0.0005 eV` | `experiments/resource_bounded_architecture/` |
@@ -38,30 +37,6 @@ decision is
    one production decision.
 4. **On failure:** write a dated decision beside the experiment evidence and
    close the branch. Do not move the failure into `CURRENT_STATE.md`.
-
-### C-PAIRGPS-R2-QM9 remote contract
-
-- Input is the fixed QM9 30,000/3,000/3,000 split (split seed 42) plus a
-  separately built, sharded, SHA-256-accepted RWSE16 cache. GPU code must
-  refuse a missing or mismatched acceptance manifest.
-- The architecture is fixed at 192 node channels, 64 pair channels, nine
-  layers, four heads, shortest-path buckets, triplet rank eight every third
-  layer, and a direct three-target head. No residual, fusion, warm start, or
-  coordinates are allowed.
-- Training retains the earlier PairGPS QM9 contract: encoder seed 42, FP32,
-  batch 48, AdamW, `4e-4` learning rate, `1e-5` weight decay, 20 epochs, and
-  patience eight. Selection uses validation; the fixed QM9 test is read only
-  after the selected checkpoint is frozen.
-- Kaggle2 must first write `preflight.json` with finite forward, backward,
-  parameter count, and peak-memory evidence. The training checkpoint is
-  replaced atomically every epoch; metrics, model, and prediction payload are
-  separate retrievable artifacts.
-- Expected wall time is at most four hours on one Kaggle GPU. If the kernel
-  reaches six hours or no accepted checkpoint appears, retain logs and stop;
-  do not silently change the contract or retry.
-- The user's no-local-model rule replaces the local model-execution item in
-  Mandatory Gate 1 for this task; static local checks plus the remote GPU
-  preflight are required instead.
 
 ## Operating Rules
 

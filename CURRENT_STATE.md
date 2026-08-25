@@ -50,12 +50,11 @@ The decisions are owned by
 and
 `experiments/pubchemqc100k_architecture/results/pair_gps_2d_a100_benchmark/decision.md`.
 
-A bounded PairGPS-R2 Lite repair is an active architecture-only challenger. It
-does not replace EdgeState or authorize a full-data run. Its Kaggle2 CPU RWSE
-input passed acceptance and the sole seed-42 QM9 GPU screen has been submitted;
-the frozen contract and remote provenance are in
-`experiments/top20_architecture_qm9/pair_gps_2d_r2_protocol.md` and
-`experiments/top20_architecture_qm9/results/pair_gps_2d_r2_remote_submission.json`.
+The bounded PairGPS-R2 Lite repair failed its QM9 accuracy gate and is closed.
+It met the parameter/stability budget and nearly matched the larger PairGPS2D,
+but did not improve both required accuracy metrics. It does not authorize seed
+repeats, PubChemQC-100K, or full-data work. The exact result is owned by
+`experiments/top20_architecture_qm9/pair_gps_2d_r2_decision.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -69,8 +68,8 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- One PairGPS-R2 Lite QM9 seed-42 Kaggle2 kernel is queued after its CPU input
-  stage completed; no duplicate submission is authorized.
+- No MolGap Kaggle architecture kernel is pending or running after the
+  PairGPS-R2 Lite seed-42 result was retrieved and closed.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
