@@ -57,7 +57,9 @@ decision record. Its completed seed-42 outcome and stop decision are in
 
 The separately authorized validation-only R3 tournament is frozen in
 `pair_gps_2d_r3_protocol.md`. It does not reopen R2 or permit repeated reads of
-the QM9 test role.
+the QM9 test role. Downloaded artifacts are checked without model execution by
+`accept_pure2d_r3.py`; tensor-level metric replay remains a separate CPU-only
+acceptance step.
 
 The conditional readout fallback is frozen in
 `edge_state_readout_protocol.md`. It may run only when R3 has no eligible
