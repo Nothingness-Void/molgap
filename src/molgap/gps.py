@@ -366,13 +366,14 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
                 )
             )
 
-    def _encode_states(
+    def _encode_state_trace(
         self,
         x,
         edge_index,
         edge_attr,
         batch,
         random_walk_pe,
+        capture_layers=(),
     ):
         if random_walk_pe is None:
             raise ValueError("Edge-state Structural GPS requires random_walk_pe")
@@ -385,12 +386,43 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
         if not torch.isfinite(random_walk_pe).all():
             raise ValueError("random_walk_pe contains non-finite values")
 
+        requested = tuple(int(layer) for layer in capture_layers)
+        if len(set(requested)) != len(requested):
+            raise ValueError("capture_layers must be unique")
+        invalid = [
+            layer for layer in requested if layer < 1 or layer > len(self.convs)
+        ]
+        if invalid:
+            raise ValueError(f"Edge-state layer index out of range: {invalid}")
+
         h = self.node_emb(x.float())
         h = h + self.rwse_encoder(random_walk_pe.float())
         edge_state = self.edge_emb(edge_attr.float())
-        for edge_update, conv in zip(self.edge_updates, self.convs):
+        captured = {}
+        for layer, (edge_update, conv) in enumerate(
+            zip(self.edge_updates, self.convs), start=1
+        ):
             edge_state = edge_update(h, edge_index, edge_state)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+            if layer in requested:
+                captured[layer] = h
+        return h, edge_state, tuple(captured[layer] for layer in requested)
+
+    def _encode_states(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+    ):
+        h, edge_state, _ = self._encode_state_trace(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+        )
         return h, edge_state
 
     def encode(
@@ -462,6 +494,79 @@ class EdgeReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
             (attended - mean, self.edge_readout_norm(edge_mean)), dim=-1
         )
         return mean + self.readout_delta(delta_input)
+
+
+class EdgeJKReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Persistent-edge GPS with an identity-initialized multi-depth readout.
+
+    Sparse node states from selected depths and the final directed-edge state
+    enter a small bottleneck. Its final projection starts at zero, so the first
+    forward pass remains exactly the accepted final-layer mean pooling path.
+    """
+
+    def __init__(
+        self,
+        *args,
+        readout_layers=(3, 6, 9),
+        readout_channels: int = 32,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        if readout_channels <= 0:
+            raise ValueError("readout_channels must be positive")
+        layers = tuple(int(layer) for layer in readout_layers)
+        if not layers or len(set(layers)) != len(layers):
+            raise ValueError("readout_layers must be non-empty and unique")
+        invalid = [layer for layer in layers if layer < 1 or layer > len(self.convs)]
+        if invalid:
+            raise ValueError(f"Edge-state readout layer out of range: {invalid}")
+
+        hidden_channels = self.node_emb.out_features
+        self.readout_layers = layers
+        self.layer_readout_norms = nn.ModuleList(
+            nn.LayerNorm(hidden_channels) for _ in self.readout_layers
+        )
+        self.edge_readout_norm = nn.LayerNorm(self.edge_state_channels)
+        input_channels = (
+            len(self.readout_layers) * hidden_channels + self.edge_state_channels
+        )
+        self.readout_delta = nn.Sequential(
+            nn.Linear(input_channels, readout_channels),
+            nn.SiLU(),
+            nn.Linear(readout_channels, hidden_channels),
+        )
+        nn.init.zeros_(self.readout_delta[-1].weight)
+        nn.init.zeros_(self.readout_delta[-1].bias)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+    ):
+        from torch_geometric.nn import global_mean_pool
+
+        h, edge_state, layer_states = self._encode_state_trace(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            capture_layers=self.readout_layers,
+        )
+        baseline = self._pool(h, batch)
+        layer_summaries = [
+            normalizer(global_mean_pool(state, batch))
+            for normalizer, state in zip(self.layer_readout_norms, layer_states)
+        ]
+        edge_batch = batch[edge_index[0]]
+        edge_summary = self.edge_readout_norm(
+            global_mean_pool(edge_state, edge_batch, size=baseline.shape[0])
+        )
+        delta_input = torch.cat((*layer_summaries, edge_summary), dim=-1)
+        return baseline + self.readout_delta(delta_input)
 
 
 class OrbitalCenterHead(nn.Module):
