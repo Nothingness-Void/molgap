@@ -24,6 +24,7 @@ EXPECTED_RWSE_SHA256 = (
 REFERENCE_AVERAGE = 0.11006919294595718
 REFERENCE_GAP = 0.1318935602903366
 PARAMETER_BUDGET = 4_800_000
+IDENTITY_TOLERANCE_EV = 1e-5
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -111,6 +112,45 @@ def compare_state_dicts(model: dict, best_state: dict, candidate: str) -> None:
             raise RuntimeError(f"Best model differs from checkpoint for {candidate}:{key}")
 
 
+def validate_cross_candidate_payload(
+    candidate: str,
+    role: str,
+    *,
+    source_indices_equal: bool,
+    targets_equal: bool,
+) -> None:
+    """Require identical rows and labels without imposing a label equation."""
+    if not source_indices_equal:
+        raise RuntimeError(f"{candidate} {role} source-index order differs")
+    if not targets_equal:
+        raise RuntimeError(f"{candidate} {role} targets differ")
+
+
+def identity_report(
+    candidate: str,
+    role: str,
+    *,
+    target_max_eV: float,
+    prediction_max_eV: float,
+    prediction_constrained: bool,
+) -> dict:
+    """Measure label residuals; gate only heads that promise exact predictions."""
+    if prediction_constrained and prediction_max_eV > IDENTITY_TOLERANCE_EV:
+        raise RuntimeError(
+            f"{candidate} {role} prediction identity failed: "
+            f"{prediction_max_eV:.9g} eV"
+        )
+    return {
+        "target_max_eV": target_max_eV,
+        "target_policy": "measured_not_gated",
+        "prediction_max_eV": prediction_max_eV,
+        "prediction_constraint_checked": prediction_constrained,
+        "prediction_tolerance_eV": (
+            IDENTITY_TOLERANCE_EV if prediction_constrained else None
+        ),
+    }
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     try:
@@ -146,6 +186,8 @@ def main() -> None:
         eligible = []
         train_indices = set()
         validation_indices = set()
+        reference_source_indices = {}
+        reference_targets = {}
         for selected_row in completed:
             candidate = selected_row["candidate"]
             metrics_path, metrics = load_candidate_metrics(candidate)
@@ -179,28 +221,37 @@ def main() -> None:
                 if torch.unique(indices).numel() != expected_rows:
                     raise RuntimeError(f"{candidate} {role} indices are not unique")
                 role_indices[role] = set(indices.tolist())
+                target = role_payload["targets"].detach().cpu().float()
+                if role not in reference_source_indices:
+                    reference_source_indices[role] = indices.clone()
+                    reference_targets[role] = target.clone()
+                else:
+                    validate_cross_candidate_payload(
+                        candidate,
+                        role,
+                        source_indices_equal=torch.equal(
+                            indices, reference_source_indices[role]
+                        ),
+                        targets_equal=torch.equal(target, reference_targets[role]),
+                    )
                 replayed[role] = recompute_metrics(role_payload)
                 compare_metrics(
                     metrics["metrics"][role], replayed[role], candidate, role
                 )
                 prediction = role_payload["predictions"].detach().cpu().float()
-                target = role_payload["targets"].detach().cpu().float()
                 target_identity = (
                     target[:, 1] - target[:, 0] - target[:, 2]
                 ).abs().max()
                 prediction_identity = (
                     prediction[:, 1] - prediction[:, 0] - prediction[:, 2]
                 ).abs().max()
-                if float(target_identity) > 1e-5:
-                    raise RuntimeError(f"{candidate} target identity changed")
-                if metrics.get("frontier_head") is not None and float(
-                    prediction_identity
-                ) > 1e-5:
-                    raise RuntimeError(f"{candidate} frontier identity failed")
-                identity_errors[role] = {
-                    "target_max_eV": float(target_identity),
-                    "prediction_max_eV": float(prediction_identity),
-                }
+                identity_errors[role] = identity_report(
+                    candidate,
+                    role,
+                    target_max_eV=float(target_identity),
+                    prediction_max_eV=float(prediction_identity),
+                    prediction_constrained=metrics.get("frontier_head") is not None,
+                )
             if role_indices["train"] & role_indices["validation"]:
                 raise RuntimeError(f"{candidate} train/validation overlap")
             if not train_indices:
@@ -218,6 +269,8 @@ def main() -> None:
             )
             compare_state_dicts(model, checkpoint["best_state"], candidate)
             parameter_count = int(metrics["n_params"])
+            if parameter_count > PARAMETER_BUDGET:
+                raise RuntimeError(f"{candidate} exceeds the parameter budget")
             if parameter_count != int(preflight_row["parameter_count"]):
                 raise RuntimeError(f"{candidate} preflight parameter count differs")
             if parameter_count != int(selected_row["parameter_count"]):
@@ -252,7 +305,7 @@ def main() -> None:
         if selection.get("selected_candidate") != expected_winner:
             raise RuntimeError("Selected candidate differs after tensor replay")
         report = {
-            "format": "molgap-pure2d-r3-tensor-acceptance-v1",
+            "format": "molgap-pure2d-r3-tensor-acceptance-v2",
             "accepted": True,
             "device": "cpu",
             "model_inference_executed": False,
@@ -260,6 +313,9 @@ def main() -> None:
             "split_fingerprint": EXPECTED_SPLIT_FINGERPRINT,
             "test_role_read": False,
             "candidate_count": len(reports),
+            "cross_candidate_source_indices_exact": True,
+            "cross_candidate_targets_exact": True,
+            "target_identity_policy": "measured_not_gated",
             "selected_candidate": expected_winner,
             "selection_sha256": sha256(selection_path),
             "preflight_sha256": sha256(preflight_path),
