@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4
+#PBS -l walltime=01:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+ROUTE_B_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f embeddings/primary/completion.json
+test -f embeddings/augmented/completion.json
+export PYTHONPATH="$ROUTE_B_ROOT/code/platforms/ims/pcqm_route_b/shims:$ROUTE_B_ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+"$PYTHON" code/platforms/ims/repaired_2m_3d/run_schnet.py \
+  --root "$ROOT" --variant primary --accept-embeddings 2>&1 | \
+  tee logs/accept_embeddings.log

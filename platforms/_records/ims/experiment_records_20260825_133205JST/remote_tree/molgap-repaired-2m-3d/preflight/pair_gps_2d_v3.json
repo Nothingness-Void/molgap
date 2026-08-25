@@ -1,0 +1,186 @@
+{
+  "status": "complete",
+  "architecture": "PairGPS2D",
+  "geometry": "none",
+  "cache_acceptance_sha256": "23e5598540c1340326cd8860f0fcb9166c843d141cfe670ab54d80d5d6ebad8b",
+  "sample_candidates": 768,
+  "tested_batch_sizes": [
+    8,
+    16,
+    32
+  ],
+  "batch_benchmarks": [
+    {
+      "batch_size": 8,
+      "steps": [
+        {
+          "quantile_batch": 23,
+          "total_nodes": 136,
+          "max_nodes": 17,
+          "elapsed_s": 0.8332077851518989,
+          "graphs_per_s": 9.601446532981628,
+          "peak_cuda_bytes": 296077824,
+          "loss": 1.7056031227111816,
+          "grad_norm": 9.103002548217773
+        },
+        {
+          "quantile_batch": 47,
+          "total_nodes": 176,
+          "max_nodes": 22,
+          "elapsed_s": 0.15297226142138243,
+          "graphs_per_s": 52.29706304702482,
+          "peak_cuda_bytes": 552100864,
+          "loss": 1.9328694343566895,
+          "grad_norm": 31.245325088500977
+        },
+        {
+          "quantile_batch": 71,
+          "total_nodes": 224,
+          "max_nodes": 28,
+          "elapsed_s": 0.15354281850159168,
+          "graphs_per_s": 52.10272989691842,
+          "peak_cuda_bytes": 765446656,
+          "loss": 0.6498895287513733,
+          "grad_norm": 12.004353523254395
+        },
+        {
+          "quantile_batch": 95,
+          "total_nodes": 286,
+          "max_nodes": 36,
+          "elapsed_s": 0.16528266109526157,
+          "graphs_per_s": 48.40193125514331,
+          "peak_cuda_bytes": 1123088896,
+          "loss": 1.471971035003662,
+          "grad_norm": 22.9013614654541
+        }
+      ],
+      "median_step_elapsed_s": 0.16528266109526157,
+      "aggregate_graphs_per_s": 24.52096896011775,
+      "peak_cuda_bytes": 1123088896
+    },
+    {
+      "batch_size": 16,
+      "steps": [
+        {
+          "quantile_batch": 11,
+          "total_nodes": 272,
+          "max_nodes": 17,
+          "elapsed_s": 0.19179526064544916,
+          "graphs_per_s": 83.42229076023648,
+          "peak_cuda_bytes": 647442432,
+          "loss": 2.0774264335632324,
+          "grad_norm": 15.763866424560547
+        },
+        {
+          "quantile_batch": 23,
+          "total_nodes": 345,
+          "max_nodes": 22,
+          "elapsed_s": 0.15737885143607855,
+          "graphs_per_s": 101.66550241026893,
+          "peak_cuda_bytes": 918895104,
+          "loss": 0.923071563243866,
+          "grad_norm": 5.488227844238281
+        },
+        {
+          "quantile_batch": 35,
+          "total_nodes": 448,
+          "max_nodes": 28,
+          "elapsed_s": 0.17239573504775763,
+          "graphs_per_s": 92.80972058599725,
+          "peak_cuda_bytes": 1341059072,
+          "loss": 3.3915586471557617,
+          "grad_norm": 44.20033645629883
+        },
+        {
+          "quantile_batch": 47,
+          "total_nodes": 566,
+          "max_nodes": 36,
+          "elapsed_s": 0.17795889358967543,
+          "graphs_per_s": 89.90840343664772,
+          "peak_cuda_bytes": 2054766592,
+          "loss": 1.6765879392623901,
+          "grad_norm": 35.32799530029297
+        }
+      ],
+      "median_step_elapsed_s": 0.17795889358967543,
+      "aggregate_graphs_per_s": 91.49016512777182,
+      "peak_cuda_bytes": 2054766592
+    },
+    {
+      "batch_size": 32,
+      "steps": [
+        {
+          "quantile_batch": 5,
+          "total_nodes": 544,
+          "max_nodes": 17,
+          "elapsed_s": 0.1974085494875908,
+          "graphs_per_s": 162.10037550583155,
+          "peak_cuda_bytes": 1118347264,
+          "loss": 1.7811081409454346,
+          "grad_norm": 16.45435905456543
+        },
+        {
+          "quantile_batch": 11,
+          "total_nodes": 681,
+          "max_nodes": 22,
+          "elapsed_s": 0.17422574199736118,
+          "graphs_per_s": 183.6697587460105,
+          "peak_cuda_bytes": 1667482112,
+          "loss": 1.23787522315979,
+          "grad_norm": 19.515317916870117
+        },
+        {
+          "quantile_batch": 17,
+          "total_nodes": 895,
+          "max_nodes": 28,
+          "elapsed_s": 0.18124563060700893,
+          "graphs_per_s": 176.5559803722106,
+          "peak_cuda_bytes": 2517960704,
+          "loss": 3.06415057182312,
+          "grad_norm": 39.56937789916992
+        },
+        {
+          "quantile_batch": 23,
+          "total_nodes": 1112,
+          "max_nodes": 36,
+          "elapsed_s": 0.21557070687413216,
+          "graphs_per_s": 148.4431742327784,
+          "peak_cuda_bytes": 3964570624,
+          "loss": 0.9020673632621765,
+          "grad_norm": 27.98501205444336
+        }
+      ],
+      "median_step_elapsed_s": 0.1974085494875908,
+      "aggregate_graphs_per_s": 166.5689312691653,
+      "peak_cuda_bytes": 3964570624
+    }
+  ],
+  "recommended_batch_size": 32,
+  "model_config": {
+    "in_channels": 18,
+    "edge_dim": 4,
+    "hidden_channels": 256,
+    "pair_channels": 96,
+    "num_layers": 10,
+    "num_heads": 8,
+    "dropout": 0.05,
+    "n_targets": 3,
+    "pooling": "mean",
+    "path_steps": 5,
+    "triplet_rank": 16
+  },
+  "n_params": 12929523,
+  "device": "NVIDIA A100-SXM4-80GB",
+  "finite": true,
+  "target": "PubChemQC B3LYP/6-31G* HOMO/LUMO/Gap",
+  "input_acceptance": {
+    "format": "molgap-pubchemqc-pair-gps-2d-v1",
+    "accepted_rows": 1989116,
+    "split_accepted_rows": {
+      "train": 1591272,
+      "validation": 198919,
+      "test": 198925
+    },
+    "geometry": "none"
+  }
+}

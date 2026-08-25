@@ -1,0 +1,3222 @@
+{
+  "format": "molgap-pcqm-route-b-embedding-parts-v1",
+  "status": "complete",
+  "name": "augmented_schnet",
+  "embedding_dim": 176,
+  "parts": [
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_000.pt",
+      "path": "train/train_shard_000_embeddings.pt",
+      "rows": 4554,
+      "bytes": 1660199,
+      "sha256": "1c17b1591e5117e029301744b8c2edd48640066f0d6f9df65a60dbcfe689d0cf"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_001.pt",
+      "path": "train/train_shard_001_embeddings.pt",
+      "rows": 4558,
+      "bytes": 1661735,
+      "sha256": "c1a0136a0037b95fbae171fa8a9c9f16140d6f51f9ce7368fb5931058ae0b385"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_002.pt",
+      "path": "train/train_shard_002_embeddings.pt",
+      "rows": 4556,
+      "bytes": 1660967,
+      "sha256": "ca59df63e1ad8110e0e7f177f94c20584971d9f046a98a7fd25c03d9c5d0153c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_003.pt",
+      "path": "train/train_shard_003_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "d54f7bc01b0729a0ee047441bed4856f1fcd09daae401229fc2a764eda7e1a20"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_004.pt",
+      "path": "train/train_shard_004_embeddings.pt",
+      "rows": 4555,
+      "bytes": 1660583,
+      "sha256": "c8bf6ecc3b636e1c4645908f717df7bf8ed9b000e9de32103185463c2a3818e1"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_005.pt",
+      "path": "train/train_shard_005_embeddings.pt",
+      "rows": 4586,
+      "bytes": 1671847,
+      "sha256": "1716ee0ac02514fe9cb1e2867aa830a834142d7c4d6c0ed326d73bd1ba2729ce"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_006.pt",
+      "path": "train/train_shard_006_embeddings.pt",
+      "rows": 4596,
+      "bytes": 1675495,
+      "sha256": "906098be2e9a07f47879bd1bc56327afc6cf40b2f6a141a1fd987670fbfe860c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_007.pt",
+      "path": "train/train_shard_007_embeddings.pt",
+      "rows": 4585,
+      "bytes": 1671463,
+      "sha256": "69cd0726c754ed07ce153296331869d50ca1a8a729cb32bb4bb3d69526fba701"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_008.pt",
+      "path": "train/train_shard_008_embeddings.pt",
+      "rows": 4561,
+      "bytes": 1662759,
+      "sha256": "79eaf373331a5f6ca2b0a59bdd3c446b0b1a407835db2fff8ee9a94dc598c0ed"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_009.pt",
+      "path": "train/train_shard_009_embeddings.pt",
+      "rows": 4564,
+      "bytes": 1663847,
+      "sha256": "fcbba7a2f01eaa29dfb3ef8514cdd1389c795e47df568b35f35eba437cfc2503"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_010.pt",
+      "path": "train/train_shard_010_embeddings.pt",
+      "rows": 4560,
+      "bytes": 1662439,
+      "sha256": "62da85bb56e1790cd7a424396205ce104d95336cf4a70d0bbc4f79da3d9e007f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_011.pt",
+      "path": "train/train_shard_011_embeddings.pt",
+      "rows": 4612,
+      "bytes": 1681319,
+      "sha256": "a729e106323d95974dcf6634e85588a05db3ac78af7927dcff110a71580e722c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_012.pt",
+      "path": "train/train_shard_012_embeddings.pt",
+      "rows": 4546,
+      "bytes": 1657319,
+      "sha256": "a3671745c1490a22328f320d82bcc0e61a8ce883b36ba105662e3bb3594d9322"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_013.pt",
+      "path": "train/train_shard_013_embeddings.pt",
+      "rows": 4574,
+      "bytes": 1667559,
+      "sha256": "aff03d0093ac5117a6c0a7a79a631e7dfe1cb06fc39346f101486d6a9efacc44"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_014.pt",
+      "path": "train/train_shard_014_embeddings.pt",
+      "rows": 4585,
+      "bytes": 1671463,
+      "sha256": "aae1e223b6d8d716bc56495b35d61a91aadae2bce41ae0c099444ec7e77177d5"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_015.pt",
+      "path": "train/train_shard_015_embeddings.pt",
+      "rows": 4584,
+      "bytes": 1671143,
+      "sha256": "1390066d2b3730048beb01a27925d602585a9bf5e7f6a66d93560640f2b458fc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_016.pt",
+      "path": "train/train_shard_016_embeddings.pt",
+      "rows": 4603,
+      "bytes": 1678055,
+      "sha256": "ef274970ee5157bcea97cf4bcd39d099d40e409c4d9b35add3d5c2fd3383225a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_017.pt",
+      "path": "train/train_shard_017_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "6ca94849b70bd4c40d8fe03478f72a0a990a59cb8044c5a1503dfa3e65a102f2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_018.pt",
+      "path": "train/train_shard_018_embeddings.pt",
+      "rows": 4567,
+      "bytes": 1664935,
+      "sha256": "59b3738dff569ef7b87c76111121d40c3bee267b53be26f303af500afcc1ce12"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_019.pt",
+      "path": "train/train_shard_019_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "1980a98448e3a2cba2cbb92e5ab04c82e181f098c54c2452738854588822eafd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_020.pt",
+      "path": "train/train_shard_020_embeddings.pt",
+      "rows": 4595,
+      "bytes": 1675111,
+      "sha256": "9e04e8e1c5cd0b2f729d3ce58890439db53452429acb15e01c9e3fb21fee4a11"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_021.pt",
+      "path": "train/train_shard_021_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "521a559c8cb7c571652a49401e67d6aaa1c0f8452d6fddfac93b8defeaaaf55b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_022.pt",
+      "path": "train/train_shard_022_embeddings.pt",
+      "rows": 4537,
+      "bytes": 1653991,
+      "sha256": "b8d6f82b19d0e0be37932ff8d2294a151053c27eaf29634fc635c5c798e6f128"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_023.pt",
+      "path": "train/train_shard_023_embeddings.pt",
+      "rows": 4611,
+      "bytes": 1680935,
+      "sha256": "93019efe2dc0fb3e386e3edbee4dda3ec5e7752bac7e8848ab02c61b1ec4971f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_024.pt",
+      "path": "train/train_shard_024_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "89bc7acd4fb82c65638eb2c608a58000f880b64901c7aa6ddbbeccfa6cc41f8e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_025.pt",
+      "path": "train/train_shard_025_embeddings.pt",
+      "rows": 4576,
+      "bytes": 1668263,
+      "sha256": "9e03847781aa30bd86df4008de2d664b718f0c7079af1cf2f331e60b3d77c687"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_026.pt",
+      "path": "train/train_shard_026_embeddings.pt",
+      "rows": 4542,
+      "bytes": 1655911,
+      "sha256": "5c329466060202dde78b0340c539dd993fcca2ab43a61b80a06d07dfcd5f4a9f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_027.pt",
+      "path": "train/train_shard_027_embeddings.pt",
+      "rows": 4555,
+      "bytes": 1660583,
+      "sha256": "ae2a08bea2f5722916e2d202aa82c881573d70791f12d9d620fe2f4f4b2d9b53"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_028.pt",
+      "path": "train/train_shard_028_embeddings.pt",
+      "rows": 4567,
+      "bytes": 1664935,
+      "sha256": "d3b7d14e21af03a27c4082235efee747afe965fac82b0edaed96ac422611b08b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_029.pt",
+      "path": "train/train_shard_029_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "65704c999f246e34d5902422c9423ca98fe546d012c8c91a25ac1f792e3d1bd9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_030.pt",
+      "path": "train/train_shard_030_embeddings.pt",
+      "rows": 4612,
+      "bytes": 1681319,
+      "sha256": "d8b7dcde439417b529e784c42147f3cf0bf92f3d135494993408ec5f4385bacd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_031.pt",
+      "path": "train/train_shard_031_embeddings.pt",
+      "rows": 4598,
+      "bytes": 1676263,
+      "sha256": "8b6b6769b7320e960137c29a724ac6282ad6d7b117d8c12c8a26e272eec1a64a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_032.pt",
+      "path": "train/train_shard_032_embeddings.pt",
+      "rows": 4540,
+      "bytes": 1655143,
+      "sha256": "57c1eb62f9268e80dd177c554c5188dc63db3f68976428659259b58d63b4771a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_033.pt",
+      "path": "train/train_shard_033_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "a3d446ef2c33064c3de78c0090d96f1755e8481b22ef2f77367081d2064e7a4b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_034.pt",
+      "path": "train/train_shard_034_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "a19802ad1ec7c6ff3af8c21280b09e62686ed6136ff16a194f21ee1e32f71876"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_035.pt",
+      "path": "train/train_shard_035_embeddings.pt",
+      "rows": 4611,
+      "bytes": 1680935,
+      "sha256": "fc62783983bbff2ac0691132c9cffbbdb86bd5b07db2cb95587af4312fe06595"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_036.pt",
+      "path": "train/train_shard_036_embeddings.pt",
+      "rows": 4578,
+      "bytes": 1668967,
+      "sha256": "a704af2b61b1462686f48e4f2c3b52f1d7134a5dd4bd6ed774e04a6d8370c78e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_037.pt",
+      "path": "train/train_shard_037_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "76cb811e1a6493ec2af42d1c1094f70400a0b4b52ae4f784d4b0dcba9fe9e5cd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_038.pt",
+      "path": "train/train_shard_038_embeddings.pt",
+      "rows": 4566,
+      "bytes": 1664615,
+      "sha256": "5c356930abf04fffd55d37bd62c44115628ff08e8553616a3ed222f29f20ed1b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_039.pt",
+      "path": "train/train_shard_039_embeddings.pt",
+      "rows": 4572,
+      "bytes": 1666791,
+      "sha256": "6d28107c76c04389592350f41e5a6cfbc6a884a75d2a1e964f27ea93e100bee0"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_040.pt",
+      "path": "train/train_shard_040_embeddings.pt",
+      "rows": 4553,
+      "bytes": 1659815,
+      "sha256": "46096c78da0a8f86cfc821bd5feebeb3ead75932314eb03b7e9da72aa0576468"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_041.pt",
+      "path": "train/train_shard_041_embeddings.pt",
+      "rows": 4576,
+      "bytes": 1668263,
+      "sha256": "70a7418ae493a4ce38d2be6cdab2fd36e2ccbd94afe1721d61a7c0ab9601b49d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_042.pt",
+      "path": "train/train_shard_042_embeddings.pt",
+      "rows": 4612,
+      "bytes": 1681319,
+      "sha256": "164091e1dcd6a4e7b6efaf613c941feeb549ed0dd6a500b1fbcf50c4358a79bd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_043.pt",
+      "path": "train/train_shard_043_embeddings.pt",
+      "rows": 4607,
+      "bytes": 1679527,
+      "sha256": "06d0f5150fe4fe6b1ebb5d8a2f44a7e0854e5b9ca789fd16ca1187a3597c14e8"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_044.pt",
+      "path": "train/train_shard_044_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "6ddbf3a53167cc0e20935e3eecae26e446b72aaf86c963ea0bdfb6d6f421f6e6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_045.pt",
+      "path": "train/train_shard_045_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "5ef47ee8a822f648d75faa80914b6d552e716ffe377df7baaff7acfc274ef7f3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_046.pt",
+      "path": "train/train_shard_046_embeddings.pt",
+      "rows": 4564,
+      "bytes": 1663847,
+      "sha256": "6baec7bff1f4bd884596d644726599e864e6bca9bc87e13a3d9840fa5fb44923"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_047.pt",
+      "path": "train/train_shard_047_embeddings.pt",
+      "rows": 4583,
+      "bytes": 1670759,
+      "sha256": "988b9bb307fba897052400f5c742356a114ffccc536e109c0ad38585ef2c416e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_048.pt",
+      "path": "train/train_shard_048_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "33f9bd23ed0f44f0ec1ab2eb746bc7b5b20fc6704169390f204be2171070b0d3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_049.pt",
+      "path": "train/train_shard_049_embeddings.pt",
+      "rows": 4589,
+      "bytes": 1672935,
+      "sha256": "6f82517613c93647d6e1c2bc72b407a63a6585d5c8185f2a286c9e0230ff9263"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_050.pt",
+      "path": "train/train_shard_050_embeddings.pt",
+      "rows": 4559,
+      "bytes": 1662055,
+      "sha256": "148b6f0bf9869c687a13ae2e10aab08d1fa533bc3b4bdff6e3f5d8cccf0ded3d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_051.pt",
+      "path": "train/train_shard_051_embeddings.pt",
+      "rows": 4590,
+      "bytes": 1673383,
+      "sha256": "cd7d2561c19d061b230afc9904b1c96f7f8fffe46056f9446928c92c574afea6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_052.pt",
+      "path": "train/train_shard_052_embeddings.pt",
+      "rows": 4577,
+      "bytes": 1668583,
+      "sha256": "e02157c16e79061b3b56b1ebae53e140348dac801d3c751ba00e2fecd7ab78d3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_053.pt",
+      "path": "train/train_shard_053_embeddings.pt",
+      "rows": 4575,
+      "bytes": 1667879,
+      "sha256": "f37c46027a10e5d8638a3f483f807759e4af7e57581b0fa12ee30427b5850451"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_054.pt",
+      "path": "train/train_shard_054_embeddings.pt",
+      "rows": 4583,
+      "bytes": 1670759,
+      "sha256": "2d5f26eaa2275e664d309b32ff8719c86e259b60024310017f84fc01b058d73c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_055.pt",
+      "path": "train/train_shard_055_embeddings.pt",
+      "rows": 4570,
+      "bytes": 1666023,
+      "sha256": "25d1754ec27a756794bab051d9f85c6c731e1b7c6b34fcf83ef3d8371e4d44a9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_056.pt",
+      "path": "train/train_shard_056_embeddings.pt",
+      "rows": 4590,
+      "bytes": 1673383,
+      "sha256": "9d1eca1db4725ce2923a75a8da374079baa2524591324e9ebf0afe93d31c7a5f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_057.pt",
+      "path": "train/train_shard_057_embeddings.pt",
+      "rows": 4561,
+      "bytes": 1662759,
+      "sha256": "ef713bb66497f83883c4adb6670ffd3c7eec6f09badff790f92edfced2135e38"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_058.pt",
+      "path": "train/train_shard_058_embeddings.pt",
+      "rows": 4594,
+      "bytes": 1674791,
+      "sha256": "9d07a8e540d4ef19894ff1c113f7941099004ecbceace650af6e060631301d8d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_059.pt",
+      "path": "train/train_shard_059_embeddings.pt",
+      "rows": 4584,
+      "bytes": 1671143,
+      "sha256": "1aff5c63001602d63c6ea994ac9c9261e72766a1bd99a162c3803bb80f7e2a3e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_060.pt",
+      "path": "train/train_shard_060_embeddings.pt",
+      "rows": 4578,
+      "bytes": 1668967,
+      "sha256": "0ef9c6c5452eb2d7dd6845dc06175c3df7bdc20899efd91c97bbbc8f00345df2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_061.pt",
+      "path": "train/train_shard_061_embeddings.pt",
+      "rows": 4597,
+      "bytes": 1675815,
+      "sha256": "32a4e6a9b9c9a711424f6b3965c32bd21007da814222c505431f49e6bfd96bd7"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_062.pt",
+      "path": "train/train_shard_062_embeddings.pt",
+      "rows": 4567,
+      "bytes": 1664935,
+      "sha256": "ddf70c6c85197697b1bfaaaaba503ea700ae64c4bd1bb43ee9649681355c60d5"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_063.pt",
+      "path": "train/train_shard_063_embeddings.pt",
+      "rows": 4560,
+      "bytes": 1662439,
+      "sha256": "9d71bcc474d5d89a2d16d496ad3af5dbaf2635e18fa2cb069cd87cc6b6202d5e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_064.pt",
+      "path": "train/train_shard_064_embeddings.pt",
+      "rows": 4610,
+      "bytes": 1680615,
+      "sha256": "e4ff0f945023b7f9d640bdc86c9909458e9bfa701f6f114797356f6e52f4be7f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_065.pt",
+      "path": "train/train_shard_065_embeddings.pt",
+      "rows": 4588,
+      "bytes": 1672615,
+      "sha256": "26099d01692a3ab6c104d6dfc56d3c7e45d129bdd667750e95b2526a30b3dbb2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_066.pt",
+      "path": "train/train_shard_066_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "5d6c953bb8bb778b35271e12d9d73b8ff675abb156c828965028342180999dc2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_067.pt",
+      "path": "train/train_shard_067_embeddings.pt",
+      "rows": 4599,
+      "bytes": 1676583,
+      "sha256": "b964bced96a92048c7e05df3897a85318360e758c938b64adb420fa0fcb6986a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_068.pt",
+      "path": "train/train_shard_068_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "6af61a387154a7fbc6213f19997669d30f7911263a17e45e935c9d4e254be708"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_069.pt",
+      "path": "train/train_shard_069_embeddings.pt",
+      "rows": 4542,
+      "bytes": 1655911,
+      "sha256": "f1a155ee6e85207ebf5287314f67282c283b0fa4086c5b463d0e762e5938dc46"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_070.pt",
+      "path": "train/train_shard_070_embeddings.pt",
+      "rows": 4534,
+      "bytes": 1652967,
+      "sha256": "7cfe18bd580cfe27618722d68fb1c2ab6729eeed02e8b65cbc88e235172b45df"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_071.pt",
+      "path": "train/train_shard_071_embeddings.pt",
+      "rows": 4566,
+      "bytes": 1664615,
+      "sha256": "9cbc87cf590da17f9778ae1d8149a82f68a7a1a764642c13098252e37ffe7bcc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_072.pt",
+      "path": "train/train_shard_072_embeddings.pt",
+      "rows": 4575,
+      "bytes": 1667879,
+      "sha256": "82ddb199bbc9363ba6122ea8753e7369372a685f91c1187965bf851a0f3ce1dd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_073.pt",
+      "path": "train/train_shard_073_embeddings.pt",
+      "rows": 4602,
+      "bytes": 1677671,
+      "sha256": "1326ae7180d3a81d5a04d7f370ac7914cd47002ac54815d16b614902595f111b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_074.pt",
+      "path": "train/train_shard_074_embeddings.pt",
+      "rows": 4570,
+      "bytes": 1666023,
+      "sha256": "2953294dc40214a559cd2c0bc0fd8c0ce65e8933eaf2c956a6a41a2a8f8b828d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_075.pt",
+      "path": "train/train_shard_075_embeddings.pt",
+      "rows": 4604,
+      "bytes": 1678439,
+      "sha256": "ebcdb784506d69a665450918cfdd0427c0fbdf501bd9e2f0fd64fe479ec14784"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_076.pt",
+      "path": "train/train_shard_076_embeddings.pt",
+      "rows": 4594,
+      "bytes": 1674791,
+      "sha256": "1540d2cbc23cd6d77f61818e231d77411b69dd618ccf0eddd93af926417b0efc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_077.pt",
+      "path": "train/train_shard_077_embeddings.pt",
+      "rows": 4594,
+      "bytes": 1674791,
+      "sha256": "22aad2d4d1d66f1db8c78b371d070d041433ae490596613d2167eadb865e36b1"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_078.pt",
+      "path": "train/train_shard_078_embeddings.pt",
+      "rows": 4577,
+      "bytes": 1668583,
+      "sha256": "9576399f5948fc00c1ba005b0d2a34afb5780ad92be1738bf65738c75f272d0e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_079.pt",
+      "path": "train/train_shard_079_embeddings.pt",
+      "rows": 4572,
+      "bytes": 1666791,
+      "sha256": "b5cc117a99f404d1f2fc258b5fa2f916eb55a20f229307a67e22dabaf9665a76"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_080.pt",
+      "path": "train/train_shard_080_embeddings.pt",
+      "rows": 4582,
+      "bytes": 1670439,
+      "sha256": "f488afe763ef51ce32c4c3f8013bec000e3b88302e64d30df1784f1c3c2117e4"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_081.pt",
+      "path": "train/train_shard_081_embeddings.pt",
+      "rows": 4606,
+      "bytes": 1679207,
+      "sha256": "6ed615bde4eeadb5dfd754e815001ac96f7f1ed2b2193d9ef9d7e6d22267470a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_082.pt",
+      "path": "train/train_shard_082_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "a25f4a2bca2eebb65f50231985777f87aa714419fd950ffb6aacb1e6f579a107"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_083.pt",
+      "path": "train/train_shard_083_embeddings.pt",
+      "rows": 4555,
+      "bytes": 1660583,
+      "sha256": "a47aa769cfaa89437b95cd5ce3f402f4c268c1e2c13cfce11b307c159196220b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_084.pt",
+      "path": "train/train_shard_084_embeddings.pt",
+      "rows": 4592,
+      "bytes": 1674087,
+      "sha256": "9a74b4e3287cfcc294183421fbd1fb9133c57a2d7e87a74b68158c434397f437"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_085.pt",
+      "path": "train/train_shard_085_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "cea5eb1d77c7e42e92ef3abbeef6d5598ce6b168b41628bb3dd2239512b5b385"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_086.pt",
+      "path": "train/train_shard_086_embeddings.pt",
+      "rows": 4597,
+      "bytes": 1675815,
+      "sha256": "5e3483361d9931a8b9b235ca64fa7f048549a5c15095131168ee23784ae7ed48"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_087.pt",
+      "path": "train/train_shard_087_embeddings.pt",
+      "rows": 4577,
+      "bytes": 1668583,
+      "sha256": "7077bb8e4192693d1e36d0a2f707b2feac1e74959a9072b9df79cd8fc09d03ac"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_088.pt",
+      "path": "train/train_shard_088_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "08ff7dab1d540e18c1be2fbb660486be2cd90fa4234672faa6dbd58c35953faf"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_089.pt",
+      "path": "train/train_shard_089_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "0d4fe431dbd892897abb17f34891f2877f3e499729f71beafc230b1488677128"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_090.pt",
+      "path": "train/train_shard_090_embeddings.pt",
+      "rows": 4557,
+      "bytes": 1661287,
+      "sha256": "a20914a31e83642c054cab3f967fa9b763656678c2915b7ad8b4f9a3dd6e781b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_091.pt",
+      "path": "train/train_shard_091_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "9d20dec89001566423a2bc56234ff61f7d41cfd336b46f389a16a23a2d398b91"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_092.pt",
+      "path": "train/train_shard_092_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "73b9ec9c61c76c2139a432b32ec74e94d416e363229c88a390d05807078a2ddb"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_093.pt",
+      "path": "train/train_shard_093_embeddings.pt",
+      "rows": 4548,
+      "bytes": 1658023,
+      "sha256": "4a8941c255795dff1a2b2eea5b430acd47b9ef0ec37516851c1547be8c82cd00"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_094.pt",
+      "path": "train/train_shard_094_embeddings.pt",
+      "rows": 4550,
+      "bytes": 1658791,
+      "sha256": "d6fb82d89a50407bf034e6aa8c7883d9f48909d388bceeb977a4d740ab7b6657"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_095.pt",
+      "path": "train/train_shard_095_embeddings.pt",
+      "rows": 4601,
+      "bytes": 1677287,
+      "sha256": "559306f62cc5bd8eb5f39167fd2478600ed0189f40b7caea218c35a12a42779c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_096.pt",
+      "path": "train/train_shard_096_embeddings.pt",
+      "rows": 4594,
+      "bytes": 1674791,
+      "sha256": "5e598378d9c011a3dbf0a9d75032ecfa2da1aa00576417ed6583fee27fb66794"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_097.pt",
+      "path": "train/train_shard_097_embeddings.pt",
+      "rows": 4574,
+      "bytes": 1667559,
+      "sha256": "f750a53bb2808fec8d89e73bbe451d4e0d34f03f970eebd7e231104c8fbcdc3b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_098.pt",
+      "path": "train/train_shard_098_embeddings.pt",
+      "rows": 4588,
+      "bytes": 1672615,
+      "sha256": "305b50920d1e63334100ec544e41724cd73340927009f1a319e372b31c6067e2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_099.pt",
+      "path": "train/train_shard_099_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "c8cd1df35fdbde61870acb23306d95f40145e394eff6635d1198f3f08f57a28e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_100.pt",
+      "path": "train/train_shard_100_embeddings.pt",
+      "rows": 4570,
+      "bytes": 1666023,
+      "sha256": "8ef0cc9cce5d89d0ec6d3efff4173bd35ac3dd0df7c825edf1ced8c62a02b868"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_101.pt",
+      "path": "train/train_shard_101_embeddings.pt",
+      "rows": 4576,
+      "bytes": 1668263,
+      "sha256": "31a5e6d6b97b77161fbef3197fee156c9a64f2b808ee502081509c6f5f62a76b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_102.pt",
+      "path": "train/train_shard_102_embeddings.pt",
+      "rows": 4573,
+      "bytes": 1667111,
+      "sha256": "c68e394239fcc3a63b0581cb3a33f350090d47c6c497a66a7f2e3e0a12d92a81"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_103.pt",
+      "path": "train/train_shard_103_embeddings.pt",
+      "rows": 4536,
+      "bytes": 1653671,
+      "sha256": "307c64191d3ef751a23e23c5f5558b0670325ea8d9841c4ad3cf642c3430175a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_104.pt",
+      "path": "train/train_shard_104_embeddings.pt",
+      "rows": 4598,
+      "bytes": 1676263,
+      "sha256": "ca983aa57aebec0dfedc82936290b67b37167779ab840a70a9ebffb427abfcdc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_105.pt",
+      "path": "train/train_shard_105_embeddings.pt",
+      "rows": 4592,
+      "bytes": 1674087,
+      "sha256": "19f2af0c6d244ff343a9209344559fa69e160e2ff00a0fdcb822d97bb1f35649"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_106.pt",
+      "path": "train/train_shard_106_embeddings.pt",
+      "rows": 4548,
+      "bytes": 1658023,
+      "sha256": "a34539d9fb82b851b8d30f57cc972c3deb8d4ec7dc4f106a4596d96d154af64b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_107.pt",
+      "path": "train/train_shard_107_embeddings.pt",
+      "rows": 4559,
+      "bytes": 1662055,
+      "sha256": "edb83079e735ab2ad6a247a169868a41e918be05e1207cb6d3acea1bfebd4abb"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_108.pt",
+      "path": "train/train_shard_108_embeddings.pt",
+      "rows": 4593,
+      "bytes": 1674407,
+      "sha256": "2d724ae1928aa2d179662bc93598828130e47aa10387639310a4fb9c2b39919c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_109.pt",
+      "path": "train/train_shard_109_embeddings.pt",
+      "rows": 4569,
+      "bytes": 1665639,
+      "sha256": "84ed728f40ce042200041b753864ffc3f62ac5966258cae8de8a706239f3f3dc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_110.pt",
+      "path": "train/train_shard_110_embeddings.pt",
+      "rows": 4589,
+      "bytes": 1672935,
+      "sha256": "bb81ff1a01280cb29bedf71380a40ac065b11ff5677b3399dca98dfbd0d37f06"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_111.pt",
+      "path": "train/train_shard_111_embeddings.pt",
+      "rows": 4596,
+      "bytes": 1675495,
+      "sha256": "40d4874c396b2522ccabaf05e510c67ae9085ce1286d2504468f89885bc2786d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_112.pt",
+      "path": "train/train_shard_112_embeddings.pt",
+      "rows": 4590,
+      "bytes": 1673383,
+      "sha256": "0cb05307126c89eb126bd04dc912dcf302be98b21adc97d062c00f50d4b931a2"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_113.pt",
+      "path": "train/train_shard_113_embeddings.pt",
+      "rows": 4580,
+      "bytes": 1669671,
+      "sha256": "9590c003bdad38920574a45e4aae7753ad8c57a648abf4e5336b9abd8a12babf"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_114.pt",
+      "path": "train/train_shard_114_embeddings.pt",
+      "rows": 4552,
+      "bytes": 1659495,
+      "sha256": "f15d1dde2e3d35b8f4af4e1282c82dc1ef5ffd98747a9a9ce2a4b3edcbbd402e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_115.pt",
+      "path": "train/train_shard_115_embeddings.pt",
+      "rows": 4585,
+      "bytes": 1671463,
+      "sha256": "02b312c3bd52fb2f797d88fafcc8c678075ce8d5bd8a9b72c43e5ef88f9f35fa"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_116.pt",
+      "path": "train/train_shard_116_embeddings.pt",
+      "rows": 4529,
+      "bytes": 1651111,
+      "sha256": "5a9c21330c8766ee4e0211a0a4328cd479347daa30bc7a5e3fbe4c9157a70524"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_117.pt",
+      "path": "train/train_shard_117_embeddings.pt",
+      "rows": 4569,
+      "bytes": 1665639,
+      "sha256": "866c78a8e33185c065bc5212c906a3355461f18252aff4768729dc2f6f3c6e91"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_118.pt",
+      "path": "train/train_shard_118_embeddings.pt",
+      "rows": 4592,
+      "bytes": 1674087,
+      "sha256": "4ca57b6439cd7d9c564f028d8663f5ce0fc4fc43d0c6f38872332da4d9784088"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_119.pt",
+      "path": "train/train_shard_119_embeddings.pt",
+      "rows": 4531,
+      "bytes": 1651815,
+      "sha256": "c34c3358c90122dae1a40e4c08b4a6839f7eb0000a4f7ece9d72a191f32d32f3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_120.pt",
+      "path": "train/train_shard_120_embeddings.pt",
+      "rows": 4535,
+      "bytes": 1653287,
+      "sha256": "754750ced24d187eb0a7b618604c3ac96e20ae858bb8800166322ba4730e75de"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_121.pt",
+      "path": "train/train_shard_121_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "d60cac3a3a3517495743b182bcc53a26795b4e432c07455709ed725a0e664c55"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_122.pt",
+      "path": "train/train_shard_122_embeddings.pt",
+      "rows": 4569,
+      "bytes": 1665639,
+      "sha256": "c9fcc58dfb41635014214d143579c6b1367c5d00deea67f3282741c19a2c58ae"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_123.pt",
+      "path": "train/train_shard_123_embeddings.pt",
+      "rows": 4570,
+      "bytes": 1666023,
+      "sha256": "1c41ff2da065fad444e37ca0890f45675d93cc1a22fac16713ce2b3bfbad0bd0"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_124.pt",
+      "path": "train/train_shard_124_embeddings.pt",
+      "rows": 4562,
+      "bytes": 1663143,
+      "sha256": "39e51c6dbdf639be0255fc80df03a40edf04ee9442a4ec64357acb32c8d889de"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_125.pt",
+      "path": "train/train_shard_125_embeddings.pt",
+      "rows": 4565,
+      "bytes": 1664167,
+      "sha256": "9330ef836dbb1bb0d823a3665513c19b686e98f265b8c8e76f42006fe5137cd6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_126.pt",
+      "path": "train/train_shard_126_embeddings.pt",
+      "rows": 4546,
+      "bytes": 1657319,
+      "sha256": "63d802ad3ced1a38db5bce1872090f3aaf975ce822af82bfd4c488ac115e9ee6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_127.pt",
+      "path": "train/train_shard_127_embeddings.pt",
+      "rows": 4546,
+      "bytes": 1657319,
+      "sha256": "bf1290a259dec8e7217d1353c7df88eb991d6e14cfaef61001bdcbdda4481a9a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_128.pt",
+      "path": "train/train_shard_128_embeddings.pt",
+      "rows": 4555,
+      "bytes": 1660583,
+      "sha256": "f01d66918927663436948784f3437e25340dc97bfdbefafefb7a2dd5bd830d81"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_129.pt",
+      "path": "train/train_shard_129_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "dadbe83607130b5056e0c493a3136f68de349a2ffb502e3f9bca782e5a2e9aff"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_130.pt",
+      "path": "train/train_shard_130_embeddings.pt",
+      "rows": 4600,
+      "bytes": 1676967,
+      "sha256": "92ffb08583e7f8552b8bc5e70da2f6c70c0203636c704ce50c9c1517927dfcac"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_131.pt",
+      "path": "train/train_shard_131_embeddings.pt",
+      "rows": 4563,
+      "bytes": 1663463,
+      "sha256": "2f97c9d3816c15a4084f49637ee97b5c0535c01800de46b78ccf9b5be0074ffe"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_132.pt",
+      "path": "train/train_shard_132_embeddings.pt",
+      "rows": 4588,
+      "bytes": 1672615,
+      "sha256": "e80e943170abec2911d61f894f6e192d21d5e1643d55389ef906fe52622a63ef"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_133.pt",
+      "path": "train/train_shard_133_embeddings.pt",
+      "rows": 4562,
+      "bytes": 1663143,
+      "sha256": "5b917b712664a32cacdfd6c34a78f04c5b272a82a27f242a3b09766dbd563f27"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_134.pt",
+      "path": "train/train_shard_134_embeddings.pt",
+      "rows": 4565,
+      "bytes": 1664167,
+      "sha256": "71432242b4a7937573a06ceff9f6097181a325ca7b867b1ae10b6f1dd5db554b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_135.pt",
+      "path": "train/train_shard_135_embeddings.pt",
+      "rows": 4577,
+      "bytes": 1668583,
+      "sha256": "a3ab42a26a3a8fcb262059ba967758ee28836bad91c8dc1cf916a8ae0844b9dd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_136.pt",
+      "path": "train/train_shard_136_embeddings.pt",
+      "rows": 4551,
+      "bytes": 1659111,
+      "sha256": "4c85f58a21470b5a613356ec76a139f8065d71cbff9b1660aa8d56a51d48b835"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_137.pt",
+      "path": "train/train_shard_137_embeddings.pt",
+      "rows": 4538,
+      "bytes": 1654375,
+      "sha256": "778309c916d64099f4bd28996ff493f16130b2b38e7cb6052c44b6c8f3ae52c9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_138.pt",
+      "path": "train/train_shard_138_embeddings.pt",
+      "rows": 4573,
+      "bytes": 1667111,
+      "sha256": "51b27000ddabc2207833a4c0aebc2236b2fdee577f09786d2fbd7a1e07c2cd68"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_139.pt",
+      "path": "train/train_shard_139_embeddings.pt",
+      "rows": 4619,
+      "bytes": 1683879,
+      "sha256": "8acce8d6e0dd921836786d5d831ead1f5e31d6e0ebd5a4891bcb6284bc6dc540"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_140.pt",
+      "path": "train/train_shard_140_embeddings.pt",
+      "rows": 4587,
+      "bytes": 1672231,
+      "sha256": "6d48ff832716435b9422c46814995b1e8515a41ada29f1d2cc4d34b8386c56a8"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_141.pt",
+      "path": "train/train_shard_141_embeddings.pt",
+      "rows": 4554,
+      "bytes": 1660199,
+      "sha256": "f54000f91fcfaa0f684583fe9a99b804d33351854aeebdfcf2af952f5bb2cc37"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_142.pt",
+      "path": "train/train_shard_142_embeddings.pt",
+      "rows": 4598,
+      "bytes": 1676263,
+      "sha256": "7a4a06b3cfe74ba67ea89377106e2aac2608723ad5e73df521f6593f7994b813"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_143.pt",
+      "path": "train/train_shard_143_embeddings.pt",
+      "rows": 4553,
+      "bytes": 1659815,
+      "sha256": "0691e916726592b05610b706af3613de7da85387d21d6a25eaf23a92917ddacd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_144.pt",
+      "path": "train/train_shard_144_embeddings.pt",
+      "rows": 4593,
+      "bytes": 1674407,
+      "sha256": "c913644f6b83ed24825cf77b5fedcb962b5d0eebc926240553520c46dad71209"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_145.pt",
+      "path": "train/train_shard_145_embeddings.pt",
+      "rows": 4619,
+      "bytes": 1683879,
+      "sha256": "b09300c149980175a1f2ec3a7b8ff075caeb02ae37db0c48cb7919cb24504132"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_146.pt",
+      "path": "train/train_shard_146_embeddings.pt",
+      "rows": 4573,
+      "bytes": 1667111,
+      "sha256": "ac1192e7c303ce6fa75a6833a4871341597d09646913564f8c41aa96e3af617d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_147.pt",
+      "path": "train/train_shard_147_embeddings.pt",
+      "rows": 4572,
+      "bytes": 1666791,
+      "sha256": "c7b54a1574ec8a79bbc4c78e7ea63db110fadc15d83bd5f567f38c7715931331"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_148.pt",
+      "path": "train/train_shard_148_embeddings.pt",
+      "rows": 4578,
+      "bytes": 1668967,
+      "sha256": "43c9e7f7662b93c657c7f4e1d995d313e798fc3494cd1d40b772fda07c187b2a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_149.pt",
+      "path": "train/train_shard_149_embeddings.pt",
+      "rows": 4547,
+      "bytes": 1657639,
+      "sha256": "711a91bae541290a54b282b638f54cf558b743f515e87d9b2b97a9fa56da9675"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_150.pt",
+      "path": "train/train_shard_150_embeddings.pt",
+      "rows": 4562,
+      "bytes": 1663143,
+      "sha256": "78e769106d67d71fbd9b35dc18ca7e2cefadbddb2314be8495449ed7027afc6b"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_151.pt",
+      "path": "train/train_shard_151_embeddings.pt",
+      "rows": 4559,
+      "bytes": 1662055,
+      "sha256": "3e2a35bcac9eec25bbbe461d1b673c4ff84b2fb44ecbaa121f761ed2ca3eea94"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_152.pt",
+      "path": "train/train_shard_152_embeddings.pt",
+      "rows": 4557,
+      "bytes": 1661287,
+      "sha256": "49360b2f05e5c909c6c11212a64593fda873e5ad26e61a02e75f8b629beab167"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_153.pt",
+      "path": "train/train_shard_153_embeddings.pt",
+      "rows": 4594,
+      "bytes": 1674791,
+      "sha256": "982ff2415bac91d366c3b4612d5e2b129ab5958969145faaec377c621c166046"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_154.pt",
+      "path": "train/train_shard_154_embeddings.pt",
+      "rows": 4565,
+      "bytes": 1664167,
+      "sha256": "c7a82851301fb3fd4085eddb1d82d72ff77d60a9698e413089bd39f8d15ed300"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_155.pt",
+      "path": "train/train_shard_155_embeddings.pt",
+      "rows": 4581,
+      "bytes": 1669991,
+      "sha256": "e15e701613ef3bb3334deee6506dd070371ae9e3104053afa59e89cf3f81f1d3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_156.pt",
+      "path": "train/train_shard_156_embeddings.pt",
+      "rows": 4564,
+      "bytes": 1663847,
+      "sha256": "26f36b7889e11a254369aaf9985345094736c6a44a514926ccb2956c189e5b08"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_157.pt",
+      "path": "train/train_shard_157_embeddings.pt",
+      "rows": 4588,
+      "bytes": 1672615,
+      "sha256": "f7248f3c96fc0edcc634b27f795c3b2b9807749a54190b73758623cc2ef96108"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_158.pt",
+      "path": "train/train_shard_158_embeddings.pt",
+      "rows": 4572,
+      "bytes": 1666791,
+      "sha256": "6c03d885bd855dc066d9f688a7930b3f631b9c35fcb2f9014ff8dadc311a17c7"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_159.pt",
+      "path": "train/train_shard_159_embeddings.pt",
+      "rows": 4597,
+      "bytes": 1675815,
+      "sha256": "ed6e81f6b75c4c4f4b8be8c621177aaf018173a6e2d91179386264560cef0388"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_160.pt",
+      "path": "train/train_shard_160_embeddings.pt",
+      "rows": 4600,
+      "bytes": 1676967,
+      "sha256": "9054f2ef6435a98fa3af6d27a7c894a604ca4dd4873f630ebc7a1d175c53de6d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_161.pt",
+      "path": "train/train_shard_161_embeddings.pt",
+      "rows": 4564,
+      "bytes": 1663847,
+      "sha256": "2b8ca869669aa04f26ec8db6f81ad4bde2d9857884da23b17f6292f09d7f8492"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_162.pt",
+      "path": "train/train_shard_162_embeddings.pt",
+      "rows": 4559,
+      "bytes": 1662055,
+      "sha256": "384cc5ba661d99a4b0942b363566e5bd4bab0ff2452d7828e42b30c9e5d6a9ab"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_163.pt",
+      "path": "train/train_shard_163_embeddings.pt",
+      "rows": 4564,
+      "bytes": 1663847,
+      "sha256": "d2e293b85094f2711c0b9f80eb0b39d5c901e613089529c9d216b585bcd288f9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_164.pt",
+      "path": "train/train_shard_164_embeddings.pt",
+      "rows": 4552,
+      "bytes": 1659495,
+      "sha256": "fcecd5fac53ebe8e949e22de8290fc94ba749b56017ad5c51a916138804d966f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_165.pt",
+      "path": "train/train_shard_165_embeddings.pt",
+      "rows": 4563,
+      "bytes": 1663463,
+      "sha256": "d74c67889ec23c4cabfcdd0f65b34fb188e62683fc19b502af8108d89e03a02d"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_166.pt",
+      "path": "train/train_shard_166_embeddings.pt",
+      "rows": 4571,
+      "bytes": 1666407,
+      "sha256": "a685cca703be194c6ef601de59780976ea125cc27b04333669b54b94dd18bb9c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_167.pt",
+      "path": "train/train_shard_167_embeddings.pt",
+      "rows": 4573,
+      "bytes": 1667111,
+      "sha256": "409e8c4d01d3f2772e3d60b3fbf0d3eed2ed3c3285e24c35f19c0b8f11b5caba"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_168.pt",
+      "path": "train/train_shard_168_embeddings.pt",
+      "rows": 4576,
+      "bytes": 1668263,
+      "sha256": "b51c8d84b6aead5020616bf461fbd992bd0314bc26a419819438899f4519f1dd"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_169.pt",
+      "path": "train/train_shard_169_embeddings.pt",
+      "rows": 4605,
+      "bytes": 1678759,
+      "sha256": "bc23d1614f44e01b7c751f2f384a477afb4a5d75c7762ad7c1d5ffb6b6ebe4cc"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_170.pt",
+      "path": "train/train_shard_170_embeddings.pt",
+      "rows": 4558,
+      "bytes": 1661735,
+      "sha256": "4281cdc40a88da82128513bbe71aca6d0f1fc9f92a69e79a4c942733630c8777"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_171.pt",
+      "path": "train/train_shard_171_embeddings.pt",
+      "rows": 4566,
+      "bytes": 1664615,
+      "sha256": "3ae58cbed43c2c578c1d01fc672612d9c17ab9fcf6eb011d29538d1874bc94d7"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_172.pt",
+      "path": "train/train_shard_172_embeddings.pt",
+      "rows": 4592,
+      "bytes": 1674087,
+      "sha256": "8f5d95b995950a1420a9b8b06d04dab28fa7522c2090781b0a75f1fe83c6f974"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_173.pt",
+      "path": "train/train_shard_173_embeddings.pt",
+      "rows": 4563,
+      "bytes": 1663463,
+      "sha256": "dbf020a9feb65f6470e5cede61a7db44e5ec8ce34304e18914da7f61937a198c"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_174.pt",
+      "path": "train/train_shard_174_embeddings.pt",
+      "rows": 4560,
+      "bytes": 1662439,
+      "sha256": "2ea7714f55e2626c8f9c7a47652a319a49b87da3055041d091d55859058126f4"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_175.pt",
+      "path": "train/train_shard_175_embeddings.pt",
+      "rows": 4623,
+      "bytes": 1685351,
+      "sha256": "5ea46620f99a8df6e420ab4fa91894a342a286e0d5d1d5b900d095322057329e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_176.pt",
+      "path": "train/train_shard_176_embeddings.pt",
+      "rows": 4586,
+      "bytes": 1671847,
+      "sha256": "01afb96c4bcf343e2a8872907e7439d60068258f2758f4b74c8203f9c948cb82"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_177.pt",
+      "path": "train/train_shard_177_embeddings.pt",
+      "rows": 4598,
+      "bytes": 1676263,
+      "sha256": "a25057ad6eb8ca6d0f360a0026329a134f921936a0386ca790c9539fe27935e6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_178.pt",
+      "path": "train/train_shard_178_embeddings.pt",
+      "rows": 4550,
+      "bytes": 1658791,
+      "sha256": "cb84d3445f48ac1242ddceb2fe1f391da3d70171323b9d9778c0340cad733351"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_179.pt",
+      "path": "train/train_shard_179_embeddings.pt",
+      "rows": 4558,
+      "bytes": 1661735,
+      "sha256": "1701eda9f64013d861910e4755d4c03150f98ac39748694a81d1c448980ef01e"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_180.pt",
+      "path": "train/train_shard_180_embeddings.pt",
+      "rows": 4590,
+      "bytes": 1673383,
+      "sha256": "40a21206c79ef7bbcbf5caa3bfd249373f665bc310ce17ba5c9a3e00ba126b39"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_181.pt",
+      "path": "train/train_shard_181_embeddings.pt",
+      "rows": 4608,
+      "bytes": 1679911,
+      "sha256": "b4b21f0fb51e03937fc04dfb1221a5be379a1d81382416601f56abf5fbe5b256"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_182.pt",
+      "path": "train/train_shard_182_embeddings.pt",
+      "rows": 4563,
+      "bytes": 1663463,
+      "sha256": "cb4a0d5e6a0a38ace17e2ef61f8fa5b673c342ffabe79c7f9932169213b975b6"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_183.pt",
+      "path": "train/train_shard_183_embeddings.pt",
+      "rows": 4600,
+      "bytes": 1676967,
+      "sha256": "e33dd468e0fd565d8106b613a798a601733b1ce1147822893adf4b03e639dae3"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_184.pt",
+      "path": "train/train_shard_184_embeddings.pt",
+      "rows": 4568,
+      "bytes": 1665319,
+      "sha256": "20a307368cffed1a2102b322eb12eccf8aa32e4e2b7f08d30041d12ede33f136"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_185.pt",
+      "path": "train/train_shard_185_embeddings.pt",
+      "rows": 4558,
+      "bytes": 1661735,
+      "sha256": "d75db2757206edd69b2351def2b18a860bffff23ed114ef20512d3cf774c547a"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_186.pt",
+      "path": "train/train_shard_186_embeddings.pt",
+      "rows": 4560,
+      "bytes": 1662439,
+      "sha256": "9830c1d77f7481bb18a43e3db399eb0f7b11287be0cfe3ea0a36c3061f3754ab"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_187.pt",
+      "path": "train/train_shard_187_embeddings.pt",
+      "rows": 4578,
+      "bytes": 1668967,
+      "sha256": "b56083bb541655c32fd4924f49dcfd78cb7a0fc24db48f79bb31af4b27cb6410"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_188.pt",
+      "path": "train/train_shard_188_embeddings.pt",
+      "rows": 4585,
+      "bytes": 1671463,
+      "sha256": "81b8e3960a53e20a72638388435fb31ec467efee7ee0ef66432f096c1c3fdfce"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_189.pt",
+      "path": "train/train_shard_189_embeddings.pt",
+      "rows": 4605,
+      "bytes": 1678759,
+      "sha256": "f7c1936608b74f869c3e284f5cccabba4f072cf09eb13aaea2471e8593fca847"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_190.pt",
+      "path": "train/train_shard_190_embeddings.pt",
+      "rows": 4579,
+      "bytes": 1669287,
+      "sha256": "4072625a52c226c8071793767ad3ef9ad9f51e29ed7767083074db7633bc52db"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_191.pt",
+      "path": "train/train_shard_191_embeddings.pt",
+      "rows": 4554,
+      "bytes": 1660199,
+      "sha256": "f0d8bf41bf5753270b907161bcf32bd69ca55001d150258528940bc04f3847e0"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_192.pt",
+      "path": "train/train_shard_192_embeddings.pt",
+      "rows": 4565,
+      "bytes": 1664167,
+      "sha256": "520697a4968a9a36900746b2d95c5773763847807509dd1bb96a88614bdd38ab"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_193.pt",
+      "path": "train/train_shard_193_embeddings.pt",
+      "rows": 4595,
+      "bytes": 1675111,
+      "sha256": "acab48a6c3a2f9cfbcb96bddd2e7fe5751a50258e17d69dc8b559594a6bd6323"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_194.pt",
+      "path": "train/train_shard_194_embeddings.pt",
+      "rows": 4628,
+      "bytes": 1687143,
+      "sha256": "cf233fd40f99cfb5fabfa33b1ed409e039579aa8a3b7a0a37a465d7e7c7450c7"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_195.pt",
+      "path": "train/train_shard_195_embeddings.pt",
+      "rows": 4536,
+      "bytes": 1653671,
+      "sha256": "fe7cebc9a4c20489b4ba04c1db0fe242e0e5789c3c6d0e0980a8500c7caf1d6f"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_196.pt",
+      "path": "train/train_shard_196_embeddings.pt",
+      "rows": 4556,
+      "bytes": 1660967,
+      "sha256": "813e3be6f020adaf644422d2a68b629ab59b23176061de61b39c5e95b39affc9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_197.pt",
+      "path": "train/train_shard_197_embeddings.pt",
+      "rows": 4545,
+      "bytes": 1656935,
+      "sha256": "1ae7d4b92587d0982cfc76886c995aa52befd6bf796c160bd497d6e151d1a356"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_198.pt",
+      "path": "train/train_shard_198_embeddings.pt",
+      "rows": 4560,
+      "bytes": 1662439,
+      "sha256": "811d1a3ae5e858104ef5d7a16c29facb69f67c73d7a613dd69a093a185661da9"
+    },
+    {
+      "role": "train",
+      "source_shard": "primary/train_shard_199.pt",
+      "path": "train/train_shard_199_embeddings.pt",
+      "rows": 4589,
+      "bytes": 1672935,
+      "sha256": "f28e01e3724b49bae6b9edb3e01e209fec7ef9451735abb7769398c48e312dd8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_000.pt",
+      "path": "dev/dev_shard_000_embeddings.pt",
+      "rows": 433,
+      "bytes": 160149,
+      "sha256": "fd5d966c3be1e926cf89aa728fb59455ea1cb7e0273c34e2e69beeb177fa83d8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_001.pt",
+      "path": "dev/dev_shard_001_embeddings.pt",
+      "rows": 433,
+      "bytes": 160149,
+      "sha256": "2bb8386c5fb5e5bb6d426a3effee0c50a82c43f179f2cb2d3e42608757682c88"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_002.pt",
+      "path": "dev/dev_shard_002_embeddings.pt",
+      "rows": 426,
+      "bytes": 157589,
+      "sha256": "e719b9f0834ee70087332bd75144292aecd3d8653890893355a6875083939a39"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_003.pt",
+      "path": "dev/dev_shard_003_embeddings.pt",
+      "rows": 409,
+      "bytes": 151381,
+      "sha256": "f368784f452182c303304887002e9074f2b523a69887b75fe4d7cb35d8883962"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_004.pt",
+      "path": "dev/dev_shard_004_embeddings.pt",
+      "rows": 428,
+      "bytes": 158357,
+      "sha256": "3d6b50ad1d5cb446c6f95c350296d82289a43cad06a4156f759cda4d452d43e4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_005.pt",
+      "path": "dev/dev_shard_005_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "ce7dcc57bee869a42100a0b6d4d59cd5354ce00c5b8a583a430e72ff87df096b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_006.pt",
+      "path": "dev/dev_shard_006_embeddings.pt",
+      "rows": 394,
+      "bytes": 145941,
+      "sha256": "b50e5493894f9bc760751955b007cc276df53b68b4906e384cf9d2c60ba3bcc3"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_007.pt",
+      "path": "dev/dev_shard_007_embeddings.pt",
+      "rows": 403,
+      "bytes": 149205,
+      "sha256": "1e222d2d7b2f0a161d27ae2b298ec18ddbe4af3ad6876e869842682a2215c0e5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_008.pt",
+      "path": "dev/dev_shard_008_embeddings.pt",
+      "rows": 426,
+      "bytes": 157589,
+      "sha256": "0d4baa880a849483cc1a65eb6d7065eb4dc85222274e2dbb73a8483edcac788b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_009.pt",
+      "path": "dev/dev_shard_009_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "df79c97c7a156778d632988d6cca74270717b75214923170b57b8077a0bb60ca"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_010.pt",
+      "path": "dev/dev_shard_010_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "5a3ca0a191b8ccdc06896b6b7d1832a5cb1a9cee5e66f6474bf7d689474c3884"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_011.pt",
+      "path": "dev/dev_shard_011_embeddings.pt",
+      "rows": 379,
+      "bytes": 140501,
+      "sha256": "7ee515683c0c7c6c0aa0fe78cff0602708446b87ea7cf1908e57575b50537fa2"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_012.pt",
+      "path": "dev/dev_shard_012_embeddings.pt",
+      "rows": 443,
+      "bytes": 163797,
+      "sha256": "055b047c5c6f13f45264f7e699dbf5ba525442989b279a295a020548cee40045"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_013.pt",
+      "path": "dev/dev_shard_013_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "765f1c917fe23d19405bb8af4f2e40633bb1f540aa870bd31a86cf1881e95ad4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_014.pt",
+      "path": "dev/dev_shard_014_embeddings.pt",
+      "rows": 395,
+      "bytes": 146325,
+      "sha256": "386408214b7fba9f981c2696e4adc1b57ea56974c060fadc032134924dc45df9"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_015.pt",
+      "path": "dev/dev_shard_015_embeddings.pt",
+      "rows": 393,
+      "bytes": 145557,
+      "sha256": "989055117172b19d1440637bfba531059cf77118639919e1d755afc711364807"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_016.pt",
+      "path": "dev/dev_shard_016_embeddings.pt",
+      "rows": 381,
+      "bytes": 141205,
+      "sha256": "c79f2c7665de3f2a2bb438f643323941241e80951c7a9187ac0eb12099eadb6c"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_017.pt",
+      "path": "dev/dev_shard_017_embeddings.pt",
+      "rows": 418,
+      "bytes": 154709,
+      "sha256": "2ee311ecee9191270bebb138d63500fa3c83db76df5f490a27b215e1b0717b3b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_018.pt",
+      "path": "dev/dev_shard_018_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "6cf1eb74924baac898c22f8afe99e3ed62522a8228298caf497f797dcc22603d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_019.pt",
+      "path": "dev/dev_shard_019_embeddings.pt",
+      "rows": 397,
+      "bytes": 147029,
+      "sha256": "51c4c9d9b427589c4c24a0659eb02fc099b236d9f5c82b94710cef86ba962926"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_020.pt",
+      "path": "dev/dev_shard_020_embeddings.pt",
+      "rows": 396,
+      "bytes": 146709,
+      "sha256": "6e96c8e9f9579afd2e6ef1af984e031f03d1484fb80cf5fb02161e4c90fabe3b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_021.pt",
+      "path": "dev/dev_shard_021_embeddings.pt",
+      "rows": 417,
+      "bytes": 154325,
+      "sha256": "c6cc55e89eae22441b29b43960b132ece1e35c0e30742b44ba4a4004476f6602"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_022.pt",
+      "path": "dev/dev_shard_022_embeddings.pt",
+      "rows": 445,
+      "bytes": 164501,
+      "sha256": "5b04ced91631585afbaa250e8510c102f96fcd2708aa6301010596bb7446d613"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_023.pt",
+      "path": "dev/dev_shard_023_embeddings.pt",
+      "rows": 376,
+      "bytes": 139413,
+      "sha256": "f6b2b3ba952cfc894f675b6feea70d4a2dfbff25f1396be6eddacd726f8913c8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_024.pt",
+      "path": "dev/dev_shard_024_embeddings.pt",
+      "rows": 419,
+      "bytes": 155029,
+      "sha256": "61830441522ce35b136be25c6c99dd2d2b5c4e3e60c1f3e698ec352bda5cc7cb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_025.pt",
+      "path": "dev/dev_shard_025_embeddings.pt",
+      "rows": 410,
+      "bytes": 151765,
+      "sha256": "51e18c24676932d2bf750008b7c0d50ccbbe94ba17accc0f3b81bfbf8da4fae6"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_026.pt",
+      "path": "dev/dev_shard_026_embeddings.pt",
+      "rows": 437,
+      "bytes": 161557,
+      "sha256": "1e74d26b4ef10ec52bb4ad6e892bafc31685e0a9f8c624abc5f3bfb8c9ca95a5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_027.pt",
+      "path": "dev/dev_shard_027_embeddings.pt",
+      "rows": 434,
+      "bytes": 160533,
+      "sha256": "24d30e1d6741a392f07c0393b4e2c7810357dd0afc31f5722bb86af5429afe6a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_028.pt",
+      "path": "dev/dev_shard_028_embeddings.pt",
+      "rows": 418,
+      "bytes": 154709,
+      "sha256": "87033a0a7b92f345dbf95c9260724a649167321388c9a8920fb7982e4f8268f0"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_029.pt",
+      "path": "dev/dev_shard_029_embeddings.pt",
+      "rows": 390,
+      "bytes": 144533,
+      "sha256": "9776856e04f20ff3ba56d3274865354a81b3832e0efdddf38fb8d62a8e5a9e1b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_030.pt",
+      "path": "dev/dev_shard_030_embeddings.pt",
+      "rows": 370,
+      "bytes": 137237,
+      "sha256": "5aecd6b5aaa48090a16b185f5b1c094750b44d6325a0a7d0e6e9556930a8ea4d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_031.pt",
+      "path": "dev/dev_shard_031_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "f190fb55994d826bb5d9499eb0927ba7f82e5df4eec00857acb0132f9c5a02fe"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_032.pt",
+      "path": "dev/dev_shard_032_embeddings.pt",
+      "rows": 441,
+      "bytes": 163029,
+      "sha256": "61fcb4ede958f3844e68cf64c83d5e7732b0f21fbbd6088eed15bf744ee32bc4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_033.pt",
+      "path": "dev/dev_shard_033_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "0733e861d3aafd6b09678c13da87f10daa8d79664771af8f0f698a58fd625362"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_034.pt",
+      "path": "dev/dev_shard_034_embeddings.pt",
+      "rows": 411,
+      "bytes": 152149,
+      "sha256": "2f7ba5438a5742b2c38a944703cbe421727ce74c619d567b17540db92faeb4ad"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_035.pt",
+      "path": "dev/dev_shard_035_embeddings.pt",
+      "rows": 367,
+      "bytes": 136149,
+      "sha256": "e4dfc635c37ea42bca6d01e88f643a08f522f9f8b606c21f36be52e225e4a1ea"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_036.pt",
+      "path": "dev/dev_shard_036_embeddings.pt",
+      "rows": 407,
+      "bytes": 150677,
+      "sha256": "8d47ff7605b5058ff6d3616b4ab2fa247e3fc737bce56cb08317a7a3741f43c0"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_037.pt",
+      "path": "dev/dev_shard_037_embeddings.pt",
+      "rows": 410,
+      "bytes": 151765,
+      "sha256": "5b3da50e328fbc62b9c54bd7686d9d9e1be94dbf72cbb49469a96ef862845981"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_038.pt",
+      "path": "dev/dev_shard_038_embeddings.pt",
+      "rows": 421,
+      "bytes": 155733,
+      "sha256": "fcd29582fa888ad7027fcf2ffd301e33ee0b7dadb5c600d2ca7f74cc73c758b5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_039.pt",
+      "path": "dev/dev_shard_039_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "d66e198b333424580d6a711d81b723e3e60380cd67a67ebdbf5007f3cad65c64"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_040.pt",
+      "path": "dev/dev_shard_040_embeddings.pt",
+      "rows": 425,
+      "bytes": 157205,
+      "sha256": "c444f9760420cf6785f2108316beddad376377670c41aa7e123fa891cb154149"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_041.pt",
+      "path": "dev/dev_shard_041_embeddings.pt",
+      "rows": 407,
+      "bytes": 150677,
+      "sha256": "da96336d3b6476e0bab1e9106dc1bf91a55c13e0db5e8d97022d49130fbbe0ae"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_042.pt",
+      "path": "dev/dev_shard_042_embeddings.pt",
+      "rows": 368,
+      "bytes": 136533,
+      "sha256": "f42c075da9c9e8305a86eb0914e8230c71a19b2109dc922b464e45459f4dee58"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_043.pt",
+      "path": "dev/dev_shard_043_embeddings.pt",
+      "rows": 380,
+      "bytes": 140885,
+      "sha256": "5bd59d40c94177a3cdbf15ed0b3e37dcccc5658d8c3223636c5dff88c48e8afb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_044.pt",
+      "path": "dev/dev_shard_044_embeddings.pt",
+      "rows": 419,
+      "bytes": 155029,
+      "sha256": "449da98c9df518176c5deee72b253fbcabe5164d36a7d1cbfb84676acfd5121f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_045.pt",
+      "path": "dev/dev_shard_045_embeddings.pt",
+      "rows": 414,
+      "bytes": 153301,
+      "sha256": "e8802cfa7d127839825bc96bdad28c17c57f484412a0349ba69fb936254389e4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_046.pt",
+      "path": "dev/dev_shard_046_embeddings.pt",
+      "rows": 418,
+      "bytes": 154709,
+      "sha256": "e6a66d07037945efc0c6c512389d7cc4fc17cca3b3635ae8d99ac563e8f4e0c8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_047.pt",
+      "path": "dev/dev_shard_047_embeddings.pt",
+      "rows": 408,
+      "bytes": 151061,
+      "sha256": "5230e2646811e534aa8bffc570d7b39dd27b43d53fd1d67424dd7093d8d23dbe"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_048.pt",
+      "path": "dev/dev_shard_048_embeddings.pt",
+      "rows": 401,
+      "bytes": 148501,
+      "sha256": "0aec2293eeb45ad7330a4b4bd202cc5928deda0f40bce68bc2a69e3e9444b4cb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_049.pt",
+      "path": "dev/dev_shard_049_embeddings.pt",
+      "rows": 397,
+      "bytes": 147029,
+      "sha256": "9c20426cda422826ada1be37c487188e646df44a5048c8786673bc7d895e5918"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_050.pt",
+      "path": "dev/dev_shard_050_embeddings.pt",
+      "rows": 424,
+      "bytes": 156885,
+      "sha256": "b0b3cbccfc35924d8a7ce1c7a31e673d51832e08034e0984982dfe55f8d5a23b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_051.pt",
+      "path": "dev/dev_shard_051_embeddings.pt",
+      "rows": 394,
+      "bytes": 145941,
+      "sha256": "259c9c575e0d3df28353f9d8121b9524998893cf9c0dea26ab8c5df0ec1b6462"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_052.pt",
+      "path": "dev/dev_shard_052_embeddings.pt",
+      "rows": 405,
+      "bytes": 149909,
+      "sha256": "241cfa11cbeb759141a449fa8adbbcf8476d28573838059ef93f098cd1cc5a4c"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_053.pt",
+      "path": "dev/dev_shard_053_embeddings.pt",
+      "rows": 412,
+      "bytes": 152533,
+      "sha256": "ea8a715f2282cc6e0328d7fbfb4d41fc0d51da1546ee6d731e1547faf882d3f1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_054.pt",
+      "path": "dev/dev_shard_054_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "e78763b07291b3a1d624c5796c2f3305178b963f24d9f94eb73586639208e9e5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_055.pt",
+      "path": "dev/dev_shard_055_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "392bf696a435f6baabf2481c39f793ea9683736812e90a86c5e966c4ed6e682a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_056.pt",
+      "path": "dev/dev_shard_056_embeddings.pt",
+      "rows": 400,
+      "bytes": 148181,
+      "sha256": "9cb0db54520dda027cd8dd9ea5519d2a7efa1ff9be404f2ad6a25e4efd330334"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_057.pt",
+      "path": "dev/dev_shard_057_embeddings.pt",
+      "rows": 429,
+      "bytes": 158677,
+      "sha256": "1dd11fe3d5878c1fd1801c764ab4c6c97e21492dd31724e5490b2a5065940f11"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_058.pt",
+      "path": "dev/dev_shard_058_embeddings.pt",
+      "rows": 394,
+      "bytes": 145941,
+      "sha256": "dac25f2178f37797f67e0f35aad694d62e39ae34e820cff5b5b4e59994b1c187"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_059.pt",
+      "path": "dev/dev_shard_059_embeddings.pt",
+      "rows": 395,
+      "bytes": 146325,
+      "sha256": "0bc9ddc395a3745806044854c68d55b7b4dfcdc112555e2bfa062aff96bf8a22"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_060.pt",
+      "path": "dev/dev_shard_060_embeddings.pt",
+      "rows": 406,
+      "bytes": 150357,
+      "sha256": "a0122b0c71b26b6273a2baa528f53c0d1eacd0a90faad2107267e1f8ee17a4c8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_061.pt",
+      "path": "dev/dev_shard_061_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "213ae313ef4f3b60152955aa7ec952466bd047c5f701e1b41855148c8ad7176e"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_062.pt",
+      "path": "dev/dev_shard_062_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "d080ab43f00151534a842f65f44e13ffedfa0b729fa7cf30024838997ae4d4d2"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_063.pt",
+      "path": "dev/dev_shard_063_embeddings.pt",
+      "rows": 431,
+      "bytes": 159445,
+      "sha256": "6c271ffd2c488ff4357ecb30e0ebeb69ac72b8a172ff5a6f89b508ad13569438"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_064.pt",
+      "path": "dev/dev_shard_064_embeddings.pt",
+      "rows": 378,
+      "bytes": 140117,
+      "sha256": "e0bb724c1f8af17ec14bff1002c88febfa28762534d672f32d55eb0958eef918"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_065.pt",
+      "path": "dev/dev_shard_065_embeddings.pt",
+      "rows": 399,
+      "bytes": 147797,
+      "sha256": "48eb8db46d116417464a136af6b5cae6e395a0aa290d7d9e25c59ab19c71b43d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_066.pt",
+      "path": "dev/dev_shard_066_embeddings.pt",
+      "rows": 413,
+      "bytes": 152853,
+      "sha256": "9b5199ec3e637d50a8ad82bf97da076233094dee7ddd09e7f25efe0a945d69a9"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_067.pt",
+      "path": "dev/dev_shard_067_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "1324a41fd7bc3dbdcb33f1ea60084b96a707585d75d2ff9a4d9d4a0dbbef446c"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_068.pt",
+      "path": "dev/dev_shard_068_embeddings.pt",
+      "rows": 412,
+      "bytes": 152533,
+      "sha256": "f7da2db6a04560615e42a3ac4c8ccf545f28af49c9359dc09527220d7320b62f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_069.pt",
+      "path": "dev/dev_shard_069_embeddings.pt",
+      "rows": 439,
+      "bytes": 162325,
+      "sha256": "e780d35b56ac4cdf92698c1c77ad5d95602af58f1726162b3da25556aadd85f1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_070.pt",
+      "path": "dev/dev_shard_070_embeddings.pt",
+      "rows": 447,
+      "bytes": 165269,
+      "sha256": "3c8e1d98a3e2ec11bb46f58f91827d5c37b9949c5aff342e3bdeb7aadbda83c4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_071.pt",
+      "path": "dev/dev_shard_071_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "5f8dcf33ff265a12db2989d2728c6bf5dc86b6566daac1769179dca1e3c8570a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_072.pt",
+      "path": "dev/dev_shard_072_embeddings.pt",
+      "rows": 408,
+      "bytes": 151061,
+      "sha256": "6b374186ac4f4bb371819f81a170c9cafff2d875b335c5fee7ec27a1cd2f1f19"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_073.pt",
+      "path": "dev/dev_shard_073_embeddings.pt",
+      "rows": 379,
+      "bytes": 140501,
+      "sha256": "1c948055de663090a6367c4969e2d64ada530d4aa6f7cda7c462e0d04c941978"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_074.pt",
+      "path": "dev/dev_shard_074_embeddings.pt",
+      "rows": 416,
+      "bytes": 154005,
+      "sha256": "8a2a145cf8f3ef06d73e07ead4fd63bcf022d7f4b535d6b111bc07cc181f2ee0"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_075.pt",
+      "path": "dev/dev_shard_075_embeddings.pt",
+      "rows": 379,
+      "bytes": 140501,
+      "sha256": "34ab6c690177f0d666aefbfe67b776a9436ea88af774ae90fc3c2228a0dbca3b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_076.pt",
+      "path": "dev/dev_shard_076_embeddings.pt",
+      "rows": 392,
+      "bytes": 145237,
+      "sha256": "eaf456cefb7a46dc5f17025404798b17dfe062bcc2105815974a4024fe184ca8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_077.pt",
+      "path": "dev/dev_shard_077_embeddings.pt",
+      "rows": 394,
+      "bytes": 145941,
+      "sha256": "dcc2114bd513af8731c323bcaff59ed51a334e4f31c6c3844a54b4b259aca3a3"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_078.pt",
+      "path": "dev/dev_shard_078_embeddings.pt",
+      "rows": 410,
+      "bytes": 151765,
+      "sha256": "e1d7d51451afe8acd77f824affb7c2e9d642059467217262eb7ca94b8fd1d462"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_079.pt",
+      "path": "dev/dev_shard_079_embeddings.pt",
+      "rows": 411,
+      "bytes": 152149,
+      "sha256": "22e4b6862503c7151ed6959f39194b84a2d4747ea0deafd89a44d34b3830b71b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_080.pt",
+      "path": "dev/dev_shard_080_embeddings.pt",
+      "rows": 403,
+      "bytes": 149205,
+      "sha256": "6cb2112ae436c55a396550e8cc96b83ae31c2689d19f35d2ba1037f20bc967b3"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_081.pt",
+      "path": "dev/dev_shard_081_embeddings.pt",
+      "rows": 381,
+      "bytes": 141205,
+      "sha256": "bab0818612196fb08d0154fe356b9b7dd04235d2c5f5eef20234b74984ad4a37"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_082.pt",
+      "path": "dev/dev_shard_082_embeddings.pt",
+      "rows": 409,
+      "bytes": 151381,
+      "sha256": "90e580bc3efa9bfc9e039ca17b17dc40d41d08896b8c0b09cec432760164b2ce"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_083.pt",
+      "path": "dev/dev_shard_083_embeddings.pt",
+      "rows": 430,
+      "bytes": 159125,
+      "sha256": "7868f6b28a697f83acfda8bed79df22c1bc6cef3dda1583bfbd7d36c62849f4b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_084.pt",
+      "path": "dev/dev_shard_084_embeddings.pt",
+      "rows": 394,
+      "bytes": 145941,
+      "sha256": "c2c4d733926fa937828b7a3c2a6dd34f25e394469b736a31289ab726b2a5a1b1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_085.pt",
+      "path": "dev/dev_shard_085_embeddings.pt",
+      "rows": 414,
+      "bytes": 153301,
+      "sha256": "2035ede78d8b95c02b5feb20dd2a4fbe71f3a2a007149bad78223a576138a78a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_086.pt",
+      "path": "dev/dev_shard_086_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "89c46cc91415ae362a76d30bd93c666cf9fef8a741f21a10dbf18e5ce0bd03f5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_087.pt",
+      "path": "dev/dev_shard_087_embeddings.pt",
+      "rows": 408,
+      "bytes": 151061,
+      "sha256": "fc177e0b976c10a601401558b7dfd9a4dbbf2a836db07fcac7aa7455f9ed9d80"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_088.pt",
+      "path": "dev/dev_shard_088_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "6c024693859095a384df31d4f6397be6d38396649a9b409a6971483852a66952"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_089.pt",
+      "path": "dev/dev_shard_089_embeddings.pt",
+      "rows": 401,
+      "bytes": 148501,
+      "sha256": "caddf38964c01b9ccaf888866dcc0b811c9a05e75e19cee17f8d432623d07641"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_090.pt",
+      "path": "dev/dev_shard_090_embeddings.pt",
+      "rows": 431,
+      "bytes": 159445,
+      "sha256": "d4607d0aa05e86c721ad73f45747f349c9fd77e0b15fd11f087b45c814e1fa6f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_091.pt",
+      "path": "dev/dev_shard_091_embeddings.pt",
+      "rows": 409,
+      "bytes": 151381,
+      "sha256": "48c745e4b176721f3a4e61311025a50d64db21de5d5a96208b615e06b042304f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_092.pt",
+      "path": "dev/dev_shard_092_embeddings.pt",
+      "rows": 410,
+      "bytes": 151765,
+      "sha256": "819827960ede47515798a7aaceb81bc1e29f0d30edf77a2b591963ef7d7972a3"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_093.pt",
+      "path": "dev/dev_shard_093_embeddings.pt",
+      "rows": 435,
+      "bytes": 160853,
+      "sha256": "ef380447472b8ace69d7fa34fc9fd451f292c0b78decdba37f5fadaf448c4e2c"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_094.pt",
+      "path": "dev/dev_shard_094_embeddings.pt",
+      "rows": 436,
+      "bytes": 161237,
+      "sha256": "19fa28f7a2803d9eda3b6f579b8923d8ce4afab55b46991f442f15ecc5a25847"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_095.pt",
+      "path": "dev/dev_shard_095_embeddings.pt",
+      "rows": 380,
+      "bytes": 140885,
+      "sha256": "617dc4d30f99c2916f5317a0e72325c7e35fff1c0bfb9baef70d0e0313551cc7"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_096.pt",
+      "path": "dev/dev_shard_096_embeddings.pt",
+      "rows": 384,
+      "bytes": 142357,
+      "sha256": "2fe74fb5855d839847fb227dd5238ef0139fd42d1970abdcffac205d6fa45bf9"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_097.pt",
+      "path": "dev/dev_shard_097_embeddings.pt",
+      "rows": 407,
+      "bytes": 150677,
+      "sha256": "f18fb9370e2f6bdcb0c959e59fc8d4355439fdf25983e96c1f4d17b13bef5268"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_098.pt",
+      "path": "dev/dev_shard_098_embeddings.pt",
+      "rows": 395,
+      "bytes": 146325,
+      "sha256": "cb8f74bd275f362084861d89ac2b78d67aa30f9116e39c009d12e07e086ea217"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_099.pt",
+      "path": "dev/dev_shard_099_embeddings.pt",
+      "rows": 414,
+      "bytes": 153301,
+      "sha256": "08618039f54b9e7918790799e03a903a18cb078df6c43da957132dc599ade922"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_100.pt",
+      "path": "dev/dev_shard_100_embeddings.pt",
+      "rows": 419,
+      "bytes": 155029,
+      "sha256": "a4a228f3ec65220a927b15333c58be8c958e257a277cc34a52e1eb084a93744f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_101.pt",
+      "path": "dev/dev_shard_101_embeddings.pt",
+      "rows": 410,
+      "bytes": 151765,
+      "sha256": "b0346647a3c0eed0477faeb5d2af13de680c993b01bf393bc2bcedfeface3289"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_102.pt",
+      "path": "dev/dev_shard_102_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "e10cf089ac005bc1826810d3019871379aab1a2601eb1d5ea57cf7a5d33e65a0"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_103.pt",
+      "path": "dev/dev_shard_103_embeddings.pt",
+      "rows": 446,
+      "bytes": 164949,
+      "sha256": "a720471850e727fc290ab5e9f0ff740279fa7a66f82561e76b26bba119863bf7"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_104.pt",
+      "path": "dev/dev_shard_104_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "8ef47794567ef2329de4f154a876e8b60a19b7d70bd362160c7644ed134e5ae2"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_105.pt",
+      "path": "dev/dev_shard_105_embeddings.pt",
+      "rows": 396,
+      "bytes": 146709,
+      "sha256": "b7ba8483d7b3836959981f6b1db0c64c7a332115b7eecde2c028d154dc7b3a5d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_106.pt",
+      "path": "dev/dev_shard_106_embeddings.pt",
+      "rows": 442,
+      "bytes": 163413,
+      "sha256": "a02c7d469551a52cf75c2b085e6964fe259552742541303112238d3ebb368fbc"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_107.pt",
+      "path": "dev/dev_shard_107_embeddings.pt",
+      "rows": 427,
+      "bytes": 157973,
+      "sha256": "4019d4174d11e9567a69279791266737260c1e7c47965944c1a049d0f4971733"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_108.pt",
+      "path": "dev/dev_shard_108_embeddings.pt",
+      "rows": 391,
+      "bytes": 144853,
+      "sha256": "1ceef5a090e96ca864582ab9ad900f76dac071bc9b0cc25a0c8db8bc9a0ebf2a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_109.pt",
+      "path": "dev/dev_shard_109_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "5a403b7bbea0dbcfc4af41aafefa202c4daffb61e5d3097ffb3e14e3778a1dde"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_110.pt",
+      "path": "dev/dev_shard_110_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "66c2e5ea7c92406eb3a9fd1ba2f4325814223442bc70c1d6668d00f741d7a3a7"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_111.pt",
+      "path": "dev/dev_shard_111_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "02ce404fae4bd568161f19776eed63aadea0b3615360b41a0a3b25edf80efc05"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_112.pt",
+      "path": "dev/dev_shard_112_embeddings.pt",
+      "rows": 399,
+      "bytes": 147797,
+      "sha256": "71cf3c9f65f2f59566a6959e124c7123b48b025ceec1fc7823960e5e93ea1b40"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_113.pt",
+      "path": "dev/dev_shard_113_embeddings.pt",
+      "rows": 403,
+      "bytes": 149205,
+      "sha256": "e2b8d2f0010d7eececc4e159df4c8cabbf7963e262ed2876880f87c4c093b206"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_114.pt",
+      "path": "dev/dev_shard_114_embeddings.pt",
+      "rows": 429,
+      "bytes": 158677,
+      "sha256": "0b951bcbf9c424f87596e005f4c4860194fa841a99d71bd23e7282fd42a50ceb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_115.pt",
+      "path": "dev/dev_shard_115_embeddings.pt",
+      "rows": 396,
+      "bytes": 146709,
+      "sha256": "587d337a0b2a67f8af46dc2246ed8cf068b15d0e91d2be08623a7d882b106ca6"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_116.pt",
+      "path": "dev/dev_shard_116_embeddings.pt",
+      "rows": 449,
+      "bytes": 165973,
+      "sha256": "2b5359f7eb54ebc68d35a729fbf3a16f9de1fed5810147523dc35e41c80033f5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_117.pt",
+      "path": "dev/dev_shard_117_embeddings.pt",
+      "rows": 419,
+      "bytes": 155029,
+      "sha256": "094abb66969722141d5441b5ba86453016ba076d225b1ca97209f748fd060a53"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_118.pt",
+      "path": "dev/dev_shard_118_embeddings.pt",
+      "rows": 386,
+      "bytes": 143061,
+      "sha256": "e43a0bb6e342c4eeb20b6483db1d4616801561424a15887de9959e9a2f9b1254"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_119.pt",
+      "path": "dev/dev_shard_119_embeddings.pt",
+      "rows": 450,
+      "bytes": 166357,
+      "sha256": "b93e3d78db90ec255269c0774564d5012a487b937531aea868c45cb688ba9786"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_120.pt",
+      "path": "dev/dev_shard_120_embeddings.pt",
+      "rows": 455,
+      "bytes": 168149,
+      "sha256": "4e3672e88b318e8f6760f6ece508af76bf2ed66b7c2dd6b6d6b0509634783247"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_121.pt",
+      "path": "dev/dev_shard_121_embeddings.pt",
+      "rows": 398,
+      "bytes": 147477,
+      "sha256": "b1c2f5b32fec264806a6d152e31cead7dcf0d3f8967747b8a82da0d29c6df385"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_122.pt",
+      "path": "dev/dev_shard_122_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "f1fe3676628a4a5c254ee22db29921aa958d255ae4f9f01bc4d40beb6e70ef59"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_123.pt",
+      "path": "dev/dev_shard_123_embeddings.pt",
+      "rows": 416,
+      "bytes": 154005,
+      "sha256": "835e3f16d1351fa3299293f75f0929a999cee5ec486a3af708fd6c4f73225097"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_124.pt",
+      "path": "dev/dev_shard_124_embeddings.pt",
+      "rows": 417,
+      "bytes": 154325,
+      "sha256": "4a220173bcfde28d362c193697763abd34f5ac95a2d5087e08f373388f8a8af8"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_125.pt",
+      "path": "dev/dev_shard_125_embeddings.pt",
+      "rows": 416,
+      "bytes": 154005,
+      "sha256": "b8342143dfc1cfb9b803ec3054997981b7b320c220b9b17577983a510284b733"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_126.pt",
+      "path": "dev/dev_shard_126_embeddings.pt",
+      "rows": 436,
+      "bytes": 161237,
+      "sha256": "85aea41a1c75a4425b72d6c05d9795d76fbfd49654241109f62455f7e0d12190"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_127.pt",
+      "path": "dev/dev_shard_127_embeddings.pt",
+      "rows": 435,
+      "bytes": 160853,
+      "sha256": "b0073e93d44db69f0bf083970fd1933058d25597fbc5e3d8052287e24d79902d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_128.pt",
+      "path": "dev/dev_shard_128_embeddings.pt",
+      "rows": 432,
+      "bytes": 159829,
+      "sha256": "0403dc933365cbc89ff4db6d46aa9495dfd11cf71b311669d12b17a57007fb6f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_129.pt",
+      "path": "dev/dev_shard_129_embeddings.pt",
+      "rows": 398,
+      "bytes": 147477,
+      "sha256": "d2f2fabe290abd887d3393a6bd52f98ae9687816801d49eb34a60e7484001ee7"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_130.pt",
+      "path": "dev/dev_shard_130_embeddings.pt",
+      "rows": 386,
+      "bytes": 143061,
+      "sha256": "a869aa39f50d152763fa55e3a8bd8f64bf0449fd90d7b08c1904a35e8222e086"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_131.pt",
+      "path": "dev/dev_shard_131_embeddings.pt",
+      "rows": 425,
+      "bytes": 157205,
+      "sha256": "e0ccc6ab706eac3d94c6233956dfdc7cd8cb0dfd53625c05ce2873b9c5b463b9"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_132.pt",
+      "path": "dev/dev_shard_132_embeddings.pt",
+      "rows": 397,
+      "bytes": 147029,
+      "sha256": "7188081de6de708b158a275e9e65565535d1d18caf38d2a75bc528d813c2d5ff"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_133.pt",
+      "path": "dev/dev_shard_133_embeddings.pt",
+      "rows": 424,
+      "bytes": 156885,
+      "sha256": "336a017fa90e94b48a2c2c97c45eed26c716d3df98889fb9d8b08825a6a902ce"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_134.pt",
+      "path": "dev/dev_shard_134_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "23ff55c9ec1cfa4cbb4c411239585c21095d9d728de9122949f6833169a55665"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_135.pt",
+      "path": "dev/dev_shard_135_embeddings.pt",
+      "rows": 403,
+      "bytes": 149205,
+      "sha256": "d2630586e363a3af156ab21fd67e15be297ea375463b302ae6e60b7e2375f6c4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_136.pt",
+      "path": "dev/dev_shard_136_embeddings.pt",
+      "rows": 433,
+      "bytes": 160149,
+      "sha256": "ff504d54311eb50defc0fc7531520903a898c16de3beb9b3927f8a3b6b36c057"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_137.pt",
+      "path": "dev/dev_shard_137_embeddings.pt",
+      "rows": 443,
+      "bytes": 163797,
+      "sha256": "e322e28705bcbd95e3b9981f061bb8adb17d555426f5eb4fd42ddcc0c1fde301"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_138.pt",
+      "path": "dev/dev_shard_138_embeddings.pt",
+      "rows": 408,
+      "bytes": 151061,
+      "sha256": "0cef00f975e0e266fbfc9c346176d7c9dd7c8571ae21728dbe5e1438913345d6"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_139.pt",
+      "path": "dev/dev_shard_139_embeddings.pt",
+      "rows": 369,
+      "bytes": 136853,
+      "sha256": "fe0d51a509b73546886b640fac7fc64251a5a9599671f033218c67c8b275c1a5"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_140.pt",
+      "path": "dev/dev_shard_140_embeddings.pt",
+      "rows": 401,
+      "bytes": 148501,
+      "sha256": "8dab40149d94915414aee5bb804be3a610c1b2ea77be28676ea56e7d48041e18"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_141.pt",
+      "path": "dev/dev_shard_141_embeddings.pt",
+      "rows": 433,
+      "bytes": 160149,
+      "sha256": "2ceef5d9d1c1cef56b742d3b7238bcd9d30cd06c7e274692e43da7d29c7449da"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_142.pt",
+      "path": "dev/dev_shard_142_embeddings.pt",
+      "rows": 385,
+      "bytes": 142677,
+      "sha256": "83754f04a4fd3fe22de52755c291f3239f076f23d6185d1e0a345fe8cb57ce48"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_143.pt",
+      "path": "dev/dev_shard_143_embeddings.pt",
+      "rows": 431,
+      "bytes": 159445,
+      "sha256": "45ba7dfe4b0aaeb65467344966f581ae19461efb63a831b962577107c136ee5e"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_144.pt",
+      "path": "dev/dev_shard_144_embeddings.pt",
+      "rows": 388,
+      "bytes": 143765,
+      "sha256": "356d099ef8c9d152f01913304c1dac84e694fb185591cf4afee32fa8b95a756a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_145.pt",
+      "path": "dev/dev_shard_145_embeddings.pt",
+      "rows": 367,
+      "bytes": 136149,
+      "sha256": "10f2019938c66f7f6fe9e36cec3ccaa5fc02c78eaf144c12bd00bbc8a4cc253b"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_146.pt",
+      "path": "dev/dev_shard_146_embeddings.pt",
+      "rows": 408,
+      "bytes": 151061,
+      "sha256": "c56bde5d56c3d4cdce952573be65a64481856c71cbf11e41145b07b263002154"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_147.pt",
+      "path": "dev/dev_shard_147_embeddings.pt",
+      "rows": 406,
+      "bytes": 150357,
+      "sha256": "32be982c100487fbd1e2266ea7bdec2c3bf33da04d78b17050ac119ed8444331"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_148.pt",
+      "path": "dev/dev_shard_148_embeddings.pt",
+      "rows": 409,
+      "bytes": 151381,
+      "sha256": "fdc099a79d84079f76b6289160fbe99a931da98585a9a0bfa535cd6b351a5a45"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_149.pt",
+      "path": "dev/dev_shard_149_embeddings.pt",
+      "rows": 435,
+      "bytes": 160853,
+      "sha256": "e475cfb0f3ea61063e2f79fcba626153cebc2f3ae5f0e228efee0c7318785970"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_150.pt",
+      "path": "dev/dev_shard_150_embeddings.pt",
+      "rows": 426,
+      "bytes": 157589,
+      "sha256": "b54d9695eed78aec17aca9ba405b19631aacb57be9e0612834d7a636b9488cf1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_151.pt",
+      "path": "dev/dev_shard_151_embeddings.pt",
+      "rows": 425,
+      "bytes": 157205,
+      "sha256": "80ef4f1949c52ff817a5498e03e51a3cba6787211dc3c7ba023e34ff76e8f78c"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_152.pt",
+      "path": "dev/dev_shard_152_embeddings.pt",
+      "rows": 431,
+      "bytes": 159445,
+      "sha256": "2e01871289a2bf6d1b2a462fdcfd7a522fe18448df7ba478d759770a41cc6872"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_153.pt",
+      "path": "dev/dev_shard_153_embeddings.pt",
+      "rows": 391,
+      "bytes": 144853,
+      "sha256": "e1da9ee6177918f19bb8a2ab6da003cecb028eaacf466cebc7ea0344eb8b0689"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_154.pt",
+      "path": "dev/dev_shard_154_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "da980fffcd813a1132496f1170d53825b0d81ce055189b4984ea818607c760b6"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_155.pt",
+      "path": "dev/dev_shard_155_embeddings.pt",
+      "rows": 404,
+      "bytes": 149589,
+      "sha256": "23f9f6d312f0f10ab21624e1246328dd4177a98d8a91d6afacab9a1c6b394364"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_156.pt",
+      "path": "dev/dev_shard_156_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "4cad41e7ea9c709419ecab4df5fc2e1ed924fe63074643a7ac46874649d0c076"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_157.pt",
+      "path": "dev/dev_shard_157_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "3d99fac1e477be5107e61656dae6bcd1e5850dd7f7761fdfff94d5b009f2baa9"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_158.pt",
+      "path": "dev/dev_shard_158_embeddings.pt",
+      "rows": 414,
+      "bytes": 153301,
+      "sha256": "c27a22068dfa97027b1d0fc06e6041a75b250f1d932687cc32160efdb58ed1fb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_159.pt",
+      "path": "dev/dev_shard_159_embeddings.pt",
+      "rows": 386,
+      "bytes": 143061,
+      "sha256": "8c6fe76345c3612b95c72c56a01c89fe947a04f04ddea76f5210a4f53f6bffa4"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_160.pt",
+      "path": "dev/dev_shard_160_embeddings.pt",
+      "rows": 390,
+      "bytes": 144533,
+      "sha256": "cf69a1f348f0b9d99bd4583c7fc30f1f883d662b295ff6cea0c2979f8707f703"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_161.pt",
+      "path": "dev/dev_shard_161_embeddings.pt",
+      "rows": 421,
+      "bytes": 155733,
+      "sha256": "a3f38efcf7573dad6de14812f666fe755b766438bc92b403d0d74b92922c7b64"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_162.pt",
+      "path": "dev/dev_shard_162_embeddings.pt",
+      "rows": 430,
+      "bytes": 159125,
+      "sha256": "b1786fd89a36b839365f0d4d84f00c5423e90b889de1d39f22b8bd099e6fbdc1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_163.pt",
+      "path": "dev/dev_shard_163_embeddings.pt",
+      "rows": 419,
+      "bytes": 155029,
+      "sha256": "df9974dc2a2b3cf52204bd031f12041062a8d468ff3e22649bb552df55491b21"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_164.pt",
+      "path": "dev/dev_shard_164_embeddings.pt",
+      "rows": 435,
+      "bytes": 160853,
+      "sha256": "d7795626bb9b58998e982bd3a74bafa27845f284d976979858abd59df8c52134"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_165.pt",
+      "path": "dev/dev_shard_165_embeddings.pt",
+      "rows": 423,
+      "bytes": 156501,
+      "sha256": "ccaa83c9af3d2531f9ab983fa6c6e18ecf5d49e926ff0c5b8659707b8c725cd0"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_166.pt",
+      "path": "dev/dev_shard_166_embeddings.pt",
+      "rows": 413,
+      "bytes": 152853,
+      "sha256": "a28c4f5b376cfe13332e9002699e571ee9416f9ab32575f12f673ab6e5f437b1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_167.pt",
+      "path": "dev/dev_shard_167_embeddings.pt",
+      "rows": 413,
+      "bytes": 152853,
+      "sha256": "858f7ee4c7e5887f48fe6fa1705ae3db4f3d1246474566ae0fc2ff6f65617c65"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_168.pt",
+      "path": "dev/dev_shard_168_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "65eb9e0de2787879c4b76fd3e105a72aa74d9202eab0b73c02fd30b76805ff45"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_169.pt",
+      "path": "dev/dev_shard_169_embeddings.pt",
+      "rows": 387,
+      "bytes": 143381,
+      "sha256": "1eca44f341dd5a75c9f75690d107a02bc1be095af54415d3beff2e78d5ea2222"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_170.pt",
+      "path": "dev/dev_shard_170_embeddings.pt",
+      "rows": 428,
+      "bytes": 158357,
+      "sha256": "6b5ab137934177ef92e11cb7cd9aefa03fc26ee32cc6d44524272ca7552b9e62"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_171.pt",
+      "path": "dev/dev_shard_171_embeddings.pt",
+      "rows": 421,
+      "bytes": 155733,
+      "sha256": "259979b163b22cc395d37ba611936a26317e554783d473adc2de30ee5f2bafad"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_172.pt",
+      "path": "dev/dev_shard_172_embeddings.pt",
+      "rows": 391,
+      "bytes": 144853,
+      "sha256": "12a6983e0622270e54a469782abf52cfaee0d7f2985b5a5c3f722bd8a2bf5207"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_173.pt",
+      "path": "dev/dev_shard_173_embeddings.pt",
+      "rows": 423,
+      "bytes": 156501,
+      "sha256": "8b306c1abfd53e49645cbcb6aa02e3444f03df8378878dc788c83a030a31fd66"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_174.pt",
+      "path": "dev/dev_shard_174_embeddings.pt",
+      "rows": 430,
+      "bytes": 159125,
+      "sha256": "752a5b261d4556ad707906299d47915da81db6040f17adb620a560298e454fae"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_175.pt",
+      "path": "dev/dev_shard_175_embeddings.pt",
+      "rows": 365,
+      "bytes": 135381,
+      "sha256": "94c47822de99e9ff8a9ff95da1468bd11c1111c1635f39a288e1f3a02041391d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_176.pt",
+      "path": "dev/dev_shard_176_embeddings.pt",
+      "rows": 397,
+      "bytes": 147029,
+      "sha256": "e357d2d056d69de69547dd7ba4334d90d770319d8972b3d746dd3c1095164e05"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_177.pt",
+      "path": "dev/dev_shard_177_embeddings.pt",
+      "rows": 390,
+      "bytes": 144533,
+      "sha256": "4162fffaf437cab06b0a95c59c98ec2034e7f34ea5add006c115bee8775aed36"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_178.pt",
+      "path": "dev/dev_shard_178_embeddings.pt",
+      "rows": 433,
+      "bytes": 160149,
+      "sha256": "d88c05c64a3e3e6215669ca4c4c798255ec3d565a317bc2607511550fb3ffccc"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_179.pt",
+      "path": "dev/dev_shard_179_embeddings.pt",
+      "rows": 418,
+      "bytes": 154709,
+      "sha256": "fa477e2258961794d21cd46d0bd04e083d7e67070152091686e02c79232cf3bb"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_180.pt",
+      "path": "dev/dev_shard_180_embeddings.pt",
+      "rows": 390,
+      "bytes": 144533,
+      "sha256": "e2f2febbb12dad901d1ee931325b456e40779b4e1454af78ff4c15754cec2c6a"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_181.pt",
+      "path": "dev/dev_shard_181_embeddings.pt",
+      "rows": 378,
+      "bytes": 140117,
+      "sha256": "090a02621caca8b67482823b241637c6546120cc8c596f1b52a594b499c4363f"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_182.pt",
+      "path": "dev/dev_shard_182_embeddings.pt",
+      "rows": 420,
+      "bytes": 155413,
+      "sha256": "5c73af825d933c9d010b6e88ebf7ac0c83d6ab3ea224888e86ab995b80d39f47"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_183.pt",
+      "path": "dev/dev_shard_183_embeddings.pt",
+      "rows": 387,
+      "bytes": 143381,
+      "sha256": "a2a1eb654b64741d2d1561f168dd509b37318f6b22e4bad7f9b7a0fb9d048979"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_184.pt",
+      "path": "dev/dev_shard_184_embeddings.pt",
+      "rows": 418,
+      "bytes": 154709,
+      "sha256": "4cb2d2079a5fdba14f3405da828a1e60ff0c0ca35942c237857b16a7ac615894"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_185.pt",
+      "path": "dev/dev_shard_185_embeddings.pt",
+      "rows": 421,
+      "bytes": 155733,
+      "sha256": "cecae637fe03231c1d8b61052a0fe9c8145742c26e910d790dbdad21da204709"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_186.pt",
+      "path": "dev/dev_shard_186_embeddings.pt",
+      "rows": 423,
+      "bytes": 156501,
+      "sha256": "b898ce65e81bf88f4eea79c5490de9b62b80a8eac51a4fe63b81ed9afd6f44b7"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_187.pt",
+      "path": "dev/dev_shard_187_embeddings.pt",
+      "rows": 402,
+      "bytes": 148885,
+      "sha256": "ea04d3bb9cf972e1a257c28982aa498e6591cd0832f71711235de28fac02f170"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_188.pt",
+      "path": "dev/dev_shard_188_embeddings.pt",
+      "rows": 400,
+      "bytes": 148181,
+      "sha256": "5a2f2b446ea95d0b681262a1e0adf1659bff283998b4484b293145e3d250ef63"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_189.pt",
+      "path": "dev/dev_shard_189_embeddings.pt",
+      "rows": 381,
+      "bytes": 141205,
+      "sha256": "323533196a61ab990b750618b28a1dd6dd88d2f9eef6a379dca123d31ccd1f73"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_190.pt",
+      "path": "dev/dev_shard_190_embeddings.pt",
+      "rows": 400,
+      "bytes": 148181,
+      "sha256": "daef8dcda7b0af3091cf7babe2b6e595490fb084e054dc44d990b543272ab921"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_191.pt",
+      "path": "dev/dev_shard_191_embeddings.pt",
+      "rows": 434,
+      "bytes": 160533,
+      "sha256": "4061bca3fd4229a4d877d38d2f19ebc538e097cbbcac46b2a099b1692485c89e"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_192.pt",
+      "path": "dev/dev_shard_192_embeddings.pt",
+      "rows": 422,
+      "bytes": 156181,
+      "sha256": "a6c96d045261b1ee0e275238d5b9b05b8e26294e1a6de6bd064e0291b6f90abf"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_193.pt",
+      "path": "dev/dev_shard_193_embeddings.pt",
+      "rows": 382,
+      "bytes": 141653,
+      "sha256": "49fb6aa32ab21ec2e0a1018fbb868a4bc27dec1c0fc99d8830f05d265c86075d"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_194.pt",
+      "path": "dev/dev_shard_194_embeddings.pt",
+      "rows": 366,
+      "bytes": 135829,
+      "sha256": "9e54f2c2aac1b434d222e48f86817d29b644cd54c2bf875eb00d63c29da76db3"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_195.pt",
+      "path": "dev/dev_shard_195_embeddings.pt",
+      "rows": 452,
+      "bytes": 167061,
+      "sha256": "c163cc46b76a9a5f05969d08cb1226d0db67479849eaa5c2be871f00b4cc4bb1"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_196.pt",
+      "path": "dev/dev_shard_196_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "3ea6da9d814e8fca0fa66c74d064613835937e6eac1dbb4bb1a72d3b09f57596"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_197.pt",
+      "path": "dev/dev_shard_197_embeddings.pt",
+      "rows": 436,
+      "bytes": 161237,
+      "sha256": "65ae3dc6cfdc43f6e56dc67517511de29ba00e2830a13dcb12609560504c1009"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_198.pt",
+      "path": "dev/dev_shard_198_embeddings.pt",
+      "rows": 415,
+      "bytes": 153621,
+      "sha256": "35b0bc589a78642345bf7042b33676b5c56926738ec2b3a1743f47e7f35d9836"
+    },
+    {
+      "role": "dev",
+      "source_shard": "primary/dev_shard_199.pt",
+      "path": "dev/dev_shard_199_embeddings.pt",
+      "rows": 389,
+      "bytes": 144085,
+      "sha256": "81ea9574fcc7902ed59014a8432915eb6faf562bb848b62d147651f4908dbcd2"
+    },
+    {
+      "role": "official",
+      "source_shard": "primary/official_shard_200.pt",
+      "path": "official/official_shard_200_embeddings.pt",
+      "rows": 4981,
+      "bytes": 1795501,
+      "sha256": "643ea266cd2b3fab8f105173f8fd69a7268fd11b9a3648cb82776cc5d1fc2e73"
+    }
+  ],
+  "rows": {
+    "train": 915012,
+    "dev": 81961,
+    "official": 4981
+  },
+  "official_valid_metric_read": false
+}

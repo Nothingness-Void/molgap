@@ -1,0 +1,237 @@
+{
+  "status": "complete",
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "encoder": "gps11_160",
+  "stage": "50k",
+  "trial": {
+    "trial_id": "trial_04",
+    "learning_rate": 8e-05,
+    "weight_decay": 0.0001,
+    "dropout": 0.05,
+    "batch_size": 256,
+    "warmup_ratio": 0.05,
+    "grad_clip": 1.0
+  },
+  "seed": 42,
+  "epochs": 20,
+  "patience": 4,
+  "subset_manifest_sha256": "49ea94f83fdba603f559c6e2d514b03a89c0b83f440b70a0688cb0e27560bccc",
+  "warm_start_sha256": "d806a4b6907eafd20dec8c5eeae766d7049a5cf7f159295422f398e588829a6a",
+  "schnet_cutoff_A": null,
+  "best_epoch": 18,
+  "best_dev_gap_mae_eV": 0.21640963852405548,
+  "train_log": [
+    {
+      "epoch": 0,
+      "train_gap_l1": 0.27207791689395905,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2661006450653076,
+      "learning_rate": 8e-05,
+      "elapsed_s": 28.64864286291413,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_gap_l1": 0.22560309223890304,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2376926988363266,
+      "learning_rate": 7.939838701928344e-05,
+      "elapsed_s": 28.0923879428301,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_gap_l1": 0.21414579238653184,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23653334379196167,
+      "learning_rate": 7.761182778312198e-05,
+      "elapsed_s": 28.433421498863026,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_gap_l1": 0.20660848616361618,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23221077024936676,
+      "learning_rate": 7.469460598986378e-05,
+      "elapsed_s": 28.495181639911607,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_gap_l1": 0.19971137059688568,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23386527597904205,
+      "learning_rate": 7.073535994751153e-05,
+      "elapsed_s": 28.170403057010844,
+      "selected": false
+    },
+    {
+      "epoch": 5,
+      "train_gap_l1": 0.1942559984278679,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.22581681609153748,
+      "learning_rate": 6.585438934358696e-05,
+      "elapsed_s": 29.10896345996298,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_gap_l1": 0.1901878289103508,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.22921913862228394,
+      "learning_rate": 6.02e-05,
+      "elapsed_s": 28.109028144041076,
+      "selected": false
+    },
+    {
+      "epoch": 7,
+      "train_gap_l1": 0.1848198740029335,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23098212480545044,
+      "learning_rate": 5.3943997675696494e-05,
+      "elapsed_s": 28.51455358089879,
+      "selected": false
+    },
+    {
+      "epoch": 8,
+      "train_gap_l1": 0.18098872812747954,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23480205237865448,
+      "learning_rate": 4.727646783561045e-05,
+      "elapsed_s": 28.38482502102852,
+      "selected": false
+    },
+    {
+      "epoch": 9,
+      "train_gap_l1": 0.17754784893989564,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.22024127840995789,
+      "learning_rate": 4.0400000000000006e-05,
+      "elapsed_s": 28.272935122950003,
+      "selected": true
+    },
+    {
+      "epoch": 10,
+      "train_gap_l1": 0.1726206039762497,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.22397030889987946,
+      "learning_rate": 3.3523532164389565e-05,
+      "elapsed_s": 28.84371189493686,
+      "selected": false
+    },
+    {
+      "epoch": 11,
+      "train_gap_l1": 0.17033623727083205,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2244889885187149,
+      "learning_rate": 2.6856002324303525e-05,
+      "elapsed_s": 28.123871645890176,
+      "selected": false
+    },
+    {
+      "epoch": 12,
+      "train_gap_l1": 0.16580679713368415,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2179790586233139,
+      "learning_rate": 2.060000000000001e-05,
+      "elapsed_s": 28.300720519851893,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_gap_l1": 0.16307739609479904,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21680031716823578,
+      "learning_rate": 1.4945610656413043e-05,
+      "elapsed_s": 28.37443795101717,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_gap_l1": 0.16100030138015747,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21663744747638702,
+      "learning_rate": 1.0064640052488476e-05,
+      "elapsed_s": 28.49658674094826,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_gap_l1": 0.15911209228396417,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21931128203868866,
+      "learning_rate": 6.1053940101362276e-06,
+      "elapsed_s": 28.52177465101704,
+      "selected": false
+    },
+    {
+      "epoch": 16,
+      "train_gap_l1": 0.15799535016536712,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21947690844535828,
+      "learning_rate": 3.1881722168780312e-06,
+      "elapsed_s": 28.177557873073965,
+      "selected": false
+    },
+    {
+      "epoch": 17,
+      "train_gap_l1": 0.15661959466218947,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21751782298088074,
+      "learning_rate": 1.4016129807165625e-06,
+      "elapsed_s": 28.679821897065267,
+      "selected": false
+    },
+    {
+      "epoch": 18,
+      "train_gap_l1": 0.15592158866882325,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21640963852405548,
+      "learning_rate": 8.000000000000001e-07,
+      "elapsed_s": 28.252114019123837,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_gap_l1": 0.15517990114569663,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21783627569675446,
+      "learning_rate": 1.4016129807165625e-06,
+      "elapsed_s": 28.242875493131578,
+      "selected": false
+    }
+  ],
+  "warm_start_report": {
+    "source_input_dim": 9,
+    "target_input_dim": 18,
+    "copied_old_element_columns": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "copied_old_scalar_columns_to": [
+      15,
+      16,
+      17
+    ],
+    "zero_initialized_new_element_columns": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

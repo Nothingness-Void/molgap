@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=4
+#PBS -l walltime=00:30:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+ROUTE_B_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+INPUTS="$ROOT/fusion_inputs"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+mkdir -p preflight logs
+export PYTHONPATH="$ROUTE_B_ROOT/code/platforms/ims/pcqm_route_b/shims:$ROUTE_B_ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+
+"$PYTHON" "$ROOT/code/experiments/preflight_hierarchical_2d3d_fusion.py" \
+  --frozen-2d "$INPUTS/frozen_2d_test_payload.pt" \
+  --frozen-sha256 23fffd29ce005ae0605b1e2ffb45bf86d53b0b53c07118da510c6bd0d70d2e12 \
+  --manifest "$INPUTS/repaired_2m_scaffold_groups.npz" \
+  --manifest-sha256 b352e9455939bc3308bb041e67eadf1f0fd8d902769f4a50173b438c7d2a8f32 \
+  --primary-embeddings "$ROOT/embeddings/primary" \
+  --augmented-embeddings "$ROOT/embeddings/augmented" \
+  --embedding-acceptance "$ROOT/embeddings/acceptance.json" \
+  --output "$ROOT/preflight/hierarchical_dual_schnet_v1.json" \
+  2>&1 | tee "logs/preflight_hierarchical_dual_schnet_v1.log"

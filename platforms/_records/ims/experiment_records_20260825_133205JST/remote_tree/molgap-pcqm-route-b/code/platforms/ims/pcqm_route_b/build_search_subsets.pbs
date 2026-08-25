@@ -1,0 +1,19 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+cd "$ROOT"
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f logs/input_acceptance.json
+mkdir -p search/subsets logs/search
+export PYTHONPATH="$ROOT/code/platforms/ims/pcqm_route_b/shims:$ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+"$PYTHON" code/platforms/ims/pcqm_route_b/build_search_subsets.py \
+  --root "$ROOT" 2>&1 | tee logs/search/build_subsets.log

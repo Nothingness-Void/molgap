@@ -1,0 +1,227 @@
+{
+  "status": "complete",
+  "variant": "augmented",
+  "config": {
+    "variant": "augmented",
+    "epochs": 10,
+    "patience": 4,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 1.4656553886225336e-05,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "source_rows": 2000000,
+    "num_workers": 0,
+    "amp_dtype": "bfloat16",
+    "max_nonfinite_batches": 8
+  },
+  "model_config": {
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 10.0,
+    "dropout": 0.05
+  },
+  "input_reports": {
+    "primary": {
+      "acceptance_path": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/primary/primary_acceptance.json",
+      "acceptance_sha256": "9b0080b2da897880a3b51111dbf914af16db98b0dacf90353fdb800104f2e659",
+      "accepted_rows": 1989116,
+      "shards": 100
+    },
+    "secondary": {
+      "acceptance_path": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/secondary/secondary_acceptance.json",
+      "acceptance_sha256": "6e3ac00d0cb5da94649a0dd7d2cbc0142489b027e7dad6c6141e5571e056b981",
+      "accepted_rows": 1986868,
+      "shards": 100
+    }
+  },
+  "best_epoch": 7,
+  "best_validation_average_mae_eV": 0.1273517885732257,
+  "test_rows": 198925,
+  "test_mae_eV": {
+    "HOMO": 0.11595014644774777,
+    "LUMO": 0.10959282975708014,
+    "Gap": 0.15549344257447265
+  },
+  "test_average_mae_eV": 0.12701213959310018,
+  "log": [
+    {
+      "epoch": 0,
+      "train_mae_eV": 0.2241288027200377,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.18629037807780005,
+        "LUMO": 0.21650512874429373,
+        "Gap": 0.3043212465743505
+      },
+      "validation_average_mae_eV": 0.2357055844654814,
+      "learning_rate": 9.757729755661011e-05,
+      "elapsed_s": 4011.414139991859,
+      "selected": true,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 1,
+      "train_mae_eV": 0.15170751110963268,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.13473841141036108,
+        "LUMO": 0.14015107536435295,
+        "Gap": 0.19289715021985165
+      },
+      "validation_average_mae_eV": 0.15592887899818855,
+      "learning_rate": 9.05463412215599e-05,
+      "elapsed_s": 4004.5487147190142,
+      "selected": true,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 2,
+      "train_mae_eV": 0.13705724106056058,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.1267859541610368,
+        "LUMO": 0.1273515282959046,
+        "Gap": 0.1777078498864227
+      },
+      "validation_average_mae_eV": 0.1439484441144547,
+      "learning_rate": 7.959536998847742e-05,
+      "elapsed_s": 3931.903105577221,
+      "selected": true,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 3,
+      "train_mae_eV": 0.12866465089008797,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.1456536870568496,
+        "LUMO": 0.14095962558587724,
+        "Gap": 0.21310264975341478
+      },
+      "validation_average_mae_eV": 0.16657198746538052,
+      "learning_rate": 6.57963412215599e-05,
+      "elapsed_s": 3834.0300822770223,
+      "selected": false,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 4,
+      "train_mae_eV": 0.12401270162641963,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.12614526259592246,
+        "LUMO": 0.11732590326344461,
+        "Gap": 0.16856245732584185
+      },
+      "validation_average_mae_eV": 0.1373445410617363,
+      "learning_rate": 5.05e-05,
+      "elapsed_s": 3820.8751560680103,
+      "selected": true,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 5,
+      "train_mae_eV": 0.11973052830931032,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.12740371969167974,
+        "LUMO": 0.1391281083146274,
+        "Gap": 0.20221258294844316
+      },
+      "validation_average_mae_eV": 0.15624813698491677,
+      "learning_rate": 3.5203658778440106e-05,
+      "elapsed_s": 3823.2682725370396,
+      "selected": false,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 6,
+      "train_mae_eV": 0.11736471443060782,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.24893129895197863,
+        "LUMO": 0.25864874317610803,
+        "Gap": 0.4766318488042766
+      },
+      "validation_average_mae_eV": 0.3280706303107878,
+      "learning_rate": 2.1404630011522586e-05,
+      "elapsed_s": 3809.7338949940167,
+      "selected": false,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 7,
+      "train_mae_eV": 0.11616351677938791,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.1160687302065732,
+        "LUMO": 0.10992702077834408,
+        "Gap": 0.15605961473475982
+      },
+      "validation_average_mae_eV": 0.1273517885732257,
+      "learning_rate": 1.0453658778440107e-05,
+      "elapsed_s": 3829.561233791057,
+      "selected": true,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 8,
+      "train_mae_eV": 0.1151306699138011,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.20448027534506533,
+        "LUMO": 0.1649764871923781,
+        "Gap": 0.3337962558540989
+      },
+      "validation_average_mae_eV": 0.23441767279718076,
+      "learning_rate": 3.4227024433899e-06,
+      "elapsed_s": 3832.016822875943,
+      "selected": false,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    },
+    {
+      "epoch": 9,
+      "train_mae_eV": 0.11526090314810554,
+      "train_draw_rows": 3180757,
+      "validation_rows": 198919,
+      "validation_mae_eV": {
+        "HOMO": 0.11768665782553803,
+        "LUMO": 0.1208330828793817,
+        "Gap": 0.17268878905086946
+      },
+      "validation_average_mae_eV": 0.13706950991859637,
+      "learning_rate": 1e-06,
+      "elapsed_s": 3858.6945697360206,
+      "selected": false,
+      "nonfinite_batches": 0,
+      "nonfinite_source_idx_sample": []
+    }
+  ],
+  "artifacts": {
+    "model": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/outputs/augmented/model.pt",
+    "model_sha256": "70375e8974284b81be5c44cd922a22eda87dbdf675d54390063880920c54db6c",
+    "checkpoint": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/outputs/augmented/checkpoint.pt",
+    "checkpoint_sha256": "eea5994d22bf6c6002fb2dc045c45ec95ed38c0acc118eb7924c7b4ccc33f7bd"
+  }
+}

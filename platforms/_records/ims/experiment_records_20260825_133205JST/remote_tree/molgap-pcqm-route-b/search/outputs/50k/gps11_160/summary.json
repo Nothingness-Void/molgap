@@ -1,0 +1,180 @@
+{
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "status": "complete",
+  "encoder": "gps11_160",
+  "stage": "50k",
+  "ranking": [
+    {
+      "trial_id": "trial_02",
+      "best_dev_gap_mae_eV": 0.2128332555294037,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_02",
+        "learning_rate": 0.00016,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_09",
+      "best_dev_gap_mae_eV": 0.2151740938425064,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_09",
+        "learning_rate": 0.00016,
+        "weight_decay": 1e-06,
+        "dropout": 0.0,
+        "batch_size": 384,
+        "warmup_ratio": 0.1,
+        "grad_clip": 0.5
+      }
+    },
+    {
+      "trial_id": "trial_05",
+      "best_dev_gap_mae_eV": 0.2158423811197281,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_05",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.0,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_04",
+      "best_dev_gap_mae_eV": 0.21640963852405548,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_04",
+        "learning_rate": 8e-05,
+        "weight_decay": 0.0001,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_03",
+      "best_dev_gap_mae_eV": 0.21699738502502441,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_03",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-06,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_00",
+      "best_dev_gap_mae_eV": 0.2177010476589203,
+      "best_epoch": 18,
+      "trial": {
+        "trial_id": "trial_00",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.0,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_11",
+      "best_dev_gap_mae_eV": 0.21914294362068176,
+      "best_epoch": 9,
+      "trial": {
+        "trial_id": "trial_11",
+        "learning_rate": 0.00012,
+        "weight_decay": 3e-06,
+        "dropout": 0.05,
+        "batch_size": 128,
+        "warmup_ratio": 0.1,
+        "grad_clip": 2.0
+      }
+    },
+    {
+      "trial_id": "trial_01",
+      "best_dev_gap_mae_eV": 0.22632278501987457,
+      "best_epoch": 4,
+      "trial": {
+        "trial_id": "trial_01",
+        "learning_rate": 4e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_08",
+      "best_dev_gap_mae_eV": 0.22915951907634735,
+      "best_epoch": 14,
+      "trial": {
+        "trial_id": "trial_08",
+        "learning_rate": 4e-05,
+        "weight_decay": 0.0001,
+        "dropout": 0.1,
+        "batch_size": 128,
+        "warmup_ratio": 0.1,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_06",
+      "best_dev_gap_mae_eV": 0.23675422370433807,
+      "best_epoch": 3,
+      "trial": {
+        "trial_id": "trial_06",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.1,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_10",
+      "best_dev_gap_mae_eV": 0.23795092105865479,
+      "best_epoch": 3,
+      "trial": {
+        "trial_id": "trial_10",
+        "learning_rate": 6e-05,
+        "weight_decay": 3e-05,
+        "dropout": 0.1,
+        "batch_size": 384,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_07",
+      "best_dev_gap_mae_eV": 0.2518792152404785,
+      "best_epoch": 3,
+      "trial": {
+        "trial_id": "trial_07",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.15,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    }
+  ],
+  "promotion_count": 4,
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false
+}

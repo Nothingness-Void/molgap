@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+BOUNDARY=/lustre/home/users/sm2/chou
+ENCODER_ROOT="$ROOT/acceptance_tuned_gps9_scnet_20260729/outputs"
+OUTPUT_DIR="$ROOT/colab_tuned_gps9_fusion_payload_20260729"
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+case "$(realpath "$ENCODER_ROOT")" in
+  "$BOUNDARY"/*) ;;
+  *) echo "ENCODER_ROOT escapes user boundary" >&2; exit 1 ;;
+esac
+case "$(realpath "$(dirname "$OUTPUT_DIR")")" in
+  "$BOUNDARY"/*) ;;
+  *) echo "OUTPUT_DIR escapes user boundary" >&2; exit 1 ;;
+esac
+test ! -e "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR" logs
+export PYTHONPATH="$ROOT/code/platforms/ims/pcqm_route_b/shims:$ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+"$PYTHON" code/platforms/ims/pcqm_route_b/export_colab_fusion_payload.py \
+  --encoder-root "$ENCODER_ROOT" \
+  --output-dir "$OUTPUT_DIR" \
+  2>&1 | tee logs/colab_tuned_gps9_fusion_payload_20260729.log

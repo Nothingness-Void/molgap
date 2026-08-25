@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "training_imports": {
+    "metric_block": true,
+    "paired_bootstrap_mean": true
+  },
+  "torch": "2.7.1+cu126",
+  "cuda_available": false,
+  "frozen_2d": {
+    "rows": 200000,
+    "sha256": "23fffd29ce005ae0605b1e2ffb45bf86d53b0b53c07118da510c6bd0d70d2e12"
+  },
+  "manifest": {
+    "rows": 2000000,
+    "scaffold_groups": 792197,
+    "sha256": "b352e9455939bc3308bb041e67eadf1f0fd8d902769f4a50173b438c7d2a8f32"
+  },
+  "primary": {
+    "parts": 100,
+    "probes": [
+      {
+        "path": "embeddings_0000000_0020000.pt",
+        "rows": 19986,
+        "source_min": 0,
+        "source_max": 19999
+      },
+      {
+        "path": "embeddings_1980000_2000000.pt",
+        "rows": 19825,
+        "source_min": 1980000,
+        "source_max": 1999999
+      }
+    ]
+  },
+  "augmented": {
+    "parts": 100,
+    "probes": [
+      {
+        "path": "embeddings_0000000_0020000.pt",
+        "rows": 19986,
+        "source_min": 0,
+        "source_max": 19999
+      },
+      {
+        "path": "embeddings_1980000_2000000.pt",
+        "rows": 19825,
+        "source_min": 1980000,
+        "source_max": 1999999
+      }
+    ]
+  },
+  "embedding_acceptance_sha256": "5503a91ab4c8c53300d216ef5e7f2775551a454cf739681dc9d679b66dd18209"
+}

@@ -1,0 +1,242 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "edge_global_2d",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "01656b1a538f89c8",
+  "split_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5358991622924805,
+    0.3225027918815613,
+    6.8583855628967285
+  ],
+  "target_std": [
+    0.5976356863975525,
+    1.2715765237808228,
+    1.288191318511963
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 192,
+    "edge_channels": 64,
+    "num_layers": 8,
+    "num_heads": 4,
+    "dropout": 0.05,
+    "pooling": "mean_max",
+    "batch_size": 128
+  },
+  "n_params": 4688803,
+  "best_epoch": 18,
+  "best_validation_average_mae_eV": 0.1367870569229126,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.1000039353966713
+      },
+      "LUMO": {
+        "mae": 0.11013711243867874
+      },
+      "Gap": {
+        "mae": 0.1400846391916275
+      },
+      "average": {
+        "mae": 0.11674189567565918
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.1155829057097435
+      },
+      "LUMO": {
+        "mae": 0.12732800841331482
+      },
+      "Gap": {
+        "mae": 0.16745032370090485
+      },
+      "average": {
+        "mae": 0.1367870569229126
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.11869215965270996
+      },
+      "LUMO": {
+        "mae": 0.12750418484210968
+      },
+      "Gap": {
+        "mae": 0.16683457791805267
+      },
+      "average": {
+        "mae": 0.13767696917057037
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.4490989985307058,
+      "validation_average_mae_eV": 0.32326558232307434,
+      "elapsed_s": 37.04463453916833,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.30177574195861817,
+      "validation_average_mae_eV": 0.2868710458278656,
+      "elapsed_s": 31.671673742122948,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_normalized_l1": 0.25970906869570415,
+      "validation_average_mae_eV": 0.24322426319122314,
+      "elapsed_s": 31.825102461036295,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_normalized_l1": 0.23579297281106312,
+      "validation_average_mae_eV": 0.22485189139842987,
+      "elapsed_s": 31.84511269722134,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_normalized_l1": 0.22243681852817535,
+      "validation_average_mae_eV": 0.20907056331634521,
+      "elapsed_s": 31.793702480383217,
+      "selected": true
+    },
+    {
+      "epoch": 5,
+      "train_normalized_l1": 0.21022163152694703,
+      "validation_average_mae_eV": 0.19835975766181946,
+      "elapsed_s": 31.61109166778624,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_normalized_l1": 0.2010990804831187,
+      "validation_average_mae_eV": 0.19060169160366058,
+      "elapsed_s": 31.927661856170744,
+      "selected": true
+    },
+    {
+      "epoch": 7,
+      "train_normalized_l1": 0.19374300705591838,
+      "validation_average_mae_eV": 0.18201227486133575,
+      "elapsed_s": 31.818109523970634,
+      "selected": true
+    },
+    {
+      "epoch": 8,
+      "train_normalized_l1": 0.18504296535650888,
+      "validation_average_mae_eV": 0.17156627774238586,
+      "elapsed_s": 31.635993083938956,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_normalized_l1": 0.177143932112058,
+      "validation_average_mae_eV": 0.17368026077747345,
+      "elapsed_s": 31.772804873995483,
+      "selected": false
+    },
+    {
+      "epoch": 10,
+      "train_normalized_l1": 0.1699422935406367,
+      "validation_average_mae_eV": 0.1714150458574295,
+      "elapsed_s": 31.69865348516032,
+      "selected": true
+    },
+    {
+      "epoch": 11,
+      "train_normalized_l1": 0.1622860675573349,
+      "validation_average_mae_eV": 0.15720245242118835,
+      "elapsed_s": 31.72239213390276,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_normalized_l1": 0.15594487749735514,
+      "validation_average_mae_eV": 0.15396200120449066,
+      "elapsed_s": 31.94759752973914,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_normalized_l1": 0.15052482992808025,
+      "validation_average_mae_eV": 0.14719811081886292,
+      "elapsed_s": 32.045374151319265,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_normalized_l1": 0.14511174060503643,
+      "validation_average_mae_eV": 0.15104426443576813,
+      "elapsed_s": 31.741574057377875,
+      "selected": false
+    },
+    {
+      "epoch": 15,
+      "train_normalized_l1": 0.14140335221687952,
+      "validation_average_mae_eV": 0.14377732574939728,
+      "elapsed_s": 31.976895248051733,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_normalized_l1": 0.13668535378774008,
+      "validation_average_mae_eV": 0.138807013630867,
+      "elapsed_s": 31.894065463915467,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_normalized_l1": 0.13372618549664816,
+      "validation_average_mae_eV": 0.13862954080104828,
+      "elapsed_s": 31.826075268909335,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_normalized_l1": 0.13145913560390474,
+      "validation_average_mae_eV": 0.1367870569229126,
+      "elapsed_s": 31.888387355953455,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_normalized_l1": 0.13046757527589797,
+      "validation_average_mae_eV": 0.13680611550807953,
+      "elapsed_s": 32.0885162348859,
+      "selected": false
+    }
+  ],
+  "artifacts": {
+    "embeddings": "/lustre/home/users/sm2/chou/molgap-top20-qm9/data/cache/qm9/embeddings/n30000_3000_3000/edge_global_2d_topology/seed42/payload.pt",
+    "model": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_edge_global_2d_retry2/n30000_3000_3000/edge_global_2d_topology/seed42/model.pt",
+    "checkpoint": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_edge_global_2d_retry2/n30000_3000_3000/edge_global_2d_topology/seed42/checkpoint.pt"
+  }
+}

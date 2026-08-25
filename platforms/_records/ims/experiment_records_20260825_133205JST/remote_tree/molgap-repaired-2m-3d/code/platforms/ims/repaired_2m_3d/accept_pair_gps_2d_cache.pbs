@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=1
+#PBS -l walltime=06:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-repaired-2m-3d
+ROUTE_B_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+CACHE="$ROOT/pair_gps_2d"
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test -f "$CACHE/build_completion.json"
+export PYTHONPATH="$ROOT/deps/site:$ROUTE_B_ROOT/code/platforms/ims/pcqm_route_b/shims:$ROUTE_B_ROOT/vendor:$ROOT/code/src"
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+"$PYTHON" -u "$ROOT/code/experiments/pubchemqc_pair_gps_2d/accept_cache.py" \
+  --cache-dir "$CACHE" --split-seed 42 2>&1 | tee "$ROOT/logs/accept_pair_gps_2d_cache.log"

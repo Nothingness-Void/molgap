@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=8
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+mkdir -p data/cache/qm9 outputs/cache logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=8
+export MKL_NUM_THREADS=8
+
+"$PYTHON" -u experiments/top20_architecture_qm9/prepare_etkdg.py \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --output-dir "$ROOT/outputs/cache" \
+  --train-size 100000 --validation-size 10000 --test-size 10000 \
+  --split-seed 42 --geometry-seed 42 2>&1 | tee logs/prepare_etkdg.log

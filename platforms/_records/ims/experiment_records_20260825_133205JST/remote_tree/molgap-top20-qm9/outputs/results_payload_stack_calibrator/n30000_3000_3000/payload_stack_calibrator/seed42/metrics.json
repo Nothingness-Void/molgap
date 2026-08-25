@@ -1,0 +1,84 @@
+{
+  "experiment": "qm9_payload_stack_calibrator",
+  "candidate": "payload_stack_calibrator",
+  "geometry": "etkdg-compatible retained payloads",
+  "seed": 42,
+  "split_seed": 42,
+  "sources": [
+    "tgt_egt_hybrid_warmblend_etkdg",
+    "tgt_egt_hybrid_plus_etkdg",
+    "tgt_egt_hybrid_warmblend_frozen_etkdg",
+    "tgt_egt_hybrid_etkdg",
+    "tgt_egt_rich_etkdg",
+    "pair_triplet_2d_rich_topology"
+  ],
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "split_rows": {
+    "train": 27877,
+    "validation": 2827,
+    "test": 2794
+  },
+  "model_config": {
+    "kind": "payload_stack_calibrator",
+    "feature_dim": 472,
+    "hidden_channels": 128,
+    "dropout": 0.05,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 256,
+    "epochs": 40,
+    "device": "cuda"
+  },
+  "n_params": 61187,
+  "best_epoch": 6,
+  "initial_validation_average_mae_eV": 0.10057274252176285,
+  "best_validation_average_mae_eV": 0.09813759475946426,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.033383503556251526
+      },
+      "LUMO": {
+        "mae": 0.04198252409696579
+      },
+      "Gap": {
+        "mae": 0.04481888189911842
+      },
+      "average": {
+        "mae": 0.04006163775920868
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.08466703444719315
+      },
+      "LUMO": {
+        "mae": 0.09193503856658936
+      },
+      "Gap": {
+        "mae": 0.11781074106693268
+      },
+      "average": {
+        "mae": 0.09813759475946426
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.08526606112718582
+      },
+      "LUMO": {
+        "mae": 0.09025480598211288
+      },
+      "Gap": {
+        "mae": 0.11770841479301453
+      },
+      "average": {
+        "mae": 0.09774309396743774
+      }
+    }
+  }
+}

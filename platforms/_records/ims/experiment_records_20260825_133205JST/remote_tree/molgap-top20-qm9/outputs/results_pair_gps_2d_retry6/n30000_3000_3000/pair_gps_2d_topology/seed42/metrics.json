@@ -1,0 +1,245 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "pair_gps_2d",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "01656b1a538f89c8",
+  "split_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5358991622924805,
+    0.3225027918815613,
+    6.8583855628967285
+  ],
+  "target_std": [
+    0.5976356863975525,
+    1.2715765237808228,
+    1.288191318511963
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 256,
+    "pair_channels": 96,
+    "num_layers": 10,
+    "num_heads": 8,
+    "dropout": 0.05,
+    "pooling": "mean",
+    "path_steps": 5,
+    "triplet_rank": 16,
+    "batch_size": 48,
+    "amp": false
+  },
+  "n_params": 12925715,
+  "best_epoch": 19,
+  "best_validation_average_mae_eV": 0.11006919294595718,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.0698307678103447
+      },
+      "LUMO": {
+        "mae": 0.0848689153790474
+      },
+      "Gap": {
+        "mae": 0.1008385494351387
+      },
+      "average": {
+        "mae": 0.0851794183254242
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.09198572486639023
+      },
+      "LUMO": {
+        "mae": 0.10632828623056412
+      },
+      "Gap": {
+        "mae": 0.1318935602903366
+      },
+      "average": {
+        "mae": 0.11006919294595718
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.09571872651576996
+      },
+      "LUMO": {
+        "mae": 0.1055229976773262
+      },
+      "Gap": {
+        "mae": 0.1340952217578888
+      },
+      "average": {
+        "mae": 0.11177898943424225
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.45339209866523744,
+      "validation_average_mae_eV": 0.33523496985435486,
+      "elapsed_s": 125.17966127907857,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.2669476400852203,
+      "validation_average_mae_eV": 0.23776499927043915,
+      "elapsed_s": 121.43191294092685,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_normalized_l1": 0.22759555580615998,
+      "validation_average_mae_eV": 0.20199277997016907,
+      "elapsed_s": 121.42863599583507,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_normalized_l1": 0.20632925314903258,
+      "validation_average_mae_eV": 0.18032166361808777,
+      "elapsed_s": 121.43245793087408,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_normalized_l1": 0.19428137350082397,
+      "validation_average_mae_eV": 0.183576762676239,
+      "elapsed_s": 121.54243986820802,
+      "selected": false
+    },
+    {
+      "epoch": 5,
+      "train_normalized_l1": 0.18457607617378236,
+      "validation_average_mae_eV": 0.1718950867652893,
+      "elapsed_s": 121.79953109100461,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_normalized_l1": 0.173764217877388,
+      "validation_average_mae_eV": 0.1610974669456482,
+      "elapsed_s": 121.52630394278094,
+      "selected": true
+    },
+    {
+      "epoch": 7,
+      "train_normalized_l1": 0.1640358405470848,
+      "validation_average_mae_eV": 0.1768168807029724,
+      "elapsed_s": 120.68628046615049,
+      "selected": false
+    },
+    {
+      "epoch": 8,
+      "train_normalized_l1": 0.15632794214487075,
+      "validation_average_mae_eV": 0.1513349562883377,
+      "elapsed_s": 121.06534143490717,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_normalized_l1": 0.1499297050714493,
+      "validation_average_mae_eV": 0.14132285118103027,
+      "elapsed_s": 121.0439217207022,
+      "selected": true
+    },
+    {
+      "epoch": 10,
+      "train_normalized_l1": 0.1413599748969078,
+      "validation_average_mae_eV": 0.14575837552547455,
+      "elapsed_s": 121.58173646312207,
+      "selected": false
+    },
+    {
+      "epoch": 11,
+      "train_normalized_l1": 0.13326662040948867,
+      "validation_average_mae_eV": 0.13370172679424286,
+      "elapsed_s": 120.83310109330341,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_normalized_l1": 0.12578015767335893,
+      "validation_average_mae_eV": 0.1289840191602707,
+      "elapsed_s": 121.57372194807976,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_normalized_l1": 0.1188153277516365,
+      "validation_average_mae_eV": 0.1249670535326004,
+      "elapsed_s": 121.5270235221833,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_normalized_l1": 0.11167509572505951,
+      "validation_average_mae_eV": 0.11796584725379944,
+      "elapsed_s": 120.79405591404065,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_normalized_l1": 0.10576182992458344,
+      "validation_average_mae_eV": 0.11647668480873108,
+      "elapsed_s": 121.44265678524971,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_normalized_l1": 0.09971401120424271,
+      "validation_average_mae_eV": 0.11460255086421967,
+      "elapsed_s": 121.62209633691236,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_normalized_l1": 0.0959897934794426,
+      "validation_average_mae_eV": 0.11305264383554459,
+      "elapsed_s": 121.72782560484484,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_normalized_l1": 0.09270471477508545,
+      "validation_average_mae_eV": 0.11025389283895493,
+      "elapsed_s": 121.93635649280623,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_normalized_l1": 0.0905102906703949,
+      "validation_average_mae_eV": 0.11006919294595718,
+      "elapsed_s": 122.81505098892376,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "/lustre/home/users/sm2/chou/molgap-top20-qm9/data/cache/qm9/embeddings/n30000_3000_3000/pair_gps_2d_topology/seed42/payload.pt",
+    "model": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_pair_gps_2d_retry6/n30000_3000_3000/pair_gps_2d_topology/seed42/model.pt",
+    "checkpoint": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_pair_gps_2d_retry6/n30000_3000_3000/pair_gps_2d_topology/seed42/checkpoint.pt"
+  }
+}

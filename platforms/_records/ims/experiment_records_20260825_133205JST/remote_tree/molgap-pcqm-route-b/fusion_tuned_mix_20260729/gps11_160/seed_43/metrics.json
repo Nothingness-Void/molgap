@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-route-b-fusion-seed-v1",
+  "status": "complete",
+  "base_name": "gps11_160",
+  "seed": 43,
+  "config": {
+    "hidden": 128,
+    "correction_scale_eV": 0.1,
+    "batch_size": 4096,
+    "learning_rate": 0.0003,
+    "weight_decay": 1e-05,
+    "max_epochs": 40,
+    "patience": 8
+  },
+  "base_dev_gap_mae_eV": 0.17044378817081451,
+  "best_epoch": 39,
+  "best_dev_gap_mae_eV": 0.1576109528541565,
+  "contract_hash": "62b6d573319a8048c1448288fbad3a65a77a7060eb0dbe6eaa29cee91584cc82",
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

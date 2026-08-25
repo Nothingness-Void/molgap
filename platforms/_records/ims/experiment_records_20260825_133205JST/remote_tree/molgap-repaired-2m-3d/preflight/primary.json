@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "variant": "primary",
+  "model_config": {
+    "hidden_channels": 176,
+    "num_filters": 160,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 10.0,
+    "dropout": 0.05
+  },
+  "input_reports": {
+    "primary": {
+      "acceptance_path": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/primary/primary_acceptance.json",
+      "acceptance_sha256": "9b0080b2da897880a3b51111dbf914af16db98b0dacf90353fdb800104f2e659",
+      "accepted_rows": 1989116,
+      "shards": 100
+    }
+  },
+  "losses": [
+    4.280115604400635
+  ],
+  "finite": true,
+  "device": "NVIDIA A100-SXM4-80GB",
+  "peak_cuda_bytes": 363491840
+}

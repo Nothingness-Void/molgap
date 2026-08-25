@@ -1,0 +1,68 @@
+{
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "status": "complete",
+  "encoder": "gps11_160",
+  "stage": "100k",
+  "ranking": [
+    {
+      "trial_id": "trial_09",
+      "best_dev_gap_mae_eV": 0.2014700025320053,
+      "best_epoch": 21,
+      "trial": {
+        "trial_id": "trial_09",
+        "learning_rate": 0.00016,
+        "weight_decay": 1e-06,
+        "dropout": 0.0,
+        "batch_size": 384,
+        "warmup_ratio": 0.1,
+        "grad_clip": 0.5
+      }
+    },
+    {
+      "trial_id": "trial_04",
+      "best_dev_gap_mae_eV": 0.20303626358509064,
+      "best_epoch": 16,
+      "trial": {
+        "trial_id": "trial_04",
+        "learning_rate": 8e-05,
+        "weight_decay": 0.0001,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_05",
+      "best_dev_gap_mae_eV": 0.20428869128227234,
+      "best_epoch": 20,
+      "trial": {
+        "trial_id": "trial_05",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.0,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    },
+    {
+      "trial_id": "trial_02",
+      "best_dev_gap_mae_eV": 0.20436613261699677,
+      "best_epoch": 12,
+      "trial": {
+        "trial_id": "trial_02",
+        "learning_rate": 0.00016,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.05,
+        "grad_clip": 1.0
+      }
+    }
+  ],
+  "promotion_count": 4,
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false
+}

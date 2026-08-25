@@ -1,0 +1,61 @@
+{
+  "status": "complete",
+  "experiment": "pubchemqc100k_pair_gps_2d_fair_screen",
+  "candidate": "gps7_gps9_equal",
+  "evaluation_contract": {
+    "format": "molgap-pubchemqc-pair-gps-2d-screen-v1",
+    "candidate": "gps7_gps9_equal",
+    "fusion": "fixed_prediction_average_0.5_0.5",
+    "shared_training": {
+      "cache_acceptance_sha256": "815cab3dbce32fde340ad998a9d8b1bb1128b08b541e4fd22181d0e3d857e9cc",
+      "split_sha256": "1e6707274dd8465cfe9d96a808064372af705c4a9e4b8d20532ae6fff2cdcf05",
+      "epochs": 40,
+      "patience": 10,
+      "batch_size": 64,
+      "learning_rate": 0.0004,
+      "weight_decay": 1e-05,
+      "seed": 42,
+      "precision": "fp32",
+      "loss": "normalized_l1",
+      "gradient_clip": 1.0,
+      "test_role_read": false
+    },
+    "gps7_model_sha256": "5bdb58498afb4f9c69741314b95a0acf9ad986dd93a135ffa125e11b45d5c1a9",
+    "gps9_model_sha256": "e351bc777d32dcc0abc8e7d73c9116244eee5661fb9bbb53c474dc769e9da7d1",
+    "test_role_read": false
+  },
+  "model_configs": {
+    "gps7": {
+      "in_channels": 18,
+      "edge_dim": 4,
+      "hidden_channels": 192,
+      "num_layers": 7,
+      "num_heads": 4,
+      "dropout": 0.05,
+      "n_targets": 3,
+      "pooling": "mean"
+    },
+    "gps9": {
+      "in_channels": 18,
+      "edge_dim": 4,
+      "hidden_channels": 192,
+      "num_layers": 9,
+      "num_heads": 4,
+      "dropout": 0.05,
+      "n_targets": 3,
+      "pooling": "mean"
+    }
+  },
+  "validation": {
+    "homo": 0.13470027384757996,
+    "lumo": 0.14321335968971252,
+    "gap": 0.20228168110847475,
+    "average": 0.1600651048819224
+  },
+  "test": null,
+  "test_role_read": false,
+  "components": {
+    "gps7": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/pubchemqc100k_pairgps/search/gps7_lr4e4_seed42/metrics.json",
+    "gps9": "/lustre/home/users/sm2/chou/molgap-repaired-2m-3d/pubchemqc100k_pairgps/search/gps9_lr4e4_seed42/metrics.json"
+  }
+}

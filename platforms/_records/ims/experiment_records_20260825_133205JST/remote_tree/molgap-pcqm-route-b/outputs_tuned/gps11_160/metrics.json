@@ -1,0 +1,3568 @@
+{
+  "status": "complete",
+  "config": {
+    "name": "gps11_160",
+    "kind": "gps",
+    "modality": "gps",
+    "hidden_channels": 160,
+    "num_layers": 11,
+    "batch_size": 384,
+    "learning_rate": 0.00016,
+    "weight_decay": 1e-06,
+    "max_epochs": 40,
+    "patience": 6,
+    "seed": 42,
+    "augmented": false,
+    "training_budget_s": 32400,
+    "hard_budget_s": 43200
+  },
+  "training_overrides": {
+    "dropout": 0.0,
+    "warmup_ratio": 0.1,
+    "grad_clip": 0.5,
+    "schnet_cutoff": 6.0
+  },
+  "best_epoch": 27,
+  "best_dev_gap_mae_eV": 0.17045912146568298,
+  "train_log": [
+    {
+      "epoch": 0,
+      "train_gap_l1": 0.20301461919063052,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.20397189259529114,
+      "elapsed_s": 403.3613432291895,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_gap_l1": 0.1827217005653148,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.19888146221637726,
+      "elapsed_s": 406.3041547590401,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_gap_l1": 0.1776366460974703,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.1944761425256729,
+      "elapsed_s": 406.36632156791165,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_gap_l1": 0.17607221213550417,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.1981484591960907,
+      "elapsed_s": 397.1916663439479,
+      "selected": false
+    },
+    {
+      "epoch": 4,
+      "train_gap_l1": 0.17117555568702655,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.20776888728141785,
+      "elapsed_s": 394.3348156409338,
+      "selected": false
+    },
+    {
+      "epoch": 5,
+      "train_gap_l1": 0.16642501031016071,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18562132120132446,
+      "elapsed_s": 408.80809892807156,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_gap_l1": 0.1621470811623121,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.19177956879138947,
+      "elapsed_s": 391.4757918631658,
+      "selected": false
+    },
+    {
+      "epoch": 7,
+      "train_gap_l1": 0.15866622589114754,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18354199826717377,
+      "elapsed_s": 391.24608133896254,
+      "selected": true
+    },
+    {
+      "epoch": 8,
+      "train_gap_l1": 0.15504074512714652,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18468379974365234,
+      "elapsed_s": 391.7570048200432,
+      "selected": false
+    },
+    {
+      "epoch": 9,
+      "train_gap_l1": 0.15238604405311174,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18398752808570862,
+      "elapsed_s": 407.70034393598326,
+      "selected": false
+    },
+    {
+      "epoch": 10,
+      "train_gap_l1": 0.14919604281167748,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.1804599016904831,
+      "elapsed_s": 398.912261802936,
+      "selected": true
+    },
+    {
+      "epoch": 11,
+      "train_gap_l1": 0.14667288547815052,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18020814657211304,
+      "elapsed_s": 410.10692338994704,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_gap_l1": 0.14359760751498266,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18164649605751038,
+      "elapsed_s": 393.81917813490145,
+      "selected": false
+    },
+    {
+      "epoch": 13,
+      "train_gap_l1": 0.14135383853481093,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.18014763295650482,
+      "elapsed_s": 399.2680117590353,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_gap_l1": 0.13843168900738176,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17990954220294952,
+      "elapsed_s": 411.2888445870485,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_gap_l1": 0.1354763446998303,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17888252437114716,
+      "elapsed_s": 408.8366086529568,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_gap_l1": 0.1329663743328693,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17794424295425415,
+      "elapsed_s": 409.24338751798496,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_gap_l1": 0.13039922110522806,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17704030871391296,
+      "elapsed_s": 398.2802625729237,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_gap_l1": 0.12766784699033729,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17466452717781067,
+      "elapsed_s": 392.833672669949,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_gap_l1": 0.12510080802467768,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17343324422836304,
+      "elapsed_s": 413.62300155404955,
+      "selected": true
+    },
+    {
+      "epoch": 20,
+      "train_gap_l1": 0.12253393358247022,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.1743340641260147,
+      "elapsed_s": 410.2512681488879,
+      "selected": false
+    },
+    {
+      "epoch": 21,
+      "train_gap_l1": 0.12005651559922487,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17317752540111542,
+      "elapsed_s": 408.16503549716435,
+      "selected": true
+    },
+    {
+      "epoch": 22,
+      "train_gap_l1": 0.11768225697139835,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17116814851760864,
+      "elapsed_s": 412.97881231084466,
+      "selected": true
+    },
+    {
+      "epoch": 23,
+      "train_gap_l1": 0.11497948678540731,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17068181931972504,
+      "elapsed_s": 415.0734530000482,
+      "selected": true
+    },
+    {
+      "epoch": 24,
+      "train_gap_l1": 0.11249043673582998,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.1729213297367096,
+      "elapsed_s": 412.8173593580723,
+      "selected": false
+    },
+    {
+      "epoch": 25,
+      "train_gap_l1": 0.10999084769641976,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17195741832256317,
+      "elapsed_s": 391.0158431821037,
+      "selected": false
+    },
+    {
+      "epoch": 26,
+      "train_gap_l1": 0.10764196030007614,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17115192115306854,
+      "elapsed_s": 392.05062183598056,
+      "selected": false
+    },
+    {
+      "epoch": 27,
+      "train_gap_l1": 0.10537859857633654,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17045912146568298,
+      "elapsed_s": 400.30707655404694,
+      "selected": true
+    },
+    {
+      "epoch": 28,
+      "train_gap_l1": 0.1032879896402718,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17376187443733215,
+      "elapsed_s": 423.70061400998384,
+      "selected": false
+    },
+    {
+      "epoch": 29,
+      "train_gap_l1": 0.1012786233898662,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17189162969589233,
+      "elapsed_s": 420.42690353491344,
+      "selected": false
+    },
+    {
+      "epoch": 30,
+      "train_gap_l1": 0.09936155695481541,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17104031145572662,
+      "elapsed_s": 401.1289284040686,
+      "selected": false
+    },
+    {
+      "epoch": 31,
+      "train_gap_l1": 0.09762496910683448,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17182253301143646,
+      "elapsed_s": 402.2667966259178,
+      "selected": false
+    },
+    {
+      "epoch": 32,
+      "train_gap_l1": 0.09612299134014674,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17165309190750122,
+      "elapsed_s": 414.0707583250478,
+      "selected": false
+    },
+    {
+      "epoch": 33,
+      "train_gap_l1": 0.09470974918765722,
+      "train_draw_rows": 915012,
+      "dev_gap_mae_eV": 0.17153768241405487,
+      "elapsed_s": 393.0896666860208,
+      "selected": false
+    }
+  ],
+  "input_reports": {
+    "gps": {
+      "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae",
+      "modality": "gps",
+      "files": 401,
+      "split_counts": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      }
+    }
+  },
+  "warm_start_report": {
+    "source_input_dim": 9,
+    "target_input_dim": 18,
+    "copied_old_element_columns": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "copied_old_scalar_columns_to": [
+      15,
+      16,
+      17
+    ],
+    "zero_initialized_new_element_columns": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "embedding_manifest": {
+    "format": "molgap-pcqm-route-b-embedding-parts-v1",
+    "status": "complete",
+    "name": "gps11_160",
+    "embedding_dim": 160,
+    "parts": [
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_000.pt",
+        "path": "train/train_shard_000_embeddings.pt",
+        "rows": 4554,
+        "bytes": 1514471,
+        "sha256": "3386c6b860b62b5278e0ef83f902943372a49b31f4531bbc2304d1cb3f189a8b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_001.pt",
+        "path": "train/train_shard_001_embeddings.pt",
+        "rows": 4558,
+        "bytes": 1515879,
+        "sha256": "eb72b69a782a8fcc7290949c0eb39db2843daef8b5ef651d38b1bc8e22176d79"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_002.pt",
+        "path": "train/train_shard_002_embeddings.pt",
+        "rows": 4556,
+        "bytes": 1515175,
+        "sha256": "24a047a8c85f1074cb575feb25309c4422aa9f47e7cad08b54736efa89d7b1e9"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_003.pt",
+        "path": "train/train_shard_003_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "d041bdff9ba9eedd15d5de2aac4e714e4bd917d74e170161529c88cb083222a8"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_004.pt",
+        "path": "train/train_shard_004_embeddings.pt",
+        "rows": 4555,
+        "bytes": 1514855,
+        "sha256": "8eb6badea6c681139d4633dab1bc68e4485b29f587a0580f87288cd9463ec8c3"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_005.pt",
+        "path": "train/train_shard_005_embeddings.pt",
+        "rows": 4586,
+        "bytes": 1525095,
+        "sha256": "5ab1c7f5c5ecbb894809d530b8e04b99216712cebd4b31e25b8cc64ed7e0db7c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_006.pt",
+        "path": "train/train_shard_006_embeddings.pt",
+        "rows": 4596,
+        "bytes": 1528423,
+        "sha256": "4df6ec6b9b088615ddc66c12fcda881ab8f0e7860abaaa306bd07c0a4b661931"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_007.pt",
+        "path": "train/train_shard_007_embeddings.pt",
+        "rows": 4585,
+        "bytes": 1524775,
+        "sha256": "c639d8a19daab432eef8b20b563dc4041490751e42b84f73367d144a53a322e3"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_008.pt",
+        "path": "train/train_shard_008_embeddings.pt",
+        "rows": 4561,
+        "bytes": 1516839,
+        "sha256": "31cec9e864abcf2d283d9789dc7b3e0360f2117c9849be85a380251e1a3d6413"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_009.pt",
+        "path": "train/train_shard_009_embeddings.pt",
+        "rows": 4564,
+        "bytes": 1517799,
+        "sha256": "cb22f3ea0fdb24ddca27b155866ab33997611e4908a2b241d119fac63637c0e9"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_010.pt",
+        "path": "train/train_shard_010_embeddings.pt",
+        "rows": 4560,
+        "bytes": 1516519,
+        "sha256": "48b46a981a08aadec7195d5632df4705475b4f85baf9f5b8ddeb68794588e832"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_011.pt",
+        "path": "train/train_shard_011_embeddings.pt",
+        "rows": 4612,
+        "bytes": 1533735,
+        "sha256": "cecd9f35b3043df5ffc63df2b87c32dd483173fee9cd833445d71938510670da"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_012.pt",
+        "path": "train/train_shard_012_embeddings.pt",
+        "rows": 4546,
+        "bytes": 1511847,
+        "sha256": "9cae9d2a58db027329e047f9d4bbbf184076129a5b9e340a1a34866f7569f67f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_013.pt",
+        "path": "train/train_shard_013_embeddings.pt",
+        "rows": 4574,
+        "bytes": 1521191,
+        "sha256": "5625db4732ced07893603d16bb619b7076bf56d51469bf8c92890124fbd40e35"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_014.pt",
+        "path": "train/train_shard_014_embeddings.pt",
+        "rows": 4585,
+        "bytes": 1524775,
+        "sha256": "2dba374f20e6a5173612e337a8151f09292ad2b87e8c279877d0104889a8b997"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_015.pt",
+        "path": "train/train_shard_015_embeddings.pt",
+        "rows": 4584,
+        "bytes": 1524455,
+        "sha256": "c80e0f92e153ee91934e6a28b2ffd6461cb1556b851b389c872054e01d2babd4"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_016.pt",
+        "path": "train/train_shard_016_embeddings.pt",
+        "rows": 4603,
+        "bytes": 1530791,
+        "sha256": "dcb172f9f649b9c723157dd5b4cd2d79e5329fdbb5b3c6f43f6fedb094b82868"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_017.pt",
+        "path": "train/train_shard_017_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "910d4bed7586ccaf82b7c0be7a0f77a054c05d5cc31cd37314642945f6e45678"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_018.pt",
+        "path": "train/train_shard_018_embeddings.pt",
+        "rows": 4567,
+        "bytes": 1518823,
+        "sha256": "88591c75fd793a9bb5b5dae4e15bf0359e38685624a1162e6c9f644bca21dedc"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_019.pt",
+        "path": "train/train_shard_019_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "3cb392bdec5c8562b4324fde7bf12608666e0e16d2af136b1d5daed5ad468d31"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_020.pt",
+        "path": "train/train_shard_020_embeddings.pt",
+        "rows": 4595,
+        "bytes": 1528103,
+        "sha256": "0a94e192c5c2ac753e28879f8803f0368b394f2abd3717ce66729c7018e5631b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_021.pt",
+        "path": "train/train_shard_021_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "866bc11d3d9632dc45e68c20bbbf80b9b74eb4cdc336b831c6e94ccdc550e51c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_022.pt",
+        "path": "train/train_shard_022_embeddings.pt",
+        "rows": 4537,
+        "bytes": 1508839,
+        "sha256": "b00c0dbe6cebc0aed10cbcbe1cf1b2503f617a0e096dd5a0500c8e9f536fd95e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_023.pt",
+        "path": "train/train_shard_023_embeddings.pt",
+        "rows": 4611,
+        "bytes": 1533415,
+        "sha256": "de761a2bc54d4d2be593771b98cdc315426f47ec9d7cc2aa0d956331fa4b1783"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_024.pt",
+        "path": "train/train_shard_024_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "8d5e6346c9f520ad2ac6783d763825766eb69a3112e2769abc84cebdcee7d801"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_025.pt",
+        "path": "train/train_shard_025_embeddings.pt",
+        "rows": 4576,
+        "bytes": 1521831,
+        "sha256": "840bec4d9069674955931389e537872137d08cfbbdb9deaa056c3cf56702571f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_026.pt",
+        "path": "train/train_shard_026_embeddings.pt",
+        "rows": 4542,
+        "bytes": 1510567,
+        "sha256": "ebb560a8fafd3d91498733945d851796ef99ba37ca87b1cbd5a26c66b75a582d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_027.pt",
+        "path": "train/train_shard_027_embeddings.pt",
+        "rows": 4555,
+        "bytes": 1514855,
+        "sha256": "950dab67580aa8b30b7b502d23dd24564dae3bc36efe58b729f9a03b36d838d2"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_028.pt",
+        "path": "train/train_shard_028_embeddings.pt",
+        "rows": 4567,
+        "bytes": 1518823,
+        "sha256": "96f87a79fce8909a42e3b7386b7bfad1dc1d822480eefdd6e9715d2b7ac665e7"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_029.pt",
+        "path": "train/train_shard_029_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "aad3d5c7253619f465c57b171882781e4a21a73121ff6fdc6c2fd7b6d9c17297"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_030.pt",
+        "path": "train/train_shard_030_embeddings.pt",
+        "rows": 4612,
+        "bytes": 1533735,
+        "sha256": "e7f142e5200bc9ea55c546f8a1af5f6013e4d11f24c92253a17465b926fa0c50"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_031.pt",
+        "path": "train/train_shard_031_embeddings.pt",
+        "rows": 4598,
+        "bytes": 1529127,
+        "sha256": "96cdd087a13339fe848ee5bdf5a4e5cb9ce0c856e7b49dad6d0ea282e55e9f5b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_032.pt",
+        "path": "train/train_shard_032_embeddings.pt",
+        "rows": 4540,
+        "bytes": 1509863,
+        "sha256": "f7ac6067874036eb98a322dc8eae8b210dc87a1c920874c60da731b08bddc136"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_033.pt",
+        "path": "train/train_shard_033_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "0efca2aa607ba7d67a4fa2e3d76227ad42b61b67a0b2cf1c3b2bfa966aa81fb5"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_034.pt",
+        "path": "train/train_shard_034_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "dca8fb1241259e457b46dcd6a6de301b0b43d83fab93c786676f16c23cbb8acd"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_035.pt",
+        "path": "train/train_shard_035_embeddings.pt",
+        "rows": 4611,
+        "bytes": 1533415,
+        "sha256": "d48a5b025faf6377d6f2f3cca717026d20e8482238a5ec86807c36e0da2559c7"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_036.pt",
+        "path": "train/train_shard_036_embeddings.pt",
+        "rows": 4578,
+        "bytes": 1522471,
+        "sha256": "588dc2e4d973f493db9b44c3ae6c7ab7facd074b4c005348095b2ba10d073e44"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_037.pt",
+        "path": "train/train_shard_037_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "49df7eb631717bc0d65db200897a51f5b3382b2718c881eacecc13014342a160"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_038.pt",
+        "path": "train/train_shard_038_embeddings.pt",
+        "rows": 4566,
+        "bytes": 1518503,
+        "sha256": "13ec1fdfec689c6da849144a0f7e228c8a947b866ed6f7ccc36f1938b3ca65b2"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_039.pt",
+        "path": "train/train_shard_039_embeddings.pt",
+        "rows": 4572,
+        "bytes": 1520487,
+        "sha256": "79f18d7d4aefbaf4d194d92344e21e3da4e806497a6899764fb4f829c075ec51"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_040.pt",
+        "path": "train/train_shard_040_embeddings.pt",
+        "rows": 4553,
+        "bytes": 1514151,
+        "sha256": "d173cf137d951d8aa437774a51016c72db70ef9650fa305d089508df7da08177"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_041.pt",
+        "path": "train/train_shard_041_embeddings.pt",
+        "rows": 4576,
+        "bytes": 1521831,
+        "sha256": "e6fedb03acaa4e860359a9abaa706f4557ef541f317a73c9f9414aa07f558903"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_042.pt",
+        "path": "train/train_shard_042_embeddings.pt",
+        "rows": 4612,
+        "bytes": 1533735,
+        "sha256": "5528a3e2179f6394b98100ca8dc7f340c3500071e30b65bf8a12db548d886f3a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_043.pt",
+        "path": "train/train_shard_043_embeddings.pt",
+        "rows": 4607,
+        "bytes": 1532135,
+        "sha256": "8a9a72416d4ea9f6c58f612cca0bcbfdad4a68c6a664f66604dda759178c2ec4"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_044.pt",
+        "path": "train/train_shard_044_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "c2a774c0c5cffb9a641580701adeec9aa38b09ae8de74974a73a074dd04d0cae"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_045.pt",
+        "path": "train/train_shard_045_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "6cc62dade120cd797185a48fedbd44ce9edf3be51649abddf033995fa0e5ff68"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_046.pt",
+        "path": "train/train_shard_046_embeddings.pt",
+        "rows": 4564,
+        "bytes": 1517799,
+        "sha256": "a7749d628cbff659959dd01d193aab1c205b62317794475bac4b1dc23ae7f1d0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_047.pt",
+        "path": "train/train_shard_047_embeddings.pt",
+        "rows": 4583,
+        "bytes": 1524135,
+        "sha256": "de5a9856b8ac73cd8b2396c553412a4ad18b2317f2b4cfff8adeb614141a853a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_048.pt",
+        "path": "train/train_shard_048_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "59d1750271dcd9749b0318792e0cf203a1648f2123c3575ee99cad7554d41230"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_049.pt",
+        "path": "train/train_shard_049_embeddings.pt",
+        "rows": 4589,
+        "bytes": 1526119,
+        "sha256": "c11b651dc9b5a56ffa761df216bd3ddb7330dfa1517b642bfbfe383fdb6b248a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_050.pt",
+        "path": "train/train_shard_050_embeddings.pt",
+        "rows": 4559,
+        "bytes": 1516199,
+        "sha256": "1b5a7a9b9ee232434932a0ef2b59dda62f194010c1b307b2fcceed4528afd006"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_051.pt",
+        "path": "train/train_shard_051_embeddings.pt",
+        "rows": 4590,
+        "bytes": 1526503,
+        "sha256": "2ef97a738955190be80f5efced54fdff7e02864c6bc8e7139920f462eb1517de"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_052.pt",
+        "path": "train/train_shard_052_embeddings.pt",
+        "rows": 4577,
+        "bytes": 1522151,
+        "sha256": "c0bd08b4b328b74fb0356c19f56965586cf86af28bf9925337ef7c2c8b7b4053"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_053.pt",
+        "path": "train/train_shard_053_embeddings.pt",
+        "rows": 4575,
+        "bytes": 1521511,
+        "sha256": "d33a10cfed9391363f41ff86086b61e6eb3794a72c5c9ebae9e2dc1d9c9a1d3e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_054.pt",
+        "path": "train/train_shard_054_embeddings.pt",
+        "rows": 4583,
+        "bytes": 1524135,
+        "sha256": "1f4db7571855d688b5aeda1ad691fc140d70b4263db73ae4ca3a3a5a35a59698"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_055.pt",
+        "path": "train/train_shard_055_embeddings.pt",
+        "rows": 4570,
+        "bytes": 1519783,
+        "sha256": "7b74f5dd463c1b160d5c8a4f24fc28120d5e94336a72c0e9f2501dfb3ffdf5db"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_056.pt",
+        "path": "train/train_shard_056_embeddings.pt",
+        "rows": 4590,
+        "bytes": 1526503,
+        "sha256": "d3e8415be1ff6ee66aecf1275f1540c77075331ab738dbac376ef0179cdf2487"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_057.pt",
+        "path": "train/train_shard_057_embeddings.pt",
+        "rows": 4561,
+        "bytes": 1516839,
+        "sha256": "b2e0cfd265bfc128d531ac01adc3331e87090930fc833477a291240569453706"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_058.pt",
+        "path": "train/train_shard_058_embeddings.pt",
+        "rows": 4594,
+        "bytes": 1527783,
+        "sha256": "4cbb76193ab878dd911efa213c805d9386a417433bf8996dbc78b00892172a9f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_059.pt",
+        "path": "train/train_shard_059_embeddings.pt",
+        "rows": 4584,
+        "bytes": 1524455,
+        "sha256": "249a7287f04a3a3e9b50c68c798f59fdd437679fe1e964a8b2a7a1f442028dcd"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_060.pt",
+        "path": "train/train_shard_060_embeddings.pt",
+        "rows": 4578,
+        "bytes": 1522471,
+        "sha256": "93bd0850af7b0b4f282e25c3bc5f4280b703b2d0de5e9e550fbcfde071fe2ae8"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_061.pt",
+        "path": "train/train_shard_061_embeddings.pt",
+        "rows": 4597,
+        "bytes": 1528743,
+        "sha256": "5ff017bafd9b3b332568e98fa150cb43260127c1058744bbb96514908fb375f6"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_062.pt",
+        "path": "train/train_shard_062_embeddings.pt",
+        "rows": 4567,
+        "bytes": 1518823,
+        "sha256": "990acb7184f54bc7a77d28848814d27651b4ed1969dfe7d3a6a52491b6e53871"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_063.pt",
+        "path": "train/train_shard_063_embeddings.pt",
+        "rows": 4560,
+        "bytes": 1516519,
+        "sha256": "f8710a240723cda907b231cbabe043559ee4ad6687927369ef4c64217cd3a749"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_064.pt",
+        "path": "train/train_shard_064_embeddings.pt",
+        "rows": 4610,
+        "bytes": 1533095,
+        "sha256": "38b1ea460148f139f31afe69e0a56aca9e0d348008aac9951a6e62c4c16da1ef"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_065.pt",
+        "path": "train/train_shard_065_embeddings.pt",
+        "rows": 4588,
+        "bytes": 1525799,
+        "sha256": "7a31dea3b5b32023bf7f98dd0673d817fa5718dfa47191a311730596c1cb9a30"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_066.pt",
+        "path": "train/train_shard_066_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "060c1da920138a7e89c090798e8c2ea76352aab5cb63c0516debc7db07c2818f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_067.pt",
+        "path": "train/train_shard_067_embeddings.pt",
+        "rows": 4599,
+        "bytes": 1529447,
+        "sha256": "adc9b621875ae6c75fa637ac4c178356d73c099362d57ad09af0f3ae50549068"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_068.pt",
+        "path": "train/train_shard_068_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "f3b66170d6bcb9d3c7c6c0f307d2d60357b9cf5d083beb3f6fe9165c854da5d7"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_069.pt",
+        "path": "train/train_shard_069_embeddings.pt",
+        "rows": 4542,
+        "bytes": 1510567,
+        "sha256": "675a2f377ce6c2c7e2f5a6a6813cef77d18be143a8a18ada85f8d0e1cb0f67ab"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_070.pt",
+        "path": "train/train_shard_070_embeddings.pt",
+        "rows": 4534,
+        "bytes": 1507879,
+        "sha256": "06186b819262fe4f1e6d7c2385a89b1daa3521f15c64d620246b1b4b0e61e74c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_071.pt",
+        "path": "train/train_shard_071_embeddings.pt",
+        "rows": 4566,
+        "bytes": 1518503,
+        "sha256": "811e0830f6480e5db327038af83995d54558adc4421f7e5666c6f676ad51e090"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_072.pt",
+        "path": "train/train_shard_072_embeddings.pt",
+        "rows": 4575,
+        "bytes": 1521511,
+        "sha256": "4633fae4a829e1b10c2f338cd47d21ec329ae103563cefedba4cf6c46fddac46"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_073.pt",
+        "path": "train/train_shard_073_embeddings.pt",
+        "rows": 4602,
+        "bytes": 1530407,
+        "sha256": "a934e3a7bf7f9ab914825055b84b5ce8d54c0e406f2b89a35256efafdbe815d0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_074.pt",
+        "path": "train/train_shard_074_embeddings.pt",
+        "rows": 4570,
+        "bytes": 1519783,
+        "sha256": "6e07e29bacfeff55a7089a7f89a21bea76ff25d8e3695465dacc9fda2e16cc06"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_075.pt",
+        "path": "train/train_shard_075_embeddings.pt",
+        "rows": 4604,
+        "bytes": 1531111,
+        "sha256": "97d066be22aac178df2e38007cf96cc5f67d0d05a0471aaf87c76533fa2d8358"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_076.pt",
+        "path": "train/train_shard_076_embeddings.pt",
+        "rows": 4594,
+        "bytes": 1527783,
+        "sha256": "eee50efb4dda76a33ae5f205fd03da9d94ab92fedf6f0b9640ebb91cf8fd2c81"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_077.pt",
+        "path": "train/train_shard_077_embeddings.pt",
+        "rows": 4594,
+        "bytes": 1527783,
+        "sha256": "11882d68eef4bb89818b99c7377e8c374881624caf654180c0a6a7aff028bdef"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_078.pt",
+        "path": "train/train_shard_078_embeddings.pt",
+        "rows": 4577,
+        "bytes": 1522151,
+        "sha256": "e001e5b5a6522f54a6b6abb4157e17996d5d80c310dd293ec7ff50f1f27fa2ec"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_079.pt",
+        "path": "train/train_shard_079_embeddings.pt",
+        "rows": 4572,
+        "bytes": 1520487,
+        "sha256": "6051f9178b95ce6dcb803d1bf5d0f5f5e88b5cee6d83bad956fe1317f1f0f561"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_080.pt",
+        "path": "train/train_shard_080_embeddings.pt",
+        "rows": 4582,
+        "bytes": 1523815,
+        "sha256": "ee3ea011eb71885dcae13af8b37ffd95b34da862c9cdfff4057138ffeddce9d6"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_081.pt",
+        "path": "train/train_shard_081_embeddings.pt",
+        "rows": 4606,
+        "bytes": 1531815,
+        "sha256": "a4a0ce75edc71f1fd269655de9b876e275a811a2bcd3a18a17244f831525254d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_082.pt",
+        "path": "train/train_shard_082_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "916299a93d9e714f5e2506f6c53230cbf60978d9f7bac180ad1f0349f9473a26"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_083.pt",
+        "path": "train/train_shard_083_embeddings.pt",
+        "rows": 4555,
+        "bytes": 1514855,
+        "sha256": "042795b4ed21554bdedd04169da2feb3a23ea6808c1c3eae0fa777acb99aae23"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_084.pt",
+        "path": "train/train_shard_084_embeddings.pt",
+        "rows": 4592,
+        "bytes": 1527143,
+        "sha256": "9678e6dcb4c2752d4133f55f9034421c7a1a386ac652059260e47304ffec6447"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_085.pt",
+        "path": "train/train_shard_085_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "33b149446923a9336e0867c1561f683927d0d47e0b23a6f4d30cb0ceb17a807e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_086.pt",
+        "path": "train/train_shard_086_embeddings.pt",
+        "rows": 4597,
+        "bytes": 1528743,
+        "sha256": "cee082cd8d67ff35ee44a4aca2103dc3e45f8550973a5b59fbf21ec02a6f631d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_087.pt",
+        "path": "train/train_shard_087_embeddings.pt",
+        "rows": 4577,
+        "bytes": 1522151,
+        "sha256": "848dbfa19c19e747461b49eb0b2f48fc1e9ac83cb4a7407a50dcc6d0cf3d7788"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_088.pt",
+        "path": "train/train_shard_088_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "5553a4f1952c3040e0bdb1e79b225b9d46e053b12e5f1fbba34e911bcddbf33c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_089.pt",
+        "path": "train/train_shard_089_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "2ee57bf95d1a444cb103945f758d61b5c673f164e9b7a4a55ca704f8c52497d0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_090.pt",
+        "path": "train/train_shard_090_embeddings.pt",
+        "rows": 4557,
+        "bytes": 1515495,
+        "sha256": "61db3fe28e79c8a7118ceed8a360d07be7fdc9623fabfd30c5a4e57b792cae58"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_091.pt",
+        "path": "train/train_shard_091_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "0514e50bbe61fd2f765fd847425658fafcabe3195a7b5c982472df4d788befb8"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_092.pt",
+        "path": "train/train_shard_092_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "fd412602400099cea4bdcbb9eefcbbad453cc2aec3062129895e74b80886040f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_093.pt",
+        "path": "train/train_shard_093_embeddings.pt",
+        "rows": 4548,
+        "bytes": 1512487,
+        "sha256": "d2c1c4c40999e15cce7d364c6a6006bfe501b6206051ce833af6db2ac5b4faa6"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_094.pt",
+        "path": "train/train_shard_094_embeddings.pt",
+        "rows": 4550,
+        "bytes": 1513191,
+        "sha256": "3e65e95be9c2e9f802f7afb36c56bb94539cffe2b7e9a319d381778ef6959946"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_095.pt",
+        "path": "train/train_shard_095_embeddings.pt",
+        "rows": 4601,
+        "bytes": 1530087,
+        "sha256": "0d9df9afe99e8a637e0f47f121ab5aad766c77b161bba1549b6bf18a90be7027"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_096.pt",
+        "path": "train/train_shard_096_embeddings.pt",
+        "rows": 4594,
+        "bytes": 1527783,
+        "sha256": "38da24887537406f099826d8c38e5ef5e1ab9f9677454cf2fb86e7c5718c42e1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_097.pt",
+        "path": "train/train_shard_097_embeddings.pt",
+        "rows": 4574,
+        "bytes": 1521191,
+        "sha256": "f195b904fc8b8885867b5b1947c68077b7ff9d54ac2dddb8f4d4c2326973fd10"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_098.pt",
+        "path": "train/train_shard_098_embeddings.pt",
+        "rows": 4588,
+        "bytes": 1525799,
+        "sha256": "075693536947115bc10040c76063214019f6ed466af783d2918ab5396b8c916c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_099.pt",
+        "path": "train/train_shard_099_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "6b2f023de886a501161348d4a9d38e39863e9b78303beea615c88421cceb9cef"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_100.pt",
+        "path": "train/train_shard_100_embeddings.pt",
+        "rows": 4570,
+        "bytes": 1519783,
+        "sha256": "5603a807bfe8700d6fd69ca90ec09659112b0a80cba8602820a2850fbc6fbfba"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_101.pt",
+        "path": "train/train_shard_101_embeddings.pt",
+        "rows": 4576,
+        "bytes": 1521831,
+        "sha256": "e2759879459ffeac5b7785a114fc909311e5fc5b92f2ae2559a40b630f4217e9"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_102.pt",
+        "path": "train/train_shard_102_embeddings.pt",
+        "rows": 4573,
+        "bytes": 1520807,
+        "sha256": "193fdd0cd1bfb12d58cd2fca12cc2cc5f79fb6580e04edad50d163e52f687597"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_103.pt",
+        "path": "train/train_shard_103_embeddings.pt",
+        "rows": 4536,
+        "bytes": 1508519,
+        "sha256": "2848015f0242eb0fa7e29fe54183d6a4ad6e48313957d824a29a31ed80eb901d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_104.pt",
+        "path": "train/train_shard_104_embeddings.pt",
+        "rows": 4598,
+        "bytes": 1529127,
+        "sha256": "fc7fa0a9b95645e218997ad25a8bc16861abefae509ace0d766a0d45da95a0e0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_105.pt",
+        "path": "train/train_shard_105_embeddings.pt",
+        "rows": 4592,
+        "bytes": 1527143,
+        "sha256": "7e111268df0ff37363a50266c9264812f6e78e7b7cbf8ca54ce2a4c28df7c325"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_106.pt",
+        "path": "train/train_shard_106_embeddings.pt",
+        "rows": 4548,
+        "bytes": 1512487,
+        "sha256": "ec26e21e825b64196ef24c0aec7cba1bd36610ea4919f8d5f155b22abcd4134f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_107.pt",
+        "path": "train/train_shard_107_embeddings.pt",
+        "rows": 4559,
+        "bytes": 1516199,
+        "sha256": "318b7a3a898a6ab00fd66d76fe0a15db707d7d79fc83c2203bdadcbf1346de83"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_108.pt",
+        "path": "train/train_shard_108_embeddings.pt",
+        "rows": 4593,
+        "bytes": 1527463,
+        "sha256": "a5d4e86b5fe6f1d3810dc38957d0d433957046bf37ba884a95f0b01e65337d7b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_109.pt",
+        "path": "train/train_shard_109_embeddings.pt",
+        "rows": 4569,
+        "bytes": 1519463,
+        "sha256": "3b3e16de3a0d8ef60bac1eed89b1f83d02ed4c152072f0ad7c1b1ca587c66cb5"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_110.pt",
+        "path": "train/train_shard_110_embeddings.pt",
+        "rows": 4589,
+        "bytes": 1526119,
+        "sha256": "445dfc42d3d0000a9efa2c66463005053878975b43176e8070454c95f7fc4c67"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_111.pt",
+        "path": "train/train_shard_111_embeddings.pt",
+        "rows": 4596,
+        "bytes": 1528423,
+        "sha256": "b98f4532939bf5e4048e4a2be5148dd6044132ed501df9d2d3ffc2fc2822137e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_112.pt",
+        "path": "train/train_shard_112_embeddings.pt",
+        "rows": 4590,
+        "bytes": 1526503,
+        "sha256": "223141fad21bbcbf489d5f9dfabbfdc5f5ccfe10d700fd5b77a46ac1245ddaf0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_113.pt",
+        "path": "train/train_shard_113_embeddings.pt",
+        "rows": 4580,
+        "bytes": 1523111,
+        "sha256": "5deb7597e8b362752c609c6532c878cd37c1d1708594abfd7c636e7b2c754bb4"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_114.pt",
+        "path": "train/train_shard_114_embeddings.pt",
+        "rows": 4552,
+        "bytes": 1513831,
+        "sha256": "b725c47f76b630e9ff8cda98f6fb14641c4319d1262a64c5216eaec851666b32"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_115.pt",
+        "path": "train/train_shard_115_embeddings.pt",
+        "rows": 4585,
+        "bytes": 1524775,
+        "sha256": "3720fb8a5eb9cca3c13f86653637be5d2ddd2d2a1af92fd448ff33033027b91b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_116.pt",
+        "path": "train/train_shard_116_embeddings.pt",
+        "rows": 4529,
+        "bytes": 1506215,
+        "sha256": "6dcf35e3f9996ff1e4841101a32217464ce0d8c9e46c718b9ade65c840fbe629"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_117.pt",
+        "path": "train/train_shard_117_embeddings.pt",
+        "rows": 4569,
+        "bytes": 1519463,
+        "sha256": "9fbb00e64593b1b4049c727c4af7dd5fb4a38372475bed92391badaa84afdd2e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_118.pt",
+        "path": "train/train_shard_118_embeddings.pt",
+        "rows": 4592,
+        "bytes": 1527143,
+        "sha256": "71c3e1cf3005ecd79c38e987fae30d9adba4e762db3fdb9da7497d5e4de2c814"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_119.pt",
+        "path": "train/train_shard_119_embeddings.pt",
+        "rows": 4531,
+        "bytes": 1506855,
+        "sha256": "1735f748c679a752479d1dc8b02689415e906c5891cbc0292469f93ae829d8a3"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_120.pt",
+        "path": "train/train_shard_120_embeddings.pt",
+        "rows": 4535,
+        "bytes": 1508199,
+        "sha256": "2db98a26568c0ce078921d880d9965008a98fa67c67f498e2b08be3885cc7e24"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_121.pt",
+        "path": "train/train_shard_121_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "bb497877527b5998d0e77411440ceb9b62a7885864f1ed7ecee035828ee474e2"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_122.pt",
+        "path": "train/train_shard_122_embeddings.pt",
+        "rows": 4569,
+        "bytes": 1519463,
+        "sha256": "667d3242bcc53f38de37b72d3c763dbf546d5288e4c0611a0ac795620beecd41"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_123.pt",
+        "path": "train/train_shard_123_embeddings.pt",
+        "rows": 4570,
+        "bytes": 1519783,
+        "sha256": "ff4d10514dec9e3370cc4507b849127b77f2412461a22174574eae25fb7478ba"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_124.pt",
+        "path": "train/train_shard_124_embeddings.pt",
+        "rows": 4562,
+        "bytes": 1517159,
+        "sha256": "9000fb5a4fa63f55a0e12ed4668b70f608aff17d4e8582fcd1f6b7624410a890"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_125.pt",
+        "path": "train/train_shard_125_embeddings.pt",
+        "rows": 4565,
+        "bytes": 1518119,
+        "sha256": "2f3dea52587bc5fc0dd3a4c462be1478aa6b80921f46c892c178338c616d37b7"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_126.pt",
+        "path": "train/train_shard_126_embeddings.pt",
+        "rows": 4546,
+        "bytes": 1511847,
+        "sha256": "cdfdc9bee9de30059f31c80c6bb1fdecfd45c0e94a745748d7375da2fb576472"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_127.pt",
+        "path": "train/train_shard_127_embeddings.pt",
+        "rows": 4546,
+        "bytes": 1511847,
+        "sha256": "db25931de0fb24cab7cf7c6e5a5a8a73c3613d1d5c921f84096a24bdc4f041d2"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_128.pt",
+        "path": "train/train_shard_128_embeddings.pt",
+        "rows": 4555,
+        "bytes": 1514855,
+        "sha256": "379d0d7a44a6e5a8b5190d21313cf1d40d4d811ffc505956ac0de87e08c6156c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_129.pt",
+        "path": "train/train_shard_129_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "2d7271edfa3e482a500440d8118d1ffd2d34c2a11b5cbb1c86392d4117dfaa35"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_130.pt",
+        "path": "train/train_shard_130_embeddings.pt",
+        "rows": 4600,
+        "bytes": 1529767,
+        "sha256": "402b906ef7f498d6c2b739540ff2f51dfbf352f5bf2809631168a617b2a8e5cd"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_131.pt",
+        "path": "train/train_shard_131_embeddings.pt",
+        "rows": 4563,
+        "bytes": 1517479,
+        "sha256": "28782a073e1de354be049748b37e56a57919e2dfa7a6cdca233dd577bf3ca64a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_132.pt",
+        "path": "train/train_shard_132_embeddings.pt",
+        "rows": 4588,
+        "bytes": 1525799,
+        "sha256": "d4276a882e4c0d2e738c18b133f555ae77eaf5e5ea68c836e2cb690510eed8f1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_133.pt",
+        "path": "train/train_shard_133_embeddings.pt",
+        "rows": 4562,
+        "bytes": 1517159,
+        "sha256": "a50c019df3497069b14839c8e1f0a689874d7def61c1412504781e7ee467f3b1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_134.pt",
+        "path": "train/train_shard_134_embeddings.pt",
+        "rows": 4565,
+        "bytes": 1518119,
+        "sha256": "c5216e2b9eb1f86179beaf600443d46e9f189a9d699c4b13ebc923152f6e0e15"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_135.pt",
+        "path": "train/train_shard_135_embeddings.pt",
+        "rows": 4577,
+        "bytes": 1522151,
+        "sha256": "694b1c4c056c80ac212df952f307de5185d494ad24b6c77cfdfb29741c4146a5"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_136.pt",
+        "path": "train/train_shard_136_embeddings.pt",
+        "rows": 4551,
+        "bytes": 1513511,
+        "sha256": "67accb188df643de8a719cb0cd0afa8c9941c2f4738cf860a18cf0b2e00ced64"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_137.pt",
+        "path": "train/train_shard_137_embeddings.pt",
+        "rows": 4538,
+        "bytes": 1509159,
+        "sha256": "b431064e1a2a441ec251160662aad4cead20441e0075a8e73fe2c648c2c867fd"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_138.pt",
+        "path": "train/train_shard_138_embeddings.pt",
+        "rows": 4573,
+        "bytes": 1520807,
+        "sha256": "256bb38c7a42183fa80b46f92665d044cdcc428d177e5c14a742fbb42cc5bc9b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_139.pt",
+        "path": "train/train_shard_139_embeddings.pt",
+        "rows": 4619,
+        "bytes": 1536103,
+        "sha256": "ce85da0cc70a6baeb911451de465d6f920e9928c671becc3b5c52c76f3cac869"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_140.pt",
+        "path": "train/train_shard_140_embeddings.pt",
+        "rows": 4587,
+        "bytes": 1525479,
+        "sha256": "96fc9c9a0075e4b106bb7749a7416b95581bfd23ed70a829d98f1a9ed5305d96"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_141.pt",
+        "path": "train/train_shard_141_embeddings.pt",
+        "rows": 4554,
+        "bytes": 1514471,
+        "sha256": "7da2dd0d50dd1800cdf3984ea3bd50937da0054ce096a99744752a28e2e3b5fe"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_142.pt",
+        "path": "train/train_shard_142_embeddings.pt",
+        "rows": 4598,
+        "bytes": 1529127,
+        "sha256": "327689cbc5548046bfa1923de35d30956b6c30e62f345a0ee14ae5ce890ed557"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_143.pt",
+        "path": "train/train_shard_143_embeddings.pt",
+        "rows": 4553,
+        "bytes": 1514151,
+        "sha256": "daed1e30a447b1deba4097f28d3f7033997f2c6b204d9485690ce398b5ebeb55"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_144.pt",
+        "path": "train/train_shard_144_embeddings.pt",
+        "rows": 4593,
+        "bytes": 1527463,
+        "sha256": "fe54160429e38de74174f00de181ffdc1217110ae40e8e4068a0ebbae5cd922e"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_145.pt",
+        "path": "train/train_shard_145_embeddings.pt",
+        "rows": 4619,
+        "bytes": 1536103,
+        "sha256": "b752346414759c7d7e314fad372e9ff979ad72591c9cca417a732305edd79930"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_146.pt",
+        "path": "train/train_shard_146_embeddings.pt",
+        "rows": 4573,
+        "bytes": 1520807,
+        "sha256": "edb2eea14e7d0a34eab28c6acde5e42d611a59d76c58f8c9cfa336ac50c82785"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_147.pt",
+        "path": "train/train_shard_147_embeddings.pt",
+        "rows": 4572,
+        "bytes": 1520487,
+        "sha256": "6430a18fe3b9c3b8bc31e29fd94088669da2a2cc091650f1b5979ac6c49846ab"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_148.pt",
+        "path": "train/train_shard_148_embeddings.pt",
+        "rows": 4578,
+        "bytes": 1522471,
+        "sha256": "dc235a29c9d7f7dd95041c0f6f1ee513a8c80a2b1184d6b58dd7fc55c09b1760"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_149.pt",
+        "path": "train/train_shard_149_embeddings.pt",
+        "rows": 4547,
+        "bytes": 1512167,
+        "sha256": "fdf42e62d825743a9a7d63f470773b83b2993a96e8cb1f7f83879515e3c827d6"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_150.pt",
+        "path": "train/train_shard_150_embeddings.pt",
+        "rows": 4562,
+        "bytes": 1517159,
+        "sha256": "b884983c756388c004547aac2c1e6eb811ff4f2933e100599b03183bd845ab1c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_151.pt",
+        "path": "train/train_shard_151_embeddings.pt",
+        "rows": 4559,
+        "bytes": 1516199,
+        "sha256": "bebd2b7cf8a473b85bd7e98292414866d7d6b58e7182c58e7a1b9f25c21141ac"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_152.pt",
+        "path": "train/train_shard_152_embeddings.pt",
+        "rows": 4557,
+        "bytes": 1515495,
+        "sha256": "7d4171d1d93dc8c13b95191a388d3e9721fa380d5ca543792fd9f276039bd7d1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_153.pt",
+        "path": "train/train_shard_153_embeddings.pt",
+        "rows": 4594,
+        "bytes": 1527783,
+        "sha256": "688fe8dfa3306e36b9c2e9831934cbac329334b6e3cbacf4ec5517d6e3405669"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_154.pt",
+        "path": "train/train_shard_154_embeddings.pt",
+        "rows": 4565,
+        "bytes": 1518119,
+        "sha256": "e01b8107a81f1682cd14ff57281ca7bef335c86197b2a91adf1692c6990ff11d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_155.pt",
+        "path": "train/train_shard_155_embeddings.pt",
+        "rows": 4581,
+        "bytes": 1523431,
+        "sha256": "ca908e747e1a72dc57ac9f3abf44051102a8be9689d885c8418ac66da39fa4f1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_156.pt",
+        "path": "train/train_shard_156_embeddings.pt",
+        "rows": 4564,
+        "bytes": 1517799,
+        "sha256": "dd56cccdb7e59b4eb9927019ffde438a04bf11fa48060c03a290a5fa7d6d37fa"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_157.pt",
+        "path": "train/train_shard_157_embeddings.pt",
+        "rows": 4588,
+        "bytes": 1525799,
+        "sha256": "b2c3383d55f4d10405a6ee56b2fd51522d3b150e7757a0c3a0144e8602142fcd"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_158.pt",
+        "path": "train/train_shard_158_embeddings.pt",
+        "rows": 4572,
+        "bytes": 1520487,
+        "sha256": "6e5f390c25cdd68dbbbd7de55519463fb1d41b83c487f5aa77dbbcee2c430887"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_159.pt",
+        "path": "train/train_shard_159_embeddings.pt",
+        "rows": 4597,
+        "bytes": 1528743,
+        "sha256": "92fc5afe4fe3f4cdece3919ede7993866b32b6e13ba838e321a7f13afa129cf9"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_160.pt",
+        "path": "train/train_shard_160_embeddings.pt",
+        "rows": 4600,
+        "bytes": 1529767,
+        "sha256": "e0a7f42e4fce26598d7ab28f927861779a993db06078927393138986d88b3f5a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_161.pt",
+        "path": "train/train_shard_161_embeddings.pt",
+        "rows": 4564,
+        "bytes": 1517799,
+        "sha256": "9f558c668ecfaa2ec27bf11b66891325925e49951c2d826c39563a392aae0f6d"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_162.pt",
+        "path": "train/train_shard_162_embeddings.pt",
+        "rows": 4559,
+        "bytes": 1516199,
+        "sha256": "e795d9f07843c9c8e9ec467fe3e84f06cd454987ae0f0b573750b7b043a1f0f4"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_163.pt",
+        "path": "train/train_shard_163_embeddings.pt",
+        "rows": 4564,
+        "bytes": 1517799,
+        "sha256": "718f3c2562a4c3d010eb6e1499c9a5dd85b9cc0d2dafacad37feb15917eb4a99"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_164.pt",
+        "path": "train/train_shard_164_embeddings.pt",
+        "rows": 4552,
+        "bytes": 1513831,
+        "sha256": "622fd552d9127843d119003a58db905b951f1aaa1bffd2af5bc8fcc486eba744"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_165.pt",
+        "path": "train/train_shard_165_embeddings.pt",
+        "rows": 4563,
+        "bytes": 1517479,
+        "sha256": "2c5fba89dff09cdef5ebff0f751ac198a3188ac35ef6969d376b78afded7689c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_166.pt",
+        "path": "train/train_shard_166_embeddings.pt",
+        "rows": 4571,
+        "bytes": 1520167,
+        "sha256": "b6507edfe6549b7e86c6d5d96fc15573b6800da012a37b6ebf64ed949e2ad5ea"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_167.pt",
+        "path": "train/train_shard_167_embeddings.pt",
+        "rows": 4573,
+        "bytes": 1520807,
+        "sha256": "0a4afe4bbbceb059cd9c246acb806acd4fa35d4c0052f265610c41d32e7adb11"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_168.pt",
+        "path": "train/train_shard_168_embeddings.pt",
+        "rows": 4576,
+        "bytes": 1521831,
+        "sha256": "8c694ee8803ece6c70cb9f5dbe5b8761acf2fd93f35351671973afdbddfb6b44"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_169.pt",
+        "path": "train/train_shard_169_embeddings.pt",
+        "rows": 4605,
+        "bytes": 1531431,
+        "sha256": "aab6d57de8f05a54536d5cb3bd7695985cac8f18fbe7dc8839e5c6e3884e6792"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_170.pt",
+        "path": "train/train_shard_170_embeddings.pt",
+        "rows": 4558,
+        "bytes": 1515879,
+        "sha256": "63b4a41ee910d84055bbef89d898b7bb33e1c15b59b431134c62a8f4afe07e5c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_171.pt",
+        "path": "train/train_shard_171_embeddings.pt",
+        "rows": 4566,
+        "bytes": 1518503,
+        "sha256": "fb1479acce358721f1ef3800555c815c42476522ebe1f157f4ef4af435784f73"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_172.pt",
+        "path": "train/train_shard_172_embeddings.pt",
+        "rows": 4592,
+        "bytes": 1527143,
+        "sha256": "c31649b84d25edb42ce4b9ef612bde6a1027b3a0b0599bdc37b777f82591b08a"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_173.pt",
+        "path": "train/train_shard_173_embeddings.pt",
+        "rows": 4563,
+        "bytes": 1517479,
+        "sha256": "85c62e46162cdc36356ccb8626679bc065cd1e7dc825cbd5116fd90790e64a03"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_174.pt",
+        "path": "train/train_shard_174_embeddings.pt",
+        "rows": 4560,
+        "bytes": 1516519,
+        "sha256": "6c0c68a1393ff70d5d98483a7b90fb6790b46de9e3db2583057106e748fb4f38"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_175.pt",
+        "path": "train/train_shard_175_embeddings.pt",
+        "rows": 4623,
+        "bytes": 1537447,
+        "sha256": "0a2cede34aeaf07bc1cb2fb2732018bb483d26283bede3eb8b8b32d9c54d263c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_176.pt",
+        "path": "train/train_shard_176_embeddings.pt",
+        "rows": 4586,
+        "bytes": 1525095,
+        "sha256": "8bd2a9fd587afb589b271fcd57d924c7f482f6156cd781c16e42986072f991b7"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_177.pt",
+        "path": "train/train_shard_177_embeddings.pt",
+        "rows": 4598,
+        "bytes": 1529127,
+        "sha256": "b4715c60a7fe4fda8c623e3ade84c5324bcaca01841789040650e995299f6b42"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_178.pt",
+        "path": "train/train_shard_178_embeddings.pt",
+        "rows": 4550,
+        "bytes": 1513191,
+        "sha256": "c36eb9256332446e37c6f6f75f6c3e0150fa826f7bb0c3643025abed651a104b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_179.pt",
+        "path": "train/train_shard_179_embeddings.pt",
+        "rows": 4558,
+        "bytes": 1515879,
+        "sha256": "3f32a5df1e387fecb50516d9ba7c0407e9fe667e3d6804bea2dcdec013150d6c"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_180.pt",
+        "path": "train/train_shard_180_embeddings.pt",
+        "rows": 4590,
+        "bytes": 1526503,
+        "sha256": "c96660f06eef52723ec9a69d561bd26153225ec783eff97207bc99b5b7fabcd8"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_181.pt",
+        "path": "train/train_shard_181_embeddings.pt",
+        "rows": 4608,
+        "bytes": 1532455,
+        "sha256": "768cdfcac8c896394c108d23c8784c3a298364bbb19da361739b92aaf30b9a94"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_182.pt",
+        "path": "train/train_shard_182_embeddings.pt",
+        "rows": 4563,
+        "bytes": 1517479,
+        "sha256": "25083085580950e66713dd06fbe52a543845f219bd0f17f40a99f3ad46b24dac"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_183.pt",
+        "path": "train/train_shard_183_embeddings.pt",
+        "rows": 4600,
+        "bytes": 1529767,
+        "sha256": "aeab89c3d28b72e1f94c82207348d3751b5cffb9df7b3322f8b3a3ce9e581da3"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_184.pt",
+        "path": "train/train_shard_184_embeddings.pt",
+        "rows": 4568,
+        "bytes": 1519143,
+        "sha256": "501880e8b1941bccba76af294514d8973f8520c2fdbff7a11370415b07cd27ce"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_185.pt",
+        "path": "train/train_shard_185_embeddings.pt",
+        "rows": 4558,
+        "bytes": 1515879,
+        "sha256": "55e9d4cdb140368bc81cc931050ac25b9100451d85f5ab7956445c63f303cfc8"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_186.pt",
+        "path": "train/train_shard_186_embeddings.pt",
+        "rows": 4560,
+        "bytes": 1516519,
+        "sha256": "a562e2f19731ff34e419039efa72a0fdf9a5cbb44eaef46d6121bc4dd40599ad"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_187.pt",
+        "path": "train/train_shard_187_embeddings.pt",
+        "rows": 4578,
+        "bytes": 1522471,
+        "sha256": "ebe46ebdb436f4501f1ba9c4f7b8ae61df7b7d0052eae87374c37783960d6f0f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_188.pt",
+        "path": "train/train_shard_188_embeddings.pt",
+        "rows": 4585,
+        "bytes": 1524775,
+        "sha256": "9726261c09ba38c2b59137227ca4d13ed9a2e3d6e40767f5429dad75b05d07e0"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_189.pt",
+        "path": "train/train_shard_189_embeddings.pt",
+        "rows": 4605,
+        "bytes": 1531431,
+        "sha256": "4a639a1782904fa702a85610b9a6ae864ddc542e278536c82170db9e469bcf69"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_190.pt",
+        "path": "train/train_shard_190_embeddings.pt",
+        "rows": 4579,
+        "bytes": 1522791,
+        "sha256": "76bb0a8447338a6e3a749f476c9c216c613c058ab863fbca16723ccf281d4137"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_191.pt",
+        "path": "train/train_shard_191_embeddings.pt",
+        "rows": 4554,
+        "bytes": 1514471,
+        "sha256": "3fb4c89b9429ea3b1860315d0ad237fcdd99ce5b6a35967c3dc191782cc2a4a5"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_192.pt",
+        "path": "train/train_shard_192_embeddings.pt",
+        "rows": 4565,
+        "bytes": 1518119,
+        "sha256": "83ffee59cb8f83adf0a5f1dd60a6077e8935ba7aef5f76f7cff8f3cdfe4ac3f1"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_193.pt",
+        "path": "train/train_shard_193_embeddings.pt",
+        "rows": 4595,
+        "bytes": 1528103,
+        "sha256": "8ba7b9e912c5cbcc863cdbda0faaef20ed288a61f4299b1b7c7a68188ebe2a4f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_194.pt",
+        "path": "train/train_shard_194_embeddings.pt",
+        "rows": 4628,
+        "bytes": 1539047,
+        "sha256": "fd224e04d4af50f12e93e08943bcc6af96793e9bc41ebee14ff0ef2870fecdaf"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_195.pt",
+        "path": "train/train_shard_195_embeddings.pt",
+        "rows": 4536,
+        "bytes": 1508519,
+        "sha256": "96c8ef3d4e3a1e6cbccf0135b91c19ee23c2b0b9061952afc1f0ec3192c2ef9f"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_196.pt",
+        "path": "train/train_shard_196_embeddings.pt",
+        "rows": 4556,
+        "bytes": 1515175,
+        "sha256": "e7bd14bce5407afdd129ad3c47a75807bdf004fcc8f16e4af6c9c8ab9629019b"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_197.pt",
+        "path": "train/train_shard_197_embeddings.pt",
+        "rows": 4545,
+        "bytes": 1511527,
+        "sha256": "39f32d3d73917e8eb5fa8fee32f95a45e641981408d4e48df95005568c94c3e4"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_198.pt",
+        "path": "train/train_shard_198_embeddings.pt",
+        "rows": 4560,
+        "bytes": 1516519,
+        "sha256": "5c36dd732c1fd5aea043a35e0dc698e5356cbc588935fb2d2f283784724c3fd2"
+      },
+      {
+        "role": "train",
+        "source_shard": "gps/train_shard_199.pt",
+        "path": "train/train_shard_199_embeddings.pt",
+        "rows": 4589,
+        "bytes": 1526119,
+        "sha256": "cbe8f918c1866aa89ebd131164c0cfaf0302499358a9c3882462c3d0e1d916e1"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_000.pt",
+        "path": "dev/dev_shard_000_embeddings.pt",
+        "rows": 433,
+        "bytes": 146325,
+        "sha256": "3eae975e9377ce2e713009c692b3c613269d7f66ee7fcdff826c62fd6febb61c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_001.pt",
+        "path": "dev/dev_shard_001_embeddings.pt",
+        "rows": 433,
+        "bytes": 146325,
+        "sha256": "cd738a8858e3bc041cf96941829162a524ffdeb52d76ddd46c12f80299eb0254"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_002.pt",
+        "path": "dev/dev_shard_002_embeddings.pt",
+        "rows": 426,
+        "bytes": 143957,
+        "sha256": "f5b92b1d12635909c180902b82a895a45841e98ecb9d26a50ccd4c909f9ecc21"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_003.pt",
+        "path": "dev/dev_shard_003_embeddings.pt",
+        "rows": 409,
+        "bytes": 138325,
+        "sha256": "b83fd8687690ce3f784f42e95723a2471c45b914e6e72690cb85536632f8fb8f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_004.pt",
+        "path": "dev/dev_shard_004_embeddings.pt",
+        "rows": 428,
+        "bytes": 144661,
+        "sha256": "981d7f72560ef2ffe827c8cf8d523b9313566e75b72ae3e61639ac3ff6f3063e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_005.pt",
+        "path": "dev/dev_shard_005_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "baefc18396605ff3ec1b0451696b16648fc728dc624153160a02b2c41a2c13f2"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_006.pt",
+        "path": "dev/dev_shard_006_embeddings.pt",
+        "rows": 394,
+        "bytes": 133333,
+        "sha256": "33f02a58fca43e6a6806395cf96eb08883146a876553c576f91dd70d45a92c47"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_007.pt",
+        "path": "dev/dev_shard_007_embeddings.pt",
+        "rows": 403,
+        "bytes": 136341,
+        "sha256": "28b102c418c42c61d7ec671b430fab178c84da0d755522d19b507add1c7f3603"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_008.pt",
+        "path": "dev/dev_shard_008_embeddings.pt",
+        "rows": 426,
+        "bytes": 143957,
+        "sha256": "cd9cab0462c23933768e00100a51a656cf839857f9c8c8f8aee8e94422d58f2d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_009.pt",
+        "path": "dev/dev_shard_009_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "68195c831e9ce9791ca1ba0969773457d59ea5adf422f773bd513516b8cc67eb"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_010.pt",
+        "path": "dev/dev_shard_010_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "e6b3abbed4fad5219bbd917c4a187e3ccf0db979cb0c8e0121653f3d64dd7d47"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_011.pt",
+        "path": "dev/dev_shard_011_embeddings.pt",
+        "rows": 379,
+        "bytes": 128405,
+        "sha256": "360ff0286c0e3b4b3bb6dccb88180215fdc0216594e599f99a0580a7f2957feb"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_012.pt",
+        "path": "dev/dev_shard_012_embeddings.pt",
+        "rows": 443,
+        "bytes": 149653,
+        "sha256": "3170288d27927a226f43d1db67793587a3c0e7d5c3a7aa0a757f53ccd8f80743"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_013.pt",
+        "path": "dev/dev_shard_013_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "fcb8d9ebf1d03e7fb027152167c7a2232d0e2717e0a5ba0b32bba16ceaf66077"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_014.pt",
+        "path": "dev/dev_shard_014_embeddings.pt",
+        "rows": 395,
+        "bytes": 133717,
+        "sha256": "349c6139adbb8281482356e3458a936f461c94e06bce9b4dc8a0bbfe6a1b00ed"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_015.pt",
+        "path": "dev/dev_shard_015_embeddings.pt",
+        "rows": 393,
+        "bytes": 133013,
+        "sha256": "f17d50adfab93c308bfa5aa4fc6acc892acc5e3848c4323036f62aa63c4d038d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_016.pt",
+        "path": "dev/dev_shard_016_embeddings.pt",
+        "rows": 381,
+        "bytes": 129045,
+        "sha256": "60458184de71dc185ca5026a826d5aef2edc3cdfde789c060e43fe6c26e62e33"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_017.pt",
+        "path": "dev/dev_shard_017_embeddings.pt",
+        "rows": 418,
+        "bytes": 141333,
+        "sha256": "8ed4600a7fe66720b85cb79fc861e0f4a15a024b36f880c3d3abf3ad3ca85679"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_018.pt",
+        "path": "dev/dev_shard_018_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "eee8d721e69e9fedcbf99d5f71875c23c76104e2e6bcb11037f92bca46b54720"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_019.pt",
+        "path": "dev/dev_shard_019_embeddings.pt",
+        "rows": 397,
+        "bytes": 134357,
+        "sha256": "47f9786190bbd5faf26f1e4cc37853d3dbf7eea9c269e2161681c40246b1d6a5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_020.pt",
+        "path": "dev/dev_shard_020_embeddings.pt",
+        "rows": 396,
+        "bytes": 134037,
+        "sha256": "99d09e09c83fe4e076967140bd74e101914ecaff7e94d2ad75c7f346599bddd4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_021.pt",
+        "path": "dev/dev_shard_021_embeddings.pt",
+        "rows": 417,
+        "bytes": 141013,
+        "sha256": "e64b59915ea94ff319dea1c62ebc07955bc84aaa3f5ae23882dd8f99e08d7ff2"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_022.pt",
+        "path": "dev/dev_shard_022_embeddings.pt",
+        "rows": 445,
+        "bytes": 150293,
+        "sha256": "795e3da7c11197a184aa524235c42758be7253114ced7e278bf211f8a6a16d66"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_023.pt",
+        "path": "dev/dev_shard_023_embeddings.pt",
+        "rows": 376,
+        "bytes": 127381,
+        "sha256": "ba06a29b0d7d53342026a8536edb5f85d47ba617553af7f01bc08f24452e6a64"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_024.pt",
+        "path": "dev/dev_shard_024_embeddings.pt",
+        "rows": 419,
+        "bytes": 141653,
+        "sha256": "997c526a31d505fd832b13b3a1926bce4ce2afcbe4337814e72a75f76811f4e4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_025.pt",
+        "path": "dev/dev_shard_025_embeddings.pt",
+        "rows": 410,
+        "bytes": 138645,
+        "sha256": "f710b1b123e0f84412810846b746378d20882f5bd24d1e973467f32629cfbc28"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_026.pt",
+        "path": "dev/dev_shard_026_embeddings.pt",
+        "rows": 437,
+        "bytes": 147605,
+        "sha256": "facdd797e750ab009c8e471f27e2598624f26ac65ef487a09670aa6ed366c403"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_027.pt",
+        "path": "dev/dev_shard_027_embeddings.pt",
+        "rows": 434,
+        "bytes": 146645,
+        "sha256": "d99e88859e4ec0ff77bb2e4a9e4baf903d6a33c36dbcf7088a0925183a72b2ef"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_028.pt",
+        "path": "dev/dev_shard_028_embeddings.pt",
+        "rows": 418,
+        "bytes": 141333,
+        "sha256": "1e92ef1d5d389a97652306b3b9f8410b34d4efc646d40330c190033cffad2412"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_029.pt",
+        "path": "dev/dev_shard_029_embeddings.pt",
+        "rows": 390,
+        "bytes": 132053,
+        "sha256": "6d57700fee49dd1dbca9890c4e946d8d95854b602e40f484c76b8b15978ee7f8"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_030.pt",
+        "path": "dev/dev_shard_030_embeddings.pt",
+        "rows": 370,
+        "bytes": 125397,
+        "sha256": "3da7441beef525115c3f4357f1eb3c8f1c41a8aed76939847a66b1f193ba5c66"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_031.pt",
+        "path": "dev/dev_shard_031_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "0143f645aea35ed50e71dd7ff2290d983198be6f8a2eb6327f859410437da481"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_032.pt",
+        "path": "dev/dev_shard_032_embeddings.pt",
+        "rows": 441,
+        "bytes": 148949,
+        "sha256": "539d301b2d1206973aacaa7048144a48908737413d192bb729bbbddfaf69a4b8"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_033.pt",
+        "path": "dev/dev_shard_033_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "1fc6a164f6fb3be51ce6209d67185e28bf070f193ee037758ca33aaad202f58b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_034.pt",
+        "path": "dev/dev_shard_034_embeddings.pt",
+        "rows": 411,
+        "bytes": 139029,
+        "sha256": "59d634c4019a205c9dd5979c3b911dfd768218cd347be3986b0f786457d3b9ee"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_035.pt",
+        "path": "dev/dev_shard_035_embeddings.pt",
+        "rows": 367,
+        "bytes": 124437,
+        "sha256": "11f8868e8c2e5529f6461f7d33e50e7dcc53ea2728f9a75a211d6e1a90250741"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_036.pt",
+        "path": "dev/dev_shard_036_embeddings.pt",
+        "rows": 407,
+        "bytes": 137685,
+        "sha256": "c3e222e6232ccda008f7bdbe6c30443e9e3e9f8a6b4123efda6c87a98686c62c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_037.pt",
+        "path": "dev/dev_shard_037_embeddings.pt",
+        "rows": 410,
+        "bytes": 138645,
+        "sha256": "b80f098e51916a7a7bfb9252b6b586a7127fa40a2fefebf26e927ea29fe2dccf"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_038.pt",
+        "path": "dev/dev_shard_038_embeddings.pt",
+        "rows": 421,
+        "bytes": 142293,
+        "sha256": "a987f8d5b8584872835616758379ac9c621dbab1efda8d329aaac9297ba37157"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_039.pt",
+        "path": "dev/dev_shard_039_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "60e75ebac02fc58decb5b414bdfbffc18ff469b173694f3b964a0cc3c1941de1"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_040.pt",
+        "path": "dev/dev_shard_040_embeddings.pt",
+        "rows": 425,
+        "bytes": 143637,
+        "sha256": "1da7b59cbd3bc1822294f58390d5a838b13964d41a60751e36c45c5bb7f6db62"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_041.pt",
+        "path": "dev/dev_shard_041_embeddings.pt",
+        "rows": 407,
+        "bytes": 137685,
+        "sha256": "f81a6d6c62e0dca88469a47f24b7ac408f4de61d374c2ccce77fca89f54f9e2b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_042.pt",
+        "path": "dev/dev_shard_042_embeddings.pt",
+        "rows": 368,
+        "bytes": 124757,
+        "sha256": "29a414131a24d3042e0544ab34f260ed1ef889974287b6a147664fa850dfb633"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_043.pt",
+        "path": "dev/dev_shard_043_embeddings.pt",
+        "rows": 380,
+        "bytes": 128725,
+        "sha256": "48d9ac312255ee8a98128ce46113beca75b7760b4d4a67ba58f26afcc08c6696"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_044.pt",
+        "path": "dev/dev_shard_044_embeddings.pt",
+        "rows": 419,
+        "bytes": 141653,
+        "sha256": "afdb2459c1e364b608d437d34b57d9944b700e61f1eef8ab179a3f1b706dcbe5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_045.pt",
+        "path": "dev/dev_shard_045_embeddings.pt",
+        "rows": 414,
+        "bytes": 140053,
+        "sha256": "d471e89c06cc8f6fb7f411cb50c343e0dcb1687eed8dea14a5b1754449201718"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_046.pt",
+        "path": "dev/dev_shard_046_embeddings.pt",
+        "rows": 418,
+        "bytes": 141333,
+        "sha256": "96d0a0e858dde51c8f317fe37a2d96cfc31bb3f128e58a61e6202c1f62ee7128"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_047.pt",
+        "path": "dev/dev_shard_047_embeddings.pt",
+        "rows": 408,
+        "bytes": 138005,
+        "sha256": "2a2e79fb5a40e16ed9121ae053772cfad1b7c27cffc3ef20cc253efd6c1248a5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_048.pt",
+        "path": "dev/dev_shard_048_embeddings.pt",
+        "rows": 401,
+        "bytes": 135701,
+        "sha256": "eb9d22fe398820508d6331e3e23cbae425404b1bb578ab42e8a875e178640078"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_049.pt",
+        "path": "dev/dev_shard_049_embeddings.pt",
+        "rows": 397,
+        "bytes": 134357,
+        "sha256": "dfc14980a1041dbfb7639f82e053ebf377a4929b990906500d0933155abd7601"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_050.pt",
+        "path": "dev/dev_shard_050_embeddings.pt",
+        "rows": 424,
+        "bytes": 143317,
+        "sha256": "dfc90e260ab0adec863a2db05553ea9fb69078114caf8c8aa543dc31a6b74db4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_051.pt",
+        "path": "dev/dev_shard_051_embeddings.pt",
+        "rows": 394,
+        "bytes": 133333,
+        "sha256": "bfdadc20ce335085af06bb86cec3797390e112d5e3380189d7ac5df7c5735aae"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_052.pt",
+        "path": "dev/dev_shard_052_embeddings.pt",
+        "rows": 405,
+        "bytes": 136981,
+        "sha256": "080ad56d57119002ea186b240687294671b7f78c512469f31c47eb92c2923561"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_053.pt",
+        "path": "dev/dev_shard_053_embeddings.pt",
+        "rows": 412,
+        "bytes": 139349,
+        "sha256": "d148858684511ae941d4abe2cf48a735b247c129de643ea0531a0ba17479255f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_054.pt",
+        "path": "dev/dev_shard_054_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "e68f7656d3bc1cfa75541f4dcf078c5109562b96e7cbf16a992ac25a3648c58a"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_055.pt",
+        "path": "dev/dev_shard_055_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "569cafaab05440826bc155eb02ccad9e271f2bcf6b56a026f106af2926c7e406"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_056.pt",
+        "path": "dev/dev_shard_056_embeddings.pt",
+        "rows": 400,
+        "bytes": 135381,
+        "sha256": "fa9f9be7386eaee53e603ed6abcf01b349aec4ffe94578744559c8f884b626e7"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_057.pt",
+        "path": "dev/dev_shard_057_embeddings.pt",
+        "rows": 429,
+        "bytes": 144981,
+        "sha256": "d2fa2f5127518851e67b3cea36f01722902ed8f7cd331a50c604a0dce4273433"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_058.pt",
+        "path": "dev/dev_shard_058_embeddings.pt",
+        "rows": 394,
+        "bytes": 133333,
+        "sha256": "a9abac6b55978db352ddbb93363ef637acdb7f41767a0617e090398d692e417e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_059.pt",
+        "path": "dev/dev_shard_059_embeddings.pt",
+        "rows": 395,
+        "bytes": 133717,
+        "sha256": "57f3cca57cd7fb894b487b2b9ac20267d1f6d5dc6e640dee0d5cb7bdcca542ad"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_060.pt",
+        "path": "dev/dev_shard_060_embeddings.pt",
+        "rows": 406,
+        "bytes": 137365,
+        "sha256": "4944d6911b9c435cad5b5294211bad4481b7f3dd54df2c52546cbfb23b54bf7e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_061.pt",
+        "path": "dev/dev_shard_061_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "e5c7cbe5e012a50df2e0317d50bbfdee1639d4b5beb795743390a2124e994f4d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_062.pt",
+        "path": "dev/dev_shard_062_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "3310bd5210375091ffac1bd64261693d47735436f6b6cfa33c6021bad47c5649"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_063.pt",
+        "path": "dev/dev_shard_063_embeddings.pt",
+        "rows": 431,
+        "bytes": 145685,
+        "sha256": "1a84cfa3859c76b4c7c87e6e3270a9dfbb13a701b66f43050a095eaf7166974b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_064.pt",
+        "path": "dev/dev_shard_064_embeddings.pt",
+        "rows": 378,
+        "bytes": 128021,
+        "sha256": "fe9a4a43a568c7bf8a8c7b48dd846d1b28e1d8d5683abad34d87d01c084aaafb"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_065.pt",
+        "path": "dev/dev_shard_065_embeddings.pt",
+        "rows": 399,
+        "bytes": 135061,
+        "sha256": "4ed41041b628cea1077d6a438f7a6cbcfc9fdde9018ae4350ee92dda2d39bb44"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_066.pt",
+        "path": "dev/dev_shard_066_embeddings.pt",
+        "rows": 413,
+        "bytes": 139669,
+        "sha256": "f60335bb4dc0747b753f156ac059bf3ac909109544605d7727b50fbf33deae1e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_067.pt",
+        "path": "dev/dev_shard_067_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "23a1ec9e35b8fa363903a0cf09c6614d8dfd046095f6a105c9514cfc4c4a976f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_068.pt",
+        "path": "dev/dev_shard_068_embeddings.pt",
+        "rows": 412,
+        "bytes": 139349,
+        "sha256": "b108bba2cdf12064abcc76d3f3b8d85a99dd6409d77cdde1d641b366db166c3e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_069.pt",
+        "path": "dev/dev_shard_069_embeddings.pt",
+        "rows": 439,
+        "bytes": 148309,
+        "sha256": "736432a75cd552b93defe0881a57d0f47d22d6557493956ef24f181911ad1177"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_070.pt",
+        "path": "dev/dev_shard_070_embeddings.pt",
+        "rows": 447,
+        "bytes": 150997,
+        "sha256": "13f71442b3f13effeeee07eb60d1c0ace664b0e38e3d432ef4bfb94033ce814c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_071.pt",
+        "path": "dev/dev_shard_071_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "bfcdc402372a9fc2526870a4889c3684616ce1c8a5c0cf961ff51a887dfb7bb9"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_072.pt",
+        "path": "dev/dev_shard_072_embeddings.pt",
+        "rows": 408,
+        "bytes": 138005,
+        "sha256": "d73907add402eb65cf28b183f7b8a538bdeca1e3a94b66cd98caefe0130655ea"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_073.pt",
+        "path": "dev/dev_shard_073_embeddings.pt",
+        "rows": 379,
+        "bytes": 128405,
+        "sha256": "83199c248e24e25c2d0ddd2116e08b1b83ec324e5163defd973fb7f015b71a9c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_074.pt",
+        "path": "dev/dev_shard_074_embeddings.pt",
+        "rows": 416,
+        "bytes": 140693,
+        "sha256": "f297ceef7e2550a549bcf7bacc6c842548ff4c64d72dd79612e7860b85646e19"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_075.pt",
+        "path": "dev/dev_shard_075_embeddings.pt",
+        "rows": 379,
+        "bytes": 128405,
+        "sha256": "69adf7126eeb39a75a0095b48b6ea87952bb78231f2095463a3d986d9e9990ee"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_076.pt",
+        "path": "dev/dev_shard_076_embeddings.pt",
+        "rows": 392,
+        "bytes": 132693,
+        "sha256": "0a6c510f16c17cafd29d62dfa8a7aa6e69f7fa7d79cb9f6a8beff8017c34b80a"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_077.pt",
+        "path": "dev/dev_shard_077_embeddings.pt",
+        "rows": 394,
+        "bytes": 133333,
+        "sha256": "da44b1fd008a4f059d315162044035515301175ef2787d4c0a3e0aadc357e256"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_078.pt",
+        "path": "dev/dev_shard_078_embeddings.pt",
+        "rows": 410,
+        "bytes": 138645,
+        "sha256": "41d9a3cf30ea6b36a946d12d2e9662f9c707e8de1c14b7e85a6694dfd430fd06"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_079.pt",
+        "path": "dev/dev_shard_079_embeddings.pt",
+        "rows": 411,
+        "bytes": 139029,
+        "sha256": "6fa0637fb0634a2fb5a8d27aa0136c733ecf77c434df64809b1230c925b2c434"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_080.pt",
+        "path": "dev/dev_shard_080_embeddings.pt",
+        "rows": 403,
+        "bytes": 136341,
+        "sha256": "e6cc4b7a44fe0b47f796816f85553992235d48f7f5b21f7f355332a926f0457c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_081.pt",
+        "path": "dev/dev_shard_081_embeddings.pt",
+        "rows": 381,
+        "bytes": 129045,
+        "sha256": "394fd639734cdfaf68b9e8d6e0b5fd845124bde3cbc911b39a7072b7fb3491d4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_082.pt",
+        "path": "dev/dev_shard_082_embeddings.pt",
+        "rows": 409,
+        "bytes": 138325,
+        "sha256": "8fe73d11dc1c40daf7ce7556204ac9564a0f57bbd344f7047340b198601c4d90"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_083.pt",
+        "path": "dev/dev_shard_083_embeddings.pt",
+        "rows": 430,
+        "bytes": 145365,
+        "sha256": "ad15fe8399522dcbf6c80fb65d5e9434a3a12559400744949c50ba91f549b825"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_084.pt",
+        "path": "dev/dev_shard_084_embeddings.pt",
+        "rows": 394,
+        "bytes": 133333,
+        "sha256": "c34e9d845ede36206007fa5d64d553a8404d9bba113b1e7b7a99573f4b93cbfd"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_085.pt",
+        "path": "dev/dev_shard_085_embeddings.pt",
+        "rows": 414,
+        "bytes": 140053,
+        "sha256": "0b86ac3d25e6be8a090c57254b0e21fceed2807673638bdfa267a9541e5085b9"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_086.pt",
+        "path": "dev/dev_shard_086_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "de5fe6b041b750540e0bafb51177b130a088cbe312727dbf9e35e0858d014391"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_087.pt",
+        "path": "dev/dev_shard_087_embeddings.pt",
+        "rows": 408,
+        "bytes": 138005,
+        "sha256": "d6ebd6f7fbb0b33c127146afd7994c8afff276c4d83d5b81e8cac9992ef0aa5c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_088.pt",
+        "path": "dev/dev_shard_088_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "ee9321f012a08eeac31c00275f365b74e351dc8192ce5bf4bf3e29445e398fea"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_089.pt",
+        "path": "dev/dev_shard_089_embeddings.pt",
+        "rows": 401,
+        "bytes": 135701,
+        "sha256": "107870153e1422877958a7249295cd06f08b7f6f3527bb789c08d59a0435760b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_090.pt",
+        "path": "dev/dev_shard_090_embeddings.pt",
+        "rows": 431,
+        "bytes": 145685,
+        "sha256": "d3640c8ef451b0c51144b9b35b58db637b9f0892a520f11c3ed933669fe33d7c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_091.pt",
+        "path": "dev/dev_shard_091_embeddings.pt",
+        "rows": 409,
+        "bytes": 138325,
+        "sha256": "74e1f28cdce2913df4415df9617584af9e5e9521b360a878555ff5017fbeb1e9"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_092.pt",
+        "path": "dev/dev_shard_092_embeddings.pt",
+        "rows": 410,
+        "bytes": 138645,
+        "sha256": "99edcfb2f29555335f62449860a4550eeae2a4716a0ec3ed34a6a6ec7c2a7e0e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_093.pt",
+        "path": "dev/dev_shard_093_embeddings.pt",
+        "rows": 435,
+        "bytes": 146965,
+        "sha256": "3a5cbf5aee2a60f5f00afbca04fbc86b3fc4de7f169fa5885d6881bf69dbb69b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_094.pt",
+        "path": "dev/dev_shard_094_embeddings.pt",
+        "rows": 436,
+        "bytes": 147285,
+        "sha256": "6fd678b13098f18858e3e795c630dee0ef2261c2bdd7ee67a4e7b341b48bace4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_095.pt",
+        "path": "dev/dev_shard_095_embeddings.pt",
+        "rows": 380,
+        "bytes": 128725,
+        "sha256": "a3e3a78e7bf5e44d54deaaea3bfe9f1effdde6f2fd8ef299ba140edfeb082f19"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_096.pt",
+        "path": "dev/dev_shard_096_embeddings.pt",
+        "rows": 384,
+        "bytes": 130069,
+        "sha256": "2d250420b403128cbfa117e0cd84b4e1b5d8a88efb49eae7a84da9dacb9a8f3d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_097.pt",
+        "path": "dev/dev_shard_097_embeddings.pt",
+        "rows": 407,
+        "bytes": 137685,
+        "sha256": "0dea079e8e1410bdf1660166dbe8b4bb8b13b3386775f39ff8e757feccda01bf"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_098.pt",
+        "path": "dev/dev_shard_098_embeddings.pt",
+        "rows": 395,
+        "bytes": 133717,
+        "sha256": "295960ce03574fbdf20178324abde45dd5563f39d75709b22e78be1e01ee34e5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_099.pt",
+        "path": "dev/dev_shard_099_embeddings.pt",
+        "rows": 414,
+        "bytes": 140053,
+        "sha256": "7c26e8987ba540dc3551d7ebfd6f366c824287e23da774b401f21512b74ac08d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_100.pt",
+        "path": "dev/dev_shard_100_embeddings.pt",
+        "rows": 419,
+        "bytes": 141653,
+        "sha256": "197473d8e2d827db6f0114a7b9f9153afb593ffd8a7f08c6f6edde0f474d63e0"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_101.pt",
+        "path": "dev/dev_shard_101_embeddings.pt",
+        "rows": 410,
+        "bytes": 138645,
+        "sha256": "b25842a756d7acc18ca83094fe32e74c00abdb4f77a345ce1b007905401b62c9"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_102.pt",
+        "path": "dev/dev_shard_102_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "42b05441f662f56e1ba454c5c49c35eac6baacf311d54c29e361b970f5d88f2e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_103.pt",
+        "path": "dev/dev_shard_103_embeddings.pt",
+        "rows": 446,
+        "bytes": 150677,
+        "sha256": "cd15728409fe3aafccacee9667352fa1b4d99b69cabc281081cf403989088a1a"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_104.pt",
+        "path": "dev/dev_shard_104_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "a2091e30cc278b5c1813703bfd6c42a268d645c7f0ff3ebb327c0872de23a164"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_105.pt",
+        "path": "dev/dev_shard_105_embeddings.pt",
+        "rows": 396,
+        "bytes": 134037,
+        "sha256": "64fe35f1a718bac95bcaabb18a7a1352edf9d407a9cb8bcf7698c885bd398a6f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_106.pt",
+        "path": "dev/dev_shard_106_embeddings.pt",
+        "rows": 442,
+        "bytes": 149269,
+        "sha256": "d553816825e09866db2f9a6a5ed633f7a6e89220f6f46455e1bfc25c0dd53e52"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_107.pt",
+        "path": "dev/dev_shard_107_embeddings.pt",
+        "rows": 427,
+        "bytes": 144341,
+        "sha256": "ca1c34c5389f716bc6e31489f200baef4b7fd52f938d5fedd402e4e2c9ba9297"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_108.pt",
+        "path": "dev/dev_shard_108_embeddings.pt",
+        "rows": 391,
+        "bytes": 132373,
+        "sha256": "4b2773a34a23dfa80d85f049377b7bc062bba5e97bd43e090adf811b39655846"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_109.pt",
+        "path": "dev/dev_shard_109_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "2cb8aa261cb757dd2d96312401edb3ca1ad5eb08be4afb9c9b5382d8c5d63c4c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_110.pt",
+        "path": "dev/dev_shard_110_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "7a0150f7985d68ab5c66cfce84494ed0cb25b2d4822fa3267387214ca7001a2e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_111.pt",
+        "path": "dev/dev_shard_111_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "315d7b6785444ef4d028ef2753cae8f79d3e696fdeb80418b349d0b2da529c92"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_112.pt",
+        "path": "dev/dev_shard_112_embeddings.pt",
+        "rows": 399,
+        "bytes": 135061,
+        "sha256": "90ee8f69d29309f3f74c68d48ebd9463925af0f208e5ea47a69ae1fa59d600d8"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_113.pt",
+        "path": "dev/dev_shard_113_embeddings.pt",
+        "rows": 403,
+        "bytes": 136341,
+        "sha256": "f994716ce85c0c4a53a212822485081d26759e0f8d1332162f53609239250c7b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_114.pt",
+        "path": "dev/dev_shard_114_embeddings.pt",
+        "rows": 429,
+        "bytes": 144981,
+        "sha256": "fab84a83775d5446149b44138420f7c7beca0d249c8a086193a9b7fbd3b51f19"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_115.pt",
+        "path": "dev/dev_shard_115_embeddings.pt",
+        "rows": 396,
+        "bytes": 134037,
+        "sha256": "368c6a4bbff473e0f78b125586584dd197e78c49af0b32add9acdf54e3669e42"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_116.pt",
+        "path": "dev/dev_shard_116_embeddings.pt",
+        "rows": 449,
+        "bytes": 151637,
+        "sha256": "b3c0b0547358afb9e3e3dc1eafc3e2b3d12dc5238bbd705b1ebd9e7ff21bdbb5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_117.pt",
+        "path": "dev/dev_shard_117_embeddings.pt",
+        "rows": 419,
+        "bytes": 141653,
+        "sha256": "8d7900a18f0f2ebb2935242cc773acb801a45ec10a0658fa1634c42f62322a58"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_118.pt",
+        "path": "dev/dev_shard_118_embeddings.pt",
+        "rows": 386,
+        "bytes": 130709,
+        "sha256": "a1981ada81e404d7306f0d0f714460a941779ceb565b1331e12e4cfd8ad83073"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_119.pt",
+        "path": "dev/dev_shard_119_embeddings.pt",
+        "rows": 450,
+        "bytes": 151957,
+        "sha256": "11077eb404a0db9c6746768a116c0245cf0d60e37c3f6d215a737807ad2b86a4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_120.pt",
+        "path": "dev/dev_shard_120_embeddings.pt",
+        "rows": 455,
+        "bytes": 153621,
+        "sha256": "132122233d2c509f3235fb60d1c258fb8887eb353112c7e9af2e7f2eb11920cb"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_121.pt",
+        "path": "dev/dev_shard_121_embeddings.pt",
+        "rows": 398,
+        "bytes": 134741,
+        "sha256": "f2d0041b0a9d2ff2122c653dabd21812c8ebbbcbca0c07835b64db7e36c6d0be"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_122.pt",
+        "path": "dev/dev_shard_122_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "0f0b20d3655f15ad923e6caef20dd7da16e26c5a0b21a645a311ed0c2bf61c4c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_123.pt",
+        "path": "dev/dev_shard_123_embeddings.pt",
+        "rows": 416,
+        "bytes": 140693,
+        "sha256": "38a6ce1dbeefd2156c6e31aca32733f21c277cb85855c3bf6bd7fe0f58000f81"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_124.pt",
+        "path": "dev/dev_shard_124_embeddings.pt",
+        "rows": 417,
+        "bytes": 141013,
+        "sha256": "bf5926eee9e955923fd4937c8cc59038610972f7e6552dce870ac7558a3d58a4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_125.pt",
+        "path": "dev/dev_shard_125_embeddings.pt",
+        "rows": 416,
+        "bytes": 140693,
+        "sha256": "6c100a975e17f0fe557e024c1abe8d7a3e7b74d2c2f7247d2255612fbec3b23d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_126.pt",
+        "path": "dev/dev_shard_126_embeddings.pt",
+        "rows": 436,
+        "bytes": 147285,
+        "sha256": "9b3067e987a0ec118926cdbd5ce7b7529c58023e5ea52223bc402df54d1af1b7"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_127.pt",
+        "path": "dev/dev_shard_127_embeddings.pt",
+        "rows": 435,
+        "bytes": 146965,
+        "sha256": "309714437af9b3cf89b26e78c3d6bfa6e567532dd9fe264317e722c9df6768fe"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_128.pt",
+        "path": "dev/dev_shard_128_embeddings.pt",
+        "rows": 432,
+        "bytes": 146005,
+        "sha256": "93780a05796a28c5e55b7edaba54de866a58e941a650aa86dd43fbfb03fe11f3"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_129.pt",
+        "path": "dev/dev_shard_129_embeddings.pt",
+        "rows": 398,
+        "bytes": 134741,
+        "sha256": "a2a32925a110e936636cb8addce60773184e6416b0b21ddcf131b95c44ae965e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_130.pt",
+        "path": "dev/dev_shard_130_embeddings.pt",
+        "rows": 386,
+        "bytes": 130709,
+        "sha256": "2a2e6f79d8f10660b099f2421f7bbcfeb3b5f98593b60666e852b3289e8bc633"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_131.pt",
+        "path": "dev/dev_shard_131_embeddings.pt",
+        "rows": 425,
+        "bytes": 143637,
+        "sha256": "0c627249279797c247db4be4c83f1c1d31e89c7b844c5b65270b928c83edc868"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_132.pt",
+        "path": "dev/dev_shard_132_embeddings.pt",
+        "rows": 397,
+        "bytes": 134357,
+        "sha256": "1ba132d3cb140f30d838af2af7c8a88160a255ac1322558f20f114786a0ea3df"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_133.pt",
+        "path": "dev/dev_shard_133_embeddings.pt",
+        "rows": 424,
+        "bytes": 143317,
+        "sha256": "53bfcbadc2e8afc5169252e363f509beadc81bf57e32b62808bfa3b5d1a80b85"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_134.pt",
+        "path": "dev/dev_shard_134_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "c906187cf18ad0b9ca6611557ad1ca196c9c227db6be0a49c37a61952f5d3151"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_135.pt",
+        "path": "dev/dev_shard_135_embeddings.pt",
+        "rows": 403,
+        "bytes": 136341,
+        "sha256": "40d179e24e3ad5d0e1f669a54abd39ffe465ae08a02354781818d427a1bb70a1"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_136.pt",
+        "path": "dev/dev_shard_136_embeddings.pt",
+        "rows": 433,
+        "bytes": 146325,
+        "sha256": "542ecad7259e4638d91d5bb47340cb49c276f5fb03ecf17011518a8211b4c7d1"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_137.pt",
+        "path": "dev/dev_shard_137_embeddings.pt",
+        "rows": 443,
+        "bytes": 149653,
+        "sha256": "b87e69f8a55e52c304c19dfee93a265163c684f4960746940289e4efa304b75f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_138.pt",
+        "path": "dev/dev_shard_138_embeddings.pt",
+        "rows": 408,
+        "bytes": 138005,
+        "sha256": "8b342325381228f0a205dac29734102a024c4778168b21006a743e04b81a4291"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_139.pt",
+        "path": "dev/dev_shard_139_embeddings.pt",
+        "rows": 369,
+        "bytes": 125077,
+        "sha256": "b70c58d2eda8c954cf3ac61a95f2f012abd64e2f9684aff7a63c92b25ca03cea"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_140.pt",
+        "path": "dev/dev_shard_140_embeddings.pt",
+        "rows": 401,
+        "bytes": 135701,
+        "sha256": "7dc23162a9ced4fd9041882b7c2af24ff609c4a7ba4a5ef3786a6a50c913b1cf"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_141.pt",
+        "path": "dev/dev_shard_141_embeddings.pt",
+        "rows": 433,
+        "bytes": 146325,
+        "sha256": "aa11ffc742ffddfda149a249795614b3e7873a760638c9c974df2ae475c21b39"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_142.pt",
+        "path": "dev/dev_shard_142_embeddings.pt",
+        "rows": 385,
+        "bytes": 130389,
+        "sha256": "5cf32b9c53e65f8c4bce0d5a82db45b894b5e76ab0055661e9f3dad000bef12e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_143.pt",
+        "path": "dev/dev_shard_143_embeddings.pt",
+        "rows": 431,
+        "bytes": 145685,
+        "sha256": "7202a604f50dff992b61895d9c9976031a598fb7b9a84e51f9cdf2f49a9b6300"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_144.pt",
+        "path": "dev/dev_shard_144_embeddings.pt",
+        "rows": 388,
+        "bytes": 131349,
+        "sha256": "c36e81b6cd8e2bc31e35c3f93e7280ea00693879a2d1d647075375d841f93468"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_145.pt",
+        "path": "dev/dev_shard_145_embeddings.pt",
+        "rows": 367,
+        "bytes": 124437,
+        "sha256": "61950b4a59dd5d82f53795dc8b6f38ade7231ab4451a5161ceedfb4d15f6f810"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_146.pt",
+        "path": "dev/dev_shard_146_embeddings.pt",
+        "rows": 408,
+        "bytes": 138005,
+        "sha256": "c82405339ec2e26be872d556f2697f9545d9c7881ee5257df4d4ee783b12ddfa"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_147.pt",
+        "path": "dev/dev_shard_147_embeddings.pt",
+        "rows": 406,
+        "bytes": 137365,
+        "sha256": "7d245a2a6dbcc4299b7f884cd6fb58853377c97bafcf5a1d2086926c95f3ba2f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_148.pt",
+        "path": "dev/dev_shard_148_embeddings.pt",
+        "rows": 409,
+        "bytes": 138325,
+        "sha256": "0f6e1d6fffe53a4568c769bae5ae443a6a20b637bf5fe5d39aeef02d9210b5f8"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_149.pt",
+        "path": "dev/dev_shard_149_embeddings.pt",
+        "rows": 435,
+        "bytes": 146965,
+        "sha256": "c7d854fa747bfe939b6587ca54dbc2e4c213e1da282c7679db45d5459db03428"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_150.pt",
+        "path": "dev/dev_shard_150_embeddings.pt",
+        "rows": 426,
+        "bytes": 143957,
+        "sha256": "1baa4f5953e9280b7d194baccd14f73bb929a1899f0601cc99c0f4f583c71ce6"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_151.pt",
+        "path": "dev/dev_shard_151_embeddings.pt",
+        "rows": 425,
+        "bytes": 143637,
+        "sha256": "53b78d23558fc72b587323227ec3b7e89567ce375057bb91cccd99297d5ee601"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_152.pt",
+        "path": "dev/dev_shard_152_embeddings.pt",
+        "rows": 431,
+        "bytes": 145685,
+        "sha256": "b6e8ea7ce9833aa5dd641012aee171fd1d1aa6a653ce3f6b64ba8a45d675c52f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_153.pt",
+        "path": "dev/dev_shard_153_embeddings.pt",
+        "rows": 391,
+        "bytes": 132373,
+        "sha256": "de04fd6877ff8b8016ea68f12e541fb04209403a14ea0d3bd33b01a5f587303b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_154.pt",
+        "path": "dev/dev_shard_154_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "04859405ee9f733204c32dc936febdd9480d2abfe1d254da5164ea2bcf7fd118"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_155.pt",
+        "path": "dev/dev_shard_155_embeddings.pt",
+        "rows": 404,
+        "bytes": 136661,
+        "sha256": "2612c9873cfd0d3fa4b3f3cf7658a0f0f2ee673089fd957c2e52aa3bf2d64b8b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_156.pt",
+        "path": "dev/dev_shard_156_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "ef42d7b34ff93b72655fa660c6c1f5b66ade0d01425c59e8f5050911d24b31d4"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_157.pt",
+        "path": "dev/dev_shard_157_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "28e5c9952979189c9d1eb6fd5e812adce76d748e28e32649c57089ceb78d546b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_158.pt",
+        "path": "dev/dev_shard_158_embeddings.pt",
+        "rows": 414,
+        "bytes": 140053,
+        "sha256": "b5d40633add3894d40c69553cffe98debce3aa5c37735faae4985a7c789b5a71"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_159.pt",
+        "path": "dev/dev_shard_159_embeddings.pt",
+        "rows": 386,
+        "bytes": 130709,
+        "sha256": "06bd7b26c8b2daa512e973e341d210a7fec3add8ef20aaafd90be98bd04cc04c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_160.pt",
+        "path": "dev/dev_shard_160_embeddings.pt",
+        "rows": 390,
+        "bytes": 132053,
+        "sha256": "0cc46f384b67d2be4921cec217ba8f895fb3c592142c32cae50f0f5d9a6fac19"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_161.pt",
+        "path": "dev/dev_shard_161_embeddings.pt",
+        "rows": 421,
+        "bytes": 142293,
+        "sha256": "c6aeec0ca98deabbdb476c2a191208bfb6de420cce4fe4eb4a4912329ab23cb1"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_162.pt",
+        "path": "dev/dev_shard_162_embeddings.pt",
+        "rows": 430,
+        "bytes": 145365,
+        "sha256": "042680fdcb09f99180ab9294283fd1b783a7092a6005aec3f53e0ffff8e2b7b6"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_163.pt",
+        "path": "dev/dev_shard_163_embeddings.pt",
+        "rows": 419,
+        "bytes": 141653,
+        "sha256": "1ce7db1db029cef56bdb7b906fbbece277eb1f5c6d07701edcc7e2eb9d6e3537"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_164.pt",
+        "path": "dev/dev_shard_164_embeddings.pt",
+        "rows": 435,
+        "bytes": 146965,
+        "sha256": "2b46467bc0a9cb6da39d0480a354b3aa61b8cfbb9c858c715d3a64bfb741a387"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_165.pt",
+        "path": "dev/dev_shard_165_embeddings.pt",
+        "rows": 423,
+        "bytes": 142997,
+        "sha256": "bf36d477c517555e7bcece5578bcde2e4d862e7d1c6e8a81fafcea9ab64c28de"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_166.pt",
+        "path": "dev/dev_shard_166_embeddings.pt",
+        "rows": 413,
+        "bytes": 139669,
+        "sha256": "3da21360eb90d6f546f8d17855e18b95fcf9771d32f1f3b465a07b707b924f0d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_167.pt",
+        "path": "dev/dev_shard_167_embeddings.pt",
+        "rows": 413,
+        "bytes": 139669,
+        "sha256": "d6a8ca434222f139ffc85c5b0cf197e68b86deba30145faebfbca989f6d741fa"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_168.pt",
+        "path": "dev/dev_shard_168_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "20675b9d8c90bc834e934d0b54defdf0c5c31c22136defa34ca74348870d699f"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_169.pt",
+        "path": "dev/dev_shard_169_embeddings.pt",
+        "rows": 387,
+        "bytes": 131029,
+        "sha256": "32fcb2e614c7f64631dc1ffacd72d01f8cdb97197b2bc8dfdbda0b8927e102ec"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_170.pt",
+        "path": "dev/dev_shard_170_embeddings.pt",
+        "rows": 428,
+        "bytes": 144661,
+        "sha256": "1ff0dc30ff314a5a2c9bed6728004dd9508deb744ea04e80b1c9cc072f6a29d5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_171.pt",
+        "path": "dev/dev_shard_171_embeddings.pt",
+        "rows": 421,
+        "bytes": 142293,
+        "sha256": "8e9611f3cf9139eef82bb61b2a3566f3a4e46c2a29e8c4afc77762285fbc402a"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_172.pt",
+        "path": "dev/dev_shard_172_embeddings.pt",
+        "rows": 391,
+        "bytes": 132373,
+        "sha256": "dc1320188f2fac0863b5985053a3d6f39c81974842697fce899039dd5e6ed618"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_173.pt",
+        "path": "dev/dev_shard_173_embeddings.pt",
+        "rows": 423,
+        "bytes": 142997,
+        "sha256": "502e8990dd2a5e472b3b15119ed8ea9d63cec81ea06de924fae77dfe7a8f1716"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_174.pt",
+        "path": "dev/dev_shard_174_embeddings.pt",
+        "rows": 430,
+        "bytes": 145365,
+        "sha256": "addf73f97f5bd48ec604a0af14245c6ff4c44738a43d3723a23dee1e4e8cd461"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_175.pt",
+        "path": "dev/dev_shard_175_embeddings.pt",
+        "rows": 365,
+        "bytes": 123733,
+        "sha256": "00dbd08a0ad2d7b83c347cbc7fa0b4399114275b027e5cf2589a504ca5823258"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_176.pt",
+        "path": "dev/dev_shard_176_embeddings.pt",
+        "rows": 397,
+        "bytes": 134357,
+        "sha256": "1e23f04ec9605457ef94c74ca5fa7132b742be7cd8c8ff2e857526c76f36f77d"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_177.pt",
+        "path": "dev/dev_shard_177_embeddings.pt",
+        "rows": 390,
+        "bytes": 132053,
+        "sha256": "ce6ab35b59814f316d9bcdeb0a4c9626d29672e39837e8051198e7047e3d2a6c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_178.pt",
+        "path": "dev/dev_shard_178_embeddings.pt",
+        "rows": 433,
+        "bytes": 146325,
+        "sha256": "b475f21bc12c00e70b318506f5fa42997356d130dca65f9a95d64f5165193b0e"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_179.pt",
+        "path": "dev/dev_shard_179_embeddings.pt",
+        "rows": 418,
+        "bytes": 141333,
+        "sha256": "755d4558fbd00a91646a757e03266120913442fca116e13910072e3a20dee742"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_180.pt",
+        "path": "dev/dev_shard_180_embeddings.pt",
+        "rows": 390,
+        "bytes": 132053,
+        "sha256": "350f03b52323ed0658c76c3dee1e4713be4d271258cc37c6ca19fe0c39d5073a"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_181.pt",
+        "path": "dev/dev_shard_181_embeddings.pt",
+        "rows": 378,
+        "bytes": 128021,
+        "sha256": "2c35c07a1d9787993b8062a74124ae121724bfc0833b8558a0e88f12186ec763"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_182.pt",
+        "path": "dev/dev_shard_182_embeddings.pt",
+        "rows": 420,
+        "bytes": 141973,
+        "sha256": "6e28095563bb6b1f8ce09037d467c77957b2bb38d884db760c0c9afb52afb5cc"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_183.pt",
+        "path": "dev/dev_shard_183_embeddings.pt",
+        "rows": 387,
+        "bytes": 131029,
+        "sha256": "59edb7fba883a6da0868b598fe6e3e6a5ef61c9cba5f59f3d569b56818bc63a5"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_184.pt",
+        "path": "dev/dev_shard_184_embeddings.pt",
+        "rows": 418,
+        "bytes": 141333,
+        "sha256": "dc253ce1888d0f7b5d8e05c18daef3f14ee52817689fef190925c3fc8d808a32"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_185.pt",
+        "path": "dev/dev_shard_185_embeddings.pt",
+        "rows": 421,
+        "bytes": 142293,
+        "sha256": "358cc2bbb8e7ce209a03bd077c35b0cf1255aea7b9d9b9cfb63efae62478f363"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_186.pt",
+        "path": "dev/dev_shard_186_embeddings.pt",
+        "rows": 423,
+        "bytes": 142997,
+        "sha256": "56fcf531fca94e9b38e0708c366bec980eecf07ccbd890ef83155c1c0bcb3e5b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_187.pt",
+        "path": "dev/dev_shard_187_embeddings.pt",
+        "rows": 402,
+        "bytes": 136021,
+        "sha256": "252bec5acce7b35afcd51a4fbd22ac4a1ca2dded7a0205f67eedcfca1e0d0ea2"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_188.pt",
+        "path": "dev/dev_shard_188_embeddings.pt",
+        "rows": 400,
+        "bytes": 135381,
+        "sha256": "8fad58629542e7055ac3271e83f0a62922231e17d42d0a75ea5739a4177c98c7"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_189.pt",
+        "path": "dev/dev_shard_189_embeddings.pt",
+        "rows": 381,
+        "bytes": 129045,
+        "sha256": "a2d29b87326929cbdd4511db7f83866fafb31f92dc653ca81d0554bf6120d3ed"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_190.pt",
+        "path": "dev/dev_shard_190_embeddings.pt",
+        "rows": 400,
+        "bytes": 135381,
+        "sha256": "6c023dcbe1c7ff7ff5e3fd1466e4a8a61659399ec625efe420133512ecc03cba"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_191.pt",
+        "path": "dev/dev_shard_191_embeddings.pt",
+        "rows": 434,
+        "bytes": 146645,
+        "sha256": "b698626e15be4fba2fedbecd9708bf2a93f7593a440b8cf26fec2ed5ae1c757b"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_192.pt",
+        "path": "dev/dev_shard_192_embeddings.pt",
+        "rows": 422,
+        "bytes": 142677,
+        "sha256": "b622c18e7755106108dcc34f6ce57b7e5b45a9c24451d526a4678aa5b5ca4fce"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_193.pt",
+        "path": "dev/dev_shard_193_embeddings.pt",
+        "rows": 382,
+        "bytes": 129429,
+        "sha256": "3d3c3165f55e2aebeae4fdf76febc001f80393f5f933c25f247f51ea9986307c"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_194.pt",
+        "path": "dev/dev_shard_194_embeddings.pt",
+        "rows": 366,
+        "bytes": 124117,
+        "sha256": "f1f31dd01f7c21a960f2c96fc19b2c900fe31650b76db645397c6602f424f036"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_195.pt",
+        "path": "dev/dev_shard_195_embeddings.pt",
+        "rows": 452,
+        "bytes": 152597,
+        "sha256": "244c3dc4a7fc8c30f9d7384dec35658d8fe026fb43f7ad58c98e42833892a1bc"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_196.pt",
+        "path": "dev/dev_shard_196_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "d32425a5244fd52bcaf057984dac72ad0eda49e4596f37e4952cb7ffcb2db972"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_197.pt",
+        "path": "dev/dev_shard_197_embeddings.pt",
+        "rows": 436,
+        "bytes": 147285,
+        "sha256": "0f940d424000db78667121c1bc2f5e9cb361721e17cf3d13f20b808ba15188bf"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_198.pt",
+        "path": "dev/dev_shard_198_embeddings.pt",
+        "rows": 415,
+        "bytes": 140373,
+        "sha256": "1fd21a95b26b5a380cf763ae96bdce153c893c5b2c7557bf6333e1c1f72810d0"
+      },
+      {
+        "role": "dev",
+        "source_shard": "gps/dev_shard_199.pt",
+        "path": "dev/dev_shard_199_embeddings.pt",
+        "rows": 389,
+        "bytes": 131669,
+        "sha256": "8543749e6a0c870318c2f9d73ab3fccb823a83982ccc74569ddd225ae416f8df"
+      },
+      {
+        "role": "official",
+        "source_shard": "gps/official_shard_200.pt",
+        "path": "official/official_shard_200_embeddings.pt",
+        "rows": 4981,
+        "bytes": 1636141,
+        "sha256": "9c2a4b6ee321bdf9e0edfac9e9cce811d8a4e4199a4837cece4fbda401c32933"
+      }
+    ],
+    "rows": {
+      "train": 915012,
+      "dev": 81961,
+      "official": 4981
+    },
+    "official_valid_metric_read": false
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false,
+  "runtime_s": 14088.457656502957
+}

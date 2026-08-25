@@ -1,0 +1,29 @@
+{
+  "format": "molgap-kaggle-connectivity-v1",
+  "checked_at": "2026-08-24T03:30:00+09:00",
+  "credential_source": "local_private_handover_only",
+  "credential_copied_to_repository": false,
+  "api_authentication": "passed",
+  "checks": {
+    "owned_kernels_page": {
+      "status": "passed",
+      "visible_count": 20
+    },
+    "private_datasets_page": {
+      "status": "passed",
+      "visible_count": 20,
+      "selection_group": "my"
+    }
+  },
+  "local_cli": {
+    "path": ".venv/Scripts/kaggle.exe",
+    "present": false,
+    "python_module_present": false
+  },
+  "remote_compute": {
+    "kernel_created": false,
+    "gpu_quota_verified": false,
+    "reason": "Authentication and private-resource access were tested without consuming a Kaggle kernel slot or GPU quota."
+  },
+  "conclusion": "The account and API credentials are usable. Install or vendor the Kaggle CLI before package submission, or use the authenticated REST API. GPU runtime remains deliberately unconsumed and unverified."
+}

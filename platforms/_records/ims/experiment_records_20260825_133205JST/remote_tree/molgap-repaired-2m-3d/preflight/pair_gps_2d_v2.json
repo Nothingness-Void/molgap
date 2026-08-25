@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "architecture": "PairGPS2D",
+  "geometry": "none",
+  "cache_acceptance_sha256": "23e5598540c1340326cd8860f0fcb9166c843d141cfe670ab54d80d5d6ebad8b",
+  "sample_candidates": 192,
+  "graphs": 32,
+  "batch_size": 32,
+  "batch_total_nodes": 1023,
+  "batch_max_nodes": 36,
+  "model_config": {
+    "in_channels": 18,
+    "edge_dim": 4,
+    "hidden_channels": 256,
+    "pair_channels": 96,
+    "num_layers": 10,
+    "num_heads": 8,
+    "dropout": 0.05,
+    "n_targets": 3,
+    "pooling": "mean",
+    "path_steps": 5,
+    "triplet_rank": 16
+  },
+  "n_params": 12929523,
+  "device": "NVIDIA A100-SXM4-80GB",
+  "loss": 0.7075085639953613,
+  "grad_norm": 5.153505802154541,
+  "output_shape": [
+    32,
+    3
+  ],
+  "step_elapsed_s": 4.972639538347721,
+  "graphs_per_s": 6.435214085642888,
+  "peak_cuda_bytes": 3850042880,
+  "finite": true,
+  "target": "PubChemQC B3LYP/6-31G* HOMO/LUMO/Gap",
+  "input_acceptance": {
+    "format": "molgap-pubchemqc-pair-gps-2d-v1",
+    "accepted_rows": 1989116,
+    "split_accepted_rows": {
+      "train": 1591272,
+      "validation": 198919,
+      "test": 198925
+    },
+    "geometry": "none"
+  }
+}

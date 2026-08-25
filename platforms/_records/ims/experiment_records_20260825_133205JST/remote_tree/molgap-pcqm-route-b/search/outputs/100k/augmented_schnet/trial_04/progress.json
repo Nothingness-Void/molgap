@@ -1,0 +1,24 @@
+{
+  "status": "training",
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "encoder": "augmented_schnet",
+  "stage": "100k",
+  "trial": {
+    "trial_id": "trial_04",
+    "learning_rate": 0.0004,
+    "weight_decay": 1e-06,
+    "dropout": 0.05,
+    "batch_size": 128,
+    "warmup_ratio": 0.05,
+    "grad_clip": 1.0
+  },
+  "seed": 42,
+  "epochs": 24,
+  "patience": 5,
+  "subset_manifest_sha256": "49ea94f83fdba603f559c6e2d514b03a89c0b83f440b70a0688cb0e27560bccc",
+  "warm_start_sha256": "04eb0751426808da0b360112fe0e634b80a4d9079ab552a6c39bc2684415eab6",
+  "schnet_cutoff_A": 6.0,
+  "epoch": 23,
+  "best_epoch": 22,
+  "best_dev_gap_mae_eV": 0.16861262917518616
+}

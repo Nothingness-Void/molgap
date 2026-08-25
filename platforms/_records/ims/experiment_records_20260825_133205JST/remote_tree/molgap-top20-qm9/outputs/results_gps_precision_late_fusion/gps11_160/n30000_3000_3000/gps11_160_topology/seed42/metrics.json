@@ -1,0 +1,310 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "gps11_160",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "01656b1a538f89c8",
+  "split_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5358991622924805,
+    0.3225027918815613,
+    6.8583855628967285
+  ],
+  "target_std": [
+    0.5976356863975525,
+    1.2715765237808228,
+    1.288191318511963
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 160,
+    "num_layers": 11,
+    "num_heads": 4,
+    "dropout": 0.05,
+    "batch_size": 192
+  },
+  "n_params": 3167363,
+  "best_epoch": 29,
+  "best_validation_average_mae_eV": 0.12032714486122131,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.08343207836151123
+      },
+      "LUMO": {
+        "mae": 0.09267078340053558
+      },
+      "Gap": {
+        "mae": 0.11586830019950867
+      },
+      "average": {
+        "mae": 0.09732372313737869
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.10420669615268707
+      },
+      "LUMO": {
+        "mae": 0.11072936654090881
+      },
+      "Gap": {
+        "mae": 0.14604538679122925
+      },
+      "average": {
+        "mae": 0.12032714486122131
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.10549068450927734
+      },
+      "LUMO": {
+        "mae": 0.11080662906169891
+      },
+      "Gap": {
+        "mae": 0.14815297722816467
+      },
+      "average": {
+        "mae": 0.12148342281579971
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.35826548380851747,
+      "validation_average_mae_eV": 0.3869086503982544,
+      "elapsed_s": 18.93952501192689,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.2606195058584213,
+      "validation_average_mae_eV": 0.2192462682723999,
+      "elapsed_s": 18.05048873089254,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_normalized_l1": 0.23513057866096496,
+      "validation_average_mae_eV": 0.23146465420722961,
+      "elapsed_s": 18.03456426411867,
+      "selected": false
+    },
+    {
+      "epoch": 3,
+      "train_normalized_l1": 0.22359620821475984,
+      "validation_average_mae_eV": 0.2171793282032013,
+      "elapsed_s": 18.090060306247324,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_normalized_l1": 0.21025162415504456,
+      "validation_average_mae_eV": 0.1999971866607666,
+      "elapsed_s": 18.05323166679591,
+      "selected": true
+    },
+    {
+      "epoch": 5,
+      "train_normalized_l1": 0.20094545118808746,
+      "validation_average_mae_eV": 0.25652435421943665,
+      "elapsed_s": 18.044540535658598,
+      "selected": false
+    },
+    {
+      "epoch": 6,
+      "train_normalized_l1": 0.19597387387752532,
+      "validation_average_mae_eV": 0.1831444650888443,
+      "elapsed_s": 18.062470970209688,
+      "selected": true
+    },
+    {
+      "epoch": 7,
+      "train_normalized_l1": 0.18927841048240662,
+      "validation_average_mae_eV": 0.19148531556129456,
+      "elapsed_s": 18.058722055051476,
+      "selected": false
+    },
+    {
+      "epoch": 8,
+      "train_normalized_l1": 0.18341245167255402,
+      "validation_average_mae_eV": 0.17679481208324432,
+      "elapsed_s": 18.14696410112083,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_normalized_l1": 0.1779886747598648,
+      "validation_average_mae_eV": 0.16966812312602997,
+      "elapsed_s": 18.18963866494596,
+      "selected": true
+    },
+    {
+      "epoch": 10,
+      "train_normalized_l1": 0.1746295893907547,
+      "validation_average_mae_eV": 0.18048273026943207,
+      "elapsed_s": 18.06573076080531,
+      "selected": false
+    },
+    {
+      "epoch": 11,
+      "train_normalized_l1": 0.16678510468006133,
+      "validation_average_mae_eV": 0.16231007874011993,
+      "elapsed_s": 18.13052075402811,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_normalized_l1": 0.16497027347087861,
+      "validation_average_mae_eV": 0.16124974191188812,
+      "elapsed_s": 18.105538948904723,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_normalized_l1": 0.15874116427898408,
+      "validation_average_mae_eV": 0.15169361233711243,
+      "elapsed_s": 18.086781218647957,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_normalized_l1": 0.1542459005832672,
+      "validation_average_mae_eV": 0.16828034818172455,
+      "elapsed_s": 18.107096378691494,
+      "selected": false
+    },
+    {
+      "epoch": 15,
+      "train_normalized_l1": 0.1516175233602524,
+      "validation_average_mae_eV": 0.15126962959766388,
+      "elapsed_s": 18.18215169524774,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_normalized_l1": 0.1471269349336624,
+      "validation_average_mae_eV": 0.1468604952096939,
+      "elapsed_s": 18.10386831779033,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_normalized_l1": 0.14581739699840546,
+      "validation_average_mae_eV": 0.13918478786945343,
+      "elapsed_s": 18.164394222199917,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_normalized_l1": 0.1386503583908081,
+      "validation_average_mae_eV": 0.13769161701202393,
+      "elapsed_s": 18.220898158848286,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_normalized_l1": 0.13662354300022125,
+      "validation_average_mae_eV": 0.1387248933315277,
+      "elapsed_s": 18.599820632953197,
+      "selected": false
+    },
+    {
+      "epoch": 20,
+      "train_normalized_l1": 0.13416923286914825,
+      "validation_average_mae_eV": 0.1282871961593628,
+      "elapsed_s": 18.136192995123565,
+      "selected": true
+    },
+    {
+      "epoch": 21,
+      "train_normalized_l1": 0.1306417388677597,
+      "validation_average_mae_eV": 0.12893562018871307,
+      "elapsed_s": 18.104732838924974,
+      "selected": false
+    },
+    {
+      "epoch": 22,
+      "train_normalized_l1": 0.12742179563045503,
+      "validation_average_mae_eV": 0.1271347999572754,
+      "elapsed_s": 18.148787493817508,
+      "selected": true
+    },
+    {
+      "epoch": 23,
+      "train_normalized_l1": 0.1252546049118042,
+      "validation_average_mae_eV": 0.1275882124900818,
+      "elapsed_s": 18.14071614202112,
+      "selected": false
+    },
+    {
+      "epoch": 24,
+      "train_normalized_l1": 0.12332314984798431,
+      "validation_average_mae_eV": 0.12402791529893875,
+      "elapsed_s": 18.291191591881216,
+      "selected": true
+    },
+    {
+      "epoch": 25,
+      "train_normalized_l1": 0.12194902980327606,
+      "validation_average_mae_eV": 0.1235375851392746,
+      "elapsed_s": 18.246562393847853,
+      "selected": true
+    },
+    {
+      "epoch": 26,
+      "train_normalized_l1": 0.12032137649059296,
+      "validation_average_mae_eV": 0.12162280082702637,
+      "elapsed_s": 18.18865103693679,
+      "selected": true
+    },
+    {
+      "epoch": 27,
+      "train_normalized_l1": 0.11918583333492279,
+      "validation_average_mae_eV": 0.12123703211545944,
+      "elapsed_s": 18.19841092498973,
+      "selected": true
+    },
+    {
+      "epoch": 28,
+      "train_normalized_l1": 0.11837351937294006,
+      "validation_average_mae_eV": 0.12061859667301178,
+      "elapsed_s": 18.16606072196737,
+      "selected": true
+    },
+    {
+      "epoch": 29,
+      "train_normalized_l1": 0.11824752485752106,
+      "validation_average_mae_eV": 0.12032714486122131,
+      "elapsed_s": 18.20682823425159,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "/lustre/home/users/sm2/chou/molgap-top20-qm9/data/cache/qm9/embeddings/n30000_3000_3000/gps11_160_topology/seed42/payload.pt",
+    "model": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_gps_precision_late_fusion/gps11_160/n30000_3000_3000/gps11_160_topology/seed42/model.pt",
+    "checkpoint": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_gps_precision_late_fusion/gps11_160/n30000_3000_3000/gps11_160_topology/seed42/checkpoint.pt"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "format": "molgap-pcqm-route-b-fusion-preflight-v1",
+  "status": "complete",
+  "device": "NVIDIA A100-SXM4-80GB",
+  "config": {
+    "hidden": 128,
+    "correction_scale_eV": 0.1,
+    "batch_size": 4096,
+    "learning_rate": 0.0003,
+    "weight_decay": 1e-05,
+    "max_epochs": 40,
+    "patience": 8
+  },
+  "batch_rows": 8,
+  "losses": {
+    "gps11_160": 0.10235404968261719,
+    "augmented_schnet": 0.12074118852615356
+  },
+  "artifacts": {
+    "gps9": {
+      "embedding_part": "train/train_shard_000_embeddings.pt",
+      "embedding_part_sha256": "3dffd2a34ab6a815f111741f613908388a2c33adf365fa45133025840ccf01ea",
+      "checkpoint_sha256": "a24e0e70f28a9e68d0883ac1236575132ff0777d119c0934c5a2d5a354f7b259"
+    },
+    "gps11_160": {
+      "embedding_part": "train/train_shard_000_embeddings.pt",
+      "embedding_part_sha256": "3386c6b860b62b5278e0ef83f902943372a49b31f4531bbc2304d1cb3f189a8b",
+      "checkpoint_sha256": "737c596d92e4efbc5045e8b26582a2829bb2fbecbadcf773971c894cd1238638"
+    },
+    "primary_schnet": {
+      "embedding_part": "train/train_shard_000_embeddings.pt",
+      "embedding_part_sha256": "7abe8c867dd1b395d6cbfd99690096733025723822f59dd3f4e316a5ae079291",
+      "checkpoint_sha256": "aee8d788d6c028c8127139e40be91773a7e5cd7de336782ea50c38a3cb265b1a"
+    },
+    "augmented_schnet": {
+      "embedding_part": "train/train_shard_000_embeddings.pt",
+      "embedding_part_sha256": "1c17b1591e5117e029301744b8c2edd48640066f0d6f9df65a60dbcfe689d0cf",
+      "checkpoint_sha256": "c6fe686273f14b237e464ff045776ea0d18f010042e257496d950eaed4b9985a"
+    }
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

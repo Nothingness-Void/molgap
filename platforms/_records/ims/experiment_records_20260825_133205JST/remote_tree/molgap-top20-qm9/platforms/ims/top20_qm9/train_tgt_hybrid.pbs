@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+test -f outputs/cache/cache_acceptance.json
+mkdir -p outputs/results outputs/models logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+
+"$PYTHON" -u experiments/top20_architecture_qm9/verify_cache.py \
+  --manifest "$ROOT/outputs/cache/cache_acceptance.json" \
+  --verified-output "$ROOT/outputs/cache/cache_verified.json"
+
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py encoder \
+  --candidate tgt_hybrid --geometry etkdg \
+  --train-size 100000 --validation-size 10000 --test-size 10000 \
+  --epochs 30 --seed "${SEED:-42}" --split-seed 42 --resume \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results" \
+  --models-dir "$ROOT/outputs/models" 2>&1 | tee "logs/tgt_hybrid_seed${SEED:-42}.log"

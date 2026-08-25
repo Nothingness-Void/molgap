@@ -1,0 +1,63 @@
+{
+  "format": "molgap-pcqm-route-b-encoder-acceptance-v1",
+  "status": "accepted",
+  "encoders": {
+    "gps9": {
+      "status": "accepted",
+      "best_dev_gap_mae_eV": 0.17576296627521515,
+      "embedding_dim": 192,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "parts": 401,
+      "artifacts": 406,
+      "completion_manifest_sha256": "4fa4c29a368019b425ea0be0bd9b7953d7f7d317e1516daffbc80543681b8ffc"
+    },
+    "gps11_160": {
+      "status": "accepted",
+      "best_dev_gap_mae_eV": 0.17045912146568298,
+      "embedding_dim": 160,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "parts": 401,
+      "artifacts": 406,
+      "completion_manifest_sha256": "b39f3d2605b36d3835c2a60fbe3d455836e3453259b885f4ef18776df390b68a"
+    },
+    "primary_schnet": {
+      "status": "accepted",
+      "best_dev_gap_mae_eV": 0.13057228922843933,
+      "embedding_dim": 176,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "parts": 401,
+      "artifacts": 406,
+      "completion_manifest_sha256": "6161e3f07fbbb10159b67737b84723b40285f027154019b28ed0933b56bdca2c"
+    },
+    "augmented_schnet": {
+      "status": "accepted",
+      "best_dev_gap_mae_eV": 0.1283137947320938,
+      "embedding_dim": 176,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "parts": 401,
+      "artifacts": 406,
+      "completion_manifest_sha256": "85932e7b653234e1583acf86b085f0ec493aa93c13287e7a12c041c655224338"
+    }
+  },
+  "cross_encoder_source_idx_aligned": true,
+  "cross_encoder_train_dev_targets_aligned": true,
+  "official_targets_read": false,
+  "official_test_used": false,
+  "production_registry_changed": false
+}

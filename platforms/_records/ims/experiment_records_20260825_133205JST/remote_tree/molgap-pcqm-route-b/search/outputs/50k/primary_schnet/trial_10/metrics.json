@@ -1,0 +1,230 @@
+{
+  "status": "complete",
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "encoder": "primary_schnet",
+  "stage": "50k",
+  "trial": {
+    "trial_id": "trial_10",
+    "learning_rate": 0.0003,
+    "weight_decay": 3e-05,
+    "dropout": 0.1,
+    "batch_size": 192,
+    "warmup_ratio": 0.05,
+    "grad_clip": 1.0
+  },
+  "seed": 42,
+  "epochs": 20,
+  "patience": 4,
+  "subset_manifest_sha256": "49ea94f83fdba603f559c6e2d514b03a89c0b83f440b70a0688cb0e27560bccc",
+  "warm_start_sha256": "30b4afc968077fea4a6e66d9a626fef124c1645046f2108273b86bbee5eb79e1",
+  "schnet_cutoff_A": 6.0,
+  "best_epoch": 19,
+  "best_dev_gap_mae_eV": 0.21567685902118683,
+  "train_log": [
+    {
+      "epoch": 0,
+      "train_gap_l1": 0.48984024609565735,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.3476178050041199,
+      "learning_rate": 0.0003,
+      "elapsed_s": 20.177957582985982,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_gap_l1": 0.3508005228471756,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.32129061222076416,
+      "learning_rate": 0.00029774395132231286,
+      "elapsed_s": 20.333147334866226,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_gap_l1": 0.3108200374507904,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.30699849128723145,
+      "learning_rate": 0.0002910443541867074,
+      "elapsed_s": 20.361384775023907,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_gap_l1": 0.28779549055099485,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.270846962928772,
+      "learning_rate": 0.0002801047724619891,
+      "elapsed_s": 20.208068103995174,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_gap_l1": 0.270782712829113,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2726362645626068,
+      "learning_rate": 0.0002652575998031682,
+      "elapsed_s": 20.350598231889307,
+      "selected": false
+    },
+    {
+      "epoch": 5,
+      "train_gap_l1": 0.2540218357205391,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2588358521461487,
+      "learning_rate": 0.00024695396003845103,
+      "elapsed_s": 20.333395533030853,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_gap_l1": 0.23967591561317445,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.25579071044921875,
+      "learning_rate": 0.00022574999999999996,
+      "elapsed_s": 20.21935775806196,
+      "selected": true
+    },
+    {
+      "epoch": 7,
+      "train_gap_l1": 0.22787891231775284,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2518322169780731,
+      "learning_rate": 0.0002022899912838618,
+      "elapsed_s": 20.242722975090146,
+      "selected": true
+    },
+    {
+      "epoch": 8,
+      "train_gap_l1": 0.2154484936261177,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.23883694410324097,
+      "learning_rate": 0.00017728675438353917,
+      "elapsed_s": 20.152221268042922,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_gap_l1": 0.205833273127079,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2411188930273056,
+      "learning_rate": 0.0001515,
+      "elapsed_s": 20.266336829867214,
+      "selected": false
+    },
+    {
+      "epoch": 10,
+      "train_gap_l1": 0.1967257626903057,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2258174568414688,
+      "learning_rate": 0.00012571324561646085,
+      "elapsed_s": 20.129608150105923,
+      "selected": true
+    },
+    {
+      "epoch": 11,
+      "train_gap_l1": 0.1875796022307873,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.2268492877483368,
+      "learning_rate": 0.0001007100087161382,
+      "elapsed_s": 20.096184897003695,
+      "selected": false
+    },
+    {
+      "epoch": 12,
+      "train_gap_l1": 0.17939474579691886,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.22267258167266846,
+      "learning_rate": 7.725000000000003e-05,
+      "elapsed_s": 20.048929393989965,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_gap_l1": 0.17171716491937639,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21987047791481018,
+      "learning_rate": 5.60460399615489e-05,
+      "elapsed_s": 20.02801972697489,
+      "selected": true
+    },
+    {
+      "epoch": 14,
+      "train_gap_l1": 0.165333420958519,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21858981251716614,
+      "learning_rate": 3.774240019683178e-05,
+      "elapsed_s": 20.099069251911715,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_gap_l1": 0.1605309699332714,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21703019738197327,
+      "learning_rate": 2.289522753801085e-05,
+      "elapsed_s": 19.97252818220295,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_gap_l1": 0.15617067921578884,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21782533824443817,
+      "learning_rate": 1.1955645813292614e-05,
+      "elapsed_s": 19.855574385961518,
+      "selected": false
+    },
+    {
+      "epoch": 17,
+      "train_gap_l1": 0.1533562830078602,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21610884368419647,
+      "learning_rate": 5.256048677687108e-06,
+      "elapsed_s": 19.845205128891394,
+      "selected": true
+    },
+    {
+      "epoch": 18,
+      "train_gap_l1": 0.15165766665697097,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21583163738250732,
+      "learning_rate": 2.9999999999999997e-06,
+      "elapsed_s": 20.067405276931822,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_gap_l1": 0.1507660141801834,
+      "train_draw_rows": 50000,
+      "dev_gap_mae_eV": 0.21567685902118683,
+      "learning_rate": 5.256048677687108e-06,
+      "elapsed_s": 19.799094145884737,
+      "selected": true
+    }
+  ],
+  "warm_start_report": {
+    "strict_except_distance_basis": true,
+    "source_model_config": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6,
+      "num_gaussians": 50,
+      "cutoff": 10.0,
+      "dropout": 0.05
+    },
+    "target_model_config": {
+      "hidden_channels": 176,
+      "num_filters": 160,
+      "num_interactions": 6,
+      "num_gaussians": 50,
+      "cutoff": 6.0,
+      "dropout": 0.1
+    },
+    "distance_basis_reinitialized": true,
+    "cutoff_fixed_by_protocol_A": 6.0
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

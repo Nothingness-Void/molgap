@@ -1,0 +1,68 @@
+{
+  "format": "molgap-pcqm-route-b-consolidated-fusion-manifest-v1",
+  "status": "complete",
+  "encoder_names": [
+    "gps9",
+    "gps11_160",
+    "primary_schnet",
+    "augmented_schnet"
+  ],
+  "rows": {
+    "train": 915012,
+    "dev": 81961
+  },
+  "embedding_dims": {
+    "gps9": 192,
+    "gps11_160": 160,
+    "primary_schnet": 176,
+    "augmented_schnet": 176
+  },
+  "artifacts": {
+    "fusion_payload.pt": {
+      "bytes": 1407730853,
+      "sha256": "0051dd8a79b3603c3110de372baac0f5dc7d01a357ba09c0ef47a01437bcc15e"
+    },
+    "checkpoints/gps9_best.pt": {
+      "bytes": 15088578,
+      "sha256": "6414e7fcc58e4f76e89083ac34e8df477373d164d8c502f932176e3d05c6dc83"
+    },
+    "checkpoints/gps11_160_best.pt": {
+      "bytes": 12833559,
+      "sha256": "737c596d92e4efbc5045e8b26582a2829bb2fbecbadcf773971c894cd1238638"
+    },
+    "checkpoints/primary_schnet_best.pt": {
+      "bytes": 3271447,
+      "sha256": "aee8d788d6c028c8127139e40be91773a7e5cd7de336782ea50c38a3cb265b1a"
+    },
+    "checkpoints/augmented_schnet_best.pt": {
+      "bytes": 3271575,
+      "sha256": "c6fe686273f14b237e464ff045776ea0d18f010042e257496d950eaed4b9985a"
+    }
+  },
+  "load_report": {
+    "roles": {
+      "train": {
+        "rows": 915012,
+        "parts": 200,
+        "source_idx_sha256": "2b1b3af4a388fc8fbae4c04ce552823810de2976b07f8d633523c3a8246f3536",
+        "target_sha256": "971cbb0f423e54a5dee0520db5b6243242682abb416ec1cab5cf768c8c838f2a"
+      },
+      "dev": {
+        "rows": 81961,
+        "parts": 200,
+        "source_idx_sha256": "b75abfd4ccf47d54cb6eceebd94145e322c08f4e11d3c3984e93214bc8b65361",
+        "target_sha256": "6317dbcd5ac045d96646d5fc6f74b6752577f45685925215c7aeeee8a4642424"
+      }
+    },
+    "manifests": {
+      "gps9": "d741d84ae07e2932b31589c023512445c789b87662613b22861097d200428038",
+      "gps11_160": "cd1664fb5950ada1aab39edaf7befa9944fb5bde8428424e085f1884bbbfb108",
+      "primary_schnet": "9b614c534518cd1855e0e6084e7fcbe82184170e6b9235a6e738d164a37f20c5",
+      "augmented_schnet": "3a42206f14761a16042797dc25d3bfa5f434b21a65904fd20e7964eb5f99b110"
+    }
+  },
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false,
+  "production_registry_changed": false
+}

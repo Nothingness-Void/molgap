@@ -1,0 +1,84 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=01:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR="$ROOT/vendor-cu126-torch271"
+cd "$ROOT"
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test -x "$PYTHON"
+test -d wheels
+mkdir -p logs
+(cd wheels && sha256sum -c SHA256SUMS)
+
+if [ ! -d "$VENDOR" ]; then
+  TEMP_VENDOR="$ROOT/vendor-cu126-torch271.${PBS_JOBID}.tmp"
+  test ! -e "$TEMP_VENDOR"
+  mkdir -p "$TEMP_VENDOR"
+  "$PYTHON" -m pip install \
+    --no-index \
+    --no-deps \
+    --target "$TEMP_VENDOR" \
+    "$ROOT"/wheels/nvidia_*.whl \
+    "$ROOT"/wheels/triton-3.3.1-*.whl \
+    "$ROOT"/wheels/torch-2.7.1+cu126-*.whl \
+    "$ROOT"/wheels/torch_geometric-2.6.1-*.whl \
+    "$ROOT"/wheels/torch_cluster-1.6.3+pt27cu126-*.whl \
+    "$ROOT"/wheels/numpy-1.26.4-*.whl \
+    "$ROOT"/wheels/filelock-3.32.0-*.whl \
+    "$ROOT"/wheels/fsspec-2026.6.0-*.whl \
+    "$ROOT"/wheels/typing_extensions-4.16.0-*.whl \
+    "$ROOT"/wheels/sympy-1.14.0-*.whl \
+    "$ROOT"/wheels/networkx-3.4.2-*.whl \
+    "$ROOT"/wheels/jinja2-3.1.6-*.whl \
+    "$ROOT"/wheels/markupsafe-3.0.3-*.whl \
+    "$ROOT"/wheels/mpmath-1.3.0-*.whl \
+    "$ROOT"/wheels/aiohttp-3.12.15-*.whl \
+    "$ROOT"/wheels/aiohappyeyeballs-2.7.1-*.whl \
+    "$ROOT"/wheels/aiosignal-1.4.0-*.whl \
+    "$ROOT"/wheels/async_timeout-5.0.1-*.whl \
+    "$ROOT"/wheels/attrs-26.1.0-*.whl \
+    "$ROOT"/wheels/frozenlist-1.8.0-*.whl \
+    "$ROOT"/wheels/multidict-6.7.1-*.whl \
+    "$ROOT"/wheels/propcache-0.5.2-*.whl \
+    "$ROOT"/wheels/yarl-1.24.5-*.whl \
+    "$ROOT"/wheels/idna-3.18-*.whl \
+    "$ROOT"/wheels/psutil-7.0.0-*.whl
+  mv "$TEMP_VENDOR" "$VENDOR"
+fi
+ln -sfn "$(basename "$VENDOR")" vendor
+
+SHIMS="$ROOT/code/platforms/ims/pcqm_route_b/shims"
+PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src" "$PYTHON" - <<'PY'
+import json
+from pathlib import Path
+
+import aiohttp
+import numpy
+import scipy
+import torch
+import torch_cluster
+import torch_geometric
+
+payload = {
+    "status": "complete",
+    "aiohttp": aiohttp.__version__,
+    "numpy": numpy.__version__,
+    "scipy": scipy.__version__,
+    "torch": torch.__version__,
+    "torch_cuda": torch.version.cuda,
+    "torch_cluster": torch_cluster.__version__,
+    "radius_backend": torch_cluster.BACKEND,
+    "torch_geometric": torch_geometric.__version__,
+}
+path = Path("logs/environment.json")
+temporary = path.with_suffix(".json.tmp")
+temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+temporary.replace(path)
+print(payload)
+PY

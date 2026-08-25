@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-route-b-single-encoder-acceptance-v1",
+  "status": "accepted",
+  "encoder": {
+    "gps9": {
+      "status": "accepted",
+      "best_dev_gap_mae_eV": 0.17248056828975677,
+      "embedding_dim": 192,
+      "rows": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      },
+      "parts": 401,
+      "artifacts": 406,
+      "completion_manifest_sha256": "dc0426ce6ccec38d856bf063b2895fcfce05c1e13a103abdeba1e14d516e126d"
+    }
+  },
+  "cross_encoder_alignment": "not_checked",
+  "official_targets_read": false,
+  "official_test_used": false,
+  "production_registry_changed": false
+}

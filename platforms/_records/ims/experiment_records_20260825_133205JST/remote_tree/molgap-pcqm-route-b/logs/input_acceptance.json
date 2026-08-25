@@ -1,0 +1,36 @@
+{
+  "format": "molgap-pcqm-route-b-ims-input-acceptance-v1",
+  "status": "complete",
+  "views": {
+    "gps": {
+      "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae",
+      "modality": "gps",
+      "files": 401,
+      "split_counts": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      }
+    },
+    "primary": {
+      "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae",
+      "modality": "primary",
+      "files": 401,
+      "split_counts": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      }
+    },
+    "secondary": {
+      "manifest_sha256": "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae",
+      "modality": "secondary",
+      "files": 401,
+      "split_counts": {
+        "train": 915012,
+        "dev": 81961,
+        "official": 4981
+      }
+    }
+  }
+}

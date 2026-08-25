@@ -1,0 +1,58 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=06:00:00
+#PBS -j oe
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+mkdir -p outputs/results_gps_precision_late_fusion outputs/models_gps_precision_late_fusion \
+  outputs/fusion_gps_precision_late_fusion logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export CUDA_LAUNCH_BLOCKING=1
+
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py encoder \
+  --candidate gps9 --geometry topology \
+  --train-size 30000 --validation-size 3000 --test-size 3000 \
+  --epochs 30 --seed "${SEED:-42}" --split-seed 42 \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results_gps_precision_late_fusion/gps9" \
+  --models-dir "$ROOT/outputs/models_gps_precision_late_fusion/gps9" 2>&1 \
+  | tee "logs/gps_precision_late_fusion_gps9_seed${SEED:-42}.log"
+
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py encoder \
+  --candidate gps11_160 --geometry topology \
+  --train-size 30000 --validation-size 3000 --test-size 3000 \
+  --epochs 30 --seed "${SEED:-42}" --split-seed 42 \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results_gps_precision_late_fusion/gps11_160" \
+  --models-dir "$ROOT/outputs/models_gps_precision_late_fusion/gps11_160" 2>&1 \
+  | tee "logs/gps_precision_late_fusion_gps11_seed${SEED:-42}.log"
+
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py encoder \
+  --candidate schnet --geometry etkdg \
+  --train-size 30000 --validation-size 3000 --test-size 3000 \
+  --epochs 30 --seed "${SEED:-42}" --split-seed 42 \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results_gps_precision_late_fusion/schnet" \
+  --models-dir "$ROOT/outputs/models_gps_precision_late_fusion/schnet" 2>&1 \
+  | tee "logs/gps_precision_late_fusion_schnet_seed${SEED:-42}.log"
+
+GPS9_PAYLOAD="$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/gps9_topology/seed${SEED:-42}/payload.pt"
+GPS11_PAYLOAD="$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/gps11_160_topology/seed${SEED:-42}/payload.pt"
+SCHNET_PAYLOAD="$ROOT/data/cache/qm9/embeddings/n30000_3000_3000/schnet_etkdg/seed${SEED:-42}/payload.pt"
+COMBINED="$ROOT/outputs/fusion_gps_precision_late_fusion/gps9_gps11_concat_seed${SEED:-42}.pt"
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py concat-payload \
+  --primary-payload "$GPS9_PAYLOAD" --secondary-payload "$GPS11_PAYLOAD" \
+  --output "$COMBINED" 2>&1 | tee "logs/gps_precision_late_fusion_concat_seed${SEED:-42}.log"
+
+"$PYTHON" -u experiments/qm9_architecture/qm9_screen.py fusion \
+  --gps-payload "$COMBINED" --schnet-payload "$SCHNET_PAYLOAD" \
+  --epochs 100 --seed "${SEED:-42}" --hidden 256 --fusion-type gate \
+  --output "$ROOT/outputs/fusion_gps_precision_late_fusion/metrics_seed${SEED:-42}.json" 2>&1 \
+  | tee "logs/gps_precision_late_fusion_head_seed${SEED:-42}.log"

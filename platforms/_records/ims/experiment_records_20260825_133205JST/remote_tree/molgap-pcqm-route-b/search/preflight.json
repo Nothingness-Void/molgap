@@ -1,0 +1,181 @@
+{
+  "format": "molgap-pcqm-route-b-hparam-preflight-v1",
+  "status": "complete",
+  "encoders": {
+    "augmented_schnet": {
+      "trial": {
+        "trial_id": "trial_00",
+        "learning_rate": 0.0004,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 128,
+        "warmup_ratio": 0.0,
+        "grad_clip": 1.0
+      },
+      "losses": [
+        0.7801591157913208,
+        0.7744179964065552
+      ],
+      "warm_start_report": {
+        "strict_except_distance_basis": true,
+        "source_model_config": {
+          "hidden_channels": 176,
+          "num_filters": 160,
+          "num_interactions": 6,
+          "num_gaussians": 50,
+          "cutoff": 10.0,
+          "dropout": 0.05
+        },
+        "target_model_config": {
+          "hidden_channels": 176,
+          "num_filters": 160,
+          "num_interactions": 6,
+          "num_gaussians": 50,
+          "cutoff": 6.0,
+          "dropout": 0.05
+        },
+        "distance_basis_reinitialized": true,
+        "cutoff_fixed_by_protocol_A": 6.0
+      },
+      "peak_cuda_bytes": 111032832,
+      "device_name": "NVIDIA A100-SXM4-80GB",
+      "schnet_cutoff_A": 6.0,
+      "distance_basis_max_A": 6.0
+    },
+    "gps11_160": {
+      "trial": {
+        "trial_id": "trial_00",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.0,
+        "grad_clip": 1.0
+      },
+      "losses": [
+        0.6701471209526062
+      ],
+      "warm_start_report": {
+        "source_input_dim": 9,
+        "target_input_dim": 18,
+        "copied_old_element_columns": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "copied_old_scalar_columns_to": [
+          15,
+          16,
+          17
+        ],
+        "zero_initialized_new_element_columns": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      "peak_cuda_bytes": 53411840,
+      "device_name": "NVIDIA A100-SXM4-80GB",
+      "schnet_cutoff_A": null,
+      "distance_basis_max_A": null
+    },
+    "gps9": {
+      "trial": {
+        "trial_id": "trial_00",
+        "learning_rate": 8e-05,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 256,
+        "warmup_ratio": 0.0,
+        "grad_clip": 1.0
+      },
+      "losses": [
+        0.5927545428276062
+      ],
+      "warm_start_report": {
+        "source_input_dim": 9,
+        "target_input_dim": 18,
+        "copied_old_element_columns": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "copied_old_scalar_columns_to": [
+          15,
+          16,
+          17
+        ],
+        "zero_initialized_new_element_columns": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      "peak_cuda_bytes": 75666432,
+      "device_name": "NVIDIA A100-SXM4-80GB",
+      "schnet_cutoff_A": null,
+      "distance_basis_max_A": null
+    },
+    "primary_schnet": {
+      "trial": {
+        "trial_id": "trial_00",
+        "learning_rate": 0.0004,
+        "weight_decay": 1e-05,
+        "dropout": 0.05,
+        "batch_size": 128,
+        "warmup_ratio": 0.0,
+        "grad_clip": 1.0
+      },
+      "losses": [
+        0.9220200777053833
+      ],
+      "warm_start_report": {
+        "strict_except_distance_basis": true,
+        "source_model_config": {
+          "hidden_channels": 176,
+          "num_filters": 160,
+          "num_interactions": 6,
+          "num_gaussians": 50,
+          "cutoff": 10.0,
+          "dropout": 0.05
+        },
+        "target_model_config": {
+          "hidden_channels": 176,
+          "num_filters": 160,
+          "num_interactions": 6,
+          "num_gaussians": 50,
+          "cutoff": 6.0,
+          "dropout": 0.05
+        },
+        "distance_basis_reinitialized": true,
+        "cutoff_fixed_by_protocol_A": 6.0
+      },
+      "peak_cuda_bytes": 131825152,
+      "device_name": "NVIDIA A100-SXM4-80GB",
+      "schnet_cutoff_A": 6.0,
+      "distance_basis_max_A": 6.0
+    }
+  },
+  "subset_manifest_sha256": "49ea94f83fdba603f559c6e2d514b03a89c0b83f440b70a0688cb0e27560bccc",
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false
+}

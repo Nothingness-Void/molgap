@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-top20-qm9
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+cd "$ROOT"
+mkdir -p outputs/results_payload_multistack_calibrator outputs/models_payload_multistack_calibrator logs
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export CUDA_LAUNCH_BLOCKING=1
+
+"$PYTHON" -u experiments/qm9_architecture/payload_multistack_calibrator.py \
+  --cache-dir "$ROOT/data/cache/qm9" \
+  --results-dir "$ROOT/outputs/results_payload_multistack_calibrator" \
+  --models-dir "$ROOT/outputs/models_payload_multistack_calibrator" \
+  --train-size 30000 --validation-size 3000 --test-size 3000 \
+  --epochs 40 --batch-size 512 --hidden-channels 256 --seed "${SEED:-42}" 2>&1 \
+  | tee "logs/payload_multistack_calibrator_preflight_seed${SEED:-42}.log"

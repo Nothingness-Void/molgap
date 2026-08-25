@@ -1,0 +1,244 @@
+{
+  "experiment": "qm9_architecture_screen",
+  "candidate": "pair_triplet_2d_rich",
+  "geometry": "topology",
+  "seed": 42,
+  "split_seed": 42,
+  "split_fingerprint": "01656b1a538f89c8",
+  "split_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "target_names": [
+    "HOMO",
+    "LUMO",
+    "Gap"
+  ],
+  "target_units": "eV",
+  "target_mean": [
+    -6.5358991622924805,
+    0.3225027918815613,
+    6.8583855628967285
+  ],
+  "target_std": [
+    0.5976356863975525,
+    1.2715765237808228,
+    1.288191318511963
+  ],
+  "model_config": {
+    "kind": "topology",
+    "hidden_channels": 256,
+    "pair_channels": 96,
+    "num_layers": 10,
+    "num_heads": 8,
+    "dropout": 0.05,
+    "pooling": "mean_max",
+    "path_steps": 5,
+    "triplet_rank": 16,
+    "batch_size": 48
+  },
+  "n_params": 11244563,
+  "best_epoch": 19,
+  "best_validation_average_mae_eV": 0.11788031458854675,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.0726378932595253
+      },
+      "LUMO": {
+        "mae": 0.09188587218523026
+      },
+      "Gap": {
+        "mae": 0.11055789887905121
+      },
+      "average": {
+        "mae": 0.09169389307498932
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.0971519872546196
+      },
+      "LUMO": {
+        "mae": 0.11316358298063278
+      },
+      "Gap": {
+        "mae": 0.14332537353038788
+      },
+      "average": {
+        "mae": 0.11788031458854675
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.09876591712236404
+      },
+      "LUMO": {
+        "mae": 0.1143094152212143
+      },
+      "Gap": {
+        "mae": 0.14285248517990112
+      },
+      "average": {
+        "mae": 0.11864262074232101
+      }
+    }
+  },
+  "geometry_report": {
+    "geometry": "topology",
+    "failed": 0
+  },
+  "log": [
+    {
+      "epoch": 0,
+      "train_normalized_l1": 0.463567107462883,
+      "validation_average_mae_eV": 0.28936654329299927,
+      "elapsed_s": 109.26793357543647,
+      "selected": true
+    },
+    {
+      "epoch": 1,
+      "train_normalized_l1": 0.2948596960067749,
+      "validation_average_mae_eV": 0.2610560357570648,
+      "elapsed_s": 103.76920202188194,
+      "selected": true
+    },
+    {
+      "epoch": 2,
+      "train_normalized_l1": 0.2555263592720032,
+      "validation_average_mae_eV": 0.22451071441173553,
+      "elapsed_s": 103.91718636872247,
+      "selected": true
+    },
+    {
+      "epoch": 3,
+      "train_normalized_l1": 0.23517027814388275,
+      "validation_average_mae_eV": 0.20607344806194305,
+      "elapsed_s": 104.15045041125268,
+      "selected": true
+    },
+    {
+      "epoch": 4,
+      "train_normalized_l1": 0.21962204802036286,
+      "validation_average_mae_eV": 0.21639235317707062,
+      "elapsed_s": 104.29462569113821,
+      "selected": false
+    },
+    {
+      "epoch": 5,
+      "train_normalized_l1": 0.2060178465127945,
+      "validation_average_mae_eV": 0.18918217718601227,
+      "elapsed_s": 104.30128565430641,
+      "selected": true
+    },
+    {
+      "epoch": 6,
+      "train_normalized_l1": 0.19274952442646026,
+      "validation_average_mae_eV": 0.17665524780750275,
+      "elapsed_s": 105.47734748199582,
+      "selected": true
+    },
+    {
+      "epoch": 7,
+      "train_normalized_l1": 0.18486558592319488,
+      "validation_average_mae_eV": 0.18035471439361572,
+      "elapsed_s": 106.49472152395174,
+      "selected": false
+    },
+    {
+      "epoch": 8,
+      "train_normalized_l1": 0.17533971943855287,
+      "validation_average_mae_eV": 0.16940772533416748,
+      "elapsed_s": 104.21369993733242,
+      "selected": true
+    },
+    {
+      "epoch": 9,
+      "train_normalized_l1": 0.16595237305164337,
+      "validation_average_mae_eV": 0.1545933336019516,
+      "elapsed_s": 105.42140471423045,
+      "selected": true
+    },
+    {
+      "epoch": 10,
+      "train_normalized_l1": 0.15519331966638564,
+      "validation_average_mae_eV": 0.16547098755836487,
+      "elapsed_s": 103.35432823281735,
+      "selected": false
+    },
+    {
+      "epoch": 11,
+      "train_normalized_l1": 0.14538841408491135,
+      "validation_average_mae_eV": 0.1471012383699417,
+      "elapsed_s": 103.50181720871478,
+      "selected": true
+    },
+    {
+      "epoch": 12,
+      "train_normalized_l1": 0.1374213683605194,
+      "validation_average_mae_eV": 0.13764216005802155,
+      "elapsed_s": 103.62529263924807,
+      "selected": true
+    },
+    {
+      "epoch": 13,
+      "train_normalized_l1": 0.1291423510313034,
+      "validation_average_mae_eV": 0.14094312489032745,
+      "elapsed_s": 105.62390276417136,
+      "selected": false
+    },
+    {
+      "epoch": 14,
+      "train_normalized_l1": 0.1210676710486412,
+      "validation_average_mae_eV": 0.1309114247560501,
+      "elapsed_s": 104.81731104105711,
+      "selected": true
+    },
+    {
+      "epoch": 15,
+      "train_normalized_l1": 0.11323738898038864,
+      "validation_average_mae_eV": 0.12524235248565674,
+      "elapsed_s": 103.63998964102939,
+      "selected": true
+    },
+    {
+      "epoch": 16,
+      "train_normalized_l1": 0.10674397895336152,
+      "validation_average_mae_eV": 0.1196185052394867,
+      "elapsed_s": 104.23476292798296,
+      "selected": true
+    },
+    {
+      "epoch": 17,
+      "train_normalized_l1": 0.10104704688787461,
+      "validation_average_mae_eV": 0.12120383232831955,
+      "elapsed_s": 102.86234874511138,
+      "selected": false
+    },
+    {
+      "epoch": 18,
+      "train_normalized_l1": 0.0974298665881157,
+      "validation_average_mae_eV": 0.11806166172027588,
+      "elapsed_s": 102.83056133799255,
+      "selected": true
+    },
+    {
+      "epoch": 19,
+      "train_normalized_l1": 0.0954966675400734,
+      "validation_average_mae_eV": 0.11788031458854675,
+      "elapsed_s": 103.7620968609117,
+      "selected": true
+    }
+  ],
+  "artifacts": {
+    "embeddings": "/lustre/home/users/sm2/chou/molgap-top20-qm9/data/cache/qm9/embeddings/n30000_3000_3000/pair_triplet_2d_rich_topology/seed42/payload.pt",
+    "model": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_pair_triplet_2d_rich/n30000_3000_3000/pair_triplet_2d_rich_topology/seed42/model.pt",
+    "checkpoint": "/lustre/home/users/sm2/chou/molgap-top20-qm9/outputs/models_pair_triplet_2d_rich/n30000_3000_3000/pair_triplet_2d_rich_topology/seed42/checkpoint.pt"
+  }
+}

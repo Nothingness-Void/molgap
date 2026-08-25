@@ -1,0 +1,42 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-phase8-secondary
+VENDOR_DIR="$ROOT/vendor"
+mkdir -p "$ROOT/logs"
+cd "$ROOT"
+
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test -x "$PYTHON"
+test -d "$ROOT/wheels"
+rm -rf "$VENDOR_DIR.tmp"
+mkdir -p "$VENDOR_DIR.tmp"
+"$PYTHON" -m pip install --no-index --find-links "$ROOT/wheels" \
+  --target "$VENDOR_DIR.tmp" numpy==1.26.4 rdkit==2023.9.6
+rm -rf "$VENDOR_DIR"
+mv "$VENDOR_DIR.tmp" "$VENDOR_DIR"
+
+PYTHONPATH="$VENDOR_DIR" "$PYTHON" - <<'PY'
+import json
+import numpy
+import rdkit
+
+versions = {
+    "numpy": numpy.__version__,
+    "rdkit": rdkit.__version__,
+}
+expected = {
+    "numpy": "1.26.4",
+    "rdkit": "2023.09.6",
+}
+if versions != expected:
+    raise SystemExit(f"environment mismatch: {versions} != {expected}")
+with open("environment.json.tmp", "w", encoding="utf-8") as handle:
+    json.dump({"status": "accepted", "versions": versions}, handle, indent=2)
+    handle.write("\n")
+PY
+mv environment.json.tmp environment.json

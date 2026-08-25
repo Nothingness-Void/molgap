@@ -1,0 +1,145 @@
+{
+  "experiment": "qm9_payload_multistack_calibrator",
+  "candidate": "payload_multistack_calibrator",
+  "geometry": "union of retained pure-2D and ETKDG-compatible payloads",
+  "seed": 42,
+  "split_seed": 42,
+  "sources": [
+    "edge_global_2d_topology",
+    "pair_triplet_2d_topology",
+    "pair_triplet_2d_rich_topology",
+    "tgt_egt_compact_etkdg",
+    "tgt_egt_hybrid_etkdg",
+    "tgt_egt_hybrid_frozen_etkdg",
+    "tgt_egt_hybrid_plus_etkdg",
+    "tgt_egt_hybrid_warmblend_etkdg",
+    "tgt_egt_hybrid_warmblend_frozen_etkdg",
+    "tgt_egt_rich_etkdg",
+    "tgt_egt_stable_etkdg"
+  ],
+  "requested_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "split_rows": {
+    "train": 30000,
+    "validation": 3000,
+    "test": 3000
+  },
+  "common_etkdg_rows": {
+    "train": 27877,
+    "validation": 2827,
+    "test": 2794
+  },
+  "model_config": {
+    "kind": "payload_multistack_calibrator",
+    "feature_dim": 3134,
+    "hidden_channels": 256,
+    "dropout": 0.1,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "batch_size": 512,
+    "epochs": 40,
+    "device": "cuda"
+  },
+  "n_params": 803843,
+  "best_epoch": 1,
+  "initial_validation_common_average_mae_eV": 0.10057274252176285,
+  "best_validation_common_average_mae_eV": 0.0980711579322815,
+  "metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.03772283345460892
+      },
+      "LUMO": {
+        "mae": 0.04692225903272629
+      },
+      "Gap": {
+        "mae": 0.05155090615153313
+      },
+      "average": {
+        "mae": 0.04539866745471954
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.0862668827176094
+      },
+      "LUMO": {
+        "mae": 0.09464261680841446
+      },
+      "Gap": {
+        "mae": 0.1215636357665062
+      },
+      "average": {
+        "mae": 0.10082437843084335
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.0869603380560875
+      },
+      "LUMO": {
+        "mae": 0.09194855391979218
+      },
+      "Gap": {
+        "mae": 0.1212492361664772
+      },
+      "average": {
+        "mae": 0.10005270689725876
+      }
+    }
+  },
+  "common_etkdg_metrics": {
+    "train": {
+      "HOMO": {
+        "mae": 0.033565912395715714
+      },
+      "LUMO": {
+        "mae": 0.042548295110464096
+      },
+      "Gap": {
+        "mae": 0.04471834376454353
+      },
+      "average": {
+        "mae": 0.04027751460671425
+      }
+    },
+    "validation": {
+      "HOMO": {
+        "mae": 0.0845537930727005
+      },
+      "LUMO": {
+        "mae": 0.09189480543136597
+      },
+      "Gap": {
+        "mae": 0.11776486039161682
+      },
+      "average": {
+        "mae": 0.0980711579322815
+      }
+    },
+    "test": {
+      "HOMO": {
+        "mae": 0.0851697251200676
+      },
+      "LUMO": {
+        "mae": 0.09003373980522156
+      },
+      "Gap": {
+        "mae": 0.11710552871227264
+      },
+      "average": {
+        "mae": 0.0974363312125206
+      }
+    }
+  },
+  "gate": {
+    "average_max_eV": 0.0678138843,
+    "Gap_max_eV": 0.082272936,
+    "average_margin_eV": -0.029622446912520597,
+    "Gap_margin_eV": -0.03483259271227264,
+    "passed": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "format": "molgap-scnet-connectivity-v1",
+  "checked_at": "2026-08-24T03:30:00+09:00",
+  "credential_source": "local_private_handover_only",
+  "credential_copied_to_repository": false,
+  "regions": {
+    "a_zone": {
+      "ssh": "passed",
+      "project_storage": "visible",
+      "slurm_association": "visible",
+      "visible_partitions": 0,
+      "active_jobs_after_check": 0,
+      "compute_status": "unavailable_no_visible_partition"
+    },
+    "kunshan": {
+      "ssh": "passed",
+      "partitions": {
+        "kshctest02": "cpu_visible",
+        "kshdtest": "dcu_visible"
+      },
+      "slurm_test_only": {
+        "cpu": "passed",
+        "dcu": "passed",
+        "created_jobs": false
+      },
+      "active_jobs_after_check": 0,
+      "compute_status": "scheduler_access_confirmed_runtime_not_executed"
+    },
+    "xian": {
+      "ssh": "passed",
+      "partition": "xahdtest",
+      "idle_dcu_nodes_observed": 15,
+      "slurm_test_only": "passed",
+      "runtime_probe": {
+        "job_id": "64270789",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:00:03",
+        "node": "c10r3n05",
+        "python": "3.9.12",
+        "torch": "1.10.0a0+git2040069-dtk2210",
+        "dcu_available": true,
+        "visible_allocated_devices": 1
+      },
+      "retained_diagnostics": [
+        {
+          "job_id": "64270484",
+          "result": "DCU and system management interface visible; bare environment had no python3"
+        },
+        {
+          "job_id": "64270724",
+          "result": "A-zone sghpcdas/25.6 template is unavailable in Xi'an"
+        },
+        {
+          "job_id": "64270760",
+          "result": "Platform Python was found; probe command had a retained quoting SyntaxError"
+        }
+      ],
+      "probe_output_dir": "/work/home/acf9jvb3sm/molgap_platform_probe_20260824",
+      "active_jobs_after_check": 0,
+      "compute_status": "dcu_runtime_confirmed"
+    }
+  },
+  "model_execution": false,
+  "conclusion": "SCNet is usable through Kunshan and Xi'an, but A-zone currently has no visible Slurm partition. Xi'an requires a region-specific environment adapter because the existing MolGap A-zone template expects sghpcdas/25.6 and Python 3.10/Torch 2.1, while the confirmed Xi'an module provides Python 3.9/Torch 1.10."
+}

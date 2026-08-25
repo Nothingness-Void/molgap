@@ -1,0 +1,50 @@
+{
+  "format": "molgap-pcqm-route-b-hparam-search-v1",
+  "status": "complete",
+  "encoder": "augmented_schnet",
+  "stage": "100k_confirm",
+  "ranking": [
+    {
+      "trial_id": "trial_09",
+      "mean_best_dev_gap_mae_eV": 0.16245963176091513,
+      "std_best_dev_gap_mae_eV": 0.00012938412766970436,
+      "seeds": {
+        "42": 0.1622808873653412,
+        "43": 0.1625828891992569,
+        "44": 0.16251511871814728
+      },
+      "trial": {
+        "trial_id": "trial_09",
+        "learning_rate": 0.0008,
+        "weight_decay": 1e-06,
+        "dropout": 0.0,
+        "batch_size": 192,
+        "warmup_ratio": 0.1,
+        "grad_clip": 0.5
+      }
+    },
+    {
+      "trial_id": "trial_11",
+      "mean_best_dev_gap_mae_eV": 0.16410755117734274,
+      "std_best_dev_gap_mae_eV": 0.000993440968009079,
+      "seeds": {
+        "42": 0.16549912095069885,
+        "43": 0.1632443219423294,
+        "44": 0.16357921063899994
+      },
+      "trial": {
+        "trial_id": "trial_11",
+        "learning_rate": 0.0006,
+        "weight_decay": 3e-06,
+        "dropout": 0.05,
+        "batch_size": 64,
+        "warmup_ratio": 0.1,
+        "grad_clip": 2.0
+      }
+    }
+  ],
+  "promotion_count": 2,
+  "official_valid_metric_read": false,
+  "official_test_used": false,
+  "sealed_20k_used": false
+}
