@@ -66,3 +66,8 @@ The conditional readout fallback is frozen in
 `edge_state_readout_protocol.md`. It may run only when R3 has no eligible
 validation winner and does not alter the accepted PubChemQC EdgeState record.
 Its trigger was not met by the accepted R3 validation result.
+
+The explicitly authorized R5 optimization is frozen in
+`edge_state_jk_readout_r5_protocol.md`. It tests one zero-initialized,
+multi-depth readout against the accepted R3 winner without reopening PairGPS or
+reading QM9 test.

@@ -15,7 +15,8 @@ general B3LYP model and official PCQM Gap specialist remain separate objectives.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | C-PURE2D-R3-TEST | Evaluate the single frozen validation winner once on QM9 test | Triggered only by the validation gate; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
+| P0 | C-PURE2D-R5-JK | Test one zero-initialized EdgeState multi-depth readout on validation only | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or retain R3 without reading test | `experiments/top20_architecture_qm9/` |
+| P0 | C-PURE2D-R3-TEST | Evaluate the single frozen R3-or-R5 validation winner once on QM9 test | Triggered only after R5 disposition; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-PC100K | Transfer a QM9-confirmed winner to matched PubChemQC-100K validation | Triggered only by the one-time QM9 test gate; no sealed PubChemQC test role is read | `experiments/pubchemqc100k_architecture/` |
 | P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
 | P0 | C-FULL-2M-TRAIN | Train exactly one EdgeState candidate from random initialization | P0 input gate passes; one complete resumable checkpoint and aligned predictions are accepted | `experiments/resource_bounded_architecture/` |
@@ -27,8 +28,8 @@ The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
 `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
 
-The accepted R3 validation gate and the untriggered R4 fallback are evidence,
-not active tasks. Their exact disposition is
+The accepted R3 validation gate and the untriggered R4 fallback are evidence.
+Their exact disposition is
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`.
 
 ## Mandatory Gates
