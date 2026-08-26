@@ -55,6 +55,8 @@ def test_official_train_only_split_contract() -> None:
     assert "smiles2graph" in source
     assert "walk_length=RWSE_DIM" in source
     assert "_atomic_torch_save(part_path, graphs)" in source
+    assert 'if key == "bond":' in source
+    assert '"bondless_graphs": bondless_graphs' in source
 
 
 def test_gap_models_use_ogb_categories_and_one_target() -> None:
@@ -89,6 +91,7 @@ def test_cache_acceptance_executes_no_model_runtime() -> None:
     assert "torch" not in imported_modules(ACCEPTANCE)
     source = ACCEPTANCE.read_text(encoding="utf-8")
     assert '"model_inference_executed": False' in source
+    assert '"bondless_graphs": manifest.get("bondless_graphs")' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
 

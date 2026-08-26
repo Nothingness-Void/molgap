@@ -200,11 +200,13 @@ def build_pcqm_gap_screen_cache(
     progress_path = output_dir / "progress.json"
     failures = []
     completed_shards = []
+    bondless_graphs = 0
     start_offsets = {"train": 0, "validation": 0}
     if progress_path.exists():
         progress = json.loads(progress_path.read_text(encoding="utf-8"))
         failures = progress.get("failures", [])
         completed_shards = progress.get("shards", [])
+        bondless_graphs = int(progress.get("bondless_graphs", 0))
         start_offsets.update(progress.get("next_offset", {}))
 
     ranges = {
@@ -233,10 +235,16 @@ def build_pcqm_gap_screen_cache(
                         }
                     )
                     continue
+                if graph.edge_attr.shape[0] == 0:
+                    bondless_graphs += 1
                 for key, values in (
                     ("atom", graph.x),
                     ("bond", graph.edge_attr),
                 ):
+                    if values.shape[0] == 0:
+                        if key == "bond":
+                            continue
+                        raise RuntimeError("Atom feature tensor is unexpectedly empty")
                     minimum = values.min(dim=0).values.tolist()
                     maximum = values.max(dim=0).values.tolist()
                     min_key = f"{key}_feature_min"
@@ -276,6 +284,7 @@ def build_pcqm_gap_screen_cache(
                     "next_offset": start_offsets,
                     "shards": completed_shards,
                     "failures": failures,
+                    "bondless_graphs": bondless_graphs,
                     "official_validation_role_read": False,
                     "test_dev_role_read": False,
                 },
@@ -311,6 +320,7 @@ def build_pcqm_gap_screen_cache(
         "train_graphs": role_counts["train"],
         "validation_graphs": role_counts["validation"],
         "failed_graphs": len(failures),
+        "bondless_graphs": bondless_graphs,
         "atom_feature_dim": 9,
         "bond_feature_dim": 3,
         "rwse_dim": RWSE_DIM,
@@ -323,4 +333,3 @@ def build_pcqm_gap_screen_cache(
     }
     atomic_json(manifest_path, manifest)
     return manifest
-

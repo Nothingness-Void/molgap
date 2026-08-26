@@ -41,11 +41,29 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
     require(manifest.get("test_dev_role_read") is False, "test-dev read")
     require(manifest.get("gpu_used") is False, "GPU used")
     require(manifest.get("failed_graphs") == 0, "graph failures")
+    require(
+        isinstance(manifest.get("bondless_graphs"), int)
+        and manifest.get("bondless_graphs") >= 0,
+        "bondless graph count",
+    )
     require(manifest.get("train_graphs") == 100_000, "train graph count")
     require(manifest.get("validation_graphs") == 10_000, "validation graph count")
     require(manifest.get("atom_feature_dim") == 9, "atom feature dim")
     require(manifest.get("bond_feature_dim") == 3, "bond feature dim")
     require(manifest.get("rwse_dim") == 16, "RWSE dim")
+    feature_ranges = manifest.get("feature_ranges", {})
+    for key, width in (
+        ("atom_feature_min", 9),
+        ("atom_feature_max", 9),
+        ("bond_feature_min", 3),
+        ("bond_feature_max", 3),
+    ):
+        values = feature_ranges.get(key, [])
+        require(
+            len(values) == width
+            and all(isinstance(value, int) for value in values),
+            f"feature range {key}",
+        )
     require(sha256_file(split_path) == manifest.get("split_file_sha256"), "split SHA")
     train = split.get("train", [])
     validation = split.get("validation", [])
@@ -83,6 +101,7 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
         "aggregate_sha256": manifest.get("aggregate_sha256"),
         "train_index_sha256": manifest.get("train_index_sha256"),
         "validation_index_sha256": manifest.get("validation_index_sha256"),
+        "bondless_graphs": manifest.get("bondless_graphs"),
         "model_inference_executed": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,
@@ -107,4 +126,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
