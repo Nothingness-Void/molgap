@@ -79,3 +79,7 @@ EdgeState checkpoint remains the sole validation winner.
 The next distinct architecture question is frozen in
 `edge_conditioned_r6_protocol.md`. R6 moves bond conditioning into every GPS
 block and does not reuse the failed R5 graph-level readout.
+
+R6 completed and failed both strict gates; its exact disposition is
+`edge_conditioned_r6_decision.md`. The next distinct operation is the recurrent
+molecule token frozen in `graph_token_r7_protocol.md`.
