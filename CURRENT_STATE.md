@@ -65,13 +65,13 @@ both gates. R3 remains the sole frozen winner. The exact decisions and artifact
 hashes are owned by
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` and
 `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
-R6 node-level edge conditioning and R7 recurrent graph memory failed their
-strict validation gates. R8 also failed after using multihop pairs as local
-message edges. R3 remains frozen. R9 is the only open discovery question: it
-keeps R3 local messages on real bonds and uses the accepted path cache only for
-a shared shortest-path-biased sparse attention branch. The R8 decision and R9
-contract are `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md`
-and `experiments/top20_architecture_qm9/sparse_path_attention_r9_protocol.md`.
+R6 through R9 failed their strict validation gates; the shortest-path branch is
+closed after both local-edge and sparse-attention variants regressed. R3 remains
+frozen. R10 is the only open discovery question: it adds non-backtracking
+directed bond-to-bond memory inside EdgeState while retaining real bonds and
+the R3 GPS backbone. The R9 decision and R10 contract are
+`experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md` and
+`experiments/top20_architecture_qm9/directed_edge_state_r10_protocol.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -85,10 +85,9 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- The R8 multihop CPU cache remains accepted and reusable. Kaggle2 GPU kernel
-  `kaseichou/molgap-sparse-path-attention-r9-qm9-validation`, version 1, is the
-  only active architecture-training job and uses that cache read-only. No test
-  or downstream transfer is authorized.
+- No architecture GPU job is active. The next permitted run is one R10
+  validation using the accepted RWSE cache and real topology only. No test or
+  downstream transfer is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
@@ -122,6 +121,7 @@ must not be represented as this new conservative head.
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |
 | Did R8 multihop local messaging improve R3? | `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md` |
+| Did R9 shortest-path sparse attention improve R3? | `experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md` |
 | Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
 | Where are rejected branches indexed? | `experiments/_closed/README.md` |

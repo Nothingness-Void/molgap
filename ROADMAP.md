@@ -15,7 +15,7 @@ general B3LYP model and official PCQM Gap specialist remain separate objectives.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | C-PURE2D-R9-PATH-ATTENTION | Test real-bond EdgeState plus a shared shortest-path-biased sparse attention branch under the frozen QM9 validation contract | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R9 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
+| P0 | C-PURE2D-R10-DIRECTED-EDGE | Test non-backtracking directed bond memory inside EdgeState under the frozen QM9 validation contract | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R10 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-TEST | Evaluate the single frozen R3 validation winner once on QM9 test | Explicit user authorization; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-PC100K | Transfer a QM9-confirmed winner to matched PubChemQC-100K validation | Triggered only by the one-time QM9 test gate; no sealed PubChemQC test role is read | `experiments/pubchemqc100k_architecture/` |
 | P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
@@ -28,13 +28,15 @@ The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
 `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
 
-The accepted R3 validation gate, failed R5/R6/R7/R8 branches, and untriggered R4
+The accepted R3 validation gate, failed R5/R6/R7/R8/R9 branches, and untriggered R4
 fallback are evidence. Their exact dispositions are
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`,
 `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`, and
 `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md`, with R7
 owned by `experiments/top20_architecture_qm9/graph_token_r7_decision.md` and R8
 owned by `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md`.
+R9 is owned by
+`experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md`.
 
 ## Mandatory Gates
 
