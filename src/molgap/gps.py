@@ -608,6 +608,121 @@ class SparsePathAttentionStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
         return self._pool(h, batch)
 
 
+class _DirectedPersistentEdgeUpdate(_PersistentEdgeUpdate):
+    """Add non-backtracking incoming bond memory to an edge update."""
+
+    def __init__(self, node_channels: int, edge_channels: int, dropout: float):
+        super().__init__(node_channels, edge_channels, dropout)
+        self.incoming = nn.Linear(edge_channels, edge_channels, bias=False)
+        nn.init.zeros_(self.incoming.weight)
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        reverse_edge: torch.Tensor,
+    ) -> torch.Tensor:
+        source, target = edge_index
+        incoming_sum = edge_state.new_zeros(
+            (h.shape[0], edge_state.shape[1])
+        )
+        incoming_sum.index_add_(0, target, edge_state)
+        non_backtracking = incoming_sum[source] - edge_state[reverse_edge]
+        context = (
+            edge_state
+            + self.source(h[source])
+            + self.target(h[target])
+            + self.incoming(non_backtracking)
+        )
+        return self.output_norm(edge_state + self.update(context))
+
+
+class DirectedEdgeStateStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """EdgeState GPS with D-MPNN-style non-backtracking bond flow."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        dropout = float(kwargs.get("dropout", 0.1))
+        super().__init__(*args, **kwargs)
+        hidden_channels = self.node_emb.out_features
+        self.edge_updates = nn.ModuleList(
+            [
+                _DirectedPersistentEdgeUpdate(
+                    hidden_channels,
+                    self.edge_state_channels,
+                    dropout,
+                )
+                for _ in self.convs
+            ]
+        )
+
+    @staticmethod
+    def _reverse_edge_indices(
+        edge_index: torch.Tensor,
+        num_nodes: int,
+    ) -> torch.Tensor:
+        source, target = edge_index
+        keys = source * num_nodes + target
+        reverse_keys = target * num_nodes + source
+        order = torch.argsort(keys)
+        sorted_keys = keys[order]
+        positions = torch.searchsorted(sorted_keys, reverse_keys)
+        if bool((positions >= len(sorted_keys)).any()):
+            raise ValueError("Directed EdgeState requires reverse bond edges")
+        reverse_edge = order[positions]
+        if not torch.equal(source[reverse_edge], target) or not torch.equal(
+            target[reverse_edge], source
+        ):
+            raise ValueError("Directed EdgeState reverse-edge mapping is invalid")
+        return reverse_edge
+
+    def _encode_state_trace(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        capture_layers=(),
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Directed EdgeState GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(
+                f"random_walk_pe must have shape {expected}, "
+                f"got {tuple(random_walk_pe.shape)}"
+            )
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        requested = tuple(int(layer) for layer in capture_layers)
+        if len(set(requested)) != len(requested):
+            raise ValueError("capture_layers must be unique")
+        invalid = [
+            layer for layer in requested if layer < 1 or layer > len(self.convs)
+        ]
+        if invalid:
+            raise ValueError(f"Directed EdgeState layer index out of range: {invalid}")
+        reverse_edge = self._reverse_edge_indices(edge_index, x.shape[0])
+        h = self.node_emb(x.float())
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self.edge_emb(edge_attr.float())
+        captured = {}
+        for layer, (edge_update, conv) in enumerate(
+            zip(self.edge_updates, self.convs), start=1
+        ):
+            edge_state = edge_update(
+                h,
+                edge_index,
+                edge_state,
+                reverse_edge,
+            )
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
+            if layer in requested:
+                captured[layer] = h
+        return h, edge_state, tuple(captured[layer] for layer in requested)
+
+
 class EdgeConditionedStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
     """Persistent-edge GPS with shared node-level edge conditioning.
 

@@ -22,6 +22,7 @@ from .edge_global_2d import EdgeGlobal2DWrapper
 from .gine import GINEWrapper
 from .gps import (
     EdgeConditionedStructuralGPSWrapper,
+    DirectedEdgeStateStructuralGPSWrapper,
     EdgeJKReadoutStructuralGPSWrapper,
     EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
@@ -299,6 +300,18 @@ ENCODER_CONFIGS = {
         "path_attention_rank": 16,
         "path_max_distance": 4,
         "multihop_attention_distance": 4,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "directed_edge_state_structural_gps": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
         "batch_size": 48,
         "amp": False,
     },
@@ -1463,6 +1476,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         "graph_token_structural_gps",
         "multihop_edge_state_structural_gps",
         "sparse_path_attention_structural_gps",
+        "directed_edge_state_structural_gps",
     }:
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
@@ -1474,6 +1488,9 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
             "multihop_edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
             "sparse_path_attention_structural_gps": (
                 SparsePathAttentionStructuralGPSWrapper
+            ),
+            "directed_edge_state_structural_gps": (
+                DirectedEdgeStateStructuralGPSWrapper
             ),
         }
         model_class = model_classes[candidate]
