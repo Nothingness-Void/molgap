@@ -85,9 +85,10 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No architecture GPU job is active. The next permitted run is one R10
-  validation using the accepted RWSE cache and real topology only. No test or
-  downstream transfer is authorized.
+- Kaggle2 GPU kernel
+  `kaseichou/molgap-directed-edgestate-r10-qm9-validation`, version 1, is the
+  only active architecture-training job. It uses the accepted RWSE cache and
+  real topology only. No test or downstream transfer is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
