@@ -11,6 +11,14 @@ EXPERIMENT = ROOT / "experiments" / "top20_architecture_qm9"
 PREP = EXPERIMENT / "kaggle_multihop_edge_state_r8" / "cpu_prep" / "run_prep.py"
 METADATA = PREP.with_name("kernel-metadata.json")
 ACCEPTANCE = EXPERIMENT / "accept_multihop_edge_state_r8_prep.py"
+GPU_RUNNER = (
+    EXPERIMENT
+    / "kaggle_multihop_edge_state_r8"
+    / "gpu_validation"
+    / "run_validation.py"
+)
+GPU_METADATA = GPU_RUNNER.with_name("kernel-metadata.json")
+GPU_ACCEPTANCE = EXPERIMENT / "accept_multihop_edge_state_r8.py"
 
 
 def dict_entry_literal(path: Path, assignment: str, key: str):
@@ -98,5 +106,57 @@ def test_r8_local_acceptance_imports_no_model_runtime() -> None:
     )
     assert "torch" not in imports
     source = ACCEPTANCE.read_text(encoding="utf-8")
+    assert '"model_inference_executed": False' in source
+    assert '"test_role_read": False' in source
+
+
+def assignment_literal(path: Path, name: str):
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == name
+            for target in node.targets
+        ):
+            return ast.literal_eval(node.value)
+    raise AssertionError(f"Missing assignment {name} in {path}")
+
+
+def test_r8_gpu_contract_is_frozen_and_validation_only() -> None:
+    assert assignment_literal(GPU_RUNNER, "EXPECTED_PARAMETER_COUNT") == 4_739_907
+    assert assignment_literal(GPU_RUNNER, "EXPECTED_SOURCE_COMMIT") == (
+        "56abea806ff88778bcbb847d569a266da074eee1"
+    )
+    assert assignment_literal(GPU_RUNNER, "EXPECTED_MULTIHOP_SHA256") == (
+        "0ea8a0e27790b5bbdb038365d681b5f48974da959a1a8890e0ca1ef24a339dd3"
+    )
+    source = GPU_RUNNER.read_text(encoding="utf-8")
+    assert "evaluate_test=False" in source
+    assert "multihop_cache_dir=multihop_cache" in source
+    assert '"test_role_read": False' in source
+    metadata = json.loads(GPU_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == (
+        "kaseichou/molgap-multihop-edgestate-r8-qm9-validation"
+    )
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["kernel_sources"][-1] == (
+        "kaseichou/molgap-multihop-edgestate-r8-qm9-prep"
+    )
+
+
+def test_r8_gpu_acceptance_imports_no_model_runtime() -> None:
+    tree = ast.parse(GPU_ACCEPTANCE.read_text(encoding="utf-8"))
+    imports = {
+        alias.name
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Import)
+        for alias in node.names
+    }
+    imports.update(
+        node.module
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module is not None
+    )
+    assert "torch" not in imports
+    source = GPU_ACCEPTANCE.read_text(encoding="utf-8")
     assert '"model_inference_executed": False' in source
     assert '"test_role_read": False' in source
