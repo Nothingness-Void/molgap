@@ -15,7 +15,8 @@ general B3LYP model and official PCQM Gap specialist remain separate objectives.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | C-PURE2D-R7-GRAPH-TOKEN | Test recurrent graph-to-node and node-to-graph communication under the frozen QM9 validation contract | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R7 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
+| P0 | C-PURE2D-R8-MULTIHOP-PREP | Build and independently accept the train/validation-only sparse shortest-path edge cache | All 33,000 rows, bounded parts, hashes, split identity, finite eight-channel edges, and `test_role_read=false` pass without model inference | `experiments/top20_architecture_qm9/` |
+| P0 | C-PURE2D-R8-MULTIHOP-VALIDATION | Test persistent EdgeState over distance-1-to-4 virtual edges under the frozen QM9 validation contract | CPU cache gate passes, then strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R8 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-TEST | Evaluate the single frozen R3 validation winner once on QM9 test | Explicit user authorization; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-PC100K | Transfer a QM9-confirmed winner to matched PubChemQC-100K validation | Triggered only by the one-time QM9 test gate; no sealed PubChemQC test role is read | `experiments/pubchemqc100k_architecture/` |
 | P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
@@ -28,11 +29,12 @@ The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
 `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
 
-The accepted R3 validation gate, failed R5/R6 branches, and untriggered R4
+The accepted R3 validation gate, failed R5/R6/R7 branches, and untriggered R4
 fallback are evidence. Their exact dispositions are
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`,
 `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`, and
-`experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md`.
+`experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md`, with R7
+owned by `experiments/top20_architecture_qm9/graph_token_r7_decision.md`.
 
 ## Mandatory Gates
 
