@@ -272,6 +272,20 @@ ENCODER_CONFIGS = {
         "batch_size": 48,
         "amp": False,
     },
+    "multihop_edge_state_structural_gps": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "model_edge_dim": 8,
+        "multihop_max_distance": 4,
+        "batch_size": 48,
+        "amp": False,
+    },
     "pair_gps_2d_r3_orbital": {
         "kind": "structural_topology",
         "hidden_channels": 192,
@@ -1040,6 +1054,287 @@ def attach_accepted_qm9_rwse(
     return acceptance
 
 
+def qm9_multihop_cache_paths(
+    cache_dir: Path,
+    split: ScreenSplit,
+    *,
+    max_distance: int = 4,
+) -> dict[str, Path]:
+    root = cache_dir / "structural" / (
+        f"topology_{split.fingerprint}_multihop{max_distance}_v1"
+    )
+    return {
+        "root": root,
+        "parts": root / "parts",
+        "progress": root / "progress.json",
+        "acceptance": root / "multihop_acceptance.json",
+    }
+
+
+def _multihop_topology_payload(
+    record: dict,
+    source_idx: int,
+    *,
+    max_distance: int,
+) -> dict:
+    """Encode directed shortest-path virtual edges without copying labels."""
+    if max_distance <= 0:
+        raise ValueError("max_distance must be positive")
+    edge_index = record["edge_index"].long().cpu()
+    edge_attr = record["edge_attr"].float().cpu()
+    if edge_index.ndim != 2 or edge_index.shape[0] != 2:
+        raise ValueError("Topology edge_index must have shape [2, E]")
+    if edge_attr.ndim != 2 or edge_attr.shape[0] != edge_index.shape[1]:
+        raise ValueError("Topology edge_attr does not align with edge_index")
+    if edge_attr.shape[1] != 4:
+        raise ValueError("QM9 multihop cache requires four bond channels")
+    num_nodes = int(record["x"].shape[0])
+    adjacency = [set() for _ in range(num_nodes)]
+    direct_features = {}
+    for column in range(edge_index.shape[1]):
+        source = int(edge_index[0, column])
+        target = int(edge_index[1, column])
+        adjacency[source].add(target)
+        adjacency[target].add(source)
+        direct_features[(source, target)] = edge_attr[column]
+
+    sources, targets, features = [], [], []
+    zero_bond = torch.zeros(4, dtype=torch.float32)
+    for source in range(num_nodes):
+        distance = [-1] * num_nodes
+        distance[source] = 0
+        queue = [source]
+        cursor = 0
+        while cursor < len(queue):
+            current = queue[cursor]
+            cursor += 1
+            if distance[current] >= max_distance:
+                continue
+            for target in sorted(adjacency[current]):
+                if distance[target] >= 0:
+                    continue
+                distance[target] = distance[current] + 1
+                queue.append(target)
+        for target, path_length in enumerate(distance):
+            if path_length <= 0 or path_length > max_distance:
+                continue
+            path_code = torch.zeros(max_distance, dtype=torch.float32)
+            path_code[path_length - 1] = 1.0
+            bond = direct_features.get((source, target), zero_bond)
+            sources.append(source)
+            targets.append(target)
+            features.append(torch.cat((bond, path_code)))
+    if not features:
+        raise ValueError(f"QM9 graph {source_idx} has no usable multihop edges")
+    return {
+        "source_idx": int(source_idx),
+        "num_nodes": num_nodes,
+        "edge_index": torch.tensor([sources, targets], dtype=torch.long),
+        "edge_attr": torch.stack(features).contiguous(),
+    }
+
+
+def _multihop_parts_sha256(parts: list[dict]) -> str:
+    identity = [
+        {"name": row["name"], "rows": row["rows"], "sha256": row["sha256"]}
+        for row in parts
+    ]
+    return hashlib.sha256(
+        json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def build_qm9_multihop_screen_cache(
+    *,
+    train_size: int,
+    validation_size: int,
+    test_size: int,
+    split_seed: int = 42,
+    max_distance: int = 4,
+    shard_size: int = 2_000,
+    cache_dir: Path = DEFAULT_CACHE,
+    source_cache_dir: Path | None = None,
+) -> dict:
+    """Build a resumable train/validation-only shortest-path edge cache."""
+    if shard_size <= 0:
+        raise ValueError("shard_size must be positive")
+    records = load_qm9_records(source_cache_dir or cache_dir)
+    split = fixed_split(
+        len(records), train_size, validation_size, test_size, split_seed
+    )
+    expected_indices = np.concatenate((split.train, split.validation)).astype(
+        np.int64
+    )
+    paths = qm9_multihop_cache_paths(
+        cache_dir, split, max_distance=max_distance
+    )
+    paths["parts"].mkdir(parents=True, exist_ok=True)
+    expected_part_names = {
+        f"part_{part_index:05d}.pt"
+        for part_index, _ in enumerate(range(0, len(expected_indices), shard_size))
+    }
+    existing_part_names = {path.name for path in paths["parts"].glob("part_*.pt")}
+    unexpected_parts = sorted(existing_part_names - expected_part_names)
+    if unexpected_parts:
+        raise ValueError(f"Unexpected stale multihop parts: {unexpected_parts}")
+
+    part_records = []
+    edge_rows = 0
+    for part_index, start in enumerate(range(0, len(expected_indices), shard_size)):
+        indices = expected_indices[start : start + shard_size]
+        part_path = paths["parts"] / f"part_{part_index:05d}.pt"
+        if part_path.is_file():
+            payloads = torch.load(
+                part_path, map_location="cpu", weights_only=False
+            )
+        else:
+            payloads = [
+                _multihop_topology_payload(
+                    records[int(source_idx)],
+                    int(source_idx),
+                    max_distance=max_distance,
+                )
+                for source_idx in indices
+            ]
+            _atomic_torch_save(part_path, payloads)
+        observed_indices = np.asarray(
+            [int(payload["source_idx"]) for payload in payloads], dtype=np.int64
+        )
+        if not np.array_equal(observed_indices, indices):
+            raise ValueError(f"Multihop part {part_path.name} has wrong indices")
+        for payload in payloads:
+            if payload["edge_index"].shape[0] != 2:
+                raise ValueError("Malformed multihop edge_index")
+            expected_width = 4 + max_distance
+            if payload["edge_attr"].shape != (
+                payload["edge_index"].shape[1],
+                expected_width,
+            ):
+                raise ValueError("Malformed multihop edge_attr")
+            if not torch.isfinite(payload["edge_attr"]).all():
+                raise ValueError("Multihop edge_attr contains non-finite values")
+            edge_rows += int(payload["edge_index"].shape[1])
+        part_records.append(
+            {
+                "name": part_path.name,
+                "rows": len(payloads),
+                "bytes": part_path.stat().st_size,
+                "sha256": sha256(part_path),
+            }
+        )
+        _atomic_json(
+            paths["progress"],
+            {
+                "format": "molgap-qm9-multihop-progress-v1",
+                "complete_parts": part_index + 1,
+                "total_parts": len(expected_part_names),
+                "rows": sum(row["rows"] for row in part_records),
+                "test_role_read": False,
+            },
+        )
+    acceptance = {
+        "format": "molgap-qm9-multihop-acceptance-v1",
+        "complete": True,
+        "split_seed": split_seed,
+        "split_fingerprint": split.fingerprint,
+        "index_sha256": hashlib.sha256(expected_indices.tobytes()).hexdigest(),
+        "roles": {"train": train_size, "validation": validation_size},
+        "requested_test_rows": test_size,
+        "test_role_read": False,
+        "max_distance": max_distance,
+        "bond_feature_dim": 4,
+        "distance_feature_dim": max_distance,
+        "edge_feature_dim": 4 + max_distance,
+        "rows": len(expected_indices),
+        "edge_rows": edge_rows,
+        "parts": part_records,
+        "parts_sha256": _multihop_parts_sha256(part_records),
+    }
+    _atomic_json(paths["acceptance"], acceptance)
+    return acceptance
+
+
+def attach_accepted_qm9_multihop(
+    graph_splits: dict[str, list[Data]],
+    *,
+    cache_dir: Path,
+    split: ScreenSplit,
+    max_distance: int = 4,
+) -> dict:
+    """Attach accepted sparse paths and refuse any test-role construction."""
+    unexpected_roles = set(graph_splits) - {"train", "validation"}
+    if unexpected_roles:
+        raise ValueError(
+            f"Multihop validation cache cannot serve roles: {unexpected_roles}"
+        )
+    paths = qm9_multihop_cache_paths(
+        cache_dir, split, max_distance=max_distance
+    )
+    if not paths["acceptance"].is_file():
+        raise FileNotFoundError(
+            "Accepted QM9 multihop cache is required; run the CPU prep first"
+        )
+    acceptance = json.loads(paths["acceptance"].read_text(encoding="utf-8"))
+    expected_indices = np.concatenate((split.train, split.validation)).astype(
+        np.int64
+    )
+    expected_contract = {
+        "format": "molgap-qm9-multihop-acceptance-v1",
+        "complete": True,
+        "split_seed": split.seed,
+        "split_fingerprint": split.fingerprint,
+        "index_sha256": hashlib.sha256(expected_indices.tobytes()).hexdigest(),
+        "roles": {
+            "train": int(len(split.train)),
+            "validation": int(len(split.validation)),
+        },
+        "test_role_read": False,
+        "max_distance": max_distance,
+        "edge_feature_dim": 4 + max_distance,
+        "rows": int(len(expected_indices)),
+    }
+    mismatches = {
+        key: (acceptance.get(key), value)
+        for key, value in expected_contract.items()
+        if acceptance.get(key) != value
+    }
+    if mismatches:
+        raise ValueError(f"QM9 multihop acceptance mismatch: {mismatches}")
+    parts = acceptance.get("parts", [])
+    if acceptance.get("parts_sha256") != _multihop_parts_sha256(parts):
+        raise ValueError("QM9 multihop aggregate hash mismatch")
+    payload_by_source = {}
+    for part in parts:
+        part_path = paths["parts"] / part["name"]
+        if not part_path.is_file() or sha256(part_path) != part["sha256"]:
+            raise ValueError(f"QM9 multihop part mismatch: {part['name']}")
+        payloads = torch.load(part_path, map_location="cpu", weights_only=False)
+        if len(payloads) != int(part["rows"]):
+            raise ValueError(f"QM9 multihop row mismatch: {part['name']}")
+        for payload in payloads:
+            source_idx = int(payload["source_idx"])
+            if source_idx in payload_by_source:
+                raise ValueError("Duplicate QM9 multihop source index")
+            payload_by_source[source_idx] = payload
+    if set(payload_by_source) != set(expected_indices.tolist()):
+        raise ValueError("QM9 multihop cache has different source indices")
+    for graphs in graph_splits.values():
+        for graph in graphs:
+            source_idx = int(graph.source_idx.view(-1)[0])
+            payload = payload_by_source[source_idx]
+            if int(payload["num_nodes"]) != graph.num_nodes:
+                raise ValueError("QM9 multihop node count differs from graph")
+            edge_index = payload["edge_index"]
+            edge_attr = payload["edge_attr"]
+            if edge_attr.shape != (edge_index.shape[1], 4 + max_distance):
+                raise ValueError("QM9 multihop feature shape is malformed")
+            if not torch.isfinite(edge_attr).all():
+                raise ValueError("QM9 multihop feature contains non-finite values")
+            graph.edge_index = edge_index.clone()
+            graph.edge_attr = edge_attr.clone()
+    return acceptance
+
+
 def _pcqm_transfer_features(graph: Data) -> Data:
     """Map QM9's processed 11-wide features to the PCQM 18-wide GPS contract.
 
@@ -1084,6 +1379,8 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     kind = config.pop("kind")
     config.pop("atom_geom_mode", None)
     config.pop("input_channels", None)
+    edge_dim = int(config.pop("model_edge_dim", edge_dim))
+    config.pop("multihop_max_distance", None)
     consistent_head = bool(config.pop("consistent_head", False))
     if candidate == "gine6":
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
@@ -1113,6 +1410,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         "edge_state_structural_jk_readout",
         "edge_conditioned_structural_gps",
         "graph_token_structural_gps",
+        "multihop_edge_state_structural_gps",
     }:
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
@@ -1121,6 +1419,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
             "edge_state_structural_jk_readout": EdgeJKReadoutStructuralGPSWrapper,
             "edge_conditioned_structural_gps": EdgeConditionedStructuralGPSWrapper,
             "graph_token_structural_gps": GraphTokenStructuralGPSWrapper,
+            "multihop_edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
         }
         model_class = model_classes[candidate]
         model = model_class(in_channels=in_channels, edge_dim=edge_dim, **config)
@@ -1353,6 +1652,7 @@ def train_encoder(
     models_dir: Path = DEFAULT_MODELS,
     embeddings_dir: Path | None = None,
     evaluate_test: bool = True,
+    multihop_cache_dir: Path | None = None,
 ) -> dict:
     expected = ENCODER_CONFIGS[candidate]["kind"]
     if expected in {"topology", "structural_topology"} and geometry != "topology":
@@ -1391,6 +1691,18 @@ def train_encoder(
             split=split,
             walk_length=rwse_dim,
         )
+        multihop_max_distance = ENCODER_CONFIGS[candidate].get(
+            "multihop_max_distance"
+        )
+        if multihop_max_distance is not None:
+            if multihop_cache_dir is None:
+                raise ValueError(f"{candidate} requires an accepted multihop cache")
+            geometry_report["multihop_cache"] = attach_accepted_qm9_multihop(
+                graph_splits,
+                cache_dir=multihop_cache_dir,
+                split=split,
+                max_distance=int(multihop_max_distance),
+            )
     else:
         graph_splits, geometry_report = make_graph_splits(
             records, split, geometry, mean, std, cache_dir, seed
@@ -1606,6 +1918,10 @@ def train_encoder(
     model.load_state_dict(best_state)
 
     if expected == "structural_topology" and evaluate_test:
+        if ENCODER_CONFIGS[candidate].get("multihop_max_distance") is not None:
+            raise ValueError(
+                "Multihop test construction requires a separately authorized cache"
+            )
         graph_splits["test"] = [
             _topology_graph(records[int(i)], int(i), mean, std)
             for i in split.test
