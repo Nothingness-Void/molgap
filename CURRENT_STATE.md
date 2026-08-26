@@ -65,6 +65,10 @@ both gates. R3 remains the sole frozen winner. The exact decisions and artifact
 hashes are owned by
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` and
 `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
+One distinct R6 architecture now conditions atom states with current bond
+states before every GPS block. It is validation-only; R3 remains frozen unless
+R6 strictly passes both gates. Its contract is
+`experiments/top20_architecture_qm9/edge_conditioned_r6_protocol.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -78,8 +82,9 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No architecture-training job is active. R5 completed and retained R3; no QM9
-  test, PubChemQC-100K, or full-data follow-up was submitted.
+- Kaggle2 kernel `kaseichou/molgap-edge-conditioned-r6-qm9-validation`, version
+  1, is the only active architecture-training job. It cannot read or trigger
+  QM9 test, PubChemQC-100K, or full-data follow-up.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
