@@ -22,23 +22,18 @@ production decision linked above.
 
 ## Active Objective
 
-Track C is open for resource-bounded, from-scratch architecture discovery. Its
-frozen comparator is `repaired_2m_dense_2d`; no Track C result changes the
-production registry before the existing Track A external promotion gate.
+Track B is open for an official PCQM4Mv2 leaderboard specialist. The target is
+the single official HOMO-LUMO Gap, not the Track A three-target contract.
+Architecture selection uses only an internal 100K/10K split derived from the
+official PCQM training role on Kaggle. Official validation and test-dev remain
+sealed during selection.
 
-Persistent EdgeState Structural GPS passed the controlled three-seed PubChemQC
-100K gate and is the sole repaired-2M scale-up candidate. The complete 2M model
-has not been trained. Submission is blocked until both conditions pass:
+The first matched question compares an OGB-categorical Structural GPS9 with its
+persistent real-bond EdgeState counterpart. Both are pure 2D, randomly
+initialized, Gap-only, and trained under one frozen contract. The protocol is
+`experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md`.
 
-1. the immutable repaired-2M EdgeState input is complete and accepted;
-2. a measured one-epoch projection keeps the bounded run below 10 hours.
-
-The exact screen result and artifacts are owned by
-`experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
-The live execution contract and remote provenance are in
-`experiments/resource_bounded_architecture/STATUS.md`.
-
-## Parallel Workstream
+## Prior Architecture Evidence
 
 The independent PairGPS2D line completed its matched PubChemQC-100K
 validation-only search and passed that stage against the fixed GPS7 plus GPS9
@@ -50,28 +45,11 @@ The decisions are owned by
 and
 `experiments/pubchemqc100k_architecture/results/pair_gps_2d_a100_benchmark/decision.md`.
 
-The bounded PairGPS-R2 Lite repair failed its QM9 accuracy gate and is closed.
-It met the parameter/stability budget and nearly matched the larger PairGPS2D,
-but did not improve both required accuracy metrics. It does not authorize seed
-repeats, PubChemQC-100K, or full-data work. The exact result is owned by
-`experiments/top20_architecture_qm9/pair_gps_2d_r2_decision.md`.
-
-The pure-2D R3 validation tournament completed and independently accepted its
-frozen winner, `edge_state_structural_gps`. The dense PairGPS repairs did not
-pass, and the conditional R4 trigger was not met. The QM9 test role remains
-sealed; the one permitted test gate has not been submitted. One R5
-identity-start multi-depth readout was evaluated on validation only and failed
-both gates. R3 remains the sole frozen winner. The exact decisions and artifact
-hashes are owned by
-`experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` and
-`experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
-R6 through R9 failed their strict validation gates; the shortest-path branch is
-closed after both local-edge and sparse-attention variants regressed. R3 remains
-frozen. R10 is the only open discovery question: it adds non-backtracking
-directed bond-to-bond memory inside EdgeState while retaining real bonds and
-the R3 GPS backbone. The R9 decision and R10 contract are
-`experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md` and
-`experiments/top20_architecture_qm9/directed_edge_state_r10_protocol.md`.
+The QM9 pure-2D tournament selected persistent EdgeState R3; R5-R10 failed their
+strict validation gates and are closed. Those runs inform architecture choice
+only. They do not supply weights, splits, metrics, or advancement authority to
+the official PCQM screen. Their decisions are indexed by
+`experiments/top20_architecture_qm9/README.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -85,19 +63,23 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- Kaggle2 GPU kernel
-  `kaseichou/molgap-directed-edgestate-r10-qm9-validation`, version 1, is the
-  only active architecture-training job. It uses the accepted RWSE cache and
-  real topology only. No test or downstream transfer is authorized.
+- No GPU architecture-training job is active.
+- The next remote stage is Kaggle CPU construction and local acceptance of the
+  official-train-derived PCQM 100K graph cache.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
-- No repaired-2M EdgeState job has been submitted.
-- No remote job is required to support the frozen Track A or Track B claims.
+- No molecular-research-server access is authorized before Kaggle selects one
+  three-seed winner.
 - Any new remote run must first appear in `ROADMAP.md` with an input contract,
   timing bound, atomic checkpoint path, and independently retrievable outputs.
 
 ## Boundaries
 
+- The leaderboard specialist predicts Gap only and stays isolated from the
+  Track A three-target production registry.
+- PCQM official validation and test-dev are not architecture-tuning data.
+- The molecular-research-server boundary is `/lustre/home/users/sm2/chou/`;
+  the current Kaggle stage does not access the server at all.
 - Common, OOD, and P8-hard are a one-time acceptance gate after the standalone
   repaired-2M candidate completes; they are not architecture-tuning data.
 - Future sealed data remains locked.
@@ -114,10 +96,11 @@ must not be represented as this new conservative head.
 |---|---|
 | What ships now? | `production/README.md` |
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
-| What did the active architecture tournament decide? | `experiments/resource_bounded_architecture/README.md` |
+| What is the active leaderboard experiment? | `experiments/pcqm_gap_architecture/README.md` |
 | What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
 | What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
 | What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
+| What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |

@@ -7,22 +7,21 @@ belong to each experiment's decision record. Track ownership is defined in
 
 ## Goal
 
-Test one bounded architecture candidate against the frozen repaired-2M
-production comparator without destabilizing the shipped Track A contract. The
-general B3LYP model and official PCQM Gap specialist remain separate objectives.
+Select one pure-2D, Gap-only architecture for the official PCQM4Mv2 leaderboard
+under a hard 12-hour A100 full-training budget. Kaggle 100K selection must
+finish before any molecular-research-server use.
 
 ## Active Queue
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | C-PURE2D-R10-DIRECTED-EDGE | Test non-backtracking directed bond memory inside EdgeState under the frozen QM9 validation contract | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R10 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
-| P0 | C-PURE2D-R3-TEST | Evaluate the single frozen R3 validation winner once on QM9 test | Explicit user authorization; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
-| P0 | C-PURE2D-R3-PC100K | Transfer a QM9-confirmed winner to matched PubChemQC-100K validation | Triggered only by the one-time QM9 test gate; no sealed PubChemQC test role is read | `experiments/pubchemqc100k_architecture/` |
-| P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
-| P0 | C-FULL-2M-TRAIN | Train exactly one EdgeState candidate from random initialization | P0 input gate passes; one complete resumable checkpoint and aligned predictions are accepted | `experiments/resource_bounded_architecture/` |
-| P1 | C-FULL-2M-EVAL | Compare the frozen candidate once on common/OOD/P8-hard | Common improves by at least `0.001 eV`; OOD and P8-hard do not regress by more than `0.0005 eV` | `experiments/resource_bounded_architecture/` |
-| P2 | C-CONSERVATIVE-3D | Test the exact-identity, low-gate, `0.03 eV` bounded 3D correction after the 2D identity freezes | Internal validation selects a non-identity head before any external block opens | `experiments/resource_bounded_architecture/`, `platforms/colab/conservative_2d3d_fusion/` |
-| P3 | B-PCQM-STRUCTURAL | Transfer the winning lightweight architecture to official PCQM4Mv2 as Gap-only | Separate official-data protocol and registry boundary are accepted | `experiments/resource_bounded_architecture/` |
+| P0 | B-PCQM100K-CACHE | Build and accept the frozen official-train-derived 100K/10K OGB graph and RWSE cache on Kaggle CPU | Exact row/hash/feature/shard contract passes; official validation and test-dev read flags are false | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-SEED42 | Train matched Gap-only Structural GPS9 and persistent EdgeState GPS9 sequentially on one Kaggle GPU | Complete finite artifacts identify a validation winner without reading official validation/test-dev | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
+| P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
+| P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
+| P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
+| P3 | B-PCQM-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after official-validation acceptance | `experiments/pcqm_gap_architecture/` |
 
 The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
@@ -40,9 +39,9 @@ R9 is owned by
 
 ## Mandatory Gates
 
-1. **Before remote submission:** local import, forward/backward, immutable input
-   acceptance, measured timing projection, atomic checkpointing, and durable
-   output chunks must pass.
+1. **Before remote GPU submission:** local syntax/AST/manifest checks and
+   immutable CPU-cache acceptance must pass. Forward/backward and memory checks
+   run only in the remote GPU preflight; models are not executed locally.
 2. **Before external evaluation:** the standalone full-scale candidate and its
    aligned predictions must be complete and frozen.
 3. **Before production promotion:** the fixed Track A external gate must pass;
@@ -53,13 +52,19 @@ R9 is owned by
 
 ## Operating Rules
 
-- Do not modify the production registry while Track C is screening.
+- Do not modify the production registry while Track B is screening.
 - Architecture claims use random initialization; no pretraining, warm start,
   fine-tuning, or distillation may be credited as an architecture gain.
 - Do not tune on common/OOD/P8-hard or sealed data.
-- New pure-2D architecture questions use the fixed sequence QM9, matched
-  PubChemQC-100K validation, one frozen intermediate test, then at most one
-  authorized full-data run.
+- PCQM leaderboard architecture questions use the frozen official-train-derived
+  100K/10K Kaggle split. QM9 and PubChemQC results are historical inspiration,
+  not advancement gates or reusable weights.
+- Do not access the molecular-research server until one candidate passes the
+  three-seed Kaggle gate. Later access is restricted to
+  `/lustre/home/users/sm2/chou/`.
+- Predict Gap directly. HOMO/LUMO auxiliary targets, 3D inputs, residual
+  targets, pretrained checkpoints, and prediction fusion are outside this
+  screen.
 - Continued pure-2D discovery tests one materially new architecture at a time.
   Every failure gets a decision record and cannot be retried as a seed or
   schedule variation; the next attempt must change the information flow.
@@ -73,7 +78,7 @@ R9 is owned by
 
 ## Delivery Queue
 
-These Track A delivery tasks remain valid but do not override the active Track C
+These Track A delivery tasks remain valid but do not override the active Track B
 experiment unless the project objective changes.
 
 | ID | Task | Trigger |
@@ -91,7 +96,6 @@ experiment unless the project objective changes.
 | Task | Trigger |
 |---|---|
 | PairGPS2D sealed-test disposition | Explicit authorization to reopen the independent branch after its validation-only decision; arithmetic equivalence must be established before using benchmark-selected TF32 for an accuracy claim |
-| OGB-compliant PCQM4Mv2 submission retrain | A separate leaderboard objective and compute budget are approved |
 | Experimental solid-state Delta head | A specific experimental target is requested |
 | Extend the supported element set | Rejected-use analysis justifies refetch and retraining |
 | Conformer ensemble or NNP geometry | Residual evidence identifies geometry as the limiting factor |
