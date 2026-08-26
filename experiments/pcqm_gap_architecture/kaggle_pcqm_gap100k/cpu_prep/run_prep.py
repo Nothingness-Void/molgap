@@ -51,6 +51,7 @@ def install_dependencies() -> None:
             "-q",
             "ogb==1.3.6",
             "torch-geometric==2.6.1",
+            "rdkit==2025.3.5",
         ]
     )
 
@@ -93,4 +94,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -79,6 +79,7 @@ def test_cpu_prep_is_gpu_free_and_uses_only_official_mirror() -> None:
         "kaseichou/molgap-pcqm-gap100k-r1-source",
     ]
     source = PREP.read_text(encoding="utf-8")
+    assert "rdkit==2025.3.5" in source
     assert '"gpu_used": False' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
