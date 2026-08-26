@@ -45,6 +45,11 @@ passes all of the following without importing or executing a model:
 - edge width is eight, distance cap is four, and all feature values are finite;
 - `test_role_read=false` and no test role is present in the cache roles.
 
+The accepted CPU output contains 17 parts and 33,000 rows. Its frozen aggregate
+SHA-256 is
+`0ea8a0e27790b5bbdb038365d681b5f48974da959a1a8890e0ca1ef24a339dd3`;
+the source commit is `56abea806ff88778bcbb847d569a266da074eee1`.
+
 ## Frozen validation contract
 
 - QM9 roles: 30,000 train / 3,000 validation / 3,000 sealed test.

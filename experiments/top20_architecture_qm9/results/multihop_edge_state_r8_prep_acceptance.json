@@ -1,0 +1,24 @@
+{
+  "format": "molgap-multihop-edgestate-r8-prep-acceptance-v1",
+  "recorded_at": "2026-08-26T16:40:00+09:00",
+  "accepted": true,
+  "source_commit": "56abea806ff88778bcbb847d569a266da074eee1",
+  "kernel": "kaseichou/molgap-multihop-edgestate-r8-qm9-prep",
+  "kernel_version": 1,
+  "gpu_used": false,
+  "split_fingerprint": "01656b1a538f89c8",
+  "roles": {
+    "train": 30000,
+    "validation": 3000
+  },
+  "test_role_read": false,
+  "model_inference_executed_during_local_acceptance": false,
+  "max_distance": 4,
+  "edge_feature_dim": 8,
+  "rows": 33000,
+  "edge_rows": 8157230,
+  "parts": 17,
+  "parts_sha256": "0ea8a0e27790b5bbdb038365d681b5f48974da959a1a8890e0ca1ef24a339dd3",
+  "prep_result_sha256": "45b12637a091dfa23a90a57a251799008b09bb0776da3af9582074bc1fe6c912",
+  "acceptance_sha256": "28e7316e111ccd3a5db25b8deb3506a78f623891ac4ee24e04f78999f69859b8"
+}
