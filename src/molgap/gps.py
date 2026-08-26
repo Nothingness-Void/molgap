@@ -76,10 +76,18 @@ class GPSWrapper(nn.Module):
         maximum = global_max_pool(h, batch)
         return self.pool_proj(torch.cat([mean, maximum], dim=-1))
 
+    def _embed_nodes(self, x):
+        """Embed node features while preserving the legacy float contract."""
+        return self.node_emb(x.float())
+
+    def _embed_edges(self, edge_attr):
+        """Embed edge features while preserving the legacy float contract."""
+        return self.edge_emb(edge_attr.float())
+
     def encode(self, x, edge_index, edge_attr, batch):
         """Return molecule-level embeddings [num_molecules, hidden_channels]."""
-        h = self.node_emb(x.float())
-        e = self.edge_emb(edge_attr.float())
+        h = self._embed_nodes(x)
+        e = self._embed_edges(edge_attr)
 
         for conv in self.convs:
             h = conv(h, edge_index, batch, edge_attr=e)
@@ -99,8 +107,8 @@ class GPSWrapper(nn.Module):
         if invalid:
             raise ValueError(f"GPS layer index out of range: {invalid}")
 
-        h = self.node_emb(x.float())
-        e = self.edge_emb(edge_attr.float())
+        h = self._embed_nodes(x)
+        e = self._embed_edges(edge_attr)
         pooled = []
         for i, conv in enumerate(self.convs, start=1):
             h = conv(h, edge_index, batch, edge_attr=e)
@@ -165,9 +173,9 @@ class StructuralGPSWrapper(GPSWrapper):
         if not torch.isfinite(random_walk_pe).all():
             raise ValueError("random_walk_pe contains non-finite values")
 
-        h = self.node_emb(x.float())
+        h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
-        e = self.edge_emb(edge_attr.float())
+        e = self._embed_edges(edge_attr)
         for conv in self.convs:
             h = conv(h, edge_index, batch, edge_attr=e)
         return self._pool(h, batch)
@@ -216,11 +224,11 @@ class NormalizedStructuralGPSWrapper(StructuralGPSWrapper):
         if not torch.isfinite(random_walk_pe).all():
             raise ValueError("random_walk_pe contains non-finite values")
 
-        atom_embedding = self.node_emb(x.float())
+        atom_embedding = self._embed_nodes(x)
         normalized_rwse = self.rwse_normalizer(random_walk_pe.float())
         rwse_embedding = self.rwse_encoder(normalized_rwse)
         h = self.h0_norm(atom_embedding + self.rwse_alpha * rwse_embedding)
-        e = self.edge_emb(edge_attr.float())
+        e = self._embed_edges(edge_attr)
         for conv in self.convs:
             h = conv(h, edge_index, batch, edge_attr=e)
         return self._pool(h, batch)
@@ -426,9 +434,9 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
         if invalid:
             raise ValueError(f"Edge-state layer index out of range: {invalid}")
 
-        h = self.node_emb(x.float())
+        h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
-        edge_state = self.edge_emb(edge_attr.float())
+        edge_state = self._embed_edges(edge_attr)
         graph_state = self._initialize_graph_state(h, batch)
         captured = {}
         for layer, (edge_update, conv) in enumerate(
@@ -593,9 +601,9 @@ class SparsePathAttentionStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
             )
         if not torch.isfinite(random_walk_pe).all():
             raise ValueError("random_walk_pe contains non-finite values")
-        h = self.node_emb(x.float())
+        h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
-        edge_state = self.edge_emb(edge_attr.float())
+        edge_state = self._embed_edges(edge_attr)
         for edge_update, conv in zip(self.edge_updates, self.convs):
             edge_state = edge_update(h, edge_index, edge_state)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
@@ -704,9 +712,9 @@ class DirectedEdgeStateStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
         if invalid:
             raise ValueError(f"Directed EdgeState layer index out of range: {invalid}")
         reverse_edge = self._reverse_edge_indices(edge_index, x.shape[0])
-        h = self.node_emb(x.float())
+        h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
-        edge_state = self.edge_emb(edge_attr.float())
+        edge_state = self._embed_edges(edge_attr)
         captured = {}
         for layer, (edge_update, conv) in enumerate(
             zip(self.edge_updates, self.convs), start=1
