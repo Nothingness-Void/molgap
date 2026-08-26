@@ -85,9 +85,10 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- The R8 multihop CPU cache remains accepted and reusable. No architecture GPU
-  job is active; the next permitted run is one R9 validation using that cache
-  read-only. No test or downstream transfer is authorized.
+- The R8 multihop CPU cache remains accepted and reusable. Kaggle2 GPU kernel
+  `kaseichou/molgap-sparse-path-attention-r9-qm9-validation`, version 1, is the
+  only active architecture-training job and uses that cache read-only. No test
+  or downstream transfer is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.
