@@ -366,6 +366,14 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
                 )
             )
 
+    def _condition_nodes_from_edges(
+        self,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+    ) -> torch.Tensor:
+        return h
+
     def _encode_state_trace(
         self,
         x,
@@ -403,6 +411,7 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
             zip(self.edge_updates, self.convs), start=1
         ):
             edge_state = edge_update(h, edge_index, edge_state)
+            h = self._condition_nodes_from_edges(h, edge_index, edge_state)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
             if layer in requested:
                 captured[layer] = h
@@ -437,6 +446,53 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
             x, edge_index, edge_attr, batch, random_walk_pe
         )
         return self._pool(h, batch)
+
+
+class EdgeConditionedStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Persistent-edge GPS with shared node-level edge conditioning.
+
+    Every updated directed edge state is averaged onto its target atom before
+    the corresponding GPS block. A shared zero-initialized FiLM transform then
+    exposes that bond context to both the local convolution and global
+    attention branches while retaining the accepted EdgeState forward path at
+    initialization.
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        hidden_channels = self.node_emb.out_features
+        self.edge_context_norm = nn.LayerNorm(self.edge_state_channels)
+        self.node_context_norm = nn.LayerNorm(hidden_channels)
+        self.edge_to_node_film = nn.Linear(
+            self.edge_state_channels,
+            2 * hidden_channels,
+        )
+        nn.init.zeros_(self.edge_to_node_film.weight)
+        nn.init.zeros_(self.edge_to_node_film.bias)
+
+    def _condition_nodes_from_edges(
+        self,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+    ) -> torch.Tensor:
+        target = edge_index[1]
+        edge_context = edge_state.new_zeros(
+            (h.shape[0], self.edge_state_channels)
+        )
+        edge_context.index_add_(0, target, edge_state)
+        degree = edge_state.new_zeros((h.shape[0], 1))
+        degree.index_add_(
+            0,
+            target,
+            edge_state.new_ones((edge_state.shape[0], 1)),
+        )
+        edge_context = edge_context / degree.clamp_min_(1.0)
+        scale, shift = self.edge_to_node_film(
+            self.edge_context_norm(edge_context)
+        ).chunk(2, dim=-1)
+        conditioned = torch.tanh(scale) * self.node_context_norm(h) + shift
+        return h + conditioned
 
 
 class EdgeReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
