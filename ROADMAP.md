@@ -15,6 +15,7 @@ general B3LYP model and official PCQM Gap specialist remain separate objectives.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
+| P0 | C-PURE2D-R6-EDGE-FILM | Test shared node-level edge conditioning under the frozen QM9 validation contract | Strictly improve both accepted R3 validation average and Gap within 4.8M parameters, or close R6 without repeating it or reading test | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-TEST | Evaluate the single frozen R3 validation winner once on QM9 test | Explicit user authorization; both frozen test average and Gap improve | `experiments/top20_architecture_qm9/` |
 | P0 | C-PURE2D-R3-PC100K | Transfer a QM9-confirmed winner to matched PubChemQC-100K validation | Triggered only by the one-time QM9 test gate; no sealed PubChemQC test role is read | `experiments/pubchemqc100k_architecture/` |
 | P0 | C-FULL-2M-INPUT | Materialize and accept the immutable repaired-2M EdgeState input; run one measured epoch | Identity, counts, finite values, hashes, and resume paths pass; projected training is at most 10 hours | `experiments/resource_bounded_architecture/` |
@@ -54,6 +55,9 @@ and `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
 - New pure-2D architecture questions use the fixed sequence QM9, matched
   PubChemQC-100K validation, one frozen intermediate test, then at most one
   authorized full-data run.
+- Continued pure-2D discovery tests one materially new architecture at a time.
+  Every failure gets a decision record and cannot be retried as a seed or
+  schedule variation; the next attempt must change the information flow.
 - Do not rerun the rejected `0.10 eV` frozen-2D plus dual-SchNet residual.
 - Geometry paths must preserve ETKDGv3+MMFF train-inference consistency.
 - Router, MoE, OOF gain labels, and dataset replacement remain closed unless a

@@ -75,3 +75,7 @@ reading QM9 test.
 Its completed validation disposition is recorded in
 `edge_state_jk_readout_r5_decision.md`. R5 failed both gates, so the accepted R3
 EdgeState checkpoint remains the sole validation winner.
+
+The next distinct architecture question is frozen in
+`edge_conditioned_r6_protocol.md`. R6 moves bond conditioning into every GPS
+block and does not reuse the failed R5 graph-level readout.
