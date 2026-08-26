@@ -9,6 +9,7 @@ from molgap.gps import (
     EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
     FrontierCenterGapHead,
+    GraphTokenStructuralGPSWrapper,
     GatedStructuralGPSWrapper,
     GPSWrapper,
     NormalizedStructuralGPSWrapper,
@@ -340,6 +341,48 @@ def test_edge_conditioning_starts_at_edge_state_baseline() -> None:
     actual.square().mean().backward()
     assert candidate.edge_to_node_film.weight.grad is not None
     assert torch.isfinite(candidate.edge_to_node_film.weight.grad).all()
+
+
+def test_graph_token_starts_at_edge_state_baseline() -> None:
+    kwargs = {
+        "in_channels": 9,
+        "hidden_channels": 16,
+        "num_layers": 3,
+        "num_heads": 4,
+        "dropout": 0.0,
+        "rwse_dim": 4,
+        "edge_state_channels": 8,
+    }
+    torch.manual_seed(31)
+    baseline = EdgeStateStructuralGPSWrapper(**kwargs)
+    torch.manual_seed(31)
+    candidate = GraphTokenStructuralGPSWrapper(**kwargs, token_channels=4)
+    batch = Batch.from_data_list(
+        [
+            add_random_walk_pe(_chain(), walk_length=4),
+            add_random_walk_pe(_chain(), walk_length=4),
+        ]
+    )
+    baseline.eval()
+    candidate.eval()
+    expected = baseline(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    actual = candidate(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+    )
+    torch.testing.assert_close(actual, expected, rtol=0.0, atol=0.0)
+    actual.square().mean().backward()
+    assert candidate.token_to_node.weight.grad is not None
+    assert torch.isfinite(candidate.token_to_node.weight.grad).all()
 
 
 def test_frontier_center_gap_head_enforces_exact_identity() -> None:

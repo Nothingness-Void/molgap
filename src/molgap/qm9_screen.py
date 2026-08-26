@@ -26,6 +26,7 @@ from .gps import (
     EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
     FrontierCenterGapHead,
+    GraphTokenStructuralGPSWrapper,
     GPSWrapper,
 )
 from .graphs import smiles_to_pyg
@@ -255,6 +256,19 @@ ENCODER_CONFIGS = {
         "pooling": "mean",
         "rwse_dim": 16,
         "edge_state_channels": 64,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "graph_token_structural_gps": {
+        "kind": "structural_topology",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "token_channels": 16,
         "batch_size": 48,
         "amp": False,
     },
@@ -1098,6 +1112,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         "edge_state_structural_readout",
         "edge_state_structural_jk_readout",
         "edge_conditioned_structural_gps",
+        "graph_token_structural_gps",
     }:
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
@@ -1105,6 +1120,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
             "edge_state_structural_readout": EdgeReadoutStructuralGPSWrapper,
             "edge_state_structural_jk_readout": EdgeJKReadoutStructuralGPSWrapper,
             "edge_conditioned_structural_gps": EdgeConditionedStructuralGPSWrapper,
+            "graph_token_structural_gps": GraphTokenStructuralGPSWrapper,
         }
         model_class = model_classes[candidate]
         model = model_class(in_channels=in_channels, edge_dim=edge_dim, **config)

@@ -374,6 +374,29 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
     ) -> torch.Tensor:
         return h
 
+    def _initialize_graph_state(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+    ):
+        return None
+
+    def _condition_nodes_from_graph(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        graph_state,
+    ) -> torch.Tensor:
+        return h
+
+    def _update_graph_state(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        graph_state,
+    ):
+        return graph_state
+
     def _encode_state_trace(
         self,
         x,
@@ -406,13 +429,16 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
         h = self.node_emb(x.float())
         h = h + self.rwse_encoder(random_walk_pe.float())
         edge_state = self.edge_emb(edge_attr.float())
+        graph_state = self._initialize_graph_state(h, batch)
         captured = {}
         for layer, (edge_update, conv) in enumerate(
             zip(self.edge_updates, self.convs), start=1
         ):
             edge_state = edge_update(h, edge_index, edge_state)
             h = self._condition_nodes_from_edges(h, edge_index, edge_state)
+            h = self._condition_nodes_from_graph(h, batch, graph_state)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+            graph_state = self._update_graph_state(h, batch, graph_state)
             if layer in requested:
                 captured[layer] = h
         return h, edge_state, tuple(captured[layer] for layer in requested)
@@ -493,6 +519,65 @@ class EdgeConditionedStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
         ).chunk(2, dim=-1)
         conditioned = torch.tanh(scale) * self.node_context_norm(h) + shift
         return h + conditioned
+
+
+class GraphTokenStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Persistent-edge GPS with a recurrent molecule token.
+
+    A compact shared update alternates node-to-graph aggregation and
+    graph-to-node broadcast at every depth. Zero-initialized output projections
+    preserve the accepted EdgeState path at initialization while the learned
+    token provides an explicit graph memory after optimization.
+    """
+
+    def __init__(self, *args, token_channels: int = 16, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        if token_channels <= 0:
+            raise ValueError("token_channels must be positive")
+        hidden_channels = self.node_emb.out_features
+        self.graph_token = nn.Parameter(torch.empty(1, hidden_channels))
+        nn.init.normal_(self.graph_token, mean=0.0, std=0.02)
+        self.token_update_norm = nn.LayerNorm(2 * hidden_channels)
+        self.token_update = nn.Sequential(
+            nn.Linear(2 * hidden_channels, token_channels),
+            nn.SiLU(),
+            nn.Linear(token_channels, hidden_channels),
+        )
+        self.token_broadcast_norm = nn.LayerNorm(hidden_channels)
+        self.token_to_node = nn.Linear(hidden_channels, hidden_channels)
+        nn.init.zeros_(self.token_update[-1].weight)
+        nn.init.zeros_(self.token_update[-1].bias)
+        nn.init.zeros_(self.token_to_node.weight)
+        nn.init.zeros_(self.token_to_node.bias)
+
+    def _initialize_graph_state(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+    ) -> torch.Tensor:
+        num_graphs = int(batch.max().item()) + 1 if batch.numel() else 0
+        return self.graph_token.expand(num_graphs, -1)
+
+    def _condition_nodes_from_graph(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        graph_state: torch.Tensor,
+    ) -> torch.Tensor:
+        broadcast = self.token_to_node(self.token_broadcast_norm(graph_state))
+        return h + broadcast[batch]
+
+    def _update_graph_state(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        graph_state: torch.Tensor,
+    ) -> torch.Tensor:
+        from torch_geometric.nn import global_mean_pool
+
+        pooled = global_mean_pool(h, batch, size=graph_state.shape[0])
+        update_input = self.token_update_norm(torch.cat((graph_state, pooled), dim=-1))
+        return graph_state + self.token_update(update_input)
 
 
 class EdgeReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
