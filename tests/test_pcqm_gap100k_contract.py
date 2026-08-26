@@ -13,6 +13,9 @@ EXPERIMENT = ROOT / "experiments" / "pcqm_gap_architecture"
 PREP = EXPERIMENT / "kaggle_pcqm_gap100k" / "cpu_prep" / "run_prep.py"
 METADATA = PREP.with_name("kernel-metadata.json")
 ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_cache.py"
+GPU = EXPERIMENT / "kaggle_pcqm_gap100k" / "gpu_seed42" / "run_screen.py"
+GPU_METADATA = GPU.with_name("kernel-metadata.json")
+GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_seed42.py"
 
 
 def assignment_literal(path: Path, name: str):
@@ -98,3 +101,34 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
     assert "Seeds 43 and 44" in protocol
     assert "12 hours" in protocol
     assert "/lustre/home/users/sm2/chou/" in protocol
+
+
+def test_gpu_screen_is_matched_gap_only_and_sequential() -> None:
+    assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "a67724999dbe145b38c2792b86d4e654f5589a20"
+    )
+    assert assignment_literal(GPU, "CANDIDATES") == (
+        "ogb_structural_gps9",
+        "ogb_edge_state_structural_gps9",
+    )
+    assert assignment_literal(GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(GPU, "MAX_EPOCHS") == 40
+    source = GPU.read_text(encoding="utf-8")
+    assert "results = [train_candidate(candidate, graphs) for candidate in CANDIDATES]" in source
+    assert '"target": "homolumogap"' in source
+    assert '"precision": "fp32"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(GPU_METADATA.read_text(encoding="utf-8"))
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
+    ]
+
+
+def test_gpu_acceptance_executes_no_model_runtime() -> None:
+    assert "torch" not in imported_modules(GPU_ACCEPTANCE)
+    source = GPU_ACCEPTANCE.read_text(encoding="utf-8")
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
