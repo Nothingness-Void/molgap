@@ -28,6 +28,7 @@ from .gps import (
     FrontierCenterGapHead,
     GraphTokenStructuralGPSWrapper,
     GPSWrapper,
+    SparsePathAttentionStructuralGPSWrapper,
 )
 from .graphs import smiles_to_pyg
 from .geometry_features import (
@@ -283,6 +284,21 @@ ENCODER_CONFIGS = {
         "edge_state_channels": 64,
         "model_edge_dim": 8,
         "multihop_max_distance": 4,
+        "batch_size": 48,
+        "amp": False,
+    },
+    "sparse_path_attention_structural_gps": {
+        "kind": "structural_multihop",
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "dropout": 0.05,
+        "pooling": "mean",
+        "rwse_dim": 16,
+        "edge_state_channels": 64,
+        "path_attention_rank": 16,
+        "path_max_distance": 4,
+        "multihop_attention_distance": 4,
         "batch_size": 48,
         "amp": False,
     },
@@ -1335,6 +1351,40 @@ def attach_accepted_qm9_multihop(
     return acceptance
 
 
+def attach_accepted_qm9_multihop_attention(
+    graph_splits: dict[str, list[Data]],
+    *,
+    cache_dir: Path,
+    split: ScreenSplit,
+    max_distance: int = 4,
+) -> dict:
+    """Attach path pairs for attention while preserving real-bond messages."""
+    original = [
+        (graph, graph.edge_index, graph.edge_attr)
+        for graphs in graph_splits.values()
+        for graph in graphs
+    ]
+    acceptance = attach_accepted_qm9_multihop(
+        graph_splits,
+        cache_dir=cache_dir,
+        split=split,
+        max_distance=max_distance,
+    )
+    for graph, bond_edge_index, bond_edge_attr in original:
+        path_code = graph.edge_attr[:, 4:]
+        if path_code.shape[1] != max_distance:
+            raise ValueError("QM9 multihop path code has the wrong width")
+        if not torch.allclose(
+            path_code.sum(dim=1), torch.ones(path_code.shape[0])
+        ):
+            raise ValueError("QM9 multihop path code is not one-hot")
+        graph.multihop_edge_index = graph.edge_index.clone()
+        graph.multihop_distance = path_code.argmax(dim=1).long() + 1
+        graph.edge_index = bond_edge_index
+        graph.edge_attr = bond_edge_attr
+    return acceptance
+
+
 def _pcqm_transfer_features(graph: Data) -> Data:
     """Map QM9's processed 11-wide features to the PCQM 18-wide GPS contract.
 
@@ -1381,6 +1431,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     config.pop("input_channels", None)
     edge_dim = int(config.pop("model_edge_dim", edge_dim))
     config.pop("multihop_max_distance", None)
+    config.pop("multihop_attention_distance", None)
     consistent_head = bool(config.pop("consistent_head", False))
     if candidate == "gine6":
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
@@ -1411,6 +1462,7 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         "edge_conditioned_structural_gps",
         "graph_token_structural_gps",
         "multihop_edge_state_structural_gps",
+        "sparse_path_attention_structural_gps",
     }:
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
@@ -1420,6 +1472,9 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
             "edge_conditioned_structural_gps": EdgeConditionedStructuralGPSWrapper,
             "graph_token_structural_gps": GraphTokenStructuralGPSWrapper,
             "multihop_edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
+            "sparse_path_attention_structural_gps": (
+                SparsePathAttentionStructuralGPSWrapper
+            ),
         }
         model_class = model_classes[candidate]
         model = model_class(in_channels=in_channels, edge_dim=edge_dim, **config)
@@ -1470,6 +1525,16 @@ def _forward(kind: str, model, batch):
             batch.edge_attr,
             batch.batch,
             batch.random_walk_pe,
+        )
+    if kind == "structural_multihop":
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+            batch.multihop_edge_index,
+            batch.multihop_distance,
         )
     if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
         return model(
@@ -1524,6 +1589,16 @@ def _encode(kind: str, model, batch):
             batch.edge_attr,
             batch.batch,
             batch.random_walk_pe,
+        )
+    if kind == "structural_multihop":
+        return model.encode(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+            batch.multihop_edge_index,
+            batch.multihop_distance,
         )
     if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
         return model.encode(
@@ -1655,11 +1730,12 @@ def train_encoder(
     multihop_cache_dir: Path | None = None,
 ) -> dict:
     expected = ENCODER_CONFIGS[candidate]["kind"]
-    if expected in {"topology", "structural_topology"} and geometry != "topology":
+    structural_kinds = {"structural_topology", "structural_multihop"}
+    if expected in {"topology", *structural_kinds} and geometry != "topology":
         raise ValueError(f"{candidate} requires --geometry topology")
     if expected == "geometry" and geometry not in {"dft", "etkdg"}:
         raise ValueError(f"{candidate} requires --geometry dft or etkdg")
-    if not evaluate_test and expected != "structural_topology":
+    if not evaluate_test and expected not in structural_kinds:
         raise ValueError(
             "validation-only mode is implemented only for accepted structural caches"
         )
@@ -1668,7 +1744,7 @@ def train_encoder(
     records = load_qm9_records(cache_dir)
     split = fixed_split(len(records), train_size, validation_size, test_size, split_seed)
     mean, std = target_stats(records, split.train)
-    if expected == "structural_topology":
+    if expected in structural_kinds:
         graph_splits = {
             "train": [
                 _topology_graph(records[int(i)], int(i), mean, std)
@@ -1702,6 +1778,20 @@ def train_encoder(
                 cache_dir=multihop_cache_dir,
                 split=split,
                 max_distance=int(multihop_max_distance),
+            )
+        multihop_attention_distance = ENCODER_CONFIGS[candidate].get(
+            "multihop_attention_distance"
+        )
+        if multihop_attention_distance is not None:
+            if multihop_cache_dir is None:
+                raise ValueError(f"{candidate} requires an accepted multihop cache")
+            geometry_report["multihop_attention_cache"] = (
+                attach_accepted_qm9_multihop_attention(
+                    graph_splits,
+                    cache_dir=multihop_cache_dir,
+                    split=split,
+                    max_distance=int(multihop_attention_distance),
+                )
             )
     else:
         graph_splits, geometry_report = make_graph_splits(
@@ -1917,8 +2007,12 @@ def train_encoder(
         raise RuntimeError("Training produced no checkpoint")
     model.load_state_dict(best_state)
 
-    if expected == "structural_topology" and evaluate_test:
-        if ENCODER_CONFIGS[candidate].get("multihop_max_distance") is not None:
+    if expected in structural_kinds and evaluate_test:
+        if (
+            ENCODER_CONFIGS[candidate].get("multihop_max_distance") is not None
+            or ENCODER_CONFIGS[candidate].get("multihop_attention_distance")
+            is not None
+        ):
             raise ValueError(
                 "Multihop test construction requires a separately authorized cache"
             )
@@ -1933,7 +2027,7 @@ def train_encoder(
             walk_length=int(ENCODER_CONFIGS[candidate]["rwse_dim"]),
         )
         geometry_report["test_role_read_after_selection"] = True
-    elif expected == "structural_topology":
+    elif expected in structural_kinds:
         geometry_report["test_role_read_after_selection"] = False
 
     role_payloads = {}

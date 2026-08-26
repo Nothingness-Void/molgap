@@ -474,6 +474,140 @@ class EdgeStateStructuralGPSWrapper(StructuralGPSWrapper):
         return self._pool(h, batch)
 
 
+class _SparseShortestPathAttention(nn.Module):
+    """Shared low-rank attention over cached topology-distance pairs."""
+
+    def __init__(
+        self,
+        hidden_channels: int,
+        rank: int,
+        max_distance: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        if rank <= 0 or max_distance <= 0:
+            raise ValueError("rank and max_distance must be positive")
+        self.rank = int(rank)
+        self.max_distance = int(max_distance)
+        self.norm = nn.LayerNorm(hidden_channels)
+        self.query = nn.Linear(hidden_channels, self.rank, bias=False)
+        self.key = nn.Linear(hidden_channels, self.rank, bias=False)
+        self.value = nn.Linear(hidden_channels, self.rank, bias=False)
+        self.distance_bias = nn.Embedding(self.max_distance, 1)
+        self.output = nn.Linear(self.rank, hidden_channels, bias=False)
+        self.dropout = nn.Dropout(dropout)
+        nn.init.zeros_(self.output.weight)
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        multihop_edge_index: torch.Tensor,
+        multihop_distance: torch.Tensor,
+        batch: torch.Tensor,
+    ) -> torch.Tensor:
+        from torch_geometric.utils import softmax
+
+        if multihop_edge_index.ndim != 2 or multihop_edge_index.shape[0] != 2:
+            raise ValueError("multihop_edge_index must have shape [2, E]")
+        distance = multihop_distance.view(-1).long()
+        if distance.numel() != multihop_edge_index.shape[1]:
+            raise ValueError("multihop distance does not align with pair edges")
+        if distance.numel() == 0:
+            raise ValueError("multihop attention requires at least one pair")
+        if int(distance.min()) < 1 or int(distance.max()) > self.max_distance:
+            raise ValueError("multihop distance falls outside the frozen cap")
+        source, target = multihop_edge_index
+        if not torch.equal(batch[source], batch[target]):
+            raise ValueError("multihop attention contains a cross-graph pair")
+        normalized = self.norm(h)
+        query = self.query(normalized[target])
+        key = self.key(normalized[source])
+        logits = (query * key).sum(dim=-1) / (self.rank ** 0.5)
+        logits = logits + self.distance_bias(distance - 1).view(-1)
+        weights = softmax(logits, target, num_nodes=h.shape[0])
+        messages = self.value(normalized[source]) * self.dropout(
+            weights.unsqueeze(-1)
+        )
+        aggregate = messages.new_zeros((h.shape[0], self.rank))
+        aggregate.index_add_(0, target, messages)
+        return h + self.dropout(self.output(aggregate))
+
+
+class SparsePathAttentionStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Accepted real-bond EdgeState plus shared shortest-path attention."""
+
+    def __init__(
+        self,
+        *args,
+        path_attention_rank: int = 16,
+        path_max_distance: int = 4,
+        **kwargs,
+    ) -> None:
+        dropout = float(kwargs.get("dropout", 0.1))
+        super().__init__(*args, **kwargs)
+        self.path_attention = _SparseShortestPathAttention(
+            hidden_channels=self.node_emb.out_features,
+            rank=path_attention_rank,
+            max_distance=path_max_distance,
+            dropout=dropout,
+        )
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        multihop_edge_index,
+        multihop_distance,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            multihop_edge_index,
+            multihop_distance,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        multihop_edge_index,
+        multihop_distance,
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Sparse-path Structural GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(
+                f"random_walk_pe must have shape {expected}, "
+                f"got {tuple(random_walk_pe.shape)}"
+            )
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        h = self.node_emb(x.float())
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self.edge_emb(edge_attr.float())
+        for edge_update, conv in zip(self.edge_updates, self.convs):
+            edge_state = edge_update(h, edge_index, edge_state)
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
+            h = self.path_attention(
+                h,
+                multihop_edge_index,
+                multihop_distance,
+                batch,
+            )
+        return self._pool(h, batch)
+
+
 class EdgeConditionedStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
     """Persistent-edge GPS with shared node-level edge conditioning.
 
