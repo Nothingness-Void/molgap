@@ -85,9 +85,10 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No architecture-training GPU job is active. The next permitted remote action
-  is the single CPU-only R8 multihop cache prep; GPU validation remains blocked
-  until that cache is downloaded and independently accepted.
+- No architecture-training GPU job is active. Kaggle2 CPU kernel
+  `kaseichou/molgap-multihop-edgestate-r8-qm9-prep`, version 1, is the only
+  active architecture job. R8 GPU validation remains blocked until its output
+  is downloaded and independently accepted without model inference.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No repaired-2M EdgeState job has been submitted.

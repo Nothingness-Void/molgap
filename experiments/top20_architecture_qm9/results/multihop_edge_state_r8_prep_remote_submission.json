@@ -1,0 +1,32 @@
+{
+  "format": "molgap-multihop-edgestate-r8-prep-remote-submission-v1",
+  "submitted_at": "2026-08-26T16:21:44+09:00",
+  "platform": "kaggle2",
+  "account": "kaseichou",
+  "source_commit": "56abea806ff88778bcbb847d569a266da074eee1",
+  "source_dataset": {
+    "ref": "kaseichou/molgap-multihop-edgestate-r8-source",
+    "version": 1,
+    "status_at_submission": "ready"
+  },
+  "kernel": {
+    "ref": "kaseichou/molgap-multihop-edgestate-r8-qm9-prep",
+    "version": 1,
+    "status_after_submission": "RUNNING",
+    "gpu_enabled": false
+  },
+  "cache_contract": {
+    "roles": {
+      "train": 30000,
+      "validation": 3000
+    },
+    "requested_test_rows": 3000,
+    "test_role_read": false,
+    "max_distance": 4,
+    "edge_feature_dim": 8,
+    "shard_size": 2000
+  },
+  "split_fingerprint": "01656b1a538f89c8",
+  "gpu_validation_submitted": false,
+  "duplicate_submission": false
+}
