@@ -1,0 +1,17 @@
+{
+  "id": "kaseichou/molgap-pcqm-gap100k-r1-prep",
+  "title": "MolGap Official PCQM Gap100K R1 Prep",
+  "code_file": "run_prep.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "piero0/pcqm4mv2",
+    "kaseichou/molgap-pcqm-gap100k-r1-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
