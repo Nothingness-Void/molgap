@@ -65,10 +65,11 @@ both gates. R3 remains the sole frozen winner. The exact decisions and artifact
 hashes are owned by
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` and
 `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`.
-One distinct R6 architecture now conditions atom states with current bond
-states before every GPS block. It is validation-only; R3 remains frozen unless
-R6 strictly passes both gates. Its contract is
-`experiments/top20_architecture_qm9/edge_conditioned_r6_protocol.md`.
+R6 node-level edge conditioning also failed both strict validation gates. R7
+now tests a recurrent molecule token under the same validation-only contract;
+R3 remains frozen unless R7 strictly passes both gates. The R6 decision and R7
+contract are `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md`
+and `experiments/top20_architecture_qm9/graph_token_r7_protocol.md`.
 
 The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
 Its exact-identity head, compact aligned payload, Colab runner, and resume
@@ -82,7 +83,7 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- Kaggle2 kernel `kaseichou/molgap-edge-conditioned-r6-qm9-validation`, version
+- Kaggle2 kernel `kaseichou/molgap-graph-token-r7-qm9-validation`, version
   1, is the only active architecture-training job. It cannot read or trigger
   QM9 test, PubChemQC-100K, or full-data follow-up.
 - All accepted 100K architecture outputs have local manifests, metrics,
@@ -115,6 +116,7 @@ must not be represented as this new conservative head.
 | What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
 | What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
+| Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
 | Where are rejected branches indexed? | `experiments/_closed/README.md` |
