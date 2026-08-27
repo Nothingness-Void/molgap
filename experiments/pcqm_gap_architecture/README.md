@@ -19,8 +19,9 @@ The first materially new OGB-constrained candidate is defined in
 only graph-level information aggregation, failed its strict gate, and is
 closed by [`results/query_pool_seed42/decision.md`](results/query_pool_seed42/decision.md).
 
-The next bounded search is the predeclared local-operator sequence in
-[`local_operator_search_protocol.md`](local_operator_search_protocol.md).
+The predeclared local-operator sequence was completed and accepted under
+[results/local_operator_search_seed42/decision.md](results/local_operator_search_seed42/decision.md).
+It did not produce a strict winner over the frozen EdgeState comparator.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

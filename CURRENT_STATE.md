@@ -30,11 +30,11 @@ sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
 real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling then
-failed its strict gate and is closed. The active search question is a bounded,
-sequential comparison of three materially different edge-aware local operators
-with one time-gated fallback, all under the same cache and optimizer contract.
-Exact comparator metrics belong to
-`experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
+failed its strict gate and is closed. The bounded sequential comparison of
+three materially different edge-aware local operators with one time-gated
+fallback has completed under the same cache and optimizer contract. No
+completed candidate beat the frozen comparator; the exact result belongs to
+`experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -66,13 +66,13 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No GPU architecture-training job is active until the staged local-operator
-  source and manifest pass static acceptance.
-- The official-train-derived PCQM 100K graph cache and first matched seed-42
-  comparison are accepted. The next remote stage is the single serialized
-  local-operator search defined in
-  `experiments/pcqm_gap_architecture/local_operator_search_protocol.md`; no
-  multiseed or full-data run is authorized yet.
+- The authorized Kaggle2 seed-42 local-operator search completed and passed
+  no-inference acceptance for all three core candidates. The optional GATv2
+  fallback was not trained, and no GPU architecture-training job is active.
+- The official-train-derived PCQM 100K graph cache, first matched seed-42
+  comparison, and local-operator search are accepted evidence. The local-
+  operator result did not pass the strict comparator gate; no multiseed or
+  full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

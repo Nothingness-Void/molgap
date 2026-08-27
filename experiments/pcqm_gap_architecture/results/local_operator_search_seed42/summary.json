@@ -1,0 +1,90 @@
+{
+  "format": "molgap-pcqm-gap100k-local-operator-summary-v1",
+  "decision_date": "2026-08-28",
+  "kernel": "kaseichou/molgap-pcqm-gap100k-local-operators-seed42",
+  "kernel_version": 1,
+  "gpu": "Tesla P100-PCIE-16GB",
+  "source_commit": "bfaffe332d4c89dc041669679d6fb066e01bce1f",
+  "cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "nominal_search_budget_s": 14400,
+  "remote_elapsed_s": 16501.304638278,
+  "remote_budget_overrun_s": 2101.304638278,
+  "core_candidates": [
+    "ogb_gated_local_gps9",
+    "ogb_edge_attention_local_gps9",
+    "ogb_gen_local_gps9"
+  ],
+  "optional_candidate": "ogb_gatv2_local_gps9",
+  "optional_launched": false,
+  "frozen_comparator": {
+    "candidate": "ogb_edge_state_structural_gps9",
+    "validation_gap_mae_eV": 0.13798263211250306
+  },
+  "candidates": [
+    {
+      "candidate": "ogb_gated_local_gps9",
+      "parameter_count": 5137921,
+      "best_epoch": 35,
+      "validation_gap_mae_eV": 0.14040802254676818,
+      "training_elapsed_s": 4972.658809855998,
+      "epochs_completed": 40,
+      "mean_epoch_time_s": 124.31647024639994,
+      "mean_training_throughput_graphs_per_s": 804.4324117358732,
+      "training_throughput_range_graphs_per_s": [
+        782.8864191815926,
+        813.0470135920175
+      ],
+      "preflight_peak_memory_bytes": 224395264,
+      "preflight_peak_memory_MiB": 214.0,
+      "delta_vs_frozen_comparator_eV": 0.0024253904342651234,
+      "delta_vs_frozen_comparator_percent": 1.7577505205782713,
+      "strictly_improves": false
+    },
+    {
+      "candidate": "ogb_edge_attention_local_gps9",
+      "parameter_count": 4479553,
+      "best_epoch": 39,
+      "validation_gap_mae_eV": 0.14298270015716552,
+      "training_elapsed_s": 5850.890708528007,
+      "epochs_completed": 40,
+      "mean_epoch_time_s": 146.27226771320016,
+      "mean_training_throughput_graphs_per_s": 683.673378636962,
+      "training_throughput_range_graphs_per_s": [
+        675.1026055918742,
+        688.6566720974757
+      ],
+      "preflight_peak_memory_bytes": 213909504,
+      "preflight_peak_memory_MiB": 204.0,
+      "delta_vs_frozen_comparator_eV": 0.005000068044662465,
+      "delta_vs_frozen_comparator_percent": 3.6236937708114585,
+      "strictly_improves": false
+    },
+    {
+      "candidate": "ogb_gen_local_gps9",
+      "parameter_count": 4142611,
+      "best_epoch": 38,
+      "validation_gap_mae_eV": 0.14277554037570953,
+      "training_elapsed_s": 5455.234690368994,
+      "epochs_completed": 40,
+      "mean_epoch_time_s": 136.38086725922486,
+      "mean_training_throughput_graphs_per_s": 733.5269733496915,
+      "training_throughput_range_graphs_per_s": [
+        665.8106576912681,
+        750.1732229115004
+      ],
+      "preflight_peak_memory_bytes": 245366784,
+      "preflight_peak_memory_MiB": 234.0,
+      "delta_vs_frozen_comparator_eV": 0.004792908263206469,
+      "delta_vs_frozen_comparator_percent": 3.4735590920592156,
+      "strictly_improves": false
+    }
+  ],
+  "selected_candidate": "ogb_gated_local_gps9",
+  "selected_strictly_improves": false,
+  "acceptance": {
+    "accepted": true,
+    "model_inference_executed": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  }
+}

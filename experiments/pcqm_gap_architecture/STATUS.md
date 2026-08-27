@@ -33,11 +33,16 @@
 - Learned-query pooling completed, passed no-inference acceptance, failed its
   strict scientific gate, and is closed by
   `results/query_pool_seed42/decision.md`.
-- The next authorized GPU screen is the serialized three-candidate plus
-  time-gated-fallback local-operator search defined in
-  `local_operator_search_protocol.md`. Runtime source commit
-  `bfaffe332d4c89dc041669679d6fb066e01bce1f` is pinned and published in the
-  private Kaggle source dataset; no GPU task is active during final manifest
-  validation.
+- Kaggle2 GPU kernel
+  kaseichou/molgap-pcqm-gap100k-local-operators-seed42, version 1, reached
+  terminal `COMPLETE`. Its three core candidates passed the dedicated
+  no-inference acceptance; the optional GATv2 fallback was not launched. The
+  decision and compact metrics are retained in
+  results/local_operator_search_seed42/decision.md and the downloaded record
+  under platforms/_records/kaggle/training/pcqm_gap100k_local_operators_seed42_v1.
+- The local-operator sequence did not beat the frozen EdgeState comparator.
+  All completed mechanisms are closed for this seed-42 question; seeds 43/44,
+  full-data training, official validation/test-dev, and molecular-research-
+  server work remain unauthorized.
 
 Task order remains authoritative in `ROADMAP.md`.
