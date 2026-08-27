@@ -14,5 +14,9 @@ The accepted first matched comparison is
 Its winner is a comparator for continued architecture discovery, not a
 multiseed or full-data authorization.
 
+The first materially new OGB-constrained candidate is defined in
+[`query_pool_seed42_protocol.md`](query_pool_seed42_protocol.md). It changes
+only graph-level information aggregation and does not reuse EdgeState.
+
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

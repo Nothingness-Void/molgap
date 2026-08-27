@@ -17,6 +17,8 @@ ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_cache.py"
 GPU = EXPERIMENT / "kaggle_pcqm_gap100k" / "gpu_seed42" / "run_screen.py"
 GPU_METADATA = GPU.with_name("kernel-metadata.json")
 GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_seed42.py"
+NOVEL_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_novel_seed42.py"
+QUERY_POOL_PROTOCOL = EXPERIMENT / "query_pool_seed42_protocol.md"
 
 
 def assignment_literal(path: Path, name: str):
@@ -97,6 +99,10 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert '"num_layers": 9' in source
     assert '"hidden_channels": 192' in source
     assert "edge_state_channels=64" in source
+    assert "class OGBQueryPoolStructuralGPSWrapper(OGBStructuralGPSWrapper)" in source
+    assert "nn.MultiheadAttention" in source
+    assert "num_pool_queries=4" in source
+    assert 'candidate == "ogb_query_pool_structural_gps9"' in source
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source
@@ -271,14 +277,24 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
     assert "/lustre/home/users/sm2/chou/" in protocol
 
 
-def test_gpu_screen_is_matched_gap_only_and_sequential() -> None:
+def test_gpu_screen_is_single_novel_gap_only_candidate() -> None:
     assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "__PIN_AFTER_SOURCE_COMMIT__"
+    )
+    assert assignment_literal(GPU, "EXPECTED_CACHE_SOURCE_COMMIT") == (
         "ba82461c53243d733474c8930ac1b86d82451c91"
     )
-    assert assignment_literal(GPU, "CANDIDATES") == (
-        "ogb_structural_gps9",
-        "ogb_edge_state_structural_gps9",
+    assert assignment_literal(GPU, "EXPECTED_CACHE_SHA256") == (
+        "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
     )
+    assert assignment_literal(GPU, "CANDIDATES") == (
+        "ogb_query_pool_structural_gps9",
+    )
+    assert assignment_literal(GPU, "FROZEN_COMPARATOR") == {
+        "candidate": "ogb_edge_state_structural_gps9",
+        "validation_gap_mae_eV": 0.13798263211250306,
+        "acceptance": "results/seed42_structural_vs_edge_state/acceptance.json",
+    }
     assert assignment_literal(GPU, "BATCH_SIZE") == 48
     assert assignment_literal(GPU, "MAX_EPOCHS") == 40
     source = GPU.read_text(encoding="utf-8")
@@ -300,3 +316,23 @@ def test_gpu_acceptance_executes_no_model_runtime() -> None:
     assert '"model_inference_executed": False' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
+
+
+def test_novel_acceptance_executes_no_model_runtime() -> None:
+    assert "torch" not in imported_modules(NOVEL_ACCEPTANCE)
+    source = NOVEL_ACCEPTANCE.read_text(encoding="utf-8")
+    assert 'CANDIDATE = "ogb_query_pool_structural_gps9"' in source
+    assert 'COMPARATOR = "ogb_edge_state_structural_gps9"' in source
+    assert "COMPARATOR_MAE = 0.13798263211250306" in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+
+
+def test_query_pool_protocol_preserves_ogb_selection_boundary() -> None:
+    source = QUERY_POOL_PROTOCOL.read_text(encoding="utf-8")
+    assert "direct graph regression" in source
+    assert "No external training data" in source
+    assert "official test-dev access" in source
+    assert "four-hour single-GPU plus single-CPU inference budget" in source
+    assert "One candidate and one GPU task" in source

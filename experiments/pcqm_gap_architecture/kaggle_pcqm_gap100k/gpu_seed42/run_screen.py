@@ -1,4 +1,4 @@
-"""Kaggle GPU: matched official-PCQM Gap100K seed-42 architecture screen."""
+"""Kaggle GPU: one novel official-PCQM Gap100K seed-42 architecture screen."""
 from __future__ import annotations
 
 import gc
@@ -14,10 +14,17 @@ import time
 from pathlib import Path
 
 
-OUT = Path("/kaggle/working/pcqm_gap100k_seed42")
+OUT = Path("/kaggle/working/pcqm_gap100k_query_pool_seed42")
 PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
-EXPECTED_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
-CANDIDATES = ("ogb_structural_gps9", "ogb_edge_state_structural_gps9")
+EXPECTED_SOURCE_COMMIT = "__PIN_AFTER_SOURCE_COMMIT__"
+EXPECTED_CACHE_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
+EXPECTED_CACHE_SHA256 = "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
+CANDIDATES = ("ogb_query_pool_structural_gps9",)
+FROZEN_COMPARATOR = {
+    "candidate": "ogb_edge_state_structural_gps9",
+    "validation_gap_mae_eV": 0.13798263211250306,
+    "acceptance": "results/seed42_structural_vs_edge_state/acceptance.json",
+}
 SEED = 42
 BATCH_SIZE = 48
 LEARNING_RATE = 1.6e-4
@@ -152,7 +159,7 @@ def cache_root_and_manifest() -> tuple[Path, dict]:
     root, manifest = candidates[0]
     required = {
         "complete": True,
-        "source_commit": EXPECTED_SOURCE_COMMIT,
+        "source_commit": EXPECTED_CACHE_SOURCE_COMMIT,
         "official_train_rows_read": 3_378_606,
         "train_graphs": 100_000,
         "validation_graphs": 10_000,
@@ -193,6 +200,8 @@ def cache_root_and_manifest() -> tuple[Path, dict]:
         )
     if aggregate.hexdigest() != manifest["aggregate_sha256"]:
         raise RuntimeError("Cache aggregate hash changed")
+    if manifest["aggregate_sha256"] != EXPECTED_CACHE_SHA256:
+        raise RuntimeError("Cache aggregate is not the frozen accepted cache")
     return root, manifest
 
 
@@ -525,22 +534,18 @@ def main() -> None:
         graphs = load_graphs(cache_root, cache_manifest)
         preflight_result = preflight(graphs)
         results = [train_candidate(candidate, graphs) for candidate in CANDIDATES]
-        winner = min(results, key=lambda item: item["validation_gap_mae_eV"])
-        challenger = next(
-            item for item in results if item["candidate"] == CANDIDATES[1]
-        )
-        baseline = next(item for item in results if item["candidate"] == CANDIDATES[0])
+        candidate = results[0]
         summary = {
-            "format": "molgap-pcqm-gap100k-seed42-screen-v1",
+            "format": "molgap-pcqm-gap100k-novel-seed42-screen-v1",
             "complete": True,
             "source_commit": source_commit,
             "cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
             "preflight": preflight_result,
             "candidates": results,
-            "selected_candidate": winner["candidate"],
-            "edge_state_strictly_improves": (
-                challenger["validation_gap_mae_eV"]
-                < baseline["validation_gap_mae_eV"]
+            "frozen_comparator": FROZEN_COMPARATOR,
+            "candidate_strictly_improves": (
+                candidate["validation_gap_mae_eV"]
+                < FROZEN_COMPARATOR["validation_gap_mae_eV"]
             ),
             "elapsed_s": time.perf_counter() - started,
             "official_validation_role_read": False,

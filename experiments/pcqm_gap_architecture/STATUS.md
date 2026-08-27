@@ -30,5 +30,8 @@
   `results/seed42_structural_vs_edge_state/decision.md`.
 - The accepted winner is only the comparator for a materially new pure-2D
   architecture. Seeds 43/44 and full-data training remain unauthorized.
+- Learned-query pooling Structural GPS9 is the first staged non-EdgeState
+  candidate. Its frozen contract is in `query_pool_seed42_protocol.md`; it may
+  run once on Kaggle only after its source commit is pinned and published.
 
 Task order remains authoritative in `ROADMAP.md`.
