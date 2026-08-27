@@ -1,0 +1,43 @@
+{
+  "format": "molgap-pcqm-gap100k-recurrent-graph-state-launch-v1",
+  "recorded_date": "2026-08-28",
+  "scientific_result_available": false,
+  "source": {
+    "commit": "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8",
+    "pinning_commit": "d2f3b1623cd56a31f3809a9919cfe32fe2d04c89",
+    "dataset": "kaseichou/molgap-pcqm-gap100k-global-state-source",
+    "dataset_status_before_launch": "ready",
+    "archive_sha256": "07d3dceb911155866b1717aefcffc029d0f79312f5be3e2ce72bbf6b7a298abc",
+    "commit_file_sha256": "00913586adce8aa09e0c202b59d8e512e9db4c92cb57164e1de5d989aa6ae952",
+    "dataset_metadata_sha256": "bdd3728cf2b45f6e156d137d91e80dfcc5f88b3efdc3c47dd4e40e4c7a2e7c52"
+  },
+  "cache": {
+    "source_commit": "ba82461c53243d733474c8930ac1b86d82451c91",
+    "aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
+  },
+  "kernel": {
+    "ref": "kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42",
+    "version": 1,
+    "status_after_launch": "RUNNING",
+    "candidate": "ogb_recurrent_graph_state_gps9"
+  },
+  "contract": {
+    "seed": 42,
+    "precision": "fp32",
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "parameter_ceiling": 5200000,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  },
+  "verification": {
+    "command": ".venv\\Scripts\\python.exe -m pytest --noconftest tests/test_pcqm_gap100k_contract.py -q",
+    "passed": 16,
+    "failed": 0,
+    "local_model_inference_executed": false,
+    "molecular_research_server_accessed": false
+  }
+}
