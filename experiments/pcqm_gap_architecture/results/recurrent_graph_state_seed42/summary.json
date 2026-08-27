@@ -1,0 +1,62 @@
+{
+  "format": "molgap-pcqm-gap100k-recurrent-graph-state-summary-v1",
+  "decision_date": "2026-08-28",
+  "kernel": "kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42",
+  "kernel_version": 1,
+  "gpu": "Tesla P100-PCIE-16GB",
+  "source_commit": "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8",
+  "cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "nominal_search_budget_s": 14400,
+  "remote_elapsed_s": 6848.459237606,
+  "remote_budget_remaining_s": 7551.540762394,
+  "candidate": {
+    "candidate": "ogb_recurrent_graph_state_gps9",
+    "parameter_count": 4818897,
+    "parameter_budget": 5200000,
+    "best_epoch": 36,
+    "validation_gap_mae_eV": 0.13861275718212127,
+    "epochs_completed": 40,
+    "training_elapsed_s": 6666.716925205001,
+    "mean_epoch_time_s": 166.66792313012503,
+    "mean_training_throughput_graphs_per_s": 600.13581187494,
+    "training_throughput_range_graphs_per_s": [
+      576.7501034279979,
+      618.3875689707513
+    ],
+    "preflight_peak_memory_bytes": 243269632,
+    "preflight_peak_memory_MiB": 232.0,
+    "delta_vs_frozen_comparator_eV": 0.000630125069618209,
+    "delta_vs_frozen_comparator_percent": 0.456669843132462,
+    "strictly_improves": false
+  },
+  "frozen_comparator": {
+    "candidate": "ogb_edge_state_structural_gps9",
+    "validation_gap_mae_eV": 0.13798263211250306
+  },
+  "contract": {
+    "seed": 42,
+    "precision": "fp32",
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "target": "homolumogap",
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  },
+  "artifacts": {
+    "best_model_sha256": "c718dae4a71d80d8c169b764bae60f910c8da119e12a97c9d1927f8a611487b3",
+    "checkpoint_sha256": "efb0fe5e2120fd4e44672b58e0c78d060e4b30a206942d5eee3c0a0b09115966",
+    "validation_payload_sha256": "70e2f4ca4ca1e20803b0993999c1c9f104403bd072d158b3f25edefe51718598",
+    "trace_sha256": "b15ee116309b39455b07221d4ccdff6e82682b1926a847266c1064d08c055322"
+  },
+  "selected_candidate": "ogb_recurrent_graph_state_gps9",
+  "selected_strictly_improves": false,
+  "acceptance": {
+    "accepted": true,
+    "model_inference_executed": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  }
+}

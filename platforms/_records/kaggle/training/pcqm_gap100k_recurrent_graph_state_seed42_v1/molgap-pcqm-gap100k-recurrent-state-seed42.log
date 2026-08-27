@@ -1,0 +1,164 @@
+[{"stream_name":"stderr","time":6.260744911,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":6.260816065,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":6.2608224,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":6.260831118,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":6.260834295,"data":"    \n"}
+,{"stream_name":"stderr","time":6.260836738,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":6.260839065,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":6.260841427,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":6.260843667,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":6.260845951,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":6.2608482,"data":"    \n"}
+,{"stream_name":"stderr","time":6.26085038,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":6.2610293949999996,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":6.261036748,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":6.261040525,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":6.26104419,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":6.261047965,"data":"\n"}
+,{"stream_name":"stderr","time":6.261051215,"data":"  queued_call()\n"}
+,{"stream_name":"stdout","time":10.518573771,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 156.8/156.8 MB 179.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":16.918162769,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 822.0/822.0 MB 179.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":66.683028068,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 63.1/63.1 kB 2.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":66.899255443,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 3.3/3.3 MB 43.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":67.132812328,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 10.9/10.9 MB 111.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":68.764753936,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 78.8/78.8 kB 5.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":68.812651907,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 1.1/1.1 MB 31.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":72.693577685,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 393.1/393.1 MB 5.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":72.792363053,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 8.9/8.9 MB 108.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":73.034936826,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 23.7/23.7 MB 68.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":73.071362712,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 897.7/897.7 kB 41.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":78.960994721,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 571.0/571.0 MB 3.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":81.472706033,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 200.2/200.2 MB 6.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":81.510601469,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 1.1/1.1 MB 52.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":82.092926225,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 56.3/56.3 MB 34.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":83.744070589,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 158.2/158.2 MB 11.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":87.50506172,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 216.6/216.6 MB 3.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":89.680647222,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 201.3/201.3 MB 9.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":89.892978033,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 19.7/19.7 MB 75.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":90.605766932,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 89.3/89.3 kB 113.3 kB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":93.423279349,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 155.7/155.7 MB 5.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":159.395307909,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":159.395355603,"data":"torchaudio 2.10.0+cu128 requires torch==2.10.0, but you have torch 2.7.1+cu126 which is incompatible.\n"}
+,{"stream_name":"stderr","time":159.395361117,"data":"torchvision 0.25.0+cu128 requires torch==2.10.0, but you have torch 2.7.1+cu126 which is incompatible.\n"}
+,{"stream_name":"stderr","time":217.614353675,"data":"/usr/local/lib/python3.12/dist-packages/outdated/__init__.py:36: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools\u003c81.\n"}
+,{"stream_name":"stderr","time":217.614395475,"data":"  from pkg_resources import parse_version\n"}
+,{"stream_name":"stdout","time":396.226551808,"data":"ogb_recurrent_graph_state_gps9 ep00 train=0.348065 val=0.328214eV 172.2s *\n"}
+,{"stream_name":"stdout","time":564.438986094,"data":"ogb_recurrent_graph_state_gps9 ep01 train=0.269878 val=0.251306eV 168.0s *\n"}
+,{"stream_name":"stdout","time":731.328297839,"data":"ogb_recurrent_graph_state_gps9 ep02 train=0.240971 val=0.217323eV 166.6s *\n"}
+,{"stream_name":"stdout","time":897.662082323,"data":"ogb_recurrent_graph_state_gps9 ep03 train=0.222615 val=0.212744eV 166.1s *\n"}
+,{"stream_name":"stdout","time":1064.327527296,"data":"ogb_recurrent_graph_state_gps9 ep04 train=0.211135 val=0.205768eV 166.4s *\n"}
+,{"stream_name":"stdout","time":1232.275354713,"data":"ogb_recurrent_graph_state_gps9 ep05 train=0.201253 val=0.210987eV 167.7s\n"}
+,{"stream_name":"stdout","time":1399.026209918,"data":"ogb_recurrent_graph_state_gps9 ep06 train=0.193936 val=0.190161eV 166.5s *\n"}
+,{"stream_name":"stdout","time":1567.63651332,"data":"ogb_recurrent_graph_state_gps9 ep07 train=0.186380 val=0.190609eV 168.4s\n"}
+,{"stream_name":"stdout","time":1735.381011783,"data":"ogb_recurrent_graph_state_gps9 ep08 train=0.180863 val=0.185546eV 167.5s *\n"}
+,{"stream_name":"stdout","time":1902.350756989,"data":"ogb_recurrent_graph_state_gps9 ep09 train=0.176109 val=0.174392eV 166.7s *\n"}
+,{"stream_name":"stdout","time":2071.387372081,"data":"ogb_recurrent_graph_state_gps9 ep10 train=0.171888 val=0.169023eV 168.8s *\n"}
+,{"stream_name":"stdout","time":2237.630762127,"data":"ogb_recurrent_graph_state_gps9 ep11 train=0.166426 val=0.170658eV 166.0s\n"}
+,{"stream_name":"stdout","time":2404.510773435,"data":"ogb_recurrent_graph_state_gps9 ep12 train=0.162163 val=0.167334eV 166.6s *\n"}
+,{"stream_name":"stdout","time":2570.984405184,"data":"ogb_recurrent_graph_state_gps9 ep13 train=0.158376 val=0.163197eV 166.2s *\n"}
+,{"stream_name":"stdout","time":2737.541978546,"data":"ogb_recurrent_graph_state_gps9 ep14 train=0.153944 val=0.159679eV 166.3s *\n"}
+,{"stream_name":"stdout","time":2904.449717558,"data":"ogb_recurrent_graph_state_gps9 ep15 train=0.150778 val=0.157038eV 166.6s *\n"}
+,{"stream_name":"stdout","time":3072.573587967,"data":"ogb_recurrent_graph_state_gps9 ep16 train=0.147044 val=0.155677eV 167.9s *\n"}
+,{"stream_name":"stdout","time":3242.553011078,"data":"ogb_recurrent_graph_state_gps9 ep17 train=0.143577 val=0.152306eV 169.7s *\n"}
+,{"stream_name":"stdout","time":3408.659442831,"data":"ogb_recurrent_graph_state_gps9 ep18 train=0.140672 val=0.154474eV 165.9s\n"}
+,{"stream_name":"stdout","time":3575.89711727,"data":"ogb_recurrent_graph_state_gps9 ep19 train=0.137283 val=0.149774eV 167.0s *\n"}
+,{"stream_name":"stdout","time":3741.613915622,"data":"ogb_recurrent_graph_state_gps9 ep20 train=0.133953 val=0.151004eV 165.5s\n"}
+,{"stream_name":"stdout","time":3907.952794843,"data":"ogb_recurrent_graph_state_gps9 ep21 train=0.130974 val=0.147472eV 166.1s *\n"}
+,{"stream_name":"stdout","time":4081.625922186,"data":"ogb_recurrent_graph_state_gps9 ep22 train=0.127899 val=0.146169eV 173.4s *\n"}
+,{"stream_name":"stdout","time":4254.426981256,"data":"ogb_recurrent_graph_state_gps9 ep23 train=0.125375 val=0.146315eV 172.6s\n"}
+,{"stream_name":"stdout","time":4424.936514835,"data":"ogb_recurrent_graph_state_gps9 ep24 train=0.122438 val=0.145988eV 170.3s *\n"}
+,{"stream_name":"stdout","time":4591.879770408,"data":"ogb_recurrent_graph_state_gps9 ep25 train=0.119820 val=0.143789eV 166.7s *\n"}
+,{"stream_name":"stdout","time":4756.919334562,"data":"ogb_recurrent_graph_state_gps9 ep26 train=0.117413 val=0.144691eV 164.8s\n"}
+,{"stream_name":"stdout","time":4923.193211063,"data":"ogb_recurrent_graph_state_gps9 ep27 train=0.115359 val=0.142985eV 166.0s *\n"}
+,{"stream_name":"stdout","time":5087.782035776,"data":"ogb_recurrent_graph_state_gps9 ep28 train=0.112871 val=0.142600eV 164.3s *\n"}
+,{"stream_name":"stdout","time":5252.12914555,"data":"ogb_recurrent_graph_state_gps9 ep29 train=0.110807 val=0.140515eV 164.1s *\n"}
+,{"stream_name":"stdout","time":5416.265745468,"data":"ogb_recurrent_graph_state_gps9 ep30 train=0.109319 val=0.140306eV 163.9s *\n"}
+,{"stream_name":"stdout","time":5580.937752179,"data":"ogb_recurrent_graph_state_gps9 ep31 train=0.107507 val=0.141149eV 164.5s\n"}
+,{"stream_name":"stdout","time":5752.437808695,"data":"ogb_recurrent_graph_state_gps9 ep32 train=0.106167 val=0.139987eV 169.8s *\n"}
+,{"stream_name":"stdout","time":5918.914573415,"data":"ogb_recurrent_graph_state_gps9 ep33 train=0.104792 val=0.139518eV 166.2s *\n"}
+,{"stream_name":"stdout","time":6086.403766836,"data":"ogb_recurrent_graph_state_gps9 ep34 train=0.103789 val=0.139145eV 167.2s *\n"}
+,{"stream_name":"stdout","time":6250.286857214,"data":"ogb_recurrent_graph_state_gps9 ep35 train=0.103222 val=0.139556eV 163.7s\n"}
+,{"stream_name":"stdout","time":6413.25160064,"data":"ogb_recurrent_graph_state_gps9 ep36 train=0.102210 val=0.138613eV 162.7s *\n"}
+,{"stream_name":"stdout","time":6575.862082556,"data":"ogb_recurrent_graph_state_gps9 ep37 train=0.101566 val=0.139222eV 162.4s\n"}
+,{"stream_name":"stdout","time":6739.891782681,"data":"ogb_recurrent_graph_state_gps9 ep38 train=0.101551 val=0.138985eV 163.8s\n"}
+,{"stream_name":"stdout","time":6901.810833662,"data":"ogb_recurrent_graph_state_gps9 ep39 train=0.101275 val=0.138892eV 161.7s\n"}
+,{"stream_name":"stdout","time":6911.003363493,"data":"{\n"}
+,{"stream_name":"stdout","time":6911.003416215,"data":"  \"format\": \"molgap-pcqm-gap100k-recurrent-graph-state-v1\",\n"}
+,{"stream_name":"stdout","time":6911.003424569,"data":"  \"complete\": true,\n"}
+,{"stream_name":"stdout","time":6911.003430869,"data":"  \"source_commit\": \"96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8\",\n"}
+,{"stream_name":"stdout","time":6911.003437375,"data":"  \"cache_aggregate_sha256\": \"eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21\",\n"}
+,{"stream_name":"stdout","time":6911.003444123,"data":"  \"preflight\": {\n"}
+,{"stream_name":"stdout","time":6911.003449431,"data":"    \"format\": \"molgap-pcqm-gap100k-seed42-preflight-v1\",\n"}
+,{"stream_name":"stdout","time":6911.003454396,"data":"    \"complete\": true,\n"}
+,{"stream_name":"stdout","time":6911.003459957,"data":"    \"source_commit\": \"96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8\",\n"}
+,{"stream_name":"stdout","time":6911.003466434,"data":"    \"gpu\": \"Tesla P100-PCIE-16GB\",\n"}
+,{"stream_name":"stdout","time":6911.003472832,"data":"    \"batch_size\": 48,\n"}
+,{"stream_name":"stdout","time":6911.003479772,"data":"    \"candidates\": [\n"}
+,{"stream_name":"stdout","time":6911.003485014,"data":"      {\n"}
+,{"stream_name":"stdout","time":6911.003489604,"data":"        \"candidate\": \"ogb_recurrent_graph_state_gps9\",\n"}
+,{"stream_name":"stdout","time":6911.003494803,"data":"        \"parameter_count\": 4818897,\n"}
+,{"stream_name":"stdout","time":6911.003499922,"data":"        \"finite_prediction\": true,\n"}
+,{"stream_name":"stdout","time":6911.0035048,"data":"        \"finite_loss\": true,\n"}
+,{"stream_name":"stdout","time":6911.003510381,"data":"        \"finite_gradients\": true,\n"}
+,{"stream_name":"stdout","time":6911.003516513,"data":"        \"peak_memory_bytes\": 243269632,\n"}
+,{"stream_name":"stdout","time":6911.003521968,"data":"        \"elapsed_s\": 0.5913195099999484\n"}
+,{"stream_name":"stdout","time":6911.00352734,"data":"      }\n"}
+,{"stream_name":"stdout","time":6911.003533065,"data":"    ],\n"}
+,{"stream_name":"stdout","time":6911.003538274,"data":"    \"official_validation_role_read\": false,\n"}
+,{"stream_name":"stdout","time":6911.003543836,"data":"    \"test_dev_role_read\": false\n"}
+,{"stream_name":"stdout","time":6911.003558626,"data":"  },\n"}
+,{"stream_name":"stdout","time":6911.003563292,"data":"  \"candidate\": {\n"}
+,{"stream_name":"stdout","time":6911.003567136,"data":"    \"format\": \"molgap-pcqm-gap100k-candidate-v1\",\n"}
+,{"stream_name":"stdout","time":6911.003571673,"data":"    \"complete\": true,\n"}
+,{"stream_name":"stdout","time":6911.003575876,"data":"    \"candidate\": \"ogb_recurrent_graph_state_gps9\",\n"}
+,{"stream_name":"stdout","time":6911.003580337,"data":"    \"source_commit\": \"96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8\",\n"}
+,{"stream_name":"stdout","time":6911.00358492,"data":"    \"seed\": 42,\n"}
+,{"stream_name":"stdout","time":6911.003589132,"data":"    \"parameter_count\": 4818897,\n"}
+,{"stream_name":"stdout","time":6911.003593396,"data":"    \"parameter_budget\": 5200000,\n"}
+,{"stream_name":"stdout","time":6911.003597599,"data":"    \"best_epoch\": 36,\n"}
+,{"stream_name":"stdout","time":6911.003601812,"data":"    \"validation_gap_mae_eV\": 0.13861275718212127,\n"}
+,{"stream_name":"stdout","time":6911.003606199,"data":"    \"target_mean_eV\": 5.695846080780029,\n"}
+,{"stream_name":"stdout","time":6911.003610264,"data":"    \"target_std_eV\": 1.1622838973999023,\n"}
+,{"stream_name":"stdout","time":6911.003614624,"data":"    \"epochs_completed\": 40,\n"}
+,{"stream_name":"stdout","time":6911.00361881,"data":"    \"training_elapsed_s\": 6666.716925205001,\n"}
+,{"stream_name":"stdout","time":6911.003622695,"data":"    \"contract\": {\n"}
+,{"stream_name":"stdout","time":6911.003627017,"data":"      \"batch_size\": 48,\n"}
+,{"stream_name":"stdout","time":6911.003631172,"data":"      \"learning_rate\": 0.00016,\n"}
+,{"stream_name":"stdout","time":6911.003635316,"data":"      \"weight_decay\": 1e-06,\n"}
+,{"stream_name":"stdout","time":6911.003639467,"data":"      \"max_epochs\": 40,\n"}
+,{"stream_name":"stdout","time":6911.003643912,"data":"      \"patience\": 8,\n"}
+,{"stream_name":"stdout","time":6911.003648061,"data":"      \"precision\": \"fp32\",\n"}
+,{"stream_name":"stdout","time":6911.003652436,"data":"      \"target\": \"homolumogap\"\n"}
+,{"stream_name":"stdout","time":6911.003679377,"data":"    },\n"}
+,{"stream_name":"stdout","time":6911.003687417,"data":"    \"artifacts\": {\n"}
+,{"stream_name":"stdout","time":6911.003692009,"data":"      \"best_model\": \"results/ogb_recurrent_graph_state_gps9/best_model.pt\",\n"}
+,{"stream_name":"stdout","time":6911.00369607,"data":"      \"best_model_sha256\": \"c718dae4a71d80d8c169b764bae60f910c8da119e12a97c9d1927f8a611487b3\",\n"}
+,{"stream_name":"stdout","time":6911.003700952,"data":"      \"checkpoint\": \"results/ogb_recurrent_graph_state_gps9/checkpoint.pt\",\n"}
+,{"stream_name":"stdout","time":6911.003705548,"data":"      \"checkpoint_sha256\": \"efb0fe5e2120fd4e44672b58e0c78d060e4b30a206942d5eee3c0a0b09115966\",\n"}
+,{"stream_name":"stdout","time":6911.003710163,"data":"      \"validation_payload\": \"results/ogb_recurrent_graph_state_gps9/validation_payload.pt\",\n"}
+,{"stream_name":"stdout","time":6911.003716218,"data":"      \"validation_payload_sha256\": \"70e2f4ca4ca1e20803b0993999c1c9f104403bd072d158b3f25edefe51718598\",\n"}
+,{"stream_name":"stdout","time":6911.003721097,"data":"      \"trace\": \"results/ogb_recurrent_graph_state_gps9/trace.json\",\n"}
+,{"stream_name":"stdout","time":6911.003725627,"data":"      \"trace_sha256\": \"b15ee116309b39455b07221d4ccdff6e82682b1926a847266c1064d08c055322\"\n"}
+,{"stream_name":"stdout","time":6911.003730111,"data":"    },\n"}
+,{"stream_name":"stdout","time":6911.003734189,"data":"    \"official_validation_role_read\": false,\n"}
+,{"stream_name":"stdout","time":6911.003743689,"data":"    \"test_dev_role_read\": false\n"}
+,{"stream_name":"stdout","time":6911.003748068,"data":"  },\n"}
+,{"stream_name":"stdout","time":6911.003752123,"data":"  \"frozen_comparator\": {\n"}
+,{"stream_name":"stdout","time":6911.003756242,"data":"    \"candidate\": \"ogb_edge_state_structural_gps9\",\n"}
+,{"stream_name":"stdout","time":6911.003760572,"data":"    \"validation_gap_mae_eV\": 0.13798263211250306,\n"}
+,{"stream_name":"stdout","time":6911.003764987,"data":"    \"acceptance\": \"results/seed42_structural_vs_edge_state/acceptance.json\"\n"}
+,{"stream_name":"stdout","time":6911.00376951,"data":"  },\n"}
+,{"stream_name":"stdout","time":6911.003773486,"data":"  \"selected_candidate\": \"ogb_recurrent_graph_state_gps9\",\n"}
+,{"stream_name":"stdout","time":6911.00377776,"data":"  \"selected_strictly_improves\": false,\n"}
+,{"stream_name":"stdout","time":6911.003781994,"data":"  \"search_budget_s\": 14400,\n"}
+,{"stream_name":"stdout","time":6911.003786292,"data":"  \"elapsed_s\": 6848.459237606,\n"}
+,{"stream_name":"stdout","time":6911.003790526,"data":"  \"official_validation_role_read\": false,\n"}
+,{"stream_name":"stdout","time":6911.003794736,"data":"  \"test_dev_role_read\": false\n"}
+,{"stream_name":"stdout","time":6911.003798954,"data":"}\n"}
+,{"stream_name":"stderr","time":6915.510245111,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":6915.510302553,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":6915.718064108,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":6915.718097336,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6916.30730419,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":6917.463090864,"data":"[NbConvertApp] Writing 371094 bytes to __results__.html\n"}
+]
