@@ -11,17 +11,23 @@ run shorter than 12 hours?
 - Source: Kaggle mirror `piero0/pcqm4mv2`, with columns `idx`, `smiles`, and
   `homolumogap`.
 - Only the first `3,378,606` rows, the official OGB training role, may be read.
-- A deterministic seed-42 sample supplies exactly `100,000` development-train
-  rows and `10,000` internal-validation rows with disjoint row identities.
+- A deterministic seed-42 sample supplies the initial `100,000`
+  development-train rows and `10,000` internal-validation rows. A disjoint
+  1,024-row reserve stream is drawn from the same frozen RNG state. If OGB/RDKit
+  cannot construct an initial graph, the next constructible reserve row fills
+  that exact role and slot. Every failed attempt and replacement is retained in
+  hashed ledgers; no failure is silently filtered.
 - The official validation and test-dev roles stay unread. The cache and every
   downstream output must state both role-read flags as `false`.
 - Graphs use `ogb.utils.smiles2graph`: nine categorical atom fields, three
   categorical real-bond fields, and no coordinates or external labels.
 - RWSE16 is computed only from the real-bond topology.
 
-The accepted cache owns the selected-index hashes, exact source identity,
-feature ranges, failures, shard hashes, and aggregate hash. A GPU run may use
-only that immutable cache.
+The accepted cache owns the initial, reserve, and effective index hashes, exact
+source identity, feature ranges, failure and replacement ledgers, shard hashes,
+and aggregate hash. Acceptance requires exactly `100,000` effective train
+graphs, `10,000` effective internal-validation graphs, and zero unresolved slots. A GPU
+run may use only that immutable cache.
 
 ## Matched first round
 
@@ -69,4 +75,3 @@ without starting the long run.
 
 All server activity, if later authorized by this gate, is additionally limited
 to `/lustre/home/users/sm2/chou/` by `platforms/REMOTE_HANDOFF.md`.
-

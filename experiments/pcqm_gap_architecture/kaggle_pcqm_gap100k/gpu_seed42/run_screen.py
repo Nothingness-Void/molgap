@@ -145,7 +145,7 @@ def cache_root_and_manifest() -> tuple[Path, dict]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             continue
-        if payload.get("format") == "molgap-pcqm-gap100k-cache-v1":
+        if payload.get("format") == "molgap-pcqm-gap100k-cache-v2":
             candidates.append((path.parent, payload))
     if len(candidates) != 1:
         raise RuntimeError(f"Expected one accepted cache manifest, found {candidates}")
@@ -156,7 +156,7 @@ def cache_root_and_manifest() -> tuple[Path, dict]:
         "official_train_rows_read": 3_378_606,
         "train_graphs": 100_000,
         "validation_graphs": 10_000,
-        "failed_graphs": 0,
+        "unresolved_graphs": 0,
         "atom_feature_dim": 9,
         "bond_feature_dim": 3,
         "rwse_dim": 16,
@@ -166,6 +166,23 @@ def cache_root_and_manifest() -> tuple[Path, dict]:
     for key, value in required.items():
         if manifest.get(key) != value:
             raise RuntimeError(f"Cache contract changed for {key}: {manifest.get(key)}")
+    replacement_count = manifest.get("replacement_count")
+    failed_attempts = manifest.get("failed_graph_attempts")
+    if not isinstance(replacement_count, int) or replacement_count < 0:
+        raise RuntimeError("Cache replacement count is invalid")
+    if not isinstance(failed_attempts, int) or failed_attempts < replacement_count:
+        raise RuntimeError("Cache failure evidence is incomplete")
+    reserve_consumed = manifest.get("reserve_rows_consumed")
+    if not isinstance(reserve_consumed, int) or reserve_consumed < replacement_count:
+        raise RuntimeError("Cache reserve evidence is incomplete")
+    for file_key, hash_key in (
+        ("split_file", "split_file_sha256"),
+        ("failures_file", "failures_file_sha256"),
+        ("replacement_ledger_file", "replacement_ledger_sha256"),
+    ):
+        path = root / manifest[file_key]
+        if sha256_file(path) != manifest[hash_key]:
+            raise RuntimeError(f"Cache evidence hash changed: {path.name}")
     aggregate = hashlib.sha256()
     for shard in manifest["shards"]:
         path = root / shard["file"]

@@ -25,13 +25,17 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     split_path = root / manifest["split_file"]
     split = json.loads(split_path.read_text(encoding="utf-8"))
+    failures_path = root / manifest["failures_file"]
+    failures = json.loads(failures_path.read_text(encoding="utf-8"))
+    ledger_path = root / manifest["replacement_ledger_file"]
+    ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
     errors = []
 
     def require(condition: bool, message: str) -> None:
         if not condition:
             errors.append(message)
 
-    require(manifest.get("format") == "molgap-pcqm-gap100k-cache-v1", "format")
+    require(manifest.get("format") == "molgap-pcqm-gap100k-cache-v2", "format")
     require(manifest.get("complete") is True, "complete")
     require(manifest.get("source_dataset") == "piero0/pcqm4mv2", "source dataset")
     if expected_source_commit is not None:
@@ -40,7 +44,7 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
     require(manifest.get("official_validation_role_read") is False, "official validation read")
     require(manifest.get("test_dev_role_read") is False, "test-dev read")
     require(manifest.get("gpu_used") is False, "GPU used")
-    require(manifest.get("failed_graphs") == 0, "graph failures")
+    require(manifest.get("unresolved_graphs") == 0, "unresolved graphs")
     require(
         isinstance(manifest.get("bondless_graphs"), int)
         and manifest.get("bondless_graphs") >= 0,
@@ -65,17 +69,155 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
             f"feature range {key}",
         )
     require(sha256_file(split_path) == manifest.get("split_file_sha256"), "split SHA")
+    require(
+        sha256_file(failures_path) == manifest.get("failures_file_sha256"),
+        "failures SHA",
+    )
+    require(
+        sha256_file(ledger_path) == manifest.get("replacement_ledger_sha256"),
+        "replacement ledger SHA",
+    )
+    require(split.get("format") == "molgap-pcqm-gap100k-split-v2", "split format")
+    require(
+        failures.get("format") == "molgap-pcqm-gap100k-failures-v2",
+        "failures format",
+    )
+    require(
+        ledger.get("format") == "molgap-pcqm-gap100k-replacements-v1",
+        "replacement ledger format",
+    )
+    initial_train = split.get("initial_train", [])
+    initial_validation = split.get("initial_validation", [])
+    reserve = split.get("reserve", [])
     train = split.get("train", [])
     validation = split.get("validation", [])
+    require(len(initial_train) == 100_000, "initial train split count")
+    require(len(initial_validation) == 10_000, "initial validation split count")
+    require(len(reserve) == 1_024, "reserve count")
     require(len(train) == 100_000, "train split count")
     require(len(validation) == 10_000, "validation split count")
+    require(set(initial_train).isdisjoint(initial_validation), "initial split overlap")
+    require(
+        set(reserve).isdisjoint(initial_train)
+        and set(reserve).isdisjoint(initial_validation),
+        "reserve overlap",
+    )
     require(set(train).isdisjoint(validation), "split overlap")
-    require(min(train + validation, default=-1) >= 0, "negative index")
-    require(max(train + validation, default=3_378_606) < 3_378_606, "non-train index")
+    all_indices = initial_train + initial_validation + reserve + train + validation
+    require(min(all_indices, default=-1) >= 0, "negative index")
+    require(max(all_indices, default=3_378_606) < 3_378_606, "non-train index")
+    require(
+        index_sha256(initial_train) == manifest.get("initial_train_index_sha256"),
+        "initial train index SHA",
+    )
+    require(
+        index_sha256(initial_validation)
+        == manifest.get("initial_validation_index_sha256"),
+        "initial validation index SHA",
+    )
+    require(
+        index_sha256(reserve) == manifest.get("reserve_index_sha256"),
+        "reserve index SHA",
+    )
     require(index_sha256(train) == manifest.get("train_index_sha256"), "train index SHA")
     require(
         index_sha256(validation) == manifest.get("validation_index_sha256"),
         "validation index SHA",
+    )
+    replacements = ledger.get("replacements", [])
+    attempts = failures.get("attempts", [])
+    require(
+        manifest.get("replacement_policy")
+        == "seed42-reserve-in-priority-order",
+        "replacement policy",
+    )
+    require(
+        ledger.get("policy") == "seed42-reserve-in-priority-order",
+        "replacement ledger policy",
+    )
+    require(
+        manifest.get("replacement_count") == len(replacements),
+        "replacement count",
+    )
+    require(
+        manifest.get("failed_graph_attempts") == len(attempts),
+        "failed attempt count",
+    )
+    require(len(attempts) >= len(replacements), "replacement failure evidence")
+    expected_effective = {
+        "train": list(initial_train),
+        "validation": list(initial_validation),
+    }
+    used_replacements = set()
+    successful_reserve_ranks = set()
+    initial_failures = {
+        (item.get("role"), item.get("slot"), item.get("row_index"))
+        for item in attempts
+        if item.get("attempt_kind") == "initial"
+    }
+    require(len(initial_failures) == len(replacements), "initial failure count")
+    for item in replacements:
+        role = item.get("role")
+        slot = item.get("slot")
+        original = item.get("original_row_index")
+        replacement = item.get("replacement_row_index")
+        reserve_rank = item.get("reserve_rank")
+        require(role in expected_effective, f"replacement role {role}")
+        if role not in expected_effective:
+            continue
+        require(isinstance(slot, int) and 0 <= slot < len(expected_effective[role]), "replacement slot")
+        if not isinstance(slot, int) or not 0 <= slot < len(expected_effective[role]):
+            continue
+        require(expected_effective[role][slot] == original, "replacement original")
+        require(replacement in reserve, "replacement outside reserve")
+        require(
+            isinstance(reserve_rank, int)
+            and 0 <= reserve_rank < len(reserve)
+            and reserve[reserve_rank] == replacement,
+            "replacement reserve rank",
+        )
+        require(replacement not in used_replacements, "replacement reused")
+        require((role, slot, original) in initial_failures, "missing initial failure")
+        expected_effective[role][slot] = replacement
+        used_replacements.add(replacement)
+        if isinstance(reserve_rank, int):
+            successful_reserve_ranks.add(reserve_rank)
+    require(expected_effective["train"] == train, "effective train ledger")
+    require(expected_effective["validation"] == validation, "effective validation ledger")
+    failed_reserve_rows = {
+        item.get("row_index")
+        for item in attempts
+        if item.get("attempt_kind") == "reserve"
+    }
+    failed_reserve_ranks = set()
+    for item in attempts:
+        if item.get("attempt_kind") != "reserve":
+            continue
+        rank = item.get("reserve_rank")
+        row_index = item.get("row_index")
+        require(
+            isinstance(rank, int)
+            and 0 <= rank < len(reserve)
+            and reserve[rank] == row_index,
+            "failed reserve rank",
+        )
+        if isinstance(rank, int):
+            failed_reserve_ranks.add(rank)
+    consumed = manifest.get("reserve_rows_consumed")
+    require(isinstance(consumed, int) and 0 <= consumed <= len(reserve), "reserve consumed")
+    if isinstance(consumed, int) and 0 <= consumed <= len(reserve):
+        require(
+            successful_reserve_ranks | failed_reserve_ranks == set(range(consumed)),
+            "reserve priority sequence",
+        )
+        require(
+            successful_reserve_ranks.isdisjoint(failed_reserve_ranks),
+            "reserve outcome overlap",
+        )
+    require(
+        failed_reserve_rows.isdisjoint(train)
+        and failed_reserve_rows.isdisjoint(validation),
+        "failed reserve row selected",
     )
     aggregate = hashlib.sha256()
     shard_graphs = {"train": 0, "validation": 0}
@@ -101,6 +243,9 @@ def accept(root: Path, expected_source_commit: str | None = None) -> dict:
         "aggregate_sha256": manifest.get("aggregate_sha256"),
         "train_index_sha256": manifest.get("train_index_sha256"),
         "validation_index_sha256": manifest.get("validation_index_sha256"),
+        "replacement_count": manifest.get("replacement_count"),
+        "reserve_rows_consumed": manifest.get("reserve_rows_consumed"),
+        "failed_graph_attempts": manifest.get("failed_graph_attempts"),
         "bondless_graphs": manifest.get("bondless_graphs"),
         "model_inference_executed": False,
         "official_validation_role_read": False,

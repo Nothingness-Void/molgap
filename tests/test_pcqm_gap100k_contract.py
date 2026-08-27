@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 from pathlib import Path
 
@@ -44,10 +45,20 @@ def imported_modules(path: Path) -> set[str]:
     return modules
 
 
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _index_sha256(indices) -> str:
+    payload = ",".join(str(int(index)) for index in indices).encode("ascii")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def test_official_train_only_split_contract() -> None:
     assert assignment_literal(DATA, "OFFICIAL_TRAIN_ROWS") == 3_378_606
     assert assignment_literal(DATA, "SCREEN_TRAIN_ROWS") == 100_000
     assert assignment_literal(DATA, "SCREEN_VALIDATION_ROWS") == 10_000
+    assert assignment_literal(DATA, "SCREEN_RESERVE_ROWS") == 1_024
     source = DATA.read_text(encoding="utf-8")
     assert "nrows=OFFICIAL_TRAIN_ROWS" in source
     assert '"official_validation_role_read": False' in source
@@ -57,6 +68,24 @@ def test_official_train_only_split_contract() -> None:
     assert "_atomic_torch_save(part_path, graphs)" in source
     assert 'if key == "bond":' in source
     assert '"bondless_graphs": bondless_graphs' in source
+    assert '"replacement_ledger_file": replacement_ledger_path.name' in source
+    assert '"unresolved_graphs": 0' in source
+    assert '"attempt_kind": attempt_kind' in source
+
+
+def test_reserve_stream_preserves_the_frozen_initial_split() -> None:
+    from molgap.pcqm_gap_data import fixed_screen_split
+
+    split = fixed_screen_split()
+    assert split["train_sha256"] == (
+        "d08e04ef73090b77963a6959d7efa22d22a4085e3869a0e13086491b8f8c9678"
+    )
+    assert split["validation_sha256"] == (
+        "40b210c03789249f89950d7eb9df6de93ec151903f75077cfa64fe0a94eca5b0"
+    )
+    assert len(split["reserve"]) == 1_024
+    assert set(split["reserve"]).isdisjoint(split["train"])
+    assert set(split["reserve"]).isdisjoint(split["validation"])
 
 
 def test_gap_models_use_ogb_categories_and_one_target() -> None:
@@ -92,8 +121,143 @@ def test_cache_acceptance_executes_no_model_runtime() -> None:
     source = ACCEPTANCE.read_text(encoding="utf-8")
     assert '"model_inference_executed": False' in source
     assert '"bondless_graphs": manifest.get("bondless_graphs")' in source
+    assert '"replacement_count": manifest.get("replacement_count")' in source
+    assert '"failed_graph_attempts": manifest.get("failed_graph_attempts")' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
+
+
+def test_cache_acceptance_verifies_audited_replacement(tmp_path: Path) -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("pcqm_cache_acceptance", ACCEPTANCE)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    initial_train = list(range(100_000))
+    initial_validation = list(range(100_000, 110_000))
+    reserve = list(range(110_000, 111_024))
+    train = list(initial_train)
+    train[17] = reserve[0]
+    split = {
+        "format": "molgap-pcqm-gap100k-split-v2",
+        "official_train_rows": 3_378_606,
+        "seed": 42,
+        "initial_train": initial_train,
+        "initial_validation": initial_validation,
+        "reserve": reserve,
+        "train": train,
+        "validation": initial_validation,
+        "initial_train_sha256": _index_sha256(initial_train),
+        "initial_validation_sha256": _index_sha256(initial_validation),
+        "reserve_sha256": _index_sha256(reserve),
+        "train_sha256": _index_sha256(train),
+        "validation_sha256": _index_sha256(initial_validation),
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    failures = {
+        "format": "molgap-pcqm-gap100k-failures-v2",
+        "attempts": [
+            {
+                "attempt_kind": "initial",
+                "role": "train",
+                "slot": 17,
+                "row_index": 17,
+                "type": "AttributeError",
+                "message": "invalid molecule",
+            }
+        ],
+    }
+    ledger = {
+        "format": "molgap-pcqm-gap100k-replacements-v1",
+        "policy": "seed42-reserve-in-priority-order",
+        "replacements": [
+            {
+                "role": "train",
+                "slot": 17,
+                "original_row_index": 17,
+                "replacement_row_index": reserve[0],
+                "reserve_rank": 0,
+                "failure_type": "AttributeError",
+                "failure_message": "invalid molecule",
+            }
+        ],
+    }
+    for name, payload in (
+        ("split.json", split),
+        ("failures.json", failures),
+        ("replacement_ledger.json", ledger),
+    ):
+        (tmp_path / name).write_text(
+            json.dumps(payload, indent=2) + "\n", encoding="utf-8"
+        )
+    shards = []
+    aggregate = hashlib.sha256()
+    for role, parts in (("train", 20), ("validation", 2)):
+        for part in range(parts):
+            name = f"{role}_part_{part:03d}.pt"
+            path = tmp_path / name
+            path.write_bytes(f"{role}-{part}".encode("ascii"))
+            digest = _sha256(path)
+            record = {
+                "role": role,
+                "file": name,
+                "source_start": part * 5_000,
+                "source_stop": (part + 1) * 5_000,
+                "graph_count": 5_000,
+                "sha256": digest,
+            }
+            shards.append(record)
+            aggregate.update(f"{role}\t{name}\t{digest}\n".encode("ascii"))
+    manifest = {
+        "format": "molgap-pcqm-gap100k-cache-v2",
+        "complete": True,
+        "source_dataset": "piero0/pcqm4mv2",
+        "source_commit": "synthetic",
+        "official_train_rows_read": 3_378_606,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+        "gpu_used": False,
+        "unresolved_graphs": 0,
+        "replacement_policy": "seed42-reserve-in-priority-order",
+        "replacement_count": 1,
+        "reserve_rows_consumed": 1,
+        "failed_graph_attempts": 1,
+        "bondless_graphs": 0,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "atom_feature_dim": 9,
+        "bond_feature_dim": 3,
+        "rwse_dim": 16,
+        "feature_ranges": {
+            "atom_feature_min": [0] * 9,
+            "atom_feature_max": [1] * 9,
+            "bond_feature_min": [0] * 3,
+            "bond_feature_max": [1] * 3,
+        },
+        "split_file": "split.json",
+        "split_file_sha256": _sha256(tmp_path / "split.json"),
+        "failures_file": "failures.json",
+        "failures_file_sha256": _sha256(tmp_path / "failures.json"),
+        "replacement_ledger_file": "replacement_ledger.json",
+        "replacement_ledger_sha256": _sha256(tmp_path / "replacement_ledger.json"),
+        "initial_train_index_sha256": _index_sha256(initial_train),
+        "initial_validation_index_sha256": _index_sha256(initial_validation),
+        "reserve_index_sha256": _index_sha256(reserve),
+        "train_index_sha256": _index_sha256(train),
+        "validation_index_sha256": _index_sha256(initial_validation),
+        "shards": shards,
+        "aggregate_sha256": aggregate.hexdigest(),
+    }
+    (tmp_path / "manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+    )
+    result = module.accept(tmp_path, "synthetic")
+    assert result["accepted"] is True
+    assert result["replacement_count"] == 1
+    assert result["failed_graph_attempts"] == 1
 
 
 def test_protocol_freezes_gap_only_kaggle_before_server() -> None:

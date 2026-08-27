@@ -11,6 +11,7 @@ from pathlib import Path
 OFFICIAL_TRAIN_ROWS = 3_378_606
 SCREEN_TRAIN_ROWS = 100_000
 SCREEN_VALIDATION_ROWS = 10_000
+SCREEN_RESERVE_ROWS = 1_024
 SCREEN_SPLIT_SEED = 42
 RWSE_DIM = 16
 
@@ -104,16 +105,30 @@ def fixed_screen_split(total_rows: int = OFFICIAL_TRAIN_ROWS) -> dict:
         size=SCREEN_TRAIN_ROWS + SCREEN_VALIDATION_ROWS,
         replace=False,
     )
+    remaining = np.setdiff1d(
+        np.arange(total_rows, dtype=np.int64),
+        selected,
+        assume_unique=False,
+    )
+    reserve = generator.choice(
+        remaining,
+        size=SCREEN_RESERVE_ROWS,
+        replace=False,
+    ).astype(np.int64)
     train = np.sort(selected[:SCREEN_TRAIN_ROWS]).astype(np.int64)
     validation = np.sort(selected[SCREEN_TRAIN_ROWS:]).astype(np.int64)
     if np.intersect1d(train, validation).size:
         raise RuntimeError("PCQM screen split roles overlap")
+    if np.intersect1d(np.concatenate((train, validation)), reserve).size:
+        raise RuntimeError("PCQM screen reserve overlaps an initial role")
     return {
         "seed": SCREEN_SPLIT_SEED,
         "train": train,
         "validation": validation,
+        "reserve": reserve,
         "train_sha256": index_sha256(train),
         "validation_sha256": index_sha256(validation),
+        "reserve_sha256": index_sha256(reserve),
     }
 
 
@@ -182,59 +197,95 @@ def build_pcqm_gap_screen_cache(
 
     frame = read_official_train_prefix(source_csv)
     split = fixed_screen_split(len(frame))
-    split_payload = {
-        "format": "molgap-pcqm-gap100k-split-v1",
-        "official_train_rows": OFFICIAL_TRAIN_ROWS,
-        "seed": SCREEN_SPLIT_SEED,
-        "train": [int(value) for value in split["train"]],
-        "validation": [int(value) for value in split["validation"]],
-        "train_sha256": split["train_sha256"],
-        "validation_sha256": split["validation_sha256"],
-        "official_validation_role_read": False,
-        "test_dev_role_read": False,
-    }
     split_path = output_dir / "split.json"
-    atomic_json(split_path, split_payload)
-
     failures_path = output_dir / "failures.json"
+    replacement_ledger_path = output_dir / "replacement_ledger.json"
     progress_path = output_dir / "progress.json"
     failures = []
+    replacements = []
     completed_shards = []
     bondless_graphs = 0
+    reserve_cursor = 0
+    effective_positions = {"train": [], "validation": []}
     start_offsets = {"train": 0, "validation": 0}
-    if progress_path.exists():
-        progress = json.loads(progress_path.read_text(encoding="utf-8"))
-        failures = progress.get("failures", [])
-        completed_shards = progress.get("shards", [])
-        bondless_graphs = int(progress.get("bondless_graphs", 0))
-        start_offsets.update(progress.get("next_offset", {}))
-
     ranges = {
         "atom_feature_min": [None] * 9,
         "atom_feature_max": [None] * 9,
         "bond_feature_min": [None] * 3,
         "bond_feature_max": [None] * 3,
     }
+    if progress_path.exists():
+        progress = json.loads(progress_path.read_text(encoding="utf-8"))
+        if progress.get("format") != "molgap-pcqm-gap100k-progress-v2":
+            raise RuntimeError("Existing progress uses an incompatible cache contract")
+        if progress.get("source_commit") != source_commit:
+            raise RuntimeError("Existing progress source commit changed")
+        failures = progress.get("failures", [])
+        replacements = progress.get("replacements", [])
+        completed_shards = progress.get("shards", [])
+        bondless_graphs = int(progress.get("bondless_graphs", 0))
+        reserve_cursor = int(progress.get("reserve_cursor", 0))
+        ranges.update(progress.get("feature_ranges", {}))
+        for role, values in progress.get("effective_positions", {}).items():
+            if role in effective_positions:
+                effective_positions[role] = [int(value) for value in values]
+        start_offsets.update(progress.get("next_offset", {}))
     for role in ("train", "validation"):
         positions = split[role]
         offset = int(start_offsets[role])
+        if len(effective_positions[role]) != offset:
+            raise RuntimeError(f"Resume alignment changed for {role}")
         while offset < len(positions):
             stop = min(offset + shard_size, len(positions))
             graphs = []
-            for position in positions[offset:stop]:
-                row = frame.iloc[int(position)]
-                try:
-                    graph = _make_graph(row)
-                except Exception as error:
-                    failures.append(
-                        {
+            for slot, position in enumerate(positions[offset:stop], start=offset):
+                original_position = int(position)
+                candidate_position = original_position
+                attempt_kind = "initial"
+                reserve_rank = None
+                original_failure = None
+                while True:
+                    row = frame.iloc[candidate_position]
+                    try:
+                        graph = _make_graph(row)
+                        break
+                    except Exception as error:
+                        failure = {
+                            "attempt_kind": attempt_kind,
                             "role": role,
+                            "slot": slot,
                             "row_index": int(row.idx),
                             "type": type(error).__name__,
                             "message": str(error),
                         }
+                        if reserve_rank is not None:
+                            failure["reserve_rank"] = reserve_rank
+                        failures.append(failure)
+                        if attempt_kind == "initial":
+                            original_failure = failure
+                        if reserve_cursor >= len(split["reserve"]):
+                            raise RuntimeError(
+                                "Deterministic reserve exhausted before roles were filled"
+                            ) from error
+                        reserve_rank = reserve_cursor
+                        candidate_position = int(split["reserve"][reserve_cursor])
+                        reserve_cursor += 1
+                        attempt_kind = "reserve"
+                if candidate_position != original_position:
+                    replacements.append(
+                        {
+                            "role": role,
+                            "slot": slot,
+                            "original_row_index": int(
+                                frame.iloc[original_position].idx
+                            ),
+                            "replacement_row_index": int(row.idx),
+                            "reserve_rank": reserve_rank,
+                            "failure_type": original_failure["type"],
+                            "failure_message": original_failure["message"],
+                        }
                     )
-                    continue
+                effective_positions[role].append(candidate_position)
                 if graph.edge_attr.shape[0] == 0:
                     bondless_graphs += 1
                 for key, values in (
@@ -275,16 +326,34 @@ def build_pcqm_gap_screen_cache(
             completed_shards.append(record)
             offset = stop
             start_offsets[role] = offset
-            atomic_json(failures_path, {"failures": failures})
+            atomic_json(
+                failures_path,
+                {
+                    "format": "molgap-pcqm-gap100k-failures-v2",
+                    "attempts": failures,
+                },
+            )
+            atomic_json(
+                replacement_ledger_path,
+                {
+                    "format": "molgap-pcqm-gap100k-replacements-v1",
+                    "policy": "seed42-reserve-in-priority-order",
+                    "replacements": replacements,
+                },
+            )
             atomic_json(
                 progress_path,
                 {
-                    "format": "molgap-pcqm-gap100k-progress-v1",
+                    "format": "molgap-pcqm-gap100k-progress-v2",
                     "source_commit": source_commit,
                     "next_offset": start_offsets,
                     "shards": completed_shards,
                     "failures": failures,
+                    "replacements": replacements,
+                    "reserve_cursor": reserve_cursor,
+                    "effective_positions": effective_positions,
                     "bondless_graphs": bondless_graphs,
+                    "feature_ranges": ranges,
                     "official_validation_role_read": False,
                     "test_dev_role_read": False,
                 },
@@ -304,22 +373,59 @@ def build_pcqm_gap_screen_cache(
         )
         for role in ("train", "validation")
     }
+    if role_counts != {
+        "train": SCREEN_TRAIN_ROWS,
+        "validation": SCREEN_VALIDATION_ROWS,
+    }:
+        raise RuntimeError(f"Effective role counts are incomplete: {role_counts}")
+    split_payload = {
+        "format": "molgap-pcqm-gap100k-split-v2",
+        "official_train_rows": OFFICIAL_TRAIN_ROWS,
+        "seed": SCREEN_SPLIT_SEED,
+        "initial_train": [int(value) for value in split["train"]],
+        "initial_validation": [int(value) for value in split["validation"]],
+        "reserve": [int(value) for value in split["reserve"]],
+        "train": effective_positions["train"],
+        "validation": effective_positions["validation"],
+        "initial_train_sha256": split["train_sha256"],
+        "initial_validation_sha256": split["validation_sha256"],
+        "reserve_sha256": split["reserve_sha256"],
+        "train_sha256": index_sha256(effective_positions["train"]),
+        "validation_sha256": index_sha256(effective_positions["validation"]),
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    atomic_json(split_path, split_payload)
     manifest = {
-        "format": "molgap-pcqm-gap100k-cache-v1",
+        "format": "molgap-pcqm-gap100k-cache-v2",
         "complete": True,
         "source_dataset": source_dataset,
         "source_file": source_csv.name,
         "source_commit": source_commit,
         "official_train_rows_read": OFFICIAL_TRAIN_ROWS,
-        "selected_rows_sha256": _selected_rows_sha256(frame, split),
+        "initial_selected_rows_sha256": _selected_rows_sha256(frame, split),
+        "selected_rows_sha256": _selected_rows_sha256(
+            frame, effective_positions
+        ),
         "split_file": split_path.name,
         "split_file_sha256": sha256_file(split_path),
         "split_seed": SCREEN_SPLIT_SEED,
-        "train_index_sha256": split["train_sha256"],
-        "validation_index_sha256": split["validation_sha256"],
+        "initial_train_index_sha256": split["train_sha256"],
+        "initial_validation_index_sha256": split["validation_sha256"],
+        "reserve_index_sha256": split["reserve_sha256"],
+        "train_index_sha256": split_payload["train_sha256"],
+        "validation_index_sha256": split_payload["validation_sha256"],
+        "replacement_policy": "seed42-reserve-in-priority-order",
+        "replacement_ledger_file": replacement_ledger_path.name,
+        "replacement_ledger_sha256": sha256_file(replacement_ledger_path),
+        "replacement_count": len(replacements),
+        "reserve_rows_consumed": reserve_cursor,
+        "failures_file": failures_path.name,
+        "failures_file_sha256": sha256_file(failures_path),
+        "failed_graph_attempts": len(failures),
+        "unresolved_graphs": 0,
         "train_graphs": role_counts["train"],
         "validation_graphs": role_counts["validation"],
-        "failed_graphs": len(failures),
         "bondless_graphs": bondless_graphs,
         "atom_feature_dim": 9,
         "bond_feature_dim": 3,
