@@ -16,7 +16,7 @@ from pathlib import Path
 
 OUT = Path("/kaggle/working/pcqm_gap100k_seed42")
 PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
-EXPECTED_SOURCE_COMMIT = "e8b190320af98834c9f85f5911d038ac196d1b5b"
+EXPECTED_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
 CANDIDATES = ("ogb_structural_gps9", "ogb_edge_state_structural_gps9")
 SEED = 42
 BATCH_SIZE = 48

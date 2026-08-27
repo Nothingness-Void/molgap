@@ -273,7 +273,7 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
 
 def test_gpu_screen_is_matched_gap_only_and_sequential() -> None:
     assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "e8b190320af98834c9f85f5911d038ac196d1b5b"
+        "ba82461c53243d733474c8930ac1b86d82451c91"
     )
     assert assignment_literal(GPU, "CANDIDATES") == (
         "ogb_structural_gps9",

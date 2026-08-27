@@ -64,8 +64,10 @@ must not be represented as this new conservative head.
 ## Execution State
 
 - No GPU architecture-training job is active.
-- The next remote stage is Kaggle CPU construction and local acceptance of the
-  official-train-derived PCQM 100K graph cache.
+- The next remote stage is Kaggle CPU version-4 construction and local
+  no-inference acceptance of the official-train-derived PCQM 100K graph cache.
+  Its audited reserve policy is frozen in the experiment protocol; the GPU
+  screen remains gated on exact effective role counts and replacement hashes.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
