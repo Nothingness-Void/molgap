@@ -15,7 +15,7 @@ finish before any molecular-research-server use.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-NOVEL | Train one materially new, non-EdgeState pure-2D information-flow candidate against the frozen accepted seed-42 comparator | Candidate strictly beats the frozen internal-validation Gap MAE under the identical cache and training contract, or closes with retained evidence | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-LOCAL-OPS | Run the predeclared single-GPU sequence of three local-operator architectures and one time-gated fallback against the frozen seed-42 comparator | Every completed candidate has accepted evidence; a strict winner advances or all completed mechanisms close | `experiments/pcqm_gap_architecture/` |
 | P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |

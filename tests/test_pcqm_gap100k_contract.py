@@ -19,6 +19,8 @@ GPU_METADATA = GPU.with_name("kernel-metadata.json")
 GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_seed42.py"
 NOVEL_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_novel_seed42.py"
 QUERY_POOL_PROTOCOL = EXPERIMENT / "query_pool_seed42_protocol.md"
+LOCAL_OPERATOR_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_local_operator_search.py"
+LOCAL_OPERATOR_PROTOCOL = EXPERIMENT / "local_operator_search_protocol.md"
 
 
 def assignment_literal(path: Path, name: str):
@@ -103,6 +105,11 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert "nn.MultiheadAttention" in source
     assert "num_pool_queries=4" in source
     assert 'candidate == "ogb_query_pool_structural_gps9"' in source
+    assert "class OGBLocalOperatorStructuralGPSWrapper" in source
+    assert '"ogb_gated_local_gps9": "resgated"' in source
+    assert '"ogb_edge_attention_local_gps9": "transformer"' in source
+    assert '"ogb_gen_local_gps9": "gen"' in source
+    assert '"ogb_gatv2_local_gps9": "gatv2"' in source
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source
@@ -277,9 +284,9 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
     assert "/lustre/home/users/sm2/chou/" in protocol
 
 
-def test_gpu_screen_is_single_novel_gap_only_candidate() -> None:
+def test_gpu_screen_is_time_bounded_local_operator_sequence() -> None:
     assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "1d67bd364113f05992934242b334b176c785601f"
+        "__PIN_AFTER_SOURCE_COMMIT__"
     )
     assert assignment_literal(GPU, "EXPECTED_CACHE_SOURCE_COMMIT") == (
         "ba82461c53243d733474c8930ac1b86d82451c91"
@@ -287,9 +294,12 @@ def test_gpu_screen_is_single_novel_gap_only_candidate() -> None:
     assert assignment_literal(GPU, "EXPECTED_CACHE_SHA256") == (
         "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
     )
-    assert assignment_literal(GPU, "CANDIDATES") == (
-        "ogb_query_pool_structural_gps9",
+    assert assignment_literal(GPU, "CORE_CANDIDATES") == (
+        "ogb_gated_local_gps9",
+        "ogb_edge_attention_local_gps9",
+        "ogb_gen_local_gps9",
     )
+    assert assignment_literal(GPU, "OPTIONAL_CANDIDATE") == "ogb_gatv2_local_gps9"
     assert assignment_literal(GPU, "FROZEN_COMPARATOR") == {
         "candidate": "ogb_edge_state_structural_gps9",
         "validation_gap_mae_eV": 0.13798263211250306,
@@ -297,8 +307,10 @@ def test_gpu_screen_is_single_novel_gap_only_candidate() -> None:
     }
     assert assignment_literal(GPU, "BATCH_SIZE") == 48
     assert assignment_literal(GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(GPU, "SEARCH_BUDGET_S") == 14_400
     source = GPU.read_text(encoding="utf-8")
-    assert "results = [train_candidate(candidate, graphs) for candidate in CANDIDATES]" in source
+    assert "for candidate in CORE_CANDIDATES" in source
+    assert "remaining_s >= max(completed_durations) + OPTIONAL_BUFFER_S" in source
     assert '"target": "homolumogap"' in source
     assert '"precision": "fp32"' in source
     assert '"official_validation_role_read": False' in source
@@ -336,3 +348,21 @@ def test_query_pool_protocol_preserves_ogb_selection_boundary() -> None:
     assert "official test-dev access" in source
     assert "four-hour single-GPU plus single-CPU inference budget" in source
     assert "One candidate and one GPU task" in source
+
+
+def test_local_operator_acceptance_executes_no_model_runtime() -> None:
+    assert "torch" not in imported_modules(LOCAL_OPERATOR_ACCEPTANCE)
+    source = LOCAL_OPERATOR_ACCEPTANCE.read_text(encoding="utf-8")
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    assert "len(rows) in (3, 4)" in source
+
+
+def test_local_operator_protocol_freezes_three_plus_optional() -> None:
+    source = LOCAL_OPERATOR_PROTOCOL.read_text(encoding="utf-8")
+    assert "Official OGB categorical 2D" in source
+    assert "at most 40 epochs, patience 8" in source
+    assert "Parameter ceiling 5.2M" in source
+    assert "The first three run sequentially" in source
+    assert "No candidate may be retried" in source

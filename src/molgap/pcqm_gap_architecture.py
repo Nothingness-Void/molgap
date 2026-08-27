@@ -95,6 +95,88 @@ class OGBQueryPoolStructuralGPSWrapper(OGBStructuralGPSWrapper):
         return queries.mean(dim=1)
 
 
+class OGBLocalOperatorStructuralGPSWrapper(OGBStructuralGPSWrapper):
+    """Structural GPS with one frozen edge-aware local operator family.
+
+    The OGB encoders, RWSE16 input, global multi-head attention, depth, width,
+    pooling, and scalar head remain fixed. Only the local message-passing
+    operator inside each GPS block changes.
+    """
+
+    def __init__(self, *args, local_operator: str, **kwargs):
+        super().__init__(*args, **kwargs)
+        from torch_geometric.nn import (
+            GATv2Conv,
+            GENConv,
+            GPSConv,
+            ResGatedGraphConv,
+            TransformerConv,
+        )
+
+        hidden_channels = self.head[0].in_features
+        num_heads = int(kwargs.get("num_heads", 4))
+        num_layers = int(kwargs.get("num_layers", 9))
+        dropout = float(kwargs.get("dropout", 0.1))
+        if hidden_channels % num_heads:
+            raise ValueError("hidden_channels must be divisible by num_heads")
+
+        def make_local():
+            if local_operator == "resgated":
+                return ResGatedGraphConv(
+                    hidden_channels,
+                    hidden_channels,
+                    edge_dim=hidden_channels,
+                )
+            if local_operator == "transformer":
+                return TransformerConv(
+                    hidden_channels,
+                    hidden_channels // num_heads,
+                    heads=num_heads,
+                    concat=True,
+                    beta=True,
+                    dropout=dropout,
+                    edge_dim=hidden_channels,
+                )
+            if local_operator == "gen":
+                return GENConv(
+                    hidden_channels,
+                    hidden_channels,
+                    aggr="softmax",
+                    learn_t=True,
+                    msg_norm=True,
+                    learn_msg_scale=True,
+                    norm="layer",
+                    num_layers=2,
+                    edge_dim=hidden_channels,
+                )
+            if local_operator == "gatv2":
+                return GATv2Conv(
+                    hidden_channels,
+                    hidden_channels // num_heads,
+                    heads=num_heads,
+                    concat=True,
+                    dropout=dropout,
+                    edge_dim=hidden_channels,
+                    add_self_loops=True,
+                    fill_value="mean",
+                )
+            raise ValueError(f"Unknown local operator: {local_operator}")
+
+        self.local_operator = local_operator
+        self.convs = nn.ModuleList(
+            GPSConv(
+                channels=hidden_channels,
+                conv=make_local(),
+                heads=num_heads,
+                dropout=dropout,
+                act="silu",
+                norm="batch_norm",
+                attn_type="multihead",
+            )
+            for _ in range(num_layers)
+        )
+
+
 def make_pcqm_gap_encoder(candidate: str):
     """Build one frozen first-round candidate with a scalar Gap head."""
     common = {
@@ -119,5 +201,16 @@ def make_pcqm_gap_encoder(candidate: str):
         return OGBQueryPoolStructuralGPSWrapper(
             **common,
             num_pool_queries=4,
+        )
+    local_operators = {
+        "ogb_gated_local_gps9": "resgated",
+        "ogb_edge_attention_local_gps9": "transformer",
+        "ogb_gen_local_gps9": "gen",
+        "ogb_gatv2_local_gps9": "gatv2",
+    }
+    if candidate in local_operators:
+        return OGBLocalOperatorStructuralGPSWrapper(
+            **common,
+            local_operator=local_operators[candidate],
         )
     raise ValueError(f"Unknown PCQM Gap candidate: {candidate}")

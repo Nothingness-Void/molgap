@@ -30,13 +30,12 @@
   `results/seed42_structural_vs_edge_state/decision.md`.
 - The accepted winner is only the comparator for a materially new pure-2D
   architecture. Seeds 43/44 and full-data training remain unauthorized.
-- Learned-query pooling Structural GPS9 is the first staged non-EdgeState
-  candidate. Source commit `1d67bd364113f05992934242b334b176c785601f`
-  is published in the private Kaggle source dataset; its frozen contract is in
-  `query_pool_seed42_protocol.md`.
-- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-query-pool-seed42`, version 1,
-  is the sole authorized GPU screen. No other candidate, seed, official
-  validation, test-dev, or molecular-research-server job is authorized while
-  it is unresolved.
+- Learned-query pooling completed, passed no-inference acceptance, failed its
+  strict scientific gate, and is closed by
+  `results/query_pool_seed42/decision.md`.
+- The next authorized GPU screen is the serialized three-candidate plus
+  time-gated-fallback local-operator search defined in
+  `local_operator_search_protocol.md`. Its runtime source commit is not yet
+  pinned; no GPU task is active during staging.
 
 Task order remains authoritative in `ROADMAP.md`.

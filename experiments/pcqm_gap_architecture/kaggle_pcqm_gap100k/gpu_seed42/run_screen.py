@@ -1,4 +1,4 @@
-"""Kaggle GPU: one novel official-PCQM Gap100K seed-42 architecture screen."""
+"""Kaggle GPU: time-bounded local-operator PCQM Gap100K architecture search."""
 from __future__ import annotations
 
 import gc
@@ -14,12 +14,18 @@ import time
 from pathlib import Path
 
 
-OUT = Path("/kaggle/working/pcqm_gap100k_query_pool_seed42")
+OUT = Path("/kaggle/working/pcqm_gap100k_local_operators_seed42")
 PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
-EXPECTED_SOURCE_COMMIT = "1d67bd364113f05992934242b334b176c785601f"
+EXPECTED_SOURCE_COMMIT = "__PIN_AFTER_SOURCE_COMMIT__"
 EXPECTED_CACHE_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
 EXPECTED_CACHE_SHA256 = "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
-CANDIDATES = ("ogb_query_pool_structural_gps9",)
+CORE_CANDIDATES = (
+    "ogb_gated_local_gps9",
+    "ogb_edge_attention_local_gps9",
+    "ogb_gen_local_gps9",
+)
+OPTIONAL_CANDIDATE = "ogb_gatv2_local_gps9"
+CANDIDATES = (*CORE_CANDIDATES, OPTIONAL_CANDIDATE)
 FROZEN_COMPARATOR = {
     "candidate": "ogb_edge_state_structural_gps9",
     "validation_gap_mae_eV": 0.13798263211250306,
@@ -32,6 +38,8 @@ WEIGHT_DECAY = 1.0e-6
 MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
+SEARCH_BUDGET_S = 14_400
+OPTIONAL_BUFFER_S = 600
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -491,6 +499,7 @@ def train_candidate(candidate: str, graphs: dict[str, list]) -> dict:
         "target_mean_eV": target_mean,
         "target_std_eV": target_std,
         "epochs_completed": len(trace),
+        "training_elapsed_s": sum(float(row["elapsed_s"]) for row in trace),
         "contract": {
             "batch_size": BATCH_SIZE,
             "learning_rate": LEARNING_RATE,
@@ -533,20 +542,33 @@ def main() -> None:
         cache_root, cache_manifest = cache_root_and_manifest()
         graphs = load_graphs(cache_root, cache_manifest)
         preflight_result = preflight(graphs)
-        results = [train_candidate(candidate, graphs) for candidate in CANDIDATES]
-        candidate = results[0]
+        results = [
+            train_candidate(candidate, graphs) for candidate in CORE_CANDIDATES
+        ]
+        optional_launched = False
+        completed_durations = [row["training_elapsed_s"] for row in results]
+        remaining_s = SEARCH_BUDGET_S - (time.perf_counter() - started)
+        if remaining_s >= max(completed_durations) + OPTIONAL_BUFFER_S:
+            optional_launched = True
+            results.append(train_candidate(OPTIONAL_CANDIDATE, graphs))
+        winner = min(results, key=lambda row: row["validation_gap_mae_eV"])
         summary = {
-            "format": "molgap-pcqm-gap100k-novel-seed42-screen-v1",
+            "format": "molgap-pcqm-gap100k-local-operator-search-v1",
             "complete": True,
             "source_commit": source_commit,
             "cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
             "preflight": preflight_result,
             "candidates": results,
             "frozen_comparator": FROZEN_COMPARATOR,
-            "candidate_strictly_improves": (
-                candidate["validation_gap_mae_eV"]
+            "core_candidates": list(CORE_CANDIDATES),
+            "optional_candidate": OPTIONAL_CANDIDATE,
+            "optional_launched": optional_launched,
+            "selected_candidate": winner["candidate"],
+            "selected_strictly_improves": (
+                winner["validation_gap_mae_eV"]
                 < FROZEN_COMPARATOR["validation_gap_mae_eV"]
             ),
+            "search_budget_s": SEARCH_BUDGET_S,
             "elapsed_s": time.perf_counter() - started,
             "official_validation_role_read": False,
             "test_dev_role_read": False,

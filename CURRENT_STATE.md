@@ -29,10 +29,11 @@ official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. It is not the endpoint of
-architecture discovery. The next candidate must be a materially new pure-2D
-information flow, trained under the same cache and optimizer contract. Exact
-metrics belong to
+real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling then
+failed its strict gate and is closed. The active search question is a bounded,
+sequential comparison of three materially different edge-aware local operators
+with one time-gated fallback, all under the same cache and optimizer contract.
+Exact comparator metrics belong to
 `experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
 
 ## Prior Architecture Evidence
@@ -65,11 +66,13 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No GPU architecture-training job is active.
+- No GPU architecture-training job is active until the staged local-operator
+  source and manifest pass static acceptance.
 - The official-train-derived PCQM 100K graph cache and first matched seed-42
-  comparison are accepted. The next remote stage is one new non-EdgeState
-  architecture candidate on that immutable cache; no multiseed or full-data
-  run is authorized yet.
+  comparison are accepted. The next remote stage is the single serialized
+  local-operator search defined in
+  `experiments/pcqm_gap_architecture/local_operator_search_protocol.md`; no
+  multiseed or full-data run is authorized yet.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
