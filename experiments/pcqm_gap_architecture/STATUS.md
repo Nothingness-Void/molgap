@@ -35,7 +35,9 @@
   `results/query_pool_seed42/decision.md`.
 - The next authorized GPU screen is the serialized three-candidate plus
   time-gated-fallback local-operator search defined in
-  `local_operator_search_protocol.md`. Its runtime source commit is not yet
-  pinned; no GPU task is active during staging.
+  `local_operator_search_protocol.md`. Runtime source commit
+  `bfaffe332d4c89dc041669679d6fb066e01bce1f` is pinned and published in the
+  private Kaggle source dataset; no GPU task is active during final manifest
+  validation.
 
 Task order remains authoritative in `ROADMAP.md`.

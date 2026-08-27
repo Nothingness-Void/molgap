@@ -8,6 +8,8 @@ PCQM4Mv2 pure-2D, Gap-only path and bounded inference cost?
 
 ## Frozen common contract
 
+- Runtime source commit:
+  `bfaffe332d4c89dc041669679d6fb066e01bce1f`.
 - Official OGB categorical 2D atom and bond fields plus topology-only RWSE16.
 - Accepted cache aggregate SHA-256:
   `eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21`.

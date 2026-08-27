@@ -286,7 +286,7 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
 
 def test_gpu_screen_is_time_bounded_local_operator_sequence() -> None:
     assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "__PIN_AFTER_SOURCE_COMMIT__"
+        "bfaffe332d4c89dc041669679d6fb066e01bce1f"
     )
     assert assignment_literal(GPU, "EXPECTED_CACHE_SOURCE_COMMIT") == (
         "ba82461c53243d733474c8930ac1b86d82451c91"
