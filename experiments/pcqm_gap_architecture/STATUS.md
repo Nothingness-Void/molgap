@@ -42,6 +42,8 @@
   version 1 is the sole active GPU task. It runs the seed-42 recurrent
   graph-state EdgeState screen under `recurrent_graph_state_seed42_protocol.md`
   from source commit `96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8`.
+  Exact launch identities and hashes are in
+  `results/recurrent_graph_state_seed42/launch_manifest.json`.
 - No seed-43/44 run, full-data run, official validation/test-dev read, or
   molecular-research-server work is authorized.
 
