@@ -28,10 +28,12 @@ Architecture selection uses only an internal 100K/10K split derived from the
 official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
-The first matched question compares an OGB-categorical Structural GPS9 with its
-persistent real-bond EdgeState counterpart. Both are pure 2D, randomly
-initialized, Gap-only, and trained under one frozen contract. The protocol is
-`experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md`.
+The first matched official-PCQM question completed and froze persistent
+real-bond EdgeState GPS9 as the seed-42 comparator. It is not the endpoint of
+architecture discovery. The next candidate must be a materially new pure-2D
+information flow, trained under the same cache and optimizer contract. Exact
+metrics belong to
+`experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -64,10 +66,10 @@ must not be represented as this new conservative head.
 ## Execution State
 
 - No GPU architecture-training job is active.
-- The next remote stage is Kaggle CPU version-4 construction and local
-  no-inference acceptance of the official-train-derived PCQM 100K graph cache.
-  Its audited reserve policy is frozen in the experiment protocol; the GPU
-  screen remains gated on exact effective role counts and replacement hashes.
+- The official-train-derived PCQM 100K graph cache and first matched seed-42
+  comparison are accepted. The next remote stage is one new non-EdgeState
+  architecture candidate on that immutable cache; no multiseed or full-data
+  run is authorized yet.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

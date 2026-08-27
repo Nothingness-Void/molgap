@@ -21,10 +21,14 @@
   deterministic 1,024-row reserve stream. It preserves the original 100K/10K
   split hashes, retains every graph failure, and emits hashed failure and
   replacement ledgers. Version 4 is the authorized CPU retry.
-- A GPU screen may start only after version 4 passes local no-inference
-  acceptance with exactly 100,000 effective train graphs, 10,000 effective
-  internal-validation graphs, and zero unresolved slots.
+- Version 4 passed local no-inference acceptance with exactly 100,000 effective
+  train graphs, 10,000 effective internal-validation graphs, one audited
+  replacement, and zero unresolved slots.
+- Kaggle2 GPU kernel `kaseichou/molgap-pcqm-gap100k-r1-seed42` completed on a
+  P100. Its downloaded outputs passed no-inference acceptance, and the exact
+  comparison is frozen in
+  `results/seed42_structural_vs_edge_state/decision.md`.
+- The accepted winner is only the comparator for a materially new pure-2D
+  architecture. Seeds 43/44 and full-data training remain unauthorized.
 
-The GPU seed-42 screen is staged but not submitted. Task order remains
-authoritative in `ROADMAP.md`; retrieval hashes will be added only after local
-no-inference acceptance.
+Task order remains authoritative in `ROADMAP.md`.

@@ -15,8 +15,7 @@ finish before any molecular-research-server use.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-CACHE | Build and accept the frozen official-train-derived 100K/10K OGB graph and RWSE cache on Kaggle CPU | Exact row/hash/feature/shard contract passes; official validation and test-dev read flags are false | `experiments/pcqm_gap_architecture/` |
-| P0 | B-PCQM100K-SEED42 | Train matched Gap-only Structural GPS9 and persistent EdgeState GPS9 sequentially on one Kaggle GPU | Complete finite artifacts identify a validation winner without reading official validation/test-dev | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-NOVEL | Train one materially new, non-EdgeState pure-2D information-flow candidate against the frozen accepted seed-42 comparator | Candidate strictly beats the frozen internal-validation Gap MAE under the identical cache and training contract, or closes with retained evidence | `experiments/pcqm_gap_architecture/` |
 | P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
@@ -26,6 +25,10 @@ finish before any molecular-research-server use.
 The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
 `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
+
+The official-PCQM cache and first matched seed-42 comparator are accepted
+evidence. Their exact decision is
+`experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
 
 The accepted R3 validation gate, failed R5/R6/R7/R8/R9 branches, and untriggered R4
 fallback are evidence. Their exact dispositions are

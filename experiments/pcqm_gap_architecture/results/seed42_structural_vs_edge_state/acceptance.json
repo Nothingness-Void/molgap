@@ -1,0 +1,16 @@
+{
+  "format": "molgap-pcqm-gap100k-seed42-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "ba82461c53243d733474c8930ac1b86d82451c91",
+  "cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "selected_candidate": "ogb_edge_state_structural_gps9",
+  "edge_state_strictly_improves": true,
+  "validation_gap_mae_eV": {
+    "ogb_structural_gps9": 0.14331276745796204,
+    "ogb_edge_state_structural_gps9": 0.13798263211250306
+  },
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
