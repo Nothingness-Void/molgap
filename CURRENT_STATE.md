@@ -71,8 +71,8 @@ must not be represented as this new conservative head.
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
 - The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. The recurrent graph-state candidate is staged for
-  one matched Kaggle seed-42 run; no multiseed or full-data run is authorized.
+  comparisons are accepted. Kaggle2 is running the sole matched recurrent
+  graph-state seed-42 screen; no multiseed or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
