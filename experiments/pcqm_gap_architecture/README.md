@@ -23,7 +23,11 @@ The predeclared local-operator sequence in
 [`local_operator_search_protocol.md`](local_operator_search_protocol.md) failed
 its strict gate and is closed by
 [`results/local_operator_search_seed42/decision.md`](results/local_operator_search_seed42/decision.md).
-A later screen must define a materially new information-flow question first.
+
+The resource-bounded comparison of all remaining mechanisms is in
+[`architecture_route_audit.md`](architecture_route_audit.md). It selects the
+recurrent graph-state EdgeState question frozen in
+[`recurrent_graph_state_seed42_protocol.md`](recurrent_graph_state_seed42_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

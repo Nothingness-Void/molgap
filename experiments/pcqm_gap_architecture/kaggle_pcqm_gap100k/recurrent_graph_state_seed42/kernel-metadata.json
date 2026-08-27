@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42",
+  "title": "MolGap PCQM Gap100K Recurrent State Seed42",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-gap100k-global-state-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
+  ],
+  "model_sources": []
+}

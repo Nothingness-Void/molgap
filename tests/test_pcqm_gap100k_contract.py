@@ -21,6 +21,17 @@ NOVEL_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_novel_seed42.py"
 QUERY_POOL_PROTOCOL = EXPERIMENT / "query_pool_seed42_protocol.md"
 LOCAL_OPERATOR_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_local_operator_search.py"
 LOCAL_OPERATOR_PROTOCOL = EXPERIMENT / "local_operator_search_protocol.md"
+RECURRENT_STATE_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "recurrent_graph_state_seed42"
+    / "run_screen.py"
+)
+RECURRENT_STATE_METADATA = RECURRENT_STATE_GPU.with_name("kernel-metadata.json")
+RECURRENT_STATE_ACCEPTANCE = (
+    EXPERIMENT / "accept_pcqm100k_recurrent_graph_state.py"
+)
+RECURRENT_STATE_PROTOCOL = EXPERIMENT / "recurrent_graph_state_seed42_protocol.md"
 
 
 def assignment_literal(path: Path, name: str):
@@ -110,6 +121,9 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert '"ogb_edge_attention_local_gps9": "transformer"' in source
     assert '"ogb_gen_local_gps9": "gen"' in source
     assert '"ogb_gatv2_local_gps9": "gatv2"' in source
+    assert "class OGBGraphTokenStructuralGPSWrapper" in source
+    assert 'candidate == "ogb_recurrent_graph_state_gps9"' in source
+    assert "token_channels=16" in source
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source
@@ -366,3 +380,56 @@ def test_local_operator_protocol_freezes_three_plus_optional() -> None:
     assert "Parameter ceiling 5.2M" in source
     assert "The first three run sequentially" in source
     assert "No candidate may be retried" in source
+
+
+def test_recurrent_graph_state_screen_preserves_frozen_contract() -> None:
+    assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "__PIN_AFTER_SOURCE_COMMIT__"
+    )
+    assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_CACHE_SHA256") == (
+        "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
+    )
+    assert assignment_literal(RECURRENT_STATE_GPU, "CANDIDATE") == (
+        "ogb_recurrent_graph_state_gps9"
+    )
+    assert assignment_literal(RECURRENT_STATE_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(RECURRENT_STATE_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(RECURRENT_STATE_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(RECURRENT_STATE_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(RECURRENT_STATE_GPU, "PATIENCE") == 8
+    assert assignment_literal(RECURRENT_STATE_GPU, "PARAMETER_BUDGET") == 5_200_000
+    assert assignment_literal(RECURRENT_STATE_GPU, "SEARCH_BUDGET_S") == 14_400
+    source = RECURRENT_STATE_GPU.read_text(encoding="utf-8")
+    assert '"precision": "fp32"' in source
+    assert '"target": "homolumogap"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(RECURRENT_STATE_METADATA.read_text(encoding="utf-8"))
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-global-state-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
+    ]
+
+
+def test_recurrent_graph_state_acceptance_executes_no_model_runtime() -> None:
+    assert "torch" not in imported_modules(RECURRENT_STATE_ACCEPTANCE)
+    source = RECURRENT_STATE_ACCEPTANCE.read_text(encoding="utf-8")
+    assert 'CANDIDATE = "ogb_recurrent_graph_state_gps9"' in source
+    assert 'COMPARATOR = "ogb_edge_state_structural_gps9"' in source
+    assert "COMPARATOR_MAE = 0.13798263211250306" in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+
+
+def test_recurrent_graph_state_protocol_is_gap_only_and_single_candidate() -> None:
+    source = RECURRENT_STATE_PROTOCOL.read_text(encoding="utf-8")
+    assert "official PCQM4Mv2 task predicts Gap only" in source
+    assert "One Kaggle GPU task" in source
+    assert "Parameter ceiling 5.2M" in source
+    assert "at most 40 epochs, patience 8" in source
+    assert "official validation and test-dev remain unread" in source
+    assert "token-width, seed, optimizer, schedule" in source

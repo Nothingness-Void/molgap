@@ -39,7 +39,8 @@
   time-gated fourth candidate was not launched. The exact disposition is in
   `results/local_operator_search_seed42/decision.md`.
 - No GPU task, seed-43/44 run, full-data run, or molecular-research-server work
-  is authorized. A later attempt requires a predeclared materially new
-  pure-2D information-flow question.
+  is active. The next authorized task is one seed-42 recurrent graph-state
+  EdgeState screen under `recurrent_graph_state_seed42_protocol.md`; its source
+  and remote kernel must pass static and manifest checks before submission.
 
 Task order remains authoritative in `ROADMAP.md`.

@@ -4,7 +4,11 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from .gps import EdgeStateStructuralGPSWrapper, StructuralGPSWrapper
+from .gps import (
+    EdgeStateStructuralGPSWrapper,
+    GraphTokenStructuralGPSWrapper,
+    StructuralGPSWrapper,
+)
 
 
 class OGBStructuralGPSWrapper(StructuralGPSWrapper):
@@ -27,6 +31,29 @@ class OGBStructuralGPSWrapper(StructuralGPSWrapper):
 
 class OGBEdgeStateStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
     """Persistent real-bond EdgeState GPS using official OGB categories."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
+
+        hidden_channels = self.node_emb.out_features
+        self.node_emb = AtomEncoder(hidden_channels)
+        self.edge_emb = BondEncoder(self.edge_state_channels)
+
+    def _embed_nodes(self, x):
+        return self.node_emb(x.long())
+
+    def _embed_edges(self, edge_attr):
+        return self.edge_emb(edge_attr.long())
+
+
+class OGBGraphTokenStructuralGPSWrapper(GraphTokenStructuralGPSWrapper):
+    """Persistent-edge GPS with an OGB-encoded recurrent molecule state.
+
+    The shared graph state is updated from the node set and broadcast before
+    every GPS block. Unlike learned-query pooling, it participates in all nine
+    representation updates rather than changing only the final readout.
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -196,6 +223,12 @@ def make_pcqm_gap_encoder(candidate: str):
         return OGBEdgeStateStructuralGPSWrapper(
             **common,
             edge_state_channels=64,
+        )
+    if candidate == "ogb_recurrent_graph_state_gps9":
+        return OGBGraphTokenStructuralGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            token_channels=16,
         )
     if candidate == "ogb_query_pool_structural_gps9":
         return OGBQueryPoolStructuralGPSWrapper(
