@@ -37,7 +37,10 @@
   time-gated-fallback local-operator search defined in
   `local_operator_search_protocol.md`. Runtime source commit
   `bfaffe332d4c89dc041669679d6fb066e01bce1f` is pinned and published in the
-  private Kaggle source dataset; no GPU task is active during final manifest
-  validation.
+  private Kaggle source dataset.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`, version
+  1, is the sole active GPU task. Luna Max task `MolGap 4h Local Operator
+  Search` owns read-only monitoring and terminal no-inference acceptance; no
+  other candidate, seed, or remote platform is authorized during this run.
 
 Task order remains authoritative in `ROADMAP.md`.

@@ -66,8 +66,9 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- No GPU architecture-training job is active until the staged local-operator
-  source and manifest pass static acceptance.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`,
+  version 1, is the sole active GPU architecture search. It serializes three
+  core local operators and permits the fourth only under its frozen time gate.
 - The official-train-derived PCQM 100K graph cache and first matched seed-42
   comparison are accepted. The next remote stage is the single serialized
   local-operator search defined in
