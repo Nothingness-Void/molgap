@@ -34,5 +34,9 @@
   candidate. Source commit `1d67bd364113f05992934242b334b176c785601f`
   is published in the private Kaggle source dataset; its frozen contract is in
   `query_pool_seed42_protocol.md`.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-query-pool-seed42`, version 1,
+  is the sole authorized GPU screen. No other candidate, seed, official
+  validation, test-dev, or molecular-research-server job is authorized while
+  it is unresolved.
 
 Task order remains authoritative in `ROADMAP.md`.
