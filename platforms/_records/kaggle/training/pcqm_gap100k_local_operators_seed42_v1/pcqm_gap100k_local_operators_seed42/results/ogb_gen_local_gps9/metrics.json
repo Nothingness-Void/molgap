@@ -1,0 +1,36 @@
+{
+  "format": "molgap-pcqm-gap100k-candidate-v1",
+  "complete": true,
+  "candidate": "ogb_gen_local_gps9",
+  "source_commit": "bfaffe332d4c89dc041669679d6fb066e01bce1f",
+  "seed": 42,
+  "parameter_count": 4142611,
+  "parameter_budget": 5200000,
+  "best_epoch": 38,
+  "validation_gap_mae_eV": 0.14277554037570953,
+  "target_mean_eV": 5.695846080780029,
+  "target_std_eV": 1.1622838973999023,
+  "epochs_completed": 40,
+  "training_elapsed_s": 5455.234690368994,
+  "contract": {
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 1e-06,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "homolumogap"
+  },
+  "artifacts": {
+    "best_model": "results/ogb_gen_local_gps9/best_model.pt",
+    "best_model_sha256": "b1cb8614ded5686d3d63a26f1904ec2e07957d4c5b6ba1a35fb3ab57ca07037c",
+    "checkpoint": "results/ogb_gen_local_gps9/checkpoint.pt",
+    "checkpoint_sha256": "53fb81415ed03b9bf42344756281ae05aec8a47c53837e5e958b9dcef4a405c8",
+    "validation_payload": "results/ogb_gen_local_gps9/validation_payload.pt",
+    "validation_payload_sha256": "2c0812c4b52f51a436649a1a45a2cffb9e2b7e700237aff497968a866344b54e",
+    "trace": "results/ogb_gen_local_gps9/trace.json",
+    "trace_sha256": "fd334c37e73fc1f0f6db1e03b27008ff5412810844176770702504055ab45adb"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

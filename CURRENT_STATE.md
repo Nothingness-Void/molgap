@@ -29,12 +29,12 @@ official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling then
-failed its strict gate and is closed. The active search question is a bounded,
-sequential comparison of three materially different edge-aware local operators
-with one time-gated fallback, all under the same cache and optimizer contract.
-Exact comparator metrics belong to
-`experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
+real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
+three matched local-operator replacements then failed their strict gates and
+are closed. No challenger currently has seed-43/44 or full-data authorization;
+the next candidate must pose a materially new pure-2D information-flow
+question. Exact conclusions belong to the decisions under
+`experiments/pcqm_gap_architecture/results/`.
 
 ## Prior Architecture Evidence
 
@@ -67,13 +67,12 @@ must not be represented as this new conservative head.
 ## Execution State
 
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`,
-  version 1, is the sole active GPU architecture search. It serializes three
-  core local operators and permits the fourth only under its frozen time gate.
-- The official-train-derived PCQM 100K graph cache and first matched seed-42
-  comparison are accepted. The next remote stage is the single serialized
-  local-operator search defined in
-  `experiments/pcqm_gap_architecture/local_operator_search_protocol.md`; no
-  multiseed or full-data run is authorized yet.
+  version 1, completed. Its three required candidates passed no-inference
+  artifact acceptance but all failed the scientific advancement gate; the
+  time-gated fourth candidate was not launched.
+- The official-train-derived PCQM 100K graph cache and all completed seed-42
+  comparisons are accepted. No GPU architecture task, multiseed run, or
+  full-data run is authorized now.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -109,6 +108,7 @@ must not be represented as this new conservative head.
 | What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
 | What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
 | What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
+| Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |
