@@ -384,7 +384,7 @@ def test_local_operator_protocol_freezes_three_plus_optional() -> None:
 
 def test_recurrent_graph_state_screen_preserves_frozen_contract() -> None:
     assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "__PIN_AFTER_SOURCE_COMMIT__"
+        "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8"
     )
     assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_CACHE_SHA256") == (
         "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
