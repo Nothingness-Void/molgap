@@ -1,0 +1,35 @@
+{
+  "format": "molgap-pcqm-gap100k-candidate-v1",
+  "complete": true,
+  "candidate": "ogb_query_pool_structural_gps9",
+  "source_commit": "1d67bd364113f05992934242b334b176c785601f",
+  "seed": 42,
+  "parameter_count": 4106881,
+  "parameter_budget": 5200000,
+  "best_epoch": 39,
+  "validation_gap_mae_eV": 0.14491832451820374,
+  "target_mean_eV": 5.695846080780029,
+  "target_std_eV": 1.1622838973999023,
+  "epochs_completed": 40,
+  "contract": {
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 1e-06,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "homolumogap"
+  },
+  "artifacts": {
+    "best_model": "results/ogb_query_pool_structural_gps9/best_model.pt",
+    "best_model_sha256": "36d843bf83539902494d7ba26feeb60a79cfcbd505d56fb0dede68c1a9caf2bc",
+    "checkpoint": "results/ogb_query_pool_structural_gps9/checkpoint.pt",
+    "checkpoint_sha256": "1fd340f1ef613aebd4f016ab13bdfd62b482e070b0c68971073bb498fbf55ba9",
+    "validation_payload": "results/ogb_query_pool_structural_gps9/validation_payload.pt",
+    "validation_payload_sha256": "22dd54e22c78f68f5fca00eaee93fd97f3620697d64ba7e4793cac63cc418d2e",
+    "trace": "results/ogb_query_pool_structural_gps9/trace.json",
+    "trace_sha256": "38d4eec0cc455ad4796b75e955f08bf267bfad7d4b958b6c07303a9b79f2c3b1"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
