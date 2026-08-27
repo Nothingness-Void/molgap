@@ -31,7 +31,8 @@
 - The accepted winner is only the comparator for a materially new pure-2D
   architecture. Seeds 43/44 and full-data training remain unauthorized.
 - Learned-query pooling Structural GPS9 is the first staged non-EdgeState
-  candidate. Its frozen contract is in `query_pool_seed42_protocol.md`; it may
-  run once on Kaggle only after its source commit is pinned and published.
+  candidate. Source commit `1d67bd364113f05992934242b334b176c785601f`
+  is published in the private Kaggle source dataset; its frozen contract is in
+  `query_pool_seed42_protocol.md`.
 
 Task order remains authoritative in `ROADMAP.md`.

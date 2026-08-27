@@ -25,6 +25,8 @@ JK-readout, shortest-path, directed-edge, or multihop branch.
 
 ## Frozen run contract
 
+- Runtime source commit:
+  `1d67bd364113f05992934242b334b176c785601f`.
 - Cache SHA-256:
   `eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21`.
 - Seed 42, FP32, batch 48, AdamW, learning rate `1.6e-4`, weight decay

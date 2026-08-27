@@ -279,7 +279,7 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
 
 def test_gpu_screen_is_single_novel_gap_only_candidate() -> None:
     assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "__PIN_AFTER_SOURCE_COMMIT__"
+        "1d67bd364113f05992934242b334b176c785601f"
     )
     assert assignment_literal(GPU, "EXPECTED_CACHE_SOURCE_COMMIT") == (
         "ba82461c53243d733474c8930ac1b86d82451c91"
