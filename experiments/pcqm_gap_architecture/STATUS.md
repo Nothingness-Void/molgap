@@ -56,12 +56,13 @@
   final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
   and molecular-research-server work remain unauthorized.
 - Kaggle2 accepted the corrected GPU submission as kernel
-  `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42`, version 1; it was
-  `RUNNING` at the launch check on 2026-08-28 17:25 JST. Its separate output
+  `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42`, version 1, but the job
+  terminated during preflight before the first epoch. Its separate failure
   record is `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_edge_state_r2_seed42`.
-  The title is deliberately under Kaggle's 50-character limit. This is the
-  single authorized seed-42 attempt for this architecture; prior
-  metadata-only submission failures remain in the archive and are not reused
-  as results.
+  The fatal error was an `AtomEncoder`/`out_features` API mismatch in the
+  sparse wrapper; no training metrics, checkpoint, or candidate result exists.
+  The preserved evidence and SHA-256 values are in
+  `results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`. No
+  retry or successor submission is authorized by this screen.
 
 Task order remains authoritative in `ROADMAP.md`.
