@@ -1,0 +1,57 @@
+{
+  "format": "molgap-pcqm-rich-full-acceptance-v1",
+  "status": "accepted",
+  "accepted_at": "2026-08-28T14:34:07+09:00",
+  "job": "1355016.ccpbs1",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/training",
+  "model": {
+    "feature_schema": "ogb",
+    "hidden_channels": 192,
+    "num_layers": 9,
+    "num_heads": 4,
+    "edge_state_channels": 64,
+    "parameters": 4771073,
+    "seed": 42
+  },
+  "training": {
+    "official_train_rows": 3378606,
+    "official_valid_rows": 73545,
+    "epochs": 20,
+    "best_epoch": 19,
+    "runtime_s": 43689.12823350821,
+    "valid_gap_mae_eV": 0.10206277058753291
+  },
+  "data_contract": {
+    "official_valid_used": true,
+    "official_test_used": false,
+    "external_data_used": false,
+    "pretrained_weights_used": false,
+    "production_registry_changed": false
+  },
+  "artifacts": {
+    "best.pt": {
+      "bytes": 19263998,
+      "sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15",
+      "finite": true
+    },
+    "last.pt": {
+      "bytes": 57695965,
+      "sha256": "1f30ea262c1f13dd37a6939726b1a28702ee89a43a82618281b3708920650d2c",
+      "finite": true,
+      "resumable_epoch": 19
+    },
+    "metrics.json": {
+      "bytes": 7524,
+      "sha256": "bcf3984cf4114ea4dc334efc6df5e9a2966c81edc7832e542047741d301ab010"
+    },
+    "valid_predictions.pt": {
+      "bytes": 1178911,
+      "sha256": "925253128a874d194d61e795ad71d6543b29bbd25f0fcea37e2ce35c74cecab1",
+      "rows": 73545,
+      "unique_source_idx": 73545,
+      "source_idx_sorted": true,
+      "recomputed_mae_eV": 0.10206276178359985
+    }
+  },
+  "local_record": "platforms/_records/ims/pcqm_rich_full_20260828/"
+}

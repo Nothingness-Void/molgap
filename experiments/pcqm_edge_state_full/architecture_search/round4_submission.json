@@ -1,0 +1,47 @@
+{
+  "format": "molgap-pcqm-official-equal-ensemble-confirmation-submission-v1",
+  "recorded_at": "2026-08-28T00:19:00+09:00",
+  "platform": "Kaggle",
+  "owner": "nothingnessvoid",
+  "input_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v6-20260827",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "runs": [
+    {
+      "variant": "radicalctx16",
+      "seed": 43,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext16-s43-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_validated",
+      "script_sha256": "57ed5e9945ef23a4f5a6a59ab7730217ef61da8694cb60716c1848c165f78baf"
+    },
+    {
+      "variant": "radicalctx32",
+      "seed": 43,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext32-s43-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_validated",
+      "script_sha256": "7944d07115c6ceb399ce9e7d3c462b409bfc31845b12740b2417d7a076fc5163"
+    },
+    {
+      "variant": "radicalctx16",
+      "seed": 44,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext16-s44-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_validated",
+      "script_sha256": "67c5784d69a33edfc11cfb4886f07ac7414d900399d3b083386f94153ba696a6"
+    },
+    {
+      "variant": "radicalctx32",
+      "seed": 44,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext32-s44-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_validated",
+      "script_sha256": "f2f755831006b3df57ec77490d4820dc6656555b89dbc1824ed041af4b3dd2d4"
+    }
+  ]
+}

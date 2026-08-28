@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=03:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+test ! -e rich_full/training/last.pt
+mkdir -p rich_full/benchmark rich_full/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+"$PYTHON" code/experiments/pcqm_edge_state_full/run.py train \
+  --graph-dir rich_full/graphs \
+  --acceptance rich_full/graphs/acceptance.json \
+  --output-dir rich_full/benchmark \
+  --feature-schema ogb --max-epochs 1 --projection-epochs 20 \
+  --scheduler cosine --warmup-epochs 0 \
+  --max-projected-hours 12 --patience 1 \
+  --batch-size 256 --eval-batch-size 512 --seed 42 \
+  2>&1 | tee rich_full/logs/benchmark.log

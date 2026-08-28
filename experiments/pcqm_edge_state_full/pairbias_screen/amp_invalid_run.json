@@ -1,0 +1,25 @@
+{
+  "format": "molgap-pcqm-pairbias-invalid-run-v1",
+  "status": "invalid_numerical_run",
+  "kernel_slug": "nothingnessvoid/molgap-pcqm-arch-pairbias-s42-train-20260828",
+  "seed": 42,
+  "precision": "amp",
+  "best_epoch": 5,
+  "last_epoch": 12,
+  "first_nonfinite_train_epoch": 5,
+  "first_nonfinite_development_epoch": 7,
+  "last_checkpoint_nonfinite_values": 5662721,
+  "best_finite_development": {
+    "mae_eV": 0.22360646724700928,
+    "radical_mae_eV": 0.44117018580436707,
+    "nonradical_mae_eV": 0.20560960471630096
+  },
+  "control": {
+    "mae_eV": 0.15006214380264282,
+    "radical_mae_eV": 0.25360438227653503,
+    "nonradical_mae_eV": 0.1414971500635147
+  },
+  "kernel_manifest_sha256": "c14412b11fdf55c3a6a2715d9c7cd6607b33dd74356f5e01b33939d383798fa4",
+  "scientific_decision": "No architecture verdict. The transferred PairGPS contract requires FP32; AMP caused delayed non-finite training.",
+  "raw_record": "platforms/_records/kaggle/training/pcqm_pairbias_screen_20260828/amp_invalid_v1/"
+}

@@ -1,0 +1,74 @@
+{
+  "format": "molgap-pcqm-official-architecture-kaggle-v1",
+  "status": "complete",
+  "variant": "radicalctx16",
+  "seed": 43,
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "config": {
+    "format": "molgap-pcqm-official-architecture-config-v1",
+    "variant": "radicalctx16",
+    "seed": 43,
+    "hidden_channels": 192,
+    "num_layers": 9,
+    "num_heads": 4,
+    "edge_state_channels": 64,
+    "categorical_encoder": "sum",
+    "categorical_field_channels": 16,
+    "graph_context": "radical",
+    "radical_context_channels": 16
+  },
+  "development": {
+    "mae_eV": 0.15183450281620026,
+    "radical_mae_eV": 0.25342223048210144,
+    "nonradical_mae_eV": 0.143431156873703,
+    "radical_rows": 764,
+    "nonradical_rows": 9236
+  },
+  "control": {
+    "mae_eV": 0.15006214380264282,
+    "radical_mae_eV": 0.25360438227653503,
+    "nonradical_mae_eV": 0.1414971500635147
+  },
+  "delta_eV": {
+    "mae_eV": 0.001772359013557434,
+    "radical_mae_eV": -0.00018215179443359375,
+    "nonradical_mae_eV": 0.0019340068101882935
+  },
+  "provisional_gate": {
+    "overall_improvement_at_least_0p002_eV": false,
+    "radical_regression_at_most_0p002_eV": true,
+    "nonradical_regression_at_most_0p002_eV": true
+  },
+  "provisional_gate_pass": false,
+  "artifacts": {
+    "best.pt": {
+      "bytes": 19425259,
+      "sha256": "49c74e347c7980b5cce93f02dd51833f503f876974ce6a497d7217d0fafcf5de"
+    },
+    "last.pt": {
+      "bytes": 58181070,
+      "sha256": "d3e90d4ce3ce0df588fe800fa8bb29e72bec144b00ac2be0c8d966af6cd2922b"
+    },
+    "metrics.json": {
+      "bytes": 8397,
+      "sha256": "a6e3a39971ca1054deca693b9ec6f0e6785d3cc2c789c5280a97e15501f48749"
+    },
+    "development_predictions.pt": {
+      "bytes": 172208,
+      "sha256": "81898285d087eaf9591d61eaa42bcbf7fcc813f16c3941e96b8e4ec8cf5a85ae"
+    },
+    "completion_manifest.json": {
+      "bytes": 424,
+      "sha256": "455922cf00e2201b5dec49947093a3a9fb40cd887c01c1005a9fd04ba493e78d"
+    },
+    "progress.json": {
+      "bytes": 133,
+      "sha256": "2639cf7a2dbef540a4f71aea61eb2de153c0460d95b866d245074df21b1647c2"
+    }
+  }
+}

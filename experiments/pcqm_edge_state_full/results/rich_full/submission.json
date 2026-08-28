@@ -1,0 +1,75 @@
+{
+  "format": "molgap-pcqm-rich-full-input-submission-v1",
+  "recorded_at": "2026-08-27T14:10:00+09:00",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full",
+  "input": {
+    "archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "train_rows": 3378606,
+    "valid_rows": 73545,
+    "source_shards": 75,
+    "feature_schema": "ogb",
+    "atom_feature_dims": [119, 5, 12, 12, 10, 6, 6, 2, 2],
+    "bond_feature_dims": [5, 6, 2]
+  },
+  "pilot": {
+    "job": "1352535.ccpbs1",
+    "status": "accepted",
+    "rows": 50000,
+    "elapsed_s": 79.17353580426425,
+    "failures": 0,
+    "graph_sha256": "86487c2e844de8f3b5dab5ba20bf25a351e454c81543c98d98ec7816ee74962e"
+  },
+  "jobs": {
+    "build_shards_1_74": "1352555[].ccpbs1",
+    "accept_graphs": "1352556.ccpbs1",
+    "benchmark_one_epoch": "1352557.ccpbs1",
+    "conditional_full_training": "1352593.ccpbs1",
+    "authorized_full_training_14h": "1355016.ccpbs1"
+  },
+  "graph_acceptance": {
+    "status": "accepted",
+    "sha256": "83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed",
+    "failures": 0,
+    "unsanitized_fallback_rows": 33,
+    "retrieved_path": "platforms/_records/ims/pcqm_rich_full_20260827_acceptance.json"
+  },
+  "dependencies": {
+    "accept_graphs": "afterok:1352555[].ccpbs1",
+    "benchmark_one_epoch": "afterok:1352556.ccpbs1",
+    "conditional_full_training": "afterok:1352557.ccpbs1"
+  },
+  "durability": {
+    "graph_root": "rich_full/graphs",
+    "per_shard_reports": "rich_full/graphs/reports/shard_{index:04d}.json",
+    "graph_acceptance": "rich_full/graphs/acceptance.json",
+    "benchmark_root": "rich_full/benchmark",
+    "benchmark_timing_gate": "rich_full/benchmark/timing_gate.json"
+  },
+  "training_gate": {
+    "projection_epochs": 20,
+    "maximum_projected_hours": 12,
+    "full_training_submitted": true,
+    "full_training_state": "not_started_timing_gate_rejected",
+    "benchmark_epoch_s": 2245.997890934348,
+    "projected_training_s": 44919.95781868696,
+    "projected_training_hours": 12.477766060746378,
+    "timing_gate_sha256": "cccaac3b337426ff1489e0204e2056fac1d644862b9c3257e8748b43ac89fbbb",
+    "timing_gate_retrieved_path": "platforms/_records/ims/pcqm_rich_full_20260827_timing_gate.json"
+  },
+  "authorized_replacement": {
+    "recorded_at": "2026-08-27T18:14:36+09:00",
+    "reason": "User explicitly authorized a one-time 14-hour walltime after reviewing the measured 12.477766-hour projection.",
+    "job": "1355016.ccpbs1",
+    "submission_state": "running",
+    "resources": {
+      "cpus": 8,
+      "gpus": 1,
+      "walltime_hours": 14.0,
+      "hard_training_budget_hours": 13.5
+    },
+    "pbs_sha256": "7a86d9ed3749352b02fdf2cd42f98726f5a18727b1b9e4a9d03c09d719576cfd",
+    "preserved_timing_gate_sha256": "cccaac3b337426ff1489e0204e2056fac1d644862b9c3257e8748b43ac89fbbb"
+  }
+}

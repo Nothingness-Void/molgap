@@ -1,0 +1,24 @@
+{
+  "format": "molgap-pcqm-feature-screen-cuda-preflight-v1",
+  "status": "passed",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "schemas": {
+    "legacy": {
+      "rows": 32,
+      "output_shape": [
+        32
+      ],
+      "parameters": 4742529,
+      "finite_gradients": true
+    },
+    "ogb": {
+      "rows": 32,
+      "output_shape": [
+        32
+      ],
+      "parameters": 4771073,
+      "finite_gradients": true
+    }
+  }
+}

@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=2:mpiprocs=1:ompthreads=1
+#PBS -l walltime=01:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+mkdir -p feature_screen/rows feature_screen/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+"$PYTHON" code/experiments/pcqm_edge_state_full/feature_screen.py prepare \
+  --archive inputs/pcqm4m-v2.zip \
+  --rows-dir feature_screen/rows \
+  --train-rows 100000 --development-rows 10000 --seed 20260826 \
+  2>&1 | tee feature_screen/logs/prepare.log

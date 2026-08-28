@@ -1,0 +1,72 @@
+{
+  "format": "molgap-pcqm-official-architecture-kaggle-v1",
+  "status": "complete",
+  "variant": "fieldconcat16",
+  "seed": 42,
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "config": {
+    "format": "molgap-pcqm-official-architecture-config-v1",
+    "variant": "fieldconcat16",
+    "seed": 42,
+    "hidden_channels": 192,
+    "num_layers": 9,
+    "num_heads": 4,
+    "edge_state_channels": 64,
+    "categorical_encoder": "concat_project",
+    "categorical_field_channels": 16
+  },
+  "development": {
+    "mae_eV": 0.15151703357696533,
+    "radical_mae_eV": 0.2644546926021576,
+    "nonradical_mae_eV": 0.1421748399734497,
+    "radical_rows": 764,
+    "nonradical_rows": 9236
+  },
+  "control": {
+    "mae_eV": 0.15006214380264282,
+    "radical_mae_eV": 0.25360438227653503,
+    "nonradical_mae_eV": 0.1414971500635147
+  },
+  "delta_eV": {
+    "mae_eV": 0.0014548897743225098,
+    "radical_mae_eV": 0.010850310325622559,
+    "nonradical_mae_eV": 0.0006776899099349976
+  },
+  "provisional_gate": {
+    "overall_improvement_at_least_0p002_eV": false,
+    "radical_regression_at_most_0p002_eV": false,
+    "nonradical_regression_at_most_0p002_eV": true
+  },
+  "provisional_gate_pass": false,
+  "artifacts": {
+    "best.pt": {
+      "bytes": 19263787,
+      "sha256": "3da1d267827a65d017dc711fce52e26193df25258c577566ebbc23d3584782f6"
+    },
+    "last.pt": {
+      "bytes": 57697230,
+      "sha256": "6b6cbaf1218c39bf369867cf115ac720d3564b1294f2d7787fd1a44dacd9f337"
+    },
+    "metrics.json": {
+      "bytes": 8343,
+      "sha256": "f063123c8882d99d74410cf61a1d95cfac187a4563bc0d5c80205476e42028d4"
+    },
+    "development_predictions.pt": {
+      "bytes": 172208,
+      "sha256": "90ae68228a109c9959ad84bcadccfd3d78caecfea313d28f13b45785664120cb"
+    },
+    "completion_manifest.json": {
+      "bytes": 424,
+      "sha256": "e4f370e18085d5f24ae7d803a881a4aae6d7246aabf8aa8194c548ab602294c7"
+    },
+    "progress.json": {
+      "bytes": 133,
+      "sha256": "de6f19d20bf5c49d01ec4735fafddb5d7b184ea78c875374492ae65d5e6e64cb"
+    }
+  }
+}

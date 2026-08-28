@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+SCHEMA="${SCHEMA:?SCHEMA is required}"
+SEED="${SEED:?SEED is required}"
+test "$SCHEMA" = legacy -o "$SCHEMA" = ogb
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+OUT="feature_screen/runs/${SCHEMA}_seed${SEED}"
+mkdir -p "$OUT" feature_screen/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+"$PYTHON" code/experiments/pcqm_edge_state_full/feature_screen.py train \
+  --graph-dir feature_screen/graphs \
+  --acceptance feature_screen/graphs/acceptance.json \
+  --output-dir "$OUT" --schema "$SCHEMA" --seed "$SEED" \
+  --max-epochs 40 --patience 7 \
+  2>&1 | tee "feature_screen/logs/train_${SCHEMA}_seed${SEED}.log"

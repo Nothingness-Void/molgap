@@ -1,0 +1,80 @@
+{
+  "format": "molgap-pcqm4mv2-official-edge-state-root-cause-v1",
+  "decision_date": "2026-08-26",
+  "source_predictions": {
+    "path": "valid_predictions.pt",
+    "sha256": "0d748446e5c0e5124b660f9b07b9f3cf3ffbb10ada00e2a7b1617c6d773148f0",
+    "rows": 73545
+  },
+  "overall": {
+    "mae_eV": 0.189450062,
+    "rmse_eV": 0.455601851,
+    "signed_bias_eV": 0.007275149,
+    "r2": 0.867145938,
+    "prediction_mean_eV": 5.452373677,
+    "prediction_std_eV": 1.198108558,
+    "target_mean_eV": 5.445098527,
+    "target_std_eV": 1.249965601
+  },
+  "same_valid_affine_diagnostic": {
+    "slope": 0.971935825,
+    "intercept_eV": 0.145741219,
+    "mae_eV": 0.196682297,
+    "disposition": "worse; calibration is not the cause or the repair"
+  },
+  "tail_concentration": {
+    "top_1_percent_error_share": 0.169928,
+    "top_5_percent_error_share": 0.425334,
+    "top_10_percent_error_share": 0.551080,
+    "top_20_percent_error_share": 0.697794
+  },
+  "radical_attribution": {
+    "nonradical": {
+      "rows": 66332,
+      "mae_eV": 0.150831986,
+      "signed_bias_eV": -0.037279951,
+      "total_absolute_error_share": 0.718073065
+    },
+    "radical": {
+      "rows": 7213,
+      "row_fraction": 0.098075,
+      "mae_eV": 0.544588596,
+      "signed_bias_eV": 0.417011584,
+      "total_absolute_error_share": 0.281926935
+    }
+  },
+  "representation_collision": {
+    "left_smiles": "[CH2]CCC[CH2]",
+    "right_smiles": "CCCCC",
+    "node_features_equal": true,
+    "edge_index_equal": true,
+    "edge_features_equal": true,
+    "rwse_equal": true,
+    "explanation": "The v1 feature contract omits radical electrons and total hydrogens, so chemically distinct radical and closed-shell graphs can become bytewise identical model inputs."
+  },
+  "gap_regions": {
+    "below_2_eV": {"rows": 94, "mae_eV": 2.884251, "signed_bias_eV": 2.884251},
+    "2_to_4_eV": {"rows": 7098, "mae_eV": 0.373772, "signed_bias_eV": 0.323174},
+    "4_to_6_eV": {"rows": 46300, "mae_eV": 0.140773, "signed_bias_eV": 0.013266},
+    "6_to_8_eV": {"rows": 17209, "mae_eV": 0.218853, "signed_bias_eV": -0.122633},
+    "at_least_8_eV": {"rows": 2844, "mae_eV": 0.254891, "signed_bias_eV": -0.187687}
+  },
+  "feature_contract": {
+    "v1_atom_fields": ["element_one_hot", "explicit_degree_scaled", "formal_charge_scaled", "is_aromatic"],
+    "v1_bond_fields": ["bond_type_one_hot"],
+    "missing_official_ogb_atom_fields": ["chirality", "total_degree", "total_hydrogens", "radical_electrons", "hybridization", "is_in_ring"],
+    "missing_official_ogb_bond_fields": ["bond_stereo", "is_conjugated"]
+  },
+  "causal_ranking": [
+    "lossy atom and bond feature contract, proven by an exact radical/closed-shell representation collision",
+    "Gap-only transfer from an architecture selected under three-target HOMO/LUMO/Gap supervision",
+    "ten-epoch schedule ended with the best validation epoch while learning rate had already collapsed to 1e-6",
+    "long-tail low-Gap, disconnected, flexible, and high-mass structures amplify the first two problems"
+  ],
+  "excluded_primary_causes": [
+    "global affine miscalibration",
+    "the 33 topology-only parsing fallbacks",
+    "insufficient row count",
+    "model parameter count alone"
+  ]
+}

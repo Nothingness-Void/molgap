@@ -1,0 +1,87 @@
+{
+  "format": "molgap-pcqm-official-architecture-kaggle-v1",
+  "status": "complete",
+  "variant": "pairbias192x8",
+  "seed": 42,
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "config": {
+    "format": "molgap-pcqm-official-architecture-config-v1",
+    "variant": "pairbias192x8",
+    "seed": 42,
+    "mode": "train",
+    "model_family": "pair_gps",
+    "hidden_channels": 192,
+    "num_layers": 8,
+    "num_heads": 4,
+    "edge_state_channels": 64,
+    "categorical_encoder": "sum",
+    "categorical_field_channels": 16,
+    "graph_context": "none",
+    "radical_context_channels": 16,
+    "pair_channels": 64,
+    "path_steps": 5,
+    "triplet_rank": 16,
+    "atom_input_channels": 64,
+    "bond_input_channels": 32,
+    "batch_size": 64,
+    "eval_batch_size": 64
+  },
+  "development": {
+    "mae_eV": 0.22360646724700928,
+    "radical_mae_eV": 0.44117018580436707,
+    "nonradical_mae_eV": 0.20560960471630096,
+    "radical_rows": 764,
+    "nonradical_rows": 9236
+  },
+  "control": {
+    "mae_eV": 0.15006214380264282,
+    "radical_mae_eV": 0.25360438227653503,
+    "nonradical_mae_eV": 0.1414971500635147
+  },
+  "delta_eV": {
+    "mae_eV": 0.07354432344436646,
+    "radical_mae_eV": 0.18756580352783203,
+    "nonradical_mae_eV": 0.06411245465278625
+  },
+  "provisional_gate": {
+    "overall_improvement_at_least_0p002_eV": false,
+    "radical_regression_at_most_0p002_eV": false,
+    "nonradical_regression_at_most_0p002_eV": false
+  },
+  "provisional_gate_pass": false,
+  "artifacts": {
+    "best.pt": {
+      "bytes": 23070290,
+      "sha256": "d835c4a292af48528c2ed6d2af9ee56a14669ce32c62ce93a1b97d5b48e20e45"
+    },
+    "last.pt": {
+      "bytes": 68656718,
+      "sha256": "9bd40de551e3433d07be642832173e86a21a032a45845d16599222320ca74436"
+    },
+    "metrics.json": {
+      "bytes": 5686,
+      "sha256": "a134ca1cb5b1682117dc56b5266cfcf29e84289571a896179113f9c0152e3511"
+    },
+    "development_predictions.pt": {
+      "bytes": 172208,
+      "sha256": "ee963dc507aec6737c3256f2fe2634e9573357fa08c96e69fc31f167ea526bd7"
+    },
+    "completion_manifest.json": {
+      "bytes": 424,
+      "sha256": "2ea599e728ed476f3d4f345ec7fcb7458e42207f507a6c62e1455f69bf610ee0"
+    },
+    "progress.json": {
+      "bytes": 132,
+      "sha256": "9f35fc39db8b1786fa648cf2fd1d7489ff18b902a35f5cfe8ad482f9d908d886"
+    },
+    "preflight.json": {
+      "bytes": 1187,
+      "sha256": "d0a0cf2149019d25011eac932e4e38f2fce68e6711b9b72e1e924a0506d6ff72"
+    }
+  }
+}

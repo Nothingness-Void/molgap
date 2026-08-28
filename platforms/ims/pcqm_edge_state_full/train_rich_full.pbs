@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=14:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+test "$(sha256sum rich_full/graphs/acceptance.json | cut -d' ' -f1)" = \
+  83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed
+test "$(sha256sum rich_full/benchmark/timing_gate.json | cut -d' ' -f1)" = \
+  cccaac3b337426ff1489e0204e2056fac1d644862b9c3257e8748b43ac89fbbb
+"$PYTHON" - <<'PY'
+import json
+from pathlib import Path
+gate = json.loads(Path("rich_full/benchmark/timing_gate.json").read_text())
+if gate.get("status") != "rejected" or float(gate.get("limit_s", 0.0)) != 12.0 * 3600.0:
+    raise SystemExit("original twelve-hour benchmark decision changed")
+if float(gate["projected_training_s"]) > 14.0 * 3600.0:
+    raise SystemExit("benchmark projection exceeds authorized fourteen hours")
+PY
+mkdir -p rich_full/training rich_full/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+"$PYTHON" code/experiments/pcqm_edge_state_full/run.py train \
+  --graph-dir rich_full/graphs \
+  --acceptance rich_full/graphs/acceptance.json \
+  --output-dir rich_full/training \
+  --feature-schema ogb --max-epochs 20 --projection-epochs 20 \
+  --scheduler warmup_cosine --warmup-epochs 2 \
+  --max-projected-hours 14 --hard-job-budget-hours 13.5 --patience 7 \
+  --batch-size 256 --eval-batch-size 512 --seed 42 \
+  2>&1 | tee rich_full/logs/train.log

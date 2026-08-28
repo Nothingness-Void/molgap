@@ -1,0 +1,51 @@
+{
+  "format": "molgap-pcqm-schedule-screen-submission-v1",
+  "recorded_at": "2026-08-27T04:14:09.6079913+09:00",
+  "platform": "IMS",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full",
+  "graph_acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "feature_gate_sha256": "329171126eebc5d130ea9c62af52e24bf736416ac36d344dab41835c694ad2a0",
+  "input": {
+    "schema": "ogb",
+    "train_rows": 100000,
+    "development_rows": 10000,
+    "official_train_only": true,
+    "official_valid_used": false,
+    "official_test_used": false
+  },
+  "variants": {
+    "collapse10": {
+      "max_epochs": 10,
+      "scheduler": "cosine",
+      "warmup_epochs": 0
+    },
+    "warmup20": {
+      "max_epochs": 20,
+      "scheduler": "warmup_cosine",
+      "warmup_epochs": 2
+    }
+  },
+  "seeds": [42, 43, 44],
+  "jobs": {
+    "collapse10_seed42": "1350938.ccpbs1",
+    "collapse10_seed43": "1350939.ccpbs1",
+    "collapse10_seed44": "1350940.ccpbs1",
+    "warmup20_seed42": "1350941.ccpbs1",
+    "warmup20_seed43": "1350942.ccpbs1",
+    "warmup20_seed44": "1350943.ccpbs1",
+    "acceptance": "1350944.ccpbs1"
+  },
+  "acceptance_dependency": "afterok:1350938.ccpbs1:1350939.ccpbs1:1350940.ccpbs1:1350941.ccpbs1:1350942.ccpbs1:1350943.ccpbs1",
+  "durability": {
+    "run_root": "feature_screen/schedule_runs/{variant}_seed{seed}",
+    "atomic_checkpoint": "last.pt",
+    "selected_checkpoint": "best.pt",
+    "progress": "progress.json",
+    "completion_manifest": "completion_manifest.json",
+    "acceptance": "feature_screen/results/schedule_acceptance.json"
+  },
+  "initial_scheduler_state": {
+    "training_jobs": "Queue",
+    "acceptance_job": "Hold"
+  }
+}

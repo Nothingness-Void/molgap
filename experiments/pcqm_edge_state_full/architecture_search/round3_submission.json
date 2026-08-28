@@ -1,0 +1,39 @@
+{
+  "format": "molgap-pcqm-official-architecture-search-round3-submission-v1",
+  "recorded_at": "2026-08-27T23:42:00+09:00",
+  "platform": "Kaggle",
+  "owner": "nothingnessvoid",
+  "input_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v6-20260827",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "runs": [
+    {
+      "variant": "radicalctx16",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext16-s42-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_rejected",
+      "script_sha256": "529bd2b00b4f351d8a7ff8f3fdcbf54fb5307e9b3a2e4295c121cdcbea26d8db",
+      "development_mae_eV": 0.14938794076442719,
+      "radical_mae_eV": 0.25402596592903137,
+      "nonradical_mae_eV": 0.1407323032617569,
+      "provisional_gate_pass": false
+    },
+    {
+      "variant": "radicalctx32",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-radicalcontext32-s42-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_rejected",
+      "script_sha256": "7c4b1693905b20acbfe98555a02e96f037f0031470e98c6dc384265f4bfb6048",
+      "development_mae_eV": 0.14940263330936432,
+      "radical_mae_eV": 0.2537010610103607,
+      "nonradical_mae_eV": 0.14077508449554443,
+      "provisional_gate_pass": false
+    }
+  ]
+}

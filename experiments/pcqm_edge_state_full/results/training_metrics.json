@@ -1,0 +1,136 @@
+{
+  "format": "molgap-pcqm4mv2-official-edge-state-training-v1",
+  "status": "complete",
+  "config": {
+    "hidden_channels": 192,
+    "num_layers": 9,
+    "num_heads": 4,
+    "dropout": 0.05,
+    "rwse_dim": 16,
+    "edge_state_channels": 64,
+    "batch_size": 256,
+    "eval_batch_size": 512,
+    "learning_rate": 0.0004,
+    "weight_decay": 1e-05,
+    "max_epochs": 10,
+    "patience": 3,
+    "seed": 42,
+    "gradient_clip": 1.0,
+    "max_projected_training_s": 36000.0,
+    "hard_job_budget_s": 41400.0
+  },
+  "parameters": 4742529,
+  "best_epoch": 9,
+  "valid_gap_mae_eV": 0.18945006209037688,
+  "train_log": [
+    {
+      "epoch": 0,
+      "train_gap_l1_normalized": 0.19763908943727496,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.24681829382102635,
+      "elapsed_s": 2167.3787646880373,
+      "projected_training_s": 21673.787646880373,
+      "selected": true,
+      "learning_rate": 0.0003902357750008832
+    },
+    {
+      "epoch": 1,
+      "train_gap_l1_normalized": 0.16664142624173173,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.243191094903896,
+      "elapsed_s": 2117.987808209844,
+      "projected_training_s": 21179.87808209844,
+      "selected": true,
+      "learning_rate": 0.000361898890377802
+    },
+    {
+      "epoch": 2,
+      "train_gap_l1_normalized": 0.15710893071943477,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.22038092787305166,
+      "elapsed_s": 2130.174890465103,
+      "projected_training_s": 21301.74890465103,
+      "selected": true,
+      "learning_rate": 0.0003177631578323484
+    },
+    {
+      "epoch": 3,
+      "train_gap_l1_normalized": 0.1500818422133556,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.22044139522059994,
+      "elapsed_s": 2137.1619547717273,
+      "projected_training_s": 21371.619547717273,
+      "selected": false,
+      "learning_rate": 0.00026214889037780206
+    },
+    {
+      "epoch": 4,
+      "train_gap_l1_normalized": 0.1440887872405422,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.2215483209344287,
+      "elapsed_s": 2145.2406017268077,
+      "projected_training_s": 21452.406017268077,
+      "selected": false,
+      "learning_rate": 0.00020050000000000002
+    },
+    {
+      "epoch": 5,
+      "train_gap_l1_normalized": 0.13767875742151559,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.19487129064636832,
+      "elapsed_s": 2143.502525145188,
+      "projected_training_s": 21435.02525145188,
+      "selected": true,
+      "learning_rate": 0.000138851109622198
+    },
+    {
+      "epoch": 6,
+      "train_gap_l1_normalized": 0.13318535981794233,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.2076151529429228,
+      "elapsed_s": 2142.4028361728415,
+      "projected_training_s": 21424.028361728415,
+      "selected": false,
+      "learning_rate": 8.323684216765164e-05
+    },
+    {
+      "epoch": 7,
+      "train_gap_l1_normalized": 0.12915755838355927,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.203853062087605,
+      "elapsed_s": 2201.6837736619636,
+      "projected_training_s": 22016.837736619636,
+      "selected": false,
+      "learning_rate": 3.9101109622198015e-05
+    },
+    {
+      "epoch": 8,
+      "train_gap_l1_normalized": 0.1263092874873739,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.19470499845127803,
+      "elapsed_s": 2227.96679249499,
+      "projected_training_s": 22279.6679249499,
+      "selected": true,
+      "learning_rate": 1.0764224999116874e-05
+    },
+    {
+      "epoch": 9,
+      "train_gap_l1_normalized": 0.125092475928995,
+      "train_rows": 3378606,
+      "valid_gap_mae_eV": 0.1894497312706181,
+      "elapsed_s": 2166.7944850996137,
+      "projected_training_s": 21667.944850996137,
+      "selected": true,
+      "learning_rate": 1e-06
+    }
+  ],
+  "official_train_rows": 3378606,
+  "official_valid_rows": 73545,
+  "official_test_used": false,
+  "external_data_used": false,
+  "pretrained_weights_used": false,
+  "production_registry_changed": false,
+  "runtime_s": 21611.407011419535,
+  "best_sha256": "70424ee51428612a189e5d1659b07626464e8a6e4a61bde338db1a29fa47b818",
+  "valid_predictions_sha256": "0d748446e5c0e5124b660f9b07b9f3cf3ffbb10ada00e2a7b1617c6d773148f0"
+}

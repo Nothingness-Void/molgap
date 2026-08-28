@@ -1,0 +1,84 @@
+{
+  "format": "molgap-pcqm-official-architecture-search-submission-v1",
+  "recorded_at": "2026-08-27T21:56:42+09:00",
+  "platform": "Kaggle",
+  "owner": "nothingnessvoid",
+  "input_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v4-20260827",
+  "failed_runtime_dataset": "nothingnessvoid/molgap-pcqm-feature-runtime-v3-20260826",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "runs": [
+    {
+      "variant": "deep160x11",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-deep160x11-s42-20260827",
+      "submitted_version": 4,
+      "submission_state": "complete_rejected",
+      "attempts": [
+        {
+          "version": 1,
+          "state": "error",
+          "reason": "The immutable v3 runtime predated warmup-cosine FeatureScreenConfig fields; training did not start."
+        },
+        {
+          "version": 2,
+          "state": "error",
+          "reason": "The first v4 runtime package copied the production __init__.py and imported an intentionally unbundled constants module."
+        },
+        {
+          "version": 3,
+          "state": "error",
+          "reason": "The assigned Kaggle worker image lacked RDKit; training did not start."
+        },
+        {
+          "version": 4,
+          "state": "complete_rejected",
+          "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v4-20260827",
+          "development_mae_eV": 0.15071436762809753,
+          "radical_mae_eV": 0.2621749937534332,
+          "nonradical_mae_eV": 0.14149437844753265,
+          "provisional_gate_pass": false
+        }
+      ],
+      "script_sha256": "736069bd8f62d5dd96802ef391d50844457b06c90cd607170cc78a43cad99461"
+    },
+    {
+      "variant": "edge96",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-edge96-s42-20260827",
+      "submitted_version": 4,
+      "submission_state": "complete_rejected",
+      "attempts": [
+        {
+          "version": 1,
+          "state": "error",
+          "reason": "The immutable v3 runtime predated warmup-cosine FeatureScreenConfig fields; training did not start."
+        },
+        {
+          "version": 2,
+          "state": "error",
+          "reason": "The first v4 runtime package copied the production __init__.py and imported an intentionally unbundled constants module."
+        },
+        {
+          "version": 3,
+          "state": "error",
+          "reason": "The assigned Kaggle worker image lacked RDKit; training did not start."
+        },
+        {
+          "version": 4,
+          "state": "complete_rejected",
+          "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v4-20260827",
+          "development_mae_eV": 0.15045638382434845,
+          "radical_mae_eV": 0.25633031129837036,
+          "nonradical_mae_eV": 0.14169852435588837,
+          "provisional_gate_pass": false
+        }
+      ],
+      "script_sha256": "ce628f27b7070c5f702ccd89e7ed7241951292690e73ddca1498ea3e3fef7371"
+    }
+  ]
+}

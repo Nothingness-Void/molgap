@@ -1,0 +1,19 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=1:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+test -s outputs/training/completion_manifest.json
+mkdir -p outputs/submission logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+"$PYTHON" code/experiments/pcqm_edge_state_full/run.py infer-test \
+  --archive inputs/pcqm4m-v2.zip \
+  --checkpoint outputs/training/best.pt \
+  --output-dir outputs/submission \
+  --workers 7 --part-rows 20000 2>&1 | tee logs/infer_test.log

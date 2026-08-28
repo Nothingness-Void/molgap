@@ -1,0 +1,39 @@
+{
+  "format": "molgap-pcqm-official-architecture-search-round2-submission-v1",
+  "recorded_at": "2026-08-27T23:03:38+09:00",
+  "platform": "Kaggle",
+  "owner": "nothingnessvoid",
+  "input_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v5-20260827",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "runs": [
+    {
+      "variant": "fieldconcat16",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-fieldconcat16-s42-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_rejected",
+      "script_sha256": "69133ea544ea99ab765c480c87c2218647d113ec3d17097bf22eaf0a572ccb77",
+      "development_mae_eV": 0.15151703357696533,
+      "radical_mae_eV": 0.2644546926021576,
+      "nonradical_mae_eV": 0.1421748399734497,
+      "provisional_gate_pass": false
+    },
+    {
+      "variant": "fieldconcat32",
+      "seed": 42,
+      "kernel": "nothingnessvoid/molgap-pcqm-arch-fieldconcat32-s42-20260827",
+      "submitted_version": 1,
+      "submission_state": "complete_rejected",
+      "script_sha256": "4bd8ac0b56902afd0c4fb2c2d70115beed55ad73f1c0eb965b1f6c84aeeab1ab",
+      "development_mae_eV": 0.150517076253891,
+      "radical_mae_eV": 0.2566751539707184,
+      "nonradical_mae_eV": 0.14173567295074463,
+      "provisional_gate_pass": false
+    }
+  ]
+}

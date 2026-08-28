@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pcqm-pairbias-fp32-screen-submission-v1",
+  "submitted_at": "2026-08-28T14:10:52+09:00",
+  "kernel_slug": "nothingnessvoid/molgap-pcqm-arch-pbfp32-s42-train-20260828",
+  "kernel_version": 1,
+  "seed": 42,
+  "precision": "fp32",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v8-20260828",
+  "runtime_manifest_sha256": "11d4594781d303a42259c6bc714dd695a7f54c52a1968bdbe0bc8f441cfb9c6a",
+  "graph_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "graph_acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "entry_script_sha256": "7d13514e7bf8f72f5387389f0d988cf46aae23b9aacef44a7a4359c9626116ef",
+  "metadata_sha256": "1c9587cb075b736a81ef198cd7a0006eaee19a14257a9b38e74e763e0656daef",
+  "preflight_acceptance": "experiments/pcqm_edge_state_full/pairbias_screen/fp32_preflight_acceptance.json",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false
+}

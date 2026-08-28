@@ -1,0 +1,29 @@
+{
+  "format": "molgap-pcqm-official-equal-ensemble-seed-confirmation-v1",
+  "seed": 43,
+  "artifact_acceptance": "passed",
+  "aligned_rows": 10000,
+  "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "control": {
+    "mae_eV": 0.15063676238059998,
+    "radical_mae_eV": 0.2565052807331085,
+    "nonradical_mae_eV": 0.14187933504581451
+  },
+  "equal_ensemble": {
+    "mae_eV": 0.14541809260845184,
+    "radical_mae_eV": 0.24013257026672363,
+    "nonradical_mae_eV": 0.13758331537246704
+  },
+  "delta_eV": {
+    "mae_eV": -0.005218669772148132,
+    "radical_mae_eV": -0.016372710466384888,
+    "nonradical_mae_eV": -0.004296019673347473
+  },
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false
+}

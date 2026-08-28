@@ -1,9 +1,8 @@
 # Current State
 
-> This file owns only live project truth: the production identity, active
-> candidate, blocker, and immediate handoff. Metrics and historical conclusions
-> belong to their dated decision records under `production/` or `experiments/`.
-> Task ordering belongs only in `ROADMAP.md`.
+> This file owns only live project truth: production identity, active
+> candidates, blockers, and immediate handoff. Metrics and history belong to
+> experiment decisions; ordering belongs to `ROADMAP.md`.
 
 ## Production Identity
 
@@ -15,87 +14,84 @@
 - **Decision owner:**
   `production/04_evaluate/project_freeze/track_a_final_decision.md`.
 
-The previous routed-v4 model remains registered for compatibility. Historical
-Delta and UQ bundles remain calibrated to their historical v3 base, not to the
-repaired-2M presets. Asset paths and hashes belong to `models/README.md` and the
-production decision linked above.
+The routed-v4 compatibility model remains registered. Historical Delta and UQ
+bundles remain calibrated to their historical v3 base. Asset ownership is in
+`models/README.md` and the production decision above.
 
-## Active Objective
+## Active Objectives
 
-Track C is open for resource-bounded, from-scratch architecture discovery. Its
-frozen comparator is `repaired_2m_dense_2d`; no Track C result changes the
-production registry before the existing Track A external promotion gate.
+### Track B: official PCQM4Mv2
 
-Persistent EdgeState Structural GPS passed the controlled three-seed PubChemQC
-100K gate and is the sole repaired-2M scale-up candidate. The complete 2M model
-has not been trained. Submission is blocked until both conditions pass:
+The OGB-rich EdgeState Structural GPS completed strict official-only training
+from random initialization. Epoch 19 reached official-validation Gap MAE
+`0.102063 eV`; the frozen checkpoint then produced both official test NPZ files
+from raw SMILES in `147.046 s`. The files passed OGB shape, dtype, order,
+finiteness, timing, and hash acceptance.
 
-1. the immutable repaired-2M EdgeState input is complete and accepted;
-2. a measured one-epoch projection keeps the bounded run below 10 hours.
+The public reproduction repository and checkpoint Release are
+`https://github.com/Nothingness-Void/pcqm4mv2-edgestate`. Final public head
+`ae00b44` passed a fresh-clone audit. The OGB-LSC form was submitted on
+2026-08-28 and is awaiting code/report validity review. No test score or rank
+exists yet. Evidence is under
+`experiments/pcqm_edge_state_full/results/rich_full/`.
 
-The exact screen result and artifacts are owned by
-`experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
-The live execution contract and remote provenance are in
+This specialist cannot change Track A production.
+
+### Track C: repaired-2M EdgeState
+
+Persistent EdgeState Structural GPS passed the controlled three-seed 100K
+screen and is the sole repaired-2M scale-up candidate. No complete 2M model has
+been trained. Submission remains blocked until the immutable input passes
+acceptance and a measured epoch projects the bounded run below 10 hours.
+
+The decision is
+`experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`;
+the execution contract is
 `experiments/resource_bounded_architecture/STATUS.md`.
 
-## Parallel Workstream
+## Parallel Workstreams
 
-The independent PairGPS2D line completed its matched PubChemQC-100K
-validation-only search and passed that stage against the fixed GPS7 plus GPS9
-equal comparator. Its test role remains sealed, and neither full-data training
-nor Track B transfer is authorized. A train-role-only A100 benchmark selected a
-safer higher-throughput configuration but did not establish an accuracy result.
-The decisions are owned by
-`experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md`
-and
-`experiments/pubchemqc100k_architecture/results/pair_gps_2d_a100_benchmark/decision.md`.
-
-The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
-Its exact-identity head, compact aligned payload, Colab runner, and resume
-contract are implemented and locally tested. Model training has not started.
-Its status and evidence pointers are owned by
-`experiments/resource_bounded_architecture/README.md` and
-`platforms/colab/conservative_2d3d_fusion/README.md`.
-
-The previously rejected frozen-2D plus dual-SchNet residual remains closed and
-must not be represented as this new conservative head.
-
-## Execution State
-
-- No MolGap Kaggle architecture kernel was pending or running at the last
-  sequential inspection on 2026-08-25 07:52 JST.
-- All accepted 100K architecture outputs have local manifests, metrics,
-  predictions, and hashes under the experiment and `platforms/_records/` trees.
-- No repaired-2M EdgeState job has been submitted.
-- No remote job is required to support the frozen Track A or Track B claims.
-- Any new remote run must first appear in `ROADMAP.md` with an input contract,
-  timing bound, atomic checkpoint path, and independently retrievable outputs.
+- The official-only Kaggle architecture search is closed. Capacity, generic
+  field concatenation, and radical-context variants did not beat the matched
+  same-cost control ensemble. See
+  `experiments/pcqm_edge_state_full/architecture_search/`.
+- The corrected FP32 PairBias seed-42 screen is the only bounded PCQM
+  architecture question still permitted. Seeds 43/44 require its predetermined
+  gate. See `experiments/pcqm_edge_state_full/pairbias_screen/`.
+- The independent PairGPS2D validation-only screen passed, but its test role
+  remains sealed and no full-data or production run is authorized. See
+  `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md`.
+- The exact-identity conservative 2D+3D head is implemented and locally tested;
+  model training has not started. See
+  `experiments/resource_bounded_architecture/README.md` and
+  `platforms/colab/conservative_2d3d_fusion/README.md`.
+- No repaired-2M EdgeState job has been submitted. Every new remote run must
+  first appear in `ROADMAP.md` with its input, timing, checkpoint, and durable
+  output contracts.
 
 ## Boundaries
 
-- Common, OOD, and P8-hard are a one-time acceptance gate after the standalone
-  repaired-2M candidate completes; they are not architecture-tuning data.
+- Common, OOD, and P8-hard are one-time acceptance scopes, not tuning data.
 - Future sealed data remains locked.
 - Router, MoE, dataset replacement, and closed late-fusion branches remain
   closed unless `ROADMAP.md` records a materially new question.
-- Track B remains an isolated PCQM Gap specialist and cannot replace Track A
-  without a separate production gate. Its final decision is
+- Track B remains isolated from Track A production. Its frozen disposition is
   `production/04_evaluate/project_freeze/track_b_final_decision.md`.
-- Train and inference conformer construction must remain ETKDG-consistent.
+- Train and inference geometry must remain ETKDG-consistent.
 
 ## Evidence Map
 
 | Question | Authoritative pointer |
 |---|---|
 | What ships now? | `production/README.md` |
-| Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
-| What did the active architecture tournament decide? | `experiments/resource_bounded_architecture/README.md` |
-| What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
-| What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
-| Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
-| Where are all active and completed experiment questions indexed? | `experiments/README.md` |
-| Where are rejected branches indexed? | `experiments/_closed/README.md` |
-| How are remote jobs packaged and retained? | `platforms/README.md` |
-| Which model artifacts exist? | `models/README.md` |
+| Why is repaired-2M pure 2D recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
+| What did the architecture tournament decide? | `experiments/resource_bounded_architecture/README.md` |
+| What passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
+| What happened in official PCQM? | `experiments/pcqm_edge_state_full/README.md` |
+| What did PairGPS2D establish? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
+| Where are remote records? | `platforms/README.md` |
+| Where are experiments indexed? | `experiments/README.md` |
+| Where are rejected branches? | `experiments/_closed/README.md` |
+| Which model assets exist? | `models/README.md` |
 
 The immediate execution order is defined only in `ROADMAP.md`.

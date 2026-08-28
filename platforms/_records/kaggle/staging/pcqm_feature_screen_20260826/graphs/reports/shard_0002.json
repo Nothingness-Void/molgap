@@ -1,0 +1,44 @@
+{
+  "format": "molgap-pcqm4mv2-feature-screen-graph-shard-v1",
+  "status": "complete",
+  "builder_version": "pcqm-official-train-feature-screen-v1",
+  "shard_index": 2,
+  "source_sha256": "c4622582daa48b583efe01cffcd5d0f65d220d24be790e8eb33d186f04c66dc3",
+  "source_rows": 10000,
+  "files": [
+    {
+      "schema": "legacy",
+      "role": "train",
+      "path": "legacy/train/train_shard_0002.pt",
+      "rows": 9112,
+      "bytes": 33362213,
+      "sha256": "0af59b4d2e4a3e001352defa6eb1f2c718fbebef0e1b0f9a5213a16d7352e33d"
+    },
+    {
+      "schema": "legacy",
+      "role": "development",
+      "path": "legacy/development/development_shard_0002.pt",
+      "rows": 888,
+      "bytes": 3265077,
+      "sha256": "30637af3fd7206f2b6e1b96892b219f6ff7ca54de7dc2ff26f097d44eebd2cb9"
+    },
+    {
+      "schema": "ogb",
+      "role": "train",
+      "path": "ogb/train/train_shard_0002.pt",
+      "rows": 9112,
+      "bytes": 30701029,
+      "sha256": "0f152c7b57e1a2f2395b96e4947e70def081aa17b6d642ca3a12d47b4ce23846"
+    },
+    {
+      "schema": "ogb",
+      "role": "development",
+      "path": "ogb/development/development_shard_0002.pt",
+      "rows": 888,
+      "bytes": 3005557,
+      "sha256": "9e73a96a0894fdc6e43a12c75b04b9e037cbd58878e46dda91a30bc5a8f3c98f"
+    }
+  ],
+  "failures": [],
+  "elapsed_s": 16.025283007882535
+}
