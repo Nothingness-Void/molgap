@@ -38,13 +38,14 @@
   acceptance, all failed the strict EdgeState advancement gate, and the
   time-gated fourth candidate was not launched. The exact disposition is in
   `results/local_operator_search_seed42/decision.md`.
-- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42`
-  version 1 is the sole active GPU task. It runs the seed-42 recurrent
-  graph-state EdgeState screen under `recurrent_graph_state_seed42_protocol.md`
-  from source commit `96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8`.
-  Exact launch identities and hashes are in
-  `results/recurrent_graph_state_seed42/launch_manifest.json`.
-- No seed-43/44 run, full-data run, official validation/test-dev read, or
-  molecular-research-server work is authorized.
+ - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42`,
+  version 1, completed and passed no-inference acceptance, but the recurrent
+  graph-state candidate missed the strict EdgeState gate by
+  `0.000630125069618209 eV`. Its downloaded evidence remains under the
+  platform records; the closure decision is retained on the acceptance branch.
+ - The sparse topology-wedge CPU cache and seed-42 GPU question are prepared
+  under `sparse_triangle_edge_state_protocol.md`. No GPU task, seed-43/44 run,
+  full-data run, official validation/test-dev read, or molecular-research-
+  server work is authorized until the derived cache passes acceptance.
 
 Task order remains authoritative in `ROADMAP.md`.

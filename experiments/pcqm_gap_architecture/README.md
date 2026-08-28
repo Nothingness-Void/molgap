@@ -25,9 +25,10 @@ its strict gate and is closed by
 [`results/local_operator_search_seed42/decision.md`](results/local_operator_search_seed42/decision.md).
 
 The resource-bounded comparison of all remaining mechanisms is in
-[`architecture_route_audit.md`](architecture_route_audit.md). It selects the
-recurrent graph-state EdgeState question frozen in
-[`recurrent_graph_state_seed42_protocol.md`](recurrent_graph_state_seed42_protocol.md).
+[`architecture_route_audit.md`](architecture_route_audit.md). The recurrent
+graph-state question is closed after its seed-42 result missed the comparator.
+The next question is the sparse topology-wedge EdgeState protocol in
+[`sparse_triangle_edge_state_protocol.md`](sparse_triangle_edge_state_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

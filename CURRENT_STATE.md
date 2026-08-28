@@ -29,11 +29,12 @@ official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
-three matched local-operator replacements then failed their strict gates and
-are closed. The next seed-42 question is a recurrent graph state inside the
-accepted EdgeState backbone, selected by the resource-bounded route audit. It
-has no seed-43/44 or full-data authorization. Exact completed conclusions
+real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling,
+three matched local-operator replacements, and recurrent graph state then
+failed their strict gates and are closed. The next seed-42 question is a sparse
+topology-wedge state inside the accepted EdgeState backbone; it is defined by
+`experiments/pcqm_gap_architecture/sparse_triangle_edge_state_protocol.md`.
+It has no seed-43/44 or full-data authorization. Exact completed conclusions
 belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
 
 ## Prior Architecture Evidence
@@ -71,8 +72,9 @@ must not be represented as this new conservative head.
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
 - The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. Kaggle2 is running the sole matched recurrent
-  graph-state seed-42 screen; no multiseed or full-data run is authorized.
+  comparisons are accepted. A CPU-only sparse-wedge cache derivation is the
+  sole newly authorized remote step; no GPU, multiseed, or full-data run is
+  authorized until that cache passes acceptance.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -110,6 +112,7 @@ must not be represented as this new conservative head.
 | What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
 | Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
 | Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
+| What is the sparse triangle EdgeState question? | `experiments/pcqm_gap_architecture/sparse_triangle_edge_state_protocol.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |
