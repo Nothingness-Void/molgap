@@ -87,6 +87,22 @@ class OfficialEdgeStateConfig:
     hard_job_budget_s: float = 11.5 * 3600.0
 
 
+@dataclass(frozen=True)
+class OfficialEdgeStateContinuationConfig:
+    """A separately recorded schedule for continuing a frozen full run."""
+
+    additional_epochs: int = 20
+    learning_rate: float = 1.0e-4
+    minimum_learning_rate: float = 1.0e-6
+    scheduler: str = "warmup_cosine"
+    warmup_epochs: int = 2
+    patience: int = 7
+    batch_size: int = 256
+    eval_batch_size: int = 512
+    gradient_clip: float = 1.0
+    hard_job_budget_s: float = 13.5 * 3600.0
+
+
 class PackedGraphDataset(InMemoryDataset):
     def __init__(self, path: Path):
         super().__init__(root=None)
@@ -1140,6 +1156,328 @@ def train_official_edge_state(
     atomic_json(output_dir / "completion_manifest.json", {
         "status": "complete",
         "best": {"path": "best.pt", "sha256": metrics["best_sha256"]},
+        "metrics": {"path": "metrics.json", "sha256": sha256_file(output_dir / "metrics.json")},
+        "valid_predictions": {
+            "path": "valid_predictions.pt",
+            "sha256": metrics["valid_predictions_sha256"],
+        },
+    })
+    return metrics
+
+
+def continue_official_edge_state(
+    graph_dir: Path,
+    acceptance_path: Path,
+    source_dir: Path,
+    output_dir: Path,
+    *,
+    config: OfficialEdgeStateContinuationConfig = OfficialEdgeStateContinuationConfig(),
+) -> dict:
+    """Continue a completed run in an isolated directory with a new schedule.
+
+    The source run is immutable.  The continuation keeps its model and Adam
+    state, resets only the learning-rate schedule, and records the source
+    hashes plus the continuation contract in every checkpoint.
+    """
+    if config.additional_epochs < 1:
+        raise ValueError("additional_epochs must be positive")
+    if config.scheduler == "warmup_cosine" and not (
+        0 <= config.warmup_epochs < config.additional_epochs
+    ):
+        raise ValueError("warmup_epochs must be in [0, additional_epochs)")
+    if config.scheduler == "cosine" and config.warmup_epochs:
+        raise ValueError("cosine scheduler does not accept warmup_epochs")
+
+    started = time.monotonic()
+    graph_dir, acceptance_path = Path(graph_dir), Path(acceptance_path)
+    source_dir, output_dir = Path(source_dir), Path(output_dir)
+    acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+    if acceptance.get("status") != "accepted" or acceptance.get("external_data_used"):
+        raise RuntimeError("Official graph acceptance is missing or contaminated")
+    source_last_path = source_dir / "last.pt"
+    source_best_path = source_dir / "best.pt"
+    source_completion_path = source_dir / "completion_manifest.json"
+    for path in (source_last_path, source_best_path, source_completion_path):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+    acceptance_hash = sha256_file(acceptance_path)
+    source_last_hash = sha256_file(source_last_path)
+    source_best_hash = sha256_file(source_best_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    completion_path = output_dir / "completion_manifest.json"
+    if completion_path.is_file():
+        completion = json.loads(completion_path.read_text(encoding="utf-8"))
+        if completion.get("status") == "complete":
+            metrics_path = output_dir / "metrics.json"
+            if not metrics_path.is_file():
+                raise RuntimeError("complete continuation is missing metrics")
+            return json.loads(metrics_path.read_text(encoding="utf-8"))
+
+    source_state = torch.load(source_last_path, map_location="cpu", weights_only=False)
+    source_best = torch.load(source_best_path, map_location="cpu", weights_only=False)
+    base_config = OfficialEdgeStateConfig(**source_state["config"])
+    if source_state.get("acceptance_sha256") != acceptance_hash:
+        raise RuntimeError("source checkpoint does not match accepted graph cache")
+    if source_best.get("config") != source_state.get("config"):
+        raise RuntimeError("source best and last checkpoints use different configs")
+    if source_best.get("acceptance_sha256") != acceptance_hash:
+        raise RuntimeError("source best checkpoint does not match graph acceptance")
+    if acceptance.get("feature_schema", "legacy") != base_config.feature_schema:
+        raise RuntimeError("source model and graph feature schemas differ")
+    source_epoch = int(source_state["epoch"])
+    if source_epoch < 0:
+        raise RuntimeError("source checkpoint has no completed epoch")
+    in_channels = int(acceptance["node_feature_dim"])
+    device = torch.device("cuda")
+    if not torch.cuda.is_available():
+        raise RuntimeError("Official PCQM EdgeState continuation requires a CUDA GPU")
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.backends.cudnn.allow_tf32 = True
+    set_seed(base_config.seed)
+
+    continuation_contract = {
+        "format": "molgap-pcqm4mv2-official-edge-state-continuation-v1",
+        "base_config": asdict(base_config),
+        "continuation_config": asdict(config),
+        "source_last_sha256": source_last_hash,
+        "source_best_sha256": source_best_hash,
+        "acceptance_sha256": acceptance_hash,
+        "source_epoch": source_epoch,
+    }
+    last_path, best_path = output_dir / "last.pt", output_dir / "best.pt"
+    continuation_schedule = OfficialEdgeStateConfig(
+        learning_rate=config.learning_rate,
+        max_epochs=config.additional_epochs,
+        scheduler=config.scheduler,
+        warmup_epochs=config.warmup_epochs,
+        minimum_learning_rate=config.minimum_learning_rate,
+    )
+    model = _make_model(base_config, in_channels).to(device)
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=config.learning_rate,
+        weight_decay=base_config.weight_decay,
+    )
+    scheduler = _official_scheduler(optimizer, continuation_schedule)
+    scaler = torch.amp.GradScaler("cuda", enabled=True)
+    criterion = nn.L1Loss()
+    mean = float(acceptance["target_mean_gap"])
+    std = float(acceptance["target_std_gap"])
+    log = []
+    elapsed_offset = 0.0
+    wait = 0
+    best_mae = float(source_best["best_valid_gap_mae_eV"])
+    best_epoch = int(source_best["best_epoch"])
+    start_local_epoch = 0
+    if last_path.is_file():
+        state = torch.load(last_path, map_location="cpu", weights_only=False)
+        if state.get("continuation_contract") != continuation_contract:
+            raise RuntimeError("continuation checkpoint contract changed")
+        model.load_state_dict(state["model"], strict=True)
+        optimizer.load_state_dict(state["optimizer"])
+        for group in optimizer.param_groups:
+            group["lr"] = config.learning_rate
+            group["initial_lr"] = config.learning_rate
+        scheduler.load_state_dict(state["scheduler"])
+        scaler.load_state_dict(state["scaler"])
+        best_mae = float(state["best_valid_gap_mae_eV"])
+        best_epoch = int(state["best_epoch"])
+        wait = int(state["wait"])
+        start_local_epoch = int(state["local_epoch"]) + 1
+        log = list(state["log"])
+        elapsed_offset = float(state.get("continuation_elapsed_s", 0.0))
+    else:
+        model.load_state_dict(source_state["model"], strict=True)
+        optimizer.load_state_dict(source_state["optimizer"])
+        for group in optimizer.param_groups:
+            group["lr"] = config.learning_rate
+            group["initial_lr"] = config.learning_rate
+        scaler.load_state_dict(source_state["scaler"])
+        atomic_torch(best_path, {
+            "format": "molgap-pcqm4mv2-official-edge-state-continuation-best-v1",
+            "continuation_contract": continuation_contract,
+            "model": copy.deepcopy(source_best["model"]),
+            "best_epoch": best_epoch,
+            "best_valid_gap_mae_eV": best_mae,
+            "target_mean_gap": mean,
+            "target_std_gap": std,
+            "source_best_sha256": source_best_hash,
+            "acceptance_sha256": acceptance_hash,
+        })
+
+    base_train_paths = _graph_files(graph_dir, "train")
+    stopped_for_budget = False
+    for local_epoch in range(start_local_epoch, config.additional_epochs):
+        if elapsed_offset + time.monotonic() - started > config.hard_job_budget_s:
+            stopped_for_budget = True
+            print("continuation hard job budget reached; checkpoint is resumable", flush=True)
+            break
+        epoch_started = time.monotonic()
+        global_epoch = source_epoch + 1 + local_epoch
+        model.train()
+        train_paths = list(base_train_paths)
+        random.Random(base_config.seed + global_epoch).shuffle(train_paths)
+        loss_sum, row_count = 0.0, 0
+        for shard_number, path in enumerate(train_paths, start=1):
+            dataset = PackedGraphDataset(path)
+            generator = torch.Generator().manual_seed(
+                base_config.seed * 1_000_000 + global_epoch * 10_000 + shard_number
+            )
+            loader = DataLoader(
+                dataset,
+                batch_size=config.batch_size,
+                shuffle=True,
+                generator=generator,
+                pin_memory=True,
+            )
+            for batch in loader:
+                batch = batch.to(device, non_blocking=True)
+                optimizer.zero_grad(set_to_none=True)
+                with torch.amp.autocast("cuda", enabled=True):
+                    prediction = _forward(model, batch)
+                    target = (batch.y.view(-1) - mean) / std
+                    loss = criterion(prediction, target)
+                scaler.scale(loss).backward()
+                scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip)
+                scaler.step(optimizer)
+                scaler.update()
+                loss_sum += float(loss.detach()) * batch.num_graphs
+                row_count += int(batch.num_graphs)
+            del loader, dataset
+            gc.collect()
+        scheduler.step()
+        valid_mae = float(
+            evaluate_valid(
+                model,
+                graph_dir,
+                device,
+                config.eval_batch_size,
+                mean,
+                std,
+            )
+        )
+        elapsed = time.monotonic() - epoch_started
+        improved = np.isfinite(valid_mae) and valid_mae < best_mae
+        if improved:
+            best_mae, best_epoch, wait = valid_mae, global_epoch, 0
+            atomic_torch(best_path, {
+                "format": "molgap-pcqm4mv2-official-edge-state-continuation-best-v1",
+                "continuation_contract": continuation_contract,
+                "model": copy.deepcopy(model.state_dict()),
+                "best_epoch": best_epoch,
+                "best_valid_gap_mae_eV": best_mae,
+                "target_mean_gap": mean,
+                "target_std_gap": std,
+                "source_best_sha256": source_best_hash,
+                "acceptance_sha256": acceptance_hash,
+            })
+        else:
+            wait += 1
+        row = {
+            "local_epoch": local_epoch,
+            "epoch": global_epoch,
+            "train_gap_l1_normalized": loss_sum / max(row_count, 1),
+            "train_rows": row_count,
+            "valid_gap_mae_eV": valid_mae,
+            "elapsed_s": elapsed,
+            "selected": bool(improved),
+            "learning_rate": float(optimizer.param_groups[0]["lr"]),
+        }
+        log.append(row)
+        continuation_elapsed = elapsed_offset + time.monotonic() - started
+        atomic_torch(last_path, {
+            "format": "molgap-pcqm4mv2-official-edge-state-continuation-checkpoint-v1",
+            "continuation_contract": continuation_contract,
+            "local_epoch": local_epoch,
+            "epoch": global_epoch,
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "scaler": scaler.state_dict(),
+            "best_epoch": best_epoch,
+            "best_valid_gap_mae_eV": best_mae,
+            "wait": wait,
+            "log": log,
+            "continuation_elapsed_s": continuation_elapsed,
+            "target_mean_gap": mean,
+            "target_std_gap": std,
+            "source_last_sha256": source_last_hash,
+            "source_best_sha256": source_best_hash,
+            "acceptance_sha256": acceptance_hash,
+        })
+        atomic_json(output_dir / "progress.json", {
+            "status": "training",
+            "local_epoch": local_epoch,
+            "epoch": global_epoch,
+            "best_epoch": best_epoch,
+            "best_valid_gap_mae_eV": best_mae,
+            "continuation_elapsed_s": continuation_elapsed,
+            "resumable_checkpoint": str(last_path),
+        })
+        print(
+            f"official-edge-state-cont ep{global_epoch:02d} "
+            f"train={row['train_gap_l1_normalized']:.6f} "
+            f"valid={valid_mae:.6f}eV {elapsed:.1f}s"
+            f"{' *' if improved else ''}",
+            flush=True,
+        )
+        if wait >= config.patience:
+            break
+
+    if not last_path.is_file():
+        raise RuntimeError("continuation produced no resumable checkpoint")
+    best = torch.load(best_path, map_location=device, weights_only=False)
+    model.load_state_dict(best["model"], strict=True)
+    valid_mae, predictions = evaluate_valid(
+        model,
+        graph_dir,
+        device,
+        config.eval_batch_size,
+        mean,
+        std,
+        return_predictions=True,
+    )
+    atomic_torch(output_dir / "valid_predictions.pt", predictions)
+    completed_epochs = len(log)
+    schedule_complete = (
+        not stopped_for_budget
+        and (start_local_epoch + completed_epochs >= config.additional_epochs or wait >= config.patience)
+    )
+    status = "complete" if schedule_complete else "partial"
+    metrics = {
+        "format": "molgap-pcqm4mv2-official-edge-state-continuation-v1",
+        "status": status,
+        "continuation_contract": continuation_contract,
+        "parameters": sum(parameter.numel() for parameter in model.parameters()),
+        "source_best_epoch": int(source_best["best_epoch"]),
+        "best_epoch": int(best["best_epoch"]),
+        "source_best_valid_gap_mae_eV": float(source_best["best_valid_gap_mae_eV"]),
+        "valid_gap_mae_eV": float(valid_mae),
+        "delta_vs_source_best_eV": float(valid_mae - float(source_best["best_valid_gap_mae_eV"])),
+        "train_log": log,
+        "official_train_rows": acceptance["counts"]["train"],
+        "official_valid_rows": acceptance["counts"]["valid"],
+        "official_valid_used": True,
+        "official_test_used": False,
+        "external_data_used": False,
+        "pretrained_weights_used": False,
+        "warm_started_from_completed_run": True,
+        "production_registry_changed": False,
+        "runtime_s": elapsed_offset + time.monotonic() - started,
+        "completed_additional_epochs": completed_epochs,
+        "best_sha256": sha256_file(best_path),
+        "valid_predictions_sha256": sha256_file(output_dir / "valid_predictions.pt"),
+    }
+    atomic_json(output_dir / "metrics.json", metrics)
+    atomic_json(completion_path, {
+        "status": status,
+        "source": {
+            "last": {"path": str(source_last_path), "sha256": source_last_hash},
+            "best": {"path": str(source_best_path), "sha256": source_best_hash},
+        },
+        "best": {"path": "best.pt", "sha256": metrics["best_sha256"]},
+        "last": {"path": "last.pt", "sha256": sha256_file(last_path)},
         "metrics": {"path": "metrics.json", "sha256": sha256_file(output_dir / "metrics.json")},
         "valid_predictions": {
             "path": "valid_predictions.pt",

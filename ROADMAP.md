@@ -10,11 +10,11 @@ belong to each experiment's decision record. Track ownership is defined in
 Select one pure-2D, Gap-only architecture for the official PCQM4Mv2 leaderboard
 under a hard 12-hour A100 full-training budget. Kaggle 100K selection must
 finish before any molecular-research-server use.
-
 ## Active Queue
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
+| P1 | B-PCQM-EDGE-CONTINUATION | Continue the completed rich-feature EdgeState run in an isolated output directory | Retrieve atomic artifacts and determine whether the best official-validation Gap MAE improves beyond 0.102063 eV; otherwise close convergence without changing production | experiments/pcqm_edge_state_full/results/convergence_40/ |
 | P0 | B-PCQM100K-GLOBAL-STATE | Run one recurrent graph-state EdgeState candidate under the frozen seed-42 contract | Downloaded artifacts pass no-inference acceptance and the candidate strictly beats the EdgeState comparator, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
 | P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
@@ -73,8 +73,8 @@ R9 is owned by
 - PCQM leaderboard architecture questions use the frozen official-train-derived
   100K/10K Kaggle split. QM9 and PubChemQC results are historical inspiration,
   not advancement gates or reusable weights.
-- Do not access the molecular-research server until one candidate passes the
-  three-seed Kaggle gate. Later access is restricted to
+- The explicit convergence diagnostic above is the only IMS exception before
+  the three-seed Kaggle gate; all IMS work remains under
   `/lustre/home/users/sm2/chou/`.
 - Predict Gap directly. HOMO/LUMO auxiliary targets, 3D inputs, residual
   targets, pretrained checkpoints, and prediction fusion are outside this

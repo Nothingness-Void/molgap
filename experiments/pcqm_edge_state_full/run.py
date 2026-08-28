@@ -8,8 +8,10 @@ from pathlib import Path
 
 from molgap.pcqm_official_edge_state import (
     OfficialEdgeStateConfig,
+    OfficialEdgeStateContinuationConfig,
     accept_training_graphs,
     build_training_graph_shard,
+    continue_official_edge_state,
     predict_official_tests_from_raw,
     prepare_training_rows,
     train_official_edge_state,
@@ -56,6 +58,27 @@ def parser() -> argparse.ArgumentParser:
     train.add_argument("--batch-size", type=int, default=256)
     train.add_argument("--eval-batch-size", type=int, default=512)
     train.add_argument("--seed", type=int, default=42)
+
+    continuation = subparsers.add_parser(
+        "continue-training",
+        help="continue an immutable completed run in a new output directory",
+    )
+    continuation.add_argument("--graph-dir", type=Path, required=True)
+    continuation.add_argument("--acceptance", type=Path, required=True)
+    continuation.add_argument("--source-dir", type=Path, required=True)
+    continuation.add_argument("--output-dir", type=Path, required=True)
+    continuation.add_argument("--additional-epochs", type=int, default=20)
+    continuation.add_argument("--learning-rate", type=float, default=1.0e-4)
+    continuation.add_argument("--minimum-learning-rate", type=float, default=1.0e-6)
+    continuation.add_argument(
+        "--scheduler", choices=("cosine", "warmup_cosine"), default="warmup_cosine"
+    )
+    continuation.add_argument("--warmup-epochs", type=int, default=2)
+    continuation.add_argument("--patience", type=int, default=7)
+    continuation.add_argument("--batch-size", type=int, default=256)
+    continuation.add_argument("--eval-batch-size", type=int, default=512)
+    continuation.add_argument("--gradient-clip", type=float, default=1.0)
+    continuation.add_argument("--hard-job-budget-hours", type=float, default=13.5)
 
     infer = subparsers.add_parser("infer-test")
     infer.add_argument("--archive", type=Path, required=True)
@@ -107,6 +130,25 @@ def main() -> None:
                 batch_size=args.batch_size,
                 eval_batch_size=args.eval_batch_size,
                 seed=args.seed,
+            ),
+        )
+    elif args.command == "continue-training":
+        result = continue_official_edge_state(
+            args.graph_dir,
+            args.acceptance,
+            args.source_dir,
+            args.output_dir,
+            config=OfficialEdgeStateContinuationConfig(
+                additional_epochs=args.additional_epochs,
+                learning_rate=args.learning_rate,
+                minimum_learning_rate=args.minimum_learning_rate,
+                scheduler=args.scheduler,
+                warmup_epochs=args.warmup_epochs,
+                patience=args.patience,
+                batch_size=args.batch_size,
+                eval_batch_size=args.eval_batch_size,
+                gradient_clip=args.gradient_clip,
+                hard_job_budget_s=args.hard_job_budget_hours * 3600.0,
             ),
         )
     else:

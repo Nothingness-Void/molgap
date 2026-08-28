@@ -84,8 +84,9 @@ must not be represented as this new conservative head.
   graph-state seed-42 screen; no multiseed or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
-- No molecular-research-server access is authorized before Kaggle selects one
-  three-seed winner.
+- User-authorized IMS convergence job `1363520.ccpbs1` runs in isolated
+  `rich_full/convergence_40/` from the immutable checkpoint; CUDA preflight
+  passed. It is diagnostic only, not a production or architecture gate.
 - Any new remote run must first appear in `ROADMAP.md` with an input contract,
   timing bound, atomic checkpoint path, and independently retrievable outputs.
 

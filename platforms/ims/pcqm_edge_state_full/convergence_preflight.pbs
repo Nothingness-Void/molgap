@@ -1,0 +1,104 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=2:ngpus=1
+#PBS -l walltime=00:10:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+OUT=rich_full/convergence_40
+mkdir -p "$OUT/preflight" "$OUT/logs"
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
+
+"$PYTHON" - <<'PY'
+import json
+import os
+import time
+from pathlib import Path
+
+import torch
+from torch_geometric.loader import DataLoader
+
+from molgap.pcqm_official_edge_state import (
+    OfficialEdgeStateConfig,
+    PackedGraphDataset,
+    _forward,
+    _make_model,
+)
+
+root = Path("rich_full")
+acceptance_path = root / "graphs" / "acceptance.json"
+acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+if acceptance.get("status") != "accepted":
+    raise RuntimeError("accepted graph cache is required")
+if acceptance.get("feature_schema") != "ogb":
+    raise RuntimeError("convergence preflight requires the OGB feature schema")
+train_paths = sorted((root / "graphs" / "train").glob("train_shard_*.pt"))
+if not train_paths:
+    raise FileNotFoundError("no accepted training shards")
+if not torch.cuda.is_available():
+    raise RuntimeError("CUDA is unavailable on the allocated node")
+
+started = time.monotonic()
+device = torch.device("cuda")
+config = OfficialEdgeStateConfig(
+    hidden_channels=192,
+    num_layers=9,
+    num_heads=4,
+    dropout=0.05,
+    rwse_dim=16,
+    edge_state_channels=64,
+    batch_size=256,
+    eval_batch_size=512,
+    learning_rate=4.0e-4,
+    weight_decay=1.0e-5,
+    max_epochs=20,
+    scheduler="warmup_cosine",
+    warmup_epochs=2,
+    minimum_learning_rate=1.0e-6,
+    feature_schema="ogb",
+    projection_epochs=20,
+    patience=7,
+    seed=42,
+    gradient_clip=1.0,
+)
+dataset = PackedGraphDataset(train_paths[0])
+loader = DataLoader(dataset, batch_size=min(4, len(dataset)), shuffle=False)
+batch = next(iter(loader)).to(device)
+model = _make_model(config, int(acceptance["node_feature_dim"])).to(device)
+optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
+model.train()
+optimizer.zero_grad(set_to_none=True)
+with torch.amp.autocast("cuda", enabled=True):
+    prediction = _forward(model, batch)
+    target = (batch.y.view(-1) - float(acceptance["target_mean_gap"])) / float(acceptance["target_std_gap"])
+    loss = torch.nn.functional.l1_loss(prediction, target)
+if not torch.isfinite(prediction).all() or not torch.isfinite(loss):
+    raise RuntimeError("non-finite forward result")
+loss.float().backward()
+gradient_norm = float(torch.nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip))
+optimizer.step()
+if not torch.isfinite(torch.tensor(gradient_norm)):
+    raise RuntimeError("non-finite gradient norm")
+payload = {
+    "status": "accepted",
+    "torch_version": torch.__version__,
+    "cuda_version": torch.version.cuda,
+    "device": torch.cuda.get_device_name(0),
+    "graph_shard": str(train_paths[0]),
+    "batch_graphs": int(batch.num_graphs),
+    "prediction_shape": list(prediction.shape),
+    "loss": float(loss.detach().cpu()),
+    "gradient_norm": gradient_norm,
+    "peak_memory_allocated": int(torch.cuda.max_memory_allocated()),
+    "elapsed_s": time.monotonic() - started,
+}
+destination = root / "convergence_40" / "preflight" / "cuda_forward_backward.json"
+temporary = destination.with_name(f".{destination.name}.tmp")
+temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+os.replace(temporary, destination)
+print(json.dumps(payload, indent=2), flush=True)
+PY
