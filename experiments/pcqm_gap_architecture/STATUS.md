@@ -52,8 +52,12 @@
   `eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21`, cache
   aggregate SHA `dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406`,
   100000/10000 graphs, 3860510/386070 wedges, 22 hashed shards, and all
-  sealed-role flags false. GPU seed-42 submission is authorized after the
-  final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
-  and molecular-research-server work remain unauthorized.
+  sealed-role flags false. The sole GPU seed-42 push was attempted at 17:02
+  JST but failed before remote kernel creation because the Kaggle metadata
+  title does not resolve to the requested id; evidence is retained under
+  `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_edge_state_seed42/submission_error.json`.
+  No retry is authorized under the one-push contract; no GPU result exists.
+  Seed-43/44, full-data, official validation/test-dev, and
+  molecular-research-server work remain unauthorized.
 
 Task order remains authoritative in `ROADMAP.md`.
