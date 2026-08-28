@@ -5,12 +5,13 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 from pathlib import Path
 
 
-OUT = Path("/kaggle/working/pcqm_gap100k_sparse_triangle_wedge_cache")
+OUT = Path("/kaggle/working/pcqm_gap100k_sparse_triangle_wedge_cache_r2")
 EXPECTED_SOURCE_COMMIT = "35fadc9de63e22de7a1cfbe21e4f1af8888e075f"
 EXPECTED_PARENT_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
 EXPECTED_PARENT_AGGREGATE_SHA256 = (
@@ -104,10 +105,25 @@ def source_root() -> Path:
     return matches[0].parents[1]
 
 
+def install_dependencies() -> None:
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            "ogb==1.3.6",
+            "torch-geometric==2.6.1",
+        ]
+    )
+
+
 def main() -> None:
     started = time.perf_counter()
     OUT.mkdir(parents=True, exist_ok=True)
     try:
+        install_dependencies()
         sys.path.insert(0, str(source_root()))
         import torch
 
