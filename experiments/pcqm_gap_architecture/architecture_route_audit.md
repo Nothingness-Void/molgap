@@ -19,9 +19,10 @@ validation and test-dev remain sealed.
 | Final multi-depth or learned-query readout | Regressed on QM9 or PCQM | Closed |
 | Static local-operator replacement | GatedGCN, TransformerConv, and GENConv all lost to persistent EdgeState | Closed |
 | Edge-to-node FiLM | Close but negative on all QM9 targets | Closed |
-| Recurrent graph state | Improved QM9 Gap but lost the old three-target average through LUMO regression | Highest-priority transfer to the now Gap-only PCQM task |
+| Recurrent graph state | Completed on PCQM Gap100K but missed the EdgeState comparator by 0.0006301 eV | Closed |
 | Virtual multihop edges and shortest-path attention | Added no net information beyond RWSE plus GPS attention | Closed |
 | Non-backtracking directed bond memory | Improved QM9 Gap slightly but lost the old three-target average | Second priority |
+| Sparse adjacent-edge wedge state | Not yet run; adds explicit edge-pair interaction while retaining sparse scaling | Next seed-42 question |
 | PNA neighborhood statistics | Not yet run; literature-backed but with more compute and no project-specific positive result | Third priority |
 | Gated retention inside the edge update | Not yet run; low-cost and mechanistically plausible but no positive empirical result | Fourth priority |
 
@@ -59,15 +60,15 @@ Exact metrics and gates remain in the linked decisions under
 
 ## Selection
 
-The next candidate is `ogb_recurrent_graph_state_gps9`: the accepted OGB
-EdgeState GPS9 plus one shared recurrent molecule state with a 16-channel
-update bottleneck. The state is updated from mean-pooled nodes and broadcast
-before every GPS block. Its output projections are zero-initialized, so the
-initial function preserves the EdgeState path while optimization can learn a
-global correction.
+The recurrent graph-state candidate was run under the frozen contract and did
+not beat the comparator. The next candidate is
+`ogb_sparse_triangle_edge_state_gps9`: accepted EdgeState GPS9 plus a compact
+16-channel state for directed non-backtracking wedges `i -> j -> k`. Each
+wedge reads two current bond states and its center-node state, then sends
+sparse context back to those bond states and the center node before the GPS
+block.
 
-This route ranks first because it has all three forms of support unavailable to
-the alternatives: positive Gap-specific project evidence, direct precedent in
-a PCQM-specialized architecture, and negligible parameter/throughput risk. It
-is a new PCQM Gap-only question, not an attempt to overturn the earlier QM9
-three-target decision.
+This route ranks first because it changes the missing information flow—explicit
+adjacent-edge interaction—without constructing a dense all-pairs tensor. It is
+a new PCQM Gap-only question under the same cache and contract, not a retry of
+the recurrent state or the earlier dense PairGPS route.

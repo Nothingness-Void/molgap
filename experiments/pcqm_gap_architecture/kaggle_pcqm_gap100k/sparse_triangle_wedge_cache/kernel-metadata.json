@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache",
+  "title": "MolGap PCQM Gap100K Sparse Triangle Wedge Cache",
+  "code_file": "run_wedge_cache.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
+  ],
+  "model_sources": []
+}
