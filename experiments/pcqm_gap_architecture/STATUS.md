@@ -64,5 +64,15 @@
   The preserved evidence and SHA-256 values are in
   `results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`. No
   retry or successor submission is authorized by this screen.
+- On 2026-08-29 the user authorized one implementation-only repair because R2
+  never reached an epoch. Source commit
+  `76dd6efa76c8236ce80a82a8a43d9f5df426165e` replaces the invalid OGB
+  `AtomEncoder.out_features` lookup with the frozen scalar-head input width;
+  no architecture, data, seed, precision, batch, optimizer, schedule, cache,
+  comparator, or sealed-role setting changed. The source dataset passed its
+  ready check and Kaggle2 accepted
+  `kaseichou/molgap-pcqm-triangle-edge-state-r3-s42`, version 1. It was
+  `RUNNING` at the 2026-08-29 00:10 JST launch check. No cron monitor, second
+  retry, seed-43/44 run, full-data run, or official evaluation is authorized.
 
 Task order remains authoritative in `ROADMAP.md`.

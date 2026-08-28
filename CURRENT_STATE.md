@@ -30,14 +30,14 @@ sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
 real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling,
-three matched local-operator replacements, recurrent graph state, and the
-sparse topology-wedge implementation question are closed. The wedge cache
-passed, but its seed-42 GPU job failed during preflight before the first epoch
-because the OGB `AtomEncoder` API was used as if it exposed `out_features`.
-The exact failure evidence is recorded under
-`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/`.
-No seed-43/44 or full-data authorization exists. Exact completed conclusions
-belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
+three matched local-operator replacements, and recurrent graph state are
+closed. Sparse topology-wedge R2 failed during preflight before the first
+epoch because the OGB `AtomEncoder` API was used as if it exposed
+`out_features`. The user authorized exactly one R3 implementation repair with
+the same frozen architecture, data, and optimization contract; that Kaggle2
+seed-42 task is running. No seed-43/44, further retry, or full-data
+authorization exists. Exact evidence belongs under
+`experiments/pcqm_gap_architecture/results/`.
 
 ## Prior Architecture Evidence
 
@@ -74,13 +74,14 @@ must not be represented as this new conservative head.
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
 - The official-train-derived PCQM 100K graph cache, completed seed-42
-  comparisons, and the sparse topology-wedge cache are accepted. Kaggle2
-  kernel `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42`, version 1,
-  terminated during preflight with no epoch or metrics output. The fatal
-  compatibility error and downloaded log hashes are recorded at
+  comparisons, and the sparse topology-wedge cache are accepted. R2 terminated
+  during preflight with no epoch or metrics output; its failure is recorded at
   `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`.
-  This implementation question is closed under its protocol; no retry,
-  multiseed run, or full-data run is authorized.
+  The sole authorized implementation repair is Kaggle2 kernel
+  `kaseichou/molgap-pcqm-triangle-edge-state-r3-s42`, version 1, which is
+  running under the unchanged frozen contract. Its launch identity is
+  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/launch_manifest.json`.
+  No further retry, multiseed run, or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
