@@ -3,6 +3,8 @@ from __future__ import annotations
 import gzip
 import io
 import json
+import subprocess
+import sys
 import zipfile
 from pathlib import Path
 
@@ -200,6 +202,58 @@ def test_official_warmup_cosine_schedule_reaches_minimum() -> None:
     ]
     assert factors[:3] == [0.5, 1.0, 1.0]
     assert factors[-1] == 0.0025
+
+
+def test_training_import_does_not_require_optional_ogb() -> None:
+    code = """
+import builtins
+real_import = builtins.__import__
+def guarded_import(name, *args, **kwargs):
+    if name == "ogb" or name.startswith("ogb."):
+        raise ModuleNotFoundError("ogb deliberately blocked")
+    return real_import(name, *args, **kwargs)
+builtins.__import__ = guarded_import
+import molgap.pcqm_official_edge_state as module
+assert callable(module.continue_official_edge_state)
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=Path(__file__).resolve().parents[1],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_ims_continuation_payload_is_isolated_and_resumable() -> None:
+    repo = Path(__file__).resolve().parents[1]
+    continuation = (
+        repo
+        / "platforms"
+        / "ims"
+        / "pcqm_edge_state_full"
+        / "continue_rich_full.pbs"
+    ).read_text(encoding="utf-8")
+    preflight = (
+        repo
+        / "platforms"
+        / "ims"
+        / "pcqm_edge_state_full"
+        / "convergence_preflight_v2.pbs"
+    ).read_text(encoding="utf-8")
+    assert "--source-dir rich_full/training" in continuation
+    assert "--output-dir rich_full/convergence_40" in continuation
+    assert "--hard-job-budget-hours 13.5" in continuation
+    assert "convergence_40/code/src" in continuation
+    assert "continue-training \\" in continuation
+    assert "+  --" not in continuation
+    assert "job_status.json" in continuation
+    assert "record_status failed" in continuation
+    assert "convergence_40/code/src" in preflight
+    assert "convergence_40/preflight_v2" in preflight
+    assert "job_status.json" in preflight
+    assert "record_status failed" in preflight
 
 
 def test_hypervalent_official_smiles_uses_visible_unsanitized_fallback() -> None:

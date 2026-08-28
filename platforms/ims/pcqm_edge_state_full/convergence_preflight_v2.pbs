@@ -13,6 +13,43 @@ mkdir -p "$OUT"
 export PYTHONPATH="$ROOT/rich_full/convergence_40/code/src:$ROOT/code/src:$ROOT/vendor"
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
 
+STATUS="$OUT/job_status.json"
+record_status() {
+  local state="$1"
+  local exit_code="$2"
+  STATE="$state" EXIT_CODE="$exit_code" JOB_ID="${PBS_JOBID:-local}" "$PYTHON" - "$STATUS" <<'PY'
+import json
+import os
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+destination = Path(sys.argv[1])
+payload = {
+    "status": os.environ["STATE"],
+    "exit_code": int(os.environ["EXIT_CODE"]),
+    "job_id": os.environ["JOB_ID"],
+    "updated_at_utc": datetime.now(timezone.utc).isoformat(),
+    "result": "rich_full/convergence_40/preflight_v2/cuda_forward_backward.json",
+}
+temporary = destination.with_name(f".{destination.name}.tmp")
+temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+os.replace(temporary, destination)
+PY
+}
+on_exit() {
+  local exit_code=$?
+  trap - EXIT
+  if [ "$exit_code" -eq 0 ]; then
+    record_status completed "$exit_code"
+  else
+    record_status failed "$exit_code"
+  fi
+  exit "$exit_code"
+}
+trap on_exit EXIT
+record_status running 0
+
 "$PYTHON" - <<'PY'
 import json
 import os

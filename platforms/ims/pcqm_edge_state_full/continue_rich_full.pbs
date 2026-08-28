@@ -16,6 +16,43 @@ mkdir -p rich_full/convergence_40/logs
 export PYTHONPATH="$ROOT/rich_full/convergence_40/code/src:$ROOT/code/src:$ROOT/vendor"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 
+STATUS=rich_full/convergence_40/job_status.json
+record_status() {
+  local state="$1"
+  local exit_code="$2"
+  STATE="$state" EXIT_CODE="$exit_code" JOB_ID="${PBS_JOBID:-local}" "$PYTHON" - "$STATUS" <<'PY'
+import json
+import os
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+destination = Path(sys.argv[1])
+payload = {
+    "status": os.environ["STATE"],
+    "exit_code": int(os.environ["EXIT_CODE"]),
+    "job_id": os.environ["JOB_ID"],
+    "updated_at_utc": datetime.now(timezone.utc).isoformat(),
+    "log": "rich_full/convergence_40/logs/continuation.log",
+}
+temporary = destination.with_name(f".{destination.name}.tmp")
+temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+os.replace(temporary, destination)
+PY
+}
+on_exit() {
+  local exit_code=$?
+  trap - EXIT
+  if [ "$exit_code" -eq 0 ]; then
+    record_status completed "$exit_code"
+  else
+    record_status failed "$exit_code"
+  fi
+  exit "$exit_code"
+}
+trap on_exit EXIT
+record_status running 0
+
 "$PYTHON" rich_full/convergence_40/code/experiments/pcqm_edge_state_full/run.py continue-training \
   --graph-dir rich_full/graphs \
   --acceptance rich_full/graphs/acceptance.json \
