@@ -259,7 +259,10 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
         if wedge_channels <= 0:
             raise ValueError("wedge_channels must be positive")
         super().__init__(*args, **kwargs)
-        hidden_channels = self.node_emb.out_features
+        # OGB's categorical AtomEncoder intentionally does not expose the
+        # Linear-style ``out_features`` attribute.  The scalar head retains
+        # the frozen encoder width after the superclass swaps node encoders.
+        hidden_channels = self.head[0].in_features
         dropout = float(kwargs.get("dropout", 0.1))
         self.wedge_channels = int(wedge_channels)
         context_channels = hidden_channels + 2 * self.edge_state_channels

@@ -32,6 +32,14 @@ RECURRENT_STATE_ACCEPTANCE = (
     EXPERIMENT / "accept_pcqm100k_recurrent_graph_state.py"
 )
 RECURRENT_STATE_PROTOCOL = EXPERIMENT / "recurrent_graph_state_seed42_protocol.md"
+SPARSE_TRIANGLE_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "sparse_triangle_edge_state_seed42"
+    / "run_screen.py"
+)
+SPARSE_TRIANGLE_METADATA = SPARSE_TRIANGLE_GPU.with_name("kernel-metadata.json")
+SPARSE_TRIANGLE_PROTOCOL = EXPERIMENT / "sparse_triangle_edge_state_protocol.md"
 
 
 def assignment_literal(path: Path, name: str):
@@ -433,3 +441,37 @@ def test_recurrent_graph_state_protocol_is_gap_only_and_single_candidate() -> No
     assert "at most 40 epochs, patience 8" in source
     assert "official validation and test-dev remain unread" in source
     assert "token-width, seed, optimizer, schedule" in source
+
+
+def test_sparse_triangle_hidden_width_does_not_depend_on_ogb_encoder_api() -> None:
+    tree = ast.parse(MODELS.read_text(encoding="utf-8"))
+    sparse_class = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.ClassDef)
+        and node.name == "OGBSparseTriangleEdgeStateGPSWrapper"
+    )
+    source = ast.get_source_segment(MODELS.read_text(encoding="utf-8"), sparse_class)
+    assert source is not None
+    assert "self.head[0].in_features" in source
+    assert "self.node_emb.out_features" not in source
+
+
+def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "CANDIDATE") == (
+        "ogb_sparse_triangle_edge_state_gps9"
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "PATIENCE") == 8
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "PARAMETER_BUDGET") == 5_200_000
+    source = SPARSE_TRIANGLE_GPU.read_text(encoding="utf-8")
+    assert '"precision": "fp32"' in source
+    assert '"target": "homolumogap"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    protocol = SPARSE_TRIANGLE_PROTOCOL.read_text(encoding="utf-8")
+    assert "Seed 42, FP32, batch 48" in protocol
+    assert "Parameter ceiling: `5,200,000`" in protocol
