@@ -1,0 +1,34 @@
+{
+  "format": "molgap-pcqm-pairbias-screen-submission-v1",
+  "submitted_at": "2026-08-28T03:49:24+09:00",
+  "kernel_slug": "nothingnessvoid/molgap-pcqm-arch-pairbias-s42-train-20260828",
+  "kernel_version": 1,
+  "seed": 42,
+  "stage": "bounded_training",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v7-20260828",
+  "runtime_manifest_sha256": "dcd8b180b54b7a2f356df863e024b4ffbd248379a41732641f81ea1ffbc31ec8",
+  "graph_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "graph_acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "entry_script_sha256": "e1731791ab8ddf51bee00eef817b8e9c9c9d0c14d96c3df6aa20cf6d78f38f8b",
+  "uploaded_metadata_sha256": "1b7d7cb2a83e0d36248091877a6b702415f168c60bc21844c93507302ddbee98",
+  "preflight_acceptance": "experiments/pcqm_edge_state_full/pairbias_screen/remote_preflight_acceptance.json",
+  "data_contract": {
+    "training_rows": 100000,
+    "development_rows": 10000,
+    "official_train_only": true,
+    "official_valid_used": false,
+    "official_test_used": false,
+    "external_data_used": false
+  },
+  "training_contract": {
+    "max_epochs": 20,
+    "warmup_epochs": 2,
+    "scheduler": "warmup_cosine",
+    "batch_size": 64,
+    "eval_batch_size": 64,
+    "learning_rate": 0.0004,
+    "patience": 7,
+    "hard_job_budget_hours": 10.0,
+    "atomic_best_and_last": true
+  }
+}

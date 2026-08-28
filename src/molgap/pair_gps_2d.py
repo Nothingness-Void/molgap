@@ -22,7 +22,7 @@ import torch.nn as nn
 from torch_geometric.nn import GINEConv
 from torch_geometric.utils import to_dense_batch
 
-from .gps import FrontierCenterGapHead
+from .gps import CategoricalFeatureEncoder, FrontierCenterGapHead
 
 
 class _PairGPSBlock(nn.Module):
@@ -830,3 +830,71 @@ class PairGPS2DR3Wrapper(PairGPS2DR2Wrapper):
                 hidden_channels=embedding_dim,
                 dropout=dropout,
             )
+
+
+class CategoricalPairGPS2DWrapper(PairGPS2DWrapper):
+    """PairGPS adapter for OGB categorical atom/bond fields plus RWSE."""
+
+    def __init__(
+        self,
+        *,
+        atom_feature_dims,
+        bond_feature_dims,
+        atom_input_channels: int = 64,
+        bond_input_channels: int = 32,
+        rwse_dim: int = 16,
+        **kwargs,
+    ) -> None:
+        if atom_input_channels <= 0 or bond_input_channels <= 0 or rwse_dim <= 0:
+            raise ValueError("categorical and RWSE dimensions must be positive")
+        super().__init__(
+            in_channels=atom_input_channels,
+            edge_dim=bond_input_channels,
+            **kwargs,
+        )
+        self.rwse_dim = int(rwse_dim)
+        self.atom_encoder = CategoricalFeatureEncoder(
+            atom_feature_dims, atom_input_channels
+        )
+        self.bond_encoder = CategoricalFeatureEncoder(
+            bond_feature_dims, bond_input_channels
+        )
+        self.rwse_encoder = nn.Sequential(
+            nn.Linear(self.rwse_dim, atom_input_channels),
+            nn.SiLU(),
+            nn.Linear(atom_input_channels, atom_input_channels),
+        )
+
+    def encode(
+        self,
+        x: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_attr: torch.Tensor,
+        batch: torch.Tensor,
+        random_walk_pe: torch.Tensor,
+    ) -> torch.Tensor:
+        if random_walk_pe.ndim != 2 or random_walk_pe.shape != (
+            x.shape[0],
+            self.rwse_dim,
+        ):
+            raise ValueError(
+                "random_walk_pe must have shape "
+                f"[{x.shape[0]}, {self.rwse_dim}]"
+            )
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        atom = self.atom_encoder(x) + self.rwse_encoder(random_walk_pe.float())
+        bond = self.bond_encoder(edge_attr)
+        return super().encode(atom, edge_index, bond, batch)
+
+    def forward(
+        self,
+        x: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_attr: torch.Tensor,
+        batch: torch.Tensor,
+        random_walk_pe: torch.Tensor,
+    ) -> torch.Tensor:
+        return self.head(
+            self.encode(x, edge_index, edge_attr, batch, random_walk_pe)
+        )

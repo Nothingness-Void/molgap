@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=2:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+mkdir -p feature_screen/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+"$PYTHON" code/experiments/pcqm_edge_state_full/feature_screen.py accept-graphs \
+  --rows-dir feature_screen/rows \
+  --graph-dir feature_screen/graphs \
+  --output feature_screen/graphs/acceptance.json \
+  2>&1 | tee feature_screen/logs/accept_graphs.log

@@ -35,6 +35,12 @@ exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42
 and
 `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md`.
 
+The separate strict OGB-rich EdgeState baseline completed public reproducibility
+acceptance and its OGB-LSC form was submitted on 2026-08-28. It is awaiting
+code/report validity review; do not resubmit it or claim a score before OGB
+acceptance. Status is owned by
+`experiments/pcqm_edge_state_full/results/rich_full/submission_status.md`.
+
 The accepted R3 validation gate, failed R5/R6/R7/R8/R9 branches, and untriggered R4
 fallback are evidence. Their exact dispositions are
 `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`,

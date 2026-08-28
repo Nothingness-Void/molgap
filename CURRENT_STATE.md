@@ -36,6 +36,15 @@ accepted EdgeState backbone, selected by the resource-bounded route audit. It
 has no seed-43/44 or full-data authorization. Exact completed conclusions
 belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
 
+In parallel, the strict OGB-rich EdgeState baseline completed full official-only
+training from random initialization. Its public reproduction repository and
+checkpoint Release are at
+`https://github.com/Nothingness-Void/pcqm4mv2-edgestate`; public head `ae00b44`
+passed a fresh-clone audit. The OGB-LSC form was submitted on 2026-08-28 and is
+awaiting code/report validity review. No test score or leaderboard rank exists
+yet. Submission and reproducibility evidence is under
+`experiments/pcqm_edge_state_full/results/rich_full/`.
+
 ## Prior Architecture Evidence
 
 The independent PairGPS2D line completed its matched PubChemQC-100K
@@ -104,21 +113,7 @@ must not be represented as this new conservative head.
 | What ships now? | `production/README.md` |
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
 | What is the active leaderboard experiment? | `experiments/pcqm_gap_architecture/README.md` |
-| What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
-| What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
-| What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
-| What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
-| Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
-| Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
-| Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
-| Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
-| Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |
-| Did R8 multihop local messaging improve R3? | `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md` |
-| Did R9 shortest-path sparse attention improve R3? | `experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md` |
-| Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
+| What was submitted for OGB review? | `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
-| Where are rejected branches indexed? | `experiments/_closed/README.md` |
 | How are remote jobs packaged and retained? | `platforms/README.md` |
 | Which model artifacts exist? | `models/README.md` |
-
-The immediate execution order is defined only in `ROADMAP.md`.

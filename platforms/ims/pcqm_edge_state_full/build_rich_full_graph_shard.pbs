@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=1:mpiprocs=1:ompthreads=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+SHARD_INDEX="${SHARD_INDEX:-${PBS_ARRAY_INDEX:-}}"
+test -n "$SHARD_INDEX"
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+test "$(sha256sum inputs/pcqm4m-v2.zip | cut -d' ' -f1)" = \
+  628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701
+test "$(sha256sum inputs/rows/manifest.json | cut -d' ' -f1)" = \
+  c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b
+mkdir -p rich_full/graphs/reports rich_full/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+"$PYTHON" code/experiments/pcqm_edge_state_full/run.py build \
+  --rows-dir inputs/rows \
+  --graph-dir rich_full/graphs \
+  --shard-index "$SHARD_INDEX" \
+  --workers 1 --feature-schema ogb \
+  2>&1 | tee "rich_full/logs/build_${SHARD_INDEX}.log"

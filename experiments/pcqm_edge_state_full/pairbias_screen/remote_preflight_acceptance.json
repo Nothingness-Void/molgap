@@ -1,0 +1,35 @@
+{
+  "format": "molgap-pcqm-pairbias-remote-preflight-acceptance-v1",
+  "status": "accepted",
+  "accepted_at": "2026-08-28T03:49:24+09:00",
+  "kernel_slug": "nothingnessvoid/molgap-pcqm-arch-pairbias-s42-preflight-20260828",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v7-20260828",
+  "graph_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "graph_acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "manifest_sha256": "f7c37b95b851e8ac1ce74795e276b08069a65ffafbe5a1d7cba33be7e3ee6c7b",
+  "preflight_sha256": "4a42f41e301a3340b5115003a49c95772bd44f6b2ed60fa65a3b5dea2d4b980c",
+  "model": {
+    "family": "pair_gps",
+    "hidden_channels": 192,
+    "pair_channels": 64,
+    "num_layers": 8,
+    "num_heads": 4,
+    "path_steps": 5,
+    "triplet_rank": 16,
+    "parameters": 5735873
+  },
+  "device": {
+    "batch_size": 64,
+    "peak_cuda_bytes": 812936704,
+    "seconds_per_batch": 0.14575676466665755,
+    "projected_training_hours": 1.2656545731888096,
+    "finite_gradients": true
+  },
+  "data_contract": {
+    "official_train_only": true,
+    "official_valid_used": false,
+    "official_test_used": false,
+    "external_data_used": false
+  },
+  "raw_record": "platforms/_records/kaggle/training/pcqm_pairbias_screen_20260828/preflight_v1/"
+}

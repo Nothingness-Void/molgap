@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-official-equal-ensemble-seed42-exploration-v1",
+  "role": "hypothesis_generation",
+  "members": [
+    "warmup20_control",
+    "radicalctx16",
+    "radicalctx32"
+  ],
+  "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "control": {
+    "mae_eV": 0.15006214380264282,
+    "radical_mae_eV": 0.25360438227653503,
+    "nonradical_mae_eV": 0.1414971500635147
+  },
+  "equal_ensemble": {
+    "mae_eV": 0.1433165818452835,
+    "radical_mae_eV": 0.24073414504528046,
+    "nonradical_mae_eV": 0.13525821268558502
+  },
+  "delta_eV": {
+    "mae_eV": -0.006745561957359314,
+    "radical_mae_eV": -0.012870237231254578,
+    "nonradical_mae_eV": -0.0062389373779296875
+  },
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false
+}

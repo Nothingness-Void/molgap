@@ -1,0 +1,61 @@
+{
+  "format": "molgap-pcqm4mv2-official-edge-state-ims-submission-v1",
+  "submitted_at": "2026-08-25T19:59:00+09:00",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full",
+  "input": {
+    "path": "inputs/pcqm4m-v2.zip",
+    "bytes": 61602606,
+    "sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "external_data_used": false
+  },
+  "jobs": {
+    "prepare_rows": "1344420.ccpbs1",
+    "rejected_build_graphs": "1344421[].ccpbs1",
+    "cancelled_accept_graphs": "1344422.ccpbs1",
+    "cancelled_train": "1344423.ccpbs1",
+    "rejected_incomplete_element_build_graphs": "1344428[].ccpbs1",
+    "build_graphs": "1344441[].ccpbs1",
+    "accept_graphs": "1344442.ccpbs1",
+    "cancelled_wrong_dependency_train": "1344433.ccpbs1",
+    "cancelled_pre_vocabulary_train": "1344437.ccpbs1",
+    "train": "1344443.ccpbs1"
+  },
+  "dependencies": {
+    "build_graphs": "after row preparation 1344420.ccpbs1 completed",
+    "accept_graphs": "afterok:1344441[].ccpbs1",
+    "train": "afterok:1344442.ccpbs1"
+  },
+  "graph_array": "0-74",
+  "graph_acceptance": {
+    "status": "accepted",
+    "rows": 3452151,
+    "failures": 0,
+    "sha256": "5213948d5610ff64dcf9186ece34f38b3870a3972372b7e9028e908735c39e07"
+  },
+  "training_result": {
+    "status": "complete",
+    "best_epoch": 9,
+    "official_valid_gap_mae_eV": 0.18945006209037688,
+    "runtime_s": 21611.407011419535,
+    "best_sha256": "70424ee51428612a189e5d1659b07626464e8a6e4a61bde338db1a29fa47b818",
+    "metrics_sha256": "74c1e4815b70563bc4df749d6b3d0a4215823b70f4e09495f99e76f05641c563"
+  },
+  "test_inference_submitted": true,
+  "test_inference_job": "1348205.ccpbs1",
+  "test_inference_result": {
+    "status": "failed_before_npz",
+    "reason": "torch_multiprocessing_resource_sharer_lost_tensor_file_descriptors",
+    "log": "test_inference_failure.log",
+    "resubmitted": false
+  },
+  "recovery": {
+    "failure": "torch multiprocessing resource_sharer lost tensor file descriptors",
+    "partial_graph_artifacts": 0,
+    "change": "retain 75-way scheduler parallelism with one process and one CPU per shard; use an explicit topology-only fallback for 33 legacy-valid official SMILES and add nine official rare elements to the fixed atom vocabulary",
+    "first_pass_failures": {
+      "smiles_sanitization": 33,
+      "unsupported_elements": 24
+    }
+  },
+  "production_registry_changed": false
+}

@@ -1,0 +1,458 @@
+{
+  "format": "molgap-pcqm4mv2-official-edge-state-graph-acceptance-v1",
+  "status": "accepted",
+  "archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+  "graph_builder_version": "official-complete-elements-topology-fallback-v3",
+  "source_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+  "counts": {
+    "train": 3378606,
+    "valid": 73545
+  },
+  "atom_list": [
+    6,
+    7,
+    8,
+    9,
+    16,
+    17,
+    15,
+    35,
+    14,
+    5,
+    34,
+    32,
+    33,
+    12,
+    2,
+    1,
+    31,
+    30,
+    13,
+    22,
+    20,
+    36,
+    18,
+    4
+  ],
+  "node_feature_dim": 27,
+  "edge_feature_dim": 4,
+  "rwse_dim": 16,
+  "target_mean_gap": 5.689459009120812,
+  "target_std_gap": 1.1621396013870846,
+  "failures": 0,
+  "unsanitized_fallback_rows": 33,
+  "unsanitized_fallback_source_idx": [
+    51128,
+    142541,
+    155174,
+    155175,
+    155176,
+    155180,
+    155181,
+    193600,
+    411357,
+    505556,
+    1756391,
+    1756392,
+    2064546,
+    2100882,
+    2119947,
+    2539039,
+    2620153,
+    2661113,
+    2690488,
+    2690489,
+    2885109,
+    2885110,
+    2980839,
+    2992920,
+    3003839,
+    3006497,
+    3096168,
+    3132431,
+    3132432,
+    3143920,
+    3143921,
+    3208535,
+    3318575
+  ],
+  "test_graphs_built": false,
+  "external_data_used": false,
+  "reports": [
+    {
+      "shard_index": 0,
+      "report_path": "reports/shard_0000.json",
+      "report_sha256": "142544ca9aad12ec731e353d543dcac940b5777b75d7d47386f9f42b1bfccb3a"
+    },
+    {
+      "shard_index": 1,
+      "report_path": "reports/shard_0001.json",
+      "report_sha256": "c6261444b80277bccd67c2824b97c1916154345dcba9d30b6d9b9cd99e2ea6fe"
+    },
+    {
+      "shard_index": 2,
+      "report_path": "reports/shard_0002.json",
+      "report_sha256": "fcd34e47fd7b326a863e0f45d275420a6a6420922b89dddbce5784d37f470484"
+    },
+    {
+      "shard_index": 3,
+      "report_path": "reports/shard_0003.json",
+      "report_sha256": "36a4034e98a6f22dce85d34469c124f7d1ff3860d1a2fb4624f4d143d9d83422"
+    },
+    {
+      "shard_index": 4,
+      "report_path": "reports/shard_0004.json",
+      "report_sha256": "9c73502a9852e45a46dd76b7c83e01eb0a9e97de5a1a548a9ea342e2de700545"
+    },
+    {
+      "shard_index": 5,
+      "report_path": "reports/shard_0005.json",
+      "report_sha256": "bb98619bb0509e249d75f69dfc243e0aa826b1a511156af1a61bd577a6a360fa"
+    },
+    {
+      "shard_index": 6,
+      "report_path": "reports/shard_0006.json",
+      "report_sha256": "22e3aadf0a65a778fb71684d921bda8ef822caa8ae1ee2099352e34749904dfb"
+    },
+    {
+      "shard_index": 7,
+      "report_path": "reports/shard_0007.json",
+      "report_sha256": "ba6d43139fd60bbfa0e89458567d19517bba510ca9cea16db977e695c145cf2e"
+    },
+    {
+      "shard_index": 8,
+      "report_path": "reports/shard_0008.json",
+      "report_sha256": "751772c276582c0712b0d18d3d23b001825c39f67b0efd5454ce86387a50d9a1"
+    },
+    {
+      "shard_index": 9,
+      "report_path": "reports/shard_0009.json",
+      "report_sha256": "23127426eae899674a716f00efd2c7139ff26846ad509acd981eca31cb008755"
+    },
+    {
+      "shard_index": 10,
+      "report_path": "reports/shard_0010.json",
+      "report_sha256": "c10487c626fa50200eef4ae1fd7b0b0e96798d54373e295cff11559d1d7d0e3a"
+    },
+    {
+      "shard_index": 11,
+      "report_path": "reports/shard_0011.json",
+      "report_sha256": "7200ab921cefcc380fbeff4a297bcab80063516b0f75679d2419c97f5596673d"
+    },
+    {
+      "shard_index": 12,
+      "report_path": "reports/shard_0012.json",
+      "report_sha256": "8946789f46afc780b5deed588671c53d0c4dec5bbcbf4927fa742056e54a87a4"
+    },
+    {
+      "shard_index": 13,
+      "report_path": "reports/shard_0013.json",
+      "report_sha256": "97057d8d6241330b225ba52032e89434df112de28fcd7f555a12ed50f4fcc82d"
+    },
+    {
+      "shard_index": 14,
+      "report_path": "reports/shard_0014.json",
+      "report_sha256": "2189035dd2542ca9afbc0542db28a1f61a33efdeed3f4ddec0ebbe3cba3a5081"
+    },
+    {
+      "shard_index": 15,
+      "report_path": "reports/shard_0015.json",
+      "report_sha256": "c44bcd0becc8857ce7cdfeeb779e48104e447ccd35560e3d9f3b6c8993ef5ef1"
+    },
+    {
+      "shard_index": 16,
+      "report_path": "reports/shard_0016.json",
+      "report_sha256": "af767e265d13b935b0be928bf57fa992c091227ec8f9db0ef8ea014474084ec5"
+    },
+    {
+      "shard_index": 17,
+      "report_path": "reports/shard_0017.json",
+      "report_sha256": "f324976b444170608d29a07140f543cdf4f7c72ae9cf37d3046e07b077f84948"
+    },
+    {
+      "shard_index": 18,
+      "report_path": "reports/shard_0018.json",
+      "report_sha256": "8c6c72f4e133eea62eb0707775c439214b1b138441967e6865e63d5736c2def2"
+    },
+    {
+      "shard_index": 19,
+      "report_path": "reports/shard_0019.json",
+      "report_sha256": "802af4f9e525c252ee2d0e4cc4581bd78d5dbb09d4b36ace2dbda4bad4832759"
+    },
+    {
+      "shard_index": 20,
+      "report_path": "reports/shard_0020.json",
+      "report_sha256": "7cac0fe5dc7ae5dd5675449aa4974989c27d992c626447adc9d04ec78479e325"
+    },
+    {
+      "shard_index": 21,
+      "report_path": "reports/shard_0021.json",
+      "report_sha256": "3282ec5203fa92b8de10796370dabd8322297ceefd95acb1787814566806dabd"
+    },
+    {
+      "shard_index": 22,
+      "report_path": "reports/shard_0022.json",
+      "report_sha256": "d5649686dac4ebe748247ec5f6d4f3054655bba0805d308e7993674034e70260"
+    },
+    {
+      "shard_index": 23,
+      "report_path": "reports/shard_0023.json",
+      "report_sha256": "fa0bbff9a2297b74985f200149c84c197ee9348506685909814e24f8ac39e594"
+    },
+    {
+      "shard_index": 24,
+      "report_path": "reports/shard_0024.json",
+      "report_sha256": "f091afd9f139ddee7a13c2873941a64f423631468642474c9b0d37943e68643c"
+    },
+    {
+      "shard_index": 25,
+      "report_path": "reports/shard_0025.json",
+      "report_sha256": "5b3d98b6260351a4976b3763f88bd8193e9364ed9f58276baf6da83f63eb4963"
+    },
+    {
+      "shard_index": 26,
+      "report_path": "reports/shard_0026.json",
+      "report_sha256": "60333eaa94ecc18d120b8ef7370faacba7212bc36dc9abb4ffec1be241ab434f"
+    },
+    {
+      "shard_index": 27,
+      "report_path": "reports/shard_0027.json",
+      "report_sha256": "37f0370a1aab30c4afdffde8ff1bea76df22cc2c67cd0c934df6aac9dd3a6e9d"
+    },
+    {
+      "shard_index": 28,
+      "report_path": "reports/shard_0028.json",
+      "report_sha256": "da60fadf08262fa89366e7a1925e3c3bff531d6d25e6b362dae47b9e5bff0499"
+    },
+    {
+      "shard_index": 29,
+      "report_path": "reports/shard_0029.json",
+      "report_sha256": "5001a315e9780605e0a7caf1155908e762acdc6594dabe17e1504b8d94bfc4e1"
+    },
+    {
+      "shard_index": 30,
+      "report_path": "reports/shard_0030.json",
+      "report_sha256": "cb7bde3a37c7edf7393622cbd36d309368f9d4c226cdbb42ee969f8b4232b13a"
+    },
+    {
+      "shard_index": 31,
+      "report_path": "reports/shard_0031.json",
+      "report_sha256": "266df52c5be8ea0d2bd85251308ae9ff2db08b8dfc981cc31d33c9bc2e0557a6"
+    },
+    {
+      "shard_index": 32,
+      "report_path": "reports/shard_0032.json",
+      "report_sha256": "4094d1d12bcc25820a9b7dcb5830622b9eb33162065d4c3ac369261f2ab0bf47"
+    },
+    {
+      "shard_index": 33,
+      "report_path": "reports/shard_0033.json",
+      "report_sha256": "22fe95788ae80e270cfcf91444cbfd2feb8173ac24b069143bb37512e2d90728"
+    },
+    {
+      "shard_index": 34,
+      "report_path": "reports/shard_0034.json",
+      "report_sha256": "e2f20a768421d28c93d48baefd57b02c71b5cf7045da6e847cff84907f1029d4"
+    },
+    {
+      "shard_index": 35,
+      "report_path": "reports/shard_0035.json",
+      "report_sha256": "6abe8c8069646614861029fd5ff66ef1b28688f36485b7e6b596abbe952363d8"
+    },
+    {
+      "shard_index": 36,
+      "report_path": "reports/shard_0036.json",
+      "report_sha256": "9fffa26b1adb69ce16969b72fb0ee7601952f55a2cfeb4eea75481e263b07397"
+    },
+    {
+      "shard_index": 37,
+      "report_path": "reports/shard_0037.json",
+      "report_sha256": "0f13adc3ace08df6ddb52ca365e8f09beb2c768ccaf5414dbb3be85f483886fb"
+    },
+    {
+      "shard_index": 38,
+      "report_path": "reports/shard_0038.json",
+      "report_sha256": "481256a139417f0a7a44d3d3219994fe173a1ed46eed988ead52e1fdf2c6a37c"
+    },
+    {
+      "shard_index": 39,
+      "report_path": "reports/shard_0039.json",
+      "report_sha256": "2834c50494ad566951f9743efa86e6a524bdca1b510e22fe8cc268925554d258"
+    },
+    {
+      "shard_index": 40,
+      "report_path": "reports/shard_0040.json",
+      "report_sha256": "63749303ad042ac350b5718c003f1f430af66eb589d22cbec81eee2ddfbbca0c"
+    },
+    {
+      "shard_index": 41,
+      "report_path": "reports/shard_0041.json",
+      "report_sha256": "90ac3e374ef09d5cc14a94d524f43ecdf90100b09f4ab5c85e322b7945e7d14a"
+    },
+    {
+      "shard_index": 42,
+      "report_path": "reports/shard_0042.json",
+      "report_sha256": "83daf3e0a76bd29123389ca55b8648eecc34f8cb1806f8e52832a40497f26303"
+    },
+    {
+      "shard_index": 43,
+      "report_path": "reports/shard_0043.json",
+      "report_sha256": "803b771372abf3a93a47ef09c47c5f61792a5e6670ff8c471bfc0535f514ce7b"
+    },
+    {
+      "shard_index": 44,
+      "report_path": "reports/shard_0044.json",
+      "report_sha256": "6fe7c670641bedb5f971a92a1e8b57c030bb80537c0b579fc748bd8126b57625"
+    },
+    {
+      "shard_index": 45,
+      "report_path": "reports/shard_0045.json",
+      "report_sha256": "6ab1add4a978008195a7aa2dcbb3518b97008e9c7c45aec888ed4e7fb49305d9"
+    },
+    {
+      "shard_index": 46,
+      "report_path": "reports/shard_0046.json",
+      "report_sha256": "90c2d61418ec1db98eb5f37863663538099ce60c681e44db7c5baab459088e51"
+    },
+    {
+      "shard_index": 47,
+      "report_path": "reports/shard_0047.json",
+      "report_sha256": "f372f91c4ade5c23a22bb104609c9849f13a0187a85f737b853b8ee312b544f7"
+    },
+    {
+      "shard_index": 48,
+      "report_path": "reports/shard_0048.json",
+      "report_sha256": "96d2c3202f3341ebd5a4e65864d10a1dc1d6cf56561b614b70532be6a4010097"
+    },
+    {
+      "shard_index": 49,
+      "report_path": "reports/shard_0049.json",
+      "report_sha256": "f832a37ac3bab0237b5bc894bb42408b4508e72c9553f0a7476dc48ae8d915dd"
+    },
+    {
+      "shard_index": 50,
+      "report_path": "reports/shard_0050.json",
+      "report_sha256": "c4385ef5627cf9716bc299b5235a4a38a972f6325f22394c35a658fceef74d69"
+    },
+    {
+      "shard_index": 51,
+      "report_path": "reports/shard_0051.json",
+      "report_sha256": "8bff2a900086fcc04de232c192feba35b439d307b1e5b43b3b9f9d6079b11893"
+    },
+    {
+      "shard_index": 52,
+      "report_path": "reports/shard_0052.json",
+      "report_sha256": "559de6311a904bd89a04a69f6f8e3cf2b250308d2637d3a2e6a789fedc05da3d"
+    },
+    {
+      "shard_index": 53,
+      "report_path": "reports/shard_0053.json",
+      "report_sha256": "d96a7dbc528471fa135abedb00675d24026f6053b3530267ccc1119b447a8747"
+    },
+    {
+      "shard_index": 54,
+      "report_path": "reports/shard_0054.json",
+      "report_sha256": "8d8ab461583d099a56351ea8e06fb8f56b9e6765a2df0bce54378563c306bf25"
+    },
+    {
+      "shard_index": 55,
+      "report_path": "reports/shard_0055.json",
+      "report_sha256": "7aaa9987eabe2619cf1e5ad366742ee40fc655950c9e174f784f6c87729019e3"
+    },
+    {
+      "shard_index": 56,
+      "report_path": "reports/shard_0056.json",
+      "report_sha256": "d6e5e290e34b6464b6cdda43cc1266b267b1d077e542d10ba8775ffbd407c70c"
+    },
+    {
+      "shard_index": 57,
+      "report_path": "reports/shard_0057.json",
+      "report_sha256": "85212a213794129e2a149dac09ca2cfc9b2ed7d55881b79561aaa40762e9e34f"
+    },
+    {
+      "shard_index": 58,
+      "report_path": "reports/shard_0058.json",
+      "report_sha256": "428bba79cc4e17ae2f753adab95dc59d39139d42a5149800202a4b5c6d0408a3"
+    },
+    {
+      "shard_index": 59,
+      "report_path": "reports/shard_0059.json",
+      "report_sha256": "4c052f958c70207552e8f5c85e3aefadb2099246d7e248416110082e2399e098"
+    },
+    {
+      "shard_index": 60,
+      "report_path": "reports/shard_0060.json",
+      "report_sha256": "6ea030bf427937251953f6a6d0325b16370cafc2ea450904b473dbcb6571979d"
+    },
+    {
+      "shard_index": 61,
+      "report_path": "reports/shard_0061.json",
+      "report_sha256": "0fa71e417b32276619f6cd44bdb99d629ba69ce9af09a353c73bc2c63f866b63"
+    },
+    {
+      "shard_index": 62,
+      "report_path": "reports/shard_0062.json",
+      "report_sha256": "56a10d556ca670efbf54a9f3927644dece44e01abb436ed66e4436340c79294a"
+    },
+    {
+      "shard_index": 63,
+      "report_path": "reports/shard_0063.json",
+      "report_sha256": "1b89e761a7e70ca38d71378b59d3495e31c57dfb1bab37aafe3c901b64b454af"
+    },
+    {
+      "shard_index": 64,
+      "report_path": "reports/shard_0064.json",
+      "report_sha256": "9ffa5a98cc033bcf90399de8a44745cc8c98f3b4c22c2955fb5f44b79e8ad2bd"
+    },
+    {
+      "shard_index": 65,
+      "report_path": "reports/shard_0065.json",
+      "report_sha256": "292079e2bc71a67835694ebef2bd63868954531ebd1162291cb562e2624e3134"
+    },
+    {
+      "shard_index": 66,
+      "report_path": "reports/shard_0066.json",
+      "report_sha256": "73f15c22c9259303d4706e51812a2749a6a27251dce2015db226812312bfe1dd"
+    },
+    {
+      "shard_index": 67,
+      "report_path": "reports/shard_0067.json",
+      "report_sha256": "7aa4b559efcd1045ba79743a26a8895ecae4099abbb96e3a254fc336d1c0ba4e"
+    },
+    {
+      "shard_index": 68,
+      "report_path": "reports/shard_0068.json",
+      "report_sha256": "07cc3e5546bb616e4c8600ca1303ef1dbf81428e806a213066770da43ffc8649"
+    },
+    {
+      "shard_index": 69,
+      "report_path": "reports/shard_0069.json",
+      "report_sha256": "cac0cd296d980f0376027a5cd3a597f8fcd266f6fd3560e89a2d25c2f08d82fe"
+    },
+    {
+      "shard_index": 70,
+      "report_path": "reports/shard_0070.json",
+      "report_sha256": "bf7443fce8037b85c872e156fe46b37ca8c0f1390485ef2766f057c24d755217"
+    },
+    {
+      "shard_index": 71,
+      "report_path": "reports/shard_0071.json",
+      "report_sha256": "7e5cd516603f612f35ae7592bd81d1971d570dd2a7b2cb06751363a6ffb62a2f"
+    },
+    {
+      "shard_index": 72,
+      "report_path": "reports/shard_0072.json",
+      "report_sha256": "f036be429b3b931c9f3d228be64b59b047d3b751dca1e55d530bd53509b47d1a"
+    },
+    {
+      "shard_index": 73,
+      "report_path": "reports/shard_0073.json",
+      "report_sha256": "24bc586702ba4d3669f623975af7aabb00a09e5df1943e8b9848fa79cd19d1f2"
+    },
+    {
+      "shard_index": 74,
+      "report_path": "reports/shard_0074.json",
+      "report_sha256": "af29bed17166f5da8ae57943d22dc924145ae55c511a5f7ce5d60bb1f9e70b58"
+    }
+  ]
+}

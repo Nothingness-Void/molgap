@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VARIANT="${VARIANT:?VARIANT is required}"
+SEED="${SEED:?SEED is required}"
+case "$VARIANT" in
+  collapse10) MAX_EPOCHS=10; SCHEDULER=cosine; WARMUP_EPOCHS=0 ;;
+  warmup20) MAX_EPOCHS=20; SCHEDULER=warmup_cosine; WARMUP_EPOCHS=2 ;;
+  *) echo "unsupported VARIANT=$VARIANT" >&2; exit 2 ;;
+esac
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+FEATURE_GATE=feature_screen/results/acceptance.json
+EXPECTED_GATE_SHA=329171126eebc5d130ea9c62af52e24bf736416ac36d344dab41835c694ad2a0
+test "$(sha256sum "$FEATURE_GATE" | cut -d' ' -f1)" = "$EXPECTED_GATE_SHA"
+OUT="feature_screen/schedule_runs/${VARIANT}_seed${SEED}"
+mkdir -p "$OUT" feature_screen/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+"$PYTHON" code/experiments/pcqm_edge_state_full/feature_screen.py train \
+  --graph-dir feature_screen/graphs \
+  --acceptance feature_screen/graphs/acceptance.json \
+  --output-dir "$OUT" --schema ogb --seed "$SEED" \
+  --max-epochs "$MAX_EPOCHS" --scheduler "$SCHEDULER" \
+  --warmup-epochs "$WARMUP_EPOCHS" --patience 7 \
+  2>&1 | tee "feature_screen/logs/schedule_${VARIANT}_seed${SEED}.log"

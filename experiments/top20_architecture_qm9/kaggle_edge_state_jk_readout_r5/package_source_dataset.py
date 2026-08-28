@@ -7,12 +7,14 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from molgap.constants import REPO_ROOT
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[3]
+    root = REPO_ROOT
     output = args.output.resolve()
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite existing package: {output}")

@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pcqm-pairbias-fp32-preflight-acceptance-v1",
+  "status": "accepted",
+  "accepted_at": "2026-08-28T14:10:52+09:00",
+  "kernel_slug": "nothingnessvoid/molgap-pcqm-arch-pbfp32-s42-preflight-20260828",
+  "runtime_dataset": "nothingnessvoid/molgap-pcqm-architecture-runtime-v8-20260828",
+  "graph_dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "graph_acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "manifest_sha256": "806d4f86d071e6e79df31eb479714d0de3574f38ab7683ab4558ccd2ab75d348",
+  "preflight_sha256": "cb3558976e71d60309725d2d6340282249b1ceefc552d7b2d96de105ec5bd3c3",
+  "precision": "fp32",
+  "batch_size": 64,
+  "parameters": 5735873,
+  "peak_cuda_bytes": 1147116544,
+  "seconds_per_batch": 0.11483205433326778,
+  "projected_training_hours": 0.9971250051272086,
+  "finite_gradients": true,
+  "raw_record": "platforms/_records/kaggle/training/pcqm_pairbias_fp32_screen_20260828/preflight_v1/"
+}

@@ -67,6 +67,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
 | `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
 | `pcqm_route_b_evaluation.py` | Fixed official-valid graph replay, downloaded Fusion acceptance, deterministic inference, and Gap metrics | Evaluating a frozen Track B Fusion without reopening development selection |
+| `pcqm_official_edge_state.py` | Official PCQM4Mv2 split identity, train/valid graph shards, from-scratch EdgeState training, and OGB submission files | Running the isolated full-data Track B leaderboard attempt |
 | `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where the `torch_cluster` wheel is ABI-incompatible |
 | `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU-only clusters | Building conformer shards without PyG on the worker |
 | `repaired_2m_3d_colab.py` | Durable Colab repaired-2M graph shards and lightweight SchNet | Changing the remote repaired-2M 3D workflow |

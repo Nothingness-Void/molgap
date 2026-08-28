@@ -1,0 +1,97 @@
+{
+  "format": "molgap-pcqm-official-equal-ensemble-multiseed-acceptance-v1",
+  "status": "accepted_gate_but_rejected_by_matched_cost_control",
+  "protocol": "round4_protocol.md",
+  "members": [
+    "warmup20_control",
+    "radicalctx16",
+    "radicalctx32"
+  ],
+  "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "seeds": {
+    "42": {
+      "control": {
+        "mae_eV": 0.15006214380264282,
+        "radical_mae_eV": 0.25360438227653503,
+        "nonradical_mae_eV": 0.1414971500635147
+      },
+      "equal_ensemble": {
+        "mae_eV": 0.1433165818452835,
+        "radical_mae_eV": 0.24073414504528046,
+        "nonradical_mae_eV": 0.13525821268558502
+      },
+      "delta_eV": {
+        "mae_eV": -0.006745561957359314,
+        "radical_mae_eV": -0.012870237231254578,
+        "nonradical_mae_eV": -0.0062389373779296875
+      }
+    },
+    "43": {
+      "control": {
+        "mae_eV": 0.15063676238059998,
+        "radical_mae_eV": 0.2565052807331085,
+        "nonradical_mae_eV": 0.14187933504581451
+      },
+      "equal_ensemble": {
+        "mae_eV": 0.14541809260845184,
+        "radical_mae_eV": 0.24013257026672363,
+        "nonradical_mae_eV": 0.13758331537246704
+      },
+      "delta_eV": {
+        "mae_eV": -0.005218669772148132,
+        "radical_mae_eV": -0.016372710466384888,
+        "nonradical_mae_eV": -0.004296019673347473
+      }
+    },
+    "44": {
+      "control": {
+        "mae_eV": 0.15136608481407166,
+        "radical_mae_eV": 0.25829240679740906,
+        "nonradical_mae_eV": 0.14252115786075592
+      },
+      "equal_ensemble": {
+        "mae_eV": 0.14492157101631165,
+        "radical_mae_eV": 0.24237211048603058,
+        "nonradical_mae_eV": 0.13686048984527588
+      },
+      "delta_eV": {
+        "mae_eV": -0.00644451379776001,
+        "radical_mae_eV": -0.01592029631137848,
+        "nonradical_mae_eV": -0.0056606680154800415
+      }
+    }
+  },
+  "three_seed_mean": {
+    "control_mae_eV": 0.15068833033243814,
+    "equal_ensemble_mae_eV": 0.14455208182334897,
+    "delta_mae_eV": -0.006136248509089152,
+    "radical_delta_eV": -0.015054414669672648,
+    "nonradical_delta_eV": -0.005398541688919067
+  },
+  "gate": {
+    "all_seed_overall_improve": true,
+    "mean_overall_improvement_at_least_0p002_eV": true,
+    "all_subset_regressions_at_most_0p002_eV": true,
+    "pass": true
+  },
+  "aligned_rows_per_seed": 10000,
+  "artifact_hash_acceptance": "passed",
+  "official_train_only": true,
+  "official_valid_used": false,
+  "official_test_used": false,
+  "external_data_used": false,
+  "matched_cost_control": {
+    "members": "three independent warmup20 control seeds",
+    "mae_eV": 0.1423291265964508,
+    "radical_mae_eV": 0.23870086669921875,
+    "nonradical_mae_eV": 0.1343572735786438,
+    "preferred_over_mixed_architecture": true
+  },
+  "architecture_promotion_authorized": false,
+  "full_data_run_authorized": false,
+  "production_change_authorized": false
+}

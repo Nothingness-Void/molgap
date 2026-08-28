@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=2:ngpus=1
+#PBS -l walltime=00:20:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+mkdir -p feature_screen/results feature_screen/logs
+export PYTHONPATH="$ROOT/code/src:$ROOT/vendor"
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
+"$PYTHON" code/experiments/pcqm_edge_state_full/feature_screen.py preflight \
+  --graph-dir feature_screen/graphs \
+  --acceptance feature_screen/graphs/acceptance.json \
+  --output feature_screen/results/cuda_preflight.json \
+  2>&1 | tee feature_screen/logs/cuda_preflight.log

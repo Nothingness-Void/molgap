@@ -1,0 +1,35 @@
+{
+  "format": "molgap-pcqm-feature-screen-kaggle-preflight-v1",
+  "status": "complete",
+  "dataset": "nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "mounted_graph_dir": "/kaggle/input/datasets/nothingnessvoid/molgap-pcqm-feature-screen-20260826",
+  "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+  "preflight": {
+    "path": "cuda_preflight.json",
+    "sha256": "c758c8d3c5e0fd235f4739d519f0da5dc15c582cd45799f8ff7b7627edca71a6"
+  },
+  "result": {
+    "format": "molgap-pcqm-feature-screen-cuda-preflight-v1",
+    "status": "passed",
+    "gpu": "Tesla P100-PCIE-16GB",
+    "acceptance_sha256": "faecf13321e373e76216e7cd6a6ab64e826d6983d2e595f419874e410d0bb3a4",
+    "schemas": {
+      "legacy": {
+        "rows": 32,
+        "output_shape": [
+          32
+        ],
+        "parameters": 4742529,
+        "finite_gradients": true
+      },
+      "ogb": {
+        "rows": 32,
+        "output_shape": [
+          32
+        ],
+        "parameters": 4771073,
+        "finite_gradients": true
+      }
+    }
+  }
+}
