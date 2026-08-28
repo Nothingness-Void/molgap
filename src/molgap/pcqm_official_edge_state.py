@@ -28,8 +28,6 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
-import ogb
-from ogb.lsc import PCQM4Mv2Evaluator
 from rdkit import Chem
 from torch_geometric.data import Data, InMemoryDataset
 from torch_geometric.loader import DataLoader
@@ -149,6 +147,8 @@ def atomic_ogb_submission(
     y_pred: np.ndarray,
 ) -> Path:
     """Write one submission through OGB's evaluator, then move atomically."""
+    from ogb.lsc import PCQM4Mv2Evaluator
+
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     values = np.asarray(y_pred, dtype=np.float32).reshape(-1)
@@ -169,6 +169,8 @@ def atomic_ogb_submission(
 
 def validate_submission_files(output_dir: Path) -> dict:
     """Validate OGB filenames, keys, shapes, dtypes, finiteness, and hashes."""
+    import ogb
+
     output_dir = Path(output_dir)
     expected_rows = {"test-dev": 147_037, "test-challenge": 147_432}
     outputs = {}
