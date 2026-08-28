@@ -72,9 +72,12 @@ must not be represented as this new conservative head.
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
 - The official-train-derived PCQM 100K graph cache, completed seed-42
-  comparisons, and the sparse topology-wedge cache are accepted. The next
-  authorized remote step is one GPU seed-42 sparse-triangle EdgeState screen;
-  no multiseed or full-data run is authorized.
+  comparisons, and the sparse topology-wedge cache are accepted. Kaggle2
+  kernel `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42`, version 1, is the
+  sole authorized GPU seed-42 sparse-triangle EdgeState screen and is running.
+  Its launch identity is recorded at
+  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/launch_manifest.json`.
+  No multiseed or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

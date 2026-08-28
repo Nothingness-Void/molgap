@@ -55,11 +55,13 @@
   sealed-role flags false. GPU seed-42 submission is authorized after the
   final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
   and molecular-research-server work remain unauthorized.
-- The corrected GPU submission uses kernel
-  `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42` and a separate output
-  directory. Its title is deliberately kept under Kaggle's 50-character
-  limit. It is the single authorized seed-42 attempt for this architecture;
-  the prior metadata-only submission failures remain in the archive and are
-  not reused as results.
+- Kaggle2 accepted the corrected GPU submission as kernel
+  `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42`, version 1; it was
+  `RUNNING` at the launch check on 2026-08-28 17:25 JST. Its separate output
+  record is `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_edge_state_r2_seed42`.
+  The title is deliberately under Kaggle's 50-character limit. This is the
+  single authorized seed-42 attempt for this architecture; prior
+  metadata-only submission failures remain in the archive and are not reused
+  as results.
 
 Task order remains authoritative in `ROADMAP.md`.
