@@ -458,6 +458,9 @@ def test_sparse_triangle_hidden_width_does_not_depend_on_ogb_encoder_api() -> No
 
 
 def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
+    )
     assert assignment_literal(SPARSE_TRIANGLE_GPU, "CANDIDATE") == (
         "ogb_sparse_triangle_edge_state_gps9"
     )
@@ -472,6 +475,19 @@ def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
     assert '"target": "homolumogap"' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
+    assert "pcqm_gap100k_sparse_triangle_edge_state_r3_seed42" in source
+    metadata = json.loads(SPARSE_TRIANGLE_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == (
+        "kaseichou/molgap-pcqm-triangle-edge-state-r3-s42"
+    )
+    assert len(metadata["title"]) <= 50
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
     protocol = SPARSE_TRIANGLE_PROTOCOL.read_text(encoding="utf-8")
     assert "Seed 42, FP32, batch 48" in protocol
     assert "Parameter ceiling: `5,200,000`" in protocol
+    assert "one R3 implementation-only retry" in protocol

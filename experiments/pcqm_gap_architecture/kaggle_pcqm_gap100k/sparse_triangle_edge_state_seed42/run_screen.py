@@ -14,9 +14,9 @@ import time
 from pathlib import Path
 
 
-OUT = Path("/kaggle/working/pcqm_gap100k_sparse_triangle_edge_state_r2_seed42")
+OUT = Path("/kaggle/working/pcqm_gap100k_sparse_triangle_edge_state_r3_seed42")
 PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
-EXPECTED_SOURCE_COMMIT = "35fadc9de63e22de7a1cfbe21e4f1af8888e075f"
+EXPECTED_SOURCE_COMMIT = "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
 EXPECTED_PARENT_SOURCE_COMMIT = "ba82461c53243d733474c8930ac1b86d82451c91"
 EXPECTED_PARENT_AGGREGATE_SHA256 = (
     "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"

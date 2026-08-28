@@ -44,5 +44,7 @@ Downloaded under
 | `pcqm_gap100k_sparse_triangle_edge_state_r2_seed42/failure.json` | `105d372d11e07c20c0a8d2fd82b54de1349fef2892d60646646e943be4517179` |
 
 The metadata-only slug/title failures preceding this run remain archived and
-are not counted as model results. This screen is closed under its protocol;
-no retry, seed-43/44 run, full-data run, or official evaluation is authorized.
+are not counted as model results. At failure acceptance, no retry, seed-43/44
+run, full-data run, or official evaluation was authorized. On 2026-08-29 the
+user explicitly authorized one implementation-only R3 retry because R2 never
+reached an epoch; that authorization does not change this R2 failure record.

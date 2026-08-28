@@ -31,10 +31,13 @@ The official-PCQM cache and first matched seed-42 comparator are accepted
 evidence. Their exact decision is
 `experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
 
-The sparse topology-wedge cache was accepted, but its seed-42 GPU screen
+The sparse topology-wedge cache was accepted, but its R2 seed-42 GPU screen
 failed during preflight on an OGB `AtomEncoder` API mismatch before any epoch.
-It is closed without a retry; the preserved failure evidence is
+The preserved failure evidence is
 `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`.
+One user-authorized R3 implementation repair may rerun the unchanged frozen
+contract. It is not a seed, architecture, optimizer, schedule, or cache retry;
+no second automatic retry is permitted.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`
