@@ -43,15 +43,17 @@
   graph-state candidate missed the strict EdgeState gate by
   `0.000630125069618209 eV`. Its downloaded evidence remains under the
   platform records; the closure decision is retained on the acceptance branch.
-- The sparse topology-wedge CPU cache and seed-42 GPU question are prepared
-  under `sparse_triangle_edge_state_protocol.md`. CPU kernel version 1 failed
-  before graph access because its runner omitted the `torch-geometric`
-  installation; the failure log is retained under
-  `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_wedge_cache_v1`.
-  Version 2 contains only that dependency/output-isolation fix and is running
-  as `kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2`. It is the
-  sole pending remote step. No GPU task, seed-43/44 run, full-data run,
-  official validation/test-dev read, or molecular-research-server work is
-  authorized until version 2 passes acceptance.
+- The sparse topology-wedge CPU retry completed as Kaggle2 kernel
+  `kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2`; its complete
+  output and log are retained under
+  `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_wedge_cache_r2`.
+  No-inference acceptance passed at 2026-08-28 17:00 JST with source commit
+  `35fadc9de63e22de7a1cfbe21e4f1af8888e075f`, parent aggregate SHA
+  `eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21`, cache
+  aggregate SHA `dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406`,
+  100000/10000 graphs, 3860510/386070 wedges, 22 hashed shards, and all
+  sealed-role flags false. GPU seed-42 submission is authorized after the
+  final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
+  and molecular-research-server work remain unauthorized.
 
 Task order remains authoritative in `ROADMAP.md`.

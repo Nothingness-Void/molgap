@@ -71,10 +71,10 @@ must not be represented as this new conservative head.
   version 1, completed. Its three required candidates passed no-inference
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
-- The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. A CPU-only sparse-wedge cache derivation is the
-  sole newly authorized remote step; no GPU, multiseed, or full-data run is
-  authorized until that cache passes acceptance.
+- The official-train-derived PCQM 100K graph cache, completed seed-42
+  comparisons, and the sparse topology-wedge cache are accepted. The next
+  authorized remote step is one GPU seed-42 sparse-triangle EdgeState screen;
+  no multiseed or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
