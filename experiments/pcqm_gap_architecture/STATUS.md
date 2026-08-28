@@ -56,9 +56,10 @@
   final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
   and molecular-research-server work remain unauthorized.
 - The corrected GPU submission uses kernel
-  `kaseichou/molgap-pcqm-gap100k-sparse-triangle-edge-state-r2-seed42` and a
-  separate output directory. It is the single authorized seed-42 attempt for
-  this architecture; the prior metadata-only submission failure remains in
-  the archive and is not reused as a result.
+  `kaseichou/molgap-pcqm-triangle-edge-state-r2-s42` and a separate output
+  directory. Its title is deliberately kept under Kaggle's 50-character
+  limit. It is the single authorized seed-42 attempt for this architecture;
+  the prior metadata-only submission failures remain in the archive and are
+  not reused as results.
 
 Task order remains authoritative in `ROADMAP.md`.
