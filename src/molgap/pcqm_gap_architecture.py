@@ -204,6 +204,218 @@ class OGBLocalOperatorStructuralGPSWrapper(OGBStructuralGPSWrapper):
         )
 
 
+class _SparseWedgeStateUpdate(nn.Module):
+    """Persistent low-rank state for adjacent directed bond pairs."""
+
+    def __init__(
+        self,
+        hidden_channels: int,
+        edge_channels: int,
+        wedge_channels: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        context_channels = hidden_channels + 2 * edge_channels
+        self.context_norm = nn.LayerNorm(context_channels)
+        self.context_proj = nn.Linear(context_channels, wedge_channels)
+        self.state_norm = nn.LayerNorm(wedge_channels)
+        self.update = nn.Sequential(
+            nn.Linear(wedge_channels, wedge_channels * 2),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(wedge_channels * 2, wedge_channels),
+        )
+        self.output_norm = nn.LayerNorm(wedge_channels)
+
+    def initial(self, context: torch.Tensor) -> torch.Tensor:
+        return self.output_norm(self.context_proj(self.context_norm(context)))
+
+    def forward(
+        self,
+        context: torch.Tensor,
+        wedge_state: torch.Tensor,
+    ) -> torch.Tensor:
+        proposal = self.context_proj(self.context_norm(context))
+        update_input = self.state_norm(wedge_state + proposal)
+        return self.output_norm(wedge_state + self.update(update_input))
+
+
+class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
+    """Persistent EdgeState GPS with sparse adjacent-edge interactions.
+
+    The additional state is attached only to directed non-backtracking wedges
+    ``i -> j -> k``.  It is updated from the two current bond states and the
+    center-node state, then sends sparse context back to both bond states and
+    the center node before the normal GPS block.  No dense all-pairs tensor,
+    coordinate input, target residual, or prediction fusion is used.
+    """
+
+    def __init__(
+        self,
+        *args,
+        wedge_channels: int = 16,
+        **kwargs,
+    ) -> None:
+        if wedge_channels <= 0:
+            raise ValueError("wedge_channels must be positive")
+        super().__init__(*args, **kwargs)
+        hidden_channels = self.node_emb.out_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.wedge_channels = int(wedge_channels)
+        context_channels = hidden_channels + 2 * self.edge_state_channels
+        self.wedge_initial = nn.Sequential(
+            nn.LayerNorm(context_channels),
+            nn.Linear(context_channels, self.wedge_channels),
+            nn.LayerNorm(self.wedge_channels),
+        )
+        self.wedge_updates = nn.ModuleList(
+            _SparseWedgeStateUpdate(
+                hidden_channels,
+                self.edge_state_channels,
+                self.wedge_channels,
+                dropout,
+            )
+            for _ in self.convs
+        )
+        self.wedge_to_edge = nn.ModuleList(
+            nn.Linear(self.wedge_channels, self.edge_state_channels)
+            for _ in self.convs
+        )
+        self.wedge_to_node = nn.ModuleList(
+            nn.Linear(self.wedge_channels, hidden_channels)
+            for _ in self.convs
+        )
+        for projection in (*self.wedge_to_edge, *self.wedge_to_node):
+            nn.init.zeros_(projection.weight)
+            nn.init.zeros_(projection.bias)
+
+    @staticmethod
+    def _validate_wedge_ids(
+        wedge_edge_ids: torch.Tensor,
+        edge_count: int,
+    ) -> None:
+        if wedge_edge_ids.ndim != 2 or wedge_edge_ids.shape[1] != 2:
+            raise ValueError("wedge_edge_ids must have shape [W, 2]")
+        if wedge_edge_ids.numel() and (
+            int(wedge_edge_ids.min()) < 0
+            or int(wedge_edge_ids.max()) >= edge_count
+        ):
+            raise ValueError("wedge edge id falls outside the batched edge set")
+
+    @staticmethod
+    def _aggregate_to_edges(
+        wedge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+        edge_count: int,
+    ) -> torch.Tensor:
+        context = wedge_state.new_zeros((edge_count, wedge_state.shape[1]))
+        counts = wedge_state.new_zeros((edge_count, 1))
+        first, second = wedge_edge_ids.unbind(dim=1)
+        context.index_add_(0, first, wedge_state)
+        context.index_add_(0, second, wedge_state)
+        ones = wedge_state.new_ones((wedge_state.shape[0], 1))
+        counts.index_add_(0, first, ones)
+        counts.index_add_(0, second, ones)
+        return context / counts.clamp_min_(1.0)
+
+    @staticmethod
+    def _aggregate_to_centers(
+        wedge_state: torch.Tensor,
+        centers: torch.Tensor,
+        node_count: int,
+    ) -> torch.Tensor:
+        context = wedge_state.new_zeros((node_count, wedge_state.shape[1]))
+        counts = wedge_state.new_zeros((node_count, 1))
+        context.index_add_(0, centers, wedge_state)
+        counts.index_add_(
+            0,
+            centers,
+            wedge_state.new_ones((wedge_state.shape[0], 1)),
+        )
+        return context / counts.clamp_min_(1.0)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Sparse triangle GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(
+                f"random_walk_pe must have shape {expected}, "
+                f"got {tuple(random_walk_pe.shape)}"
+            )
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        self._validate_wedge_ids(wedge_edge_ids, edge_index.shape[1])
+
+        h = self._embed_nodes(x)
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self._embed_edges(edge_attr)
+        first, second = wedge_edge_ids.unbind(dim=1)
+        centers = edge_index[1, first]
+        wedge_state = None
+        if wedge_edge_ids.shape[0]:
+            initial_context = torch.cat(
+                [edge_state[first], edge_state[second], h[centers]], dim=-1
+            )
+            wedge_state = self.wedge_initial(initial_context)
+
+        for edge_update, wedge_update, edge_projection, node_projection, conv in zip(
+            self.edge_updates,
+            self.wedge_updates,
+            self.wedge_to_edge,
+            self.wedge_to_node,
+            self.convs,
+        ):
+            edge_state = edge_update(h, edge_index, edge_state)
+            if wedge_state is not None:
+                context = torch.cat(
+                    [edge_state[first], edge_state[second], h[centers]],
+                    dim=-1,
+                )
+                wedge_state = wedge_update(context, wedge_state)
+                edge_context = self._aggregate_to_edges(
+                    wedge_state,
+                    wedge_edge_ids,
+                    edge_state.shape[0],
+                )
+                edge_state = edge_state + edge_projection(edge_context)
+                center_context = self._aggregate_to_centers(
+                    wedge_state,
+                    centers,
+                    h.shape[0],
+                )
+                h = h + node_projection(center_context)
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
+        return self._pool(h, batch)
+
+
 def make_pcqm_gap_encoder(candidate: str):
     """Build one frozen first-round candidate with a scalar Gap head."""
     common = {
@@ -229,6 +441,12 @@ def make_pcqm_gap_encoder(candidate: str):
             **common,
             edge_state_channels=64,
             token_channels=16,
+        )
+    if candidate == "ogb_sparse_triangle_edge_state_gps9":
+        return OGBSparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
         )
     if candidate == "ogb_query_pool_structural_gps9":
         return OGBQueryPoolStructuralGPSWrapper(
