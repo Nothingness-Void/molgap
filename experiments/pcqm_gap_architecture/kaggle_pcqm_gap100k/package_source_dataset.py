@@ -11,6 +11,14 @@ from pathlib import Path
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--dataset-id",
+        default="kaseichou/molgap-pcqm-gap100k-r1-source",
+    )
+    parser.add_argument(
+        "--source-commit",
+        help="Pin the source marker independently of the packaging commit.",
+    )
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     output = args.output.resolve()
@@ -18,7 +26,7 @@ def main() -> None:
         raise FileExistsError(f"Refusing to overwrite existing package: {output}")
     (output / "src").mkdir(parents=True)
     shutil.copytree(root / "src" / "molgap", output / "src" / "molgap")
-    commit = subprocess.check_output(
+    commit = args.source_commit or subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=root, text=True
     ).strip()
     (output / "PCQM_GAP100K_SOURCE_COMMIT.txt").write_text(
@@ -26,7 +34,7 @@ def main() -> None:
     )
     metadata = {
         "title": "MolGap Official PCQM Gap100K Source",
-        "id": "kaseichou/molgap-pcqm-gap100k-r1-source",
+        "id": args.dataset_id,
         "licenses": [{"name": "other"}],
     }
     (output / "dataset-metadata.json").write_text(
@@ -37,4 +45,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

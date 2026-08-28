@@ -28,9 +28,6 @@ The resource-bounded comparison of all remaining mechanisms is in
 [`architecture_route_audit.md`](architecture_route_audit.md). It selects the
 recurrent graph-state EdgeState question frozen in
 [`recurrent_graph_state_seed42_protocol.md`](recurrent_graph_state_seed42_protocol.md).
-That seed-42 screen passed no-inference artifact acceptance but failed its
-strict comparator gate and is closed by
-[`results/recurrent_graph_state_seed42/decision.md`](results/recurrent_graph_state_seed42/decision.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

@@ -1,0 +1,18 @@
+{
+  "format": "molgap-kaggle-kernel-submission-error-v1",
+  "timestamp_jst": "2026-08-28T17:02:00+09:00",
+  "kaggle_cli_version": "2.2.4",
+  "account": "Kaggle2",
+  "kernel_id": "kaseichou/molgap-pcqm-gap100k-sparse-triangle-edge-state-seed42",
+  "command": "kaggle kernels push -p experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/sparse_triangle_edge_state_seed42",
+  "http_status": 400,
+  "endpoint": "SaveKernel",
+  "error": "Your kernel title does not resolve to the specified id. This may result in surprising behavior. We suggest making your title something that resolves to the specified id.",
+  "remote_kernel_created": false,
+  "retry_attempted": false,
+  "diagnosis": "The metadata title uses EdgeState while the requested id uses edge-state; Kaggle slug resolution rejects the mismatch.",
+  "gpu_result_available": false,
+  "model_inference_executed_locally": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
