@@ -48,9 +48,10 @@
   before graph access because its runner omitted the `torch-geometric`
   installation; the failure log is retained under
   `platforms/_records/kaggle/training/pcqm_gap100k_sparse_triangle_wedge_cache_v1`.
-  Version 2 contains only that dependency/output-isolation fix and is the sole
-  pending remote step. No GPU task, seed-43/44 run, full-data run, official
-  validation/test-dev read, or molecular-research-server work is authorized
-  until version 2 passes acceptance.
+  Version 2 contains only that dependency/output-isolation fix and is running
+  as `kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2`. It is the
+  sole pending remote step. No GPU task, seed-43/44 run, full-data run,
+  official validation/test-dev read, or molecular-research-server work is
+  authorized until version 2 passes acceptance.
 
 Task order remains authoritative in `ROADMAP.md`.
