@@ -171,9 +171,10 @@ def test_edge_state_structural_gps_updates_compact_edge_state() -> None:
 
 def test_pair_gps_r2_is_compact_and_runs_sparse_triplet_backward() -> None:
     model = PairGPS2DR2Wrapper(
+        in_channels=9,
         hidden_channels=16,
         pair_channels=8,
-        num_layers=3,
+        num_layers=4,
         num_heads=4,
         dropout=0.0,
         distance_cap=3,
@@ -407,7 +408,7 @@ def test_pair_gps_r3_attentive_triplet_and_consistent_head_backward() -> None:
         in_channels=9,
         hidden_channels=16,
         pair_channels=8,
-        num_layers=3,
+        num_layers=4,
         num_heads=4,
         dropout=0.0,
         distance_cap=3,
