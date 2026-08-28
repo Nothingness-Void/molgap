@@ -55,5 +55,10 @@
   sealed-role flags false. GPU seed-42 submission is authorized after the
   final no-other-GPU check; seed-43/44, full-data, official validation/test-dev,
   and molecular-research-server work remain unauthorized.
+- The corrected GPU submission uses kernel
+  `kaseichou/molgap-pcqm-gap100k-sparse-triangle-edge-state-r2-seed42` and a
+  separate output directory. It is the single authorized seed-42 attempt for
+  this architecture; the prior metadata-only submission failure remains in
+  the archive and is not reused as a result.
 
 Task order remains authoritative in `ROADMAP.md`.
