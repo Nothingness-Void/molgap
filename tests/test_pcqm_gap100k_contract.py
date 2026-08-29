@@ -59,6 +59,21 @@ SPARSE_TRIANGLE_MULTISEED_PROTOCOL = (
 GEOMETRY_BOTTOM_FUSION_PROTOCOL = (
     EXPERIMENT / "geometry_bottom_fusion_seed42_protocol.md"
 )
+GEOMETRY_CACHE_CPU = (
+    EXPERIMENT / "kaggle_pcqm_gap100k" / "geometry_cache" / "run_geometry_cache.py"
+)
+GEOMETRY_CACHE_METADATA = GEOMETRY_CACHE_CPU.with_name("kernel-metadata.json")
+GEOMETRY_CACHE_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_geometry_cache.py"
+GEOMETRY_SCREEN_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "geometry_bottom_fusion_seed42"
+    / "run_geometry_screen.py"
+)
+GEOMETRY_SCREEN_METADATA = GEOMETRY_SCREEN_GPU.with_name("kernel-metadata.json")
+GEOMETRY_SCREEN_ACCEPTANCE = (
+    EXPERIMENT / "accept_pcqm100k_geometry_bottom_fusion.py"
+)
 
 
 def assignment_literal(path: Path, name: str):
@@ -523,6 +538,91 @@ def test_geometry_screen_protocol_is_three_seed42_candidates_only() -> None:
     lowered = source.lower()
     assert "official validation" in lowered
     assert "test-dev remain unread" in lowered
+
+
+def test_geometry_cache_is_cpu_only_and_parent_pinned() -> None:
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "EXPECTED_SOURCE_COMMIT") == (
+        "e083bee19ee6a13cd9f72e91229752a9d5f56389"
+    )
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "EXPECTED_WEDGE_SHA256") == (
+        "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
+    )
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "MINIMUM_VALID_FRACTION") == 0.99
+    source = GEOMETRY_CACHE_CPU.read_text(encoding="utf-8")
+    assert "ProcessPoolExecutor" in source
+    assert "compute_etkdg_geometry" in source
+    assert "atomic_torch_save" in source
+    assert '"gpu_used": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(GEOMETRY_CACHE_METADATA.read_text(encoding="utf-8"))
+    assert metadata["enable_gpu"] == "false"
+    assert metadata["dataset_sources"] == [
+        "piero0/pcqm4mv2",
+        "kaseichou/molgap-pcqm-geometry-fusion-source",
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
+
+
+def test_geometry_cache_acceptance_imports_no_torch() -> None:
+    assert "torch" not in imported_modules(GEOMETRY_CACHE_ACCEPTANCE)
+    source = GEOMETRY_CACHE_ACCEPTANCE.read_text(encoding="utf-8")
+    assert "len(shards) == 22" in source
+    assert "fraction >= MINIMUM_VALID_FRACTION" in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+
+
+def test_geometry_screen_is_one_seed42_job_with_three_candidates() -> None:
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "e083bee19ee6a13cd9f72e91229752a9d5f56389"
+    )
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "CANDIDATES") == (
+        "ogb_distance_triangle_edge_state_gps9",
+        "ogb_angle_triangle_edge_state_gps9",
+        "ogb_distance_angle_triangle_edge_state_gps9",
+    )
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "SEED") == 42
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "PATIENCE") == 8
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "PARAMETER_BUDGET") == 5_200_000
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "SEARCH_BUDGET_S") == 34_200
+    source = GEOMETRY_SCREEN_GPU.read_text(encoding="utf-8")
+    assert "for candidate in CANDIDATES" in source
+    assert "for seed in" not in source
+    assert "batch.edge_distance" in source
+    assert "batch.wedge_angle_cos" in source
+    assert '"target": "gap"' in source
+    assert '"precision": "fp32"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(GEOMETRY_SCREEN_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "kaseichou/molgap-pcqm-geometry-fusion-s42"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-geometry-fusion-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-geometry-cache-s42"
+    ]
+
+
+def test_geometry_screen_acceptance_is_no_inference() -> None:
+    assert "torch" not in imported_modules(GEOMETRY_SCREEN_ACCEPTANCE)
+    source = GEOMETRY_SCREEN_ACCEPTANCE.read_text(encoding="utf-8")
+    assert "len(preflight) == 3" in source
+    assert "len(runs) == 3" in source
+    assert '"target": "gap"' in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    assert "row[\"validation_gap_mae_eV\"] < COMPARATOR_MAE" in source
 
 
 def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
