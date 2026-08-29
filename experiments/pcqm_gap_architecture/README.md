@@ -1,8 +1,8 @@
 # Official PCQM Gap Architecture Screen
 
-This Track B experiment asks which bounded pure-2D architecture should be
-trained for the official PCQM4Mv2 leaderboard. It predicts the single official
-HOMO-LUMO Gap target; HOMO and LUMO are not auxiliary targets.
+This Track B experiment asks which bounded architecture should be trained for
+the official PCQM4Mv2 leaderboard. It predicts the single official HOMO-LUMO
+Gap target; HOMO and LUMO are not auxiliary targets.
 
 The frozen first-round contract is
 [`pcqm100k_gap_screen_protocol.md`](pcqm100k_gap_screen_protocol.md). Live remote
@@ -27,11 +27,16 @@ its strict gate and is closed by
 The resource-bounded comparison of all remaining mechanisms is in
 [`architecture_route_audit.md`](architecture_route_audit.md). The recurrent
 graph-state question is closed after its seed-42 result missed the comparator.
-Sparse Triangle R3 strictly passed its seed-42 arithmetic gate but the gain was
-small and the candidate was slower; the exact disposition is
-[`results/sparse_triangle_edge_state_r3_seed42/decision.md`](results/sparse_triangle_edge_state_r3_seed42/decision.md).
-Its only open question is the paired seed-43/44 confirmation frozen in
-[`sparse_triangle_edge_state_multiseed_protocol.md`](sparse_triangle_edge_state_multiseed_protocol.md).
+Sparse Triangle R3 passed seed 42 and then improved fresh paired seeds 43/44.
+It is the accepted pure-2D comparator; the multiseed decision is
+[`results/sparse_triangle_edge_state_multiseed/decision.md`](results/sparse_triangle_edge_state_multiseed/decision.md).
+
+The geometry bottom-fusion screen is defined in
+[`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
+It constructs one accepted CPU geometry cache before one GPU task isolates
+distance-only, angle-only, and distance-plus-angle candidates at seed 42.
+No additional seed is run unless one candidate strictly improves the frozen
+Sparse Triangle comparator.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

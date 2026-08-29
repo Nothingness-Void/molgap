@@ -29,17 +29,22 @@ official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling,
+real-bond EdgeState GPS9 as the initial comparator. Learned-query pooling,
 three matched local-operator replacements, and recurrent graph state are
-closed. Sparse Triangle R3 completed after its one implementation repair and
-strictly improved seed 42 by a very small margin while reducing throughput.
-It is therefore a confirmation candidate, not a replacement comparator. The
-only open GPU question is a paired seed-43/44 run that trains fresh EdgeState
-and Sparse Triangle models under the unchanged cache and optimization
-contract. The single Kaggle2 task is version 1 of
-`kaseichou/molgap-pcqm-triangle-r3-confirm-s43-s44`; it was running at the
-launch check. Exact evidence belongs under
-`experiments/pcqm_gap_architecture/results/`.
+closed. Sparse Triangle R3 then completed its paired seeds 42/43/44
+confirmation and improved EdgeState in every seed and their mean. It is the
+accepted pure-2D comparator for materially new 100K questions; the exact result
+is owned by
+`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md`.
+
+The active server-side question is whether inexpensive ETKDG geometry helps
+when fused into that accepted topology model at the bottom of every block.
+Three seed-42 candidates isolate bond distance, wedge angle, and their
+combination. CPU geometry construction and acceptance must finish before one
+sequential Kaggle GPU task trains the three candidates. Additional seeds are
+not authorized unless one candidate strictly improves the frozen Sparse
+Triangle comparator. The contract is
+`experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md`.
 
 ## Prior Architecture Evidence
 
@@ -82,9 +87,13 @@ must not be represented as this new conservative head.
   R3 completed, passed no-inference artifact acceptance, and strictly passed
   the seed-42 arithmetic gate. Its decision is
   `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md`.
-  The user authorized the next key server experiment: one sequential Kaggle2
-  task containing paired EdgeState and Sparse Triangle runs at seeds 43 and
-  44. No full-data or official-role run is authorized.
+  The paired EdgeState/Sparse Triangle seeds 43/44 task completed and passed
+  no-inference acceptance; together with seed 42, Sparse Triangle improved all
+  three paired comparisons. No full-data or official-role run is authorized.
+- The geometry bottom-fusion implementation and submission packages are
+  statically tested. Remote execution is staged as CPU-only ETKDG cache
+  construction followed, only after cache acceptance, by one GPU task with
+  three seed-42 candidates.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -124,6 +133,8 @@ must not be represented as this new conservative head.
 | Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
 | What is the sparse triangle EdgeState question? | `experiments/pcqm_gap_architecture/sparse_triangle_edge_state_protocol.md` |
 | Did Sparse Triangle pass seed 42? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md` |
+| Did Sparse Triangle reproduce across three seeds? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md` |
+| What is the bottom-fused geometry question? | `experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |

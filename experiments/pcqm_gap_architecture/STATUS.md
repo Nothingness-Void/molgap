@@ -96,5 +96,16 @@
   until the displayed reset. The approximate projected reset is 2026-09-05
   09:00 JST; the minute-rounded evidence is in
   `results/sparse_triangle_edge_state_multiseed/quota_snapshot.json`.
+- The paired seed-43/44 task reached `COMPLETE`. Its downloaded artifacts and
+  hashes passed no-inference acceptance; Sparse Triangle improved EdgeState at
+  seeds 42, 43, and 44 and on their mean. The frozen disposition is
+  `results/sparse_triangle_edge_state_multiseed/decision.md`.
+- The subsequent seed-42 geometry question is frozen in
+  `geometry_bottom_fusion_seed42_protocol.md`: distance-only, angle-only, and
+  distance-plus-angle features are injected inside every Sparse Triangle
+  block. ETKDG cache construction is CPU-only and must pass acceptance before
+  the single three-candidate GPU task. No SchNet, late fusion, residual target,
+  extra seed, official role, full-data run, or molecular-research-server access
+  is authorized by this screen.
 
 Task order remains authoritative in `ROADMAP.md`.

@@ -7,15 +7,18 @@ belong to each experiment's decision record. Track ownership is defined in
 
 ## Goal
 
-Select one pure-2D, Gap-only architecture for the official PCQM4Mv2 leaderboard
-under a hard 12-hour A100 full-training budget. Kaggle 100K selection must
-finish before any molecular-research-server use.
+Select one Gap-only architecture for the official PCQM4Mv2 leaderboard under a
+hard 12-hour A100 full-training budget. Kaggle 100K selection must finish
+before any molecular-research-server use. Geometry candidates must remain
+ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 ## Active Queue
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-SPARSE-TRIANGLE-MULTISEED | Train fresh paired EdgeState and Sparse Triangle models at seeds 43/44 in one sequential Kaggle task | All artifacts pass no-inference acceptance and Triangle improves seeds 42/43/44 plus their mean, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-GEOMETRY-CACHE | Build and accept one immutable ETKDGv3/MMFF94s cache for the frozen 100K/10K split | 110,000 aligned graphs, at least 99% valid geometry, all hashes and sealed-role checks pass | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-GEOMETRY-FUSION-S42 | In one Kaggle GPU task, train distance-only, angle-only, and distance-plus-angle bottom-fusion candidates at seed 42 | All three pass artifact acceptance; retain only a candidate that strictly beats the frozen Sparse Triangle comparator | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-GEOMETRY-CONFIRM | Train seeds 43/44 only for a positive seed-42 geometry winner | The same candidate improves every paired seed and their mean, or geometry closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -34,9 +37,11 @@ OGB `AtomEncoder` API mismatch before any epoch, and the one implementation-
 only R3 repair then completed the unchanged seed-42 contract. R3 strictly
 passed by a small margin and is frozen in
 `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md`.
-The paired multiseed contract is
-`experiments/pcqm_gap_architecture/sparse_triangle_edge_state_multiseed_protocol.md`.
-No second implementation retry or unpaired seed comparison is permitted.
+The paired multiseed contract completed and selected Sparse Triangle as the
+accepted pure-2D comparator. Its decision is
+`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md`.
+The three-candidate geometry contract is
+`experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md`.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`
@@ -80,10 +85,15 @@ R9 is owned by
 - Do not access the molecular-research server until one candidate passes the
   three-seed Kaggle gate. Later access is restricted to
   `/lustre/home/users/sm2/chou/`.
-- Predict Gap directly. HOMO/LUMO auxiliary targets, 3D inputs, residual
-  targets, pretrained checkpoints, and prediction fusion are outside this
-  screen.
-- Continued pure-2D discovery tests one materially new architecture at a time.
+- Predict Gap directly. HOMO/LUMO auxiliary targets, residual targets,
+  pretrained checkpoints, and prediction fusion are outside this screen.
+- The only authorized 3D screen is deterministic single-conformer
+  ETKDGv3/MMFF94s distance/angle injection inside Sparse Triangle blocks. An
+  independent SchNet, late fusion, residual correction, and conformer
+  ensembles remain closed.
+- Continued discovery tests one materially new mechanism at a time. The three
+  geometry candidates may share one task because they form one predeclared
+  factorization of distance and angle information.
   Every failure gets a decision record and cannot be retried as a seed or
   schedule variation; the next attempt must change the information flow.
 - Do not rerun the rejected `0.10 eV` frozen-2D plus dual-SchNet residual.
