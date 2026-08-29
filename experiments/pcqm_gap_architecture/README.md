@@ -27,8 +27,11 @@ its strict gate and is closed by
 The resource-bounded comparison of all remaining mechanisms is in
 [`architecture_route_audit.md`](architecture_route_audit.md). The recurrent
 graph-state question is closed after its seed-42 result missed the comparator.
-The next question is the sparse topology-wedge EdgeState protocol in
-[`sparse_triangle_edge_state_protocol.md`](sparse_triangle_edge_state_protocol.md).
+Sparse Triangle R3 strictly passed its seed-42 arithmetic gate but the gain was
+small and the candidate was slower; the exact disposition is
+[`results/sparse_triangle_edge_state_r3_seed42/decision.md`](results/sparse_triangle_edge_state_r3_seed42/decision.md).
+Its only open question is the paired seed-43/44 confirmation frozen in
+[`sparse_triangle_edge_state_multiseed_protocol.md`](sparse_triangle_edge_state_multiseed_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

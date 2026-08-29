@@ -1,0 +1,31 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-triangle-seed42-summary-v1",
+  "decision_date": "2026-08-29",
+  "candidate": {
+    "name": "ogb_sparse_triangle_edge_state_gps9",
+    "parameter_count": 4878257,
+    "best_epoch": 38,
+    "validation_gap_mae_eV": 0.13790177369117737,
+    "mean_throughput_graphs_per_s": 478.4226,
+    "training_elapsed_s": 8361.356644842002,
+    "total_elapsed_s": 8552.526243933
+  },
+  "comparator": {
+    "name": "ogb_edge_state_structural_gps9",
+    "parameter_count": 4771073,
+    "validation_gap_mae_eV": 0.13798263211250306,
+    "mean_throughput_graphs_per_s": 678.11
+  },
+  "delta": {
+    "validation_gap_mae_eV": -0.00008085842132568888,
+    "relative_validation_improvement_fraction": 0.0005859997356286688,
+    "parameter_count": 107184,
+    "parameter_fraction": 0.022465387025345036,
+    "throughput_ratio": 0.7055234646319872
+  },
+  "formal_seed42_gate_passed": true,
+  "multiseed_confirmation_required": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "model_inference_executed_locally": false
+}

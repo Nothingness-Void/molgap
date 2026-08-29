@@ -1,0 +1,16 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-triangle-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "76dd6efa76c8236ce80a82a8a43d9f5df426165e",
+  "cache_aggregate_sha256": "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406",
+  "candidate": "ogb_sparse_triangle_edge_state_gps9",
+  "parameter_count": 4878257,
+  "best_epoch": 38,
+  "validation_gap_mae_eV": 0.13790177369117737,
+  "comparator_validation_gap_mae_eV": 0.13798263211250306,
+  "selected_strictly_improves": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
