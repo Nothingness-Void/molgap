@@ -85,5 +85,11 @@
   `sparse_triangle_edge_state_multiseed_protocol.md`. It does not authorize a
   second retry, full-data training, official validation/test-dev, or server
   access.
+- The confirmation was submitted once as Kaggle2 kernel
+  `kaseichou/molgap-pcqm-triangle-r3-confirm-s43-s44`, version 1, and was
+  `RUNNING` at the launch check. The submitted title normalized the requested
+  metadata slug by inserting the separator between `s43` and `s44`; both
+  identities and the exact source hashes are retained in
+  `results/sparse_triangle_edge_state_multiseed/launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.

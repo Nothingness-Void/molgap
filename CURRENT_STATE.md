@@ -36,7 +36,9 @@ strictly improved seed 42 by a very small margin while reducing throughput.
 It is therefore a confirmation candidate, not a replacement comparator. The
 only open GPU question is a paired seed-43/44 run that trains fresh EdgeState
 and Sparse Triangle models under the unchanged cache and optimization
-contract. Exact evidence belongs under
+contract. The single Kaggle2 task is version 1 of
+`kaseichou/molgap-pcqm-triangle-r3-confirm-s43-s44`; it was running at the
+launch check. Exact evidence belongs under
 `experiments/pcqm_gap_architecture/results/`.
 
 ## Prior Architecture Evidence

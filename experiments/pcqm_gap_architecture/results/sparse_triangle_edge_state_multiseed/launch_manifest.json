@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-triangle-multiseed-launch-v1",
+  "launched_at": "2026-08-29T15:36:34.9403921+09:00",
+  "git_branch": "molgap-server",
+  "git_commit": "c53b41e76826f2b1ccd196caaeacd98c312c2d8c",
+  "submitted_metadata_id": "kaseichou/molgap-pcqm-triangle-r3-confirm-s4344",
+  "resolved_kernel_ref": "kaseichou/molgap-pcqm-triangle-r3-confirm-s43-s44",
+  "kernel_version": 1,
+  "status_at_launch_check": "RUNNING",
+  "runner_sha256": "50580e82eeb513badf0cef62acf01885d4e2ce054830fbc636d5803a9eadd3f1",
+  "metadata_sha256": "88c6b0b63776b66e488ce8c496859d7c98b20ade7623eb360a9d1b1831167144",
+  "dataset_source": "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source",
+  "kernel_source": "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2",
+  "seeds": [43, 44],
+  "paired_models_per_seed": [
+    "ogb_edge_state_structural_gps9",
+    "ogb_sparse_triangle_edge_state_gps9"
+  ],
+  "single_gpu_task": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
