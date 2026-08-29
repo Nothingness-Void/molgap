@@ -14,7 +14,7 @@ from pathlib import Path
 
 OUT = Path("/kaggle/working/pcqm_gap100k_geometry_cache_s42")
 EXPECTED_SOURCE_COMMIT = "e083bee19ee6a13cd9f72e91229752a9d5f56389"
-EXPECTED_PARENT_SOURCE_COMMIT = "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
+EXPECTED_PARENT_SOURCE_COMMIT = "35fadc9de63e22de7a1cfbe21e4f1af8888e075f"
 EXPECTED_PARENT_GRAPH_SHA256 = (
     "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
 )

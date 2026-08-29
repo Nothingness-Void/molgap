@@ -547,6 +547,9 @@ def test_geometry_cache_is_cpu_only_and_parent_pinned() -> None:
     assert assignment_literal(GEOMETRY_CACHE_CPU, "EXPECTED_WEDGE_SHA256") == (
         "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
     )
+    assert assignment_literal(
+        GEOMETRY_CACHE_CPU, "EXPECTED_PARENT_SOURCE_COMMIT"
+    ) == "35fadc9de63e22de7a1cfbe21e4f1af8888e075f"
     assert assignment_literal(GEOMETRY_CACHE_CPU, "MINIMUM_VALID_FRACTION") == 0.99
     source = GEOMETRY_CACHE_CPU.read_text(encoding="utf-8")
     assert "ProcessPoolExecutor" in source
