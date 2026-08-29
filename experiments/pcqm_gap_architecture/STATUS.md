@@ -114,5 +114,12 @@
   Its immutable launch identity is in
   `results/geometry_bottom_fusion_seed42/cpu_cache_launch_manifest.json`. The
   GPU successor remains unsubmitted until downloaded cache acceptance passes.
+- CPU version 1 later reached terminal `ERROR` about 22 seconds after launch.
+  It failed before ETKDG because the runner required parent wedge-cache
+  `source_commit` `76dd6efa76c8236ce80a82a8a43d9f5df426165e`, while the accepted
+  cache manifest correctly records
+  `35fadc9de63e22de7a1cfbe21e4f1af8888e075f`. No geometry shard was
+  written and no GPU successor was submitted. The preserved diagnosis is
+  `results/geometry_bottom_fusion_seed42/cpu_cache_v1_failure_diagnosis.md`.
 
 Task order remains authoritative in `ROADMAP.md`.

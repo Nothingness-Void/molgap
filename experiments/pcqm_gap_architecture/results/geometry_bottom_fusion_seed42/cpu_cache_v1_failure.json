@@ -1,0 +1,18 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-cache-failure-v1",
+  "observed_at": "2026-08-30T03:03:09.5678177+09:00",
+  "kernel_ref": "kaseichou/molgap-pcqm-geometry-cache-s42",
+  "kernel_version": 1,
+  "terminal_status": "ERROR",
+  "failure_stage": "parent-wedge-manifest-preflight",
+  "exception": "RuntimeError: Wedge cache contract changed for source_commit",
+  "script_expected_parent_source_commit": "76dd6efa76c8236ce80a82a8a43d9f5df426165e",
+  "actual_parent_source_commit": "35fadc9de63e22de7a1cfbe21e4f1af8888e075f",
+  "parent_wedge_aggregate_sha256": "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406",
+  "geometry_shards_written": 0,
+  "gpu_successor_submitted": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
