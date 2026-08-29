@@ -107,5 +107,12 @@
   the single three-candidate GPU task. No SchNet, late fusion, residual target,
   extra seed, official role, full-data run, or molecular-research-server access
   is authorized by this screen.
+- Source dataset `kaseichou/molgap-pcqm-geometry-fusion-source` was created from
+  model source commit `e083bee19ee6a13cd9f72e91229752a9d5f56389`.
+  Kaggle2 CPU kernel `kaseichou/molgap-pcqm-geometry-cache-s42`, version 1, was
+  submitted once and was `RUNNING` at the 2026-08-30 02:48 JST launch check.
+  Its immutable launch identity is in
+  `results/geometry_bottom_fusion_seed42/cpu_cache_launch_manifest.json`. The
+  GPU successor remains unsubmitted until downloaded cache acceptance passes.
 
 Task order remains authoritative in `ROADMAP.md`.

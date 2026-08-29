@@ -90,10 +90,11 @@ must not be represented as this new conservative head.
   The paired EdgeState/Sparse Triangle seeds 43/44 task completed and passed
   no-inference acceptance; together with seed 42, Sparse Triangle improved all
   three paired comparisons. No full-data or official-role run is authorized.
-- The geometry bottom-fusion implementation and submission packages are
-  statically tested. Remote execution is staged as CPU-only ETKDG cache
-  construction followed, only after cache acceptance, by one GPU task with
-  three seed-42 candidates.
+- The geometry bottom-fusion implementation and submission packages passed 28
+  static contract tests. Kaggle2 CPU kernel
+  `kaseichou/molgap-pcqm-geometry-cache-s42`, version 1, is constructing the
+  ETKDG cache. Only after downloaded cache acceptance may one GPU task train
+  the three seed-42 candidates.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
