@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "molgap" / "pcqm_gap_data.py"
 MODELS = ROOT / "src" / "molgap" / "pcqm_gap_architecture.py"
+GEOMETRY = ROOT / "src" / "molgap" / "pcqm_geometry.py"
 GPS = ROOT / "src" / "molgap" / "gps.py"
 EXPERIMENT = ROOT / "experiments" / "pcqm_gap_architecture"
 PREP = EXPERIMENT / "kaggle_pcqm_gap100k" / "cpu_prep" / "run_prep.py"
@@ -54,6 +55,9 @@ SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE = (
 )
 SPARSE_TRIANGLE_MULTISEED_PROTOCOL = (
     EXPERIMENT / "sparse_triangle_edge_state_multiseed_protocol.md"
+)
+GEOMETRY_BOTTOM_FUSION_PROTOCOL = (
+    EXPERIMENT / "geometry_bottom_fusion_seed42_protocol.md"
 )
 
 
@@ -147,6 +151,13 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert "class OGBGraphTokenStructuralGPSWrapper" in source
     assert 'candidate == "ogb_recurrent_graph_state_gps9"' in source
     assert "token_channels=16" in source
+    assert "class OGBGeometrySparseTriangleEdgeStateGPSWrapper" in source
+    assert '"ogb_distance_triangle_edge_state_gps9": "distance"' in source
+    assert '"ogb_angle_triangle_edge_state_gps9": "angle"' in source
+    assert (
+        '"ogb_distance_angle_triangle_edge_state_gps9": "distance_angle"'
+        in source
+    )
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source
@@ -470,6 +481,48 @@ def test_sparse_triangle_hidden_width_does_not_depend_on_ogb_encoder_api() -> No
     assert source is not None
     assert "self.head[0].in_features" in source
     assert "self.node_emb.out_features" not in source
+
+
+def test_geometry_bottom_fusion_is_early_and_not_prediction_fusion() -> None:
+    source = MODELS.read_text(encoding="utf-8")
+    geometry_class = next(
+        node
+        for node in ast.parse(source).body
+        if isinstance(node, ast.ClassDef)
+        and node.name == "OGBGeometrySparseTriangleEdgeStateGPSWrapper"
+    )
+    segment = ast.get_source_segment(source, geometry_class)
+    assert segment is not None
+    assert "edge_state + self.distance_initial" in segment
+    assert "edge_state + self.distance_updates[layer]" in segment
+    assert "wedge_state + self.angle_initial" in segment
+    assert "wedge_state + self.angle_updates[layer]" in segment
+    assert "SchNet" not in segment
+    assert "residual_head" not in segment
+    assert "prediction_fusion" not in segment
+
+
+def test_geometry_cache_contract_is_deterministic_and_visible_on_failure() -> None:
+    source = GEOMETRY.read_text(encoding="utf-8")
+    assert "AllChem.ETKDGv3()" in source
+    assert 'MMFF_VARIANT = "MMFF94s"' in source
+    assert "geometry_seed(row_index)" in source
+    assert "params.useRandomCoords = True" in source
+    assert "geometry_valid=False" in source
+    assert "failure_type=type(error).__name__" in source
+    assert "np.zeros" in source
+
+
+def test_geometry_screen_protocol_is_three_seed42_candidates_only() -> None:
+    source = GEOMETRY_BOTTOM_FUSION_PROTOCOL.read_text(encoding="utf-8")
+    assert "Seed 42 only" in source
+    assert "three candidates run sequentially" in source
+    assert "does not run additional seeds" in source
+    assert "0.13790177369117737 eV" in source
+    assert "There is no SchNet" in source
+    lowered = source.lower()
+    assert "official validation" in lowered
+    assert "test-dev remain unread" in lowered
 
 
 def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:

@@ -419,6 +419,210 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
         return self._pool(h, batch)
 
 
+class _FixedGaussianBasis(nn.Module):
+    """Small fixed radial basis for deterministic scalar geometry channels."""
+
+    def __init__(self, minimum: float, maximum: float, channels: int) -> None:
+        super().__init__()
+        if channels < 2 or not maximum > minimum:
+            raise ValueError("Gaussian basis bounds/channels are invalid")
+        centers = torch.linspace(float(minimum), float(maximum), int(channels))
+        spacing = float((maximum - minimum) / (channels - 1))
+        self.register_buffer("centers", centers)
+        self.gamma = 0.5 / (spacing * spacing)
+
+    def forward(self, values: torch.Tensor) -> torch.Tensor:
+        if values.ndim != 2 or values.shape[1] != 1:
+            raise ValueError("geometry scalar must have shape [N, 1]")
+        return torch.exp(-self.gamma * (values - self.centers.view(1, -1)) ** 2)
+
+
+class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBSparseTriangleEdgeStateGPSWrapper
+):
+    """Bottom-fused ETKDG bond/angle geometry inside Sparse Triangle GPS.
+
+    Geometry enters the persistent real-bond and topology-wedge states before
+    every GPS block.  There is no independent 3D encoder, late prediction
+    fusion, or target residual.  Zero-initialized projections make the initial
+    function equal to the accepted pure-2D architecture while preserving full
+    gradient flow into the new geometry channels.
+    """
+
+    MODES = {"distance", "angle", "distance_angle"}
+
+    def __init__(
+        self,
+        *args,
+        geometry_mode: str,
+        geometry_basis_channels: int = 16,
+        **kwargs,
+    ) -> None:
+        if geometry_mode not in self.MODES:
+            raise ValueError(f"Unknown geometry mode: {geometry_mode}")
+        super().__init__(*args, **kwargs)
+        self.geometry_mode = geometry_mode
+        self.distance_basis = _FixedGaussianBasis(0.75, 2.25, geometry_basis_channels)
+        self.angle_basis = _FixedGaussianBasis(-1.0, 1.0, geometry_basis_channels)
+        if "distance" in geometry_mode:
+            self.distance_initial = nn.Linear(
+                geometry_basis_channels, self.edge_state_channels, bias=False
+            )
+            self.distance_updates = nn.ModuleList(
+                nn.Linear(
+                    geometry_basis_channels, self.edge_state_channels, bias=False
+                )
+                for _ in self.convs
+            )
+            nn.init.zeros_(self.distance_initial.weight)
+            for projection in self.distance_updates:
+                nn.init.zeros_(projection.weight)
+        if "angle" in geometry_mode:
+            self.angle_initial = nn.Linear(
+                geometry_basis_channels, self.wedge_channels, bias=False
+            )
+            self.angle_updates = nn.ModuleList(
+                nn.Linear(geometry_basis_channels, self.wedge_channels, bias=False)
+                for _ in self.convs
+            )
+            nn.init.zeros_(self.angle_initial.weight)
+            for projection in self.angle_updates:
+                nn.init.zeros_(projection.weight)
+
+    @staticmethod
+    def _geometry_mask(
+        geometry_valid: torch.Tensor,
+        batch: torch.Tensor,
+        node_ids: torch.Tensor,
+    ) -> torch.Tensor:
+        valid = geometry_valid.reshape(-1).float()
+        if valid.shape[0] <= int(batch.max()):
+            raise ValueError("geometry_valid does not cover the batched graphs")
+        return valid[batch[node_ids]].view(-1, 1)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Geometry Triangle GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(f"random_walk_pe must have shape {expected}")
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        self._validate_wedge_ids(wedge_edge_ids, edge_index.shape[1])
+        if tuple(edge_distance.shape) != (edge_index.shape[1], 1):
+            raise ValueError("edge_distance is not aligned to directed bonds")
+        if tuple(wedge_angle_cos.shape) != (wedge_edge_ids.shape[0], 1):
+            raise ValueError("wedge_angle_cos is not aligned to wedges")
+        if not torch.isfinite(edge_distance).all() or not torch.isfinite(
+            wedge_angle_cos
+        ).all():
+            raise ValueError("geometry contains non-finite values")
+
+        h = self._embed_nodes(x)
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self._embed_edges(edge_attr)
+        first, second = wedge_edge_ids.unbind(dim=1)
+        centers = edge_index[1, first]
+
+        distance_features = None
+        if "distance" in self.geometry_mode:
+            edge_mask = self._geometry_mask(
+                geometry_valid, batch, edge_index[0]
+            )
+            distance_features = self.distance_basis(edge_distance.float()) * edge_mask
+            edge_state = edge_state + self.distance_initial(distance_features)
+
+        angle_features = None
+        if "angle" in self.geometry_mode and wedge_edge_ids.shape[0]:
+            wedge_mask = self._geometry_mask(geometry_valid, batch, centers)
+            angle_features = self.angle_basis(wedge_angle_cos.float()) * wedge_mask
+
+        wedge_state = None
+        if wedge_edge_ids.shape[0]:
+            initial_context = torch.cat(
+                [edge_state[first], edge_state[second], h[centers]], dim=-1
+            )
+            wedge_state = self.wedge_initial(initial_context)
+            if angle_features is not None:
+                wedge_state = wedge_state + self.angle_initial(angle_features)
+
+        for layer, (
+            edge_update,
+            wedge_update,
+            edge_projection,
+            node_projection,
+            conv,
+        ) in enumerate(
+            zip(
+                self.edge_updates,
+                self.wedge_updates,
+                self.wedge_to_edge,
+                self.wedge_to_node,
+                self.convs,
+            )
+        ):
+            edge_state = edge_update(h, edge_index, edge_state)
+            if distance_features is not None:
+                edge_state = edge_state + self.distance_updates[layer](
+                    distance_features
+                )
+            if wedge_state is not None:
+                context = torch.cat(
+                    [edge_state[first], edge_state[second], h[centers]], dim=-1
+                )
+                wedge_state = wedge_update(context, wedge_state)
+                if angle_features is not None:
+                    wedge_state = wedge_state + self.angle_updates[layer](
+                        angle_features
+                    )
+                edge_context = self._aggregate_to_edges(
+                    wedge_state, wedge_edge_ids, edge_state.shape[0]
+                )
+                edge_state = edge_state + edge_projection(edge_context)
+                center_context = self._aggregate_to_centers(
+                    wedge_state, centers, h.shape[0]
+                )
+                h = h + node_projection(center_context)
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
+        return self._pool(h, batch)
+
+
 def make_pcqm_gap_encoder(candidate: str):
     """Build one frozen first-round candidate with a scalar Gap head."""
     common = {
@@ -450,6 +654,19 @@ def make_pcqm_gap_encoder(candidate: str):
             **common,
             edge_state_channels=64,
             wedge_channels=16,
+        )
+    geometry_modes = {
+        "ogb_distance_triangle_edge_state_gps9": "distance",
+        "ogb_angle_triangle_edge_state_gps9": "angle",
+        "ogb_distance_angle_triangle_edge_state_gps9": "distance_angle",
+    }
+    if candidate in geometry_modes:
+        return OGBGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_mode=geometry_modes[candidate],
+            geometry_basis_channels=16,
         )
     if candidate == "ogb_query_pool_structural_gps9":
         return OGBQueryPoolStructuralGPSWrapper(
