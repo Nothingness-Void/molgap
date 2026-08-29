@@ -91,5 +91,10 @@
   metadata slug by inserting the separator between `s43` and `s44`; both
   identities and the exact source hashes are retained in
   `results/sparse_triangle_edge_state_multiseed/launch_manifest.json`.
+- A user-provided Kaggle2 quota screenshot was transcribed at 2026-08-29
+  16:05 JST: 29h31m available of 30h, 0h28m used, 0h0m reserved, and 160h55m
+  until the displayed reset. The approximate projected reset is 2026-09-05
+  09:00 JST; the minute-rounded evidence is in
+  `results/sparse_triangle_edge_state_multiseed/quota_snapshot.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
