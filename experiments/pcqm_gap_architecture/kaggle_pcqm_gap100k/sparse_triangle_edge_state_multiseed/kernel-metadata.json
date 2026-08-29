@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-triangle-r3-confirm-s4344",
+  "title": "MolGap PCQM Triangle R3 Confirm S43 S44",
+  "code_file": "run_confirmation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+  ],
+  "model_sources": []
+}

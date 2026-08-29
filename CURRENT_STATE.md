@@ -31,12 +31,12 @@ sealed during selection.
 The first matched official-PCQM question completed and froze persistent
 real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling,
 three matched local-operator replacements, and recurrent graph state are
-closed. Sparse topology-wedge R2 failed during preflight before the first
-epoch because the OGB `AtomEncoder` API was used as if it exposed
-`out_features`. The user authorized exactly one R3 implementation repair with
-the same frozen architecture, data, and optimization contract; that Kaggle2
-seed-42 task is running. No seed-43/44, further retry, or full-data
-authorization exists. Exact evidence belongs under
+closed. Sparse Triangle R3 completed after its one implementation repair and
+strictly improved seed 42 by a very small margin while reducing throughput.
+It is therefore a confirmation candidate, not a replacement comparator. The
+only open GPU question is a paired seed-43/44 run that trains fresh EdgeState
+and Sparse Triangle models under the unchanged cache and optimization
+contract. Exact evidence belongs under
 `experiments/pcqm_gap_architecture/results/`.
 
 ## Prior Architecture Evidence
@@ -77,11 +77,12 @@ must not be represented as this new conservative head.
   comparisons, and the sparse topology-wedge cache are accepted. R2 terminated
   during preflight with no epoch or metrics output; its failure is recorded at
   `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`.
-  The sole authorized implementation repair is Kaggle2 kernel
-  `kaseichou/molgap-pcqm-triangle-edge-state-r3-s42`, version 1, which is
-  running under the unchanged frozen contract. Its launch identity is
-  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/launch_manifest.json`.
-  No further retry, multiseed run, or full-data run is authorized.
+  R3 completed, passed no-inference artifact acceptance, and strictly passed
+  the seed-42 arithmetic gate. Its decision is
+  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md`.
+  The user authorized the next key server experiment: one sequential Kaggle2
+  task containing paired EdgeState and Sparse Triangle runs at seeds 43 and
+  44. No full-data or official-role run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -120,6 +121,7 @@ must not be represented as this new conservative head.
 | Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
 | Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
 | What is the sparse triangle EdgeState question? | `experiments/pcqm_gap_architecture/sparse_triangle_edge_state_protocol.md` |
+| Did Sparse Triangle pass seed 42? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |

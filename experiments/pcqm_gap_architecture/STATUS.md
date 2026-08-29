@@ -74,5 +74,16 @@
   `kaseichou/molgap-pcqm-triangle-edge-state-r3-s42`, version 1. It was
   `RUNNING` at the 2026-08-29 00:10 JST launch check. No cron monitor, second
   retry, seed-43/44 run, full-data run, or official evaluation is authorized.
+- R3 later reached terminal `COMPLETE`. Its downloaded outputs passed the
+  no-inference acceptance with 4,878,257 parameters, best epoch 38, and a
+  validation Gap MAE strictly below the frozen seed-42 comparator. The exact
+  result and throughput caveat are frozen in
+  `results/sparse_triangle_edge_state_r3_seed42/decision.md`.
+- On 2026-08-29 the user authorized the next server-side architecture step:
+  one sequential Kaggle2 confirmation task. It must train fresh paired
+  EdgeState and Sparse Triangle models at seeds 43 and 44 under
+  `sparse_triangle_edge_state_multiseed_protocol.md`. It does not authorize a
+  second retry, full-data training, official validation/test-dev, or server
+  access.
 
 Task order remains authoritative in `ROADMAP.md`.

@@ -15,9 +15,7 @@ finish before any molecular-research-server use.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-SPARSE-TRIANGLE-CACHE | Derive the immutable sparse topology-wedge cache from the accepted PCQM 100K graph cache | Parent identity, wedge validity, shard hashes, exact role counts, and sealed-role flags pass | `experiments/pcqm_gap_architecture/` |
-| P0 | B-PCQM100K-SPARSE-TRIANGLE-SEED42 | Run one sparse triangle EdgeState candidate under the frozen seed-42 contract | Downloaded artifacts pass no-inference acceptance and the candidate strictly beats the EdgeState comparator, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
-| P0 | B-PCQM100K-MULTISEED | Confirm a seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-SPARSE-TRIANGLE-MULTISEED | Train fresh paired EdgeState and Sparse Triangle models at seeds 43/44 in one sequential Kaggle task | All artifacts pass no-inference acceptance and Triangle improves seeds 42/43/44 plus their mean, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -31,13 +29,14 @@ The official-PCQM cache and first matched seed-42 comparator are accepted
 evidence. Their exact decision is
 `experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
 
-The sparse topology-wedge cache was accepted, but its R2 seed-42 GPU screen
-failed during preflight on an OGB `AtomEncoder` API mismatch before any epoch.
-The preserved failure evidence is
-`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`.
-One user-authorized R3 implementation repair may rerun the unchanged frozen
-contract. It is not a seed, architecture, optimizer, schedule, or cache retry;
-no second automatic retry is permitted.
+The sparse topology-wedge cache was accepted. R2 failed during preflight on an
+OGB `AtomEncoder` API mismatch before any epoch, and the one implementation-
+only R3 repair then completed the unchanged seed-42 contract. R3 strictly
+passed by a small margin and is frozen in
+`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md`.
+The paired multiseed contract is
+`experiments/pcqm_gap_architecture/sparse_triangle_edge_state_multiseed_protocol.md`.
+No second implementation retry or unpaired seed comparison is permitted.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`

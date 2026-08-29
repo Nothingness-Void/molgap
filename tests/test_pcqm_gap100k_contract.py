@@ -40,6 +40,21 @@ SPARSE_TRIANGLE_GPU = (
 )
 SPARSE_TRIANGLE_METADATA = SPARSE_TRIANGLE_GPU.with_name("kernel-metadata.json")
 SPARSE_TRIANGLE_PROTOCOL = EXPERIMENT / "sparse_triangle_edge_state_protocol.md"
+SPARSE_TRIANGLE_MULTISEED_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "sparse_triangle_edge_state_multiseed"
+    / "run_confirmation.py"
+)
+SPARSE_TRIANGLE_MULTISEED_METADATA = SPARSE_TRIANGLE_MULTISEED_GPU.with_name(
+    "kernel-metadata.json"
+)
+SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE = (
+    EXPERIMENT / "accept_pcqm100k_sparse_triangle_multiseed.py"
+)
+SPARSE_TRIANGLE_MULTISEED_PROTOCOL = (
+    EXPERIMENT / "sparse_triangle_edge_state_multiseed_protocol.md"
+)
 
 
 def assignment_literal(path: Path, name: str):
@@ -491,3 +506,192 @@ def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
     assert "Seed 42, FP32, batch 48" in protocol
     assert "Parameter ceiling: `5,200,000`" in protocol
     assert "one R3 implementation-only retry" in protocol
+
+
+def test_sparse_triangle_multiseed_is_paired_and_frozen() -> None:
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "CANDIDATES") == (
+        "ogb_edge_state_structural_gps9",
+        "ogb_sparse_triangle_edge_state_gps9",
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "SEEDS") == (43, 44)
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "PATIENCE") == 8
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "SEARCH_BUDGET_S") == 39_600
+    source = SPARSE_TRIANGLE_MULTISEED_GPU.read_text(encoding="utf-8")
+    assert "for seed in SEEDS" in source
+    assert "for candidate in CANDIDATES" in source
+    assert '"precision": "fp32"' in source
+    assert '"target": "homolumogap"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(SPARSE_TRIANGLE_MULTISEED_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "kaseichou/molgap-pcqm-triangle-r3-confirm-s4344"
+    assert len(metadata["title"]) <= 50
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
+
+
+def test_sparse_triangle_multiseed_acceptance_is_no_inference() -> None:
+    assert "torch" not in imported_modules(SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE)
+    source = SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE.read_text(encoding="utf-8")
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    protocol = SPARSE_TRIANGLE_MULTISEED_PROTOCOL.read_text(encoding="utf-8")
+    assert "fresh comparator and candidate" in protocol
+    assert "seeds 42, 43, and 44" in protocol
+    assert "Only one GPU kernel" in protocol
+
+
+def test_sparse_triangle_multiseed_acceptance_replays_pair_arithmetic(
+    tmp_path: Path,
+) -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "sparse_triangle_multiseed_acceptance",
+        SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE,
+    )
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    source_commit = "synthetic-source"
+    cache_sha = "a" * 64
+    values = {
+        (43, "ogb_edge_state_structural_gps9"): 0.1400,
+        (43, "ogb_sparse_triangle_edge_state_gps9"): 0.1390,
+        (44, "ogb_edge_state_structural_gps9"): 0.1410,
+        (44, "ogb_sparse_triangle_edge_state_gps9"): 0.1405,
+    }
+    runs = []
+    for (seed, candidate), value in values.items():
+        run_dir = tmp_path / "results" / f"seed{seed}" / candidate
+        run_dir.mkdir(parents=True)
+        artifacts = {}
+        for name in ("best_model", "checkpoint", "validation_payload", "trace"):
+            suffix = ".json" if name == "trace" else ".pt"
+            path = run_dir / f"{name}{suffix}"
+            path.write_bytes(f"{seed}-{candidate}-{name}".encode("utf-8"))
+            artifacts[name] = str(path.relative_to(tmp_path)).replace("\\", "/")
+            artifacts[f"{name}_sha256"] = _sha256(path)
+        metrics = {
+            "format": "molgap-pcqm-gap100k-sparse-triangle-paired-run-v1",
+            "complete": True,
+            "candidate": candidate,
+            "source_commit": source_commit,
+            "seed": seed,
+            "parameter_count": 4_800_000,
+            "parameter_budget": 5_200_000,
+            "best_epoch": 19,
+            "validation_gap_mae_eV": value,
+            "validation_rows": 10_000,
+            "validation_row_index_sha256": "b" * 64,
+            "validation_target_sha256": "c" * 64,
+            "target_mean_eV": 5.5,
+            "target_std_eV": 1.2,
+            "epochs_completed": 20,
+            "training_elapsed_s": 100.0,
+            "contract": {
+                "batch_size": 48,
+                "learning_rate": 1.6e-4,
+                "weight_decay": 1.0e-6,
+                "max_epochs": 40,
+                "patience": 8,
+                "precision": "fp32",
+                "target": "homolumogap",
+            },
+            "artifacts": artifacts,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        }
+        (run_dir / "metrics.json").write_text(
+            json.dumps(metrics, indent=2) + "\n", encoding="utf-8"
+        )
+        runs.append(metrics)
+
+    pairs = [
+        {
+            "seed": 42,
+            "comparator_validation_gap_mae_eV": 0.13798263211250306,
+            "candidate_validation_gap_mae_eV": 0.13790177369117737,
+            "candidate_minus_comparator_eV": (
+                0.13790177369117737 - 0.13798263211250306
+            ),
+        }
+    ]
+    for seed in (43, 44):
+        comparator = values[(seed, "ogb_edge_state_structural_gps9")]
+        candidate = values[(seed, "ogb_sparse_triangle_edge_state_gps9")]
+        pairs.append(
+            {
+                "seed": seed,
+                "comparator_validation_gap_mae_eV": comparator,
+                "candidate_validation_gap_mae_eV": candidate,
+                "candidate_minus_comparator_eV": candidate - comparator,
+            }
+        )
+    mean_comparator = sum(
+        row["comparator_validation_gap_mae_eV"] for row in pairs
+    ) / 3
+    mean_candidate = sum(
+        row["candidate_validation_gap_mae_eV"] for row in pairs
+    ) / 3
+    paired_comparison = [
+        *pairs,
+        {
+            "seed": "mean",
+            "comparator_validation_gap_mae_eV": mean_comparator,
+            "candidate_validation_gap_mae_eV": mean_candidate,
+            "candidate_minus_comparator_eV": mean_candidate - mean_comparator,
+        },
+    ]
+    selection = {
+        "format": "molgap-pcqm-gap100k-sparse-triangle-multiseed-v1",
+        "complete": True,
+        "source_commit": source_commit,
+        "cache_aggregate_sha256": cache_sha,
+        "parent_cache_aggregate_sha256": "d" * 64,
+        "seeds": [43, 44],
+        "candidates": [
+            "ogb_edge_state_structural_gps9",
+            "ogb_sparse_triangle_edge_state_gps9",
+        ],
+        "preflight": [
+            {
+                "candidate": candidate,
+                "parameter_count": 4_800_000,
+                "finite_prediction": True,
+                "finite_loss": True,
+                "finite_gradients": True,
+            }
+            for candidate in (
+                "ogb_edge_state_structural_gps9",
+                "ogb_sparse_triangle_edge_state_gps9",
+            )
+        ],
+        "runs": runs,
+        "paired_comparison": paired_comparison,
+        "multiseed_gate_passed": True,
+        "selected_candidate": "ogb_sparse_triangle_edge_state_gps9",
+        "search_budget_s": 39_600,
+        "elapsed_s": 400.0,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    (tmp_path / "selection.json").write_text(
+        json.dumps(selection, indent=2) + "\n", encoding="utf-8"
+    )
+    result = module.accept(tmp_path, source_commit, cache_sha)
+    assert result["accepted"] is True
+    assert result["multiseed_gate_passed"] is True
