@@ -70,6 +70,12 @@ R9 is owned by
    one production decision.
 4. **On failure:** write a dated decision beside the experiment evidence and
    close the branch. Do not move the failure into `CURRENT_STATE.md`.
+5. **Infrastructure retry authority:** after preserving evidence, automatically
+   diagnose, repair, test, and resubmit infrastructure-only failures without a
+   new user confirmation. The retry must preserve architecture, data roles,
+   split, target, seed, optimizer, schedule, precision, and sealed-role flags;
+   it must use a new remote version and remain idempotent. Scientific gate
+   failures are not retryable under this authority.
 
 ## Operating Rules
 
