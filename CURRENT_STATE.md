@@ -97,6 +97,10 @@ must not be represented as this new conservative head.
   model-wrapper source commit with the accepted wedge-cache producer commit.
   No geometry shard or GPU successor exists. The exact diagnosis is
   `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/cpu_cache_v1_failure_diagnosis.md`.
+  The user authorized automatic infrastructure retries. Version 2 corrects
+  only the expected wedge-cache producer identity, passed the same 28 static
+  tests, and is running; architecture, data, seed, and sealed-role settings are
+  unchanged.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

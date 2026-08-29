@@ -121,5 +121,11 @@
   `35fadc9de63e22de7a1cfbe21e4f1af8888e075f`. No geometry shard was
   written and no GPU successor was submitted. The preserved diagnosis is
   `results/geometry_bottom_fusion_seed42/cpu_cache_v1_failure_diagnosis.md`.
+- The user authorized automatic infrastructure-only diagnosis, repair, and
+  resubmission without per-error confirmation. Commit `9132a88` changes only
+  the expected parent source identity and adds the missing static assertion;
+  all 28 contract tests pass. CPU version 2 was submitted once and was
+  `RUNNING` at the 2026-08-30 03:05 JST launch check. Its identity is
+  `results/geometry_bottom_fusion_seed42/cpu_cache_v2_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
