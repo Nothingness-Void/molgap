@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "source": {
+    "last": {
+      "path": "rich_full/training/last.pt",
+      "sha256": "1f30ea262c1f13dd37a6939726b1a28702ee89a43a82618281b3708920650d2c"
+    },
+    "best": {
+      "path": "rich_full/training/best.pt",
+      "sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15"
+    }
+  },
+  "best": {
+    "path": "best.pt",
+    "sha256": "ca5118128e5d1626901d054fcc152863a2fb40678c1ae914be9ea42db7e447fb"
+  },
+  "last": {
+    "path": "last.pt",
+    "sha256": "e9bef9f88134959320ee19864f6541a0a9bb4f623778dcf76d11f78228686f68"
+  },
+  "metrics": {
+    "path": "metrics.json",
+    "sha256": "e9ab77fce98c93d8405b569f38fa577759528e6775c57521f7984bf2ddc7ebea"
+  },
+  "valid_predictions": {
+    "path": "valid_predictions.pt",
+    "sha256": "98c27df7291841f2147672d76d2924adbc0b96822938fab31239e5971260ea56"
+  }
+}

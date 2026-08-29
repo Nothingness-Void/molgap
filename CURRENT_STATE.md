@@ -84,9 +84,9 @@ must not be represented as this new conservative head.
   graph-state seed-42 screen; no multiseed or full-data run is authorized.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
-- IMS CUDA preflight `1364426.ccpbs1` accepted the isolated lazy-import fix on
-  an A100 with finite forward/backward results. Continuation `1364434.ccpbs1`
-  is queued with atomic failure status and no duplicate active job.
+- IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.
+  Positive convergence evidence and closure are recorded in
+  `experiments/pcqm_edge_state_full/results/convergence_40/decision.md`.
 - Any new remote run must first appear in `ROADMAP.md` with an input contract,
   timing bound, atomic checkpoint path, and independently retrievable outputs.
 
