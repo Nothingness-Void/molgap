@@ -37,6 +37,8 @@ Its CPU geometry cache passed acceptance, and the three-candidate GPU screen
 selected distance-plus-angle as the only seed-42 winner. The accepted result
 and infrastructure-repair evidence are frozen in
 [`results/geometry_bottom_fusion_seed42/decision.md`](results/geometry_bottom_fusion_seed42/decision.md).
+Its fresh paired seeds 43/44 confirmation contract is
+[`geometry_bottom_fusion_multiseed_protocol.md`](geometry_bottom_fusion_multiseed_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.
