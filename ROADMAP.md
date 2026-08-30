@@ -129,6 +129,9 @@ experiment unless the project objective changes.
 
 | Task | Trigger |
 |---|---|
+| Recent-architecture sparse torsion screen | The active geometry multiseed task reaches an accepted terminal decision and continued 100K discovery is chosen before the A100 gate | Reuse the best accepted comparator and the frozen 100K/10K roles; test only the sparse torsion-state mechanism from `experiments/pcqm_gap_architecture/recent_literature_audit_2024_2026.md`, seed 42 first |
+| Sparse atom--bond dual-stream attention | The sparse torsion mechanism scientifically fails | Test segmented real-bond attention and symmetric atom--bond exchange without dense pair matrices, new geometry, or a second encoder |
+| Ring/conjugation hierarchy | Both higher-order geometry and sparse bond-attention routes scientifically fail | Test deterministic ring-system tokens as one new information flow, without fingerprint or prediction fusion |
 | PairGPS2D sealed-test disposition | Explicit authorization to reopen the independent branch after its validation-only decision; arithmetic equivalence must be established before using benchmark-selected TF32 for an accuracy claim |
 | Experimental solid-state Delta head | A specific experimental target is requested |
 | Extend the supported element set | Rejected-use analysis justifies refetch and retraining |

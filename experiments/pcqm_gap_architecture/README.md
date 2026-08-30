@@ -31,6 +31,13 @@ Sparse Triangle R3 passed seed 42 and then improved fresh paired seeds 43/44.
 It is the accepted pure-2D comparator; the multiseed decision is
 [`results/sparse_triangle_edge_state_multiseed/decision.md`](results/sparse_triangle_edge_state_multiseed/decision.md).
 
+Recent 2024--2026 molecular architectures, their input and compute assumptions,
+and the mechanisms that remain transferable under this project's budget are
+indexed in
+[`recent_literature_audit_2024_2026.md`](recent_literature_audit_2024_2026.md).
+That audit is research evidence, not an authorization to interrupt the active
+geometry confirmation or to submit concurrent GPU work.
+
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
 Its CPU geometry cache passed acceptance, and the three-candidate GPU screen
