@@ -1,0 +1,57 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-bottom-fusion-repair-v1",
+  "recorded_at": "2026-08-29T19:56:24.9859373Z",
+  "kernel": {
+    "ref": "kaseichou/molgap-pcqm-geometry-fusion-s42",
+    "failed_version": 1,
+    "repair_version": 2,
+    "repair_status_after_push": "KernelWorkerStatus.RUNNING",
+    "repair_last_run_time": "2026-08-29T19:55:50.400000Z"
+  },
+  "failure": {
+    "type": "RuntimeError",
+    "message": "PyTorch remains incompatible with compute capability (6, 0)",
+    "stage": "ensure_pascal_compatible_torch",
+    "completed_candidates": [],
+    "failure_sha256": "b004c2f80b396f795f25e31fa78c1cd5d120f58ca70f08d92991b028577918e1",
+    "log_sha256": "e44cd43e69c390b4b8896c45cedcf4fe4e467cfcb77fda8b9fbf1f1c96528b56"
+  },
+  "repair": {
+    "kind": "infrastructure_only_pascal_torch_compatibility",
+    "gpu_capability": [6, 0],
+    "torch": "2.7.1",
+    "cuda_wheel_index": "https://download.pytorch.org/whl/cu126",
+    "additional_package": "nvidia-cusparselt-cu12==0.6.3",
+    "required_architecture": "sm_60",
+    "restart_guard": "MOLGAP_TORCH_COMPAT_RESTART",
+    "old_bootstrap_removed": {
+      "torch": "2.5.1",
+      "cuda_wheel_index": "https://download.pytorch.org/whl/cu124"
+    },
+    "patched_runner_sha256": "6593614a05bcb9ae64802b9a0bcf3d91dd9b52d4e072b459216b1c742f6c2fc0",
+    "patched_metadata_sha256": "ca3087ccb410cee9f81d8f750646a7ab04c0e7f0fe97ef10e47d0de32d3c2363",
+    "static_contract_test_sha256": "64a2fde86dfb58d1b6c310c4b896700b5bb292e3511bcf14b7db60ed39ed81a0",
+    "verification": [
+      "python -m pytest --noconftest tests/test_geometry_gpu_pascal_contract.py -q: 2 passed",
+      "python -m py_compile run_geometry_screen.py: passed"
+    ]
+  },
+  "scientific_contract": {
+    "launch_commit": "eb88821",
+    "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+    "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+    "seed": 42,
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "parameter_budget": 5200000,
+    "frozen_comparator_mae_eV": 0.13790177369117737,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "model_inference_executed_locally": false,
+    "molecular_research_server_accessed": false
+  }
+}

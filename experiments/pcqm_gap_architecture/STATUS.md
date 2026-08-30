@@ -124,8 +124,20 @@
 - The user authorized automatic infrastructure-only diagnosis, repair, and
   resubmission without per-error confirmation. Commit `9132a88` changes only
   the expected parent source identity and adds the missing static assertion;
-  all 28 contract tests pass. CPU version 2 was submitted once and was
-  `RUNNING` at the 2026-08-30 03:05 JST launch check. Its identity is
-  `results/geometry_bottom_fusion_seed42/cpu_cache_v2_launch_manifest.json`.
+  all 28 contract tests pass. CPU version 2 completed; the downloaded 110,000-
+  role cache, invalid-geometry ledger, 22 shards, and aggregate hash passed
+  no-model acceptance. Its identity and acceptance are in
+  `results/geometry_bottom_fusion_seed42/cpu_cache_v2_launch_manifest.json` and
+  `results/geometry_bottom_fusion_seed42/acceptance.json`.
+- GPU version 1 failed before its first candidate because the PyTorch CUDA 12.4
+  build omitted P100 `sm_60`. The automatic infrastructure-only repair pinned
+  the compatible CUDA 12.6 build without changing the scientific contract;
+  dedicated static tests passed. Version 2 then completed all three candidates
+  and passed no-inference artifact acceptance. Distance plus angle was the
+  seed-42 winner; the terminal disposition is
+  `results/geometry_bottom_fusion_seed42/decision.md`.
+- No seed-43/44 confirmation, full-data training, official validation/test-dev,
+  desktop submission, or molecular-research-server task was submitted by the
+  seed-42 geometry screen.
 
 Task order remains authoritative in `ROADMAP.md`.

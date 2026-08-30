@@ -37,14 +37,14 @@ accepted pure-2D comparator for materially new 100K questions; the exact result
 is owned by
 `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md`.
 
-The active server-side question is whether inexpensive ETKDG geometry helps
-when fused into that accepted topology model at the bottom of every block.
-Three seed-42 candidates isolate bond distance, wedge angle, and their
-combination. CPU geometry construction and acceptance must finish before one
-sequential Kaggle GPU task trains the three candidates. Additional seeds are
-not authorized unless one candidate strictly improves the frozen Sparse
-Triangle comparator. The contract is
-`experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md`.
+The seed-42 bottom-fusion screen established that deterministic ETKDG geometry
+can help when injected into the accepted topology model inside every block.
+Distance-only, angle-only, and their combination all passed the strict
+single-seed arithmetic gate; distance plus angle was the clear winner. The
+next server-side question is whether only that combined candidate reproduces
+against fresh paired seeds 43/44. No confirmation task has been submitted. The
+accepted seed-42 decision is
+`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -90,17 +90,15 @@ must not be represented as this new conservative head.
   The paired EdgeState/Sparse Triangle seeds 43/44 task completed and passed
   no-inference acceptance; together with seed 42, Sparse Triangle improved all
   three paired comparisons. No full-data or official-role run is authorized.
-- The geometry bottom-fusion submission package passed 28 static contract
-  tests, but Kaggle2 CPU kernel
-  `kaseichou/molgap-pcqm-geometry-cache-s42`, version 1, failed during parent-
-  cache manifest preflight before ETKDG began. The runner confused the later
-  model-wrapper source commit with the accepted wedge-cache producer commit.
-  No geometry shard or GPU successor exists. The exact diagnosis is
-  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/cpu_cache_v1_failure_diagnosis.md`.
-  The user authorized automatic infrastructure retries. Version 2 corrects
-  only the expected wedge-cache producer identity, passed the same 28 static
-  tests, and is running; architecture, data, seed, and sealed-role settings are
-  unchanged.
+- Geometry-cache version 2 completed after one infrastructure-only parent-
+  identity repair. Its 110,000 aligned roles, invalid-geometry ledger, 22
+  shards, and aggregate hash passed no-model acceptance.
+- Geometry GPU version 1 stopped before training because its PyTorch build
+  omitted P100 `sm_60`. The automatically repaired version 2 preserved the
+  scientific contract, completed all three candidates, and passed no-inference
+  artifact acceptance. The combined distance-plus-angle candidate is the sole
+  seed-42 geometry winner. Its decision is
+  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -142,6 +140,7 @@ must not be represented as this new conservative head.
 | Did Sparse Triangle pass seed 42? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md` |
 | Did Sparse Triangle reproduce across three seeds? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md` |
 | What is the bottom-fused geometry question? | `experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md` |
+| Did bottom-fused ETKDG geometry pass seed 42? | `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |

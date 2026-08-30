@@ -1,0 +1,37 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-bottom-fusion-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "comparator": "ogb_sparse_triangle_edge_state_gps9",
+  "comparator_validation_gap_mae_eV": 0.13790177369117737,
+  "candidates": [
+    {
+      "candidate": "ogb_distance_triangle_edge_state_gps9",
+      "parameter_count": 4888497,
+      "best_epoch": 36,
+      "validation_gap_mae_eV": 0.13780435919761658,
+      "mean_throughput_graphs_per_s": 459.6229548589321
+    },
+    {
+      "candidate": "ogb_angle_triangle_edge_state_gps9",
+      "parameter_count": 4880817,
+      "best_epoch": 36,
+      "validation_gap_mae_eV": 0.1367538571357727,
+      "mean_throughput_graphs_per_s": 455.4333112564527
+    },
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+      "parameter_count": 4891057,
+      "best_epoch": 35,
+      "validation_gap_mae_eV": 0.13559719920158386,
+      "mean_throughput_graphs_per_s": 450.7830963644844
+    }
+  ],
+  "selected_candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "selected_strictly_improves": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

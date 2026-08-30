@@ -33,10 +33,10 @@ It is the accepted pure-2D comparator; the multiseed decision is
 
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
-It constructs one accepted CPU geometry cache before one GPU task isolates
-distance-only, angle-only, and distance-plus-angle candidates at seed 42.
-No additional seed is run unless one candidate strictly improves the frozen
-Sparse Triangle comparator.
+Its CPU geometry cache passed acceptance, and the three-candidate GPU screen
+selected distance-plus-angle as the only seed-42 winner. The accepted result
+and infrastructure-repair evidence are frozen in
+[`results/geometry_bottom_fusion_seed42/decision.md`](results/geometry_bottom_fusion_seed42/decision.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.
