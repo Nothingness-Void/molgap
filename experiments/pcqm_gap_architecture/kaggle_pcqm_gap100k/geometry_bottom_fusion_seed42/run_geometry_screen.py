@@ -76,31 +76,32 @@ def ensure_pascal_compatible_torch() -> None:
     import torch
 
     if not torch.cuda.is_available():
-        raise RuntimeError("Kaggle GPU is unavailable")
+        raise RuntimeError("Kaggle did not allocate a GPU")
     capability = torch.cuda.get_device_capability(0)
-    if capability[0] >= 7:
+    if capability != (6, 0):
+        return
+    if "sm_60" in set(torch.cuda.get_arch_list()):
         return
     if os.environ.get(PASCAL_COMPAT_RESTART) == "1":
-        raise RuntimeError(
-            f"PyTorch remains incompatible with compute capability {capability}"
-        )
+        raise RuntimeError("Compatibility install still lacks sm_60")
     subprocess.check_call(
         [
             sys.executable,
             "-m",
             "pip",
             "install",
-            "-q",
-            "--force-reinstall",
+            "--quiet",
             "--no-cache-dir",
-            "torch==2.5.1",
+            "--no-deps",
+            "--force-reinstall",
+            "torch==2.7.1",
+            "nvidia-cusparselt-cu12==0.6.3",
             "--index-url",
-            "https://download.pytorch.org/whl/cu124",
+            "https://download.pytorch.org/whl/cu126",
         ]
     )
-    environment = os.environ.copy()
-    environment[PASCAL_COMPAT_RESTART] = "1"
-    os.execve(sys.executable, [sys.executable, *sys.argv], environment)
+    os.environ[PASCAL_COMPAT_RESTART] = "1"
+    os.execv(sys.executable, [sys.executable, *sys.argv])
 
 
 def install_dependencies() -> None:
