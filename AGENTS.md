@@ -44,6 +44,17 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.
 
+## Branch ownership
+- Desktop/Kaggle work is owned by `molgap-desktop`; molecular-server work is
+  owned by `molgap-server`. Never modify or merge into the other owner's branch.
+- Start each architecture or question on `codex/exp/<question>` from its owner
+  branch. Do not create branches for individual seeds or remote job versions.
+- Merge accepted desktop results into `molgap-desktop`. Merge rejected results
+  into `molgap-archive` with their evidence and rejection reason.
+- Keep only active experiment branches. Delete a completed experiment branch
+  after its commits are reachable from `molgap-desktop` or `molgap-archive`.
+- Promote an accepted owner branch to `master` only as a separate explicit step.
+
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
 - Don't double-write a fact; if it must appear twice, the second is a link.
