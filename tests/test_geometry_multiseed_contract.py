@@ -37,7 +37,7 @@ def _literal_assignments(path: Path) -> dict[str, object]:
 
 def test_geometry_multiseed_metadata_is_one_private_gpu_task() -> None:
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
-    assert metadata["id"] == "kaseichou/molgap-pcqm-geometry-confirm-s4344"
+    assert metadata["id"] == "kaseichou/molgap-pcqm-geometry-confirm-s43-s44"
     assert metadata["code_file"] == "run_confirmation.py"
     assert metadata["enable_gpu"] == "true"
     assert metadata["is_private"] == "true"
