@@ -1,0 +1,49 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-multiseed-launch-v1",
+  "submitted_at": "2026-08-30T17:52:00.243+09:00",
+  "launch_commit": "d7cba348754df843797332c7ec1280ca356f23a6",
+  "kernel": {
+    "requested_ref": "kaseichou/molgap-pcqm-geometry-confirm-s4344",
+    "actual_ref": "kaseichou/molgap-pcqm-geometry-confirm-s43-s44",
+    "version": 1,
+    "status_after_push": "KernelWorkerStatus.RUNNING",
+    "slug_normalized_by_kaggle": true
+  },
+  "package": {
+    "runner_sha256": "d1c7eecdec2785a6e7d60cb696abb2d6475901d7a225887d14b251f128411818",
+    "submitted_metadata_sha256": "abeeb91433fbb777582d2ae651b6548a86a949373c84157c22a35e3235ce08e5",
+    "reconciled_metadata_sha256": "230ab82814d011c94d2c133c969fa2ed21db33a29fe06033174c021d48cb5fdf"
+  },
+  "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+  "geometry_cache": {
+    "kernel_ref": "kaseichou/molgap-pcqm-geometry-cache-s42",
+    "aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+    "valid_geometry_fraction": 0.9971363636363636
+  },
+  "seeds": [43, 44],
+  "comparator": "ogb_sparse_triangle_edge_state_gps9",
+  "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "seed42_reference": {
+    "comparator_validation_gap_mae_eV": 0.13790177369117737,
+    "candidate_validation_gap_mae_eV": 0.13559719920158386
+  },
+  "contract": {
+    "fresh_paired_training": true,
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "gap",
+    "parameter_budget": 5200000,
+    "search_budget_s": 39600,
+    "atomic_checkpoints": true,
+    "rng_state_resumable": true
+  },
+  "gpu_task_count": 1,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "full_data_authorized": false
+}

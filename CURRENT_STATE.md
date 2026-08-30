@@ -40,10 +40,10 @@ is owned by
 The seed-42 bottom-fusion screen established that deterministic ETKDG geometry
 can help when injected into the accepted topology model inside every block.
 Distance-only, angle-only, and their combination all passed the strict
-single-seed arithmetic gate; distance plus angle was the clear winner. The
-next server-side question is whether only that combined candidate reproduces
-against fresh paired seeds 43/44. No confirmation task has been submitted. The
-accepted seed-42 decision is
+single-seed arithmetic gate; distance plus angle was the clear winner. Kaggle2
+is now running one sequential task that pairs only that combined candidate
+against freshly trained pure-2D comparators at seeds 43/44. The accepted
+seed-42 decision is
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
 
 ## Prior Architecture Evidence
@@ -99,6 +99,10 @@ must not be represented as this new conservative head.
   artifact acceptance. The combined distance-plus-angle candidate is the sole
   seed-42 geometry winner. Its decision is
   `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-geometry-confirm-s43-s44`, version 1,
+  is running the paired seeds 43/44 confirmation. It is the only GPU task
+  submitted for this step; its immutable launch record is
+  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/launch_manifest.json`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

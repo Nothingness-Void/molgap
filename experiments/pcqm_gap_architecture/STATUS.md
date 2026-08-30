@@ -139,5 +139,12 @@
 - No seed-43/44 confirmation, full-data training, official validation/test-dev,
   desktop submission, or molecular-research-server task was submitted by the
   seed-42 geometry screen.
+- The separately contracted paired confirmation was submitted once as Kaggle2
+  kernel `kaseichou/molgap-pcqm-geometry-confirm-s43-s44`, version 1. Kaggle
+  normalized the requested metadata slug by inserting the separator between
+  `s43` and `s44`; the runner and scientific contract were unchanged. The task
+  was `RUNNING` at the 2026-08-30 17:52 JST launch check. Its exact package,
+  cache, seed, and hash identities are in
+  `results/geometry_bottom_fusion_multiseed/launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
