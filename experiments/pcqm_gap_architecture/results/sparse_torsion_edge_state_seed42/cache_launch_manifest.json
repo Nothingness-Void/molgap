@@ -6,6 +6,7 @@
     "actual_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42",
     "version": 1,
     "status_after_push": "KernelWorkerStatus.RUNNING",
+    "terminal_status": "KernelWorkerStatus.COMPLETE",
     "slug_normalized_by_kaggle": true,
     "gpu_enabled": false
   },
@@ -36,10 +37,25 @@
     "official_validation_role_read": false,
     "test_dev_role_read": false
   },
+  "result": {
+    "cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173",
+    "dataset_mirror": "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+    "dataset_content_sha256": "363565123e9133c36ba980a8d1fcf4d3a11882eaa5d6d0f1c031d5c112b65627",
+    "dataset_file_count": 26,
+    "dataset_bytes": 1234866207,
+    "train_torsion_paths": 4627762,
+    "validation_torsion_paths": 462972,
+    "train_valid_torsion_paths": 4608590,
+    "validation_valid_torsion_paths": 461492,
+    "degenerate_path_count": 20652,
+    "elapsed_s": 276.987260086,
+    "accepted_at": "2026-08-31T18:59:29+09:00"
+  },
   "retrieval": {
     "independently_retrievable": true,
     "acceptance_script": "experiments/pcqm_gap_architecture/accept_pcqm100k_torsion_cache.py",
-    "planned_record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_cache_s42_v1\\pcqm_gap100k_sparse_torsion_cache_s42"
+    "record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_cache_s42_v1\\pcqm_gap100k_sparse_torsion_cache_s42\\pcqm_gap100k_torsion_cache_s42",
+    "acceptance_file": "experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_acceptance.json"
   },
   "molecular_research_server_accessed": false
 }
