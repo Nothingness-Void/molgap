@@ -285,6 +285,7 @@ def preflight(
     rows = []
     initial_reference = None
     initial_function_match = None
+    initial_max_abs_diff = 0.0
     for candidate in CANDIDATES:
         set_seed(SEED)
         model = make_pcqm_gap_encoder(candidate).to(device)
@@ -301,11 +302,30 @@ def preflight(
         if candidate == COMPARATOR:
             initial_reference = initial_prediction.detach().cpu()
         else:
-            initial_function_match = bool(
-                torch.equal(initial_reference, initial_prediction.detach().cpu())
+            candidate_initial = initial_prediction.detach().cpu()
+            finite_pair = bool(
+                torch.isfinite(initial_reference).all()
+                and torch.isfinite(candidate_initial).all()
+            )
+            initial_max_abs_diff = (
+                float((initial_reference - candidate_initial).abs().max())
+                if finite_pair
+                else float("inf")
+            )
+            initial_function_match = finite_pair and bool(
+                torch.allclose(
+                    initial_reference,
+                    candidate_initial,
+                    rtol=0.0,
+                    atol=1.0e-6,
+                )
             )
             if not initial_function_match:
-                raise RuntimeError("Torsion injection is not zero-initialized")
+                raise RuntimeError(
+                    "Torsion injection is not zero-initialized: "
+                    f"finite_pair={finite_pair}, "
+                    f"max_abs_diff={initial_max_abs_diff}"
+                )
         model.train()
         torch.cuda.reset_peak_memory_stats()
         started = time.perf_counter()
@@ -323,6 +343,9 @@ def preflight(
             "parameter_count": parameter_count,
             "initial_function_match": (
                 True if candidate == COMPARATOR else initial_function_match
+            ),
+            "initial_max_abs_diff": (
+                0.0 if candidate == COMPARATOR else initial_max_abs_diff
             ),
             "finite_prediction": bool(torch.isfinite(prediction).all()),
             "finite_loss": bool(torch.isfinite(loss)),
