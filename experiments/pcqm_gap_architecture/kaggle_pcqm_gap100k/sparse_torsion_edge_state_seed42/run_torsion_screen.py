@@ -137,6 +137,8 @@ def source_python_root() -> Path:
 def source_commit_for(source_root: Path) -> str:
     marker = source_root.parent / "PCQM_GAP100K_SOURCE_COMMIT.txt"
     if not marker.is_file():
+        marker = source_root / "PCQM_GAP100K_SOURCE_COMMIT.txt"
+    if not marker.is_file():
         raise RuntimeError(f"Torsion source marker missing beside {source_root}")
     source_commit = marker.read_text(encoding="utf-8").strip()
     if len(source_commit) != 40:

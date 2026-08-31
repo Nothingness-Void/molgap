@@ -48,9 +48,21 @@ def sha256_file(path: Path) -> str:
 
 def source_root() -> Path:
     matches = list(Path("/kaggle/input").rglob("src/molgap/pcqm_torsion.py"))
-    if len(matches) != 1:
-        raise RuntimeError(f"Expected one torsion source tree, found {matches}")
-    return matches[0].parents[1]
+    if len(matches) == 1:
+        return matches[0].parents[1]
+    archives = list(Path("/kaggle/input").rglob("src.zip"))
+    if len(archives) != 1:
+        raise RuntimeError(
+            f"Expected one torsion source tree/archive, found {matches}/{archives}"
+        )
+    extracted = Path("/kaggle/working/_molgap_torsion_cache_source")
+    import shutil
+
+    shutil.unpack_archive(archives[0], extracted)
+    modules = list(extracted.rglob("molgap/pcqm_torsion.py"))
+    if len(modules) != 1:
+        raise RuntimeError(f"Unexpected torsion source archive layout: {modules}")
+    return modules[0].parents[1]
 
 
 def install_dependencies() -> None:
@@ -136,6 +148,8 @@ def main() -> None:
         from molgap.pcqm_torsion import with_torsion_cache
 
         source_marker = source_python_root.parent / "PCQM_GAP100K_SOURCE_COMMIT.txt"
+        if not source_marker.is_file():
+            source_marker = source_python_root / "PCQM_GAP100K_SOURCE_COMMIT.txt"
         if not source_marker.is_file():
             raise RuntimeError(f"Torsion source marker missing beside {source_python_root}")
         source_commit = source_marker.read_text(encoding="utf-8").strip()
