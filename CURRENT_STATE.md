@@ -111,8 +111,9 @@ must not be represented as this new conservative head.
   question. The separate Kaggle1 CPU torsion derivation completed and passed
   no-model acceptance; its cache decision is
   `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-  The one paired seed-42 torsion GPU task is running under
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1; its launch
+  Version 1 of the paired seed-42 torsion GPU task stopped before training on
+  an implementation preflight check; the single same-contract retry is running
+  under `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 2. Its launch
   identity is
   `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
 - All accepted 100K architecture outputs have local manifests, metrics,

@@ -161,9 +161,11 @@
   recorded in
   `results/sparse_torsion_edge_state_seed42/cache_decision.md`.
 - The one strict paired seed-42 GPU screen is running on Kaggle1 as
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1, with P100 and a
-  23,400-second bound. Its comparator/candidate order, accepted cache hash,
-  and no-sealed-role flags are recorded in
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 2, with P100 and a
+  23,400-second bound. Version 1 stopped before training on an implementation
+  preflight identity check; version 2 is the single unchanged-contract retry.
+  Its comparator/candidate order, accepted cache hash, and no-sealed-role flags
+  are recorded in
   `results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.

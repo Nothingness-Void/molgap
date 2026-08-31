@@ -1,11 +1,11 @@
 {
   "format": "molgap-pcqm-gap100k-sparse-torsion-seed42-launch-v1",
   "submitted_at": "2026-08-31T19:00:47+09:00",
-  "launch_commit": "e05a9678380ec0735c03d3f1dfd2568dc4575a8f",
+  "launch_commit": "3de4d7c0eae476d862e5008ed6c2e08024bcdf60",
   "kernel": {
     "requested_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
     "actual_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
-    "version": 1,
+    "version": 2,
     "status_after_push": "KernelWorkerStatus.RUNNING",
     "accelerator": "P100",
     "timeout_s": 23400,
@@ -18,8 +18,19 @@
     "gpu_or_kernel_statuses_queued_or_running": false
   },
   "package": {
-    "runner_sha256": "e0e8475b27a75b2c372499109bea31de4f44e1fee329309e436806fe5c16a241",
+    "runner_sha256": "4905aedf6faa37f62b33cebd395f3c29c6539b34da23483a4ef5b28e94d45dce",
     "submitted_metadata_sha256": "1c2ce7808fc72161345930e8ec48cf8e7f833b467ea48c03c0fc6383f3bfb57a"
+  },
+  "retry": {
+    "prior_version": 1,
+    "prior_status": "KernelWorkerStatus.ERROR",
+    "prior_completed_runs": [],
+    "prior_failure_type": "RuntimeError",
+    "prior_failure_message": "Torsion injection is not zero-initialized",
+    "prior_failure_record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_seed42_v1\\pcqm_gap100k_sparse_torsion_seed42",
+    "retry_count": 1,
+    "scientific_contract_unchanged": true,
+    "implementation_fix": "finite numerical baseline identity check with recorded maximum absolute difference"
   },
   "source": {
     "commit": "3d4cdb73ccd4d01c24e84ac4e4538d6fee7722cb",
