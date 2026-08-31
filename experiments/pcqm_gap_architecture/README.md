@@ -35,6 +35,9 @@ Recent 2024--2026 molecular architectures, their input and compute assumptions,
 and the mechanisms that remain transferable under this project's budget are
 indexed in
 [`recent_literature_audit_2024_2026.md`](recent_literature_audit_2024_2026.md).
+Their task-specific widths, heads, optimizer settings, training horizons, and
+the resulting no-grid local parameter priors are recorded separately in
+[`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 That audit is research evidence, not an authorization to interrupt the active
 geometry confirmation or to submit concurrent GPU work.
 

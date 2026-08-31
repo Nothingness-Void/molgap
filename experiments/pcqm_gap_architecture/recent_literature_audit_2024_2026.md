@@ -5,6 +5,10 @@ research. It does not own live job state, project priorities, or experiment
 metrics. Those remain in `CURRENT_STATE.md`, `ROADMAP.md`, and the individual
 decision records linked from this experiment.
 
+Exact published widths, heads, optimizers, schedules, compute, and the
+scale-normalized local defaults derived from them are kept in the companion
+[`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
+
 ## Scope and comparability contract
 
 The audit covers primary papers published or accepted from 2024 through August
