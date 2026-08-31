@@ -15,6 +15,7 @@ from pathlib import Path
 
 OUT = Path("/kaggle/working/pcqm_gap100k_sparse_torsion_edge_state_s42")
 PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
+SEARCH_STARTED_MONOTONIC = "MOLGAP_TORSION_SEARCH_STARTED_MONOTONIC"
 EXPECTED_GEOMETRY_SOURCE_COMMIT = "e083bee19ee6a13cd9f72e91229752a9d5f56389"
 EXPECTED_PARENT_GRAPH_SHA256 = (
     "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
@@ -66,6 +67,14 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def search_started() -> float:
+    value = os.environ.get(SEARCH_STARTED_MONOTONIC)
+    if value is None:
+        value = f"{time.monotonic():.9f}"
+        os.environ[SEARCH_STARTED_MONOTONIC] = value
+    return float(value)
 
 
 def tensor_sha256(value) -> str:
@@ -660,7 +669,7 @@ def paired_comparison(run: dict) -> tuple[list[dict], bool]:
 
 
 def main() -> None:
-    task_started = time.perf_counter()
+    task_started = search_started()
     OUT.mkdir(parents=True, exist_ok=True)
     completed_runs = []
     try:
