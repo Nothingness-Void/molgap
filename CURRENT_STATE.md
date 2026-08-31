@@ -108,11 +108,13 @@ must not be represented as this new conservative head.
   `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
 - The accepted `ogb_distance_angle_triangle_edge_state_gps9` geometry result is
   the frozen 100K comparator for the one authorized seed-42 sparse torsion
-  question. No torsion cache or GPU task has been accepted yet. The separate
-  Kaggle1 CPU torsion derivation is running under
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42`, version 1; its launch
+  question. The separate Kaggle1 CPU torsion derivation completed and passed
+  no-model acceptance; its cache decision is
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_decision.md`.
+  The one paired seed-42 torsion GPU task is running under
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1; its launch
   identity is
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_launch_manifest.json`.
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

@@ -155,9 +155,15 @@
   identity must be accepted before any GPU submission; no torsion GPU task has
   been submitted.
 - The separate CPU torsion derivation is running on Kaggle1 as
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42`, version 1. Its
-  account1 input mirrors, canonical slug, source marker, and retrieval contract
-  are recorded in
-  `results/sparse_torsion_edge_state_seed42/cache_launch_manifest.json`.
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42`, version 1. It
+  completed and passed no-model acceptance; its account1 input mirrors,
+  canonical slug, source marker, retrieval contract, and accepted output are
+  recorded in
+  `results/sparse_torsion_edge_state_seed42/cache_decision.md`.
+- The one strict paired seed-42 GPU screen is running on Kaggle1 as
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1, with P100 and a
+  23,400-second bound. Its comparator/candidate order, accepted cache hash,
+  and no-sealed-role flags are recorded in
+  `results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
