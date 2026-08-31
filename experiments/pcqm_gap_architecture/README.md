@@ -38,6 +38,9 @@ indexed in
 Their task-specific widths, heads, optimizer settings, training horizons, and
 the resulting no-grid local parameter priors are recorded separately in
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
+The auditable count, unique numbering, and reading depth for all 50 primary
+papers are owned by
+[`recent_literature_coverage_ledger_50.md`](recent_literature_coverage_ledger_50.md).
 That audit is research evidence, not an authorization to interrupt the active
 geometry confirmation or to submit concurrent GPU work.
 

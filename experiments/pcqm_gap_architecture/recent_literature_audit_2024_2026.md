@@ -8,6 +8,10 @@ decision records linked from this experiment.
 Exact published widths, heads, optimizers, schedules, compute, and the
 scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
+The exact unique-paper count and per-paper reading depth are owned by the
+[`50-paper coverage ledger`](recent_literature_coverage_ledger_50.md). The
+milestone contains 50 primary papers: 15 configuration-level reads and 35
+mechanism-level reads.
 
 ## Scope and comparability contract
 
@@ -121,6 +125,97 @@ better in the present screen.
 | Association-pattern plug-ins | [Association Pattern-enhanced MRL, AAAI 2025](https://ojs.aaai.org/index.php/AAAI/article/view/33935) | Property-specific subgraph pattern library | Pattern mining can leak task-specific validation choices and is less clean than deterministic ring or torsion states. |
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
+
+## Extended evidence from papers 27--50
+
+The first review pass established the bond/higher-order queue. Twenty-four
+additional primary papers were then read to test whether a newer mechanism
+should displace it. Full per-paper notes and source links are in the
+[coverage ledger](recent_literature_coverage_ledger_50.md); this section owns
+only the cross-paper conclusions.
+
+### Benchmark and low-cost function design
+
+- The [strong GINE reassessment](https://proceedings.mlr.press/v267/bechler-speicher25a.html)
+  shows that a long, carefully optimized conventional GNN can erase apparent
+  architecture gains. Local results therefore mean **best under the frozen
+  budget**, not asymptotic superiority.
+- [KA-GNN](https://www.nature.com/articles/s42256-025-01087-7) suggests that
+  Fourier-KAN transformations can improve parameter efficiency in embedding,
+  message passing and readout. Because its graph also adds non-covalent
+  proximity edges, the first fair transplant would replace one MLP only; it is
+  not evidence to rewrite the whole encoder.
+- [Orb](https://arxiv.org/abs/2410.22570) and
+  [Orb-v3](https://arxiv.org/abs/2504.06231) show that a fast non-equivariant,
+  non-conservative model can remain competitive in atomistic prediction. This
+  rejects the assumption that more symmetry machinery is automatically the
+  best use of the 12-hour budget.
+
+### Efficient equivariant and Cartesian representations
+
+- [EquiformerV2](https://proceedings.iclr.cc/paper_files/paper/2024/hash/ab12e8f3443c1a789f595b18d8c597b4-Abstract-Conference.html),
+  [SO3krates](https://www.nature.com/articles/s41467-024-50620-6),
+  [E2Former](https://proceedings.neurips.cc/paper_files/paper/2025/hash/21f7b745f73ce0d1f9bcea7f40b1388e-Abstract-Conference.html),
+  and [FreeCG](https://proceedings.iclr.cc/paper_files/paper/2025/hash/10e400a587ff6925e4e26333b419ff55-Abstract-Conference.html)
+  reduce different bottlenecks in tensor attention. Their exact models still
+  target force fields or cost far more than the bounded PCQM screen. They
+  justify optimizing a vector path only after a width-16 order-1 pilot wins.
+- [ViSNet](https://arxiv.org/abs/2210.16518) remains the clearest precursor for
+  direct scalar--vector interaction. [HotPP](https://www.nature.com/articles/s41467-024-51886-6),
+  [TACE](https://arxiv.org/abs/2509.14961), and
+  [CACE](https://www.nature.com/articles/s41524-024-01332-4) show a second route
+  based on Cartesian tensor or body-order bases. CACE is the only one compact
+  enough to motivate a later invariant high-order basis screen; none displaces
+  the sparse torsion question.
+- [SevenNet](https://arxiv.org/abs/2402.03789) addresses parallel molecular
+  dynamics, while [eSEN](https://icml.cc/virtual/2025/poster/45302) addresses
+  energy conservation and downstream physical validity. These are important
+  deployment/evaluation lessons but do not solve direct scalar Gap selection.
+
+### Chemistry hierarchy and explicit four-body information
+
+- The [four-body hybrid Transformer Graph](https://www.nature.com/articles/s41524-024-01472-7)
+  independently supports explicit four-body interaction, although its evidence
+  is from inorganic materials. It strengthens the torsion hypothesis without
+  providing a directly transferable molecular recipe.
+- [Fragment-Biases for Molecular GNNs](https://icml.cc/virtual/2024/poster/32952)
+  shows that explicit fragment inductive bias can generalize better than generic
+  higher-order expressivity. This raises deterministic ring/conjugation state,
+  but not learned fragment vocabularies, in confidence.
+- [TopNets](https://icml.cc/virtual/2024/poster/34586) combines persistence,
+  topology and equivariance. It is scientifically interesting but changes too
+  many mechanisms at once for a first bounded PCQM attribution test.
+
+### Pretraining, multimodal transfer and geometry teachers
+
+- [MMFRL](https://www.nature.com/articles/s42004-025-01586-z),
+  [functional-group masking](https://www.nature.com/articles/s44387-025-00029-3),
+  and [UniGEM](https://proceedings.iclr.cc/paper_files/paper/2025/hash/223935759d7743c85318639b560882a1-Abstract-Conference.html)
+  offer relational, chemical-language and generative pretraining signals. They
+  belong to a later teacher/pretraining study and cannot certify architecture.
+- [Fractional Denoising](https://proceedings.mlr.press/v202/feng23c.html) and
+  [Sliced Denoising](https://openreview.net/pdf?id=liKkG1zcWq) provide the most
+  reproducible geometry-pretraining recipes. SliDe's use of bond, angle and
+  torsion perturbations also reinforces the current higher-order state design.
+- [MACE-OFF23](https://pubs.acs.org/doi/10.1021/jacs.4c07099) and
+  [AIMNet2](https://pubs.rsc.org/en/content/articlepdf/2025/sc/d4sc08572h)
+  are more valuable here as conformer optimizers or geometry teachers than as
+  direct Gap encoders. They provide a credible way to improve ETKDG-derived
+  geometry later without reintroducing the rejected dual-SchNet late fusion.
+
+### Decision after 50 papers
+
+No newly read paper justifies interrupting the active matched experiment or
+opening a concurrent GPU task. The random-initialized architecture order remains:
+
+1. sparse torsion state;
+2. separately normalized sparse atom--bond attention;
+3. deterministic ring/conjugation hierarchy;
+4. conditional width-16 scalar--vector repair.
+
+The new literature creates two explicitly separate later questions: CACE-like
+compact invariant body-order features, and SliDe/MACE-OFF/AIMNet2 geometry
+teachers. Neither may be called an architecture gain without its own protocol.
 
 ## Prioritized experiment queue
 
