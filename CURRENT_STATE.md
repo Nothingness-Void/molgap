@@ -111,10 +111,13 @@ must not be represented as this new conservative head.
   question. The separate Kaggle1 CPU torsion derivation completed and passed
   no-model acceptance; its cache decision is
   `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-  The paired seed-42 torsion GPU task stopped before training in both version 1
-  and its single same-contract retry. It has no scientific comparison result;
-  the terminal implementation-blocked disposition is
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
+  The paired seed-42 torsion GPU task stopped before training in versions 1 and
+  2 because its preflight incorrectly treated two independent CUDA sparse-
+  reduction forwards as an exact zero-injection proof. A user-directed manual
+  audit replaced that invalid test with exact shared-backbone and zero-
+  projection parameter checks. Kaggle1 version 3 is running under the unchanged
+  scientific contract; its repair record is
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

@@ -155,12 +155,15 @@
   derivation completed and passed no-model acceptance; its input mirrors,
   source/cache identities, and accepted output are recorded in
   `results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-- The one strict paired seed-42 GPU screen was submitted on Kaggle1 as
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1, with one
-  same-contract retry as version 2. Both stopped in implementation preflight
-  before any epoch; no comparator/candidate metrics or scientific result
-  exists. The terminal evidence and no-third-submission disposition are in
-  `results/sparse_torsion_edge_state_seed42/gpu_decision.md` and
-  `results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
+- The strict paired seed-42 GPU screen stopped before any epoch in versions 1
+  and 2. Manual inspection found that the preflight compared independent CUDA
+  forwards through nondeterministic sparse `index_add_` reductions instead of
+  verifying the actual zero-initialized injection parameters. Under explicit
+  user authority, commit `9a16122` replaced that invalid test with exact CPU
+  shared-backbone equality and zero-projection checks while preserving every
+  scientific field. Kaggle1 version 3 is running; the audit and immutable
+  launch identity are in
+  `results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md` and
+  `results/sparse_torsion_edge_state_seed42/gpu_v3_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
