@@ -127,16 +127,18 @@ experiment unless the project objective changes.
 
 ## Conditional Queue
 
-| Task | Trigger |
-|---|---|
+| Task | Trigger | Bounded action |
+|---|---|---|
 | Recent-architecture sparse torsion screen | The active geometry multiseed task reaches an accepted terminal decision and continued 100K discovery is chosen before the A100 gate | Reuse the best accepted comparator and the frozen 100K/10K roles; test only the sparse torsion-state mechanism from `experiments/pcqm_gap_architecture/recent_literature_audit_2024_2026.md`, seed 42 first |
 | Sparse atom--bond dual-stream attention | The sparse torsion mechanism scientifically fails | Test segmented real-bond attention and symmetric atom--bond exchange without dense pair matrices, new geometry, or a second encoder |
 | Ring/conjugation hierarchy | Both higher-order geometry and sparse bond-attention routes scientifically fail | Test deterministic ring-system tokens as one new information flow, without fingerprint or prediction fusion |
-| PairGPS2D sealed-test disposition | Explicit authorization to reopen the independent branch after its validation-only decision; arithmetic equivalence must be established before using benchmark-selected TF32 for an accuracy claim |
-| Experimental solid-state Delta head | A specific experimental target is requested |
-| Extend the supported element set | Rejected-use analysis justifies refetch and retraining |
-| Conformer ensemble or NNP geometry | Residual evidence identifies geometry as the limiting factor |
-| Paper figures and write-up | An academic delivery is requested |
+| Compact Cartesian invariant body-order basis | Torsion, bond-stream, and ring mechanisms all fail and a parameter/throughput preflight fits the same ceiling | Isolate one CACE-like invariant basis; do not add equivariant tensors, pretraining, or a new optimizer in the same screen |
+| PairGPS2D sealed-test disposition | Explicit authorization reopens the independent branch after its validation-only decision | Establish arithmetic equivalence before using benchmark-selected TF32 for an accuracy claim |
+| Experimental solid-state Delta head | A specific experimental target is requested | Open a separate target contract; do not alter Track B |
+| Extend the supported element set | Rejected-use analysis justifies refetch and retraining | Version the new data and registry separately |
+| Conformer ensemble or NNP geometry | Residual evidence identifies geometry as the limiting factor | Compare an accepted ETKDG input against one frozen MACE-OFF23/AIMNet2 geometry source; label it an input/teacher experiment, not an architecture gain |
+| Geometry denoising teacher | A randomly initialized architecture has already been selected and teacher compute receives a separate budget | Start from the Frad/SliDe configuration evidence; keep official validation and test-dev sealed |
+| Paper figures and write-up | An academic delivery is requested | Derive figures from accepted decision records only |
 
 Completed work is indexed, without duplicated metrics, in
 `experiments/README.md`, `experiments/_closed/README.md`, and
