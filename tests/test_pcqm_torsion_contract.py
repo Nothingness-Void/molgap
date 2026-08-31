@@ -60,4 +60,8 @@ def test_kernel_metadata_separates_cpu_cache_and_gpu_task():
     assert gpu["enable_gpu"] == "true"
     assert cache["id"].startswith("nothingnessvoid/")
     assert gpu["id"].startswith("nothingnessvoid/")
-    assert gpu["kernel_sources"] == ["nothingnessvoid/molgap-pcqm-torsion-cache-s42"]
+    assert gpu["kernel_sources"] == []
+    assert gpu["dataset_sources"] == [
+        "nothingnessvoid/molgap-pcqm-torsion-source-3d4cdb73",
+        "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+    ]
