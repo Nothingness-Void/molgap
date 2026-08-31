@@ -1,0 +1,38 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-multiseed-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "paired_comparison": [
+    {
+      "seed": 42,
+      "comparator_validation_gap_mae_eV": 0.13790177369117737,
+      "candidate_validation_gap_mae_eV": 0.13559719920158386,
+      "candidate_minus_comparator_eV": -0.0023045744895935083
+    },
+    {
+      "seed": 43,
+      "comparator_validation_gap_mae_eV": 0.1386183649301529,
+      "candidate_validation_gap_mae_eV": 0.13639135658740997,
+      "candidate_minus_comparator_eV": -0.00222700834274292
+    },
+    {
+      "seed": 44,
+      "comparator_validation_gap_mae_eV": 0.1376376748085022,
+      "candidate_validation_gap_mae_eV": 0.13758981227874756,
+      "candidate_minus_comparator_eV": -4.786252975463867e-05
+    },
+    {
+      "seed": "mean",
+      "comparator_validation_gap_mae_eV": 0.13805260447661083,
+      "candidate_validation_gap_mae_eV": 0.13652612268924713,
+      "candidate_minus_comparator_eV": -0.0015264817873636982
+    }
+  ],
+  "multiseed_gate_passed": true,
+  "selected_candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

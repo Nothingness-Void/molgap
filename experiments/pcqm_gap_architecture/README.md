@@ -41,8 +41,9 @@ the resulting no-grid local parameter priors are recorded separately in
 The auditable count, unique numbering, and reading depth for all 50 primary
 papers are owned by
 [`recent_literature_coverage_ledger_50.md`](recent_literature_coverage_ledger_50.md).
-That audit is research evidence, not an authorization to interrupt the active
-geometry confirmation or to submit concurrent GPU work.
+That audit is research evidence; the geometry confirmation has now completed,
+and its only authorized follow-up is the separately frozen torsion protocol
+below.
 
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
@@ -52,6 +53,16 @@ and infrastructure-repair evidence are frozen in
 [`results/geometry_bottom_fusion_seed42/decision.md`](results/geometry_bottom_fusion_seed42/decision.md).
 Its fresh paired seeds 43/44 confirmation contract is
 [`geometry_bottom_fusion_multiseed_protocol.md`](geometry_bottom_fusion_multiseed_protocol.md).
+That task completed and passed its strict gate: distance-plus-angle improved
+the comparator at seeds 42, 43, and 44 and on their mean, with a marginal
+seed-44 gain. Its decision is
+[`results/geometry_bottom_fusion_multiseed/decision.md`](results/geometry_bottom_fusion_multiseed/decision.md).
+
+The one authorized follow-up is the seed-42 sparse torsion-state question,
+defined in
+[`sparse_torsion_edge_state_seed42_protocol.md`](sparse_torsion_edge_state_seed42_protocol.md).
+It uses the accepted distance-plus-angle model as its frozen 100K comparator
+and does not open additional seeds unless its own strict seed-42 gate passes.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

@@ -143,8 +143,16 @@
   kernel `kaseichou/molgap-pcqm-geometry-confirm-s43-s44`, version 1. Kaggle
   normalized the requested metadata slug by inserting the separator between
   `s43` and `s44`; the runner and scientific contract were unchanged. The task
-  was `RUNNING` at the 2026-08-30 17:52 JST launch check. Its exact package,
-  cache, seed, and hash identities are in
-  `results/geometry_bottom_fusion_multiseed/launch_manifest.json`.
+  reached `COMPLETE`. Its downloaded immutable output passed no-inference
+  acceptance: distance-plus-angle improved at seeds 42, 43, and 44 and on the
+  mean, while seed 44 was marginal. Exact package, cache, seed, metric, and
+  hash identities are in
+  `results/geometry_bottom_fusion_multiseed/launch_manifest.json`,
+  `results/geometry_bottom_fusion_multiseed/summary.json`, and
+  `results/geometry_bottom_fusion_multiseed/decision.md`.
+- The accepted distance-plus-angle candidate is the frozen 100K comparator for
+  the one seed-42 sparse torsion-state task. Its protocol and source/cache
+  identity must be accepted before any GPU submission; no torsion GPU task has
+  been submitted.
 
 Task order remains authoritative in `ROADMAP.md`.

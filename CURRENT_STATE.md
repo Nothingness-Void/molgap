@@ -40,11 +40,13 @@ is owned by
 The seed-42 bottom-fusion screen established that deterministic ETKDG geometry
 can help when injected into the accepted topology model inside every block.
 Distance-only, angle-only, and their combination all passed the strict
-single-seed arithmetic gate; distance plus angle was the clear winner. Kaggle2
-is now running one sequential task that pairs only that combined candidate
-against freshly trained pure-2D comparators at seeds 43/44. The accepted
-seed-42 decision is
-`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
+single-seed arithmetic gate; distance plus angle was the clear winner. Its
+fresh paired seeds 43/44 confirmation completed and passed the no-inference
+acceptance: the candidate improved at both fresh seeds and in the three-seed
+mean, although seed 44 was marginal. The accepted distance-plus-angle model
+is frozen as the 100K comparator for one seed-42 sparse torsion-state question.
+The paired decision is
+`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -100,9 +102,13 @@ must not be represented as this new conservative head.
   seed-42 geometry winner. Its decision is
   `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-geometry-confirm-s43-s44`, version 1,
-  is running the paired seeds 43/44 confirmation. It is the only GPU task
-  submitted for this step; its immutable launch record is
-  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/launch_manifest.json`.
+  completed the paired seeds 43/44 confirmation. Its downloaded immutable
+  output passed no-inference acceptance; exact metrics and the seed-44
+  marginality caveat are in
+  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
+- The accepted `ogb_distance_angle_triangle_edge_state_gps9` geometry result is
+  the frozen 100K comparator for the one authorized seed-42 sparse torsion
+  question. No torsion cache or GPU task has been accepted yet.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one

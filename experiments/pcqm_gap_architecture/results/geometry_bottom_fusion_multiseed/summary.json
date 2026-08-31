@@ -1,0 +1,20 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-multiseed-summary-v1",
+  "accepted": true,
+  "selected_candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "comparator": "ogb_sparse_triangle_edge_state_gps9",
+  "paired_seeds": [42, 43, 44],
+  "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "geometry_valid_fraction": 0.9971363636363636,
+  "mean_comparator_validation_gap_mae_eV": 0.13805260447661083,
+  "mean_candidate_validation_gap_mae_eV": 0.13652612268924713,
+  "mean_candidate_minus_comparator_eV": -0.0015264817873636982,
+  "all_seed_directions_improved": true,
+  "seed44_gain_is_marginal": true,
+  "seed44_candidate_minus_comparator_eV": -4.786252975463867e-05,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

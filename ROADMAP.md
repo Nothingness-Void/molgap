@@ -16,7 +16,7 @@ ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-GEOMETRY-CONFIRM | Freeze a paired seed-43/44 contract for only the seed-42 distance-plus-angle winner, then train it against fresh matched comparators | The same candidate improves every paired seed and their mean, or geometry closes | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-TORSION-SEED42 | Build and accept a derived sparse torsion cache, then train one fresh paired seed-42 distance-plus-angle comparator and torsion candidate | The torsion candidate strictly improves its fresh comparator, or the torsion mechanism closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -39,9 +39,24 @@ The paired multiseed contract completed and selected Sparse Triangle as the
 accepted pure-2D comparator. Its decision is
 `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md`.
 The accepted geometry cache and three-candidate seed-42 screen selected only
-distance-plus-angle bottom fusion for paired confirmation. The exact decision
-is
+distance-plus-angle bottom fusion for paired confirmation. Its paired seeds
+43/44 task completed the strict gate: all three paired deltas are negative and
+the mean improved, but seed 44 is marginal. The exact decision is
+`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
+The resulting distance-plus-angle model is the frozen 100K comparator for the
+single active torsion question below. The exact seed-42 geometry decision is
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
+
+The active torsion question adds only a persistent 16-wide state on
+non-backtracking bonded paths `i-j-k-l`, fixed periodic features
+`[sin(phi), cos(phi), sin(2phi), cos(2phi)]`, one shared gated update cell, and
+sparse exchange with the three bonds and two adjacent wedges. It reuses the
+accepted ETKDGv3+MMFF94s single-conformer geometry, the frozen 100K/10K roles,
+and the unchanged 192/64/16 GPS9, direct Gap, FP32, batch-48, AdamW, and
+40-epoch/patience-8 contract. The CPU torsion cache must pass no-model
+acceptance before one six-and-a-half-hour Kaggle1 paired GPU task. The fresh
+distance-plus-angle comparator is trained first under the same seed-42 data
+order. No seed 43/44, full-data, official-role, or server work is included.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`
@@ -93,10 +108,11 @@ R9 is owned by
   `/lustre/home/users/sm2/chou/`.
 - Predict Gap directly. HOMO/LUMO auxiliary targets, residual targets,
   pretrained checkpoints, and prediction fusion are outside this screen.
-- The only authorized 3D screen is deterministic single-conformer
-  ETKDGv3/MMFF94s distance/angle injection inside Sparse Triangle blocks. An
-  independent SchNet, late fusion, residual correction, and conformer
-  ensembles remain closed.
+- The active geometry screen is deterministic single-conformer
+  ETKDGv3/MMFF94s distance/angle injection inside Sparse Triangle blocks. The
+  one authorized torsion question reuses that conformer and adds only its
+  sparse torsion state; an independent SchNet, late fusion, residual
+  correction, and conformer ensembles remain closed.
 - Continued discovery tests one materially new mechanism at a time. The three
   geometry candidates may share one task because they form one predeclared
   factorization of distance and angle information.
@@ -129,7 +145,7 @@ experiment unless the project objective changes.
 
 | Task | Trigger | Bounded action |
 |---|---|---|
-| Recent-architecture sparse torsion screen | The active geometry multiseed task reaches an accepted terminal decision and continued 100K discovery is chosen before the A100 gate | Reuse the best accepted comparator and the frozen 100K/10K roles; test only the sparse torsion-state mechanism from `experiments/pcqm_gap_architecture/recent_literature_audit_2024_2026.md`, seed 42 first |
+| Recent-architecture sparse torsion screen | Satisfied: the geometry multiseed task reached an accepted terminal decision and continued 100K discovery was chosen before the A100 gate | Its bounded seed-42 contract is the P0 task above; no additional torsion seeds are authorized by this row |
 | Sparse atom--bond dual-stream attention | The sparse torsion mechanism scientifically fails | Test segmented real-bond attention and symmetric atom--bond exchange without dense pair matrices, new geometry, or a second encoder |
 | Ring/conjugation hierarchy | Both higher-order geometry and sparse bond-attention routes scientifically fail | Test deterministic ring-system tokens as one new information flow, without fingerprint or prediction fusion |
 | Compact Cartesian invariant body-order basis | Torsion, bond-stream, and ring mechanisms all fail and a parameter/throughput preflight fits the same ceiling | Isolate one CACE-like invariant basis; do not add equivariant tensors, pretraining, or a new optimizer in the same screen |

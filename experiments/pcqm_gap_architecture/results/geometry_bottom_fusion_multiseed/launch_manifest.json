@@ -7,6 +7,7 @@
     "actual_ref": "kaseichou/molgap-pcqm-geometry-confirm-s43-s44",
     "version": 1,
     "status_after_push": "KernelWorkerStatus.RUNNING",
+    "terminal_status": "KernelWorkerStatus.COMPLETE",
     "slug_normalized_by_kaggle": true
   },
   "package": {
@@ -42,6 +43,14 @@
     "rng_state_resumable": true
   },
   "gpu_task_count": 1,
+  "retrieval": {
+    "record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_geometry_bottom_fusion_multiseed_v1\\pcqm_gap100k_geometry_bottom_fusion_multiseed",
+    "selection_file": "selection.json",
+    "preflight_file": "preflight.json",
+    "progress_file": "progress.json",
+    "acceptance_script": "experiments/pcqm_gap_architecture/accept_pcqm100k_geometry_multiseed.py",
+    "model_inference_executed_during_acceptance": false
+  },
   "official_validation_role_read": false,
   "test_dev_role_read": false,
   "molecular_research_server_accessed": false,
