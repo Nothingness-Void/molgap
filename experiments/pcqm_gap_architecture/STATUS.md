@@ -151,21 +151,16 @@
   `results/geometry_bottom_fusion_multiseed/summary.json`, and
   `results/geometry_bottom_fusion_multiseed/decision.md`.
 - The accepted distance-plus-angle candidate is the frozen 100K comparator for
-  the one seed-42 sparse torsion-state task. Its protocol and source/cache
-  identity must be accepted before any GPU submission; no torsion GPU task has
-  been submitted.
-- The separate CPU torsion derivation is running on Kaggle1 as
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42`, version 1. It
-  completed and passed no-model acceptance; its account1 input mirrors,
-  canonical slug, source marker, retrieval contract, and accepted output are
-  recorded in
+  the one seed-42 sparse torsion-state task. The separate Kaggle1 CPU torsion
+  derivation completed and passed no-model acceptance; its input mirrors,
+  source/cache identities, and accepted output are recorded in
   `results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-- The one strict paired seed-42 GPU screen is running on Kaggle1 as
-  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 2, with P100 and a
-  23,400-second bound. Version 1 stopped before training on an implementation
-  preflight identity check; version 2 is the single unchanged-contract retry.
-  Its comparator/candidate order, accepted cache hash, and no-sealed-role flags
-  are recorded in
+- The one strict paired seed-42 GPU screen was submitted on Kaggle1 as
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-s42`, version 1, with one
+  same-contract retry as version 2. Both stopped in implementation preflight
+  before any epoch; no comparator/candidate metrics or scientific result
+  exists. The terminal evidence and no-third-submission disposition are in
+  `results/sparse_torsion_edge_state_seed42/gpu_decision.md` and
   `results/sparse_torsion_edge_state_seed42/gpu_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.

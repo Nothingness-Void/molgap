@@ -1,0 +1,47 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-torsion-seed42-terminal-v1",
+  "decision_date": "2026-08-31",
+  "kernel": {
+    "ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+    "versions_attempted": [1, 2],
+    "accelerator": "P100",
+    "timeout_s": 23400
+  },
+  "status": "implementation_preflight_blocked",
+  "scientific_result_available": false,
+  "training_runs_completed": [],
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "attempts": [
+    {
+      "version": 1,
+      "status": "KernelWorkerStatus.ERROR",
+      "stage": "implementation_preflight",
+      "message": "Torsion injection is not zero-initialized",
+      "elapsed_s": 186.31554221399995,
+      "record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_seed42_v1\\pcqm_gap100k_sparse_torsion_seed42",
+      "evidence": {
+        "log_sha256": "5bf7921254d21ba313fe7c7df4eb341d3553fd7f03163420709fb01603357e5e",
+        "failure_json_sha256": "43252897cffae31aee3910f6f201ff667392849ffab63b9da066a7854d8a9cfb"
+      }
+    },
+    {
+      "version": 2,
+      "status": "KernelWorkerStatus.ERROR",
+      "stage": "implementation_preflight",
+      "message": "Torsion injection is not zero-initialized: finite_pair=True, max_abs_diff=0.0037622451782226562",
+      "max_abs_diff": 0.0037622451782226562,
+      "tolerance": 0.000001,
+      "elapsed_s": 185.96291941100003,
+      "record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_seed42_v2\\pcqm_gap100k_sparse_torsion_seed42",
+      "evidence": {
+        "log_sha256": "3523fb17ee8b92ad1e3e115e9d0fd0288344e206a5b4f4c41026232d33a87c73",
+        "failure_json_sha256": "867ebf87420ffa663a1ed7891c27d7873b0edae338e5881cf39a6f8806587208"
+      }
+    }
+  ],
+  "authorized_retry_exhausted": true,
+  "no_third_gpu_submission": true,
+  "frozen_comparator": "ogb_distance_angle_triangle_edge_state_gps9",
+  "accepted_torsion_cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173"
+}

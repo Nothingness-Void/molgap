@@ -11,6 +11,23 @@
     "timeout_s": 23400,
     "slug_normalized_by_kaggle": false
   },
+  "terminal": {
+    "observed_date": "2026-08-31",
+    "status": "KernelWorkerStatus.ERROR",
+    "stage": "implementation_preflight",
+    "training_runs_completed": [],
+    "scientific_comparison_available": false,
+    "model_inference_executed": false,
+    "failure_records": {
+      "version_1": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_seed42_v1\\pcqm_gap100k_sparse_torsion_seed42",
+      "version_2": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_seed42_v2\\pcqm_gap100k_sparse_torsion_seed42"
+    },
+    "version_1_failure": "Torsion injection is not zero-initialized",
+    "version_2_failure": "Torsion injection is not zero-initialized: finite_pair=True, max_abs_diff=0.0037622451782226562",
+    "authorized_retry_exhausted": true,
+    "no_third_gpu_submission": true,
+    "decision": "implementation_blocked_no_scientific_result"
+  },
   "pre_submit_resource_check": {
     "account": "nothingnessvoid",
     "kernels_checked": 75,
