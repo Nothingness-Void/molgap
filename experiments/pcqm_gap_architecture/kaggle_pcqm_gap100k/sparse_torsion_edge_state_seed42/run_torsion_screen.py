@@ -283,12 +283,10 @@ def preflight(
         iter(DataLoader(graphs["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))
     ).to(device)
     rows = []
-    initial_reference = None
-    initial_function_match = None
-    initial_max_abs_diff = 0.0
+    initial_reference_state = None
     for candidate in CANDIDATES:
         set_seed(SEED)
-        model = make_pcqm_gap_encoder(candidate).to(device)
+        model = make_pcqm_gap_encoder(candidate)
         parameter_count = sum(parameter.numel() for parameter in model.parameters())
         if parameter_count != EXPECTED_PARAMETER_COUNTS[candidate]:
             raise RuntimeError(
@@ -296,36 +294,52 @@ def preflight(
             )
         if parameter_count > PARAMETER_BUDGET:
             raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
+
+        # Prove the zero-injection contract from CPU parameters, not by comparing
+        # two independent CUDA forwards.  The model uses CUDA index_add_ for
+        # sparse wedge aggregation; atomic reduction order can make two otherwise
+        # identical forwards differ numerically after nine blocks.
+        state = model.state_dict()
+        shared_backbone_mismatches = []
+        torsion_nonzero_parameters = []
+        if candidate == COMPARATOR:
+            initial_reference_state = {
+                name: value.detach().clone() for name, value in state.items()
+            }
+            shared_backbone_parameters_match = True
+            torsion_injection_zero = True
+        else:
+            for name, reference in initial_reference_state.items():
+                value = state.get(name)
+                if (
+                    value is None
+                    or tuple(value.shape) != tuple(reference.shape)
+                    or not torch.equal(value.detach(), reference)
+                ):
+                    shared_backbone_mismatches.append(name)
+            shared_backbone_parameters_match = not shared_backbone_mismatches
+            for module_name in ("torsion_to_edge", "torsion_to_wedge"):
+                module = getattr(model, module_name)
+                for parameter_name, value in module.named_parameters():
+                    if torch.count_nonzero(value.detach()).item() != 0:
+                        torsion_nonzero_parameters.append(
+                            f"{module_name}.{parameter_name}"
+                        )
+            torsion_injection_zero = not torsion_nonzero_parameters
+            if not shared_backbone_parameters_match or not torsion_injection_zero:
+                raise RuntimeError(
+                    "Torsion initialization contract failed: "
+                    f"shared_backbone_mismatches={shared_backbone_mismatches}, "
+                    f"torsion_nonzero_parameters={torsion_nonzero_parameters}"
+                )
+
+        initial_function_match = (
+            shared_backbone_parameters_match and torsion_injection_zero
+        )
+        model = model.to(device)
         model.eval()
         with torch.no_grad():
             initial_prediction = forward(model, batch, candidate)
-        if candidate == COMPARATOR:
-            initial_reference = initial_prediction.detach().cpu()
-        else:
-            candidate_initial = initial_prediction.detach().cpu()
-            finite_pair = bool(
-                torch.isfinite(initial_reference).all()
-                and torch.isfinite(candidate_initial).all()
-            )
-            initial_max_abs_diff = (
-                float((initial_reference - candidate_initial).abs().max())
-                if finite_pair
-                else float("inf")
-            )
-            initial_function_match = finite_pair and bool(
-                torch.allclose(
-                    initial_reference,
-                    candidate_initial,
-                    rtol=0.0,
-                    atol=1.0e-6,
-                )
-            )
-            if not initial_function_match:
-                raise RuntimeError(
-                    "Torsion injection is not zero-initialized: "
-                    f"finite_pair={finite_pair}, "
-                    f"max_abs_diff={initial_max_abs_diff}"
-                )
         model.train()
         torch.cuda.reset_peak_memory_stats()
         started = time.perf_counter()
@@ -341,12 +355,11 @@ def preflight(
         row = {
             "candidate": candidate,
             "parameter_count": parameter_count,
-            "initial_function_match": (
-                True if candidate == COMPARATOR else initial_function_match
-            ),
-            "initial_max_abs_diff": (
-                0.0 if candidate == COMPARATOR else initial_max_abs_diff
-            ),
+            "initial_function_match": initial_function_match,
+            "shared_backbone_parameters_match": shared_backbone_parameters_match,
+            "shared_backbone_mismatches": shared_backbone_mismatches,
+            "torsion_injection_zero": torsion_injection_zero,
+            "torsion_nonzero_parameters": torsion_nonzero_parameters,
             "finite_prediction": bool(torch.isfinite(prediction).all()),
             "finite_loss": bool(torch.isfinite(loss)),
             "finite_gradients": bool(gradients)

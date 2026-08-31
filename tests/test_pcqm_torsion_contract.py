@@ -40,8 +40,11 @@ def test_torsion_cache_and_gpu_runner_keep_sealed_roles_and_budget():
     assert "train_generator = torch.Generator().manual_seed(SEED)" in runner
     assert 'train_generator_state": train_generator.get_state()' in runner
     assert 'train_generator.set_state(checkpoint["train_generator_state"])' in runner
-    assert "torch.allclose(" in runner
-    assert "max_abs_diff" in runner
+    assert "shared_backbone_parameters_match" in runner
+    assert "torsion_injection_zero" in runner
+    assert "torch.equal(value.detach(), reference)" in runner
+    assert "torch.count_nonzero(value.detach()).item() != 0" in runner
+    assert "torch.allclose(" not in runner
     assert '"official_validation_role_read": False' in runner
     assert '"test_dev_role_read": False' in runner
     assert "piero0/pcqm4mv2" not in runner

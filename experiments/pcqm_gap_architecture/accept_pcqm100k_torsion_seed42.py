@@ -107,11 +107,21 @@ def accept(root: Path, expected_source_commit: str, expected_torsion_sha256: str
             )
             for key in (
                 "initial_function_match",
+                "shared_backbone_parameters_match",
+                "torsion_injection_zero",
                 "finite_prediction",
                 "finite_loss",
                 "finite_gradients",
             ):
                 require(row.get(key) is True, f"preflight {candidate} {key}")
+            require(
+                row.get("shared_backbone_mismatches") == [],
+                f"preflight {candidate} shared backbone mismatches",
+            )
+            require(
+                row.get("torsion_nonzero_parameters") == [],
+                f"preflight {candidate} nonzero torsion injection",
+            )
 
     runs = selection.get("runs", [])
     require(isinstance(runs, list) and len(runs) == 2, "run rows")
