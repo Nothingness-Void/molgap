@@ -154,5 +154,10 @@
   the one seed-42 sparse torsion-state task. Its protocol and source/cache
   identity must be accepted before any GPU submission; no torsion GPU task has
   been submitted.
+- The separate CPU torsion derivation is running on Kaggle1 as
+  `nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42`, version 1. Its
+  account1 input mirrors, canonical slug, source marker, and retrieval contract
+  are recorded in
+  `results/sparse_torsion_edge_state_seed42/cache_launch_manifest.json`.
 
 Task order remains authoritative in `ROADMAP.md`.
