@@ -20,6 +20,14 @@ CACHE_RUNNER = (
 )
 CACHE_METADATA = CACHE_RUNNER.with_name("kernel-metadata.json")
 CACHE_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_ring_hierarchy_cache.py"
+GPU_RUNNER = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "ring_hierarchy_seed42"
+    / "run_ring_hierarchy_screen.py"
+)
+GPU_METADATA = GPU_RUNNER.with_name("kernel-metadata.json")
+GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_ring_hierarchy_seed42.py"
 PROTOCOL = EXPERIMENT / "ring_hierarchy_seed42_protocol.md"
 CANDIDATE = "ogb_distance_angle_ring_hierarchy_triangle_edge_state_gps9"
 COMPARATOR = "ogb_distance_angle_triangle_edge_state_gps9"
@@ -97,3 +105,54 @@ def test_ring_protocol_freezes_one_seed_and_closes_same_mechanism_retries():
     assert "does not submit" in source
     assert "ring-definition" in source
     assert "official validation/test-dev" in source
+
+
+def test_ring_gpu_runner_is_one_candidate_against_the_frozen_comparator():
+    source = GPU_RUNNER.read_text(encoding="utf-8")
+    assert f'CANDIDATE = "{CANDIDATE}"' in source
+    assert "CANDIDATE: 4_949_097" in source
+    assert "PARAMETER_BUDGET = 5_000_000" in source
+    assert "BATCH_SIZE = 48" in source
+    assert "LEARNING_RATE = 1.6e-4" in source
+    assert "MAX_EPOCHS = 40" in source
+    assert "PATIENCE = 8" in source
+    assert "ring_update.ring_to_atom.value.weight" in source
+    assert "ring_return_gradient_nonzero" in source
+    assert "batch.ring_features" in source
+    assert "batch.atom_ring_index" in source
+    assert "train_one(\n            graphs,\n            CANDIDATE," in source
+    assert "seed43_44_submitted" in source
+    assert "official_validation_role_read" in source
+    assert "test_dev_role_read" in source
+
+
+def test_ring_gpu_metadata_is_one_private_p100_compatible_task():
+    metadata = json.loads(GPU_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-ring-hierarchy-s42"
+    assert metadata["is_private"] == "true"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["code_file"] == "run_ring_hierarchy_screen.py"
+    assert metadata["kernel_sources"] == [
+        "nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42"
+    ]
+    assert "nothingnessvoid/molgap-pcqm-ring-hierarchy-source" in metadata[
+        "dataset_sources"
+    ]
+    assert "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3" in metadata[
+        "dataset_sources"
+    ]
+    source = GPU_RUNNER.read_text(encoding="utf-8")
+    assert "torch==2.7.1" in source
+    assert "sm_60" in source
+
+
+def test_ring_gpu_acceptance_is_no_inference_and_arithmetic_only():
+    source = GPU_ACCEPTANCE.read_text(encoding="utf-8")
+    assert "import torch" not in source
+    assert "model_inference_executed" in source
+    assert "candidate_minus_comparator_eV" in source
+    assert "EXPECTED_COMPARATOR_MAE = 0.1353926807641983" in source
+    assert "4_949_097" in source
+    assert "ring_cache_aggregate_sha256" in source
+    assert "official_validation_role_read" in source
+    assert "test_dev_role_read" in source
