@@ -160,5 +160,15 @@
   The final decision and compact hashes are in
   `results/sparse_torsion_edge_state_seed42/gpu_decision.md` and
   `results/sparse_torsion_edge_state_seed42/gpu_v5_summary.json`.
+- The post-dual-stream attribution proved that the failed bond stream learned
+  but widened the generalization gap; same-information optimizer, width,
+  depth, and seed retries are closed. The next distinct mechanism is frozen in
+  `ring_hierarchy_seed42_protocol.md`.
+- Kaggle1 CPU kernel `nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42`,
+  version 1, was submitted once from model source commit
+  `58f425258031062c3c3762f13b7d4c160dffba65` and was `QUEUED` at the launch
+  check. It derives deterministic smallest-ring nodes and relations from the
+  accepted 100K/10K geometry roles. No GPU successor was submitted; cache
+  download and no-model acceptance remain mandatory first.
 
 Task order remains authoritative in `ROADMAP.md`.

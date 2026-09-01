@@ -56,8 +56,10 @@ eV`; the mechanism is closed without more seeds or parameter retries. The
 next literature-ranked bounded question is the deterministic smallest-ring
 hierarchy frozen in
 `experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md`. It has
-implementation and CPU-cache authority but no GPU authority until that cache
-passes acceptance. The geometry, torsion, and
+implementation and CPU-cache authority. The private CPU cache kernel
+`nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42` version 1 has been
+submitted; no GPU successor is authorized until its downloaded cache passes
+acceptance. The geometry, torsion, and
 dual-stream decisions are
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
 and
