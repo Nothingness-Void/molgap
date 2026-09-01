@@ -626,9 +626,33 @@ def train_one(
         model.load_state_dict(checkpoint["model"])
         optimizer.load_state_dict(checkpoint["optimizer"])
         scheduler.load_state_dict(checkpoint["scheduler"])
-        train_generator.set_state(checkpoint["train_generator_state"])
-        torch.set_rng_state(checkpoint["torch_rng_state"])
-        torch.cuda.set_rng_state_all(checkpoint["cuda_rng_state_all"])
+
+        def cpu_byte_rng_state(value, label):
+            if (
+                not isinstance(value, torch.Tensor)
+                or value.dtype != torch.uint8
+                or value.ndim != 1
+            ):
+                raise RuntimeError(f"Invalid checkpoint RNG state: {label}")
+            return value.detach().cpu().contiguous()
+
+        train_generator.set_state(
+            cpu_byte_rng_state(
+                checkpoint["train_generator_state"], "train_generator_state"
+            )
+        )
+        torch.set_rng_state(
+            cpu_byte_rng_state(checkpoint["torch_rng_state"], "torch_rng_state")
+        )
+        cuda_rng_state_all = checkpoint["cuda_rng_state_all"]
+        if not isinstance(cuda_rng_state_all, (list, tuple)):
+            raise RuntimeError("Invalid checkpoint CUDA RNG state list")
+        torch.cuda.set_rng_state_all(
+            [
+                cpu_byte_rng_state(value, f"cuda_rng_state_all[{index}]")
+                for index, value in enumerate(cuda_rng_state_all)
+            ]
+        )
         start_epoch = int(checkpoint["epoch"]) + 1
         best_epoch = int(checkpoint["best_epoch"])
         best_mae = float(checkpoint["best_mae"])

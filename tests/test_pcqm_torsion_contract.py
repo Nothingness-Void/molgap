@@ -53,6 +53,8 @@ def test_torsion_cache_and_gpu_runner_keep_sealed_roles_and_budget():
     assert "hydrate_resume_state(source_commit, cache_manifest[\"aggregate_sha256\"])" in runner
     assert "candidate_checkpoint_epoch" in runner
     assert "train_generator_state" in runner
+    assert "cpu_byte_rng_state" in runner
+    assert "value.detach().cpu().contiguous()" in runner
 
 
 def test_torsion_resume_bundle_is_hash_checked_and_hydrated(tmp_path):
