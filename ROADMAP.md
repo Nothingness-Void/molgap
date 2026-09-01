@@ -16,7 +16,7 @@ ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-RING-CONJUGATION-HIERARCHY-SEED42 | Freeze one deterministic ring/conjugation hierarchy candidate after reviewing the closed dual-stream evidence | One protocol fixes a single information-flow change, parameter/time ceiling, and seed-42 stop rule before any GPU submission | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-RING-HIERARCHY-SEED42 | Build and accept the frozen deterministic smallest-ring hierarchy cache, then run one seed-42 candidate | CPU cache acceptance passes first; one hash-pinned GPU run either strictly beats the frozen distance-plus-angle comparator or closes the mechanism | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -161,7 +161,7 @@ experiment unless the project objective changes.
 |---|---|---|
 | Recent-architecture sparse torsion screen | Completed and scientifically failed at seed 42 | Closed by its accepted decision; no additional torsion seeds are authorized |
 | Sparse atom--bond dual-stream attention | Completed, accepted, and scientifically failed at seed 42 | Closed by its decision; no extra seeds or parameter variants are authorized |
-| Ring/conjugation hierarchy | Satisfied: torsion and sparse bond-attention both scientifically failed | Freeze one deterministic ring/conjugation representation as the next bounded information-flow question; do not submit until its protocol and cache contract are reviewed |
+| Ring/conjugation hierarchy | Satisfied: torsion and sparse bond-attention both scientifically failed | Execute only the frozen smallest-ring hierarchy in `ring_hierarchy_seed42_protocol.md`; no ring-definition or training grid is authorized |
 | Compact Cartesian invariant body-order basis | Torsion, bond-stream, and ring mechanisms all fail and a parameter/throughput preflight fits the same ceiling | Isolate one CACE-like invariant basis; do not add equivariant tensors, pretraining, or a new optimizer in the same screen |
 | PairGPS2D sealed-test disposition | Explicit authorization reopens the independent branch after its validation-only decision | Establish arithmetic equivalence before using benchmark-selected TF32 for an accuracy claim |
 | Experimental solid-state Delta head | A specific experimental target is requested | Open a separate target contract; do not alter Track B |

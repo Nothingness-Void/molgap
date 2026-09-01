@@ -53,8 +53,11 @@ question. Kaggle1 kernel
 completed and passed no-inference artifact acceptance, but its `0.1364679933
 eV` validation Gap MAE was worse than the frozen comparator's `0.1353926808
 eV`; the mechanism is closed without more seeds or parameter retries. The
-next literature-ranked bounded question is a deterministic ring/conjugation
-hierarchy, but it has no submission authority yet. The geometry, torsion, and
+next literature-ranked bounded question is the deterministic smallest-ring
+hierarchy frozen in
+`experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md`. It has
+implementation and CPU-cache authority but no GPU authority until that cache
+passes acceptance. The geometry, torsion, and
 dual-stream decisions are
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
 and
@@ -167,6 +170,7 @@ must not be represented as this new conservative head.
 | Did Sparse Triangle pass seed 42? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md` |
 | Did Sparse Triangle reproduce across three seeds? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md` |
 | What is the bottom-fused geometry question? | `experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md` |
+| What is the deterministic ring-hierarchy question? | `experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md` |
 | Did bottom-fused ETKDG geometry pass seed 42? | `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |

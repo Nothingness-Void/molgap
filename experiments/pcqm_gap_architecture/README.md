@@ -76,6 +76,8 @@ The launch identity and immutable input hashes are recorded under
 The learned-but-redundant failure mechanism and the information gate for a
 non-duplicate successor are isolated in
 [`post_dual_stream_failure_attribution.md`](post_dual_stream_failure_attribution.md).
+The resulting single smallest-ring hierarchy question is frozen in
+[`ring_hierarchy_seed42_protocol.md`](ring_hierarchy_seed42_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.
