@@ -356,6 +356,17 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
         )
         return self.head(embedding)
 
+    def _post_atom_block(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Optional information-flow hook after one atom GPS block."""
+        return h, edge_state
+
     def encode(
         self,
         x,
@@ -416,7 +427,149 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
                 )
                 h = h + node_projection(center_context)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+            h, edge_state = self._post_atom_block(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+            )
         return self._pool(h, batch)
+
+
+class _SparseBondAttentionBlock(nn.Module):
+    """Separately normalized attention over non-backtracking bond wedges."""
+
+    def __init__(
+        self,
+        channels: int,
+        heads: int,
+        dropout: float,
+        expansion: int = 2,
+    ) -> None:
+        super().__init__()
+        if channels % heads:
+            raise ValueError("bond channels must be divisible by attention heads")
+        self.channels = int(channels)
+        self.heads = int(heads)
+        self.head_channels = self.channels // self.heads
+        self.scale = self.head_channels ** -0.5
+        self.attention_norm = nn.LayerNorm(self.channels)
+        self.query = nn.Linear(self.channels, self.channels)
+        self.key = nn.Linear(self.channels, self.channels)
+        self.value = nn.Linear(self.channels, self.channels)
+        self.attention_dropout = nn.Dropout(dropout)
+        self.attention_output = nn.Linear(self.channels, self.channels)
+        self.ffn_norm = nn.LayerNorm(self.channels)
+        expanded = self.channels * int(expansion)
+        self.ffn_value = nn.Linear(self.channels, expanded)
+        self.ffn_gate = nn.Linear(self.channels, expanded)
+        self.ffn_dropout = nn.Dropout(dropout)
+        self.ffn_output = nn.Linear(expanded, self.channels)
+        for projection in (self.attention_output, self.ffn_output):
+            nn.init.zeros_(projection.weight)
+            nn.init.zeros_(projection.bias)
+
+    def forward(
+        self,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> torch.Tensor:
+        normalized = self.attention_norm(edge_state)
+        attended = edge_state.new_zeros(edge_state.shape)
+        if wedge_edge_ids.shape[0]:
+            from torch_geometric.utils import softmax
+
+            source, target = wedge_edge_ids.unbind(dim=1)
+            query = self.query(normalized[target]).view(
+                -1, self.heads, self.head_channels
+            )
+            key = self.key(normalized[source]).view(
+                -1, self.heads, self.head_channels
+            )
+            value = self.value(normalized[source]).view(
+                -1, self.heads, self.head_channels
+            )
+            score = (query * key).sum(dim=-1) * self.scale
+            weight = softmax(score, target, num_nodes=edge_state.shape[0])
+            message = self.attention_dropout(weight).unsqueeze(-1) * value
+            attended = attended.view(
+                -1, self.heads, self.head_channels
+            )
+            attended.index_add_(0, target, message)
+            attended = attended.reshape(-1, self.channels)
+        edge_state = edge_state + self.attention_output(attended)
+        normalized = self.ffn_norm(edge_state)
+        proposal = self.ffn_value(normalized) * torch.sigmoid(
+            self.ffn_gate(normalized)
+        )
+        return edge_state + self.ffn_output(self.ffn_dropout(proposal))
+
+
+class _LowRankGatedProjection(nn.Module):
+    """Rank-bounded gated residual whose value path starts at zero."""
+
+    def __init__(self, in_channels: int, out_channels: int, rank: int) -> None:
+        super().__init__()
+        self.norm = nn.LayerNorm(in_channels)
+        self.down = nn.Linear(in_channels, rank)
+        self.value = nn.Linear(rank, out_channels)
+        self.gate = nn.Linear(rank, out_channels)
+        nn.init.zeros_(self.value.weight)
+        nn.init.zeros_(self.value.bias)
+
+    def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+        latent = torch.nn.functional.silu(self.down(self.norm(inputs)))
+        return self.value(latent) * torch.sigmoid(self.gate(latent))
+
+
+class _SharedAtomBondExchange(nn.Module):
+    """One shared low-rank exchange between atom and directed-bond streams."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        bond_channels: int,
+        rank: int,
+    ) -> None:
+        super().__init__()
+        self.atom_to_bond = _LowRankGatedProjection(
+            atom_channels, bond_channels, rank
+        )
+        self.bond_to_atom = _LowRankGatedProjection(
+            bond_channels, atom_channels, rank
+        )
+
+    @staticmethod
+    def _incoming_bond_mean(
+        edge_state: torch.Tensor,
+        destinations: torch.Tensor,
+        node_count: int,
+    ) -> torch.Tensor:
+        context = edge_state.new_zeros((node_count, edge_state.shape[1]))
+        counts = edge_state.new_zeros((node_count, 1))
+        context.index_add_(0, destinations, edge_state)
+        counts.index_add_(
+            0,
+            destinations,
+            edge_state.new_ones((edge_state.shape[0], 1)),
+        )
+        return context / counts.clamp_min_(1.0)
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        source, destination = edge_index
+        endpoint_mean = 0.5 * (h[source] + h[destination])
+        edge_state = edge_state + self.atom_to_bond(endpoint_mean)
+        incoming = self._incoming_bond_mean(
+            edge_state, destination, h.shape[0]
+        )
+        h = h + self.bond_to_atom(incoming)
+        return h, edge_state
 
 
 class _FixedGaussianBasis(nn.Module):
@@ -620,7 +773,64 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
                 )
                 h = h + node_projection(center_context)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+            h, edge_state = self._post_atom_block(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+            )
         return self._pool(h, batch)
+
+
+class OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """Distance/angle GPS with a sparse, separately normalized bond stream."""
+
+    DUAL_STREAM_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        bond_attention_heads: int = 4,
+        exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, geometry_mode="distance_angle", **kwargs)
+        hidden_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.bond_stream_blocks = nn.ModuleDict(
+            {
+                str(layer): _SparseBondAttentionBlock(
+                    self.edge_state_channels,
+                    bond_attention_heads,
+                    dropout,
+                )
+                for layer in self.DUAL_STREAM_LAYERS
+            }
+        )
+        self.atom_bond_exchange = _SharedAtomBondExchange(
+            hidden_channels,
+            self.edge_state_channels,
+            exchange_rank,
+        )
+
+    def _post_atom_block(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        key = str(layer)
+        if key not in self.bond_stream_blocks:
+            return h, edge_state
+        edge_state = self.bond_stream_blocks[key](
+            edge_state, wedge_edge_ids
+        )
+        return self.atom_bond_exchange(h, edge_index, edge_state)
 
 
 class _SharedTorsionGatedUpdate(nn.Module):
@@ -1011,6 +1221,15 @@ def make_pcqm_gap_encoder(candidate: str):
             wedge_channels=16,
             torsion_channels=16,
             geometry_basis_channels=16,
+        )
+    if candidate == "ogb_distance_angle_dual_stream_triangle_edge_state_gps9":
+        return OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            bond_attention_heads=4,
+            exchange_rank=32,
         )
     if candidate == "ogb_query_pool_structural_gps9":
         return OGBQueryPoolStructuralGPSWrapper(
