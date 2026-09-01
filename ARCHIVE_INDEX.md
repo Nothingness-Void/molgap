@@ -1,6 +1,6 @@
 # MolGap Archive Index
 
-This branch (`molgap-archive`) is the durable history line for rejected or
+This branch (`archive`) is the durable history line for rejected or
 inactive experiments. It is not a live-state or production branch. `master`
 owns the production baseline; `molgap-server` owns server-side discovery and
 `molgap-desktop` owns full training and official evaluation.
