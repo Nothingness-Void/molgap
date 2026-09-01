@@ -41,6 +41,10 @@ EXPECTED_PARAMETER_COUNTS = {
     COMPARATOR: 4_891_057,
     CANDIDATE: 4_902_081,
 }
+RESUME_FORMAT = "molgap-pcqm-gap100k-sparse-torsion-resume-v1"
+EXPECTED_RESUME_MANIFEST_SHA256 = (
+    "9d0f4ccc5f315dd5c7f5fe9305bb6cd36f1bd88659bffeea96711525678c77f9"
+)
 GEOMETRY_CONTRACT = "ETKDGv3+MMFF94s-single-conformer-bottom-fusion"
 TORSION_CONTRACT = "sparse-16-fixed-periodic-shared-gated-update"
 
@@ -205,6 +209,110 @@ def find_torsion_cache(expected_source_commit: str) -> tuple[Path, dict]:
     if aggregate.hexdigest() != manifest["aggregate_sha256"]:
         raise RuntimeError("Torsion aggregate hash changed")
     return root, manifest
+
+
+def find_resume_bundle(
+    expected_source_commit: str,
+    expected_torsion_cache_sha256: str,
+    input_root: Path = Path("/kaggle/input"),
+) -> tuple[Path, dict]:
+    candidates = []
+    for path in input_root.rglob("resume_manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == RESUME_FORMAT:
+            candidates.append((path.parent, path, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one sparse torsion resume bundle, found {candidates}")
+    root, manifest_path, manifest = candidates[0]
+    if sha256_file(manifest_path) != EXPECTED_RESUME_MANIFEST_SHA256:
+        raise RuntimeError("Sparse torsion resume manifest hash changed")
+    required = {
+        "complete": True,
+        "source_commit": expected_source_commit,
+        "torsion_cache_aggregate_sha256": expected_torsion_cache_sha256,
+        "source_kernel": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+        "source_kernel_version": 3,
+        "comparator_complete": True,
+        "comparator_checkpoint_epoch": 39,
+        "candidate_checkpoint_epoch": 38,
+        "candidate_best_epoch": 36,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"Sparse torsion resume contract changed for {key}")
+    artifacts = manifest.get("artifacts")
+    if not isinstance(artifacts, list) or len(artifacts) != 8:
+        raise RuntimeError("Sparse torsion resume artifact inventory changed")
+    expected_paths = {
+        f"results/{COMPARATOR}/best_model.pt",
+        f"results/{COMPARATOR}/checkpoint.pt",
+        f"results/{COMPARATOR}/metrics.json",
+        f"results/{COMPARATOR}/trace.json",
+        f"results/{COMPARATOR}/validation_payload.pt",
+        f"results/{CANDIDATE}/best_model.pt",
+        f"results/{CANDIDATE}/checkpoint.pt",
+        f"results/{CANDIDATE}/trace.json",
+    }
+    recorded_paths = {row.get("path") for row in artifacts}
+    if recorded_paths != expected_paths:
+        raise RuntimeError("Sparse torsion resume artifact paths changed")
+    for row in artifacts:
+        relative = Path(row["path"])
+        if relative.is_absolute() or ".." in relative.parts:
+            raise RuntimeError(f"Unsafe sparse torsion resume path: {relative}")
+        source = root / relative
+        if not source.is_file():
+            raise RuntimeError(f"Sparse torsion resume artifact missing: {relative}")
+        if source.stat().st_size != int(row["bytes"]):
+            raise RuntimeError(f"Sparse torsion resume artifact size changed: {relative}")
+        if sha256_file(source) != row["sha256"]:
+            raise RuntimeError(f"Sparse torsion resume artifact hash changed: {relative}")
+    return root, manifest
+
+
+def hydrate_resume_state(
+    expected_source_commit: str,
+    expected_torsion_cache_sha256: str,
+    input_root: Path = Path("/kaggle/input"),
+    output_root: Path = OUT,
+) -> dict:
+    root, manifest = find_resume_bundle(
+        expected_source_commit,
+        expected_torsion_cache_sha256,
+        input_root,
+    )
+    output_root.mkdir(parents=True, exist_ok=True)
+    for row in manifest["artifacts"]:
+        relative = Path(row["path"])
+        source = root / relative
+        destination = output_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        temporary = destination.with_name(f".{destination.name}.resume.tmp")
+        shutil.copy2(source, temporary)
+        if sha256_file(temporary) != row["sha256"]:
+            temporary.unlink(missing_ok=True)
+            raise RuntimeError(f"Sparse torsion hydrated hash changed: {relative}")
+        os.replace(temporary, destination)
+    acceptance = {
+        "format": "molgap-pcqm-gap100k-sparse-torsion-resume-acceptance-v1",
+        "complete": True,
+        "source_kernel": manifest["source_kernel"],
+        "source_kernel_version": manifest["source_kernel_version"],
+        "source_commit": expected_source_commit,
+        "torsion_cache_aggregate_sha256": expected_torsion_cache_sha256,
+        "comparator_checkpoint_epoch": manifest["comparator_checkpoint_epoch"],
+        "candidate_checkpoint_epoch": manifest["candidate_checkpoint_epoch"],
+        "artifact_count": len(manifest["artifacts"]),
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    atomic_json(output_root / "resume_acceptance.json", acceptance)
+    return acceptance
 
 
 def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
@@ -717,6 +825,7 @@ def main() -> None:
         if source_commit == EXPECTED_GEOMETRY_SOURCE_COMMIT:
             raise RuntimeError("Torsion screen source was not advanced beyond geometry source")
         cache_root, cache_manifest = find_torsion_cache(source_commit)
+        hydrate_resume_state(source_commit, cache_manifest["aggregate_sha256"])
         graphs = load_graphs(cache_root, cache_manifest)
         preflight_rows = preflight(
             graphs, source_commit, cache_manifest["aggregate_sha256"]

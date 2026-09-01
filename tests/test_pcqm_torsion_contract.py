@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
+import importlib.util
 from pathlib import Path
 
 
@@ -48,6 +50,80 @@ def test_torsion_cache_and_gpu_runner_keep_sealed_roles_and_budget():
     assert '"official_validation_role_read": False' in runner
     assert '"test_dev_role_read": False' in runner
     assert "piero0/pcqm4mv2" not in runner
+    assert "hydrate_resume_state(source_commit, cache_manifest[\"aggregate_sha256\"])" in runner
+    assert "candidate_checkpoint_epoch" in runner
+    assert "train_generator_state" in runner
+
+
+def test_torsion_resume_bundle_is_hash_checked_and_hydrated(tmp_path):
+    runner_path = ROOT / (
+        "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/"
+        "sparse_torsion_edge_state_seed42/run_torsion_screen.py"
+    )
+    spec = importlib.util.spec_from_file_location("torsion_resume_runner", runner_path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    source_commit = "3" * 40
+    cache_sha = "4" * 64
+    input_root = tmp_path / "input"
+    bundle = input_root / "resume"
+    output = tmp_path / "output"
+    artifacts = []
+    expected = [
+        f"results/{module.COMPARATOR}/best_model.pt",
+        f"results/{module.COMPARATOR}/checkpoint.pt",
+        f"results/{module.COMPARATOR}/metrics.json",
+        f"results/{module.COMPARATOR}/trace.json",
+        f"results/{module.COMPARATOR}/validation_payload.pt",
+        f"results/{module.CANDIDATE}/best_model.pt",
+        f"results/{module.CANDIDATE}/checkpoint.pt",
+        f"results/{module.CANDIDATE}/trace.json",
+    ]
+    for index, relative in enumerate(expected):
+        path = bundle / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        payload = f"artifact-{index}".encode("ascii")
+        path.write_bytes(payload)
+        artifacts.append(
+            {
+                "path": relative,
+                "bytes": len(payload),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+            }
+        )
+    manifest = {
+        "format": module.RESUME_FORMAT,
+        "complete": True,
+        "source_commit": source_commit,
+        "torsion_cache_aggregate_sha256": cache_sha,
+        "source_kernel": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+        "source_kernel_version": 3,
+        "comparator_complete": True,
+        "comparator_checkpoint_epoch": 39,
+        "candidate_checkpoint_epoch": 38,
+        "candidate_best_epoch": 36,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+        "artifacts": artifacts,
+    }
+    manifest_path = bundle / "resume_manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    module.EXPECTED_RESUME_MANIFEST_SHA256 = hashlib.sha256(
+        manifest_path.read_bytes()
+    ).hexdigest()
+
+    accepted = module.hydrate_resume_state(
+        source_commit,
+        cache_sha,
+        input_root=input_root,
+        output_root=output,
+    )
+    assert accepted["complete"] is True
+    assert accepted["candidate_checkpoint_epoch"] == 38
+    for relative in expected:
+        assert (output / relative).read_bytes() == (bundle / relative).read_bytes()
 
 
 def test_kernel_metadata_separates_cpu_cache_and_gpu_task():
@@ -69,4 +145,5 @@ def test_kernel_metadata_separates_cpu_cache_and_gpu_task():
     assert gpu["dataset_sources"] == [
         "nothingnessvoid/molgap-pcqm-torsion-source-3d4cdb73",
         "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+        "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3",
     ]
