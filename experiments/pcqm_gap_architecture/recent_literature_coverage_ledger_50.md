@@ -1,4 +1,4 @@
-# Recent Molecular Literature Coverage Ledger: 50 Papers
+# Recent Molecular Literature Coverage Ledger: 58 Papers
 
 This ledger owns the auditable paper count and reading depth for the Track B
 literature review. It does not own live experiment state or task order. The
@@ -16,8 +16,8 @@ and exact reusable configurations are in
   not expose a sufficiently complete task-specific recipe or the recipe is not
   comparable to direct PCQM Gap prediction.
 
-The ledger contains exactly **50 unique primary papers**: 15 configuration-level
-reads and 35 mechanism-level reads. A missing number is therefore a ledger
+The ledger contains exactly **58 unique primary papers**: 17 configuration-level
+reads and 41 mechanism-level reads. A missing number is therefore a ledger
 error, not an invitation to infer an unreviewed paper.
 
 ## Audited papers
@@ -74,19 +74,34 @@ error, not an invitation to infer an unreviewed paper.
 | 48 | [Sliced Denoising (ICLR 2024)](https://openreview.net/pdf?id=liKkG1zcWq) | Configuration | Bond/angle/torsion noise is tied to a classical intramolecular potential; PCQM pretraining uses batch 128, 10K warmup, maximum LR 4e-4 and 240K cosine cycle. | Strong teacher candidate after architecture selection; eight-GPU pretraining is outside current budget. |
 | 49 | [Cartesian Atomic Cluster Expansion (npj Computational Materials 2024)](https://www.nature.com/articles/s41524-024-01332-4) | Configuration | Compact polynomially independent Cartesian body-order basis; a representative model uses 4.5-angstrom cutoff, maximum angular/body orders 3/3 and one message pass. | A compact invariant high-order basis is more plausible than a full tensor Transformer, but still a separate mechanism. |
 | 50 | [AIMNet2 (Chemical Science 2025)](https://pubs.rsc.org/en/content/articlepdf/2025/sc/d4sc08572h) | Configuration | Sixteen radial functions, 5-angstrom local cutoff, scalar and vector environment components, iterative charge refinement and explicit long-range Coulomb/dispersion; four-model ensemble trained from 20M DFT structures. | Valuable conformer/geometry teacher and long-range design reference; not a direct PCQM random-init architecture. |
+| 51 | [MMGNN (2026 preprint)](https://arxiv.org/abs/2606.20906) | Configuration | Decomposes covalent or spatial graphs into overlapping atom-type-pair subgraphs processed by a shared directed CMPNN. The official default is width 300, depth 3, batch 50 and 50 epochs. Its 3D variant simultaneously adds spatial pairs, distance/angle/torsion features and a different subgraph decomposition. | Contact edges remain only a hypothesis: the paper has no PCQM or quantum-Gap task, does not isolate contacts, and its 3D form is clearly best on only one of three regression datasets. Do not copy the complete ensemble. |
+| 52 | [Multi-View Graph Learning with Graph-Tuple (TAG-DS 2025 / PMLR 2026)](https://proceedings.mlr.press/v321/chen26a.html) | Mechanism | Partitions one dense interaction graph into disjoint views, applies separate intra-view updates, and adds ordered cross-view messages with distinct parameters. Its molecular experiment thresholds exact QM7b Coulomb matrices. | Supports relation separation in principle, but exact Coulomb interactions and QM7b targets do not validate ETKDG contact edges for PCQM. |
+| 53 | [MGNN (npj Computational Materials 2025)](https://www.nature.com/articles/s41524-025-01541-5) | Mechanism | Uses cutoff-radius graphs, Chebyshev radial functions and contracted rank-1/rank-2 moments to inject angular many-body information without a full spherical-tensor stack. | Reinforces a compact invariant moment fallback, but its default width 512 and force-field setting are not a direct PCQM recipe. |
+| 54 | [MACE-H (2025 preprint)](https://arxiv.org/abs/2508.15108) | Mechanism | Applies high-body-order messages and node-order expansion to electronic Hamiltonian blocks; two MACE-H layers outperform a deeper two-body baseline in the reported materials tasks. | Confirms that local body order can replace depth, but Hamiltonian labels, orbital bases and equivariant cost make a direct transplant ineligible. |
+| 55 | [CEITNet (2026 preprint)](https://arxiv.org/abs/2602.04323) | Mechanism | Builds multi-channel Cartesian local environments and mixes channels to induce effective three-body terms without explicit tuple enumeration; its ablation favors an intermediate channel width of 16. | Provides the strongest new prior for a 16-channel invariant moment mixer if explicit wedge enumeration becomes the cost bottleneck. |
+| 56 | [Augmenting Molecular Graphs with Geometries via MLIPs (TMLR 2026)](https://openreview.net/forum?id=JwxhHTISJL) | Mechanism | Trains an interatomic potential from millions of molecules and hundreds of millions of snapshots, then improves molecular graphs through explicit geometry optimization or implicit geometric augmentation. | Geometry quality is a later input/teacher question; its scale and pretrained potential cannot establish a random-initialized architecture gain. |
+| 57 | [MBGF-Net (Nature Computational Science 2025)](https://www.nature.com/articles/s43588-025-00810-z) | Mechanism | Predicts many-body self-energies from mean-field orbital features and derives orbital-specific ground- and excited-state quantities. | It identifies missing electronic state as a high-value signal, but mean-field calculations are unavailable in the official graph-only screen and belong to a separate descriptor/teacher route. |
+| 58 | [When does global attention help? (Journal of Cheminformatics 2026)](https://link.springer.com/article/10.1186/s13321-026-01171-z) | Configuration | Compares MPNN-only, encoder-augmented MPNN, GPS, and encoder-plus-GPS under one HPO/training framework. On official OGB-PCQM4Mv2, the 71.1K-parameter encoder-augmented PaiNN without GPS beats the 95.1K DimeNet baseline and 130.2K GPS-heavy model on MSE, MAE, and correlation. | Direct PCQM evidence raises a local-heavy, sparse-global schedule above another full-GPS expansion. It does not prove the local 4.9M comparator should remove all attention because models and budgets differ. |
 
 ## Coverage conclusion
 
 The additional papers do not overturn the experiment queue. They make its
 reasoning sharper:
 
-1. persistent bond, angle and torsion information has the closest direct
-   relationship to the missing PCQM signal;
+1. direct controlled PCQM evidence now makes global-attention frequency an open
+   budget-allocation question: strong local encoders can outperform larger GPS
+   variants, so a local-heavy sparse-global schedule precedes another full-GPS
+   expansion;
 2. equivariant high-order models repeatedly require substantially more compute,
    and their largest gains often occur on forces or large angularly diverse
    systems rather than small-molecule scalar properties;
-3. geometry denoising and transferable potentials are credible teacher or
+3. non-covalent through-space contacts remain an untested information channel,
+   but current support is confounded by simultaneous geometry and decomposition
+   changes; they require a separate CPU edge-statistics gate;
+4. channelized Cartesian moments offer a more credible bounded fallback than
+   another explicit tuple hierarchy when computation is the limiting factor;
+5. geometry denoising and transferable potentials are credible teacher or
    conformer-improvement routes, but must not be misreported as random-init
    architecture gains;
-4. chemistry hierarchy and atom--bond exchange remain cleaner bounded tests
-   than another generic global mixer.
+6. the active deterministic ring hierarchy remains the current experiment and
+   must finish before either new mechanism is implemented.

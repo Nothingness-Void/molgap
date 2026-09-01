@@ -10,10 +10,11 @@ The purpose is not to copy a leaderboard recipe. It is to remove avoidable local
 search dimensions before a matched PCQM 100K experiment is written.
 
 The companion
-[`50-paper coverage ledger`](recent_literature_coverage_ledger_50.md) records the
-complete paper count. Fifteen of those papers reached configuration depth; the
-remaining 35 were mechanism/ablation reads and are not assigned invented
-hyperparameters.
+[`coverage ledger`](recent_literature_coverage_ledger_50.md) records the
+complete paper count. Seventeen papers reached configuration depth. Two
+additional mechanism-level papers are included below only where their concrete
+settings clarify non-comparability; no local hyperparameters are invented from
+them.
 
 ## Local comparison anchor
 
@@ -50,6 +51,10 @@ means that the paper or public configuration did not expose a reliable value.
 | [RingFormer, CEPDB](https://arxiv.org/pdf/2412.09030) | 8 layers; hidden 512; four heads; GINE for atom and inter-level message passing; localized ring cross-attention plus a virtual molecule node | Adam, one-cycle LR with 5% rising phase; batch 1024; 30 epochs; maximum LR selected from `{1e-3, 5e-4, 1e-4, 5e-5}` | One RTX 3090; about 504 s/epoch for the full model versus 445 s for GINE in the reported CEPDB timing | Four heads remain effective at large width. The ablation improves until eight layers on all five datasets; the full atom--ring hierarchy matters more than a generic motif vocabulary. |
 | [GeoMFormer, PCQM4Mv2](https://openreview.net/pdf?id=Y5Zi59N265) | 8 layers; invariant/equivariant hidden 512; 32 heads; 128 Gaussian kernels | AdamW, `2e-4`, batch 1024, 1.5M steps, 150K warmup, clip 5, attention/hidden dropout `0.1/0.1`, no weight decay | 16 V100 GPUs; RDKit geometry plus equilibrium-structure prediction | This is evidence for cross-coupled scalar/vector streams, but not for a cheap random-initialized vector branch. A local vector channel must be narrow and conditional on the accepted scalar-geometry result. |
 | [GotenNet, official QM9 configuration](https://github.com/sarpaykent/GotenNet/blob/main/gotennet/configs/experiment/qm9.yaml) | Four interactions; atom 256; eight heads; 64 RBFs; cutoff 5 A; maximum tensor degree 2; output hidden 256 | `1e-4`, batch 32, 10K warmup steps, minimum LR `1e-7`, plateau patience 15, no weight decay in the task override, EMA 0.9 in the base model, clip 5, at most 1000 epochs | One GPU in the public datamodule | Even an efficient equivariant model uses long training and a small batch. It supports an `l=1` vector pilot, not importing its full tensor hierarchy into the 12-hour PCQM route. |
+| [When does global attention help?, OGB-PCQM4Mv2](https://link.springer.com/article/10.1186/s13321-026-01171-z) | Four controlled schemes: MPNN, encoder-augmented MPNN, GPS, and encoder-plus-GPS. OGB-PCQM uses OGB atom/bond categorical features plus topology/chemistry/Laplacian encoders; best S2 is encoder-augmented PAINN without GPS with 71.1K parameters, versus 95.1K DimeNet S1 and 130.2K GPS-heavy S4 | Identical HPO/training pipeline within the paper; exact per-trial optimizer values are selected by HPO rather than exposed as a single transferable recipe | Unified HydraGNN benchmark; paper reports parameter and memory comparisons, not a local 12-hour A100 run | This is the most direct recent evidence that strong local encoders can beat a larger GPS fusion on PCQM. It motivates a fixed global-attention schedule rather than assuming nine global blocks are optimal; it does not justify removing accepted local geometry. |
+| [MMGNN, MoleculeNet regression](https://arxiv.org/abs/2606.20906) | Shared directed CMPNN on colored atom-pair subgraphs; width 300, depth 3; 2D covalent or 3D spatial graph, with 3D distance/angle/torsion features | Adam-family schedule with batch 50, 50 epochs and five seeds; exact warmup and LR stages are recorded in the mechanism ledger | Scaffold 8:1:1 split; no PCQM or quantum-Gap measurement | The setting is useful for scale intuition only. Because the 3D graph, geometry features and subgraph decomposition change together, it cannot set a contact-edge hyperparameter for this screen. |
+| [Multi-View Graph Learning with Graph-Tuple, QM7b](https://proceedings.mlr.press/v321/chen26a.html) | GINE-Gt uses separate intra-view GINE messages and ordered cross-view messages on strong/weak edge views; molecular input is a thresholded exact Coulomb matrix with 100d binary-expanded features | Task-specific settings are exposed in the paper, but do not match PCQM roles or the local contract | QM7b, not PCQM; exact Coulomb geometry rather than ETKDG | The useful configuration lesson is relation-specific normalization and cross-view order, not a directly portable contact graph. |
+| [CEITNet, dielectric tensor task](https://arxiv.org/abs/2602.04323) | Multi-channel Cartesian local environments; ablation tests channel width `K={4,8,16,32,64}` and reports `K=16` as the best overall balance | Task-specific crystal training; no comparable PCQM optimizer contract | Crystal tensor prediction; no direct scalar Gap benchmark | K=16 is a bounded prior for an implicit moment mixer, especially if explicit wedge/torsion state becomes the throughput bottleneck. |
 | [Strong GINE reassessment, PCQM4Mv2](https://proceedings.mlr.press/v267/bechler-speicher25a.html) | 20 GINE layers; hidden 512; two-layer 1024 update MLP; RWSE20; sum pooling and three-layer graph MLP | Adam, `2e-4`, weight decay 0.1, batch 512, 1M steps, 10K warmup, cosine to `1e-6`, dropout 0.1 | About 8 hours per run on one H100 | Training horizon can erase apparent architecture gains. The local 40-epoch contract tests **budgeted convergence**, not asymptotic capacity; failure records must say so explicitly. |
 | [EquiformerV2, QM9 HOMO/LUMO/Gap family](https://proceedings.iclr.cc/paper_files/paper/2024/file/ab12e8f3443c1a789f595b18d8c597b4-Paper-Conference.pdf) | 6 blocks; scalar embedding width 96; maximum degree/order `4/4`; four heads; 128 radial bases; 5 A cutoff; 11.20M parameters | AdamW, cosine with 5 warmup epochs, `5e-4`, weight decay `5e-3`, batch 64, 300 epochs, dropout 0.2, mixed precision | About 72 GPU-hours per task on one A6000 | Even the small-molecule configuration is more than twice the local parameter ceiling and six times the final A100 wall-time budget. Its useful prior is attention renormalization and separable normalization, not high degree. |
 | [SO3krates, invariant/equivariant comparison](https://www.nature.com/articles/s41467-024-50620-6) | Feature width 132; four invariant-attention heads; three message-passing updates; 5 A cutoff; equivariant degrees `{0,1,2,3}`; 311K parameters versus 386K invariant | The comparison uses 10,000 train and 500 validation conformations per molecule; task-specific optimizer details vary by benchmark | Timed in JAX on V100; 5x faster than NequIP for small organic molecules and up to 30x at larger scale | A narrow explicit equivariant state can be cheaper than an invariant control. This supports a width-16 order-1 pilot, not an SO(3) convolution stack. |
@@ -75,19 +80,31 @@ TetraGT reports the following progression on its 12-layer PCQM configuration:
 Its distance:angle loss-ratio study is non-monotonic: `1:2`, `2:1`, `4:1`, and
 `8:1` give 70.7, 69.5, 68.8, and 70.1 meV. This saves two local mistakes:
 
-1. the first torsion experiment should test the information-flow mechanism
-   without a new auxiliary geometry-loss grid;
+1. the completed torsion experiment tested the information-flow mechanism
+   without a new auxiliary geometry-loss grid; its negative result closes that
+   local mechanism under the current screen;
 2. if an auxiliary loss is studied later, a single literature-derived ratio is
    safer than assuming that more angular weight is always better.
+
+### Global attention frequency and local encoders
+
+The 2026 HydraGNN study is the most direct recent configuration comparison for
+this project because it includes OGB-PCQM4Mv2 and holds data, selection and HPO
+machinery in one framework. On that task, encoder-augmented PAINN without GPS
+beats both the DimeNet baseline and the larger encoder-plus-GPS model. The
+result is not a command to delete global attention: the local encoder, width,
+HPO space and training horizon differ from the accepted 4.9M EdgeState model.
+It is evidence for one bounded schedule test: retain the accepted local states
+and place global atom attention only at blocks 3, 6 and 9. This isolates global
+attention frequency and also addresses the A100 budget.
 
 ### Atom--bond dual streams
 
 DeMol's ablation sequence reports a large separation between bond-only, atom-
 only, atom plus torsional position encoding, and the coupled atom--bond model.
-The important ordering is robust: adding torsion to atoms helps, while explicit
-atom--bond interaction helps substantially more. Therefore torsion and bond
-attention are distinct questions. A failed torsion state does not close the
-dual-stream route.
+The important ordering in the paper is robust, but the bounded local
+atom--bond screen already failed. Therefore this is a closed local route, not
+permission to retry it with more heads, width or a different optimizer.
 
 ### Ring hierarchy
 
@@ -233,17 +250,19 @@ The literature does not justify spending GPU time on the following grids:
 ## Configuration conclusion
 
 The strongest transferable configuration is not a miniature copy of any one
-paper. It is a scale-normalized design:
+paper. For the next open architecture question, the evidence-derived design is
+a local-heavy schedule:
 
 ```text
 192-d atom GPS
     <-> 64-d real-bond state
     <-> 16-d angle state
-    <-> 16-d torsion state
+    <-> global atom attention only at blocks 3, 6 and 9
 ```
 
-with four-head sparse attention only when the separate bond-stream question is
-tested. This keeps the local representation ratios close to the higher-order
-models while avoiding their 60M--200M parameters, million-step schedules, and
-multi-GPU inference assumptions. It also leaves exactly one default per next
-mechanism, which is the main way this audit reduces trial-and-error cost.
+The second open design is a separately normalized through-space ContactState,
+but it has weaker causal evidence and must first pass a CPU edge-statistics
+gate. The compact Cartesian `K=16` mixer is the fallback if explicit higher-order
+states are the cost bottleneck. These defaults preserve one mechanism per
+experiment and do not turn paper-scale widths or training schedules into local
+authorization.

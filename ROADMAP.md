@@ -60,7 +60,9 @@ before cache acceptance.
 
 | Question | Trigger | Bounded action |
 |---|---|---|
-| Compact Cartesian invariant body-order basis | Ring hierarchy fails and a preflight fits the same ceiling | Isolate one CACE-like invariant basis; no equivariant tensors or new optimizer |
+| Local-heavy sparse-global schedule | Ring hierarchy fails, or the accepted winner misses the 12-hour A100 projection | Keep the accepted local EdgeState/wedge updates; enable global atom attention only after blocks 3, 6 and 9; compare with a freshly trained full-GPS control |
+| Sparse non-covalent ContactState | Ring and sparse-global screens fail or leave a clear through-space hypothesis; CPU preflight is feasible | Build one ETKDG contact cache with fixed edge-count/type/coverage statistics; only after acceptance test a narrow separately normalized contact state |
+| Compact Cartesian invariant body-order basis | Ring and the two higher-information screens fail, and a preflight fits the same ceiling | Isolate one CACE/CEIT-like invariant basis with `K=16`; no equivariant tensors or new optimizer |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
 | Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |
 | Geometry denoising teacher | Architecture is selected and receives a separate budget | Use the literature configuration while official roles remain sealed |

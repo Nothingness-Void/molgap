@@ -9,13 +9,14 @@ Exact published widths, heads, optimizers, schedules, compute, and the
 scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 The exact unique-paper count and per-paper reading depth are owned by the
-[`50-paper coverage ledger`](recent_literature_coverage_ledger_50.md). The
-milestone contains 50 primary papers: 15 configuration-level reads and 35
-mechanism-level reads.
+[`coverage ledger`](recent_literature_coverage_ledger_50.md). The retained
+review contains 58 primary papers: 17 configuration-level reads and 41
+mechanism-level reads. The ledger filename is retained as a stable historical
+path from the original 50-paper milestone.
 
 ## Scope and comparability contract
 
-The audit covers primary papers published or accepted from 2024 through August
+The audit covers primary papers published or accepted from 2024 through September
 2026, plus a small number of immediately preceding methods needed to understand
 the newer designs. A method is useful here only if at least one of its mechanisms
 can be tested under the Track B contract:
@@ -53,14 +54,20 @@ mean pooling  -> direct Gap
 
 It therefore already captures the central ideas behind older GraphGPS, line-
 graph message passing, and angle-aware local interaction. Its principal missing
-channels are:
+channels, after the completed torsion, atom--bond dual-stream, and learned-
+readout screens, are:
 
-1. an explicit torsion state on bonded four-atom paths;
-2. a separately normalized bond-attention stream with symmetric atom--bond
-   exchange;
-3. ring/conjugation hierarchy beyond ordinary atom and bond categories;
-4. a small equivariant vector stream or another way to retain orientation;
-5. geometry-consistency or cross-modal teacher objectives.
+1. the active ring/conjugation hierarchy beyond ordinary atom and bond
+   categories;
+2. whether all nine blocks need global attention after the local bond/wedge
+   encoder became expressive;
+3. non-covalent through-space contacts that are close in ETKDG geometry but
+   absent from the covalent graph;
+4. a compact Cartesian moment basis that could express local body order without
+   explicit tuple growth;
+5. a small equivariant vector stream or another way to retain orientation;
+6. geometry-consistency or electronic teacher objectives, which remain outside
+   the random-initialized architecture claim.
 
 These gaps, rather than model depth alone, organize the review below.
 
@@ -68,22 +75,24 @@ These gaps, rather than model depth alone, organize the review below.
 
 | Work | New information flow | Evidence relevant to Gap | Bounded adaptation | Disposition |
 |---|---|---|---|---|
-| [DeMol, ICLR 2026](https://arxiv.org/abs/2603.00568) | Parallel atom and bond graphs connected by Double-Helix blocks; atom--atom, atom--bond, and bond--bond interaction; torsional encoding and covalent-radius regularization | Direct PCQM4Mv2 and QM9 evidence. Its ablations attribute a large part of the gain to adding and coupling the bond graph rather than merely enlarging the atom model. The reported PCQM setup uses 12 layers, 768-dimensional atom and bond streams, 1.5M steps, and roughly seven days on eight A6000 GPUs. | Keep the accepted atom GPS, turn the existing sparse bond/wedge path into a normalized bond stream, and add low-rank symmetric atom--bond exchange. Do not reproduce the full model. | **First-priority family** |
-| [TetraGT, ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/239b0f62a2cb86876a0c7028393d2a18-Abstract-Conference.html) | Bond angles and torsion angles are first-class tokens; selective tetrahedral interaction, directed cyclic angle loss, and hierarchical virtual nodes | Direct PCQM4Mv2 evidence and a component ablation. The smallest reported model is still 60M parameters and about 10 A100 GPU-days, so the complete architecture is outside budget. | Add only a sparse, low-rank torsion state on non-backtracking bonded paths and exchange it with its two wedges and three bonds. | **Highest-priority single mechanism** |
+| [DeMol, ICLR 2026](https://arxiv.org/abs/2603.00568) | Parallel atom and bond graphs connected by Double-Helix blocks; atom--atom, atom--bond, and bond--bond interaction; torsional encoding and covalent-radius regularization | Direct PCQM4Mv2 and QM9 evidence. Its ablations attribute a large part of the gain to adding and coupling the bond graph rather than merely enlarging the atom model. The reported PCQM setup uses 12 layers, 768-dimensional atom and bond streams, 1.5M steps, and roughly seven days on eight A6000 GPUs. | The bounded atom--bond dual-stream adaptation was tested and lost under the frozen local contract. The paper remains an interpretation reference, not an open retry. | **Closed locally** |
+| [TetraGT, ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/239b0f62a2cb86876a0c7028393d2a18-Abstract-Conference.html) | Bond angles and torsion angles are first-class tokens; selective tetrahedral interaction, directed cyclic angle loss, and hierarchical virtual nodes | Direct PCQM4Mv2 evidence and a component ablation. The smallest reported model is still 60M parameters and about 10 A100 GPU-days, so the complete architecture is outside budget. | The bounded persistent-torsion adaptation was tested and lost under the frozen local contract. Full TetraGT remains outside budget. | **Closed locally** |
 | [Dual Graph Transformer, Nature Communications 2026](https://www.nature.com/articles/s41467-026-75005-9) | Atom and bond graphs receive their own self-attention; atom and bond features are mutually fused; relative position, ring structure, lengths, distances, angles, chirality, and E/Z descriptors can bias attention | Quantum-property and HOMO/LUMO evidence, including approximate MMFF/UFF geometry. PCQM is used for pretraining rather than a directly comparable leaderboard experiment. | Test sparse bond-set attention and ring-state encoding separately. Avoid its dense quadratic pair matrices. | **First-priority design reference** |
-| [Edge-Set Attention, Nature Communications 2025](https://www.nature.com/articles/s41467-025-60252-z) | The graph is represented as edge tokens; masked attention connects edges sharing an atom, global edge attention corrects graph misspecification, and attention pooling performs readout | Broad molecular evidence and a PCQM4Mv2 experiment. The paper's reported 0.0235 PCQM validation MAE is anomalous relative to the official landscape and was not accompanied by matched rerun baselines; it is not accepted evidence here. The paper also reports PNA ahead on QM9 frontier orbitals. | Replace wedge mean aggregation with normalized masked edge attention while retaining RWSE and real-bond chemistry. Use sparse segmented attention, not a dense edge mask. | **Second-priority controlled screen** |
-| [RingFormer, AAAI 2025](https://ojs.aaai.org/index.php/AAAI/article/view/31991) | Atom and ring graphs form a hierarchy with local message passing and global attention | Direct evidence on organic-solar-cell properties; especially relevant to conjugated organic-electronic molecules, though not to the PCQM split itself. | Add deterministic ring tokens and atom--ring exchange. Do not add a separate late-fusion branch. | **Third-priority chemistry screen** |
+| [Edge-Set Attention, Nature Communications 2025](https://www.nature.com/articles/s41467-025-60252-z) | The graph is represented as edge tokens; masked attention connects edges sharing an atom, global edge attention corrects graph misspecification, and attention pooling performs readout | Broad molecular evidence and a PCQM4Mv2 experiment. The paper's reported 0.0235 PCQM validation MAE is anomalous relative to the official landscape and was not accompanied by matched rerun baselines; it is not accepted evidence here. The paper also reports PNA ahead on QM9 frontier orbitals. | Local edge-attention and learned-readout adaptations were tested and lost. Dense/global variants remain excluded by attribution and budget. | **Closed locally** |
+| [RingFormer, AAAI 2025](https://ojs.aaai.org/index.php/AAAI/article/view/31991) | Atom and ring graphs form a hierarchy with local message passing and global attention | Direct evidence on organic-solar-cell properties; especially relevant to conjugated organic-electronic molecules, though not to the PCQM split itself. | Add deterministic ring tokens and atom--ring exchange. Do not add a separate late-fusion branch. | **Active bounded screen** |
+| [When does global attention help?, Journal of Cheminformatics 2026](https://link.springer.com/article/10.1186/s13321-026-01171-z) | Controlled MPNN, encoder, GPS and fused local--global switches under one HPO/training framework | Direct official OGB-PCQM4Mv2 Gap evidence: encoder-augmented PaiNN without GPS is smaller and better on MSE/MAE/correlation than the tested DimeNet and GPS-heavy models. | Preserve all accepted local EdgeState/wedge updates but enable global atom attention only after blocks 3, 6 and 9. Compare against a freshly trained full-GPS comparator because parameter count and compute change. | **Highest-confidence post-ring screen** |
 | [GeoMFormer, ICML 2024](https://proceedings.mlr.press/v235/chen24ac.html) | Separate invariant scalar and equivariant vector streams coupled by cross-attention | Strong 3D invariant/equivariant molecular evidence, but not a bounded PCQM architecture result | Add a very small vector channel only after distance-plus-angle geometry reproduces across seeds. Cross-gate it into the scalar bond stream every second block. | **Conditional geometry screen** |
 | [GotenNet, ICLR 2025](https://proceedings.iclr.cc/paper_files/paper/2025/hash/64d4ff4fff788cdffe236f9ce8b09400-Abstract-Conference.html) | Efficient geometric tensor representations, geometry-aware tensor attention, and hierarchical tensor refinement without expensive irreducible-representation products | Strong QM9 and Molecule3D evidence; requires 3D coordinates and targets broader atomistic tasks | Borrow a compact tensor/vector refinement block only if scalar invariant geometry plateaus. | **Conditional geometry reference** |
 
 ### Most important synthesis
 
-DeMol, TetraGT, and DGT independently converge on the same conclusion: a
-molecule should not be represented only as globally attending atom tokens.
-Bonds and higher-order geometric relations need persistent states and direct
-communication paths. The local Sparse Triangle model has already moved in that
-direction, which explains why its next credible extension is a sparse torsion
-and dual-stream repair rather than another generic node convolution.
+DeMol, TetraGT, and DGT correctly motivated persistent bond and higher-order
+states, but the bounded torsion and atom--bond adaptations have now failed
+locally and are closed. The newer controlled PCQM study changes the next
+question: once local bond/wedge information is already strong, global attention
+in every block may be redundant or harmful. The clean post-ring experiment is
+therefore a fixed sparse-global schedule, not another expansion of the global
+or higher-order path.
 
 ### Reusable reference implementations
 
@@ -126,9 +135,9 @@ better in the present screen.
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
 
-## Extended evidence from papers 27--50
+## Extended evidence from papers 27--58
 
-The first review pass established the bond/higher-order queue. Twenty-four
+The first review pass established the bond/higher-order queue. Thirty-two
 additional primary papers were then read to test whether a newer mechanism
 should displace it. Full per-paper notes and source links are in the
 [coverage ledger](recent_literature_coverage_ledger_50.md); this section owns
@@ -151,6 +160,13 @@ only the cross-paper conclusions.
   rejects the assumption that more symmetry machinery is automatically the
   best use of the 12-hour budget.
 
+- The controlled [global-attention study](https://link.springer.com/article/10.1186/s13321-026-01171-z)
+  is the strongest new configuration-level result for this task: on official
+  OGB-PCQM4Mv2, encoder-augmented PAINN without GPS beats the tested DimeNet and
+  encoder-plus-GPS variants. It does not prove that every GPS block should be
+  removed from the accepted local geometry model, but it makes attention
+  frequency a higher-value screen than adding another full global stack.
+
 ### Efficient equivariant and Cartesian representations
 
 - [EquiformerV2](https://proceedings.iclr.cc/paper_files/paper/2024/hash/ab12e8f3443c1a789f595b18d8c597b4-Abstract-Conference.html),
@@ -165,8 +181,10 @@ only the cross-paper conclusions.
   [TACE](https://arxiv.org/abs/2509.14961), and
   [CACE](https://www.nature.com/articles/s41524-024-01332-4) show a second route
   based on Cartesian tensor or body-order bases. CACE is the only one compact
-  enough to motivate a later invariant high-order basis screen; none displaces
-  the sparse torsion question.
+  enough to motivate a later invariant high-order basis screen. The local
+  torsion screen has since failed, so CACE-like moments are now a fallback after
+  the sparse-global question rather than a justification for another torsion
+  retry.
 - [SevenNet](https://arxiv.org/abs/2402.03789) addresses parallel molecular
   dynamics, while [eSEN](https://icml.cc/virtual/2025/poster/45302) addresses
   energy conservation and downstream physical validity. These are important
@@ -203,79 +221,110 @@ only the cross-paper conclusions.
   direct Gap encoders. They provide a credible way to improve ETKDG-derived
   geometry later without reintroducing the rejected dual-SchNet late fusion.
 
-### Decision after 50 papers
+### Relation separation and contact evidence
+
+- [MMGNN](https://arxiv.org/html/2606.20906) uses a shared directed CMPNN over
+  colored atom-pair subgraphs. Its 3D version adds spatial edges and distance,
+  angle and torsion features simultaneously. The authors report the clearest
+  3D regression advantage on FreeSolv, while the 2D model is best on ESOL and
+  near-best on the other regression tasks. There is no PCQM or quantum-Gap
+  result, and no ablation that isolates a non-bonded contact graph. Therefore
+  contact state remains a hypothesis, not a literature-proven transplant.
+- [Graph-Tuple](https://proceedings.mlr.press/v321/chen26a.html) provides a
+  clean relation-separation mechanism: separate intra-view updates and ordered
+  cross-view messages. Its molecular study uses thresholded exact Coulomb
+  matrices on QM7b, not ETKDG molecular graphs. It supports separate relation
+  normalization but cannot set our contact cutoff or claim PCQM transfer.
+- [CEITNet](https://arxiv.org/html/2602.04323) mixes Cartesian local-environment
+  channels and reports an intermediate `K=16` as the best accuracy/stability
+  balance in a crystal tensor task. This is a useful compact-moment prior, not
+  direct scalar-Gap evidence.
+
+### Decision after 58 papers
 
 No newly read paper justifies interrupting the active matched experiment or
-opening a concurrent GPU task. The random-initialized architecture order remains:
+opening a concurrent GPU task. After reading methods, configurations and
+ablations, the random-initialized architecture order is:
 
-1. sparse torsion state;
-2. separately normalized sparse atom--bond attention;
-3. deterministic ring/conjugation hierarchy;
-4. conditional width-16 scalar--vector repair.
+1. active deterministic ring/conjugation hierarchy;
+2. local-heavy sparse-global attention schedule;
+3. separately normalized non-covalent ContactState, after a CPU edge-statistics
+   gate;
+4. compact Cartesian `K=16` moment mixer;
+5. conditional width-16 scalar--vector repair.
 
 The new literature creates two explicitly separate later questions: CACE-like
-compact invariant body-order features, and SliDe/MACE-OFF/AIMNet2 geometry
-teachers. Neither may be called an architecture gain without its own protocol.
+compact invariant body-order features, SliDe/MACE-OFF/AIMNet2 geometry
+teachers, and a bounded global-attention-frequency test. None may be called an
+architecture gain without its own protocol.
 
 ## Prioritized experiment queue
 
-No item below may start while the geometry multiseed confirmation is running.
+No item below may start while the deterministic ring cache/candidate is active.
 Every screen reuses the accepted PCQM 100K/10K roles and begins with seed 42.
 Additional seeds are authorized only after a strict matched improvement.
 
-### 1. Sparse torsion-state EdgeState GPS
+### 1. Deterministic ring/conjugation hierarchy
 
-This is the highest-value untested mechanism.
+This is the active screen and is already frozen in its own protocol. It adds
+smallest-ring and fused-ring states with atom--ring membership exchange while
+preserving the accepted local geometry and direct Gap head. Its result decides
+whether a chemistry hierarchy is useful before any new architecture is opened.
+
+### 2. Local-heavy sparse-global EdgeState GPS
+
+If the ring screen fails, test the global-attention frequency hypothesis raised by
+the controlled OGB-PCQM study. Keep every accepted local state and change only
+the placement of global atom attention:
 
 ```text
 Atom state h
     <-> Bond EdgeState e
     <-> Angle/Wedge state w(i,j,k)
-    <-> Torsion state t(i,j,k,l)
-               |
-          direct Gap head
+    <-> local updates in all 9 blocks
+    <-> global atom attention only after blocks 3, 6 and 9
+                 |
+            direct Gap head
 ```
 
-- Enumerate only non-backtracking bonded paths `i-j-k-l`; no dense four-body
-  tensor.
-- Encode the signed ETKDG dihedral periodically with small sine/cosine or fixed
-  Fourier features.
-- Initialize each torsion from its three bond states and two adjacent wedge
-  states; return low-rank context to those same states.
-- Keep the torsion width small and share projections across alternating blocks
-  so a full-data throughput gate remains plausible.
-- Do not add a second conformer, independent 3D encoder, residual target, or
-  auxiliary HOMO/LUMO head.
+- Use a fresh comparator with the same split, seed, precision, optimizer,
+  direct target and stopping rules; attention removal changes parameter count
+  and throughput, so the old full-GPS result cannot serve as a measured control.
+- Do not alter RWSE, bond distance, wedge angle state, pooling or target head.
+- Do not combine this screen with ContactState, ring tokens, torsion, vector
+  channels or a new optimizer.
 
-### 2. Sparse dual-helix bond attention
+### 3. Sparse non-covalent ContactState
 
-If the torsion-only candidate fails, test the DeMol/DGT/ESA consensus without
-changing geometry:
+If the ring and sparse-global screens fail or leave the information bottleneck
+unresolved, test one relation-separation hypothesis. It has weaker causal
+literature evidence and therefore requires a CPU preflight before GPU work:
 
-- retain the atom GPS stream;
-- apply segmented masked attention among real bonds that share an atom;
-- normalize bond-to-atom and atom-to-bond exchange with separate gates;
-- retain current wedge state but replace its unweighted mean aggregation only;
-- avoid dense all-bond or all-atom pair matrices.
+- derive ETKDG non-covalent atom pairs using one frozen cutoff and exclude real
+  bonds plus pairs already covered by the selected covalent-hop rule;
+- report pair counts, atom-type-pair counts, component coverage, invalid/empty
+  graphs and aggregate hashes without reading any validation/test role;
+- only if the cache is accepted, add a narrow separately normalized ContactState
+  and exchange it at fixed blocks; do not add angles, torsions or subgraph
+  ensembles in the same experiment.
 
-### 3. Ring/conjugation state
+### 4. Compact Cartesian moment mixer
 
-If bond attention fails, test one deterministic chemistry hierarchy:
+If ContactState is not viable or is scientifically negative, test whether the
+explicit wedge representation is the computational bottleneck:
 
-- create ring-system tokens from the 2D molecular graph;
-- exchange atom/bond context with their ring token inside each block;
-- encode aromatic and conjugated membership explicitly;
-- pool through the atom stream only, preventing a late-fusion explanation.
+- retain the real-bond EdgeState and scalar atom stream;
+- replace only the explicit wedge aggregation with a compact channelized
+  Cartesian/invariant moment mixer, starting at `K=16`;
+- preserve the same geometry input and direct Gap head; no equivariant tensor
+  stack, vector stream or new global mixer.
 
-This route is lower priority for PCQM-wide selection but unusually relevant to
-the eventual organic-electronics use case.
+### 5. Compact invariant--vector repair
 
-### 4. Compact invariant--vector repair
-
-This route is conditional on the active distance-plus-angle model reproducing
-across seeds. It tests whether lost orientation, rather than missing scalar
-geometry, is the bottleneck. The vector channel must be much narrower than the
-192-dimensional scalar stream and update only from real bonded geometry.
+This remains a reserve route. It tests whether lost orientation, rather than
+missing scalar geometry, is the bottleneck. The vector channel must be much
+narrower than the 192-dimensional scalar stream and update only from real
+bonded geometry; it remains behind the four scalar/local hypotheses above.
 
 ## Stop rules
 
@@ -294,8 +343,11 @@ geometry, is the bottleneck. The vector channel must be much narrower than the
 
 The 2024--2026 literature does show a meaningful architecture shift beyond the
 2021--2022 leaderboard: persistent bond-centric computation, explicit
-higher-order geometry, and cross-level interaction are replacing simple
-atom-only graph Transformers. The current Sparse Triangle model already
-implements the first half of this shift. The most defensible next step is not a
-larger GPS, generic Mamba block, or another late fusion. It is a sparse torsion
-state followed, if needed, by normalized atom--bond dual-stream attention.
+higher-order geometry, relation-specific interaction and compact local
+encoders are replacing simple atom-only graph Transformers. The current Sparse
+Triangle model already implements much of the persistent local-state shift.
+After reading the actual ablations, the most defensible next question is not
+another larger GPS or a second torsion/atom--bond retry. It is whether the
+accepted local encoder needs global attention in every block. ContactState and
+compact Cartesian moments remain separate, bounded follow-ups with weaker or
+more indirect evidence.
