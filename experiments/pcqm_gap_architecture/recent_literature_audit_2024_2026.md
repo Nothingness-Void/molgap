@@ -10,7 +10,7 @@ scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 The exact unique-paper count and per-paper reading depth are owned by the
 [`coverage ledger`](recent_literature_coverage_ledger_50.md). The retained
-review contains 68 research papers: 23 configuration-level reads and 45
+review contains 72 research papers: 23 configuration-level reads and 49
 mechanism-level reads, plus one critical post-publication audit. The ledger
 filename is retained as a stable historical path from the original 50-paper
 milestone.
@@ -136,14 +136,15 @@ better in the present screen.
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
 
-## Extended evidence from papers 27--68 plus one critical audit
+## Extended evidence from papers 27--72 plus one critical audit
 
 The first review pass established the bond/higher-order queue. Additional
 primary papers were then read to test whether a newer mechanism should
-displace it. The recent method-level passes add six sources on
+displace it. The recent method-level passes add ten sources on
 stereoelectronic representations, attention scheduling, graph-free
 Transformers, message-passing/attention allocation, conformation refinement,
-and topology-matched structural pretraining. Full per-paper notes and source links are in the [coverage
+topology-matched structural pretraining, compact equivariant geometry,
+and motif/scaffold representation learning. Full per-paper notes and source links are in the [coverage
 ledger](recent_literature_coverage_ledger_50.md); this section owns only the
 cross-paper conclusions.
 
@@ -168,6 +169,15 @@ cross-paper conclusions.
   aggregation 0.7 meV, and attention 0.9 meV. The 2D MPNN-only result is
   better than the 2D hybrid. The transferable lesson is local directional
   computation and global summaries, not its 44.3M scale.
+- [Optimal message passing for molecular prediction is simple, attentive and
+  spatial](https://arxiv.org/abs/2509.10871) provides a smaller causal
+  experiment around the same local question. Its ABMP variant transforms edge,
+  source and target states separately, forms an edge-aware attention
+  coefficient, and aggregates with scatter-max. Bidirectionality and attention
+  each help on BACE, but five attention heads do not; the tested variants stay
+  around 0.39M--0.45M parameters. This is support for a directional,
+  degree-robust local operator, not evidence for another global stack or for
+  direct PCQM transfer.
 - [Orb](https://arxiv.org/abs/2410.22570) and
   [Orb-v3](https://arxiv.org/abs/2504.06231) show that a fast non-equivariant,
   non-conservative model can remain competitive in atomistic prediction. This
@@ -231,6 +241,16 @@ cross-paper conclusions.
   reduce different bottlenecks in tensor attention. Their exact models still
   target force fields or cost far more than the bounded PCQM screen. They
   justify optimizing a vector path only after a width-16 order-1 pilot wins.
+- [3DMSE](https://www.nature.com/articles/s41598-025-09842-x) makes the
+  geometry claim testable by ablation: its MPNN feeds a spherical-harmonic and
+  Clebsch--Gordan tensor-field module over distances, angles and dihedrals,
+  followed by hierarchical pooling and attention readout. Removing geometry,
+  equivariance or hierarchical pooling causes distinct error increases. The
+  reported tuning spans 2--5 message layers, hidden widths 64/128/256 and
+  equivariant filters 8/16/32, but the study is limited to at most nine heavy
+  atoms and does not use the official PCQM role contract. It is evidence for
+  an information-flow pattern, not for a full tensor model in the current
+  budget.
 - [ViSNet](https://arxiv.org/abs/2210.16518) remains the clearest precursor for
   direct scalar--vector interaction. [HotPP](https://www.nature.com/articles/s41467-024-51886-6),
   [TACE](https://arxiv.org/abs/2509.14961), and
@@ -276,6 +296,24 @@ cross-paper conclusions.
   trains for 1.5M steps on eight A100s. OuterProduct and TriangularUpdate are
   therefore evidence for bottom-level atom--pair information flow, but the
   result cannot be transferred as a fair random-init or 2D claim.
+- [MotiL](https://www.nature.com/articles/s41467-025-66685-w) separates two
+  effects that motif papers often conflate. DiffMoM first primes a CMPNN by
+  reconstructing bonds from adjacency noise; bi-scaled training then aligns
+  representations from original and pruned twin graphs at graph and motif
+  scales. The reported pruning probability is `0.7`, the bi-scaled stage uses
+  batch 1024 and 50 epochs, and the ablation identifies DiffMoM as the most
+  important stage. Its QM7/QM8/QM9 and MoleculeNet/MoleculeACE gains are
+  pretraining gains, so they motivate a later motif teacher rather than a
+  random-init PCQM architecture claim.
+- [Multi-channel structural hierarchies](https://www.nature.com/articles/s41467-024-55082-4)
+  uses a shared encoder with molecule, scaffold and context channels, prompt
+  tokens to identify the channel, and prompt-query multi-head attention for
+  readout. The channels correspond to molecule contrastive distancing, scaffold
+  contrastive distancing and masked-subgraph/motif context prediction, trained
+  on 1,861,467 ZINC molecules. The authors also state the important limit:
+  2D topology alone cannot resolve conformation or chirality. This is evidence
+  for semantic separation during pretraining, not a reason to add a learned
+  multi-channel gate to the matched random-init screen.
 - [Stereoelectronics-Infused Molecular Graphs](https://arxiv.org/pdf/2408.04520)
   is more chemically specific than a generic auxiliary task. The authors build
   explicit atom, lone-pair, σ/π-bond and donor--acceptor nodes, use a GAT with
@@ -370,7 +408,7 @@ cross-paper conclusions.
   The transferable question is whether topology-conditioned radial fields and
   degree normalization help after a valid geometry input contract is frozen.
 
-### Decision after 68 research papers and one audit
+### Decision after 72 research papers and one audit
 
 No newly read paper justifies interrupting the active matched experiment or
 opening a concurrent GPU task. After reading methods, configurations and
@@ -391,12 +429,16 @@ input/teacher question, GoMS needs an internal table audit before its PCQM
 number can be used, and the 2026 global-attention study remains the strongest
 direct reason to test attention frequency after the ring screen.
 
-The new literature creates four explicitly separate later questions: a
+The new literature reinforces four explicitly separate later questions: a
 RepSet-only readout control, CACE-like compact invariant body-order features,
 SliDe/MACE-OFF/AIMNet2 geometry teachers, and topology-matched GAPE structural
-pretraining. GPS++ is a strengthened explanation for the local-heavy design,
-not a new copy candidate; Uni-Mol+ is a strengthened explanation for why
-bottom-level 3D interaction must be distinguished from late prediction fusion.
+pretraining. MotiL and multi-channel learning strengthen the motif/scaffold
+pretraining case but do not create a new random-init route. 3DMSE strengthens
+the geometry/equivariance evidence while also making the scale and descriptor
+cost boundary explicit. GPS++ and the attentive-message-passing study are
+strengthened explanations for the local-heavy design, not new copy candidates;
+Uni-Mol+ is a strengthened explanation for why bottom-level 3D interaction must
+be distinguished from late prediction fusion.
 The bounded global-attention-frequency test remains the architecture question
 most directly supported by the new attention studies. None may be called an
 architecture gain without its own protocol.
