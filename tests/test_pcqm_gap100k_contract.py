@@ -15,24 +15,7 @@ EXPERIMENT = ROOT / "experiments" / "pcqm_gap_architecture"
 PREP = EXPERIMENT / "kaggle_pcqm_gap100k" / "cpu_prep" / "run_prep.py"
 METADATA = PREP.with_name("kernel-metadata.json")
 ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_cache.py"
-GPU = EXPERIMENT / "kaggle_pcqm_gap100k" / "gpu_seed42" / "run_screen.py"
-GPU_METADATA = GPU.with_name("kernel-metadata.json")
 GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_seed42.py"
-NOVEL_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_novel_seed42.py"
-QUERY_POOL_PROTOCOL = EXPERIMENT / "query_pool_seed42_protocol.md"
-LOCAL_OPERATOR_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_local_operator_search.py"
-LOCAL_OPERATOR_PROTOCOL = EXPERIMENT / "local_operator_search_protocol.md"
-RECURRENT_STATE_GPU = (
-    EXPERIMENT
-    / "kaggle_pcqm_gap100k"
-    / "recurrent_graph_state_seed42"
-    / "run_screen.py"
-)
-RECURRENT_STATE_METADATA = RECURRENT_STATE_GPU.with_name("kernel-metadata.json")
-RECURRENT_STATE_ACCEPTANCE = (
-    EXPERIMENT / "accept_pcqm100k_recurrent_graph_state.py"
-)
-RECURRENT_STATE_PROTOCOL = EXPERIMENT / "recurrent_graph_state_seed42_protocol.md"
 SPARSE_TRIANGLE_GPU = (
     EXPERIMENT
     / "kaggle_pcqm_gap100k"
@@ -154,18 +137,6 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert '"num_layers": 9' in source
     assert '"hidden_channels": 192' in source
     assert "edge_state_channels=64" in source
-    assert "class OGBQueryPoolStructuralGPSWrapper(OGBStructuralGPSWrapper)" in source
-    assert "nn.MultiheadAttention" in source
-    assert "num_pool_queries=4" in source
-    assert 'candidate == "ogb_query_pool_structural_gps9"' in source
-    assert "class OGBLocalOperatorStructuralGPSWrapper" in source
-    assert '"ogb_gated_local_gps9": "resgated"' in source
-    assert '"ogb_edge_attention_local_gps9": "transformer"' in source
-    assert '"ogb_gen_local_gps9": "gen"' in source
-    assert '"ogb_gatv2_local_gps9": "gatv2"' in source
-    assert "class OGBGraphTokenStructuralGPSWrapper" in source
-    assert 'candidate == "ogb_recurrent_graph_state_gps9"' in source
-    assert "token_channels=16" in source
     assert "class OGBGeometrySparseTriangleEdgeStateGPSWrapper" in source
     assert '"ogb_distance_triangle_edge_state_gps9": "distance"' in source
     assert '"ogb_angle_triangle_edge_state_gps9": "angle"' in source
@@ -347,141 +318,12 @@ def test_protocol_freezes_gap_only_kaggle_before_server() -> None:
     assert "/lustre/home/users/sm2/chou/" in protocol
 
 
-def test_gpu_screen_is_time_bounded_local_operator_sequence() -> None:
-    assert assignment_literal(GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "bfaffe332d4c89dc041669679d6fb066e01bce1f"
-    )
-    assert assignment_literal(GPU, "EXPECTED_CACHE_SOURCE_COMMIT") == (
-        "ba82461c53243d733474c8930ac1b86d82451c91"
-    )
-    assert assignment_literal(GPU, "EXPECTED_CACHE_SHA256") == (
-        "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
-    )
-    assert assignment_literal(GPU, "CORE_CANDIDATES") == (
-        "ogb_gated_local_gps9",
-        "ogb_edge_attention_local_gps9",
-        "ogb_gen_local_gps9",
-    )
-    assert assignment_literal(GPU, "OPTIONAL_CANDIDATE") == "ogb_gatv2_local_gps9"
-    assert assignment_literal(GPU, "FROZEN_COMPARATOR") == {
-        "candidate": "ogb_edge_state_structural_gps9",
-        "validation_gap_mae_eV": 0.13798263211250306,
-        "acceptance": "results/seed42_structural_vs_edge_state/acceptance.json",
-    }
-    assert assignment_literal(GPU, "BATCH_SIZE") == 48
-    assert assignment_literal(GPU, "MAX_EPOCHS") == 40
-    assert assignment_literal(GPU, "SEARCH_BUDGET_S") == 14_400
-    source = GPU.read_text(encoding="utf-8")
-    assert "for candidate in CORE_CANDIDATES" in source
-    assert "remaining_s >= max(completed_durations) + OPTIONAL_BUFFER_S" in source
-    assert '"target": "homolumogap"' in source
-    assert '"precision": "fp32"' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
-    metadata = json.loads(GPU_METADATA.read_text(encoding="utf-8"))
-    assert metadata["enable_gpu"] == "true"
-    assert metadata["kernel_sources"] == [
-        "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
-    ]
-
-
 def test_gpu_acceptance_executes_no_model_runtime() -> None:
     assert "torch" not in imported_modules(GPU_ACCEPTANCE)
     source = GPU_ACCEPTANCE.read_text(encoding="utf-8")
     assert '"model_inference_executed": False' in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
-
-
-def test_novel_acceptance_executes_no_model_runtime() -> None:
-    assert "torch" not in imported_modules(NOVEL_ACCEPTANCE)
-    source = NOVEL_ACCEPTANCE.read_text(encoding="utf-8")
-    assert 'CANDIDATE = "ogb_query_pool_structural_gps9"' in source
-    assert 'COMPARATOR = "ogb_edge_state_structural_gps9"' in source
-    assert "COMPARATOR_MAE = 0.13798263211250306" in source
-    assert '"model_inference_executed": False' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
-
-
-def test_query_pool_protocol_preserves_ogb_selection_boundary() -> None:
-    source = QUERY_POOL_PROTOCOL.read_text(encoding="utf-8")
-    assert "direct graph regression" in source
-    assert "No external training data" in source
-    assert "official test-dev access" in source
-    assert "four-hour single-GPU plus single-CPU inference budget" in source
-    assert "One candidate and one GPU task" in source
-
-
-def test_local_operator_acceptance_executes_no_model_runtime() -> None:
-    assert "torch" not in imported_modules(LOCAL_OPERATOR_ACCEPTANCE)
-    source = LOCAL_OPERATOR_ACCEPTANCE.read_text(encoding="utf-8")
-    assert '"model_inference_executed": False' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
-    assert "len(rows) in (3, 4)" in source
-
-
-def test_local_operator_protocol_freezes_three_plus_optional() -> None:
-    source = LOCAL_OPERATOR_PROTOCOL.read_text(encoding="utf-8")
-    assert "Official OGB categorical 2D" in source
-    assert "at most 40 epochs, patience 8" in source
-    assert "Parameter ceiling 5.2M" in source
-    assert "The first three run sequentially" in source
-    assert "No candidate may be retried" in source
-
-
-def test_recurrent_graph_state_screen_preserves_frozen_contract() -> None:
-    assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_SOURCE_COMMIT") == (
-        "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8"
-    )
-    assert assignment_literal(RECURRENT_STATE_GPU, "EXPECTED_CACHE_SHA256") == (
-        "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
-    )
-    assert assignment_literal(RECURRENT_STATE_GPU, "CANDIDATE") == (
-        "ogb_recurrent_graph_state_gps9"
-    )
-    assert assignment_literal(RECURRENT_STATE_GPU, "BATCH_SIZE") == 48
-    assert assignment_literal(RECURRENT_STATE_GPU, "LEARNING_RATE") == 1.6e-4
-    assert assignment_literal(RECURRENT_STATE_GPU, "WEIGHT_DECAY") == 1.0e-6
-    assert assignment_literal(RECURRENT_STATE_GPU, "MAX_EPOCHS") == 40
-    assert assignment_literal(RECURRENT_STATE_GPU, "PATIENCE") == 8
-    assert assignment_literal(RECURRENT_STATE_GPU, "PARAMETER_BUDGET") == 5_200_000
-    assert assignment_literal(RECURRENT_STATE_GPU, "SEARCH_BUDGET_S") == 14_400
-    source = RECURRENT_STATE_GPU.read_text(encoding="utf-8")
-    assert '"precision": "fp32"' in source
-    assert '"target": "homolumogap"' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
-    metadata = json.loads(RECURRENT_STATE_METADATA.read_text(encoding="utf-8"))
-    assert metadata["enable_gpu"] == "true"
-    assert metadata["dataset_sources"] == [
-        "kaseichou/molgap-pcqm-gap100k-global-state-source"
-    ]
-    assert metadata["kernel_sources"] == [
-        "kaseichou/molgap-official-pcqm-gap100k-r1-prep"
-    ]
-
-
-def test_recurrent_graph_state_acceptance_executes_no_model_runtime() -> None:
-    assert "torch" not in imported_modules(RECURRENT_STATE_ACCEPTANCE)
-    source = RECURRENT_STATE_ACCEPTANCE.read_text(encoding="utf-8")
-    assert 'CANDIDATE = "ogb_recurrent_graph_state_gps9"' in source
-    assert 'COMPARATOR = "ogb_edge_state_structural_gps9"' in source
-    assert "COMPARATOR_MAE = 0.13798263211250306" in source
-    assert '"model_inference_executed": False' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
-
-
-def test_recurrent_graph_state_protocol_is_gap_only_and_single_candidate() -> None:
-    source = RECURRENT_STATE_PROTOCOL.read_text(encoding="utf-8")
-    assert "official PCQM4Mv2 task predicts Gap only" in source
-    assert "One Kaggle GPU task" in source
-    assert "Parameter ceiling 5.2M" in source
-    assert "at most 40 epochs, patience 8" in source
-    assert "official validation and test-dev remain unread" in source
-    assert "token-width, seed, optimizer, schedule" in source
 
 
 def test_sparse_triangle_hidden_width_does_not_depend_on_ogb_encoder_api() -> None:

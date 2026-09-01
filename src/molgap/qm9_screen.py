@@ -21,15 +21,9 @@ from .egnn import EGNNWrapper
 from .edge_global_2d import EdgeGlobal2DWrapper
 from .gine import GINEWrapper
 from .gps import (
-    EdgeConditionedStructuralGPSWrapper,
-    DirectedEdgeStateStructuralGPSWrapper,
-    EdgeJKReadoutStructuralGPSWrapper,
-    EdgeReadoutStructuralGPSWrapper,
     EdgeStateStructuralGPSWrapper,
     FrontierCenterGapHead,
-    GraphTokenStructuralGPSWrapper,
     GPSWrapper,
-    SparsePathAttentionStructuralGPSWrapper,
 )
 from .graphs import smiles_to_pyg
 from .geometry_features import (
@@ -46,7 +40,6 @@ from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
 from .pair_triplet_2d import PairTriplet2DWrapper
 from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
 from .pair_gps_2d import (
-    PairGPS2DR2Wrapper,
     PairGPS2DR3Wrapper,
     PairGPS2DWrapper,
 )
@@ -181,22 +174,6 @@ ENCODER_CONFIGS = {
         "batch_size": 48,
         "amp": False,
     },
-    "pair_gps_2d_r2": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "pair_channels": 64,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "distance_cap": 5,
-        "triplet_rank": 8,
-        "triplet_interval": 3,
-        "rwse_dim": 16,
-        "gate_init": 0.1,
-        "batch_size": 48,
-        "amp": False,
-    },
     "edge_state_structural_gps": {
         "kind": "structural_topology",
         "hidden_channels": 192,
@@ -219,99 +196,6 @@ ENCODER_CONFIGS = {
         "rwse_dim": 16,
         "edge_state_channels": 64,
         "consistent_head": True,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "edge_state_structural_readout": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "readout_channels": 32,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "edge_state_structural_jk_readout": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "readout_layers": (3, 6, 9),
-        "readout_channels": 32,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "edge_conditioned_structural_gps": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "graph_token_structural_gps": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "token_channels": 16,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "multihop_edge_state_structural_gps": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "model_edge_dim": 8,
-        "multihop_max_distance": 4,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "sparse_path_attention_structural_gps": {
-        "kind": "structural_multihop",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
-        "path_attention_rank": 16,
-        "path_max_distance": 4,
-        "multihop_attention_distance": 4,
-        "batch_size": 48,
-        "amp": False,
-    },
-    "directed_edge_state_structural_gps": {
-        "kind": "structural_topology",
-        "hidden_channels": 192,
-        "num_layers": 9,
-        "num_heads": 4,
-        "dropout": 0.05,
-        "pooling": "mean",
-        "rwse_dim": 16,
-        "edge_state_channels": 64,
         "batch_size": 48,
         "amp": False,
     },
@@ -1456,10 +1340,6 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         return PairTriplet2DRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "pair_gps_2d":
         return PairGPS2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
-    if candidate == "pair_gps_2d_r2":
-        return PairGPS2DR2Wrapper(
-            in_channels=in_channels, edge_dim=edge_dim, **config
-        ), kind
     if candidate.startswith("pair_gps_2d_r3_"):
         return PairGPS2DR3Wrapper(
             in_channels=in_channels,
@@ -1470,28 +1350,10 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     if candidate in {
         "edge_state_structural_gps",
         "edge_state_structural_orbital",
-        "edge_state_structural_readout",
-        "edge_state_structural_jk_readout",
-        "edge_conditioned_structural_gps",
-        "graph_token_structural_gps",
-        "multihop_edge_state_structural_gps",
-        "sparse_path_attention_structural_gps",
-        "directed_edge_state_structural_gps",
     }:
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
             "edge_state_structural_orbital": EdgeStateStructuralGPSWrapper,
-            "edge_state_structural_readout": EdgeReadoutStructuralGPSWrapper,
-            "edge_state_structural_jk_readout": EdgeJKReadoutStructuralGPSWrapper,
-            "edge_conditioned_structural_gps": EdgeConditionedStructuralGPSWrapper,
-            "graph_token_structural_gps": GraphTokenStructuralGPSWrapper,
-            "multihop_edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
-            "sparse_path_attention_structural_gps": (
-                SparsePathAttentionStructuralGPSWrapper
-            ),
-            "directed_edge_state_structural_gps": (
-                DirectedEdgeStateStructuralGPSWrapper
-            ),
         }
         model_class = model_classes[candidate]
         model = model_class(in_channels=in_channels, edge_dim=edge_dim, **config)
