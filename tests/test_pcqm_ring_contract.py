@@ -63,6 +63,7 @@ def test_ring_cache_runner_is_cpu_only_and_role_sealed():
     assert "with_ring_hierarchy" in source
     assert "from rdkit" not in source
     assert "OFFICIAL_TRAIN_ROWS = 3_378_606" in source
+    assert "58f425258031062c3c3762f13b7d4c160dffba65" in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
     assert "model_inference_executed" in source
@@ -81,6 +82,7 @@ def test_ring_cache_acceptance_executes_no_model_and_pins_parent_hashes():
     assert "import torch" not in source
     assert "model_inference_executed" in source
     assert "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22" in source
+    assert "58f425258031062c3c3762f13b7d4c160dffba65" in source
     assert "zero unresolved failures" in source
     assert "official_validation_role_read" in source
     assert "test_dev_role_read" in source
