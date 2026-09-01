@@ -150,20 +150,15 @@
   `results/geometry_bottom_fusion_multiseed/launch_manifest.json`,
   `results/geometry_bottom_fusion_multiseed/summary.json`, and
   `results/geometry_bottom_fusion_multiseed/decision.md`.
-- The accepted distance-plus-angle candidate is the frozen 100K comparator for
-  the one seed-42 sparse torsion-state task. The separate Kaggle1 CPU torsion
-  derivation completed and passed no-model acceptance; its input mirrors,
-  source/cache identities, and accepted output are recorded in
-  `results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-- The strict paired seed-42 GPU screen stopped before any epoch in versions 1
-  and 2. Manual inspection found that the preflight compared independent CUDA
-  forwards through nondeterministic sparse `index_add_` reductions instead of
-  verifying the actual zero-initialized injection parameters. Under explicit
-  user authority, commit `9a16122` replaced that invalid test with exact CPU
-  shared-backbone equality and zero-projection checks while preserving every
-  scientific field. Kaggle1 version 3 is running; the audit and immutable
-  launch identity are in
-  `results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md` and
-  `results/sparse_torsion_edge_state_seed42/gpu_v3_launch_manifest.json`.
+- The separate Kaggle1 CPU torsion derivation completed and passed no-model
+  acceptance. The paired GPU comparison was recovered from the version-3
+  atomic checkpoint after two documented resume-only infrastructure repairs.
+  Kaggle1 version 5 completed both 40-epoch traces and passed independent
+  no-inference acceptance with the official validation and test-dev roles
+  sealed. Sparse torsion failed the strict seed-42 gate and is closed; the
+  accepted distance-plus-angle candidate remains the frozen 100K comparator.
+  The final decision and compact hashes are in
+  `results/sparse_torsion_edge_state_seed42/gpu_decision.md` and
+  `results/sparse_torsion_edge_state_seed42/gpu_v5_summary.json`.
 
 Task order remains authoritative in `ROADMAP.md`.

@@ -16,7 +16,7 @@ ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-TORSION-SEED42 | Complete the user-authorized seed-42 distance-plus-angle versus sparse-torsion comparison from the version-3 atomic checkpoint | One exact-hash resume runs candidate epoch 39, passes artifact acceptance, and produces a scientific decision, or terminates with preserved evidence | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-ATOM-BOND-DUALSTREAM-DESIGN | Freeze one segmented real-bond dual-stream attention question against the accepted distance-plus-angle comparator | Protocol fixes one information-flow change, 100K/10K roles, parameter/throughput ceiling, atomic outputs, and a single seed-42 gate before any remote submission | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -43,8 +43,8 @@ distance-plus-angle bottom fusion for paired confirmation. Its paired seeds
 43/44 task completed the strict gate: all three paired deltas are negative and
 the mean improved, but seed 44 is marginal. The exact decision is
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
-The resulting distance-plus-angle model is the frozen 100K comparator for the
-single active torsion question below. The exact seed-42 geometry decision is
+The resulting distance-plus-angle model is the frozen 100K comparator. The
+exact seed-42 geometry decision is
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
 
 The contracted torsion question added only a persistent 16-wide state on
@@ -64,14 +64,13 @@ caused the mismatch; version 3 uses exact parameter-level checks under the
 unchanged scientific contract. The audit and launch identity are in
 `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`.
 Version 3 completed the comparator and candidate epochs 0--38 before its
-planned search budget expired. Its hash-pinned resume bundle preserves all RNG,
-optimizer, scheduler, data-order, checkpoint, and trace state; the sole resume
-must skip the comparator and run only candidate epoch 39 plus final artifact
-assembly. Kaggle1 version 4 verified and hydrated the bundle but stopped before
-training because CUDA map-location changed the RNG state's device. Version 5
-repairs only that device restoration and preserves the same checkpoint. The
-evidence contract is in
-`experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.
+planned search budget expired. Its hash-pinned resume preserved all RNG,
+optimizer, scheduler, data-order, checkpoint, and trace state. Version 4
+verified the bundle but stopped before training on an RNG-device mismatch;
+version 5 restored that state, ran only candidate epoch 39, and completed
+artifact assembly. Independent no-inference acceptance passed, while sparse
+torsion failed the scientific gate. The route is closed by
+`experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`
@@ -160,8 +159,8 @@ experiment unless the project objective changes.
 
 | Task | Trigger | Bounded action |
 |---|---|---|
-| Recent-architecture sparse torsion screen | Satisfied: the geometry multiseed task reached an accepted terminal decision and continued 100K discovery was chosen before the A100 gate | Its bounded seed-42 contract is the P0 task above; no additional torsion seeds are authorized by this row |
-| Sparse atom--bond dual-stream attention | The sparse torsion mechanism scientifically fails | Test segmented real-bond attention and symmetric atom--bond exchange without dense pair matrices, new geometry, or a second encoder |
+| Recent-architecture sparse torsion screen | Completed and scientifically failed at seed 42 | Closed by its accepted decision; no additional torsion seeds are authorized |
+| Sparse atom--bond dual-stream attention | Satisfied: the sparse torsion mechanism scientifically failed | The bounded design task is P0 above; do not submit until its protocol and preflight contract are frozen |
 | Ring/conjugation hierarchy | Both higher-order geometry and sparse bond-attention routes scientifically fail | Test deterministic ring-system tokens as one new information flow, without fingerprint or prediction fusion |
 | Compact Cartesian invariant body-order basis | Torsion, bond-stream, and ring mechanisms all fail and a parameter/throughput preflight fits the same ceiling | Isolate one CACE-like invariant basis; do not add equivariant tensors, pretraining, or a new optimizer in the same screen |
 | PairGPS2D sealed-test disposition | Explicit authorization reopens the independent branch after its validation-only decision | Establish arithmetic equivalence before using benchmark-selected TF32 for an accuracy claim |

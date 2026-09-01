@@ -58,11 +58,13 @@ the comparator at seeds 42, 43, and 44 and on their mean, with a marginal
 seed-44 gain. Its decision is
 [`results/geometry_bottom_fusion_multiseed/decision.md`](results/geometry_bottom_fusion_multiseed/decision.md).
 
-The one authorized follow-up is the seed-42 sparse torsion-state question,
-defined in
+The seed-42 sparse torsion-state question was defined in
 [`sparse_torsion_edge_state_seed42_protocol.md`](sparse_torsion_edge_state_seed42_protocol.md).
-It uses the accepted distance-plus-angle model as its frozen 100K comparator
-and does not open additional seeds unless its own strict seed-42 gate passes.
+Its completed, no-inference-accepted comparison failed the strict gate and is
+closed by
+[`results/sparse_torsion_edge_state_seed42/gpu_decision.md`](results/sparse_torsion_edge_state_seed42/gpu_decision.md).
+The accepted distance-plus-angle model remains the frozen 100K comparator; no
+additional torsion seeds were opened.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

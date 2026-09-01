@@ -44,9 +44,12 @@ single-seed arithmetic gate; distance plus angle was the clear winner. Its
 fresh paired seeds 43/44 confirmation completed and passed the no-inference
 acceptance: the candidate improved at both fresh seeds and in the three-seed
 mean, although seed 44 was marginal. The accepted distance-plus-angle model
-is frozen as the 100K comparator for one seed-42 sparse torsion-state question.
-The paired decision is
-`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
+remains the frozen 100K comparator. Its subsequent seed-42 sparse torsion-state
+question completed, passed no-inference acceptance, and failed its strict
+advancement gate. The geometry and torsion decisions are
+`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
+and
+`experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -106,26 +109,12 @@ must not be represented as this new conservative head.
   output passed no-inference acceptance; exact metrics and the seed-44
   marginality caveat are in
   `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
-- The accepted `ogb_distance_angle_triangle_edge_state_gps9` geometry result is
-  the frozen 100K comparator for the one authorized seed-42 sparse torsion
-  question. The separate Kaggle1 CPU torsion derivation completed and passed
-  no-model acceptance; its cache decision is
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_decision.md`.
-  The paired seed-42 torsion GPU task stopped before training in versions 1 and
-  2 because its preflight incorrectly treated two independent CUDA sparse-
-  reduction forwards as an exact zero-injection proof. A user-directed manual
-  audit replaced that invalid test with exact shared-backbone and zero-
-  projection parameter checks. Kaggle1 version 3 then completed the comparator
-  and candidate epochs 0--38 before its planned search budget ended. Its atomic
-  checkpoint is complete. Kaggle1 version 4 accepted the resume bundle but
-  stopped before training because `torch.load(map_location=cuda)` moved the
-  CPU generator state to CUDA. Version 5 applies only a checked device restore
-  for RNG tensors and is running to execute candidate epoch 39 and final
-  artifact assembly under the unchanged scientific contract. The audit and
-  resume records are
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`
-  and
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.
+- The paired seed-42 torsion GPU task completed from its atomic checkpoint in
+  Kaggle1 version 5 after documented preflight, wall-time, and RNG-device
+  repairs. Both 40-epoch traces and all artifacts passed no-inference
+  acceptance, but sparse torsion failed the scientific gate. No fresh torsion
+  seeds or larger runs are authorized. The terminal decision is
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
