@@ -96,7 +96,7 @@ def test_r5_runner_is_validation_only_and_anchors_accepted_r3() -> None:
     assert '"test_role_read": False' in source
     assert "molgap-pure2d-r3-tensor-acceptance-v2" in source
     assert "EXPECTED_R3_MODEL_SHA256" in source
-    assert "EXPECTED_R3_WINNER = \"edge_state_structural_gps\"" in source
+    assert 'EXPECTED_R3_WINNER = "edge_state_structural_gps"' in source
     assert "EXPECTED_PARAMETER_COUNT = 4_767_779" in source
 
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
