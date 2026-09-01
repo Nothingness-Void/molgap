@@ -1,5 +1,8 @@
 # Experiments
 
+- `pcqm_geometry_warmstart/`: fail-closed official-PCQM warm-start of the
+  accepted distance/angle Sparse Triangle EdgeState GPS9.
+
 One directory per **question**, never per calendar phase. A phase number ages;
 a question does not. Anything whose output does not enter the model registry or
 change the recommended predictor belongs here rather than in `production/`.

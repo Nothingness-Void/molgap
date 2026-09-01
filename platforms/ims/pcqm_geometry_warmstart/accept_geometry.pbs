@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart
+BASE=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+
+test "$(realpath "$ROOT")" = "$ROOT"
+cd "$ROOT"
+mkdir -p logs artifacts
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+
+"$PYTHON" -u code/experiments/pcqm_geometry_warmstart/run.py accept \
+  --rows-dir "$BASE/inputs/rows" \
+  --base-acceptance "$BASE/rich_full/graphs/acceptance.json" \
+  --graph-dir "$ROOT/graph_cache" \
+  --output "$ROOT/artifacts/geometry_acceptance.json" \
+  2>&1 | tee "$ROOT/logs/accept_geometry.log"

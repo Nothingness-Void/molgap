@@ -967,6 +967,71 @@ class EdgeJKReadoutStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
         return baseline + self.readout_delta(delta_input)
 
 
+class CategoricalFeatureEncoder(nn.Module):
+    """Sum one learned embedding per categorical molecular feature field."""
+
+    def __init__(self, feature_dims, embedding_dim: int):
+        super().__init__()
+        dimensions = tuple(int(value) for value in feature_dims)
+        if not dimensions or any(value <= 0 for value in dimensions):
+            raise ValueError("feature_dims must contain positive category counts")
+        if embedding_dim <= 0:
+            raise ValueError("embedding_dim must be positive")
+        self.feature_dims = dimensions
+        self.embeddings = nn.ModuleList(
+            nn.Embedding(categories, embedding_dim) for categories in dimensions
+        )
+        for embedding in self.embeddings:
+            nn.init.xavier_uniform_(embedding.weight)
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        if features.ndim != 2 or features.shape[1] != len(self.embeddings):
+            raise ValueError(
+                f"categorical features must have shape [rows, {len(self.embeddings)}]"
+            )
+        encoded = self.embeddings[0](features[:, 0].long())
+        for column, embedding in enumerate(self.embeddings[1:], start=1):
+            encoded = encoded + embedding(features[:, column].long())
+        return encoded
+
+
+class CategoricalEdgeStateStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
+    """Persistent EdgeState GPS using complete categorical atom/bond fields."""
+
+    def __init__(
+        self,
+        *,
+        atom_feature_dims,
+        bond_feature_dims,
+        hidden_channels=128,
+        num_layers=6,
+        num_heads=8,
+        dropout=0.1,
+        n_targets=3,
+        pooling="mean",
+        rwse_dim=16,
+        edge_state_channels=64,
+    ):
+        atom_dimensions = tuple(int(value) for value in atom_feature_dims)
+        bond_dimensions = tuple(int(value) for value in bond_feature_dims)
+        super().__init__(
+            in_channels=len(atom_dimensions),
+            edge_dim=len(bond_dimensions),
+            hidden_channels=hidden_channels,
+            num_layers=num_layers,
+            num_heads=num_heads,
+            dropout=dropout,
+            n_targets=n_targets,
+            pooling=pooling,
+            rwse_dim=rwse_dim,
+            edge_state_channels=edge_state_channels,
+        )
+        self.node_emb = CategoricalFeatureEncoder(atom_dimensions, hidden_channels)
+        self.edge_emb = CategoricalFeatureEncoder(
+            bond_dimensions, edge_state_channels
+        )
+
+
 class OrbitalCenterHead(nn.Module):
     """Predict the frontier-orbital center from a frozen graph embedding."""
 

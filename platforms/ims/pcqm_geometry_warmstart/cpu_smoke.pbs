@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=00:20:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart
+BASE=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test "$(realpath "$BASE")" = "$BASE"
+test -x "$PYTHON"
+test -d "$VENDOR"
+cd "$ROOT"
+mkdir -p logs artifacts
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+
+"$PYTHON" -u code/experiments/pcqm_geometry_warmstart/run.py smoke \
+  --rows-dir "$BASE/inputs/rows" \
+  --base-graph-dir "$BASE/rich_full/graphs" \
+  --base-acceptance "$BASE/rich_full/graphs/acceptance.json" \
+  --source-checkpoint "$BASE/rich_full/convergence_40/best.pt" \
+  --output "$ROOT/artifacts/cpu_smoke.json" \
+  2>&1 | tee "$ROOT/logs/cpu_smoke.log"

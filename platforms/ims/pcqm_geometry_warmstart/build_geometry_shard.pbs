@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart
+BASE=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+SHARD_INDEX="${SHARD_INDEX:-${PBS_ARRAY_INDEX:-}}"
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test -n "$SHARD_INDEX"
+test -s "$ROOT/artifacts/cpu_smoke.json"
+cd "$ROOT"
+mkdir -p logs graph_cache/reports graph_cache/train graph_cache/valid
+export PYTHONPATH="$SHIMS:$VENDOR:$ROOT/code/src"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+
+"$PYTHON" -u code/experiments/pcqm_geometry_warmstart/run.py build-shard \
+  --rows-dir "$BASE/inputs/rows" \
+  --base-graph-dir "$BASE/rich_full/graphs" \
+  --output-dir "$ROOT/graph_cache" \
+  --shard-index "$SHARD_INDEX" \
+  --workers 8 \
+  2>&1 | tee "$ROOT/logs/build_${SHARD_INDEX}.log"

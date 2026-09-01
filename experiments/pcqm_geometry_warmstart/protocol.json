@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-protocol-v1",
+  "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "source_model": "official-full-ogb-rich-edge-state-gps9-epoch30",
+  "official_train_rows": 3378606,
+  "official_valid_rows": 73545,
+  "official_test_used": false,
+  "external_data_used": false,
+  "pretrained_weights_used": true,
+  "max_epochs": 12,
+  "batch_size": 192,
+  "shared_learning_rate": 0.00002,
+  "new_learning_rate": 0.0002,
+  "maximum_projected_training_hours": 12,
+  "dependency_gates": [
+    "cpu_smoke",
+    "geometry_shards",
+    "geometry_acceptance",
+    "gpu_preflight",
+    "training"
+  ],
+  "production_registry_changed": false
+}
