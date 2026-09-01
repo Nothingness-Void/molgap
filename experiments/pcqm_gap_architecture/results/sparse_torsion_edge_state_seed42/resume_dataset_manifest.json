@@ -1,0 +1,56 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-torsion-resume-v1",
+  "complete": true,
+  "source_commit": "3d4cdb73ccd4d01c24e84ac4e4538d6fee7722cb",
+  "torsion_cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173",
+  "source_kernel": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+  "source_kernel_version": 3,
+  "comparator_complete": true,
+  "comparator_checkpoint_epoch": 39,
+  "candidate_checkpoint_epoch": 38,
+  "candidate_best_epoch": 36,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "artifacts": [
+    {
+      "path": "results/ogb_distance_angle_triangle_edge_state_gps9/best_model.pt",
+      "bytes": 19807976,
+      "sha256": "015f470b687a717690bce9ce3ef4f4198ceecba53e0d3ccf3d10606981c118db"
+    },
+    {
+      "path": "results/ogb_distance_angle_triangle_edge_state_gps9/checkpoint.pt",
+      "bytes": 59365125,
+      "sha256": "1c961b8d1962158ac217d2b433b963c018cbe815d32e7d76d95088a43c110f91"
+    },
+    {
+      "path": "results/ogb_distance_angle_triangle_edge_state_gps9/metrics.json",
+      "bytes": 1982,
+      "sha256": "a5ad6ab31df1b5753864860c4bd3352ee21874b3dfcd33d5a4841158736ccb70"
+    },
+    {
+      "path": "results/ogb_distance_angle_triangle_edge_state_gps9/trace.json",
+      "bytes": 10858,
+      "sha256": "b5c6be205ec76c0fd05cc707f031329f2e83fd6b2e0381bcf44b75afe0d02dec"
+    },
+    {
+      "path": "results/ogb_distance_angle_triangle_edge_state_gps9/validation_payload.pt",
+      "bytes": 162664,
+      "sha256": "48d187e7adaf30b67cc2e33ec81656d576a80de22a6ad516aecc2711e07f149c"
+    },
+    {
+      "path": "results/ogb_distance_angle_torsion_triangle_edge_state_gps9/best_model.pt",
+      "bytes": 19860512,
+      "sha256": "abd4254a134025af066fd5099828b047d759f6e8914edcc88c7d378826539f22"
+    },
+    {
+      "path": "results/ogb_distance_angle_torsion_triangle_edge_state_gps9/checkpoint.pt",
+      "bytes": 59526341,
+      "sha256": "7874eacaa3b6e11542a778f2f50696d01cb1ae96dc9b466cf6598b17413298f2"
+    },
+    {
+      "path": "results/ogb_distance_angle_torsion_triangle_edge_state_gps9/trace.json",
+      "bytes": 10612,
+      "sha256": "0042dbd89ea1887be1214dfa1df6d7c3d7c32fb465a469002ed955b51963c224"
+    }
+  ]
+}

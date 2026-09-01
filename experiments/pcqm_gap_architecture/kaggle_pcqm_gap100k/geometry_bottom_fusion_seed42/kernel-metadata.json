@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-geometry-fusion-s42",
+  "title": "MolGap PCQM Geometry Fusion S42",
+  "code_file": "run_geometry_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-geometry-fusion-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pcqm-geometry-cache-s42"
+  ],
+  "model_sources": []
+}

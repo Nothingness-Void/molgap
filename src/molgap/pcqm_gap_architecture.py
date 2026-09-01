@@ -259,7 +259,10 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
         if wedge_channels <= 0:
             raise ValueError("wedge_channels must be positive")
         super().__init__(*args, **kwargs)
-        hidden_channels = self.node_emb.out_features
+        # OGB's categorical AtomEncoder intentionally does not expose the
+        # Linear-style ``out_features`` attribute.  The scalar head retains
+        # the frozen encoder width after the superclass swaps node encoders.
+        hidden_channels = self.head[0].in_features
         dropout = float(kwargs.get("dropout", 0.1))
         self.wedge_channels = int(wedge_channels)
         context_channels = hidden_channels + 2 * self.edge_state_channels
@@ -353,6 +356,17 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
         )
         return self.head(embedding)
 
+    def _post_atom_block(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Optional information-flow hook after one atom GPS block."""
+        return h, edge_state
+
     def encode(
         self,
         x,
@@ -413,6 +427,1089 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
                 )
                 h = h + node_projection(center_context)
             h = conv(h, edge_index, batch, edge_attr=edge_state)
+            h, edge_state = self._post_atom_block(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+            )
+        return self._pool(h, batch)
+
+
+class _SparseBondAttentionBlock(nn.Module):
+    """Separately normalized attention over non-backtracking bond wedges."""
+
+    def __init__(
+        self,
+        channels: int,
+        heads: int,
+        dropout: float,
+        expansion: int = 2,
+    ) -> None:
+        super().__init__()
+        if channels % heads:
+            raise ValueError("bond channels must be divisible by attention heads")
+        self.channels = int(channels)
+        self.heads = int(heads)
+        self.head_channels = self.channels // self.heads
+        self.scale = self.head_channels ** -0.5
+        self.attention_norm = nn.LayerNorm(self.channels)
+        self.query = nn.Linear(self.channels, self.channels)
+        self.key = nn.Linear(self.channels, self.channels)
+        self.value = nn.Linear(self.channels, self.channels)
+        self.attention_dropout = nn.Dropout(dropout)
+        self.attention_output = nn.Linear(self.channels, self.channels)
+        self.ffn_norm = nn.LayerNorm(self.channels)
+        expanded = self.channels * int(expansion)
+        self.ffn_value = nn.Linear(self.channels, expanded)
+        self.ffn_gate = nn.Linear(self.channels, expanded)
+        self.ffn_dropout = nn.Dropout(dropout)
+        self.ffn_output = nn.Linear(expanded, self.channels)
+        for projection in (self.attention_output, self.ffn_output):
+            nn.init.zeros_(projection.weight)
+            nn.init.zeros_(projection.bias)
+
+    def forward(
+        self,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> torch.Tensor:
+        normalized = self.attention_norm(edge_state)
+        attended = edge_state.new_zeros(edge_state.shape)
+        if wedge_edge_ids.shape[0]:
+            from torch_geometric.utils import softmax
+
+            source, target = wedge_edge_ids.unbind(dim=1)
+            query = self.query(normalized[target]).view(
+                -1, self.heads, self.head_channels
+            )
+            key = self.key(normalized[source]).view(
+                -1, self.heads, self.head_channels
+            )
+            value = self.value(normalized[source]).view(
+                -1, self.heads, self.head_channels
+            )
+            score = (query * key).sum(dim=-1) * self.scale
+            weight = softmax(score, target, num_nodes=edge_state.shape[0])
+            message = self.attention_dropout(weight).unsqueeze(-1) * value
+            attended = attended.view(
+                -1, self.heads, self.head_channels
+            )
+            attended.index_add_(0, target, message)
+            attended = attended.reshape(-1, self.channels)
+        edge_state = edge_state + self.attention_output(attended)
+        normalized = self.ffn_norm(edge_state)
+        proposal = self.ffn_value(normalized) * torch.sigmoid(
+            self.ffn_gate(normalized)
+        )
+        return edge_state + self.ffn_output(self.ffn_dropout(proposal))
+
+
+class _LowRankGatedProjection(nn.Module):
+    """Rank-bounded gated residual whose value path starts at zero."""
+
+    def __init__(self, in_channels: int, out_channels: int, rank: int) -> None:
+        super().__init__()
+        self.norm = nn.LayerNorm(in_channels)
+        self.down = nn.Linear(in_channels, rank)
+        self.value = nn.Linear(rank, out_channels)
+        self.gate = nn.Linear(rank, out_channels)
+        nn.init.zeros_(self.value.weight)
+        nn.init.zeros_(self.value.bias)
+
+    def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+        latent = torch.nn.functional.silu(self.down(self.norm(inputs)))
+        return self.value(latent) * torch.sigmoid(self.gate(latent))
+
+
+class _SharedAtomBondExchange(nn.Module):
+    """One shared low-rank exchange between atom and directed-bond streams."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        bond_channels: int,
+        rank: int,
+    ) -> None:
+        super().__init__()
+        self.atom_to_bond = _LowRankGatedProjection(
+            atom_channels, bond_channels, rank
+        )
+        self.bond_to_atom = _LowRankGatedProjection(
+            bond_channels, atom_channels, rank
+        )
+
+    @staticmethod
+    def _incoming_bond_mean(
+        edge_state: torch.Tensor,
+        destinations: torch.Tensor,
+        node_count: int,
+    ) -> torch.Tensor:
+        context = edge_state.new_zeros((node_count, edge_state.shape[1]))
+        counts = edge_state.new_zeros((node_count, 1))
+        context.index_add_(0, destinations, edge_state)
+        counts.index_add_(
+            0,
+            destinations,
+            edge_state.new_ones((edge_state.shape[0], 1)),
+        )
+        return context / counts.clamp_min_(1.0)
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        source, destination = edge_index
+        endpoint_mean = 0.5 * (h[source] + h[destination])
+        edge_state = edge_state + self.atom_to_bond(endpoint_mean)
+        incoming = self._incoming_bond_mean(
+            edge_state, destination, h.shape[0]
+        )
+        h = h + self.bond_to_atom(incoming)
+        return h, edge_state
+
+
+class _FixedGaussianBasis(nn.Module):
+    """Small fixed radial basis for deterministic scalar geometry channels."""
+
+    def __init__(self, minimum: float, maximum: float, channels: int) -> None:
+        super().__init__()
+        if channels < 2 or not maximum > minimum:
+            raise ValueError("Gaussian basis bounds/channels are invalid")
+        centers = torch.linspace(float(minimum), float(maximum), int(channels))
+        spacing = float((maximum - minimum) / (channels - 1))
+        self.register_buffer("centers", centers)
+        self.gamma = 0.5 / (spacing * spacing)
+
+    def forward(self, values: torch.Tensor) -> torch.Tensor:
+        if values.ndim != 2 or values.shape[1] != 1:
+            raise ValueError("geometry scalar must have shape [N, 1]")
+        return torch.exp(-self.gamma * (values - self.centers.view(1, -1)) ** 2)
+
+
+class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBSparseTriangleEdgeStateGPSWrapper
+):
+    """Bottom-fused ETKDG bond/angle geometry inside Sparse Triangle GPS.
+
+    Geometry enters the persistent real-bond and topology-wedge states before
+    every GPS block.  There is no independent 3D encoder, late prediction
+    fusion, or target residual.  Zero-initialized projections make the initial
+    function equal to the accepted pure-2D architecture while preserving full
+    gradient flow into the new geometry channels.
+    """
+
+    MODES = {"distance", "angle", "distance_angle"}
+
+    def __init__(
+        self,
+        *args,
+        geometry_mode: str,
+        geometry_basis_channels: int = 16,
+        **kwargs,
+    ) -> None:
+        if geometry_mode not in self.MODES:
+            raise ValueError(f"Unknown geometry mode: {geometry_mode}")
+        super().__init__(*args, **kwargs)
+        self.geometry_mode = geometry_mode
+        self.distance_basis = _FixedGaussianBasis(0.75, 2.25, geometry_basis_channels)
+        self.angle_basis = _FixedGaussianBasis(-1.0, 1.0, geometry_basis_channels)
+        if "distance" in geometry_mode:
+            self.distance_initial = nn.Linear(
+                geometry_basis_channels, self.edge_state_channels, bias=False
+            )
+            self.distance_updates = nn.ModuleList(
+                nn.Linear(
+                    geometry_basis_channels, self.edge_state_channels, bias=False
+                )
+                for _ in self.convs
+            )
+            nn.init.zeros_(self.distance_initial.weight)
+            for projection in self.distance_updates:
+                nn.init.zeros_(projection.weight)
+        if "angle" in geometry_mode:
+            self.angle_initial = nn.Linear(
+                geometry_basis_channels, self.wedge_channels, bias=False
+            )
+            self.angle_updates = nn.ModuleList(
+                nn.Linear(geometry_basis_channels, self.wedge_channels, bias=False)
+                for _ in self.convs
+            )
+            nn.init.zeros_(self.angle_initial.weight)
+            for projection in self.angle_updates:
+                nn.init.zeros_(projection.weight)
+
+    @staticmethod
+    def _geometry_mask(
+        geometry_valid: torch.Tensor,
+        batch: torch.Tensor,
+        node_ids: torch.Tensor,
+    ) -> torch.Tensor:
+        valid = geometry_valid.reshape(-1).float()
+        if valid.shape[0] <= int(batch.max()):
+            raise ValueError("geometry_valid does not cover the batched graphs")
+        return valid[batch[node_ids]].view(-1, 1)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+    ):
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        """Create optional state for a subclass without changing the base."""
+        return auxiliary_payload
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        """Update optional state after a complete atom block."""
+        return h, edge_state, auxiliary_state
+
+    def _encode_geometry(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        auxiliary_payload=None,
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Geometry Triangle GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(f"random_walk_pe must have shape {expected}")
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        self._validate_wedge_ids(wedge_edge_ids, edge_index.shape[1])
+        if tuple(edge_distance.shape) != (edge_index.shape[1], 1):
+            raise ValueError("edge_distance is not aligned to directed bonds")
+        if tuple(wedge_angle_cos.shape) != (wedge_edge_ids.shape[0], 1):
+            raise ValueError("wedge_angle_cos is not aligned to wedges")
+        if not torch.isfinite(edge_distance).all() or not torch.isfinite(
+            wedge_angle_cos
+        ).all():
+            raise ValueError("geometry contains non-finite values")
+
+        h = self._embed_nodes(x)
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self._embed_edges(edge_attr)
+        first, second = wedge_edge_ids.unbind(dim=1)
+        centers = edge_index[1, first]
+
+        distance_features = None
+        if "distance" in self.geometry_mode:
+            edge_mask = self._geometry_mask(
+                geometry_valid, batch, edge_index[0]
+            )
+            distance_features = self.distance_basis(edge_distance.float()) * edge_mask
+            edge_state = edge_state + self.distance_initial(distance_features)
+
+        angle_features = None
+        if "angle" in self.geometry_mode and wedge_edge_ids.shape[0]:
+            wedge_mask = self._geometry_mask(geometry_valid, batch, centers)
+            angle_features = self.angle_basis(wedge_angle_cos.float()) * wedge_mask
+
+        wedge_state = None
+        if wedge_edge_ids.shape[0]:
+            initial_context = torch.cat(
+                [edge_state[first], edge_state[second], h[centers]], dim=-1
+            )
+            wedge_state = self.wedge_initial(initial_context)
+            if angle_features is not None:
+                wedge_state = wedge_state + self.angle_initial(angle_features)
+
+        auxiliary_state = self._initialize_geometry_auxiliary(
+            h, batch, auxiliary_payload
+        )
+
+        for layer, (
+            edge_update,
+            wedge_update,
+            edge_projection,
+            node_projection,
+            conv,
+        ) in enumerate(
+            zip(
+                self.edge_updates,
+                self.wedge_updates,
+                self.wedge_to_edge,
+                self.wedge_to_node,
+                self.convs,
+            )
+        ):
+            edge_state = edge_update(h, edge_index, edge_state)
+            if distance_features is not None:
+                edge_state = edge_state + self.distance_updates[layer](
+                    distance_features
+                )
+            if wedge_state is not None:
+                context = torch.cat(
+                    [edge_state[first], edge_state[second], h[centers]], dim=-1
+                )
+                wedge_state = wedge_update(context, wedge_state)
+                if angle_features is not None:
+                    wedge_state = wedge_state + self.angle_updates[layer](
+                        angle_features
+                    )
+                edge_context = self._aggregate_to_edges(
+                    wedge_state, wedge_edge_ids, edge_state.shape[0]
+                )
+                edge_state = edge_state + edge_projection(edge_context)
+                center_context = self._aggregate_to_centers(
+                    wedge_state, centers, h.shape[0]
+                )
+                h = h + node_projection(center_context)
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
+            h, edge_state = self._post_atom_block(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+            )
+            h, edge_state, auxiliary_state = self._update_geometry_auxiliary(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                batch,
+                auxiliary_state,
+            )
+        return self._pool(h, batch)
+
+
+class _SharedRingHierarchyUpdate(nn.Module):
+    """One narrow recurrent atom--ring--ring update shared across depth."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        ring_channels: int,
+        ring_edge_channels: int,
+        exchange_rank: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        self.ring_channels = int(ring_channels)
+        self.atom_projection = nn.Linear(atom_channels, ring_channels)
+        self.edge_projection = nn.Linear(ring_edge_channels, ring_channels)
+        combined_channels = 3 * ring_channels
+        self.update_norm = nn.LayerNorm(combined_channels)
+        self.update_gate = nn.Linear(combined_channels, ring_channels)
+        self.update_value = nn.Sequential(
+            nn.Linear(combined_channels, ring_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(ring_channels, ring_channels),
+        )
+        self.output_norm = nn.LayerNorm(ring_channels)
+        self.ring_to_atom = _LowRankGatedProjection(
+            ring_channels, atom_channels, exchange_rank
+        )
+
+    @staticmethod
+    def _membership_mean(
+        source: torch.Tensor,
+        source_ids: torch.Tensor,
+        target_ids: torch.Tensor,
+        target_count: int,
+    ) -> torch.Tensor:
+        result = source.new_zeros((target_count, source.shape[1]))
+        counts = source.new_zeros((target_count, 1))
+        result.index_add_(0, target_ids, source[source_ids])
+        counts.index_add_(
+            0, target_ids, source.new_ones((source_ids.shape[0], 1))
+        )
+        return result / counts.clamp_min_(1.0)
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        ring_state: torch.Tensor,
+        atom_ring_index: torch.Tensor,
+        ring_edge_index: torch.Tensor,
+        ring_edge_attr: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        if ring_state.shape[0] == 0:
+            return h, ring_state
+        atom_ids, ring_ids = atom_ring_index.unbind(dim=0)
+        atom_context = self._membership_mean(
+            h, atom_ids, ring_ids, ring_state.shape[0]
+        )
+        atom_context = self.atom_projection(atom_context)
+
+        neighbor_context = ring_state.new_zeros(ring_state.shape)
+        if ring_edge_index.shape[1]:
+            source, target = ring_edge_index.unbind(dim=0)
+            messages = ring_state[source] + self.edge_projection(
+                ring_edge_attr.float()
+            )
+            counts = ring_state.new_zeros((ring_state.shape[0], 1))
+            neighbor_context.index_add_(0, target, messages)
+            counts.index_add_(
+                0, target, ring_state.new_ones((target.shape[0], 1))
+            )
+            neighbor_context = neighbor_context / counts.clamp_min_(1.0)
+
+        combined = self.update_norm(
+            torch.cat([ring_state, atom_context, neighbor_context], dim=-1)
+        )
+        gate = torch.sigmoid(self.update_gate(combined))
+        proposal = self.update_value(combined)
+        ring_state = self.output_norm(ring_state + gate * proposal)
+
+        atom_ring_context = self._membership_mean(
+            ring_state, ring_ids, atom_ids, h.shape[0]
+        )
+        return h + self.ring_to_atom(atom_ring_context), ring_state
+
+
+class OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """Distance/angle GPS with persistent deterministic smallest-ring state."""
+
+    HIERARCHY_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        ring_channels: int = 64,
+        ring_feature_channels: int = 12,
+        ring_edge_channels: int = 4,
+        exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        if ring_channels <= 0 or ring_feature_channels <= 0:
+            raise ValueError("ring channels must be positive")
+        super().__init__(*args, geometry_mode="distance_angle", **kwargs)
+        hidden_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.ring_channels = int(ring_channels)
+        self.ring_feature_channels = int(ring_feature_channels)
+        self.ring_edge_channels = int(ring_edge_channels)
+        self.ring_feature_encoder = nn.Sequential(
+            nn.LayerNorm(self.ring_feature_channels),
+            nn.Linear(self.ring_feature_channels, self.ring_channels),
+            nn.LayerNorm(self.ring_channels),
+        )
+        self.ring_update = _SharedRingHierarchyUpdate(
+            hidden_channels,
+            self.ring_channels,
+            self.ring_edge_channels,
+            exchange_rank,
+            dropout,
+        )
+        self.ring_initial_norm = nn.LayerNorm(self.ring_channels)
+
+    @staticmethod
+    def _validate_ring_payload(
+        ring_features: torch.Tensor,
+        atom_ring_index: torch.Tensor,
+        ring_edge_index: torch.Tensor,
+        ring_edge_attr: torch.Tensor,
+        node_count: int,
+        feature_channels: int,
+        edge_channels: int,
+    ) -> None:
+        ring_count = int(ring_features.shape[0])
+        if tuple(ring_features.shape) != (ring_count, feature_channels):
+            raise ValueError("ring_features has the wrong shape")
+        if atom_ring_index.ndim != 2 or atom_ring_index.shape[0] != 2:
+            raise ValueError("atom_ring_index must have shape [2, M]")
+        if ring_edge_index.ndim != 2 or ring_edge_index.shape[0] != 2:
+            raise ValueError("ring_edge_index must have shape [2, R]")
+        if tuple(ring_edge_attr.shape) != (
+            ring_edge_index.shape[1],
+            edge_channels,
+        ):
+            raise ValueError("ring edge attributes are not aligned")
+        if not torch.isfinite(ring_features).all() or not torch.isfinite(
+            ring_edge_attr
+        ).all():
+            raise ValueError("ring payload contains non-finite values")
+        if atom_ring_index.shape[1]:
+            atom_ids, ring_ids = atom_ring_index.unbind(dim=0)
+            if int(atom_ids.min()) < 0 or int(atom_ids.max()) >= node_count:
+                raise ValueError("atom-ring membership has an invalid atom id")
+            if int(ring_ids.min()) < 0 or int(ring_ids.max()) >= ring_count:
+                raise ValueError("atom-ring membership has an invalid ring id")
+            counts = torch.bincount(ring_ids, minlength=ring_count)
+            if counts.shape[0] != ring_count or torch.any(counts == 0):
+                raise ValueError("every ring must have at least one member atom")
+        elif ring_count:
+            raise ValueError("ring features exist without atom membership")
+        if ring_edge_index.shape[1] and (
+            int(ring_edge_index.min()) < 0
+            or int(ring_edge_index.max()) >= ring_count
+        ):
+            raise ValueError("ring relation has an invalid ring id")
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        self._validate_ring_payload(
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+            x.shape[0],
+            self.ring_feature_channels,
+            self.ring_edge_channels,
+        )
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            auxiliary_payload={
+                "ring_features": ring_features,
+                "atom_ring_index": atom_ring_index,
+                "ring_edge_index": ring_edge_index,
+                "ring_edge_attr": ring_edge_attr,
+            },
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is None:
+            raise ValueError("ring hierarchy payload is required")
+        ring_features = auxiliary_payload["ring_features"]
+        atom_ring_index = auxiliary_payload["atom_ring_index"]
+        ring_state = self.ring_feature_encoder(ring_features.float())
+        if ring_state.shape[0]:
+            atom_ids, ring_ids = atom_ring_index.unbind(dim=0)
+            atom_context = self.ring_update._membership_mean(
+                h, atom_ids, ring_ids, ring_state.shape[0]
+            )
+            ring_state = self.ring_initial_norm(
+                ring_state + self.ring_update.atom_projection(atom_context)
+            )
+        return {**auxiliary_payload, "ring_state": ring_state}
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        if layer not in self.HIERARCHY_LAYERS:
+            return h, edge_state, auxiliary_state
+        h, ring_state = self.ring_update(
+            h,
+            auxiliary_state["ring_state"],
+            auxiliary_state["atom_ring_index"],
+            auxiliary_state["ring_edge_index"],
+            auxiliary_state["ring_edge_attr"],
+        )
+        auxiliary_state["ring_state"] = ring_state
+        return h, edge_state, auxiliary_state
+
+
+class OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """Distance/angle GPS with a sparse, separately normalized bond stream."""
+
+    DUAL_STREAM_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        bond_attention_heads: int = 4,
+        exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, geometry_mode="distance_angle", **kwargs)
+        hidden_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.bond_stream_blocks = nn.ModuleDict(
+            {
+                str(layer): _SparseBondAttentionBlock(
+                    self.edge_state_channels,
+                    bond_attention_heads,
+                    dropout,
+                )
+                for layer in self.DUAL_STREAM_LAYERS
+            }
+        )
+        self.atom_bond_exchange = _SharedAtomBondExchange(
+            hidden_channels,
+            self.edge_state_channels,
+            exchange_rank,
+        )
+
+    def _post_atom_block(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        key = str(layer)
+        if key not in self.bond_stream_blocks:
+            return h, edge_state
+        edge_state = self.bond_stream_blocks[key](
+            edge_state, wedge_edge_ids
+        )
+        return self.atom_bond_exchange(h, edge_index, edge_state)
+
+
+class _SharedTorsionGatedUpdate(nn.Module):
+    """One gated torsion-state update cell reused at every GPS block."""
+
+    def __init__(
+        self,
+        context_channels: int,
+        torsion_channels: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        self.context_norm = nn.LayerNorm(context_channels)
+        self.context_proj = nn.Linear(context_channels, torsion_channels)
+        self.state_norm = nn.LayerNorm(torsion_channels)
+        combined_channels = torsion_channels * 2
+        self.gate = nn.Linear(combined_channels, torsion_channels)
+        self.proposal = nn.Sequential(
+            nn.Linear(combined_channels, torsion_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(torsion_channels, torsion_channels),
+        )
+        self.output_norm = nn.LayerNorm(torsion_channels)
+
+    def forward(
+        self,
+        context: torch.Tensor,
+        torsion_state: torch.Tensor,
+    ) -> torch.Tensor:
+        context_state = self.context_proj(self.context_norm(context))
+        combined = torch.cat(
+            [context_state, self.state_norm(torsion_state)], dim=-1
+        )
+        gate = torch.sigmoid(self.gate(combined))
+        proposal = self.proposal(combined)
+        return self.output_norm(torsion_state + gate * proposal)
+
+
+class OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """Distance/angle Sparse Triangle GPS with one sparse torsion state.
+
+    Torsions are attached only to cached non-backtracking bonded paths.  Their
+    zero-initialized projections cannot perturb the accepted distance-plus-
+    angle function at initialization; after optimization they exchange
+    context only with their three bonds and two adjacent wedges.
+    """
+
+    TORSION_FEATURE_CHANNELS = 4
+
+    def __init__(
+        self,
+        *args,
+        torsion_channels: int = 16,
+        **kwargs,
+    ) -> None:
+        if torsion_channels <= 0:
+            raise ValueError("torsion_channels must be positive")
+        super().__init__(*args, geometry_mode="distance_angle", **kwargs)
+        self.torsion_channels = int(torsion_channels)
+        context_channels = (
+            3 * self.edge_state_channels
+            + 2 * self.wedge_channels
+            + self.TORSION_FEATURE_CHANNELS
+        )
+        self.torsion_initial = nn.Sequential(
+            nn.LayerNorm(context_channels),
+            nn.Linear(context_channels, self.torsion_channels),
+            nn.LayerNorm(self.torsion_channels),
+        )
+        self.torsion_update = _SharedTorsionGatedUpdate(
+            context_channels,
+            self.torsion_channels,
+            float(kwargs.get("dropout", 0.1)),
+        )
+        self.torsion_to_edge = nn.Linear(
+            self.torsion_channels, self.edge_state_channels
+        )
+        self.torsion_to_wedge = nn.Linear(
+            self.torsion_channels, self.wedge_channels
+        )
+        for projection in (self.torsion_to_edge, self.torsion_to_wedge):
+            nn.init.zeros_(projection.weight)
+            nn.init.zeros_(projection.bias)
+
+    @staticmethod
+    def _validate_torsion_inputs(
+        torsion_edge_ids: torch.Tensor,
+        torsion_wedge_ids: torch.Tensor,
+        torsion_fourier: torch.Tensor,
+        torsion_valid: torch.Tensor,
+        edge_count: int,
+        wedge_count: int,
+    ) -> None:
+        torsion_count = int(torsion_edge_ids.shape[0])
+        if torsion_edge_ids.ndim != 2 or torsion_edge_ids.shape[1] != 3:
+            raise ValueError("torsion_edge_ids must have shape [T, 3]")
+        if torsion_wedge_ids.ndim != 2 or torsion_wedge_ids.shape[1] != 2:
+            raise ValueError("torsion_wedge_ids must have shape [T, 2]")
+        if torsion_wedge_ids.shape[0] != torsion_count:
+            raise ValueError("torsion wedge ids are not aligned to torsions")
+        if tuple(torsion_fourier.shape) != (
+            torsion_count,
+            OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper.TORSION_FEATURE_CHANNELS,
+        ):
+            raise ValueError("torsion_fourier is not aligned to torsion paths")
+        if tuple(torsion_valid.shape) != (torsion_count, 1):
+            raise ValueError("torsion_valid is not aligned to torsion paths")
+        if torsion_count and (
+            int(torsion_edge_ids.min()) < 0
+            or int(torsion_edge_ids.max()) >= edge_count
+        ):
+            raise ValueError("torsion edge id falls outside the batched edge set")
+        if torsion_count and (
+            int(torsion_wedge_ids.min()) < 0
+            or int(torsion_wedge_ids.max()) >= wedge_count
+        ):
+            raise ValueError("torsion wedge id falls outside the batched wedge set")
+        if not torch.isfinite(torsion_fourier).all() or not torch.isfinite(
+            torsion_valid
+        ).all():
+            raise ValueError("torsion payload contains non-finite values")
+        if torch.any(torsion_valid < 0) or torch.any(torsion_valid > 1):
+            raise ValueError("torsion_valid must lie in [0, 1]")
+
+    @staticmethod
+    def _aggregate_to_indices(
+        state: torch.Tensor,
+        indices: torch.Tensor,
+        count: int,
+    ) -> torch.Tensor:
+        context = state.new_zeros((count, state.shape[1]))
+        occurrences = state.new_zeros((count, 1))
+        for column in range(indices.shape[1]):
+            selected = indices[:, column]
+            context.index_add_(0, selected, state)
+            occurrences.index_add_(
+                0, selected, state.new_ones((state.shape[0], 1))
+            )
+        return context / occurrences.clamp_min_(1.0)
+
+    def _torsion_context(
+        self,
+        edge_state: torch.Tensor,
+        wedge_state: torch.Tensor,
+        torsion_edge_ids: torch.Tensor,
+        torsion_wedge_ids: torch.Tensor,
+        torsion_features: torch.Tensor,
+    ) -> torch.Tensor:
+        parts = [
+            edge_state[torsion_edge_ids[:, column]]
+            for column in range(3)
+        ]
+        parts.extend(
+            wedge_state[torsion_wedge_ids[:, column]] for column in range(2)
+        )
+        parts.append(torsion_features)
+        return torch.cat(parts, dim=-1)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        torsion_edge_ids,
+        torsion_wedge_ids,
+        torsion_fourier,
+        torsion_valid,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            torsion_edge_ids,
+            torsion_wedge_ids,
+            torsion_fourier,
+            torsion_valid,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        torsion_edge_ids,
+        torsion_wedge_ids,
+        torsion_fourier,
+        torsion_valid,
+    ):
+        if random_walk_pe is None:
+            raise ValueError("Torsion geometry GPS requires random_walk_pe")
+        expected = (x.shape[0], self.rwse_dim)
+        if random_walk_pe.ndim != 2 or tuple(random_walk_pe.shape) != expected:
+            raise ValueError(f"random_walk_pe must have shape {expected}")
+        if not torch.isfinite(random_walk_pe).all():
+            raise ValueError("random_walk_pe contains non-finite values")
+        self._validate_wedge_ids(wedge_edge_ids, edge_index.shape[1])
+        if tuple(edge_distance.shape) != (edge_index.shape[1], 1):
+            raise ValueError("edge_distance is not aligned to directed bonds")
+        if tuple(wedge_angle_cos.shape) != (wedge_edge_ids.shape[0], 1):
+            raise ValueError("wedge_angle_cos is not aligned to wedges")
+        if not torch.isfinite(edge_distance).all() or not torch.isfinite(
+            wedge_angle_cos
+        ).all():
+            raise ValueError("geometry contains non-finite values")
+        self._validate_torsion_inputs(
+            torsion_edge_ids,
+            torsion_wedge_ids,
+            torsion_fourier,
+            torsion_valid,
+            edge_index.shape[1],
+            wedge_edge_ids.shape[0],
+        )
+
+        h = self._embed_nodes(x)
+        h = h + self.rwse_encoder(random_walk_pe.float())
+        edge_state = self._embed_edges(edge_attr)
+        first, second = wedge_edge_ids.unbind(dim=1)
+        centers = edge_index[1, first]
+
+        edge_mask = self._geometry_mask(geometry_valid, batch, edge_index[0])
+        distance_features = self.distance_basis(edge_distance.float()) * edge_mask
+        edge_state = edge_state + self.distance_initial(distance_features)
+
+        angle_features = None
+        if wedge_edge_ids.shape[0]:
+            wedge_mask = self._geometry_mask(geometry_valid, batch, centers)
+            angle_features = self.angle_basis(wedge_angle_cos.float()) * wedge_mask
+
+        wedge_state = None
+        if wedge_edge_ids.shape[0]:
+            initial_context = torch.cat(
+                [edge_state[first], edge_state[second], h[centers]], dim=-1
+            )
+            wedge_state = self.wedge_initial(initial_context)
+            if angle_features is not None:
+                wedge_state = wedge_state + self.angle_initial(angle_features)
+
+        torsion_state = None
+        torsion_mask = None
+        torsion_features = None
+        if torsion_edge_ids.shape[0]:
+            if wedge_state is None:
+                raise ValueError("torsion paths require cached wedges")
+            torsion_mask = torsion_valid.float()
+            torsion_features = torsion_fourier.float() * torsion_mask
+            initial_torsion_context = self._torsion_context(
+                edge_state,
+                wedge_state,
+                torsion_edge_ids,
+                torsion_wedge_ids,
+                torsion_features,
+            )
+            torsion_state = self.torsion_initial(initial_torsion_context)
+            torsion_state = torsion_state * torsion_mask
+
+        for layer, (
+            edge_update,
+            wedge_update,
+            edge_projection,
+            node_projection,
+            conv,
+        ) in enumerate(
+            zip(
+                self.edge_updates,
+                self.wedge_updates,
+                self.wedge_to_edge,
+                self.wedge_to_node,
+                self.convs,
+            )
+        ):
+            edge_state = edge_update(h, edge_index, edge_state)
+            edge_state = edge_state + self.distance_updates[layer](
+                distance_features
+            )
+            if wedge_state is not None:
+                context = torch.cat(
+                    [edge_state[first], edge_state[second], h[centers]], dim=-1
+                )
+                wedge_state = wedge_update(context, wedge_state)
+                if angle_features is not None:
+                    wedge_state = wedge_state + self.angle_updates[layer](
+                        angle_features
+                    )
+                if torsion_state is not None:
+                    torsion_context = self._torsion_context(
+                        edge_state,
+                        wedge_state,
+                        torsion_edge_ids,
+                        torsion_wedge_ids,
+                        torsion_features,
+                    )
+                    torsion_state = self.torsion_update(
+                        torsion_context, torsion_state
+                    ) * torsion_mask
+                    edge_context = self._aggregate_to_indices(
+                        torsion_state, torsion_edge_ids, edge_state.shape[0]
+                    )
+                    wedge_context = self._aggregate_to_indices(
+                        torsion_state, torsion_wedge_ids, wedge_state.shape[0]
+                    )
+                    edge_state = edge_state + self.torsion_to_edge(edge_context)
+                    wedge_state = wedge_state + self.torsion_to_wedge(
+                        wedge_context
+                    )
+                edge_context = self._aggregate_to_edges(
+                    wedge_state, wedge_edge_ids, edge_state.shape[0]
+                )
+                edge_state = edge_state + edge_projection(edge_context)
+                center_context = self._aggregate_to_centers(
+                    wedge_state, centers, h.shape[0]
+                )
+                h = h + node_projection(center_context)
+            h = conv(h, edge_index, batch, edge_attr=edge_state)
         return self._pool(h, batch)
 
 
@@ -447,6 +1544,47 @@ def make_pcqm_gap_encoder(candidate: str):
             **common,
             edge_state_channels=64,
             wedge_channels=16,
+        )
+    geometry_modes = {
+        "ogb_distance_triangle_edge_state_gps9": "distance",
+        "ogb_angle_triangle_edge_state_gps9": "angle",
+        "ogb_distance_angle_triangle_edge_state_gps9": "distance_angle",
+    }
+    if candidate in geometry_modes:
+        return OGBGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_mode=geometry_modes[candidate],
+            geometry_basis_channels=16,
+        )
+    if candidate == "ogb_distance_angle_torsion_triangle_edge_state_gps9":
+        return OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            torsion_channels=16,
+            geometry_basis_channels=16,
+        )
+    if candidate == "ogb_distance_angle_dual_stream_triangle_edge_state_gps9":
+        return OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            bond_attention_heads=4,
+            exchange_rank=32,
+        )
+    if candidate == "ogb_distance_angle_ring_hierarchy_triangle_edge_state_gps9":
+        return OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            ring_channels=64,
+            ring_feature_channels=12,
+            ring_edge_channels=4,
+            exchange_rank=32,
         )
     if candidate == "ogb_query_pool_structural_gps9":
         return OGBQueryPoolStructuralGPSWrapper(

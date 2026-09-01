@@ -51,6 +51,17 @@ all-pairs cost of PairGPS?
 5. A failure closes this information-flow question. No seed, width, schedule,
    optimizer, or cache-threshold retry is allowed under this protocol.
 
+## Authorized implementation repair
+
+The R2 kernel failed before the first epoch because the wrapper queried an OGB
+`AtomEncoder` attribute that the installed API does not expose. It produced no
+model result and therefore did not test the information-flow question. On
+2026-08-29 the user explicitly authorized one R3 implementation-only retry.
+R3 changes only the hidden-width lookup and source identity; every frozen data,
+architecture, seed, precision, batch, optimizer, schedule, cache, comparator,
+and sealed-role condition above remains unchanged. No further automatic retry
+is authorized.
+
 ## Timing boundary
 
 The CPU cache is a graph-representation preflight. Before any full-data run,

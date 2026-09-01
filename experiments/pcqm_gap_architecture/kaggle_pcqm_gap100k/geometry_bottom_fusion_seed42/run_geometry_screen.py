@@ -1,0 +1,636 @@
+"""Kaggle GPU: three seed-42 bottom-fused PCQM geometry candidates."""
+from __future__ import annotations
+
+import gc
+import hashlib
+import json
+import math
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+
+OUT = Path("/kaggle/working/pcqm_gap100k_geometry_bottom_fusion_seed42")
+PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
+EXPECTED_SOURCE_COMMIT = "e083bee19ee6a13cd9f72e91229752a9d5f56389"
+EXPECTED_PARENT_GRAPH_SHA256 = (
+    "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21"
+)
+EXPECTED_WEDGE_SHA256 = (
+    "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
+)
+CANDIDATES = (
+    "ogb_distance_triangle_edge_state_gps9",
+    "ogb_angle_triangle_edge_state_gps9",
+    "ogb_distance_angle_triangle_edge_state_gps9",
+)
+FROZEN_COMPARATOR = {
+    "candidate": "ogb_sparse_triangle_edge_state_gps9",
+    "seed": 42,
+    "validation_gap_mae_eV": 0.13790177369117737,
+    "acceptance": "results/sparse_triangle_edge_state_r3_seed42/acceptance.json",
+}
+SEED = 42
+BATCH_SIZE = 48
+LEARNING_RATE = 1.6e-4
+WEIGHT_DECAY = 1.0e-6
+MAX_EPOCHS = 40
+PATIENCE = 8
+PARAMETER_BUDGET = 5_200_000
+SEARCH_BUDGET_S = 34_200
+
+
+def atomic_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def atomic_torch_save(path: Path, value) -> None:
+    import torch
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    torch.save(value, temporary)
+    os.replace(temporary, path)
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def tensor_sha256(value) -> str:
+    array = value.detach().cpu().contiguous().numpy()
+    return hashlib.sha256(array.tobytes(order="C")).hexdigest()
+
+
+def ensure_pascal_compatible_torch() -> None:
+    import torch
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("Kaggle did not allocate a GPU")
+    capability = torch.cuda.get_device_capability(0)
+    if capability != (6, 0):
+        return
+    if "sm_60" in set(torch.cuda.get_arch_list()):
+        return
+    if os.environ.get(PASCAL_COMPAT_RESTART) == "1":
+        raise RuntimeError("Compatibility install still lacks sm_60")
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--quiet",
+            "--no-cache-dir",
+            "--no-deps",
+            "--force-reinstall",
+            "torch==2.7.1",
+            "nvidia-cusparselt-cu12==0.6.3",
+            "--index-url",
+            "https://download.pytorch.org/whl/cu126",
+        ]
+    )
+    os.environ[PASCAL_COMPAT_RESTART] = "1"
+    os.execv(sys.executable, [sys.executable, *sys.argv])
+
+
+def install_dependencies() -> None:
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            "--no-deps",
+            "torch-geometric==2.6.1",
+            "ogb==1.3.6",
+        ]
+    )
+
+
+def source_python_root() -> Path:
+    matches = list(Path("/kaggle/input").rglob("src/molgap/pcqm_gap_architecture.py"))
+    if len(matches) == 1:
+        return matches[0].parents[1]
+    archives = list(Path("/kaggle/input").rglob("src.zip"))
+    if len(archives) != 1:
+        raise RuntimeError(f"Expected one source tree/archive, found {matches}/{archives}")
+    extracted = Path("/kaggle/working/_molgap_geometry_screen_source")
+    shutil.unpack_archive(archives[0], extracted)
+    modules = list(extracted.rglob("molgap/pcqm_gap_architecture.py"))
+    if len(modules) != 1:
+        raise RuntimeError(f"Unexpected source archive layout: {modules}")
+    return modules[0].parents[1]
+
+
+def find_geometry_cache() -> tuple[Path, dict]:
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-etkdg-geometry-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one geometry cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_SOURCE_COMMIT,
+        "parent_graph_cache_aggregate_sha256": EXPECTED_PARENT_GRAPH_SHA256,
+        "parent_wedge_cache_aggregate_sha256": EXPECTED_WEDGE_SHA256,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "geometry_method": "ETKDGv3",
+        "optimization_method": "MMFF94s",
+        "single_conformer": True,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"Geometry cache contract changed for {key}")
+    if float(manifest.get("valid_geometry_fraction", 0.0)) < 0.99:
+        raise RuntimeError("Geometry cache valid fraction is below 0.99")
+    failures_path = root / manifest["failures_file"]
+    if sha256_file(failures_path) != manifest["failures_file_sha256"]:
+        raise RuntimeError("Geometry failure ledger hash changed")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"Geometry shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != manifest["aggregate_sha256"]:
+        raise RuntimeError("Geometry aggregate hash changed")
+    return root, manifest
+
+
+def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
+    import torch
+
+    graphs = {"train": [], "validation": []}
+    for shard in manifest["shards"]:
+        payload = torch.load(
+            root / shard["file"], map_location="cpu", weights_only=False
+        )
+        if len(payload) != int(shard["graph_count"]):
+            raise RuntimeError(f"Geometry graph count changed: {shard['file']}")
+        graphs[shard["role"]].extend(payload)
+    if len(graphs["train"]) != 100_000 or len(graphs["validation"]) != 10_000:
+        raise RuntimeError("Loaded geometry role counts changed")
+    for role, items in graphs.items():
+        for graph in items[: min(64, len(items))]:
+            if tuple(graph.pos.shape) != (graph.num_nodes, 3):
+                raise RuntimeError(f"{role} position alignment changed")
+            if tuple(graph.edge_distance.shape) != (graph.edge_index.shape[1], 1):
+                raise RuntimeError(f"{role} distance alignment changed")
+            if tuple(graph.wedge_angle_cos.shape) != (
+                graph.wedge_edge_ids.shape[0],
+                1,
+            ):
+                raise RuntimeError(f"{role} angle alignment changed")
+    return graphs
+
+
+def set_seed(seed: int) -> None:
+    import numpy as np
+    import torch
+
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+def forward(model, batch):
+    return model(
+        batch.x,
+        batch.edge_index,
+        batch.edge_attr,
+        batch.batch,
+        batch.random_walk_pe,
+        batch.wedge_edge_ids,
+        batch.edge_distance,
+        batch.wedge_angle_cos,
+        batch.geometry_valid,
+    )
+
+
+def preflight(graphs: dict[str, list]) -> list[dict]:
+    import torch
+    import torch.nn.functional as functional
+    from torch_geometric.loader import DataLoader
+
+    from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
+
+    device = torch.device("cuda")
+    batch = next(
+        iter(DataLoader(graphs["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))
+    ).to(device)
+    rows = []
+    for candidate in CANDIDATES:
+        set_seed(SEED)
+        model = make_pcqm_gap_encoder(candidate).to(device)
+        parameter_count = sum(parameter.numel() for parameter in model.parameters())
+        if parameter_count > PARAMETER_BUDGET:
+            raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
+        torch.cuda.reset_peak_memory_stats()
+        started = time.perf_counter()
+        prediction = forward(model, batch)
+        loss = functional.l1_loss(prediction, batch.y.view(-1, 1))
+        loss.backward()
+        torch.cuda.synchronize()
+        gradients = [
+            parameter.grad
+            for parameter in model.parameters()
+            if parameter.requires_grad and parameter.grad is not None
+        ]
+        row = {
+            "candidate": candidate,
+            "parameter_count": parameter_count,
+            "finite_prediction": bool(torch.isfinite(prediction).all()),
+            "finite_loss": bool(torch.isfinite(loss)),
+            "finite_gradients": bool(gradients)
+            and all(bool(torch.isfinite(gradient).all()) for gradient in gradients),
+            "peak_memory_bytes": int(torch.cuda.max_memory_reserved()),
+            "elapsed_s": time.perf_counter() - started,
+        }
+        if not all(
+            row[key] for key in ("finite_prediction", "finite_loss", "finite_gradients")
+        ):
+            raise RuntimeError(f"Non-finite geometry preflight: {row}")
+        rows.append(row)
+        del model, prediction, loss, gradients
+        gc.collect()
+        torch.cuda.empty_cache()
+    atomic_json(
+        OUT / "preflight.json",
+        {
+            "format": "molgap-pcqm-gap100k-geometry-preflight-v1",
+            "complete": True,
+            "source_commit": EXPECTED_SOURCE_COMMIT,
+            "gpu": torch.cuda.get_device_name(0),
+            "batch_size": BATCH_SIZE,
+            "models": rows,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        },
+    )
+    del batch
+    gc.collect()
+    torch.cuda.empty_cache()
+    return rows
+
+
+def evaluate(model, loader, target_mean, target_std, device) -> dict:
+    import torch
+
+    model.eval()
+    predictions = []
+    targets = []
+    row_indices = []
+    with torch.no_grad():
+        for batch in loader:
+            batch = batch.to(device, non_blocking=True)
+            prediction = forward(model, batch) * target_std + target_mean
+            predictions.append(prediction.cpu())
+            targets.append(batch.y.view(-1, 1).cpu())
+            row_indices.append(batch.row_index.view(-1).cpu())
+    prediction = torch.cat(predictions)
+    target = torch.cat(targets)
+    row_index = torch.cat(row_indices)
+    return {
+        "mae_eV": float((prediction - target).abs().mean()),
+        "prediction": prediction,
+        "target": target,
+        "row_index": row_index,
+    }
+
+
+def train_one(
+    graphs: dict[str, list],
+    candidate: str,
+    task_started: float,
+) -> dict:
+    import torch
+    import torch.nn.functional as functional
+    from torch_geometric.loader import DataLoader
+
+    from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
+
+    if time.perf_counter() - task_started >= SEARCH_BUDGET_S:
+        raise TimeoutError("Geometry screen budget exhausted before next candidate")
+    set_seed(SEED)
+    run_dir = OUT / "results" / candidate
+    run_dir.mkdir(parents=True, exist_ok=True)
+    train_targets = torch.tensor(
+        [float(graph.y.view(-1)[0]) for graph in graphs["train"]],
+        dtype=torch.float32,
+    )
+    target_mean = train_targets.mean().item()
+    target_std = train_targets.std(unbiased=False).item()
+    if not math.isfinite(target_std) or target_std <= 0:
+        raise RuntimeError("Invalid target standard deviation")
+    train_generator = torch.Generator().manual_seed(SEED)
+    train_loader = DataLoader(
+        graphs["train"],
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        generator=train_generator,
+        num_workers=2,
+        pin_memory=True,
+        persistent_workers=True,
+    )
+    validation_loader = DataLoader(
+        graphs["validation"],
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        num_workers=2,
+        pin_memory=True,
+        persistent_workers=True,
+    )
+    device = torch.device("cuda")
+    model = make_pcqm_gap_encoder(candidate).to(device)
+    parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    if parameter_count > PARAMETER_BUDGET:
+        raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
+    optimizer = torch.optim.AdamW(
+        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+    )
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=MAX_EPOCHS, eta_min=1.0e-6
+    )
+    checkpoint_path = run_dir / "checkpoint.pt"
+    best_model_path = run_dir / "best_model.pt"
+    start_epoch = 0
+    best_epoch = -1
+    best_mae = float("inf")
+    stale_epochs = 0
+    trace = []
+    if checkpoint_path.exists():
+        checkpoint = torch.load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
+        if checkpoint.get("candidate") != candidate or checkpoint.get("seed") != SEED:
+            raise RuntimeError("Geometry checkpoint identity changed")
+        model.load_state_dict(checkpoint["model"])
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        scheduler.load_state_dict(checkpoint["scheduler"])
+        start_epoch = int(checkpoint["epoch"]) + 1
+        best_epoch = int(checkpoint["best_epoch"])
+        best_mae = float(checkpoint["best_mae"])
+        stale_epochs = int(checkpoint["stale_epochs"])
+        trace = list(checkpoint["trace"])
+
+    mean_tensor = torch.tensor(target_mean, device=device)
+    std_tensor = torch.tensor(target_std, device=device)
+    training_started = time.perf_counter()
+    for epoch in range(start_epoch, MAX_EPOCHS):
+        if time.perf_counter() - task_started >= SEARCH_BUDGET_S:
+            raise TimeoutError("Geometry screen budget exhausted during training")
+        model.train()
+        epoch_started = time.perf_counter()
+        train_absolute_error = 0.0
+        train_count = 0
+        for batch in train_loader:
+            batch = batch.to(device, non_blocking=True)
+            optimizer.zero_grad(set_to_none=True)
+            normalized_target = (batch.y.view(-1, 1) - mean_tensor) / std_tensor
+            normalized_prediction = forward(model, batch)
+            loss = functional.l1_loss(normalized_prediction, normalized_target)
+            loss.backward()
+            optimizer.step()
+            prediction_eV = normalized_prediction.detach() * std_tensor + mean_tensor
+            train_absolute_error += float(
+                (prediction_eV - batch.y.view(-1, 1)).abs().sum()
+            )
+            train_count += batch.y.numel()
+        scheduler.step()
+        validation = evaluate(model, validation_loader, mean_tensor, std_tensor, device)
+        elapsed = time.perf_counter() - epoch_started
+        improved = validation["mae_eV"] < best_mae
+        if improved:
+            best_mae = validation["mae_eV"]
+            best_epoch = epoch
+            stale_epochs = 0
+            atomic_torch_save(
+                best_model_path,
+                {
+                    "candidate": candidate,
+                    "seed": SEED,
+                    "model": model.state_dict(),
+                    "target_mean": target_mean,
+                    "target_std": target_std,
+                    "best_epoch": best_epoch,
+                    "best_mae": best_mae,
+                    "source_commit": EXPECTED_SOURCE_COMMIT,
+                },
+            )
+        else:
+            stale_epochs += 1
+        row = {
+            "epoch": epoch,
+            "train_mae_eV": train_absolute_error / train_count,
+            "validation_mae_eV": validation["mae_eV"],
+            "learning_rate": optimizer.param_groups[0]["lr"],
+            "elapsed_s": elapsed,
+            "graphs_per_s": len(graphs["train"]) / elapsed,
+            "improved": improved,
+        }
+        trace.append(row)
+        atomic_json(run_dir / "trace.json", {"epochs": trace})
+        atomic_torch_save(
+            checkpoint_path,
+            {
+                "candidate": candidate,
+                "seed": SEED,
+                "epoch": epoch,
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "best_epoch": best_epoch,
+                "best_mae": best_mae,
+                "stale_epochs": stale_epochs,
+                "trace": trace,
+                "source_commit": EXPECTED_SOURCE_COMMIT,
+            },
+        )
+        print(
+            f"{candidate} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
+            f"val={row['validation_mae_eV']:.6f}eV {elapsed:.1f}s"
+            f"{' *' if improved else ''}",
+            flush=True,
+        )
+        if stale_epochs >= PATIENCE:
+            break
+
+    best = torch.load(best_model_path, map_location=device, weights_only=False)
+    model.load_state_dict(best["model"])
+    validation = evaluate(model, validation_loader, mean_tensor, std_tensor, device)
+    payload_path = run_dir / "validation_payload.pt"
+    atomic_torch_save(
+        payload_path,
+        {
+            "candidate": candidate,
+            "seed": SEED,
+            "row_index": validation["row_index"],
+            "target_eV": validation["target"],
+            "prediction_eV": validation["prediction"],
+            "source_commit": EXPECTED_SOURCE_COMMIT,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        },
+    )
+    metrics = {
+        "format": "molgap-pcqm-gap100k-geometry-candidate-v1",
+        "complete": True,
+        "candidate": candidate,
+        "source_commit": EXPECTED_SOURCE_COMMIT,
+        "seed": SEED,
+        "parameter_count": parameter_count,
+        "parameter_budget": PARAMETER_BUDGET,
+        "best_epoch": best_epoch,
+        "validation_gap_mae_eV": validation["mae_eV"],
+        "validation_rows": int(validation["target"].numel()),
+        "validation_row_index_sha256": tensor_sha256(validation["row_index"]),
+        "validation_target_sha256": tensor_sha256(validation["target"]),
+        "target_mean_eV": target_mean,
+        "target_std_eV": target_std,
+        "epochs_completed": len(trace),
+        "training_elapsed_s": time.perf_counter() - training_started,
+        "mean_throughput_graphs_per_s": sum(
+            row["graphs_per_s"] for row in trace
+        )
+        / len(trace),
+        "contract": {
+            "batch_size": BATCH_SIZE,
+            "learning_rate": LEARNING_RATE,
+            "weight_decay": WEIGHT_DECAY,
+            "max_epochs": MAX_EPOCHS,
+            "patience": PATIENCE,
+            "precision": "fp32",
+            "target": "gap",
+            "geometry": "ETKDGv3+MMFF94s-single-conformer-bottom-fusion",
+        },
+        "artifacts": {
+            "best_model": str(best_model_path.relative_to(OUT)),
+            "best_model_sha256": sha256_file(best_model_path),
+            "checkpoint": str(checkpoint_path.relative_to(OUT)),
+            "checkpoint_sha256": sha256_file(checkpoint_path),
+            "validation_payload": str(payload_path.relative_to(OUT)),
+            "validation_payload_sha256": sha256_file(payload_path),
+            "trace": str((run_dir / "trace.json").relative_to(OUT)),
+            "trace_sha256": sha256_file(run_dir / "trace.json"),
+        },
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    atomic_json(run_dir / "metrics.json", metrics)
+    del model, optimizer, scheduler, train_loader, validation_loader, validation
+    gc.collect()
+    torch.cuda.empty_cache()
+    return metrics
+
+
+def select(runs: list[dict]) -> tuple[str, bool]:
+    positive = [
+        row
+        for row in runs
+        if row["validation_gap_mae_eV"]
+        < FROZEN_COMPARATOR["validation_gap_mae_eV"]
+    ]
+    if not positive:
+        return FROZEN_COMPARATOR["candidate"], False
+    winner = min(positive, key=lambda row: row["validation_gap_mae_eV"])
+    return winner["candidate"], True
+
+
+def main() -> None:
+    task_started = time.perf_counter()
+    OUT.mkdir(parents=True, exist_ok=True)
+    completed_runs = []
+    try:
+        ensure_pascal_compatible_torch()
+        install_dependencies()
+        sys.path.insert(0, str(source_python_root()))
+        marker = next(Path("/kaggle/input").rglob("PCQM_GAP100K_SOURCE_COMMIT.txt"))
+        source_commit = marker.read_text(encoding="utf-8").strip()
+        if source_commit != EXPECTED_SOURCE_COMMIT:
+            raise RuntimeError(f"Geometry source commit changed: {source_commit}")
+        cache_root, cache_manifest = find_geometry_cache()
+        graphs = load_graphs(cache_root, cache_manifest)
+        preflight_rows = preflight(graphs)
+        for candidate in CANDIDATES:
+            result = train_one(graphs, candidate, task_started)
+            completed_runs.append(result)
+            atomic_json(
+                OUT / "progress.json",
+                {
+                    "complete": False,
+                    "completed_candidates": [
+                        row["candidate"] for row in completed_runs
+                    ],
+                    "elapsed_s": time.perf_counter() - task_started,
+                },
+            )
+        selected_candidate, positive = select(completed_runs)
+        selection = {
+            "format": "molgap-pcqm-gap100k-geometry-bottom-fusion-screen-v1",
+            "complete": True,
+            "source_commit": source_commit,
+            "geometry_cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
+            "geometry_valid_fraction": cache_manifest["valid_geometry_fraction"],
+            "seed": SEED,
+            "candidates": list(CANDIDATES),
+            "preflight": preflight_rows,
+            "runs": completed_runs,
+            "frozen_comparator": FROZEN_COMPARATOR,
+            "selected_candidate": selected_candidate,
+            "selected_strictly_improves": positive,
+            "search_budget_s": SEARCH_BUDGET_S,
+            "elapsed_s": time.perf_counter() - task_started,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        }
+        atomic_json(OUT / "selection.json", selection)
+        atomic_json(
+            OUT / "progress.json",
+            {
+                "complete": True,
+                "completed_candidates": [row["candidate"] for row in completed_runs],
+                "elapsed_s": selection["elapsed_s"],
+            },
+        )
+        print(json.dumps(selection, indent=2), flush=True)
+    except Exception as error:
+        atomic_json(
+            OUT / "failure.json",
+            {
+                "type": type(error).__name__,
+                "message": str(error),
+                "completed_candidates": [row["candidate"] for row in completed_runs],
+                "elapsed_s": time.perf_counter() - task_started,
+            },
+        )
+        raise
+
+
+if __name__ == "__main__":
+    main()

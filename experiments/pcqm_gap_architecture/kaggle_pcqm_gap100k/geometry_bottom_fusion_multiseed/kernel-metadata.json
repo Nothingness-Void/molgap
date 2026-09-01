@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-geometry-confirm-s43-s44",
+  "title": "MolGap PCQM Geometry Confirm S43 S44",
+  "code_file": "run_confirmation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-geometry-fusion-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pcqm-geometry-cache-s42"
+  ],
+  "model_sources": []
+}

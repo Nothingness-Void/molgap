@@ -1,0 +1,108 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-bottom-fusion-final-v1",
+  "recorded_at": "2026-08-30T03:36:35.766Z",
+  "kernel": {
+    "ref": "kaseichou/molgap-pcqm-geometry-fusion-s42",
+    "version": 2,
+    "terminal_status": "KernelWorkerStatus.COMPLETE",
+    "output_root": "platforms/_records/kaggle/training/pcqm_gap100k_geometry_bottom_fusion_seed42_v2/pcqm_gap100k_geometry_bottom_fusion_seed42"
+  },
+  "acceptance": {
+    "accepted": true,
+    "errors": [],
+    "record": "experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/gpu_acceptance.json",
+    "selection_sha256": "f7ddac1f79a2b66dc6f0cf914b624ea31e8c29c915c58e0407f70b691bf86dbc",
+    "preflight_sha256": "374debd79d887add5cf6fc32cee7ad7181d41397d5c339620a6091abb50e8db5",
+    "progress_sha256": "55535711a735ee917202fae7270f0edcfa1cc566883ed34d0e8702db7d6fb9c",
+    "acceptance_sha256": "b81388affa46f6684adf7f78450234dc160a9e21ddc05038037f5ad79052d9e2"
+  },
+  "scientific_contract": {
+    "launch_commit": "eb88821",
+    "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+    "parent_graph_cache_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+    "parent_wedge_cache_sha256": "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406",
+    "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+    "geometry_valid_fraction": 0.9971363636363636,
+    "seed": 42,
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "gap",
+    "geometry": "ETKDGv3+MMFF94s-single-conformer-bottom-fusion",
+    "parameter_budget": 5200000,
+    "search_budget_s": 34200
+  },
+  "candidate_results": [
+    {
+      "candidate": "ogb_distance_triangle_edge_state_gps9",
+      "parameter_count": 4888497,
+      "best_epoch": 36,
+      "epochs_completed": 40,
+      "validation_gap_mae_eV": 0.13780435919761658,
+      "mean_throughput_graphs_per_s": 459.6229548589321,
+      "training_elapsed_s": 8730.72391958,
+      "metrics_sha256": "c5e408c938a9f13c35423aac3ddc64206f2f82a79363bd6a658366dd202ba6ae",
+      "best_model_sha256": "b7eab14610b0cbffee1862f6cdd7de28af36a7d86cc2b1ea318c476902031aae",
+      "checkpoint_sha256": "a277b25bffbc9f5c76f519ac166a8cbc6bf386f099669616953ab478aa8bac29",
+      "validation_payload_sha256": "b91ebe4c6cc81b4a04757fb5c493ed95cbc3490fef12d25ad053b290deb35fb0",
+      "trace_sha256": "21de8f958f5a657f8ee15af74f6883d23320d5af3aec3ca8933dd03c31b3adc1"
+    },
+    {
+      "candidate": "ogb_angle_triangle_edge_state_gps9",
+      "parameter_count": 4880817,
+      "best_epoch": 36,
+      "epochs_completed": 40,
+      "validation_gap_mae_eV": 0.1367538571357727,
+      "mean_throughput_graphs_per_s": 455.4333112564527,
+      "training_elapsed_s": 8806.486647171,
+      "metrics_sha256": "2c7e020859d0ac19692b53537e32e5e5ce43a32f2359f8589c1997a42d311137",
+      "best_model_sha256": "65ca19af2078903d973ffbdb295f6fd7a68b2ba83b4a90d33b5992aefbc71848",
+      "checkpoint_sha256": "ca73e7af58819ae55a6f968c695d38098d762d8a5d7b9991d5daac0c0fc8988a",
+      "validation_payload_sha256": "68631f98cc2718a162eeaadd741f27b94ef7e7923fc2db44c000938f892a8901",
+      "trace_sha256": "3d604fbbdae2e90cb269adcafc385606287330649b293ec6a24548123f45af63"
+    },
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+      "parameter_count": 4891057,
+      "best_epoch": 35,
+      "epochs_completed": 40,
+      "validation_gap_mae_eV": 0.13559719920158386,
+      "mean_throughput_graphs_per_s": 450.7830963644844,
+      "training_elapsed_s": 8897.180526573,
+      "metrics_sha256": "9c3b1a14ba9dfe3ab0adf1cadcfdb405b8998804f03a5074ef6806dae0c08597",
+      "best_model_sha256": "9ae2e0fa5af3846e7ad8e37ff65f9ffbfb32b63a146d5793cfbf81151f85cdcc",
+      "checkpoint_sha256": "a218b67dcd8ad22296470b88855d99c1ea680964009d3d79522b7ff0486326c2",
+      "validation_payload_sha256": "91885ae349e147828ee3c156a3aa2de91652fca35673a5283e914b105b84ec44",
+      "trace_sha256": "83cf9b5d04009441fbd9866a80ebbaeefb0d146dc9897a3393adb34c87fa7b5c"
+    }
+  ],
+  "preflight": {
+    "gpu": "Tesla P100-PCIE-16GB",
+    "peak_memory_bytes_each_candidate": 314572800,
+    "peak_memory_mib_each_candidate": 300,
+    "all_predictions_finite": true,
+    "all_losses_finite": true,
+    "all_gradients_finite": true
+  },
+  "selection": {
+    "selected_candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+    "selected_strictly_improves": true,
+    "comparator": "ogb_sparse_triangle_edge_state_gps9",
+    "comparator_validation_gap_mae_eV": 0.13790177369117737,
+    "improvement_eV": 0.00230457448959351,
+    "total_screen_elapsed_s": 26553.39593787,
+    "training_elapsed_s_sum": 26434.391093324
+  },
+  "boundaries": {
+    "model_inference_executed": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "molecular_research_server_accessed": false,
+    "seed_43_44_submitted": false,
+    "full_data_authorized": false
+  },
+  "local_model_inference_executed": false
+}

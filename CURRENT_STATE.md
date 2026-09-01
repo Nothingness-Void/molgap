@@ -29,12 +29,43 @@ official PCQM training role on Kaggle. Official validation and test-dev remain
 sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
-three matched local-operator replacements then failed their strict gates and
-are closed. The next seed-42 question is a recurrent graph state inside the
-accepted EdgeState backbone, selected by the resource-bounded route audit. It
-has no seed-43/44 or full-data authorization. Exact completed conclusions
-belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
+real-bond EdgeState GPS9 as the initial comparator. Learned-query pooling,
+three matched local-operator replacements, and recurrent graph state are
+closed. Sparse Triangle R3 then completed its paired seeds 42/43/44
+confirmation and improved EdgeState in every seed and their mean. It is the
+accepted pure-2D comparator for materially new 100K questions; the exact result
+is owned by
+`experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md`.
+
+The seed-42 bottom-fusion screen established that deterministic ETKDG geometry
+can help when injected into the accepted topology model inside every block.
+Distance-only, angle-only, and their combination all passed the strict
+single-seed arithmetic gate; distance plus angle was the clear winner. Its
+fresh paired seeds 43/44 confirmation completed and passed the no-inference
+acceptance: the candidate improved at both fresh seeds and in the three-seed
+mean, although seed 44 was marginal. The accepted distance-plus-angle model
+remains the frozen 100K comparator. Its subsequent seed-42 sparse torsion-state
+question completed, passed no-inference acceptance, and failed its strict
+advancement gate. The 50-paper post-result synthesis selected one sparse
+atom--bond dual-stream seed-42 screen as the next bounded architecture
+question. Kaggle1 kernel
+`nothingnessvoid/molgap-pcqm-sparse-atom-bond-dual-stream-s42` version 1
+completed and passed no-inference artifact acceptance, but its `0.1364679933
+eV` validation Gap MAE was worse than the frozen comparator's `0.1353926808
+eV`; the mechanism is closed without more seeds or parameter retries. The
+next literature-ranked bounded question is the deterministic smallest-ring
+hierarchy frozen in
+`experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md`. It has
+implementation and CPU-cache authority. The private CPU cache kernel
+`nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42` version 1 has been
+submitted; no GPU successor is authorized until its downloaded cache passes
+acceptance. The geometry, torsion, and
+dual-stream decisions are
+`experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
+and
+`experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`,
+and
+`experiments/pcqm_gap_architecture/results/sparse_atom_bond_dual_stream_seed42/decision.md`.
 
 ## Prior Architecture Evidence
 
@@ -70,9 +101,36 @@ must not be represented as this new conservative head.
   version 1, completed. Its three required candidates passed no-inference
   artifact acceptance but all failed the scientific advancement gate; the
   time-gated fourth candidate was not launched.
-- The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. Kaggle2 is running the sole matched recurrent
-  graph-state seed-42 screen; no multiseed or full-data run is authorized.
+- The official-train-derived PCQM 100K graph cache, completed seed-42
+  comparisons, and the sparse topology-wedge cache are accepted. R2 terminated
+  during preflight with no epoch or metrics output; its failure is recorded at
+  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r2_seed42/failure_diagnosis.md`.
+  R3 completed, passed no-inference artifact acceptance, and strictly passed
+  the seed-42 arithmetic gate. Its decision is
+  `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md`.
+  The paired EdgeState/Sparse Triangle seeds 43/44 task completed and passed
+  no-inference acceptance; together with seed 42, Sparse Triangle improved all
+  three paired comparisons. No full-data or official-role run is authorized.
+- Geometry-cache version 2 completed after one infrastructure-only parent-
+  identity repair. Its 110,000 aligned roles, invalid-geometry ledger, 22
+  shards, and aggregate hash passed no-model acceptance.
+- Geometry GPU version 1 stopped before training because its PyTorch build
+  omitted P100 `sm_60`. The automatically repaired version 2 preserved the
+  scientific contract, completed all three candidates, and passed no-inference
+  artifact acceptance. The combined distance-plus-angle candidate is the sole
+  seed-42 geometry winner. Its decision is
+  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md`.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-geometry-confirm-s43-s44`, version 1,
+  completed the paired seeds 43/44 confirmation. Its downloaded immutable
+  output passed no-inference acceptance; exact metrics and the seed-44
+  marginality caveat are in
+  `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`.
+- The paired seed-42 torsion GPU task completed from its atomic checkpoint in
+  Kaggle1 version 5 after documented preflight, wall-time, and RNG-device
+  repairs. Both 40-epoch traces and all artifacts passed no-inference
+  acceptance, but sparse torsion failed the scientific gate. No fresh torsion
+  seeds or larger runs are authorized. The terminal decision is
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
@@ -110,6 +168,12 @@ must not be represented as this new conservative head.
 | What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
 | Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
 | Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
+| What is the sparse triangle EdgeState question? | `experiments/pcqm_gap_architecture/sparse_triangle_edge_state_protocol.md` |
+| Did Sparse Triangle pass seed 42? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_r3_seed42/decision.md` |
+| Did Sparse Triangle reproduce across three seeds? | `experiments/pcqm_gap_architecture/results/sparse_triangle_edge_state_multiseed/decision.md` |
+| What is the bottom-fused geometry question? | `experiments/pcqm_gap_architecture/geometry_bottom_fusion_seed42_protocol.md` |
+| What is the deterministic ring-hierarchy question? | `experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md` |
+| Did bottom-fused ETKDG geometry pass seed 42? | `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/decision.md` |
 | Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
 | Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
 | Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |

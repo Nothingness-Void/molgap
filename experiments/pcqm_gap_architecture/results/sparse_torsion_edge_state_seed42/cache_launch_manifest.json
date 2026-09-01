@@ -1,0 +1,61 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-torsion-cache-launch-v1",
+  "submitted_at": "2026-08-31T18:43:36+09:00",
+  "kernel": {
+    "requested_ref": "nothingnessvoid/molgap-pcqm-torsion-cache-s42",
+    "actual_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-cache-s42",
+    "version": 1,
+    "status_after_push": "KernelWorkerStatus.RUNNING",
+    "terminal_status": "KernelWorkerStatus.COMPLETE",
+    "slug_normalized_by_kaggle": true,
+    "gpu_enabled": false
+  },
+  "package": {
+    "runner_sha256": "05c8de40a85ab5fb8c03d8cc505b9209b7a4a7cc6ef737b8f4ac9d596d026cc7",
+    "submitted_metadata_sha256": "ff9d78a9be37f9eb31f59143477dd89b94b020746f6f8b52753767fbd2e1717c"
+  },
+  "source": {
+    "commit": "3d4cdb73ccd4d01c24e84ac4e4538d6fee7722cb",
+    "dataset": "nothingnessvoid/molgap-pcqm-torsion-source-3d4cdb73",
+    "content_sha256": "687cf6100c48f8768935dd07ef45b6d2293ae1a885383711725b03c855e29e80"
+  },
+  "accepted_geometry": {
+    "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+    "source_dataset_mirror": "nothingnessvoid/molgap-pcqm-geometry-fusion-source-accepted",
+    "source_content_sha256": "d0dbda094c7e20fcf55aa23f99c6302664f9e79a96a3092c99e55347c4c27db0",
+    "cache_dataset_mirror": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+    "cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+    "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+    "parent_wedge_cache_aggregate_sha256": "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
+  },
+  "contract": {
+    "train_graphs": 100000,
+    "validation_graphs": 10000,
+    "invalid_geometry_rows": 315,
+    "etkdg_single_conformer_reused": true,
+    "model_inference_executed": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  },
+  "result": {
+    "cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173",
+    "dataset_mirror": "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+    "dataset_content_sha256": "363565123e9133c36ba980a8d1fcf4d3a11882eaa5d6d0f1c031d5c112b65627",
+    "dataset_file_count": 26,
+    "dataset_bytes": 1234866207,
+    "train_torsion_paths": 4627762,
+    "validation_torsion_paths": 462972,
+    "train_valid_torsion_paths": 4608590,
+    "validation_valid_torsion_paths": 461492,
+    "degenerate_path_count": 20652,
+    "elapsed_s": 276.987260086,
+    "accepted_at": "2026-08-31T18:59:29+09:00"
+  },
+  "retrieval": {
+    "independently_retrievable": true,
+    "acceptance_script": "experiments/pcqm_gap_architecture/accept_pcqm100k_torsion_cache.py",
+    "record_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gap100k_sparse_torsion_cache_s42_v1\\pcqm_gap100k_sparse_torsion_cache_s42\\pcqm_gap100k_torsion_cache_s42",
+    "acceptance_file": "experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/cache_acceptance.json"
+  },
+  "molecular_research_server_accessed": false
+}

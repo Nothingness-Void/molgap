@@ -1,8 +1,8 @@
 # Official PCQM Gap Architecture Screen
 
-This Track B experiment asks which bounded pure-2D architecture should be
-trained for the official PCQM4Mv2 leaderboard. It predicts the single official
-HOMO-LUMO Gap target; HOMO and LUMO are not auxiliary targets.
+This Track B experiment asks which bounded architecture should be trained for
+the official PCQM4Mv2 leaderboard. It predicts the single official HOMO-LUMO
+Gap target; HOMO and LUMO are not auxiliary targets.
 
 The frozen first-round contract is
 [`pcqm100k_gap_screen_protocol.md`](pcqm100k_gap_screen_protocol.md). Live remote
@@ -25,9 +25,59 @@ its strict gate and is closed by
 [`results/local_operator_search_seed42/decision.md`](results/local_operator_search_seed42/decision.md).
 
 The resource-bounded comparison of all remaining mechanisms is in
-[`architecture_route_audit.md`](architecture_route_audit.md). It selects the
-recurrent graph-state EdgeState question frozen in
-[`recurrent_graph_state_seed42_protocol.md`](recurrent_graph_state_seed42_protocol.md).
+[`architecture_route_audit.md`](architecture_route_audit.md). The recurrent
+graph-state question is closed after its seed-42 result missed the comparator.
+Sparse Triangle R3 passed seed 42 and then improved fresh paired seeds 43/44.
+It is the accepted pure-2D comparator; the multiseed decision is
+[`results/sparse_triangle_edge_state_multiseed/decision.md`](results/sparse_triangle_edge_state_multiseed/decision.md).
+
+Recent 2024--2026 molecular architectures, their input and compute assumptions,
+and the mechanisms that remain transferable under this project's budget are
+indexed in
+[`recent_literature_audit_2024_2026.md`](recent_literature_audit_2024_2026.md).
+Their task-specific widths, heads, optimizer settings, training horizons, and
+the resulting no-grid local parameter priors are recorded separately in
+[`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
+The auditable count, unique numbering, and reading depth for all 50 primary
+papers are owned by
+[`recent_literature_coverage_ledger_50.md`](recent_literature_coverage_ledger_50.md).
+That audit is research evidence; the geometry confirmation has now completed,
+and its only authorized follow-up is the separately frozen torsion protocol
+below.
+
+The geometry bottom-fusion screen is defined in
+[`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
+Its CPU geometry cache passed acceptance, and the three-candidate GPU screen
+selected distance-plus-angle as the only seed-42 winner. The accepted result
+and infrastructure-repair evidence are frozen in
+[`results/geometry_bottom_fusion_seed42/decision.md`](results/geometry_bottom_fusion_seed42/decision.md).
+Its fresh paired seeds 43/44 confirmation contract is
+[`geometry_bottom_fusion_multiseed_protocol.md`](geometry_bottom_fusion_multiseed_protocol.md).
+That task completed and passed its strict gate: distance-plus-angle improved
+the comparator at seeds 42, 43, and 44 and on their mean, with a marginal
+seed-44 gain. Its decision is
+[`results/geometry_bottom_fusion_multiseed/decision.md`](results/geometry_bottom_fusion_multiseed/decision.md).
+
+The seed-42 sparse torsion-state question was defined in
+[`sparse_torsion_edge_state_seed42_protocol.md`](sparse_torsion_edge_state_seed42_protocol.md).
+Its completed, no-inference-accepted comparison failed the strict gate and is
+closed by
+[`results/sparse_torsion_edge_state_seed42/gpu_decision.md`](results/sparse_torsion_edge_state_seed42/gpu_decision.md).
+The accepted distance-plus-angle model remains the frozen 100K comparator; no
+additional torsion seeds were opened.
+
+The post-torsion re-ranking of all 50 literature assets is
+[`post_torsion_literature_synthesis.md`](post_torsion_literature_synthesis.md).
+It selects one separately normalized sparse atom--bond stream as the next
+bounded question. Its immutable seed-42 contract is
+[`sparse_atom_bond_dual_stream_seed42_protocol.md`](sparse_atom_bond_dual_stream_seed42_protocol.md).
+The launch identity and immutable input hashes are recorded under
+[`results/sparse_atom_bond_dual_stream_seed42/`](results/sparse_atom_bond_dual_stream_seed42/).
+The learned-but-redundant failure mechanism and the information gate for a
+non-duplicate successor are isolated in
+[`post_dual_stream_failure_attribution.md`](post_dual_stream_failure_attribution.md).
+The resulting single smallest-ring hierarchy question is frozen in
+[`ring_hierarchy_seed42_protocol.md`](ring_hierarchy_seed42_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

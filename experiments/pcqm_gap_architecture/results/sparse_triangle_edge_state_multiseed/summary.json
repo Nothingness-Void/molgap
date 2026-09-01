@@ -1,0 +1,15 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-triangle-multiseed-summary-v1",
+  "accepted": true,
+  "selected_candidate": "ogb_sparse_triangle_edge_state_gps9",
+  "parameter_count": 4878257,
+  "comparator_parameter_count": 4771073,
+  "paired_seeds": [42, 43, 44],
+  "mean_comparator_validation_gap_mae_eV": 0.1378612850745519,
+  "mean_candidate_validation_gap_mae_eV": 0.13742067603270214,
+  "mean_candidate_minus_comparator_eV": -0.00044060904184975436,
+  "all_seed_directions_improved": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

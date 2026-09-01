@@ -132,6 +132,8 @@ platforms/_records/**/*.sh
 
 # Local-only remote outputs
 platforms/scnet/records/**/*.txt
+platforms/_records/kaggle/resume/
+platforms/_records/kaggle/datasets/
 
 # Split upload payloads and row ledgers: transport artifacts, not evidence.
 experiments/**/upload_parts/
@@ -145,6 +147,12 @@ platforms/_records/**/inputs/**
 
 # Local Codex artifact build workspaces.
 .codex_tmp/
+
+# Local generated workspaces and presentation render outputs. These are
+# reproducible or separately retained artifacts, not repository source.
+.tmp/
+artifacts/
+.codex/
 
 # Presentation outputs live on the dedicated presentation-assets branch. Keep
 # source diagrams and the builder in the main branch without accumulating

@@ -44,6 +44,77 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.
 
+## Remote monitor handoff
+
+Remote polling is a bounded waiting stage, not a decision-making loop. Use one
+dedicated Luna Max heartbeat attached to one persistent monitor thread; never
+use a standalone cron that creates a new task on every poll. The monitor prompt
+must name both its automation id and the coordinator thread that owns scientific
+analysis.
+
+- While the remote job is non-terminal, report only the status and newly visible
+  mechanical evidence. Do not wake the coordinator, resubmit, or open another
+  task.
+- On `COMPLETE` or unrecoverable `ERROR`, collect the terminal logs/artifacts and
+  run only the frozen mechanical acceptance, if one exists. Then use the Codex
+  thread-message capability to send one structured terminal handoff to the
+  coordinator thread. The message must include job identity, terminal state,
+  artifact location, acceptance output, essential metrics/hashes, and an
+  explicit request for coordinator analysis.
+- After the terminal handoff is delivered, pause or delete the heartbeat in the
+  same turn. A completed monitor has no reason to remain active. If message
+  delivery itself fails, leave the heartbeat active only long enough to retry
+  that delivery; do not repeat remote work or scientific interpretation.
+- Make terminal handoff idempotent: before sending, check the experiment status,
+  decision record, and any recorded handoff marker. Never send duplicate terminal
+  prompts or rerun an already accepted job.
+- Luna Max owns economical polling and mechanical evidence collection. The
+  coordinator owns result interpretation, repository decisions, follow-up
+  architecture selection, and any new submission authorization.
+
+## Branch governance
+
+The repository has four long-lived branches with non-overlapping roles:
+
+- **`master`** is the minimal, stable delivery branch. It receives only
+  validated, optimized, reviewable production content; exploratory work and
+  remote-run history do not accumulate there.
+- **`molgap-server`** is the integration branch for this server-side agent. New
+  architecture protocols, Kaggle screens, runners, acceptance logic, compact
+  evidence, and server-side decisions land here.
+- **`molgap-desktop`** is the independent desktop integration branch. It owns
+  full training, official evaluation, and final submission work rather than
+  server-side architecture discovery.
+- **`archive`** retains rejected or inactive experiment implementations,
+  process records, and provenance that must remain reproducible but should not
+  stay in an active integration branch.
+
+Do not create one long-lived branch per experiment. Work directly on the
+owning integration branch when safe. Create a short-lived `codex/<topic>` branch
+only when parallel work, worktree isolation, or a risky change requires it.
+Afterward, merge accepted work into `molgap-server`, preserve rejected compact
+evidence in `archive`, verify the commits are reachable remotely, and delete
+the inactive temporary branch.
+
+Before branching or integrating, fetch the remote, inspect the worktree, and
+preserve unrelated user changes. Never overwrite another machine's branch.
+`molgap-server` and `molgap-desktop` exchange only reviewed, explicit commits;
+neither branch is a scratch copy of the other.
+
+Keep commits classified and independently traceable:
+
+- `docs(...)` freezes protocols, decisions, and authority boundaries;
+- `feat(...)` adds an architecture, runner, or acceptance capability;
+- `fix(...)` repairs implementation or infrastructure without disguising a
+  scientific-contract change;
+- `ops(...)` records remote packaging, submission, retrieval, or handoff.
+
+Large caches, checkpoints, models, logs, and prediction payloads remain in
+ignored local/platform record storage. Git receives compact metrics, hashes,
+manifests, acceptance records, and decisions. A server experiment must pass its
+declared confirmation gate before desktop full training, and only a validated
+delivery candidate may be promoted from the integration branches to `master`.
+
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
 - Don't double-write a fact; if it must appear twice, the second is a link.

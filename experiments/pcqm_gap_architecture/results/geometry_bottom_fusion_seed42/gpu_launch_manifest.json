@@ -1,0 +1,48 @@
+{
+  "format": "molgap-pcqm-gap100k-geometry-bottom-fusion-launch-v1",
+  "submitted_at": "2026-08-30T04:12:41.3496166+09:00",
+  "launch_commit": "eb88821",
+  "kernel_ref": "kaseichou/molgap-pcqm-geometry-fusion-s42",
+  "kernel_version": 1,
+  "status_after_push": "KernelWorkerStatus.RUNNING",
+  "package": {
+    "metadata_sha256": "73a233991342f154eb73ce419ea633037bf2cc3b750076bf0a178c4b55789014",
+    "runner_sha256": "247bb252dbec047e3617d026e7d0c8dc5cd727c64bf639755abeef72f603939b"
+  },
+  "source_commit": "e083bee19ee6a13cd9f72e91229752a9d5f56389",
+  "geometry_cache": {
+    "kernel_ref": "kaseichou/molgap-pcqm-geometry-cache-s42",
+    "kernel_version": 2,
+    "aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+    "valid_geometry_fraction": 0.9971363636363636,
+    "acceptance": "experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_seed42/acceptance.json"
+  },
+  "candidates": [
+    "ogb_distance_triangle_edge_state_gps9",
+    "ogb_angle_triangle_edge_state_gps9",
+    "ogb_distance_angle_triangle_edge_state_gps9"
+  ],
+  "contract": {
+    "seed": 42,
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 0.000001,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "gap",
+    "parameter_budget": 5200000,
+    "geometry": "ETKDGv3+MMFF94s-single-conformer-bottom-fusion"
+  },
+  "frozen_comparator": {
+    "candidate": "ogb_sparse_triangle_edge_state_gps9",
+    "seed": 42,
+    "validation_gap_mae_eV": 0.13790177369117737
+  },
+  "gpu_used": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "seed_43_44_authorized": false,
+  "full_data_authorized": false
+}

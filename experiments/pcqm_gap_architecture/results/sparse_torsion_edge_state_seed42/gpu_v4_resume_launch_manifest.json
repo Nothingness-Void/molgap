@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-torsion-resume-launch-v1",
+  "submitted_at": "2026-09-01T14:10:11.6580995+09:00",
+  "kernel_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+  "kernel_version": 4,
+  "status_after_push": "KernelWorkerStatus.RUNNING",
+  "resume_dataset": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3",
+  "resume_dataset_status_before_push": "ready",
+  "resume_manifest_sha256": "9d0f4ccc5f315dd5c7f5fe9305bb6cd36f1bd88659bffeea96711525678c77f9",
+  "resume_artifact_count": 8,
+  "source_kernel_version": 3,
+  "comparator_checkpoint_epoch": 39,
+  "candidate_checkpoint_epoch": 38,
+  "expected_first_candidate_epoch": 39,
+  "resume_code_commit": "1d5bafe0e472571ec0296c8c69ee15c1829003b2",
+  "evidence_commit_before_push": "bf85205972562c4d7eb7230b0bd3cc0e424effb6",
+  "runner_sha256": "557c18b4718bf3203376f23d2fef916a8172818501782014606f4a2dad2c5493",
+  "scientific_contract_unchanged": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

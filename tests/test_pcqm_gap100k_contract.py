@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "molgap" / "pcqm_gap_data.py"
 MODELS = ROOT / "src" / "molgap" / "pcqm_gap_architecture.py"
+GEOMETRY = ROOT / "src" / "molgap" / "pcqm_geometry.py"
 GPS = ROOT / "src" / "molgap" / "gps.py"
 EXPERIMENT = ROOT / "experiments" / "pcqm_gap_architecture"
 PREP = EXPERIMENT / "kaggle_pcqm_gap100k" / "cpu_prep" / "run_prep.py"
@@ -32,6 +33,47 @@ RECURRENT_STATE_ACCEPTANCE = (
     EXPERIMENT / "accept_pcqm100k_recurrent_graph_state.py"
 )
 RECURRENT_STATE_PROTOCOL = EXPERIMENT / "recurrent_graph_state_seed42_protocol.md"
+SPARSE_TRIANGLE_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "sparse_triangle_edge_state_seed42"
+    / "run_screen.py"
+)
+SPARSE_TRIANGLE_METADATA = SPARSE_TRIANGLE_GPU.with_name("kernel-metadata.json")
+SPARSE_TRIANGLE_PROTOCOL = EXPERIMENT / "sparse_triangle_edge_state_protocol.md"
+SPARSE_TRIANGLE_MULTISEED_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "sparse_triangle_edge_state_multiseed"
+    / "run_confirmation.py"
+)
+SPARSE_TRIANGLE_MULTISEED_METADATA = SPARSE_TRIANGLE_MULTISEED_GPU.with_name(
+    "kernel-metadata.json"
+)
+SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE = (
+    EXPERIMENT / "accept_pcqm100k_sparse_triangle_multiseed.py"
+)
+SPARSE_TRIANGLE_MULTISEED_PROTOCOL = (
+    EXPERIMENT / "sparse_triangle_edge_state_multiseed_protocol.md"
+)
+GEOMETRY_BOTTOM_FUSION_PROTOCOL = (
+    EXPERIMENT / "geometry_bottom_fusion_seed42_protocol.md"
+)
+GEOMETRY_CACHE_CPU = (
+    EXPERIMENT / "kaggle_pcqm_gap100k" / "geometry_cache" / "run_geometry_cache.py"
+)
+GEOMETRY_CACHE_METADATA = GEOMETRY_CACHE_CPU.with_name("kernel-metadata.json")
+GEOMETRY_CACHE_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_geometry_cache.py"
+GEOMETRY_SCREEN_GPU = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "geometry_bottom_fusion_seed42"
+    / "run_geometry_screen.py"
+)
+GEOMETRY_SCREEN_METADATA = GEOMETRY_SCREEN_GPU.with_name("kernel-metadata.json")
+GEOMETRY_SCREEN_ACCEPTANCE = (
+    EXPERIMENT / "accept_pcqm100k_geometry_bottom_fusion.py"
+)
 
 
 def assignment_literal(path: Path, name: str):
@@ -124,6 +166,13 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert "class OGBGraphTokenStructuralGPSWrapper" in source
     assert 'candidate == "ogb_recurrent_graph_state_gps9"' in source
     assert "token_channels=16" in source
+    assert "class OGBGeometrySparseTriangleEdgeStateGPSWrapper" in source
+    assert '"ogb_distance_triangle_edge_state_gps9": "distance"' in source
+    assert '"ogb_angle_triangle_edge_state_gps9": "angle"' in source
+    assert (
+        '"ogb_distance_angle_triangle_edge_state_gps9": "distance_angle"'
+        in source
+    )
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source
@@ -433,3 +482,372 @@ def test_recurrent_graph_state_protocol_is_gap_only_and_single_candidate() -> No
     assert "at most 40 epochs, patience 8" in source
     assert "official validation and test-dev remain unread" in source
     assert "token-width, seed, optimizer, schedule" in source
+
+
+def test_sparse_triangle_hidden_width_does_not_depend_on_ogb_encoder_api() -> None:
+    tree = ast.parse(MODELS.read_text(encoding="utf-8"))
+    sparse_class = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.ClassDef)
+        and node.name == "OGBSparseTriangleEdgeStateGPSWrapper"
+    )
+    source = ast.get_source_segment(MODELS.read_text(encoding="utf-8"), sparse_class)
+    assert source is not None
+    assert "self.head[0].in_features" in source
+    assert "self.node_emb.out_features" not in source
+
+
+def test_geometry_bottom_fusion_is_early_and_not_prediction_fusion() -> None:
+    source = MODELS.read_text(encoding="utf-8")
+    geometry_class = next(
+        node
+        for node in ast.parse(source).body
+        if isinstance(node, ast.ClassDef)
+        and node.name == "OGBGeometrySparseTriangleEdgeStateGPSWrapper"
+    )
+    segment = ast.get_source_segment(source, geometry_class)
+    assert segment is not None
+    assert "edge_state + self.distance_initial" in segment
+    assert "edge_state + self.distance_updates[layer]" in segment
+    assert "wedge_state + self.angle_initial" in segment
+    assert "wedge_state + self.angle_updates[layer]" in segment
+    assert "SchNet" not in segment
+    assert "residual_head" not in segment
+    assert "prediction_fusion" not in segment
+
+
+def test_geometry_cache_contract_is_deterministic_and_visible_on_failure() -> None:
+    source = GEOMETRY.read_text(encoding="utf-8")
+    assert "AllChem.ETKDGv3()" in source
+    assert 'MMFF_VARIANT = "MMFF94s"' in source
+    assert "geometry_seed(row_index)" in source
+    assert "params.useRandomCoords = True" in source
+    assert "geometry_valid=False" in source
+    assert "failure_type=type(error).__name__" in source
+    assert "np.zeros" in source
+
+
+def test_geometry_screen_protocol_is_three_seed42_candidates_only() -> None:
+    source = GEOMETRY_BOTTOM_FUSION_PROTOCOL.read_text(encoding="utf-8")
+    assert "Seed 42 only" in source
+    assert "three candidates run sequentially" in source
+    assert "does not run additional seeds" in source
+    assert "0.13790177369117737 eV" in source
+    assert "There is no SchNet" in source
+    lowered = source.lower()
+    assert "official validation" in lowered
+    assert "test-dev remain unread" in lowered
+
+
+def test_geometry_cache_is_cpu_only_and_parent_pinned() -> None:
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "EXPECTED_SOURCE_COMMIT") == (
+        "e083bee19ee6a13cd9f72e91229752a9d5f56389"
+    )
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "EXPECTED_WEDGE_SHA256") == (
+        "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
+    )
+    assert assignment_literal(
+        GEOMETRY_CACHE_CPU, "EXPECTED_PARENT_SOURCE_COMMIT"
+    ) == "35fadc9de63e22de7a1cfbe21e4f1af8888e075f"
+    assert assignment_literal(GEOMETRY_CACHE_CPU, "MINIMUM_VALID_FRACTION") == 0.99
+    source = GEOMETRY_CACHE_CPU.read_text(encoding="utf-8")
+    assert "ProcessPoolExecutor" in source
+    assert "compute_etkdg_geometry" in source
+    assert "atomic_torch_save" in source
+    assert '"gpu_used": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(GEOMETRY_CACHE_METADATA.read_text(encoding="utf-8"))
+    assert metadata["enable_gpu"] == "false"
+    assert metadata["dataset_sources"] == [
+        "piero0/pcqm4mv2",
+        "kaseichou/molgap-pcqm-geometry-fusion-source",
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
+
+
+def test_geometry_cache_acceptance_imports_no_torch() -> None:
+    assert "torch" not in imported_modules(GEOMETRY_CACHE_ACCEPTANCE)
+    source = GEOMETRY_CACHE_ACCEPTANCE.read_text(encoding="utf-8")
+    assert "len(shards) == 22" in source
+    assert "fraction >= MINIMUM_VALID_FRACTION" in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+
+
+def test_geometry_screen_is_one_seed42_job_with_three_candidates() -> None:
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "e083bee19ee6a13cd9f72e91229752a9d5f56389"
+    )
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "CANDIDATES") == (
+        "ogb_distance_triangle_edge_state_gps9",
+        "ogb_angle_triangle_edge_state_gps9",
+        "ogb_distance_angle_triangle_edge_state_gps9",
+    )
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "SEED") == 42
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "PATIENCE") == 8
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "PARAMETER_BUDGET") == 5_200_000
+    assert assignment_literal(GEOMETRY_SCREEN_GPU, "SEARCH_BUDGET_S") == 34_200
+    source = GEOMETRY_SCREEN_GPU.read_text(encoding="utf-8")
+    assert "for candidate in CANDIDATES" in source
+    assert "for seed in" not in source
+    assert "batch.edge_distance" in source
+    assert "batch.wedge_angle_cos" in source
+    assert '"target": "gap"' in source
+    assert '"precision": "fp32"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(GEOMETRY_SCREEN_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "kaseichou/molgap-pcqm-geometry-fusion-s42"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-geometry-fusion-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-geometry-cache-s42"
+    ]
+
+
+def test_geometry_screen_acceptance_is_no_inference() -> None:
+    assert "torch" not in imported_modules(GEOMETRY_SCREEN_ACCEPTANCE)
+    source = GEOMETRY_SCREEN_ACCEPTANCE.read_text(encoding="utf-8")
+    assert "len(preflight) == 3" in source
+    assert "len(runs) == 3" in source
+    assert '"target": "gap"' in source
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    assert "row[\"validation_gap_mae_eV\"] < COMPARATOR_MAE" in source
+
+
+def test_sparse_triangle_retry_preserves_frozen_training_contract() -> None:
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "CANDIDATE") == (
+        "ogb_sparse_triangle_edge_state_gps9"
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "PATIENCE") == 8
+    assert assignment_literal(SPARSE_TRIANGLE_GPU, "PARAMETER_BUDGET") == 5_200_000
+    source = SPARSE_TRIANGLE_GPU.read_text(encoding="utf-8")
+    assert '"precision": "fp32"' in source
+    assert '"target": "homolumogap"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    assert "pcqm_gap100k_sparse_triangle_edge_state_r3_seed42" in source
+    metadata = json.loads(SPARSE_TRIANGLE_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == (
+        "kaseichou/molgap-pcqm-triangle-edge-state-r3-s42"
+    )
+    assert len(metadata["title"]) <= 50
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
+    protocol = SPARSE_TRIANGLE_PROTOCOL.read_text(encoding="utf-8")
+    assert "Seed 42, FP32, batch 48" in protocol
+    assert "Parameter ceiling: `5,200,000`" in protocol
+    assert "one R3 implementation-only retry" in protocol
+
+
+def test_sparse_triangle_multiseed_is_paired_and_frozen() -> None:
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "EXPECTED_SOURCE_COMMIT") == (
+        "76dd6efa76c8236ce80a82a8a43d9f5df426165e"
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "CANDIDATES") == (
+        "ogb_edge_state_structural_gps9",
+        "ogb_sparse_triangle_edge_state_gps9",
+    )
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "SEEDS") == (43, 44)
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "BATCH_SIZE") == 48
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "LEARNING_RATE") == 1.6e-4
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "WEIGHT_DECAY") == 1.0e-6
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "MAX_EPOCHS") == 40
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "PATIENCE") == 8
+    assert assignment_literal(SPARSE_TRIANGLE_MULTISEED_GPU, "SEARCH_BUDGET_S") == 39_600
+    source = SPARSE_TRIANGLE_MULTISEED_GPU.read_text(encoding="utf-8")
+    assert "for seed in SEEDS" in source
+    assert "for candidate in CANDIDATES" in source
+    assert '"precision": "fp32"' in source
+    assert '"target": "homolumogap"' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    metadata = json.loads(SPARSE_TRIANGLE_MULTISEED_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "kaseichou/molgap-pcqm-triangle-r3-confirm-s4344"
+    assert len(metadata["title"]) <= 50
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-source"
+    ]
+    assert metadata["kernel_sources"] == [
+        "kaseichou/molgap-pcqm-gap100k-sparse-triangle-wedge-cache-r2"
+    ]
+
+
+def test_sparse_triangle_multiseed_acceptance_is_no_inference() -> None:
+    assert "torch" not in imported_modules(SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE)
+    source = SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE.read_text(encoding="utf-8")
+    assert '"model_inference_executed": False' in source
+    assert '"official_validation_role_read": False' in source
+    assert '"test_dev_role_read": False' in source
+    protocol = SPARSE_TRIANGLE_MULTISEED_PROTOCOL.read_text(encoding="utf-8")
+    assert "fresh comparator and candidate" in protocol
+    assert "seeds 42, 43, and 44" in protocol
+    assert "Only one GPU kernel" in protocol
+
+
+def test_sparse_triangle_multiseed_acceptance_replays_pair_arithmetic(
+    tmp_path: Path,
+) -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "sparse_triangle_multiseed_acceptance",
+        SPARSE_TRIANGLE_MULTISEED_ACCEPTANCE,
+    )
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    source_commit = "synthetic-source"
+    cache_sha = "a" * 64
+    values = {
+        (43, "ogb_edge_state_structural_gps9"): 0.1400,
+        (43, "ogb_sparse_triangle_edge_state_gps9"): 0.1390,
+        (44, "ogb_edge_state_structural_gps9"): 0.1410,
+        (44, "ogb_sparse_triangle_edge_state_gps9"): 0.1405,
+    }
+    runs = []
+    for (seed, candidate), value in values.items():
+        run_dir = tmp_path / "results" / f"seed{seed}" / candidate
+        run_dir.mkdir(parents=True)
+        artifacts = {}
+        for name in ("best_model", "checkpoint", "validation_payload", "trace"):
+            suffix = ".json" if name == "trace" else ".pt"
+            path = run_dir / f"{name}{suffix}"
+            path.write_bytes(f"{seed}-{candidate}-{name}".encode("utf-8"))
+            artifacts[name] = str(path.relative_to(tmp_path)).replace("\\", "/")
+            artifacts[f"{name}_sha256"] = _sha256(path)
+        metrics = {
+            "format": "molgap-pcqm-gap100k-sparse-triangle-paired-run-v1",
+            "complete": True,
+            "candidate": candidate,
+            "source_commit": source_commit,
+            "seed": seed,
+            "parameter_count": 4_800_000,
+            "parameter_budget": 5_200_000,
+            "best_epoch": 19,
+            "validation_gap_mae_eV": value,
+            "validation_rows": 10_000,
+            "validation_row_index_sha256": "b" * 64,
+            "validation_target_sha256": "c" * 64,
+            "target_mean_eV": 5.5,
+            "target_std_eV": 1.2,
+            "epochs_completed": 20,
+            "training_elapsed_s": 100.0,
+            "contract": {
+                "batch_size": 48,
+                "learning_rate": 1.6e-4,
+                "weight_decay": 1.0e-6,
+                "max_epochs": 40,
+                "patience": 8,
+                "precision": "fp32",
+                "target": "homolumogap",
+            },
+            "artifacts": artifacts,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        }
+        (run_dir / "metrics.json").write_text(
+            json.dumps(metrics, indent=2) + "\n", encoding="utf-8"
+        )
+        runs.append(metrics)
+
+    pairs = [
+        {
+            "seed": 42,
+            "comparator_validation_gap_mae_eV": 0.13798263211250306,
+            "candidate_validation_gap_mae_eV": 0.13790177369117737,
+            "candidate_minus_comparator_eV": (
+                0.13790177369117737 - 0.13798263211250306
+            ),
+        }
+    ]
+    for seed in (43, 44):
+        comparator = values[(seed, "ogb_edge_state_structural_gps9")]
+        candidate = values[(seed, "ogb_sparse_triangle_edge_state_gps9")]
+        pairs.append(
+            {
+                "seed": seed,
+                "comparator_validation_gap_mae_eV": comparator,
+                "candidate_validation_gap_mae_eV": candidate,
+                "candidate_minus_comparator_eV": candidate - comparator,
+            }
+        )
+    mean_comparator = sum(
+        row["comparator_validation_gap_mae_eV"] for row in pairs
+    ) / 3
+    mean_candidate = sum(
+        row["candidate_validation_gap_mae_eV"] for row in pairs
+    ) / 3
+    paired_comparison = [
+        *pairs,
+        {
+            "seed": "mean",
+            "comparator_validation_gap_mae_eV": mean_comparator,
+            "candidate_validation_gap_mae_eV": mean_candidate,
+            "candidate_minus_comparator_eV": mean_candidate - mean_comparator,
+        },
+    ]
+    selection = {
+        "format": "molgap-pcqm-gap100k-sparse-triangle-multiseed-v1",
+        "complete": True,
+        "source_commit": source_commit,
+        "cache_aggregate_sha256": cache_sha,
+        "parent_cache_aggregate_sha256": "d" * 64,
+        "seeds": [43, 44],
+        "candidates": [
+            "ogb_edge_state_structural_gps9",
+            "ogb_sparse_triangle_edge_state_gps9",
+        ],
+        "preflight": [
+            {
+                "candidate": candidate,
+                "parameter_count": 4_800_000,
+                "finite_prediction": True,
+                "finite_loss": True,
+                "finite_gradients": True,
+            }
+            for candidate in (
+                "ogb_edge_state_structural_gps9",
+                "ogb_sparse_triangle_edge_state_gps9",
+            )
+        ],
+        "runs": runs,
+        "paired_comparison": paired_comparison,
+        "multiseed_gate_passed": True,
+        "selected_candidate": "ogb_sparse_triangle_edge_state_gps9",
+        "search_budget_s": 39_600,
+        "elapsed_s": 400.0,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    (tmp_path / "selection.json").write_text(
+        json.dumps(selection, indent=2) + "\n", encoding="utf-8"
+    )
+    result = module.accept(tmp_path, source_commit, cache_sha)
+    assert result["accepted"] is True
+    assert result["multiseed_gate_passed"] is True

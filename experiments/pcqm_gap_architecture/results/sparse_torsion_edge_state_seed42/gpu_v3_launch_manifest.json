@@ -1,0 +1,15 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-torsion-manual-repair-launch-v1",
+  "submitted_at": "2026-08-31T22:36:23.2074416+09:00",
+  "kernel_ref": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+  "kernel_version": 3,
+  "status_after_push": "KernelWorkerStatus.RUNNING",
+  "repair_commit": "9a16122573d16a9988cc27550d87be111c6cedc2",
+  "runner_sha256": "a460d52b37c4b6e6ceb31b12002664264389054beb413b377c4133869963f215",
+  "repair_scope": "replace_cuda_forward_identity_with_exact_parameter_contract",
+  "scientific_contract_unchanged": true,
+  "accepted_torsion_cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
