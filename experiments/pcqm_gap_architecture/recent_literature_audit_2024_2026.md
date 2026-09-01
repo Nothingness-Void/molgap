@@ -10,9 +10,10 @@ scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 The exact unique-paper count and per-paper reading depth are owned by the
 [`coverage ledger`](recent_literature_coverage_ledger_50.md). The retained
-review contains 58 primary papers: 17 configuration-level reads and 41
-mechanism-level reads. The ledger filename is retained as a stable historical
-path from the original 50-paper milestone.
+review contains 61 research papers: 19 configuration-level reads and 42
+mechanism-level reads, plus one critical post-publication audit. The ledger
+filename is retained as a stable historical path from the original 50-paper
+milestone.
 
 ## Scope and comparability contract
 
@@ -135,11 +136,12 @@ better in the present screen.
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
 
-## Extended evidence from papers 27--58
+## Extended evidence from papers 27--61 plus one critical audit
 
 The first review pass established the bond/higher-order queue. Thirty-two
 additional primary papers were then read to test whether a newer mechanism
-should displace it. Full per-paper notes and source links are in the
+should displace it; three further research papers and one critical audit were
+added in the deep-read pass. Full per-paper notes and source links are in the
 [coverage ledger](recent_literature_coverage_ledger_50.md); this section owns
 only the cross-paper conclusions.
 
@@ -240,7 +242,50 @@ only the cross-paper conclusions.
   balance in a crystal tensor task. This is a useful compact-moment prior, not
   direct scalar-Gap evidence.
 
-### Decision after 58 papers
+### Hypergraph claims and their audit
+
+- [MHNN](https://arxiv.org/html/2312.13136) is the clearest direct 2D PCQM
+  architecture reference in the new pass. It turns bonds and conjugated
+  structures into a bipartite hypergraph and applies four distinct update
+  functions per block: node-to-hyperedge aggregation, hyperedge update,
+  hyperedge-to-node aggregation, and node update. The official repository
+  recipe is concrete (three blocks, two-layer 512-wide MLPs, 256-wide output,
+  mean aggregation, batch 256, `lr=1e-4`, no weight decay, dropout 0.05,
+  400 epochs), and the paper reports 2.1M parameters and 0.1125 MAE. However,
+  its PCQM experiment uses a fixed 98/2 split and one seed rather than the
+  official OGB test-dev contract, so it is a chemistry-hyperedge hypothesis,
+  not a matched comparator.
+- The [post-publication MHNN comment](https://www.researchgate.net/publication/386177744_Comment_on_Molecular_hypergraph_neural_networks_J_Chem_Phys_160_144307_2024)
+  re-evaluates higher-order connections while matching the available atom and
+  connectivity information. It challenges the original data-efficiency
+  interpretation and reports that adding higher-order connections does not by
+  itself increase data efficiency. This is a required causal-ablation warning:
+  a future conjugated-hyperedge experiment must compare information-matched
+  controls rather than copy the headline result.
+- [EquiHGNN](https://arxiv.org/html/2505.05650) gives a related AllSet/MHNN
+  formulation in which RDKit-detected conjugated pi systems are hyperedges and
+  geometry variants use EGNN, FAFormer or Equiformer initialization/evolution.
+  Its geometry settings (5 A radius, 16 neighbors, 400 epochs, batch 16,
+  Adam `1e-4`) and reported 98.45 meV PCQM result are not under the official
+  evaluation contract; its Molecule3D comparison also shows geometry is not
+  universally beneficial. It remains a reserve mechanism reference.
+
+### Geometry fields are not the same as an architecture gain
+
+- [TGF-M](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1013004&rev=1)
+  is a useful full-method read because the gain comes from a specific
+  information flow, not simply from naming a geometry model: all-pair SDF
+  distances are expanded with learnable Gaussian bases, topology-conditioned
+  edge values are scattered to atoms, a learnable degree scaler is applied,
+  and a 3-hop local convolution is paired with a virtual node and linear
+  attention. The model is 6.4M parameters with embedding 256, batch 512 and
+  100 epochs. Its reported 0.0647/0.0616 PCQM claims use re-segmented or
+  supplemented evaluations, with coordinates available for training, so they
+  cannot authorize an all-pair 3D or altered-split route in the current screen.
+  The transferable question is whether topology-conditioned radial fields and
+  degree normalization help after a valid geometry input contract is frozen.
+
+### Decision after 61 research papers and one audit
 
 No newly read paper justifies interrupting the active matched experiment or
 opening a concurrent GPU task. After reading methods, configurations and
@@ -252,6 +297,12 @@ ablations, the random-initialized architecture order is:
    gate;
 4. compact Cartesian `K=16` moment mixer;
 5. conditional width-16 scalar--vector repair.
+
+The queue order is unchanged. The deep reads sharpen the stop rules rather
+than add another immediate candidate: MHNN/EquiHGNN hyperedges require an
+information-matched conjugation ablation, TGF-M's all-pair geometry is a later
+input/teacher question, and the 2026 global-attention study remains the
+strongest direct reason to test attention frequency after the ring screen.
 
 The new literature creates two explicitly separate later questions: CACE-like
 compact invariant body-order features, SliDe/MACE-OFF/AIMNet2 geometry

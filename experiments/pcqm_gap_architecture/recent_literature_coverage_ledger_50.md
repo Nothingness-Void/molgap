@@ -1,4 +1,4 @@
-# Recent Molecular Literature Coverage Ledger: 58 Papers
+# Recent Molecular Literature Coverage Ledger: 62 Audited Sources
 
 This ledger owns the auditable paper count and reading depth for the Track B
 literature review. It does not own live experiment state or task order. The
@@ -16,9 +16,10 @@ and exact reusable configurations are in
   not expose a sufficiently complete task-specific recipe or the recipe is not
   comparable to direct PCQM Gap prediction.
 
-The ledger contains exactly **58 unique primary papers**: 17 configuration-level
-reads and 41 mechanism-level reads. A missing number is therefore a ledger
-error, not an invitation to infer an unreviewed paper.
+The ledger contains exactly **62 audited sources**: 61 research papers (19
+configuration-level reads and 42 mechanism-level reads) plus one critical
+post-publication audit. A missing number is therefore a ledger error, not an
+invitation to infer an unreviewed paper.
 
 ## Audited papers
 
@@ -82,6 +83,10 @@ error, not an invitation to infer an unreviewed paper.
 | 56 | [Augmenting Molecular Graphs with Geometries via MLIPs (TMLR 2026)](https://openreview.net/forum?id=JwxhHTISJL) | Mechanism | Trains an interatomic potential from millions of molecules and hundreds of millions of snapshots, then improves molecular graphs through explicit geometry optimization or implicit geometric augmentation. | Geometry quality is a later input/teacher question; its scale and pretrained potential cannot establish a random-initialized architecture gain. |
 | 57 | [MBGF-Net (Nature Computational Science 2025)](https://www.nature.com/articles/s43588-025-00810-z) | Mechanism | Predicts many-body self-energies from mean-field orbital features and derives orbital-specific ground- and excited-state quantities. | It identifies missing electronic state as a high-value signal, but mean-field calculations are unavailable in the official graph-only screen and belong to a separate descriptor/teacher route. |
 | 58 | [When does global attention help? (Journal of Cheminformatics 2026)](https://link.springer.com/article/10.1186/s13321-026-01171-z) | Configuration | Compares MPNN-only, encoder-augmented MPNN, GPS, and encoder-plus-GPS under one HPO/training framework. On official OGB-PCQM4Mv2, the 71.1K-parameter encoder-augmented PaiNN without GPS beats the 95.1K DimeNet baseline and 130.2K GPS-heavy model on MSE, MAE, and correlation. | Direct PCQM evidence raises a local-heavy, sparse-global schedule above another full-GPS expansion. It does not prove the local 4.9M comparator should remove all attention because models and budgets differ. |
+| 59 | [Molecular Hypergraph Neural Networks (MHNN, JCP 2024)](https://arxiv.org/html/2312.13136) | Configuration | Represents atoms and bonds/conjugated structures as a bipartite molecular hypergraph; each block performs node-to-hyperedge aggregation, hyperedge update, hyperedge-to-node aggregation and node update. The official PCQM recipe uses three blocks, 512-wide two-layer MLPs, 256-wide output, mean aggregation, batch 256, `lr=1e-4`, `weight_decay=0`, dropout 0.05 and 400 epochs; the paper reports 2.1M parameters and 0.1125 MAE under its fixed 98/2 single-seed split. | Direct 2D PCQM evidence makes conjugated-system hierarchy plausible, but the split, seed and reported evaluation role are not the matched OGB test-dev contract. Treat it as a bounded chemistry-hyperedge hypothesis, not a current comparator. |
+| 60 | [Comment on Molecular Hypergraph Neural Networks (JCP 2024)](https://www.researchgate.net/publication/386177744_Comment_on_Molecular_hypergraph_neural_networks_J_Chem_Phys_160_144307_2024) | Audit | Re-evaluates MHNN with and without higher-order connections while controlling the atom/connectivity information, separating representation effects from architecture effects. Its analysis challenges treating the original data-efficiency claim as established and reports that adding higher-order connections does not itself increase data efficiency. | Downgrade unpaired hypergraph and data-efficiency claims. Any conjugated-hyperedge screen must use an information-matched baseline and a causal ablation. This source is a critical audit, not an additional architecture result. |
+| 61 | [TGF-M (PLOS Computational Biology 2025)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1013004&rev=1) | Configuration | Uses 9-dimensional atom inputs and 3-dimensional bond inputs; all-pair SDF distances enter a learnable Gaussian basis, topology-conditioned geometry is scattered from edges to atoms, a learnable degree scaler is applied, and a 3-hop local convolution is combined with a virtual node and linear attention. The reported model has 6.4M parameters and uses embedding 256, batch 512 and 100 epochs. | Strong geometry-conditioned feature-engineering evidence, with reported 0.0647 and 0.0616 claims on re-segmented or supplemented nonstandard PCQM evaluations. It is not a valid 2D official-screen result: its coordinates are training-only and its all-pair geometry/split contract is different. Keep it as a later geometry-input hypothesis, not an active route. |
+| 62 | [EquiHGNN (2025 preprint)](https://arxiv.org/html/2505.05650) | Mechanism | Builds a bipartite AllSet/MHNN hypergraph whose higher-order hyperedges represent RDKit-detected conjugated pi systems; geometric variants initialize and evolve hyperedge/node features with EGNN, FAFormer or Equiformer. The study uses radius 5 A and 16 neighbors for geometry variants, 400 epochs, batch 16 and Adam `1e-4`; its PCQM table reports a 98.45 meV EGNN-MHNN result, but the PCQM setup is a train-subset comparison with nonstandard evaluation and geometry available only during training. | Supports symmetry-aware conjugated-system hierarchy, while its Molecule3D results show geometry is not universally beneficial. Reserve as a mechanism reference; do not copy its hypergraph or call the PCQM number matched evidence. |
 
 ## Coverage conclusion
 
@@ -105,3 +110,9 @@ reasoning sharper:
    architecture gains;
 6. the active deterministic ring hierarchy remains the current experiment and
    must finish before either new mechanism is implemented.
+7. hypergraph results require representation-matched audits: MHNN supplies a
+   direct but nonstandard PCQM signal, while its post-publication critique
+   prevents treating higher-order connections as a standalone causal gain;
+8. TGF-M and EquiHGNN show that geometry-conditioned fields and conjugated
+   hyperedges remain interesting, but neither authorizes a change to the
+   current random-init, 2D, official-role contract.
