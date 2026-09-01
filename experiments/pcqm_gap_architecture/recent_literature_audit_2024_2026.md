@@ -10,7 +10,7 @@ scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 The exact unique-paper count and per-paper reading depth are owned by the
 [`coverage ledger`](recent_literature_coverage_ledger_50.md). The retained
-review contains 65 research papers: 20 configuration-level reads and 45
+review contains 68 research papers: 23 configuration-level reads and 45
 mechanism-level reads, plus one critical post-publication audit. The ledger
 filename is retained as a stable historical path from the original 50-paper
 milestone.
@@ -136,13 +136,14 @@ better in the present screen.
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
 
-## Extended evidence from papers 27--65 plus one critical audit
+## Extended evidence from papers 27--68 plus one critical audit
 
 The first review pass established the bond/higher-order queue. Additional
 primary papers were then read to test whether a newer mechanism should
-displace it. The latest deep-read pass adds three mechanism-level sources on
-stereoelectronic representations, attention scheduling and graph-free
-Transformers. Full per-paper notes and source links are in the [coverage
+displace it. The recent method-level passes add six sources on
+stereoelectronic representations, attention scheduling, graph-free
+Transformers, message-passing/attention allocation, conformation refinement,
+and topology-matched structural pretraining. Full per-paper notes and source links are in the [coverage
 ledger](recent_literature_coverage_ledger_50.md); this section owns only the
 cross-paper conclusions.
 
@@ -157,6 +158,16 @@ cross-paper conclusions.
   message passing and readout. Because its graph also adds non-covalent
   proximity edges, the first fair transplant would replace one MLP only; it is
   not evidence to rewrite the whole encoder.
+- [GPS++](https://ar5iv.labs.arxiv.org/html/2302.02947) is useful because its
+  authors ablate the information paths on PCQM rather than only reporting a
+  large final model. Its 16-block design runs a strong edge/global-feature
+  MPNN beside biased attention, keeps incoming and outgoing messages separate,
+  and uses adjacent-node aggregation to avoid compressing 256-dimensional node
+  information into 128-dimensional edge messages. In five-run 200-epoch
+  ablations, removing MPNN costs 7.7 meV, edge features 4.2 meV, sender
+  aggregation 0.7 meV, and attention 0.9 meV. The 2D MPNN-only result is
+  better than the 2D hybrid. The transferable lesson is local directional
+  computation and global summaries, not its 44.3M scale.
 - [Orb](https://arxiv.org/abs/2410.22570) and
   [Orb-v3](https://arxiv.org/abs/2504.06231) show that a fast non-equivariant,
   non-conservative model can remain competitive in atomistic prediction. This
@@ -169,6 +180,17 @@ cross-paper conclusions.
   encoder-plus-GPS variants. It does not prove that every GPS block should be
   removed from the accepted local geometry model, but it makes attention
   frequency a higher-value screen than adding another full global stack.
+- [GAPE](https://arxiv.org/html/2505.13087) adds a different kind of evidence:
+  a Siamese GNN is pretrained to align correlated graph pairs, and its frozen
+  node embeddings are then used as positional encodings. The PCQM downstream
+  Transformer is 1.217M parameters (12 layers, 16 heads, batch 1024, max LR
+  `1e-4`, no dropout or weight decay); the PCQM GAPE generator uses a
+  32-dimensional GAT at 30% alignment noise. On a deliberately 2D Transformer
+  with no edge features, validation MAE is 0.133 for GAPE and 0.125 for
+  GAPE+RWPE, versus 0.236 with no PE. The authors also show that topology-
+  matched pretraining matters and that PCQM GAPE pretraining takes about one
+  hour. This is a strong low-cost **pretraining** hypothesis, not an
+  architecture-only gain for the random-init screen.
 
 - [Molecular Set Representation Learning](https://doi.org/10.1038/s42256-024-00856-0)
   gives a low-cost readout hypothesis rather than a new encoder. Its RepSet
@@ -244,6 +266,16 @@ cross-paper conclusions.
   and [UniGEM](https://proceedings.iclr.cc/paper_files/paper/2025/hash/223935759d7743c85318639b560882a1-Abstract-Conference.html)
   offer relational, chemical-language and generative pretraining signals. They
   belong to a later teacher/pretraining study and cannot certify architecture.
+- [Uni-Mol+](https://www.nature.com/articles/s41467-024-51321-w) clarifies why
+  the earlier late-fusion 3D route was a weak test. Its atom and pair tracks
+  interact inside every block: pair states receive an atom OuterProduct and a
+  merged incoming/outgoing TriangularUpdate, while pair states bias atom
+  attention. The PCQM recipe uses eight ETKDG+MMFF94 conformers, a raw/target/
+  intermediate conformation mixture, and a supervised DFT-conformation
+  refinement objective; the 12-layer model is about 52.4M parameters and
+  trains for 1.5M steps on eight A100s. OuterProduct and TriangularUpdate are
+  therefore evidence for bottom-level atom--pair information flow, but the
+  result cannot be transferred as a fair random-init or 2D claim.
 - [Stereoelectronics-Infused Molecular Graphs](https://arxiv.org/pdf/2408.04520)
   is more chemically specific than a generic auxiliary task. The authors build
   explicit atom, lone-pair, σ/π-bond and donor--acceptor nodes, use a GAT with
@@ -338,7 +370,7 @@ cross-paper conclusions.
   The transferable question is whether topology-conditioned radial fields and
   degree normalization help after a valid geometry input contract is frozen.
 
-### Decision after 65 research papers and one audit
+### Decision after 68 research papers and one audit
 
 No newly read paper justifies interrupting the active matched experiment or
 opening a concurrent GPU task. After reading methods, configurations and
@@ -359,12 +391,15 @@ input/teacher question, GoMS needs an internal table audit before its PCQM
 number can be used, and the 2026 global-attention study remains the strongest
 direct reason to test attention frequency after the ring screen.
 
-The new literature creates three explicitly separate later questions: a
+The new literature creates four explicitly separate later questions: a
 RepSet-only readout control, CACE-like compact invariant body-order features,
-and SliDe/MACE-OFF/AIMNet2 geometry teachers. The bounded global-attention-
-frequency test remains the architecture question most directly supported by
-the new attention studies. None may be called an architecture gain without
-its own protocol.
+SliDe/MACE-OFF/AIMNet2 geometry teachers, and topology-matched GAPE structural
+pretraining. GPS++ is a strengthened explanation for the local-heavy design,
+not a new copy candidate; Uni-Mol+ is a strengthened explanation for why
+bottom-level 3D interaction must be distinguished from late prediction fusion.
+The bounded global-attention-frequency test remains the architecture question
+most directly supported by the new attention studies. None may be called an
+architecture gain without its own protocol.
 
 ## Prioritized experiment queue
 

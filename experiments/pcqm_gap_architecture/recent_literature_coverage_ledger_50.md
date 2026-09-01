@@ -1,4 +1,4 @@
-# Recent Molecular Literature Coverage Ledger: 66 Audited Sources
+# Recent Molecular Literature Coverage Ledger: 69 Audited Sources
 
 This ledger owns the auditable paper count and reading depth for the Track B
 literature review. It does not own live experiment state or task order. The
@@ -16,7 +16,7 @@ and exact reusable configurations are in
   not expose a sufficiently complete task-specific recipe or the recipe is not
   comparable to direct PCQM Gap prediction.
 
-The ledger contains exactly **66 audited sources**: 65 research papers (20
+The ledger contains exactly **69 audited sources**: 68 research papers (23
 configuration-level reads and 45 mechanism-level reads) plus one critical
 post-publication audit. A missing number is therefore a ledger error, not an
 invitation to infer an unreviewed paper.
@@ -92,6 +92,9 @@ invitation to infer an unreviewed paper.
 | 64 | [Stereoelectronics-Infused Molecular Graphs (Nature Machine Intelligence 2025)](https://arxiv.org/pdf/2408.04520) | Mechanism | Constructs a heterogeneous graph with atom, lone-pair, σ/π bond and donor--acceptor interaction nodes; a GAT encoder concatenates intermediate block outputs to reduce over-smoothing, and an evolver iteratively updates random hidden states with permutation-invariant Hungarian matching. The downstream QM9 comparison separates added atomic features, added topology, full SIMGs and learned SIMG* representations; learned SIMG* is reported nearly equivalent to ground-truth SIMG. | The surrogate is trained on full-QM9 plus GEOM DFT+NBO targets (ωB97M-V/def2-SVPD), not on the official PCQM graph-only contract. Its evidence is a representation/teacher result, not a free architecture gain. | Orbital-aware bond/lone-pair channels are the strongest new chemistry hypothesis, but they require auxiliary quantum labels or a separately frozen teacher. Do not inject predicted electronic descriptors into the matched random-init screen. |
 | 65 | [Molecular Graph Transformer: stepping beyond ALIGNN into long-range interactions (Digital Discovery 2024)](https://pubs.rsc.org/en/content/articlepdf/2024/dd/d4dd00014e) | Mechanism | Splits the representation into a local bond graph, a line graph for three-body angles and a distance-cutoff global graph whose edges use Coulomb-matrix features; the encoder alternates global MHA with ALIGNN/EGCC updates on local and line graphs. On QMOF, single-module ablations show ALIGNN is stronger than MHA/EGCC, while MHA performance saturates around three repetitions; extra MHA also adds the largest time cost. | The ablation is on QMOF bandgap/HOMO/LUMO, not PCQM, and uses solid-state geometry with a 12 Å cutoff. The paper explicitly notes that long-range additions can worsen HOMO/LUMO when bonded interactions dominate. | Keep the global channel sparse or late and preserve local bond/angle processing. This independently supports an attention-frequency test, not a dense all-pairs replacement. |
 | 66 | [Transformers Discover Molecular Structure Without Graph Priors (2025 preprint)](https://arxiv.org/pdf/2510.02259) | Mechanism | Uses an unmodified LLaMA2-style Transformer with no positional embeddings, continuous plus discretized coordinate inputs, and bidirectional attention during fine-tuning. On OMol25, a 1B model uses 10 pretraining and 60 fine-tuning epochs; an ablation shows continuous inputs are essential. Attention analysis finds local, distance-decaying behavior in early layers and global-token/long-range aggregation in later layers, with atom-specific adaptive radii. | This is a 3D energy/force study, not PCQM Gap; the reference run uses batch 1024/2048 and 1B parameters, so neither its scale nor its geometry contract transfers. | The information-flow conclusion is portable: local chemistry first, global correction later, and a fixed contact radius is not universally optimal. Use it to order a bounded sparse-global schedule, not to remove graph features wholesale. |
+| 67 | [GPS++: Reviving the Art of Message Passing for Molecular Property Prediction (TMLR 2023)](https://ar5iv.labs.arxiv.org/html/2302.02947) | Configuration | Uses 16 repeated blocks with a large edge/global-feature MPNN in parallel with biased global attention; node/edge/global widths are 256/128/64. The MPNN keeps separate incoming and outgoing edge aggregation plus adjacent-node aggregation. On five-run 200-epoch ablations, removing MPNN costs 7.7 meV, edge features 4.2, sender aggregation 0.7, MHSA 0.9, and MHSA plus global features 3.4; the 2D MPNN-only model reaches 81.8 meV versus 82.6 for the hybrid. | The paper's 44.3M model and 3D/auxiliary-denoising contract are not a local recipe, but the controlled ablation is directly relevant to information flow. It shows that a strong local edge-aware path can dominate global attention and that outgoing messages and global summaries are distinct signals. | Treat GPS++ as evidence for preserving directional bond updates and testing sparse/late global attention, not as permission to copy its width or to assume every GPS block is useful. |
+| 68 | [Uni-Mol+: Data-driven quantum chemical property prediction leveraging 3D conformations (Nature Communications 2024)](https://www.nature.com/articles/s41467-024-51321-w) | Configuration | Uses an atom track and dense pair track. Each block applies atom self-attention with pair bias, then pair OuterProduct atom-to-pair communication, merged incoming/outgoing TriangularUpdate, and pair FFN. PCQM uses 8 ETKDG+MMFF94 conformers, samples one during training and averages eight at inference; the default q mixture is 0.8 raw, 0.1 target, 0.1 intermediate. The 12-layer model is about 52.4M parameters and trains with AdamW `2e-4`, batch 1024, 1.5M steps, 150K warmup and EMA 0.999 on 8 A100s for about 5 days. | OuterProduct and TriangularUpdate are the actual atom-to-pair and pair-to-pair mechanisms, while the property gain is coupled to supervised DFT-conformation refinement. R=0 remains strong because the auxiliary conformation target is still trained; this is not comparable to a random-init graph-only screen. | The useful lesson is bottom-level atom--pair interaction and auxiliary geometry alignment. It explains why late SchNet prediction fusion is weak, but the dense O(n^3) triangle path and DFT-conformation supervision belong to a separate teacher/3D route. |
+| 69 | [Graph Alignment for Benchmarking Graph Neural Networks and Learning Positional Encodings (ICML 2026)](https://arxiv.org/html/2505.13087) | Configuration | Pretrains a Siamese GNN on correlated graph pairs, uses a node-similarity matrix and linear assignment loss, then freezes the encoder as Graph Alignment Positional Encoding. For PCQM, the regression Transformer has 12 layers, 16 heads, 1,217,025 parameters, batch 1024, max LR `1e-4`, dropout 0, weight decay 0 and 200K steps; PCQM GAPE is generated with a 32-dimensional GAT at 30% alignment noise. On a 2D/no-edge-feature Transformer, PCQM validation MAE is 0.133 for GAPE and 0.125 for GAPE+RWPE, versus 0.236 with no PE. | The reported gain is from topology-matched unsupervised pretraining, not from the downstream Transformer alone. The paper also reports about one hour for PCQM GAPE pretraining and shows the same-dataset topology matters; its PE experiments intentionally remove edge features, so they do not establish superiority over the accepted atom/bond encoder. | Keep GAPE as a separate low-cost structural-pretraining track after random-init architecture selection. It is a credible way to strengthen topology without enlarging the inference model, but must never be mixed into an architecture claim. |
 
 ## Coverage conclusion
 
@@ -129,12 +132,25 @@ reasoning sharper:
     consumed by a downstream graph model. It is promising for a teacher or
     auxiliary-label track, but cannot be counted as a graph-only architecture
     improvement without the extra NBO supervision.
-11. Molecular Graph Transformer and the graph-free Transformer study converge
+11. GPS++ provides a matched PCQM ablation showing that edge-aware local
+    message passing, outgoing/sender aggregation and global summaries matter
+    independently; its 2D MPNN-only result is better than its 2D hybrid. This
+    strengthens the local-heavy schedule without justifying a larger GPS copy.
+12. Uni-Mol+ reports atom--pair communication and pair--pair triangular
+    updates alongside supervised conformation refinement. It is evidence for
+    bottom-level interaction, not evidence that a late SchNet prediction
+    fusion should be reopened or that a random-init 2D transplant is proven.
+13. GAPE reports topology-matched graph-alignment pretraining and a compact
+    downstream Transformer, with GAPE+RWPE outperforming the compared 2D
+    positional encodings on PCQM. Because the PE is pretrained and the test
+    Transformer omits edge features, this is a separate structural-pretraining
+    track rather than an architecture-screen result.
+14. Molecular Graph Transformer and the graph-free Transformer study converge
     on an information-flow lesson despite different domains: local interactions
     should dominate early processing, while global attention is most useful as
     a later adaptive correction. Both also warn that global attention is the
     expensive part; this strengthens the sparse/late schedule hypothesis.
-12. Set-enhanced readout remains a low-cost orthogonal candidate: replacing
+15. Set-enhanced readout remains a low-cost orthogonal candidate: replacing
     mean pooling with a permutation-invariant RepSet layer improved SR-GINE
     over GINE in the authors' quantum-property benchmarks with only a small
     measured runtime increase, but it has no direct PCQM evidence and must not
