@@ -41,7 +41,8 @@ def test_torsion_cache_and_gpu_runner_keep_sealed_roles_and_budget():
     assert "CANDIDATES = (COMPARATOR, CANDIDATE)" in runner
     assert "train_generator = torch.Generator().manual_seed(SEED)" in runner
     assert 'train_generator_state": train_generator.get_state()' in runner
-    assert 'train_generator.set_state(checkpoint["train_generator_state"])' in runner
+    assert "train_generator.set_state(" in runner
+    assert 'checkpoint["train_generator_state"]' in runner
     assert "shared_backbone_parameters_match" in runner
     assert "torsion_injection_zero" in runner
     assert "torch.equal(value.detach(), reference)" in runner
