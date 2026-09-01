@@ -16,7 +16,7 @@ ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-TORSION-SEED42 | Complete the user-authorized manual repair run pairing a fresh seed-42 distance-plus-angle comparator with the sparse torsion candidate | Version 3 passes artifact acceptance and produces a scientific decision, or fails without a valid comparison | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-TORSION-SEED42 | Complete the user-authorized seed-42 distance-plus-angle versus sparse-torsion comparison from the version-3 atomic checkpoint | One exact-hash resume runs candidate epoch 39, passes artifact acceptance, and produces a scientific decision, or terminates with preserved evidence | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
@@ -63,6 +63,12 @@ audit established that CUDA sparse reductions, not nonzero torsion injection,
 caused the mismatch; version 3 uses exact parameter-level checks under the
 unchanged scientific contract. The audit and launch identity are in
 `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`.
+Version 3 completed the comparator and candidate epochs 0--38 before its
+planned search budget expired. Its hash-pinned resume bundle preserves all RNG,
+optimizer, scheduler, data-order, checkpoint, and trace state; the sole resume
+must skip the comparator and run only candidate epoch 39 plus final artifact
+assembly. The evidence contract is in
+`experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
 exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`

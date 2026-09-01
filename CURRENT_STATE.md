@@ -115,9 +115,14 @@ must not be represented as this new conservative head.
   2 because its preflight incorrectly treated two independent CUDA sparse-
   reduction forwards as an exact zero-injection proof. A user-directed manual
   audit replaced that invalid test with exact shared-backbone and zero-
-  projection parameter checks. Kaggle1 version 3 is running under the unchanged
-  scientific contract; its repair record is
-  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`.
+  projection parameter checks. Kaggle1 version 3 then completed the comparator
+  and candidate epochs 0--38 before its planned search budget ended. Its atomic
+  checkpoint is complete; one exact-hash resume is prepared to run only
+  candidate epoch 39 and final artifact assembly under the unchanged scientific
+  contract. The audit and resume records are
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`
+  and
+  `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - No molecular-research-server access is authorized before Kaggle selects one
