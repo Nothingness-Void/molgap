@@ -44,6 +44,34 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.
 
+## Remote monitor handoff
+
+Remote polling is a bounded waiting stage, not a decision-making loop. Use one
+dedicated Luna Max heartbeat attached to one persistent monitor thread; never
+use a standalone cron that creates a new task on every poll. The monitor prompt
+must name both its automation id and the coordinator thread that owns scientific
+analysis.
+
+- While the remote job is non-terminal, report only the status and newly visible
+  mechanical evidence. Do not wake the coordinator, resubmit, or open another
+  task.
+- On `COMPLETE` or unrecoverable `ERROR`, collect the terminal logs/artifacts and
+  run only the frozen mechanical acceptance, if one exists. Then use the Codex
+  thread-message capability to send one structured terminal handoff to the
+  coordinator thread. The message must include job identity, terminal state,
+  artifact location, acceptance output, essential metrics/hashes, and an
+  explicit request for coordinator analysis.
+- After the terminal handoff is delivered, pause or delete the heartbeat in the
+  same turn. A completed monitor has no reason to remain active. If message
+  delivery itself fails, leave the heartbeat active only long enough to retry
+  that delivery; do not repeat remote work or scientific interpretation.
+- Make terminal handoff idempotent: before sending, check the experiment status,
+  decision record, and any recorded handoff marker. Never send duplicate terminal
+  prompts or rerun an already accepted job.
+- Luna Max owns economical polling and mechanical evidence collection. The
+  coordinator owns result interpretation, repository decisions, follow-up
+  architecture selection, and any new submission authorization.
+
 ## Branch governance
 
 The repository has four long-lived branches with non-overlapping roles:
