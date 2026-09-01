@@ -18,3 +18,4 @@ then at most 12 training epochs. Any failed predecessor prevents GPU training.
 No result was available when this execution record was created.
 
 Machine-readable execution contract: `protocol.json`.
+IMS submission record: `launch.json`.

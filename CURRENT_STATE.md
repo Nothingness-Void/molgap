@@ -17,23 +17,16 @@
 
 ## Active objective
 
-Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
-12-hour A100 budget. Selection uses only the official-train-derived Kaggle
-100K/10K internal split; official validation and test-dev stay sealed.
+Track B is running an official-full warm-start of the accepted Gap-only
+distance/angle Sparse Triangle EdgeState GPS9. The accepted OGB-rich EdgeState
+GPS9 epoch-30 checkpoint initializes the shared backbone; geometry and sparse
+triangle modules remain new. This is training-strategy evidence, not a new
+architecture comparison.
 
-The accepted comparator is Sparse Triangle plus distance-and-angle bottom
-fusion on the fixed pure-2D/ETKDG contract. The single active question is the
-deterministic smallest-ring hierarchy, frozen in
-`experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md`.
-
-Its CPU cache kernel `nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42`,
-version 1, has been submitted. No GPU successor is authorized before the
-downloaded cache passes no-model acceptance. The active experiment status is
-`experiments/pcqm_gap_architecture/STATUS.md`.
-
-Recent torsion and atom--bond dual-stream questions are closed; their complete
-records are on `archive` and indexed by
-`experiments/_closed/pcqm_server_archive_index.md`.
+IMS jobs `1403710` through `1403723` form a strict `afterok` chain: CPU smoke,
+75 resumable geometry shards in ten bounded waves, exhaustive acceptance,
+A100 mapping/timing preflight, and at most 12 training epochs. The immutable
+contract and job ledger are under `experiments/pcqm_geometry_warmstart/`.
 
 ## Prior architecture evidence
 
@@ -55,8 +48,8 @@ records are on `archive` and indexed by
 
 - Accepted PCQM caches, seed-42 comparisons, geometry confirmation, and sparse
   topology-wedge evidence are retained in their experiment records.
-- No molecular-research-server run is authorized before the Kaggle selection
-  gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
+- Molecular-research-server access remains restricted to
+  `/lustre/home/users/sm2/chou/`; the active chain is fail-closed and bounded.
 - Track B predicts Gap directly and cannot alter the Track A production
   registry. Official validation/test-dev and future sealed data are locked.
 - Train and inference geometry must use the same ETKDG construction.
