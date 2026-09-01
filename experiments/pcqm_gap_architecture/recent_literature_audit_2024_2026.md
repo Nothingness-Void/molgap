@@ -10,7 +10,7 @@ scale-normalized local defaults derived from them are kept in the companion
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
 The exact unique-paper count and per-paper reading depth are owned by the
 [`coverage ledger`](recent_literature_coverage_ledger_50.md). The retained
-review contains 61 research papers: 19 configuration-level reads and 42
+review contains 65 research papers: 20 configuration-level reads and 45
 mechanism-level reads, plus one critical post-publication audit. The ledger
 filename is retained as a stable historical path from the original 50-paper
 milestone.
@@ -136,14 +136,15 @@ better in the present screen.
 | Set representation | [Molecular Set Representation Learning, Nature Machine Intelligence 2024](https://www.nature.com/articles/s42256-024-00856-0) | A compact non-graph control and an argument against unnecessary graph complexity | Valuable as a sanity control, but it discards the accepted local bond/angle advantages. |
 | Full pair/triplet attention | [TGT, ICML 2024](https://arxiv.org/abs/2402.04538), [Edge Transformer, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/hash/e5419147e53eba322cf12aff266a66f2-Abstract-Conference.html) | Dense pair states, direct triplet reasoning, higher Weisfeiler--Leman expressivity | The local dense-pair repair was already slower and worse, and the published models are far beyond the parameter/time budget. Only sparse higher-order projections remain justified. |
 
-## Extended evidence from papers 27--61 plus one critical audit
+## Extended evidence from papers 27--65 plus one critical audit
 
-The first review pass established the bond/higher-order queue. Thirty-two
-additional primary papers were then read to test whether a newer mechanism
-should displace it; three further research papers and one critical audit were
-added in the deep-read pass. Full per-paper notes and source links are in the
-[coverage ledger](recent_literature_coverage_ledger_50.md); this section owns
-only the cross-paper conclusions.
+The first review pass established the bond/higher-order queue. Additional
+primary papers were then read to test whether a newer mechanism should
+displace it. The latest deep-read pass adds three mechanism-level sources on
+stereoelectronic representations, attention scheduling and graph-free
+Transformers. Full per-paper notes and source links are in the [coverage
+ledger](recent_literature_coverage_ledger_50.md); this section owns only the
+cross-paper conclusions.
 
 ### Benchmark and low-cost function design
 
@@ -168,6 +169,36 @@ only the cross-paper conclusions.
   encoder-plus-GPS variants. It does not prove that every GPS block should be
   removed from the accepted local geometry model, but it makes attention
   frequency a higher-value screen than adding another full global stack.
+
+- [Molecular Set Representation Learning](https://doi.org/10.1038/s42256-024-00856-0)
+  gives a low-cost readout hypothesis rather than a new encoder. Its RepSet
+  layer is permutation-invariant over a variable-size multiset; the authors'
+  SR-GINE replaces GINE mean pooling with RepSet and reports better quantum-
+  property results than GINE. The measured OCELOT overhead is only 6.2%, but
+  the set-only variants lose topology on newer benchmarks and the study does
+  not use PCQM4Mv2. Therefore the clean local test is **readout replacement
+  only**, with the accepted atom/bond encoder unchanged.
+
+- [Molecular Graph Transformer (MGT)](https://pubs.rsc.org/en/content/articlepdf/2024/dd/d4dd00014e)
+  separates local two-body, line-graph three-body and cutoff global interactions.
+  Its QMOF ablation is informative even though it is not PCQM: ALIGNN local
+  blocks are stronger than isolated MHA or EGCC blocks, and the MHA-only curve
+  saturates at four repetitions while adding the most time. The authors also
+  note that long-range additions can hurt HOMO/LUMO when bonded interactions
+  dominate. This is independent support for **local-first, sparse/late-global**
+  scheduling, not for dense global attention at every layer.
+
+- [Transformers Discover Molecular Structure Without Graph Priors](https://arxiv.org/pdf/2510.02259)
+  reaches the same scheduling conclusion from a different 3D domain. Its
+  LLaMA2-style backbone removes graph priors, uses continuous plus discretized
+  coordinates, and changes causal attention to bidirectional attention for
+  fine-tuning. The authors use Adam at `3e-4`, batch `1024/2048`, 10/60 epochs,
+  and gradient clipping `1/100` for pretraining/fine-tuning; a 1B model is
+  compared with a 6M equivariant GNN under matched FLOPs. Attention is local
+  and distance-decaying in early layers, then shifts toward global tokens and
+  long-range aggregation. This is not a PCQM or Gap result, but it argues
+  against hard-coding a single contact radius and supports a late global
+  correction in a bounded screen.
 
 ### Efficient equivariant and Cartesian representations
 
@@ -213,6 +244,16 @@ only the cross-paper conclusions.
   and [UniGEM](https://proceedings.iclr.cc/paper_files/paper/2025/hash/223935759d7743c85318639b560882a1-Abstract-Conference.html)
   offer relational, chemical-language and generative pretraining signals. They
   belong to a later teacher/pretraining study and cannot certify architecture.
+- [Stereoelectronics-Infused Molecular Graphs](https://arxiv.org/pdf/2408.04520)
+  is more chemically specific than a generic auxiliary task. The authors build
+  explicit atom, lone-pair, σ/π-bond and donor--acceptor nodes, use a GAT with
+  concatenated intermediate outputs, and add an evolver that updates random
+  hidden states under a permutation-invariant matching loss. Their QM9 study
+  separates atomic features from topology and shows learned SIMG* features
+  nearly match ground-truth SIMGs in downstream 2D models. However, SIMG* is
+  trained from full-QM9/GEOM DFT+NBO targets at ωB97M-V/def2-SVPD. The result is
+  therefore a strong **electronic-representation teacher** hypothesis, not a
+  permissible random-init PCQM architecture gain.
 - [Fractional Denoising](https://proceedings.mlr.press/v202/feng23c.html) and
   [Sliced Denoising](https://openreview.net/pdf?id=liKkG1zcWq) provide the most
   reproducible geometry-pretraining recipes. SliDe's use of bond, angle and
@@ -269,6 +310,18 @@ only the cross-paper conclusions.
   Adam `1e-4`) and reported 98.45 meV PCQM result are not under the official
   evaluation contract; its Molecule3D comparison also shows geometry is not
   universally beneficial. It remains a reserve mechanism reference.
+- [GoMS](https://arxiv.org/html/2512.12489) extracts up to 50 chemically
+  meaningful RECAP/BRICS/RGB substructures, encodes them with EGNN, and then
+  builds a graph over substructure embeddings with a Graph Transformer or
+  MPNN. The appendix gives a concrete recipe (EGNN depth/width 4/6/8 and
+  256/384/512, GoMS-GT depth 4/6/8 with 8 heads, AdamW `1e-3`, weight decay
+  `0.05`, batch 32, 100 epochs, clip 1, patience 20). Its Table 1 reports
+  `0.078` PCQM MAE, but Table 5 repeats `0.0301`, which is exactly the GoMS-GT
+  Molecule3D random result in Table 1. Until that internal inconsistency and
+  the input geometry/reproducibility contract are resolved, the only usable
+  conclusion is that arrangement-aware chemical substructure relationships
+  are a hypothesis for larger molecules; the headline PCQM decomposition
+  number is not evidence.
 
 ### Geometry fields are not the same as an architecture gain
 
@@ -285,7 +338,7 @@ only the cross-paper conclusions.
   The transferable question is whether topology-conditioned radial fields and
   degree normalization help after a valid geometry input contract is frozen.
 
-### Decision after 61 research papers and one audit
+### Decision after 65 research papers and one audit
 
 No newly read paper justifies interrupting the active matched experiment or
 opening a concurrent GPU task. After reading methods, configurations and
@@ -297,17 +350,21 @@ ablations, the random-initialized architecture order is:
    gate;
 4. compact Cartesian `K=16` moment mixer;
 5. conditional width-16 scalar--vector repair.
+6. readout-only RepSet replacement as a cheap orthogonal control.
 
 The queue order is unchanged. The deep reads sharpen the stop rules rather
 than add another immediate candidate: MHNN/EquiHGNN hyperedges require an
 information-matched conjugation ablation, TGF-M's all-pair geometry is a later
-input/teacher question, and the 2026 global-attention study remains the
-strongest direct reason to test attention frequency after the ring screen.
+input/teacher question, GoMS needs an internal table audit before its PCQM
+number can be used, and the 2026 global-attention study remains the strongest
+direct reason to test attention frequency after the ring screen.
 
-The new literature creates two explicitly separate later questions: CACE-like
-compact invariant body-order features, SliDe/MACE-OFF/AIMNet2 geometry
-teachers, and a bounded global-attention-frequency test. None may be called an
-architecture gain without its own protocol.
+The new literature creates three explicitly separate later questions: a
+RepSet-only readout control, CACE-like compact invariant body-order features,
+and SliDe/MACE-OFF/AIMNet2 geometry teachers. The bounded global-attention-
+frequency test remains the architecture question most directly supported by
+the new attention studies. None may be called an architecture gain without
+its own protocol.
 
 ## Prioritized experiment queue
 
