@@ -14,15 +14,10 @@ The accepted first matched comparison is
 Its winner is a comparator for continued architecture discovery, not a
 multiseed or full-data authorization.
 
-The first materially new OGB-constrained candidate is defined in
-[`query_pool_seed42_protocol.md`](query_pool_seed42_protocol.md). It changes
-only graph-level information aggregation, failed its strict gate, and is
-closed by [`results/query_pool_seed42/decision.md`](results/query_pool_seed42/decision.md).
-
-The predeclared local-operator sequence in
-[`local_operator_search_protocol.md`](local_operator_search_protocol.md) failed
-its strict gate and is closed by
-[`results/local_operator_search_seed42/decision.md`](results/local_operator_search_seed42/decision.md).
+The earlier query-pool, local-operator, and recurrent-state questions failed
+their gates and are closed. Their complete source and evidence are retained on
+`archive`; the server-side tombstone is
+[`../_closed/pcqm_server_archive_index.md`](../_closed/pcqm_server_archive_index.md).
 
 The resource-bounded comparison of all remaining mechanisms is in
 [`architecture_route_audit.md`](architecture_route_audit.md). The recurrent
@@ -42,8 +37,8 @@ The auditable count, unique numbering, and reading depth for all 50 primary
 papers are owned by
 [`recent_literature_coverage_ledger_50.md`](recent_literature_coverage_ledger_50.md).
 That audit is research evidence; the geometry confirmation has now completed,
-and its only authorized follow-up is the separately frozen torsion protocol
-below.
+and the torsion and dual-stream follow-ups are closed archive evidence. The
+single active follow-up is the ring-hierarchy protocol below.
 
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
@@ -58,24 +53,18 @@ the comparator at seeds 42, 43, and 44 and on their mean, with a marginal
 seed-44 gain. Its decision is
 [`results/geometry_bottom_fusion_multiseed/decision.md`](results/geometry_bottom_fusion_multiseed/decision.md).
 
-The seed-42 sparse torsion-state question was defined in
-[`sparse_torsion_edge_state_seed42_protocol.md`](sparse_torsion_edge_state_seed42_protocol.md).
-Its completed, no-inference-accepted comparison failed the strict gate and is
-closed by
-[`results/sparse_torsion_edge_state_seed42/gpu_decision.md`](results/sparse_torsion_edge_state_seed42/gpu_decision.md).
-The accepted distance-plus-angle model remains the frozen 100K comparator; no
-additional torsion seeds were opened.
+The seed-42 sparse torsion-state and atom--bond dual-stream questions both
+completed no-inference acceptance but failed their scientific gates. They are
+closed on `archive`; no additional torsion or dual-stream seeds were
+opened. The accepted distance-plus-angle model remains the frozen 100K
+comparator.
 
 The post-torsion re-ranking of all 50 literature assets is
 [`post_torsion_literature_synthesis.md`](post_torsion_literature_synthesis.md).
-It selects one separately normalized sparse atom--bond stream as the next
-bounded question. Its immutable seed-42 contract is
-[`sparse_atom_bond_dual_stream_seed42_protocol.md`](sparse_atom_bond_dual_stream_seed42_protocol.md).
-The launch identity and immutable input hashes are recorded under
-[`results/sparse_atom_bond_dual_stream_seed42/`](results/sparse_atom_bond_dual_stream_seed42/).
-The learned-but-redundant failure mechanism and the information gate for a
-non-duplicate successor are isolated in
-[`post_dual_stream_failure_attribution.md`](post_dual_stream_failure_attribution.md).
+It selected a separately normalized sparse atom--bond stream, which was then
+tested and closed after attribution found redundant capacity. Its complete
+contract and launch evidence are on `archive`; the server retains only
+the compact attribution and archive pointer.
 The resulting single smallest-ring hierarchy question is frozen in
 [`ring_hierarchy_seed42_protocol.md`](ring_hierarchy_seed42_protocol.md).
 

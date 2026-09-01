@@ -2,8 +2,9 @@
 
 This note answers one question only: why did the separately normalized sparse
 atom--bond dual stream fail, and what must a successor change to avoid a
-duplicate experiment? The terminal metric and artifact disposition remain in
-[`results/sparse_atom_bond_dual_stream_seed42/decision.md`](results/sparse_atom_bond_dual_stream_seed42/decision.md).
+duplicate experiment? The terminal metric and artifact disposition remain on
+`archive`; the server-side pointer is
+[`../_closed/pcqm_server_archive_index.md`](../_closed/pcqm_server_archive_index.md).
 
 ## What the evidence rules out
 
@@ -87,8 +88,8 @@ cache and training contract require a separate protocol before remote work.
 
 ## Evidence identities
 
-The machine-readable calculation is
-[`results/sparse_atom_bond_dual_stream_seed42/failure_attribution.json`](results/sparse_atom_bond_dual_stream_seed42/failure_attribution.json).
+The machine-readable calculation is retained on `archive` and indexed
+by [`../_closed/pcqm_server_archive_index.md`](../_closed/pcqm_server_archive_index.md).
 It pins the accepted comparator trace, candidate trace, and candidate checkpoint
 hashes. Raw checkpoints and row-level payloads remain in ignored platform
 record storage.

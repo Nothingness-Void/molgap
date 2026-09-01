@@ -32,12 +32,14 @@
   architecture. Seeds 43/44 and full-data training remain unauthorized.
 - Learned-query pooling completed, passed no-inference acceptance, failed its
   strict scientific gate, and is closed by
-  `results/query_pool_seed42/decision.md`.
+  The complete decision is retained on `archive` and indexed by
+  `../_closed/pcqm_server_archive_index.md`.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`, version
   1, completed. Its three required candidates passed terminal no-inference
   acceptance, all failed the strict EdgeState advancement gate, and the
   time-gated fourth candidate was not launched. The exact disposition is in
-  `results/local_operator_search_seed42/decision.md`.
+  The complete decision is retained on `archive` and indexed by
+  `../_closed/pcqm_server_archive_index.md`.
  - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42`,
   version 1, completed and passed no-inference acceptance, but the recurrent
   graph-state candidate missed the strict EdgeState gate by
@@ -158,8 +160,8 @@
   sealed. Sparse torsion failed the strict seed-42 gate and is closed; the
   accepted distance-plus-angle candidate remains the frozen 100K comparator.
   The final decision and compact hashes are in
-  `results/sparse_torsion_edge_state_seed42/gpu_decision.md` and
-  `results/sparse_torsion_edge_state_seed42/gpu_v5_summary.json`.
+  the complete decision and summary are retained on `archive` and
+  indexed by `../_closed/pcqm_server_archive_index.md`.
 - The post-dual-stream attribution proved that the failed bond stream learned
   but widened the generalization gap; same-information optimizer, width,
   depth, and seed retries are closed. The next distinct mechanism is frozen in

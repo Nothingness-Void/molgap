@@ -29,3 +29,15 @@ and does not consume archive experiment numbers:
 None of these branches changed the model registry. The recommended predictor is
 recorded only in `CURRENT_STATE.md`; the routed dual-GPS v4 that these records
 compare against is now the previous production baseline.
+
+## Server-side PCQM archive
+
+Recent Track B architecture questions are indexed in
+[`pcqm_server_archive_index.md`](pcqm_server_archive_index.md). Their complete
+source and evidence are preserved on the `archive` branch; only compact
+no-rerun pointers remain on `molgap-server`.
+
+The rejected and inactive QM9 transfer routes use the same arrangement:
+[`qm9_top20_archive_index.md`](qm9_top20_archive_index.md). The accepted R3
+validation evidence remains on `molgap-server` as the comparator for the
+active PCQM line.
