@@ -87,6 +87,27 @@ def accept(root: Path, expected_source_commit: str, expected_torsion_sha256: str
     }
     for key, value in required.items():
         require(selection.get(key) == value, key)
+
+    resume_path = root / "resume_acceptance.json"
+    require(resume_path.is_file(), "missing resume acceptance")
+    resume = {}
+    if resume_path.is_file():
+        resume = json.loads(resume_path.read_text(encoding="utf-8"))
+        resume_required = {
+            "format": "molgap-pcqm-gap100k-sparse-torsion-resume-acceptance-v1",
+            "complete": True,
+            "source_kernel": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42",
+            "source_kernel_version": 3,
+            "source_commit": expected_source_commit,
+            "torsion_cache_aggregate_sha256": expected_torsion_sha256,
+            "comparator_checkpoint_epoch": 39,
+            "candidate_checkpoint_epoch": 38,
+            "artifact_count": 8,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        }
+        for key, value in resume_required.items():
+            require(resume.get(key) == value, f"resume {key}")
     require(
         0 <= float(selection.get("torsion_cache_valid_geometry_rows", -1)) <= 110_000,
         "valid geometry row count",
@@ -232,6 +253,9 @@ def accept(root: Path, expected_source_commit: str, expected_torsion_sha256: str
         "paired_comparison": comparison,
         "scientific_gate_passed": passed,
         "selected_candidate": CANDIDATE if passed else COMPARATOR,
+        "resume_verified": bool(resume) and not any(
+            message.startswith("resume ") for message in errors
+        ),
         "model_inference_executed": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,

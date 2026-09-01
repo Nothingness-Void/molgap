@@ -147,3 +147,15 @@ def test_kernel_metadata_separates_cpu_cache_and_gpu_task():
         "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
         "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3",
     ]
+
+
+def test_torsion_acceptance_requires_exact_resume_evidence():
+    acceptance = read(
+        "experiments/pcqm_gap_architecture/accept_pcqm100k_torsion_seed42.py"
+    )
+    assert 'root / "resume_acceptance.json"' in acceptance
+    assert '"source_kernel_version": 3' in acceptance
+    assert '"comparator_checkpoint_epoch": 39' in acceptance
+    assert '"candidate_checkpoint_epoch": 38' in acceptance
+    assert '"artifact_count": 8' in acceptance
+    assert '"resume_verified"' in acceptance
