@@ -73,6 +73,9 @@ bounded question. Its immutable seed-42 contract is
 [`sparse_atom_bond_dual_stream_seed42_protocol.md`](sparse_atom_bond_dual_stream_seed42_protocol.md).
 The launch identity and immutable input hashes are recorded under
 [`results/sparse_atom_bond_dual_stream_seed42/`](results/sparse_atom_bond_dual_stream_seed42/).
+The learned-but-redundant failure mechanism and the information gate for a
+non-duplicate successor are isolated in
+[`post_dual_stream_failure_attribution.md`](post_dual_stream_failure_attribution.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

@@ -38,3 +38,8 @@ Under the frozen literature ranking, the next distinct bounded question is a
 deterministic ring/conjugation hierarchy. It must receive a separate protocol
 and cache contract before submission; this decision does not authorize that
 task automatically.
+
+The post-hoc curve and checkpoint attribution is frozen in
+[`../../post_dual_stream_failure_attribution.md`](../../post_dual_stream_failure_attribution.md).
+It establishes that the new modules learned but widened the generalization gap,
+and therefore closes optimizer, width, depth, head-count, and extra-seed retries.
