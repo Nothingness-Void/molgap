@@ -48,7 +48,11 @@ remains the frozen 100K comparator. Its subsequent seed-42 sparse torsion-state
 question completed, passed no-inference acceptance, and failed its strict
 advancement gate. The 50-paper post-result synthesis selects one sparse
 atom--bond dual-stream seed-42 screen as the next bounded architecture
-question; it has no seed 43/44 or full-data authority. The geometry and torsion decisions are
+question. Kaggle1 kernel
+`nothingnessvoid/molgap-pcqm-sparse-atom-bond-dual-stream-s42` version 1 was
+submitted from source commit `8d168bf8ff83b739ff1d8e45195fa289ab59fb32`
+on 2026-09-01 and reached `RUNNING`; it has no seed 43/44 or full-data
+authority. The geometry and torsion decisions are
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
 and
 `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.

@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-gap100k-sparse-atom-bond-dual-stream-launch-v1",
+  "submitted_at_utc": "2026-09-01T05:58:01.9473886Z",
+  "kernel": "nothingnessvoid/molgap-pcqm-sparse-atom-bond-dual-stream-s42",
+  "kernel_version": 1,
+  "initial_status": "RUNNING",
+  "source_commit": "8d168bf8ff83b739ff1d8e45195fa289ab59fb32",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-dual-stream-source-8d168bf",
+  "source_dataset_status": "ready",
+  "cache_dataset": "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+  "cache_aggregate_sha256": "4e151e4d11cf84c53e2510c2982670736a91503899f6e2dc27efedf220bb0173",
+  "frozen_comparator_dataset": "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3",
+  "frozen_comparator_validation_gap_mae_eV": 0.1353926807641983,
+  "candidate": "ogb_distance_angle_dual_stream_triangle_edge_state_gps9",
+  "candidate_parameter_count": 5083889,
+  "seed": 42,
+  "search_budget_s": 14400,
+  "duplicate_submission": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

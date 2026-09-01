@@ -75,7 +75,9 @@ def test_dual_stream_kernel_is_one_private_gpu_task():
             "sparse_atom_bond_dual_stream_seed42/kernel-metadata.json"
         )
     )
-    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-dual-stream-s42"
+    assert metadata["id"] == (
+        "nothingnessvoid/molgap-pcqm-sparse-atom-bond-dual-stream-s42"
+    )
     assert metadata["code_file"] == "run_dual_stream_screen.py"
     assert metadata["is_private"] == "true"
     assert metadata["enable_gpu"] == "true"

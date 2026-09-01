@@ -71,6 +71,8 @@ The post-torsion re-ranking of all 50 literature assets is
 It selects one separately normalized sparse atom--bond stream as the next
 bounded question. Its immutable seed-42 contract is
 [`sparse_atom_bond_dual_stream_seed42_protocol.md`](sparse_atom_bond_dual_stream_seed42_protocol.md).
+The launch identity and immutable input hashes are recorded under
+[`results/sparse_atom_bond_dual_stream_seed42/`](results/sparse_atom_bond_dual_stream_seed42/).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

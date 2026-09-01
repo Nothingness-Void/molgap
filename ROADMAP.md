@@ -160,7 +160,7 @@ experiment unless the project objective changes.
 | Task | Trigger | Bounded action |
 |---|---|---|
 | Recent-architecture sparse torsion screen | Completed and scientifically failed at seed 42 | Closed by its accepted decision; no additional torsion seeds are authorized |
-| Sparse atom--bond dual-stream attention | Satisfied: the sparse torsion mechanism scientifically failed | The bounded design task is P0 above; do not submit until its protocol and preflight contract are frozen |
+| Sparse atom--bond dual-stream attention | Active seed-42 Kaggle1 screen under the frozen protocol | Accept artifacts and compare to the hash-pinned distance-plus-angle comparator; do not submit a successor or more seeds before the gate resolves |
 | Ring/conjugation hierarchy | Both higher-order geometry and sparse bond-attention routes scientifically fail | Test deterministic ring-system tokens as one new information flow, without fingerprint or prediction fusion |
 | Compact Cartesian invariant body-order basis | Torsion, bond-stream, and ring mechanisms all fail and a parameter/throughput preflight fits the same ceiling | Isolate one CACE-like invariant basis; do not add equivariant tensors, pretraining, or a new optimizer in the same screen |
 | PairGPS2D sealed-test disposition | Explicit authorization reopens the independent branch after its validation-only decision | Establish arithmetic equivalence before using benchmark-selected TF32 for an accuracy claim |
