@@ -117,9 +117,12 @@ must not be represented as this new conservative head.
   audit replaced that invalid test with exact shared-backbone and zero-
   projection parameter checks. Kaggle1 version 3 then completed the comparator
   and candidate epochs 0--38 before its planned search budget ended. Its atomic
-  checkpoint is complete. Kaggle1 version 4 is the sole exact-hash resume and
-  was submitted to run only candidate epoch 39 and final artifact assembly
-  under the unchanged scientific contract. The audit and resume records are
+  checkpoint is complete. Kaggle1 version 4 accepted the resume bundle but
+  stopped before training because `torch.load(map_location=cuda)` moved the
+  CPU generator state to CUDA. Version 5 applies only a checked device restore
+  for RNG tensors and is running to execute candidate epoch 39 and final
+  artifact assembly under the unchanged scientific contract. The audit and
+  resume records are
   `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_manual_audit.md`
   and
   `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.

@@ -67,7 +67,10 @@ Version 3 completed the comparator and candidate epochs 0--38 before its
 planned search budget expired. Its hash-pinned resume bundle preserves all RNG,
 optimizer, scheduler, data-order, checkpoint, and trace state; the sole resume
 must skip the comparator and run only candidate epoch 39 plus final artifact
-assembly. That resume is Kaggle1 kernel version 4. The evidence contract is in
+assembly. Kaggle1 version 4 verified and hydrated the bundle but stopped before
+training because CUDA map-location changed the RNG state's device. Version 5
+repairs only that device restoration and preserves the same checkpoint. The
+evidence contract is in
 `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_v3_timeout_resume.md`.
 
 The learned-query and local-operator seed-42 screens are closed evidence. Their
