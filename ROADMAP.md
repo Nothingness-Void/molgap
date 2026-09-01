@@ -16,7 +16,7 @@ ETKDG-consistent and earn advancement against the accepted pure-2D comparator.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-PCQM100K-ATOM-BOND-DUALSTREAM-DESIGN | Freeze one segmented real-bond dual-stream attention question against the accepted distance-plus-angle comparator | Protocol fixes one information-flow change, 100K/10K roles, parameter/throughput ceiling, atomic outputs, and a single seed-42 gate before any remote submission | `experiments/pcqm_gap_architecture/` |
+| P0 | B-PCQM100K-ATOM-BOND-DUALSTREAM-SEED42 | Run one segmented real-bond dual-stream attention candidate against the accepted distance-plus-angle comparator | One Kaggle1 seed-42 candidate passes no-inference artifact acceptance and strictly beats the frozen comparator, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |

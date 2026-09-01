@@ -46,10 +46,14 @@ acceptance: the candidate improved at both fresh seeds and in the three-seed
 mean, although seed 44 was marginal. The accepted distance-plus-angle model
 remains the frozen 100K comparator. Its subsequent seed-42 sparse torsion-state
 question completed, passed no-inference acceptance, and failed its strict
-advancement gate. The geometry and torsion decisions are
+advancement gate. The 50-paper post-result synthesis selects one sparse
+atom--bond dual-stream seed-42 screen as the next bounded architecture
+question; it has no seed 43/44 or full-data authority. The geometry and torsion decisions are
 `experiments/pcqm_gap_architecture/results/geometry_bottom_fusion_multiseed/decision.md`
 and
 `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md`.
+The selected follow-up is defined in
+`experiments/pcqm_gap_architecture/sparse_atom_bond_dual_stream_seed42_protocol.md`.
 
 ## Prior Architecture Evidence
 
