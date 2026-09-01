@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-dual-stream-s42",
+  "title": "MolGap PCQM Sparse Atom Bond Dual Stream S42",
+  "code_file": "run_dual_stream_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm-dual-stream-source-8d168bf",
+    "nothingnessvoid/molgap-pcqm-torsion-cache-s42-dataset",
+    "nothingnessvoid/molgap-pcqm-sparse-torsion-s42-resume-v3"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
