@@ -26,6 +26,13 @@ CONFIRMATION_RUNNER = (
     / "run_confirmation.py"
 )
 CONFIRMATION_METADATA = CONFIRMATION_RUNNER.with_name("kernel-metadata.json")
+SEED44_RUNNER = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "local_global_allocation_seed44"
+    / "run_confirmation.py"
+)
+SEED44_METADATA = SEED44_RUNNER.with_name("kernel-metadata.json")
 
 
 def class_segment(name: str) -> str:
@@ -150,6 +157,21 @@ def test_seed43_confirmation_is_paired_and_t4x2() -> None:
     assert metadata["enable_gpu"] == "true"
     assert metadata["is_private"] == "true"
     assert metadata["kernel_sources"] == []
+
+
+def test_seed44_confirmation_changes_only_the_seed_identity() -> None:
+    source = SEED44_RUNNER.read_text(encoding="utf-8")
+    ast.parse(source)
+    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "confirmation"' in source
+    assert '"MOLGAP_LOCAL_GLOBAL_SEED"] = "44"' in source
+    assert "9068ddb82e6bdf16b841570abbff023b90c07f07" in source
+    metadata = json.loads(SEED44_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == (
+        "nothingnessvoid/molgap-pcqm-graphstate-confirmation-s44"
+    )
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    seed43_metadata = json.loads(CONFIRMATION_METADATA.read_text(encoding="utf-8"))
+    assert metadata["dataset_sources"] == seed43_metadata["dataset_sources"]
 
 
 def test_confirmation_protocol_stops_early_and_keeps_roles_sealed() -> None:
