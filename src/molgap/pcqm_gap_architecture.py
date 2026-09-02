@@ -711,6 +711,18 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
         """Create optional state for a subclass without changing the base."""
         return auxiliary_payload
 
+    def _pre_message_node_injection(
+        self,
+        h: torch.Tensor,
+        pos: torch.Tensor | None,
+        edge_index: torch.Tensor,
+        batch: torch.Tensor,
+        edge_distance: torch.Tensor,
+        geometry_valid: torch.Tensor,
+    ) -> torch.Tensor:
+        """Allow one stateless node feature injection before message passing."""
+        return h
+
     def _update_geometry_auxiliary(
         self,
         layer: int,
@@ -735,6 +747,7 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
         wedge_angle_cos,
         geometry_valid,
         auxiliary_payload=None,
+        pos=None,
     ):
         if random_walk_pe is None:
             raise ValueError("Geometry Triangle GPS requires random_walk_pe")
@@ -755,6 +768,14 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
 
         h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
+        h = self._pre_message_node_injection(
+            h,
+            pos,
+            edge_index,
+            batch,
+            edge_distance,
+            geometry_valid,
+        )
         edge_state = self._embed_edges(edge_attr)
         first, second = wedge_edge_ids.unbind(dim=1)
         centers = edge_index[1, first]
@@ -1043,6 +1064,155 @@ class OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
                 h, batch, auxiliary_state
             )
         return h, edge_state, auxiliary_state
+
+
+class OGBBodyOrderMomentGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState geometry GPS with one stateless rotational-invariant moment."""
+
+    BODY_ORDER_BASIS_CHANNELS = 16
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        self.body_order_basis = _FixedGaussianBasis(
+            0.75, 2.25, self.BODY_ORDER_BASIS_CHANNELS
+        )
+        self.body_order_injection = nn.Sequential(
+            nn.LayerNorm(48),
+            nn.Linear(48, 64),
+            nn.SiLU(),
+            nn.Linear(64, 192, bias=False),
+        )
+        nn.init.zeros_(self.body_order_injection[-1].weight)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        pos,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            pos,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        pos,
+    ):
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            pos=pos,
+        )
+
+    def _pre_message_node_injection(
+        self,
+        h: torch.Tensor,
+        pos: torch.Tensor | None,
+        edge_index: torch.Tensor,
+        batch: torch.Tensor,
+        edge_distance: torch.Tensor,
+        geometry_valid: torch.Tensor,
+    ) -> torch.Tensor:
+        if pos is None:
+            raise ValueError("Body-order moment GPS requires pos")
+        if pos.ndim != 2 or tuple(pos.shape) != (h.shape[0], 3):
+            raise ValueError("pos must align to batched atom coordinates")
+        if edge_index.ndim != 2 or edge_index.shape[0] != 2:
+            raise ValueError("edge_index must have shape [2, E]")
+        if tuple(edge_distance.shape) != (edge_index.shape[1], 1):
+            raise ValueError("edge_distance is not aligned to directed bonds")
+        valid = geometry_valid.reshape(-1).to(device=h.device, dtype=h.dtype)
+        if valid.numel() == 0 or batch.numel() == 0:
+            raise ValueError("geometry_valid and batch must be non-empty")
+        if int(batch.max()) >= valid.shape[0]:
+            raise ValueError("geometry_valid does not cover the batched graphs")
+        if not torch.isfinite(valid).all():
+            raise ValueError("geometry_valid contains non-finite values")
+        node_mask = valid[batch].view(-1, 1)
+        finite_pos = torch.isfinite(pos).all(dim=1, keepdim=True)
+        if bool(((node_mask > 0) & ~finite_pos).any()):
+            raise ValueError("valid geometry contains non-finite positions")
+        safe_pos = torch.where(finite_pos, pos, torch.zeros_like(pos))
+
+        node_count = h.shape[0]
+        source, destination = edge_index.unbind(dim=0)
+        if destination.numel() == 0:
+            invariants = h.new_zeros((node_count, 48))
+        else:
+            displacement = safe_pos[destination] - safe_pos[source]
+            direction = displacement / displacement.norm(
+                dim=1, keepdim=True
+            ).clamp_min_(torch.finfo(displacement.dtype).eps)
+            radial = self.body_order_basis(edge_distance.float()) * node_mask[
+                destination
+            ]
+
+            scalar_density = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS)
+            )
+            scalar_density.index_add_(0, destination, radial)
+
+            vector_moment = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS, 3)
+            )
+            vector_moment.index_add_(
+                0, destination, radial.unsqueeze(-1) * direction.unsqueeze(1)
+            )
+
+            rank2_moment = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS, 3, 3)
+            )
+            outer = direction.unsqueeze(-1) * direction.unsqueeze(-2)
+            rank2_moment.index_add_(
+                0,
+                destination,
+                radial.unsqueeze(-1).unsqueeze(-1) * outer.unsqueeze(1),
+            )
+
+            invariants = torch.cat(
+                [
+                    scalar_density,
+                    vector_moment.square().sum(dim=-1),
+                    rank2_moment.square().sum(dim=(-1, -2)),
+                ],
+                dim=-1,
+            )
+        return h + self.body_order_injection(invariants)
 
 
 class _SharedContactStateUpdate(nn.Module):
@@ -2195,6 +2365,17 @@ def make_pcqm_gap_encoder(candidate: str):
             contact_channels=32,
             contact_basis_channels=16,
             contact_exchange_rank=16,
+        )
+    if candidate == (
+        "ogb_distance_angle_body_order_triangle_edge_state_graph_state9"
+    ):
+        return OGBBodyOrderMomentGraphStateGeometrySparseTriangleEdgeStateWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
         )
     local_global_modes = {
         "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",

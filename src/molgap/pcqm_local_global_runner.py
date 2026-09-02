@@ -19,6 +19,7 @@ if RUN_MODE not in {
     "confirmation",
     "ring_graphstate",
     "contact_graphstate",
+    "body_order_graphstate",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
@@ -31,6 +32,8 @@ if RUN_MODE == "ring_graphstate" and SEED != 42:
     raise RuntimeError("Ring-GraphState mode requires seed 42")
 if RUN_MODE == "contact_graphstate" and SEED != 42:
     raise RuntimeError("ContactState mode requires seed 42")
+if RUN_MODE == "body_order_graphstate" and SEED != 42:
+    raise RuntimeError("Body-order moment mode requires seed 42")
 
 OUT = Path(
     os.environ.get(
@@ -74,8 +77,14 @@ CONTACT_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_contact_state_triangle_edge_state_graph_state9",
 )
+BODY_ORDER_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_body_order_triangle_edge_state_graph_state9",
+)
 CANDIDATES = (
-    RING_GRAPHSTATE_CANDIDATES
+    BODY_ORDER_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "body_order_graphstate"
+    else RING_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "ring_graphstate"
     else CONTACT_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "contact_graphstate"
@@ -90,18 +99,21 @@ EXPECTED_GLOBAL_BLOCKS = {
     SCREEN_CANDIDATES[2]: (),
     RING_GRAPHSTATE_CANDIDATES[1]: (),
     CONTACT_GRAPHSTATE_CANDIDATES[1]: (),
+    BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
     "candidate": BASELINE,
     "seed": 42,
     "validation_gap_mae_eV": (
         0.13012409210205078
-        if RUN_MODE in {"ring_graphstate", "contact_graphstate"}
+        if RUN_MODE
+        in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
         else 0.1353926807641983
     ),
     "acceptance": (
         "results/local_global_allocation_seed42/acceptance.json"
-        if RUN_MODE in {"ring_graphstate", "contact_graphstate"}
+        if RUN_MODE
+        in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
         else "results/geometry_bottom_fusion_multiseed/acceptance.json"
     ),
 }
@@ -112,7 +124,7 @@ MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
 SEARCH_BUDGET_S = 39_600
-if RUN_MODE in {"ring_graphstate", "contact_graphstate"}:
+if RUN_MODE in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}:
     PARAMETER_BUDGET = 4_000_000
     SEARCH_BUDGET_S = 14_400
 EXPECTED_GPU_COUNT = 2
@@ -129,6 +141,7 @@ EXPECTED_PARAMETER_COUNTS = {
     SCREEN_CANDIDATES[2]: 3_665_809,
     RING_GRAPHSTATE_CANDIDATES[1]: 3_723_849,
     CONTACT_GRAPHSTATE_CANDIDATES[1]: 3_700_321,
+    BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: 3_681_329,
 }
 
 
@@ -138,6 +151,10 @@ def uses_ring_hierarchy(candidate: str) -> bool:
 
 def uses_contact_state(candidate: str) -> bool:
     return candidate == CONTACT_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_body_order_moment(candidate: str) -> bool:
+    return candidate == BODY_ORDER_GRAPHSTATE_CANDIDATES[1]
 
 
 def expected_input_cache_sha256() -> str:
@@ -480,6 +497,8 @@ def forward(model, batch, candidate: str):
             batch.contact_edge_index,
             batch.contact_distance,
         )
+    if uses_body_order_moment(candidate):
+        return model(*base, batch.pos)
     return model(*base)
 
 
@@ -535,6 +554,11 @@ def initialization_preflight() -> list[dict]:
         contact_state_present = hasattr(model, "contact_update")
         if contact_state_present != uses_contact_state(candidate):
             raise RuntimeError(f"ContactState identity changed for {candidate}")
+        body_order_moment_present = hasattr(model, "body_order_injection")
+        if body_order_moment_present != uses_body_order_moment(candidate):
+            raise RuntimeError(
+                f"Body-order moment identity changed for {candidate}"
+            )
         ring_injection_zero = True
         if ring_hierarchy_present:
             zero_parameters = {
@@ -567,6 +591,15 @@ def initialization_preflight() -> list[dict]:
             )
             if not contact_injection_zero:
                 raise RuntimeError("Contact-to-atom initialization is not zero")
+        body_order_injection_zero = True
+        if body_order_moment_present:
+            projection = getattr(model, "body_order_injection")[-1]
+            body_order_injection_zero = (
+                projection.bias is None
+                and bool(torch.count_nonzero(projection.weight.detach()) == 0)
+            )
+            if not body_order_injection_zero:
+                raise RuntimeError("Body-order moment injection is not zero")
         rows.append(
             {
                 "candidate": candidate,
@@ -577,6 +610,8 @@ def initialization_preflight() -> list[dict]:
                 "ring_injection_zero": ring_injection_zero,
                 "contact_state_present": contact_state_present,
                 "contact_injection_zero": contact_injection_zero,
+                "body_order_moment_present": body_order_moment_present,
+                "body_order_injection_zero": body_order_injection_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -628,6 +663,34 @@ def gpu_preflight(
     contact_state_present = hasattr(model, "contact_update")
     if contact_state_present != uses_contact_state(candidate):
         raise RuntimeError(f"ContactState identity changed for {candidate}")
+    body_order_moment_present = hasattr(model, "body_order_injection")
+    if body_order_moment_present != uses_body_order_moment(candidate):
+        raise RuntimeError(f"Body-order moment identity changed for {candidate}")
+    body_order_injection_zero = True
+    if body_order_moment_present:
+        projection = getattr(model, "body_order_injection")[-1]
+        body_order_injection_zero = (
+            projection.bias is None
+            and bool(torch.count_nonzero(projection.weight.detach()) == 0)
+        )
+        if not body_order_injection_zero:
+            raise RuntimeError("Body-order moment injection is not zero")
+    initial_prediction_equal_to_baseline = True
+    if uses_body_order_moment(candidate):
+        set_seed(SEED, cuda_device=0)
+        baseline_model = make_pcqm_gap_encoder(BASELINE).to(device)
+        baseline_model.eval()
+        model.eval()
+        with torch.no_grad():
+            baseline_prediction = forward(baseline_model, batch, BASELINE)
+            candidate_prediction = forward(model, batch, candidate)
+        initial_prediction_equal_to_baseline = bool(
+            torch.equal(baseline_prediction, candidate_prediction)
+        )
+        del baseline_model, baseline_prediction, candidate_prediction
+        model.train()
+        if not initial_prediction_equal_to_baseline:
+            raise RuntimeError("Body-order initial function changed")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
         raise RuntimeError(f"Worker {physical_device_index} is not on T4: {gpu_name}")
@@ -658,6 +721,14 @@ def gpu_preflight(
             and bool(torch.isfinite(gradient).all())
             and int(torch.count_nonzero(gradient)) > 0
         )
+    body_order_return_gradient_nonzero = True
+    if body_order_moment_present:
+        gradient = model.body_order_injection[-1].weight.grad
+        body_order_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -670,6 +741,10 @@ def gpu_preflight(
         "ring_return_gradient_nonzero": ring_return_gradient_nonzero,
         "contact_state_present": contact_state_present,
         "contact_return_gradient_nonzero": contact_return_gradient_nonzero,
+        "body_order_moment_present": body_order_moment_present,
+        "body_order_injection_zero": body_order_injection_zero,
+        "initial_prediction_equal_to_baseline": initial_prediction_equal_to_baseline,
+        "body_order_return_gradient_nonzero": body_order_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -685,6 +760,8 @@ def gpu_preflight(
             "finite_gradients",
             "ring_return_gradient_nonzero",
             "contact_return_gradient_nonzero",
+            "initial_prediction_equal_to_baseline",
+            "body_order_return_gradient_nonzero",
         )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
@@ -967,6 +1044,17 @@ def train_one(
             "excluded_covalent_hops": (
                 3 if uses_contact_state(candidate) else None
             ),
+            "body_order_moment": (
+                "radial16+scalar_density16+vector_squared_norm16+"
+                "rank2_frobenius_squared16+pre_message_node_injection"
+                if uses_body_order_moment(candidate)
+                else "none"
+            ),
+            "body_order_injection": (
+                "layernorm48-linear48x64-silu-linear64x192-bias_free_zero"
+                if uses_body_order_moment(candidate)
+                else "none"
+            ),
         },
         "artifacts": {
             "best_model": str(best_model_path.relative_to(OUT)),
@@ -1082,7 +1170,11 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
                 "throughput_ratio": row["mean_throughput_graphs_per_s"]
                 / baseline["mean_throughput_graphs_per_s"],
             }
-        if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}:
+        if RUN_MODE not in {
+            "ring_graphstate",
+            "contact_graphstate",
+            "body_order_graphstate",
+        }:
             comparison["full_gps_validation_gap_mae_eV"] = comparison[
                 "baseline_validation_gap_mae_eV"
             ]
@@ -1253,14 +1345,16 @@ def main() -> None:
             "paired_against_baseline": comparisons,
             "paired_against_fresh_full_gps": (
                 comparisons
-                if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}
+                if RUN_MODE
+                not in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
                 else None
             ),
             "selected_candidate": selected_candidate,
             "selected_strictly_improves_baseline": positive,
             "selected_strictly_improves_full_gps": (
                 positive
-                if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}
+                if RUN_MODE
+                not in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
                 else None
             ),
             "search_budget_s": SEARCH_BUDGET_S,
