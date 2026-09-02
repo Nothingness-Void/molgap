@@ -20,6 +20,10 @@ EXPECTED_GLOBAL_BLOCKS = {
     CANDIDATES[1]: [3, 6, 9],
     CANDIDATES[2]: [],
 }
+EXPECTED_DEVICE_ASSIGNMENTS = {
+    "0": [CANDIDATES[0]],
+    "1": [CANDIDATES[1], CANDIDATES[2]],
+}
 COMMON_CONTRACT = {
     "batch_size": 48,
     "learning_rate": 1.6e-4,
@@ -67,6 +71,21 @@ def accept(
     require(selection.get("seed") == 42, "seed")
     require(selection.get("candidates") == list(CANDIDATES), "candidates")
     require(selection.get("search_budget_s") == 39_600, "budget")
+    require(
+        selection.get("execution") == "dual_t4_candidate_parallel",
+        "execution",
+    )
+    require(
+        selection.get("device_assignments") == EXPECTED_DEVICE_ASSIGNMENTS,
+        "device assignments",
+    )
+    gpu_names = selection.get("gpu_names", [])
+    require(
+        isinstance(gpu_names, list)
+        and len(gpu_names) == 2
+        and all("T4" in name for name in gpu_names),
+        "dual T4 allocation",
+    )
     require(selection.get("official_validation_role_read") is False, "official valid")
     require(selection.get("test_dev_role_read") is False, "test-dev")
     require(
@@ -103,6 +122,15 @@ def accept(
             and 0 < row["parameter_count"] <= 5_200_000,
             f"preflight parameters {row.get('candidate')}",
         )
+        expected_device = (
+            0 if row.get("candidate") == CANDIDATES[0] else 1
+        )
+        require(
+            row.get("physical_device_index") == expected_device
+            and row.get("visible_device_index") == 0
+            and "T4" in str(row.get("gpu")),
+            f"preflight device {row.get('candidate')}",
+        )
 
     runs = selection.get("runs", [])
     require(isinstance(runs, list) and len(runs) == 3, "run count")
@@ -127,6 +155,12 @@ def accept(
         contract = metrics.get("contract", {})
         for key, expected in COMMON_CONTRACT.items():
             require(contract.get(key) == expected, f"contract {key} {candidate}")
+        require(contract.get("loader_workers") == 0, f"loader workers {candidate}")
+        require(
+            contract.get("candidate_parallelism")
+            == "dual_t4_process_isolation",
+            f"parallelism {candidate}",
+        )
         require(
             contract.get("global_attention_blocks")
             == EXPECTED_GLOBAL_BLOCKS[candidate],

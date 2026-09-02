@@ -14,7 +14,6 @@ from pathlib import Path
 
 
 OUT = Path("/kaggle/working/pcqm_gap100k_local_global_allocation_seed42")
-PASCAL_COMPAT_RESTART = "MOLGAP_TORCH_COMPAT_RESTART"
 EXPECTED_MODEL_SOURCE_COMMIT = "c61e147796ee4195b837bd7e5639ab0dfe97b12c"
 EXPECTED_GEOMETRY_SOURCE_COMMIT = "e083bee19ee6a13cd9f72e91229752a9d5f56389"
 EXPECTED_GEOMETRY_SHA256 = (
@@ -51,6 +50,13 @@ MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
 SEARCH_BUDGET_S = 39_600
+EXPECTED_GPU_COUNT = 2
+EXPECTED_GPU_TOKEN = "T4"
+LOADER_WORKERS = 0
+DEVICE_ASSIGNMENTS = {
+    0: (CANDIDATES[0],),
+    1: (CANDIDATES[1], CANDIDATES[2]),
+}
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -82,36 +88,24 @@ def tensor_sha256(value) -> str:
     return hashlib.sha256(array.tobytes(order="C")).hexdigest()
 
 
-def ensure_pascal_compatible_torch() -> None:
-    import torch
-
-    if not torch.cuda.is_available():
-        raise RuntimeError("Kaggle did not allocate a GPU")
-    capability = torch.cuda.get_device_capability(0)
-    if capability != (6, 0):
-        return
-    if "sm_60" in set(torch.cuda.get_arch_list()):
-        return
-    if os.environ.get(PASCAL_COMPAT_RESTART) == "1":
-        raise RuntimeError("Compatibility install still lacks sm_60")
-    subprocess.check_call(
+def verify_dual_t4_host() -> list[str]:
+    """Verify accelerator allocation without initializing CUDA before fork."""
+    completed = subprocess.run(
         [
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            "--quiet",
-            "--no-cache-dir",
-            "--no-deps",
-            "--force-reinstall",
-            "torch==2.7.1",
-            "nvidia-cusparselt-cu12==0.6.3",
-            "--index-url",
-            "https://download.pytorch.org/whl/cu126",
-        ]
+            "nvidia-smi",
+            "--query-gpu=name",
+            "--format=csv,noheader",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
     )
-    os.environ[PASCAL_COMPAT_RESTART] = "1"
-    os.execv(sys.executable, [sys.executable, *sys.argv])
+    names = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+    if len(names) != EXPECTED_GPU_COUNT:
+        raise RuntimeError(f"Expected two Kaggle T4 GPUs, found {names}")
+    if any(EXPECTED_GPU_TOKEN not in name for name in names):
+        raise RuntimeError(f"Expected only T4 GPUs, found {names}")
+    return names
 
 
 def install_dependencies() -> None:
@@ -221,14 +215,16 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
     return graphs
 
 
-def set_seed(seed: int) -> None:
+def set_seed(seed: int, cuda_device: int | None = None) -> None:
     import numpy as np
     import torch
 
     os.environ["PYTHONHASHSEED"] = str(seed)
     np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    torch.random.default_generator.manual_seed(seed)
+    if cuda_device is not None:
+        with torch.cuda.device(cuda_device):
+            torch.cuda.manual_seed(seed)
 
 
 def forward(model, batch):
@@ -245,17 +241,12 @@ def forward(model, batch):
     )
 
 
-def preflight(graphs: dict[str, list]) -> list[dict]:
+def initialization_preflight() -> list[dict]:
+    """Check schedules and matched CPU initialization before CUDA processes."""
     import torch
-    import torch.nn.functional as functional
-    from torch_geometric.loader import DataLoader
 
     from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
 
-    device = torch.device("cuda")
-    batch = next(
-        iter(DataLoader(graphs["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))
-    ).to(device)
     rows = []
     reference_state = None
     for candidate in CANDIDATES:
@@ -291,57 +282,93 @@ def preflight(graphs: dict[str, list]) -> list[dict]:
         graph_state_present = hasattr(model, "graph_context")
         if graph_state_present != candidate.endswith("graph_state9"):
             raise RuntimeError(f"Graph-state identity changed for {candidate}")
-        model = model.to(device)
-        torch.cuda.reset_peak_memory_stats()
-        started = time.perf_counter()
-        prediction = forward(model, batch)
-        loss = functional.l1_loss(prediction, batch.y.view(-1, 1))
-        loss.backward()
-        torch.cuda.synchronize()
-        gradients = [
-            parameter.grad
-            for parameter in model.parameters()
-            if parameter.requires_grad and parameter.grad is not None
-        ]
-        row = {
-            "candidate": candidate,
-            "parameter_count": parameter_count,
-            "global_attention_blocks": list(global_blocks),
-            "graph_state_present": graph_state_present,
-            "shared_parameter_mismatches": shared_parameter_mismatches,
-            "finite_prediction": bool(torch.isfinite(prediction).all()),
-            "finite_loss": bool(torch.isfinite(loss)),
-            "finite_gradients": bool(gradients)
-            and all(bool(torch.isfinite(gradient).all()) for gradient in gradients),
-            "peak_memory_bytes": int(torch.cuda.max_memory_reserved()),
-            "elapsed_s": time.perf_counter() - started,
-        }
-        if not all(
-            row[key] for key in ("finite_prediction", "finite_loss", "finite_gradients")
-        ):
-            raise RuntimeError(f"Non-finite local/global preflight: {row}")
-        rows.append(row)
-        del model, prediction, loss, gradients
+        rows.append(
+            {
+                "candidate": candidate,
+                "parameter_count": parameter_count,
+                "global_attention_blocks": list(global_blocks),
+                "graph_state_present": graph_state_present,
+                "shared_parameter_mismatches": shared_parameter_mismatches,
+            }
+        )
+        del model, state
         gc.collect()
-        torch.cuda.empty_cache()
-    atomic_json(
-        OUT / "preflight.json",
-        {
-            "format": "molgap-pcqm-gap100k-local-global-preflight-v1",
-            "complete": True,
-            "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
-            "geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
-            "gpu": torch.cuda.get_device_name(0),
-            "batch_size": BATCH_SIZE,
-            "models": rows,
-            "official_validation_role_read": False,
-            "test_dev_role_read": False,
-        },
+    return rows
+
+
+def gpu_preflight(
+    graphs: dict[str, list],
+    candidate: str,
+    physical_device_index: int,
+) -> dict:
+    import torch
+    import torch.nn.functional as functional
+    from torch_geometric.loader import DataLoader
+
+    from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
+
+    if torch.cuda.device_count() != 1:
+        raise RuntimeError(
+            f"Worker {physical_device_index} did not isolate one GPU: "
+            f"{torch.cuda.device_count()}"
+        )
+    device = torch.device("cuda:0")
+    set_seed(SEED, cuda_device=0)
+    batch = next(
+        iter(DataLoader(graphs["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))
+    ).to(device)
+    model = make_pcqm_gap_encoder(candidate).to(device)
+    parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    if parameter_count > PARAMETER_BUDGET:
+        raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
+    global_blocks = tuple(
+        layer
+        for layer, block in enumerate(model.convs, start=1)
+        if getattr(block, "use_global_attention", True)
     )
-    del batch
+    graph_state_present = hasattr(model, "graph_context")
+    if global_blocks != EXPECTED_GLOBAL_BLOCKS[candidate]:
+        raise RuntimeError(f"Global schedule changed for {candidate}: {global_blocks}")
+    if graph_state_present != candidate.endswith("graph_state9"):
+        raise RuntimeError(f"Graph-state identity changed for {candidate}")
+    gpu_name = torch.cuda.get_device_name(0)
+    if EXPECTED_GPU_TOKEN not in gpu_name:
+        raise RuntimeError(f"Worker {physical_device_index} is not on T4: {gpu_name}")
+    torch.cuda.reset_peak_memory_stats(0)
+    started = time.perf_counter()
+    prediction = forward(model, batch)
+    loss = functional.l1_loss(prediction, batch.y.view(-1, 1))
+    loss.backward()
+    torch.cuda.synchronize(0)
+    gradients = [
+        parameter.grad
+        for parameter in model.parameters()
+        if parameter.requires_grad and parameter.grad is not None
+    ]
+    row = {
+        "candidate": candidate,
+        "physical_device_index": physical_device_index,
+        "visible_device_index": 0,
+        "gpu": gpu_name,
+        "parameter_count": parameter_count,
+        "global_attention_blocks": list(global_blocks),
+        "graph_state_present": graph_state_present,
+        "finite_prediction": bool(torch.isfinite(prediction).all()),
+        "finite_loss": bool(torch.isfinite(loss)),
+        "finite_gradients": bool(gradients)
+        and all(bool(torch.isfinite(gradient).all()) for gradient in gradients),
+        "peak_memory_bytes": int(torch.cuda.max_memory_reserved(0)),
+        "elapsed_s": time.perf_counter() - started,
+    }
+    if not all(
+        row[key] for key in ("finite_prediction", "finite_loss", "finite_gradients")
+    ):
+        raise RuntimeError(f"Non-finite local/global preflight: {row}")
+    atomic_json(OUT / "preflight" / f"{candidate}.json", row)
+    del model, prediction, loss, gradients, batch
     gc.collect()
     torch.cuda.empty_cache()
-    return rows
+    return row
 
 
 def evaluate(model, loader, target_mean, target_std, device) -> dict:
@@ -373,6 +400,7 @@ def train_one(
     graphs: dict[str, list],
     candidate: str,
     task_started: float,
+    physical_device_index: int,
 ) -> dict:
     import torch
     import torch.nn.functional as functional
@@ -382,7 +410,7 @@ def train_one(
 
     if time.perf_counter() - task_started >= SEARCH_BUDGET_S:
         raise TimeoutError("Local/global screen budget exhausted before next candidate")
-    set_seed(SEED)
+    set_seed(SEED, cuda_device=0)
     run_dir = OUT / "results" / candidate
     run_dir.mkdir(parents=True, exist_ok=True)
     train_targets = torch.tensor(
@@ -399,19 +427,17 @@ def train_one(
         batch_size=BATCH_SIZE,
         shuffle=True,
         generator=train_generator,
-        num_workers=2,
+        num_workers=LOADER_WORKERS,
         pin_memory=True,
-        persistent_workers=True,
     )
     validation_loader = DataLoader(
         graphs["validation"],
         batch_size=BATCH_SIZE,
         shuffle=False,
-        num_workers=2,
+        num_workers=LOADER_WORKERS,
         pin_memory=True,
-        persistent_workers=True,
     )
-    device = torch.device("cuda")
+    device = torch.device("cuda:0")
     model = make_pcqm_gap_encoder(candidate).to(device)
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     if parameter_count > PARAMETER_BUDGET:
@@ -551,6 +577,8 @@ def train_one(
         "seed": SEED,
         "parameter_count": parameter_count,
         "parameter_budget": PARAMETER_BUDGET,
+        "physical_device_index": physical_device_index,
+        "gpu": torch.cuda.get_device_name(0),
         "best_epoch": best_epoch,
         "validation_gap_mae_eV": validation["mae_eV"],
         "validation_rows": int(validation["target"].numel()),
@@ -571,6 +599,8 @@ def train_one(
             "max_epochs": MAX_EPOCHS,
             "patience": PATIENCE,
             "precision": "fp32",
+            "loader_workers": LOADER_WORKERS,
+            "candidate_parallelism": "dual_t4_process_isolation",
             "target": "gap",
             "geometry": "ETKDGv3+MMFF94s-single-conformer-bottom-fusion",
             "global_attention_blocks": list(EXPECTED_GLOBAL_BLOCKS[candidate]),
@@ -598,6 +628,63 @@ def train_one(
     gc.collect()
     torch.cuda.empty_cache()
     return metrics
+
+
+def worker_main(
+    graphs: dict[str, list],
+    candidates: tuple[str, ...],
+    physical_device_index: int,
+    task_started: float,
+) -> None:
+    """Run one isolated candidate queue on exactly one physical T4."""
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(physical_device_index)
+    completed = []
+    try:
+        import torch
+
+        torch.set_num_threads(1)
+        if torch.cuda.device_count() != 1:
+            raise RuntimeError(
+                f"GPU worker {physical_device_index} sees "
+                f"{torch.cuda.device_count()} devices"
+            )
+        for candidate in candidates:
+            gpu_preflight(graphs, candidate, physical_device_index)
+            result = train_one(
+                graphs,
+                candidate,
+                task_started,
+                physical_device_index,
+            )
+            completed.append(result["candidate"])
+            atomic_json(
+                OUT / f"worker_gpu{physical_device_index}_progress.json",
+                {
+                    "complete": len(completed) == len(candidates),
+                    "physical_device_index": physical_device_index,
+                    "assigned_candidates": list(candidates),
+                    "completed_candidates": completed,
+                    "elapsed_s": time.perf_counter() - task_started,
+                    "official_validation_role_read": False,
+                    "test_dev_role_read": False,
+                },
+            )
+    except Exception as error:
+        atomic_json(
+            OUT / f"worker_gpu{physical_device_index}_failure.json",
+            {
+                "type": type(error).__name__,
+                "message": str(error),
+                "physical_device_index": physical_device_index,
+                "assigned_candidates": list(candidates),
+                "completed_candidates": completed,
+                "elapsed_s": time.perf_counter() - task_started,
+                "official_validation_role_read": False,
+                "test_dev_role_read": False,
+            },
+        )
+        raise
 
 
 def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
@@ -635,11 +722,15 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
 
 
 def main() -> None:
+    import multiprocessing
+
     task_started = time.perf_counter()
     OUT.mkdir(parents=True, exist_ok=True)
     completed_runs = []
     try:
-        ensure_pascal_compatible_torch()
+        if not sys.platform.startswith("linux"):
+            raise RuntimeError("Dual-T4 worker isolation requires Linux fork")
+        gpu_names = verify_dual_t4_host()
         install_dependencies()
         sys.path.insert(0, str(source_python_root()))
         marker = next(Path("/kaggle/input").rglob("PCQM_GAP100K_SOURCE_COMMIT.txt"))
@@ -650,22 +741,99 @@ def main() -> None:
             )
         cache_root, cache_manifest = find_geometry_cache()
         graphs = load_graphs(cache_root, cache_manifest)
-        preflight_rows = preflight(graphs)
-        for candidate in CANDIDATES:
-            result = train_one(graphs, candidate, task_started)
-            completed_runs.append(result)
+        initialization_rows = initialization_preflight()
+        atomic_json(
+            OUT / "initialization_preflight.json",
+            {
+                "format": "molgap-pcqm-gap100k-local-global-initialization-v1",
+                "complete": True,
+                "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+                "models": initialization_rows,
+                "official_validation_role_read": False,
+                "test_dev_role_read": False,
+            },
+        )
+        context = multiprocessing.get_context("fork")
+        workers = [
+            context.Process(
+                target=worker_main,
+                args=(graphs, candidates, device_index, task_started),
+                name=f"molgap-t4-{device_index}",
+            )
+            for device_index, candidates in DEVICE_ASSIGNMENTS.items()
+        ]
+        for worker in workers:
+            worker.start()
+        while any(worker.is_alive() for worker in workers):
+            for worker in workers:
+                worker.join(timeout=5)
+            completed_names = [
+                candidate
+                for candidate in CANDIDATES
+                if (OUT / "results" / candidate / "metrics.json").is_file()
+            ]
             atomic_json(
                 OUT / "progress.json",
                 {
                     "complete": False,
-                    "completed_candidates": [
-                        row["candidate"] for row in completed_runs
-                    ],
+                    "execution": "dual_t4_candidate_parallel",
+                    "gpu_names": gpu_names,
+                    "device_assignments": {
+                        str(index): list(candidates)
+                        for index, candidates in DEVICE_ASSIGNMENTS.items()
+                    },
+                    "completed_candidates": completed_names,
+                    "worker_exitcodes": [worker.exitcode for worker in workers],
                     "elapsed_s": time.perf_counter() - task_started,
                     "official_validation_role_read": False,
                     "test_dev_role_read": False,
                 },
             )
+            if time.perf_counter() - task_started > SEARCH_BUDGET_S + 600:
+                for worker in workers:
+                    if worker.is_alive():
+                        worker.terminate()
+                raise TimeoutError("Dual-T4 workers exceeded the wall budget")
+        failed_workers = [
+            worker.name for worker in workers if worker.exitcode != 0
+        ]
+        if failed_workers:
+            raise RuntimeError(f"Dual-T4 workers failed: {failed_workers}")
+        preflight_rows = []
+        initialization_by_candidate = {
+            row["candidate"]: row for row in initialization_rows
+        }
+        for candidate in CANDIDATES:
+            gpu_row = json.loads(
+                (OUT / "preflight" / f"{candidate}.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            preflight_rows.append(
+                {**initialization_by_candidate[candidate], **gpu_row}
+            )
+            completed_runs.append(
+                json.loads(
+                    (OUT / "results" / candidate / "metrics.json").read_text(
+                        encoding="utf-8"
+                    )
+                )
+            )
+        atomic_json(
+            OUT / "preflight.json",
+            {
+                "format": "molgap-pcqm-gap100k-local-global-preflight-v1",
+                "complete": True,
+                "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+                "geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+                "execution": "dual_t4_candidate_parallel",
+                "gpu_names": gpu_names,
+                "batch_size": BATCH_SIZE,
+                "models": preflight_rows,
+                "official_validation_role_read": False,
+                "test_dev_role_read": False,
+            },
+        )
         selected_candidate, positive, comparisons = select(completed_runs)
         selection = {
             "format": "molgap-pcqm-gap100k-local-global-allocation-screen-v1",
@@ -675,6 +843,12 @@ def main() -> None:
             "geometry_valid_fraction": cache_manifest["valid_geometry_fraction"],
             "seed": SEED,
             "candidates": list(CANDIDATES),
+            "execution": "dual_t4_candidate_parallel",
+            "gpu_names": gpu_names,
+            "device_assignments": {
+                str(index): list(candidates)
+                for index, candidates in DEVICE_ASSIGNMENTS.items()
+            },
             "preflight": preflight_rows,
             "runs": completed_runs,
             "frozen_comparator": FROZEN_COMPARATOR,

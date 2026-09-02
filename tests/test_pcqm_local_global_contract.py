@@ -76,6 +76,13 @@ def test_remote_runner_freezes_fair_seed42_contract() -> None:
     assert "PATIENCE = 8" in source
     assert "PARAMETER_BUDGET = 5_200_000" in source
     assert "SEARCH_BUDGET_S = 39_600" in source
+    assert "EXPECTED_GPU_COUNT = 2" in source
+    assert 'EXPECTED_GPU_TOKEN = "T4"' in source
+    assert "LOADER_WORKERS = 0" in source
+    assert "multiprocessing.get_context(\"fork\")" in source
+    assert 'os.environ["CUDA_VISIBLE_DEVICES"]' in source
+    assert '"dual_t4_candidate_parallel"' in source
+    assert "ensure_pascal_compatible_torch" not in source
     assert "paired_against_fresh_full_gps" in source
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
@@ -89,6 +96,7 @@ def test_remote_metadata_is_one_private_gpu_task() -> None:
     )
     assert metadata["is_private"] == "true"
     assert metadata["enable_gpu"] == "true"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
     assert metadata["code_file"] == "run_local_global_screen.py"
     assert metadata["kernel_sources"] == []
     assert metadata["dataset_sources"] == [
