@@ -73,6 +73,11 @@
   the conditional gate and authorizes exactly one paired seed-44 T4x2 task;
   full-data, official-role, desktop, and molecular-research-server work remain
   unauthorized.
+- The paired seed-44 task was submitted once as Kaggle1 kernel
+  `nothingnessvoid/molgap-pcqm-graphstate-confirmation-s44`, version 1, using
+  Kaggle CLI 2.2.4 with explicit `NvidiaTeslaT4`. It remained `RUNNING` after a
+  delayed health check. Its immutable identity is
+  `results/local_global_allocation_multiseed/seed44_launch_manifest.json`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
