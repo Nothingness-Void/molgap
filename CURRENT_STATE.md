@@ -21,12 +21,15 @@ Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
 12-hour A100 budget. Selection uses only the official-train-derived Kaggle
 100K/10K internal split; official validation and test-dev stay sealed.
 
-The accepted comparator is Sparse Triangle plus distance-and-angle bottom
-fusion on the fixed pure-2D/ETKDG contract. The single active question is
-whether full GPS global attention is over-allocated. A fresh full-GPS control,
-a sparse block-3/6/9 attention schedule, and a no-attention shared GraphState
-are frozen in
-`experiments/pcqm_gap_architecture/local_global_allocation_seed42_protocol.md`.
+The seed-42 local/global allocation screen passed no-model acceptance. The
+no-attention shared GraphState beat both the fresh full-GPS control and the
+sparse block-3/6/9 attention schedule while using fewer parameters. Its exact
+evidence is
+`experiments/pcqm_gap_architecture/results/local_global_allocation_seed42/decision.md`.
+The single active question is paired seed-43 reproducibility against a fresh
+full-GPS control under
+`experiments/pcqm_gap_architecture/local_global_allocation_multiseed_protocol.md`.
+Seed 44 is conditional on seed 43 passing.
 
 The deterministic smallest-ring CPU cache completed and passed no-model
 acceptance. Its immutable evidence is

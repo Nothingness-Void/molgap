@@ -68,9 +68,12 @@ the compact attribution and archive pointer.
 The deterministic smallest-ring cache passed no-model acceptance and remains
 ready but deferred. Its acceptance is
 [`results/ring_hierarchy_seed42/cache_acceptance.json`](results/ring_hierarchy_seed42/cache_acceptance.json).
-The active matched test of full GPS, sparse GPS blocks 3/6/9, and no-attention
-GraphState is frozen in
-[`local_global_allocation_seed42_protocol.md`](local_global_allocation_seed42_protocol.md).
+The matched full-GPS, sparse GPS blocks 3/6/9, and no-attention GraphState
+screen completed. GraphState passed seed 42; its decision is
+[`results/local_global_allocation_seed42/decision.md`](results/local_global_allocation_seed42/decision.md).
+The active paired confirmation is
+[`local_global_allocation_multiseed_protocol.md`](local_global_allocation_multiseed_protocol.md):
+seed 43 runs first, and seed 44 is conditional on a strict paired pass.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.
