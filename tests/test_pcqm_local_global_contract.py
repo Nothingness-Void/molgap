@@ -143,7 +143,9 @@ def test_seed43_confirmation_is_paired_and_t4x2() -> None:
     assert "9068ddb82e6bdf16b841570abbff023b90c07f07" in source
     assert "__PIN_AFTER_FEATURE_COMMIT__" not in source
     metadata = json.loads(CONFIRMATION_METADATA.read_text(encoding="utf-8"))
-    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-graph-state-confirm-s43"
+    assert metadata["id"] == (
+        "nothingnessvoid/molgap-pcqm-graphstate-confirmation-s43"
+    )
     assert metadata["machine_shape"] == "NvidiaTeslaT4"
     assert metadata["enable_gpu"] == "true"
     assert metadata["is_private"] == "true"

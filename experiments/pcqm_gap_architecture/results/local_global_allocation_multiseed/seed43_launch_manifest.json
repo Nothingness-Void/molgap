@@ -1,0 +1,29 @@
+{
+  "format": "molgap-pcqm-graph-state-seed43-launch-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-graphstate-confirmation-s43",
+  "kernel_version": 1,
+  "status_at_launch_check": "RUNNING",
+  "submitted_once": true,
+  "execution": "dual_t4_candidate_parallel",
+  "device_assignments": {
+    "0": [
+      "ogb_distance_angle_triangle_edge_state_gps9"
+    ],
+    "1": [
+      "ogb_distance_angle_triangle_edge_state_graph_state9"
+    ]
+  },
+  "seed": 43,
+  "source_dataset": "nothingnessvoid/molgap-pcqm-local-global-confirm-source",
+  "model_source_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "submission_commit": "dcf7580631d412718209597cd7cdc93eaf03055a",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "runner_sha256": "bc6ee7c688abacb821381e20d21faeafeb31103b24b50bf334391f7cbc5091f6",
+  "submitted_metadata_sha256": "552bb9ce14df7f4d022486d3e60389c69fc3d6bbd10b02aea9d01aa9374def5a",
+  "runtime_sha256": "552c79c8692b17f875e8ba4ed87df388db709ff027454cd30c608b240fbb894b",
+  "protocol_sha256": "6023e80a11828cecfbbcb672cca909fd13ef693220a6abbf1f016cd5adb75963",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "seed44_submitted": false
+}

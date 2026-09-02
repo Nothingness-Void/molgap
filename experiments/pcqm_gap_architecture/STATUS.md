@@ -48,6 +48,12 @@
   seed-43 confirmation is now the only authorized GPU successor; seed 44 is
   conditional on seed 43 passing. No full-data, official-role, desktop, or
   molecular-research-server action is authorized.
+- The paired confirmation was submitted once as Kaggle1 kernel
+  `nothingnessvoid/molgap-pcqm-graphstate-confirmation-s43`, version 1. Kaggle
+  normalized the requested metadata slug to the title-derived identity above.
+  The task was `RUNNING` at the launch check on 2026-09-02. GPU 0 trains the
+  fresh full-GPS control and GPU 1 trains GraphState under seed 43; no seed-44
+  task was submitted.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
