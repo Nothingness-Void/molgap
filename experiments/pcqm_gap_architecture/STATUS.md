@@ -61,6 +61,11 @@
   `results/local_global_allocation_multiseed/seed43_v1_failure_diagnosis.md`.
   An unchanged-contract version-2 retry is authorized through Kaggle CLI 2.2.4,
   which preserves the explicit `NvidiaTeslaT4` request.
+- Version 2 was submitted once with Kaggle CLI 2.2.4 and remained `RUNNING`
+  after a delayed health check beyond the version-1 host-guard failure point.
+  Its launch identity is
+  `results/local_global_allocation_multiseed/seed43_v2_launch_manifest.json`.
+  No seed-44 task was submitted.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
