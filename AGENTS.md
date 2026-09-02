@@ -136,6 +136,10 @@ delivery candidate may be promoted from the integration branches to `master`.
 
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
+- Minimize expected context cost (`read frequency * token count`): frequently
+  read entry documents contain only routing, hard constraints, and live deltas;
+  move high-entropy methods, metrics, and logs into conditionally read experiment
+  records.
 - Don't double-write a fact; if it must appear twice, the second is a link.
 - Decision records use dated historical language. Never write `current`,
   `default`, `running`, or `next` there; point to `CURRENT_STATE.md` or

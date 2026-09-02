@@ -77,6 +77,7 @@ LOCAL_LINK_SUFFIXES = (
     ".yml",
 )
 CONTROL_DOC_LIMITS = {
+    "AGENTS.md": 170,
     "CURRENT_STATE.md": 120,
     "ROADMAP.md": 120,
 }
