@@ -34,11 +34,11 @@ The bounded Ring-GraphState comparison completed and closed: its tiny seed-42
 gain did not justify a 15.1% throughput loss or extra seeds, and its candidate
 metrics also missed a required cache-lineage field. The exact decision is
 `experiments/pcqm_gap_architecture/results/ring_graphstate_seed42/decision.md`.
-Server discovery now advances only to the CPU evidence gate for a separately
-normalized non-covalent ContactState; no successor GPU run is authorized until
-that cache passes acceptance. Its contract is
-`experiments/pcqm_gap_architecture/contact_state_seed42_protocol.md`; live status is
-`experiments/pcqm_gap_architecture/STATUS.md`.
+The non-covalent ContactState CPU cache passed its immutable evidence gate with
+110,000 graphs and zero failures. Server discovery now advances to one fresh
+paired seed-42 T4x2 comparison under
+`experiments/pcqm_gap_architecture/contact_state_gpu_seed42_protocol.md`.
+Live status is `experiments/pcqm_gap_architecture/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

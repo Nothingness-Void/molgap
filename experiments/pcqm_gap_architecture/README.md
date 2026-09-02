@@ -85,6 +85,8 @@ decision is
 The next server-side question is the CPU evidence gate for a separately
 normalized non-covalent ContactState. Its frozen contract is
 [`contact_state_seed42_protocol.md`](contact_state_seed42_protocol.md).
+That cache passed, and the separately frozen paired GPU question is
+[`contact_state_gpu_seed42_protocol.md`](contact_state_gpu_seed42_protocol.md).
 Task order remains in `ROADMAP.md`.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.

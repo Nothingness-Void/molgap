@@ -129,6 +129,13 @@
   parent cache. Source-dataset version 2 adds only that frozen class module;
   version 4 was `RUNNING` at the 2026-09-03 05:16 JST health check. Evidence
   and launch identity are in `results/contact_state_seed42/`.
+- Version 4 reached `COMPLETE` and passed no-model acceptance: 100,000/10,000
+  graphs, zero failures, 3,658,038/366,116 directed contacts, maximum 122/110
+  contacts per graph, and aggregate SHA-256
+  `49725b92c2c0d33e17633abf8ffa7148ebc8bc9721d3e5b3635f1309891bc826`.
+  This authorizes only the paired seed-42 GPU contract in
+  `contact_state_gpu_seed42_protocol.md`; no extra seed or full-data action is
+  authorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
