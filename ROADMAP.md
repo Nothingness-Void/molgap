@@ -13,7 +13,7 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM100K-RING-GRAPHSTATE-S42 | Server compares fresh GraphState9 with one Ring-GraphState addition on T4x2 | Candidate strictly wins and becomes confirmation-eligible, or the exact route closes |
+| P0 | B-PCQM100K-CONTACT-CACHE | Server derives and audits one frozen ETKDG non-covalent contact relation | Immutable pair statistics and cache lineage pass acceptance, or the route closes before GPU use |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -22,9 +22,9 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 The GraphState three-seed gate passed; its frozen decision and desktop handoff
 are under
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/`.
-The accepted ring-hierarchy cache now feeds one server-side Ring-GraphState
-seed-42 comparison. This does not revoke the frozen GraphState desktop handoff
-or authorize a second full-data model.
+The Ring-GraphState seed-42 question closed without confirmation. The next
+server action is CPU-only ContactState cache acceptance; this does not revoke
+the frozen GraphState desktop handoff or authorize a second full-data model.
 
 ## Mandatory gates
 
@@ -74,8 +74,7 @@ or authorize a second full-data model.
 
 | Question | Trigger | Bounded action |
 |---|---|---|
-| Deterministic smallest-ring hierarchy | The local/global allocation question closes without a better candidate | Use the already accepted ring cache and submit only the frozen seed-42 ring candidate |
-| Sparse non-covalent ContactState | Ring and sparse-global screens fail or leave a clear through-space hypothesis; CPU preflight is feasible | Build one ETKDG contact cache with fixed edge-count/type/coverage statistics; only after acceptance test a narrow separately normalized contact state |
+| Sparse non-covalent ContactState | Active CPU evidence gate | Build one ETKDG contact cache with fixed edge-count/type/coverage statistics; only after acceptance test a narrow separately normalized contact state |
 | Compact Cartesian invariant body-order basis | Ring and the two higher-information screens fail, and a preflight fits the same ceiling | Isolate one CACE/CEIT-like invariant basis with `K=16`; no equivariant tensors or new optimizer |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
 | Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |

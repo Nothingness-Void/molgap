@@ -30,17 +30,14 @@ The active question is now the separate A100 timing and memory gate described
 in that directory's `desktop_handoff.md`; no full-data or official-role action
 is authorized before it passes.
 
-Server-side architecture discovery continues independently with one bounded
-seed-42 Ring-GraphState comparison. It keeps the frozen GraphState winner as a
-fresh paired baseline and adds only the already accepted deterministic
-smallest-ring hierarchy. Its contract is
-`experiments/pcqm_gap_architecture/ring_graphstate_seed42_protocol.md`.
-
-The deterministic smallest-ring CPU cache completed and passed no-model
-acceptance. Its immutable evidence is
-`experiments/pcqm_gap_architecture/results/ring_hierarchy_seed42/cache_acceptance.json`;
-it is reused by the active Ring-GraphState screen without preprocessing.
-Live experiment status is `experiments/pcqm_gap_architecture/STATUS.md`.
+The bounded Ring-GraphState comparison completed and closed: its tiny seed-42
+gain did not justify a 15.1% throughput loss or extra seeds, and its candidate
+metrics also missed a required cache-lineage field. The exact decision is
+`experiments/pcqm_gap_architecture/results/ring_graphstate_seed42/decision.md`.
+Server discovery now advances only to the CPU evidence gate for a separately
+normalized non-covalent ContactState; no successor GPU run is authorized until
+that cache passes acceptance. Live status is
+`experiments/pcqm_gap_architecture/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

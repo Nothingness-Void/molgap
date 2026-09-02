@@ -101,6 +101,14 @@
   `results/ring_graphstate_seed42/launch_manifest.json`. No confirmation seed,
   full-data, official-role, desktop, or molecular-research-server successor
   was submitted.
+- Ring-GraphState version 1 reached `COMPLETE`. Its paired seed-42 gain was
+  `0.00020264089107513428 eV`, but throughput fell to 0.8492 times the fresh
+  GraphState baseline and both candidate metrics omitted the required input
+  cache lineage field. The route closed without confirmation; exact evidence
+  is `results/ring_graphstate_seed42/decision.md`. The reusable runner now
+  emits the missing field for future jobs, but no Ring-GraphState retry was
+  submitted. The only successor is a CPU evidence gate for non-covalent
+  ContactState; no GPU successor is authorized before cache acceptance.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

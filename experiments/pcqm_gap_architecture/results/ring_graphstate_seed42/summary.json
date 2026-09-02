@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm-ring-graphstate-seed42-summary-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-ring-graphstate-s42",
+  "version": 1,
+  "terminal_state": "COMPLETE",
+  "source_commit": "b9f8445ac400315d82441db8292ea99e68b37dfa",
+  "seed": 42,
+  "baseline": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameter_count": 3665809,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.12953335046768188,
+    "mean_throughput_graphs_per_s": 558.5396187179082,
+    "training_elapsed_s": 7178.8605587249995
+  },
+  "candidate": {
+    "candidate": "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9",
+    "parameter_count": 3723849,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.12933070957660675,
+    "mean_throughput_graphs_per_s": 474.2893404613361,
+    "training_elapsed_s": 8454.501752646
+  },
+  "candidate_minus_baseline_eV": -0.00020264089107513428,
+  "parameter_delta": 58040,
+  "throughput_ratio": 0.8491597096550408,
+  "no_model_acceptance": {
+    "accepted": false,
+    "errors": [
+      "cache ogb_distance_angle_triangle_edge_state_graph_state9",
+      "cache ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9"
+    ],
+    "cause": "Both candidate metrics files omitted input_cache_aggregate_sha256; selection and payload identities retained the expected cache SHA."
+  },
+  "selection_sha256": "7180ed994476c9f3cc43a4e37e767b4039a04d31a88c460044a4874275f60d92",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "model_inference_executed_during_acceptance": false,
+  "seed43_44_authorized": false,
+  "decision": "closed"
+}
