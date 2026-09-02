@@ -52,6 +52,7 @@ def test_runtime_freezes_paired_t4x2_ring_graphstate_contract() -> None:
     source = RUNTIME.read_text(encoding="utf-8")
     ast.parse(source)
     assert '"ring_graphstate"' in source
+    assert '"input_cache_aggregate_sha256"' in source
     assert "RING_GRAPHSTATE_CANDIDATES = (" in source
     assert "EXPECTED_RING_CACHE_SHA256" in source
     assert "3_665_809" in source

@@ -790,6 +790,11 @@ def train_one(
         "complete": True,
         "candidate": candidate,
         "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+        "input_cache_aggregate_sha256": (
+            EXPECTED_RING_CACHE_SHA256
+            if RUN_MODE == "ring_graphstate"
+            else EXPECTED_GEOMETRY_SHA256
+        ),
         "seed": SEED,
         "parameter_count": parameter_count,
         "parameter_budget": PARAMETER_BUDGET,
