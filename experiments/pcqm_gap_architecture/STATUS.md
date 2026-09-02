@@ -54,6 +54,13 @@
   The task was `RUNNING` at the launch check on 2026-09-02. GPU 0 trains the
   fresh full-GPS control and GPU 1 trains GraphState under seed 43; no seed-44
   task was submitted.
+- Version 1 reached `ERROR` after 0.027 seconds and before preflight because the
+  legacy submission client omitted the unsupported `machineShape` field and
+  Kaggle assigned one P100. This is an infrastructure-only failure with no
+  scientific result. Its diagnosis is
+  `results/local_global_allocation_multiseed/seed43_v1_failure_diagnosis.md`.
+  An unchanged-contract version-2 retry is authorized through Kaggle CLI 2.2.4,
+  which preserves the explicit `NvidiaTeslaT4` request.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
