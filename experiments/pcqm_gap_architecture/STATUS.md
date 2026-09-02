@@ -109,6 +109,12 @@
   emits the missing field for future jobs, but no Ring-GraphState retry was
   submitted. The only successor is a CPU evidence gate for non-covalent
   ContactState; no GPU successor is authorized before cache acceptance.
+- ContactState CPU cache version 1 reached `ERROR` after Kaggle2 rejected the
+  inaccessible Kaggle1 private geometry-dataset input. No shard or scientific
+  result was produced. The accepted local cache was uploaded unchanged under
+  Kaggle2 with the same aggregate SHA, and the unchanged-contract version 2
+  was `RUNNING` at the 2026-09-03 04:10 JST health check. The diagnosis and
+  launch identity are in `results/contact_state_seed42/`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
