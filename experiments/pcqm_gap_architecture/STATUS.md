@@ -25,7 +25,14 @@
   is commit `c61e147796ee4195b837bd7e5639ab0dfe97b12c`; all six static contract
   checks passed. The repaired source dataset reached `ready`, Kaggle1 accepted
   kernel version 2 once, and version 2 was `RUNNING` at the 2026-09-02 14:56
-  JST launch check under the unchanged scientific contract.
+  JST launch check under the unchanged scientific contract. The user then
+  selected T4x2 candidate-level parallelism for multi-candidate screens.
+  Kaggle's public CLI does not expose cancellation by kernel slug; version 3
+  was therefore pushed to the same kernel as the new latest run, explicitly
+  requesting `NvidiaTeslaT4` and a 39,600-second timeout. Version 3 was
+  `RUNNING` at the 2026-09-02 15:08 JST launch check. It assigns fresh full-GPS
+  to physical GPU 0 and sparse-GPS followed by GraphState to physical GPU 1,
+  with process-isolated CUDA visibility, RNG, optimizer and checkpoints.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
