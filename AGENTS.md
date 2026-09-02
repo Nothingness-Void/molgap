@@ -40,6 +40,13 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   ETKDG/graph construction, and graph acceptance. Submit GPU/DCU jobs only
   after an immutable graph cache passes acceptance; GPU/DCU time is reserved
   for encoder training, embedding extraction, and fusion.
+- **Kaggle multi-candidate screens**: when two or more independent candidates
+  can be isolated without changing their scientific contracts, explicitly
+  request `NvidiaTeslaT4` and use the T4x2 allocation for candidate-level
+  parallelism. Give every worker an independent model, RNG, optimizer,
+  checkpoint directory, and one visible GPU. Use a single accelerator only
+  for one-model jobs, memory-constrained candidates, or mechanisms that cannot
+  be deterministically isolated; record that exception in the protocol.
 - **IMS access boundary**: before any molecular-research-server command, read
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.

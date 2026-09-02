@@ -53,7 +53,9 @@ state. It is representation-level communication, not prediction fusion.
   `1e-6`, at most 40 epochs, patience 8, identical target normalization,
   scheduler, shuffle order, loaders, direct scalar Gap head, and mean pooling;
 - every candidate must remain at or below 5.2M trainable parameters;
-- one sequential Kaggle GPU task, with a search wall budget of 39,600 seconds;
+- one Kaggle T4x2 task with candidate-level process isolation: GPU 0 trains
+  fresh full-GPS, while GPU 1 trains sparse-GPS then GraphState; the shared
+  search wall budget remains 39,600 seconds;
 - official validation and test-dev remain unread.
 
 The full-GPS comparator is trained fresh inside the same task. The previously
@@ -75,6 +77,12 @@ Before training, the remote GPU preflight must verify:
 Every epoch writes an atomic checkpoint and complete trace. Each completed
 candidate writes a best model, validation payload, metrics, and hashes so a
 terminal task can be accepted without local model inference.
+
+The two workers inherit one read-only graph cache through Linux copy-on-write,
+set disjoint `CUDA_VISIBLE_DEVICES` values before CUDA initialization, use
+independent RNG state, model, optimizer and checkpoint directories, and never
+combine gradients. Parallelism changes wall-clock allocation only; it does not
+change the scientific contract.
 
 ## Decision rule
 
