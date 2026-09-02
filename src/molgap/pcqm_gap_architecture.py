@@ -1331,6 +1331,172 @@ class OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper(
         return h, edge_state, auxiliary_state
 
 
+class OGBRingHierarchyGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState winner with one persistent deterministic ring hierarchy."""
+
+    HIERARCHY_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        ring_channels: int = 64,
+        ring_feature_channels: int = 12,
+        ring_edge_channels: int = 4,
+        ring_exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        if ring_channels <= 0 or ring_feature_channels <= 0:
+            raise ValueError("ring channels must be positive")
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        hidden_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.ring_channels = int(ring_channels)
+        self.ring_feature_channels = int(ring_feature_channels)
+        self.ring_edge_channels = int(ring_edge_channels)
+        self.ring_feature_encoder = nn.Sequential(
+            nn.LayerNorm(self.ring_feature_channels),
+            nn.Linear(self.ring_feature_channels, self.ring_channels),
+            nn.LayerNorm(self.ring_channels),
+        )
+        self.ring_update = _SharedRingHierarchyUpdate(
+            hidden_channels,
+            self.ring_channels,
+            self.ring_edge_channels,
+            ring_exchange_rank,
+            dropout,
+        )
+        self.ring_initial_norm = nn.LayerNorm(self.ring_channels)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper._validate_ring_payload(
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+            x.shape[0],
+            self.ring_feature_channels,
+            self.ring_edge_channels,
+        )
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            auxiliary_payload={
+                "ring_features": ring_features,
+                "atom_ring_index": atom_ring_index,
+                "ring_edge_index": ring_edge_index,
+                "ring_edge_attr": ring_edge_attr,
+            },
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is None:
+            raise ValueError("ring hierarchy payload is required")
+        ring_features = auxiliary_payload["ring_features"]
+        atom_ring_index = auxiliary_payload["atom_ring_index"]
+        ring_state = self.ring_feature_encoder(ring_features.float())
+        if ring_state.shape[0]:
+            atom_ids, ring_ids = atom_ring_index.unbind(dim=0)
+            atom_context = self.ring_update._membership_mean(
+                h, atom_ids, ring_ids, ring_state.shape[0]
+            )
+            ring_state = self.ring_initial_norm(
+                ring_state + self.ring_update.atom_projection(atom_context)
+            )
+        return {
+            **auxiliary_payload,
+            "ring_state": ring_state,
+            "graph_state": self.graph_context.initialize(h, batch),
+        }
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        if layer in self.HIERARCHY_LAYERS:
+            h, ring_state = self.ring_update(
+                h,
+                auxiliary_state["ring_state"],
+                auxiliary_state["atom_ring_index"],
+                auxiliary_state["ring_edge_index"],
+                auxiliary_state["ring_edge_attr"],
+            )
+            auxiliary_state["ring_state"] = ring_state
+        block = layer + 1
+        if block in self.GLOBAL_BLOCKS:
+            h, graph_state = self.graph_context(
+                h, batch, auxiliary_state["graph_state"]
+            )
+            auxiliary_state["graph_state"] = graph_state
+        return h, edge_state, auxiliary_state
+
+
 class OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
     OGBGeometrySparseTriangleEdgeStateGPSWrapper
 ):
@@ -1766,6 +1932,21 @@ def make_pcqm_gap_encoder(candidate: str):
             ring_feature_channels=12,
             ring_edge_channels=4,
             exchange_rank=32,
+        )
+    if candidate == (
+        "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9"
+    ):
+        return OGBRingHierarchyGraphStateGeometrySparseTriangleEdgeStateWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
+            ring_channels=64,
+            ring_feature_channels=12,
+            ring_edge_channels=4,
+            ring_exchange_rank=32,
         )
     local_global_modes = {
         "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",

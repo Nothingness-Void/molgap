@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 RUN_MODE = os.environ.get("MOLGAP_LOCAL_GLOBAL_RUN_MODE", "seed42_screen")
-if RUN_MODE not in {"seed42_screen", "confirmation"}:
+if RUN_MODE not in {"seed42_screen", "confirmation", "ring_graphstate"}:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
 SEED = int(os.environ.get("MOLGAP_LOCAL_GLOBAL_SEED", "42"))
@@ -22,6 +22,8 @@ if RUN_MODE == "seed42_screen" and SEED != 42:
     raise RuntimeError("The seed-42 screen mode requires seed 42")
 if RUN_MODE == "confirmation" and SEED not in {43, 44}:
     raise RuntimeError("Confirmation mode requires seed 43 or 44")
+if RUN_MODE == "ring_graphstate" and SEED != 42:
+    raise RuntimeError("Ring-GraphState mode requires seed 42")
 
 OUT = Path(
     os.environ.get(
@@ -43,26 +45,47 @@ EXPECTED_PARENT_GRAPH_SHA256 = (
 EXPECTED_WEDGE_SHA256 = (
     "dc62b8289b0d85bd71a2eca9a16b6223f53206dd9a901670bb799125eff77406"
 )
+EXPECTED_RING_SOURCE_COMMIT = "58f425258031062c3c3762f13b7d4c160dffba65"
+EXPECTED_RING_CACHE_SHA256 = (
+    "3f8b271571b8d1026e96fc1dae51d9479489ddd13b73df95740288e6f630779f"
+)
 SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
     "ogb_distance_angle_triangle_edge_state_graph_state9",
 )
 CONFIRMATION_CANDIDATES = (SCREEN_CANDIDATES[0], SCREEN_CANDIDATES[2])
-CANDIDATES = (
-    SCREEN_CANDIDATES if RUN_MODE == "seed42_screen" else CONFIRMATION_CANDIDATES
+RING_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9",
 )
-FULL_GPS = CANDIDATES[0]
+CANDIDATES = (
+    RING_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "ring_graphstate"
+    else SCREEN_CANDIDATES
+    if RUN_MODE == "seed42_screen"
+    else CONFIRMATION_CANDIDATES
+)
+BASELINE = CANDIDATES[0]
 EXPECTED_GLOBAL_BLOCKS = {
     SCREEN_CANDIDATES[0]: tuple(range(1, 10)),
     SCREEN_CANDIDATES[1]: (3, 6, 9),
     SCREEN_CANDIDATES[2]: (),
+    RING_GRAPHSTATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
-    "candidate": FULL_GPS,
+    "candidate": BASELINE,
     "seed": 42,
-    "validation_gap_mae_eV": 0.1353926807641983,
-    "acceptance": "results/geometry_bottom_fusion_multiseed/acceptance.json",
+    "validation_gap_mae_eV": (
+        0.13012409210205078
+        if RUN_MODE == "ring_graphstate"
+        else 0.1353926807641983
+    ),
+    "acceptance": (
+        "results/local_global_allocation_seed42/acceptance.json"
+        if RUN_MODE == "ring_graphstate"
+        else "results/geometry_bottom_fusion_multiseed/acceptance.json"
+    ),
 }
 BATCH_SIZE = 48
 LEARNING_RATE = 1.6e-4
@@ -71,6 +94,9 @@ MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
 SEARCH_BUDGET_S = 39_600
+if RUN_MODE == "ring_graphstate":
+    PARAMETER_BUDGET = 4_000_000
+    SEARCH_BUDGET_S = 14_400
 EXPECTED_GPU_COUNT = 2
 EXPECTED_GPU_TOKEN = "T4"
 LOADER_WORKERS = 0
@@ -79,6 +105,16 @@ DEVICE_ASSIGNMENTS = (
     if RUN_MODE == "seed42_screen"
     else {0: (CANDIDATES[0],), 1: (CANDIDATES[1],)}
 )
+EXPECTED_PARAMETER_COUNTS = {
+    SCREEN_CANDIDATES[0]: 4_891_057,
+    SCREEN_CANDIDATES[1]: 3_999_409,
+    SCREEN_CANDIDATES[2]: 3_665_809,
+    RING_GRAPHSTATE_CANDIDATES[1]: 3_723_849,
+}
+
+
+def uses_ring_hierarchy(candidate: str) -> bool:
+    return candidate == RING_GRAPHSTATE_CANDIDATES[1]
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -210,6 +246,65 @@ def find_geometry_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
+def find_ring_cache() -> tuple[Path, dict]:
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-ring-hierarchy-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one ring-hierarchy cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_RING_SOURCE_COMMIT,
+        "parent_graph_cache_aggregate_sha256": EXPECTED_PARENT_GRAPH_SHA256,
+        "parent_wedge_cache_aggregate_sha256": EXPECTED_WEDGE_SHA256,
+        "parent_geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+        "aggregate_sha256": EXPECTED_RING_CACHE_SHA256,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "ring_method": "RDKit-GetSymmSSSR-canonical-atom-tuples",
+        "ring_feature_channels": 12,
+        "ring_edge_feature_channels": 4,
+        "failure_count": 0,
+        "model_inference_executed": False,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"Ring cache contract changed for {key}")
+    failures_path = root / manifest["failures_file"]
+    if sha256_file(failures_path) != manifest["failures_file_sha256"]:
+        raise RuntimeError("Ring failure ledger hash changed")
+    failures = json.loads(failures_path.read_text(encoding="utf-8"))
+    if failures.get("failures") != []:
+        raise RuntimeError("Ring cache contains unresolved failures")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"Ring shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != EXPECTED_RING_CACHE_SHA256:
+        raise RuntimeError("Ring aggregate hash changed")
+    return root, manifest
+
+
+def find_input_cache() -> tuple[Path, dict]:
+    if RUN_MODE == "ring_graphstate":
+        return find_ring_cache()
+    return find_geometry_cache()
+
+
 def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
     import torch
 
@@ -219,7 +314,7 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
             root / shard["file"], map_location="cpu", weights_only=False
         )
         if len(payload) != int(shard["graph_count"]):
-            raise RuntimeError(f"Geometry graph count changed: {shard['file']}")
+            raise RuntimeError(f"Input graph count changed: {shard['file']}")
         graphs[shard["role"]].extend(payload)
     if len(graphs["train"]) != 100_000 or len(graphs["validation"]) != 10_000:
         raise RuntimeError("Loaded geometry role counts changed")
@@ -234,6 +329,22 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                 1,
             ):
                 raise RuntimeError(f"{role} angle alignment changed")
+            if RUN_MODE == "ring_graphstate":
+                ring_count = int(graph.ring_features.shape[0])
+                if tuple(graph.ring_features.shape) != (ring_count, 12):
+                    raise RuntimeError(f"{role} ring feature shape changed")
+                if (
+                    graph.atom_ring_index.ndim != 2
+                    or graph.atom_ring_index.shape[0] != 2
+                ):
+                    raise RuntimeError(f"{role} atom-ring shape changed")
+                if (
+                    graph.ring_edge_index.ndim != 2
+                    or graph.ring_edge_index.shape[0] != 2
+                    or tuple(graph.ring_edge_attr.shape)
+                    != (graph.ring_edge_index.shape[1], 4)
+                ):
+                    raise RuntimeError(f"{role} ring relation shape changed")
     return graphs
 
 
@@ -249,8 +360,8 @@ def set_seed(seed: int, cuda_device: int | None = None) -> None:
             torch.cuda.manual_seed(seed)
 
 
-def forward(model, batch):
-    return model(
+def forward(model, batch, candidate: str):
+    base = (
         batch.x,
         batch.edge_index,
         batch.edge_attr,
@@ -261,6 +372,15 @@ def forward(model, batch):
         batch.wedge_angle_cos,
         batch.geometry_valid,
     )
+    if uses_ring_hierarchy(candidate):
+        return model(
+            *base,
+            batch.ring_features,
+            batch.atom_ring_index,
+            batch.ring_edge_index,
+            batch.ring_edge_attr,
+        )
+    return model(*base)
 
 
 def initialization_preflight() -> list[dict]:
@@ -275,11 +395,15 @@ def initialization_preflight() -> list[dict]:
         set_seed(SEED)
         model = make_pcqm_gap_encoder(candidate)
         parameter_count = sum(parameter.numel() for parameter in model.parameters())
+        if parameter_count != EXPECTED_PARAMETER_COUNTS[candidate]:
+            raise RuntimeError(
+                f"{candidate} parameter count changed: {parameter_count}"
+            )
         if parameter_count > PARAMETER_BUDGET:
             raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
         state = model.state_dict()
         shared_parameter_mismatches = []
-        if candidate == FULL_GPS:
+        if candidate == BASELINE:
             reference_state = {
                 name: value.detach().clone() for name, value in state.items()
             }
@@ -302,14 +426,36 @@ def initialization_preflight() -> list[dict]:
                 f"Global schedule changed for {candidate}: {global_blocks}"
             )
         graph_state_present = hasattr(model, "graph_context")
-        if graph_state_present != candidate.endswith("graph_state9"):
+        expected_graph_state = candidate.endswith("graph_state9")
+        if graph_state_present != expected_graph_state:
             raise RuntimeError(f"Graph-state identity changed for {candidate}")
+        ring_hierarchy_present = hasattr(model, "ring_update")
+        if ring_hierarchy_present != uses_ring_hierarchy(candidate):
+            raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
+        ring_injection_zero = True
+        if ring_hierarchy_present:
+            zero_parameters = {
+                name: value
+                for name, value in model.named_parameters()
+                if name in {
+                    "ring_update.ring_to_atom.value.weight",
+                    "ring_update.ring_to_atom.value.bias",
+                }
+            }
+            ring_injection_zero = len(zero_parameters) == 2 and all(
+                torch.count_nonzero(value.detach()).item() == 0
+                for value in zero_parameters.values()
+            )
+            if not ring_injection_zero:
+                raise RuntimeError("Ring-to-atom initialization is not zero")
         rows.append(
             {
                 "candidate": candidate,
                 "parameter_count": parameter_count,
                 "global_attention_blocks": list(global_blocks),
                 "graph_state_present": graph_state_present,
+                "ring_hierarchy_present": ring_hierarchy_present,
+                "ring_injection_zero": ring_injection_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -341,6 +487,8 @@ def gpu_preflight(
     ).to(device)
     model = make_pcqm_gap_encoder(candidate).to(device)
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    if parameter_count != EXPECTED_PARAMETER_COUNTS[candidate]:
+        raise RuntimeError(f"{candidate} parameter count changed: {parameter_count}")
     if parameter_count > PARAMETER_BUDGET:
         raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
     global_blocks = tuple(
@@ -353,12 +501,15 @@ def gpu_preflight(
         raise RuntimeError(f"Global schedule changed for {candidate}: {global_blocks}")
     if graph_state_present != candidate.endswith("graph_state9"):
         raise RuntimeError(f"Graph-state identity changed for {candidate}")
+    ring_hierarchy_present = hasattr(model, "ring_update")
+    if ring_hierarchy_present != uses_ring_hierarchy(candidate):
+        raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
         raise RuntimeError(f"Worker {physical_device_index} is not on T4: {gpu_name}")
     torch.cuda.reset_peak_memory_stats(0)
     started = time.perf_counter()
-    prediction = forward(model, batch)
+    prediction = forward(model, batch, candidate)
     loss = functional.l1_loss(prediction, batch.y.view(-1, 1))
     loss.backward()
     torch.cuda.synchronize(0)
@@ -367,6 +518,14 @@ def gpu_preflight(
         for parameter in model.parameters()
         if parameter.requires_grad and parameter.grad is not None
     ]
+    ring_return_gradient_nonzero = True
+    if ring_hierarchy_present:
+        gradient = model.ring_update.ring_to_atom.value.weight.grad
+        ring_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -375,6 +534,8 @@ def gpu_preflight(
         "parameter_count": parameter_count,
         "global_attention_blocks": list(global_blocks),
         "graph_state_present": graph_state_present,
+        "ring_hierarchy_present": ring_hierarchy_present,
+        "ring_return_gradient_nonzero": ring_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -383,7 +544,13 @@ def gpu_preflight(
         "elapsed_s": time.perf_counter() - started,
     }
     if not all(
-        row[key] for key in ("finite_prediction", "finite_loss", "finite_gradients")
+        row[key]
+        for key in (
+            "finite_prediction",
+            "finite_loss",
+            "finite_gradients",
+            "ring_return_gradient_nonzero",
+        )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
     atomic_json(OUT / "preflight" / f"{candidate}.json", row)
@@ -393,7 +560,7 @@ def gpu_preflight(
     return row
 
 
-def evaluate(model, loader, target_mean, target_std, device) -> dict:
+def evaluate(model, loader, target_mean, target_std, device, candidate: str) -> dict:
     import torch
 
     model.eval()
@@ -403,7 +570,7 @@ def evaluate(model, loader, target_mean, target_std, device) -> dict:
     with torch.no_grad():
         for batch in loader:
             batch = batch.to(device, non_blocking=True)
-            prediction = forward(model, batch) * target_std + target_mean
+            prediction = forward(model, batch, candidate) * target_std + target_mean
             predictions.append(prediction.cpu())
             targets.append(batch.y.view(-1, 1).cpu())
             row_indices.append(batch.row_index.view(-1).cpu())
@@ -462,6 +629,8 @@ def train_one(
     device = torch.device("cuda:0")
     model = make_pcqm_gap_encoder(candidate).to(device)
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    if parameter_count != EXPECTED_PARAMETER_COUNTS[candidate]:
+        raise RuntimeError(f"{candidate} parameter count changed: {parameter_count}")
     if parameter_count > PARAMETER_BUDGET:
         raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
     optimizer = torch.optim.AdamW(
@@ -483,6 +652,12 @@ def train_one(
         )
         if checkpoint.get("candidate") != candidate or checkpoint.get("seed") != SEED:
             raise RuntimeError("Local/global checkpoint identity changed")
+        if checkpoint.get("input_cache_aggregate_sha256") != (
+            EXPECTED_RING_CACHE_SHA256
+            if RUN_MODE == "ring_graphstate"
+            else EXPECTED_GEOMETRY_SHA256
+        ):
+            raise RuntimeError("Local/global checkpoint cache identity changed")
         model.load_state_dict(checkpoint["model"])
         optimizer.load_state_dict(checkpoint["optimizer"])
         scheduler.load_state_dict(checkpoint["scheduler"])
@@ -506,7 +681,7 @@ def train_one(
             batch = batch.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
             normalized_target = (batch.y.view(-1, 1) - mean_tensor) / std_tensor
-            normalized_prediction = forward(model, batch)
+            normalized_prediction = forward(model, batch, candidate)
             loss = functional.l1_loss(normalized_prediction, normalized_target)
             loss.backward()
             optimizer.step()
@@ -516,7 +691,9 @@ def train_one(
             )
             train_count += batch.y.numel()
         scheduler.step()
-        validation = evaluate(model, validation_loader, mean_tensor, std_tensor, device)
+        validation = evaluate(
+            model, validation_loader, mean_tensor, std_tensor, device, candidate
+        )
         elapsed = time.perf_counter() - epoch_started
         improved = validation["mae_eV"] < best_mae
         if improved:
@@ -534,6 +711,11 @@ def train_one(
                     "best_epoch": best_epoch,
                     "best_mae": best_mae,
                     "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+                    "input_cache_aggregate_sha256": (
+                        EXPECTED_RING_CACHE_SHA256
+                        if RUN_MODE == "ring_graphstate"
+                        else EXPECTED_GEOMETRY_SHA256
+                    ),
                 },
             )
         else:
@@ -563,6 +745,11 @@ def train_one(
                 "stale_epochs": stale_epochs,
                 "trace": trace,
                 "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+                "input_cache_aggregate_sha256": (
+                    EXPECTED_RING_CACHE_SHA256
+                    if RUN_MODE == "ring_graphstate"
+                    else EXPECTED_GEOMETRY_SHA256
+                ),
             },
         )
         print(
@@ -576,7 +763,9 @@ def train_one(
 
     best = torch.load(best_model_path, map_location=device, weights_only=False)
     model.load_state_dict(best["model"])
-    validation = evaluate(model, validation_loader, mean_tensor, std_tensor, device)
+    validation = evaluate(
+        model, validation_loader, mean_tensor, std_tensor, device, candidate
+    )
     payload_path = run_dir / "validation_payload.pt"
     atomic_torch_save(
         payload_path,
@@ -587,6 +776,11 @@ def train_one(
             "target_eV": validation["target"],
             "prediction_eV": validation["prediction"],
             "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
+            "input_cache_aggregate_sha256": (
+                EXPECTED_RING_CACHE_SHA256
+                if RUN_MODE == "ring_graphstate"
+                else EXPECTED_GEOMETRY_SHA256
+            ),
             "official_validation_role_read": False,
             "test_dev_role_read": False,
         },
@@ -630,6 +824,14 @@ def train_one(
                 "gated_graph_state"
                 if candidate.endswith("graph_state9")
                 else "multihead_attention"
+            ),
+            "ring_hierarchy": (
+                "symmsssr-ring64+shared-four-point-update+rank32-ring-to-atom"
+                if uses_ring_hierarchy(candidate)
+                else "none"
+            ),
+            "ring_update_layers": (
+                [2, 4, 6, 8] if uses_ring_hierarchy(candidate) else []
             ),
         },
         "artifacts": {
@@ -718,27 +920,26 @@ def worker_entry() -> None:
     source_commit = marker.read_text(encoding="utf-8").strip()
     if source_commit != EXPECTED_MODEL_SOURCE_COMMIT:
         raise RuntimeError(f"Local/global source commit changed: {source_commit}")
-    cache_root, cache_manifest = find_geometry_cache()
+    cache_root, cache_manifest = find_input_cache()
     graphs = load_graphs(cache_root, cache_manifest)
     worker_main(graphs, candidates, physical_device_index, task_started)
 
 
 def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
     by_name = {row["candidate"]: row for row in runs}
-    baseline = by_name[FULL_GPS]
+    baseline = by_name[BASELINE]
     comparisons = []
     for candidate in CANDIDATES[1:]:
         row = by_name[candidate]
-        comparisons.append(
-            {
+        comparison = {
                 "candidate": candidate,
-                "full_gps_validation_gap_mae_eV": baseline[
+                "baseline_validation_gap_mae_eV": baseline[
                     "validation_gap_mae_eV"
                 ],
                 "candidate_validation_gap_mae_eV": row[
                     "validation_gap_mae_eV"
                 ],
-                "candidate_minus_full_gps_eV": row[
+                "candidate_minus_baseline_eV": row[
                     "validation_gap_mae_eV"
                 ]
                 - baseline["validation_gap_mae_eV"],
@@ -747,10 +948,17 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
                 "throughput_ratio": row["mean_throughput_graphs_per_s"]
                 / baseline["mean_throughput_graphs_per_s"],
             }
-        )
+        if RUN_MODE != "ring_graphstate":
+            comparison["full_gps_validation_gap_mae_eV"] = comparison[
+                "baseline_validation_gap_mae_eV"
+            ]
+            comparison["candidate_minus_full_gps_eV"] = comparison[
+                "candidate_minus_baseline_eV"
+            ]
+        comparisons.append(comparison)
     winner = min(runs, key=lambda row: row["validation_gap_mae_eV"])
     positive = (
-        winner["candidate"] != FULL_GPS
+        winner["candidate"] != BASELINE
         and winner["validation_gap_mae_eV"]
         < baseline["validation_gap_mae_eV"]
     )
@@ -773,7 +981,7 @@ def main() -> None:
             raise RuntimeError(
                 f"Local/global source commit changed: {source_commit}"
             )
-        cache_root, cache_manifest = find_geometry_cache()
+        cache_root, cache_manifest = find_input_cache()
         initialization_rows = initialization_preflight()
         atomic_json(
             OUT / "initialization_preflight.json",
@@ -867,6 +1075,7 @@ def main() -> None:
                 "complete": True,
                 "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
                 "geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+                "input_cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
                 "execution": "dual_t4_candidate_parallel",
                 "gpu_names": gpu_names,
                 "batch_size": BATCH_SIZE,
@@ -881,8 +1090,16 @@ def main() -> None:
             "complete": True,
             "run_mode": RUN_MODE,
             "source_commit": source_commit,
-            "geometry_cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
-            "geometry_valid_fraction": cache_manifest["valid_geometry_fraction"],
+            "geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+            "input_cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
+            "ring_cache_aggregate_sha256": (
+                EXPECTED_RING_CACHE_SHA256
+                if RUN_MODE == "ring_graphstate"
+                else None
+            ),
+            "geometry_valid_fraction": cache_manifest.get(
+                "valid_geometry_fraction", 0.9971363636363636
+            ),
             "seed": SEED,
             "candidates": list(CANDIDATES),
             "execution": "dual_t4_candidate_parallel",
@@ -894,9 +1111,15 @@ def main() -> None:
             "preflight": preflight_rows,
             "runs": completed_runs,
             "frozen_comparator": FROZEN_COMPARATOR,
-            "paired_against_fresh_full_gps": comparisons,
+            "paired_against_baseline": comparisons,
+            "paired_against_fresh_full_gps": (
+                comparisons if RUN_MODE != "ring_graphstate" else None
+            ),
             "selected_candidate": selected_candidate,
-            "selected_strictly_improves_full_gps": positive,
+            "selected_strictly_improves_baseline": positive,
+            "selected_strictly_improves_full_gps": (
+                positive if RUN_MODE != "ring_graphstate" else None
+            ),
             "search_budget_s": SEARCH_BUDGET_S,
             "elapsed_s": time.perf_counter() - task_started,
             "official_validation_role_read": False,
