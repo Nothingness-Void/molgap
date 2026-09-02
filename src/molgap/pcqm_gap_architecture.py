@@ -1212,7 +1212,7 @@ class OGBBodyOrderMomentGraphStateGeometrySparseTriangleEdgeStateWrapper(
                 ],
                 dim=-1,
             )
-        return h + self.body_order_injection(invariants)
+        return h + self.body_order_injection(invariants) * node_mask
 
 
 class _SharedContactStateUpdate(nn.Module):

@@ -51,7 +51,7 @@ def test_body_order_is_one_stateless_invariant_injection() -> None:
         "nn.SiLU()",
         "nn.Linear(64, 192, bias=False)",
         "nn.init.zeros_(self.body_order_injection[-1].weight)",
-        "return h + self.body_order_injection(invariants)",
+        "return h + self.body_order_injection(invariants) * node_mask",
     ):
         assert token in source
     for forbidden in (
