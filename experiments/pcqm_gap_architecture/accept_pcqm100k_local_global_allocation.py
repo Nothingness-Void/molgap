@@ -8,21 +8,18 @@ import math
 from pathlib import Path
 
 
-CANDIDATES = (
+SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
     "ogb_distance_angle_triangle_edge_state_graph_state9",
 )
-COMPARATOR = CANDIDATES[0]
+COMPARATOR = SCREEN_CANDIDATES[0]
+GRAPH_STATE = SCREEN_CANDIDATES[2]
 FROZEN_COMPARATOR_MAE = 0.1353926807641983
 EXPECTED_GLOBAL_BLOCKS = {
-    CANDIDATES[0]: list(range(1, 10)),
-    CANDIDATES[1]: [3, 6, 9],
-    CANDIDATES[2]: [],
-}
-EXPECTED_DEVICE_ASSIGNMENTS = {
-    "0": [CANDIDATES[0]],
-    "1": [CANDIDATES[1], CANDIDATES[2]],
+    SCREEN_CANDIDATES[0]: list(range(1, 10)),
+    SCREEN_CANDIDATES[1]: [3, 6, 9],
+    SCREEN_CANDIDATES[2]: [],
 }
 COMMON_CONTRACT = {
     "batch_size": 48,
@@ -48,7 +45,20 @@ def accept(
     root: Path,
     expected_source_commit: str,
     expected_geometry_sha256: str,
+    expected_seed: int = 42,
 ) -> dict:
+    if expected_seed not in {42, 43, 44}:
+        raise ValueError("Expected seed must be 42, 43, or 44")
+    candidates = (
+        SCREEN_CANDIDATES
+        if expected_seed == 42
+        else (COMPARATOR, GRAPH_STATE)
+    )
+    expected_device_assignments = (
+        {"0": [candidates[0]], "1": [candidates[1], candidates[2]]}
+        if expected_seed == 42
+        else {"0": [candidates[0]], "1": [candidates[1]]}
+    )
     selection = json.loads((root / "selection.json").read_text(encoding="utf-8"))
     errors = []
 
@@ -68,15 +78,17 @@ def accept(
         == expected_geometry_sha256,
         "geometry cache SHA",
     )
-    require(selection.get("seed") == 42, "seed")
-    require(selection.get("candidates") == list(CANDIDATES), "candidates")
+    require(selection.get("seed") == expected_seed, "seed")
+    require(selection.get("candidates") == list(candidates), "candidates")
+    if expected_seed != 42:
+        require(selection.get("run_mode") == "confirmation", "run mode")
     require(selection.get("search_budget_s") == 39_600, "budget")
     require(
         selection.get("execution") == "dual_t4_candidate_parallel",
         "execution",
     )
     require(
-        selection.get("device_assignments") == EXPECTED_DEVICE_ASSIGNMENTS,
+        selection.get("device_assignments") == expected_device_assignments,
         "device assignments",
     )
     gpu_names = selection.get("gpu_names", [])
@@ -93,9 +105,12 @@ def accept(
         "molecular server",
     )
     preflight = selection.get("preflight", [])
-    require(isinstance(preflight, list) and len(preflight) == 3, "preflight")
+    require(
+        isinstance(preflight, list) and len(preflight) == len(candidates),
+        "preflight",
+    )
     for row in preflight if isinstance(preflight, list) else []:
-        require(row.get("candidate") in CANDIDATES, "preflight candidate")
+        require(row.get("candidate") in candidates, "preflight candidate")
         require(
             row.get("global_attention_blocks")
             == EXPECTED_GLOBAL_BLOCKS.get(row.get("candidate")),
@@ -107,7 +122,7 @@ def accept(
         )
         require(
             row.get("graph_state_present")
-            == (row.get("candidate") == CANDIDATES[2]),
+            == (row.get("candidate") == GRAPH_STATE),
             f"graph state {row.get('candidate')}",
         )
         require(
@@ -123,7 +138,7 @@ def accept(
             f"preflight parameters {row.get('candidate')}",
         )
         expected_device = (
-            0 if row.get("candidate") == CANDIDATES[0] else 1
+            0 if row.get("candidate") == COMPARATOR else 1
         )
         require(
             row.get("physical_device_index") == expected_device
@@ -133,11 +148,14 @@ def accept(
         )
 
     runs = selection.get("runs", [])
-    require(isinstance(runs, list) and len(runs) == 3, "run count")
+    require(
+        isinstance(runs, list) and len(runs) == len(candidates),
+        "run count",
+    )
     accepted_rows = []
     row_hashes = set()
     target_hashes = set()
-    for candidate in CANDIDATES:
+    for candidate in candidates:
         metrics_path = root / "results" / candidate / "metrics.json"
         require(metrics_path.is_file(), f"metrics {candidate}")
         if not metrics_path.is_file():
@@ -151,7 +169,7 @@ def accept(
         require(metrics.get("complete") is True, f"complete {candidate}")
         require(metrics.get("candidate") == candidate, f"identity {candidate}")
         require(metrics.get("source_commit") == expected_source_commit, f"source {candidate}")
-        require(metrics.get("seed") == 42, f"seed {candidate}")
+        require(metrics.get("seed") == expected_seed, f"seed {candidate}")
         contract = metrics.get("contract", {})
         for key, expected in COMMON_CONTRACT.items():
             require(contract.get(key) == expected, f"contract {key} {candidate}")
@@ -168,7 +186,7 @@ def accept(
         )
         require(
             contract.get("global_mechanism")
-            == ("gated_graph_state" if candidate == CANDIDATES[2] else "multihead_attention"),
+            == ("gated_graph_state" if candidate == GRAPH_STATE else "multihead_attention"),
             f"global mechanism {candidate}",
         )
         require(metrics.get("validation_rows") == 10_000, f"rows {candidate}")
@@ -213,10 +231,14 @@ def accept(
         "positive gate",
     )
     comparisons = selection.get("paired_against_fresh_full_gps", [])
-    require(isinstance(comparisons, list) and len(comparisons) == 2, "comparisons")
+    require(
+        isinstance(comparisons, list)
+        and len(comparisons) == len(candidates) - 1,
+        "comparisons",
+    )
     for comparison in comparisons if isinstance(comparisons, list) else []:
         candidate = comparison.get("candidate")
-        require(candidate in CANDIDATES[1:], "comparison candidate")
+        require(candidate in candidates[1:], "comparison candidate")
         if candidate in by_name:
             expected_delta = (
                 by_name[candidate]["validation_gap_mae_eV"]
@@ -236,6 +258,7 @@ def accept(
         "accepted": not errors,
         "errors": errors,
         "source_commit": expected_source_commit,
+        "seed": expected_seed,
         "geometry_cache_aggregate_sha256": expected_geometry_sha256,
         "comparator": COMPARATOR,
         "frozen_comparator_validation_gap_mae_eV": FROZEN_COMPARATOR_MAE,
@@ -268,12 +291,14 @@ def main() -> None:
     parser.add_argument("root", type=Path)
     parser.add_argument("--expected-source-commit", required=True)
     parser.add_argument("--expected-geometry-sha256", required=True)
+    parser.add_argument("--expected-seed", type=int, default=42)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     result = accept(
         args.root,
         args.expected_source_commit,
         args.expected_geometry_sha256,
+        args.expected_seed,
     )
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

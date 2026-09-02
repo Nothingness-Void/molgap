@@ -14,9 +14,18 @@ RUNNER = (
     / "local_global_allocation_seed42"
     / "run_local_global_screen.py"
 )
+RUNTIME = ROOT / "src" / "molgap" / "pcqm_local_global_runner.py"
 METADATA = RUNNER.with_name("kernel-metadata.json")
 ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_local_global_allocation.py"
 PROTOCOL = EXPERIMENT / "local_global_allocation_seed42_protocol.md"
+CONFIRMATION_PROTOCOL = EXPERIMENT / "local_global_allocation_multiseed_protocol.md"
+CONFIRMATION_RUNNER = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "local_global_allocation_seed43"
+    / "run_confirmation.py"
+)
+CONFIRMATION_METADATA = CONFIRMATION_RUNNER.with_name("kernel-metadata.json")
 
 
 def class_segment(name: str) -> str:
@@ -62,13 +71,19 @@ def test_factory_exposes_only_the_two_new_challengers() -> None:
 
 
 def test_remote_runner_freezes_fair_seed42_contract() -> None:
-    source = RUNNER.read_text(encoding="utf-8")
+    wrapper = RUNNER.read_text(encoding="utf-8")
+    ast.parse(wrapper)
+    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE", "seed42_screen"' in wrapper
+    assert '"MOLGAP_LOCAL_GLOBAL_SEED", "42"' in wrapper
+    assert 'run_module("molgap.pcqm_local_global_runner"' in wrapper
+    source = RUNTIME.read_text(encoding="utf-8")
     ast.parse(source)
-    assert "CANDIDATES = (" in source
+    assert "SCREEN_CANDIDATES = (" in source
+    assert "CONFIRMATION_CANDIDATES" in source
     assert "EXPECTED_GLOBAL_BLOCKS" in source
     assert "tuple(range(1, 10))" in source
     assert "(3, 6, 9)" in source
-    assert "SEED = 42" in source
+    assert '"MOLGAP_LOCAL_GLOBAL_SEED", "42"' in source
     assert "BATCH_SIZE = 48" in source
     assert "LEARNING_RATE = 1.6e-4" in source
     assert "WEIGHT_DECAY = 1.0e-6" in source
@@ -117,6 +132,31 @@ def test_acceptance_is_no_inference_and_recomputes_selection() -> None:
     assert "model_inference_executed" in source
     assert "official_validation_role_read" in source
     assert "test_dev_role_read" in source
+
+
+def test_seed43_confirmation_is_paired_and_t4x2() -> None:
+    source = CONFIRMATION_RUNNER.read_text(encoding="utf-8")
+    ast.parse(source)
+    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "confirmation"' in source
+    assert '"MOLGAP_LOCAL_GLOBAL_SEED"] = "43"' in source
+    assert "MOLGAP_EXPECTED_MODEL_SOURCE_COMMIT" in source
+    assert "__PIN_AFTER_FEATURE_COMMIT__" in source
+    metadata = json.loads(CONFIRMATION_METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-graph-state-confirm-s43"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["is_private"] == "true"
+    assert metadata["kernel_sources"] == []
+
+
+def test_confirmation_protocol_stops_early_and_keeps_roles_sealed() -> None:
+    source = CONFIRMATION_PROTOCOL.read_text(encoding="utf-8")
+    assert "Seed 43 runs first" in source
+    assert "seed 44 is submitted only if seed 43 strictly passes" in source
+    assert "GPU 0 trains the fresh full-GPS" in source
+    assert "GPU 1 trains the fresh GraphState" in source
+    assert "Official validation and test-dev remain unread" in source
+    assert "full-data training" in source
 
 
 def test_protocol_keeps_ring_ready_and_sealed_roles_closed() -> None:

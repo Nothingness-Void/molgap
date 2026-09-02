@@ -1,4 +1,4 @@
-"""Thin Kaggle entry point for the frozen seed-42 allocation screen."""
+"""Thin Kaggle entry point for GraphState seed-43 confirmation."""
 from __future__ import annotations
 
 import os
@@ -6,6 +6,9 @@ import runpy
 import shutil
 import sys
 from pathlib import Path
+
+
+EXPECTED_SOURCE_COMMIT = "__PIN_AFTER_FEATURE_COMMIT__"
 
 
 def source_python_root() -> Path:
@@ -17,7 +20,7 @@ def source_python_root() -> Path:
         raise RuntimeError(
             f"Expected one runner source tree/archive, found {matches}/{archives}"
         )
-    extracted = Path("/kaggle/working/_molgap_local_global_source")
+    extracted = Path("/kaggle/working/_molgap_graph_state_confirmation_source")
     shutil.unpack_archive(archives[0], extracted)
     modules = list(extracted.rglob("molgap/pcqm_local_global_runner.py"))
     if len(modules) != 1:
@@ -25,7 +28,11 @@ def source_python_root() -> Path:
     return modules[0].parents[1]
 
 
-os.environ.setdefault("MOLGAP_LOCAL_GLOBAL_RUN_MODE", "seed42_screen")
-os.environ.setdefault("MOLGAP_LOCAL_GLOBAL_SEED", "42")
+os.environ["MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "confirmation"
+os.environ["MOLGAP_LOCAL_GLOBAL_SEED"] = "43"
+os.environ["MOLGAP_LOCAL_GLOBAL_OUTPUT"] = (
+    "/kaggle/working/pcqm_gap100k_graph_state_confirmation_seed43"
+)
+os.environ["MOLGAP_EXPECTED_MODEL_SOURCE_COMMIT"] = EXPECTED_SOURCE_COMMIT
 sys.path.insert(0, str(source_python_root()))
 runpy.run_module("molgap.pcqm_local_global_runner", run_name="__main__")

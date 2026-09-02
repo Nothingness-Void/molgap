@@ -1,0 +1,18 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-graph-state-confirm-s43",
+  "title": "MolGap PCQM GraphState Confirmation S43",
+  "code_file": "run_confirmation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm-local-global-confirm-source",
+    "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
