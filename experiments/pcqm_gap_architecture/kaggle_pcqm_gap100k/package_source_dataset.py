@@ -27,7 +27,11 @@ def main() -> None:
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite existing package: {output}")
     (output / "src").mkdir(parents=True)
-    shutil.copytree(root / "src" / "molgap", output / "src" / "molgap")
+    shutil.copytree(
+        root / "src" / "molgap",
+        output / "src" / "molgap",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+    )
     commit = args.source_commit or subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=root, text=True
     ).strip()

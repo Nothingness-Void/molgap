@@ -140,7 +140,8 @@ def test_seed43_confirmation_is_paired_and_t4x2() -> None:
     assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "confirmation"' in source
     assert '"MOLGAP_LOCAL_GLOBAL_SEED"] = "43"' in source
     assert "MOLGAP_EXPECTED_MODEL_SOURCE_COMMIT" in source
-    assert "__PIN_AFTER_FEATURE_COMMIT__" in source
+    assert "9068ddb82e6bdf16b841570abbff023b90c07f07" in source
+    assert "__PIN_AFTER_FEATURE_COMMIT__" not in source
     metadata = json.loads(CONFIRMATION_METADATA.read_text(encoding="utf-8"))
     assert metadata["id"] == "nothingnessvoid/molgap-pcqm-graph-state-confirm-s43"
     assert metadata["machine_shape"] == "NvidiaTeslaT4"

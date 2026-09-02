@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 
-EXPECTED_SOURCE_COMMIT = "__PIN_AFTER_FEATURE_COMMIT__"
+EXPECTED_SOURCE_COMMIT = "9068ddb82e6bdf16b841570abbff023b90c07f07"
 
 
 def source_python_root() -> Path:
