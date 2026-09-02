@@ -1,0 +1,33 @@
+{
+  "format": "molgap-pcqm-contactstate-graphstate-decision-v1",
+  "date": "2026-09-03",
+  "kernel": "kaseichou/molgap-pcqm-contactstate-graphstate-s42",
+  "version": 1,
+  "accepted": true,
+  "seed": 42,
+  "baseline": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameters": 3665809,
+    "best_epoch": 35,
+    "validation_gap_mae_eV": 0.12925085425376892,
+    "training_elapsed_s": 7863.081690866999,
+    "mean_throughput_graphs_per_s": 510.51367534361725
+  },
+  "contact_state": {
+    "candidate": "ogb_distance_angle_contact_state_triangle_edge_state_graph_state9",
+    "parameters": 3700321,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.13115215301513672,
+    "training_elapsed_s": 8798.749143179999,
+    "mean_throughput_graphs_per_s": 456.5621009739158
+  },
+  "candidate_minus_baseline_eV": 0.0019012987613677979,
+  "parameter_delta": 34512,
+  "throughput_ratio": 0.8943190418290212,
+  "decision": "closed_scientific_failure",
+  "seed43_44_authorized": false,
+  "full_data_authorized": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "acceptance_sha256": "18de72d6c11e9659268e6e2a3c005624e4ab6d29d688986e9b95a3af55b7cbe1"
+}

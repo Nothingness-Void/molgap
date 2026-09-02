@@ -34,11 +34,11 @@ The bounded Ring-GraphState comparison completed and closed: its tiny seed-42
 gain did not justify a 15.1% throughput loss or extra seeds, and its candidate
 metrics also missed a required cache-lineage field. The exact decision is
 `experiments/pcqm_gap_architecture/results/ring_graphstate_seed42/decision.md`.
-The non-covalent ContactState CPU cache passed its immutable evidence gate with
-110,000 graphs and zero failures. Server discovery now advances to one fresh
-paired seed-42 T4x2 comparison under
-`experiments/pcqm_gap_architecture/contact_state_gpu_seed42_protocol.md`.
-Live status is `experiments/pcqm_gap_architecture/STATUS.md`.
+The non-covalent ContactState screen passed mechanical acceptance but was
+slower and less accurate than its fresh GraphState control, so that mechanism
+is closed. Exact evidence is in
+`experiments/pcqm_gap_architecture/results/contact_state_seed42/decision.md`.
+Server discovery proceeds only through the active item in `ROADMAP.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
@@ -62,8 +62,8 @@ records are on `archive` and indexed by
 
 ## Execution and boundaries
 
-- Accepted PCQM caches, seed-42 comparisons, geometry confirmation, and sparse
-  topology-wedge evidence are retained in their experiment records.
+- Accepted PCQM caches and architecture comparisons are retained in their
+  experiment records.
 - No molecular-research-server run is authorized before the Kaggle selection
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production

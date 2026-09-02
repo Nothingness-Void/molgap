@@ -133,11 +133,10 @@
   graphs, zero failures, 3,658,038/366,116 directed contacts, maximum 122/110
   contacts per graph, and aggregate SHA-256
   `49725b92c2c0d33e17633abf8ffa7148ebc8bc9721d3e5b3635f1309891bc826`.
-  The paired seed-42 T4x2 screen was submitted once as Kaggle2 kernel
-  `kaseichou/molgap-pcqm-contactstate-graphstate-s42`, version 1, and was
-  `RUNNING` at the launch check. Its immutable identity is in
-  `results/contact_state_seed42/gpu_launch_manifest.json`; no extra seed or
-  full-data action is authorized.
+  Its paired seed-42 T4x2 screen then completed and passed no-model acceptance,
+  but ContactState was less accurate and slower than the fresh control. The
+  route is closed by `results/contact_state_seed42/decision.md`; no extra seed
+  or full-data action is authorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
