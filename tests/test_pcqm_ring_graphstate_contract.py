@@ -83,7 +83,7 @@ def test_protocol_changes_one_mechanism_and_stops_after_seed42() -> None:
     assert "GPU 0" in source and "GPU 1" in source
     assert "14,400-second" in source
     assert "strictly lower" in source
-    assert "eligibility to plan seeds 43/44" in source
+    assert "does not automatically trigger seeds 43/44" in source
     assert "official validation/test-dev" in source
 
 

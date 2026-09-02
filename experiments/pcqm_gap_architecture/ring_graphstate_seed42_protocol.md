@@ -69,6 +69,8 @@ function-equivalent while retaining a finite nonzero return-path gradient.
 
 The candidate passes seed 42 only if it has strictly lower internal-validation
 Gap MAE than the fresh same-task GraphState9 baseline, every artifact passes
-no-model acceptance, and the parameter/time contracts hold. A pass grants only
-eligibility to plan seeds 43/44. A scientific failure closes this exact ring
-addition without parameter or seed variants.
+no-model acceptance, and the parameter/time contracts hold. A pass records a
+promising candidate only; it does not automatically trigger seeds 43/44.
+Multi-seed confirmation requires a later explicit compute-budget decision and
+is reserved for a final short list. A scientific failure closes this exact
+ring addition without parameter or seed variants.

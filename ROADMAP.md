@@ -53,6 +53,10 @@ or authorize a second full-data model.
 - Predict Gap directly. Track A HOMO/LUMO experiments do not authorize Track B.
 - Test one material mechanism at a time. Scientific failures are not retried
   as seed, width, distance, optimizer, or schedule variants.
+- Architecture discovery defaults to one paired seed-42 screen. Passing seed
+  42 records a promising candidate but does not automatically trigger seeds
+  43/44. Multi-seed confirmation is reserved for the final short list only,
+  after a material paired gain and an explicit compute-budget decision.
 - Preserve invalid-molecule reason codes and ETKDG train/inference consistency.
 - Router, MoE, dataset replacement, ordinary late fusion, and the old
   dual-SchNet residual remain closed unless a new question is recorded here.
