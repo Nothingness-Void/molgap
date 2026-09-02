@@ -1,0 +1,18 @@
+{
+  "format": "molgap-pcqm-contactstate-cache-launch-v1",
+  "kernel": "kaseichou/molgap-pcqm-contactstate-cache-s42",
+  "version": 4,
+  "submitted_at": "2026-09-03T05:16:15+09:00",
+  "launch_state": "RUNNING",
+  "repository_commit": "b96a9ad",
+  "repair": "include-WedgeData-deserialization-module",
+  "contact_source_commit": "7f2f8ce476f654320f07e2c2e630f473d7d81c72",
+  "source_dataset": "kaseichou/molgap-pcqm-contactstate-source",
+  "source_dataset_version": 2,
+  "source_archive_sha256": "5db816d037df9bfc0a240977bb89837329d8b0dabd3ed369418b91dbc490a343",
+  "geometry_dataset": "kaseichou/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "gpu_enabled": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

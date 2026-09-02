@@ -124,6 +124,11 @@
 - The repaired CPU cache was submitted once as version 3 and was `RUNNING` at
   the 2026-09-03 04:43 JST health check. Its immutable launch identity is
   `results/contact_state_seed42/cpu_v3_launch_manifest.json`.
+- Version 3 reached `ERROR` before conversion because the minimal source
+  package omitted the `WedgeData` class required to deserialize the accepted
+  parent cache. Source-dataset version 2 adds only that frozen class module;
+  version 4 was `RUNNING` at the 2026-09-03 05:16 JST health check. Evidence
+  and launch identity are in `results/contact_state_seed42/`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
