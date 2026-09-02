@@ -637,8 +637,6 @@ def worker_main(
     task_started: float,
 ) -> None:
     """Run one isolated candidate queue on exactly one physical T4."""
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(physical_device_index)
     completed = []
     try:
         import torch
@@ -687,6 +685,22 @@ def worker_main(
         raise
 
 
+def worker_entry() -> None:
+    """Fresh-process entry point; CUDA visibility is fixed by the parent."""
+    physical_device_index = int(os.environ["MOLGAP_PHYSICAL_DEVICE_INDEX"])
+    candidates = tuple(json.loads(os.environ["MOLGAP_WORKER_CANDIDATES"]))
+    task_started = float(os.environ["MOLGAP_TASK_STARTED"])
+    OUT.mkdir(parents=True, exist_ok=True)
+    sys.path.insert(0, str(source_python_root()))
+    marker = next(Path("/kaggle/input").rglob("PCQM_GAP100K_SOURCE_COMMIT.txt"))
+    source_commit = marker.read_text(encoding="utf-8").strip()
+    if source_commit != EXPECTED_MODEL_SOURCE_COMMIT:
+        raise RuntimeError(f"Local/global source commit changed: {source_commit}")
+    cache_root, cache_manifest = find_geometry_cache()
+    graphs = load_graphs(cache_root, cache_manifest)
+    worker_main(graphs, candidates, physical_device_index, task_started)
+
+
 def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
     by_name = {row["candidate"]: row for row in runs}
     baseline = by_name[FULL_GPS]
@@ -722,8 +736,6 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
 
 
 def main() -> None:
-    import multiprocessing
-
     task_started = time.perf_counter()
     OUT.mkdir(parents=True, exist_ok=True)
     completed_runs = []
@@ -740,7 +752,6 @@ def main() -> None:
                 f"Local/global source commit changed: {source_commit}"
             )
         cache_root, cache_manifest = find_geometry_cache()
-        graphs = load_graphs(cache_root, cache_manifest)
         initialization_rows = initialization_preflight()
         atomic_json(
             OUT / "initialization_preflight.json",
@@ -753,20 +764,26 @@ def main() -> None:
                 "test_dev_role_read": False,
             },
         )
-        context = multiprocessing.get_context("fork")
-        workers = [
-            context.Process(
-                target=worker_main,
-                args=(graphs, candidates, device_index, task_started),
-                name=f"molgap-t4-{device_index}",
+        workers = []
+        for device_index, candidates in DEVICE_ASSIGNMENTS.items():
+            environment = os.environ.copy()
+            environment["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+            environment["CUDA_VISIBLE_DEVICES"] = str(device_index)
+            environment["MOLGAP_T4_WORKER"] = "1"
+            environment["MOLGAP_PHYSICAL_DEVICE_INDEX"] = str(device_index)
+            environment["MOLGAP_WORKER_CANDIDATES"] = json.dumps(candidates)
+            environment["MOLGAP_TASK_STARTED"] = repr(task_started)
+            workers.append(
+                (
+                    f"molgap-t4-{device_index}",
+                    subprocess.Popen(
+                        [sys.executable, str(Path(__file__).resolve())],
+                        env=environment,
+                    ),
+                )
             )
-            for device_index, candidates in DEVICE_ASSIGNMENTS.items()
-        ]
-        for worker in workers:
-            worker.start()
-        while any(worker.is_alive() for worker in workers):
-            for worker in workers:
-                worker.join(timeout=5)
+        while any(process.poll() is None for _, process in workers):
+            time.sleep(5)
             completed_names = [
                 candidate
                 for candidate in CANDIDATES
@@ -783,19 +800,21 @@ def main() -> None:
                         for index, candidates in DEVICE_ASSIGNMENTS.items()
                     },
                     "completed_candidates": completed_names,
-                    "worker_exitcodes": [worker.exitcode for worker in workers],
+                    "worker_exitcodes": {
+                        name: process.poll() for name, process in workers
+                    },
                     "elapsed_s": time.perf_counter() - task_started,
                     "official_validation_role_read": False,
                     "test_dev_role_read": False,
                 },
             )
             if time.perf_counter() - task_started > SEARCH_BUDGET_S + 600:
-                for worker in workers:
-                    if worker.is_alive():
-                        worker.terminate()
+                for _, process in workers:
+                    if process.poll() is None:
+                        process.terminate()
                 raise TimeoutError("Dual-T4 workers exceeded the wall budget")
         failed_workers = [
-            worker.name for worker in workers if worker.exitcode != 0
+            name for name, process in workers if process.returncode != 0
         ]
         if failed_workers:
             raise RuntimeError(f"Dual-T4 workers failed: {failed_workers}")
@@ -891,4 +910,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    if os.environ.get("MOLGAP_T4_WORKER") == "1":
+        worker_entry()
+    else:
+        main()

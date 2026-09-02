@@ -79,8 +79,10 @@ def test_remote_runner_freezes_fair_seed42_contract() -> None:
     assert "EXPECTED_GPU_COUNT = 2" in source
     assert 'EXPECTED_GPU_TOKEN = "T4"' in source
     assert "LOADER_WORKERS = 0" in source
-    assert "multiprocessing.get_context(\"fork\")" in source
-    assert 'os.environ["CUDA_VISIBLE_DEVICES"]' in source
+    assert "subprocess.Popen" in source
+    assert 'os.environ.get("MOLGAP_T4_WORKER")' in source
+    assert 'environment["CUDA_VISIBLE_DEVICES"]' in source
+    assert "multiprocessing.get_context" not in source
     assert '"dual_t4_candidate_parallel"' in source
     assert "ensure_pascal_compatible_torch" not in source
     assert "paired_against_fresh_full_gps" in source
@@ -125,3 +127,4 @@ def test_protocol_keeps_ring_ready_and_sealed_roles_closed() -> None:
     assert "strictly lower" in source
     assert "ring-hierarchy cache remains accepted and deferred" in source
     assert "official validation/test-dev" in source
+    assert "fresh Python processes" in source
