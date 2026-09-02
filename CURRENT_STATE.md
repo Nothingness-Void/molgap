@@ -21,15 +21,14 @@ Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
 12-hour A100 budget. Selection uses only the official-train-derived Kaggle
 100K/10K internal split; official validation and test-dev stay sealed.
 
-The seed-42 local/global allocation screen passed no-model acceptance. The
-no-attention shared GraphState beat both the fresh full-GPS control and the
-sparse block-3/6/9 attention schedule while using fewer parameters. Its exact
-evidence is
-`experiments/pcqm_gap_architecture/results/local_global_allocation_seed42/decision.md`.
-Paired seed 43 also passed against a fresh full-GPS control; its decision is
-`experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/seed43_decision.md`.
-The single active question is the final paired seed-44 confirmation under
-`experiments/pcqm_gap_architecture/local_global_allocation_multiseed_protocol.md`.
+The no-attention shared GraphState strictly beat fresh full-GPS controls at
+seeds 42, 43, and 44 while using fewer parameters and higher throughput. The
+three-seed gate passed, and architecture discovery has stopped at the desktop
+handoff boundary. The frozen winner and complete arithmetic are in
+`experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/decision.md`.
+The active question is now the separate A100 timing and memory gate described
+in that directory's `desktop_handoff.md`; no full-data or official-role action
+is authorized before it passes.
 
 The deterministic smallest-ring CPU cache completed and passed no-model
 acceptance. Its immutable evidence is

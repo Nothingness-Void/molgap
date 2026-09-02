@@ -71,10 +71,13 @@ ready but deferred. Its acceptance is
 The matched full-GPS, sparse GPS blocks 3/6/9, and no-attention GraphState
 screen completed. GraphState passed seed 42; its decision is
 [`results/local_global_allocation_seed42/decision.md`](results/local_global_allocation_seed42/decision.md).
-The active paired confirmation is
-[`local_global_allocation_multiseed_protocol.md`](local_global_allocation_multiseed_protocol.md):
-seed 43 passed its strict paired gate, so seed 44 is the active final
-confirmation stage.
+The paired confirmation under
+[`local_global_allocation_multiseed_protocol.md`](local_global_allocation_multiseed_protocol.md)
+passed at seeds 42, 43, and 44. GraphState is frozen as the architecture winner;
+the three-seed arithmetic and bounded desktop handoff are in
+[`results/local_global_allocation_multiseed/decision.md`](results/local_global_allocation_multiseed/decision.md)
+and
+[`results/local_global_allocation_multiseed/desktop_handoff.md`](results/local_global_allocation_multiseed/desktop_handoff.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

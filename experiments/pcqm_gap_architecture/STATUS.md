@@ -78,6 +78,13 @@
   Kaggle CLI 2.2.4 with explicit `NvidiaTeslaT4`. It remained `RUNNING` after a
   delayed health check. Its immutable identity is
   `results/local_global_allocation_multiseed/seed44_launch_manifest.json`.
+- Version 1 reached `COMPLETE` and passed frozen no-model acceptance. GraphState
+  strictly improved the fresh seed-44 full-GPS control. It therefore improved
+  all three paired seeds and their arithmetic mean, so the three-seed gate
+  passes and server-side architecture discovery stops at the desktop handoff
+  boundary. Exact evidence and the authorized A100 timing-only successor are
+  in `results/local_global_allocation_multiseed/decision.md` and
+  `results/local_global_allocation_multiseed/desktop_handoff.md`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
