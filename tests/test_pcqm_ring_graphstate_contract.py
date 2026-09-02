@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import json
 from pathlib import Path
 
 
@@ -10,6 +11,13 @@ MODEL = ROOT / "src" / "molgap" / "pcqm_gap_architecture.py"
 RUNTIME = ROOT / "src" / "molgap" / "pcqm_local_global_runner.py"
 ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_ring_graphstate_seed42.py"
 PROTOCOL = EXPERIMENT / "ring_graphstate_seed42_protocol.md"
+RUNNER = (
+    EXPERIMENT
+    / "kaggle_pcqm_gap100k"
+    / "ring_graphstate_seed42"
+    / "run_screen.py"
+)
+METADATA = RUNNER.with_name("kernel-metadata.json")
 CANDIDATE = (
     "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9"
 )
@@ -77,3 +85,19 @@ def test_protocol_changes_one_mechanism_and_stops_after_seed42() -> None:
     assert "strictly lower" in source
     assert "eligibility to plan seeds 43/44" in source
     assert "official validation/test-dev" in source
+
+
+def test_kaggle_wrapper_pins_source_cache_and_t4x2() -> None:
+    source = RUNNER.read_text(encoding="utf-8")
+    ast.parse(source)
+    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "ring_graphstate"' in source
+    assert '"MOLGAP_LOCAL_GLOBAL_SEED"] = "42"' in source
+    assert "b9f8445ac400315d82441db8292ea99e68b37dfa" in source
+    metadata = json.loads(METADATA.read_text(encoding="utf-8"))
+    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-ring-graphstate-s42"
+    assert metadata["is_private"] == "true"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["kernel_sources"] == [
+        "nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42"
+    ]
