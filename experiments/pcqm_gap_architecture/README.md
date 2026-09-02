@@ -38,7 +38,7 @@ papers are owned by
 [`recent_literature_coverage_ledger_50.md`](recent_literature_coverage_ledger_50.md).
 That audit is research evidence; the geometry confirmation has now completed,
 and the torsion and dual-stream follow-ups are closed archive evidence. The
-single active follow-up is the ring-hierarchy protocol below.
+single active follow-up is the local/global allocation protocol below.
 
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
@@ -65,8 +65,12 @@ It selected a separately normalized sparse atom--bond stream, which was then
 tested and closed after attribution found redundant capacity. Its complete
 contract and launch evidence are on `archive`; the server retains only
 the compact attribution and archive pointer.
-The resulting single smallest-ring hierarchy question is frozen in
-[`ring_hierarchy_seed42_protocol.md`](ring_hierarchy_seed42_protocol.md).
+The deterministic smallest-ring cache passed no-model acceptance and remains
+ready but deferred. Its acceptance is
+[`results/ring_hierarchy_seed42/cache_acceptance.json`](results/ring_hierarchy_seed42/cache_acceptance.json).
+The active matched test of full GPS, sparse GPS blocks 3/6/9, and no-attention
+GraphState is frozen in
+[`local_global_allocation_seed42_protocol.md`](local_global_allocation_seed42_protocol.md).
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

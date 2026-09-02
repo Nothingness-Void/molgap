@@ -22,14 +22,18 @@ Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
 100K/10K internal split; official validation and test-dev stay sealed.
 
 The accepted comparator is Sparse Triangle plus distance-and-angle bottom
-fusion on the fixed pure-2D/ETKDG contract. The single active question is the
-deterministic smallest-ring hierarchy, frozen in
-`experiments/pcqm_gap_architecture/ring_hierarchy_seed42_protocol.md`.
+fusion on the fixed pure-2D/ETKDG contract. The single active question is
+whether full GPS global attention is over-allocated. A fresh full-GPS control,
+a sparse block-3/6/9 attention schedule, and a no-attention shared GraphState
+are frozen in
+`experiments/pcqm_gap_architecture/local_global_allocation_seed42_protocol.md`.
 
-Its CPU cache kernel `nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42`,
-version 1, has been submitted. No GPU successor is authorized before the
-downloaded cache passes no-model acceptance. The active experiment status is
-`experiments/pcqm_gap_architecture/STATUS.md`.
+The deterministic smallest-ring CPU cache completed and passed no-model
+acceptance. Its immutable evidence is
+`experiments/pcqm_gap_architecture/results/ring_hierarchy_seed42/cache_acceptance.json`;
+the ring GPU successor is deferred while the explicitly prioritized
+local/global allocation screen owns the one-GPU slot. Live experiment status
+is `experiments/pcqm_gap_architecture/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

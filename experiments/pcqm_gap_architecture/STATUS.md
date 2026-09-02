@@ -4,6 +4,17 @@
   selection.
 - No official PCQM4Mv2 validation or test-dev row is authorized during the
   Kaggle screen.
+- Kaggle1 CPU kernel `nothingnessvoid/molgap-pcqm-ring-hierarchy-cache-s42`,
+  version 1, reached `COMPLETE`. Its 100,000/10,000 role cache, 22 shards,
+  zero failures, ring memberships and directed relation counts passed local
+  no-model acceptance. The accepted aggregate SHA-256 is
+  `3f8b271571b8d1026e96fc1dae51d9479489ddd13b73df95740288e6f630779f`.
+  The ring GPU successor remains unsubmitted and deferred.
+- The active seed-42 question is now the matched local/global allocation
+  screen. One sequential Kaggle1 task trains a fresh full-GPS control, a
+  block-3/6/9 sparse-attention challenger, and a no-attention shared-GraphState
+  challenger under the same geometry, split, initialization seed and training
+  contract. No seed 43/44 or successor is authorized by preparation alone.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

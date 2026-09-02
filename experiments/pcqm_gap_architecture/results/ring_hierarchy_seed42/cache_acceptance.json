@@ -1,0 +1,28 @@
+{
+  "format": "molgap-pcqm-gap100k-ring-hierarchy-cache-acceptance-v1",
+  "accepted": true,
+  "source_commit": "58f425258031062c3c3762f13b7d4c160dffba65",
+  "aggregate_sha256": "3f8b271571b8d1026e96fc1dae51d9479489ddd13b73df95740288e6f630779f",
+  "selected_smiles_sha256": "1416b8097f37e6bf11bb3620c9cd2784d6731667eb2ec2b55d0d0af0fcfcdf59",
+  "train_graphs": 100000,
+  "validation_graphs": 10000,
+  "totals": {
+    "train": {
+      "graphs": 100000,
+      "rings": 141647,
+      "memberships": 780212,
+      "directed_relations": 78116,
+      "acyclic_graphs": 11745
+    },
+    "validation": {
+      "graphs": 10000,
+      "rings": 14150,
+      "memberships": 77943,
+      "directed_relations": 7716,
+      "acyclic_graphs": 1144
+    }
+  },
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

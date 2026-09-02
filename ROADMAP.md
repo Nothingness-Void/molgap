@@ -13,15 +13,15 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM100K-RING-HIERARCHY-SEED42 | Accept the frozen smallest-ring cache, then run one seed-42 candidate | Cache passes first; candidate beats the frozen comparator or the mechanism is closed |
+| P0 | B-PCQM100K-LOCAL-GLOBAL-SEED42 | Train fresh full-GPS, sparse-GPS-3/6/9, and no-GPS GraphState controls in one task | A challenger strictly beats the fresh full-GPS control or both allocations close |
 | P1 | B-PCQM-A100-GATE | Benchmark the frozen winner on official-train graphs | Throughput, epoch time, and memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
 | P3 | B-PCQM-TESTDEV | Produce the final test-dev submission | Explicit user authorization after official validation |
 
 The active experiment owns its detailed status and protocol at
-`experiments/pcqm_gap_architecture/`. Do not start a GPU successor to P0
-before cache acceptance.
+`experiments/pcqm_gap_architecture/`. The ring-hierarchy cache is accepted,
+but its GPU successor is deferred and must not run concurrently with P0.
 
 ## Mandatory gates
 
@@ -60,7 +60,7 @@ before cache acceptance.
 
 | Question | Trigger | Bounded action |
 |---|---|---|
-| Local-heavy sparse-global schedule | Ring hierarchy fails, or the accepted winner misses the 12-hour A100 projection | Keep the accepted local EdgeState/wedge updates; enable global atom attention only after blocks 3, 6 and 9; compare with a freshly trained full-GPS control |
+| Deterministic smallest-ring hierarchy | The local/global allocation question closes without a better candidate | Use the already accepted ring cache and submit only the frozen seed-42 ring candidate |
 | Sparse non-covalent ContactState | Ring and sparse-global screens fail or leave a clear through-space hypothesis; CPU preflight is feasible | Build one ETKDG contact cache with fixed edge-count/type/coverage statistics; only after acceptance test a narrow separately normalized contact state |
 | Compact Cartesian invariant body-order basis | Ring and the two higher-information screens fail, and a preflight fits the same ceiling | Isolate one CACE/CEIT-like invariant basis with `K=16`; no equivariant tensors or new optimizer |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
