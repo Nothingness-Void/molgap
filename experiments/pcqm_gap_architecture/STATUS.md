@@ -21,7 +21,11 @@
   `distance_angle` geometry mode to be rejected. This is an implementation-only
   failure; no scientific result exists. Its evidence is frozen in
   `results/local_global_allocation_seed42/v1_failure_diagnosis.md`. No seed
-  43/44 or scientific successor is authorized.
+  43/44 or scientific successor is authorized. The implementation-only repair
+  is commit `c61e147796ee4195b837bd7e5639ab0dfe97b12c`; all six static contract
+  checks passed. The repaired source dataset reached `ready`, Kaggle1 accepted
+  kernel version 2 once, and version 2 was `RUNNING` at the 2026-09-02 14:56
+  JST launch check under the unchanged scientific contract.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
