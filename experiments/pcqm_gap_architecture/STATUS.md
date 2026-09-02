@@ -91,6 +91,16 @@
   deterministic smallest-ring hierarchy. No GPU task is recorded until its
   protocol, implementation, static checks, source package, and launch identity
   are frozen.
+- The Ring-GraphState implementation and no-model acceptance are pinned by
+  source commit `b9f8445ac400315d82441db8292ea99e68b37dfa`; 14 static contract
+  checks passed. Private source dataset
+  `nothingnessvoid/molgap-pcqm-ring-graphstate-source` reached `ready`.
+  Kaggle1 accepted exactly one T4x2 task as
+  `nothingnessvoid/molgap-pcqm-ring-graphstate-s42`, version 1, and it was
+  `RUNNING` after a delayed health check. Its immutable launch identity is
+  `results/ring_graphstate_seed42/launch_manifest.json`. No confirmation seed,
+  full-data, official-role, desktop, or molecular-research-server successor
+  was submitted.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

@@ -1,0 +1,31 @@
+{
+  "format": "molgap-pcqm-ring-graphstate-seed42-launch-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-ring-graphstate-s42",
+  "kernel_version": 1,
+  "status_after_delayed_health_check": "RUNNING",
+  "submitted_once": true,
+  "submission_client": "Kaggle CLI 2.2.4",
+  "requested_machine_shape": "NvidiaTeslaT4",
+  "execution": "dual_t4_candidate_parallel",
+  "device_assignments": {
+    "0": [
+      "ogb_distance_angle_triangle_edge_state_graph_state9"
+    ],
+    "1": [
+      "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9"
+    ]
+  },
+  "seed": 42,
+  "source_dataset": "nothingnessvoid/molgap-pcqm-ring-graphstate-source",
+  "model_source_commit": "b9f8445ac400315d82441db8292ea99e68b37dfa",
+  "submission_commit": "429cfb1",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "ring_cache_aggregate_sha256": "3f8b271571b8d1026e96fc1dae51d9479489ddd13b73df95740288e6f630779f",
+  "runner_sha256": "9269ba6489c18283be4294f5645b4205d4a558849e06240d27abb71378ba4397",
+  "metadata_sha256": "6530c404f750db9c06337e19749737bc133da2c348430648972d7ff4edae7c19",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "seed43_44_submitted": false,
+  "full_data_authorized": false
+}
