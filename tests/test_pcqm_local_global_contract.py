@@ -38,9 +38,14 @@ def test_local_global_model_has_one_isolated_schedule_question() -> None:
     graph_state = class_segment("_SharedGraphContext")
     assert "use_global_attention" in scheduled
     assert "to_dense_batch" in scheduled
-    assert 'MODES = {"sparse_attention", "graph_state"}' in wrapper
+    assert 'GLOBAL_MODES = {"sparse_attention", "graph_state"}' in wrapper
+    assert "self.MODES" not in wrapper
     assert "GLOBAL_BLOCKS = (3, 6, 9)" in wrapper
     assert 'geometry_mode="distance_angle"' in wrapper
+    geometry_parent = class_segment(
+        "OGBGeometrySparseTriangleEdgeStateGPSWrapper"
+    )
+    assert 'MODES = {"distance", "angle", "distance_angle"}' in geometry_parent
     assert "self.graph_context" in wrapper
     assert "global_mean_pool" in graph_state
     assert "global_add_pool" in graph_state

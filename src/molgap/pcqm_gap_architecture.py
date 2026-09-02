@@ -981,7 +981,7 @@ class OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
 ):
     """Allocate global communication sparsely or through a graph state."""
 
-    MODES = {"sparse_attention", "graph_state"}
+    GLOBAL_MODES = {"sparse_attention", "graph_state"}
     GLOBAL_BLOCKS = (3, 6, 9)
 
     def __init__(
@@ -992,7 +992,7 @@ class OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
         graph_exchange_rank: int = 32,
         **kwargs,
     ) -> None:
-        if global_mode not in self.MODES:
+        if global_mode not in self.GLOBAL_MODES:
             raise ValueError(f"Unknown local/global mode: {global_mode}")
         super().__init__(*args, geometry_mode="distance_angle", **kwargs)
         self.global_mode = global_mode
