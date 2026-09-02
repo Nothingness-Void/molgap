@@ -1045,6 +1045,240 @@ class OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
         return h, edge_state, auxiliary_state
 
 
+class _SharedContactStateUpdate(nn.Module):
+    """One recurrent through-space relation update shared across depth."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        contact_channels: int,
+        exchange_rank: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        self.endpoint_projection = nn.Linear(atom_channels, contact_channels)
+        combined_channels = 3 * contact_channels
+        self.update_norm = nn.LayerNorm(combined_channels)
+        self.update_gate = nn.Linear(combined_channels, contact_channels)
+        self.update_value = nn.Sequential(
+            nn.Linear(combined_channels, contact_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(contact_channels, contact_channels),
+        )
+        self.output_norm = nn.LayerNorm(contact_channels)
+        self.contact_to_atom = _LowRankGatedProjection(
+            contact_channels, atom_channels, exchange_rank
+        )
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        contact_state: torch.Tensor,
+        contact_edge_index: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        if contact_state.shape[0] == 0:
+            return h, contact_state
+        source, target = contact_edge_index.unbind(dim=0)
+        combined = self.update_norm(
+            torch.cat(
+                [
+                    contact_state,
+                    self.endpoint_projection(h[source]),
+                    self.endpoint_projection(h[target]),
+                ],
+                dim=-1,
+            )
+        )
+        gate = torch.sigmoid(self.update_gate(combined))
+        proposal = self.update_value(combined)
+        contact_state = self.output_norm(contact_state + gate * proposal)
+
+        incoming = contact_state.new_zeros((h.shape[0], contact_state.shape[1]))
+        counts = contact_state.new_zeros((h.shape[0], 1))
+        incoming.index_add_(0, target, contact_state)
+        counts.index_add_(
+            0, target, contact_state.new_ones((target.shape[0], 1))
+        )
+        incoming = incoming / counts.clamp_min_(1.0)
+        return h + self.contact_to_atom(incoming), contact_state
+
+
+class OGBContactStateGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState winner plus one narrow non-covalent ContactState."""
+
+    CONTACT_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        contact_channels: int = 32,
+        contact_basis_channels: int = 16,
+        contact_exchange_rank: int = 16,
+        **kwargs,
+    ) -> None:
+        if contact_channels <= 0 or contact_basis_channels < 2:
+            raise ValueError("contact channels/basis are invalid")
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        atom_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.contact_channels = int(contact_channels)
+        self.contact_basis_channels = int(contact_basis_channels)
+        self.contact_distance_basis = _FixedGaussianBasis(
+            0.25, 5.0, self.contact_basis_channels
+        )
+        initial_channels = 2 * atom_channels + self.contact_basis_channels
+        self.contact_initial = nn.Sequential(
+            nn.LayerNorm(initial_channels),
+            nn.Linear(initial_channels, self.contact_channels),
+            nn.LayerNorm(self.contact_channels),
+        )
+        self.contact_update = _SharedContactStateUpdate(
+            atom_channels,
+            self.contact_channels,
+            contact_exchange_rank,
+            dropout,
+        )
+
+    @staticmethod
+    def _validate_contact_payload(
+        contact_edge_index: torch.Tensor,
+        contact_distance: torch.Tensor,
+        node_count: int,
+    ) -> None:
+        if contact_edge_index.ndim != 2 or contact_edge_index.shape[0] != 2:
+            raise ValueError("contact_edge_index must have shape [2, C]")
+        if tuple(contact_distance.shape) != (contact_edge_index.shape[1], 1):
+            raise ValueError("contact distances are not aligned")
+        if contact_edge_index.shape[1] and (
+            int(contact_edge_index.min()) < 0
+            or int(contact_edge_index.max()) >= node_count
+        ):
+            raise ValueError("contact relation has an invalid atom id")
+        if not torch.isfinite(contact_distance).all() or (
+            contact_distance.numel()
+            and (
+                bool((contact_distance <= 0).any())
+                or bool((contact_distance > 5.0).any())
+            )
+        ):
+            raise ValueError("contact distance is outside (0, 5.0]")
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        contact_edge_index,
+        contact_distance,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            contact_edge_index,
+            contact_distance,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        contact_edge_index,
+        contact_distance,
+    ):
+        self._validate_contact_payload(
+            contact_edge_index, contact_distance, x.shape[0]
+        )
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            auxiliary_payload={
+                "contact_edge_index": contact_edge_index,
+                "contact_distance": contact_distance,
+            },
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is None:
+            raise ValueError("ContactState payload is required")
+        contact_edge_index = auxiliary_payload["contact_edge_index"]
+        contact_distance = auxiliary_payload["contact_distance"]
+        if contact_edge_index.shape[1]:
+            source, target = contact_edge_index.unbind(dim=0)
+            distance_features = self.contact_distance_basis(
+                contact_distance.float()
+            )
+            contact_state = self.contact_initial(
+                torch.cat([h[source], h[target], distance_features], dim=-1)
+            )
+        else:
+            contact_state = h.new_empty((0, self.contact_channels))
+        return {
+            **auxiliary_payload,
+            "contact_state": contact_state,
+            "graph_state": self.graph_context.initialize(h, batch),
+        }
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        if layer in self.CONTACT_LAYERS:
+            h, contact_state = self.contact_update(
+                h,
+                auxiliary_state["contact_state"],
+                auxiliary_state["contact_edge_index"],
+            )
+            auxiliary_state["contact_state"] = contact_state
+        block = layer + 1
+        if block in self.GLOBAL_BLOCKS:
+            h, graph_state = self.graph_context(
+                h, batch, auxiliary_state["graph_state"]
+            )
+            auxiliary_state["graph_state"] = graph_state
+        return h, edge_state, auxiliary_state
+
+
 class _SharedRingHierarchyUpdate(nn.Module):
     """One narrow recurrent atom--ring--ring update shared across depth."""
 
@@ -1947,6 +2181,20 @@ def make_pcqm_gap_encoder(candidate: str):
             ring_feature_channels=12,
             ring_edge_channels=4,
             ring_exchange_rank=32,
+        )
+    if candidate == (
+        "ogb_distance_angle_contact_state_triangle_edge_state_graph_state9"
+    ):
+        return OGBContactStateGraphStateGeometrySparseTriangleEdgeStateWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
+            contact_channels=32,
+            contact_basis_channels=16,
+            contact_exchange_rank=16,
         )
     local_global_modes = {
         "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",

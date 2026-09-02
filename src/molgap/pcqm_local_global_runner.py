@@ -14,7 +14,12 @@ from pathlib import Path
 
 
 RUN_MODE = os.environ.get("MOLGAP_LOCAL_GLOBAL_RUN_MODE", "seed42_screen")
-if RUN_MODE not in {"seed42_screen", "confirmation", "ring_graphstate"}:
+if RUN_MODE not in {
+    "seed42_screen",
+    "confirmation",
+    "ring_graphstate",
+    "contact_graphstate",
+}:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
 SEED = int(os.environ.get("MOLGAP_LOCAL_GLOBAL_SEED", "42"))
@@ -24,6 +29,8 @@ if RUN_MODE == "confirmation" and SEED not in {43, 44}:
     raise RuntimeError("Confirmation mode requires seed 43 or 44")
 if RUN_MODE == "ring_graphstate" and SEED != 42:
     raise RuntimeError("Ring-GraphState mode requires seed 42")
+if RUN_MODE == "contact_graphstate" and SEED != 42:
+    raise RuntimeError("ContactState mode requires seed 42")
 
 OUT = Path(
     os.environ.get(
@@ -49,6 +56,10 @@ EXPECTED_RING_SOURCE_COMMIT = "58f425258031062c3c3762f13b7d4c160dffba65"
 EXPECTED_RING_CACHE_SHA256 = (
     "3f8b271571b8d1026e96fc1dae51d9479489ddd13b73df95740288e6f630779f"
 )
+EXPECTED_CONTACT_SOURCE_COMMIT = "7f2f8ce476f654320f07e2c2e630f473d7d81c72"
+EXPECTED_CONTACT_CACHE_SHA256 = (
+    "49725b92c2c0d33e17633abf8ffa7148ebc8bc9721d3e5b3635f1309891bc826"
+)
 SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
@@ -59,9 +70,15 @@ RING_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9",
 )
+CONTACT_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_contact_state_triangle_edge_state_graph_state9",
+)
 CANDIDATES = (
     RING_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "ring_graphstate"
+    else CONTACT_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "contact_graphstate"
     else SCREEN_CANDIDATES
     if RUN_MODE == "seed42_screen"
     else CONFIRMATION_CANDIDATES
@@ -72,18 +89,19 @@ EXPECTED_GLOBAL_BLOCKS = {
     SCREEN_CANDIDATES[1]: (3, 6, 9),
     SCREEN_CANDIDATES[2]: (),
     RING_GRAPHSTATE_CANDIDATES[1]: (),
+    CONTACT_GRAPHSTATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
     "candidate": BASELINE,
     "seed": 42,
     "validation_gap_mae_eV": (
         0.13012409210205078
-        if RUN_MODE == "ring_graphstate"
+        if RUN_MODE in {"ring_graphstate", "contact_graphstate"}
         else 0.1353926807641983
     ),
     "acceptance": (
         "results/local_global_allocation_seed42/acceptance.json"
-        if RUN_MODE == "ring_graphstate"
+        if RUN_MODE in {"ring_graphstate", "contact_graphstate"}
         else "results/geometry_bottom_fusion_multiseed/acceptance.json"
     ),
 }
@@ -94,7 +112,7 @@ MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
 SEARCH_BUDGET_S = 39_600
-if RUN_MODE == "ring_graphstate":
+if RUN_MODE in {"ring_graphstate", "contact_graphstate"}:
     PARAMETER_BUDGET = 4_000_000
     SEARCH_BUDGET_S = 14_400
 EXPECTED_GPU_COUNT = 2
@@ -110,11 +128,24 @@ EXPECTED_PARAMETER_COUNTS = {
     SCREEN_CANDIDATES[1]: 3_999_409,
     SCREEN_CANDIDATES[2]: 3_665_809,
     RING_GRAPHSTATE_CANDIDATES[1]: 3_723_849,
+    CONTACT_GRAPHSTATE_CANDIDATES[1]: 3_700_321,
 }
 
 
 def uses_ring_hierarchy(candidate: str) -> bool:
     return candidate == RING_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_contact_state(candidate: str) -> bool:
+    return candidate == CONTACT_GRAPHSTATE_CANDIDATES[1]
+
+
+def expected_input_cache_sha256() -> str:
+    if RUN_MODE == "ring_graphstate":
+        return EXPECTED_RING_CACHE_SHA256
+    if RUN_MODE == "contact_graphstate":
+        return EXPECTED_CONTACT_CACHE_SHA256
+    return EXPECTED_GEOMETRY_SHA256
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -182,7 +213,7 @@ def install_dependencies() -> None:
 
 
 def source_python_root() -> Path:
-    matches = list(Path("/kaggle/input").rglob("src/molgap/pcqm_gap_architecture.py"))
+    matches = list(Path("/kaggle/input").rglob("molgap/pcqm_gap_architecture.py"))
     if len(matches) == 1:
         return matches[0].parents[1]
     archives = list(Path("/kaggle/input").rglob("src.zip"))
@@ -299,9 +330,64 @@ def find_ring_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
+def find_contact_cache() -> tuple[Path, dict]:
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-contactstate-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one ContactState cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_CONTACT_SOURCE_COMMIT,
+        "parent_graph_cache_aggregate_sha256": EXPECTED_PARENT_GRAPH_SHA256,
+        "parent_wedge_cache_aggregate_sha256": EXPECTED_WEDGE_SHA256,
+        "parent_geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+        "aggregate_sha256": EXPECTED_CONTACT_CACHE_SHA256,
+        "contact_cutoff_angstrom": 5.0,
+        "excluded_covalent_hops": 3,
+        "directed_storage": True,
+        "neighbor_cap": None,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "failure_count": 0,
+        "model_inference_executed": False,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"ContactState cache contract changed for {key}")
+    failures_path = root / manifest["failures_file"]
+    if sha256_file(failures_path) != manifest["failures_file_sha256"]:
+        raise RuntimeError("ContactState failure ledger hash changed")
+    if json.loads(failures_path.read_text(encoding="utf-8")).get("failures") != []:
+        raise RuntimeError("ContactState cache contains unresolved failures")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"ContactState shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != EXPECTED_CONTACT_CACHE_SHA256:
+        raise RuntimeError("ContactState aggregate hash changed")
+    return root, manifest
+
+
 def find_input_cache() -> tuple[Path, dict]:
     if RUN_MODE == "ring_graphstate":
         return find_ring_cache()
+    if RUN_MODE == "contact_graphstate":
+        return find_contact_cache()
     return find_geometry_cache()
 
 
@@ -345,6 +431,14 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                     != (graph.ring_edge_index.shape[1], 4)
                 ):
                     raise RuntimeError(f"{role} ring relation shape changed")
+            if RUN_MODE == "contact_graphstate":
+                if (
+                    graph.contact_edge_index.ndim != 2
+                    or graph.contact_edge_index.shape[0] != 2
+                    or tuple(graph.contact_distance.shape)
+                    != (graph.contact_edge_index.shape[1], 1)
+                ):
+                    raise RuntimeError(f"{role} contact alignment changed")
     return graphs
 
 
@@ -379,6 +473,12 @@ def forward(model, batch, candidate: str):
             batch.atom_ring_index,
             batch.ring_edge_index,
             batch.ring_edge_attr,
+        )
+    if uses_contact_state(candidate):
+        return model(
+            *base,
+            batch.contact_edge_index,
+            batch.contact_distance,
         )
     return model(*base)
 
@@ -432,6 +532,9 @@ def initialization_preflight() -> list[dict]:
         ring_hierarchy_present = hasattr(model, "ring_update")
         if ring_hierarchy_present != uses_ring_hierarchy(candidate):
             raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
+        contact_state_present = hasattr(model, "contact_update")
+        if contact_state_present != uses_contact_state(candidate):
+            raise RuntimeError(f"ContactState identity changed for {candidate}")
         ring_injection_zero = True
         if ring_hierarchy_present:
             zero_parameters = {
@@ -448,6 +551,22 @@ def initialization_preflight() -> list[dict]:
             )
             if not ring_injection_zero:
                 raise RuntimeError("Ring-to-atom initialization is not zero")
+        contact_injection_zero = True
+        if contact_state_present:
+            zero_parameters = {
+                name: value
+                for name, value in model.named_parameters()
+                if name in {
+                    "contact_update.contact_to_atom.value.weight",
+                    "contact_update.contact_to_atom.value.bias",
+                }
+            }
+            contact_injection_zero = len(zero_parameters) == 2 and all(
+                torch.count_nonzero(value.detach()).item() == 0
+                for value in zero_parameters.values()
+            )
+            if not contact_injection_zero:
+                raise RuntimeError("Contact-to-atom initialization is not zero")
         rows.append(
             {
                 "candidate": candidate,
@@ -456,6 +575,8 @@ def initialization_preflight() -> list[dict]:
                 "graph_state_present": graph_state_present,
                 "ring_hierarchy_present": ring_hierarchy_present,
                 "ring_injection_zero": ring_injection_zero,
+                "contact_state_present": contact_state_present,
+                "contact_injection_zero": contact_injection_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -504,6 +625,9 @@ def gpu_preflight(
     ring_hierarchy_present = hasattr(model, "ring_update")
     if ring_hierarchy_present != uses_ring_hierarchy(candidate):
         raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
+    contact_state_present = hasattr(model, "contact_update")
+    if contact_state_present != uses_contact_state(candidate):
+        raise RuntimeError(f"ContactState identity changed for {candidate}")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
         raise RuntimeError(f"Worker {physical_device_index} is not on T4: {gpu_name}")
@@ -526,6 +650,14 @@ def gpu_preflight(
             and bool(torch.isfinite(gradient).all())
             and int(torch.count_nonzero(gradient)) > 0
         )
+    contact_return_gradient_nonzero = True
+    if contact_state_present:
+        gradient = model.contact_update.contact_to_atom.value.weight.grad
+        contact_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -536,6 +668,8 @@ def gpu_preflight(
         "graph_state_present": graph_state_present,
         "ring_hierarchy_present": ring_hierarchy_present,
         "ring_return_gradient_nonzero": ring_return_gradient_nonzero,
+        "contact_state_present": contact_state_present,
+        "contact_return_gradient_nonzero": contact_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -550,6 +684,7 @@ def gpu_preflight(
             "finite_loss",
             "finite_gradients",
             "ring_return_gradient_nonzero",
+            "contact_return_gradient_nonzero",
         )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
@@ -652,11 +787,7 @@ def train_one(
         )
         if checkpoint.get("candidate") != candidate or checkpoint.get("seed") != SEED:
             raise RuntimeError("Local/global checkpoint identity changed")
-        if checkpoint.get("input_cache_aggregate_sha256") != (
-            EXPECTED_RING_CACHE_SHA256
-            if RUN_MODE == "ring_graphstate"
-            else EXPECTED_GEOMETRY_SHA256
-        ):
+        if checkpoint.get("input_cache_aggregate_sha256") != expected_input_cache_sha256():
             raise RuntimeError("Local/global checkpoint cache identity changed")
         model.load_state_dict(checkpoint["model"])
         optimizer.load_state_dict(checkpoint["optimizer"])
@@ -711,11 +842,7 @@ def train_one(
                     "best_epoch": best_epoch,
                     "best_mae": best_mae,
                     "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
-                    "input_cache_aggregate_sha256": (
-                        EXPECTED_RING_CACHE_SHA256
-                        if RUN_MODE == "ring_graphstate"
-                        else EXPECTED_GEOMETRY_SHA256
-                    ),
+                    "input_cache_aggregate_sha256": expected_input_cache_sha256(),
                 },
             )
         else:
@@ -745,11 +872,7 @@ def train_one(
                 "stale_epochs": stale_epochs,
                 "trace": trace,
                 "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
-                "input_cache_aggregate_sha256": (
-                    EXPECTED_RING_CACHE_SHA256
-                    if RUN_MODE == "ring_graphstate"
-                    else EXPECTED_GEOMETRY_SHA256
-                ),
+                "input_cache_aggregate_sha256": expected_input_cache_sha256(),
             },
         )
         print(
@@ -776,11 +899,7 @@ def train_one(
             "target_eV": validation["target"],
             "prediction_eV": validation["prediction"],
             "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
-            "input_cache_aggregate_sha256": (
-                EXPECTED_RING_CACHE_SHA256
-                if RUN_MODE == "ring_graphstate"
-                else EXPECTED_GEOMETRY_SHA256
-            ),
+            "input_cache_aggregate_sha256": expected_input_cache_sha256(),
             "official_validation_role_read": False,
             "test_dev_role_read": False,
         },
@@ -790,11 +909,7 @@ def train_one(
         "complete": True,
         "candidate": candidate,
         "source_commit": EXPECTED_MODEL_SOURCE_COMMIT,
-        "input_cache_aggregate_sha256": (
-            EXPECTED_RING_CACHE_SHA256
-            if RUN_MODE == "ring_graphstate"
-            else EXPECTED_GEOMETRY_SHA256
-        ),
+        "input_cache_aggregate_sha256": expected_input_cache_sha256(),
         "seed": SEED,
         "parameter_count": parameter_count,
         "parameter_budget": PARAMETER_BUDGET,
@@ -837,6 +952,20 @@ def train_one(
             ),
             "ring_update_layers": (
                 [2, 4, 6, 8] if uses_ring_hierarchy(candidate) else []
+            ),
+            "contact_state": (
+                "distance-rbf16+contact32+shared-four-point-update+rank16-contact-to-atom"
+                if uses_contact_state(candidate)
+                else "none"
+            ),
+            "contact_update_layers": (
+                [2, 4, 6, 8] if uses_contact_state(candidate) else []
+            ),
+            "contact_cutoff_angstrom": (
+                5.0 if uses_contact_state(candidate) else None
+            ),
+            "excluded_covalent_hops": (
+                3 if uses_contact_state(candidate) else None
             ),
         },
         "artifacts": {
@@ -953,7 +1082,7 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
                 "throughput_ratio": row["mean_throughput_graphs_per_s"]
                 / baseline["mean_throughput_graphs_per_s"],
             }
-        if RUN_MODE != "ring_graphstate":
+        if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}:
             comparison["full_gps_validation_gap_mae_eV"] = comparison[
                 "baseline_validation_gap_mae_eV"
             ]
@@ -1102,6 +1231,11 @@ def main() -> None:
                 if RUN_MODE == "ring_graphstate"
                 else None
             ),
+            "contact_cache_aggregate_sha256": (
+                EXPECTED_CONTACT_CACHE_SHA256
+                if RUN_MODE == "contact_graphstate"
+                else None
+            ),
             "geometry_valid_fraction": cache_manifest.get(
                 "valid_geometry_fraction", 0.9971363636363636
             ),
@@ -1118,12 +1252,16 @@ def main() -> None:
             "frozen_comparator": FROZEN_COMPARATOR,
             "paired_against_baseline": comparisons,
             "paired_against_fresh_full_gps": (
-                comparisons if RUN_MODE != "ring_graphstate" else None
+                comparisons
+                if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}
+                else None
             ),
             "selected_candidate": selected_candidate,
             "selected_strictly_improves_baseline": positive,
             "selected_strictly_improves_full_gps": (
-                positive if RUN_MODE != "ring_graphstate" else None
+                positive
+                if RUN_MODE not in {"ring_graphstate", "contact_graphstate"}
+                else None
             ),
             "search_budget_s": SEARCH_BUDGET_S,
             "elapsed_s": time.perf_counter() - task_started,
