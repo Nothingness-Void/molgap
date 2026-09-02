@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-contactstate-graphstate-launch-v1",
+  "submitted_at": "2026-09-03T06:00:12+09:00",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-pcqm-contactstate-graphstate-s42",
+  "version": 1,
+  "launch_status": "RUNNING",
+  "machine_shape": "NvidiaTeslaT4",
+  "execution": "dual_t4_candidate_parallel",
+  "seed": 42,
+  "source_dataset": "kaseichou/molgap-pcqm-contactstate-gpu-source",
+  "model_source_commit": "a28862c3d91590b0827c3cfd6d7d2586a9c6ab47",
+  "submission_commit": "7e270df34fdc988421dd421776306171798c3339",
+  "contact_cache_kernel": "kaseichou/molgap-pcqm-contactstate-cache-s42",
+  "contact_cache_aggregate_sha256": "49725b92c2c0d33e17633abf8ffa7148ebc8bc9721d3e5b3635f1309891bc826",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "seed43_44_submitted": false,
+  "full_data_authorized": false
+}
