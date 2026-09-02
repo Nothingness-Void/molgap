@@ -36,7 +36,8 @@ metrics also missed a required cache-lineage field. The exact decision is
 `experiments/pcqm_gap_architecture/results/ring_graphstate_seed42/decision.md`.
 Server discovery now advances only to the CPU evidence gate for a separately
 normalized non-covalent ContactState; no successor GPU run is authorized until
-that cache passes acceptance. Live status is
+that cache passes acceptance. Its contract is
+`experiments/pcqm_gap_architecture/contact_state_seed42_protocol.md`; live status is
 `experiments/pcqm_gap_architecture/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete

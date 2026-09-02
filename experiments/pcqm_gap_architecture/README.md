@@ -83,7 +83,9 @@ The subsequent Ring-GraphState question closed without confirmation; its
 decision is
 [`results/ring_graphstate_seed42/decision.md`](results/ring_graphstate_seed42/decision.md).
 The next server-side question is the CPU evidence gate for a separately
-normalized non-covalent ContactState. Task order remains in `ROADMAP.md`.
+normalized non-covalent ContactState. Its frozen contract is
+[`contact_state_seed42_protocol.md`](contact_state_seed42_protocol.md).
+Task order remains in `ROADMAP.md`.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.
