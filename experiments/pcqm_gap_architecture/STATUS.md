@@ -115,6 +115,12 @@
   Kaggle2 with the same aggregate SHA, and the unchanged-contract version 2
   was `RUNNING` at the 2026-09-03 04:10 JST health check. The diagnosis and
   launch identity are in `results/contact_state_seed42/`.
+- Version 2 reached `ERROR` before reading a shard because Kaggle expanded the
+  source archive to `molgap/pcqm_contact.py` while the locator required a
+  `src/` prefix. The retained diagnosis is
+  `results/contact_state_seed42/cpu_v2_failure_diagnosis.md`. An
+  implementation-only path-locator repair is authorized under the unchanged
+  CPU contract; no GPU successor is authorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
