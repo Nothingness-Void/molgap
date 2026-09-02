@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+import builtins
 
 pytest.importorskip("torch")
 
@@ -57,6 +58,32 @@ def test_warmstart_maps_every_source_tensor_and_preserves_initial_function():
             batch.wedge_angle_cos, batch.geometry_valid,
         )
     torch.testing.assert_close(source_value, target_value, atol=2e-6, rtol=2e-6)
+
+
+def test_warmstart_mapping_accepts_local_categorical_encoder_keys():
+    source = _make_model(OfficialEdgeStateConfig(feature_schema="ogb"), 9)
+    target = _make_model(OfficialEdgeStateConfig(feature_schema="ogb"), 9)
+    report = load_pretrained_backbone(target, source.state_dict())
+    assert report["mapped_tensor_count"] == len(source.state_dict())
+    assert report["new_tensor_count"] == 0
+
+
+def test_geometry_encoder_falls_back_when_ogb_package_is_absent(monkeypatch):
+    original_import = builtins.__import__
+
+    def without_ogb(name, *args, **kwargs):
+        if name == "ogb" or name.startswith("ogb."):
+            error = ModuleNotFoundError("No module named 'ogb'")
+            error.name = "ogb"
+            raise error
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", without_ogb)
+    source = _make_model(OfficialEdgeStateConfig(feature_schema="ogb"), 9).eval()
+    target = make_pcqm_gap_encoder(CANDIDATE).eval()
+    report = load_pretrained_backbone(target, source.state_dict())
+    assert report["mapped_tensor_count"] == len(source.state_dict())
+    assert "node_emb.embeddings.0.weight" in target.state_dict()
 
 
 def test_warmstart_contract_is_bounded_and_uses_two_learning_rates():

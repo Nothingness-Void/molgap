@@ -327,6 +327,8 @@ def load_pretrained_backbone(target: nn.Module, source_state: dict[str, torch.Te
     mapped, source_to_target = {}, {}
     for source_key, value in source_state.items():
         target_key = _embedding_target_key(source_key)
+        if target_key not in target_state and source_key in target_state:
+            target_key = source_key
         if target_key not in target_state:
             raise RuntimeError(f"Pretrained source tensor has no target: {source_key}")
         if target_state[target_key].shape != value.shape:

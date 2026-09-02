@@ -5,10 +5,28 @@ import torch
 import torch.nn as nn
 
 from .gps import (
+    CategoricalFeatureEncoder,
     EdgeStateStructuralGPSWrapper,
     GraphTokenStructuralGPSWrapper,
     StructuralGPSWrapper,
 )
+
+
+def _official_ogb_encoders(node_channels: int, edge_channels: int):
+    """Use OGB encoders when installed, otherwise their exact local equivalent."""
+    try:
+        from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
+
+        return AtomEncoder(node_channels), BondEncoder(edge_channels)
+    except ModuleNotFoundError as error:
+        if error.name != "ogb":
+            raise
+        from .ogb_features import ATOM_FEATURE_DIMS, BOND_FEATURE_DIMS
+
+        return (
+            CategoricalFeatureEncoder(ATOM_FEATURE_DIMS, node_channels),
+            CategoricalFeatureEncoder(BOND_FEATURE_DIMS, edge_channels),
+        )
 
 
 class OGBStructuralGPSWrapper(StructuralGPSWrapper):
@@ -16,11 +34,10 @@ class OGBStructuralGPSWrapper(StructuralGPSWrapper):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
-
         hidden_channels = self.node_emb.out_features
-        self.node_emb = AtomEncoder(hidden_channels)
-        self.edge_emb = BondEncoder(hidden_channels)
+        self.node_emb, self.edge_emb = _official_ogb_encoders(
+            hidden_channels, hidden_channels
+        )
 
     def _embed_nodes(self, x):
         return self.node_emb(x.long())
@@ -34,11 +51,10 @@ class OGBEdgeStateStructuralGPSWrapper(EdgeStateStructuralGPSWrapper):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
-
         hidden_channels = self.node_emb.out_features
-        self.node_emb = AtomEncoder(hidden_channels)
-        self.edge_emb = BondEncoder(self.edge_state_channels)
+        self.node_emb, self.edge_emb = _official_ogb_encoders(
+            hidden_channels, self.edge_state_channels
+        )
 
     def _embed_nodes(self, x):
         return self.node_emb(x.long())
@@ -57,11 +73,10 @@ class OGBGraphTokenStructuralGPSWrapper(GraphTokenStructuralGPSWrapper):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
-
         hidden_channels = self.node_emb.out_features
-        self.node_emb = AtomEncoder(hidden_channels)
-        self.edge_emb = BondEncoder(self.edge_state_channels)
+        self.node_emb, self.edge_emb = _official_ogb_encoders(
+            hidden_channels, self.edge_state_channels
+        )
 
     def _embed_nodes(self, x):
         return self.node_emb(x.long())
