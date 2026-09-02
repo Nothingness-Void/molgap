@@ -45,6 +45,7 @@ def test_contact_cache_contract_is_frozen_in_code_and_protocol() -> None:
 
 def test_contact_cache_runner_never_reads_targets_or_runs_models() -> None:
     source = RUNNER.read_text(encoding="utf-8")
+    assert 'rglob("molgap/pcqm_contact.py")' in source
     assert ".y" not in source
     assert "make_pcqm_gap_encoder" not in source
     assert "optimizer" not in source

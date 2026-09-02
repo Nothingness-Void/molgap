@@ -52,7 +52,7 @@ def install_dependencies() -> None:
 
 
 def source_root() -> Path:
-    modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_contact.py"))
+    modules = list(Path("/kaggle/input").rglob("molgap/pcqm_contact.py"))
     if len(modules) == 1:
         return modules[0].parents[1]
     archives = list(Path("/kaggle/input").rglob("src.zip"))
