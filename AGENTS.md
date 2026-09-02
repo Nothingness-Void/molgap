@@ -47,6 +47,12 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   checkpoint directory, and one visible GPU. Use a single accelerator only
   for one-model jobs, memory-constrained candidates, or mechanisms that cannot
   be deterministically isolated; record that exception in the protocol.
+- **Seed-budget governance**: architecture discovery defaults to one paired
+  seed-42 screen. A seed-42 win records a promising candidate but never
+  automatically triggers seeds 43/44. Multi-seed confirmation is reserved for
+  the final short list after a material paired gain and a separate explicit
+  compute-budget decision. Each experiment protocol may further restrict this
+  rule but may not silently broaden it.
 - **IMS access boundary**: before any molecular-research-server command, read
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.
