@@ -13,6 +13,7 @@ from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
 from molgap.pcqm_geometry_warmstart import (
     CANDIDATE,
     GeometryWarmstartConfig,
+    _load_source_checkpoint,
     build_geometry_shard,
     load_pretrained_backbone,
 )
@@ -64,6 +65,42 @@ def test_warmstart_contract_is_bounded_and_uses_two_learning_rates():
     assert config.max_projected_training_s == 12 * 3600
     assert config.new_learning_rate > config.shared_learning_rate
     assert config.minimum_memory_headroom_fraction >= 0.15
+
+
+def test_continuation_checkpoint_uses_hashed_base_config(tmp_path):
+    config = OfficialEdgeStateConfig(feature_schema="ogb")
+    source = _make_model(config, 9)
+    acceptance = {
+        "node_feature_dim": 9,
+        "target_mean_gap": 5.5,
+        "target_std_gap": 1.2,
+    }
+    base_path = tmp_path / "base.pt"
+    atomic_torch(base_path, {
+        "config": config.__dict__,
+        "model": source.state_dict(),
+        "acceptance_sha256": "accepted-graphs",
+    })
+    continuation_path = tmp_path / "continuation.pt"
+    atomic_torch(continuation_path, {
+        "format": "molgap-pcqm4mv2-official-edge-state-continuation-best-v1",
+        "model": source.state_dict(),
+        "best_epoch": 30,
+        "target_mean_gap": 5.5,
+        "target_std_gap": 1.2,
+        "acceptance_sha256": "accepted-graphs",
+        "source_best_sha256": sha256_file(base_path),
+    })
+    checkpoint, loaded = _load_source_checkpoint(
+        continuation_path, acceptance, base_path
+    )
+    assert checkpoint["best_epoch"] == 30
+    assert set(loaded.state_dict()) == set(source.state_dict())
+
+    changed_path = tmp_path / "changed.pt"
+    changed_path.write_bytes(base_path.read_bytes() + b"changed")
+    with pytest.raises(RuntimeError, match="does not reference"):
+        _load_source_checkpoint(continuation_path, acceptance, changed_path)
 
 
 def test_geometry_shard_is_atomic_resumable_and_batch_aligned(tmp_path):

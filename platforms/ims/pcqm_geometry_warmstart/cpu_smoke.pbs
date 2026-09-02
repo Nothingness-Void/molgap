@@ -24,5 +24,6 @@ export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
   --base-graph-dir "$BASE/rich_full/graphs" \
   --base-acceptance "$BASE/rich_full/graphs/acceptance.json" \
   --source-checkpoint "$BASE/rich_full/convergence_40/best.pt" \
+  --source-config-checkpoint "$BASE/rich_full/training/best.pt" \
   --output "$ROOT/artifacts/cpu_smoke.json" \
   2>&1 | tee "$ROOT/logs/cpu_smoke.log"

@@ -399,9 +399,38 @@ def _evaluate(model, graph_dir: Path, device, batch_size: int, mean: float, std:
     }
 
 
-def _load_source_checkpoint(path: Path, acceptance: dict) -> tuple[dict, nn.Module]:
+def _load_source_checkpoint(
+    path: Path,
+    acceptance: dict,
+    config_checkpoint_path: Path | None = None,
+) -> tuple[dict, nn.Module]:
+    """Load continuation weights with an independently hashed base config."""
+    path = Path(path)
     checkpoint = torch.load(path, map_location="cpu", weights_only=False)
-    source_config = OfficialEdgeStateConfig(**checkpoint["config"])
+    config_payload = checkpoint
+    if "config" not in checkpoint:
+        if config_checkpoint_path is None:
+            raise RuntimeError(
+                "Continuation checkpoint requires its source config checkpoint"
+            )
+        config_checkpoint_path = Path(config_checkpoint_path)
+        config_payload = torch.load(
+            config_checkpoint_path, map_location="cpu", weights_only=False
+        )
+        if "config" not in config_payload:
+            raise RuntimeError("Source config checkpoint has no config contract")
+        expected_source_hash = checkpoint.get("source_best_sha256")
+        actual_source_hash = sha256_file(config_checkpoint_path)
+        if expected_source_hash != actual_source_hash:
+            raise RuntimeError(
+                "Continuation checkpoint does not reference the supplied "
+                "source config checkpoint"
+            )
+        if config_payload.get("acceptance_sha256") != checkpoint.get(
+            "acceptance_sha256"
+        ):
+            raise RuntimeError("Source and continuation graph acceptances differ")
+    source_config = OfficialEdgeStateConfig(**config_payload["config"])
     if source_config.feature_schema != "ogb":
         raise RuntimeError("Warm-start source checkpoint is not OGB-rich")
     if checkpoint.get("best_epoch") != 30:
@@ -420,6 +449,7 @@ def cpu_smoke(
     base_graph_dir: Path,
     base_acceptance_path: Path,
     source_checkpoint_path: Path,
+    source_config_checkpoint_path: Path,
     output_path: Path,
 ) -> dict:
     """Validate immutable inputs, one ETKDG graph, and the weight map on CPU."""
@@ -430,7 +460,9 @@ def cpu_smoke(
     acceptance = json.loads(base_acceptance_path.read_text(encoding="utf-8"))
     if acceptance.get("status") != "accepted" or acceptance.get("feature_schema") != "ogb":
         raise RuntimeError("CPU smoke requires accepted OGB-rich base graphs")
-    checkpoint, source_model = _load_source_checkpoint(source_checkpoint_path, acceptance)
+    checkpoint, source_model = _load_source_checkpoint(
+        source_checkpoint_path, acceptance, source_config_checkpoint_path
+    )
     target_model = make_pcqm_gap_encoder(CANDIDATE)
     mapping = load_pretrained_backbone(target_model, checkpoint["model"])
     smiles, _ = _load_smiles(rows_dir, 0)
@@ -462,6 +494,9 @@ def cpu_smoke(
         "status": "accepted",
         "candidate": CANDIDATE,
         "source_checkpoint_sha256": sha256_file(source_checkpoint_path),
+        "source_config_checkpoint_sha256": sha256_file(
+            source_config_checkpoint_path
+        ),
         "base_acceptance_sha256": sha256_file(base_acceptance_path),
         "base_graph_sha256": sha256_file(base_path),
         "source_idx": source_idx,
@@ -480,6 +515,7 @@ def gpu_preflight(
     graph_dir: Path,
     acceptance_path: Path,
     source_checkpoint_path: Path,
+    source_config_checkpoint_path: Path,
     output_path: Path,
     *,
     config: GeometryWarmstartConfig = GeometryWarmstartConfig(),
@@ -492,7 +528,9 @@ def gpu_preflight(
     acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
     if acceptance.get("status") != "accepted":
         raise RuntimeError("Geometry cache was not accepted")
-    checkpoint, source_model = _load_source_checkpoint(source_checkpoint_path, acceptance)
+    checkpoint, source_model = _load_source_checkpoint(
+        source_checkpoint_path, acceptance, source_config_checkpoint_path
+    )
     target_model = make_pcqm_gap_encoder(CANDIDATE)
     mapping = load_pretrained_backbone(target_model, checkpoint["model"])
     device = torch.device("cuda")
@@ -553,6 +591,9 @@ def gpu_preflight(
         "config": asdict(config),
         "gpu": torch.cuda.get_device_name(0),
         "source_checkpoint_sha256": sha256_file(source_checkpoint_path),
+        "source_config_checkpoint_sha256": sha256_file(
+            source_config_checkpoint_path
+        ),
         "acceptance_sha256": sha256_file(acceptance_path),
         "initial_function_max_abs_difference": max_difference,
         "mapping": mapping,
@@ -573,6 +614,7 @@ def train_geometry_warmstart(
     graph_dir: Path,
     acceptance_path: Path,
     source_checkpoint_path: Path,
+    source_config_checkpoint_path: Path,
     preflight_path: Path,
     output_dir: Path,
     *,
@@ -599,7 +641,13 @@ def train_geometry_warmstart(
         raise RuntimeError("GPU preflight refers to another geometry cache")
     if preflight.get("source_checkpoint_sha256") != sha256_file(source_checkpoint_path):
         raise RuntimeError("GPU preflight refers to another source checkpoint")
-    checkpoint, _ = _load_source_checkpoint(source_checkpoint_path, acceptance)
+    if preflight.get("source_config_checkpoint_sha256") != sha256_file(
+        source_config_checkpoint_path
+    ):
+        raise RuntimeError("GPU preflight refers to another source config checkpoint")
+    checkpoint, _ = _load_source_checkpoint(
+        source_checkpoint_path, acceptance, source_config_checkpoint_path
+    )
     model = make_pcqm_gap_encoder(CANDIDATE)
     mapping = load_pretrained_backbone(model, checkpoint["model"])
     mapped_keys = set(mapping["source_to_target"].values())
@@ -625,6 +673,9 @@ def train_geometry_warmstart(
     identities = {
         "acceptance_sha256": sha256_file(acceptance_path),
         "source_checkpoint_sha256": sha256_file(source_checkpoint_path),
+        "source_config_checkpoint_sha256": sha256_file(
+            source_config_checkpoint_path
+        ),
         "preflight_sha256": sha256_file(preflight_path),
     }
     start_epoch, best_epoch, best_mae, wait, log = 0, -1, float("inf"), 0, []

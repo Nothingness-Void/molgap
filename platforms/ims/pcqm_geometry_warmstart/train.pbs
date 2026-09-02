@@ -23,6 +23,7 @@ nvidia-smi -L
   --graph-dir "$ROOT/graph_cache" \
   --acceptance "$ROOT/artifacts/geometry_acceptance.json" \
   --source-checkpoint "$BASE/rich_full/convergence_40/best.pt" \
+  --source-config-checkpoint "$BASE/rich_full/training/best.pt" \
   --preflight "$ROOT/artifacts/gpu_preflight.json" \
   --output-dir "$ROOT/outputs/training" \
   2>&1 | tee "$ROOT/logs/train.log"
