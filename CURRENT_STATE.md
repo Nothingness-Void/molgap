@@ -23,10 +23,12 @@ GPS9 epoch-30 checkpoint initializes the shared backbone; geometry and sparse
 triangle modules remain new. This is training-strategy evidence, not a new
 architecture comparison.
 
-IMS jobs `1403710` through `1403723` form a strict `afterok` chain: CPU smoke,
-75 resumable geometry shards in ten bounded waves, exhaustive acceptance,
-A100 mapping/timing preflight, and at most 12 training epochs. The immutable
-contract and job ledger are under `experiments/pcqm_geometry_warmstart/`.
+IMS CPU smoke `1410207` passed with exact initial-function identity and complete
+backbone mapping. Jobs `1410302` through `1410317` form the replacement strict
+`afterok` chain: 75 resumable geometry shards in ten bounded waves, exhaustive
+acceptance, A100 mapping/timing preflight, and at most 12 training epochs. The
+immutable contract, infrastructure recovery, and job ledgers are under
+`experiments/pcqm_geometry_warmstart/`.
 
 ## Prior architecture evidence
 

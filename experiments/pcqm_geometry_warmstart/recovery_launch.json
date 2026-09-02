@@ -1,0 +1,26 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-ims-recovery-launch-v1",
+  "source_commit": "dfbaa34",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart",
+  "source_archive_sha256": "f49463ca852e00cdbc8b35d971c25eb75be2511eefbbff5dd2727f84a7bd9365",
+  "cpu_smoke": "1410207.ccpbs1",
+  "geometry_waves": [
+    "1410302[].ccpbs1",
+    "1410304[].ccpbs1",
+    "1410305[].ccpbs1",
+    "1410306[].ccpbs1",
+    "1410307[].ccpbs1",
+    "1410308[].ccpbs1",
+    "1410309[].ccpbs1",
+    "1410311[].ccpbs1",
+    "1410312[].ccpbs1",
+    "1410313[].ccpbs1"
+  ],
+  "geometry_acceptance": "1410314.ccpbs1",
+  "gpu_preflight": "1410316.ccpbs1",
+  "training": "1410317.ccpbs1",
+  "dependency_policy": "strict-afterok-linear-waves",
+  "maximum_concurrent_geometry_tasks": 8,
+  "official_test_used": false,
+  "production_registry_changed": false
+}

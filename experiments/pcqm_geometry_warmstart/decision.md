@@ -19,3 +19,10 @@ No result was available when this execution record was created.
 
 Machine-readable execution contract: `protocol.json`.
 IMS submission record: `launch.json`.
+
+Two CPU-smoke infrastructure failures were repaired without changing the
+scientific contract. The accepted recovery smoke mapped all 391 source tensors
+and 4,771,073 pretrained parameters, reproduced the source function with zero
+maximum absolute difference, and produced valid ETKDG geometry. Exact evidence
+is in `infrastructure_recovery.json`; replacement job identities are in
+`recovery_launch.json`.

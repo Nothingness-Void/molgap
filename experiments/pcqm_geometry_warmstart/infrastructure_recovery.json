@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-infrastructure-recovery-v1",
+  "failed_attempts": [
+    {
+      "job": "1403710.ccpbs1",
+      "stage": "cpu_smoke",
+      "failure": "continuation checkpoint has no top-level config",
+      "gpu_used": false
+    },
+    {
+      "job": "1410117.ccpbs1",
+      "stage": "cpu_smoke",
+      "failure": "IMS environment has no ogb Python package",
+      "gpu_used": false
+    }
+  ],
+  "repairs": [
+    {
+      "commit": "204e52e",
+      "change": "load the base model config only after matching source_best_sha256"
+    },
+    {
+      "commit": "dfbaa34",
+      "change": "use the exact local categorical-encoder equivalent when ogb is absent"
+    }
+  ],
+  "accepted_cpu_smoke": {
+    "job": "1410207.ccpbs1",
+    "status": "accepted",
+    "source_checkpoint_sha256": "ca5118128e5d1626901d054fcc152863a2fb40678c1ae914be9ea42db7e447fb",
+    "source_config_checkpoint_sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15",
+    "base_acceptance_sha256": "83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed",
+    "mapped_tensors": 391,
+    "mapped_parameters": 4771073,
+    "initial_function_max_abs_difference": 0.0,
+    "geometry_valid": true,
+    "gpu_used": false
+  },
+  "scientific_contract_changed": false,
+  "official_test_used": false
+}
