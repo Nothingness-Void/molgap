@@ -21,10 +21,10 @@ def test_contact_cache_sources_parse() -> None:
 
 def test_contact_cache_metadata_is_cpu_only_and_private() -> None:
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
-    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-contactstate-cache-s42"
+    assert metadata["id"] == "kaseichou/molgap-pcqm-contactstate-cache-s42"
     assert metadata["is_private"] == "true"
     assert metadata["enable_gpu"] == "false"
-    assert "nothingnessvoid/molgap-pcqm-contactstate-source" in metadata["dataset_sources"]
+    assert "kaseichou/molgap-pcqm-contactstate-source" in metadata["dataset_sources"]
     assert "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset" in metadata["dataset_sources"]
 
 
