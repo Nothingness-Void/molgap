@@ -14,7 +14,10 @@
   screen. One sequential Kaggle1 task trains a fresh full-GPS control, a
   block-3/6/9 sparse-attention challenger, and a no-attention shared-GraphState
   challenger under the same geometry, split, initialization seed and training
-  contract. No seed 43/44 or successor is authorized by preparation alone.
+  contract. Kaggle1 accepted version 1 as
+  `nothingnessvoid/molgap-pcqm-local-global-allocation-s42`; it was `RUNNING`
+  at the 2026-09-02 14:49 JST launch check. No seed 43/44 or successor is
+  authorized by submission alone.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

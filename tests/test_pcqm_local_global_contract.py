@@ -79,7 +79,9 @@ def test_remote_runner_freezes_fair_seed42_contract() -> None:
 
 def test_remote_metadata_is_one_private_gpu_task() -> None:
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
-    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-local-global-s42"
+    assert metadata["id"] == (
+        "nothingnessvoid/molgap-pcqm-local-global-allocation-s42"
+    )
     assert metadata["is_private"] == "true"
     assert metadata["enable_gpu"] == "true"
     assert metadata["code_file"] == "run_local_global_screen.py"
