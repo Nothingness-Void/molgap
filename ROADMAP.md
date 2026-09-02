@@ -55,6 +55,17 @@ but its GPU successor is deferred and must not run concurrently with P0.
   dual-SchNet residual remain closed unless a new question is recorded here.
 - Remote monitoring is mechanical only: one Luna Max heartbeat per persistent
   monitor thread; terminal evidence is handed to the coordinator for analysis.
+- The active Track B architecture search is an authorized autonomous discovery
+  loop. After each confirmed terminal handoff, the coordinator may accept and
+  diagnose the result, close a scientific failure or repair an infrastructure
+  failure, select one materially distinct backlog hypothesis, commit and push
+  its frozen contract, submit exactly one successor GPU job, and retarget the
+  same heartbeat without asking again. `QUEUED` and `RUNNING` never trigger
+  scientific analysis or a new submission. Stop the loop when no defensible
+  hypothesis remains, remote quota or immutable inputs are unavailable, a
+  candidate reaches the three-seed desktop handoff gate, or the next action
+  would require sealed roles, full-data training, production changes, or the
+  molecular-research server.
 
 ## Conditional backlog
 

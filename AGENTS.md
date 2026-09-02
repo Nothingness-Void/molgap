@@ -62,7 +62,9 @@ analysis.
 - While the remote job is non-terminal, report only the status and newly visible
   mechanical evidence. Do not wake the coordinator, resubmit, or open another
   task.
-- On `COMPLETE` or unrecoverable `ERROR`, collect the terminal logs/artifacts and
+- On any confirmed terminal state, including `COMPLETE`, unrecoverable `ERROR`,
+  cancellation, or an unknown state that is verified as no longer queued or
+  running, collect the terminal logs/artifacts and
   run only the frozen mechanical acceptance, if one exists. Then use the Codex
   thread-message capability to send one structured terminal handoff to the
   coordinator thread. The message must include job identity, terminal state,
@@ -78,6 +80,10 @@ analysis.
 - Luna Max owns economical polling and mechanical evidence collection. The
   coordinator owns result interpretation, repository decisions, follow-up
   architecture selection, and any new submission authorization.
+- When `ROADMAP.md` explicitly authorizes an autonomous discovery loop, the
+  coordinator may use a terminal handoff to select, prepare, and submit exactly
+  one next in-scope experiment, then retarget and reactivate the same persistent
+  heartbeat. The monitor must never choose or submit the successor itself.
 
 ## Branch governance
 
