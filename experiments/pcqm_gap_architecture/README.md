@@ -79,5 +79,9 @@ the three-seed arithmetic and bounded desktop handoff are in
 and
 [`results/local_global_allocation_multiseed/desktop_handoff.md`](results/local_global_allocation_multiseed/desktop_handoff.md).
 
+The next server-side question keeps that winner as a fresh paired baseline and
+adds only deterministic smallest-ring communication. Its frozen contract is
+[`ring_graphstate_seed42_protocol.md`](ring_graphstate_seed42_protocol.md).
+
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

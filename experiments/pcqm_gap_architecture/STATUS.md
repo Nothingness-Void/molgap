@@ -85,6 +85,12 @@
   boundary. Exact evidence and the authorized A100 timing-only successor are
   in `results/local_global_allocation_multiseed/decision.md` and
   `results/local_global_allocation_multiseed/desktop_handoff.md`.
+- The user authorized continued server-side exploration from the frozen
+  GraphState combination. The next single question is Ring-GraphState seed 42:
+  a fresh GraphState9 baseline versus the same model plus the already accepted
+  deterministic smallest-ring hierarchy. No GPU task is recorded until its
+  protocol, implementation, static checks, source package, and launch identity
+  are frozen.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

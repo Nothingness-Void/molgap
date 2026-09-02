@@ -13,6 +13,7 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-PCQM100K-RING-GRAPHSTATE-S42 | Server compares fresh GraphState9 with one Ring-GraphState addition on T4x2 | Candidate strictly wins and becomes confirmation-eligible, or the exact route closes |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -21,8 +22,9 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 The GraphState three-seed gate passed; its frozen decision and desktop handoff
 are under
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/`.
-The ring-hierarchy cache is accepted, but its GPU successor remains deferred
-because architecture discovery stopped at the desktop handoff boundary.
+The accepted ring-hierarchy cache now feeds one server-side Ring-GraphState
+seed-42 comparison. This does not revoke the frozen GraphState desktop handoff
+or authorize a second full-data model.
 
 ## Mandatory gates
 
