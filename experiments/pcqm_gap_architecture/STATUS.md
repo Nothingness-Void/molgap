@@ -121,6 +121,9 @@
   `results/contact_state_seed42/cpu_v2_failure_diagnosis.md`. An
   implementation-only path-locator repair is authorized under the unchanged
   CPU contract; no GPU successor is authorized.
+- The repaired CPU cache was submitted once as version 3 and was `RUNNING` at
+  the 2026-09-03 04:43 JST health check. Its immutable launch identity is
+  `results/contact_state_seed42/cpu_v3_launch_manifest.json`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
