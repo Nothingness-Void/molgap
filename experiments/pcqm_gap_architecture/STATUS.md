@@ -39,7 +39,11 @@
   inside the inherited `fork` workers. The implementation-only repair replaces
   `fork` with two fresh Python subprocesses whose CUDA visibility is fixed
   before import. The retained diagnosis is
-  `results/local_global_allocation_seed42/v3_failure_diagnosis.md`.
+  `results/local_global_allocation_seed42/v3_failure_diagnosis.md`. Kaggle1
+  accepted the unchanged-contract repair as version 4 with an explicit
+  `NvidiaTeslaT4` request. Version 4 remained `RUNNING` at the 2026-09-02
+  15:19 JST health check, beyond the prior CUDA failure window; no version-4
+  failure had appeared.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
