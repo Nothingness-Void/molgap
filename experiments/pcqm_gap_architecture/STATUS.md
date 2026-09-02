@@ -15,9 +15,13 @@
   block-3/6/9 sparse-attention challenger, and a no-attention shared-GraphState
   challenger under the same geometry, split, initialization seed and training
   contract. Kaggle1 accepted version 1 as
-  `nothingnessvoid/molgap-pcqm-local-global-allocation-s42`; it was `RUNNING`
-  at the 2026-09-02 14:49 JST launch check. No seed 43/44 or successor is
-  authorized by submission alone.
+  `nothingnessvoid/molgap-pcqm-local-global-allocation-s42`. Version 1 reached
+  terminal `ERROR` after 104.50 seconds, before any candidate or epoch, because
+  the subclass reused the parent `MODES` attribute name and caused the valid
+  `distance_angle` geometry mode to be rejected. This is an implementation-only
+  failure; no scientific result exists. Its evidence is frozen in
+  `results/local_global_allocation_seed42/v1_failure_diagnosis.md`. No seed
+  43/44 or scientific successor is authorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
