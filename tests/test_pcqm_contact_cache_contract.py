@@ -25,7 +25,7 @@ def test_contact_cache_metadata_is_cpu_only_and_private() -> None:
     assert metadata["is_private"] == "true"
     assert metadata["enable_gpu"] == "false"
     assert "kaseichou/molgap-pcqm-contactstate-source" in metadata["dataset_sources"]
-    assert "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset" in metadata["dataset_sources"]
+    assert "kaseichou/molgap-pcqm-geometry-cache-s42-dataset" in metadata["dataset_sources"]
 
 
 def test_contact_cache_contract_is_frozen_in_code_and_protocol() -> None:
