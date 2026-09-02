@@ -78,11 +78,12 @@ Every epoch writes an atomic checkpoint and complete trace. Each completed
 candidate writes a best model, validation payload, metrics, and hashes so a
 terminal task can be accepted without local model inference.
 
-The two workers inherit one read-only graph cache through Linux copy-on-write,
-set disjoint `CUDA_VISIBLE_DEVICES` values before CUDA initialization, use
-independent RNG state, model, optimizer and checkpoint directories, and never
-combine gradients. Parallelism changes wall-clock allocation only; it does not
-change the scientific contract.
+The parent launches two fresh Python processes with disjoint
+`CUDA_VISIBLE_DEVICES` values fixed before either process imports or initializes
+CUDA. Each worker independently reloads the same immutable accepted cache and
+uses independent RNG state, model, optimizer and checkpoint directories; they
+never combine gradients. Parallelism changes wall-clock allocation only; it
+does not change the scientific contract.
 
 ## Decision rule
 
