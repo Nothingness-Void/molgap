@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-pcqm-contactstate-graphstate-s42",
+  "title": "MolGap PCQM ContactState GraphState S42",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-contactstate-gpu-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "kaseichou/molgap-pcqm-contactstate-cache-s42"
+  ],
+  "model_sources": []
+}
