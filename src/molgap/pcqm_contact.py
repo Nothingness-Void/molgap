@@ -151,3 +151,35 @@ def contact_statistics(graphs) -> dict:
         "maximum_directed_edges_per_graph": maximum_directed_edges,
         "atom_type_pairs": dict(sorted(atom_type_pairs.items())),
     }
+
+
+def contact_contract_violations(graph) -> list[str]:
+    """Return mechanical relation violations for a converted graph."""
+    errors: list[str] = []
+    edge_index = graph.contact_edge_index.to(device="cpu")
+    distance = graph.contact_distance.to(device="cpu").view(-1)
+    if edge_index.ndim != 2 or edge_index.shape[0] != 2:
+        return ["contact_edge_index_shape"]
+    if edge_index.shape[1] != distance.numel():
+        errors.append("contact_distance_count")
+        return errors
+    if distance.numel() and (
+        not torch.isfinite(distance).all()
+        or bool((distance <= 0).any())
+        or bool((distance > CONTACT_CUTOFF_ANGSTROM).any())
+    ):
+        errors.append("contact_distance_range")
+    directed = [tuple(map(int, pair)) for pair in edge_index.t().tolist()]
+    if len(directed) != len(set(directed)):
+        errors.append("duplicate_directed_contact")
+    directed_set = set(directed)
+    if any((target, source) not in directed_set for source, target in directed):
+        errors.append("missing_reverse_contact")
+    adjacency = _adjacency(graph.edge_index.to(device="cpu"), int(graph.num_nodes))
+    excluded = [
+        _within_hops(adjacency, source, EXCLUDED_COVALENT_HOPS)
+        for source in range(int(graph.num_nodes))
+    ]
+    if any(target in excluded[source] for source, target in directed):
+        errors.append("excluded_covalent_hop_overlap")
+    return errors

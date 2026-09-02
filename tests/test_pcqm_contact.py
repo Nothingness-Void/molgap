@@ -3,7 +3,11 @@ from __future__ import annotations
 import torch
 from torch_geometric.data import Data
 
-from molgap.pcqm_contact import contact_statistics, with_non_covalent_contacts
+from molgap.pcqm_contact import (
+    contact_contract_violations,
+    contact_statistics,
+    with_non_covalent_contacts,
+)
 
 
 def chain_graph(positions: list[list[float]], *, valid: bool = True) -> Data:
@@ -52,3 +56,4 @@ def test_contact_statistics_do_not_require_targets() -> None:
     assert stats["undirected_pairs"] == 1
     assert stats["directed_edges"] == 2
     assert stats["atom_type_pairs"] == {"5:5": 1}
+    assert contact_contract_violations(graph) == []
