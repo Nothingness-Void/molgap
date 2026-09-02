@@ -13,6 +13,20 @@ PROTOCOL = (
     / "pcqm_gap_architecture"
     / "body_order_moment_seed42_protocol.md"
 )
+WRAPPER = (
+    ROOT
+    / "experiments"
+    / "pcqm_gap_architecture"
+    / "kaggle_pcqm_gap100k"
+    / "body_order_graphstate_seed42"
+    / "run_screen.py"
+)
+ACCEPTANCE = (
+    ROOT
+    / "experiments"
+    / "pcqm_gap_architecture"
+    / "accept_pcqm100k_body_order_graphstate_seed42.py"
+)
 BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 CANDIDATE = "ogb_distance_angle_body_order_triangle_edge_state_graph_state9"
 
@@ -29,8 +43,8 @@ def class_segment(name: str) -> str:
 
 
 def test_body_order_sources_parse() -> None:
-    ast.parse(MODEL.read_text(encoding="utf-8"))
-    ast.parse(RUNNER.read_text(encoding="utf-8"))
+    for path in (MODEL, RUNNER, WRAPPER, ACCEPTANCE):
+        ast.parse(path.read_text(encoding="utf-8"))
 
 
 def test_body_order_is_one_stateless_invariant_injection() -> None:
@@ -111,3 +125,25 @@ def test_body_order_protocol_seals_roles_and_variants() -> None:
         "or schedule variants",
     ):
         assert token in source
+
+
+def test_body_order_remote_package_pins_the_same_contract() -> None:
+    wrapper = WRAPPER.read_text(encoding="utf-8")
+    acceptance = ACCEPTANCE.read_text(encoding="utf-8")
+    for token in (
+        '"body_order_graphstate"',
+        "2ba5c0f8c60081db5247aaaf0282c288bba8ff13",
+        "pcqm_gap100k_body_order_graphstate_seed42",
+    ):
+        assert token in wrapper
+    for token in (
+        CANDIDATE,
+        "3_681_329",
+        "body_order_moment_present",
+        "body_order_injection_zero",
+        "initial_prediction_equal_to_baseline",
+        "body_order_return_gradient_nonzero",
+        '"official_validation_role_read": False',
+        '"test_dev_role_read": False',
+    ):
+        assert token in acceptance
