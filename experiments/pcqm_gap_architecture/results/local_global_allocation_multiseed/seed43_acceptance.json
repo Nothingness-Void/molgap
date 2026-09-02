@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-gap100k-local-global-allocation-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "seed": 43,
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "comparator": "ogb_distance_angle_triangle_edge_state_gps9",
+  "frozen_comparator_validation_gap_mae_eV": 0.1353926807641983,
+  "fresh_comparator_validation_gap_mae_eV": 0.1369333118200302,
+  "candidates": [
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+      "parameter_count": 4891057,
+      "best_epoch": 38,
+      "validation_gap_mae_eV": 0.1369333118200302,
+      "mean_throughput_graphs_per_s": 495.84777229514975
+    },
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+      "parameter_count": 3665809,
+      "best_epoch": 36,
+      "validation_gap_mae_eV": 0.129884272813797,
+      "mean_throughput_graphs_per_s": 572.2127056108233
+    }
+  ],
+  "selected_candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+  "selected_strictly_improves_full_gps": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

@@ -66,6 +66,13 @@
   Its launch identity is
   `results/local_global_allocation_multiseed/seed43_v2_launch_manifest.json`.
   No seed-44 task was submitted.
+- Version 2 later reached `COMPLETE` and passed no-model acceptance. GraphState
+  strictly improved the fresh seed-43 full-GPS control with fewer parameters
+  and higher throughput. The exact decision is
+  `results/local_global_allocation_multiseed/seed43_decision.md`. This passes
+  the conditional gate and authorizes exactly one paired seed-44 T4x2 task;
+  full-data, official-role, desktop, and molecular-research-server work remain
+  unauthorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

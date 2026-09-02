@@ -73,7 +73,8 @@ screen completed. GraphState passed seed 42; its decision is
 [`results/local_global_allocation_seed42/decision.md`](results/local_global_allocation_seed42/decision.md).
 The active paired confirmation is
 [`local_global_allocation_multiseed_protocol.md`](local_global_allocation_multiseed_protocol.md):
-seed 43 runs first, and seed 44 is conditional on a strict paired pass.
+seed 43 passed its strict paired gate, so seed 44 is the active final
+confirmation stage.
 
 QM9 R3-R10 and the historical PubChemQC models are architecture evidence only.
 Their weights, splits, and metrics are not part of this leaderboard screen.

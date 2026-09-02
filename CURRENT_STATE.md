@@ -26,10 +26,10 @@ no-attention shared GraphState beat both the fresh full-GPS control and the
 sparse block-3/6/9 attention schedule while using fewer parameters. Its exact
 evidence is
 `experiments/pcqm_gap_architecture/results/local_global_allocation_seed42/decision.md`.
-The single active question is paired seed-43 reproducibility against a fresh
-full-GPS control under
+Paired seed 43 also passed against a fresh full-GPS control; its decision is
+`experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/seed43_decision.md`.
+The single active question is the final paired seed-44 confirmation under
 `experiments/pcqm_gap_architecture/local_global_allocation_multiseed_protocol.md`.
-Seed 44 is conditional on seed 43 passing.
 
 The deterministic smallest-ring CPU cache completed and passed no-model
 acceptance. Its immutable evidence is

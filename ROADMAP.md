@@ -13,15 +13,15 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM100K-GRAPHSTATE-S43 | Train fresh paired full-GPS and GraphState at seed 43 on T4x2 | GraphState strictly wins and authorizes seed 44, or the route closes |
+| P0 | B-PCQM100K-GRAPHSTATE-S44 | Train fresh paired full-GPS and GraphState at seed 44 on T4x2 | Three-seed gate passes and reaches desktop handoff, or the route closes |
 | P1 | B-PCQM-A100-GATE | Benchmark the frozen winner on official-train graphs | Throughput, epoch time, and memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
 | P3 | B-PCQM-TESTDEV | Produce the final test-dev submission | Explicit user authorization after official validation |
 
 The active experiment owns its detailed status and protocol at
-`experiments/pcqm_gap_architecture/`. Seed 44 is conditional on seed 43 passing
-the paired gate. The ring-hierarchy cache is accepted, but its GPU successor is
+`experiments/pcqm_gap_architecture/`. Seed 43 passed its paired gate and
+authorized seed 44. The ring-hierarchy cache is accepted, but its GPU successor is
 deferred and must not run concurrently with P0.
 
 ## Mandatory gates
