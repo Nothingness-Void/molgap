@@ -33,6 +33,13 @@
   `RUNNING` at the 2026-09-02 15:08 JST launch check. It assigns fresh full-GPS
   to physical GPU 0 and sparse-GPS followed by GraphState to physical GPU 1,
   with process-isolated CUDA visibility, RNG, optimizer and checkpoints.
+  Version 3 reached terminal `ERROR` after 114.28 seconds and zero epochs.
+  Host verification correctly found two Tesla T4 GPUs and CPU initialization
+  acceptance passed for all candidates, but CUDA initialization is unsupported
+  inside the inherited `fork` workers. The implementation-only repair replaces
+  `fork` with two fresh Python subprocesses whose CUDA visibility is fixed
+  before import. The retained diagnosis is
+  `results/local_global_allocation_seed42/v3_failure_diagnosis.md`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
