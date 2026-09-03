@@ -27,6 +27,14 @@ ACCEPTANCE = (
     / "pcqm_gap_architecture"
     / "accept_pcqm100k_body_order_graphstate_seed42.py"
 )
+ACCOUNT1_WRAPPER = (
+    ROOT
+    / "experiments"
+    / "pcqm_gap_architecture"
+    / "kaggle_pcqm_gap100k"
+    / "body_order_graphstate_seed42_account1"
+    / "run_screen.py"
+)
 BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 CANDIDATE = "ogb_distance_angle_body_order_triangle_edge_state_graph_state9"
 
@@ -43,8 +51,14 @@ def class_segment(name: str) -> str:
 
 
 def test_body_order_sources_parse() -> None:
-    for path in (MODEL, RUNNER, WRAPPER, ACCEPTANCE):
+    for path in (MODEL, RUNNER, WRAPPER, ACCOUNT1_WRAPPER, ACCEPTANCE):
         ast.parse(path.read_text(encoding="utf-8"))
+
+
+def test_body_order_account1_retry_pins_repaired_source() -> None:
+    source = ACCOUNT1_WRAPPER.read_text(encoding="utf-8")
+    assert "9625db4237584efc6cafe98432b090370af4c8c8" in source
+    assert '"body_order_graphstate"' in source
 
 
 def test_body_order_is_one_stateless_invariant_injection() -> None:
