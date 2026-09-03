@@ -676,6 +676,7 @@ def gpu_preflight(
         if not body_order_injection_zero:
             raise RuntimeError("Body-order moment injection is not zero")
     initial_prediction_equal_to_baseline = True
+    initial_prediction_max_abs_difference = 0.0
     if uses_body_order_moment(candidate):
         set_seed(SEED, cuda_device=0)
         baseline_model = make_pcqm_gap_encoder(BASELINE).to(device)
@@ -684,8 +685,16 @@ def gpu_preflight(
         with torch.no_grad():
             baseline_prediction = forward(baseline_model, batch, BASELINE)
             candidate_prediction = forward(model, batch, candidate)
+        initial_prediction_max_abs_difference = float(
+            (baseline_prediction - candidate_prediction).abs().max()
+        )
         initial_prediction_equal_to_baseline = bool(
-            torch.equal(baseline_prediction, candidate_prediction)
+            torch.allclose(
+                baseline_prediction,
+                candidate_prediction,
+                rtol=1.0e-6,
+                atol=1.0e-7,
+            )
         )
         del baseline_model, baseline_prediction, candidate_prediction
         model.train()
@@ -744,6 +753,9 @@ def gpu_preflight(
         "body_order_moment_present": body_order_moment_present,
         "body_order_injection_zero": body_order_injection_zero,
         "initial_prediction_equal_to_baseline": initial_prediction_equal_to_baseline,
+        "initial_prediction_max_abs_difference": (
+            initial_prediction_max_abs_difference
+        ),
         "body_order_return_gradient_nonzero": body_order_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),

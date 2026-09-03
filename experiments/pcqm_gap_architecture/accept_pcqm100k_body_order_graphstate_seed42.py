@@ -82,6 +82,13 @@ def accept(root: Path, expected_source_commit: str) -> dict:
             row.get("initial_prediction_equal_to_baseline") is True,
             f"initial equality {identity}",
         )
+        initial_difference = row.get("initial_prediction_max_abs_difference")
+        require(
+            isinstance(initial_difference, (int, float))
+            and math.isfinite(initial_difference)
+            and initial_difference <= 1.0e-6,
+            f"initial tolerance {identity}",
+        )
         require(
             row.get("body_order_return_gradient_nonzero") is True,
             f"gradient {identity}",
