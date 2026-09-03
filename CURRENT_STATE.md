@@ -38,6 +38,8 @@ The non-covalent ContactState screen passed mechanical acceptance but was
 slower and less accurate than its fresh GraphState control, so that mechanism
 is closed. Exact evidence is in
 `experiments/pcqm_gap_architecture/results/contact_state_seed42/decision.md`.
+The body-order candidate remains scientifically unevaluated after two
+preflight-only failures; its repaired retry is blocked by Kaggle2 quota.
 Server discovery proceeds only through the active item in `ROADMAP.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete

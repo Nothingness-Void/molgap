@@ -142,8 +142,11 @@
   task as `kaseichou/molgap-pcqm-body-order-graphstate-s42`. Version 1 failed
   its pre-training bitwise CUDA equality guard; no candidate epoch ran. The
   unchanged-contract numeric-tolerance repair is documented in
-  `results/body_order_moment_seed42/v1_failure_diagnosis.md`; version 2 was
-  `RUNNING` at its launch check.
+  `results/body_order_moment_seed42/v1_failure_diagnosis.md`. Version 2 also
+  failed before a candidate epoch because the CUDA-forward tolerance remained
+  an invalid structural-identity test; its fail-fast repair and exhausted
+  Kaggle2 quota blocker are documented in
+  `results/body_order_moment_seed42/v2_failure_diagnosis.md`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
