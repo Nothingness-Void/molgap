@@ -147,6 +147,11 @@
   an invalid structural-identity test; its fail-fast repair and exhausted
   Kaggle2 quota blocker are documented in
   `results/body_order_moment_seed42/v2_failure_diagnosis.md`.
+- The unchanged-contract repaired comparison was submitted once to Kaggle1 as
+  `nothingnessvoid/molgap-pcqm-body-order-graphstate-s42`, version 1, using the
+  account-local accepted geometry cache and T4x2 candidate parallelism. It was
+  `RUNNING` at the launch check; the immutable identity is in
+  `results/body_order_moment_seed42/account1_v1_launch_manifest.json`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
