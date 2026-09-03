@@ -139,9 +139,11 @@
   or full-data action is authorized.
 - The next isolated question is the compact body-order moment in
   `body_order_moment_seed42_protocol.md`. Kaggle2 accepted one paired T4x2
-  task as `kaseichou/molgap-pcqm-body-order-graphstate-s42`, version 1, and it
-  was `RUNNING` at the launch check. Its identity is
-  `results/body_order_moment_seed42/launch_manifest.json`.
+  task as `kaseichou/molgap-pcqm-body-order-graphstate-s42`. Version 1 failed
+  its pre-training bitwise CUDA equality guard; no candidate epoch ran. The
+  unchanged-contract numeric-tolerance repair is documented in
+  `results/body_order_moment_seed42/v1_failure_diagnosis.md`; version 2 was
+  `RUNNING` at its launch check.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
