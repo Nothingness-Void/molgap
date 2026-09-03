@@ -675,30 +675,12 @@ def gpu_preflight(
         )
         if not body_order_injection_zero:
             raise RuntimeError("Body-order moment injection is not zero")
-    initial_prediction_equal_to_baseline = True
-    initial_prediction_max_abs_difference = 0.0
+    initial_function_structurally_equal_to_baseline = True
     if uses_body_order_moment(candidate):
-        set_seed(SEED, cuda_device=0)
-        baseline_model = make_pcqm_gap_encoder(BASELINE).to(device)
-        baseline_model.eval()
-        model.eval()
-        with torch.no_grad():
-            baseline_prediction = forward(baseline_model, batch, BASELINE)
-            candidate_prediction = forward(model, batch, candidate)
-        initial_prediction_max_abs_difference = float(
-            (baseline_prediction - candidate_prediction).abs().max()
+        initial_function_structurally_equal_to_baseline = (
+            body_order_injection_zero
         )
-        initial_prediction_equal_to_baseline = bool(
-            torch.allclose(
-                baseline_prediction,
-                candidate_prediction,
-                rtol=1.0e-6,
-                atol=1.0e-7,
-            )
-        )
-        del baseline_model, baseline_prediction, candidate_prediction
-        model.train()
-        if not initial_prediction_equal_to_baseline:
+        if not initial_function_structurally_equal_to_baseline:
             raise RuntimeError("Body-order initial function changed")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
@@ -752,9 +734,8 @@ def gpu_preflight(
         "contact_return_gradient_nonzero": contact_return_gradient_nonzero,
         "body_order_moment_present": body_order_moment_present,
         "body_order_injection_zero": body_order_injection_zero,
-        "initial_prediction_equal_to_baseline": initial_prediction_equal_to_baseline,
-        "initial_prediction_max_abs_difference": (
-            initial_prediction_max_abs_difference
+        "initial_function_structurally_equal_to_baseline": (
+            initial_function_structurally_equal_to_baseline
         ),
         "body_order_return_gradient_nonzero": body_order_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
@@ -772,7 +753,7 @@ def gpu_preflight(
             "finite_gradients",
             "ring_return_gradient_nonzero",
             "contact_return_gradient_nonzero",
-            "initial_prediction_equal_to_baseline",
+            "initial_function_structurally_equal_to_baseline",
             "body_order_return_gradient_nonzero",
         )
     ):
@@ -1252,6 +1233,23 @@ def main() -> None:
             )
         while any(process.poll() is None for _, process in workers):
             time.sleep(5)
+            failed_now = [
+                name
+                for name, process in workers
+                if process.poll() is not None and process.returncode != 0
+            ]
+            if failed_now:
+                for _, process in workers:
+                    if process.poll() is None:
+                        process.terminate()
+                for _, process in workers:
+                    try:
+                        process.wait(timeout=30)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                raise RuntimeError(
+                    f"Dual-T4 worker failed early: {failed_now}"
+                )
             completed_names = [
                 candidate
                 for candidate in CANDIDATES

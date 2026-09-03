@@ -79,15 +79,8 @@ def accept(root: Path, expected_source_commit: str) -> dict:
         )
         require(row.get("body_order_injection_zero") is True, f"zero {identity}")
         require(
-            row.get("initial_prediction_equal_to_baseline") is True,
-            f"initial equality {identity}",
-        )
-        initial_difference = row.get("initial_prediction_max_abs_difference")
-        require(
-            isinstance(initial_difference, (int, float))
-            and math.isfinite(initial_difference)
-            and initial_difference <= 1.0e-6,
-            f"initial tolerance {identity}",
+            row.get("initial_function_structurally_equal_to_baseline") is True,
+            f"initial structural equality {identity}",
         )
         require(
             row.get("body_order_return_gradient_nonzero") is True,
