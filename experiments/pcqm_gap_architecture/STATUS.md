@@ -137,6 +137,11 @@
   but ContactState was less accurate and slower than the fresh control. The
   route is closed by `results/contact_state_seed42/decision.md`; no extra seed
   or full-data action is authorized.
+- The next isolated question is the compact body-order moment in
+  `body_order_moment_seed42_protocol.md`. Kaggle2 accepted one paired T4x2
+  task as `kaseichou/molgap-pcqm-body-order-graphstate-s42`, version 1, and it
+  was `RUNNING` at the launch check. Its identity is
+  `results/body_order_moment_seed42/launch_manifest.json`.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log
