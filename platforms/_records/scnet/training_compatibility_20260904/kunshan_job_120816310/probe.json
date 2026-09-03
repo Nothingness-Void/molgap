@@ -1,0 +1,9 @@
+{
+  "format": "molgap-scnet-graphstate-training-probe-v1",
+  "model_execution": "synthetic_only",
+  "official_data_read": false,
+  "passed": false,
+  "error_type": "ModuleNotFoundError",
+  "error": "No module named 'torch_geometric'",
+  "traceback": "Traceback (most recent call last):\n  File \"/public/home/scnaqkfcy3/molgap-results/scnet_probe_20260904/b0419f0/platforms/scnet/probe_graphstate_training.py\", line 126, in main\n    report.update(run())\n  File \"/public/home/scnaqkfcy3/molgap-results/scnet_probe_20260904/b0419f0/platforms/scnet/probe_graphstate_training.py\", line 55, in run\n    import torch_geometric\nModuleNotFoundError: No module named 'torch_geometric'\n"
+}
