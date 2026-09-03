@@ -135,7 +135,7 @@ def test_body_order_remote_package_pins_the_same_contract() -> None:
     acceptance = ACCEPTANCE.read_text(encoding="utf-8")
     for token in (
         '"body_order_graphstate"',
-        "2ba5c0f8c60081db5247aaaf0282c288bba8ff13",
+        "9785022300a54ee4e8f66c378cf6a9c19d2b20e5",
         "pcqm_gap100k_body_order_graphstate_seed42",
     ):
         assert token in wrapper

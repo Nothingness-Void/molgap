@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 
-EXPECTED_SOURCE_COMMIT = "2ba5c0f8c60081db5247aaaf0282c288bba8ff13"
+EXPECTED_SOURCE_COMMIT = "9785022300a54ee4e8f66c378cf6a9c19d2b20e5"
 
 
 def source_python_root() -> Path:
@@ -34,4 +34,3 @@ os.environ["MOLGAP_LOCAL_GLOBAL_OUTPUT"] = (
 os.environ["MOLGAP_EXPECTED_MODEL_SOURCE_COMMIT"] = EXPECTED_SOURCE_COMMIT
 sys.path.insert(0, str(source_python_root()))
 runpy.run_module("molgap.pcqm_local_global_runner", run_name="__main__")
-
