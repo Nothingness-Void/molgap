@@ -1,0 +1,56 @@
+{
+  "format": "molgap-scnet-connectivity-v2",
+  "checked_at": "2026-09-04T00:52:21+09:00",
+  "credential_source": "local_private_handover_only",
+  "credential_copied_to_repository": false,
+  "user_reported_gpu_hours_remaining": 50,
+  "scheduler_exposes_portal_balance": false,
+  "regions": {
+    "a_zone": {
+      "ssh": "passed",
+      "slurm_commands_visible": true,
+      "active_jobs": 0,
+      "visible_partitions": 0,
+      "association_visible": true,
+      "compute_status": "unavailable_no_visible_partition"
+    },
+    "kunshan": {
+      "ssh": "passed",
+      "active_jobs": 0,
+      "partition": "kshdtest",
+      "visible_dcu_nodes": 79,
+      "devices_per_node": 4,
+      "slurm_test_only": "passed",
+      "test_only_identifier": "120814773",
+      "test_only_identifier_present_after_check": false,
+      "compiler_dtk_25_04_visible": true,
+      "sghpcdas_25_6_visible": false,
+      "filesystem_available": "17P",
+      "compute_status": "scheduler_accepts_dcu_request_runtime_not_executed"
+    },
+    "xian": {
+      "ssh": "passed",
+      "active_jobs": 0,
+      "partition": "xahdtest",
+      "visible_dcu_nodes": 21,
+      "devices_per_node": 4,
+      "slurm_test_only": "passed",
+      "test_only_identifier": "65469750",
+      "test_only_identifier_present_after_check": false,
+      "compiler_dtk_25_04_visible": true,
+      "sghpcdas_25_6_visible": false,
+      "filesystem_available": "18P",
+      "prior_runtime_probe": {
+        "record": "connectivity_20260824.json",
+        "state": "COMPLETED",
+        "torch": "1.10.0a0+git2040069-dtk2210",
+        "dcu_available": true
+      },
+      "compute_status": "scheduler_accepts_dcu_request_prior_runtime_confirmed"
+    }
+  },
+  "model_execution": false,
+  "jobs_created": false,
+  "gpu_hours_consumed_by_check": 0,
+  "conclusion": "SCNet connectivity and DCU scheduling are usable in Kunshan and Xi'an. Existing A-zone Slurm templates cannot run unchanged because sghpcdas/25.6 is unavailable in both visible DCU regions; a region-specific environment adapter and bounded runtime smoke are required before model training."
+}
