@@ -14,8 +14,11 @@ set -euo pipefail
 : "${PROBE_OUTPUT:?Set PROBE_OUTPUT to a dedicated JSON path}"
 
 module purge
-module load apps/PyTorch/1.10/dtk-22.04-py37
+module load compiler/dtk/23.10
+module load mpi/openmpi/gcc-9.3.0/4.1.5
 
 export PYTHONPATH="$PROJECT_DIR/src${PYTHONPATH:+:$PYTHONPATH}"
-python "$PROJECT_DIR/platforms/scnet/probe_graphstate_training.py" \
+export PYTHONNOUSERSITE=1
+PYTHON=/public/home/scnaqkfcy3/molgap-envs/graphstate-dtk2310-py310/bin/python
+"$PYTHON" "$PROJECT_DIR/platforms/scnet/probe_graphstate_training.py" \
   --output "$PROBE_OUTPUT"
