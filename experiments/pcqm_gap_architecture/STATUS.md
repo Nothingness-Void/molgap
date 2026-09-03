@@ -152,6 +152,11 @@
   account-local accepted geometry cache and T4x2 candidate parallelism. It was
   `RUNNING` at the launch check; the immutable identity is in
   `results/body_order_moment_seed42/account1_v1_launch_manifest.json`.
+- The Kaggle1 comparison completed and passed frozen no-model acceptance. The
+  body-order candidate was less accurate than its fresh GraphState control, so
+  the exact mechanism is closed by
+  `results/body_order_moment_seed42/decision.md`; no extra seed or downstream
+  action is authorized.
 - Kaggle2 CPU kernel
   `kaseichou/molgap-official-pcqm-gap100k-r1-prep`, version 1, completed with
   a retained acceptance failure because RDKit was absent; its output and log

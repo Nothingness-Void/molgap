@@ -38,9 +38,11 @@ The non-covalent ContactState screen passed mechanical acceptance but was
 slower and less accurate than its fresh GraphState control, so that mechanism
 is closed. Exact evidence is in
 `experiments/pcqm_gap_architecture/results/contact_state_seed42/decision.md`.
-The body-order candidate remains scientifically unevaluated after two
-preflight-only failures; its repaired paired retry is running on Kaggle1.
-Server discovery proceeds only through the active item in `ROADMAP.md`.
+The repaired body-order comparison completed on Kaggle1 and passed mechanical
+acceptance, but its candidate was less accurate than its fresh GraphState
+control. The exact mechanism is closed by
+`experiments/pcqm_gap_architecture/results/body_order_moment_seed42/decision.md`.
+No server-side architecture candidate is active.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

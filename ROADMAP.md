@@ -13,7 +13,6 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM100K-BODYORDER-S42 | Monitor the repaired compact body-order comparison running on Kaggle1 | Candidate strictly wins and becomes budget-review eligible, or the exact route closes |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -22,11 +21,9 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 The GraphState three-seed gate passed; its frozen decision and desktop handoff
 are under
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/`.
-Ring-GraphState and ContactState are closed. The next server question is one
-compact invariant body-order basis; this does not revoke the frozen GraphState
-desktop handoff or authorize a second full-data model. Two preflight-only
-failures produced no candidate epoch; the structurally repaired retry is now
-running on Kaggle1 under the unchanged scientific contract.
+Ring-GraphState, ContactState, and the compact invariant body-order basis are
+closed. None revoked the frozen GraphState desktop handoff or authorized a
+second full-data model. No server-side architecture candidate is active.
 
 ## Mandatory gates
 
@@ -77,7 +74,7 @@ running on Kaggle1 under the unchanged scientific contract.
 | Question | Trigger | Bounded action |
 |---|---|---|
 | Sparse non-covalent ContactState | Closed at seed 42 | Do not retry cutoff, width, depth, seed, or optimizer variants |
-| Compact Cartesian invariant body-order basis | Active after ring/contact failures | Isolate one CACE/CEIT-like invariant basis with `K=16`; no equivariant tensors or new optimizer |
+| Compact Cartesian invariant body-order basis | Closed at seed 42 | Do not retry width, radial count, seed, optimizer, or schedule variants |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
 | Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |
 | Geometry denoising teacher | Architecture is selected and receives a separate budget | Use the literature configuration while official roles remain sealed |
