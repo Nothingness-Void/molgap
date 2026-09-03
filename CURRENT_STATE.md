@@ -68,6 +68,9 @@ records are on `archive` and indexed by
 
 - Accepted PCQM caches and architecture comparisons are retained in their
   experiment records.
+- SCNet Kunshan card1 is runtime-compatible for bounded GraphState jobs via
+  the isolated DTK 23.10/Python 3.10 environment; no dataset job is active.
+  Evidence: `platforms/_records/scnet/training_compatibility_20260904/`.
 - No molecular-research-server run is authorized before the Kaggle selection
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production

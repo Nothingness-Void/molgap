@@ -1,8 +1,8 @@
 {
-  "format": "molgap-scnet-training-compatibility-v1",
-  "checked_at": "2026-09-04T01:12:00+09:00",
-  "source_commit": "b0419f0",
-  "source_archive_sha256": "8c4a0cf65d8f239520f6e125cb68eb0eeb8f289e98d19f591b3c2d239b6e9b9d",
+  "format": "molgap-scnet-training-compatibility-v2",
+  "checked_at": "2026-09-04T01:18:00+09:00",
+  "source_commit": "04d1504",
+  "source_archive_sha256": "897bcdfa4b790086dfc6fee5bd663f9669cc23e06404e22fdc716917b8e8049f",
   "kunshan": {
     "partition": "kshdtest",
     "scheduler_submission_probe": {
@@ -11,7 +11,7 @@
       "exit_code": "0:0",
       "elapsed": "00:00:03"
     },
-    "graphstate_training_probe": {
+    "legacy_runtime_probe": {
       "job_id": 120816310,
       "state": "FAILED",
       "exit_code": "1:0",
@@ -21,6 +21,40 @@
       "failure_stage": "dependency import before model construction",
       "error": "ModuleNotFoundError: No module named 'torch_geometric'",
       "model_steps_completed": 0
+    },
+    "isolated_runtime_probe": {
+      "job_id": 120822635,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:03:30",
+      "node": "e06r4n11",
+      "partition": "kshdtest",
+      "gres": "dcu:Hygon:1",
+      "runtime_module": [
+        "compiler/dtk/23.10",
+        "mpi/openmpi/gcc-9.3.0/4.1.5"
+      ],
+      "python": "3.10.18",
+      "torch": "1.13.1+git7d2dd01.abi0.dtk2310",
+      "torch_geometric": "2.5.3",
+      "hip": "5.4.23392",
+      "device_name": "Device 66a1",
+      "device_count": 1,
+      "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+      "parameter_count": 3665809,
+      "steps": 3,
+      "losses": [
+        0.5156418681144714,
+        0.48144954442977905,
+        0.4641537666320801
+      ],
+      "finite_losses": true,
+      "elapsed_s": 43.64686757326126,
+      "peak_memory_bytes": 58338304,
+      "model_execution": "synthetic_only",
+      "official_data_read": false,
+      "passed": true,
+      "stdout_warning": "DTK torch_scatter kernel launch bounds warning; job completed successfully"
     }
   },
   "wuzhen_or_a_zone": {
@@ -28,8 +62,9 @@
     "visible_partitions": 0,
     "runtime_probe_possible": false
   },
+  "environment_freeze_sha256": "dd4258a6904fe8e9071140cb88c4a0ce7236668912a3dbb37d879f9cb335a960",
   "official_data_read": false,
-  "model_execution": false,
-  "estimated_gpu_hours_consumed": 0.0514,
-  "conclusion": "The visible Kunshan accelerator accepts real DCU jobs, but the available platform PyTorch module does not include PyG, so the current MolGap training stack cannot run unchanged. The hardware is not the blocker; a region-specific Python/PyG/OGB runtime must pass an operator and model smoke before any dataset training."
+  "model_execution": "synthetic_only",
+  "estimated_gpu_hours_consumed": 0.1097,
+  "conclusion": "Kunshan card1 is usable for the current MolGap GraphState stack through an isolated Python 3.10 DTK2310 runtime with official PyG extensions. The old DTK2204 Python37 module was an environment-only failure; no dataset training was run. A full-data job still requires an accepted graph cache and a separate throughput/memory gate."
 }

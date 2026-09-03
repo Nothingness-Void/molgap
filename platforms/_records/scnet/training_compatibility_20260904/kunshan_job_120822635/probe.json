@@ -1,0 +1,25 @@
+{
+  "format": "molgap-scnet-graphstate-training-probe-v1",
+  "model_execution": "synthetic_only",
+  "official_data_read": false,
+  "python": "3.10.18",
+  "torch": "1.13.1",
+  "torch_geometric": "2.5.3",
+  "cuda_build": null,
+  "hip_build": "5.4.23392",
+  "accelerator_ready": true,
+  "device_name": "Device 66a1",
+  "device_count": 1,
+  "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+  "parameter_count": 3665809,
+  "steps": 3,
+  "losses": [
+    0.5156418681144714,
+    0.48144954442977905,
+    0.4641537666320801
+  ],
+  "finite_losses": true,
+  "elapsed_s": 43.64686757326126,
+  "peak_memory_bytes": 58338304,
+  "passed": true
+}
