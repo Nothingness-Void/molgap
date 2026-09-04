@@ -1,0 +1,31 @@
+{
+  "format": "molgap-pcqm-kunshan-graphstate-runtime-summary-v1",
+  "job_id": "120869290",
+  "terminal_state": "COMPLETED",
+  "accepted": true,
+  "node": "e06r4n13",
+  "partition": "kshdtest",
+  "gres": "dcu:Hygon:1",
+  "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+  "model_source_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "parameter_count": 3665809,
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "epochs": 3,
+  "best_epoch": 3,
+  "best_validation_mae_eV": 0.2967550099372864,
+  "epoch_seconds": [473.20803915709257, 337.3211283534765, 334.98777052015066],
+  "train_graphs_per_second": [215.31476101357893, 303.7530040824601, 305.9681022334656],
+  "peak_memory_bytes": 284145664,
+  "peak_memory_mib": 271.27,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "checkpoint_sha256": {
+    "best_model.pt": "bc3c6ff5cae55920f4be7038c0ca178ab1a36e1ba5ddcc8a90f32df2fcd3e31a",
+    "last_checkpoint.pt": "705c88e2e1b25567447815475fc7057c6eeb19ab3f8dec74d561173ea6123538"
+  },
+  "nonfatal_runtime_warning": "DTK scatter kernel launch bounds warning",
+  "budget_interpretation": "Kunshan compatibility passed; this DCU measurement is not an A100 budget measurement and does not authorize full-data training."
+}

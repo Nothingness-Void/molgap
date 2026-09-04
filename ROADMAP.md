@@ -13,7 +13,7 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM-A100-GATE | SCNet Kunshan or desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
+| P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
 | P3 | B-PCQM-TESTDEV | Produce the final test-dev submission | Explicit user authorization after official validation |
@@ -21,6 +21,8 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 The GraphState three-seed gate passed; its frozen decision and desktop handoff
 are under
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/`.
+The supplemental single-DCU Kunshan runtime gate completed with mechanical
+acceptance, but it does not close the A100 budget gate.
 Ring-GraphState, ContactState, and the compact invariant body-order basis are
 closed. None revoked the frozen GraphState desktop handoff or authorized a
 second full-data model. No server-side architecture candidate is active.
