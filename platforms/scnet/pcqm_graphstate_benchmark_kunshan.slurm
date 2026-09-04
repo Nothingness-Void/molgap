@@ -4,7 +4,7 @@
 #SBATCH --gres=dcu:Hygon:1
 #SBATCH --time=08:00:00
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=80G
+#SBATCH --mem=50G
 
 set -euo pipefail
 : "${ROOT:?submit with ROOT}"
