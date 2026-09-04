@@ -3,8 +3,8 @@
 #SBATCH --partition=kshdtest
 #SBATCH --gres=dcu:Hygon:1
 #SBATCH --time=08:00:00
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=50G
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=27G
 
 set -euo pipefail
 : "${ROOT:?submit with ROOT}"
