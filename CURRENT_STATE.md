@@ -26,9 +26,10 @@ seeds 42, 43, and 44 while using fewer parameters and higher throughput. The
 three-seed gate passed, and architecture discovery has stopped at the desktop
 handoff boundary. The frozen winner and complete arithmetic are in
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/decision.md`.
-The active question is now the separate A100 timing and memory gate described
-in that directory's `desktop_handoff.md`; no full-data or official-role action
-is authorized before it passes.
+The active question is now the separate timing and memory gate described in
+that directory's `desktop_handoff.md`; the authorized single-DCU Kunshan
+runtime gate is the first remote measurement, and no full-data or official-role
+action is authorized before it passes.
 
 The bounded Ring-GraphState comparison completed and closed: its tiny seed-42
 gain did not justify a 15.1% throughput loss or extra seeds, and its candidate
@@ -69,8 +70,13 @@ records are on `archive` and indexed by
 - Accepted PCQM caches and architecture comparisons are retained in their
   experiment records.
 - SCNet Kunshan card1 is runtime-compatible for bounded GraphState jobs via
-  the isolated DTK 23.10/Python 3.10 environment; no dataset job is active.
-  Evidence: `platforms/_records/scnet/training_compatibility_20260904/`.
+  the isolated DTK 23.10/Python 3.10 environment. The single-DCU GraphState
+  runtime gate `120869290` is running against the accepted 100K/10K geometry
+  cache; its protocol and launch record are
+  `experiments/pcqm_gap_architecture/kunshan_graphstate_runtime_protocol.md`
+  and `experiments/pcqm_gap_architecture/results/kunshan_graphstate_runtime_gate/`.
+  Evidence for the earlier synthetic compatibility probe remains at
+  `platforms/_records/scnet/training_compatibility_20260904/`.
 - No molecular-research-server run is authorized before the Kaggle selection
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production
