@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=molgap-xian-scatter-build
 #SBATCH --partition=xahdtest
+#SBATCH --gres=dcu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=16G
 #SBATCH --time=00:30:00
@@ -139,8 +140,20 @@ if old not in text:
     raise SystemExit("expected torch-scatter half atomic guard was not found")
 path.write_text(text.replace(old, new, 1), encoding="utf-8")
 PY
+"$PYTHON" - "$SCATTER_SOURCE/csrc/cuda/scatter_cuda.cu" <<'PY'
+from pathlib import Path
+import sys
 
-WHEEL_DIR="$ROOT/wheels"
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "#define THREADS 1024"
+new = "#define THREADS 256"
+if old not in text:
+    raise SystemExit("expected torch-scatter launch-width definition was not found")
+path.write_text(text.replace(old, new, 1), encoding="utf-8")
+PY
+
+WHEEL_DIR="$ROOT/wheels-threads256"
 mkdir -p "$WHEEL_DIR"
 "$PYTHON" -m pip wheel \
   --no-deps \
