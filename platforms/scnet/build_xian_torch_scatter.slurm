@@ -87,6 +87,24 @@ if old not in text:
     raise SystemExit("expected torch-scatter compiler flag line was not found")
 path.write_text(text.replace(old, new, 1), encoding="utf-8")
 PY
+"$PYTHON" - "$SCATTER_SOURCE/csrc/cuda/utils.cuh" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+replacements = {
+    "return __shfl_up_sync(mask, (__half)var, delta);":
+        "return at::Half(__shfl_up((float)var, delta));",
+    "return __shfl_down_sync(mask, (__half)var, delta);":
+        "return at::Half(__shfl_down((float)var, delta));",
+}
+for old, new in replacements.items():
+    if old not in text:
+        raise SystemExit(f"expected torch-scatter half shuffle line was not found: {old}")
+    text = text.replace(old, new, 1)
+path.write_text(text, encoding="utf-8")
+PY
 
 "$PYTHON" -m pip install \
   --no-deps \
