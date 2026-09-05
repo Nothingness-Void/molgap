@@ -289,17 +289,16 @@ def run(output: Path) -> dict:
     def symmetry_check():
         rotation = torch.tensor(
             [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]],
-            device=device,
         )
-        reflection = torch.diag(torch.tensor([-1.0, 1.0, 1.0], device=device))
-        translation = torch.tensor([2.0, -3.0, 1.5], device=device)
+        reflection = torch.diag(torch.tensor([-1.0, 1.0, 1.0]))
+        translation = torch.tensor([2.0, -3.0, 1.5])
         outputs = {}
         for name, matrix, shift in (
-            ("rotation", rotation, torch.zeros(3, device=device)),
-            ("reflection", reflection, torch.zeros(3, device=device)),
-            ("translation", torch.eye(3, device=device), translation),
+            ("rotation", rotation, torch.zeros(3)),
+            ("reflection", reflection, torch.zeros(3)),
+            ("translation", torch.eye(3), translation),
         ):
-            transformed = make_batch([transform_graph(graph, matrix, shift.cpu())])
+            transformed = make_batch([transform_graph(graph, matrix, shift)])
             outputs[name] = candidate(*candidate_args(transformed))
             torch.testing.assert_close(
                 randomized_prediction,
