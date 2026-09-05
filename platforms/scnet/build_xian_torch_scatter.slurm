@@ -105,6 +105,18 @@ for old, new in replacements.items():
     text = text.replace(old, new, 1)
 path.write_text(text, encoding="utf-8")
 PY
+"$PYTHON" - "$SCATTER_SOURCE/csrc/cuda/atomics.cuh" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "#if defined(__CUDA_ARCH__) && (__CUDA_ARCH__ < 700 || CUDA_VERSION < 10000)"
+new = "#if defined(__HIP_PLATFORM_HCC__) || (defined(__CUDA_ARCH__) && (__CUDA_ARCH__ < 700 || CUDA_VERSION < 10000))"
+if old not in text:
+    raise SystemExit("expected torch-scatter half atomic guard was not found")
+path.write_text(text.replace(old, new, 1), encoding="utf-8")
+PY
 
 "$PYTHON" -m pip install \
   --no-deps \
