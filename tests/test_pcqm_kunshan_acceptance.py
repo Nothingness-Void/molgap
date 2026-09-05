@@ -118,6 +118,9 @@ class AcceptanceTests(unittest.TestCase):
             self.assertIn(f'rng["{key}"]', source)
         self.assertIn('scheduler = torch.optim.lr_scheduler.CosineAnnealingLR', source)
         self.assertIn('normalized_target = (batch.y.view(-1, 1) - mean_tensor) / std_tensor', source)
+        self.assertIn("graph.row_id = graph.row_index.clone()", source)
+        self.assertIn("row_indices.append(batch.row_id.view(-1).cpu())", source)
+        self.assertNotIn("row_indices.append(batch.row_index.view(-1).cpu())", source)
 
 
 if __name__ == "__main__":

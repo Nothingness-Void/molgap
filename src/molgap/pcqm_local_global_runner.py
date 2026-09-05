@@ -422,6 +422,12 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
         )
         if len(payload) != int(shard["graph_count"]):
             raise RuntimeError(f"Input graph count changed: {shard['file']}")
+        for graph in payload:
+            # PyG increments attributes whose names contain "index" while
+            # batching. Preserve the dataset identity under a non-index name
+            # so validation provenance remains exact without affecting model
+            # inputs or training behavior.
+            graph.row_id = graph.row_index.clone()
         graphs[shard["role"]].extend(payload)
     if len(graphs["train"]) != 100_000 or len(graphs["validation"]) != 10_000:
         raise RuntimeError("Loaded geometry role counts changed")
@@ -784,7 +790,7 @@ def evaluate(model, loader, target_mean, target_std, device, candidate: str) -> 
             prediction = forward(model, batch, candidate) * target_std + target_mean
             predictions.append(prediction.cpu())
             targets.append(batch.y.view(-1, 1).cpu())
-            row_indices.append(batch.row_index.view(-1).cpu())
+            row_indices.append(batch.row_id.view(-1).cpu())
     prediction = torch.cat(predictions)
     target = torch.cat(targets)
     row_index = torch.cat(row_indices)
