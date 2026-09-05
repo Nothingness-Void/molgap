@@ -128,12 +128,21 @@ if old not in text:
 path.write_text(text.replace(old, new, 1), encoding="utf-8")
 PY
 
-"$PYTHON" -m pip install \
+WHEEL_DIR="$ROOT/wheels"
+mkdir -p "$WHEEL_DIR"
+"$PYTHON" -m pip wheel \
   --no-deps \
   --no-build-isolation \
-  --target "$TARGET_SITE" \
   --no-cache-dir \
+  --wheel-dir "$WHEEL_DIR" \
   "$SCATTER_SOURCE"
+SCATTER_WHEEL="$(find "$WHEEL_DIR" -maxdepth 1 -type f -name 'torch_scatter-2.0.9-*.whl' -print | sort | tail -n 1)"
+test -n "$SCATTER_WHEEL"
+"$PYTHON" -m pip install \
+  --no-deps \
+  --target "$TARGET_SITE" \
+  --upgrade \
+  "$SCATTER_WHEEL"
 
 PYTHONPATH="$TARGET_SITE:${PYTHONPATH:-}" "$PYTHON" - <<'PY'
 import json
