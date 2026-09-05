@@ -892,6 +892,8 @@ def train_one(
     std_tensor = torch.tensor(target_std, device=device)
     training_started = time.perf_counter()
     for epoch in range(start_epoch, MAX_EPOCHS):
+        if stale_epochs >= PATIENCE:
+            break
         if time.perf_counter() - task_started >= SEARCH_BUDGET_S:
             raise TimeoutError("Local/global screen budget exhausted during training")
         model.train()
