@@ -29,6 +29,9 @@ export PYTORCH_ROCM_ARCH="${PYTORCH_ROCM_ARCH:-gfx906}"
 # torch-scatter 2.0.9 checks CUDA_HOME only; the vendor HIP build exposes
 # ROCM_HOME instead, so request the CUDA-named extension path explicitly.
 export FORCE_CUDA=1
+# The DTK 22.10 Torch fork omits the upstream compile-time HIP version macro.
+# Its reported HIP runtime is 5.2, whose upstream numeric encoding is 502.
+export CXXFLAGS="${CXXFLAGS:-} -DTORCH_HIP_VERSION=502"
 
 PYTHON=/public/software/apps/DeepLearning/PyTorch/torch110_dtk2210_py39/bin/python
 GFLAGS_PREFIX="$ROOT/gflags-2.1.2-install"
