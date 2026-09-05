@@ -7,10 +7,10 @@
 - Throughput after repair `65730745`: completed.
 - Full cache acceptance `65731424`: accepted.
 - Exact batch-48 run `65731613`: completed and mechanically accepted.
-- Unchanged reproducibility audit `65733502`: submitted.
-- Mechanical monitoring is delegated to the existing persistent Luna Max task
-  through heartbeat `molgap-kunshan-discovery-monitor`; the coordinator owns
-  interpretation.
+- Unchanged reproducibility audit `65733502`: completed and mechanically
+  accepted; terminal evidence was handed to the coordinator by Luna Max.
+- Disposition: Xi'an is qualified for paired exploratory pre-screens, but not
+  for single-run authoritative ranking. See `decision.md`.
 
 No official validation/test-dev role was read. No architecture search or
 full-data training was authorized by these platform checks.

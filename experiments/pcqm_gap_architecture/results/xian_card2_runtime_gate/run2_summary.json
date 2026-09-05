@@ -1,0 +1,54 @@
+{
+  "format": "molgap-pcqm-xian-card2-reproducibility-summary-v1",
+  "date": "2026-09-05",
+  "job_id": "65733502",
+  "terminal_state": "COMPLETED",
+  "accepted": true,
+  "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+  "model_source_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "parameter_count": 3665809,
+  "device": "Z100SM",
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_mae_eV": 0.6160497069263459,
+      "validation_mae_eV": 0.40537471771240235,
+      "train_graphs_per_s": 351.96806427390294
+    },
+    {
+      "epoch": 2,
+      "train_mae_eV": 0.36877635297298433,
+      "validation_mae_eV": 0.3629679290771484,
+      "train_graphs_per_s": 354.5961790252382
+    },
+    {
+      "epoch": 3,
+      "train_mae_eV": 0.31577078746795656,
+      "validation_mae_eV": 0.32515532512664796,
+      "train_graphs_per_s": 336.9473731097985
+    }
+  ],
+  "best_epoch": 3,
+  "best_validation_mae_eV": 0.32515532512664796,
+  "mean_train_graphs_per_s": 347.8372054696465,
+  "peak_memory_bytes": 277342720,
+  "repeat_comparison": {
+    "run1_best_validation_mae_eV": 0.34658553628921507,
+    "absolute_best_validation_difference_eV": 0.021430211162567103,
+    "absolute_epoch3_validation_difference_eV": 0.1172343035697937,
+    "run1_mean_train_graphs_per_s": 322.172632394238,
+    "two_run_mean_train_graphs_per_s": 335.00491893194226
+  },
+  "checkpoint_sha256": {
+    "best_model.pt": "58b0be586db04a066fb3364fb95eec7d8e364418df12d66df015fa0522e436d8",
+    "last_checkpoint.pt": "0071b8a24a7fb4f1463fec4350affe4c3459ed7b63f9b7f94e776764cea735f2"
+  },
+  "accelerator_hours_consumed_through_repeat": 1.5788888888888888,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
+
