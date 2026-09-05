@@ -17,9 +17,10 @@ module load Pytorch/1.10.0-hpcx-gcc-7.3.1
 export PYTHONNOUSERSITE=1
 export PYTHONHASHSEED=42
 PLATFORM_PYTHONPATH="${PYTHONPATH:-}"
-export PYTHONPATH="$CODE/src:$PLATFORM_PYTHONPATH"
+EXTRA_SITE=/work/home/acf9jvb3sm/molgap-envs/xian-card2-torch110-pyg24/lib/python3.9/site-packages
+export PYTHONPATH="$CODE/src:$EXTRA_SITE:$PLATFORM_PYTHONPATH"
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
-PYTHON=/work/home/acf9jvb3sm/molgap-envs/xian-card2-torch110-pyg24/bin/python
+PYTHON=/public/software/apps/DeepLearning/PyTorch/torch110_dtk2210_py39/bin/python
 "$PYTHON" "$CODE/tests/remote_pcqm_vector_state.py" \
   --output "$ROOT/model_preflight.json"
