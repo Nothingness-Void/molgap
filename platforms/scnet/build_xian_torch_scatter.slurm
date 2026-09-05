@@ -70,12 +70,30 @@ fi
 export CPLUS_INCLUDE_PATH="$GLOG_PREFIX/include:$GFLAGS_PREFIX/include:${CPLUS_INCLUDE_PATH:-}"
 export LIBRARY_PATH="$GLOG_PREFIX/lib:$GFLAGS_PREFIX/lib:${LIBRARY_PATH:-}"
 export LD_LIBRARY_PATH="$GLOG_PREFIX/lib:$GFLAGS_PREFIX/lib:${LD_LIBRARY_PATH:-}"
+
+SCATTER_BUILD="$ROOT/torch-scatter-build-${SLURM_JOB_ID}"
+mkdir -p "$SCATTER_BUILD"
+tar -xzf "$SOURCE_TARBALL" -C "$SCATTER_BUILD"
+SCATTER_SOURCE="$SCATTER_BUILD/torch_scatter-2.0.9"
+"$PYTHON" - "$SCATTER_SOURCE/setup.py" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "nvcc_flags += ['--expt-relaxed-constexpr', '-O2']"
+new = "nvcc_flags += ([] if torch.version.hip else ['--expt-relaxed-constexpr']) + ['-O2']"
+if old not in text:
+    raise SystemExit("expected torch-scatter compiler flag line was not found")
+path.write_text(text.replace(old, new, 1), encoding="utf-8")
+PY
+
 "$PYTHON" -m pip install \
   --no-deps \
   --no-build-isolation \
   --target "$TARGET_SITE" \
   --no-cache-dir \
-  "$SOURCE_TARBALL"
+  "$SCATTER_SOURCE"
 
 PYTHONPATH="$TARGET_SITE:${PYTHONPATH:-}" "$PYTHON" - <<'PY'
 import json
