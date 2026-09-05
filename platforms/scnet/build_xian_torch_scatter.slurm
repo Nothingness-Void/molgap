@@ -11,7 +11,8 @@ set -euo pipefail
 : "${TARGET_SITE:?}"
 : "${SOURCE_TARBALL:?}"
 : "${GFLAGS_TARBALL:?}"
-for path in "$ROOT" "$TARGET_SITE" "$SOURCE_TARBALL" "$GFLAGS_TARBALL"; do
+: "${GLOG_TARBALL:?}"
+for path in "$ROOT" "$TARGET_SITE" "$SOURCE_TARBALL" "$GFLAGS_TARBALL" "$GLOG_TARBALL"; do
   case "$(realpath "$path")" in
     /work/home/acf9jvb3sm/*) ;;
     *) exit 2 ;;
@@ -45,9 +46,23 @@ if [[ ! -f "$GFLAGS_PREFIX/include/gflags/gflags.h" ]]; then
   cd "$ROOT"
 fi
 
-export CPLUS_INCLUDE_PATH="$GFLAGS_PREFIX/include:${CPLUS_INCLUDE_PATH:-}"
-export LIBRARY_PATH="$GFLAGS_PREFIX/lib:${LIBRARY_PATH:-}"
-export LD_LIBRARY_PATH="$GFLAGS_PREFIX/lib:${LD_LIBRARY_PATH:-}"
+GLOG_PREFIX="$ROOT/glog-0.3.5-install"
+if [[ ! -f "$GLOG_PREFIX/include/glog/stl_logging.h" ]]; then
+  GLOG_BUILD="$ROOT/glog-build-${SLURM_JOB_ID}"
+  mkdir -p "$GLOG_BUILD"
+  tar -xzf "$GLOG_TARBALL" -C "$GLOG_BUILD"
+  cd "$GLOG_BUILD/glog-0.3.5"
+  CPPFLAGS="-I$GFLAGS_PREFIX/include" \
+  LDFLAGS="-L$GFLAGS_PREFIX/lib" \
+    ./configure --prefix="$GLOG_PREFIX" --with-gflags="$GFLAGS_PREFIX"
+  make -j "${SLURM_CPUS_PER_TASK:-8}"
+  make install
+  cd "$ROOT"
+fi
+
+export CPLUS_INCLUDE_PATH="$GLOG_PREFIX/include:$GFLAGS_PREFIX/include:${CPLUS_INCLUDE_PATH:-}"
+export LIBRARY_PATH="$GLOG_PREFIX/lib:$GFLAGS_PREFIX/lib:${LIBRARY_PATH:-}"
+export LD_LIBRARY_PATH="$GLOG_PREFIX/lib:$GFLAGS_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 "$PYTHON" -m pip install \
   --no-deps \
   --no-build-isolation \
