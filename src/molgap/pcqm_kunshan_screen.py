@@ -23,14 +23,21 @@ CONTRACT = {
 }
 
 
-def configure(trainer, output: Path, source_commit: str, parameter_counts: dict):
+def configure(
+    trainer,
+    output: Path,
+    source_commit: str,
+    parameter_counts: dict,
+    candidates=CANDIDATES,
+    candidate=CANDIDATE,
+):
     trainer.OUT = output
     trainer.SEED = 42
     trainer.EXPECTED_MODEL_SOURCE_COMMIT = source_commit
-    trainer.CANDIDATES = CANDIDATES
+    trainer.CANDIDATES = candidates
     trainer.BASELINE = BASELINE
     trainer.EXPECTED_PARAMETER_COUNTS.update(parameter_counts)
-    trainer.EXPECTED_GLOBAL_BLOCKS[CANDIDATE] = ()
+    trainer.EXPECTED_GLOBAL_BLOCKS[candidate] = ()
     trainer.PARAMETER_BUDGET = 4_000_000
     trainer.SEARCH_BUDGET_S = 41_400
     trainer.PIN_MEMORY = False
@@ -75,9 +82,47 @@ def run(args) -> None:
     os.environ["MOLGAP_LOCAL_GLOBAL_SEED"] = "42"
     from molgap import pcqm_local_global_runner as trainer
     from molgap.pcqm_gap_architecture import make_pcqm_gap_encoder
-    from molgap.pcqm_vector_state import make_vector_state_encoder
     import torch
     import torch_geometric
+
+    if args.screen == "vector":
+        from molgap.pcqm_vector_state import make_vector_state_encoder
+
+        candidate = CANDIDATE
+        candidates = CANDIDATES
+        expected_counts = {BASELINE: 3_665_809, candidate: 3_696_209}
+        format_name = "molgap-kunshan-vector-screen-v1"
+        candidate_factory = make_vector_state_encoder
+        baseline_delta = {"vector_state": "none"}
+        candidate_delta = {
+            "vector_state": "persistent_polar_order1_channels16",
+            "vector_update_blocks": [2, 4, 6, 8],
+            "relation": "directed_real_bond_displacement",
+            "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
+        }
+    else:
+        from molgap.pcqm_moment_readout import (
+            CANDIDATE_ID,
+            MOMENT_PARAMETER_COUNT,
+            make_moment_readout_encoder,
+        )
+
+        candidate = CANDIDATE_ID
+        candidates = (BASELINE, candidate)
+        expected_counts = {
+            BASELINE: 3_665_809,
+            candidate: MOMENT_PARAMETER_COUNT,
+        }
+        format_name = "molgap-kunshan-moment-readout-screen-v1"
+        candidate_factory = make_moment_readout_encoder
+        baseline_delta = {"moment_readout": "mean_only"}
+        candidate_delta = {
+            "moment_readout": (
+                "mean_plus_nonlinear_projected_first_centered_second"
+            ),
+            "moment_channels": 32,
+            "return": "linear64x192_bias_free_zero_init",
+        }
 
     output = args.output_root
     output.mkdir(parents=True, exist_ok=True)
@@ -89,9 +134,16 @@ def run(args) -> None:
     if preflight.get("accepted") is not True:
         raise RuntimeError("Remote model/symmetry preflight failed")
     counts = preflight["parameter_counts"]
-    if counts != {BASELINE: 3_665_809, CANDIDATE: 3_696_209}:
+    if counts != expected_counts:
         raise RuntimeError("Unexpected model parameter counts")
-    configure(trainer, output, args.source_commit, counts)
+    configure(
+        trainer,
+        output,
+        args.source_commit,
+        counts,
+        candidates=candidates,
+        candidate=candidate,
+    )
     torch.set_num_threads(1)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("Exactly one visible DCU is required")
@@ -100,8 +152,8 @@ def run(args) -> None:
     started = time.perf_counter()
     trainer.atomic_json(output / "preflight.json", preflight)
     manifest = {
-        "format": "molgap-kunshan-vector-screen-v1",
-        "source_commit": args.source_commit, "candidates": list(CANDIDATES),
+        "format": format_name,
+        "source_commit": args.source_commit, "candidates": list(candidates),
         "contract": CONTRACT, "geometry_cache_aggregate_sha256": CACHE_SHA,
         "preflight_sha256": trainer.sha256_file(output / "preflight.json"),
         "platform": "SCNet Kunshan", "job_id": os.environ.get("SLURM_JOB_ID"),
@@ -128,11 +180,11 @@ def run(args) -> None:
         trainer.atomic_json(output / "progress.json", {**manifest, "state": "CACHE_VERIFIED", "complete": False})
 
         def factory(candidate):
-            return (make_vector_state_encoder() if candidate == CANDIDATE
+            return (candidate_factory() if candidate == candidates[1]
                     else make_pcqm_gap_encoder(candidate))
 
-        for candidate in CANDIDATES:
-            metrics_path = output / "results" / candidate / "metrics.json"
+        for candidate_name in candidates:
+            metrics_path = output / "results" / candidate_name / "metrics.json"
             if metrics_path.exists():
                 metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
                 if metrics.get("source_commit") != args.source_commit or not metrics.get("complete"):
@@ -142,22 +194,15 @@ def run(args) -> None:
                     trainer.atomic_json(metrics_path, metrics)
                 runs.append(metrics)
                 continue
-            trainer.atomic_json(output / "progress.json", {**manifest, "state": "TRAINING", "candidate": candidate, "completed_candidates": [r["candidate"] for r in runs], "complete": False})
+            trainer.atomic_json(output / "progress.json", {**manifest, "state": "TRAINING", "candidate": candidate_name, "completed_candidates": [r["candidate"] for r in runs], "complete": False})
             torch.cuda.reset_peak_memory_stats(0)
-            metrics = trainer.train_one(graphs, candidate, started, 0, model_factory=factory)
+            metrics = trainer.train_one(graphs, candidate_name, started, 0, model_factory=factory)
             metrics["peak_memory_allocated_bytes"] = torch.cuda.max_memory_allocated(0)
             metrics["peak_memory_reserved_bytes"] = torch.cuda.max_memory_reserved(0)
             metrics["device_total_memory_bytes"] = torch.cuda.get_device_properties(0).total_memory
             metrics["platform_contract"] = CONTRACT
             metrics["architecture_delta"] = (
-                {
-                    "vector_state": "persistent_polar_order1_channels16",
-                    "vector_update_blocks": [2, 4, 6, 8],
-                    "relation": "directed_real_bond_displacement",
-                    "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
-                }
-                if candidate == CANDIDATE
-                else {"vector_state": "none"}
+                candidate_delta if candidate_name == candidate else baseline_delta
             )
             export_csv(trainer, metrics)
             trainer.atomic_json(metrics_path, metrics)
@@ -184,6 +229,9 @@ def main() -> None:
     parser.add_argument("--preflight", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--screen", choices=("vector", "moment_readout"), default="vector"
+    )
     run(parser.parse_args())
 
 
