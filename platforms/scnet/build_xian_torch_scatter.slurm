@@ -87,6 +87,18 @@ if old not in text:
     raise SystemExit("expected torch-scatter compiler flag line was not found")
 path.write_text(text.replace(old, new, 1), encoding="utf-8")
 PY
+"$PYTHON" - "$SCATTER_SOURCE/torch_scatter/__init__.py" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "t_major, t_minor = [int(x) for x in torch.version.cuda.split('.')]"
+new = "t_major, t_minor = [int(x) for x in (torch.version.cuda or torch.version.hip).split('.')[:2]]"
+if old not in text:
+    raise SystemExit("expected torch-scatter CUDA version check was not found")
+path.write_text(text.replace(old, new, 1), encoding="utf-8")
+PY
 "$PYTHON" - "$SCATTER_SOURCE/csrc/cuda/utils.cuh" <<'PY'
 from pathlib import Path
 import sys
