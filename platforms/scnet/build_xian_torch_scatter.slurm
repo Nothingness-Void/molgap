@@ -9,7 +9,8 @@ set -euo pipefail
 
 : "${ROOT:?}"
 : "${TARGET_SITE:?}"
-for path in "$ROOT" "$TARGET_SITE"; do
+: "${SOURCE_TARBALL:?}"
+for path in "$ROOT" "$TARGET_SITE" "$SOURCE_TARBALL"; do
   case "$(realpath "$path")" in
     /work/home/acf9jvb3sm/*) ;;
     *) exit 2 ;;
@@ -30,7 +31,7 @@ PYTHON=/public/software/apps/DeepLearning/PyTorch/torch110_dtk2210_py39/bin/pyth
   --no-build-isolation \
   --target "$TARGET_SITE" \
   --no-cache-dir \
-  torch-scatter==2.0.9
+  "$SOURCE_TARBALL"
 
 PYTHONPATH="$TARGET_SITE:${PYTHONPATH:-}" "$PYTHON" - <<'PY'
 import json
