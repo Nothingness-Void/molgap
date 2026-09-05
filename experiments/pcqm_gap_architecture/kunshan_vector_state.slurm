@@ -24,6 +24,8 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 PYTHON=/public/home/scnaqkfcy3/molgap-envs/graphstate-dtk2310-py310/bin/python
 "$PYTHON" "$CODE/tests/remote_pcqm_vector_state.py" --output "$ROOT/preflight.json"
+resume_args=()
+if [[ "${RESUME:-0}" == "1" ]]; then resume_args=(--resume); fi
 "$PYTHON" -m molgap.pcqm_kunshan_screen \
   --cache-root "$CACHE" --output-root "$ROOT/output" \
-  --preflight "$ROOT/preflight.json" --source-commit "$SOURCE_COMMIT"
+  --preflight "$ROOT/preflight.json" --source-commit "$SOURCE_COMMIT" "${resume_args[@]}"

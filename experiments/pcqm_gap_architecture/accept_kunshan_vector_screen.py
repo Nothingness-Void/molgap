@@ -69,11 +69,27 @@ def accept(root: Path, source: str) -> dict:
         require(metrics.get("input_cache_aggregate_sha256") == CACHE, f"cache {candidate}")
         require(metrics.get("seed") == 42, f"seed {candidate}")
         require(metrics.get("platform_contract") == EXPECTED_CONTRACT, f"contract {candidate}")
+        architecture_delta = metrics.get("architecture_delta")
+        if candidate == BASELINE:
+            require(architecture_delta == {"vector_state": "none"}, "baseline architecture delta")
+        else:
+            require(
+                architecture_delta
+                == {
+                    "vector_state": "persistent_polar_order1_channels16",
+                    "vector_update_blocks": [2, 4, 6, 8],
+                    "relation": "directed_real_bond_displacement",
+                    "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
+                },
+                "vector architecture delta",
+            )
         require(metrics.get("official_validation_role_read") is False and metrics.get("test_dev_role_read") is False, f"sealed roles {candidate}")
         count = metrics.get("parameter_count", 0)
         require(0 < count <= 4_000_000 and count == preflight.get("parameter_counts", {}).get(candidate), f"parameters {candidate}")
         if candidate == BASELINE:
             require(count == 3_665_809, "baseline parameter count")
+        else:
+            require(count == 3_696_209, "vector parameter count")
         artifacts = metrics["artifacts"]
         for key in ("best_model", "checkpoint", "validation_payload", "validation_csv", "trace"):
             path = child(artifacts[key])

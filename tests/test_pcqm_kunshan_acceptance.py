@@ -18,7 +18,7 @@ class AcceptanceTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)
-        self.counts = {ACCEPT.BASELINE: 3665809, ACCEPT.CANDIDATE: 3700000}
+        self.counts = {ACCEPT.BASELINE: 3665809, ACCEPT.CANDIDATE: 3696209}
         self.write(self.root / "preflight.json", {"accepted": True, "parameter_counts": self.counts})
         self.completion = {
             "format": "molgap-kunshan-vector-screen-v1", "complete": True,
@@ -51,7 +51,17 @@ class AcceptanceTests(unittest.TestCase):
             self.write(path, {"epochs": trace})
             artifacts["trace"] = str(path.relative_to(self.root))
             artifacts["trace_sha256"] = ACCEPT.sha256(path)
-            metrics = {"candidate": candidate, "complete": True, "source_commit": SOURCE, "input_cache_aggregate_sha256": ACCEPT.CACHE, "seed": 42, "platform_contract": ACCEPT.EXPECTED_CONTRACT, "official_validation_role_read": False, "test_dev_role_read": False, "parameter_count": count, "validation_gap_mae_eV": .125, "epochs_completed": 40, "best_epoch": 39, "artifacts": artifacts}
+            architecture_delta = (
+                {"vector_state": "none"}
+                if candidate == ACCEPT.BASELINE
+                else {
+                    "vector_state": "persistent_polar_order1_channels16",
+                    "vector_update_blocks": [2, 4, 6, 8],
+                    "relation": "directed_real_bond_displacement",
+                    "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
+                }
+            )
+            metrics = {"candidate": candidate, "complete": True, "source_commit": SOURCE, "input_cache_aggregate_sha256": ACCEPT.CACHE, "seed": 42, "platform_contract": ACCEPT.EXPECTED_CONTRACT, "architecture_delta": architecture_delta, "official_validation_role_read": False, "test_dev_role_read": False, "parameter_count": count, "validation_gap_mae_eV": .125, "epochs_completed": 40, "best_epoch": 39, "artifacts": artifacts}
             self.write(folder / "metrics.json", metrics)
             self.completion["runs"].append(metrics)
         self.save()

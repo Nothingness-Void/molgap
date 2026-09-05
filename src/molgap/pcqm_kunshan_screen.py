@@ -89,7 +89,7 @@ def run(args) -> None:
     if preflight.get("accepted") is not True:
         raise RuntimeError("Remote model/symmetry preflight failed")
     counts = preflight["parameter_counts"]
-    if counts.get(BASELINE) != 3_665_809 or not 3_665_809 < counts.get(CANDIDATE, 0) <= 4_000_000:
+    if counts != {BASELINE: 3_665_809, CANDIDATE: 3_696_209}:
         raise RuntimeError("Unexpected model parameter counts")
     configure(trainer, output, args.source_commit, counts)
     torch.set_num_threads(1)
@@ -149,6 +149,16 @@ def run(args) -> None:
             metrics["peak_memory_reserved_bytes"] = torch.cuda.max_memory_reserved(0)
             metrics["device_total_memory_bytes"] = torch.cuda.get_device_properties(0).total_memory
             metrics["platform_contract"] = CONTRACT
+            metrics["architecture_delta"] = (
+                {
+                    "vector_state": "persistent_polar_order1_channels16",
+                    "vector_update_blocks": [2, 4, 6, 8],
+                    "relation": "directed_real_bond_displacement",
+                    "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
+                }
+                if candidate == CANDIDATE
+                else {"vector_state": "none"}
+            )
             export_csv(trainer, metrics)
             trainer.atomic_json(metrics_path, metrics)
             runs.append(metrics)
