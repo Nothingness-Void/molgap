@@ -1,5 +1,9 @@
 # PCQM Gap Architecture Screen Status
 
+Live Kunshan discovery is routed to `results/kunshan_vector_state_seed42/STATUS.md`.
+The entries below retain earlier operational history; CURRENT_STATE.md owns
+the current authority boundaries.
+
 - No molecular-research-server access is authorized during architecture
   selection.
 - No official PCQM4Mv2 validation or test-dev row is authorized during the

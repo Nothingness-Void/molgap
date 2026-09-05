@@ -6,13 +6,14 @@
 ## Goal
 
 Select one Gap-only architecture for the official PCQM4Mv2 leaderboard that
-fits a full-data run within 12 A100 hours. Kaggle 100K selection precedes any
+fits a full-data run within 12 A100 hours. Internal 100K selection precedes any
 molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 ## Active queue
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -25,7 +26,12 @@ The supplemental single-DCU Kunshan runtime gate completed with mechanical
 acceptance, but it does not close the A100 budget gate.
 Ring-GraphState, ContactState, and the compact invariant body-order basis are
 closed. None revoked the frozen GraphState desktop handoff or authorized a
-second full-data model. No server-side architecture candidate is active.
+second full-data model. On 2026-09-05 the user authorized further server-side
+experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
+cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
+The first paired screen uses `kunshan_vector_state_protocol.md` in that tree.
+Its completion may release one next planned screen after coordinator review;
+the existing desktop handoff does not stop this newly authorized bounded loop.
 
 ## Mandatory gates
 
@@ -46,7 +52,7 @@ second full-data model. No server-side architecture candidate is active.
 - Do not modify the production registry while Track B is screening.
 - Architecture claims use random initialization; no pretraining, warm start,
   fine-tuning, distillation, residual target, or prediction fusion.
-- Use only the frozen official-train-derived 100K/10K Kaggle split for PCQM
+- Use only the frozen official-train-derived 100K/10K split for PCQM
   architecture selection. Never tune on common/OOD/P8-hard or sealed data.
 - Do not access the molecular-research server until a candidate passes the
   three-seed Kaggle gate; later access is restricted to

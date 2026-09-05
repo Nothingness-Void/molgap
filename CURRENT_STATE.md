@@ -18,16 +18,16 @@
 ## Active objective
 
 Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
-12-hour A100 budget. Selection uses only the official-train-derived Kaggle
+12-hour A100 budget. Selection uses only the official-train-derived
 100K/10K internal split; official validation and test-dev stay sealed.
 
 The no-attention shared GraphState strictly beat fresh full-GPS controls at
 seeds 42, 43, and 44 while using fewer parameters and higher throughput. The
-three-seed gate passed, and architecture discovery has stopped at the desktop
-handoff boundary. The frozen winner and complete arithmetic are in
+three-seed gate passed. It remains the frozen desktop handoff and comparison
+anchor. The winner and complete arithmetic are in
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/decision.md`.
-The active question is now the separate timing and memory gate described in
-that directory's `desktop_handoff.md`. The single-DCU Kunshan runtime gate
+The desktop timing and memory gate is described in that directory's
+`desktop_handoff.md`. The single-DCU Kunshan runtime gate
 completed with mechanical acceptance; it establishes SCNet runtime
 compatibility only and does not substitute for the required A100 measurement.
 No full-data or official-role action is authorized before the A100 gate passes.
@@ -44,7 +44,12 @@ The repaired body-order comparison completed on Kaggle1 and passed mechanical
 acceptance, but its candidate was less accurate than its fresh GraphState
 control. The exact mechanism is closed by
 `experiments/pcqm_gap_architecture/results/body_order_moment_seed42/decision.md`.
-No server-side architecture candidate is active.
+The user reopened bounded server-side discovery on Kunshan on 2026-09-05.
+The first question is persistent order-1 vector propagation against a fresh
+GraphState control under the full matched training contract. Plan and limits:
+`experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
+The paired screen is in preparation; launch state is owned by
+`experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

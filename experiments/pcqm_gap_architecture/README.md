@@ -1,5 +1,12 @@
 # Official PCQM Gap Architecture Screen
 
+The Kunshan discovery extension is routed through
+[`kunshan_discovery_plan.md`](kunshan_discovery_plan.md) and the first
+[`persistent-vector protocol`](kunshan_vector_state_protocol.md).
+Live job evidence is in
+[`results/kunshan_vector_state_seed42/STATUS.md`](results/kunshan_vector_state_seed42/STATUS.md).
+The following records describe prior comparisons; CURRENT_STATE.md owns live truth.
+
 This Track B experiment asks which bounded architecture should be trained for
 the official PCQM4Mv2 leaderboard. It predicts the single official HOMO-LUMO
 Gap target; HOMO and LUMO are not auxiliary targets.
