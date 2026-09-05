@@ -130,6 +130,8 @@ if RUN_MODE in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"
 EXPECTED_GPU_COUNT = 2
 EXPECTED_GPU_TOKEN = "T4"
 LOADER_WORKERS = 0
+PIN_MEMORY = True
+CANDIDATE_EXECUTION = "dual_t4_process_isolation"
 DEVICE_ASSIGNMENTS = (
     {0: (CANDIDATES[0],), 1: (CANDIDATES[1], CANDIDATES[2])}
     if RUN_MODE == "seed42_screen"
@@ -244,9 +246,11 @@ def source_python_root() -> Path:
     return modules[0].parents[1]
 
 
-def find_geometry_cache() -> tuple[Path, dict]:
+def find_geometry_cache(explicit_root: Path | None = None) -> tuple[Path, dict]:
     candidates = []
-    for path in Path("/kaggle/input").rglob("manifest.json"):
+    paths = ([explicit_root / "manifest.json"] if explicit_root is not None
+             else Path("/kaggle/input").rglob("manifest.json"))
+    for path in paths:
         try:
             manifest = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
@@ -498,6 +502,8 @@ def forward(model, batch, candidate: str):
             batch.contact_distance,
         )
     if uses_body_order_moment(candidate):
+        return model(*base, batch.pos)
+    if candidate == "ogb_distance_angle_vector_state_triangle_edge_state_graph_state9":
         return model(*base, batch.pos)
     return model(*base)
 
@@ -795,6 +801,7 @@ def train_one(
     candidate: str,
     task_started: float,
     physical_device_index: int,
+    model_factory=None,
 ) -> dict:
     import torch
     import torch.nn.functional as functional
@@ -822,17 +829,17 @@ def train_one(
         shuffle=True,
         generator=train_generator,
         num_workers=LOADER_WORKERS,
-        pin_memory=True,
+        pin_memory=PIN_MEMORY,
     )
     validation_loader = DataLoader(
         graphs["validation"],
         batch_size=BATCH_SIZE,
         shuffle=False,
         num_workers=LOADER_WORKERS,
-        pin_memory=True,
+        pin_memory=PIN_MEMORY,
     )
     device = torch.device("cuda:0")
-    model = make_pcqm_gap_encoder(candidate).to(device)
+    model = (model_factory or make_pcqm_gap_encoder)(candidate).to(device)
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     if parameter_count != EXPECTED_PARAMETER_COUNTS[candidate]:
         raise RuntimeError(f"{candidate} parameter count changed: {parameter_count}")
@@ -859,6 +866,8 @@ def train_one(
             raise RuntimeError("Local/global checkpoint identity changed")
         if checkpoint.get("input_cache_aggregate_sha256") != expected_input_cache_sha256():
             raise RuntimeError("Local/global checkpoint cache identity changed")
+        if checkpoint.get("source_commit") != EXPECTED_MODEL_SOURCE_COMMIT:
+            raise RuntimeError("Checkpoint source identity changed")
         model.load_state_dict(checkpoint["model"])
         optimizer.load_state_dict(checkpoint["optimizer"])
         scheduler.load_state_dict(checkpoint["scheduler"])
@@ -867,6 +876,17 @@ def train_one(
         best_mae = float(checkpoint["best_mae"])
         stale_epochs = int(checkpoint["stale_epochs"])
         trace = list(checkpoint["trace"])
+        if "rng_state" in checkpoint:
+            rng = checkpoint["rng_state"]
+            import random
+            import numpy as np
+            random.setstate(rng["python"])
+            np.random.set_state(rng["numpy"])
+            torch.set_rng_state(rng["torch_cpu"].cpu())
+            torch.cuda.set_rng_state(rng["torch_device"].cpu(), device)
+            train_generator.set_state(rng["loader"].cpu())
+        elif CANDIDATE_EXECUTION == "single_kunshan_dcu_sequential":
+            raise RuntimeError("Kunshan continuation requires complete RNG state")
 
     mean_tensor = torch.tensor(target_mean, device=device)
     std_tensor = torch.tensor(target_std, device=device)
@@ -884,6 +904,8 @@ def train_one(
             normalized_target = (batch.y.view(-1, 1) - mean_tensor) / std_tensor
             normalized_prediction = forward(model, batch, candidate)
             loss = functional.l1_loss(normalized_prediction, normalized_target)
+            if not torch.isfinite(loss):
+                raise RuntimeError(f"Nonfinite loss: {candidate} epoch {epoch}")
             loss.backward()
             optimizer.step()
             prediction_eV = normalized_prediction.detach() * std_tensor + mean_tensor
@@ -895,6 +917,8 @@ def train_one(
         validation = evaluate(
             model, validation_loader, mean_tensor, std_tensor, device, candidate
         )
+        if not math.isfinite(validation["mae_eV"]):
+            raise RuntimeError(f"Nonfinite validation: {candidate} epoch {epoch}")
         elapsed = time.perf_counter() - epoch_started
         improved = validation["mae_eV"] < best_mae
         if improved:
@@ -928,6 +952,8 @@ def train_one(
         }
         trace.append(row)
         atomic_json(run_dir / "trace.json", {"epochs": trace})
+        import random
+        import numpy as np
         atomic_torch_save(
             checkpoint_path,
             {
@@ -937,6 +963,13 @@ def train_one(
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
                 "scheduler": scheduler.state_dict(),
+                "rng_state": {
+                    "python": random.getstate(),
+                    "numpy": np.random.get_state(),
+                    "torch_cpu": torch.get_rng_state(),
+                    "torch_device": torch.cuda.get_rng_state(device),
+                    "loader": train_generator.get_state(),
+                },
                 "best_epoch": best_epoch,
                 "best_mae": best_mae,
                 "stale_epochs": stale_epochs,
@@ -1006,7 +1039,7 @@ def train_one(
             "patience": PATIENCE,
             "precision": "fp32",
             "loader_workers": LOADER_WORKERS,
-            "candidate_parallelism": "dual_t4_process_isolation",
+            "candidate_parallelism": CANDIDATE_EXECUTION,
             "target": "gap",
             "geometry": "ETKDGv3+MMFF94s-single-conformer-bottom-fusion",
             "global_attention_blocks": list(EXPECTED_GLOBAL_BLOCKS[candidate]),
