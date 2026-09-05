@@ -87,6 +87,12 @@ records are on `archive` and indexed by
   and `experiments/pcqm_gap_architecture/results/kunshan_graphstate_runtime_gate/`.
   Evidence for the earlier synthetic compatibility probe remains at
   `platforms/_records/scnet/training_compatibility_20260904/`.
+- SCNet Xi'an Card2 now has an isolated DTK 22.10/PyG runtime with a
+  device-width-corrected HIP `torch-scatter` build. A 10K train-role probe
+  matched the pinned T4 throughput at batch 96, and the exact batch-48 100K
+  three-epoch gate completed with accepted checkpoints. A same-contract repeat
+  is auditing cross-run stability before this platform may rank architectures;
+  see `experiments/pcqm_gap_architecture/results/xian_card2_runtime_gate/STATUS.md`.
 - No molecular-research-server run is authorized before the Kaggle selection
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production

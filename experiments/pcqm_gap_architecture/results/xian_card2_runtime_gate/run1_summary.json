@@ -1,0 +1,86 @@
+{
+  "format": "molgap-pcqm-xian-card2-runtime-summary-v1",
+  "date": "2026-09-05",
+  "runtime_probe_job": "65707384",
+  "scatter_threads256_build_job": "65729774",
+  "throughput_before_job": "65718803",
+  "throughput_after_job": "65730745",
+  "cache_acceptance_job": "65731424",
+  "full_batch48_job": "65731613",
+  "full_batch48_terminal_state": "COMPLETED",
+  "full_batch48_accepted": true,
+  "device": "Z100SM",
+  "torch": "1.10.0a0+git2040069-dtk2210",
+  "torch_hip": "5.2.22451-8f78d635",
+  "torch_scatter": "2.0.9",
+  "torch_scatter_threads": 256,
+  "torch_scatter_wheel_sha256": "006dc5730b6f75114968b365fc42a99685eae8a275f8c3de1c00d1d996c6937c",
+  "accelerator_hours_consumed_before_repeat": 1.3105555555555555,
+  "accelerator_hour_cap": 10.0,
+  "model_preflight": {
+    "accepted": false,
+    "failed_checks": [
+      "initial_eval_prediction_identity"
+    ],
+    "passed_check_count": 8,
+    "interpretation": "core execution passed; exact cross-forward identity requires a reproducibility audit"
+  },
+  "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+  "model_source_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "parameter_count": 3665809,
+  "cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "precision": "fp32",
+  "seed": 42,
+  "t4_reference_graphs_per_s": 566.5467159302983,
+  "probe_before_threads256_graphs_per_s": {
+    "batch48": 87.82631012945825,
+    "batch96": 112.52230271977021,
+    "batch192": 135.55430950748547
+  },
+  "probe_after_threads256_graphs_per_s": {
+    "batch48": 348.7158198091977,
+    "batch96": 567.1943572332437,
+    "batch192": 733.8916906008822
+  },
+  "speedup_from_threads256": {
+    "batch48": 3.9705165718015656,
+    "batch96": 5.040728313619798,
+    "batch192": 5.414004860984193
+  },
+  "probe_ratio_vs_t4": {
+    "batch48": 0.6155111485141851,
+    "batch96": 1.0011431383939486,
+    "batch192": 1.295377185967436
+  },
+  "full_batch48_epochs": [
+    {
+      "epoch": 1,
+      "train_mae_eV": 0.6281674358844757,
+      "validation_mae_eV": 0.37243118352890014,
+      "train_graphs_per_s": 283.87196467694326
+    },
+    {
+      "epoch": 2,
+      "train_mae_eV": 0.371450379948616,
+      "validation_mae_eV": 0.34658553628921507,
+      "train_graphs_per_s": 330.1856220490894
+    },
+    {
+      "epoch": 3,
+      "train_mae_eV": 0.32597954448223115,
+      "validation_mae_eV": 0.44238962869644166,
+      "train_graphs_per_s": 352.4603104566814
+    }
+  ],
+  "best_epoch": 2,
+  "best_validation_mae_eV": 0.34658553628921507,
+  "peak_memory_bytes": 277342720,
+  "cache_acceptance": true,
+  "checkpoint_sha256": {
+    "best_model.pt": "f4f3478891845abec7b4da962e7c24376a6d4d1185d9c6c84e496b882d1c9a45",
+    "last_checkpoint.pt": "d3b3b560413384138c99aff613abe885459bf42ce86a5e2c2509e5d18116ae04"
+  },
+  "reproducibility_audit_job": "65733502",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
