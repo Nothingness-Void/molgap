@@ -1,0 +1,38 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-terminal-result-v1",
+  "recorded_at": "2026-09-05",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart",
+  "geometry": {
+    "status": "accepted",
+    "shards": 75,
+    "train_rows": 3378606,
+    "valid_rows": 73545,
+    "source_idx_count": 3452151,
+    "valid_geometry": 3442387,
+    "invalid_geometry": 9764,
+    "valid_geometry_fraction": 0.9971716185068382,
+    "mmff_converged": 3101786,
+    "aggregate_sha256": "c744bdc66797d6e9d2ed337a4fbf072d265ab264c8192e0a03e88a8040510112",
+    "row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "acceptance_file_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2"
+  },
+  "gpu_preflight": {
+    "job_id": "1410316.ccpbs1",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "status": "rejected",
+    "reason": "projected_training_exceeds_gate",
+    "projected_training_seconds": 63027,
+    "projected_training_hours": 17.5075,
+    "maximum_training_hours": 12,
+    "log_sha256": "fc4b1fc88c84080ab66ab968c7cec44b37cd5708009d55b3e7ebafd49ff92be8"
+  },
+  "training": {
+    "job_id": "1410317.ccpbs1",
+    "started": false,
+    "blocked_by": "strict_afterok_gpu_preflight_failure",
+    "checkpoint_produced": false,
+    "metrics_produced": false
+  },
+  "official_test_used": false,
+  "production_registry_changed": false
+}

@@ -17,17 +17,17 @@
 
 ## Active objective
 
-Track B is running an official-full warm-start of the accepted Gap-only
-distance/angle Sparse Triangle EdgeState GPS9. The accepted OGB-rich EdgeState
-GPS9 epoch-30 checkpoint initializes the shared backbone; geometry and sparse
-triangle modules remain new. This is training-strategy evidence, not a new
-architecture comparison.
+Track B's official-full geometry warm-start is closed. The eight-epoch successor
+passed A100 preflight and completed seven epochs before patience-based early
+stopping. Its best official-validation Gap MAE was `0.115825 eV`, versus
+`0.099638 eV` for the exact source OGB-rich EdgeState GPS9 checkpoint on the
+same split (`+0.016186 eV`, 16.25% worse). No official test role was read.
 
-IMS CPU smoke `1410207` passed with exact initial-function identity and complete
-backbone mapping. Jobs `1410302` through `1410317` form the replacement strict
-`afterok` chain: 75 resumable geometry shards in ten bounded waves, exhaustive
-acceptance, A100 mapping/timing preflight, and at most 12 training epochs. The
-immutable contract, infrastructure recovery, and job ledgers are under
+The completion manifest, best checkpoint, metrics, and validation predictions
+are hash-consistent. PBS reported a host-memory cgroup excess only after those
+artifacts and the final JSON were written; this is retained as an infrastructure
+warning, not grounds to rerun a scientifically negative result. No IMS job or
+heartbeat remains active. Evidence is under
 `experiments/pcqm_geometry_warmstart/`.
 
 ## Prior architecture evidence

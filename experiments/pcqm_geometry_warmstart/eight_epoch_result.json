@@ -1,0 +1,57 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-eight-epoch-result-v1",
+  "recorded_at": "2026-09-05",
+  "status": "scientifically_rejected",
+  "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "preflight": {
+    "status": "accepted",
+    "job_id": "1443246.ccpbs1",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "mapped_tensor_count": 391,
+    "mapped_parameter_count": 4771073,
+    "new_tensor_count": 172,
+    "initial_function_max_abs_difference": 2.384185791015625e-7,
+    "memory_headroom_fraction": 0.9896274761013107,
+    "projected_training_seconds": 42320.84232170942,
+    "artifact_sha256": "fcebd77022ada61a68c7cdba5c4d30d6268664002a38ce7d32bd9dafdfc6a0fd"
+  },
+  "training": {
+    "job_id": "1443247.ccpbs1",
+    "artifact_status": "complete",
+    "scheduler_terminal_warning": "Cgroup mem limit exceeded after final result output",
+    "epochs_completed": 7,
+    "last_epoch": 6,
+    "stop_reason": "patience_4",
+    "best_epoch": 2,
+    "valid_gap_mae_eV": 0.1158245586232136,
+    "runtime_seconds": 16273.227219565772,
+    "runtime_hours": 4.52034089432383,
+    "epoch_valid_gap_mae_eV": [
+      0.1207301964579258,
+      0.11640791886845941,
+      0.115824499090699,
+      0.1172859953491877,
+      0.11749299506666513,
+      0.1193765276690312,
+      0.11701029632553317
+    ]
+  },
+  "source_comparison": {
+    "checkpoint_sha256": "ca5118128e5d1626901d054fcc152863a2fb40678c1ae914be9ea42db7e447fb",
+    "valid_gap_mae_eV": 0.09963829831009176,
+    "delta_gap_mae_eV": 0.0161862603131218,
+    "relative_regression_percent": 16.2450188207223,
+    "same_official_validation_split": true
+  },
+  "artifacts": {
+    "best_sha256": "0ef621685cb278630f98878c28e6570a959b6b6c4c9ff98ba060151fd84e2936",
+    "last_sha256": "e868a8c28b875abb143eb074dbd1752f4ef391b810037355bb16d9ebf857b7d1",
+    "valid_predictions_sha256": "86f0c056cba4a8d94ebc36b045369c6f4f1969cd3472233d367f2d4692437013",
+    "metrics_sha256": "fb7ce89bee7c55565abf0db24a25c507c77c6b0a582114bcd43cae0838810cd7",
+    "completion_manifest_sha256": "3546b281f440e89ec1ab2d5d6334a1a7d43e519432960386b3b4d5d4f677b032",
+    "mechanical_acceptance": "accepted_with_stale_progress_and_post_completion_cgroup_warning"
+  },
+  "official_test_used": false,
+  "external_data_used": false,
+  "production_registry_changed": false
+}
