@@ -10,7 +10,8 @@ set -euo pipefail
 : "${ROOT:?}"
 : "${TARGET_SITE:?}"
 : "${SOURCE_TARBALL:?}"
-for path in "$ROOT" "$TARGET_SITE" "$SOURCE_TARBALL"; do
+: "${GFLAGS_TARBALL:?}"
+for path in "$ROOT" "$TARGET_SITE" "$SOURCE_TARBALL" "$GFLAGS_TARBALL"; do
   case "$(realpath "$path")" in
     /work/home/acf9jvb3sm/*) ;;
     *) exit 2 ;;
@@ -26,6 +27,27 @@ export MAX_JOBS="${SLURM_CPUS_PER_TASK:-8}"
 export PYTORCH_ROCM_ARCH="${PYTORCH_ROCM_ARCH:-gfx906}"
 
 PYTHON=/public/software/apps/DeepLearning/PyTorch/torch110_dtk2210_py39/bin/python
+GFLAGS_PREFIX="$ROOT/gflags-2.1.2-install"
+if [[ ! -f "$GFLAGS_PREFIX/include/gflags/gflags.h" ]]; then
+  GFLAGS_BUILD="$ROOT/gflags-build-${SLURM_JOB_ID}"
+  mkdir -p "$GFLAGS_BUILD"
+  tar -xzf "$GFLAGS_TARBALL" -C "$GFLAGS_BUILD"
+  mkdir -p "$GFLAGS_BUILD/build"
+  cd "$GFLAGS_BUILD/build"
+  cmake \
+    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_STATIC_LIBS=OFF \
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_INSTALL_PREFIX="$GFLAGS_PREFIX" \
+    ../gflags-2.1.2
+  make -j "${SLURM_CPUS_PER_TASK:-8}"
+  make install
+  cd "$ROOT"
+fi
+
+export CPLUS_INCLUDE_PATH="$GFLAGS_PREFIX/include:${CPLUS_INCLUDE_PATH:-}"
+export LIBRARY_PATH="$GFLAGS_PREFIX/lib:${LIBRARY_PATH:-}"
+export LD_LIBRARY_PATH="$GFLAGS_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 "$PYTHON" -m pip install \
   --no-deps \
   --no-build-isolation \
