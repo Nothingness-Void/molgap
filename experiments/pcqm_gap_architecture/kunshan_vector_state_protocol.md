@@ -6,6 +6,7 @@ Protocol date: 2026-09-05. Plan: kunshan_discovery_plan.md, K0/K1.
 
 Control: ogb_distance_angle_triangle_edge_state_graph_state9 (3,665,809 parameters).
 Candidate: ogb_distance_angle_vector_state_triangle_edge_state_graph_state9.
+Expected candidate count: 3,696,209 (30,400 added); verify on the remote device.
 Keep OGB categorical atom/bond inputs, RWSE16, node192, bond64, wedge16,
 GraphState64, nine local blocks, and graph exchange at blocks 3/6/9.
 
@@ -13,7 +14,7 @@ Add a 16-channel Cartesian order-1 vector per atom, initialized to zero and
 updated by one shared cell after blocks 2/4/6/8. Messages travel only along
 the original real bonds. Scalar coefficients may depend on atom/bond states
 and distance bases; vector channels use bias-free linear channel mixing,
-unit displacements, invariant norm/dot-product contractions and scalar gates.
+directed bond displacements, invariant norm/dot-product contractions and scalar gates.
 Mask failed geometries. The scalar return projection is zero initialized.
 The final prediction is invariant to translation, rotation and reflection.
 
