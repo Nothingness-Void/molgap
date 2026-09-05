@@ -48,8 +48,10 @@ The user reopened bounded server-side discovery on Kunshan on 2026-09-05.
 The first question is persistent order-1 vector propagation against a fresh
 GraphState control under the full matched training contract. Plan and limits:
 `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
-The paired seed-42 screen is submitted on Kunshan as job `120999044`; launch
-and monitor state is owned by
+The first formal allocation `120999044` failed before training because its
+Slurm wrapper expanded an unset empty array under `set -u`. This is an
+infrastructure-only failure; the unchanged paired seed-42 screen is being
+repaired and resubmitted. Launch and monitor state is owned by
 `experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete

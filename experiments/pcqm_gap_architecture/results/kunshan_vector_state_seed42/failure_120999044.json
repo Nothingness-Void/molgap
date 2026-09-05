@@ -1,0 +1,17 @@
+{
+  "format": "molgap-kunshan-vector-infrastructure-failure-v1",
+  "job_id": "120999044",
+  "state": "FAILED",
+  "exit_code": "1:0",
+  "elapsed": "00:02:34",
+  "node": "e06r4n00",
+  "failure_stage": "post_preflight_shell_wrapper_before_training",
+  "cause": "empty resume_args array expansion under set -u",
+  "training_epoch_started": false,
+  "scientific_result_available": false,
+  "accepted_preflight_sha256": "e275c1a240043b2b4efef11e1e0f3dbd7a38e3a565127e9345986582dfe28e66",
+  "stderr_sha256": "0bee5ba6fa3e88b8e5a940cbae9efcff95bc413044c3e809dabf8af6f74e0982",
+  "stdout_sha256": "e275c1a240043b2b4efef11e1e0f3dbd7a38e3a565127e9345986582dfe28e66",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

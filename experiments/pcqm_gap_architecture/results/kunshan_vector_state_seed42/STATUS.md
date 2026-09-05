@@ -1,6 +1,6 @@
 # Kunshan persistent-vector screen status
 
-- Stage: paired seed-42 screen submitted as Kunshan job `120999044`.
+- Stage: repairing the formal Slurm wrapper before one unchanged resubmission.
 - Models: frozen GraphState9 control followed by persistent VectorState16.
 - Platform: SCNet Kunshan, one Hygon DCU, sequential candidate execution.
 - Protocol: ../../kunshan_vector_state_protocol.md.
@@ -14,6 +14,11 @@
   check accepted. Formal job `120999044` was submitted from source commit
   `a359c282e7d6a341d4716f31a37f052ea94412fa`; it was pending for priority at
   the first post-submit check. See `launch.json`.
+- Formal job `120999044` failed before epoch 0 after 2:34 because Bash expanded
+  an empty `resume_args` array while `set -u` was active. It produced no
+  checkpoint, metrics, progress, MAE, throughput or memory evidence. The
+  accepted preflight remains valid; the wrapper repair does not change the
+  architecture, data, seed or training contract. See `failure_120999044.json`.
 - No scientific result or seed-43/44 authorization exists.
 - Terminal handoff coordinator: 01a025a1-3b87-7781-8a91-f183193f7865.
 - Persistent Luna Max monitor task: 01a04479-ca44-7d31-95c4-6be485f256cc.
