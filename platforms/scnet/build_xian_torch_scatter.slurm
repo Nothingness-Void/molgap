@@ -26,6 +26,9 @@ module load Pytorch/1.10.0-hpcx-gcc-7.3.1
 export PYTHONNOUSERSITE=1
 export MAX_JOBS="${SLURM_CPUS_PER_TASK:-8}"
 export PYTORCH_ROCM_ARCH="${PYTORCH_ROCM_ARCH:-gfx906}"
+# torch-scatter 2.0.9 checks CUDA_HOME only; the vendor HIP build exposes
+# ROCM_HOME instead, so request the CUDA-named extension path explicitly.
+export FORCE_CUDA=1
 
 PYTHON=/public/software/apps/DeepLearning/PyTorch/torch110_dtk2210_py39/bin/python
 GFLAGS_PREFIX="$ROOT/gflags-2.1.2-install"
