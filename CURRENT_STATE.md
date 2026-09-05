@@ -44,15 +44,15 @@ The repaired body-order comparison completed on Kaggle1 and passed mechanical
 acceptance, but its candidate was less accurate than its fresh GraphState
 control. The exact mechanism is closed by
 `experiments/pcqm_gap_architecture/results/body_order_moment_seed42/decision.md`.
-The user reopened bounded server-side discovery on Kunshan on 2026-09-05.
-The first question is persistent order-1 vector propagation against a fresh
-GraphState control under the full matched training contract. Plan and limits:
-`experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
-The first formal allocation `120999044` failed before training because its
-Slurm wrapper expanded an unset empty array under `set -u`. The wrapper-only
-repair was applied and the unchanged paired seed-42 screen is running as
-Kunshan job `121002721`. Launch and monitor state is owned by
-`experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/STATUS.md`.
+The bounded Kunshan persistent-VectorState comparison completed and passed
+mechanical acceptance after a provenance-only row-identity repair. Its
+`0.000608 eV` seed-42 reduction was below the `0.001 eV` promotion threshold
+and came with lower throughput, so the mechanism is closed without more seeds
+or full-data training. GraphState9 remains the frozen anchor. The exact result
+and repair boundary are in
+`experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/decision.md`.
+The next bounded discovery question is K2 projected first/second-moment
+readout under `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

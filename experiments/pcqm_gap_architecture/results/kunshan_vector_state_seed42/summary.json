@@ -1,0 +1,47 @@
+{
+  "format": "molgap-kunshan-vector-state-seed42-summary-v1",
+  "job_id": "121002721",
+  "terminal_state": "COMPLETED",
+  "exit_code": 0,
+  "node": "e06r4n13",
+  "elapsed": "08:00:53",
+  "accepted_after_identity_repair": true,
+  "model_inference_executed_during_repair_or_acceptance": false,
+  "source_commit": "45d2e28db49adb24ca38d141f0362a9bc4e912a6",
+  "cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "control": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameters": 3665809,
+    "best_epoch": 35,
+    "validation_gap_mae_eV": 0.13071690881252288,
+    "throughput_graphs_per_second": 300.0961340106567,
+    "peak_reserved_bytes": 354418688
+  },
+  "candidate": {
+    "candidate": "ogb_distance_angle_vector_state_triangle_edge_state_graph_state9",
+    "parameters": 3696209,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.13010844552516937,
+    "throughput_graphs_per_second": 265.111603583693,
+    "peak_reserved_bytes": 387973120
+  },
+  "candidate_minus_control_eV": -0.0006084632873535056,
+  "relative_mae_reduction_fraction": 0.004654814704235283,
+  "throughput_change_fraction": -0.1165787126629955,
+  "parameter_delta": 30400,
+  "promotion_threshold_eV": -0.001,
+  "promotion_passed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "identity_repair": {
+    "validation_rows": 10000,
+    "validation_unique_rows": 10000,
+    "validation_row_index_sha256": "f38ccef35c146feb4f495480558ec69c1f0a123f89f9e6390a7b44d11b323189",
+    "validation_target_sha256": "7920d73338f063d2fab6ceca5f124dcc7fe2c2863d87ca718f77fc7b707c3a94",
+    "predictions_changed": false,
+    "targets_changed": false
+  }
+}

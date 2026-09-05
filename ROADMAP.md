@@ -29,9 +29,9 @@ closed. None revoked the frozen GraphState desktop handoff or authorized a
 second full-data model. On 2026-09-05 the user authorized further server-side
 experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
 cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
-The first paired screen uses `kunshan_vector_state_protocol.md` in that tree.
-Its completion may release one next planned screen after coordinator review;
-the existing desktop handoff does not stop this newly authorized bounded loop.
+The K1 persistent-VectorState paired screen is closed below its material-gain
+threshold. K2 projected first/second-moment readout is the next released
+question; the existing desktop handoff does not stop this bounded loop.
 
 ## Mandatory gates
 
