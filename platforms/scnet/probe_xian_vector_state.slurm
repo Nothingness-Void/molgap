@@ -16,7 +16,8 @@ module purge
 module load Pytorch/1.10.0-hpcx-gcc-7.3.1
 export PYTHONNOUSERSITE=1
 export PYTHONHASHSEED=42
-export PYTHONPATH="$CODE/src"
+PLATFORM_PYTHONPATH="${PYTHONPATH:-}"
+export PYTHONPATH="$CODE/src:$PLATFORM_PYTHONPATH"
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 PYTHON=/work/home/acf9jvb3sm/molgap-envs/xian-card2-torch110-pyg24/bin/python
