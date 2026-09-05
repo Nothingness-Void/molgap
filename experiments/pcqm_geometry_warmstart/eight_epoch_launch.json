@@ -1,0 +1,26 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-eight-epoch-launch-v1",
+  "submitted_at": "2026-09-05",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart",
+  "code_snapshot": "code-8epoch-warmstart",
+  "run_script_sha256": "578c6245fc0156c2fe8fd816b46b52ca636ca59a491b089eeceb5ac03b775b87",
+  "preflight_pbs_sha256": "ddb24165e9e6716a3a19dcdd40958890abd3ed644b273386677a1a7154c71fa7",
+  "training_pbs_sha256": "0bbc2ba6a6df664f6255c165d7e1e004967aecf66a6c87f60a2333754405c175",
+  "protocol_sha256": "99306096495e0f738112acf81ee95728be26e013257fdbffcdfdc74f63e2a220",
+  "reused_geometry_acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+  "gpu_preflight_job": "1443246.ccpbs1",
+  "training_job": "1443247.ccpbs1",
+  "dependency": "afterok:1443246.ccpbs1",
+  "preflight_artifact": "artifacts/gpu_preflight_8epoch.json",
+  "training_output": "outputs/training_8epoch",
+  "monitor": {
+    "thread_id": "01a03de4-fbb3-76c1-ab0c-25721edecdc0",
+    "coordinator_thread_id": "019ef861-8611-7790-a091-a887effa7813",
+    "automation_id": "ims-geometry-warm-start-8epoch-monitor",
+    "interval_minutes": 15,
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max"
+  },
+  "official_test_used": false,
+  "production_registry_changed": false
+}

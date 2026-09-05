@@ -1,0 +1,21 @@
+{
+  "format": "molgap-pcqm4mv2-geometry-warmstart-eight-epoch-protocol-v1",
+  "parent_protocol": "protocol.json",
+  "reason": "The accepted A100 preflight projected 17.51 hours for 12 epochs; eight epochs retain the warm-start design and fit the 12-hour gate.",
+  "reused_geometry_acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+  "candidate": "ogb_distance_angle_triangle_edge_state_gps9",
+  "source_model": "official-full-ogb-rich-edge-state-gps9-epoch30",
+  "pretrained_backbone_trainable": true,
+  "new_geometry_modules_trainable": true,
+  "shared_learning_rate": 0.00002,
+  "new_learning_rate": 0.0002,
+  "max_epochs": 8,
+  "patience": 4,
+  "batch_size": 192,
+  "maximum_projected_training_hours": 12,
+  "hard_job_budget_hours": 13.5,
+  "artifact_namespace": "8epoch",
+  "official_test_used": false,
+  "external_data_used": false,
+  "production_registry_changed": false
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=00:45:00
+#PBS -j oe
+
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart
+BASE=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+CODE=$ROOT/code-8epoch-warmstart
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271
+SHIMS=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims
+
+test "$(realpath "$ROOT")" = "$ROOT"
+test "$(realpath "$CODE")" = "$CODE"
+test -s "$ROOT/artifacts/geometry_acceptance.json"
+cd "$ROOT"
+mkdir -p logs artifacts
+export PYTHONPATH="$SHIMS:$VENDOR:$CODE/src"
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1
+nvidia-smi -L
+
+"$PYTHON" -u "$CODE/experiments/pcqm_geometry_warmstart/run.py" preflight \
+  --graph-dir "$ROOT/graph_cache" \
+  --acceptance "$ROOT/artifacts/geometry_acceptance.json" \
+  --source-checkpoint "$BASE/rich_full/convergence_40/best.pt" \
+  --source-config-checkpoint "$BASE/rich_full/training/best.pt" \
+  --output "$ROOT/artifacts/gpu_preflight_8epoch.json" \
+  --batches 64 \
+  --max-epochs 8 \
+  2>&1 | tee "$ROOT/logs/gpu_preflight_8epoch.log"

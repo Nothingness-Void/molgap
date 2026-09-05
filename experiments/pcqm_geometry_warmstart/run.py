@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 
 from molgap.pcqm_geometry_warmstart import (
@@ -47,6 +48,7 @@ def parser() -> argparse.ArgumentParser:
     preflight.add_argument("--source-config-checkpoint", type=Path, required=True)
     preflight.add_argument("--output", type=Path, required=True)
     preflight.add_argument("--batches", type=int, default=64)
+    preflight.add_argument("--max-epochs", type=int)
 
     train = subparsers.add_parser("train")
     train.add_argument("--graph-dir", type=Path, required=True)
@@ -55,12 +57,17 @@ def parser() -> argparse.ArgumentParser:
     train.add_argument("--source-config-checkpoint", type=Path, required=True)
     train.add_argument("--preflight", type=Path, required=True)
     train.add_argument("--output-dir", type=Path, required=True)
+    train.add_argument("--max-epochs", type=int)
     return result
 
 
 def main() -> None:
     args = parser().parse_args()
     config = GeometryWarmstartConfig()
+    if getattr(args, "max_epochs", None) is not None:
+        if args.max_epochs <= 0:
+            raise ValueError("--max-epochs must be positive")
+        config = replace(config, max_epochs=args.max_epochs)
     if args.command == "smoke":
         payload = cpu_smoke(
             args.rows_dir, args.base_graph_dir, args.base_acceptance,
