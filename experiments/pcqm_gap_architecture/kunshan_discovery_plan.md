@@ -14,10 +14,14 @@ initialization. No official validation/test-dev or other sealed data is used.
 The experimental parameter ceiling is 4M. Keep the frozen GraphState9 winner
 as the comparison anchor; do not stack unconfirmed candidate mechanisms.
 
-All new discovery compute runs on SCNet Kunshan, one visible Hygon DCU per
-worker, at most one allocated training worker at a time. Platform Torch/DTK
-is preserved. CPU-only cache construction and acceptance precede allocation.
-The already accepted geometry cache is reused without reconstruction.
+Canonical discovery confirmation runs on SCNet Kunshan, one visible Hygon DCU
+per worker. Xi'an may run twice-reproduced paired pre-screens for later
+candidates when that materially reduces turnaround, but an Xi'an result alone
+cannot promote an architecture. Keep at most one allocated worker per region
+and never run the same candidate redundantly across both regions. Platform
+Torch/DTK is preserved. CPU-only cache construction and acceptance precede
+allocation. The already accepted geometry cache is reused without
+reconstruction.
 
 The 3-epoch runtime probe used unnormalized L1 and a constant learning rate.
 It is not a matched scientific control and its checkpoint is not resumed.
@@ -42,12 +46,12 @@ released only after the preceding result is accepted and attributed by the
 coordinator, and after their own protocol and implementation gates pass.
 No unimplemented follow-up is silently scheduled as a Slurm dependency.
 
-The user reported 50 hours remaining on 2026-09-04; Slurm does not expose the
-portal balance and billing conversion is unverified. Reserve no more than
-32 additional allocated DCU-hours for this staged plan, including failures and
-retries. This is a compute cap, not a claim that 32 portal credits are available.
-Stop when the allocation ledger reaches the cap or a platform quota error
-occurs. Do not purchase resources or switch to Kaggle/IMS automatically.
+The user reported 200 available accelerator-hours in each of Kunshan and Xi'an
+on 2026-09-06; Slurm does not expose the portal balance and billing conversion
+is unverified. Treat this as an inventory ceiling, not a mandate to spend it.
+Every candidate remains independently bounded to at most 12 allocated hours,
+one seed and one material mechanism. Stop on a platform quota error. Do not
+purchase resources or switch to Kaggle/IMS automatically.
 
 ## Mechanism justification and exclusions
 

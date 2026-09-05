@@ -30,8 +30,8 @@ second full-data model. On 2026-09-05 the user authorized further server-side
 experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
 cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
 The K1 persistent-VectorState paired screen is closed below its material-gain
-threshold. K2 projected first/second-moment readout is the next released
-question; the existing desktop handoff does not stop this bounded loop.
+threshold. K2 projected first/second-moment readout is running on Kunshan as
+job `121048634`; the existing desktop handoff does not stop this bounded loop.
 
 ## Mandatory gates
 

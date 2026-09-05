@@ -51,8 +51,10 @@ and came with lower throughput, so the mechanism is closed without more seeds
 or full-data training. GraphState9 remains the frozen anchor. The exact result
 and repair boundary are in
 `experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/decision.md`.
-The next bounded discovery question is K2 projected first/second-moment
-readout under `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
+The next bounded discovery question, K2 projected first/second-moment readout,
+is submitted on Kunshan as job `121048634`. It compares a fresh GraphState9
+control with only the final readout changed. Live status is in
+`experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
@@ -95,6 +97,10 @@ records are on `archive` and indexed by
   Xi'an is restricted to twice-reproduced paired pre-screens followed by a
   canonical Kunshan confirmation. The exact boundary is in
   `experiments/pcqm_gap_architecture/results/xian_card2_runtime_gate/decision.md`.
+- The user reported 200 available accelerator-hours on each SCNet region on
+  2026-09-06. This is availability, not permission to broaden a frozen
+  experiment: Xi'an remains the rapid repeated pre-screen backend and Kunshan
+  remains the canonical paired-confirmation backend.
 - No molecular-research-server run is authorized before the Kaggle selection
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production
