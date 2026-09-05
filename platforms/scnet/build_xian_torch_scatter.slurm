@@ -103,6 +103,16 @@ for old, new in replacements.items():
     if old not in text:
         raise SystemExit(f"expected torch-scatter half shuffle line was not found: {old}")
     text = text.replace(old, new, 1)
+include = "#include <torch/extension.h>\n"
+half_ldg = """#include <torch/extension.h>
+
+#if defined(__HIP_PLATFORM_HCC__)
+__device__ __inline__ at::Half __ldg(const at::Half *ptr) { return *ptr; }
+#endif
+"""
+if include not in text:
+    raise SystemExit("expected torch-scatter extension include was not found")
+text = text.replace(include, half_ldg, 1)
 path.write_text(text, encoding="utf-8")
 PY
 "$PYTHON" - "$SCATTER_SOURCE/csrc/cuda/atomics.cuh" <<'PY'
