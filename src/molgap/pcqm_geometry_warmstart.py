@@ -810,6 +810,12 @@ def train_geometry_warmstart(
         "runtime_s": time.monotonic() - started,
     }
     atomic_json(output_dir / "metrics.json", metrics)
+    atomic_json(output_dir / "progress.json", {
+        "status": "complete", "epoch": log[-1]["epoch"],
+        "best_epoch": int(best["best_epoch"]),
+        "best_valid_gap_mae_eV": float(valid_mae),
+        "elapsed_s": time.monotonic() - started,
+    })
     atomic_json(output_dir / "completion_manifest.json", {
         "status": "complete",
         "best": {"path": "best.pt", "sha256": metrics["best_sha256"]},
