@@ -49,7 +49,9 @@ def test_k3_sources_parse_and_freeze_one_chemical_mechanism() -> None:
         ROOT / "experiments/pcqm_gap_architecture/build_kunshan_conjugated_cache.py",
         ROOT / "experiments/pcqm_gap_architecture/accept_kunshan_conjugated_cache.py",
         ROOT / "experiments/pcqm_gap_architecture/accept_kunshan_conjugated_descriptor.py",
+        ROOT / "experiments/pcqm_gap_architecture/accept_kunshan_conjugated_component.py",
         ROOT / "tests/remote_pcqm_conjugated_descriptor.py",
+        ROOT / "tests/remote_pcqm_conjugated_component.py",
     ]
     for path in paths:
         ast.parse(path.read_text(encoding="utf-8"))
@@ -60,3 +62,29 @@ def test_k3_sources_parse_and_freeze_one_chemical_mechanism() -> None:
     assert "nn.init.zeros_(self.descriptor_to_atom.weight)" in model
     assert "_LowRankGatedProjection" in model
     assert "Dropout" not in model
+
+
+def test_k3b_runner_and_slurm_freeze_component_state_comparison() -> None:
+    runner = (ROOT / "src/molgap/pcqm_kunshan_screen.py").read_text(
+        encoding="utf-8"
+    )
+    remote = (ROOT / "tests/remote_pcqm_conjugated_component.py").read_text(
+        encoding="utf-8"
+    )
+    slurm = (
+        ROOT
+        / "experiments/pcqm_gap_architecture/kunshan_conjugated_component.slurm"
+    ).read_text(encoding="utf-8")
+    protocol = (
+        ROOT / "experiments/pcqm_gap_architecture/kunshan_conjugated_component_protocol.md"
+    ).read_text(encoding="utf-8")
+    assert '"conjugated_component"' in runner
+    assert 'format_name = "molgap-kunshan-conjugated-component-screen-v1"' in runner
+    assert "3_694_033" in remote
+    assert "shared initialization changed" in remote
+    assert "zero component return changed initial prediction" in remote
+    assert "--screen conjugated_component" in slurm
+    assert "#SBATCH --gres=dcu:Hygon:1" in slurm
+    assert "#SBATCH --time=12:00:00" in slurm
+    assert "0.0001969527" in protocol
+    assert "K3a checkpoints are not" in protocol

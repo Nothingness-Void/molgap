@@ -163,6 +163,10 @@ def uses_conjugated_components(candidate: str) -> bool:
     return "_conjugated_descriptor" in candidate or "_conjugated_component" in candidate
 
 
+def uses_graph_state(candidate: str) -> bool:
+    return candidate.endswith("graph_state9") or uses_conjugated_components(candidate)
+
+
 def expected_input_cache_sha256() -> str:
     if RUN_MODE == "ring_graphstate":
         return EXPECTED_RING_CACHE_SHA256
@@ -568,7 +572,7 @@ def initialization_preflight() -> list[dict]:
                 f"Global schedule changed for {candidate}: {global_blocks}"
             )
         graph_state_present = hasattr(model, "graph_context")
-        expected_graph_state = candidate.endswith("graph_state9")
+        expected_graph_state = uses_graph_state(candidate)
         if graph_state_present != expected_graph_state:
             raise RuntimeError(f"Graph-state identity changed for {candidate}")
         ring_hierarchy_present = hasattr(model, "ring_update")
@@ -678,7 +682,7 @@ def gpu_preflight(
     graph_state_present = hasattr(model, "graph_context")
     if global_blocks != EXPECTED_GLOBAL_BLOCKS[candidate]:
         raise RuntimeError(f"Global schedule changed for {candidate}: {global_blocks}")
-    if graph_state_present != candidate.endswith("graph_state9"):
+    if graph_state_present != uses_graph_state(candidate):
         raise RuntimeError(f"Graph-state identity changed for {candidate}")
     ring_hierarchy_present = hasattr(model, "ring_update")
     if ring_hierarchy_present != uses_ring_hierarchy(candidate):
@@ -1064,7 +1068,7 @@ def train_one(
             "global_attention_blocks": list(EXPECTED_GLOBAL_BLOCKS[candidate]),
             "global_mechanism": (
                 "gated_graph_state"
-                if candidate.endswith("graph_state9")
+                if uses_graph_state(candidate)
                 else "multihead_attention"
             ),
             "ring_hierarchy": (

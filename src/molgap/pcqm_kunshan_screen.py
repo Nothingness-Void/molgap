@@ -39,7 +39,8 @@ def configure(
     trainer.CANDIDATES = candidates
     trainer.BASELINE = baseline
     trainer.EXPECTED_PARAMETER_COUNTS.update(parameter_counts)
-    trainer.EXPECTED_GLOBAL_BLOCKS[candidate] = ()
+    for candidate_name in candidates:
+        trainer.EXPECTED_GLOBAL_BLOCKS[candidate_name] = ()
     trainer.PARAMETER_BUDGET = 4_000_000
     trainer.SEARCH_BUDGET_S = 41_400
     trainer.PIN_MEMORY = False
@@ -130,7 +131,7 @@ def run(args) -> None:
         }
         expected_cache_sha = CACHE_SHA
         baseline = BASELINE
-    else:
+    elif args.screen == "conjugated_descriptor":
         from molgap.pcqm_conjugated_state import (
             DESCRIPTOR_ID,
             DESCRIPTOR_PARAMETERS,
@@ -155,6 +156,42 @@ def run(args) -> None:
             "injection_block": 2,
             "component_communication": "none",
             "return": "linear32x192_bias_free_zero_init",
+        }
+        expected_cache_sha = args.cache_sha
+    else:
+        from molgap.pcqm_conjugated_state import (
+            COMPONENT_STATE_ID,
+            COMPONENT_STATE_PARAMETERS,
+            DESCRIPTOR_ID,
+            DESCRIPTOR_PARAMETERS,
+            make_conjugated_encoder,
+        )
+
+        if not args.cache_sha:
+            raise RuntimeError("conjugated screen requires --cache-sha")
+        baseline = DESCRIPTOR_ID
+        candidate = COMPONENT_STATE_ID
+        candidates = (baseline, candidate)
+        expected_counts = {
+            baseline: DESCRIPTOR_PARAMETERS,
+            candidate: COMPONENT_STATE_PARAMETERS,
+        }
+        format_name = "molgap-kunshan-conjugated-component-screen-v1"
+        candidate_factory = make_conjugated_encoder
+        baseline_delta = {
+            "conjugated_input": "repeated_component_descriptor8",
+            "descriptor_channels": 32,
+            "injection_block": 2,
+            "component_communication": "none",
+            "return": "linear32x192_bias_free_zero_init",
+        }
+        candidate_delta = {
+            **baseline_delta,
+            "component_communication": "persistent_component_state32",
+            "component_update_blocks": [3, 6, 9],
+            "atom_to_component": "mean_linear192x32_bias_free",
+            "component_update": "shared_gated_residual32",
+            "component_to_atom": "low_rank16_gated_linear192_zero_init",
         }
         expected_cache_sha = args.cache_sha
 
@@ -212,7 +249,7 @@ def run(args) -> None:
         trainer.atomic_json(identity, manifest)
     runs = []
     try:
-        if args.screen == "conjugated_descriptor":
+        if args.screen in ("conjugated_descriptor", "conjugated_component"):
             root = args.cache_root
             cache = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
             required = {
@@ -238,6 +275,8 @@ def run(args) -> None:
         trainer.atomic_json(output / "progress.json", {**manifest, "state": "CACHE_VERIFIED", "complete": False})
 
         def factory(candidate):
+            if args.screen == "conjugated_component":
+                return candidate_factory(candidate)
             return (candidate_factory() if candidate == candidates[1]
                     else make_pcqm_gap_encoder(candidate))
 
@@ -290,7 +329,12 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
         "--screen",
-        choices=("vector", "moment_readout", "conjugated_descriptor"),
+        choices=(
+            "vector",
+            "moment_readout",
+            "conjugated_descriptor",
+            "conjugated_component",
+        ),
         default="vector",
     )
     run(parser.parse_args())

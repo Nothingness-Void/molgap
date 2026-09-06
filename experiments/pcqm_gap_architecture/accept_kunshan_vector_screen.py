@@ -39,6 +39,8 @@ def accept_screen(
     candidate_delta: dict,
     report_format: str,
     expected_cache: str = CACHE,
+    baseline: str = BASELINE,
+    baseline_parameter_count: int = 3_665_809,
 ) -> dict:
     errors = []
     rows_by_model = {}
@@ -58,7 +60,7 @@ def accept_screen(
     require(completion.get("format") == completion_format, "format")
     require(completion.get("complete") is True, "incomplete screen")
     require(completion.get("source_commit") == source, "source")
-    require(completion.get("candidates") == [BASELINE, candidate], "candidates")
+    require(completion.get("candidates") == [baseline, candidate], "candidates")
     require(completion.get("geometry_cache_aggregate_sha256") == CACHE, "cache")
     require(
         completion.get("input_cache_aggregate_sha256", CACHE) == expected_cache,
@@ -76,7 +78,7 @@ def accept_screen(
     require(preflight.get("accepted") is True, "preflight")
     runs = completion.get("runs", [])
     require(len(runs) == 2, "run count")
-    for candidate_name in (BASELINE, candidate):
+    for candidate_name in (baseline, candidate):
         metrics = json.loads((root / "results" / candidate_name / "metrics.json").read_text(encoding="utf-8"))
         require(metrics in runs, f"completion/metrics {candidate_name}")
         require(metrics.get("candidate") == candidate_name and metrics.get("complete") is True, f"identity/complete {candidate_name}")
@@ -85,15 +87,15 @@ def accept_screen(
         require(metrics.get("seed") == 42, f"seed {candidate_name}")
         require(metrics.get("platform_contract") == EXPECTED_CONTRACT, f"contract {candidate_name}")
         architecture_delta = metrics.get("architecture_delta")
-        if candidate_name == BASELINE:
+        if candidate_name == baseline:
             require(architecture_delta == baseline_delta, "baseline architecture delta")
         else:
             require(architecture_delta == candidate_delta, "candidate architecture delta")
         require(metrics.get("official_validation_role_read") is False and metrics.get("test_dev_role_read") is False, f"sealed roles {candidate_name}")
         count = metrics.get("parameter_count", 0)
         require(0 < count <= 4_000_000 and count == preflight.get("parameter_counts", {}).get(candidate_name), f"parameters {candidate_name}")
-        if candidate_name == BASELINE:
-            require(count == 3_665_809, "baseline parameter count")
+        if candidate_name == baseline:
+            require(count == baseline_parameter_count, "baseline parameter count")
         else:
             require(count == candidate_parameter_count, "candidate parameter count")
         artifacts = metrics["artifacts"]
@@ -118,7 +120,7 @@ def accept_screen(
             require(len(trace) == 40 or len(trace) - best_epoch - 1 == 8, f"incomplete schedule {candidate_name}")
         require(all(math.isfinite(r[k]) and r["elapsed_s"] > 0 for r in trace for k in ("train_mae_eV", "validation_mae_eV", "elapsed_s", "graphs_per_s", "learning_rate")), f"trace finite {candidate_name}")
         summaries.append({"candidate": candidate_name, "mae_eV": mae, "parameters": count, "epochs": len(trace), "best_epoch": metrics.get("best_epoch"), "throughput": metrics.get("mean_throughput_graphs_per_s"), "peak_reserved_bytes": metrics.get("peak_memory_reserved_bytes"), "device_total_bytes": metrics.get("device_total_memory_bytes")})
-    require(rows_by_model[BASELINE] == rows_by_model[candidate], "paired validation row/target mismatch")
+    require(rows_by_model[baseline] == rows_by_model[candidate], "paired validation row/target mismatch")
     return {"format": report_format, "accepted": not errors, "errors": errors, "source_commit": source, "model_inference_executed": False, "official_validation_role_read": False, "test_dev_role_read": False, "runs": summaries, "candidate_minus_control_eV": summaries[1]["mae_eV"] - summaries[0]["mae_eV"]}
 
 
