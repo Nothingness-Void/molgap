@@ -57,7 +57,11 @@ the `0.001 eV` promotion threshold, with unchanged peak memory, so it is closed
 without more seeds or full-data training. GraphState9 remains the frozen
 anchor. The exact result is in
 `experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/decision.md`.
-K3 conjugated-component communication is the next released question.
+K3 conjugated-component communication is active. Kunshan CPU job `121079846`
+is building and independently accepting the deterministic component cache; no
+model runs in this stage. K3a GPU training is released only after that cache
+passes. Live state is in
+`experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
