@@ -24,6 +24,7 @@ if RUN_MODE not in {
     "edge_retention_graphstate",
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
+    "conjugated_component_confirmation",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
@@ -45,6 +46,8 @@ if RUN_MODE in {
     "signnet_lappe_graphstate",
 } and SEED != 42:
     raise RuntimeError("Local-statistics modes require seed 42")
+if RUN_MODE == "conjugated_component_confirmation" and SEED != 43:
+    raise RuntimeError("ComponentState confirmation mode requires seed 43")
 
 OUT = Path(
     os.environ.get(
@@ -78,6 +81,12 @@ EXPECTED_LAPPE_SOURCE_COMMIT = os.environ.get(
     "MOLGAP_EXPECTED_LAPPE_SOURCE_COMMIT", ""
 )
 EXPECTED_LAPPE_SHA256 = os.environ.get("MOLGAP_EXPECTED_LAPPE_SHA256", "")
+EXPECTED_COMPONENT_SOURCE_COMMIT = os.environ.get(
+    "MOLGAP_EXPECTED_COMPONENT_SOURCE_COMMIT", ""
+)
+EXPECTED_COMPONENT_CACHE_SHA256 = os.environ.get(
+    "MOLGAP_EXPECTED_COMPONENT_CACHE_SHA256", ""
+)
 SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
@@ -112,6 +121,10 @@ SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
 )
+COMPONENT_STATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component",
+)
 PAIRED_GRAPHSTATE_MODES = {
     "ring_graphstate",
     "contact_graphstate",
@@ -120,9 +133,12 @@ PAIRED_GRAPHSTATE_MODES = {
     "edge_retention_graphstate",
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
+    "conjugated_component_confirmation",
 }
 CANDIDATES = (
-    DIRECTED_BOND_GRAPHSTATE_CANDIDATES
+    COMPONENT_STATE_CANDIDATES
+    if RUN_MODE == "conjugated_component_confirmation"
+    else DIRECTED_BOND_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "directed_bond_graphstate"
     else SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "signnet_lappe_graphstate"
@@ -152,17 +168,25 @@ EXPECTED_GLOBAL_BLOCKS = {
     RETENTION_GRAPHSTATE_CANDIDATES[1]: (),
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: (),
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
+    COMPONENT_STATE_CANDIDATES[0]: (),
+    COMPONENT_STATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
     "candidate": BASELINE,
-    "seed": 42,
+    "seed": 43 if RUN_MODE == "conjugated_component_confirmation" else 42,
     "validation_gap_mae_eV": (
+        0.13066026899814606
+        if RUN_MODE == "conjugated_component_confirmation"
+        else
         0.13012409210205078
         if RUN_MODE
         in PAIRED_GRAPHSTATE_MODES
         else 0.1353926807641983
     ),
     "acceptance": (
+        "results/kunshan_conjugated_component_seed42/k3b_acceptance.json"
+        if RUN_MODE == "conjugated_component_confirmation"
+        else
         "results/local_global_allocation_seed42/acceptance.json"
         if RUN_MODE
         in PAIRED_GRAPHSTATE_MODES
@@ -200,6 +224,8 @@ EXPECTED_PARAMETER_COUNTS = {
     RETENTION_GRAPHSTATE_CANDIDATES[1]: 3_743_281,
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: 3_741_265,
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
+    COMPONENT_STATE_CANDIDATES[0]: 3_672_257,
+    COMPONENT_STATE_CANDIDATES[1]: 3_694_033,
 }
 
 
@@ -246,6 +272,8 @@ def expected_input_cache_sha256() -> str:
         return EXPECTED_CONTACT_CACHE_SHA256
     if RUN_MODE == "signnet_lappe_graphstate":
         return EXPECTED_LAPPE_SHA256
+    if RUN_MODE == "conjugated_component_confirmation":
+        return EXPECTED_COMPONENT_CACHE_SHA256
     return EXPECTED_GEOMETRY_SHA256
 
 
@@ -536,6 +564,57 @@ def find_lappe_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
+def find_component_cache() -> tuple[Path, dict]:
+    if (
+        len(EXPECTED_COMPONENT_SOURCE_COMMIT) != 40
+        or len(EXPECTED_COMPONENT_CACHE_SHA256) != 64
+    ):
+        raise RuntimeError("ComponentState cache identities were not pinned")
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-conjugated-component-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one conjugated-component cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_COMPONENT_SOURCE_COMMIT,
+        "parent_geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+        "aggregate_sha256": EXPECTED_COMPONENT_CACHE_SHA256,
+        "component_rule": "connected_components_of_ogb_conjugated_bonds",
+        "local_component_order": "ascending_minimum_atom_index",
+        "nonmember_component_id": -1,
+        "feature_channels": 8,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "gpu_used": False,
+        "model_inference_executed": False,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"ComponentState cache contract changed for {key}")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"ComponentState shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != EXPECTED_COMPONENT_CACHE_SHA256:
+        raise RuntimeError("ComponentState aggregate hash changed")
+    return root, manifest
+
+
 def find_input_cache() -> tuple[Path, dict]:
     if RUN_MODE == "ring_graphstate":
         return find_ring_cache()
@@ -543,6 +622,8 @@ def find_input_cache() -> tuple[Path, dict]:
         return find_contact_cache()
     if RUN_MODE == "signnet_lappe_graphstate":
         return find_lappe_cache()
+    if RUN_MODE == "conjugated_component_confirmation":
+        return find_component_cache()
     return find_geometry_cache()
 
 
@@ -608,6 +689,13 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                     raise RuntimeError(f"{role} LapPE eigenvalue shape changed")
                 if tuple(graph.lap_mask.shape) != expected:
                     raise RuntimeError(f"{role} LapPE mask shape changed")
+            if RUN_MODE == "conjugated_component_confirmation":
+                if tuple(graph.conjugated_component_id.shape) != (graph.num_nodes,):
+                    raise RuntimeError(f"{role} component id shape changed")
+                if tuple(graph.conjugated_features.shape) != (graph.num_nodes, 8):
+                    raise RuntimeError(f"{role} component features changed")
+                if graph.conjugated_component_count.numel() != 1:
+                    raise RuntimeError(f"{role} component count changed")
     return graphs
 
 
@@ -815,6 +903,22 @@ def initialization_preflight() -> list[dict]:
             )
             if not signnet_lappe_injection_zero:
                 raise RuntimeError("SignNet-LapPE return is not zero")
+        conjugated_descriptor_present = hasattr(model, "conjugated_descriptor")
+        if conjugated_descriptor_present != uses_conjugated_components(candidate):
+            raise RuntimeError(f"Conjugated descriptor identity changed for {candidate}")
+        component_state_present = hasattr(model, "component_atom_projection")
+        expected_component_state = candidate == COMPONENT_STATE_CANDIDATES[1]
+        if component_state_present != expected_component_state:
+            raise RuntimeError(f"ComponentState identity changed for {candidate}")
+        component_return_zero = True
+        if component_state_present:
+            component_return_zero = bool(
+                torch.count_nonzero(model.component_to_atom.value.weight.detach()) == 0
+            ) and bool(
+                torch.count_nonzero(model.component_to_atom.value.bias.detach()) == 0
+            )
+            if not component_return_zero:
+                raise RuntimeError("ComponentState return is not zero")
         rows.append(
             {
                 "candidate": candidate,
@@ -835,6 +939,9 @@ def initialization_preflight() -> list[dict]:
                 "directed_bond_injection_zero": directed_bond_injection_zero,
                 "signnet_lappe_present": signnet_lappe_present,
                 "signnet_lappe_injection_zero": signnet_lappe_injection_zero,
+                "conjugated_descriptor_present": conjugated_descriptor_present,
+                "component_state_present": component_state_present,
+                "component_return_zero": component_return_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -924,6 +1031,20 @@ def gpu_preflight(
         signnet_lappe_injection_zero = bool(
             torch.count_nonzero(model.lappe_to_atom.weight.detach()) == 0
         )
+    conjugated_descriptor_present = hasattr(model, "conjugated_descriptor")
+    if conjugated_descriptor_present != uses_conjugated_components(candidate):
+        raise RuntimeError(f"Conjugated descriptor identity changed for {candidate}")
+    component_state_present = hasattr(model, "component_atom_projection")
+    expected_component_state = candidate == COMPONENT_STATE_CANDIDATES[1]
+    if component_state_present != expected_component_state:
+        raise RuntimeError(f"ComponentState identity changed for {candidate}")
+    component_return_zero = True
+    if component_state_present:
+        component_return_zero = bool(
+            torch.count_nonzero(model.component_to_atom.value.weight.detach()) == 0
+        ) and bool(
+            torch.count_nonzero(model.component_to_atom.value.bias.detach()) == 0
+        )
     initial_function_structurally_equal_to_baseline = True
     if uses_body_order_moment(candidate):
         initial_function_structurally_equal_to_baseline = (
@@ -939,6 +1060,8 @@ def gpu_preflight(
         initial_function_structurally_equal_to_baseline = (
             signnet_lappe_injection_zero
         )
+    if component_state_present:
+        initial_function_structurally_equal_to_baseline = component_return_zero
     if not initial_function_structurally_equal_to_baseline:
         raise RuntimeError("Candidate initial function changed")
     gpu_name = torch.cuda.get_device_name(0)
@@ -1011,6 +1134,14 @@ def gpu_preflight(
             and bool(torch.isfinite(gradient).all())
             and int(torch.count_nonzero(gradient)) > 0
         )
+    component_return_gradient_nonzero = True
+    if component_state_present:
+        gradient = model.component_to_atom.value.weight.grad
+        component_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -1043,6 +1174,10 @@ def gpu_preflight(
         "signnet_lappe_return_gradient_nonzero": (
             signnet_lappe_return_gradient_nonzero
         ),
+        "conjugated_descriptor_present": conjugated_descriptor_present,
+        "component_state_present": component_state_present,
+        "component_return_zero": component_return_zero,
+        "component_return_gradient_nonzero": component_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -1064,6 +1199,7 @@ def gpu_preflight(
             "retention_return_gradient_nonzero",
             "directed_bond_return_gradient_nonzero",
             "signnet_lappe_return_gradient_nonzero",
+            "component_return_gradient_nonzero",
         )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
@@ -1406,6 +1542,11 @@ def train_one(
                 "normalized-laplacian-lowest8-nontrivial+"
                 "signnet32-zero-return+rwse16-retained"
                 if uses_signnet_lappe(candidate)
+                else "none"
+            ),
+            "conjugated_component_state": (
+                "persistent32-mean-exchange-blocks3-6-9-lowrank16-zero-return"
+                if candidate == COMPONENT_STATE_CANDIDATES[1]
                 else "none"
             ),
         },

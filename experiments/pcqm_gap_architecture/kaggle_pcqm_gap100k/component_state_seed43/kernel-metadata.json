@@ -1,0 +1,19 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-componentstate-confirm-s43",
+  "title": "MolGap PCQM ComponentState Confirmation S43",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm-componentstate-confirm-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "nothingnessvoid/molgap-pcqm-componentstate-cache-s43"
+  ],
+  "model_sources": []
+}
