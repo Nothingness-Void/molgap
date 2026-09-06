@@ -74,7 +74,8 @@ The representative estimate was 45,353.313 s including the 20% reserve. Only
 the time gate is waived: the exact accepted numerical probe, model-source
 hashes, parameters, memory reserve, data, optimizer and 12-epoch schedule are
 checked by `runtime_override.json`. The cumulative ceiling becomes 24 hours.
-Each scheduled segment has a 14-hour PBS limit and pauses atomically after a
-completed shard at 13.5 hours. A serialized afterok successor resumes only the
+The initial 14-hour request was queued as `(long)` beyond maintenance and was
+cancelled before execution. Each replacement segment has a four-hour PBS limit
+and pauses atomically after a completed shard at 3.5 hours. Serialized afterok successors resume only the
 same last checkpoint; a completed manifest causes immediate validated exit.
 Thus shutdown of the desktop cannot interrupt the training/continuation chain.
