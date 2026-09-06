@@ -20,6 +20,12 @@ only control with ComponentState under the same source, cache, initialization,
 shuffle and training contract. This staging keeps each allocation below 12
 hours while preserving causal attribution.
 
+K3a completed as the required attribution control: descriptor-only improved
+its fresh GraphState9 comparator by `0.0001969527 eV`, below the material-gain
+gate. K3b therefore tests communication rather than treating the descriptor as
+a promoted model. Its paired identities are descriptor-only (3,672,257
+parameters) and descriptor plus ComponentState (3,694,033 parameters).
+
 ## Deterministic representation
 
 Components are connected components of real bonds whose OGB conjugation flag
@@ -46,3 +52,6 @@ Promotion requires at least `0.001 eV` lower paired MAE, no more than 1.5x
 control epoch time, and at least 15% device-memory reserve. K3b is required for
 an architecture claim even if descriptor-only K3a is neutral or negative.
 Official validation/test-dev, seeds43/44 and full-data training remain locked.
+K3b uses one Kunshan Hygon DCU, 8 CPU cores, 27 GB host memory, and a 12-hour
+wall limit. Both models train fresh and sequentially; K3a checkpoints are not
+warm-started or reused.
