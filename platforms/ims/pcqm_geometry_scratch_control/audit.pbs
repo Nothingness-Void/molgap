@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=01:30:00
+#PBS -j oe
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-scratch-control
+OLD=/lustre/home/users/sm2/chou/molgap-pcqm-geometry-warmstart
+BASE=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full
+CODE=$ROOT/code
+test "$(realpath "$ROOT")" = "$ROOT"
+test "$(realpath "$CODE")" = "$CODE"
+cd "$ROOT"
+export PYTHONPATH=/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims:/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271:$CODE/src
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1
+/lustre/home/users/sm2/chou/molgap/.venv/bin/python -u "$CODE/experiments/pcqm_geometry_scratch_control/run.py" \
+  --graph-dir "$OLD/graph_cache" --acceptance "$OLD/artifacts/geometry_acceptance.json" \
+  --source "$BASE/rich_full/convergence_40/best.pt" \
+  --source-config "$BASE/rich_full/training/best.pt" \
+  --reference "$BASE/rich_full/convergence_40/valid_predictions.pt" \
+  --output-dir "$ROOT/audit" 2>&1 | tee -a "$ROOT/audit.log"
