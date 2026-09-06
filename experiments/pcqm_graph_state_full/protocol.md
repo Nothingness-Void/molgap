@@ -66,3 +66,15 @@ one final evaluation without opening validation during preflight.
 Each stratum is independently saved and retrievable. No architecture or
 optimizer is searched and no cache is rebuilt. A failed representative gate
 does not authorize an automatic shorter schedule or different precision.
+
+## Explicit Time Override (2026-09-07)
+
+The user explicitly accepted exceeding 12 hours and requested training anyway.
+The representative estimate was 45,353.313 s including the 20% reserve. Only
+the time gate is waived: the exact accepted numerical probe, model-source
+hashes, parameters, memory reserve, data, optimizer and 12-epoch schedule are
+checked by `runtime_override.json`. The cumulative ceiling becomes 24 hours.
+Each scheduled segment has a 14-hour PBS limit and pauses atomically after a
+completed shard at 13.5 hours. A serialized afterok successor resumes only the
+same last checkpoint; a completed manifest causes immediate validated exit.
+Thus shutdown of the desktop cannot interrupt the training/continuation chain.

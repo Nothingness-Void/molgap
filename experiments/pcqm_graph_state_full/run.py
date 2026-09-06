@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--preflight", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--representative", action="store_true")
+    parser.add_argument("--runtime-contract", type=Path)
     args = parser.parse_args()
     if args.mode == "preflight":
         if args.audit_dir is None:
@@ -26,7 +27,8 @@ def main():
     else:
         if args.preflight is None:
             parser.error("--preflight is required")
-        result = train(args.graph_dir, args.acceptance, args.preflight, args.output, "graphstate")
+        result = train(args.graph_dir, args.acceptance, args.preflight, args.output, "graphstate",
+                       runtime_contract_path=args.runtime_contract)
     print(json.dumps(result, indent=2), flush=True)
 
 

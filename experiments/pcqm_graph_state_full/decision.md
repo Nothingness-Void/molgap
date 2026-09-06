@@ -20,3 +20,17 @@ so the gate rejected the run before full training. This was a budget rejection,
 not a model-quality result. A representative multi-shard timing calibration
 was prepared under the unchanged scientific configuration; its method is
 specified in `protocol.md`.
+
+## Representative Gate and Time Override (2026-09-07)
+
+Eight shuffled train strata covered 196,608 measured molecules after warm-up.
+The estimate included measured per-shard IO and atomic-checkpoint cost and
+reached 45,353.313 s (12.598 h) with 20% reserve. Minimum GPU memory reserve
+was 98.793%; the model count was 3,665,809 and every measured FP32 step was
+finite. The old 12-hour time gate still rejected this result.
+
+The user explicitly waived that time ceiling while preserving the model and
+12 training epochs. The approved override retained strict numerical, memory,
+cache and source checks and allowed a 24-hour cumulative budget across at
+most two serialized 14-hour scheduler segments. Exact evidence is retained
+in `preflight_representative.json` and `runtime_override.json`.

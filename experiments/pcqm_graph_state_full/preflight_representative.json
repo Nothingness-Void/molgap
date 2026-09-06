@@ -1,0 +1,64 @@
+{
+  "status": "rejected",
+  "config": {
+    "seed": 42,
+    "epochs": 12,
+    "batch_size": 192,
+    "learning_rate": 0.00016,
+    "minimum_learning_rate": 1e-06,
+    "weight_decay": 1e-06,
+    "max_training_seconds": 43200,
+    "job_seconds": 41400,
+    "precision": "fp32_tf32_off"
+  },
+  "audit_sha256": "f3bd47b6d993d3afff9d53fefb583554478722525159f84b6c6a07a55f60dad4",
+  "code_sha256": "81943c1040a7a19667d651dacfb4243ca02be399de2bb0dbf680a845c6f946b3",
+  "acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+  "method": "8_strata_128_batches_after_8_warmup_plus_io_and_save",
+  "parts": [
+    {
+      "path": "timing_parts/stratum_000.json",
+      "sha256": "712022e203e6bbef1465d27b54df5c30033530f79af0c4b671525f0c55a08762"
+    },
+    {
+      "path": "timing_parts/stratum_009.json",
+      "sha256": "c0f76a7e4b7836e8c1ff6e58c838a924cbe05e9166e78e7815a66a6bee6f10cd"
+    },
+    {
+      "path": "timing_parts/stratum_019.json",
+      "sha256": "13fc167662cd3aab8bd52a8e846e5f205b84dce38e8d557d16e512e1a1a0c85a"
+    },
+    {
+      "path": "timing_parts/stratum_028.json",
+      "sha256": "c9720c139476cf94b789bdcd08c4fee367e3bebf3b28b3ee295ead4c92b01d4f"
+    },
+    {
+      "path": "timing_parts/stratum_038.json",
+      "sha256": "e3fdc1087ca8ca6ae8a349eb550f882d6b61701aaa8b3607a6f7fc6bbb99756e"
+    },
+    {
+      "path": "timing_parts/stratum_047.json",
+      "sha256": "6ae66768c0e8b070ae691369439d92e6a679ef0b7cbc299dca80fe714353e159"
+    },
+    {
+      "path": "timing_parts/stratum_057.json",
+      "sha256": "f940f17f13655744d90a3be9a49c3bbfdfa406c0f302ecdb09c047b7c23e92ea"
+    },
+    {
+      "path": "timing_parts/stratum_067.json",
+      "sha256": "fb58d0fdfa71bd20cdf2f1cb031e3c7932f5a96ac6c19aa98a7ee6a2e47a8afd"
+    }
+  ],
+  "arms": {
+    "graphstate": {
+      "projected_training_seconds": 45353.31306528632,
+      "sample_rows": 196608,
+      "epoch_compute_seconds": 3078.3120034870817,
+      "epoch_io_seconds": 65.63960568699986,
+      "memory_headroom": 0.9879274662461811,
+      "parameters": 3665809
+    }
+  },
+  "official_validation_read": false,
+  "official_test_used": false
+}

@@ -304,15 +304,40 @@ def representative_preflight(root: Path, acceptance_path: Path, audit_dir: Path,
     return result
 
 
-def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path, arm: str):
+def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path, arm: str,
+          *, runtime_contract_path: Path | None = None):
     config = config_for(arm)
     acceptance = checked_acceptance(acceptance_path)
     report = json.loads(preflight_path.read_text())
-    if (report["status"] != "accepted" or report["config"] != asdict(config)
-            or report["code_sha256"] != sha256_file(Path(__file__)) or arm not in report["arms"]):
-        raise RuntimeError("Missing or changed paired scratch preflight")
+    runtime_hash = None
+    if runtime_contract_path is None:
+        if (report["status"] != "accepted" or report["config"] != asdict(config)
+                or report["code_sha256"] != sha256_file(Path(__file__)) or arm not in report["arms"]):
+            raise RuntimeError("Missing or changed paired scratch preflight")
+    else:
+        contract = json.loads(runtime_contract_path.read_text())
+        if (arm != "graphstate" or contract["preflight_sha256"] != sha256_file(preflight_path)
+                or report["code_sha256"] != contract["preflight_code_sha256"]
+                or report["config"] != asdict(config)
+                or report["acceptance_sha256"] != ACCEPTANCE_SHA
+                or report["method"] != "8_strata_128_batches_after_8_warmup_plus_io_and_save"):
+            raise RuntimeError("Extended-runtime provenance or scientific contract changed")
+        if (set(contract["model_source_sha256"]) != {"pcqm_graph_state.py", "pcqm_gap_architecture.py", "gps.py"}
+                or not 0 < contract["segment_seconds"] < contract["total_seconds"]):
+            raise RuntimeError("Incomplete extended-runtime contract")
+        for filename, digest in contract["model_source_sha256"].items():
+            if Path(filename).name != filename or sha256_file(Path(__file__).with_name(filename)) != digest:
+                raise RuntimeError("Extended-runtime architecture source changed")
+        measured = report["arms"]["graphstate"]
+        if measured["parameters"] != 3665809 or measured["memory_headroom"] < .15:
+            raise RuntimeError("Only the timing gate may be waived")
+        config = replace(config, max_training_seconds=contract["total_seconds"], job_seconds=contract["segment_seconds"])
+        if measured["projected_training_seconds"] > config.max_training_seconds:
+            raise RuntimeError("Projection exceeds extended budget")
+        runtime_hash = sha256_file(runtime_contract_path)
     identity = {"arm": arm, "config": asdict(config), "preflight_sha256": sha256_file(preflight_path),
-                "acceptance_sha256": ACCEPTANCE_SHA, "code_sha256": sha256_file(Path(__file__))}
+                "acceptance_sha256": ACCEPTANCE_SHA, "code_sha256": sha256_file(Path(__file__)),
+                "runtime_contract_sha256": runtime_hash}
     device = _device()
     output.mkdir(parents=True, exist_ok=True)
     if (output / "completion_manifest.json").exists():
@@ -387,10 +412,13 @@ def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path,
             gc.collect()
             save(epoch, position + 1)
             print(f"{arm} ep{epoch:02d} shard={position + 1}/{len(records)} rows={rows}", flush=True)
-            if time.monotonic() - started >= config.job_seconds:
-                raise TimeoutError("Durable shard checkpoint saved; explicit resume required")
             if previous_seconds + time.monotonic() - started >= config.max_training_seconds:
-                raise TimeoutError("Cumulative 12-hour budget exhausted; checkpoint retained")
+                raise TimeoutError("Authorized cumulative budget exhausted; checkpoint retained")
+            if time.monotonic() - started >= config.job_seconds:
+                paused = {"status": "paused", "reason": "segment_budget", "epoch": epoch,
+                          "next_shard": position + 1, "checkpoint": str(last), "identity": identity}
+                atomic_json(output / "progress.json", paused)
+                return paused
         if rows != acceptance["counts"]["train"]:
             raise RuntimeError("Training row accounting differs")
         mae = None
