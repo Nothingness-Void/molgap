@@ -1,0 +1,33 @@
+{
+  "format": "molgap-kunshan-conjugated-cache-summary-v1",
+  "job_id": "121081124",
+  "terminal_state": "COMPLETED",
+  "elapsed": "00:11:43",
+  "node": "a08r1n17",
+  "source_commit": "2496c67097362d1ab9fe54145ef3fba33e73fdc5",
+  "source_archive_sha256": "a539426905fc3bf5967f97f872d06a9f672280c103ec9772160117ce09615605",
+  "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "cache_aggregate_sha256": "40dfb281a474a3cb240e867572e398ab6128b8e1977821ac4a0bc0f3f95edc05",
+  "manifest_sha256": "a3311a83f3332b59aa1ea1b547b9dcac8d44ee51084b96d487be3e5b9c3a4ce2",
+  "remote_acceptance_sha256": "c61fe483e23ac13e3be56e5e6f60768fd29d69c993978fa3d1f726bfe7af69c4",
+  "local_acceptance_sha256": "4a6effb1300b8ceae217d18fa0af58d9b2b3fed0117a5693e06f7dc64d336242",
+  "accepted": true,
+  "checked_graphs": 110000,
+  "role_counts": {"train": 100000, "validation": 10000},
+  "train": {
+    "components": 103790,
+    "component_atoms": 681164,
+    "graphs_with_components": 84108,
+    "max_components_per_graph": 4
+  },
+  "validation": {
+    "components": 10240,
+    "component_atoms": 67171,
+    "graphs_with_components": 8358,
+    "max_components_per_graph": 3
+  },
+  "gpu_used": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

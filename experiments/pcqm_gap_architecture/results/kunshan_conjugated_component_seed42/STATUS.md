@@ -1,8 +1,8 @@
 # Kunshan conjugated-component K3 status
 
-- Stage: deterministic CPU cache construction and acceptance.
-- Cache job: `121081124`, observed `RUNNING` on node `a08r1n17` in Kunshan
-  CPU partition `kshctest02`.
+- Stage: K3a descriptor-only paired GPU screen submitted.
+- Cache job `121081124` completed in `00:11:43` on `a08r1n17`. CPU acceptance
+  checked all 110,000 graphs and passed.
 - Source: `2496c67097362d1ab9fe54145ef3fba33e73fdc5`.
 - Source archive SHA-256:
   `a539426905fc3bf5967f97f872d06a9f672280c103ec9772160117ce09615605`.
@@ -25,9 +25,12 @@
   CPU environment was built with Torch `2.1.2+cpu`, PyG `2.6.1`, and NumPy
   `1.26.4`. A one-graph read-only smoke loaded the accepted `WedgeData` cache.
   The v5 task uses this isolated CPU runtime and does not load DTK/HSA.
-- After cache acceptance, K3a may submit exactly one paired seed-42 GPU screen:
-  fresh GraphState9 versus descriptor-only. K3b ComponentState remains locked
-  until K3a is accepted and attributed.
-- Official validation/test-dev remain unread. No model runs in this CPU stage.
+- Accepted cache aggregate SHA-256:
+  `40dfb281a474a3cb240e867572e398ab6128b8e1977821ac4a0bc0f3f95edc05`.
+- K3a job `121082200` was initially `PENDING (Priority)`. It trains fresh
+  GraphState9 versus descriptor-only under the frozen seed-42 contract.
+- K3b ComponentState remains locked until K3a is accepted and attributed.
+- Official validation/test-dev remain unread. No seed43/44 or full-data action
+  is authorized.
 - Coordinator task: `01a025a1-3b87-7781-8a91-f183193f7865`.
 - Luna Max monitor task: `01a04479-ca44-7d31-95c4-6be485f256cc`.

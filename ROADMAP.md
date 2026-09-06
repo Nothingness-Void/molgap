@@ -32,8 +32,9 @@ cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
 The K1 persistent-VectorState and K2 projected-moment readout screens are
 closed below the material-gain threshold. K3 conjugated-component
 communication is the next released question; its descriptor-only control must
-separate chemical-input gain from communication gain. CPU cache job `121081124`
-is the active prerequisite; K3a GPU submission waits for cache acceptance.
+separate chemical-input gain from communication gain. The CPU cache passed;
+K3a descriptor-only paired job `121082200` is active, while K3b remains locked
+pending accepted attribution.
 
 ## Mandatory gates
 
