@@ -66,15 +66,14 @@ communication against that exact control on Kunshan. Live state is in
 `experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
 
 Both Kaggle accounts were reported restored to 30 weekly GPU-hours on
-2026-09-06. Two independent seed-42 paired screens are running under
-`experiments/pcqm_gap_architecture/local_statistics_seed42_protocol.md`:
-PNA-style neighborhood statistics on account 1 and gated persistent-edge
-retention on account 2. Their live identities are recorded in
-`experiments/pcqm_gap_architecture/results/pna_statistics_graphstate_seed42/STATUS.md`
+2026-09-06. The two independent seed-42 paired local-state screens completed
+and passed no-model acceptance. PNA-style neighborhood statistics and gated
+persistent-edge retention were both slightly worse than their fresh
+GraphState9 controls, so both mechanisms are closed without more seeds. Exact
+evidence is in
+`experiments/pcqm_gap_architecture/results/pna_statistics_graphstate_seed42/decision.md`
 and
-`experiments/pcqm_gap_architecture/results/edge_retention_graphstate_seed42/STATUS.md`.
-They do not duplicate K3b and do not authorize more seeds or full-data
-training.
+`experiments/pcqm_gap_architecture/results/edge_retention_graphstate_seed42/decision.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

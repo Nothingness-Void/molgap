@@ -14,7 +14,6 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
-| P0 | B-KAGGLE-LOCAL-STATE | Run two independent paired seed-42 local-state screens across the restored Kaggle accounts | Accept PNA statistics and gated edge retention without automatic extra seeds |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -41,11 +40,11 @@ full-data action are implied.
 
 On 2026-09-06 the user reported a restored weekly allowance of 30 GPU-hours on
 each Kaggle account. The two remaining random-initialized local-state questions
-are frozen in `local_statistics_seed42_protocol.md`: account 1 tests shared
-PNA-style neighborhood statistics and account 2 tests gated persistent-edge
-retention. They answer distinct questions with separate fresh controls; neither
-job authorizes confirmation seeds. GAPE remains a separate pretraining track
-and is not part of these architecture claims.
+were frozen in `local_statistics_seed42_protocol.md` and completed on 2026-09-07.
+PNA-style neighborhood statistics and gated persistent-edge retention both
+lost to their separate fresh GraphState9 controls; both are closed without
+confirmation seeds. GAPE remains a separate pretraining track and was not part
+of these architecture claims.
 
 ## Mandatory gates
 

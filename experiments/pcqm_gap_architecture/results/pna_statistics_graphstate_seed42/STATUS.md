@@ -1,6 +1,6 @@
 # PNA-statistics GraphState seed-42 status
 
-- Stage: Kaggle1 paired T4x2 screen running.
+- Stage: complete, mechanically accepted, scientifically rejected.
 - Kernel: `nothingnessvoid/molgap-pcqm-pna-statistics-graphstate-s42`, version 1.
 - Source dataset: `nothingnessvoid/molgap-pcqm-local-statistics-source`, version 2.
 - Frozen source: `4226f819d9e997f3bae9bf2ad2c0f2d517c1ba1c`.
@@ -13,4 +13,6 @@
   before the GPU kernel was submitted; no GPU work used version 1.
 - Official validation/test-dev remain unread. No extra seed or full-data action
   is authorized.
-
+- Decision: `decision.md`.
+- Local no-model acceptance:
+  `platforms/_records/kaggle/training/pcqm_gap100k_pna_statistics_graphstate_seed42_v1/acceptance.json`.
