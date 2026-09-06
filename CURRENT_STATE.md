@@ -17,18 +17,25 @@
 
 ## Active objective
 
-Track B's official-full geometry warm-start is closed. The eight-epoch successor
-passed A100 preflight and completed seven epochs before patience-based early
-stopping. Its best official-validation Gap MAE was `0.115825 eV`, versus
-`0.099638 eV` for the exact source OGB-rich EdgeState GPS9 checkpoint on the
-same split (`+0.016186 eV`, 16.25% worse). No official test role was read.
+Desktop accepted the server's frozen GraphState9 three-seed handoff. The
+representative A100 calibration passed numerical/memory checks but exceeded
+the former 12-hour time gate; the user explicitly waived that ceiling.
+The single full-data run is submitted as serialized segments `1450742`,
+`1450751`, `1450752`, and `1450753` (all `.ccpbs1`). A four-hour scheduler
+window avoids the `(long)` maintenance hold; each segment checkpoints at
+3.5 hours and the successor continues the unchanged 12-epoch schedule.
+The exact architecture, source provenance, runtime authorization and fixed final-epoch training
+contract are under `experiments/pcqm_graph_state_full/`. Accepted full geometry
+caches are reused. Server-side architecture discovery remains independent.
 
-The completion manifest, best checkpoint, metrics, and validation predictions
-are hash-consistent. PBS reported a host-memory cgroup excess only after those
-artifacts and the final JSON were written; this is retained as an infrastructure
-warning, not grounds to rerun a scientifically negative result. No IMS job or
-heartbeat remains active. Evidence is under
-`experiments/pcqm_geometry_warmstart/`.
+The P0 numerical audit completed and passed downloaded-artifact acceptance.
+Its source-function, dropout and precision findings are retained under
+`experiments/pcqm_geometry_scratch_control/`. That directory's older paired
+scratch preflight stopped before training and was superseded by GraphState9;
+no old paired-training successor should be submitted.
+
+The historical full-data geometry warm-start remains closed; its evidence is
+in `experiments/pcqm_geometry_warmstart/`. No monitor heartbeat is active.
 
 ## Prior architecture evidence
 
@@ -53,7 +60,8 @@ heartbeat remains active. Evidence is under
 - Molecular-research-server access remains restricted to
   `/lustre/home/users/sm2/chou/`; the active chain is fail-closed and bounded.
 - Track B predicts Gap directly and cannot alter the Track A production
-  registry. Official validation/test-dev and future sealed data are locked.
+  registry. Official validation use is limited to the frozen desktop protocol;
+  official test roles and future sealed data remain locked.
 - Train and inference geometry must use the same ETKDG construction.
 - Every new remote run needs a protocol, immutable cache acceptance, atomic
   checkpointing, independently retrievable outputs, and a dated decision.

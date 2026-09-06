@@ -34,3 +34,10 @@ The user explicitly waived that time ceiling while preserving the model and
 cache and source checks and allowed a 24-hour cumulative budget across at
 most two serialized 14-hour scheduler segments. Exact evidence is retained
 in `preflight_representative.json` and `runtime_override.json`.
+
+The 14-hour scheduler request 1450739 was held as `(long)` beyond maintenance
+and cancelled while still queued. Four four-hour segments were then submitted
+with serialized afterok dependencies and 3.5-hour atomic pause boundaries.
+These are segments of one training run, not four models; a complete manifest
+makes later segments exit without further optimization. Exact job IDs are
+retained in `launch.json`.

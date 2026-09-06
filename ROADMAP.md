@@ -13,15 +13,19 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-PCQM100K-RING-HIERARCHY-SEED42 | Accept the frozen smallest-ring cache, then run one seed-42 candidate | Cache passes first; candidate beats the frozen comparator or the mechanism is closed |
-| P1 | B-PCQM-A100-GATE | Benchmark the frozen winner on official-train graphs | Throughput, epoch time, and memory reserve meet the protocol |
-| P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
-| P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
+| P0 | B-PCQM-A100-GATE | Accept the frozen GraphState9 A100 measurements | Numerical/memory checks passed; the user explicitly waived the 12-hour timing gate |
+| P1 | B-PCQM-FULL-TRAIN | Complete exactly one randomly initialized GraphState9 on official train | Fixed 12-epoch run, serialized durable segments under the approved runtime override |
+| P2 | B-PCQM-OFFICIAL-VALID | Evaluate the fixed final-epoch model once | Identity, prediction hashes and arithmetic pass |
 | P3 | B-PCQM-TESTDEV | Produce the final test-dev submission | Explicit user authorization after official validation |
 
-The active experiment owns its detailed status and protocol at
-`experiments/pcqm_gap_architecture/`. Do not start a GPU successor to P0
-before cache acceptance.
+The 2026-09-06 user correction selected the server's accepted GraphState9
+handoff, superseding the unstarted paired scratch proposal. The desktop
+protocol and source evidence live at `experiments/pcqm_graph_state_full/`.
+The completed numerical audit is retained at
+`experiments/pcqm_geometry_scratch_control/audit_acceptance.json`.
+Do not duplicate server-side discovery; its live queue belongs to the
+`molgap-server` branch. Older ring/torsion/dual-stream priorities in historical
+desktop documents are not fresh submissions.
 
 ## Mandatory gates
 
@@ -60,7 +64,7 @@ before cache acceptance.
 
 | Question | Trigger | Bounded action |
 |---|---|---|
-| Compact Cartesian invariant body-order basis | Ring hierarchy fails and a preflight fits the same ceiling | Isolate one CACE-like invariant basis; no equivariant tensors or new optimizer |
+| New architecture discovery | Server supplies a separately accepted handoff | Review its explicit commits and gate before desktop full training |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
 | Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |
 | Geometry denoising teacher | Architecture is selected and receives a separate budget | Use the literature configuration while official roles remain sealed |
