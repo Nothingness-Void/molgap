@@ -1,0 +1,25 @@
+{
+  "format": "molgap-pcqm-gap100k-lappe-cache-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "5b7beefbd0da48f57d77ad8c424e31e3a3d28119",
+  "aggregate_sha256": "26084ba7d80f872520030713fbe87369c8686cb31859ac04e354d670e6a0ebc7",
+  "role_graphs": {
+    "train": 100000,
+    "validation": 10000
+  },
+  "role_valid_eigenmodes": {
+    "train": 795186,
+    "validation": 79503
+  },
+  "disconnected_graphs": {
+    "train": 10,
+    "validation": 1
+  },
+  "remote_elapsed_s": 260.859002659,
+  "acceptance_sha256": "b295dd5d7525f92bf70827c841846c9a156da0f497fa07ea8348cc460c9593fc",
+  "manifest_sha256": "00992084d9735b82b47ebde28aaec5356fabb11fd0aa6fec9dfdc500a5ce0ca9",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
