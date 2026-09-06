@@ -14,7 +14,6 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
-| P0 | B-DIRECTED-BOND-S42 | Compare non-backtracking directed bond memory with fresh GraphState9 on Kaggle1 | Accept paired seed-42 artifacts and close or retain the mechanism |
 | P0 | B-SIGNNET-LAPPE-S42 | Build/accept spectral cache, then compare SignNet-LapPE with fresh GraphState9 on Kaggle2 | Cache passes before one paired seed-42 GPU screen |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
@@ -51,9 +50,10 @@ of these architecture claims.
 Two materially distinct seed-42 Kaggle questions are now released under
 `directed_bond_graphstate_seed42_protocol.md` and
 `signnet_lappe_graphstate_seed42_protocol.md`. The first uses the accepted
-wedge cache directly for directional edge-to-edge memory. The second must pass
-its CPU normalized-Laplacian cache gate before GPU use. They use separate
-accounts and neither authorizes confirmation seeds.
+wedge cache directly for directional edge-to-edge memory; it completed with a
+sub-threshold weak positive result and no confirmation. The second passed its
+CPU normalized-Laplacian cache gate and entered its one paired GPU screen.
+Neither route authorizes confirmation seeds automatically.
 
 ## Mandatory gates
 
@@ -76,6 +76,11 @@ accounts and neither authorizes confirmation seeds.
   fine-tuning, distillation, residual target, or prediction fusion.
 - Use only the frozen official-train-derived 100K/10K split for PCQM
   architecture selection. Never tune on common/OOD/P8-hard or sealed data.
+- Keep the main databases unchanged: Track B stays on PCQM4Mv2 and Track A
+  stays on the existing repaired-2M PubChemQC corpus. External datasets may
+  support an explicitly labeled audit, OOD evaluation, or separately approved
+  teacher route, but may not replace or silently augment the main training
+  database.
 - Do not access the molecular-research server until a candidate passes the
   three-seed Kaggle gate; later access is restricted to
   `/lustre/home/users/sm2/chou/`.

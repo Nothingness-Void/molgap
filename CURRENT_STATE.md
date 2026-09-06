@@ -76,8 +76,10 @@ and
 `experiments/pcqm_gap_architecture/results/edge_retention_graphstate_seed42/decision.md`.
 
 Two new one-seed information-flow questions were released on 2026-09-07.
-Kaggle1 is running a fresh paired GraphState9 versus non-backtracking directed
-bond-memory screen. The Kaggle2 eight-mode SignNet-LapPE CPU cache passed
+The Kaggle1 non-backtracking directed-bond candidate produced a small paired
+seed-42 gain, but it remained below the `0.001 eV` material threshold and cost
+about 10% throughput; it is retained only as weak positive evidence without
+confirmation seeds. The Kaggle2 eight-mode SignNet-LapPE CPU cache passed
 no-model acceptance, and its single fresh paired T4x2 GPU comparison is now
 running. Live identities are in
 `experiments/pcqm_gap_architecture/results/directed_bond_graphstate_seed42/STATUS.md`
@@ -133,6 +135,11 @@ records are on `archive` and indexed by
   gate; later access is restricted to `/lustre/home/users/sm2/chou/`.
 - Track B predicts Gap directly and cannot alter the Track A production
   registry. Official validation/test-dev and future sealed data are locked.
+- The database contracts are unchanged: Track B remains on the official
+  PCQM4Mv2 data, and Track A remains on the existing repaired-2M PubChemQC
+  corpus. External databases and public datasets are reference, audit, or
+  separately labeled OOD/teacher material only; they are not replacements or
+  silent training augmentation.
 - Train and inference geometry must use the same ETKDG construction.
 - Every new remote run needs a protocol, immutable cache acceptance, atomic
   checkpointing, independently retrievable outputs, and a dated decision.
