@@ -1,0 +1,18 @@
+{
+  "format": "molgap-pcqm-signnet-lappe-cache-launch-v1",
+  "submitted_at": "2026-09-07T00:45:31+09:00",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-pcqm-signnet-lappe-cache-s42",
+  "kernel_version": 1,
+  "status_at_launch_check": "RUNNING",
+  "source_dataset": "kaseichou/molgap-pcqm-directed-spectral-source",
+  "source_dataset_version": 1,
+  "source_commit": "5b7beefbd0da48f57d77ad8c424e31e3a3d28119",
+  "parent_geometry_cache_kernel": "kaseichou/molgap-pcqm-geometry-cache-s42",
+  "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "gpu_used": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "gpu_successor_submitted": false
+}
