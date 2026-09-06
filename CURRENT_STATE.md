@@ -65,6 +65,13 @@ matched control. K3b job `121111542` tests persistent ComponentState
 communication against that exact control on Kunshan. Live state is in
 `experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
 
+Both Kaggle accounts were reported restored to 30 weekly GPU-hours on
+2026-09-06. Two independent seed-42 paired screens are being prepared under
+`experiments/pcqm_gap_architecture/local_statistics_seed42_protocol.md`:
+PNA-style neighborhood statistics on account 1 and gated persistent-edge
+retention on account 2. They do not duplicate K3b and do not authorize more
+seeds or full-data training.
+
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
 `experiments/_closed/pcqm_server_archive_index.md`.
