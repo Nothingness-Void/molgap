@@ -14,13 +14,11 @@ for path in "$ROOT" "$CODE" "$INPUT_CACHE"; do
 done
 cd "$ROOT"
 module purge
-module load compiler/dtk/23.10
-module load mpi/openmpi/gcc-9.3.0/4.1.5
 export PYTHONNOUSERSITE=1
 export PYTHONPATH="$CODE/src"
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
-PYTHON=/public/home/scnaqkfcy3/molgap-envs/graphstate-dtk2310-py310/bin/python
+PYTHON=/public/home/scnaqkfcy3/molgap-envs/cpu-cache-py311/bin/python
 "$PYTHON" "$CODE/experiments/pcqm_gap_architecture/build_kunshan_conjugated_cache.py" \
   --input-root "$INPUT_CACHE" --output-root "$ROOT/cache" \
   --source-commit "$SOURCE_COMMIT"
