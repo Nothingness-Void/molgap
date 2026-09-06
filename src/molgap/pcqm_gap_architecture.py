@@ -2289,6 +2289,13 @@ class OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper(
 
 def make_pcqm_gap_encoder(candidate: str):
     """Build one frozen first-round candidate with a scalar Gap head."""
+    if candidate in {
+        "ogb_distance_angle_pna_statistics_triangle_edge_state_graph_state9",
+        "ogb_distance_angle_retention_triangle_edge_state_graph_state9",
+    }:
+        from .pcqm_local_statistics import make_local_statistics_encoder
+
+        return make_local_statistics_encoder(candidate)
     common = {
         "in_channels": 9,
         "edge_dim": 3,

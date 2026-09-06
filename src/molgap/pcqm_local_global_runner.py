@@ -20,6 +20,8 @@ if RUN_MODE not in {
     "ring_graphstate",
     "contact_graphstate",
     "body_order_graphstate",
+    "pna_statistics_graphstate",
+    "edge_retention_graphstate",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
@@ -34,6 +36,8 @@ if RUN_MODE == "contact_graphstate" and SEED != 42:
     raise RuntimeError("ContactState mode requires seed 42")
 if RUN_MODE == "body_order_graphstate" and SEED != 42:
     raise RuntimeError("Body-order moment mode requires seed 42")
+if RUN_MODE in {"pna_statistics_graphstate", "edge_retention_graphstate"} and SEED != 42:
+    raise RuntimeError("Local-statistics modes require seed 42")
 
 OUT = Path(
     os.environ.get(
@@ -81,8 +85,27 @@ BODY_ORDER_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_body_order_triangle_edge_state_graph_state9",
 )
+PNA_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_pna_statistics_triangle_edge_state_graph_state9",
+)
+RETENTION_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_retention_triangle_edge_state_graph_state9",
+)
+PAIRED_GRAPHSTATE_MODES = {
+    "ring_graphstate",
+    "contact_graphstate",
+    "body_order_graphstate",
+    "pna_statistics_graphstate",
+    "edge_retention_graphstate",
+}
 CANDIDATES = (
-    BODY_ORDER_GRAPHSTATE_CANDIDATES
+    PNA_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "pna_statistics_graphstate"
+    else RETENTION_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "edge_retention_graphstate"
+    else BODY_ORDER_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "body_order_graphstate"
     else RING_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "ring_graphstate"
@@ -100,6 +123,8 @@ EXPECTED_GLOBAL_BLOCKS = {
     RING_GRAPHSTATE_CANDIDATES[1]: (),
     CONTACT_GRAPHSTATE_CANDIDATES[1]: (),
     BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: (),
+    PNA_GRAPHSTATE_CANDIDATES[1]: (),
+    RETENTION_GRAPHSTATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
     "candidate": BASELINE,
@@ -107,13 +132,13 @@ FROZEN_COMPARATOR = {
     "validation_gap_mae_eV": (
         0.13012409210205078
         if RUN_MODE
-        in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
+        in PAIRED_GRAPHSTATE_MODES
         else 0.1353926807641983
     ),
     "acceptance": (
         "results/local_global_allocation_seed42/acceptance.json"
         if RUN_MODE
-        in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
+        in PAIRED_GRAPHSTATE_MODES
         else "results/geometry_bottom_fusion_multiseed/acceptance.json"
     ),
 }
@@ -124,7 +149,7 @@ MAX_EPOCHS = 40
 PATIENCE = 8
 PARAMETER_BUDGET = 5_200_000
 SEARCH_BUDGET_S = 39_600
-if RUN_MODE in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}:
+if RUN_MODE in PAIRED_GRAPHSTATE_MODES:
     PARAMETER_BUDGET = 4_000_000
     SEARCH_BUDGET_S = 14_400
 EXPECTED_GPU_COUNT = 2
@@ -144,7 +169,17 @@ EXPECTED_PARAMETER_COUNTS = {
     RING_GRAPHSTATE_CANDIDATES[1]: 3_723_849,
     CONTACT_GRAPHSTATE_CANDIDATES[1]: 3_700_321,
     BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: 3_681_329,
+    PNA_GRAPHSTATE_CANDIDATES[1]: 3_724_755,
+    RETENTION_GRAPHSTATE_CANDIDATES[1]: 3_743_281,
 }
+
+
+def uses_pna_statistics(candidate: str) -> bool:
+    return candidate == PNA_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_edge_retention(candidate: str) -> bool:
+    return candidate == RETENTION_GRAPHSTATE_CANDIDATES[1]
 
 
 def uses_ring_hierarchy(candidate: str) -> bool:
@@ -627,6 +662,32 @@ def initialization_preflight() -> list[dict]:
             )
             if not body_order_injection_zero:
                 raise RuntimeError("Body-order moment injection is not zero")
+        pna_statistics_present = hasattr(model, "pna_statistics")
+        if pna_statistics_present != uses_pna_statistics(candidate):
+            raise RuntimeError(f"PNA-statistics identity changed for {candidate}")
+        pna_injection_zero = True
+        if pna_statistics_present:
+            value = model.pna_statistics.value
+            pna_injection_zero = bool(torch.count_nonzero(value.weight) == 0) and bool(
+                torch.count_nonzero(value.bias) == 0
+            )
+            if not pna_injection_zero:
+                raise RuntimeError("PNA-statistics return is not zero")
+        edge_retention_present = uses_edge_retention(candidate)
+        retention_modules_present = all(
+            hasattr(update, "retention_value") for update in model.edge_updates
+        )
+        if retention_modules_present != edge_retention_present:
+            raise RuntimeError(f"Edge-retention identity changed for {candidate}")
+        retention_injection_zero = True
+        if edge_retention_present:
+            retention_injection_zero = all(
+                bool(torch.count_nonzero(update.retention_value.weight) == 0)
+                and bool(torch.count_nonzero(update.retention_value.bias) == 0)
+                for update in model.edge_updates
+            )
+            if not retention_injection_zero:
+                raise RuntimeError("Edge-retention return is not zero")
         rows.append(
             {
                 "candidate": candidate,
@@ -639,6 +700,10 @@ def initialization_preflight() -> list[dict]:
                 "contact_injection_zero": contact_injection_zero,
                 "body_order_moment_present": body_order_moment_present,
                 "body_order_injection_zero": body_order_injection_zero,
+                "pna_statistics_present": pna_statistics_present,
+                "pna_injection_zero": pna_injection_zero,
+                "edge_retention_present": edge_retention_present,
+                "retention_injection_zero": retention_injection_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -702,6 +767,15 @@ def gpu_preflight(
         )
         if not body_order_injection_zero:
             raise RuntimeError("Body-order moment injection is not zero")
+    pna_statistics_present = hasattr(model, "pna_statistics")
+    if pna_statistics_present != uses_pna_statistics(candidate):
+        raise RuntimeError(f"PNA-statistics identity changed for {candidate}")
+    edge_retention_present = uses_edge_retention(candidate)
+    retention_modules_present = all(
+        hasattr(update, "retention_value") for update in model.edge_updates
+    )
+    if retention_modules_present != edge_retention_present:
+        raise RuntimeError(f"Edge-retention identity changed for {candidate}")
     initial_function_structurally_equal_to_baseline = True
     if uses_body_order_moment(candidate):
         initial_function_structurally_equal_to_baseline = (
@@ -747,6 +821,22 @@ def gpu_preflight(
             and bool(torch.isfinite(gradient).all())
             and int(torch.count_nonzero(gradient)) > 0
         )
+    pna_return_gradient_nonzero = True
+    if pna_statistics_present:
+        gradient = model.pna_statistics.value.weight.grad
+        pna_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
+    retention_return_gradient_nonzero = True
+    if edge_retention_present:
+        retention_return_gradient_nonzero = all(
+            update.retention_value.weight.grad is not None
+            and bool(torch.isfinite(update.retention_value.weight.grad).all())
+            and int(torch.count_nonzero(update.retention_value.weight.grad)) > 0
+            for update in model.edge_updates
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -765,6 +855,10 @@ def gpu_preflight(
             initial_function_structurally_equal_to_baseline
         ),
         "body_order_return_gradient_nonzero": body_order_return_gradient_nonzero,
+        "pna_statistics_present": pna_statistics_present,
+        "pna_return_gradient_nonzero": pna_return_gradient_nonzero,
+        "edge_retention_present": edge_retention_present,
+        "retention_return_gradient_nonzero": retention_return_gradient_nonzero,
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -782,6 +876,8 @@ def gpu_preflight(
             "contact_return_gradient_nonzero",
             "initial_function_structurally_equal_to_baseline",
             "body_order_return_gradient_nonzero",
+            "pna_return_gradient_nonzero",
+            "retention_return_gradient_nonzero",
         )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
@@ -1104,6 +1200,16 @@ def train_one(
                 if uses_body_order_moment(candidate)
                 else "none"
             ),
+            "pna_neighborhood_statistics": (
+                "shared-mean-max-min-std-logdegree-rank64-zero-return"
+                if uses_pna_statistics(candidate)
+                else "none"
+            ),
+            "edge_state_retention": (
+                "per-layer-rank32-gated-zero-start-correction"
+                if uses_edge_retention(candidate)
+                else "none"
+            ),
         },
         "artifacts": {
             "best_model": str(best_model_path.relative_to(OUT)),
@@ -1219,11 +1325,7 @@ def select(runs: list[dict]) -> tuple[str, bool, list[dict]]:
                 "throughput_ratio": row["mean_throughput_graphs_per_s"]
                 / baseline["mean_throughput_graphs_per_s"],
             }
-        if RUN_MODE not in {
-            "ring_graphstate",
-            "contact_graphstate",
-            "body_order_graphstate",
-        }:
+        if RUN_MODE not in PAIRED_GRAPHSTATE_MODES:
             comparison["full_gps_validation_gap_mae_eV"] = comparison[
                 "baseline_validation_gap_mae_eV"
             ]
@@ -1411,16 +1513,14 @@ def main() -> None:
             "paired_against_baseline": comparisons,
             "paired_against_fresh_full_gps": (
                 comparisons
-                if RUN_MODE
-                not in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
+                if RUN_MODE not in PAIRED_GRAPHSTATE_MODES
                 else None
             ),
             "selected_candidate": selected_candidate,
             "selected_strictly_improves_baseline": positive,
             "selected_strictly_improves_full_gps": (
                 positive
-                if RUN_MODE
-                not in {"ring_graphstate", "contact_graphstate", "body_order_graphstate"}
+                if RUN_MODE not in PAIRED_GRAPHSTATE_MODES
                 else None
             ),
             "search_budget_s": SEARCH_BUDGET_S,
