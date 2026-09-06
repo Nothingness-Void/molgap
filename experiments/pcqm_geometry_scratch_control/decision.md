@@ -12,3 +12,30 @@ prepared to resolve these uncertainties before any scratch successor.
 
 No new accuracy outcome was available at preparation. Historical negative
 evidence remains in `../pcqm_geometry_warmstart/eight_epoch_result.json`.
+
+## Completed P0 Audit (2026-09-06)
+
+IMS job 1448851 completed the full 73,545-row replay. Source and mapped
+candidate FP32 MAEs were 0.09969422899247901 and 0.0996942296343565 eV;
+the largest paired difference was 2.86102294921875e-6 eV. Candidate FP16 MAE
+was 0.09963855845687164 eV, reproducing the retained source performance.
+This supports preservation of the initial evaluation function on the complete
+accepted validation population.
+
+The actual source dropout was 0.05; the candidate used 0.10. Four fixed
+training-batch FP32 numerical probes had finite gradients and updates. Three
+FP16 probes overflowed at the default initial GradScaler scale. Such initial
+overflows may be resolved by scaler backoff; these probes do not prove
+persistent FP16 failure or explain the previous training regression. Train-
+mode dropout also prevents interpreting gradient differences as pure rounding
+error. The audit supports a fixed FP32 scratch control, not another tuning
+round on the official validation set.
+
+The local paired-forward test caught a NameError in the later no-op atom-block
+hook (`layer` was undefined in the pure Triangle loop). Enumerating the loop
+repaired that interface without changing the accepted geometry mechanism.
+The original architecture/evidence commits were verified as e083bee, bfd8279,
+and ba320fa. No new server-side discovery module was selected.
+
+Downloaded audit parts and recomputed arithmetic are summarized by
+`audit_acceptance.json`; launch identities are recorded in `launch.json`.

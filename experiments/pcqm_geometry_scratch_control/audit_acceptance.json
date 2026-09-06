@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "rows": 73545,
+  "parts": 8,
+  "identity": {
+    "format": "pcqm-geometry-audit-v1",
+    "source_sha256": "ca5118128e5d1626901d054fcc152863a2fb40678c1ae914be9ea42db7e447fb",
+    "acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+    "reference_sha256": "98c27df7291841f2147672d76d2924adbc0b96822938fab31239e5971260ea56",
+    "config_sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15",
+    "code_sha256": "247bfe6f0f35afc4807582706aa0c63430b22628f0d69259d33f29c604385613"
+  },
+  "raw_result_sha256": "f3bd47b6d993d3afff9d53fefb583554478722525159f84b6c6a07a55f60dad4",
+  "mae_eV": {
+    "source_fp32": 0.09969422899247901,
+    "source_fp16": 0.09963943922622612,
+    "candidate_fp32": 0.0996942296343565,
+    "candidate_fp16": 0.09963855845687164
+  },
+  "initial_max_difference_eV": 2.86102294921875e-06,
+  "source_dropout": 0.05,
+  "candidate_dropout": 0.1,
+  "fp32_finite_probes": 4,
+  "fp16_overflow_probes_at_initial_scale": 3,
+  "causal_attribution": "not_established; initial_scaler_overflow_can_be_transient",
+  "official_test_used": false,
+  "model_inference_executed_during_acceptance": false
+}

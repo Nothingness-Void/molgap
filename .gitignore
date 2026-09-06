@@ -168,3 +168,7 @@ production/04_evaluate/project_freeze/figures/source/*.png
 production/04_evaluate/project_freeze/figures_dark/
 production/04_evaluate/project_freeze/figures_dark_final/
 tmp/
+
+# Local transport snapshots and row-level numerical audit outputs.
+platforms/_records/ims/geometry_scratch_audit/
+platforms/_records/ims/geometry_scratch_*.tar

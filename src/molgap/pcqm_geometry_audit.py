@@ -85,6 +85,47 @@ def numeric_step(model, batch, mean, std, amp: bool) -> dict:
             "gradient_norm": float(norm), "update_l2": change, "gradients": grads}
 
 
+def accept_audit_outputs(directory: Path, output: Path) -> dict:
+    """Accept downloaded audit parts without executing a model."""
+    result_path = directory / "result.json"
+    result = json.loads(result_path.read_text())
+    completion = json.loads((directory / "completion_manifest.json").read_text())
+    if result["status"] != "accepted" or completion["result_sha256"] != sha256_file(result_path):
+        raise RuntimeError("Incomplete/corrupt audit result")
+    payloads = []
+    for record in result["parts"]:
+        part = directory / record["path"]
+        if sha256_file(part) != record["sha256"]:
+            raise RuntimeError("Downloaded audit part hash changed")
+        saved = torch.load(part, map_location="cpu", weights_only=False)
+        if saved["identity"] != result["identity"]:
+            raise RuntimeError("Downloaded audit part identity changed")
+        payloads.append(saved["payload"])
+    data = {key: torch.cat([p[key] for p in payloads]) for key in payloads[0]}
+    if len(data["source_idx"]) != 73545 or len(torch.unique(data["source_idx"])) != 73545:
+        raise RuntimeError("Incomplete audit identity coverage")
+    if not all(bool(torch.isfinite(value).all()) for value in data.values()):
+        raise RuntimeError("Non-finite audit predictions")
+    maes = {key: float((data[key].double() - data["target_eV"].double()).abs().mean()) for key in result["mae_eV"]}
+    for key, value in maes.items():
+        if not math.isclose(value, result["mae_eV"][key], abs_tol=1e-12):
+            raise RuntimeError("Audit metric recomputation differs")
+    difference = float((data["source_fp32"] - data["candidate_fp32"]).abs().max())
+    if difference > 2e-5 or not all(p["fp32"]["finite"] for p in result["numerical_steps"]):
+        raise RuntimeError("FP32 audit gate failed")
+    compact = {"status": "accepted", "rows": 73545, "parts": len(payloads),
+               "identity": result["identity"], "raw_result_sha256": sha256_file(result_path),
+               "mae_eV": maes, "initial_max_difference_eV": difference,
+               "source_dropout": result["source_config_dropout"],
+               "candidate_dropout": result["candidate_factory_dropout"],
+               "fp32_finite_probes": sum(p["fp32"]["finite"] for p in result["numerical_steps"]),
+               "fp16_overflow_probes_at_initial_scale": sum(not p["fp16"]["finite"] for p in result["numerical_steps"]),
+               "causal_attribution": "not_established; initial_scaler_overflow_can_be_transient",
+               "official_test_used": False, "model_inference_executed_during_acceptance": False}
+    atomic_json(output, compact)
+    return compact
+
+
 def run_audit(graph_dir: Path, acceptance_path: Path, source_path: Path,
               config_path: Path, reference_path: Path, output_dir: Path) -> dict:
     acceptance = checked_acceptance(acceptance_path)

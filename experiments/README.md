@@ -1,5 +1,7 @@
 # Experiments
 
+- `pcqm_geometry_scratch_control/`: complete initialization/precision audit
+  followed by the authorized matched full-data random-initialization control.
 - `pcqm_geometry_warmstart/`: fail-closed official-PCQM warm-start of the
   accepted distance/angle Sparse Triangle EdgeState GPS9.
 

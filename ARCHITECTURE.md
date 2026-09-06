@@ -20,6 +20,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `pcqm_geometry_audit.py` | Sharded source-function replay and precision diagnostics | Auditing geometry weight transfer without refitting |
+| `pcqm_geometry_scratch.py` | Matched full-data scratch control and shard-level resume | Comparing the accepted pure Triangle and distance-angle models |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
