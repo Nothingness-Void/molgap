@@ -2,8 +2,9 @@
 
 Kaggle2 CPU kernel `kaseichou/molgap-pcqm-signnet-lappe-cache-s42`
 version 1 ended with an implementation-only import error before any shard.
-The diagnosis is `cpu_v1_failure_diagnosis.md`. An unchanged-science version-2
-retry may extract the frozen source archive before graph deserialization.
+The diagnosis is `cpu_v1_failure_diagnosis.md`. The unchanged-science version-2
+retry was `QUEUED` at its single post-submission check; it extracts the frozen
+source archive before graph deserialization.
 No GPU SignNet-LapPE task has been submitted.
 
 On completion, download the cache and run
