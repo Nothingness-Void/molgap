@@ -1,0 +1,40 @@
+{
+  "format": "molgap-pcqm-signnet-lappe-graphstate-summary-v1",
+  "kernel": "kaseichou/molgap-pcqm-signnet-lappe-graphstate-s42",
+  "kernel_version": 1,
+  "seed": 42,
+  "control": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameter_count": 3665809,
+    "best_epoch": 39,
+    "train_mae_eV_at_best_epoch": 0.11425059909582139,
+    "validation_gap_mae_eV": 0.12986214458942413,
+    "generalization_gap_eV": 0.01561154549360274,
+    "mean_throughput_graphs_per_s": 561.9232246550565,
+    "preflight_peak_memory_bytes": 270532608
+  },
+  "candidate": {
+    "candidate": "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
+    "parameter_count": 3673109,
+    "best_epoch": 39,
+    "train_mae_eV_at_best_epoch": 0.11314444642066955,
+    "validation_gap_mae_eV": 0.13057009875774384,
+    "generalization_gap_eV": 0.01742565233707429,
+    "mean_throughput_graphs_per_s": 551.9377571142383,
+    "preflight_peak_memory_bytes": 274726912
+  },
+  "candidate_minus_control_eV": 0.0007079541683197021,
+  "relative_mae_degradation": 0.0054515822956566,
+  "generalization_gap_increase_eV": 0.00181410684347155,
+  "parameter_delta": 7300,
+  "parameter_ratio": 1.0019913748916,
+  "throughput_ratio": 0.9822298365636196,
+  "late_epoch_candidate_wins": 4,
+  "late_epoch_window": [30, 39],
+  "selection_sha256": "24df887d1ae9dd8de6d97f6c090e5cd2a1a299bcb7565bac6992c7d3e3e825ed",
+  "acceptance_sha256": "9107b3bb2520b4c9aa98bf84fd12e9809a48cffea81443b9e91c99710e961dbb",
+  "validation_row_index_sha256": "f38ccef35c146feb4f495480558ec69c1f0a123f89f9e6390a7b44d11b323189",
+  "validation_target_sha256": "7920d73338f063d2fab6ceca5f124dcc7fe2c2863d87ca718f77fc7b707c3a94",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

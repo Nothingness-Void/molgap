@@ -7,12 +7,10 @@ retry was `QUEUED` at its single post-submission check; it extracts the frozen
 source archive before graph deserialization.
 Version 2 then reached `COMPLETE`; its 110,000 graphs, 22 shards, zero failures,
 role flags and aggregate SHA passed no-model acceptance. Kaggle2 GPU kernel
-`kaseichou/molgap-pcqm-signnet-lappe-graphstate-s42` version 1 was `RUNNING`
-at its single post-submission check. It is the only submitted SignNet-LapPE GPU
-comparison and uses one isolated T4 per fresh seed-42 candidate.
+`kaseichou/molgap-pcqm-signnet-lappe-graphstate-s42` version 1 reached
+`COMPLETE` and passed no-model acceptance. The SignNet-LapPE candidate was
+worse than its fresh GraphState9 control and is closed without confirmation.
 
-On GPU completion, download the output and run
-`accept_pcqm100k_directed_spectral_seed42.py` in
-`signnet_lappe_graphstate` mode with the accepted cache aggregate
-`26084ba7d80f872520030713fbe87369c8686cb31859ac04e354d670e6a0ebc7`.
-Official validation and test-dev remain unread.
+Exact arithmetic and disposition are in `decision.md`. Do not submit a seed,
+width, mode-count, optimizer, full-data, or official-role variant. Official
+validation and test-dev remain unread.
