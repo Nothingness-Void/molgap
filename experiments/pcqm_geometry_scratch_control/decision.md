@@ -39,3 +39,15 @@ and ba320fa. No new server-side discovery module was selected.
 
 Downloaded audit parts and recomputed arithmetic are summarized by
 `audit_acceptance.json`; launch identities are recorded in `launch.json`.
+
+## Superseded Scratch Proposal (2026-09-06)
+
+The paired scratch preflight job 1448871 stopped at the initial-function
+comparison, before throughput measurement or training. Its log did not print
+the measured difference, so no causal diagnosis was inferred from that
+assertion. Neither arm started and no accuracy result was produced.
+
+The user then supplied the newer, three-seed-accepted GraphState9 handoff.
+Desktop verified that evidence on the server branch and superseded the
+two-arm proposal with `../pcqm_graph_state_full/`. No repeat of this older
+preflight or training was submitted. P0 audit evidence was retained unchanged.

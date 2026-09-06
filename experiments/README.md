@@ -1,7 +1,9 @@
 # Experiments
 
-- `pcqm_geometry_scratch_control/`: complete initialization/precision audit
-  followed by the authorized matched full-data random-initialization control.
+- `pcqm_graph_state_full/`: frozen server GraphState9 handoff, A100 gate and
+  one full-data random-initialization run.
+- `pcqm_geometry_scratch_control/`: completed initialization/precision audit;
+  its unstarted paired-training proposal was superseded by GraphState9.
 - `pcqm_geometry_warmstart/`: fail-closed official-PCQM warm-start of the
   accepted distance/angle Sparse Triangle EdgeState GPS9.
 

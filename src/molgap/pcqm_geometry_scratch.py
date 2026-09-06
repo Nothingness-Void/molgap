@@ -6,7 +6,7 @@ import json
 import math
 import random
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -19,6 +19,7 @@ from .pcqm_geometry_warmstart import CANDIDATE, _forward_geometry, load_pretrain
 from .pcqm_official_edge_state import PackedGraphDataset, atomic_json, atomic_torch, sha256_file
 
 ARMS = {"triangle": "ogb_sparse_triangle_edge_state_gps9", "geometry": CANDIDATE}
+GRAPHSTATE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 
 
 @dataclass(frozen=True)
@@ -32,6 +33,13 @@ class ScratchConfig:
     max_training_seconds: float = 43200
     job_seconds: float = 41400
     precision: str = "fp32_tf32_off"
+
+
+def config_for(arm):
+    config = ScratchConfig()
+    if arm == "graphstate":
+        return replace(config, learning_rate=1.6e-4, weight_decay=1e-6)
+    return config
 
 
 def seed_all(seed):
@@ -57,6 +65,9 @@ def restore_rng(state):
 
 def make_matched_model(arm: str, seed: int):
     seed_all(seed)
+    if arm == "graphstate":
+        from .pcqm_graph_state import make_graph_state
+        return make_graph_state()
     baseline = make_pcqm_gap_encoder(ARMS["triangle"])
     if arm == "triangle":
         return baseline
@@ -68,7 +79,7 @@ def make_matched_model(arm: str, seed: int):
 
 
 def forward(model, batch, arm):
-    if arm == "geometry":
+    if arm in {"geometry", "graphstate"}:
         return _forward_geometry(model, batch)
     return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch,
                  batch.random_walk_pe, batch.wedge_edge_ids).view(-1)
@@ -135,25 +146,30 @@ def evaluate(model, root, acceptance, arm, output, batch_size):
     return total / count
 
 
-def preflight(root: Path, acceptance_path: Path, audit_dir: Path, output: Path):
-    config = ScratchConfig()
+def preflight(root: Path, acceptance_path: Path, audit_dir: Path, output: Path, *, graphstate=False):
+    config = config_for("graphstate" if graphstate else "triangle")
     acceptance = checked_acceptance(acceptance_path)
     audit_hash = require_audit(audit_dir)
     device = _device()
     record = _records(acceptance, "train")[0]
     dataset = _load(root, record)
     first = next(iter(DataLoader(dataset, batch_size=config.batch_size))).to(device)
-    a, b = make_matched_model("triangle", config.seed).to(device).eval(), make_matched_model("geometry", config.seed).to(device).eval()
-    with torch.no_grad():
-        difference = float((forward(a, first, "triangle") - forward(b, first, "geometry")).abs().max())
-    del a, b, first
+    difference = None
+    if not graphstate:
+        a, b = make_matched_model("triangle", config.seed).to(device).eval(), make_matched_model("geometry", config.seed).to(device).eval()
+        with torch.no_grad():
+            difference = float((forward(a, first, "triangle") - forward(b, first, "geometry")).abs().max())
+        del a, b
+    del first
     gc.collect()
     torch.cuda.empty_cache()
-    if difference > 2e-5:
+    if difference is not None and difference > 2e-5:
         raise RuntimeError("Scratch initial function mismatch")
     reports = {}
-    for arm in ARMS:
+    for arm in (["graphstate"] if graphstate else ARMS):
         model = make_matched_model(arm, config.seed).to(device).train()
+        if graphstate and sum(p.numel() for p in model.parameters()) != 3665809:
+            raise RuntimeError("Frozen GraphState parameter count changed")
         optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
         torch.cuda.reset_peak_memory_stats()
         torch.cuda.synchronize()
@@ -201,11 +217,11 @@ def validate_resume(state, identity):
 
 
 def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path, arm: str):
-    config = ScratchConfig()
+    config = config_for(arm)
     acceptance = checked_acceptance(acceptance_path)
     report = json.loads(preflight_path.read_text())
     if (report["status"] != "accepted" or report["config"] != asdict(config)
-            or report["code_sha256"] != sha256_file(Path(__file__))):
+            or report["code_sha256"] != sha256_file(Path(__file__)) or arm not in report["arms"]):
         raise RuntimeError("Missing or changed paired scratch preflight")
     identity = {"arm": arm, "config": asdict(config), "preflight_sha256": sha256_file(preflight_path),
                 "acceptance_sha256": ACCEPTANCE_SHA, "code_sha256": sha256_file(Path(__file__))}
@@ -239,8 +255,9 @@ def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path,
         del state
     else:
         atomic_torch(output / "initial.pt", {"identity": identity, "model": model.state_dict(), "epoch": -1})
-        baseline = evaluate(model, root, acceptance, arm, output / "validation_initial", config.batch_size)
-        atomic_json(output / "initial_metrics.json", {"mae_eV": baseline, "epoch": -1})
+        if arm != "graphstate":
+            baseline = evaluate(model, root, acceptance, arm, output / "validation_initial", config.batch_size)
+            atomic_json(output / "initial_metrics.json", {"mae_eV": baseline, "epoch": -1})
 
     def save(epoch, next_shard):
         atomic_torch(last, {"identity": identity, "model": model.state_dict(),
@@ -288,8 +305,10 @@ def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path,
                 raise TimeoutError("Cumulative 12-hour budget exhausted; checkpoint retained")
         if rows != acceptance["counts"]["train"]:
             raise RuntimeError("Training row accounting differs")
-        mae = evaluate(model, root, acceptance, arm, output / f"validation_ep{epoch:02d}", config.batch_size)
-        if mae < best:
+        mae = None
+        if arm != "graphstate" or epoch == config.epochs - 1:
+            mae = evaluate(model, root, acceptance, arm, output / f"validation_ep{epoch:02d}", config.batch_size)
+        if mae is not None and mae < best:
             best, best_epoch = mae, epoch
             atomic_torch(output / "best.pt", {"identity": identity, "model": model.state_dict(),
                                              "best_epoch": best_epoch, "mae_eV": best,
@@ -301,10 +320,11 @@ def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path,
         loss_sum, rows, cursor = 0., 0, 0
         save(epoch + 1, 0)
         atomic_json(output / "train_log.json", log)
-        print(f"{arm} ep{epoch:02d} valid={mae:.6f} best={best:.6f}@{best_epoch}", flush=True)
+        print(f"{arm} ep{epoch:02d} valid={mae} selected_epoch={best_epoch}", flush=True)
     result = {"status": "complete", "identity": identity, "best_epoch": best_epoch,
               "best_mae_eV": best, "final_mae_eV": log[-1]["mae_eV"], "log": log,
               "runtime_seconds": previous_seconds + time.monotonic() - started,
+              "selection": "fixed_final_epoch" if arm == "graphstate" else "validation_best",
               "pretrained_weights_used": False, "official_test_used": False}
     atomic_json(output / "metrics.json", result)
     atomic_json(output / "progress.json", {"status": "complete", "epoch": config.epochs})
