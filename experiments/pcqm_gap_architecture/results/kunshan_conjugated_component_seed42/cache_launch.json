@@ -1,11 +1,12 @@
 {
   "format": "molgap-kunshan-conjugated-cache-launch-v1",
-  "job_id": "121080047",
-  "initial_state": "PENDING_PRIORITY",
-  "source_commit": "11bcb77a60ea33b5ce8f8a0a6041c72b33ffc8ae",
-  "source_archive_sha256": "bdc9562ae4f55100eca36ac4dd021ba335fa0d026ef305480201012f402a6d35",
+  "job_id": "121081124",
+  "initial_state": "RUNNING",
+  "initial_node": "a08r1n17",
+  "source_commit": "2496c67097362d1ab9fe54145ef3fba33e73fdc5",
+  "source_archive_sha256": "a539426905fc3bf5967f97f872d06a9f672280c103ec9772160117ce09615605",
   "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
-  "remote_root": "/public/home/scnaqkfcy3/molgap-results/kunshan-conjugated-k3-v4",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/kunshan-conjugated-k3-v5",
   "partition": "kshctest02",
   "cpus": 16,
   "memory_gb": 32,
@@ -25,8 +26,22 @@
       "job_id": "121080017",
       "reason": "missing_libmpi_so_40_before_input_read",
       "artifacts_created": false
+    },
+    {
+      "job_id": "121080047",
+      "elapsed": "00:00:05",
+      "reason": "dcu_torch_requires_libhsakmt_on_cpu_node",
+      "artifacts_created": false
     }
   ],
+  "cpu_runtime": {
+    "python": "3.11",
+    "torch": "2.1.2+cpu",
+    "torch_cuda": null,
+    "torch_geometric": "2.6.1",
+    "numpy": "1.26.4",
+    "read_only_wedge_data_smoke": true
+  },
   "gpu_used": false,
   "model_inference_executed": false,
   "official_validation_role_read": false,
