@@ -77,9 +77,9 @@ and
 
 Two new one-seed information-flow questions were released on 2026-09-07.
 Kaggle1 is running a fresh paired GraphState9 versus non-backtracking directed
-bond-memory screen. Kaggle2 is running only the CPU cache gate for an
-eight-mode SignNet-LapPE addition; its GPU comparison remains unsubmitted
-until cache acceptance. Live identities are in
+bond-memory screen. The Kaggle2 eight-mode SignNet-LapPE CPU cache passed
+no-model acceptance, and its single fresh paired T4x2 GPU comparison is now
+running. Live identities are in
 `experiments/pcqm_gap_architecture/results/directed_bond_graphstate_seed42/STATUS.md`
 and
 `experiments/pcqm_gap_architecture/results/signnet_lappe_graphstate_seed42/STATUS.md`.
