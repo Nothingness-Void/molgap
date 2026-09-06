@@ -57,12 +57,14 @@ the `0.001 eV` promotion threshold, with unchanged peak memory, so it is closed
 without more seeds or full-data training. GraphState9 remains the frozen
 anchor. The exact result is in
 `experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/decision.md`.
-K3 conjugated-component communication is active. The deterministic component
-cache completed and passed 110,000-graph CPU acceptance. Kunshan K3a job
-`121082200` passed no-model acceptance; the repeated descriptor produced only
-a small sub-threshold seed-42 gain and is retained solely as the information-
-matched control. K3b job `121111542` tests persistent ComponentState
-communication against that exact control on Kunshan. Live state is in
+K3 conjugated-component communication completed. The deterministic component
+cache passed 110,000-graph CPU acceptance. K3a established the repeated
+descriptor as a sub-threshold information-matched control. K3b job `121111542`
+then showed that persistent ComponentState passed the frozen seed-42 accuracy,
+runtime and memory gates. It is the leading single-seed shortlist candidate,
+but descriptor-control drift across K3a/K3b prevents promotion over the
+three-seed GraphState9 handoff without a separate confirmation-budget decision.
+Exact evidence is in
 `experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
 
 Both Kaggle accounts were reported restored to 30 weekly GPU-hours on

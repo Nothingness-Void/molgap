@@ -31,12 +31,13 @@ experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
 cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
 The K1 persistent-VectorState and K2 projected-moment readout screens are
 closed below the material-gain threshold. K3 conjugated-component
-communication is the released question. Its CPU cache passed and K3a job
+communication completed. Its CPU cache passed and K3a job
 `121082200` completed: the descriptor-only control was directionally positive
-but below the material-gain gate. K3b job `121111542` is the required causal
-comparison between that exact descriptor path and persistent component-level
-communication. It remains one seed-42 paired screen; no confirmation seeds or
-full-data action are implied.
+but below the material-gain gate. K3b job `121111542` passed all three frozen
+seed-42 gates, while also exposing `0.000661 eV` repeat drift in the unchanged
+descriptor control. ComponentState is retained in the final shortlist, but no
+confirmation seed or full-data action is implied without a separate budget
+decision.
 
 On 2026-09-06 the user reported a restored weekly allowance of 30 GPU-hours on
 each Kaggle account. The two remaining random-initialized local-state questions
