@@ -1,8 +1,9 @@
 # SignNet-LapPE GraphState seed-42 status
 
 Kaggle2 CPU kernel `kaseichou/molgap-pcqm-signnet-lappe-cache-s42`
-version 1 was `RUNNING` at the single post-submission check on 2026-09-07.
-It derives eight normalized-Laplacian modes for the frozen 100K/10K roles.
+version 1 ended with an implementation-only import error before any shard.
+The diagnosis is `cpu_v1_failure_diagnosis.md`. An unchanged-science version-2
+retry may extract the frozen source archive before graph deserialization.
 No GPU SignNet-LapPE task has been submitted.
 
 On completion, download the cache and run
