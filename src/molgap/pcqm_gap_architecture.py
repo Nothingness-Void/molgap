@@ -415,13 +415,13 @@ class OGBSparseTriangleEdgeStateGPSWrapper(OGBEdgeStateStructuralGPSWrapper):
             )
             wedge_state = self.wedge_initial(initial_context)
 
-        for edge_update, wedge_update, edge_projection, node_projection, conv in zip(
+        for layer, (edge_update, wedge_update, edge_projection, node_projection, conv) in enumerate(zip(
             self.edge_updates,
             self.wedge_updates,
             self.wedge_to_edge,
             self.wedge_to_node,
             self.convs,
-        ):
+        )):
             edge_state = edge_update(h, edge_index, edge_state)
             if wedge_state is not None:
                 context = torch.cat(
