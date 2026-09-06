@@ -66,6 +66,21 @@ def source_commit() -> str:
     return value
 
 
+def source_python_root() -> Path:
+    matches = list(Path("/kaggle/input").rglob("molgap/__init__.py"))
+    if len(matches) == 1:
+        return matches[0].parents[1]
+    archives = list(Path("/kaggle/input").rglob("src.zip"))
+    if len(archives) != 1:
+        raise RuntimeError(f"Expected one source tree/archive, found {matches}/{archives}")
+    extracted = Path("/kaggle/working/_molgap_signnet_lappe_source")
+    shutil.unpack_archive(archives[0], extracted)
+    modules = list(extracted.rglob("molgap/__init__.py"))
+    if len(modules) != 1:
+        raise RuntimeError(f"Unexpected source archive layout: {modules}")
+    return modules[0].parents[1]
+
+
 def find_geometry_cache() -> tuple[Path, dict]:
     candidates = []
     for path in Path("/kaggle/input").rglob("manifest.json"):
@@ -156,6 +171,7 @@ def main() -> None:
     try:
         install_dependencies()
         commit = source_commit()
+        sys.path.insert(0, str(source_python_root()))
         root, parent = find_geometry_cache()
         shards = []
         role_graphs = {"train": 0, "validation": 0}

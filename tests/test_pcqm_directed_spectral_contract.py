@@ -60,6 +60,10 @@ def test_lappe_cache_is_cpu_only_role_sealed_and_hashable():
         encoding="utf-8"
     )
     assert "torch.linalg.eigh" in source
+    assert "sys.path.insert(0, str(source_python_root()))" in source
+    assert source.index("sys.path.insert(0, str(source_python_root()))") < source.index(
+        "graphs = torch.load("
+    )
     assert '"official_validation_role_read": False' in source
     assert '"test_dev_role_read": False' in source
     assert "atomic_torch_save" in source
