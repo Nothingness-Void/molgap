@@ -1,0 +1,32 @@
+{
+  "format": "molgap-kunshan-conjugated-component-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "e76e65aeea9bbf94dc147d7d15403cd4fa7c6473",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "runs": [
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+      "mae_eV": 0.13066026899814606,
+      "parameters": 3672257,
+      "epochs": 40,
+      "best_epoch": 39,
+      "throughput": 252.92312836287402,
+      "peak_reserved_bytes": 354418688,
+      "device_total_bytes": 17163091968
+    },
+    {
+      "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component",
+      "mae_eV": 0.12963221881389617,
+      "parameters": 3694033,
+      "epochs": 40,
+      "best_epoch": 39,
+      "throughput": 222.71312563896328,
+      "peak_reserved_bytes": 358612992,
+      "device_total_bytes": 17163091968
+    }
+  ],
+  "candidate_minus_control_eV": -0.0010280501842498957
+}

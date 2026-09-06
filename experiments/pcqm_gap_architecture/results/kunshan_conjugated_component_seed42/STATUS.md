@@ -1,6 +1,6 @@
 # Kunshan conjugated-component K3 status
 
-- Stage: K3b ComponentState paired GPU screen submitted.
+- Stage: K3b ComponentState paired GPU screen accepted and decided.
 - Cache job `121081124` completed in `00:11:43` on `a08r1n17`. CPU acceptance
   checked all 110,000 graphs and passed.
 - Source: `2496c67097362d1ab9fe54145ef3fba33e73fdc5`.
@@ -31,12 +31,19 @@
   Descriptor-only improved its fresh GraphState9 control by `0.0001969527 eV`,
   below the `0.001 eV` material-gain gate. The exact attribution is in
   `k3a_decision.md`.
-- K3b job `121111542` was initially `PENDING (Priority)`. It trains a fresh
-  descriptor-only control against descriptor plus persistent ComponentState
-  under the frozen seed-42 contract. Source commit is
+- K3b job `121111542` completed in `09:38:07` and passed no-model acceptance.
+  Persistent ComponentState improved its descriptor-only control by
+  `0.0010280502 eV`, used 1.006x the parameters and 1.136x inverse throughput,
+  and retained 97.9% device-memory reserve. It therefore passed all three
+  frozen seed-42 gates. Source commit is
   `e76e65aeea9bbf94dc147d7d15403cd4fa7c6473`; the exact launch identity is in
   `k3b_launch.json`.
+- The descriptor-only control changed by `0.0006612356 eV` between K3a and K3b
+  despite an unchanged descriptor model path. K3b is therefore the leading
+  single-seed candidate but does not replace the three-seed GraphState9 handoff
+  without a separate confirmation-budget decision. Exact evidence and scope
+  are in `k3b_decision.md`.
 - Official validation/test-dev remain unread. No seed43/44 or full-data action
-  is authorized.
+  was submitted.
 - Coordinator task: `01a025a1-3b87-7781-8a91-f183193f7865`.
 - Luna Max monitor task: `01a04479-ca44-7d31-95c4-6be485f256cc`.
