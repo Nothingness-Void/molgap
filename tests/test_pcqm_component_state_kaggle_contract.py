@@ -34,8 +34,9 @@ def test_component_confirmation_is_private_t4x2_seed43() -> None:
     source = (root / "run_screen.py").read_text(encoding="utf-8")
     assert 'MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "conjugated_component_confirmation"' in source
     assert 'MOLGAP_LOCAL_GLOBAL_SEED"] = "43"' in source
-    assert "__SOURCE_COMMIT__" in source
-    assert "__CACHE_SHA256__" in source
+    assert "c3c54e09c783d8718cb3129b08e33fd8de3525cd" in source
+    assert "434dc60b40064eb30eab279e85dcc7f43ef7763cda9e9e42d7a8630f35de57fc" in source
+    assert 'rglob("molgap/pcqm_local_global_runner.py")' in source
 
 
 def test_component_cache_is_cpu_only_and_role_sealed() -> None:

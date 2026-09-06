@@ -1,6 +1,7 @@
 # ComponentState seed-43 confirmation status
 
-- Stage: private Kaggle1 CPU component-cache kernel version 2 is running.
+- Stage: CPU cache accepted; private Kaggle1 T4x2 seed-43 confirmation is
+  ready for submission.
 - Question: paired seed-43 replication of descriptor-only control versus
   persistent ComponentState on T4x2.
 - Protocol: `../../component_state_seed43_protocol.md`.
@@ -17,3 +18,7 @@
 - Version 1 failed before reading graph data because Kaggle expands uploaded
   `src.zip` into a source tree. Version 2 accepts either representation; the
   cache algorithm, rows and all scientific settings are unchanged.
+- Version 2 completed in `310.12 s`. No-model acceptance verified 100,000
+  train and 10,000 internal-validation graphs across 22 shards. Accepted
+  aggregate SHA-256:
+  `434dc60b40064eb30eab279e85dcc7f43ef7763cda9e9e42d7a8630f35de57fc`.
