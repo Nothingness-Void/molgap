@@ -1,6 +1,6 @@
 # ComponentState seed-43 confirmation status
 
-- Stage: authorized; private Kaggle1 CPU component-cache gate is being staged.
+- Stage: private Kaggle1 CPU component-cache kernel version 1 is running.
 - Question: paired seed-43 replication of descriptor-only control versus
   persistent ComponentState on T4x2.
 - Protocol: `../../component_state_seed43_protocol.md`.
@@ -9,3 +9,8 @@
 - No GPU submission is allowed until the CPU cache passes no-model acceptance.
 - A terminal GPU result authorizes analysis only; seed 44, full-data training,
   official-role access and molecular-research-server access remain locked.
+- Source dataset:
+  `nothingnessvoid/molgap-pcqm-componentstate-confirm-source`, version 1,
+  marker `c3c54e09c783d8718cb3129b08e33fd8de3525cd`.
+- CPU cache kernel:
+  `nothingnessvoid/molgap-pcqm-componentstate-cache-s43`, version 1.
