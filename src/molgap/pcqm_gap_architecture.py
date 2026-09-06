@@ -723,6 +723,26 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
         """Allow one stateless node feature injection before message passing."""
         return h
 
+    def _pre_auxiliary_node_injection(
+        self,
+        h: torch.Tensor,
+        auxiliary_payload,
+    ) -> torch.Tensor:
+        """Inject optional cached node data before message passing."""
+        return h
+
+    def _pre_edge_update(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+        auxiliary_state,
+    ) -> torch.Tensor:
+        """Allow one directed relation update before the persistent edge update."""
+        return edge_state
+
     def _update_geometry_auxiliary(
         self,
         layer: int,
@@ -776,6 +796,7 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
             edge_distance,
             geometry_valid,
         )
+        h = self._pre_auxiliary_node_injection(h, auxiliary_payload)
         edge_state = self._embed_edges(edge_attr)
         first, second = wedge_edge_ids.unbind(dim=1)
         centers = edge_index[1, first]
@@ -821,6 +842,14 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
                 self.convs,
             )
         ):
+            edge_state = self._pre_edge_update(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+                auxiliary_state,
+            )
             edge_state = edge_update(h, edge_index, edge_state)
             if distance_features is not None:
                 edge_state = edge_state + self.distance_updates[layer](
@@ -2296,6 +2325,13 @@ def make_pcqm_gap_encoder(candidate: str):
         from .pcqm_local_statistics import make_local_statistics_encoder
 
         return make_local_statistics_encoder(candidate)
+    if candidate in {
+        "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
+        "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
+    }:
+        from .pcqm_directed_spectral import make_directed_spectral_encoder
+
+        return make_directed_spectral_encoder(candidate)
     common = {
         "in_channels": 9,
         "edge_dim": 3,

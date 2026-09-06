@@ -22,6 +22,8 @@ if RUN_MODE not in {
     "body_order_graphstate",
     "pna_statistics_graphstate",
     "edge_retention_graphstate",
+    "directed_bond_graphstate",
+    "signnet_lappe_graphstate",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
 
@@ -36,7 +38,12 @@ if RUN_MODE == "contact_graphstate" and SEED != 42:
     raise RuntimeError("ContactState mode requires seed 42")
 if RUN_MODE == "body_order_graphstate" and SEED != 42:
     raise RuntimeError("Body-order moment mode requires seed 42")
-if RUN_MODE in {"pna_statistics_graphstate", "edge_retention_graphstate"} and SEED != 42:
+if RUN_MODE in {
+    "pna_statistics_graphstate",
+    "edge_retention_graphstate",
+    "directed_bond_graphstate",
+    "signnet_lappe_graphstate",
+} and SEED != 42:
     raise RuntimeError("Local-statistics modes require seed 42")
 
 OUT = Path(
@@ -67,6 +74,10 @@ EXPECTED_CONTACT_SOURCE_COMMIT = "7f2f8ce476f654320f07e2c2e630f473d7d81c72"
 EXPECTED_CONTACT_CACHE_SHA256 = (
     "49725b92c2c0d33e17633abf8ffa7148ebc8bc9721d3e5b3635f1309891bc826"
 )
+EXPECTED_LAPPE_SOURCE_COMMIT = os.environ.get(
+    "MOLGAP_EXPECTED_LAPPE_SOURCE_COMMIT", ""
+)
+EXPECTED_LAPPE_SHA256 = os.environ.get("MOLGAP_EXPECTED_LAPPE_SHA256", "")
 SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
@@ -93,15 +104,29 @@ RETENTION_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_retention_triangle_edge_state_graph_state9",
 )
+DIRECTED_BOND_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
+)
+SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
+)
 PAIRED_GRAPHSTATE_MODES = {
     "ring_graphstate",
     "contact_graphstate",
     "body_order_graphstate",
     "pna_statistics_graphstate",
     "edge_retention_graphstate",
+    "directed_bond_graphstate",
+    "signnet_lappe_graphstate",
 }
 CANDIDATES = (
-    PNA_GRAPHSTATE_CANDIDATES
+    DIRECTED_BOND_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "directed_bond_graphstate"
+    else SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "signnet_lappe_graphstate"
+    else PNA_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "pna_statistics_graphstate"
     else RETENTION_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "edge_retention_graphstate"
@@ -125,6 +150,8 @@ EXPECTED_GLOBAL_BLOCKS = {
     BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: (),
     PNA_GRAPHSTATE_CANDIDATES[1]: (),
     RETENTION_GRAPHSTATE_CANDIDATES[1]: (),
+    DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: (),
+    SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
 }
 FROZEN_COMPARATOR = {
     "candidate": BASELINE,
@@ -171,6 +198,8 @@ EXPECTED_PARAMETER_COUNTS = {
     BODY_ORDER_GRAPHSTATE_CANDIDATES[1]: 3_681_329,
     PNA_GRAPHSTATE_CANDIDATES[1]: 3_724_755,
     RETENTION_GRAPHSTATE_CANDIDATES[1]: 3_743_281,
+    DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: 3_741_265,
+    SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
 }
 
 
@@ -180,6 +209,14 @@ def uses_pna_statistics(candidate: str) -> bool:
 
 def uses_edge_retention(candidate: str) -> bool:
     return candidate == RETENTION_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_directed_bond(candidate: str) -> bool:
+    return candidate == DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_signnet_lappe(candidate: str) -> bool:
+    return candidate == SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]
 
 
 def uses_ring_hierarchy(candidate: str) -> bool:
@@ -207,6 +244,8 @@ def expected_input_cache_sha256() -> str:
         return EXPECTED_RING_CACHE_SHA256
     if RUN_MODE == "contact_graphstate":
         return EXPECTED_CONTACT_CACHE_SHA256
+    if RUN_MODE == "signnet_lappe_graphstate":
+        return EXPECTED_LAPPE_SHA256
     return EXPECTED_GEOMETRY_SHA256
 
 
@@ -447,11 +486,63 @@ def find_contact_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
+def find_lappe_cache() -> tuple[Path, dict]:
+    if len(EXPECTED_LAPPE_SOURCE_COMMIT) != 40 or len(EXPECTED_LAPPE_SHA256) != 64:
+        raise RuntimeError("SignNet-LapPE cache identities were not pinned")
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-lappe-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one SignNet-LapPE cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_LAPPE_SOURCE_COMMIT,
+        "parent_graph_cache_aggregate_sha256": EXPECTED_PARENT_GRAPH_SHA256,
+        "parent_wedge_cache_aggregate_sha256": EXPECTED_WEDGE_SHA256,
+        "parent_geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+        "aggregate_sha256": EXPECTED_LAPPE_SHA256,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "laplacian": "symmetric-normalized-unweighted-covalent",
+        "eigenpair_policy": "lowest-8-nontrivial-zero-padded",
+        "lappe_dim": 8,
+        "failure_count": 0,
+        "gpu_used": False,
+        "model_inference_executed": False,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"SignNet-LapPE cache contract changed for {key}")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"SignNet-LapPE shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != EXPECTED_LAPPE_SHA256:
+        raise RuntimeError("SignNet-LapPE aggregate hash changed")
+    return root, manifest
+
+
 def find_input_cache() -> tuple[Path, dict]:
     if RUN_MODE == "ring_graphstate":
         return find_ring_cache()
     if RUN_MODE == "contact_graphstate":
         return find_contact_cache()
+    if RUN_MODE == "signnet_lappe_graphstate":
+        return find_lappe_cache()
     return find_geometry_cache()
 
 
@@ -509,6 +600,14 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                     != (graph.contact_edge_index.shape[1], 1)
                 ):
                     raise RuntimeError(f"{role} contact alignment changed")
+            if RUN_MODE == "signnet_lappe_graphstate":
+                expected = (graph.num_nodes, 8)
+                if tuple(graph.lap_eigvec.shape) != expected:
+                    raise RuntimeError(f"{role} LapPE eigenvector shape changed")
+                if tuple(graph.lap_eigval.shape) != expected:
+                    raise RuntimeError(f"{role} LapPE eigenvalue shape changed")
+                if tuple(graph.lap_mask.shape) != expected:
+                    raise RuntimeError(f"{role} LapPE mask shape changed")
     return graphs
 
 
@@ -560,6 +659,13 @@ def forward(model, batch, candidate: str):
             batch.conjugated_component_id,
             batch.conjugated_component_count,
             batch.conjugated_features,
+        )
+    if uses_signnet_lappe(candidate):
+        return model(
+            *base,
+            batch.lap_eigvec,
+            batch.lap_eigval,
+            batch.lap_mask,
         )
     return model(*base)
 
@@ -688,6 +794,27 @@ def initialization_preflight() -> list[dict]:
             )
             if not retention_injection_zero:
                 raise RuntimeError("Edge-retention return is not zero")
+        directed_bond_present = hasattr(model, "directed_edge_returns")
+        if directed_bond_present != uses_directed_bond(candidate):
+            raise RuntimeError(f"Directed-bond identity changed for {candidate}")
+        directed_bond_injection_zero = True
+        if directed_bond_present:
+            directed_bond_injection_zero = all(
+                bool(torch.count_nonzero(block[-1].weight.detach()) == 0)
+                for block in model.directed_edge_returns
+            )
+            if not directed_bond_injection_zero:
+                raise RuntimeError("Directed-bond return is not zero")
+        signnet_lappe_present = hasattr(model, "lappe_to_atom")
+        if signnet_lappe_present != uses_signnet_lappe(candidate):
+            raise RuntimeError(f"SignNet-LapPE identity changed for {candidate}")
+        signnet_lappe_injection_zero = True
+        if signnet_lappe_present:
+            signnet_lappe_injection_zero = bool(
+                torch.count_nonzero(model.lappe_to_atom.weight.detach()) == 0
+            )
+            if not signnet_lappe_injection_zero:
+                raise RuntimeError("SignNet-LapPE return is not zero")
         rows.append(
             {
                 "candidate": candidate,
@@ -704,6 +831,10 @@ def initialization_preflight() -> list[dict]:
                 "pna_injection_zero": pna_injection_zero,
                 "edge_retention_present": edge_retention_present,
                 "retention_injection_zero": retention_injection_zero,
+                "directed_bond_present": directed_bond_present,
+                "directed_bond_injection_zero": directed_bond_injection_zero,
+                "signnet_lappe_present": signnet_lappe_present,
+                "signnet_lappe_injection_zero": signnet_lappe_injection_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
             }
         )
@@ -776,6 +907,23 @@ def gpu_preflight(
     )
     if retention_modules_present != edge_retention_present:
         raise RuntimeError(f"Edge-retention identity changed for {candidate}")
+    directed_bond_present = hasattr(model, "directed_edge_returns")
+    if directed_bond_present != uses_directed_bond(candidate):
+        raise RuntimeError(f"Directed-bond identity changed for {candidate}")
+    directed_bond_injection_zero = True
+    if directed_bond_present:
+        directed_bond_injection_zero = all(
+            bool(torch.count_nonzero(block[-1].weight.detach()) == 0)
+            for block in model.directed_edge_returns
+        )
+    signnet_lappe_present = hasattr(model, "lappe_to_atom")
+    if signnet_lappe_present != uses_signnet_lappe(candidate):
+        raise RuntimeError(f"SignNet-LapPE identity changed for {candidate}")
+    signnet_lappe_injection_zero = True
+    if signnet_lappe_present:
+        signnet_lappe_injection_zero = bool(
+            torch.count_nonzero(model.lappe_to_atom.weight.detach()) == 0
+        )
     initial_function_structurally_equal_to_baseline = True
     if uses_body_order_moment(candidate):
         initial_function_structurally_equal_to_baseline = (
@@ -783,6 +931,16 @@ def gpu_preflight(
         )
         if not initial_function_structurally_equal_to_baseline:
             raise RuntimeError("Body-order initial function changed")
+    if uses_directed_bond(candidate):
+        initial_function_structurally_equal_to_baseline = (
+            directed_bond_injection_zero
+        )
+    if uses_signnet_lappe(candidate):
+        initial_function_structurally_equal_to_baseline = (
+            signnet_lappe_injection_zero
+        )
+    if not initial_function_structurally_equal_to_baseline:
+        raise RuntimeError("Candidate initial function changed")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
         raise RuntimeError(f"Worker {physical_device_index} is not on T4: {gpu_name}")
@@ -837,6 +995,22 @@ def gpu_preflight(
             and int(torch.count_nonzero(update.retention_value.weight.grad)) > 0
             for update in model.edge_updates
         )
+    directed_bond_return_gradient_nonzero = True
+    if directed_bond_present:
+        directed_bond_return_gradient_nonzero = all(
+            block[-1].weight.grad is not None
+            and bool(torch.isfinite(block[-1].weight.grad).all())
+            and int(torch.count_nonzero(block[-1].weight.grad)) > 0
+            for block in model.directed_edge_returns
+        )
+    signnet_lappe_return_gradient_nonzero = True
+    if signnet_lappe_present:
+        gradient = model.lappe_to_atom.weight.grad
+        signnet_lappe_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     row = {
         "candidate": candidate,
         "physical_device_index": physical_device_index,
@@ -859,6 +1033,16 @@ def gpu_preflight(
         "pna_return_gradient_nonzero": pna_return_gradient_nonzero,
         "edge_retention_present": edge_retention_present,
         "retention_return_gradient_nonzero": retention_return_gradient_nonzero,
+        "directed_bond_present": directed_bond_present,
+        "directed_bond_injection_zero": directed_bond_injection_zero,
+        "directed_bond_return_gradient_nonzero": (
+            directed_bond_return_gradient_nonzero
+        ),
+        "signnet_lappe_present": signnet_lappe_present,
+        "signnet_lappe_injection_zero": signnet_lappe_injection_zero,
+        "signnet_lappe_return_gradient_nonzero": (
+            signnet_lappe_return_gradient_nonzero
+        ),
         "finite_prediction": bool(torch.isfinite(prediction).all()),
         "finite_loss": bool(torch.isfinite(loss)),
         "finite_gradients": bool(gradients)
@@ -878,6 +1062,8 @@ def gpu_preflight(
             "body_order_return_gradient_nonzero",
             "pna_return_gradient_nonzero",
             "retention_return_gradient_nonzero",
+            "directed_bond_return_gradient_nonzero",
+            "signnet_lappe_return_gradient_nonzero",
         )
     ):
         raise RuntimeError(f"Non-finite local/global preflight: {row}")
@@ -1208,6 +1394,18 @@ def train_one(
             "edge_state_retention": (
                 "per-layer-rank32-gated-zero-start-correction"
                 if uses_edge_retention(candidate)
+                else "none"
+            ),
+            "directed_bond_memory": (
+                "per-layer-nonbacktracking-predecessor-mean+"
+                "layernorm64-mlp64-zero-return"
+                if uses_directed_bond(candidate)
+                else "none"
+            ),
+            "spectral_position_encoding": (
+                "normalized-laplacian-lowest8-nontrivial+"
+                "signnet32-zero-return+rwse16-retained"
+                if uses_signnet_lappe(candidate)
                 else "none"
             ),
         },
