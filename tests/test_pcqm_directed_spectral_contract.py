@@ -70,6 +70,19 @@ def test_lappe_cache_is_cpu_only_role_sealed_and_hashable():
     assert "model_inference_executed" in acceptance
 
 
+def test_directed_gpu_manifest_is_private_t4x2_and_seed42():
+    root = KERNELS / "directed_bond_graphstate_seed42"
+    metadata = json.loads((root / "kernel-metadata.json").read_text(encoding="utf-8"))
+    assert metadata["id"].startswith("nothingnessvoid/")
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["is_private"] == "true"
+    source = (root / "run_screen.py").read_text(encoding="utf-8")
+    assert 'MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "directed_bond_graphstate"' in source
+    assert 'MOLGAP_LOCAL_GLOBAL_SEED"] = "42"' in source
+    assert "5b7beefbd0da48f57d77ad8c424e31e3a3d28119" in source
+
+
 def test_protocols_do_not_broaden_seed_or_roles():
     for name in (
         "directed_bond_graphstate_seed42_protocol.md",
