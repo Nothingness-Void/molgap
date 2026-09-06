@@ -36,7 +36,9 @@ communication completed. Its CPU cache passed and K3a job
 but below the material-gain gate. K3b job `121111542` passed all three frozen
 seed-42 gates, while also exposing `0.000661 eV` repeat drift in the unchanged
 descriptor control. ComponentState is retained in the final shortlist, but no
-confirmation seed or full-data action is implied without a separate budget
+full-data action is implied. On 2026-09-07 the user authorized one bounded
+Kaggle seed-43 paired confirmation. Its CPU cache gate and T4x2 contract are
+owned by `component_state_seed43_protocol.md`; seed 44 remains a separate
 decision.
 
 On 2026-09-06 the user reported a restored weekly allowance of 30 GPU-hours on
