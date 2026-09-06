@@ -66,6 +66,11 @@ but descriptor-control drift across K3a/K3b prevents promotion over the
 three-seed GraphState9 handoff without a separate confirmation-budget decision.
 Exact evidence is in
 `experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
+The user authorized one bounded seed-43 replication on 2026-09-07. Its private
+Kaggle1 T4x2 paired kernel is running after the deterministic 110,000-graph
+component cache passed no-model acceptance; seed 44 and full-data work remain
+locked. Live identity is in
+`experiments/pcqm_gap_architecture/results/component_state_seed43/STATUS.md`.
 
 Both Kaggle accounts were reported restored to 30 weekly GPU-hours on
 2026-09-06. The two independent seed-42 paired local-state screens completed
