@@ -1,0 +1,35 @@
+{
+  "format": "molgap-pcqm-directed-bond-graphstate-summary-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-directed-bond-graphstate-s42",
+  "kernel_version": 1,
+  "seed": 42,
+  "control": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameter_count": 3665809,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.13035430014133453,
+    "mean_throughput_graphs_per_s": 504.88334563671094,
+    "preflight_peak_memory_bytes": 272629760
+  },
+  "candidate": {
+    "candidate": "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
+    "parameter_count": 3741265,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.12995867431163788,
+    "mean_throughput_graphs_per_s": 454.06045972060963,
+    "preflight_peak_memory_bytes": 291504128
+  },
+  "candidate_minus_control_eV": -0.0003956258296966553,
+  "relative_mae_reduction": 0.00303500405638866,
+  "parameter_delta": 75456,
+  "parameter_ratio": 1.02058372381103,
+  "throughput_ratio": 0.8993373690074717,
+  "late_epoch_candidate_wins": 8,
+  "late_epoch_window": [30, 39],
+  "selection_sha256": "cc0f3ed3895ac6c92993c6ccb03fd848a670da5bac68c0f7afefd4ea28fdac7e",
+  "acceptance_sha256": "3977ad5259a61340d4ce2bda0552ee95b1f86e8d4e893267109bb441ff4cb441",
+  "validation_row_index_sha256": "f38ccef35c146feb4f495480558ec69c1f0a123f89f9e6390a7b44d11b323189",
+  "validation_target_sha256": "7920d73338f063d2fab6ceca5f124dcc7fe2c2863d87ca718f77fc7b707c3a94",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

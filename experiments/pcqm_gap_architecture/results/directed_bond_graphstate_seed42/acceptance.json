@@ -1,0 +1,17 @@
+{
+  "format": "molgap-pcqm-gap100k-directed-spectral-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "mode": "directed_bond_graphstate",
+  "source_commit": "5b7beefbd0da48f57d77ad8c424e31e3a3d28119",
+  "input_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "seed": 42,
+  "baseline_validation_gap_mae_eV": 0.13035430014133453,
+  "candidate_validation_gap_mae_eV": 0.12995867431163788,
+  "candidate_minus_baseline_eV": -0.0003956258296966553,
+  "selected_candidate": "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
+  "selected_strictly_improves_baseline": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

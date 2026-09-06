@@ -1,11 +1,11 @@
 # Directed-bond GraphState seed-42 status
 
 Kaggle1 kernel `nothingnessvoid/molgap-pcqm-directed-bond-graphstate-s42`
-version 1 was `RUNNING` at the single post-submission check on 2026-09-07.
-It compares a fresh GraphState9 control with the zero-start non-backtracking
-directed-bond candidate on isolated T4x2 workers. No result has been accepted.
+version 1 reached `COMPLETE` and passed no-model acceptance. The directed-bond
+candidate strictly improved its fresh seed-42 control, but the gain remained
+below the project material-gain threshold and cost about 10% throughput. The
+mechanism is retained as weak positive evidence without confirmation seeds.
 
-Do not duplicate, cancel, change the contract, read official validation or
-test-dev, or submit confirmation seeds. On terminal state, retrieve artifacts
-and run `accept_pcqm100k_directed_spectral_seed42.py` in
-`directed_bond_graphstate` mode with the frozen geometry SHA.
+Exact arithmetic and disposition are in `decision.md`. Do not duplicate,
+change the contract, read official validation/test-dev, or submit confirmation
+seeds.
