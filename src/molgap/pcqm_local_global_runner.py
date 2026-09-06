@@ -159,6 +159,10 @@ def uses_body_order_moment(candidate: str) -> bool:
     return candidate == BODY_ORDER_GRAPHSTATE_CANDIDATES[1]
 
 
+def uses_conjugated_components(candidate: str) -> bool:
+    return "_conjugated_descriptor" in candidate or "_conjugated_component" in candidate
+
+
 def expected_input_cache_sha256() -> str:
     if RUN_MODE == "ring_graphstate":
         return EXPECTED_RING_CACHE_SHA256
@@ -511,6 +515,13 @@ def forward(model, batch, candidate: str):
         return model(*base, batch.pos)
     if candidate == "ogb_distance_angle_vector_state_triangle_edge_state_graph_state9":
         return model(*base, batch.pos)
+    if uses_conjugated_components(candidate):
+        return model(
+            *base,
+            batch.conjugated_component_id,
+            batch.conjugated_component_count,
+            batch.conjugated_features,
+        )
     return model(*base)
 
 

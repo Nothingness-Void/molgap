@@ -30,12 +30,14 @@ def configure(
     parameter_counts: dict,
     candidates=CANDIDATES,
     candidate=CANDIDATE,
+    baseline=BASELINE,
+    expected_cache_sha=CACHE_SHA,
 ):
     trainer.OUT = output
     trainer.SEED = 42
     trainer.EXPECTED_MODEL_SOURCE_COMMIT = source_commit
     trainer.CANDIDATES = candidates
-    trainer.BASELINE = BASELINE
+    trainer.BASELINE = baseline
     trainer.EXPECTED_PARAMETER_COUNTS.update(parameter_counts)
     trainer.EXPECTED_GLOBAL_BLOCKS[candidate] = ()
     trainer.PARAMETER_BUDGET = 4_000_000
@@ -48,7 +50,8 @@ def configure(
     ):
         if getattr(trainer, key) != expected:
             raise RuntimeError(f"Scientific trainer contract changed: {key}")
-    if trainer.expected_input_cache_sha256() != CACHE_SHA:
+    trainer.expected_input_cache_sha256 = lambda: expected_cache_sha
+    if trainer.expected_input_cache_sha256() != expected_cache_sha:
         raise RuntimeError("Unexpected training cache role")
 
 
@@ -100,7 +103,9 @@ def run(args) -> None:
             "relation": "directed_real_bond_displacement",
             "scalar_return": "norm_norm_dot_linear192_bias_free_zero_init",
         }
-    else:
+        expected_cache_sha = CACHE_SHA
+        baseline = BASELINE
+    elif args.screen == "moment_readout":
         from molgap.pcqm_moment_readout import (
             CANDIDATE_ID,
             MOMENT_PARAMETER_COUNT,
@@ -123,6 +128,35 @@ def run(args) -> None:
             "moment_channels": 32,
             "return": "linear64x192_bias_free_zero_init",
         }
+        expected_cache_sha = CACHE_SHA
+        baseline = BASELINE
+    else:
+        from molgap.pcqm_conjugated_state import (
+            DESCRIPTOR_ID,
+            DESCRIPTOR_PARAMETERS,
+            make_conjugated_encoder,
+        )
+
+        if not args.cache_sha:
+            raise RuntimeError("conjugated screen requires --cache-sha")
+        candidate = DESCRIPTOR_ID
+        baseline = BASELINE
+        candidates = (baseline, candidate)
+        expected_counts = {
+            baseline: 3_665_809,
+            candidate: DESCRIPTOR_PARAMETERS,
+        }
+        format_name = "molgap-kunshan-conjugated-descriptor-screen-v1"
+        candidate_factory = lambda: make_conjugated_encoder(candidate)
+        baseline_delta = {"conjugated_input": "none"}
+        candidate_delta = {
+            "conjugated_input": "repeated_component_descriptor8",
+            "descriptor_channels": 32,
+            "injection_block": 2,
+            "component_communication": "none",
+            "return": "linear32x192_bias_free_zero_init",
+        }
+        expected_cache_sha = args.cache_sha
 
     output = args.output_root
     output.mkdir(parents=True, exist_ok=True)
@@ -143,6 +177,8 @@ def run(args) -> None:
         counts,
         candidates=candidates,
         candidate=candidate,
+        baseline=baseline,
+        expected_cache_sha=expected_cache_sha,
     )
     torch.set_num_threads(1)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
@@ -155,6 +191,7 @@ def run(args) -> None:
         "format": format_name,
         "source_commit": args.source_commit, "candidates": list(candidates),
         "contract": CONTRACT, "geometry_cache_aggregate_sha256": CACHE_SHA,
+        "input_cache_aggregate_sha256": expected_cache_sha,
         "preflight_sha256": trainer.sha256_file(output / "preflight.json"),
         "platform": "SCNet Kunshan", "job_id": os.environ.get("SLURM_JOB_ID"),
         "train_graphs": 100_000, "validation_graphs": 10_000,
@@ -175,7 +212,28 @@ def run(args) -> None:
         trainer.atomic_json(identity, manifest)
     runs = []
     try:
-        root, cache = trainer.find_geometry_cache(args.cache_root)
+        if args.screen == "conjugated_descriptor":
+            root = args.cache_root
+            cache = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+            required = {
+                "format": "molgap-pcqm-gap100k-conjugated-component-cache-v1",
+                "complete": True,
+                "parent_geometry_cache_aggregate_sha256": CACHE_SHA,
+                "aggregate_sha256": expected_cache_sha,
+                "feature_channels": 8,
+                "train_graphs": 100_000,
+                "validation_graphs": 10_000,
+                "official_validation_role_read": False,
+                "test_dev_role_read": False,
+            }
+            for key, value in required.items():
+                if cache.get(key) != value:
+                    raise RuntimeError(f"conjugated cache changed: {key}")
+            for shard in cache["shards"]:
+                if trainer.sha256_file(root / shard["file"]) != shard["sha256"]:
+                    raise RuntimeError(f"conjugated shard hash changed: {shard['file']}")
+        else:
+            root, cache = trainer.find_geometry_cache(args.cache_root)
         graphs = trainer.load_graphs(root, cache)
         trainer.atomic_json(output / "progress.json", {**manifest, "state": "CACHE_VERIFIED", "complete": False})
 
@@ -228,9 +286,12 @@ def main() -> None:
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--preflight", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)
+    parser.add_argument("--cache-sha")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
-        "--screen", choices=("vector", "moment_readout"), default="vector"
+        "--screen",
+        choices=("vector", "moment_readout", "conjugated_descriptor"),
+        default="vector",
     )
     run(parser.parse_args())
 

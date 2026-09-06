@@ -31,7 +31,7 @@ def test_k2_runner_and_remote_gate_are_frozen() -> None:
     remote = REMOTE.read_text(encoding="utf-8")
     slurm = SLURM.read_text(encoding="utf-8")
     protocol = PROTOCOL.read_text(encoding="utf-8")
-    assert 'choices=("vector", "moment_readout")' in runner
+    assert '"vector", "moment_readout", "conjugated_descriptor"' in runner
     assert 'format_name = "molgap-kunshan-moment-readout-screen-v1"' in runner
     assert "3_684_753" in remote
     assert "shared initialization changed" in remote

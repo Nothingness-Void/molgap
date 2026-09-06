@@ -38,6 +38,7 @@ def accept_screen(
     baseline_delta: dict,
     candidate_delta: dict,
     report_format: str,
+    expected_cache: str = CACHE,
 ) -> dict:
     errors = []
     rows_by_model = {}
@@ -59,6 +60,10 @@ def accept_screen(
     require(completion.get("source_commit") == source, "source")
     require(completion.get("candidates") == [BASELINE, candidate], "candidates")
     require(completion.get("geometry_cache_aggregate_sha256") == CACHE, "cache")
+    require(
+        completion.get("input_cache_aggregate_sha256", CACHE) == expected_cache,
+        "input cache",
+    )
     require(completion.get("contract") == EXPECTED_CONTRACT, "scientific contract")
     require(completion.get("platform") == "SCNet Kunshan", "platform")
     require(completion.get("device_count") == 1, "one DCU")
@@ -76,7 +81,7 @@ def accept_screen(
         require(metrics in runs, f"completion/metrics {candidate_name}")
         require(metrics.get("candidate") == candidate_name and metrics.get("complete") is True, f"identity/complete {candidate_name}")
         require(metrics.get("source_commit") == source, f"source {candidate_name}")
-        require(metrics.get("input_cache_aggregate_sha256") == CACHE, f"cache {candidate_name}")
+        require(metrics.get("input_cache_aggregate_sha256") == expected_cache, f"cache {candidate_name}")
         require(metrics.get("seed") == 42, f"seed {candidate_name}")
         require(metrics.get("platform_contract") == EXPECTED_CONTRACT, f"contract {candidate_name}")
         architecture_delta = metrics.get("architecture_delta")
