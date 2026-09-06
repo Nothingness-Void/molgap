@@ -15,6 +15,7 @@ done
 cd "$ROOT"
 module purge
 module load compiler/dtk/23.10
+module load mpi/openmpi/gcc-9.3.0/4.1.5
 export PYTHONNOUSERSITE=1
 export PYTHONPATH="$CODE/src"
 export OMP_NUM_THREADS=1
