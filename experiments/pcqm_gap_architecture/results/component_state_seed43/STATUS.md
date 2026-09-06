@@ -1,7 +1,6 @@
 # ComponentState seed-43 confirmation status
 
-- Stage: CPU cache accepted; private Kaggle1 T4x2 seed-43 confirmation is
-  ready for submission.
+- Stage: private Kaggle1 T4x2 seed-43 confirmation version 1 is running.
 - Question: paired seed-43 replication of descriptor-only control versus
   persistent ComponentState on T4x2.
 - Protocol: `../../component_state_seed43_protocol.md`.
@@ -22,3 +21,7 @@
   train and 10,000 internal-validation graphs across 22 shards. Accepted
   aggregate SHA-256:
   `434dc60b40064eb30eab279e85dcc7f43ef7763cda9e9e42d7a8630f35de57fc`.
+- GPU kernel:
+  `nothingnessvoid/molgap-pcqm-componentstate-confirmation-s43`, version 1.
+  Kaggle normalized the originally requested shorter slug at submission; the
+  tracked metadata now matches the canonical remote identity.

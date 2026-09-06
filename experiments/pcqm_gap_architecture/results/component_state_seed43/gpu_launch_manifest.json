@@ -1,0 +1,27 @@
+{
+  "format": "molgap-pcqm-component-state-seed43-gpu-launch-v1",
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-pcqm-componentstate-confirmation-s43",
+  "kernel_version": 1,
+  "source_dataset": "nothingnessvoid/molgap-pcqm-componentstate-confirm-source",
+  "source_dataset_version": 1,
+  "source_commit": "c3c54e09c783d8718cb3129b08e33fd8de3525cd",
+  "cache_kernel": "nothingnessvoid/molgap-pcqm-componentstate-cache-s43",
+  "cache_kernel_version": 2,
+  "cache_aggregate_sha256": "434dc60b40064eb30eab279e85dcc7f43ef7763cda9e9e42d7a8630f35de57fc",
+  "seed": 43,
+  "gpu_request": "NvidiaTeslaT4",
+  "execution": "dual_t4_candidate_parallel",
+  "candidates": [
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component"
+  ],
+  "parameter_counts": {
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor": 3672257,
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component": 3694033
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "seed44_submitted": false,
+  "full_data_authorized": false
+}
