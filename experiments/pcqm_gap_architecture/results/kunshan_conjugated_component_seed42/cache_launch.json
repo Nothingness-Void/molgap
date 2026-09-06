@@ -1,10 +1,11 @@
 {
   "format": "molgap-kunshan-conjugated-cache-launch-v1",
-  "job_id": "121079846",
-  "source_commit": "0c9445985dd391c44595531cce2039176b5680c5",
-  "source_archive_sha256": "0f6db636927a944f31a3dc170b5b5ba3db235832eb97b171e5a53a0c7f970af9",
+  "job_id": "121080047",
+  "initial_state": "PENDING_PRIORITY",
+  "source_commit": "11bcb77a60ea33b5ce8f8a0a6041c72b33ffc8ae",
+  "source_archive_sha256": "bdc9562ae4f55100eca36ac4dd021ba335fa0d026ef305480201012f402a6d35",
   "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
-  "remote_root": "/public/home/scnaqkfcy3/molgap-results/kunshan-conjugated-k3-v3",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/kunshan-conjugated-k3-v4",
   "partition": "kshctest02",
   "cpus": 16,
   "memory_gb": 32,
@@ -12,6 +13,19 @@
   "prequeue_rejections": [
     {"cpus": 8, "memory_gb": 64, "reason": "memory_per_cpu_policy"},
     {"cpus": 16, "memory_gb": 64, "reason": "memory_per_cpu_policy"}
+  ],
+  "infrastructure_failures": [
+    {
+      "job_id": "121079846",
+      "elapsed": "00:00:08",
+      "reason": "unobservable_stdout_outside_authorized_root",
+      "artifacts_created": false
+    },
+    {
+      "job_id": "121080017",
+      "reason": "missing_libmpi_so_40_before_input_read",
+      "artifacts_created": false
+    }
   ],
   "gpu_used": false,
   "model_inference_executed": false,
