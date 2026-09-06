@@ -1,6 +1,6 @@
 # Kunshan conjugated-component K3 status
 
-- Stage: K3a descriptor-only paired GPU screen submitted.
+- Stage: K3a accepted and attributed; K3b ComponentState preparation released.
 - Cache job `121081124` completed in `00:11:43` on `a08r1n17`. CPU acceptance
   checked all 110,000 graphs and passed.
 - Source: `2496c67097362d1ab9fe54145ef3fba33e73fdc5`.
@@ -27,9 +27,13 @@
   The v5 task uses this isolated CPU runtime and does not load DTK/HSA.
 - Accepted cache aggregate SHA-256:
   `40dfb281a474a3cb240e867572e398ab6128b8e1977821ac4a0bc0f3f95edc05`.
-- K3a job `121082200` was initially `PENDING (Priority)`. It trains fresh
-  GraphState9 versus descriptor-only under the frozen seed-42 contract.
-- K3b ComponentState remains locked until K3a is accepted and attributed.
+- K3a job `121082200` completed in `07:34:39` and passed no-model acceptance.
+  Descriptor-only improved its fresh GraphState9 control by `0.0001969527 eV`,
+  below the `0.001 eV` material-gain gate. The exact attribution is in
+  `k3a_decision.md`.
+- K3b ComponentState is released as the protocol's required communication
+  comparison. No K3b remote job is recorded until its implementation and
+  preflight contract are committed and submitted.
 - Official validation/test-dev remain unread. No seed43/44 or full-data action
   is authorized.
 - Coordinator task: `01a025a1-3b87-7781-8a91-f183193f7865`.

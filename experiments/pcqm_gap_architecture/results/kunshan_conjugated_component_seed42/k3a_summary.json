@@ -1,0 +1,38 @@
+{
+  "format": "molgap-kunshan-conjugated-descriptor-decision-summary-v1",
+  "job_id": "121082200",
+  "terminal_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed": "07:34:39",
+  "node": "e06r4n03",
+  "accepted": true,
+  "acceptance_sha256": "7c3e48ca4e2ec1300201262ff0c269c25c26c62a89ba184957a810dd3f43ea39",
+  "source_commit": "2496c67097362d1ab9fe54145ef3fba33e73fdc5",
+  "cache_aggregate_sha256": "40dfb281a474a3cb240e867572e398ab6128b8e1977821ac4a0bc0f3f95edc05",
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "control": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "parameters": 3665809,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.1301959860086441,
+    "throughput_graphs_per_second": 297.9762586104533,
+    "peak_reserved_bytes": 354418688
+  },
+  "descriptor_only": {
+    "candidate": "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+    "parameters": 3672257,
+    "best_epoch": 39,
+    "validation_gap_mae_eV": 0.1299990333557129,
+    "throughput_graphs_per_second": 297.4970568884343,
+    "peak_reserved_bytes": 354418688
+  },
+  "descriptor_minus_control_eV": -0.00019695265293120934,
+  "promotion_threshold_eV": -0.001,
+  "descriptor_promotion_passed": false,
+  "k3b_attribution_required": true,
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

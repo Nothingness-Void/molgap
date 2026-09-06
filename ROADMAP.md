@@ -31,10 +31,12 @@ experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
 cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
 The K1 persistent-VectorState and K2 projected-moment readout screens are
 closed below the material-gain threshold. K3 conjugated-component
-communication is the next released question; its descriptor-only control must
-separate chemical-input gain from communication gain. The CPU cache passed;
-K3a descriptor-only paired job `121082200` is active, while K3b remains locked
-pending accepted attribution.
+communication is the released question. Its CPU cache passed and K3a job
+`121082200` completed: the descriptor-only control was directionally positive
+but below the material-gain gate. K3b is now authorized as the required causal
+comparison between that exact descriptor path and persistent component-level
+communication. It remains one seed-42 paired screen; no confirmation seeds or
+full-data action are implied.
 
 ## Mandatory gates
 
