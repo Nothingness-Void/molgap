@@ -61,8 +61,8 @@ K3 conjugated-component communication is active. The deterministic component
 cache completed and passed 110,000-graph CPU acceptance. Kunshan K3a job
 `121082200` passed no-model acceptance; the repeated descriptor produced only
 a small sub-threshold seed-42 gain and is retained solely as the information-
-matched control. K3b is released to test persistent ComponentState
-communication against that exact control. Live state is in
+matched control. K3b job `121111542` tests persistent ComponentState
+communication against that exact control on Kunshan. Live state is in
 `experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete

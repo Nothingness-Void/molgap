@@ -1,0 +1,25 @@
+{
+  "format": "molgap-kunshan-conjugated-component-launch-v1",
+  "job_id": "121111542",
+  "initial_state": "PENDING_PRIORITY",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/kunshan-conjugated-k3b-s42-v1",
+  "source_commit": "e76e65aeea9bbf94dc147d7d15403cd4fa7c6473",
+  "source_archive_sha256": "4a0845fd402e55cbb8ca38426ae1618f78dd9e9f8b7c814f10a29afeba20df62",
+  "cache_aggregate_sha256": "40dfb281a474a3cb240e867572e398ab6128b8e1977821ac4a0bc0f3f95edc05",
+  "platform": "SCNet Kunshan",
+  "gres": "dcu:Hygon:1",
+  "walltime": "12:00:00",
+  "candidates": [
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component"
+  ],
+  "parameter_counts": {
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor": 3672257,
+    "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component": 3694033
+  },
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

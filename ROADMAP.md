@@ -33,7 +33,7 @@ The K1 persistent-VectorState and K2 projected-moment readout screens are
 closed below the material-gain threshold. K3 conjugated-component
 communication is the released question. Its CPU cache passed and K3a job
 `121082200` completed: the descriptor-only control was directionally positive
-but below the material-gain gate. K3b is now authorized as the required causal
+but below the material-gain gate. K3b job `121111542` is the required causal
 comparison between that exact descriptor path and persistent component-level
 communication. It remains one seed-42 paired screen; no confirmation seeds or
 full-data action are implied.
