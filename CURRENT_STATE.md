@@ -51,10 +51,13 @@ and came with lower throughput, so the mechanism is closed without more seeds
 or full-data training. GraphState9 remains the frozen anchor. The exact result
 and repair boundary are in
 `experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/decision.md`.
-The next bounded discovery question, K2 projected first/second-moment readout,
-is submitted on Kunshan as job `121048634`. It compares a fresh GraphState9
-control with only the final readout changed. Live status is in
-`experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/STATUS.md`.
+The K2 projected first/second-moment readout completed on Kunshan and passed
+mechanical acceptance. Its `0.000328 eV` paired seed-42 improvement was below
+the `0.001 eV` promotion threshold, with unchanged peak memory, so it is closed
+without more seeds or full-data training. GraphState9 remains the frozen
+anchor. The exact result is in
+`experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/decision.md`.
+K3 conjugated-component communication is the next released question.
 
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by

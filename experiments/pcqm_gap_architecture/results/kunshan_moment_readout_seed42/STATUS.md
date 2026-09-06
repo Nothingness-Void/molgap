@@ -1,7 +1,8 @@
 # Kunshan projected-moment readout status
 
-- Stage: submitted; waiting for the frozen paired screen.
-- Job: `121048634`, initially `PENDING (Priority)`.
+- Stage: closed after accepted seed-42 paired comparison.
+- Job: `121048634`, `COMPLETED`, exit 0, node `e06r4n11`, elapsed
+  `08:32:58`.
 - Source: `bcbd71990adc4ccccfdb20ea2cee1c507944ee51`.
 - Source archive SHA-256:
   `9192c64192f382159b8a11b114710476426844b83190ccd7901394c3fff480f7`.
@@ -15,5 +16,8 @@
   `/public/home/scnaqkfcy3/molgap-results/kunshan-moment-readout-s42-v1`.
 - Official validation and test-dev remain unread. No seed43/44 or full-data
   action is authorized by this submission.
+- No-inference acceptance passed. The candidate improved paired MAE by only
+  `0.0003280061 eV`, below the `0.001 eV` promotion threshold. It is retained
+  as a cheap weak observation and closed without more seeds. See `decision.md`.
 - Luna Max monitor task: `01a04479-ca44-7d31-95c4-6be485f256cc`.
 - Coordinator task: `01a025a1-3b87-7781-8a91-f183193f7865`.

@@ -29,9 +29,10 @@ closed. None revoked the frozen GraphState desktop handoff or authorized a
 second full-data model. On 2026-09-05 the user authorized further server-side
 experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
 cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
-The K1 persistent-VectorState paired screen is closed below its material-gain
-threshold. K2 projected first/second-moment readout is running on Kunshan as
-job `121048634`; the existing desktop handoff does not stop this bounded loop.
+The K1 persistent-VectorState and K2 projected-moment readout screens are
+closed below the material-gain threshold. K3 conjugated-component
+communication is the next released question; its descriptor-only control must
+separate chemical-input gain from communication gain.
 
 ## Mandatory gates
 
