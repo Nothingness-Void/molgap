@@ -75,6 +75,15 @@ evidence is in
 and
 `experiments/pcqm_gap_architecture/results/edge_retention_graphstate_seed42/decision.md`.
 
+Two new one-seed information-flow questions were released on 2026-09-07.
+Kaggle1 is running a fresh paired GraphState9 versus non-backtracking directed
+bond-memory screen. Kaggle2 is running only the CPU cache gate for an
+eight-mode SignNet-LapPE addition; its GPU comparison remains unsubmitted
+until cache acceptance. Live identities are in
+`experiments/pcqm_gap_architecture/results/directed_bond_graphstate_seed42/STATUS.md`
+and
+`experiments/pcqm_gap_architecture/results/signnet_lappe_graphstate_seed42/STATUS.md`.
+
 Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
 `experiments/_closed/pcqm_server_archive_index.md`.

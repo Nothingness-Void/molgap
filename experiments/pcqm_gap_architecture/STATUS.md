@@ -1,6 +1,7 @@
 # PCQM Gap Architecture Screen Status
 
-Live Kunshan discovery is routed to `results/kunshan_vector_state_seed42/STATUS.md`.
+Live work is routed through the result-local status files for Kunshan K3b,
+Kaggle1 directed-bond GraphState, and the Kaggle2 SignNet-LapPE CPU cache.
 The entries below retain earlier operational history; CURRENT_STATE.md owns
 the current authority boundaries.
 
