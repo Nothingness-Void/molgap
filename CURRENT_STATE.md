@@ -79,9 +79,10 @@ Two new one-seed information-flow questions were released on 2026-09-07.
 The Kaggle1 non-backtracking directed-bond candidate produced a small paired
 seed-42 gain, but it remained below the `0.001 eV` material threshold and cost
 about 10% throughput; it is retained only as weak positive evidence without
-confirmation seeds. The Kaggle2 eight-mode SignNet-LapPE CPU cache passed
-no-model acceptance, and its single fresh paired T4x2 GPU comparison is now
-running. Live identities are in
+confirmation seeds. The Kaggle2 eight-mode SignNet-LapPE cache and paired GPU
+screen passed mechanical acceptance, but the candidate generalized worse than
+its fresh GraphState9 control; that spectral injection is closed. Exact
+identities are in
 `experiments/pcqm_gap_architecture/results/directed_bond_graphstate_seed42/STATUS.md`
 and
 `experiments/pcqm_gap_architecture/results/signnet_lappe_graphstate_seed42/STATUS.md`.

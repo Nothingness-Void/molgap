@@ -14,7 +14,6 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
-| P0 | B-SIGNNET-LAPPE-S42 | Build/accept spectral cache, then compare SignNet-LapPE with fresh GraphState9 on Kaggle2 | Cache passes before one paired seed-42 GPU screen |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
@@ -52,8 +51,8 @@ Two materially distinct seed-42 Kaggle questions are now released under
 `signnet_lappe_graphstate_seed42_protocol.md`. The first uses the accepted
 wedge cache directly for directional edge-to-edge memory; it completed with a
 sub-threshold weak positive result and no confirmation. The second passed its
-CPU normalized-Laplacian cache gate and entered its one paired GPU screen.
-Neither route authorizes confirmation seeds automatically.
+CPU normalized-Laplacian cache gate, then lost its paired GPU comparison and
+closed without confirmation. Neither route authorized confirmation seeds.
 
 ## Mandatory gates
 
