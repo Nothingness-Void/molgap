@@ -1,6 +1,6 @@
 # ComponentState seed-43 confirmation status
 
-- Stage: private Kaggle1 CPU component-cache kernel version 1 is running.
+- Stage: private Kaggle1 CPU component-cache kernel version 2 is running.
 - Question: paired seed-43 replication of descriptor-only control versus
   persistent ComponentState on T4x2.
 - Protocol: `../../component_state_seed43_protocol.md`.
@@ -13,4 +13,7 @@
   `nothingnessvoid/molgap-pcqm-componentstate-confirm-source`, version 1,
   marker `c3c54e09c783d8718cb3129b08e33fd8de3525cd`.
 - CPU cache kernel:
-  `nothingnessvoid/molgap-pcqm-componentstate-cache-s43`, version 1.
+  `nothingnessvoid/molgap-pcqm-componentstate-cache-s43`, version 2.
+- Version 1 failed before reading graph data because Kaggle expands uploaded
+  `src.zip` into a source tree. Version 2 accepts either representation; the
+  cache algorithm, rows and all scientific settings are unchanged.

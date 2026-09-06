@@ -14,15 +14,20 @@ GEOMETRY_FORMAT = "molgap-pcqm-gap100k-etkdg-geometry-cache-v1"
 
 
 def source_python_root() -> Path:
+    modules = list(Path("/kaggle/input").rglob("molgap/pcqm_conjugated_cache.py"))
+    if len(modules) == 1:
+        return modules[0].parents[1]
     archives = list(Path("/kaggle/input").rglob("src.zip"))
     if len(archives) != 1:
-        raise RuntimeError(f"Expected one source archive, found {archives}")
+        raise RuntimeError(
+            f"Expected one source tree/archive, found {modules}/{archives}"
+        )
     extracted = Path("/kaggle/working/_molgap_componentstate_source")
     shutil.unpack_archive(archives[0], extracted)
-    modules = list(extracted.rglob("molgap/pcqm_conjugated_cache.py"))
-    if len(modules) != 1:
-        raise RuntimeError(f"Unexpected source archive layout: {modules}")
-    return modules[0].parents[1]
+    extracted_modules = list(extracted.rglob("molgap/pcqm_conjugated_cache.py"))
+    if len(extracted_modules) != 1:
+        raise RuntimeError(f"Unexpected source archive layout: {extracted_modules}")
+    return extracted_modules[0].parents[1]
 
 
 def source_commit() -> str:
