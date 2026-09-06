@@ -52,3 +52,17 @@ The historical original-full EdgeState score is a deployment reference with
 a different training horizon. This one-model run cannot establish a matched
 full-scale architectural causal effect, and 12 epochs do not guarantee
 convergence. No leaderboard submission or production promotion is authorized.
+
+## Representative Timing Calibration (2026-09-07)
+
+The first 64-batch cold-start gate projected 14.22 hours and did not release
+training. The user requested continuation. One separately recorded calibration
+uses eight evenly spaced official-train shards, eight unmeasured warm-up
+batches and 128 measured shuffled batches per shard. The accepted model,
+optimizer, batch, precision, epoch count and 20% margin remain unchanged.
+The calibration explicitly measures immutable-shard hashing/loading and atomic
+checkpoint cost and adds these costs for every training shard. It also budgets
+one final evaluation without opening validation during preflight.
+Each stratum is independently saved and retrievable. No architecture or
+optimizer is searched and no cache is rebuilt. A failed representative gate
+does not authorize an automatic shorter schedule or different precision.

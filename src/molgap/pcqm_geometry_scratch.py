@@ -216,6 +216,94 @@ def validate_resume(state, identity):
         raise RuntimeError("Scratch resume identity changed")
 
 
+def representative_preflight(root: Path, acceptance_path: Path, audit_dir: Path, output: Path):
+    """Time eight fixed train strata, including shard IO and durable-save cost."""
+    config = config_for("graphstate")
+    acceptance = checked_acceptance(acceptance_path)
+    audit_hash = require_audit(audit_dir)
+    device = _device()
+    records = _records(acceptance, "train")
+    positions = np.linspace(0, len(records) - 1, 8, dtype=int).tolist()
+    identity = {"config": asdict(config), "audit_sha256": audit_hash,
+                "acceptance_sha256": ACCEPTANCE_SHA, "code_sha256": sha256_file(Path(__file__)),
+                "positions": positions, "warmup_batches": 8, "measured_batches": 128}
+    parts = output.parent / "timing_parts"
+    parts.mkdir(parents=True, exist_ok=True)
+    results = []
+    for position in positions:
+        record = records[position]
+        part = parts / f"stratum_{position:03d}.json"
+        if part.exists():
+            saved = json.loads(part.read_text())
+            if saved["identity"] != identity or saved["record"] != record:
+                raise RuntimeError("Timing stratum identity changed")
+            results.append(saved["measurement"])
+            continue
+        began = time.monotonic()
+        dataset = _load(root, record)
+        io_seconds = time.monotonic() - began
+        model = make_matched_model("graphstate", config.seed).to(device).train()
+        if sum(p.numel() for p in model.parameters()) != 3665809:
+            raise RuntimeError("Frozen GraphState parameter count changed")
+        optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
+        generator = torch.Generator().manual_seed(config.seed + position)
+        loader = iter(DataLoader(dataset, batch_size=config.batch_size, shuffle=True, generator=generator, num_workers=0))
+        rows, node_count, edge_count = 0, 0, 0
+        torch.cuda.reset_peak_memory_stats()
+        for step in range(136):
+            if step == 8:
+                torch.cuda.synchronize()
+                began = time.monotonic()
+            batch = next(loader).to(device)
+            optimizer.zero_grad(set_to_none=True)
+            prediction = forward(model, batch, "graphstate")
+            target = (batch.y.view(-1) - acceptance["target_mean_gap"]) / acceptance["target_std_gap"]
+            loss = torch.nn.functional.l1_loss(prediction, target)
+            if not torch.isfinite(loss):
+                raise RuntimeError("Representative FP32 loss is not finite")
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True)
+            optimizer.step()
+            float(loss.detach())
+            if step >= 8:
+                rows += target.numel()
+                node_count += batch.num_nodes
+                edge_count += batch.edge_index.shape[1]
+        torch.cuda.synchronize()
+        seconds = time.monotonic() - began
+        began = time.monotonic()
+        atomic_torch(parts / "disposable_checkpoint.pt", {"model": model.state_dict(), "optimizer": optimizer.state_dict()})
+        save_seconds = time.monotonic() - began
+        measurement = {"rows": rows, "nodes": node_count, "edges": edge_count,
+                       "train_seconds": seconds, "io_seconds": io_seconds,
+                       "checkpoint_seconds": save_seconds,
+                       "memory_headroom": 1 - torch.cuda.max_memory_reserved() / torch.cuda.get_device_properties(0).total_memory}
+        atomic_json(part, {"identity": identity, "record": record, "measurement": measurement})
+        results.append(measurement)
+        print(f"stratum={position} rows={rows} train={seconds:.2f}s io={io_seconds:.2f}s save={save_seconds:.2f}s", flush=True)
+        del loader, dataset, model, optimizer, loss, prediction, target, batch
+        gc.collect()
+        torch.cuda.empty_cache()
+    mean_step_seconds = sum(r["train_seconds"] / r["rows"] for r in results) / len(results)
+    epoch_compute = mean_step_seconds * acceptance["counts"]["train"]
+    epoch_io = sum(r["io_seconds"] + r["checkpoint_seconds"] for r in results) / len(results) * len(records)
+    projection = ((epoch_compute + epoch_io) * config.epochs + mean_step_seconds * acceptance["counts"]["valid"]) * 1.20
+    headroom = min(r["memory_headroom"] for r in results)
+    passed = projection <= config.max_training_seconds and headroom >= .15
+    result = {"status": "accepted" if passed else "rejected", "config": asdict(config),
+              "audit_sha256": audit_hash, "code_sha256": identity["code_sha256"],
+              "acceptance_sha256": ACCEPTANCE_SHA, "method": "8_strata_128_batches_after_8_warmup_plus_io_and_save",
+              "parts": [{"path": str(p.relative_to(output.parent)), "sha256": sha256_file(p)} for p in sorted(parts.glob("stratum_*.json"))],
+              "arms": {"graphstate": {"projected_training_seconds": projection,
+                       "sample_rows": sum(r["rows"] for r in results), "epoch_compute_seconds": epoch_compute,
+                       "epoch_io_seconds": epoch_io, "memory_headroom": headroom, "parameters": 3665809}},
+              "official_validation_read": False, "official_test_used": False}
+    atomic_json(output, result)
+    if not passed:
+        raise RuntimeError("Representative 12-hour gate failed; no training released")
+    return result
+
+
 def train(root: Path, acceptance_path: Path, preflight_path: Path, output: Path, arm: str):
     config = config_for(arm)
     acceptance = checked_acceptance(acceptance_path)
