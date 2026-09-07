@@ -76,6 +76,19 @@ packages, services, queues, or host configuration. Sustained work must go
 through the scheduler, not the login node. Recursive deletion requires
 explicit user approval and resolved-path proof.
 
+### Scheduled maintenance guard
+
+RCCS normally stops the frontend and compute systems from 09:00 to 19:00 JST
+on the first Monday of each month, and the window may be extended. Jobs must
+finish before scheduled maintenance. Treat the immediately preceding Sunday as
+a no-submit day for new IMS work: do not submit even a short job unless the user
+explicitly overrides this guard after checking the current RCCS maintenance
+notice. Before every IMS submission, check the Japan calendar and reject any
+requested walltime whose estimated completion, including a 25% runtime margin,
+could cross 09:00 on that first Monday.
+
+Official reference: <https://ccportal.ims.ac.jp/en/node/1893>
+
 ### Scheduler
 
 ```bash
