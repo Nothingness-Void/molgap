@@ -42,6 +42,7 @@ def main() -> None:
         "title": "MolGap Official PCQM Gap100K Source",
         "id": args.dataset_id,
         "licenses": [{"name": "other"}],
+        "isPrivate": True,
     }
     (output / "dataset-metadata.json").write_text(
         json.dumps(metadata, indent=2) + "\n", encoding="utf-8"

@@ -24,6 +24,7 @@ if RUN_MODE not in {
     "edge_retention_graphstate",
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
+    "hop_path_graphstate",
     "conjugated_component_confirmation",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
@@ -44,6 +45,7 @@ if RUN_MODE in {
     "edge_retention_graphstate",
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
+    "hop_path_graphstate",
 } and SEED != 42:
     raise RuntimeError("Local-statistics modes require seed 42")
 if RUN_MODE == "conjugated_component_confirmation" and SEED != 43:
@@ -87,6 +89,12 @@ EXPECTED_COMPONENT_SOURCE_COMMIT = os.environ.get(
 EXPECTED_COMPONENT_CACHE_SHA256 = os.environ.get(
     "MOLGAP_EXPECTED_COMPONENT_CACHE_SHA256", ""
 )
+EXPECTED_HOP_PATH_SOURCE_COMMIT = os.environ.get(
+    "MOLGAP_EXPECTED_HOP_PATH_SOURCE_COMMIT", ""
+)
+EXPECTED_HOP_PATH_CACHE_SHA256 = os.environ.get(
+    "MOLGAP_EXPECTED_HOP_PATH_CACHE_SHA256", ""
+)
 SCREEN_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_gps9",
     "ogb_distance_angle_triangle_edge_state_sparse_gps369",
@@ -125,6 +133,10 @@ COMPONENT_STATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
     "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component",
 )
+HOP_PATH_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9",
+)
 PAIRED_GRAPHSTATE_MODES = {
     "ring_graphstate",
     "contact_graphstate",
@@ -133,6 +145,7 @@ PAIRED_GRAPHSTATE_MODES = {
     "edge_retention_graphstate",
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
+    "hop_path_graphstate",
     "conjugated_component_confirmation",
 }
 CANDIDATES = (
@@ -142,6 +155,8 @@ CANDIDATES = (
     if RUN_MODE == "directed_bond_graphstate"
     else SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "signnet_lappe_graphstate"
+    else HOP_PATH_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "hop_path_graphstate"
     else PNA_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "pna_statistics_graphstate"
     else RETENTION_GRAPHSTATE_CANDIDATES
@@ -168,6 +183,7 @@ EXPECTED_GLOBAL_BLOCKS = {
     RETENTION_GRAPHSTATE_CANDIDATES[1]: (),
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: (),
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
+    HOP_PATH_GRAPHSTATE_CANDIDATES[1]: (),
     COMPONENT_STATE_CANDIDATES[0]: (),
     COMPONENT_STATE_CANDIDATES[1]: (),
 }
@@ -224,6 +240,7 @@ EXPECTED_PARAMETER_COUNTS = {
     RETENTION_GRAPHSTATE_CANDIDATES[1]: 3_743_281,
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: 3_741_265,
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
+    HOP_PATH_GRAPHSTATE_CANDIDATES[1]: 3_697_537,
     COMPONENT_STATE_CANDIDATES[0]: 3_672_257,
     COMPONENT_STATE_CANDIDATES[1]: 3_694_033,
 }
@@ -243,6 +260,10 @@ def uses_directed_bond(candidate: str) -> bool:
 
 def uses_signnet_lappe(candidate: str) -> bool:
     return candidate == SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]
+
+
+def uses_hop_path(candidate: str) -> bool:
+    return candidate == HOP_PATH_GRAPHSTATE_CANDIDATES[1]
 
 
 def uses_ring_hierarchy(candidate: str) -> bool:
@@ -274,6 +295,8 @@ def expected_input_cache_sha256() -> str:
         return EXPECTED_LAPPE_SHA256
     if RUN_MODE == "conjugated_component_confirmation":
         return EXPECTED_COMPONENT_CACHE_SHA256
+    if RUN_MODE == "hop_path_graphstate":
+        return EXPECTED_HOP_PATH_CACHE_SHA256
     return EXPECTED_GEOMETRY_SHA256
 
 
@@ -615,6 +638,61 @@ def find_component_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
+def find_hop_path_cache() -> tuple[Path, dict]:
+    if (
+        len(EXPECTED_HOP_PATH_SOURCE_COMMIT) != 40
+        or len(EXPECTED_HOP_PATH_CACHE_SHA256) != 64
+    ):
+        raise RuntimeError("Hop-path cache identities were not pinned")
+    candidates = []
+    for path in Path("/kaggle/input").rglob("manifest.json"):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if manifest.get("format") == "molgap-pcqm-gap100k-hop-path-cache-v1":
+            candidates.append((path.parent, manifest))
+    if len(candidates) != 1:
+        raise RuntimeError(f"Expected one hop-path cache, found {candidates}")
+    root, manifest = candidates[0]
+    required = {
+        "complete": True,
+        "source_commit": EXPECTED_HOP_PATH_SOURCE_COMMIT,
+        "parent_graph_cache_aggregate_sha256": EXPECTED_PARENT_GRAPH_SHA256,
+        "parent_wedge_cache_aggregate_sha256": EXPECTED_WEDGE_SHA256,
+        "parent_geometry_cache_aggregate_sha256": EXPECTED_GEOMETRY_SHA256,
+        "aggregate_sha256": EXPECTED_HOP_PATH_CACHE_SHA256,
+        "train_graphs": 100_000,
+        "validation_graphs": 10_000,
+        "hops": [2, 3],
+        "feature_channels": 8,
+        "exact_shortest_path": True,
+        "simple_paths": True,
+        "directed_relations": True,
+        "failure_count": 0,
+        "gpu_used": False,
+        "model_inference_executed": False,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    for key, value in required.items():
+        if manifest.get(key) != value:
+            raise RuntimeError(f"Hop-path cache contract changed for {key}")
+    aggregate = hashlib.sha256()
+    for shard in manifest["shards"]:
+        path = root / shard["file"]
+        if sha256_file(path) != shard["sha256"]:
+            raise RuntimeError(f"Hop-path shard hash changed: {path.name}")
+        aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if aggregate.hexdigest() != EXPECTED_HOP_PATH_CACHE_SHA256:
+        raise RuntimeError("Hop-path aggregate hash changed")
+    return root, manifest
+
+
 def find_input_cache() -> tuple[Path, dict]:
     if RUN_MODE == "ring_graphstate":
         return find_ring_cache()
@@ -624,6 +702,8 @@ def find_input_cache() -> tuple[Path, dict]:
         return find_lappe_cache()
     if RUN_MODE == "conjugated_component_confirmation":
         return find_component_cache()
+    if RUN_MODE == "hop_path_graphstate":
+        return find_hop_path_cache()
     return find_geometry_cache()
 
 
@@ -696,6 +776,16 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                     raise RuntimeError(f"{role} component features changed")
                 if graph.conjugated_component_count.numel() != 1:
                     raise RuntimeError(f"{role} component count changed")
+            if RUN_MODE == "hop_path_graphstate":
+                if (
+                    graph.hop_path_edge_index.ndim != 2
+                    or graph.hop_path_edge_index.shape[0] != 2
+                    or tuple(graph.hop_path_features.shape)
+                    != (graph.hop_path_edge_index.shape[1], 8)
+                ):
+                    raise RuntimeError(f"{role} hop-path alignment changed")
+                if not torch.isfinite(graph.hop_path_features).all():
+                    raise RuntimeError(f"{role} hop-path features are non-finite")
     return graphs
 
 
@@ -754,6 +844,12 @@ def forward(model, batch, candidate: str):
             batch.lap_eigvec,
             batch.lap_eigval,
             batch.lap_mask,
+        )
+    if uses_hop_path(candidate):
+        return model(
+            *base,
+            batch.hop_path_edge_index,
+            batch.hop_path_features,
         )
     return model(*base)
 
@@ -903,6 +999,17 @@ def initialization_preflight() -> list[dict]:
             )
             if not signnet_lappe_injection_zero:
                 raise RuntimeError("SignNet-LapPE return is not zero")
+        hop_path_present = hasattr(model, "hop_path_mixer")
+        if hop_path_present != uses_hop_path(candidate):
+            raise RuntimeError(f"Hop-path identity changed for {candidate}")
+        hop_path_injection_zero = True
+        if hop_path_present:
+            value = model.hop_path_mixer.output_value
+            hop_path_injection_zero = bool(
+                torch.count_nonzero(value.weight.detach()) == 0
+            ) and bool(torch.count_nonzero(value.bias.detach()) == 0)
+            if not hop_path_injection_zero:
+                raise RuntimeError("Hop-path return is not zero")
         conjugated_descriptor_present = hasattr(model, "conjugated_descriptor")
         if conjugated_descriptor_present != uses_conjugated_components(candidate):
             raise RuntimeError(f"Conjugated descriptor identity changed for {candidate}")
@@ -939,6 +1046,8 @@ def initialization_preflight() -> list[dict]:
                 "directed_bond_injection_zero": directed_bond_injection_zero,
                 "signnet_lappe_present": signnet_lappe_present,
                 "signnet_lappe_injection_zero": signnet_lappe_injection_zero,
+                "hop_path_present": hop_path_present,
+                "hop_path_injection_zero": hop_path_injection_zero,
                 "conjugated_descriptor_present": conjugated_descriptor_present,
                 "component_state_present": component_state_present,
                 "component_return_zero": component_return_zero,
@@ -1031,6 +1140,15 @@ def gpu_preflight(
         signnet_lappe_injection_zero = bool(
             torch.count_nonzero(model.lappe_to_atom.weight.detach()) == 0
         )
+    hop_path_present = hasattr(model, "hop_path_mixer")
+    if hop_path_present != uses_hop_path(candidate):
+        raise RuntimeError(f"Hop-path identity changed for {candidate}")
+    hop_path_injection_zero = True
+    if hop_path_present:
+        value = model.hop_path_mixer.output_value
+        hop_path_injection_zero = bool(
+            torch.count_nonzero(value.weight.detach()) == 0
+        ) and bool(torch.count_nonzero(value.bias.detach()) == 0)
     conjugated_descriptor_present = hasattr(model, "conjugated_descriptor")
     if conjugated_descriptor_present != uses_conjugated_components(candidate):
         raise RuntimeError(f"Conjugated descriptor identity changed for {candidate}")
@@ -1060,6 +1178,8 @@ def gpu_preflight(
         initial_function_structurally_equal_to_baseline = (
             signnet_lappe_injection_zero
         )
+    if uses_hop_path(candidate):
+        initial_function_structurally_equal_to_baseline = hop_path_injection_zero
     if component_state_present:
         initial_function_structurally_equal_to_baseline = component_return_zero
     if not initial_function_structurally_equal_to_baseline:
@@ -1134,6 +1254,14 @@ def gpu_preflight(
             and bool(torch.isfinite(gradient).all())
             and int(torch.count_nonzero(gradient)) > 0
         )
+    hop_path_return_gradient_nonzero = True
+    if hop_path_present:
+        gradient = model.hop_path_mixer.output_value.weight.grad
+        hop_path_return_gradient_nonzero = (
+            gradient is not None
+            and bool(torch.isfinite(gradient).all())
+            and int(torch.count_nonzero(gradient)) > 0
+        )
     component_return_gradient_nonzero = True
     if component_state_present:
         gradient = model.component_to_atom.value.weight.grad
@@ -1174,6 +1302,9 @@ def gpu_preflight(
         "signnet_lappe_return_gradient_nonzero": (
             signnet_lappe_return_gradient_nonzero
         ),
+        "hop_path_present": hop_path_present,
+        "hop_path_injection_zero": hop_path_injection_zero,
+        "hop_path_return_gradient_nonzero": hop_path_return_gradient_nonzero,
         "conjugated_descriptor_present": conjugated_descriptor_present,
         "component_state_present": component_state_present,
         "component_return_zero": component_return_zero,
@@ -1199,6 +1330,7 @@ def gpu_preflight(
             "retention_return_gradient_nonzero",
             "directed_bond_return_gradient_nonzero",
             "signnet_lappe_return_gradient_nonzero",
+            "hop_path_return_gradient_nonzero",
             "component_return_gradient_nonzero",
         )
     ):
@@ -1544,6 +1676,12 @@ def train_one(
                 if uses_signnet_lappe(candidate)
                 else "none"
             ),
+            "hop_path_mixer": (
+                "exact-shortest-2-3-hop+path-count+bond-histogram+"
+                "shared-blocks3-6-9+rank32-zero-return"
+                if uses_hop_path(candidate)
+                else "none"
+            ),
             "conjugated_component_state": (
                 "persistent32-mean-exchange-blocks3-6-9-lowrank16-zero-return"
                 if candidate == COMPONENT_STATE_CANDIDATES[1]
@@ -1833,6 +1971,11 @@ def main() -> None:
             "contact_cache_aggregate_sha256": (
                 EXPECTED_CONTACT_CACHE_SHA256
                 if RUN_MODE == "contact_graphstate"
+                else None
+            ),
+            "hop_path_cache_aggregate_sha256": (
+                EXPECTED_HOP_PATH_CACHE_SHA256
+                if RUN_MODE == "hop_path_graphstate"
                 else None
             ),
             "geometry_valid_fraction": cache_manifest.get(
