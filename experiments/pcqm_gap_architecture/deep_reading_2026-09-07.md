@@ -566,24 +566,49 @@ and the lack of a usable artifact prevents reproducibility. The target-label
 pretraining result can be monitored, but it cannot justify a current remote
 screen.
 
-## 17. DGT: dual graph Transformer as a design reference
+## 17. DGT: dual graph Transformer as a public pretraining asset
 
 **Primary reading.** [DGT code](https://github.com/zhangsy-ryan/DGT) and
-[paper](https://www.nature.com/articles/s41467-026-75005-9).
+[paper](https://www.nature.com/articles/s41467-026-75005-9), with the [Zenodo
+code archive](https://doi.org/10.5281/zenodo.20009509) and [Figshare source
+data](https://doi.org/10.6084/m9.figshare.30665129).
 
 **Question and mechanism.** DGT maintains atom and bond graphs separately and
-uses cross-level interactions, with optional 3D descriptors. The public code
-and paper provide a concrete atom/bond implementation and QM9 ablations.
+uses cross-level interactions, with optional 3D descriptors, relative position
+and spatial encodings, and chiral/E--Z features. The public code, Zenodo
+archive, and source-data record make this a complete pretraining/architecture
+reference rather than a paper-only idea.
+
+The paper's cleanest PCQM evidence is a pretraining-transfer experiment, not a
+PCQM leaderboard result: random `10K`, `100K`, and `1M` PCQM4Mv2 subsets are
+used to predict the PCQM Gap for 100 epochs (AdamW, batch 128, learning rate
+`2e-4`, cosine schedule, five warmup epochs), and the weights then initialize
+QM9. At `10K` pretraining, the reported QM9 HOMO/LUMO MAEs are `0.0306/0.0240
+eV`; the paper reports no significant downstream gain from increasing the
+pretraining subset size.
+
+The official repository is MIT-licensed and runnable in a documented
+Python 3.10 / Torch 2.1 / PyG 2.0.4 environment, but the visible configuration
+tree exposes QM9 configurations rather than a PCQM pretraining config or
+checkpoint. This is a reproducibility asset and an auditable source for the
+pretraining schedule, not proof that the PCQM Gap transfer can be replayed
+from the public tree alone.
 
 **Evidence boundary.** The available primary evidence does not establish a
-direct PCQM4Mv2 Gap result under the MolGap ETKDG and 12-hour contract. The
-bond-state mechanism overlaps substantially with the existing persistent
-EdgeState/GraphState experiments. Reimplementing the whole model would not
-isolate a new causal information-flow hypothesis.
+direct official PCQM4Mv2 Gap leaderboard result under the MolGap ETKDG and
+12-hour contract. The reported downstream benchmark is QM9, whose labels use
+B3LYP/6-31G(2df,p); its 3D comparison uses DFT, MMFF, and UFF geometries rather
+than the current ETKDG-only role. Dense atom/bond pair representations are
+quadratic, and the bond-state mechanism overlaps substantially with the
+existing persistent EdgeState/GraphState experiments. Reimplementing the whole
+model would therefore be a large transplant, not a clean new information-flow
+hypothesis.
 
-**MolGap disposition.** **B for design reference, not a queue item.** A
-specific atom--bond interaction could be reconsidered only if it is formulated
-as a new, non-overlapping hypothesis with a parameter/throughput gate.
+**MolGap disposition.** **B for a complete pretraining/code/data reference; C
+for direct current use, and not a queue item.** A specific atom--bond
+interaction could be reconsidered only if it is formulated as a new,
+non-overlapping hypothesis with an ETKDG-only role map, a no-pretraining
+control, and a parameter/throughput gate.
 
 ## 18. MoleculeSDE / GraphMVPv2: data-space 2D--3D diffusion pretraining
 

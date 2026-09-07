@@ -843,6 +843,93 @@ features. No direct PCQM Gap claim is admitted from this paper.
 Evidence grade: **B for 3D representation engineering; C for current target
 selection**.
 
+## 15. C-FREE: contrast-free ego-net prediction with 2D/3D conformers
+
+### Primary sources and public artifacts
+
+The primary source is the ICML 2026 [C-FREE paper](https://arxiv.org/html/2509.22468).
+The authors provide the [MIT-licensed implementation](https://github.com/ariguiba/C-FREE)
+and [public Hugging Face checkpoints](https://huggingface.co/ariguiba/C-FREE).
+The audit froze GitHub `main` at `62787cce90d25483bd1ae35e3a120013e53ae7ea` and
+the Hugging Face revision at `26fb85aaeb183960773f975485fc056a77c97d12`; the
+model surface exposes `cfree.pth` and `painn-cfree.pth`.
+
+### Method reconstructed from the paper
+
+C-FREE is a non-contrastive, latent-predictive objective. It samples a node,
+forms a fixed-radius `k`-hop ego-net and its complementary subgraph, and asks a
+context encoder plus predictor to match the target encoder's embedding. The
+context and target views can be 2D graphs, 3D conformers, or both. The target
+encoder is an exponential-moving-average copy of the context encoder, and the
+predictor is essential: the paper's ablation reports collapse when the
+predictor is removed, with a Transformer predictor outperforming a simple MLP.
+Fine-tuning can use a whole-molecule linear head or DeepSets aggregation over
+subgraph embeddings.
+
+Pretraining uses about `304,466` GEOM molecules and about `25M` conformers;
+the multimodal backbone is about `9.1M` parameters. The paper reports three
+conformers in the main multimodal setup and uses additional RDKit-generated
+conformers at fine-tuning, so the geometry source is not the MolGap ETKDG
+contract.
+
+### Quantitative evidence and boundary
+
+The paper includes a random-initialized PaiNN control and a QM9 table. Its
+column labelled `HOMO/LUMO/GAP` reports `0.0055 +/- 0.002` for random PaiNN,
+`0.0049 +/- 0.0007` for 3D-Ego, `0.0049 +/- 0.0005` for 3D-Murcko, and
+`0.0043 +/- 0.0001` for the multimodal variant; the paper explicitly says the
+3D-only variant has a slight edge over multimodal on this grouped frontier
+column. These are QM9 MAEs under the paper's protocol, not PCQM4Mv2 Gap
+evidence. C-FREE improves five of six QM9 targets over PaiNN RND, while the
+HOMO/LUMO/GAP and ZPVE rows remain behind Uni-Mol2 in the authors' comparison.
+
+The safe lesson is narrow but useful: use an EMA target plus a predictor, and
+predict complementary local-to-global subgraph embeddings instead of relying on
+negative sampling or graph-token reconstruction. The code/checkpoint package
+is sufficiently complete for a later ETKDG-only reimplementation, but its GEOM
+3D pretraining, RDKit conformer path, and QM9 downstream role block direct
+initialization or score transfer. **Evidence grade: A/B for objective, code,
+checkpoint provenance, and controlled QM9 evidence; C for current PCQM/ETKDG
+use.** No external data or C-FREE weight is admitted now.
+
+## 16. Zatom-1: multimodal 3D flow pretraining with released frontier-property heads
+
+### Primary sources and public artifacts
+
+The primary sources are the [Zatom-1 paper](https://arxiv.org/html/2602.22251),
+the [official implementation](https://github.com/Zatom-AI/zatom), and the
+[Zenodo checkpoint record](https://zenodo.org/records/19766997). The repository
+publishes generative and property-prediction checkpoints, including QM9-only,
+joint, non-pretrained, and molecule/material variants, together with commands
+for reproducing the paper evaluations.
+
+### Method and electronic-property role
+
+Zatom-1 is a Trunk-based Flow Transformer. Stage 1 uses multimodal flow
+matching over atom types and explicit 3D coordinates; for periodic materials it
+also models fractional coordinates and lattice parameters. Stage 2 attaches
+property, energy, and force heads to selected trunk representations. The QM9
+property command explicitly includes `homo`, `lumo`, and `gap`, so this is a
+real frontier-property teacher surface rather than a generic energy-only
+foundation model. The paper also compares whole-trunk unfreezing, LoRA, and
+trunk-freezing controls; full unfreezing damages generative validity, which is
+useful evidence for keeping representation transfer and generative integrity
+separate.
+
+### Contract audit
+
+The property evidence is QM9 and Matbench, while energy/force evidence uses
+OMol25 and MPtrj. Zatom consumes explicit 3D coordinates or material lattice
+inputs and publishes no matched PCQM4Mv2 B3LYP/6-31G* Gap result. Its geometry
+and data roles therefore cannot be substituted for the current ETKDG
+train/inference contract. The paper reports about `20,000` GPU-hours and `1 TB`
+of local storage across its experiments; this is a foundation/teacher-scale
+asset, not a bounded architecture-screen recipe.
+
+**Disposition.** A/B for 3D generative pretraining, frozen-trunk/LoRA control
+design, and artifact packaging; C for current weights, external rows, explicit
+coordinates, and PCQM/ETKDG experiments. No Zatom asset is admitted.
+
 ## Cross-paper synthesis
 
 ### Evidence that survived the contract audit
@@ -866,6 +953,15 @@ selection**.
    ablation, and the direct global-attention study.
 7. Uni-3DAR adds a compact tokenization reference, but its property result is
    a SpaceFormer/19M-molecule 3D setting rather than official PCQM4Mv2 evidence.
+8. C-FREE adds a clean non-contrastive alternative to contrastive multimodal
+   pretraining: an EMA target plus predictor learns complementary ego-net and
+   context embeddings. Its public code and checkpoints make the objective
+   auditable, but GEOM/RDKit conformers and QM9-only frontier evidence keep it
+   outside the current PCQM/ETKDG candidate set.
+9. Zatom-1 adds a complete flow-foundation/checkpoint surface with explicit QM9
+   HOMO/LUMO/Gap heads. Its frozen-trunk versus LoRA controls and negative
+   transfer observations are useful, but the external 3D/QM9/OMol25/MPtrj
+   contract and foundation-scale cost keep it teacher-only.
 
 ### Candidate ledger
 
@@ -885,5 +981,7 @@ selection**.
 | EMPP | PCQM only as label-free pretraining; QM9 downstream Gap/HOMO/LUMO | masked-position 3D pretraining; ETKDG and role lineage unresolved | position-prediction objective reference |
 | Suiren-1.0 | no direct PCQM Gap result | 1.8B 3D teacher + frozen CCD 2D student; external B3LYP/def2-SVP data | staged distillation reference; scale and geometry mismatch |
 | Uni-3DAR | no direct official PCQM4Mv2 Gap result; SpaceFormer 20K HOMO/LUMO/Gap setting | Octree/subtree compression and masked next-token 3D modeling; MIT code | 19M external 3D corpus, non-ETKDG contract, eight-4090 pretraining budget | 3D tokenization reference only |
+| C-FREE | no direct PCQM Gap result; QM9 grouped HOMO/LUMO/GAP evidence | EMA-target latent prediction over complementary 2D/3D ego-nets; GEOM/RDKit conformers; no current ETKDG role lineage | Non-contrastive objective reference; MIT code/checkpoints only; no current initialization or external-weight import |
+| Zatom-1 | no direct PCQM Gap result; QM9 HOMO/LUMO/Gap property-head evidence | 3D flow foundation; QM9/Matbench/OMol25/MPtrj roles; explicit coordinate/lattice inputs; large compute and external checkpoint | Frozen-trunk/LoRA teacher and foundation-packaging reference only; no current initialization or external-weight import |
 
 No item in this table changes the active experiment authorization.

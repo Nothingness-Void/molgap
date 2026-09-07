@@ -1261,6 +1261,973 @@ the paper does not justify adding them to the active GraphState screen.
 **Disposition: B for task-grouping and negative-transfer design; C for current
 experiment, code, data, and direct PCQM claims.**
 
+## 7.21 QuADMET-Former: a complete public quantum-property pretraining asset
+
+### Primary evidence
+
+The [QuADMET-Former ChemRxiv preprint](https://doi.org/10.26434/chemrxiv.15002429/v1)
+and its [MIT-licensed repository](https://github.com/arunraja-hub/quadmetformer)
+describe a TorchMD-NET/E(3)-equivariant pretraining pipeline for downstream
+ADMET prediction. The public [Hugging Face model card](https://huggingface.co/arunraja007/quadmetformer)
+advertises pretrained checkpoints, 23 ADMET benchmarks, and a best result on
+`16/23` tasks. The accessible project surfaces are sufficient to audit the
+objective and code shape, but the preprint is not a direct PCQM4Mv2 Gap result.
+
+The public artifact is retrievable rather than only promised: the audited
+GitHub `main` revision is `b5789c52a2701009005b98930fae24f8c136142f` and the
+Hugging Face model revision is `a106f8a675d44b4291ec6977666cf12cc12fa912`.
+The model listing exposes single- and multi-conformer checkpoint names for
+Löwdin, E3FP, dipole, Gap, and total-energy combinations, including
+`multi_conf/dipole_moment_e3fp_hl_gap_total_energy_lowdin.ckpt`. This closes
+the public-asset existence question, but not the MolGap theory/geometry or
+identity-overlap questions.
+
+The repository's exact QMugs configuration is independently visible in
+[`qmugs.json`](https://raw.githubusercontent.com/arunraja-hub/quadmetformer/main/pretraining/configs/pretraining/qmugs.json):
+
+```text
+model: TorchMD_ET
+atom_targets: [lowdin]
+mol_targets: [e3fp, dipole_moment, hl_gap, total_energy]
+```
+
+This is more informative than a generic claim that “quantum pretraining helps”:
+it defines a concrete target bundle containing a local charge field, a
+conformer fingerprint, a molecular dipole, an orbital Gap, and a total-energy
+quantity. The [public loss code](https://raw.githubusercontent.com/arunraja-hub/quadmetformer/main/losses.py)
+also exposes charge conservation as a combined per-atom charge plus molecular
+formal-charge loss.
+
+### What the source supports
+
+The project combines two kinds of pretraining signal. Quantum targets include
+dipole moment, HOMO--LUMO Gap, and atomic partial charge; E3FP is used as a
+3D structural pretraining target. The searchable preprint description further
+identifies QMugs electronic calculations at the TPSSh-D3BJ/def2-SVP level and
+GFN2-xTB polarizability-related fields. The downstream role is ADMET, with
+TDC, Biogen ADME, and OpenADMET benchmarks and spectral splits. The reported
+`16/23` result is therefore evidence for transfer from an external quantum
+representation into drug-property tasks, not evidence of a lower PCQM Gap MAE.
+
+The safe methodological lessons are:
+
+- a teacher can be decomposed into physically distinct heads instead of using
+  one undifferentiated “electronic pretraining” loss;
+- local charge supervision should include a molecular charge-conservation
+  check, rather than only atom-wise MSE;
+- the useful source-target combination may be task dependent, so a
+  target-subset ablation is required instead of assuming that adding HOMO,
+  LUMO, Gap, dipole, energy, and geometry all helps;
+- a geometry-only E3FP control can distinguish electronic supervision from
+  generic 3D representation learning.
+
+### MolGap contract audit
+
+QMugs, TPSSh-D3BJ/def2-SVP, its conformer construction, and its ADMET labels
+are all external to the frozen PCQM/B3LYP/6-31G*/ETKDG contract. The public
+checkpoint is a 3D equivariant model trained for an external source-target
+pair; it cannot be treated as a GraphState initialization or as a current
+teacher without a new input-role and overlap protocol. E3FP also depends on a
+3D conformer, so recomputing it on ETKDG would be a deliberate new pretraining
+contract, not a free feature addition.
+
+**Disposition: A/B for public code, configuration, and teacher-loss design;
+C for current labels, weights, geometry, and direct PCQM use.** If a future
+electronic-teacher protocol is authorized, the first controlled comparison
+should be: Gap-only; HOMO+LUMO+Gap; charge-conservation plus frontier targets;
+and a geometry/E3FP-only control, all against a fresh same-contract GraphState
+random-init baseline. No external rows or checkpoints are admitted now.
+
+## 7.22 BOA: basis-overlap message passing for electron-density teachers
+
+### Primary evidence
+
+The peer-reviewed [ICLR 2026 BOA paper](https://proceedings.iclr.cc/paper_files/paper/2026/hash/718573eff1cb169316783d3e08514b5b-Abstract-Conference.html)
+introduces the Basis Overlap Architecture, and the authors release a complete
+[LGPL-3.0 code repository](https://github.com/sciai-lab/boa) with
+[Hugging Face checkpoints](https://huggingface.co/sciai-lab/boa). The repository
+README gives executable data-conversion, train/test commands and a concrete
+checkpoint-loading example (`qm9_pyscf_large.ckpt`), so this is a real code/data
+workflow rather than a paper-only density proposal.
+
+BOA does not regress a scalar frontier property. It represents the ground-state
+electron density in a quadratic expansion of atom-centered Gaussian basis
+functions. Products of basis functions on two atoms naturally place density
+components between atoms; the model predicts a low-rank representation of the
+corresponding density-matrix blocks without materializing the full matrix. Its
+message-passing step computes overlap integrals between basis functions on the
+sending and receiving atoms, projects the message into the receiving basis, and
+uses those overlaps to form attention weights. The paper uses an uncontracted
+def2-QZVPPD basis with a learned radial correction and separate edge/message
+cutoffs. The construction is rotationally and translationally equivariant by
+design.
+
+### Quantitative evidence and scaling lesson
+
+The paper evaluates VASP- and PySCF-derived QM9 density sets and six small-molecule
+MD density subsets using normalized density MAE (NMAE, percent). BOA large reports
+`0.1339 +/- 0.0005` on VASP QM9 and `0.116 +/- 0.006` on PySCF QM9; BOA small
+reports `0.1381 +/- 0.0003` and `0.13 +/- 0.01`, respectively. On the MD set,
+the reported BOA small NMAEs are `0.710`, `0.361`, `0.56`, `0.371`, `0.772`, and
+`0.61` percent for ethanol, benzene, phenol, resorcinol, ethane, and
+malonaldehyde. These are density errors, not Gap errors.
+
+For a size-transfer test, the model is trained only on QM9 molecules with at
+most nine heavy atoms and evaluated on QMugs molecules approaching 200 atoms.
+The smaller message-passing/edge cutoffs (`3/2 Å` rather than `6/3 Å`) keep the
+NMAE roughly stable with molecule size and outperform the comparison ResNet on
+that external test. This is a useful warning for MolGap teacher design: local
+field-of-view controls can improve chemical-size transfer, but a density model
+with a wide field of view is not automatically better.
+
+### MolGap contract audit
+
+BOA's source data are QM9 VASP/PySCF density grids and QMugs density tests, not
+PCQM4Mv2 Gap labels. Its basis is def2-QZVPPD and its density representation is
+not the current B3LYP/6-31G* Kohn--Sham scalar target. It also consumes explicit
+3D geometries, so using it on ETKDG would be a new density-teacher input role;
+using its released checkpoint as a GraphState warm start would be scientifically
+unjustified. The repository bundles `scdp` and `structures25` packages with
+separate licenses, so any future code reuse would need license and dependency
+pinning.
+
+The safe transfer is architectural: if an electronic-density teacher is ever
+authorized, BOA supplies a basis-aware alternative to voxel-image density
+encoders, a low-rank density output, an explicit density-integral metric, and a
+small-cutoff versus standard-cutoff scaling control. It does not authorize a
+current teacher or delta experiment. **Disposition: A/B for public density
+architecture/code evidence; C for current labels, weights, geometry, and direct
+MolGap use.**
+
+## 7.23 OneQMC/Orbformer: a public wavefunction teacher, not a Gap regressor
+
+### Primary evidence
+
+The [Orbformer paper](https://arxiv.org/abs/2506.19960) presents a transferable
+neural-network wavefunction trained variationally with quantum Monte Carlo. The
+authors release the [MIT-licensed OneQMC repository](https://github.com/microsoft/oneqmc),
+the [model card](https://github.com/microsoft/oneqmc/blob/main/model_card.md), a
+Light Atom Curriculum dataset, notebooks, an `lac.chkpt` checkpoint, and a
+separate neural electron real-space density path. The repository is therefore
+an unusually complete public teacher asset, but it is also a JAX/A100-oriented
+quantum-chemistry system rather than a conventional molecular-property encoder.
+
+### Method reconstructed from the paper and model card
+
+Orbformer takes nuclear configuration and electron coordinates as inputs to a
+chemically transferable antisymmetric wavefunction built from a Jastrow factor
+and generalized Slater determinants. An Electron Transformer processes electron
+features while an Orbital Generator creates localized orbitals from the nuclear
+configuration. Training minimizes the variational energy expectation and uses
+Monte Carlo-generated electron configurations, so its pretraining is physics
+supervision rather than a labelled HOMO/LUMO dataset.
+
+The Light Atom Curriculum contains `22,350` configurations with up to `24`
+electrons and H, Li, B, C, N, O, and F. The paper reports three stages spanning
+equilibrium and strongly non-equilibrium geometries, then fine-tunes jointly
+over reaction curves or related geometry families. The model card gives a
+roughly `3,032,938`-parameter model, an estimated `4,000` A100 pretraining hours,
+high memory use above 100 electrons, and a warning that zero-shot checkpoint
+evaluation is not expected to be sufficiently accurate; at least minimal
+fine-tuning is recommended.
+
+### Quantitative evidence and teacher value
+
+The paper reports chemical-accuracy-scale (`1 kcal/mol`) results on bond
+dissociation and Diels--Alder tests, an approximately `20x` efficiency gain
+from joint fine-tuning across a dissociation curve, and further pretraining
+benefits such as about `16x` lower cost to chemical accuracy on ethane and `6x`
+on 1-propanol. The benefit falls for the larger L-alanine case, which is useful
+evidence that pretraining proximity and target-size coverage matter. These are
+relative-energy/QMC claims, not a PCQM4Mv2 HOMO/LUMO/Gap benchmark.
+
+The companion [NERD electron-density paper](https://arxiv.org/abs/2409.01306)
+shows how a density can be extracted from a deep-QMC wavefunction: a real-space
+neural density with cusp and tail constraints is trained by score matching plus
+noise-contrastive estimation. The authors demonstrate dipoles, forces, contact
+densities, and other density-derived observables. This suggests a possible
+high-level electronic teacher target, but it is much more expensive and less
+direct than a scalar orbital-energy teacher.
+
+### MolGap contract audit
+
+OneQMC does not publish a same-contract scalar Gap head, PCQM4Mv2 result, or
+B3LYP/6-31G*/ETKDG training/inference path. Its LAC structures include
+non-equilibrium and NIST-derived geometry sources, the released checkpoint only
+supports the listed light elements, and the model card explicitly rejects
+zero-shot use. A wavefunction or NERD-derived teacher would therefore require a
+separate teacher-only protocol, careful target/geometry provenance, and a
+costed extraction pipeline; it cannot be treated as a drop-in GraphState
+initialization or current delta label.
+
+**Disposition: A/B for public wavefunction/density teacher concept, code,
+checkpoint, and controlled pretraining evidence; C for current labels,
+geometry, weights, and direct MolGap experiment.** The only transferable idea
+to retain now is teacher provenance plus a cost/coverage audit: if a future
+electronic teacher is authorized, compare a scalar frontier teacher against a
+density-derived teacher on the same frozen ETKDG molecules, with a fresh
+random-init control and no external rows in the active database.
+
+## 7.24 OrbitAll: orbital features plus explicit delta-learning
+
+### Primary evidence
+
+The [OrbitAll preprint](https://arxiv.org/html/2507.03853) is the clearest new
+paper-level match to the requested teacher-plus-`Delta` direction. It combines
+spin-polarized orbital features from a low-level semi-empirical calculation
+(spGFN1-xTB or g-xTB) with an SE(3)-equivariant graph network, and explicitly
+defines the supervised target as
+`Delta y = y_target - y_low-level`. The current audit found the paper's
+availability statement but no verified official code or released checkpoint:
+the paper says both will be made available upon publication, so this remains a
+paper-level method reference rather than a public implementation asset.
+
+### Method and exact evidence
+
+OrbitAll builds a quantum-mechanical-matrix feature bundle containing
+spin-resolved Fock and density matrices, an overlap matrix, and a core
+Hamiltonian. Diagonal blocks are reduced to atom-wise representations and
+off-block matrix elements drive equivariant message passing. The low-level
+calculation supplies an inexpensive electronic baseline; the GNN learns the
+correction instead of relearning the entire target. This is materially richer
+than appending a scalar xTB Gap because the representation carries local orbital,
+charge, spin, and environmental information.
+
+The large model is trained on roughly `4M` OMol25 single-point calculations at
+`omegaB97M-V/def2-TZVPD`, with g-xTB energy/force deltas. On QM9star, the
+paper uses B3LYP-D3(BJ)/6-311+G(d,p), balanced neutral/radical/cation/anion
+roles, up to `400K` total training examples, and a separate `100K` radical set
+for spin-resolved HOMO/LUMO levels. In the supplementary table, the
+OrbitAll(`Delta`) total-energy MAE is `8.50 meV` over all species versus
+`14.75 meV` for direct OrbitAll, and its radical spin-resolved HOMO/LUMO MAEs
+are `55.40`, `43.31`, `32.27`, and `14.73 meV` for alpha HOMO, alpha LUMO,
+beta HOMO, and beta LUMO, respectively. These are QM9star values, not current
+PCQM Gap values.
+
+The paper also reports that delta learning reduces the data needed to reach
+chemical accuracy on QM9star from about `70K` for the next-best direct model to
+about `7K` for OrbitAll, while making the charged-species error distributions
+more balanced. The cost accounting is honest: every inference requires the
+low-level QC feature generation, so the neural speedup is not the same as a
+geometry-only model's speedup.
+
+### MolGap contract audit
+
+OrbitAll is not directly transferable to the present route. The reported
+QM9star target is B3LYP-D3(BJ)/6-311+G(d,p), the large pretraining source is
+OMol25 at a different theory and geometry distribution, the low-level feature
+backend is not part of the current ETKDG-only inference contract, and no
+official code/checkpoint was available in this audit. A naive substitution of
+spGFN1-xTB/g-xTB features would introduce a new external calculation and a
+second geometry/theory path; it would not be “the same database plus a small
+head.”
+
+**Disposition: B for a highly relevant delta-learning and orbital-feature
+design; C for current code, weights, labels, geometry, and direct experiment.**
+If ever reopened, the only admissible test would be a separately authorized
+CPU feature-cost/provenance audit followed by a same-PCQM ETKDG control: direct
+GraphState, scalar low-level delta, and orbital-feature delta with identical
+rows, splits, and target reconstruction. No external OMol25 rows or OrbitAll
+weights are admitted now.
+
+## 7.25 NN-xTB: Hamiltonian-level low-fidelity teacher with a reproducible archive
+
+### Primary evidence
+
+The peer-reviewed [Nature Communications NN-xTB paper](https://www.nature.com/articles/s41467-026-73184-z)
+introduces a neural extension of GFN2-xTB. The paper's data statement points
+to a [Code Ocean capsule](https://doi.org/10.24433/CO.8668201.v1) containing
+source code, pretrained models, and training/evaluation scripts; the authors'
+[GitHub repository](https://github.com/Barca-group/NN-xTB) is an auditable
+release-status surface but explicitly says that its source code is not yet in
+the repository. This distinction matters: Code Ocean is the current artifact
+source, not the GitHub tree.
+
+### Method and evidence
+
+NN-xTB keeps the self-consistent GFN2-xTB Hamiltonian and lets an E(3)-equivariant
+encoder predict bounded, environment-dependent shifts to a selected set of
+Hamiltonian parameters. Setting all shifts to zero exactly recovers GFN2-xTB;
+otherwise the modified Hamiltonian is solved self-consistently, so energies,
+forces, vibrational curvatures, charges and multipoles come from one electronic
+state. The reported training mix includes SPICE, VQM24, DES15K, GMTKN55 and
+rMD17, with system-wise splits rather than a single random molecular split.
+
+The paper reports GMTKN55 WTMAD-2 `3.78 kcal/mol` versus `25.0` for GFN2-xTB
+and `9.3` for g-xTB, lowest force MAE on eight of ten rMD17 molecules, a VQM24
+frequency MAE reduction from `200.6` to `12.7 cm^-1`, and typically less than
+`20%` runtime overhead over fixed-parameter GFN2-xTB. These are strong physical
+consistency and low-fidelity-modeling results. They are not HOMO/LUMO/Gap
+results, and the paper does not establish a PCQM4Mv2 frontier benchmark.
+
+### MolGap contract audit
+
+NN-xTB is closer to a reusable low-level electronic teacher than a post-hoc
+regression correction because it preserves a self-consistent Hamiltonian. It
+still does not solve the current contract: its supervised sources use multiple
+theories and geometry roles, its published benchmarks target energies/forces/
+frequencies rather than B3LYP/6-31G* orbital energies, and applying it to the
+active molecules would introduce an external learned QM calculation. The Code
+Ocean archive, license terms, exact model variant, supported elements, and
+whether orbital eigenvalues are stable enough for a Gap residual must be frozen
+before any use.
+
+**Disposition: A/B for Hamiltonian-level teacher design and reproducible
+artifact provenance; C for current labels, frontier targets, geometry, and
+direct experiment.** The safe future control would be direct GraphState versus
+a scalar NN-xTB residual on the same ETKDG rows, with full feature-generation
+cost and target reconstruction reported. No NN-xTB model or external labels are
+admitted now.
+
+## 7.26 QuantumCanvas: public two-body electronic teacher asset
+
+### Primary evidence
+
+The [arXiv paper](https://arxiv.org/abs/2512.01519), [MIT code](https://github.com/KurbanIntelligenceLab/QuantumCanvas), and [CC-BY Zenodo dataset](https://doi.org/10.5281/zenodo.20631934) are all public. The paper defines `2,850` element-pair diatomics across `75` elements, ten-channel orbital/charge image representations, graph coordinates, and frontier/energy/charge/geometry targets. The repository exposes a reproducible `dataset_combined.npz` download, an MD5, loaders, and `REPRODUCE.md`.
+
+### What it actually teaches
+
+The paper compares SchNet, DimeNet, EGNN, FAENet, GATv2, ViT, QuantumShellNet, and late fusion under element-pair-disjoint splits and three seeds. On the paper's gap task, GATv2 is `0.201 +/- 0.020 eV`, EGNN `0.226 +/- 0.015 eV`, and DimeNet `0.248 +/- 0.020 eV`. The transfer experiment pretrains on QuantumCanvas and fine-tunes on QM9, MD17, and CrysMTM; the QM9 setup is `110K/10K/10K`, with scratch learning rate `1e-4` versus fine-tuning `1e-5` and matched HOMO/LUMO/Gap downstream heads. The safe transferable mechanism is an electronic auxiliary teacher based on fixed-size local pair fields, not the image architecture itself.
+
+### Contract audit
+
+The paper abstract and introduction use a finite-temperature Kohn--Sham description, while the dataset section and repository identify the actual simulations as self-consistent-charge DFTB/DFTB+ with the PTBP parameter set. The labels are therefore not B3LYP/6-31G*. The resource is a diatomic/two-body corpus, not a molecular PCQM distribution; its coordinates are explicit/DFTB-derived and are not ETKDG. The paper describes `18` targets (and elsewhere `22` in the detailed materials), whereas the repository README exposes `37` label keys. That revision/schema discrepancy must be frozen before any reuse. No direct PCQM Gap result or current-contract checkpoint is exposed.
+
+**Disposition: B for electronic-teacher, two-body auxiliary, and artifact-manifest
+reference; C for current PCQM labels, database, geometry, weights, and
+experiment.** Do not import its data or weights. It is useful as a completed
+example of how to package a physics-derived auxiliary asset and how to test
+composition-held-out transfer, but it does not authorize a new MolGap route.
+
+## 7.27 Selected Machine Learning: chemistry-family stratification as a Delta control
+
+The peer-reviewed [Materials Advances paper](https://doi.org/10.1039/D2MA00742H),
+[arXiv record](https://arxiv.org/abs/2110.02596), and [public code](https://github.com/b3rn4rdm/SelectedML)
+give a reproducible older control for the requested “new algorithm” direction.
+The authors classify QM7/QM9 molecules from structure into aromatic-ring/
+carbonyl, singly unsaturated, and saturated families, then train separate
+kernel-ridge models. The same repository contains direct learning-curve code
+and a QM7b Delta path with explicit low/high property arguments.
+
+The paper reports roughly `0.1 eV` MAE with up to an order-of-magnitude fewer
+training molecules after selection, and the QM9 saturated class reaches that
+scale with about `16K` examples versus more than `64K` for a random unselected
+pool. The comparison also includes GW, B3LYP, and ZINDO labels and finds that
+family selection can be more data-efficient than its Delta-QML control. This
+does not prove a neural PCQM gain: the representations are CM/BoB/SLATM, the
+models are KRR, the sources are QM7/QM9, and the geometry/theory contract is
+not ETKDG plus PCQM4Mv2.
+
+**Safe MolGap use.** First borrow the measurement: report Gap residuals,
+bias, and learning curves by deterministic chemical family on the existing
+official rows. A class-conditioned head or mixture-of-experts would require a
+new paired control, train-only class rules, and a global model baseline; no
+database, checkpoint, or split change is justified by this paper alone.
+
+## 7.28 HLP-Stack: descriptor stacking as a target-adjacent negative control
+
+The open-access [RSC Advances paper](https://doi.org/10.1039/D5RA08007J), [PMC record](https://pmc.ncbi.nlm.nih.gov/articles/PMC12959570/), and [public repository](https://github.com/college-of-pharmacy-gachon-university/HLP_STACK) expose a full descriptor/model artifact. HLP-Stack combines RDKit 2D descriptors with QM9 3D quantum descriptors, selects `51` of `221` features, and stacks four tree/boosting regressors with a linear meta-learner. It reports HOMO/LUMO test RMSE of `3.219e-4` and `1.903e-4 Eh` with (R^2 approx 0.9999).
+
+The paper states that the QM9 3D descriptors are calculated at B3LYP/6-31G(2df,p). That makes the result a feature-provenance warning for MolGap: target-adjacent quantum descriptors are not available from the current graph/ETKDG input without an additional QC computation, and QM9's theory/basis is not the PCQM target. The repository's raw data, saved models, and near-perfect summaries are useful for forensic audit, but they do not establish a portable baseline or a PCQM gain.
+
+**Disposition: B for leakage/provenance and descriptor-audit design; C for
+current experiment.** Do not import HLP-Stack weights or QM9 quantum features.
+If a descriptor control is ever authorized, restrict features to those
+computable from the same graph plus ETKDG coordinates and compare it against a
+descriptor-free GraphState control.
+
+## 7.29 PET-MAD-DOS: a complete public electronic-structure teacher, not a PCQM label source
+
+### Primary evidence
+
+The [Digital Discovery paper](https://doi.org/10.1039/D5DD00557D), its
+[arXiv record](https://arxiv.org/abs/2508.17418), the
+[Materials Cloud reproduction record](https://doi.org/10.24435/materialscloud:gs-z7),
+the [UPET implementation](https://github.com/lab-cosmo/upet), and the
+[Hugging Face model surface](https://huggingface.co/lab-cosmo/pet-mad-dos)
+form an unusually complete electronic-model artifact. The paper introduces
+PET-MAD-DOS, a rotationally unconstrained Point Edge Transformer trained on the
+Massive Atomistic Diversity (MAD) dataset. The release contains processed
+`.xyz` data, training/fine-tuning/UQ scripts, model material, and the exact
+fixed energy grid used for the DOS representation.
+
+### What is actually predicted
+
+The public data README exposes `number of electrons`, `gap`, `DOS`, and
+`mask` fields. The model predicts a smoothed density of states; a band gap can
+then be obtained either by a CNN head or by a physical interpretation of the
+DOS. The paper evaluates external samples and demonstrates fine-tuning with a
+small fraction of system-specific data. The implementation also exposes LoRA
+and uncertainty-related workflows, which are useful artifact patterns for a
+future frozen-teacher cache.
+
+This is stronger than a paper-only claim: the Materials Cloud record states
+that the data, training scripts, UQ/fine-tuning material, and reproduction
+scripts are available, and the repository README points to the public
+pretrained model. It is therefore a completed electronic-structure teacher
+asset, not merely a suggested architecture.
+
+### Contract audit
+
+The MAD/PET-MAD-DOS release is built for a heterogeneous materials-and-molecule
+distribution and uses plane-wave PBEsol/Quantum Espresso calculations, not the
+current B3LYP/6-31G* Kohn--Sham labels. Its `gap` is derived from the DOS and
+is not a released, target-matched HOMO/LUMO pair for PCQM4Mv2. The structures
+come from MAD and external materials datasets; they are not an ETKDG training
+cache. A DOS/band-gap teacher can therefore be evaluated as an external
+representation or OOD diagnostic only after molecule/periodic handling,
+electron-count conventions, and identity overlap are frozen.
+
+**Disposition: A/B for completed electronic-teacher packaging, DOS-derived
+auxiliary design, LoRA/UQ, and artifact-manifest reference; C for current
+labels, weights, database, geometry, and direct experiment.** The safe lesson
+is to treat the electronic object, energy grid, reliability mask, electron
+count, model revision, and uncertainty output as one immutable artifact. Do
+not call its PBEsol DOS gap a B3LYP/6-31G* PCQM target or add its rows.
+
+## 7.30 FieldMACE: higher-order multipole messages for long-range environments
+
+The peer-reviewed [npj Computational Materials paper](https://doi.org/10.1038/s41524-026-02048-3),
+[official GitHub implementation](https://github.com/rhyan10/FieldMACE), and
+[Figshare model/data archive](https://figshare.com/articles/dataset/Models_data_and_code_for_publication_Incorporating_Long-Range_Interactions_via_the_Multipole_Expansion_into_Ground_and_Excited-State_Molecular_Simulations_/28497857)
+provide paper, source, checkpoints, logs, and publication data. FieldMACE
+extends MACE for QM/MM by adding multipole-derived long-range information to
+the equivariant message update. The authors use a direct sum of multipole
+features rather than a full tensor product so that adding higher-order moments
+does not multiply the feature dimension unnecessarily. The paper studies
+ell-truncation, transfer from MACE-OFF/MACE-MP-0, solvated molecules, nickel
+complex dynamics, and excited-state simulations.
+
+The reproducible training contract is explicit: a 5 Å local cutoff, two short-
+and long-range layer sets, `ell=3` in transfer/dynamics models, H100 training,
+1000 epochs, initial learning rate `0.01`, and energy/force losses. The code
+exposes `--foundation_model` and `--multipole_max_ell`, plus publication
+checkpoints and validation-index files. The paper also shows an important
+failure boundary: very short-range QM/MM boundary interactions remain difficult
+for a truncated multipole expansion, and simply increasing the order raises
+cost.
+
+### MolGap relevance
+
+This is not a HOMO/LUMO/Gap model. Its labels are QM/MM energies and forces,
+its long-range source is an explicit MM point-charge environment, and its
+geometry/theory roles are external to PCQM4Mv2 and ETKDG. Nevertheless, it is a
+credible mechanism reference for a future electronic auxiliary channel: if a
+validated charge/multipole teacher becomes available, inject a bounded
+long-range equivariant feature at the message level rather than adding
+arbitrary all-pair contact edges. No current MolGap source supplies the
+required matching multipole labels, so no experiment is admitted.
+
+**Disposition: A/B for long-range message design, foundation-transfer ablation,
+and checkpoint/data packaging; C for current target, database, geometry, and
+experiment.** Do not import MM coordinates, QM/MM labels, or FieldMACE weights
+into the PCQM/ETKDG route.
+
+## 7.31 MACE-POLAR-1: a released electrostatic foundation model with physical charge/spin constraints
+
+The [primary paper](https://arxiv.org/html/2602.19411), the
+[official foundation-model release](https://github.com/ACEsuit/mace-foundations/releases),
+the [MACE implementation](https://github.com/ACEsuit/mace), and the
+[electrostatic documentation](https://mace-docs.readthedocs.io/en/latest/guide/polar_mace.html)
+expose both the method and usable model artifacts. MACE-POLAR-1 extends MACE
+with a non-self-consistent polarizable field. It predicts spin-resolved atomic
+multipoles, performs repeated global field updates, and applies learnable
+Fukui equilibration so total charge and total spin are controlled explicitly.
+The long-range energy is computed from Gaussian-smeared multipoles, while a
+local MACE term handles short-range chemistry and a restricted non-local term
+captures residual interactions.
+
+The models are trained on the 100-million-structure OMol25 hybrid-DFT corpus;
+the official release states that medium and large models with 12 Å and 18 Å
+receptive fields are distributed under the ASL license. The paper evaluates
+thermochemistry, reaction barriers, conformers, molecular crystals,
+protein--ligand interactions, transition metals, charge separation, and
+external-field response. A key methodological point is that the models are
+trained on energy and force labels but expose physically interpretable charge
+and spin densities as part of the architecture, rather than treating a scalar
+partial charge as an unconstrained auxiliary regression.
+
+### MolGap contract audit
+
+MACE-POLAR-1 does not publish a PCQM4Mv2 HOMO/LUMO/Gap result or a
+B3LYP/6-31G* frontier-orbital head. Its pretraining theory is
+`omegaB97M-V` on OMol25, and its primary use is a 3D atomistic potential with
+explicit long-range electrostatics. Feeding ETKDG coordinates to the released
+model would be an inference test, not evidence that its learned features
+transfer to the current target. In particular, external charge/spin outputs
+would need a theory/identity audit before becoming a teacher; the release must
+not be treated as a free source of current labels.
+
+**Disposition: A/B for released foundation/checkpoint provenance, physically
+constrained charge/spin teacher design, and long-range auxiliary ablations; C
+for current initialization, target labels, database, and direct experiment.**
+The portable lesson is the constraint hierarchy: local representation ->
+explicit non-local field -> global charge/spin conservation. It is not a
+permission to add a MACE-POLAR feature or OMol25 row to GraphState.
+
+## 7.32 MACE-H: operator-level electronic supervision and high-body-order messages
+
+The updated [MACE-H paper](https://arxiv.org/html/2508.15108) and
+[MIT repository](https://github.com/maurergroup/MACE-H) provide a complete
+operator-learning reference. MACE-H predicts local Kohn--Sham Hamiltonian
+matrix blocks in an atomic-orbital basis. Its distinctive changes are
+high-body-order MACE messages, a node-degree expansion to reach the angular
+momenta needed by orbital blocks (including `f-f`/SOC cases), and an edge-update
+module that produces the matrix block. The paper reports sub-meV matrix errors
+and accurate eigenvalue/DOS-derived quantities on open 2D-material and bulk-Au
+benchmarks; the supplementary material explicitly studies data efficiency,
+correlation order, locality, and inference time.
+
+The repository is MIT-licensed and exposes preprocessing, training, evaluation,
+analysis, inference tools, environment files, and a Zenodo package containing
+configs and containers. The post-processing path uses Julia to diagonalize the
+predicted reciprocal-space Hamiltonian and calculate bands/DOS. This is a
+useful completed example of treating an electronic operator—not just a scalar
+property—as the teacher object.
+
+### MolGap contract audit
+
+MACE-H is trained on periodic 2D materials and bulk Au Hamiltonians generated
+with OpenMX/FHI-aims, with basis-set transformations, spin-orbit coupling, and
+periodic reciprocal-space post-processing. It has no current PCQM4Mv2 molecular
+Gap result, no B3LYP/6-31G*/ETKDG contract, and no released molecular orbital
+teacher for the active database. Its strong result is therefore evidence for
+high-body-order/operator supervision in its own domain, not evidence for a
+frontier-orbital experiment here.
+
+**Disposition: A/B for electronic-operator supervision, high-body-order/locality
+analysis, and reproducible code packaging; C for current weights, database,
+geometry, target, and experiment.** Keep this as a mechanism reference and do
+not duplicate the existing MACE-H ledger entry as a new PCQM score.
+
+## 7.33 CheMeleon: descriptor-pretrained D-MPNN with a complete checkpoint route
+
+The [CheMeleon paper](https://arxiv.org/html/2506.15792), [official repository](https://github.com/JacksonBurns/chemeleon),
+[training-data release](https://doi.org/10.5281/zenodo.15733574), [model-weight
+release](https://doi.org/10.5281/zenodo.15426600), and [Chemprop fine-tuning
+documentation](https://chemprop.readthedocs.io/en/main/chemeleon_foundation_finetuning.html)
+form a substantially more complete molecular-pretraining asset than a
+paper-only descriptor claim. The model is a roughly 10M-parameter D-MPNN/FNN
+system pretrained on one million PubChem molecules to predict a large bundle of
+Mordred descriptors. The published architecture uses a six-layer D-MPNN with
+2048-dimensional messages; during downstream transfer, the pretrained
+D-MPNN is retained, the descriptor-prediction FNN is discarded, a fresh task
+head is attached, and the whole network is fine-tuned. The pretraining masks a
+dynamic 85% of descriptor targets, so the signal is not simply a fixed
+single-property regression task.
+
+This is useful evidence for a **descriptor-pretrained molecular foundation
+route**, but not direct evidence for a PCQM4Mv2 Gap gain. The paper's benchmark
+suite is broad (58 MoleculeACE/Polaris tasks) and reports strong aggregate
+win-rate claims, yet the verified source material does not expose a matched
+PCQM4Mv2 B3LYP/6-31G* HOMO/LUMO/Gap result. The pretraining molecules are an
+external PubChem corpus, the input is graph/SMILES rather than ETKDG geometry,
+and Mordred descriptors are a classical descriptor target bundle rather than
+the current Kohn--Sham frontier labels. Some descriptors also encode estimated
+physical/size properties, so they must not be described as purely topological
+or as independent electronic supervision without a descriptor-by-descriptor
+audit.
+
+The repository is nevertheless valuable for engineering and cost planning. It
+publishes the data/weight surfaces, a Chemprop loader path, and a reproducible
+scale estimate: the full descriptor calculation and pretraining reproduction
+is reported at roughly 500 CPU-hours plus 1000 GPU-hours and more than 1 TB of
+checkpoint/storage footprint, while downstream fine-tuning is much cheaper.
+That asymmetry argues against reproducing the full foundation model inside the
+current bounded screen. If this idea is ever tested without changing the
+database, the safe adaptation is a **train-only, same-PCQM descriptor
+pretraining control**: compute a frozen, explicitly enumerated descriptor
+bundle from the existing training SMILES only; exclude validation/test
+molecules; compare one descriptor-pretrained model with one paired random-init
+control; and keep the descriptor head, split, seed, and ETKDG inference route
+auditable. No such run is authorized here.
+
+**Disposition: A/B for descriptor-pretraining design, public checkpoint/data
+packaging, and transfer-cost evidence; C for external PubChem pretraining,
+CheMeleon weights, current database expansion, and current experiment.** Use it
+as a future same-database pretraining protocol reference, not as evidence that
+an external foundation checkpoint is compatible with the present
+B3LYP/6-31G*/ETKDG contract.
+
+## 7.34 Zatom-1: released 3D flow foundation with frontier-property heads
+
+The [Zatom-1 paper](https://arxiv.org/html/2602.22251), [official repository](https://github.com/Zatom-AI/zatom),
+and [Zenodo checkpoint record](https://zenodo.org/records/19766997) expose a
+complete, unusually broad 3D foundation-model asset. Zatom-1 uses a
+Trunk-based Flow Transformer: stage 1 performs multimodal flow matching over
+atom types and 3D coordinates (plus material lattice modalities), while stage 2
+adds property, energy, and force prediction heads. The paper's QM9 property
+route explicitly includes `homo`, `lumo`, and `gap`; the repository publishes
+both generative and property-prediction checkpoints, including non-pretrained
+and QM9-only controls. The main model is about 77M parameters, with released
+160M and 300M variants.
+
+This is evidence for a **generative 3D pretraining teacher** and for a useful
+finetuning control: the paper reports that unfreezing the whole pretrained
+trunk damages generative validity, while trunk freezing is the strongest
+integrity control and LoRA is a more conservative adaptation. It also exposes
+an important negative-transfer warning: jointly trained molecule/material
+models and OMol25-only MLIP models trade off energy/force behavior rather than
+providing a universally better representation.
+
+The contract mismatch is decisive for MolGap. Zatom's property evidence is QM9
+and Matbench, its force/energy evidence is OMol25/MPtrj, and its representation
+consumes explicit 3D coordinates or material lattice inputs. It publishes no
+matched PCQM4Mv2 B3LYP/6-31G* Gap result and does not establish an ETKDG
+train/inference path. The paper reports approximately `20,000` GPU-hours and
+`1 TB` of local storage for its full experiments, so even a checkpoint smoke
+test would require a separately approved teacher audit. No Zatom data, weights,
+or labels are admitted to the current database or model.
+
+**Disposition: A/B for 3D foundation/pretraining architecture, frozen-trunk
+versus LoRA controls, and checkpoint packaging; C for current initialization,
+external QM9/OMol25/MPtrj rows, coordinates, labels, and experiment.** The only
+safe lesson for a later route is to keep generative pretraining, property
+finetuning, and frozen-trunk controls as separate contracts.
+
+## 7.35 OrbNet-Equi: orbital-basis electronic features and the direct/Delta crossover
+
+The [PNAS paper](https://doi.org/10.1073/pnas.2205221119), its [open arXiv
+record](https://arxiv.org/abs/2105.14655), and the [Zenodo source/data/code
+package](https://zenodo.org/records/6568437) establish a complete, older but
+high-value Delta-learning reference. OrbNet-Equi first runs a low-cost
+GFN-xTB mean-field calculation and represents the result in an atomic-orbital
+basis through electronic-operator matrices. Its UNiTE network then applies
+equivariant diagonal reduction, block convolution, message passing, and
+pointwise tensor interactions before property-specific pooling.
+
+The frontier result is more informative than a single headline score. On QM9,
+the paper compares direct learning with residual learning from the GFN-xTB
+estimate for HOMO, LUMO, and the HOMO--LUMO Gap. With the default electronic
+features, the Delta advantage shrinks as the training set grows; the LUMO and
+Gap curves cross around roughly `32K--64K` training examples, after which
+direct learning is better. Supplying energy-weighted occupied/virtual density
+matrices removes that crossover and preserves a Delta/direct separation. This
+is evidence that a residual target is not automatically easier: the low-level
+representation must resolve the relevant electronic degrees of freedom.
+
+The package also contains QM9/SDC21 source data, neural-network code, examples,
+and checksums. The paper's QM9 experiments use standard QM9 DFT labels; SDC21
+uses externally assembled non-equilibrium geometries and
+`omegaB97X-D3/def2-TZVP` single-point labels. The low-fidelity input is a
+GFN-xTB calculation, not an ETKDG-only graph input, and no matched PCQM4Mv2
+B3LYP/6-31G* result is provided.
+
+**MolGap disposition.** A/B for electronic-feature design, a three-way
+direct/scalar-residual/orbital-residual control matrix, and the negative lesson
+that Delta-learning must be tested against direct learning at multiple data
+sizes. C for GFN-xTB features, Zenodo data/weights, external geometries, and
+current initialization. No OrbNet-Equi asset was downloaded.
+
+## 7.36 Image-super-resolution electron density: a real-space electronic teacher
+
+The [Nature Communications paper](https://doi.org/10.1038/s41467-025-60095-8),
+the [pretrained-model/code record](https://doi.org/10.5281/zenodo.15226766),
+and the [CC-BY Figshare data release](https://figshare.com/articles/dataset/Image_Super-resolution_Inspired_Electron_Density_Prediction/25365508)
+provide a second independently retrievable electronic-teacher route. A 3D
+convolutional ResNet maps a coarse superposition of neutral atomic densities
+(SAD) to a high-resolution ground-state electron density. The input requires
+only atom locations, element-dependent tabulated atomic densities, and a
+uniform grid; it does not require a semiempirical calculation.
+
+The model is trained on QM9 densities generated with PBE, GTH pseudopotentials,
+and a GTH-TZV2P basis in a Gaussian--Plane-Wave/PySCF workflow. The paper
+extracts energy, HOMO, LUMO, and Gap after one Kohn--Sham Fock build and
+diagonalization; the reported QM9 one-step table gives a Gap error of about
+`11 meV`. This is not a pure learned Gap head, because the final orbital
+quantities still require the diagonalization step. The paper also reports
+transfer to non-equilibrium conformers and limited-data fine-tuning on unseen
+elements/charge states, which is useful geometry-transfer evidence.
+
+The physical and data contract is external to MolGap: real-space grids,
+PBE/GTH-TZV2P pseudopotential densities, QM9 and water/MD datasets, and no
+PCQM4Mv2 B3LYP/6-31G*/ETKDG route. The public license and model/data surface
+make it a valid teacher-design asset, but the grid memory and one-step DFT
+post-processing are outside the bounded GraphState screen.
+
+**MolGap disposition.** A/B for density-teacher design, electron-number
+normalization, geometry-transfer controls, and the distinction between density
+error and post-diagonalization orbital error. C for the PBE density rows,
+real-space grids, pretrained weights, and current experiment. No asset was
+downloaded.
+
+## 7.37 3DGrid-VQGAN: a public density-grid foundation model with QM9 frontier readouts
+
+The [ICLR paper](https://openreview.net/pdf/51c97777a512d94b366ffd7ba0d8979eba14e3c8.pdf),
+[IBM implementation](https://github.com/IBM/materials/tree/main/models/3dgrid_vqgan),
+and [Hugging Face model card](https://huggingface.co/ibm-research/materials.3dgrid_vqgan)
+form a complete density-grid pretraining and fine-tuning surface. The published
+pretraining corpus contains roughly `855K` PubChem molecules with neutral-charge
+selection and at most `30` heavy atoms. The data pipeline makes up to `50` RDKit
+distance-geometry/force-field conformers, reoptimizes five with MINDO3, keeps the
+lowest MINDO3 structure, and evaluates an RHF/STO-3G density on a `128^3` grid.
+The released model uses a VQGAN-style encoder/codebook and a downstream predictor;
+the public checkpoint is named `3DGrid-VQGAN_43.pt`.
+
+The QM9 fine-tuning section is directly relevant because it includes `gap`, `homo`,
+and `lumo` readouts under QM9 B3LYP/6-31G(2df,p) labels, with standard MoleculeNet
+splits and a public one-GPU script. However, the table entries `0.0088`, `0.0058`,
+and `0.0057` are not explicitly unit-labelled in the audited paper/table context;
+they must not be silently converted to eV or presented as PCQM evidence. The paper
+also compares against SMILES baselines and does not establish a matched
+PCQM4Mv2/B3LYP/6-31G*/ETKDG frontier result.
+
+**MolGap disposition.** A/B for density-grid tokenization, public checkpoint/data
+lineage, and a frozen-density versus scratch fine-tuning control. C for the RHF/
+STO-3G grids, PubChem rows, QM9 theory, external weights, grid-memory cost, and
+current experiment. Do not import the `0.0088` row as an eV claim and do not
+download the roughly multi-terabyte grid corpus.
+
+## 7.38 Graph2Mat: sparse equivariant density matrices with self-consistency diagnostics
+
+The [Graph2Mat paper](https://doi.org/10.1088/2632-2153/adc871),
+[MIT-licensed code](https://github.com/BIG-MAP/graph2mat), and [DTU data
+record](https://data.dtu.dk/articles/dataset/MD17_data_for_graph2mat/26195285)
+provide a completed operator-learning package. Given atomic numbers and coordinates,
+Graph2Mat uses graph construction plus MACE-style equivariant node embeddings to
+predict sparse atom-centred density-matrix blocks. The target is basis dependent,
+but the predicted object remains an electronic operator rather than a scalar
+property. The paper reports SIESTA 5.0.0 calculations, pseudodojo PBE norm-
+conserving pseudopotentials, default split-valence DZP basis, MD17/QM9/ethylene-
+carbonate examples, and about `40%` SCF reduction in the warm-start setting.
+
+The useful result for MolGap is the error decomposition: electron-count error and
+Hamiltonian self-consistency residual are reported as uncertainty/active-learning
+signals. That gives a defensible teacher-quality gate if a future electronic
+teacher is opened. Graph2Mat does not directly predict HOMO/LUMO/Gap, and its
+SIESTA basis, pseudopotentials, coordinates, and matrix block conventions are not
+the current B3LYP/6-31G*/ETKDG contract.
+
+**MolGap disposition.** A/B for sparse operator targets, equivariant matrix
+packaging, self-consistency/UQ, and a teacher-quality acceptance gate. C for
+SIESTA matrices, external rows, basis/pseudopotentials, dataset assets, and current
+experiment. No density matrix or code asset was imported.
+
+## 7.39 ACE density matrix: Grassmann-constrained operator learning
+
+The [ACE density-matrix paper](https://doi.org/10.1039/D5DD00230C),
+[ACEsuit implementation](https://github.com/ACEsuit/ACEdensitymatrix), and
+[DaRUS data record](https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi%3A10.18419/DARUS-4902)
+give a second operator-level route with a different inductive bias. The method
+expands local density-matrix blocks in an Atomic Cluster Expansion basis, fits a
+linear model, and applies a spectral retraction onto the Grassmann manifold so the
+predicted density matrix remains a valid projector-like object. The paper uses
+18 molecules and reports one-SCF energy/force evaluation plus the commutator
+residual `FD-DF` as an error and active-learning signal.
+
+The released data are not a current-target substitute. The main examples use
+`omegaB97XD/6-31G(d)` and solvent/QM-MM trajectory sources, with a large archived
+learning-density bundle and additional prediction files. These are explicit
+three-dimensional, basis-dependent operator labels; the package has no direct
+PCQM4Mv2 B3LYP/6-31G* HOMO/LUMO/Gap result and no ETKDG input path.
+
+**MolGap disposition.** A/B for projector/Grassmann constraints, local-to-global
+operator decomposition, and commutator-based teacher/UQ acceptance. C for ACE
+coefficients, solvent/QM-MM rows, external basis/theory, 3D coordinates, and
+current experiment. No DaRUS asset was downloaded.
+
+## 7.40 SMILESDFT-CLIP/SigLIP: contrastive SMILES--density pretraining
+
+The [NeurIPS 2025 workshop record](https://neurips.cc/virtual/2025/126037),
+[IBM implementation](https://github.com/IBM/materials/tree/main/models/smilesdft_clip),
+and [Apache-2.0 model card](https://huggingface.co/ibm-research/materials.smilesdft-clip)
+establish a public multimodal pretraining route. It pairs canonical SMILES with
+the same approximately `855K` PubChem electron-density grids used in the IBM
+materials models and trains CLIP/SigLIP-style contrastive encoders. The paper
+reports random-rotation evaluation (`1,000` molecules and five SO(3) rotations),
+large Recall@10 improvement over a unimodal baseline, and functional-group
+retrieval diagnostics. The repository exposes pretraining, QM9 `U0` fine-tuning,
+embedding extraction, and checkpoint names `SMILESDFT-CLIP_96.pt` and
+`SMILESDFT-SigLIP_96.pt`.
+
+This is a representation/invariance result, not a frontier-level result. The
+SMILES encoder could be a frozen teacher or a same-database train-only contrastive
+control, but the public density grids, PubChem identities, external density
+convention, and no matched PCQM4Mv2 B3LYP/6-31G*/ETKDG Gap table block direct
+reuse. A future audit would need a train-only identity list, a fresh Gap head, and
+an identical random-init control; it must not use validation/test molecules in
+contrastive pretraining.
+
+**MolGap disposition.** A/B for multimodal pretraining, frozen-encoder transfer,
+and rotation/invariance diagnostics. C for external density grids, PubChem rows,
+released weights, QM9 downstream route, and current initialization. No asset was
+downloaded.
+
+## 7.41 QMLearn: one-electron reduced-density-matrix gamma/delta learning
+
+The [Nature Communications paper](https://doi.org/10.1038/s41467-023-41953-9),
+[QMLearn source](https://gitlab.com/pavanello-research-group/qmlearn),
+[Zenodo training data](https://doi.org/10.5281/zenodo.7946420), and [Zenodo code
+snapshot](https://doi.org/10.5281/zenodo.8269767) establish a complete electronic
+surrogate route. The gamma map learns the one-electron reduced density matrix
+from the electron--nuclear external potential in a Gaussian-type-orbital basis;
+the delta map learns energies, forces, and one-electron observables from the
+predicted 1-RDM, or learns a residual correction to the 1-RDM itself. A Fock
+build and diagonalization then exposes Kohn--Sham orbitals and HOMO--LUMO gaps.
+
+The paper demonstrates local/hybrid DFT, Hartree--Fock, and full-CI surrogates on
+water, benzene, and alcohols, including gap curves along distorted coordinates,
+IR spectra, geometry relaxation, and energy-conserving AIMD. This is a strong
+principled teacher route because the learned object supports multiple downstream
+observables rather than only a scalar Gap. It is also explicitly method-, basis-,
+temperature-, and molecule-specific: the public examples use PySCF/GTO matrices,
+small molecule normal-mode sampling, and an Eckart-frame workflow, not
+PCQM4Mv2/ETKDG.
+
+**MolGap disposition.** A/B for electronic-objective hierarchy, gamma-versus-
+delta decomposition, operator-aware teacher design, and post-diagonalization
+frontier readouts. C for GTO 1-RDM data, QMLearn code/weights, external geometries,
+and current experiment. No asset was downloaded.
+
+## 7.42 QMLearn-SCF: optimized 1-RDM learning and force correction
+
+The peer-reviewed [JCTC follow-up](https://doi.org/10.1021/acs.jctc.5c01564),
+[open preprint](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/68c9a9763e708a76498380b5/original/main.pdf),
+and [Zenodo data/code record](https://zenodo.org/records/17103131) extend the same
+route rather than proposing a new scalar property head. The study compares
+regressors and hyperparameters, finds KRR for gamma-learning and linear delta
+correction to be a reliable low-cost combination, and reduces the training-set
+requirements needed to reach roughly SCF-threshold 1-RDM accuracy. It covers
+H2O, NH3, CO2, methanol, benzene, propanols, naphthalene, and biphenyl, with
+explicit B3LYP/6-31G* examples and PySCF/GTO operator labels.
+
+The frontier evidence is a controlled readout, not direct regression: predicted
+1-RDMs generate a Fock matrix, which is diagonalized to obtain HOMO/LUMO and the
+Gap along water OH-stretch and biphenyl torsion scans. The paper also adds a force-
+correction algorithm; on 500 K displaced biphenyl geometries it reduces force
+error by about an order of magnitude and stabilizes AIMD. The Zenodo record
+contains reproducible scripts and HDF5 data, but its full archive is about `1.3 TB`.
+
+**MolGap disposition.** A/B for direct-versus-operator-residual controls,
+diagonalization-aware metric interpretation, force/trajectory acceptance, and
+active-learning-style geometry coverage. C for molecule-specific 1-RDM labels,
+external GTO/B3LYP data, torsion scans, and current ETKDG use. Do not call its
+post-diagonalization Gap result a direct PCQM Gap head; no asset was downloaded.
+
+## 7.43 STRUCTURES25: variational orbital-free DFT as a density/energy teacher
+
+The [JACS paper/preprint](https://arxiv.org/html/2503.00443v2), [official
+repository](https://github.com/sciai-lab/structures25), and [public
+documentation](https://sciai-lab.github.io/structures25/) provide a completed
+orbital-free DFT implementation with inference models and a replication workflow.
+STRUCTURES25 represents the electron density by coefficients of atom-centred
+even-tempered basis functions and learns an equivariant energy functional with
+tensorial Graphormer-style messages. Its distinctive training intervention is
+to add densities generated from perturbed effective potentials, producing a
+broader distribution than ordinary near-converged SCF iterations. Density
+optimization is then performed variationally, with gradients obtained by
+automatic differentiation; a fast dSAD initial density replaces a cubic MINAO
+guess in the published pipeline.
+
+On QM9 the paper reports PBE/6-31G(2df,p)-relative energy MAE about `0.644 mHa`
+and convergent density optimization; on a larger QMugs subset it tests local
+radius-limited extrapolation. The model predicts energies and densities, not
+direct Kohn--Sham orbitals or a HOMO/LUMO/Gap head. The released code is therefore
+useful for a physically stable electronic auxiliary objective, density
+normalization, perturbed-state coverage, and a variational teacher, but its
+explicit coordinates, basis coefficients, PBE/QMugs labels, and LGPL-3.0 software
+contract remain external to PCQM4Mv2/ETKDG.
+
+**MolGap disposition.** A/B for variational auxiliary supervision, perturbed-state
+coverage, density/energy consistency, and local electronic-field teacher design.
+C for QM9/QMugs rows, density coefficients, explicit 3D geometry, external
+weights, and current experiment. No model, data, or dependency was imported.
+
+## 7.44 KineticNet: derivative-aware orbital-free electronic supervision
+
+The [JCP paper](https://doi.org/10.1063/5.0158275) and its [arXiv HTML
+version](https://arxiv.org/html/2305.13316) are a useful predecessor to
+STRUCTURES25. KineticNet takes electron density on molecular quadrature grids
+together with nuclear positions/charges and predicts both kinetic-energy density
+and a kinetic potential. The architecture is an E(3)-equivariant point-convolution
+encoder--atom interaction stack--grid decoder, with tensor channels through order
+`l=4`, local atomic contributions, a smooth-L1 field loss, and a several-bond-length
+field of view. The authors train separate models for the energy-density and
+functional-derivative targets.
+
+The evidence is deliberately narrow but concrete. Ground truth is BLYP/cc-pVDZ
+KS-DFT for He, H2, H3+, HF, Ne2, and H2O. Each system has 8,000 training,
+2,000 validation, and 1,000 test samples, with geometry changes and random
+external-potential matrix perturbations. On 100 held-out test samples, the
+reported kinetic-energy MAE is below 1 mHa per electron for all systems; the
+paper reports H2O at `1.3 mHa`, HF at `2.0 mHa`, and Ne2 at `10.0 mHa`. Density
+optimization is demonstrated only for two-electron systems, where the chosen
+single-orbital density ansatz is exactly compatible with the KS density. The
+data-availability statement says the data are available from the authors on
+request, not as a public PCQM-scale archive.
+
+**MolGap disposition.** A/B for derivative-aware electronic supervision,
+perturbed-state coverage, grid-to-atom receptive-field design, and an explicit
+warning that a functional teacher must be stable away from the ground state. C
+for real-space grids, BLYP/cc-pVDZ labels, author-request data, and any direct
+PCQM/ETKDG experiment. KineticNet has no direct HOMO/LUMO/Gap head or released
+frontier checkpoint; no asset was imported.
+
+## 7.45 M-OFDFT: explicit residual, gradient-label, and pretrain/fine-tune controls
+
+The peer-reviewed [Nature Computational Science paper](https://doi.org/10.1038/s43588-024-00605-8),
+[open arXiv PDF](https://arxiv.org/pdf/2309.16578), [Zenodo implementation](https://doi.org/10.5281/zenodo.10616893),
+and [Figshare model/data collection](https://doi.org/10.6084/m9.figshare.c.6877432)
+form a much more complete public reference. M-OFDFT represents the density by
+coefficients on an atom-centred even-tempered basis and uses an all-node
+Graphormer attention model to predict a kinetic-energy functional. Density
+coefficients are optimized variationally under an electron-count constraint,
+while Hartree, exchange-correlation, and external terms are evaluated directly.
+The implementation uses local frames for rotation invariance, an overlap-matrix
+reparameterization, dimension-wise gradient rescaling, and an atomic reference
+module that removes the large mean gradient.
+
+The key training result is not ordinary energy regression. For every molecule,
+the authors retain multiple coefficient states from KS SCF iterations, their
+kinetic energies, and projected coefficient gradients. They show that energy-only
+training can still lower the electronic energy when initialized at a KS density;
+the gradient labels directly stabilize the optimization landscape and enforce the
+stationary-point condition. At the in-scale level, the model learns a residual on
+top of an APBE kinetic functional. The reported PBE/6-31G(2df,p) results are
+`0.18 kcal/mol` energy MAE on ethanol and `0.93 kcal/mol` on QM9, with
+corresponding force MAEs of `1.18` and `2.91 kcal/mol/A`. The workflow uses
+100,000 MD17 ethanol structures, QM9, QMugs, and a 1,000-structure chignolin
+trajectory-derived protein set. For larger chignolin structures, accessible-scale
+pretraining reduces error by `35.4%` versus training from scratch; fine-tuning
+with 500 large-system structures still gives the best absolute result. The paper
+reports empirical scaling `O(N^1.46)` versus `O(N^2.49)` for its KS reference and
+up to `27.4x` speedup on a 738-atom protein system.
+
+This is the strongest newly audited evidence for combining a physically meaningful
+residual target with gradient/landscape supervision and explicit pretrain--fine-
+tune controls. It is nevertheless an orbital-free density solver, not a frontier
+orbital predictor: no direct HOMO/LUMO/Gap head is supplied, and all labels,
+coordinates, basis coefficients, PBE/QM9/QMugs roles, and external model assets
+are outside the current database contract.
+
+**MolGap disposition.** A/B for residual-target design, teacher-gradient quality
+gates, pretraining versus from-scratch controls, and a clear rule that optimization
+landscape coverage matters more than a single ground-state label. C for external
+density coefficients, QM9/QMugs/MD17/chignolin rows, PBE/6-31G(2df,p), explicit
+3D geometry, and imported weights. Do not treat its `35.4%` pretraining gain or
+protein speedup as PCQM Gap evidence; no code, data, or checkpoint was imported.
+
+## 7.46 Meyer--Weichselbaum--Hauser: derivative supervision as a negative control
+
+The open [JCTC paper](https://doi.org/10.1021/acs.jctc.0c00580) is available via
+[PMC7482319](https://pmc.ncbi.nlm.nih.gov/articles/PMC7482319/). It studies a
+one-dimensional model of non-interacting spinless fermions: 100 analytic training
+potentials and 1,000 additional test potentials are solved on a 500-point grid
+with Numerov's method. Kernel ridge regression, a CNN, and a ResNet are trained
+on kinetic energy alone or jointly on kinetic energy and its functional derivative.
+Derivative supervision improves both derivative accuracy and the stability of
+iterative minimum-density searches; the ResNet improves with more data at low
+additional inference cost. However, the authors also show that unconstrained
+optimization still leaves the valid region because ML derivatives are noisy, so
+PCA projection or a von-Weizsaecker penalty is required. This is a useful caution
+against equating a lower auxiliary loss with a usable electronic teacher.
+
+**MolGap disposition.** C as a direct experiment: the system is 1D, synthetic,
+non-molecular, and has no PCQM/ETKDG or frontier-orbital result. A/B only as a
+negative control for derivative-loss ablations: any future electronic teacher
+must report convergence, normalization/self-consistency, and out-of-manifold
+failure, not just energy or gradient MAE. No code or data was imported.
+
 ## 8. Evidence-only next actions
 
 1. Record exact revisions/licenses for HEDMoL, Q-GEM assets, and any MET
@@ -1293,6 +2260,154 @@ experiment, code, data, and direct PCQM claims.**
 9. For AEGCNN-MTL, retain only the correlation-grouping and single-task versus
    multi-task control. Do not request the unpublished BDG data or treat its QM9
    errors as PCQM evidence.
+10. For QuADMET-Former, freeze the repository revision, checkpoint file list,
+     QMugs release, and license separately before any inspection. Borrow only
+     the target-bundle and charge-conservation ablation shape; do not compute
+     external QMugs/E3FP labels on the current track or import its weights.
+11. For BOA, record the repository revision, LGPL/MIT bundled-package licenses,
+     checkpoint hash, basis, density source, and PySCF/VASP geometry roles before
+     any teacher inspection. Borrow only the basis-aware density architecture and
+     cutoff-scaling control; do not feed BOA density outputs into GraphState.
+12. For OneQMC/Orbformer, freeze the OneQMC commit, checkpoint hash, MIT/model-
+    card terms, supported elements, LAC data lineage, and JAX/A100 resource
+    envelope before any teacher inspection. Treat Orbformer/NERD only as a
+    separate electronic-teacher feasibility study; do not run zero-shot
+    inference, import its checkpoint, or add wavefunction/density rows to PCQM.
+13. For OrbitAll, freeze the paper version, QM9star/OMol25 theory levels, the
+    low-level spGFN1-xTB/g-xTB feature definition, and the promised-but-not-yet-
+    verified code/data release separately. Borrow only the three-way delta
+    control (direct, scalar low-level residual, orbital-feature residual); do
+    not add external OMol25 rows or generate low-level features on the active
+    track without a new CPU cost and geometry contract.
+14. For NN-xTB, use the Code Ocean capsule—not the still-empty GitHub source
+     tree—as the artifact authority. Freeze capsule/model hashes, license,
+     supported elements, SCF settings, and output fields; first verify whether
+     reproducible orbital eigenvalues or only energies/forces/frequencies are
+     exposed. Do not treat its DFT-level energy benchmarks as Gap evidence or
+     reserve GPU time before a CPU ETKDG feature-cost audit.
+15. For QuantumCanvas, freeze the Zenodo revision, NPZ MD5, repository schema,
+    DFTB/PTBP label provenance, and paper-versus-README target count before any
+    teacher inspection. Borrow only its two-body/electronic-auxiliary packaging
+    and composition-held-out evaluation idea; do not add diatomic rows, image
+    tensors, or explicit-coordinate features to the current PCQM/ETKDG track.
+16. For TMC-Delta-ML, freeze the Chemistry--A European Journal version, MIT
+    code revision, Zenodo graph archive, tmQMg release, and the exact
+    GFN2-xTB//LSDA/LANL2DZ versus GFN2-xTB//PBE0-D3BJ/def2-TZVP modes. Borrow
+    only its benchmark-versus-residual and cheap-versus-expensive fidelity
+    matrix; transition-metal rows, u-NatQG features, and non-ETKDG geometries
+    remain external.
+17. For SelectedML, freeze the paper version, class-rule implementation,
+    QM7/QM9 source roles, CM/BoB/SLATM representation, and direct/Delta script
+    revisions. Borrow the family-conditioned residual and learning-curve audit
+    first; do not transplant KRR models or split PCQM into three training sets
+    without a new paired protocol.
+18. For HLP-Stack, freeze the paper/repository revision and enumerate every
+     2D/3D feature with its computation source before using any number. Treat
+     the near-perfect metrics as a negative provenance control until a strict
+     train/test and target-adjacent-feature audit is complete; do not import its
+     DFT-derived descriptors or models.
+19. For PET-MAD-DOS, freeze the Materials Cloud record, DOS energy grid,
+    `mask` semantics, electron-count convention, UPET/Hugging Face revision,
+    and the PBEsol/Quantum Espresso label provenance. Treat it as a DOS teacher
+    packaging reference only; do not equate its `gap` field with the current
+    B3LYP/6-31G* HOMO/LUMO/Gap target.
+20. For FieldMACE, freeze the GitHub revision, Figshare archive, license,
+    multipole order, foundation checkpoint, QM/MM point-charge convention, and
+    energy/force label schema. Borrow only the message-level long-range design;
+    do not generate MM or multipole features for the active track without a
+    separately approved ETKDG-compatible teacher contract.
+21. For MACE-POLAR-1, freeze the release tag/checkpoint hash, ASL terms,
+    OMol25 theory, charge/spin convention, and receptive field. If a future
+    teacher route is authorized, compare frozen features against a no-teacher
+    control and record whether the model is merely an external 3D probe; do not
+    import OMol25 rows or treat its charge/spin output as a target label.
+22. For MACE-H, freeze the MIT commit, Zenodo config/container revision, basis
+    and DFT engine, periodic/SOC settings, and Julia post-processing version.
+  Use only as an operator-level/high-body-order reference; do not interpret
+  material Hamiltonian scores as molecular PCQM Gap evidence.
+23. For CheMeleon, freeze the paper version, repository commit, Zenodo data and
+    weight hashes, Chemprop loader revision, descriptor names/order, and the
+    license of every asset. Treat the published PubChem foundation route as
+    external. If a same-database probe is later authorized, generate
+    descriptors from the PCQM training SMILES only, exclude validation/test
+    molecules, keep an identical random-init control, and report descriptor
+    missingness and any target-adjacent fields before reserving GPU time.
+24. For Zatom-1, freeze the paper version, repository commit, Zenodo checkpoint
+    record, model variant, QM9/OMol25/MPtrj/Matbench role, and checkpoint license.
+    Treat explicit coordinates and all external rows as teacher-only. If a
+    later audit is authorized, compare frozen-trunk, LoRA, and non-pretrained
+    controls without changing the PCQM database or ETKDG contract; do not infer
+    PCQM Gap benefit from QM9 or materials results.
+25. For OrbNet-Equi, freeze the PNAS paper version, Zenodo archive/MD5,
+    GFN-xTB feature definition, QM9 versus SDC21 target theory, and the exact
+    direct/Delta target list. If a future Delta audit is authorized, compare
+    direct, scalar-low-level residual, and orbital-feature residual models at
+    matched data sizes; do not generate GFN-xTB features or import SDC21 rows
+    into the current PCQM/ETKDG route.
+26. For the real-space density teacher, freeze the Nature paper, Zenodo model
+    record, Figshare data revision/license, PBE/GTH-TZV2P density convention,
+    grid spacing, electron-number normalization, and one-step diagonalization
+    definition. Treat its `11 meV` QM9 Gap result as post-diagonalization
+    evidence only; do not equate it with a direct PCQM Gap head or allocate
+    grid-memory/DFT compute without a separate teacher protocol.
+27. For 3DGrid-VQGAN, freeze the ICLR paper, IBM commit, Hugging Face checkpoint
+    name, PubChem selection, `128^3` grid convention, MINDO3/RHF/STO-3G density
+    provenance, QM9 target table, and the unit interpretation of every reported
+    metric. Treat the table values `0.0088/0.0058/0.0057` as unit-ambiguous until
+    the source table is independently resolved; do not convert them to eV or
+    allocate multi-terabyte grid storage for a current experiment.
+28. For Graph2Mat, freeze the code commit, DTU data revision, SIESTA version,
+    pseudodojo pseudopotentials, basis variant, matrix block ordering, charge
+    convention, and electron-count/self-consistency acceptance metrics. If an
+    operator teacher is later authorized, require matrix reconstruction and
+    electron-count gates before any frontier readout; do not import SIESTA rows
+    into PCQM or treat SCF reduction as a Gap result.
+29. For ACE density matrix, freeze the RSC/arXiv version, Julia/ACE commit, DaRUS
+    file hashes, molecule/frame identity list, basis/theory and solvent/QM-MM
+    provenance, ACE degree/cutoff, and Grassmann retraction settings. Borrow only
+    projector validity and commutator residuals as teacher/UQ controls; do not use
+    the external density matrices or 3D frames under the current ETKDG route.
+30. For SMILESDFT-CLIP/SigLIP, freeze the NeurIPS record, IBM commit, checkpoint
+    revision, PubChem pair list, density-grid convention, rotation-evaluation
+    protocol, and QM9 fine-tuning script. If a same-database contrastive control
+    is ever authorized, use PCQM training identities only, attach a fresh Gap head,
+    and compare frozen, fine-tuned, and random-init controls; never import its
+    external grids or weights.
+31. For QMLearn, freeze the Nature paper, GitLab/Zenodo code revisions, training
+    and test-set archives, PySCF/GTO basis, method/temperature/molecule identity,
+    Eckart-frame sampling, and the gamma/delta map definitions. Treat its
+    post-Fock-diagonalization HOMO/LUMO/Gap readout as an electronic-teacher
+    control only; do not import molecule-specific 1-RDM data or use the QMLearn
+    code as a current PCQM predictor.
+32. For the QMLearn-SCF follow-up, freeze the JCTC version, ChemRxiv revision,
+    Zenodo file hashes, KRR/linear-delta settings, SCF-threshold definition,
+    force-correction equations, and every molecule/torsion/temperature role.
+    Keep the 1.3-TB archive external and require an explicit teacher-quality and
+    diagonalization-cost audit before considering any feature transfer.
+33. For STRUCTURES25, freeze the JACS/arXiv version, repository commit/license,
+    model identifier, basis and PBE/QMugs label provenance, perturbed-potential
+    generator, dSAD initialization, density normalization, local cutoff, and
+    density-optimization stopping rule. Borrow only the variational auxiliary
+    objective and perturbed-state coverage; do not add explicit-coordinate
+    density coefficients or external orbital-free weights to the current ETKDG
+    screen.
+34. For KineticNet, freeze the JCP/arXiv version, BLYP/cc-pVDZ level, grid and
+    atomic-contribution convention, perturbation-matrix distribution, two-field
+    target definition, and author-request data boundary. Borrow only derivative
+    supervision and off-ground-state coverage; do not introduce real-space grids,
+    external weights, or a non-ETKDG teacher into the current screen.
+35. For M-OFDFT, freeze the Nature/arXiv version, Zenodo/figshare revisions,
+    APBE residual definition, even-tempered basis, local-frame transform,
+    projected-SCF gradient labels, ProjMINAO/Hueckel initialization, and the
+    pretrain/from-scratch/500-structure fine-tune comparison. If this route is
+    ever reconsidered, reproduce a no-teacher control and a gradient-landscape
+    acceptance gate before discussing any same-database residual; do not import
+    QM9/QMugs/MD17 rows or external density coefficients.
+36. For Meyer--Weichselbaum--Hauser, retain the 1D derivative-training result as
+    a negative control. Any future auxiliary-gradient proposal must test whether
+    optimization stays on-manifold and normalized, and must include an explicit
+    noisy-derivative failure check; do not cite the 1D metrics as molecular or
+    PCQM evidence.
 
 ## Primary-source index
 
@@ -1349,3 +2464,45 @@ experiment, code, data, and direct PCQM claims.**
   [IBM implementation](https://github.com/ibm/materials), and
   [public MPtrj POS-EGNN weights](https://huggingface.co/ibm-research/materials.pos-egnn)
 - [AEGCNN-MTL paper](https://www.nature.com/articles/s41524-025-01917-7)
+- [QuADMET-Former preprint](https://doi.org/10.26434/chemrxiv.15002429/v1),
+  [MIT code](https://github.com/arunraja-hub/quadmetformer), [Hugging Face
+  checkpoints](https://huggingface.co/arunraja007/quadmetformer), [QMugs
+  pretraining config](https://raw.githubusercontent.com/arunraja-hub/quadmetformer/main/pretraining/configs/pretraining/qmugs.json),
+  and [loss implementation](https://raw.githubusercontent.com/arunraja-hub/quadmetformer/main/losses.py)
+- [BOA ICLR 2026 paper](https://proceedings.iclr.cc/paper_files/paper/2026/file/718573eff1cb169316783d3e08514b5b-Paper-Conference.pdf),
+  [official code](https://github.com/sciai-lab/boa), [README](https://raw.githubusercontent.com/sciai-lab/boa/main/README.md),
+  and [Hugging Face checkpoints](https://huggingface.co/sciai-lab/boa)
+- [Orbformer paper](https://arxiv.org/abs/2506.19960), [OneQMC code](https://github.com/microsoft/oneqmc),
+  [model card](https://github.com/microsoft/oneqmc/blob/main/model_card.md), and
+  [NERD electron-density paper](https://arxiv.org/abs/2409.01306)
+- [OrbitAll paper](https://arxiv.org/html/2507.03853)
+- [NN-xTB paper](https://www.nature.com/articles/s41467-026-73184-z),
+  [Code Ocean capsule](https://doi.org/10.24433/CO.8668201.v1), and
+  [release-status repository](https://github.com/Barca-group/NN-xTB)
+- [QuantumCanvas paper](https://arxiv.org/abs/2512.01519), [MIT code](https://github.com/KurbanIntelligenceLab/QuantumCanvas), and [Zenodo dataset](https://doi.org/10.5281/zenodo.20631934)
+- [TMC-Delta-ML paper](https://doi.org/10.1002/chem.71487), [official code](https://github.com/uiocompcat/TMC-Delta-ML), [tmQMg data/code](https://github.com/uiocompcat/tmQMg), and [Zenodo low-fidelity graphs](https://doi.org/10.5281/zenodo.18348669)
+- [Selected Machine Learning paper](https://doi.org/10.1039/D2MA00742H), [arXiv record](https://arxiv.org/abs/2110.02596), and [public code](https://github.com/b3rn4rdm/SelectedML)
+- [HLP-Stack paper](https://doi.org/10.1039/D5RA08007J), [PMC record](https://pmc.ncbi.nlm.nih.gov/articles/PMC12959570/), and [public repository](https://github.com/college-of-pharmacy-gachon-university/HLP_STACK)
+- [PET-MAD-DOS paper](https://doi.org/10.1039/D5DD00557D), [arXiv record](https://arxiv.org/abs/2508.17418), [UPET code](https://github.com/lab-cosmo/upet), [Materials Cloud reproduction record](https://doi.org/10.24435/materialscloud:gs-z7), and [Hugging Face model](https://huggingface.co/lab-cosmo/pet-mad-dos)
+- [FieldMACE paper](https://doi.org/10.1038/s41524-026-02048-3), [official code](https://github.com/rhyan10/FieldMACE), and [Figshare models/data](https://figshare.com/articles/dataset/Models_data_and_code_for_publication_Incorporating_Long-Range_Interactions_via_the_Multipole_Expansion_into_Ground_and_Excited-State_Molecular_Simulations_/28497857)
+- [MACE-POLAR-1 paper](https://arxiv.org/html/2602.19411), [foundation-model release](https://github.com/ACEsuit/mace-foundations/releases), and [MACE-POLAR documentation](https://mace-docs.readthedocs.io/en/latest/guide/polar_mace.html)
+- [MACE-H paper](https://arxiv.org/html/2508.15108), [MIT code](https://github.com/maurergroup/MACE-H), and [Zenodo reproduction/config surface](https://doi.org/10.5281/zenodo.15223696)
+- [CheMeleon paper](https://arxiv.org/html/2506.15792), [official code](https://github.com/JacksonBurns/chemeleon), [training data](https://doi.org/10.5281/zenodo.15733574), [model weights](https://doi.org/10.5281/zenodo.15426600), and [Chemprop fine-tuning documentation](https://chemprop.readthedocs.io/en/main/chemeleon_foundation_finetuning.html)
+- [Zatom-1 paper](https://arxiv.org/html/2602.22251), [official code](https://github.com/Zatom-AI/zatom), and [Zenodo checkpoints](https://zenodo.org/records/19766997)
+- [OrbNet-Equi paper](https://doi.org/10.1073/pnas.2205221119), [arXiv record](https://arxiv.org/abs/2105.14655), and [Zenodo source/data/code](https://zenodo.org/records/6568437)
+- [Image-super-resolution density paper](https://doi.org/10.1038/s41467-025-60095-8), [Zenodo model/code record](https://doi.org/10.5281/zenodo.15226766), and [Figshare data](https://figshare.com/articles/dataset/Image_Super-resolution_Inspired_Electron_Density_Prediction/25365508)
+- [3DGrid-VQGAN paper](https://openreview.net/pdf/51c97777a512d94b366ffd7ba0d8979eba14e3c8.pdf), [IBM code](https://github.com/IBM/materials/tree/main/models/3dgrid_vqgan), and [Hugging Face checkpoint](https://huggingface.co/ibm-research/materials.3dgrid_vqgan)
+- [Graph2Mat paper](https://doi.org/10.1088/2632-2153/adc871), [official code](https://github.com/BIG-MAP/graph2mat), and [DTU data](https://data.dtu.dk/articles/dataset/MD17_data_for_graph2mat/26195285)
+- [ACE density-matrix paper](https://doi.org/10.1039/D5DD00230C), [official code](https://github.com/ACEsuit/ACEdensitymatrix), and [DaRUS data](https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi%3A10.18419/DARUS-4902)
+- [SMILESDFT-CLIP/SigLIP workshop record](https://neurips.cc/virtual/2025/126037), [IBM code](https://github.com/IBM/materials/tree/main/models/smilesdft_clip), and [Hugging Face model card](https://huggingface.co/ibm-research/materials.smilesdft-clip)
+- [QMLearn 2023 paper](https://doi.org/10.1038/s41467-023-41953-9), [source](https://gitlab.com/pavanello-research-group/qmlearn), [training data](https://doi.org/10.5281/zenodo.7946420), and [code snapshot](https://doi.org/10.5281/zenodo.8269767)
+- [QMLearn-SCF 2025 paper](https://doi.org/10.1021/acs.jctc.5c01564), [open preprint](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/68c9a9763e708a76498380b5/original/main.pdf), and [Zenodo data/code](https://zenodo.org/records/17103131)
+- [STRUCTURES25 paper](https://arxiv.org/html/2503.00443v2), [official code](https://github.com/sciai-lab/structures25), and [documentation](https://sciai-lab.github.io/structures25/)
+- [KineticNet paper](https://doi.org/10.1063/5.0158275) and
+  [arXiv HTML](https://arxiv.org/html/2305.13316)
+- [M-OFDFT paper](https://doi.org/10.1038/s43588-024-00605-8),
+  [arXiv PDF](https://arxiv.org/pdf/2309.16578),
+  [Zenodo implementation](https://doi.org/10.5281/zenodo.10616893), and
+  [Figshare checkpoints/examples](https://doi.org/10.6084/m9.figshare.c.6877432)
+- [Derivative-aware orbital-free DFT paper](https://doi.org/10.1021/acs.jctc.0c00580)
+  and [PMC full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC7482319/)

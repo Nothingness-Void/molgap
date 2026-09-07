@@ -950,3 +950,66 @@ governance.
 Evidence grade: A/B for the theory, public implementation, and direct PCQM
 validation; C for official test-dev comparability. No run, pretrained
 initialization, database change, or seed expansion is authorized by this card.
+
+## 15. GDT: a unified standard-attention and positional-encoding audit
+
+### Primary source and question
+
+The primary paper is [Generalizable Insights for Graph Transformers in Theory
+and Practice](https://arxiv.org/html/2511.08028), published at NeurIPS 2025
+with an official conference record
+[here](https://papers.nips.cc/paper_files/paper/2025/hash/f79df6cbc6e5f708440004fad7ef64cc-Abstract-Conference.html).
+No independently verifiable author repository or checkpoint was found in this
+audit, so the paper is an evidence source rather than a code asset.
+
+GDT is designed to make the graph-Transformer comparison less architecture-
+specific. It retains standard scaled dot-product attention, supports node-only
+or node-plus-edge tokenization, represents edge features as an attention bias,
+and treats the positional encoding as the main controlled structural choice.
+The paper proves an equivalence between its standard-attention construction
+and a generalized-distance Weisfeiler--Leman procedure, then compares NoPE,
+LPE, SPE, RWSE, and RRWP on the same model family.
+
+### PCQM experiment reconstructed from the paper
+
+The PCQM4Mv2 run uses all `3.746M` graphs and reports PCQ MAE in meV for
+clarity. The 16M model uses 16 layers, hidden size 384, 16 heads, AdamW,
+batch size 256, learning rate `1e-4`, 20k warmup steps, 2M steps, weight
+decay `0.1`, dropout `0.1`, and 32 random-walk steps/eigenvectors. The paper
+reports three-seed results:
+
+| PE | PCQ MAE (meV) |
+|---|---:|
+| NoPE | `93.6 +/- 0.5` |
+| LPE | `92.7 +/- 0.9` |
+| SPE | `94.1 +/- 0.6` |
+| RWSE | `92.9 +/- 0.6` |
+| RRWP | `90.4 +/- 0.3` |
+
+The larger models are also expensive: the 90M table reports `89.7 +/- 0.4`
+meV for LPE, `88.9 +/- 0.7` for RWSE, and `86.5 +/- 0.3` for RRWP over two
+seeds. These are paper PCQ validation-style numbers; the visible tables do
+not provide a matching official OGB test-dev submission. The main value for
+MolGap is the controlled PE ranking and the separation of standard attention
+from PE choice, not the absolute headline.
+
+### Contract and reuse audit
+
+GDT is 2D and therefore does not conflict with the ETKDG rule, but the 16M
+recipe is still a large 2M-step Transformer and the attention bias is dense.
+The paper itself notes that its current implementation does not exploit
+sparsity in the attention bias, and that this can become prohibitive on large
+graphs. The PE comparison also overlaps the GAPE/GRPE/TokenGT batch already
+audited here.
+
+The defensible reuse is a control principle: hold the standard attention,
+tokenization, edge-bias path, optimizer, and budget fixed while changing one
+structural encoding. It does not justify importing an undocumented checkpoint
+or treating RRWP's paper value as a MolGap result. A future small screen would
+need a no-PE baseline, one PE at a time, the accepted graph cache, and the
+same paired seed-42 governance.
+
+Evidence grade: A/B for the primary paper, direct PCQM protocol, and three-seed
+comparison; C for immediate reproduction because no official code/checkpoint
+was independently closed and no test-dev record is exposed. No run, database
+change, warm start, or queue promotion is authorized by this card.

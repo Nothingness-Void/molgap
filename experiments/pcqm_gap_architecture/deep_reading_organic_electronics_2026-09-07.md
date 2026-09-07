@@ -442,6 +442,174 @@ control and a target-similarity ablation. Do not import CO-610 labels, copy its
 weights, or treat the filtered PubChemQC subset as a new database role without
 an identity, geometry, license, and split audit.
 
+## 11. OSCAgent: graph--SMILES contrastive pretraining with frontier supervision
+
+**Primary source.** [OSCAgent: Accelerating the Discovery of Organic Solar Cells
+with LLM Agents](https://arxiv.org/html/2602.04510) is a 2026 arXiv paper about
+an agentic organic-photovoltaic discovery loop. It is not a PCQM4Mv2 benchmark
+paper, but it contains a compact and unusually explicit recipe for combining a
+graph view, a SMILES view, and an electronic auxiliary target.
+
+### What is actually trained
+
+The paper uses two data roles. A computational pretraining set contains `51,256`
+molecules from the Lopez/Harvard Clean Energy Project screening lineage; the
+paper describes it as a high-throughput DFT screening collection. An
+experimental OSC set curated by Sun et al. is used for PCE fine-tuning. The
+paper does not expose enough of the computational calculation and coordinate
+contract to equate those labels with MolGap's B3LYP/6-31G* Kohn--Sham targets
+or ETKDG inputs. They therefore remain external roles, not additional PCQM
+rows.
+
+The pretraining objective has two coupled pieces:
+
+1. A graph encoder and a SMILES encoder produce L2-normalized embeddings for
+   the same molecule. A symmetric graph-to-SMILES / SMILES-to-graph InfoNCE
+   loss uses a learnable temperature, so the positive pair is the identity
+   match rather than a noisy chemical-similarity pair.
+2. Each branch also predicts LUMO with an MSE auxiliary head. In schematic form,
+   the paper uses `L_pretrain = L_contrastive + lambda L_LUMO`, where the LUMO
+   term contains both graph and SMILES predictions.
+
+During PCE fine-tuning, the two learned embeddings are concatenated with
+Morgan and MACCS fingerprints and passed through a mixture-of-experts head.
+The predictor outputs a PCE mean and variance, using a regression loss plus a
+Gaussian negative-log-likelihood term. The agent then uses predictive
+uncertainty in its candidate-selection loop. The uncertainty feedback is an
+agent-system feature, not a new HOMO/LUMO/Gap estimator.
+
+### What the ablation supports
+
+The paper's full predictive model reports PCE `R^2 = 0.713` and `MAE = 1.686`
+on its experimental task. The same table reports the following ablations:
+
+| Variant | PCE `R^2` | PCE MAE |
+|---|---:|---:|
+| Full graph + SMILES + fingerprints + uncertainty | 0.713 | 1.686 |
+| No pretraining | 0.654 | 1.879 |
+| No graph branch | 0.665 | 1.822 |
+| No SMILES branch | 0.675 | 1.793 |
+| No handcrafted fingerprints | 0.634 | 1.924 |
+| No uncertainty loss | 0.681 | 1.776 |
+
+These controls support a useful *method* conclusion: in this external OSC
+setting, same-molecule graph--SMILES alignment plus frontier supervision is
+more useful than either view alone, and the uncertainty head contributes to
+the reported PCE result. They do **not** support a PCQM Gap gain, because the
+downstream label is experimental PCE and the pretraining calculation/geometry
+contract is not the MolGap contract.
+
+### Reproducibility and MolGap transfer boundary
+
+The paper says that code will be made public, but an official repository,
+checkpoint, released pretraining file, and independently retrievable split
+manifest were not found in this audit. The paper therefore supplies a primary
+method description and reported ablations, not a completed asset package.
+
+The safe transferable hypotheses are narrow:
+
+- use same-identity graph--SMILES alignment as a separately authorized
+  pretraining objective, with identity-disjoint roles and no sealed PCQM
+  labels;
+- test an electronic auxiliary head on the existing target family, preferably
+  HOMO and LUMO together with Gap so that the algebraic relation can be checked,
+  while measuring whether the auxiliary task causes negative transfer;
+- retain the paper's uncertainty/NLL idea as a calibration or error-analysis
+  control, not as evidence that a larger fusion head will improve the current
+  deterministic metric.
+
+The current GraphState route should not be warm-started from OSCAgent, and the
+Lopez or Sun rows must not be merged into Track A/B. Any future use would need
+a fresh same-contract random-init control, a PCQM identity audit, and a
+separate protocol for whether LUMO supervision is allowed. **Disposition: C
+for artifacts and direct experiment; B for a low-modification objective
+reference.**
+
+## 12. Message-Passing Delta-ML for excited-state organic electronics
+
+### Primary sources and completed artifacts
+
+The peer-reviewed [Journal of Chemical Theory and Computation paper](https://doi.org/10.1021/acs.jctc.5c01587)
+studies `Delta` correction from ZINDO to M06-2X/3-21G* TDDFT for organic
+pi-conjugated molecules. The authors release the [dataset, pretrained models,
+and PyTorch tutorials](https://github.com/AdamCoxson/Message-Passing-Delta-ML).
+The repository is a real reproducibility asset, but it is an excited-state
+optical workflow, not a HOMO/LUMO/Gap predictor.
+
+### Method and evidence
+
+The low-level calculation supplies the ZINDO `S1` energy, Mulliken charges,
+atomic potentials, electron/hole densities from natural transition orbitals,
+and orbital-weighted radial-distribution descriptors. An AttentiveFP message-
+passing network predicts the residual
+`Delta E = E_S1(TDDFT) - E_S1(ZINDO)`, with a residual connection that adds the
+predicted correction back to the ZINDO estimate. The final published dataset
+contains `7,600` training molecules and a `9,500`-molecule test evaluation in a
+conjugated-core design; the article reports a correlation of `0.964` for the
+best S1 model. A separate oscillator-strength adaptation improves the ZINDO
+correlation from `0.524` to `0.839`. The authors report roughly `2 ms` model
+cost on top of a `2 s` ZINDO calculation, compared with about `20 min` for the
+TDDFT calculation in their timing example.
+
+The strongest lesson is not the specific AttentiveFP choice. It is the
+combination of (1) a physically meaningful low-level electronic baseline, (2)
+an explicitly defined residual, (3) electronic atom-level and orbital-local
+descriptors, and (4) a core-aware split that distinguishes extrapolation from
+analogue interpolation. This is a useful organic-electronics protocol model.
+
+### MolGap contract audit
+
+The low-level and target calculations, conformer/geometry choices, target
+(`S1`/oscillator strength), and conjugated-core split are all external to the
+current PCQM B3LYP/6-31G* Kohn--Sham HOMO/LUMO/Gap contract. In particular, a
+published S1 gain cannot be counted as Gap evidence, and the released weights
+cannot be used as a GraphState initialization. Reusing the idea would require
+an explicitly authorized same-PCQM low-level proxy, strict target reconstruction,
+and a new identity/split audit.
+
+**Disposition: A/B for an organic-electronics `Delta` protocol and public code/
+data evidence; C for current labels, weights, geometry, and direct MolGap use.**
+No ZINDO, TDDFT, or external organic-electronics rows are admitted.
+
+## 13. NDI linker screening: descriptor-only HOMO--LUMO surrogate in a narrow domain
+
+### Primary source and task definition
+
+The [Materials Chemistry and Physics paper](https://doi.org/10.1016/j.matchemphys.2026.132345)
+has an [open UCL record and published-version PDF](https://discovery.ucl.ac.uk/id/eprint/10223000/).
+It studies `195` naphthalene-diimide derivatives around a fixed pi-conjugated
+core. Gaussian 16 B3LYP/6-31G(d,p) calculations provide the reference
+HOMO--LUMO gaps, while the ML inputs are RDKit descriptors from SMILES rather
+than DFT orbitals or 3D coordinates.
+
+The abstract reports LightGBM as the best model with `R^2 = 0.86` and
+`RMSE = 0.25 eV`. The full article also exposes a test-set figure around
+`R^2 = 0.69`, `RMSE = 0.37 eV` and a bootstrap summary around `R^2 ~= 0.82`,
+`RMSE ~= 0.29 eV`; these are different evaluation summaries and must not be
+collapsed into one universal score. The paper reports `761.24` CPU-hours for
+the 195 B3LYP labels and a screening break-even near 195 candidates.
+
+### External-gap stratification and MolGap reading
+
+The authors compare 32 literature NDI compounds, separating optical (`n = 24`)
+and electrochemical (`n = 8`) gaps from the Kohn--Sham quantity. On that
+heterogeneous external set, LightGBM reports `MAE = 0.650 eV`, `RMSE = 0.916
+eV`, and positive bias `+0.516 eV`. The paper explicitly warns that optical
+and redox gaps include effects not represented by a gas-phase Kohn--Sham
+HOMO--LUMO difference.
+
+The useful evidence is therefore methodological: a cheap descriptor baseline,
+SHAP interpretation, scaffold-restricted applicability-domain reporting, and
+an explicit separation of calculated and experimental gap definitions. It does
+not establish a PCQM4Mv2 result. The fixed NDI scaffold is narrow, the basis is
+`6-31G(d,p)` rather than the project's `6-31G*`, the DFT geometry is not ETKDG,
+and no official code/checkpoint or general chemical-space split was found in
+the primary release surface. The external optical/electrochemical comparison
+must not be relabeled as B3LYP/6-31G* evidence.
+
+**Disposition: B for organic-electronics protocol and descriptor/uncertainty
+reference; C for current labels, database, initialization, and experiment.**
+
 ## Cross-paper synthesis
 
 | Source | Strong evidence | What can be borrowed | Why it cannot enter the current PCQM route |
@@ -453,6 +621,9 @@ an identity, geometry, license, and split audit.
 | Conjugated-polymer D-MPNN pretraining | Published three-way pretraining comparison; TD-DFT-extrapolated polymer proxy beats direct training and monomer-DFT pretraining in its own polymer task | Domain-matched proxy selection, full fine-tuning versus frozen layers, and explicit semantic-distance audit | Experimental polymer targets, TD-DFT/MMFF94s geometries, external data, and cited code URL currently unresolved |
 | DFT-feature-assisted optical-gap transfer | Open paper/SI and public MIT repo; modified-oligomer DFT gap + ECFP6 gives `0.065 eV` optical-gap MAE on its own task | Distinguish proxy feature from strict residual delta, group-based extrapolation, and teacher-ablation design | Experimental optical targets and external oligomer/DFT contract; no PCQM Kohn--Sham result |
 | Frontier-orbital Chemprop transfer | 2026 published abstract/preview reports GFN2-xTB trimer pretraining transferred to chain/bulk gap, IE, and EA | Frontier-family transfer and chain-length/inter-property consistency checks | No verified code, checkpoint, split, data identity, or target-theory packet |
+| OSCAgent | Graph--SMILES InfoNCE plus auxiliary LUMO regression; external PCE ablation improves from `R^2 .654` without pretraining to `.713` with the full model | Lopez/Harvard computational set and Sun experimental PCE set; no PCQM Gap result, exact theory/geometry contract, or verified code/checkpoint | Same-molecule multi-view alignment and frontier-auxiliary objective reference only; no label or weight import |
+| Message-Passing Delta-ML | Peer-reviewed ZINDO-to-TDDFT S1 correction, public dataset/models/tutorials, `0.964` S1 correlation and oscillator-strength ablation | Excited-state/oscillator targets, ZINDO and external geometry/theory roles, conjugated-core split, no PCQM Gap result | Organic-electronics residual and electronic-descriptor protocol reference; no current labels, weights, or experiment |
+| NDI DFT--LightGBM | Open 195-derivative B3LYP/6-31G(d,p) paper, RDKit-SMILES descriptors, LightGBM abstract `R^2 .86/RMSE .25`, and external 32-gap stratification | Descriptor baseline, SHAP/applicability-domain reporting, and calculated-versus-optical/electrochemical gap separation | Narrow fixed NDI family, metric variations across figures, no code/checkpoint, no ETKDG, and no PCQM Kohn--Sham result | Descriptor/provenance/applicability-domain reference; no current labels or weights |
 | OPoly26 | Public paper, Hugging Face/ColabFit records, and fairchem code; multi-million polymer DFT/MD asset with documented frontier-field schema | Versioned large-data manifest, polymer-family/OOD stratification, and method/status fields | Condensed-phase/MD geometry, omegaB97M-V/def2-TZVPD versus B3LYP/6-31G*, and unresolved train metadata/field-coverage discrepancy | External database and packaging audit only; no row merge or current teacher |
 | PubChemQC-100K -> CO-610 SchNet transfer | Published B3LYP/6-31G* transfer study with public ESI, explicit filtered pretraining rule, frozen layers, added interaction block, and direct control | Target-similarity selection, frozen-backbone plus one-block adaptation, and direct-vs-transfer reporting | External CO-610 target, unspecified MolGap geometry contract, no official code/checkpoint, and possible overlap with Track A/PubChemQC lineage | Same-source protocol reference only; no labels, weights, or filtered rows merged |
 
@@ -496,3 +667,6 @@ No external data were downloaded or merged while writing this record.
 - [Frontier-orbital Chemprop transfer paper](https://pubmed.ncbi.nlm.nih.gov/42268043/), [DOI](https://doi.org/10.1063/5.0333521), and [publisher-preview record](https://www.researchgate.net/publication/406894098_Physics-informed_transfer_learning_via_frontier_orbital_pretraining_for_prediction_of_polymer_electronic_properties)
 - [OPoly26 paper](https://arxiv.org/pdf/2512.23117), [official OMol25 page](https://huggingface.co/facebook/OMol25), [ColabFit train record](https://materials.colabfit.org/id/DS_wfekwbgncjd3_0), [OPoly26 validation schema](https://huggingface.co/datasets/colabfit/OPoly26-val), and [fairchem code](https://github.com/facebookresearch/fairchem)
 - [PubChemQC-to-conjugated-oligomer transfer paper](https://pubs.rsc.org/en/content/articlehtml/2025/me/d4me00188e) and [supporting information](https://www.rsc.org/suppdata/d4/me/d4me00188e/d4me00188e1.pdf)
+- [OSCAgent paper](https://arxiv.org/html/2602.04510) and the [Harvard Clean Energy Project data record](https://www.nature.com/articles/sdata201686)
+- [Message-Passing Delta-ML paper](https://doi.org/10.1021/acs.jctc.5c01587) and [public code/data/models](https://github.com/AdamCoxson/Message-Passing-Delta-ML)
+- [NDI linker HOMO--LUMO paper](https://doi.org/10.1016/j.matchemphys.2026.132345) and [open UCL record/PDF](https://discovery.ucl.ac.uk/id/eprint/10223000/)

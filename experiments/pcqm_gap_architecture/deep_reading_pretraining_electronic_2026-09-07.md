@@ -63,24 +63,39 @@ the paper reports a prior scale around `sigma=0.1` and a KL weight near `1` as
 strong settings, while the code exposes the data, configuration, and training
 layout needed for a smoke audit.
 
-**MolGap contract audit.** The PCQM experiment is based on 3D equilibrium
-structures and the public repository has only two visible commits, no clear
-license file, and no release/checkpoint manifest in its top-level page. The
-paper does not by itself establish that the downstream prediction path can
-consume MolGap ETKDG coordinates with the same preprocessing and atom ordering.
-The `0.0777` number therefore cannot be copied into the current leaderboard or
-used as evidence that an ETKDG model will improve. Before a possible protocol,
-the following must be checked: repository revision, license, checkpoint
-availability, PCQM split construction, coordinate generation, inference-time
-inputs, target-label use during pretraining, and parameter/throughput cost.
+**Repository audit (fixed evidence).** The public repository has two visible
+commits, no visible license file, and no released checkpoint or checkpoint
+manifest on its top-level page. The default
+[`pretrain_denoisevae.yml`](https://raw.githubusercontent.com/liuyurou1/DenoiseVAE/main/config/pretrain_denoisevae.yml)
+points to `datasets/GEOM/blocks`, not to the PCQM directory. The pretraining
+script loads `GEOMDataset` block files and writes a local checkpoint path, so
+the paper's PCQM table is not a turnkey invocation of the default repository
+configuration.
 
-**Disposition: B, highest-priority audit lead.** DenoiseVAE may enter a future
-pretraining proposal only after an ETKDG-only implementation or a demonstrated
-same-method train/inference path is specified. The safe scientific question is
-not “can the released DenoiseVAE checkpoint be pasted into GraphState?”; it is
-“does molecule-adaptive denoising help when both pretraining and downstream
-inference use the permitted ETKDG construction?” That question needs a fresh
-random-init control and a separately approved budget.
+The PCQM conversion script is a more serious contract mismatch. It adds
+hydrogens, calls RDKit `EmbedMolecule`, then calls
+`MMFFOptimizeMolecule`, removes hydrogens, and for train rows aligns that
+generated conformer against a DFT molblock before storing both `input_pos` and
+`label_pos` in LMDB. This is not the project's ETKDG construction, and the
+stored DFT position makes the train-role data path require an explicit role
+audit even though the paper states that PCQM labels are not used in
+pretraining. The legacy environment is also Python 3.7 / PyTorch 1.7 / PyG
+1.6.3. Finally, the public
+[`denoise_prednoise.py`](https://raw.githubusercontent.com/liuyurou1/DenoiseVAE/main/denoisevae/models/denoise_prednoise.py)
+returns an undefined `noneed` variable, while the training script expects a
+three-value return. The released code therefore fails the direct-run gate as
+published, independently of the geometry mismatch.
+
+**Disposition: B for the paper/method, C for code reproducibility.** The
+`0.0777 +/- 0.0005` remains a primary-source validation claim and a useful
+adaptive-noise hypothesis, but it cannot be treated as a runnable checkpoint,
+an ETKDG result, or a current leaderboard number. A future audit would need a
+new ETKDG-only implementation, a repaired and pinned code revision, a split
+and role manifest, and a fresh random-init GraphState control. The safe
+scientific question is not “can the released DenoiseVAE checkpoint be pasted
+into GraphState?”; it is “does molecule-adaptive denoising help when both
+pretraining and downstream inference use the permitted ETKDG construction?”
+That question still needs a separately approved budget.
 
 ## 2. 3D-GSRD: selective re-mask decoding
 
@@ -213,7 +228,7 @@ change the current labels.
 
 | Route | Strongest evidence | Main unresolved MolGap gate | Safe role now |
 |---|---|---|---|
-| DenoiseVAE | Directly reports PCQM4Mv2 Gap validation `0.0777 +/- 0.0005`; public code | ETKDG train/inference path, exact split/config, checkpoint/license, cost | Highest-priority evidence-only audit lead |
+| DenoiseVAE | Paper directly reports PCQM4Mv2 Gap validation `0.0777 +/- 0.0005`; public code is available but not directly runnable as published | ETKDG train/inference path, exact split/config, checkpoint/license, undefined `noneed` return, cost | Paper/method B; code C; evidence-only audit lead, no initialization |
 | 3D-GSRD | Public PCQM pretraining and QM9 `gap` fine-tune path; 3D masked-decoder design | No direct PCQM Gap score; DFT/3D contract and budget | Selective re-mask design reference |
 | 3D-MolT5 | PCQM 3D pretraining plus PubChemQC Gap ablation `0.0791` vs `0.0968` without 3D | PubChemQC/text setting, external data, discrete-token geometry | Compact masked-geometry auxiliary-task idea |
 | MolSpectra | Controlled QM9 electronic-spectrum ablations; Gap `26.8` vs `31.8` meV coordinate baseline | B3LYP/def-TZVP QM9S teacher, license/identity/geometry audit | Electronic teacher/auxiliary-objective reference |
@@ -227,11 +242,13 @@ public engineering assets, not official PCQM leaderboard evidence.
 ## Evidence gate before any possible experiment
 
 For DenoiseVAE, the minimum evidence packet would contain the exact paper/code
-revision, license status, checkpoint hash if any, PCQM split manifest,
-coordinate-construction record, target-label usage, parameter/memory estimate,
-and a local forward smoke test. A candidate implementation must use ETKDG for
-both pretraining and inference or receive a separately approved geometry
-contract.
+revision, license status, checkpoint hash if any, repaired-forward patch or
+replacement implementation, PCQM split manifest, coordinate-construction
+record, target-label usage, parameter/memory estimate, and a local forward
+smoke test. A candidate implementation must use ETKDG for both pretraining and
+inference or receive a separately approved geometry contract. The public
+repository's MMFF path and undefined return variable are blockers, not tasks
+that can be silently fixed inside an experiment run.
 
 For an electronic teacher such as MolSpectra, the packet must additionally
 contain the source theory/basis, canonical identity overlap with PCQM4Mv2 and

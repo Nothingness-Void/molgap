@@ -264,6 +264,19 @@ uncertainty-weighted loss option, Optuna tuning, early stopping, checkpointing,
 metric logs, and downloadable teacher/student models.  It uses QM9/ESOL/FreeSolv
 and a Python 3.9 environment; it is not a PCQM/ETKDG implementation.
 
+The checked public `main` revision was `49728a775ed44d60cefb4fde66d527c338fea9db`.
+The code-level loss audit confirms learnable `log_sigma1`/`log_sigma2` weighting
+of the student L1 target loss and cosine embedding loss, with the form
+`L1/(2*sigma1^2) + KD/(2*sigma2^2) + log(sigma1) + log(sigma2)`.  The student
+training script uses a teacher with five QM9 source targets and feeds both
+teacher and student the same atomic numbers and coordinates before applying
+the alignment criterion.  These details make the repository useful for a
+control design, but they also expose the contract boundary: the code's
+teacher target width and coordinate path are QM9-specific, and the public page
+does not surface a clear license file.  The article's “up to 90% relative R2”
+claim therefore remains a property/architecture-specific result, not evidence
+of a PCQM Gap improvement.
+
 ### MolGap transfer
 
 The strongest transferable idea is the control matrix: teacher versus no-teacher,
