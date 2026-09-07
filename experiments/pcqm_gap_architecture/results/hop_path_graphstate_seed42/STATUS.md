@@ -9,7 +9,10 @@ multiplicity and bond-sequence statistics; official PCQM validation and
 test-dev remained sealed.
 
 Kaggle1 GPU kernel `nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42`
-version 1 was `RUNNING` at its single post-submission check. T4 GPU 0 owns a
-fresh GraphState9 control and GPU 1 owns GraphState9 plus the shared low-rank
-hop-path mixer. Completion does not authorize confirmation seeds or official
-roles.
+version 1 received one P100 because the legacy upload client silently omitted
+the requested machine shape. The immutable dual-T4 preflight stopped before
+candidate construction, so version 1 has no scientific result. Version 2 was
+submitted with Kaggle CLI 2.2.4 and explicit T4 acceleration; a remote metadata
+pull retained `machine_shape=NvidiaTeslaT4`, and the job was `RUNNING` at its
+single post-submission check. The scientific contract is unchanged. Completion
+does not authorize confirmation seeds or official roles.
