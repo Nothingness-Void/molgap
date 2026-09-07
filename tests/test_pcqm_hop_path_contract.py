@@ -16,14 +16,27 @@ CACHE_RUNNER = (
 )
 CACHE_METADATA = CACHE_RUNNER.with_name("kernel-metadata.json")
 CACHE_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_hop_path_cache.py"
+GPU_ACCEPTANCE = EXPERIMENT / "accept_pcqm100k_hop_path_graphstate.py"
 PROTOCOL = EXPERIMENT / "hop_path_graphstate_seed42_protocol.md"
 SOURCE_PACKAGER = (
     EXPERIMENT / "kaggle_pcqm_gap100k/package_source_dataset.py"
 )
+GPU_RUNNER = (
+    EXPERIMENT / "kaggle_pcqm_gap100k/hop_path_graphstate_seed42/run_screen.py"
+)
+GPU_METADATA = GPU_RUNNER.with_name("kernel-metadata.json")
 
 
 def test_sources_parse_and_cache_contract_is_explicit() -> None:
-    for path in (MODEL, FACTORY, RUNNER, CACHE_RUNNER, CACHE_ACCEPTANCE):
+    for path in (
+        MODEL,
+        FACTORY,
+        RUNNER,
+        CACHE_RUNNER,
+        CACHE_ACCEPTANCE,
+        GPU_RUNNER,
+        GPU_ACCEPTANCE,
+    ):
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     source = MODEL.read_text(encoding="utf-8")
     assert "exact-shortest 2/3-hop" in source
@@ -62,13 +75,31 @@ def test_cpu_kernel_is_private_and_never_requests_gpu() -> None:
 
 
 def test_acceptance_is_no_model_and_roles_remain_sealed() -> None:
-    source = CACHE_ACCEPTANCE.read_text(encoding="utf-8")
-    assert "import torch" not in source
-    assert '"hops": [2, 3]' in source
-    assert '"feature_channels": 8' in source
-    assert '"model_inference_executed": False' in source
-    assert '"official_validation_role_read": False' in source
-    assert '"test_dev_role_read": False' in source
+    cache_source = CACHE_ACCEPTANCE.read_text(encoding="utf-8")
+    gpu_source = GPU_ACCEPTANCE.read_text(encoding="utf-8")
+    for source in (cache_source, gpu_source):
+        assert "import torch" not in source
+        assert '"model_inference_executed": False' in source
+        assert '"official_validation_role_read": False' in source
+        assert '"test_dev_role_read": False' in source
+    assert '"hops": [2, 3]' in cache_source
+    assert '"feature_channels": 8' in cache_source
+    assert '"material_gain_at_least_0_001_eV"' in gpu_source
+
+
+def test_gpu_kernel_is_private_t4x2_and_pins_accepted_cache() -> None:
+    metadata = json.loads(GPU_METADATA.read_text(encoding="utf-8"))
+    runner = GPU_RUNNER.read_text(encoding="utf-8")
+    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42"
+    assert metadata["is_private"] == "true"
+    assert metadata["enable_gpu"] == "true"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["kernel_sources"] == [
+        "nothingnessvoid/molgap-pcqm-hop-path-cache-s42"
+    ]
+    assert "hop_path_graphstate" in runner
+    assert "0253aaa2061d0e7ac655fc8b6d9effd283722096" in runner
+    assert "6d3a7df67cfadc26db2a38c006fd20e0d4294c16968fa92b01739daf8527993e" in runner
 
 
 def test_protocol_is_one_mechanism_and_seed42_only() -> None:
