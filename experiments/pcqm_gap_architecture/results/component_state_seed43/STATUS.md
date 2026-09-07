@@ -1,6 +1,6 @@
 # ComponentState seed-43 confirmation status
 
-- Stage: private Kaggle1 T4x2 seed-43 confirmation version 1 is running.
+- Stage: complete, mechanically accepted and scientifically decided.
 - Question: paired seed-43 replication of descriptor-only control versus
   persistent ComponentState on T4x2.
 - Protocol: `../../component_state_seed43_protocol.md`.
@@ -25,3 +25,11 @@
   `nothingnessvoid/molgap-pcqm-componentstate-confirmation-s43`, version 1.
   Kaggle normalized the originally requested shorter slug at submission; the
   tracked metadata now matches the canonical remote identity.
+- Seed-43 paired result: descriptor control `0.1305245310 eV`, ComponentState
+  `0.1298854351 eV`, delta `-0.0006390959 eV`. The direction replicated, but
+  the frozen `0.001 eV` material-gain threshold did not.
+- Across seeds 42 and 43 the mean paired delta is `-0.0008335730 eV`.
+  ComponentState is retained as weak positive mechanism evidence, not promoted
+  over the simpler three-seed GraphState9 handoff. No seed 44 or successor was
+  submitted.
+- Decision: `decision.md`; compact terminal evidence: `seed43_summary.json`.
