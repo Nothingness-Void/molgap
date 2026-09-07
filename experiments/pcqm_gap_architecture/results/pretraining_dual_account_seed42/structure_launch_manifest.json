@@ -1,0 +1,18 @@
+{
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-pcqm-structure-pretrain-s42",
+  "version": 1,
+  "status_after_submission": "RUNNING",
+  "requested_accelerator": "NvidiaTeslaT4",
+  "execution": "paired_T4x2_scratch60_vs_pretrain20_finetune40",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-pretraining-source",
+  "source_commit": "1a98ceb917cc55f26c722e11fa04bc33fdb4dafe",
+  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "mode": "structure_source_tasks",
+  "seed": 42,
+  "gpu_hours_remaining_before_submission": 20.30,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
