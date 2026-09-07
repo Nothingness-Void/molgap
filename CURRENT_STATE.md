@@ -110,6 +110,15 @@ closed as weak positive evidence without confirmation; GraphState9 remains the
 server recommendation. The decision is
 `experiments/pcqm_gap_architecture/results/hop_path_graphstate_seed42/decision.md`.
 
+The first two same-database pretraining screens completed with accepted
+mechanical evidence but did not pass their compute-normalized material gate.
+Aggregate atom/bond/fragment/molecule source tasks only matched an independent
+scratch-40 trajectory and lost to scratch-60; graph-level ETKDG geometry
+histogram denoising lost to both paired controls. These exact objectives are
+closed, while pretraining as a broader family remains open pending the expanded
+literature audit. The decision is
+`experiments/pcqm_gap_architecture/results/pretraining_dual_account_seed42/decision.md`.
+
 ## Prior architecture evidence
 
 - Track A EdgeState three-seed evidence remains at

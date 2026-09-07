@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-08",
+  "protocol": "experiments/pcqm_gap_architecture/pretraining_dual_account_seed42_protocol.md",
+  "seed": 42,
+  "parameter_count": 3665809,
+  "initial_encoder_sha256": "ce7f85f205eb7b7f21e497864b554dda27d3ef2cf3cd33d6623318b587562fea",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "structure_source_tasks": {
+    "kernel": "nothingnessvoid/molgap-pcqm-structure-pretrain-s42",
+    "version": 1,
+    "acceptance_sha256": "602eebd6e423d384ad972b5fba5a890ab1313a75ec893cb902cc290cb986a4fd",
+    "scratch_best_40_gap_mae_eV": 0.1320091120004654,
+    "scratch_best_60_gap_mae_eV": 0.12686547820568084,
+    "pretrained_best_40_gap_mae_eV": 0.1293375632762909,
+    "pretrained_minus_scratch40_eV": -0.002671548724174494,
+    "pretrained_minus_scratch60_eV": 0.0024720850706100583,
+    "elapsed_s": 11215.452384889,
+    "passes_material_gate": false
+  },
+  "etkdg_geometry_denoising": {
+    "kernel": "kaseichou/molgap-pcqm-etkdg-denoise-pretrain-s42",
+    "version": 1,
+    "acceptance_sha256": "e2463ecb511afb77563b7938113dcea9b38b03fadea81d43794d86a7cd8d530a",
+    "scratch_best_40_gap_mae_eV": 0.1293169799566269,
+    "scratch_best_60_gap_mae_eV": 0.12637588748931886,
+    "pretrained_best_40_gap_mae_eV": 0.12997589418888092,
+    "pretrained_minus_scratch40_eV": 0.000658914232254032,
+    "pretrained_minus_scratch60_eV": 0.003600006699562064,
+    "elapsed_s": 11795.634348395999,
+    "passes_material_gate": false
+  },
+  "cross_job_scratch40_drift_eV": 0.0026921320438385,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "seed43_44_submitted": false,
+  "full_data_authorized": false,
+  "molecular_research_server_accessed": false
+}

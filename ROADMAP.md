@@ -13,6 +13,7 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-LITERATURE-REASSESS | Re-audit the expanded 2025--2026 architecture and pretraining evidence after the first pretraining screens | Rank only OGB-compliant, train-role-only candidates that fit the model and compute budgets |
 | P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
@@ -80,8 +81,10 @@ and closed without confirmation. See
 ## Operating rules
 
 - Do not modify the production registry while Track B is screening.
-- Architecture claims use random initialization; no pretraining, warm start,
-  fine-tuning, distillation, residual target, or prediction fusion.
+- Random-initialized architecture claims never use pretraining, warm start,
+  distillation, residual targets, or prediction fusion. Separately labeled
+  pretraining questions require their own scratch and equal-compute controls
+  and cannot retroactively change an architecture conclusion.
 - Use only the frozen official-train-derived 100K/10K split for PCQM
   architecture selection. Never tune on common/OOD/P8-hard or sealed data.
 - Keep the main databases unchanged: Track B stays on PCQM4Mv2 and Track A
