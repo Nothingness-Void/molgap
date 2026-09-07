@@ -13,6 +13,7 @@ molecular-research-server use, and all geometry must be ETKDG-consistent.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-PCQM-HOP-PATH | Build and accept the exact-shortest 2/3-hop cache, then run one paired seed-42 GraphState screen | Record the paired accuracy/resource result and close or retain the mechanism |
 | P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
 | P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
 | P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
@@ -56,6 +57,13 @@ wedge cache directly for directional edge-to-edge memory; it completed with a
 sub-threshold weak positive result and no confirmation. The second passed its
 CPU normalized-Laplacian cache gate, then lost its paired GPU comparison and
 closed without confirmation. Neither route authorized confirmation seeds.
+
+The incremental literature extension retained one final random-initialized
+architecture question: a static exact-shortest two/three-hop path channel.
+Its frozen causal contract is
+`hop_path_graphstate_seed42_protocol.md`. CPU cache acceptance precedes one
+paired T4x2 seed-42 screen; no confirmation seed or successor method is
+authorized by launch or completion.
 
 ## Mandatory gates
 

@@ -100,6 +100,12 @@ Recent torsion and atom--bond dual-stream questions are closed; their complete
 records are on `archive` and indexed by
 `experiments/_closed/pcqm_server_archive_index.md`.
 
+The final bounded random-initialized architecture question retained by the
+incremental literature audit is now in preparation: exact-shortest two/three-
+hop path statistics around the frozen GraphState9 encoder. The CPU path cache
+must pass before the single paired seed-42 T4x2 screen can start. Its contract
+is `experiments/pcqm_gap_architecture/hop_path_graphstate_seed42_protocol.md`.
+
 ## Prior architecture evidence
 
 - Track A EdgeState three-seed evidence remains at
