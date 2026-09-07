@@ -406,6 +406,248 @@ component route is scientifically positive, the next question should be
 whether a conjugation-relevant auxiliary corpus helps; generic monomer/QM9
 pretraining is not enough by assumption.
 
+### E16a. DFT features versus strict delta-learning in conjugated polymers
+
+**Source.** [Liu, Yan, and Liu, Nanoscale 2025](https://pubs.rsc.org/en/content/articlehtml/2025/nr/d4nr03702b),
+with [supplementary information](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/66c23a02f3f4b05290464885/original/si-file.pdf)
+and a public [MIT code/data repository](https://github.com/Liu-Group-UF/Machine-Learning-for-Accurate-Optical-Gap-Prediction-in-Conjugated-Polymers).
+
+The study uses `1,096` experimental conjugated-polymer records and a `227`-
+polymer no-retraining validation set. Its best XGBoost model combines an
+oligomer B3LYP-D3/6-31G* HOMO--LUMO gap with ECFP6 and reports `MAE = 0.065
+eV`, `R^2 = 0.77` for the experimental optical gap. The modified oligomer
+construction removes alkyl side chains and extends the conjugated backbone;
+the DFT-gap/optical-gap correlation rises from `R^2 = 0.15` for the unmodified
+monomer to `0.51` after modification.
+
+This is a completed, public *teacher-feature* protocol, but not strict
+residual delta-learning: the DFT descriptor is concatenated with ECFP6 and the
+model directly predicts the experimental target. For MolGap, this supplies a
+clean control design: compare direct prediction, low-fidelity feature
+concatenation, and an explicitly defined residual target under the same split,
+geometry, and B3LYP/6-31G* target contract. Its optical labels and oligomer
+construction must remain external.
+
+### E16b. Frontier-orbital-family transfer with Chemprop
+
+**Source.** [Meng et al., Journal of Chemical Physics 2026](https://pubmed.ncbi.nlm.nih.gov/42268043/),
+DOI `10.1063/5.0333521`.
+
+The accessible abstract and publisher preview describe Chemprop pretraining on
+GFN2-xTB frontier-orbital properties of polymer trimers, followed by transfer
+to chain/bulk bandgaps, ionization energy, and electron affinity. Reported test
+MAEs are `0.246`, `0.269`, `0.169`, and `0.136 eV`, respectively, with
+`R^2 > 0.90`; the authors also check chain-length scaling and inter-property
+consistency and screen approximately `12 million` repeat units.
+
+The transferable idea is to reuse separate HOMO-, LUMO-, and gap-pretrained
+representations for related downstream frontier targets, then test physical
+relations rather than only scalar error. However, the audited sources do not
+expose a complete code/checkpoint/split/target-theory packet or the full text.
+This is therefore a design reference, not evidence for a current PCQM
+experiment.
+
+### E16c. OPoly26: public polymer database with unresolved frontier-field contract
+
+**Source.** [OPoly26](https://arxiv.org/pdf/2512.23117), the [official OMol25
+model/data page](https://huggingface.co/facebook/OMol25), the [ColabFit train
+record](https://materials.colabfit.org/id/DS_wfekwbgncjd3_0), the [OPoly26
+validation schema](https://huggingface.co/datasets/colabfit/OPoly26-val), and
+the [fairchem codebase](https://github.com/facebookresearch/fairchem).
+
+OPoly26 is a large, public polymer-domain asset rather than a direct MolGap
+method: the paper reports more than `6.35M` DFT calculations, more than `1.2B`
+atoms, `94,000` amorphous-polymer cells, more than `239,000 ns` of MD, and
+`2,444` unique monomers. The paper and official model page specify
+`omegaB97M-V/def2-TZVPD`, while Appendix A lists frontier-orbital quantities
+including HOMO energies and HOMO--LUMO gaps. The retrievable ColabFit train
+record has `6,104,876` configurations and more than `1.1B` atoms, but its
+description says `B97M-V/def2-SVP`, its method field says
+`DFT-omegaB97M-V`, and its calculated-property summary advertises only
+energy/forces. The validation schema exposes `electronic_band_gap` and
+`def2-TZVPD` sample metadata. This is a real evidence conflict, not a detail
+that can be filled in by assumption.
+
+For MolGap, OPoly26 is therefore a public database/schema and polymer-OOD
+reference. Its condensed-phase/MD/DFTB/AFIR geometries and
+`omegaB97M-V/def2-TZVPD` labels do not satisfy the current ETKDG and
+B3LYP/6-31G* contract. Before any future teacher or pretraining use, freeze
+the exact release, reconcile field coverage and theory metadata, hash the
+files, and quantify overlap with PCQM/Track A. No OPoly26 rows, frontier
+fields, or weights enter the current database or experiment queue.
+
+### E16d. PubChemQC-100K transfer to conjugated oligomers
+
+**Source.** [Deng, Ng, and Li, Molecular Systems Design & Engineering
+2025](https://pubs.rsc.org/en/content/articlehtml/2025/me/d4me00188e) and the
+public [supporting information](https://www.rsc.org/suppdata/d4/me/d4me00188e/d4me00188e1.pdf).
+
+This is a useful same-source transfer protocol. The authors select `106,429`
+PubChemQC molecules with more than six double bonds and a gap below `6 eV`,
+pretrain a width-128 SchNet, freeze its six interaction blocks, add one new
+interaction block, and fine-tune on `610` conjugated oligomers (`131` monomer
+types, polymerization degree `4--10`) at stated B3LYP/6-31G*. The target split
+is `400/100/110`. Their direct-versus-transfer MAEs are `1.34/0.74 eV` for
+HOMO, `0.67/0.46 eV` for LUMO, and `0.71/0.54 eV` for Gap; the same model
+filters `3,710` candidates to `256` ML survivors and `46` DFT-validated
+candidates.
+
+The result supports target-distribution selection, frozen-backbone plus
+one-block adaptation, and a direct-training control. It does not prove a
+PCQM4Mv2 gain: the target is external CO-610, the coordinate construction is
+not closed to MolGap's ETKDG contract, no official code/checkpoint was found,
+and the filtered PubChemQC pool may overlap the repaired-2M lineage. Keep it as
+a same-source teacher/pretraining protocol reference and require identity,
+geometry, license, and role audits before any reuse.
+
+### E16e. Public GFN2-xTB/COCONUT proxy workflow for gap and delta audits
+
+**Source.** [Thinius et al., Digital Discovery 2026](https://pubs.rsc.org/en/content/articlehtml/2026/dd/d5dd00186b),
+the public [GitHub workflow and data repository](https://github.com/sthinius87/HL-gaps-pub),
+and its persistent [Zenodo v0.2.1 archive](https://doi.org/10.5281/zenodo.15113790).
+
+The paper builds a low-fidelity HOMO--LUMO-gap resource from approximately
+`407,000` COCONUT natural products. It generates ten RDKit conformers per
+molecule, optimizes them with GFN2-xTB/BFGS, computes same-level xTB orbital
+gaps, and combines conformers with Boltzmann weights. A `70/30` split and
+repeated shuffle-split evaluation produce a reported MLPR test MAE of
+`0.210 +/- 0.001 eV` and RMSE of `0.298 +/- 0.002 eV`; XGBoost reaches about
+`0.180 eV` on one split but shows a larger generalization gap. An external
+evaluation on roughly `133,000` QM9 molecules demonstrates the theory shift:
+the xTB-trained model underestimates the paper's B3LYP/6-31G(2df,p) DFT gaps by
+about `3.94 eV` and GW gaps by `7.75 eV` on average.
+
+This is unusually complete evidence for a proxy-generation workflow because
+the paper points to versioned code, full calculated gaps/descriptors, CWL
+definitions, and an archive rather than only a score. It is not, however, a
+same-label delta-learning result for MolGap. Its target is GFN2-xTB, its
+geometry path is RDKit plus xTB optimization, and its chemistry is COCONUT
+rather than the official PCQM4Mv2 or repaired-2M PubChemQC role. The transferable
+lesson is the audit shape: record proxy theory, conformer policy, aggregation,
+cost, residual/error strata, and OOD theory shift before deciding whether a
+proxy can reduce target error. A future same-PCQM delta route may borrow this
+workflow shape only after recomputing the proxy under the exact ETKDG contract.
+
+**Disposition.** Evidence level A for public low-fidelity workflow/data
+provenance; B for a future CPU residual protocol; C for current MolGap labels,
+weights, and database use. Do not report the xTB MAE as PCQM evidence.
+
+### E16f. QMCVNet: PubChemQC PM6/MMFF geometry as a historical control
+
+**Source.** [Maser and Reisman, CaltechAUTHORS record](https://authors.library.caltech.edu/records/2jygg-n1r30),
+the attached [ChemRxiv paper PDF](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60ea947a9ab06e2e274d6cd7/original/3d-computer-vision-models-predict-dft-level-homo-lumo-gap-energies-from-force-field-optimized-geometries.pdf),
+and [ChemRxiv DOI `10.33774/chemrxiv-2021-11r61`](https://doi.org/10.33774/chemrxiv-2021-11r61).
+
+QMCVNet studies voxelized 3D CNNs for predicting B3LYP/6-31G* HOMO--LUMO
+gaps from cheaper structures in the PubChemQC PM6 lineage. The paper uses a
+`2.5M` B3LYP subset, about `1.8M` filtered molecules, and a `100k` architecture
+screen followed by `1M` scaling. PM6 coordinates, RDKit MMFF coordinates, and
+MMFF structures aligned to PM6 are all used, with an `80/10/10` split and
+ten-fold right-angle rotation augmentation. On the `1M` screen, ShapeEncoder-d
+reports `0.418 eV` MAE from PM6 coordinates after 20 epochs and `0.455 eV` from
+MMFF after 100 epochs; the explicit PM6 electronic gap baseline is `0.400 eV`.
+
+The study is informative but not a current method lead. It is a discussion
+preprint with no audited code/checkpoint release, combines multiple geometry
+contracts, and directly predicts the high-level gap rather than defining a
+residual `Gap_B3LYP - Gap_PM6`. The source lineage may overlap Track A, and its
+PM6/MMFF inputs violate the project's ETKDG train/inference rule. Its safe use
+is a negative control template: compare a direct model with an explicitly
+defined low-fidelity proxy, report coordinate and rotation costs, and keep the
+proxy theory separate from the target.
+
+**Disposition.** Evidence level B as historical same-lineage geometry/proxy
+control; C for current database, initialization, labels, and code reuse.
+
+### E16g. QUED: a complete electronic-descriptor teacher package
+
+**Source.** [Hinostroza Caldas et al., Digital Discovery 2026](https://pubs.rsc.org/en/content/articlehtml/2026/dd/d5dd00411j),
+the [MIT-licensed implementation and model repository](https://github.com/lmedranos/QUED),
+and the [Zenodo archive](https://doi.org/10.5281/zenodo.17106019).
+
+QUED combines BOB or SLATM geometric descriptors with a named DFTB3+MBD
+electronic descriptor containing global quantities, molecular-orbital energies,
+and padded atom-level properties. It evaluates approximately `42k` equilibrium
+and `42k` highly distorted QM7-X structures for PBE0+MBD properties, including
+HOMO--LUMO Gap. The supplementary XGBoost table reports Gap MAE reductions from
+`2.821` to `1.442` kcal/mol on the equilibrium subset and from `10.922` to
+`4.071` kcal/mol on the distorted subset when SOAP is augmented with `D_QM`
+(approximately `0.122 -> 0.063 eV` and `0.474 -> 0.177 eV`).
+
+The public package includes descriptor generation, DFTB+ wrappers, CPU
+training/evaluation scripts, model pickles, HDF5 training sets, and a notebook.
+Its larger-molecule path is RDKit/MMFF followed by CREST/GFN2-xTB in GBSA water,
+up to ten low-xTB-energy conformers, and DFTB3+MBD property calculation. This
+is a high-quality teacher-feature engineering reference, but it is not a
+same-target delta model: the target theory is PBE0+MBD/QM7-X or an ADMET
+dataset, the electronic proxy is DFTB3+MBD, and the geometry does not satisfy
+MolGap's ETKDG contract.
+
+**Disposition.** Evidence level A/B for reproducible electronic-feature
+packaging and geometry/electronic/combined ablations; C for current PCQM rows,
+labels, weights, and direct feature use. If revisited, the safe borrowing is
+the field-level teacher manifest and three-way ablation, recomputed under an
+ETKDG-compatible, identity-audited proxy contract.
+
+### E16h. POS-EGNN/OMol25: multi-task frontier-orbital pretraining with an explicit relation
+
+**Source.** The peer-reviewed [EES Batteries paper](https://pubs.rsc.org/en/Content/ArticleLanding/2026/EB/D6EB00024J),
+the [IBM/materials implementation](https://github.com/ibm/materials), and the
+[Hugging Face POS-EGNN model card](https://huggingface.co/ibm-research/materials.pos-egnn).
+
+The paper pretrains POS-EGNN on more than `20M` OMol25 electrolyte structures
+at `ωB97M-V/def2-TZVPD`, predicting HOMO, LUMO, and Gap, then fine-tunes on
+approximately `24k` lithium-electrolyte structures selected by composition,
+hydration, and lithium-coordination rules. Its GotenNet-based equivariant
+encoder uses a `6 Å` cutoff and max pooling. The four-target Huber loss gives
+larger weights to HOMO and LUMO, a smaller weight to Gap, and adds a site-charge
+head; the paper explicitly motivates this with `Gap = LUMO - HOMO`. The small
+model reports held-out OMol25 MAEs of `0.489 eV` for HOMO and `0.606 eV` for
+LUMO, with all three frontier targets below `0.61 eV` and correlations above
+`0.9`.
+
+The public package is useful but must be role-separated. IBM's Apache-2.0 repo
+contains POS-EGNN code and an example notebook; the public `pos-egnn.v1-6M.pt`
+weights are MPtrj energy/force/stress weights trained on `1.4M` samples, not the
+paper's OMol25 frontier-orbital model. The paper's target theory, explicit MD
+solvation/ion-pair geometries, and external OMol25 role are incompatible with
+the current PCQM B3LYP/6-31G*/ETKDG contract.
+
+**MolGap implication.** POS-EGNN is strong evidence for a future HOMO/LUMO/Gap
+physical-consistency ablation and a public 3D foundation-model engineering
+reference. It is not permission to import IBM weights, OMol25 rows, or explicit
+solvation geometries into the current database.
+
+**Disposition.** B for multi-task/physical-consistency and public 3D foundation
+design; C for current labels, weights, rows, geometry, and pretraining.
+
+### E16i. LUMIA: chemistry-informed organic-electronics pretraining and search
+
+**Source.** The peer-reviewed [JCTC paper](https://pubs.acs.org/doi/10.1021/acs.jctc.5c00713),
+the [MIT-licensed implementation](https://github.com/YajingSun-Group/LUMIA),
+and the [Zenodo data/weight release](https://zenodo.org/records/15852302).
+
+LUMIA pretrains an RGCN on approximately `1.4M` organic molecules with
+knowledge-informed edge and substituent masking intended to emphasize
+π-conjugation and substituent effects. The repository exposes pretraining,
+fine-tuning, fixed OCELOT folds, substructure-mask explanations, and an MCTS
+workflow for searching attribution patterns; Zenodo exposes the pretraining
+and downstream data archives plus a model dump with MD5 values. The published
+scientific scope is organic optoelectronics, including OCELOT and reorganization
+energy insight, not an official PCQM4Mv2 Gap benchmark.
+
+**MolGap implication.** LUMIA is a completed engineering reference for
+domain-informed 2D contrastive pretraining, explanation artifacts, and
+knowledge-discovery audit trails. Its data, weights, knowledge masks, downstream
+targets, and DGL/RGCN environment are external to the B3LYP/6-31G*/ETKDG
+contract. The safe borrowing is the artifact/ablation pattern: freeze the
+transformation definition, source rows, checkpoint hash, downstream folds, and
+explanation outputs before asking whether a conjugation-aware teacher transfers.
+
+**Disposition.** A/B for public organic-electronics pretraining and
+interpretability engineering; C for current labels, weights, database, and
+PCQM Gap evidence.
+
 ## E. Long-range and higher-fidelity targets
 
 ### E17. CELLI: charge equilibration for non-local interactions
@@ -444,6 +686,30 @@ or chemically distinct test molecules.
 Delta-GW direction and the principle that readout-only transfer should be
 tested before full fine-tuning. It does not alter the current B3LYP Gap target,
 and no GW/BSE quantity should be mixed into the Track B architecture screen.
+
+### E18a. Public 134k-molecule GW frontier-orbital teacher database
+
+**Source.** [Accurate GW frontier orbital energies of 134 kilo
+molecules](https://www.nature.com/articles/s41597-023-02486-4), with the
+[open arXiv record](https://arxiv.org/abs/2303.08708) and the public
+[Figshare archive](https://figshare.com/articles/dataset/Accurate_GW_frontier_orbital_energies_of_134_kilo_molecules_of_the_QM9_dataset_/21610077).
+
+The dataset covers 133,885 QM9 molecules and provides PBE, G0W0, and
+eigenvalue-self-consistent GW@PBE HOMO/LUMO quantities, with basis-set
+extrapolated values. The records are keyed by the original QM9 identifiers and
+the paper explicitly proposes the data for delta-learning and transfer
+learning. The reported DFT-to-GW correlations are molecule-dependent, with
+weaker LUMO correlation than HOMO, so a learned residual is more defensible
+than a fixed energy shift.
+
+**MolGap implication.** This is a strong public teacher-data reference, but it
+is not a replacement for the current database: its targets are GW
+quasiparticle energies, its source is QM9, and its theory/geometry contract is
+different from B3LYP/6-31G* PCQM. Any use would require exact QM9-to-PCQM
+identity/substructure auditing, train-role-only supervision, and a separate
+theory declaration. Keep it as an external delta/transfer resource; do not
+append it to Track A or Track B and do not count it as evidence for current
+PCQM Gap improvement.
 
 ### E19. Systematic review of frontier-orbital prediction
 
@@ -605,6 +871,153 @@ an independent coordinate-free, official-role reproduction is available. A
 low number without an audited inference-information statement is not evidence
 of a better MolGap route.
 
+## I. Direct same-database self-supervised pretraining
+
+### E27. Pre-training via Denoising (PVD)
+
+**Primary sources.** The ICLR 2023 paper is
+[Pre-training via Denoising for Molecular Property
+Prediction](https://arxiv.org/html/2206.00133), with an
+[MIT-licensed official repository](https://github.com/shehzaidi/pre-training-via-denoising)
+and a documented [PCQM4Mv2 configuration](https://github.com/shehzaidi/pre-training-via-denoising/blob/main/examples/ET-PCQM4MV2.yaml).
+
+PVD perturbs equilibrium 3D coordinates with isotropic Gaussian noise and
+trains an equivariant vector head to predict the injected noise. Its score-
+matching derivation interprets the result as an approximate force field around
+the observed equilibrium structures. The paper explicitly mean-centers the
+noise because a global translation is unidentifiable. This is a self-supervised
+structural objective, not a force label, a low-fidelity electronic target, or
+strict delta-learning.
+
+The upstream is `3,378,606` PCQM4Mv2 DFT-equilibrium structures and the labels
+are not used. The paper's QM9 table reports three-seed GNS-TAT improvements
+from `17.3/17.1/25.7` meV to `14.9/14.7/22.0` meV for HOMO/LUMO/Gap after
+PCQM denoising pretraining on top of the same Noisy-Nodes family. Its isolated
+TorchMD-NET control separates random initialization (`22.0/18.7` meV), a
+downstream denoising auxiliary task (`18.1/15.6`), and upstream PCQM
+pretraining (`15.6/13.2`) for HOMO/LUMO. The official repository includes a
+retrievable `denoised-pcqm4mv2.ckpt`, the PCQM pretraining command, and a QM9
+fine-tuning command/config.
+
+The paper also shows why this is not a free scaling recipe: upstream-size
+benefit saturates, downstream gains increase when labels are scarce, and PCQM
+pretraining does not improve final OC20 IS2RE validation when the upstream and
+downstream distributions differ substantially. A frozen-backbone probe still
+beats a random frozen backbone, but full fine-tuning remains better.
+
+**MolGap disposition.** This closes an important evidence gap: there is a
+completed, code-backed precedent for direct PCQM structure pretraining and a
+causal control separating pretraining from an auxiliary denoising loss. It is
+not a current experiment because its coordinates are DFT equilibrium rather
+than ETKDG, its upstream role is the full PCQM structure pool, and it reports
+QM9/OC20 downstream outcomes rather than a same-contract PCQM Gap result. A
+future ETKDG-only audit could borrow mean-centered vector denoising, the three-
+way control, and upstream compatibility curves, but cannot import its
+checkpoint, coordinates, or metrics.
+
+See the [full PVD deep-reading card](deep_reading_denoising_continuation_2026-09-07.md#5-pre-training-via-denoising-pvd-the-clean-pcqm-pretraining-baseline)
+for the separate TorchMD/GNS configurations and geometry audit.
+
+### E28. Fractional Denoising (Frad/FradNMI)
+
+**Primary sources.** The ICML 2023 formulation is
+[Fractional Denoising for 3D Molecular Pre-training](https://arxiv.org/html/2307.10683)
+with [official code](https://github.com/fengshikun/Frad). The expanded Nature
+Machine Intelligence paper is
+[Pre-training with Fractional Denoising to Enhance Molecular Property
+Prediction](https://arxiv.org/html/2407.11086), with
+[FradNMI code](https://github.com/fengshikun/FradNMI), [Zenodo weights](https://zenodo.org/records/12697467),
+and [Figshare source data](https://doi.org/10.6084/m9.figshare.25902679.v1).
+
+Frad introduces a chemical-aware noise (CAN) stage before coordinate Gaussian
+noise (CGN): `x_eq -> x_med -> x_fin`. It only predicts `x_fin - x_med`, the
+CGN component. This allows CAN to model rotatable-bond torsions (RN) or
+bond-length/bond-angle/torsion vibrations (VRN) without losing the theorem's
+force-learning interpretation, which relies on the final conditional noise
+being isotropic Gaussian. The NMI PCQM recipe uses batch `70`, AdamW, `10,000`
+warmup steps, maximum learning rate `4e-4`, a `400,000`-step cosine cycle,
+RN torsion scale `2`, VRN scales `0.058/0.129/0.18/1`, and CGN standard
+deviation `0.04`.
+
+The upstream is the same `3,378,606`-structure PCQM4Mv2 pool, with labels
+unused. On QM9, coordinate denoising gives HOMO/LUMO/Gap
+`17.7/14.3/31.8` meV; Frad(RN) gives `15.3/13.7/27.8` and Frad(VRN)
+`17.9/13.8/27.7`. The paper reports 9/12 QM9 targets at a new best and
+improvement over the same TorchMD-NET backbone on 11/12 targets. Its force,
+MD17/MD22/ISO17, LBA, and inaccurate-conformer studies support the mechanism,
+but none is a same-contract PCQM Gap result. The inaccurate-conformer test is
+specifically RDKit Distance Geometry plus MMFF; it does not establish
+equivalence to MolGap ETKDG.
+
+**MolGap disposition.** Frad is a complete chemical-aware pretraining
+reference with code, weights, source data, theory, and matched ablations. It
+is not a current candidate: its main PCQM coordinates are DFT equilibrium,
+its robustness control is RDKit+MMFF, its frontier results are QM9, and the
+project's random-init torsion-state route is already closed. A future
+post-selection ETKDG-only audit may borrow the intermediate/final-coordinate
+manifest and the coordinate-denoising/no-pretraining controls, but cannot
+import Frad weights, coordinates, or metrics.
+
+See the [full Frad deep-reading card](deep_reading_denoising_continuation_2026-09-07.md#6-fractional-denoising-frad-chemical-aware-noise-without-breaking-the-score-objective)
+for the theorem, ring/degree handling, robustness, and cost audit.
+
+### E29. Sliced Denoising (SliDe)
+
+**Primary sources.** [ICLR 2024 paper](https://arxiv.org/html/2311.02124),
+[official MIT code](https://github.com/fengshikun/SliDe), and the
+[ICLR proceedings record](https://proceedings.iclr.cc/paper_files/paper/2024/hash/4a1d69d1f64c6b6df105b15984ca527a-Abstract-Conference.html).
+
+SliDe derives a quadratic BAT energy over bond lengths, bond angles, and
+torsions from Open Force Field 2.0.0 parameters. It samples chemically
+structured relative-coordinate noise and uses Gaussian random slicing plus
+finite coordinate differences to avoid explicit Cartesian/BAT Jacobians. The
+GET encoder adds angle/torsion-aware edge updates to a TorchMD-NET-like
+equivariant Transformer. On 1,000 PCQM4Mv2 molecules, its estimated-force
+Pearson correlation is `0.895(0.071)`, versus `0.616(0.047)` for coordinate
+denoising and `0.631(0.046)` for Frad. The matched QM9 table reports
+HOMO/LUMO/Gap `13.6/12.3/26.2` meV, versus Coord `17.7/14.3/31.8` and Frad
+`15.3/13.7/27.8`; the pretraining ablation reports scratch
+`17.6/16.7/31.3`, without regularization `15.0/14.8/27.7`, and with
+regularization `13.6/12.3/26.2`.
+
+The PCQM pretraining pool is about `3.4M` label-free equilibrium structures.
+The public recipe exposes batch `128`, AdamW, `10,000` warmup steps, maximum
+learning rate `4e-4`, cosine cycle `240,000`, `N_v=128`, `sigma=0.001`, and
+coordinate regularization scale `tau=0.04`; the authors report eight A100
+GPUs. These results are not a PCQM4Mv2 Gap score: the main coordinates are
+DFT equilibrium structures and the frontier-orbital downstream table is QM9.
+
+**MolGap disposition.** Strong B-level physics-informed pretraining and code
+reference; no current experiment, checkpoint initialization, database change,
+or reopening of the closed torsion-state route. A future adaptation must use
+ETKDG at both stages, freeze BAT parameter/ring/degeneracy rules, and compare
+random-init, coordinate-denoising, and SliDe-style objectives at the same
+student capacity. See the [full SliDe deep-reading card](deep_reading_denoising_continuation_2026-09-07.md#7-slide-force-consistent-bondangletorsion-pretraining-with-random-slicing).
+
+### E30. Coordinating Cross-modal Distillation (CCMD)
+
+**Primary source.** [Coordinating Cross-modal Distillation for Molecular
+Property Prediction](https://arxiv.org/html/2211.16712).
+
+CCMD trains a DFT-coordinate 3D Graphormer teacher and distills it into a 2D
+Graphormer student. It separates all-layer virtual-token (global molecular)
+alignment from atom-token (local) alignment and derives a molecular-size
+normalization, with order `1/N^2` for a Transformer. The PCQM validation table
+reports Graphormer `0.0864`, APE baseline `0.0845`, global distillation
+`0.0822`, global plus manually searched local weighting `0.0818`, and global
+plus size-coordinated local weighting `0.0809` eV. Naive local alignment alone
+degrades to `0.0870`; all-layer and size-normalized controls are therefore
+more informative than the headline. The abstract separately states `0.0734`
+on the 2022 test-challenge, but the accessible main table is a validation
+comparison and no verified code/checkpoint was found.
+
+**MolGap disposition.** A for global/local teacher-loss and negative-transfer
+evidence, B/C for current use. DFT teacher coordinates, a prior Graphormer
+split protocol, 68M-scale backbone, and absent executable artifact prevent
+direct admission. Preserve it as the control design for a separately
+authorized ETKDG teacher study; do not treat the `0.0809` or `0.0734` values as
+current MolGap results. See the [full CCMD deep-reading card](deep_reading_teacher_delta_continuation_2026-09-07.md#2a-coordinating-cross-modal-distillation-ccmd-globallocal-teacher-loss-with-size-normalization).
+
 ## Decision matrix for the remaining search
 
 | Route | New information | Overlap with closed routes | Contract class | Priority |
@@ -613,12 +1026,62 @@ of a better MolGap route.
 | QCDGE auxiliary teacher | Near-target B3LYP/6-31G* HOMO/LUMO, Mulliken, excited-state labels | Low, but source overlap risk is high | Frozen external teacher; identity dedup and level-of-theory audit | P1 post-selection |
 | HEDMoL/OP/charge teacher | Substructure, bond, or atom electronic descriptors | Distinct from contacts/rings; teacher-only | Auxiliary/pretraining, no target leakage | P1 post-selection |
 | MET/Q-GEM/atom-QM pretraining | Charges, Wiberg, geometry and electronic SSL | Reuses known geometry/torsion ideas but adds supervision | Separate pretrained teacher and transfer experiment | P2 |
+| EMPP | Label-free masked-position 3D pretraining on PCQM | Requires a 3D coordinate contract and pretrained initialization | Post-selection objective reference; no direct PCQM Gap gain | P2 |
+| Suiren-1.0 | Large 3D teacher plus frozen 2D conformation distillation | External B3LYP/def2-SVP data, 1.8B scale, non-ETKDG geometry | Staged teacher/student design reference only | P2 |
+| Uni-3DAR | Octree/subtree-compressed autoregressive 3D modeling with a public QM9/DRUG/MP20 implementation; SpaceFormer 20K HOMO/LUMO/Gap setting | External 19M 3D corpus, SpaceFormer task/split, non-ETKDG geometry, and no direct official PCQM4Mv2 Gap result | Hierarchical geometry-tokenization reference only | P2 |
+| QCML | 14.7B low-fidelity plus 33.5M PBE0 multi-fidelity data, outlier/status fields | Off-equilibrium UFF/xTB geometry and PBE0 energy/force/matrix targets | Schema and transfer-learning design reference; no bulk merge | P2/P3 |
+| qcMol | 1.2M molecules with global Gap and local atom/bond descriptors | B3LYP-D3/def2-SV(P)//GFN2-xTB, single geometry, mixed-source overlap | Identity-filtered electronic teacher candidate; no current initialization | P1 post-selection |
+| QM40 | 162,954 B3LYP frontier-orbital records for 10--40-atom drug-like molecules | 6-31G(2df,p), xTB/DFT geometry, ZINC distribution | Near-target external size/scaffold audit; no concatenation | P2 |
+| QeMFi | Five-fidelity target/cost benchmark with public scripts | Nine molecules, TD-DFT excitations, Wigner/geodesic geometry | Delta-learning protocol reference only | P3 |
+| PubChemQC B3LYP/6-31G*//PM6 | Same-origin 86M electronic release with orbital energies and queryable HOMO/LUMO/Gap fields | PM6-optimized geometry, broad 2016 PubChem snapshot, exact overlap/release audit absent | Closest same-origin teacher/proxy source; no merge or initialization | P2/P3 |
+| MFΔML | Public Δ-ML/MFML/MFΔML comparison with explicit training and inference cost | QeMFi basis-set fidelities, KRR/Coulomb-matrix descriptor, nine molecules | Residual/cost gate for any future same-database delta route | P2 |
+| ViSNetGWBSE | OMol25/QCDGE low-fidelity pretraining, full vs readout-only transfer, qsGW/GW-BSE learning curves, public code/checkpoints | External functionals/bases, qsGW/BSE targets, explicit Cartesian geometry, not current B3LYP/6-31G* Gap | Multi-fidelity transfer and outlier/data-demand protocol reference; no current initialization | P2 |
+| MoleculeSDE / GraphMVPv2 | PCQM paired 2D/3D pretraining, data-space 2D↔3D SDEs, public code and checkpoints | PCQM paired conformers, old environment, QM9 downstream rather than direct PCQM Gap | ETKDG-only denoising/pretraining design reference; no current initialization | P2 |
+| MoleculeJAE | Joint 2D/3D trajectory score matching plus contrastive surrogate; QM9 Gap/HOMO/LUMO ablations | No verified code/checkpoint, PCQM paired geometry, QM9 rather than target-matched PCQM score | ETKDG trajectory-objective reference after architecture selection | P2/P3 |
+| MoleBlend | Relation-level SPD/edge/3D blending, modality-targeted relation prediction, public code | Legacy stack, PCQM Gap mentioned without a directly checkable score/split table, non-ETKDG pretraining geometry | Pair-relation pretraining design reference only | P2 |
+| FlexMol | Paired-PCQM pretraining plus missing-modality decoders and single-modality continuation | Stage 2 imports Uni-Mol data; PCQM DFT geometry; no direct PCQM Gap result | ETKDG student/teacher and missing-modality contract reference | P2 |
+| DenoiseVAE | Molecule-adaptive atom-wise noise distributions, public ICLR 2025 code, reported PCQM4Mv2 Gap validation `0.0777 +/- 0.0005` with `1.44M` parameters | Exact split/coordinate path/checkpoint/license and ETKDG compatibility are not yet independently closed | Highest-priority evidence-only pretraining audit; no warm start or run yet | P1 audit |
+| PVD | Direct PCQM4Mv2 self-supervised denoising, official checkpoint/config, QM9 HOMO/LUMO/Gap transfer, and random-init/Noisy-Nodes/pretraining controls | DFT-equilibrium coordinates, full-PCQM upstream role, TorchMD/GNS stack, and no same-contract PCQM Gap result | Completed denoising reference; future ETKDG-only protocol after architecture selection | P1 audit/reference |
+| Frad / FradNMI | Chemical-aware RN/VRN noise, fractional CGN target, public code/weights/data, QM9 frontier and force/robustness ablations | DFT main coordinates, RDKit+MMFF robustness geometry, legacy TorchMD stack, QM9 downstream, and closed torsion-state route | Chemical-aware pretraining reference; future ETKDG-only audit only | P1 audit/reference |
+| SliDe | BAT bond/angle/torsion pretraining, random-sliced force objective, public code/models, PCQM force audit and QM9 frontier ablations | DFT equilibrium geometry, OpenFF/Sage prior, QM9 rather than PCQM Gap downstream, GET/Nv cost | Future ETKDG-only physics-informed pretraining reference | P1 audit/reference |
+| CCMD | Direct PCQM validation of global/local 3D-to-2D distillation and size-normalized atom loss | DFT teacher coordinates, prior split, large Graphormer, no verified code/checkpoint | Future ETKDG teacher-loss control design; no current score | P1 teacher reference |
+| 3D-GSRD | Selective re-mask decoding, public PCQM pretraining and QM9 `homo/lumo/gap` fine-tune scripts | No directly checkable official PCQM Gap score; 3D/DFT geometry and budget differ | Decoder leakage-control reference | P2 |
+| 3D-MolT5 | Discrete local 3D tokens, PCQM 3D pretraining, PubChemQC Gap ablation `0.0791` vs `0.0968` without 3D | PubChemQC/text setting, external corpora, and non-ETKDG geometry are not the official PCQM contract | Compact masked-geometry auxiliary-task reference | P2 |
+| MolSpectra | PCQM denoising plus QM9Spectra UV--Vis/IR/Raman teacher; QM9 Gap `26.8` vs `31.8` meV coordinate baseline | B3LYP/def-TZVP spectral labels, QM9 identity, geometry, and repository license need audit | Electronic teacher/auxiliary-objective reference | P1 post-selection |
+| 3D-PGT | Direct paper PCQM4Mv2 validation `0.0762` with 42.6M GPS-style parameters; automated bond/angle/dihedral pretext fusion | DFT equilibrium pretraining geometry, large model, paper validation protocol | Historical direct-PCQM pretraining reference; possible reduced ETKDG contract only after a new protocol | P1 audit |
+| AniDS | Public PCQM label-free pretraining, atom-wise full-covariance anisotropic noise, 8.9% MD17 force improvement | 129M Equiformer-scale force model, DFT coordinates, no direct Gap result | Adaptive-noise design reference after scalar-noise audit | P2 |
+| 3D-EMGP | Public equivariant force/noise-scale pretraining with QM9 `gap/homo/lumo` fine-tuning | GEOM-QM9 rather than PCQM, old stack, no direct PCQM Gap result | Historical physical-objective reference | P2 |
+| Mol-MFFGE | Task-aware learnable noise transformation and bi-level weighting of denoising plus downstream losses; public code with QM9 `homo/lumo/delta` paths | GEOM/SPICE/QM9/MD17 rather than PCQM/ETKDG; no direct PCQM Gap result and no independently verified checkpoint | Task-aware denoising reference after a future ETKDG-only contract | P2 |
+| OCNet | Conjugated-domain SE(3) pretraining on 10M-scale molecular/dimer assets, TB electronic descriptors, public weights, and OCELOT H-L Gap MAE `0.008 eV` | OCELOT/OCNet theory, geometry, dimer/film roles, generated chemistry, and non-ETKDG inputs | Organic-electronics teacher/OOD and conjugation-error stratification; no label merge | P1 post-selection |
+| LUMIA | ~1.4M-molecule chemistry-informed contrastive RGCN pretraining, public data/weights, OCELOT/optoelectronic fine-tuning, substructure explanation, and MCTS search | External organic-optoelectronic roles, no directly verified PCQM Gap score, DGL/RGCN environment, and no ETKDG/B3LYP contract | Organic-domain pretraining and interpretability/artifact reference; no current labels or weights | P2 |
+| DFT-to-experiment frontier-orbital transfer | XGBoost/Klekota--Roth transfer from 11,626 DFT rows to 1,198 experimental rows; HOMO/LUMO correlations `0.75/0.84` | Experimental targets and fingerprint/tree model are not PCQM B3LYP/6-31G* | Theory-to-experiment calibration protocol only | P2 |
+| Conjugated-polymer D-MPNN pretraining | Three-way comparison of direct training, monomer-DFT pretraining, and TD-DFT-extrapolated polymer pretraining; own-task final gap MAE `0.074 eV` | Domain-matched proxy selection and full-fine-tuning ablation | Experimental polymer targets, TD-DFT/MMFF94s geometries, external data, and cited artifact URL currently unresolved | P2 |
+| DFT-feature-assisted optical-gap transfer | Public paper/SI/repo; modified-oligomer DFT gap + ECFP6 gives own-task optical-gap MAE `0.065 eV` | Separate teacher feature from strict residual delta; nested-CV and group extrapolation | Experimental optical targets and external oligomer/DFT geometry; not PCQM Kohn--Sham Gap | P2 |
+| Frontier-orbital Chemprop transfer | Published 2026 abstract/preview reports GFN2-xTB-trimer transfer to chain/bulk gap, IE, and EA | Frontier-family transfer and physical-consistency checks | No verified code, checkpoint, split, data identity, or complete target-theory packet | P3 |
+| OPoly26 | Public multi-million-polymer DFT/MD database, fairchem path, ColabFit record, and validation schema with frontier-field evidence | Polymer condensed-phase/MD geometry, omegaB97M-V/def2-TZVPD theory, unresolved train metadata/field coverage, and no current PCQM Gap result | External database/schema/OOD reference; no data merge or current teacher | P2 audit |
+| PubChemQC-100K -> CO-610 SchNet transfer | Published same-source B3LYP/6-31G* transfer, public ESI, filtered pretraining rule, frozen layers, added interaction block, and direct control | External oligomer target, no official code/checkpoint, unclear ETKDG geometry, and possible Track A/PubChemQC identity overlap | Same-source transfer protocol reference; no labels, weights, or filtered rows merged | P2 audit |
+| GFN2-xTB/COCONUT proxy workflow | Complete public low-fidelity xTB gap/descriptors workflow, archived data, conformer aggregation, and external theory-shift test | GFN2-xTB target, RDKit/xTB geometry, natural-product distribution, and no B3LYP/6-31G*/ETKDG residual evidence | CPU proxy-generation and delta-cost reference only; exact ETKDG adaptation and residual/cost audit required | P2 audit |
+| QMCVNet / PubChemQC PM6-to-B3LYP control | Same-lineage low-fidelity geometry comparison, voxel CNNs, explicit rotation augmentation, and direct PM6/MMFF controls | Discussion preprint, no audited code/checkpoint, mixed PM6/MMFF geometry, possible Track A overlap, and no strict residual target | Historical proxy/rotation negative control only; recompute under ETKDG before any future use | P3 |
+| QUED electronic descriptor | Public DFTB3+MBD electronic descriptor, BOB/SLATM geometry, QM7-X Gap ablations, MIT code/models, and Zenodo archive | QM7-X/PBE0+MBD and ADMET roles, RDKit/MMFF+CREST/GFN2-xTB geometry, and no PCQM/B3LYP/6-31G*/ETKDG result | Electronic-teacher packaging and three-way ablation reference; no current feature/row/weight import | P1 audit |
+| POS-EGNN/OMol25 frontier workflow | >20M OMol25 pretraining structures; HOMO/LUMO/Gap/site-charge multi-task loss; Huber weighting treats Gap as a physical consistency term; public IBM code and MPtrj weights | OMol25 `ωB97M-V/def2-TZVPD`, explicit MD solvation geometry, public weights target MPtrj energy/force/stress, and no PCQM/ETKDG result | Multi-task physical-consistency and 3D-foundation reference; no external rows or weights | P1 post-selection reference |
+| AEGCNN-MTL | QM9 correlation-grouped HOMO/LUMO/Gap multi-task result plus within-architecture negative-transfer comparison | QM9/BDG roles, no public code/BDG data, and no direct PCQM/ETKDG result | Auxiliary-target/task-grouping control only | P2 reference |
+| OSCs_RGGN | Public repository claims 48,182 OSC samples and RGNN predictions | No auditable dataset/license/split/theory manifest or released checkpoint | Quarantine discovery lead; no evidence or data import | C |
+| GLACIER | Public KDD 2026 multimodal student--teacher model; 100K Enamine pretraining, graph/SMILES/descriptor fusion, MiniMol/MolFormer distillation, public code and checkpoint | TDC/MoleculeNet only; no PCQM Gap result; external corpus and descriptor/teacher overlap require a new role audit | Multi-teacher embedding cache, contribution floor, and frozen-teacher ablations after architecture selection | B engineering |
+| QM9 embedding KD scalability study | Open-access 2025 paper and code; QM9 teacher includes HOMO/LUMO/Gap, smaller students, latent L1+cosine KD, and cross-domain transfer | QM9/ESOL/FreeSolv, relative `R^2`, Python 3.9, and no PCQM/ETKDG result | Teacher/no-teacher, student-capacity, and embedding-alignment control design only | B teacher reference |
+| EDG electron-density teacher | IJCAI paper, MIT code/checkpoints, EDBench/PCQM-derived 2M density pretraining, and QM9 HOMO/LUMO/Gap ablations | Density basis, source conformers, PCQM row overlap, OneDrive artifacts, and non-ETKDG geometry are not closed for MolGap | Three-stage electronic teacher, frozen feature artifact, and geometry-student distillation reference | B teacher reference |
+| ChemBERTa-3 | Public open training/benchmark framework, model variants, environment, data preparation, and Zenodo/repository artifacts | ZINC20/PubChem pretraining and no directly verified PCQM Gap evidence; external source and 3D conformer roles differ | Reproducible configs, benchmark scripts, model-size/featurizer ledger | B engineering |
+| ChemFM | 3B-scale causal SMILES foundation model trained on 178M UniChem SMILES with public code/weights | No matched PCQM Gap result, no ETKDG path, and model/data scale exceeds the bounded screen | Scaling-report and corpus/version accounting only | B/C reference |
+| GPSE | Public learned positional/structural encoder, six PSE families, and a retrievable PCQM-named checkpoint | PSE reconstruction is not a Gap result; checkpoint lineage, labels, split, and old PyG stack need audit | Frozen structural teacher or representation probe after provenance gate | B teacher |
+| CondPSE | 2026 polynomial-filtered structural encoder; strong CSL/EXP synthetic gains over GPSE | Comparable to GPSE with no consistent molecular-property advantage; no official code | Negative control against admitting structural pretraining from synthetic expressivity alone | B negative control |
+| GCPE | 2026 publisher page describes spatial/spectral/subgraph PE and PCQM4Mv2 experiments | Exact PCQM metric, split, code, checkpoint, and complete accessible paper were not verified | Observation only; no candidate or headline score | C |
+| Chemprop benchmark v2 | MIT benchmark package with `qm9_gap` and `pcqm4mv2`, Zenodo data, explicit `data.csv`/`splits.json`, and Chemprop v2.0.3 environment | It is a baseline/engineering package, not evidence of a new MolGap architecture or a replacement split | Independent data-loader/metric/artifact sanity reference | B engineering |
+| ECMMR | 2026 abstract describes BRICS hypergraphs, contrastive/generative cross-modal tasks, PCQM pretraining, and 22 downstream tasks | Exact Gap table, split, code, and checkpoint were not exposed in the audited source | Index hit only; no possible experiment | C |
 | HOMO+LUMO+Gap multi-task | Related frontier-orbital targets | No new encoder channel | Post-selection target contract | P2 |
 | GeoOpt-Net / conformer refinement | Better geometry input | Different from architecture; changes ETKDG source | New immutable train/inference geometry cache | Conditional on geometry residuals |
 | nablaColors/FACET ensemble | Conformer fidelity + fragments | Different from one-ring token; multi-view teacher | Separate multi-conformer teacher | P2/P3 |
 | QO2Mol/VQM24 | Larger or exhaustive quantum geometry corpora | Dataset/teacher only | OOD or pretraining benchmark | P3 |
 | CELLI-style Qeq | Explicit global charge equilibration | More principled than arbitrary contacts | New long-range electronic contract | P3 |
-| GW/BSE transfer | Multi-fidelity expensive targets | Separate from B3LYP Gap | `production/05_delta_gw`-type track | P2 when requested |
+| GW/BSE and multi-fidelity transfer | ESA and ViSNetGWBSE show DFT/TDDFT-to-GW/BSE transfer; MFGP-GEM, multi-fidelity GNNs, and dataset embeddings add autoregression, proxy/embedding/readout controls, and auditable HOMO/LUMO evidence | Separate from B3LYP Gap; QM9GWBSE/GW, QMugs, MultiXC/MatPES, or HF/MP2/CCSD roles and explicit 3D geometry differ | `production/05_delta_gw`-type track; split/identity/theory audit first | P2 when requested |
 | EDBench / ED-DiT | Electron density, orbital energies, conserved electron number | Highest electronic relevance, but PCQM-derived overlap and basis mismatch | Train-role-only teacher after identity/level audit | P1 post-selection |
 | MoiréGT / RadialFocus | Distance-modulated attention with an apparent 46 meV PCQM result | Explicit 3D coordinates / no official test-dev lineage | Negative control; never enter 2D candidate pool without a clean reproduction | Exclude |
 
@@ -645,9 +1108,111 @@ of a better MolGap route.
 6. Keep multi-task HOMO/LUMO/Gap, conformer ensembles, CELLI, and GW/BSE as
    separate post-selection tracks. They are useful project extensions, not
    reasons to weaken the current direct Gap screen.
-7. Treat EDBench/ED-DiT as the strongest newly found electronic-teacher line,
-   but do not use it until the PCQM identity/role leakage audit and basis-level
-   accounting are complete.
+7. Treat EDBench/EDG/ED-DiT as the strongest newly found electronic-teacher
+   line, but do not use any of them until the PCQM identity/role leakage audit,
+   basis-level accounting, and exact ETKDG input contract are complete. EDG's
+   released teacher/feature artifacts make it the first package to inspect when
+   that audit is authorized; this is not an authorization to import them.
+
+## Deep-reading continuation recorded on 2026-09-07
+
+The subsequent primary-source reading is split into three auditable batches:
+
+- [direct PCQM and attention](deep_reading_direct_pcqm_attention_2026-09-07.md):
+  controlled global-attention evidence, GAPE, GRPE, TetraGT, Edge-Set
+  Attention, GEM-2, TokenGT, GPTrans, Edge Transformer, quantum-computed
+  positional encodings, GFSA, Specformer, and the (2,1)-GT/WL-Transformer
+  reference, with explicit geometry and split audits; the AdvSynGNN index hit
+  is recorded as a non-comparable negative control because its PCQM protocol is
+  incomplete;
+- [hierarchy, pretraining, and electronic teachers](deep_reading_hierarchy_pretraining_2026-09-07.md):
+  RingFormer, SCAGE, EPT, M2UMol, TGF-M, SIMG, GraphGPT, GTAM, MolGroup, and
+  TMP; TMP is a high-signal 3D pretraining reference but is not ETKDG-compatible
+  as published;
+- [foundation, geometry, and higher-order graphs](deep_reading_foundation_geometry_higher_order_2026-09-07.md):
+  MIST, UMA, MotiL, GeoMFormer, GotenNet, EquiHGNN, GoMS, 3DMSE, the QMOF
+  Molecular Graph Transformer, SpaceFormer, MolCL-SP, EMPP, and Suiren-1.0;
+  EMPP is a masked-position pretraining reference, Suiren is a large
+  teacher/CCD distillation reference, and Uni-3DAR is an octree/subtree
+  geometry-tokenization reference; all use non-ETKDG or non-official-PCQM
+  property contracts.
+- [teacher/distillation and delta-learning continuation](deep_reading_teacher_delta_continuation_2026-09-07.md):
+  a public PCQM 3D-prior distillation implementation, the D&D training and
+  geometry contract, DelFTa, selected HOMO-LUMO delta-QML, and Δ-DFT/GW
+  correction evidence. It records a synthetic-smoke failure as a constraint,
+  not as a positive PCQM result.
+- [electronic and delta-learning deep reading](deep_reading_electronic_delta_2026-09-07.md):
+  atom-level quantum pretraining, HEDMoL/Q-GEM/overlap-population teachers,
+  DelFTa-style residuals, the public 134k-QM9 GW frontier-orbital database,
+  the ESA DFT-to-GW transfer control, the MFGP-GEM multi-step
+  HOMO/LUMO benchmark, VQM24, QCML, qcMol, and QM40. These public resources remain
+  teacher/OOD/protocol references only; none is added to the current PCQM or
+  repaired-2M database roles.
+- [multi-fidelity delta continuation](deep_reading_teacher_delta_continuation_2026-09-07.md):
+  QeMFi's five-level TD-DFT benchmark and its explicit compute-time accounting,
+  MFΔML's public residual/ensemble cost comparison, plus ViSNetGWBSE's
+  OMol25/QCDGE-to-qsGW transfer, full-vs-readout comparison, and public
+  QM9GWBSE release, are recorded as delta/transfer protocol references, not
+  current Gap results. The same-origin PubChemQC 86M B3LYP/6-31G*//PM6
+  release is separately recorded as a lineage lead, not an added database.
+- [2D/3D trajectory and relation-pretraining continuation](deep_reading_2026-09-07.md):
+  MoleculeSDE/GraphMVPv2, MoleculeJAE, MoleBlend, and FlexMol are now read at
+  the paper-and-code level. Their public PCQM use is verified, but their
+  strongest numeric results are QM9, MoleculeNet, or conformation-generation
+  results rather than a directly checkable PCQM Gap score under this project's
+  ETKDG/role contract.
+- [adaptive denoising, discrete geometry, and electronic spectra](deep_reading_pretraining_electronic_2026-09-07.md):
+  DenoiseVAE, 3D-GSRD, 3D-MolT5, and MolSpectra are read at the
+  paper-and-code level. DenoiseVAE reports the only new direct PCQM Gap
+  validation number in this batch, but its ETKDG/split/checkpoint contract is
+  not yet closed; 3D-GSRD and 3D-MolT5 remain design references, and MolSpectra
+  remains an external-theory electronic-teacher reference.
+- [denoising continuation](deep_reading_denoising_continuation_2026-09-07.md):
+  3D-PGT, AniDS, and 3D-EMGP are read at the paper-and-code level. 3D-PGT's
+  `0.0762` is a direct paper PCQM validation number but uses DFT 3D pretraining
+  and a much larger GPS model; AniDS and 3D-EMGP are adaptive-noise and
+  physics-objective references without direct PCQM Gap results. Mol-MFFGE adds
+  task-aware learnable noise transformation and bi-level auxiliary-loss
+  weighting, but its evidence is GEOM/SPICE/QM9/MD17 rather than PCQM/ETKDG.
+- [organic-electronics domain models](deep_reading_organic_electronics_2026-09-07.md):
+  OCNet, LUMIA, a DFT-to-experiment frontier-orbital transfer model, and
+  OSCs_RGGN are read separately. OCNet and LUMIA are reusable external
+  pretraining/interpretability references for conjugated chemistry, but their
+  OCELOT/TB/DFT/dimer or RGCN/optoelectronic roles are not PCQM labels;
+  OSCs_RGGN remains a weak provenance lead.
+- [student--teacher, foundation, and structural pretraining](deep_reading_foundation_teacher_structural_2026-09-07.md):
+  GLACIER, the 2025 QM9 embedding-KD scalability study, EDG/EDBench,
+  ChemBERTa-3, ChemFM, GPSE, CondPSE, GCPE, and the Chemprop v2 benchmark
+  package are read at the paper/code level. EDG is the clearest new
+  electronic-density teacher package; GLACIER is the clearest new multi-teacher
+  engineering template; the QM9 KD study supplies a teacher/no-teacher control
+  matrix; GPSE/CondPSE provide matched positive and negative evidence for
+  learned structural encodings. None clears the current ETKDG/PCQM Gap
+  admission gate, and ECMMR remains observation-only.
+- [proxy and delta continuation](deep_reading_electronic_delta_2026-09-07.md):
+  the GFN2-xTB/COCONUT workflow is recorded as a complete public low-fidelity
+  asset and cost/audit reference. Its xTB target, RDKit/xTB geometry, and
+  natural-product role remain external; it does not add rows, weights, or a
+  current teacher to MolGap.
+- The same continuation records QMCVNet as a historical PubChemQC
+  PM6/MMFF-to-B3LYP geometry control and QUED as a public DFTB3+MBD electronic
+  descriptor package. QMCVNet remains a mixed-contract negative control; QUED
+  remains a teacher-feature/ablation reference because neither provides a
+  legal B3LYP/6-31G*/ETKDG feature path for the current database.
+- It also records POS-EGNN/OMol25 as a complete multi-task frontier-orbital
+  design reference with public IBM code and MPtrj weights, while separating
+  those weights from the paper's unreleased OMol25 frontier checkpoint. Its
+  theory and explicit solvation geometry remain external. AEGCNN-MTL supplies
+  independent QM9 evidence that task relatedness should be measured and that
+  weakly coupled auxiliary targets can produce negative transfer; neither
+  source authorizes a current experiment.
+
+These batches add evidence and exclusions only. They do not change the
+database, conformer method, active experiment, seed budget, or authorization
+boundary. In particular, MIST is retained as a future SMILES-pretraining
+teacher; EPT, UMA, GeoMFormer, GotenNet, EquiHGNN, and TGF-M remain 3D or
+teacher protocols; and Edge-Set, EquiHGNN, GoMS, and nonstandard 3D PCQM
+numbers are not accepted as comparable scores.
 
 ## What this extension closes
 
