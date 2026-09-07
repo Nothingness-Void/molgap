@@ -1,0 +1,27 @@
+{
+  "format": "molgap-pcqm-gap100k-hop-path-cache-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "0253aaa2061d0e7ac655fc8b6d9effd283722096",
+  "aggregate_sha256": "6d3a7df67cfadc26db2a38c006fd20e0d4294c16968fa92b01739daf8527993e",
+  "role_graphs": {
+    "train": 100000,
+    "validation": 10000
+  },
+  "role_hop2_relations": {
+    "train": 3803218,
+    "validation": 380280
+  },
+  "role_hop3_relations": {
+    "train": 3545056,
+    "validation": 354908
+  },
+  "role_multipath_relations": {
+    "train": 522214,
+    "validation": 52174
+  },
+  "maximum_path_count": 6,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

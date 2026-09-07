@@ -1,0 +1,21 @@
+{
+  "format": "molgap-pcqm-hop-path-graphstate-launch-v1",
+  "submitted_at": "2026-09-07T13:03:53+09:00",
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42",
+  "kernel_version": 1,
+  "status_at_launch_check": "RUNNING",
+  "source_commit": "0253aaa2061d0e7ac655fc8b6d9effd283722096",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-hop-path-source",
+  "source_dataset_version": 1,
+  "cache_kernel": "nothingnessvoid/molgap-pcqm-hop-path-cache-s42",
+  "cache_kernel_version": 1,
+  "cache_aggregate_sha256": "6d3a7df67cfadc26db2a38c006fd20e0d4294c16968fa92b01739daf8527993e",
+  "accelerator": "NvidiaTeslaT4",
+  "requested_gpu_count": 2,
+  "seed": 42,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "seed43_44_submitted": false,
+  "full_data_authorized": false
+}
