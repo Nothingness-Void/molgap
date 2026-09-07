@@ -47,6 +47,33 @@ That audit is research evidence; the geometry confirmation has now completed,
 and the torsion and dual-stream follow-ups are closed archive evidence. The
 single active follow-up is the local/global allocation protocol below.
 
+The incremental literature reserve beyond the base 73-source ledger is
+[`literature_extension_2026.md`](literature_extension_2026.md). It separates
+the one remaining bounded random-init candidate (static hop/path statistics)
+from electronic teachers, geometry/data contracts, and higher-fidelity target
+routes. It is evidence only and does not change the active K3b protocol or
+remote authorization.
+
+The dated leaderboard and SOTA comparability audit is
+[`leaderboard_sota_audit_2026-09-07.md`](leaderboard_sota_audit_2026-09-07.md).
+It separates official OGB test-dev submissions from paper validation numbers,
+quantifies the gap to the frozen GraphState anchor, and defines the candidate
+card required before a paper can justify a new remote run.
+
+The broader public-asset audit is
+[`external_assets_audit_2026-09-07.md`](external_assets_audit_2026-09-07.md).
+It covers completed codebases, released weights, quantum-chemistry databases,
+data/workflow platforms, organic-electronics external sets, licenses, overlap
+risks, and the evidence gate for any future experiment. It is research
+evidence only and does not authorize a model, dataset, or remote-run change.
+
+The method-focused extension for pretraining, teacher/student distillation,
+delta-learning, and recent algorithms is
+[`method_extension_2026-09-07.md`](method_extension_2026-09-07.md). It keeps
+the database unchanged, separates reproducible evidence from research leads,
+and defines the gates for any future method contract. It does not authorize a
+remote run or pretrained initialization.
+
 The geometry bottom-fusion screen is defined in
 [`geometry_bottom_fusion_seed42_protocol.md`](geometry_bottom_fusion_seed42_protocol.md).
 Its CPU geometry cache passed acceptance, and the three-candidate GPU screen

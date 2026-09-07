@@ -97,15 +97,18 @@ or higher-order path.
 
 ### Reusable reference implementations
 
-Official or author-provided implementations are available for
+Author repositories or landing pages are linked for
 [TetraGT](https://github.com/xkxxfyf/TetraGT),
 [DGT](https://github.com/zhangsy-ryan/DGT),
 [Edge-Set Attention](https://github.com/davidbuterez/edge-set-attention),
 [GeoMFormer](https://github.com/c-tl/GeoMFormer), and
-[GotenNet](https://github.com/sarpaykent/GotenNet). The repositories are
-implementation references only. Code must not be vendored wholesale: the local
-experiment protocol first specifies the one mechanism being transferred, then
-tests its syntax, batching, parameter count, and remote preflight contract.
+[GotenNet](https://github.com/sarpaykent/GotenNet), but availability is not
+uniform. In particular, the TetraGT repository currently says “Code Coming
+Soon” and contains a placeholder README rather than a runnable implementation.
+The repositories are therefore implementation references, not evidence of
+reproducibility. Code must not be vendored wholesale: the local experiment
+protocol first specifies the one mechanism being transferred, then tests its
+syntax, batching, parameter count, and remote preflight contract.
 
 ## Tier 2: useful training signals or pretrained teachers
 

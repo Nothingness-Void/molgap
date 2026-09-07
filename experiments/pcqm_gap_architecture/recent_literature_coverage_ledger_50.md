@@ -6,6 +6,11 @@ cross-paper architecture synthesis is in
 [`recent_literature_audit_2024_2026.md`](recent_literature_audit_2024_2026.md),
 and exact reusable configurations are in
 [`recent_literature_configuration_audit_2024_2026.md`](recent_literature_configuration_audit_2024_2026.md).
+Sources found after this fixed 73-source ledger are mapped in
+[`literature_extension_2026.md`](literature_extension_2026.md); they are not
+renumbered into this historical count.
+The official-board versus paper-validation audit is
+[`leaderboard_sota_audit_2026-09-07.md`](leaderboard_sota_audit_2026-09-07.md).
 
 ## Reading-depth definitions
 
