@@ -1,0 +1,24 @@
+{
+  "format": "molgap-pcqm-gap100k-hop-path-graphstate-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "0253aaa2061d0e7ac655fc8b6d9effd283722096",
+  "input_cache_aggregate_sha256": "6d3a7df67cfadc26db2a38c006fd20e0d4294c16968fa92b01739daf8527993e",
+  "seed": 42,
+  "baseline_validation_gap_mae_eV": 0.1300130933523178,
+  "candidate_validation_gap_mae_eV": 0.12910647690296173,
+  "candidate_minus_baseline_eV": -0.0009066164493560791,
+  "selected_candidate": "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9",
+  "selected_strictly_improves_baseline": true,
+  "material_gain_at_least_0_001_eV": false,
+  "candidate_to_baseline_epoch_time_ratio": 1.1193429750670894,
+  "epoch_time_gate_at_most_1_5x": true,
+  "preflight_peak_memory_bytes": {
+    "ogb_distance_angle_triangle_edge_state_graph_state9": 272629760,
+    "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9": 301989888
+  },
+  "memory_reserve_gate_at_least_15_percent": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

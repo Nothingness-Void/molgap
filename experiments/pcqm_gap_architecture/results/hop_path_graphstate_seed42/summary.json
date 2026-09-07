@@ -1,0 +1,35 @@
+{
+  "format": "molgap-pcqm-hop-path-graphstate-seed42-summary-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42",
+  "kernel_version": 2,
+  "seed": 42,
+  "control": {
+    "parameter_count": 3665809,
+    "best_epoch": 39,
+    "train_mae_eV_at_best_epoch": 0.11400436816215515,
+    "validation_gap_mae_eV": 0.1300130933523178,
+    "generalization_gap_eV": 0.016008725190162665,
+    "mean_throughput_graphs_per_s": 584.4930824235718,
+    "training_elapsed_s": 6860.174040506
+  },
+  "candidate": {
+    "parameter_count": 3697537,
+    "best_epoch": 38,
+    "train_mae_eV_at_best_epoch": 0.1115515275835991,
+    "validation_gap_mae_eV": 0.12910647690296173,
+    "generalization_gap_eV": 0.017554949319362634,
+    "mean_throughput_graphs_per_s": 522.1823084302744,
+    "training_elapsed_s": 7678.887619978001
+  },
+  "candidate_minus_control_eV": -0.0009066164493560791,
+  "parameter_delta": 31728,
+  "parameter_ratio": 1.0086551154192704,
+  "throughput_ratio": 0.8933934791239464,
+  "epoch_time_ratio": 1.1193429750670894,
+  "generalization_gap_increase_eV": 0.001546224129199969,
+  "candidate_late_epoch_wins": 10,
+  "late_epoch_window": [30, 39],
+  "late_epoch_mean_candidate_minus_control_eV": -0.001188419759273529,
+  "material_gain_gate_passed": false,
+  "decision": "weak_positive_closed_without_confirmation"
+}
