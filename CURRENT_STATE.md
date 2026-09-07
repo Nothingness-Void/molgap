@@ -20,11 +20,16 @@
 Desktop accepted the server's frozen GraphState9 three-seed handoff. The
 representative A100 calibration passed numerical/memory checks but exceeded
 the former 12-hour time gate; the user explicitly waived that ceiling.
-The single full-data run is submitted as serialized segments `1450742`,
-`1450751`, `1450752`, and `1450753` (all `.ccpbs1`). A four-hour scheduler
-window avoids the `(long)` maintenance hold; each segment checkpoints at
-3.5 hours and the successor continues the unchanged 12-epoch schedule.
-The exact architecture, source provenance, runtime authorization and fixed final-epoch training
+The single full-data run completed its fixed 12-epoch schedule with official-valid
+Gap MAE 0.1209200481 eV. Artifact counts and hashes passed mechanical acceptance,
+but this did not beat the historical OGB-rich EdgeState reference. At the user's
+request, an isolated convergence continuation now resumes that completed model,
+optimizer moments and RNG state under `experiments/pcqm_graph_state_convergence/`.
+Preflight `1456956.ccpbs1` passed a real A100 optimizer step; serialized four-hour
+segments `1456959` through `1456980` (see the experiment launch manifest for the
+non-contiguous exact IDs) continue until the declared convergence rule or epoch-80
+safety ceiling. The immutable 12-epoch source directory is not modified.
+The exact architecture, source provenance, runtime authorization and original fixed final-epoch training
 contract are under `experiments/pcqm_graph_state_full/`. Accepted full geometry
 caches are reused. Server-side architecture discovery remains independent.
 
