@@ -35,11 +35,11 @@ communication completed. Its CPU cache passed and K3a job
 `121082200` completed: the descriptor-only control was directionally positive
 but below the material-gain gate. K3b job `121111542` passed all three frozen
 seed-42 gates, while also exposing `0.000661 eV` repeat drift in the unchanged
-descriptor control. ComponentState is retained in the final shortlist, but no
-full-data action is implied. On 2026-09-07 the user authorized one bounded
-Kaggle seed-43 paired confirmation. Its CPU cache gate and T4x2 contract are
-owned by `component_state_seed43_protocol.md`; seed 44 remains a separate
-decision.
+descriptor control. The authorized Kaggle seed-43 paired confirmation repeated
+the positive direction but missed the material-gain threshold. The two-seed
+mean gain remained below `0.001 eV`, so ComponentState is retained only as weak
+positive evidence and closed without seed 44 or full-data action. Its decision
+is under `results/component_state_seed43/`.
 
 On 2026-09-06 the user reported a restored weekly allowance of 30 GPU-hours on
 each Kaggle account. The two remaining random-initialized local-state questions
