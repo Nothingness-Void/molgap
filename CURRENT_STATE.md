@@ -104,7 +104,10 @@ The final bounded random-initialized architecture question retained by the
 incremental literature audit is exact-shortest two/three-hop path statistics
 around the frozen GraphState9 encoder. Its 110,000-graph CPU cache passed
 no-model acceptance, and Kaggle1 paired T4x2 kernel
-`nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42` version 1 is running.
+`nothingnessvoid/molgap-pcqm-hop-path-graphstate-s42` version 2 is running.
+Version 1 was an infrastructure-only failure before model construction because
+the legacy upload client omitted the T4 machine shape; version 2 preserves it
+through the current CLI's explicit accelerator option.
 The frozen contract is
 `experiments/pcqm_gap_architecture/hop_path_graphstate_seed42_protocol.md`.
 
