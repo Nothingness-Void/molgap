@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 
-EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"
+EXPECTED_SOURCE_COMMIT = "f68047e36a8bccb8c6052e661c70f6afa63d3280"
 
 
 def source_python_root() -> Path:

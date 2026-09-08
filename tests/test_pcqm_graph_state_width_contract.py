@@ -114,7 +114,7 @@ def test_single_gpu_packages_pin_the_same_source_and_isolate_gpu_zero() -> None:
     for root, expected_id in expected_ids.items():
         wrapper = (root / "run_single.py").read_text(encoding="utf-8")
         ast.parse(wrapper)
-        assert 'EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"' in wrapper
+        assert 'EXPECTED_SOURCE_COMMIT = "f68047e36a8bccb8c6052e661c70f6afa63d3280"' in wrapper
         assert 'os.environ["CUDA_VISIBLE_DEVICES"] = "0"' in wrapper
         assert 'os.environ["MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"' in wrapper
         metadata = json.loads((root / "kernel-metadata.json").read_text(encoding="utf-8"))
@@ -122,6 +122,6 @@ def test_single_gpu_packages_pin_the_same_source_and_isolate_gpu_zero() -> None:
         assert metadata["is_private"] == "true"
         assert metadata["machine_shape"] == "NvidiaTeslaT4"
         assert metadata["dataset_sources"] == [
-            "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
+            "nothingnessvoid/molgap-pcqm-graphstate-width-source-v3-20260908",
             "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
         ]
