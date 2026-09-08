@@ -11,6 +11,8 @@ ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_sta
 PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
 SINGLE_RUNNER = ROOT / "src/molgap/pcqm_graph_state_width_single_runner.py"
 KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42"
+BASELINE_KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42"
+CANDIDATE_KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42"
 BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
 
@@ -94,3 +96,26 @@ def test_kaggle_package_pins_private_dual_t4_inputs() -> None:
         "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
         "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
     ]
+
+
+def test_single_gpu_packages_pin_the_same_source_and_isolate_gpu_zero() -> None:
+    import json
+
+    expected_ids = {
+        BASELINE_KERNEL: "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
+        CANDIDATE_KERNEL: "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
+    }
+    for root, expected_id in expected_ids.items():
+        wrapper = (root / "run_single.py").read_text(encoding="utf-8")
+        ast.parse(wrapper)
+        assert 'EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"' in wrapper
+        assert 'os.environ["CUDA_VISIBLE_DEVICES"] = "0"' in wrapper
+        assert 'os.environ["MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"' in wrapper
+        metadata = json.loads((root / "kernel-metadata.json").read_text(encoding="utf-8"))
+        assert metadata["id"] == expected_id
+        assert metadata["is_private"] == "true"
+        assert metadata["machine_shape"] == "NvidiaTeslaT4"
+        assert metadata["dataset_sources"] == [
+            "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
+            "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+        ]
