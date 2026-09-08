@@ -1,0 +1,26 @@
+{
+  "format": "molgap-pcqm-gap100k-edgestate-local-hierarchy-acceptance-v1",
+  "accepted": true,
+  "source_commit": "1015b0a",
+  "local_label_cache_aggregate_sha256": "e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6",
+  "scratch_validation_gap_mae_eV": 0.13777318596839905,
+  "pretrained_validation_gap_mae_eV": 0.13800819218158722,
+  "pretrained_minus_scratch_eV": 0.0002350062131881714,
+  "passes_seed42_nomination_gate": false,
+  "payload_sha256": {
+    "scratch": "7968e7c6541508bb66207b753362404dbd301d1f4f6031277819cf6f7186a50c",
+    "pretrained": "6fdee9ed6a403cbe1cc1751dd3b887a0c9454ecace53bebc4d34c06fa3713847"
+  },
+  "best_model_sha256": {
+    "scratch": "c30b1dfa3001957ce1378b39bc79df55600b12a7bcbf65c557163d24b5ee66d4",
+    "pretrained": "fa2aac44f8239ce0c19d7aef80c3c4c59ac651b7a7ca7337b73ad505be3848fc"
+  },
+  "checkpoint_sha256": {
+    "scratch": "a6a5e9f05f0f7757f907aded697e3cd07d8b30f01e7d82a4209d2d9dc78ee4cd",
+    "pretraining": "1ac82868713672e1731c2523a569e4ef93a4e737c4ff6bccb80356cd613fb6985",
+    "finetune": "a6667eff56a063f26390a79efd930c551bfeeb7d30f7e558d96fab9bd39560c7"
+  },
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
