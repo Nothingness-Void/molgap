@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from typing import Optional
 
 
 PARENT_GEOMETRY_CACHE_SHA256 = (
@@ -54,6 +55,18 @@ def _atomic_torch_save(path: Path, value) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
+
+
+def _torch_load(path: Path, *, map_location="cpu", weights_only=False):
+    """Load on both upstream Torch and older DTK forks."""
+    import torch
+
+    try:
+        return torch.load(
+            path, map_location=map_location, weights_only=weights_only
+        )
+    except TypeError:
+        return torch.load(path, map_location=map_location)
 
 
 def functional_group_contract_sha256() -> str:
@@ -132,7 +145,7 @@ def build_local_label_cache(
         parent_path = parent_cache_root / parent_shard["file"]
         if sha256_file(parent_path) != parent_shard["sha256"]:
             raise RuntimeError(f"Parent shard hash changed: {parent_path.name}")
-        graphs = torch.load(parent_path, map_location="cpu", weights_only=False)
+        graphs = _torch_load(parent_path, map_location="cpu", weights_only=False)
         entries = []
         for graph in graphs:
             row_index = int(graph.row_index.view(-1)[0])
@@ -244,7 +257,7 @@ def accept_local_label_cache(root: Path, *, expected_source_commit: str) -> dict
         path = root / item["file"]
         file_hash = sha256_file(path) if path.is_file() else None
         entries = (
-            torch.load(path, map_location="cpu", weights_only=False)
+            _torch_load(path, map_location="cpu", weights_only=False)
             if path.is_file()
             else []
         )
@@ -319,10 +332,58 @@ def _set_seed(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
-def _find_cache(format_name: str) -> tuple[Path, dict]:
+def _capture_rng_state(*, shuffle_generator, mask_generator=None) -> dict:
+    import random
+    import numpy as np
+    import torch
+
+    state = {
+        "python": random.getstate(),
+        "numpy": np.random.get_state(),
+        "torch": torch.get_rng_state(),
+        "shuffle_generator": shuffle_generator.get_state(),
+    }
+    if mask_generator is not None:
+        state["mask_generator"] = mask_generator.get_state()
+    if torch.cuda.is_available():
+        state["cuda"] = torch.cuda.get_rng_state_all()
+    return state
+
+
+def _restore_rng_state(state: dict, *, shuffle_generator, mask_generator=None) -> None:
+    import random
+    import numpy as np
+    import torch
+
+    required = {"python", "numpy", "torch", "shuffle_generator"}
+    if not required.issubset(state):
+        raise RuntimeError("Resume checkpoint is missing RNG state")
+    random.setstate(state["python"])
+    np.random.set_state(state["numpy"])
+    torch.set_rng_state(state["torch"])
+    shuffle_generator.set_state(state["shuffle_generator"])
+    if mask_generator is not None:
+        if "mask_generator" not in state:
+            raise RuntimeError("Pretraining checkpoint is missing mask RNG state")
+        mask_generator.set_state(state["mask_generator"])
+    if torch.cuda.is_available() and "cuda" in state:
+        torch.cuda.set_rng_state_all(state["cuda"])
+
+
+def _find_cache(
+    format_name: str, explicit_root: Optional[Path] = None
+) -> tuple[Path, dict]:
+    if explicit_root is not None:
+        root = explicit_root.resolve()
+        manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+        if manifest.get("format") != format_name:
+            raise RuntimeError(
+                f"Expected {format_name} at {root}, found {manifest.get('format')}"
+            )
+        return root, manifest
     candidates = []
     for path in Path("/kaggle/input").rglob("manifest.json"):
         try:
@@ -336,16 +397,21 @@ def _find_cache(format_name: str) -> tuple[Path, dict]:
     return candidates[0]
 
 
-def load_training_roles(expected_label_sha256: str):
+def load_training_roles(
+    expected_label_sha256: str,
+    *,
+    graph_root: Optional[Path] = None,
+    label_root: Optional[Path] = None,
+):
     """Load and align the immutable graph cache and compact label sidecar."""
     import torch
 
     graph_root, graph_manifest = _find_cache(
-        "molgap-pcqm-gap100k-etkdg-geometry-cache-v1"
+        "molgap-pcqm-gap100k-etkdg-geometry-cache-v1", graph_root
     )
     _verify_parent_manifest(graph_manifest)
     label_root, label_manifest = _find_cache(
-        "molgap-pcqm-gap100k-local-label-cache-v1"
+        "molgap-pcqm-gap100k-local-label-cache-v1", label_root
     )
     if label_manifest.get("aggregate_sha256") != expected_label_sha256:
         raise RuntimeError("Local-label cache identity changed")
@@ -369,8 +435,8 @@ def load_training_roles(expected_label_sha256: str):
             raise RuntimeError(f"Graph shard hash changed: {graph_name}")
         if sha256_file(label_path) != label_item["sha256"]:
             raise RuntimeError(f"Local-label shard hash changed: {label_path.name}")
-        graphs = torch.load(graph_path, map_location="cpu", weights_only=False)
-        labels = torch.load(label_path, map_location="cpu", weights_only=False)
+        graphs = _torch_load(graph_path, map_location="cpu", weights_only=False)
+        labels = _torch_load(label_path, map_location="cpu", weights_only=False)
         if len(graphs) != len(labels):
             raise RuntimeError(f"Sidecar length changed: {graph_name}")
         for graph, label in zip(graphs, labels):
@@ -448,7 +514,7 @@ class LocalHierarchyHeads:
             handle.remove()
 
 
-def _loader(graphs, *, shuffle: bool, seed: int):
+def _loader(graphs, *, shuffle: bool, seed: int, generator=None):
     import torch
     from torch_geometric.loader import DataLoader
 
@@ -456,7 +522,7 @@ def _loader(graphs, *, shuffle: bool, seed: int):
         graphs,
         batch_size=BATCH_SIZE,
         shuffle=shuffle,
-        generator=torch.Generator().manual_seed(seed),
+        generator=generator or torch.Generator().manual_seed(seed),
         num_workers=0,
         pin_memory=True,
     )
@@ -516,7 +582,13 @@ def _train_gap(
     mean, std = _target_stats(roles["train"])
     mean_tensor = torch.tensor(mean, device=device)
     std_tensor = torch.tensor(std, device=device)
-    train_loader = _loader(roles["train"], shuffle=True, seed=MODEL_SEED)
+    shuffle_generator = torch.Generator().manual_seed(MODEL_SEED)
+    train_loader = _loader(
+        roles["train"],
+        shuffle=True,
+        seed=MODEL_SEED,
+        generator=shuffle_generator,
+    )
     validation_loader = _loader(
         roles["validation"], shuffle=False, seed=MODEL_SEED
     )
@@ -529,7 +601,43 @@ def _train_gap(
     trace = []
     best = float("inf")
     best_epoch = -1
-    for epoch in range(epochs):
+    start_epoch = 0
+    checkpoint_path = run_dir / f"{stage}_checkpoint.pt"
+    best_model_path = run_dir / f"{stage}_best_model.pt"
+    if checkpoint_path.is_file():
+        checkpoint = _torch_load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
+        checks = {
+            "stage": checkpoint.get("stage") == stage,
+            "seed": checkpoint.get("seed") == MODEL_SEED,
+            "max_epochs": checkpoint.get("max_epochs") == epochs,
+            "initial_hash": checkpoint.get("initial_encoder_sha256")
+            == initial_hash,
+            "label_cache": checkpoint.get("local_label_cache_aggregate_sha256")
+            == label_sha256,
+        }
+        if not all(checks.values()):
+            raise RuntimeError(f"Gap resume checkpoint contract changed: {checks}")
+        model.load_state_dict(checkpoint["model"])
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        scheduler.load_state_dict(checkpoint["scheduler"])
+        trace = list(checkpoint["trace"])
+        start_epoch = int(checkpoint["epoch"]) + 1
+        if len(trace) != start_epoch or start_epoch > epochs:
+            raise RuntimeError("Gap resume trace does not match checkpoint epoch")
+        if trace:
+            best_row = min(trace, key=lambda row: row["validation_gap_mae_eV"])
+            best = float(best_row["validation_gap_mae_eV"])
+            best_epoch = int(best_row["epoch"])
+            if not best_model_path.is_file():
+                raise RuntimeError("Gap resume checkpoint has no best model")
+        _restore_rng_state(
+            checkpoint.get("rng_state", {}),
+            shuffle_generator=shuffle_generator,
+        )
+        print(f"resuming {stage} at epoch {start_epoch}", flush=True)
+    for epoch in range(start_epoch, epochs):
         model.train()
         started = time.perf_counter()
         absolute = 0.0
@@ -560,7 +668,7 @@ def _train_gap(
             best = validation["mae_eV"]
             best_epoch = epoch
             _atomic_torch_save(
-                run_dir / f"{stage}_best_model.pt", model.state_dict()
+                best_model_path, model.state_dict()
             )
         row = {
             "epoch": epoch,
@@ -574,10 +682,11 @@ def _train_gap(
         trace.append(row)
         atomic_json(run_dir / f"{stage}_trace.json", {"epochs": trace})
         _atomic_torch_save(
-            run_dir / f"{stage}_checkpoint.pt",
+            checkpoint_path,
             {
                 "stage": stage,
                 "epoch": epoch,
+                "max_epochs": epochs,
                 "seed": MODEL_SEED,
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
@@ -585,6 +694,9 @@ def _train_gap(
                 "initial_encoder_sha256": initial_hash,
                 "local_label_cache_aggregate_sha256": label_sha256,
                 "trace": trace,
+                "rng_state": _capture_rng_state(
+                    shuffle_generator=shuffle_generator
+                ),
             },
         )
         print(
@@ -595,7 +707,7 @@ def _train_gap(
         )
     model.load_state_dict(
         torch.load(
-            run_dir / f"{stage}_best_model.pt",
+            best_model_path,
             map_location=device,
             weights_only=True,
         )
@@ -621,8 +733,8 @@ def _train_gap(
         "epochs_completed": len(trace),
         "mean_epoch_seconds": float(np.mean([row["elapsed_s"] for row in trace])),
         "mean_graphs_per_s": float(np.mean([row["graphs_per_s"] for row in trace])),
-        "best_model_sha256": sha256_file(run_dir / f"{stage}_best_model.pt"),
-        "checkpoint_sha256": sha256_file(run_dir / f"{stage}_checkpoint.pt"),
+        "best_model_sha256": sha256_file(best_model_path),
+        "checkpoint_sha256": sha256_file(checkpoint_path),
         "validation_payload_sha256": sha256_file(payload_path),
     }
 
@@ -660,10 +772,51 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=PRETRAIN_EPOCHS, eta_min=1e-6
     )
-    loader = _loader(roles["train"], shuffle=True, seed=MODEL_SEED)
+    shuffle_generator = torch.Generator().manual_seed(MODEL_SEED)
+    loader = _loader(
+        roles["train"],
+        shuffle=True,
+        seed=MODEL_SEED,
+        generator=shuffle_generator,
+    )
     mask_generator = torch.Generator().manual_seed(MODEL_SEED + 17)
     trace = []
-    for epoch in range(PRETRAIN_EPOCHS):
+    start_epoch = 0
+    checkpoint_path = run_dir / "pretrain_checkpoint.pt"
+    if checkpoint_path.is_file():
+        checkpoint = _torch_load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
+        checks = {
+            "stage": checkpoint.get("stage") == "local_hierarchy_pretrain",
+            "seed": checkpoint.get("seed") == MODEL_SEED,
+            "max_epochs": checkpoint.get("max_epochs") == PRETRAIN_EPOCHS,
+            "initial_hash": checkpoint.get("initial_encoder_sha256")
+            == initial_hash,
+            "label_cache": checkpoint.get("local_label_cache_aggregate_sha256")
+            == label_sha256,
+        }
+        if not all(checks.values()):
+            raise RuntimeError(
+                f"Pretraining resume checkpoint contract changed: {checks}"
+            )
+        model.load_state_dict(checkpoint["model"])
+        heads.module.load_state_dict(checkpoint["heads"])
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        scheduler.load_state_dict(checkpoint["scheduler"])
+        trace = list(checkpoint["trace"])
+        start_epoch = int(checkpoint["epoch"]) + 1
+        if len(trace) != start_epoch or start_epoch > PRETRAIN_EPOCHS:
+            raise RuntimeError(
+                "Pretraining resume trace does not match checkpoint epoch"
+            )
+        _restore_rng_state(
+            checkpoint.get("rng_state", {}),
+            shuffle_generator=shuffle_generator,
+            mask_generator=mask_generator,
+        )
+        print(f"resuming local hierarchy at epoch {start_epoch}", flush=True)
+    for epoch in range(start_epoch, PRETRAIN_EPOCHS):
         model.train()
         heads.module.train()
         totals = {"loss": 0.0, "atom": 0.0, "bond": 0.0, "group": 0.0}
@@ -737,6 +890,7 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
             {
                 "stage": "local_hierarchy_pretrain",
                 "epoch": epoch,
+                "max_epochs": PRETRAIN_EPOCHS,
                 "seed": MODEL_SEED,
                 "model": model.state_dict(),
                 "heads": heads.module.state_dict(),
@@ -746,6 +900,10 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
                 "local_label_cache_aggregate_sha256": label_sha256,
                 "gap_labels_read": False,
                 "trace": trace,
+                "rng_state": _capture_rng_state(
+                    shuffle_generator=shuffle_generator,
+                    mask_generator=mask_generator,
+                ),
             },
         )
         print(
@@ -762,7 +920,7 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
         "training_head_parameters": sum(
             parameter.numel() for parameter in heads.module.parameters()
         ),
-        "checkpoint_sha256": sha256_file(run_dir / "pretrain_checkpoint.pt"),
+        "checkpoint_sha256": sha256_file(checkpoint_path),
         "final_encoder_sha256": _state_sha256(model),
         "gap_labels_read": False,
     }
@@ -770,13 +928,23 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
     return model, result
 
 
-def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit: str):
+def run_worker(
+    role: str,
+    output_root: Path,
+    *,
+    label_sha256: str,
+    source_commit: str,
+    graph_root: Optional[Path] = None,
+    label_root: Optional[Path] = None,
+):
     import torch
 
     if torch.cuda.device_count() != 1:
         raise RuntimeError(f"Worker {role} sees {torch.cuda.device_count()} GPUs")
     _set_seed(MODEL_SEED)
-    roles, graph_manifest, label_manifest = load_training_roles(label_sha256)
+    roles, graph_manifest, label_manifest = load_training_roles(
+        label_sha256, graph_root=graph_root, label_root=label_root
+    )
     model = _make_encoder()
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     if parameter_count != EXPECTED_MODEL_PARAMETERS:
@@ -833,6 +1001,10 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
         "learning_rate": LEARNING_RATE,
         "weight_decay": WEIGHT_DECAY,
         "precision": "FP32",
+        "execution_platform": os.environ.get(
+            "MOLGAP_EXECUTION_PLATFORM", "unspecified"
+        ),
+        "accelerator_name": torch.cuda.get_device_name(0),
         "official_validation_role_read": False,
         "test_dev_role_read": False,
         "molecular_research_server_accessed": False,
@@ -840,6 +1012,86 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
     }
     atomic_json(run_dir / "metrics.json", payload)
     return payload
+
+
+def finalize_paired_outputs(
+    output_root: Path,
+    *,
+    label_sha256: str,
+    source_commit: str,
+    elapsed_s: Optional[float] = None,
+):
+    """Combine independently durable workers without running either encoder."""
+    scratch = json.loads((output_root / "scratch" / "metrics.json").read_text())
+    pretrained = json.loads(
+        (output_root / "pretrained" / "metrics.json").read_text()
+    )
+    checks = {
+        "source_commit": all(
+            item.get("source_commit") == source_commit
+            for item in (scratch, pretrained)
+        ),
+        "label_cache": all(
+            item.get("local_label_cache_aggregate_sha256") == label_sha256
+            for item in (scratch, pretrained)
+        ),
+        "same_initial_encoder": scratch.get("initial_encoder_sha256")
+        == pretrained.get("initial_encoder_sha256"),
+        "same_platform": scratch.get("execution_platform")
+        == pretrained.get("execution_platform"),
+    }
+    if not all(checks.values()):
+        raise RuntimeError(f"Paired worker identities changed: {checks}")
+    delta = (
+        pretrained["gap"]["best_validation_gap_mae_eV"]
+        - scratch["gap"]["best_validation_gap_mae_eV"]
+    )
+    selection = {
+        "format": "molgap-pcqm-gap100k-edgestate-local-hierarchy-selection-v1",
+        "complete": True,
+        "source_commit": source_commit,
+        "seed": MODEL_SEED,
+        "gpu_names": [
+            scratch.get("accelerator_name"),
+            pretrained.get("accelerator_name"),
+        ],
+        "execution_platform": scratch.get("execution_platform"),
+        "architecture": "ogb_edge_state_structural_gps9",
+        "parameter_count": EXPECTED_MODEL_PARAMETERS,
+        "initial_encoder_sha256": scratch["initial_encoder_sha256"],
+        "parent_geometry_cache_aggregate_sha256": PARENT_GEOMETRY_CACHE_SHA256,
+        "local_label_cache_aggregate_sha256": label_sha256,
+        "scratch_validation_gap_mae_eV": scratch["gap"][
+            "best_validation_gap_mae_eV"
+        ],
+        "pretrained_validation_gap_mae_eV": pretrained["gap"][
+            "best_validation_gap_mae_eV"
+        ],
+        "pretrained_minus_scratch_eV": delta,
+        "minimum_paired_gain_eV": MIN_PAIRED_GAIN_EV,
+        "passes_seed42_nomination_gate": delta <= -MIN_PAIRED_GAIN_EV,
+        "equal_encoder_sample_exposure_epochs": SCRATCH_EPOCHS,
+        "shadow_audit_read": False,
+        "seed43_44_submitted": False,
+        "scale_up_submitted": False,
+        "elapsed_s": elapsed_s,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+        "molecular_research_server_accessed": False,
+    }
+    atomic_json(output_root / "selection.json", selection)
+    atomic_json(
+        output_root / "progress.json",
+        {
+            "format": "molgap-pcqm-gap100k-edgestate-local-hierarchy-progress-v1",
+            "complete": True,
+            "source_commit": source_commit,
+            "elapsed_s": elapsed_s,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+        },
+    )
+    return selection
 
 
 def run_paired_screen(output_root: Path, *, label_sha256: str, source_commit: str):
@@ -907,58 +1159,12 @@ def run_paired_screen(output_root: Path, *, label_sha256: str, source_commit: st
                 "test_dev_role_read": False,
             },
         )
-    scratch = json.loads((output_root / "scratch" / "metrics.json").read_text())
-    pretrained = json.loads(
-        (output_root / "pretrained" / "metrics.json").read_text()
+    return finalize_paired_outputs(
+        output_root,
+        label_sha256=label_sha256,
+        source_commit=source_commit,
+        elapsed_s=time.perf_counter() - started,
     )
-    if scratch["initial_encoder_sha256"] != pretrained["initial_encoder_sha256"]:
-        raise RuntimeError("Paired workers did not start from identical encoders")
-    delta = (
-        pretrained["gap"]["best_validation_gap_mae_eV"]
-        - scratch["gap"]["best_validation_gap_mae_eV"]
-    )
-    selection = {
-        "format": "molgap-pcqm-gap100k-edgestate-local-hierarchy-selection-v1",
-        "complete": True,
-        "source_commit": source_commit,
-        "seed": MODEL_SEED,
-        "gpu_names": gpu_names,
-        "architecture": "ogb_edge_state_structural_gps9",
-        "parameter_count": EXPECTED_MODEL_PARAMETERS,
-        "initial_encoder_sha256": scratch["initial_encoder_sha256"],
-        "parent_geometry_cache_aggregate_sha256": PARENT_GEOMETRY_CACHE_SHA256,
-        "local_label_cache_aggregate_sha256": label_sha256,
-        "scratch_validation_gap_mae_eV": scratch["gap"][
-            "best_validation_gap_mae_eV"
-        ],
-        "pretrained_validation_gap_mae_eV": pretrained["gap"][
-            "best_validation_gap_mae_eV"
-        ],
-        "pretrained_minus_scratch_eV": delta,
-        "minimum_paired_gain_eV": MIN_PAIRED_GAIN_EV,
-        "passes_seed42_nomination_gate": delta <= -MIN_PAIRED_GAIN_EV,
-        "equal_encoder_sample_exposure_epochs": SCRATCH_EPOCHS,
-        "shadow_audit_read": False,
-        "seed43_44_submitted": False,
-        "scale_up_submitted": False,
-        "elapsed_s": time.perf_counter() - started,
-        "official_validation_role_read": False,
-        "test_dev_role_read": False,
-        "molecular_research_server_accessed": False,
-    }
-    atomic_json(output_root / "selection.json", selection)
-    atomic_json(
-        output_root / "progress.json",
-        {
-            "format": "molgap-pcqm-gap100k-edgestate-local-hierarchy-progress-v1",
-            "complete": True,
-            "source_commit": source_commit,
-            "elapsed_s": selection["elapsed_s"],
-            "official_validation_role_read": False,
-            "test_dev_role_read": False,
-        },
-    )
-    return selection
 
 
 def accept_paired_screen(
