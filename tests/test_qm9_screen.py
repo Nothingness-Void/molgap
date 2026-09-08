@@ -2,6 +2,7 @@ import numpy as np
 import torch
 
 from molgap.qm9_payloads import combine_embedding_payloads_on_intersection
+from molgap.qm9_data import fixed_split_from_pool
 from molgap.qm9_screen import fixed_split, target_tensor
 
 
@@ -13,6 +14,16 @@ def test_fixed_split_is_deterministic_and_disjoint():
     assert len(set(first.train).intersection(first.validation)) == 0
     assert len(set(first.train).intersection(first.test)) == 0
     assert len(set(first.validation).intersection(first.test)) == 0
+
+
+def test_fixed_split_from_pool_preserves_source_identity():
+    pool = np.arange(10_000, 10_100, dtype=np.int64)
+    first = fixed_split_from_pool(pool, 60, 20, 20, seed=42)
+    second = fixed_split_from_pool(pool, 60, 20, 20, seed=42)
+
+    assert np.array_equal(first.all_indices, second.all_indices)
+    assert set(first.all_indices).issubset(set(pool))
+    assert len(np.unique(first.all_indices)) == 100
 
 
 def test_qm9_target_selection_uses_electron_volt_columns():

@@ -4,7 +4,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / "src" / "molgap" / "qm9_local_hierarchy.py"
-PROTOCOL = ROOT / "experiments" / "qm9_local_hierarchy" / "protocol.md"
+PROTOCOL = (
+    ROOT
+    / "experiments"
+    / "qm9_local_hierarchy"
+    / "protocol_edgestate_v2.md"
+)
 
 
 def _tree():
@@ -39,8 +44,21 @@ def test_local_supervision_is_not_graph_histogram_surrogate():
 
 def test_cache_path_uses_model_free_qm9_data_module():
     source = MODULE.read_text(encoding="utf-8")
-    assert "from .qm9_data import fixed_split" in source
+    assert "fixed_split_from_pool" in source
     assert "from .qm9_screen import" not in source
+    assert "canonical_validity.json" in source
+
+
+def test_v2_uses_edgestate_without_wedge_or_geometry_inputs():
+    source = MODULE.read_text(encoding="utf-8")
+    protocol = PROTOCOL.read_text(encoding="utf-8")
+    assert "OGBEdgeStateStructuralGPSWrapper" in source
+    assert "num_layers=9" in source
+    assert "hidden_channels=192" in source
+    assert "edge_state_channels=64" in source
+    assert "WedgeData" not in source
+    assert "geometry_valid" not in source
+    assert "only eligible training" in protocol
 
 
 def test_sealed_roles_and_dynamic_drift_gate_are_explicit():
@@ -51,7 +69,7 @@ def test_sealed_roles_and_dynamic_drift_gate_are_explicit():
     assert "max(MIN_GAIN_EV, 2.0 * control_spread)" in source
     assert '"rng": _rng_state(train_loader)' in source
     assert '_restore_rng(checkpoint["rng"]' in source
-    assert "unmaterialized" in protocol
+    assert "held-out graph construction" in protocol
     assert "does not authorize" in protocol
 
 
@@ -87,7 +105,7 @@ def test_remote_preflight_checks_exact_model_and_gradients():
     assert "def run_preflight" in source
     assert '"finite_forward_backward": finite' in source
     assert '"inference_parameter_count"' in source
-    assert '"geometry_valid": False' in source
+    assert '"architecture": "ogb_edge_state_structural_gps9"' in source
     assert "loss.backward()" in source
 
 
@@ -96,3 +114,9 @@ def test_acceptance_never_imports_or_runs_model():
     assert "import torch" not in source
     assert "make_encoder" not in source
     assert "model_inference_executed" in source
+
+    cache_source = (PROTOCOL.parent / "accept_cache.py").read_text(
+        encoding="utf-8"
+    )
+    assert "make_encoder" not in cache_source
+    assert "model_inference_executed" in cache_source

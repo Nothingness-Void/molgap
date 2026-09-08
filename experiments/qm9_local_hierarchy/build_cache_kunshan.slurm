@@ -25,3 +25,7 @@ mkdir -p "$ROOT/logs" "$ROOT/cache"
 "$PYTHON" -m molgap.qm9_local_hierarchy build-cache \
   --output-root "$ROOT/cache" \
   --source-commit "$SOURCE_COMMIT"
+"$PYTHON" "$CODE/experiments/qm9_local_hierarchy/accept_cache.py" \
+  --root "$ROOT/cache" \
+  --source-commit "$SOURCE_COMMIT" \
+  --output "$ROOT/cache/acceptance.json"

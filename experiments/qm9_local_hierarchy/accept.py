@@ -22,9 +22,10 @@ def accept(root: Path, *, source_commit: str) -> dict:
     metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
     completion = json.loads(completion_path.read_text(encoding="utf-8"))
     required = {
-        "format": "molgap-qm9-local-hierarchy-screen-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-screen-v2",
         "complete": True,
         "source_commit": source_commit,
+        "architecture": "ogb_edge_state_structural_gps9",
         "seed": 42,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
@@ -67,7 +68,7 @@ def accept(root: Path, *, source_commit: str) -> dict:
     if not all(checks.values()):
         raise RuntimeError(f"Result arithmetic changed: {checks}")
     return {
-        "format": "molgap-qm9-local-hierarchy-acceptance-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-acceptance-v2",
         "accepted": True,
         "model_inference_executed": False,
         "source_commit": source_commit,

@@ -28,6 +28,14 @@ FINETUNE_EPOCHS = 20
 PATIENCE = 8
 MASK_RATE = 0.15
 MIN_GAIN_EV = 0.002
+EXPECTED_SOURCE_ROWS = 130_831
+EXPECTED_RDKIT_VERSION = "2023.09.6"
+EXPECTED_PROCESSED_SHA256 = (
+    "90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721"
+)
+EXPECTED_RAW_SDF_SHA256 = (
+    "98c4e97d50ac549b8c9f0b2114b348a9a944718e17e50d9a724b729f1deaa28e"
+)
 
 FUNCTIONAL_GROUP_SMARTS = {
     "aromatic": "[a]",
@@ -108,13 +116,38 @@ def _record_molecule(record: dict, supplier):
     return molecule, smiles
 
 
+def _canonical_valid_pool(records: list[dict], supplier):
+    """Freeze the source rows that survive the required canonical round trip."""
+    valid = []
+    invalid = []
+    for source_idx, record in enumerate(records):
+        try:
+            _record_molecule(record, supplier)
+        except Exception as error:
+            invalid.append(
+                {
+                    "source_idx": int(source_idx),
+                    "name": str(record["name"]),
+                    "type": type(error).__name__,
+                    "message": str(error),
+                }
+            )
+        else:
+            valid.append(source_idx)
+    return np.asarray(valid, dtype=np.int64), invalid
+
+
+def _indices_sha256(indices: np.ndarray) -> str:
+    return hashlib.sha256(
+        np.asarray(indices, dtype=np.int64).tobytes()
+    ).hexdigest()
+
+
 def _make_graph(record: dict, source_idx: int, supplier):
     import torch
     from ogb.utils.mol import smiles2graph
     from torch_geometric.data import Data
     from torch_geometric.transforms import AddRandomWalkPE
-
-    from .pcqm_wedge import with_wedge_cache
 
     molecule, smiles = _record_molecule(record, supplier)
     payload = smiles2graph(smiles)
@@ -130,14 +163,9 @@ def _make_graph(record: dict, source_idx: int, supplier):
         raise RuntimeError("OGB atom representation is not aligned to QM9")
     if graph.edge_attr.ndim != 2 or graph.edge_attr.shape[1] != 3:
         raise RuntimeError("OGB bond representation changed")
-    graph = AddRandomWalkPE(
+    return AddRandomWalkPE(
         walk_length=RWSE_DIM, attr_name="random_walk_pe"
     )(graph)
-    graph = with_wedge_cache(graph)
-    graph.edge_distance = torch.zeros((graph.edge_index.shape[1], 1))
-    graph.wedge_angle_cos = torch.zeros((graph.wedge_edge_ids.shape[0], 1))
-    graph.geometry_valid = torch.tensor([False], dtype=torch.bool)
-    return graph
 
 
 def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_000):
@@ -145,7 +173,13 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
     import torch
     from rdkit import Chem, RDLogger
 
-    from .qm9_data import fixed_split, load_qm9_records, prepare_qm9_files
+    from rdkit import rdBase
+
+    from .qm9_data import (
+        fixed_split_from_pool,
+        load_qm9_records,
+        prepare_qm9_files,
+    )
 
     output_root.mkdir(parents=True, exist_ok=True)
     manifest_path = output_root / "manifest.json"
@@ -157,13 +191,43 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
 
     records = load_qm9_records(output_root / "source")
     files = prepare_qm9_files(output_root / "source")
-    split = fixed_split(
-        len(records), TRAIN_ROWS, VALIDATION_ROWS, HELD_OUT_ROWS, SPLIT_SEED
-    )
+    source_checks = {
+        "source_rows": len(records) == EXPECTED_SOURCE_ROWS,
+        "rdkit_version": rdBase.rdkitVersion == EXPECTED_RDKIT_VERSION,
+        "processed_sha256": sha256_file(files["processed"])
+        == EXPECTED_PROCESSED_SHA256,
+        "raw_sdf_sha256": sha256_file(files["raw_sdf"])
+        == EXPECTED_RAW_SDF_SHA256,
+    }
+    if not all(source_checks.values()):
+        raise RuntimeError(f"Frozen QM9 source contract changed: {source_checks}")
     RDLogger.DisableLog("rdApp.*")
     supplier = Chem.SDMolSupplier(
         str(files["raw_sdf"]), removeHs=False, sanitize=False
     )
+    valid_pool, canonical_invalid = _canonical_valid_pool(records, supplier)
+    split = fixed_split_from_pool(
+        valid_pool, TRAIN_ROWS, VALIDATION_ROWS, HELD_OUT_ROWS, SPLIT_SEED
+    )
+    validity = {
+        "format": "molgap-qm9-canonical-valid-pool-v1",
+        "source_commit": source_commit,
+        "rdkit_version": rdBase.rdkitVersion,
+        "total_source_rows": len(records),
+        "valid_source_rows": int(valid_pool.size),
+        "invalid_source_rows": len(canonical_invalid),
+        "valid_source_indices": valid_pool.tolist(),
+        "valid_source_indices_sha256": _indices_sha256(valid_pool),
+        "invalid_records": canonical_invalid,
+        "processed_source_sha256": sha256_file(files["processed"]),
+        "raw_sdf_sha256": sha256_file(files["raw_sdf"]),
+        "selected_train_indices": split.train.tolist(),
+        "selected_validation_indices": split.validation.tolist(),
+        "selected_split_fingerprint": split.fingerprint,
+        "held_out_graphs_materialized": False,
+        "test_role_read": False,
+    }
+    atomic_json(output_root / "canonical_validity.json", validity)
     roles = {"train": split.train, "validation": split.validation}
     shards = []
     failures = []
@@ -232,13 +296,21 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
             )
         )
     manifest = {
-        "format": "molgap-qm9-local-hierarchy-cache-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-cache-v2",
         "complete": True,
         "source_commit": source_commit,
         "split_seed": SPLIT_SEED,
         "split_fingerprint": split.fingerprint,
         "roles": {"train": TRAIN_ROWS, "validation": VALIDATION_ROWS},
         "held_out_indices_materialized": False,
+        "canonical_valid_pool_count": int(valid_pool.size),
+        "canonical_invalid_count": len(canonical_invalid),
+        "canonical_valid_pool_sha256": _indices_sha256(valid_pool),
+        "canonical_validity_sha256": sha256_file(
+            output_root / "canonical_validity.json"
+        ),
+        "train_source_indices_sha256": _indices_sha256(split.train),
+        "validation_source_indices_sha256": _indices_sha256(split.validation),
         "atom_feature_channels": 9,
         "bond_feature_channels": 3,
         "rwse_channels": RWSE_DIM,
@@ -253,7 +325,6 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
         "test_role_read": False,
     }
     atomic_json(manifest_path, manifest)
-    atomic_json(output_root / "acceptance.json", {**manifest, "accepted": True})
     return manifest
 
 
@@ -262,7 +333,7 @@ def load_cache(cache_root: Path, expected_sha256: str | None = None):
 
     manifest = json.loads((cache_root / "manifest.json").read_text(encoding="utf-8"))
     required = {
-        "format": "molgap-qm9-local-hierarchy-cache-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-cache-v2",
         "complete": True,
         "roles": {"train": TRAIN_ROWS, "validation": VALIDATION_ROWS},
         "held_out_indices_materialized": False,
@@ -275,6 +346,57 @@ def load_cache(cache_root: Path, expected_sha256: str | None = None):
     for key, value in required.items():
         if manifest.get(key) != value:
             raise RuntimeError(f"Cache contract changed for {key}")
+    validity_path = cache_root / "canonical_validity.json"
+    if not validity_path.is_file():
+        raise RuntimeError("Canonical-valid pool evidence is missing")
+    if sha256_file(validity_path) != manifest.get("canonical_validity_sha256"):
+        raise RuntimeError("Canonical-valid pool evidence hash changed")
+    validity = json.loads(validity_path.read_text(encoding="utf-8"))
+    valid_pool = np.asarray(validity.get("valid_source_indices", []), dtype=np.int64)
+    train_indices = np.asarray(
+        validity.get("selected_train_indices", []), dtype=np.int64
+    )
+    validation_indices = np.asarray(
+        validity.get("selected_validation_indices", []), dtype=np.int64
+    )
+    if (
+        validity.get("format") != "molgap-qm9-canonical-valid-pool-v1"
+        or validity.get("total_source_rows") != EXPECTED_SOURCE_ROWS
+        or validity.get("rdkit_version") != EXPECTED_RDKIT_VERSION
+        or validity.get("processed_source_sha256") != EXPECTED_PROCESSED_SHA256
+        or validity.get("raw_sdf_sha256") != EXPECTED_RAW_SDF_SHA256
+        or validity.get("held_out_graphs_materialized") is not False
+        or validity.get("test_role_read") is not False
+        or _indices_sha256(valid_pool)
+        != manifest.get("canonical_valid_pool_sha256")
+        or int(valid_pool.size) != manifest.get("canonical_valid_pool_count")
+        or len(validity.get("invalid_records", []))
+        != manifest.get("canonical_invalid_count")
+        or _indices_sha256(train_indices)
+        != manifest.get("train_source_indices_sha256")
+        or _indices_sha256(validation_indices)
+        != manifest.get("validation_source_indices_sha256")
+        or np.intersect1d(train_indices, validation_indices).size
+        or not np.isin(train_indices, valid_pool).all()
+        or not np.isin(validation_indices, valid_pool).all()
+    ):
+        raise RuntimeError("Canonical-valid pool contract changed")
+    acceptance_path = cache_root / "acceptance.json"
+    if not acceptance_path.is_file():
+        raise RuntimeError("Independent cache acceptance is missing")
+    acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+    for key, value in {
+        "format": "molgap-qm9-edgestate-local-hierarchy-cache-acceptance-v2",
+        "accepted": True,
+        "source_commit": manifest["source_commit"],
+        "cache_aggregate_sha256": manifest["aggregate_sha256"],
+        "canonical_validity_sha256": manifest["canonical_validity_sha256"],
+        "model_inference_executed": False,
+        "official_pcqm_roles_read": False,
+        "test_role_read": False,
+    }.items():
+        if acceptance.get(key) != value:
+            raise RuntimeError(f"Cache acceptance changed for {key}")
     if expected_sha256 and manifest.get("aggregate_sha256") != expected_sha256:
         raise RuntimeError("Cache aggregate SHA changed")
     roles = {"train": [], "validation": []}
@@ -310,11 +432,9 @@ def set_seed(seed: int) -> None:
 
 
 def make_encoder():
-    from .pcqm_gap_architecture import (
-        OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper,
-    )
+    from .pcqm_gap_architecture import OGBEdgeStateStructuralGPSWrapper
 
-    return OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
+    return OGBEdgeStateStructuralGPSWrapper(
         in_channels=9,
         edge_dim=3,
         hidden_channels=192,
@@ -325,11 +445,6 @@ def make_encoder():
         pooling="mean",
         rwse_dim=16,
         edge_state_channels=64,
-        wedge_channels=16,
-        geometry_basis_channels=16,
-        global_mode="graph_state",
-        graph_state_channels=64,
-        graph_exchange_rank=32,
     )
 
 
@@ -340,10 +455,6 @@ def forward_encoder(model, batch):
         batch.edge_attr,
         batch.batch,
         batch.random_walk_pe,
-        batch.wedge_edge_ids,
-        batch.edge_distance,
-        batch.wedge_angle_cos,
-        batch.geometry_valid,
     ).view(-1)
 
 
@@ -731,9 +842,8 @@ def run_preflight(output_root: Path, *, source_commit: str):
     """Exercise the exact encoder and auxiliary heads on one synthetic DCU batch."""
     import torch
     import torch.nn.functional as functional
+    from torch_geometric.data import Data
     from torch_geometric.loader import DataLoader
-
-    from .pcqm_wedge import WedgeData, directed_nonbacktracking_wedges
 
     if not torch.cuda.is_available():
         raise RuntimeError("SCNet did not expose a DCU")
@@ -744,22 +854,16 @@ def run_preflight(output_root: Path, *, source_commit: str):
         edge_index = torch.tensor(
             [[0, 1, 1, 2, 2, 3], [1, 0, 2, 1, 3, 2]], dtype=torch.long
         )
-        graph = WedgeData(
+        graph = Data(
             x=torch.zeros((4, 9), dtype=torch.long),
             edge_index=edge_index,
             edge_attr=torch.zeros((6, 3), dtype=torch.long),
             y=torch.tensor([0.1 * graph_id], dtype=torch.float32),
             random_walk_pe=torch.zeros((4, RWSE_DIM), dtype=torch.float32),
-            wedge_edge_ids=directed_nonbacktracking_wedges(edge_index),
-            edge_distance=torch.zeros((6, 1), dtype=torch.float32),
-            wedge_angle_cos=torch.zeros((4, 1), dtype=torch.float32),
-            geometry_valid=torch.tensor([False], dtype=torch.bool),
             functional_group_y=torch.zeros(
                 (4, len(FUNCTIONAL_GROUP_SMARTS)), dtype=torch.float32
             ),
         )
-        if graph.wedge_edge_ids.shape[0] != graph.wedge_angle_cos.shape[0]:
-            raise RuntimeError("Synthetic wedge contract changed")
         graphs.append(graph)
 
     device = torch.device("cuda")
@@ -788,9 +892,10 @@ def run_preflight(output_root: Path, *, source_commit: str):
         for parameter in parameters
     )
     result = {
-        "format": "molgap-qm9-local-hierarchy-dcu-preflight-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-dcu-preflight-v2",
         "accepted": finite,
         "source_commit": source_commit,
+        "architecture": "ogb_edge_state_structural_gps9",
         "gpu": torch.cuda.get_device_name(0),
         "cuda_available": True,
         "inference_parameter_count": sum(p.numel() for p in model.parameters()),
@@ -801,7 +906,6 @@ def run_preflight(output_root: Path, *, source_commit: str):
         "edge_state_shape": list(heads.edge_state.shape),
         "finite_forward_backward": finite,
         "peak_memory_mib": torch.cuda.max_memory_allocated() / 1024**2,
-        "geometry_valid": False,
         "model_inference_executed": True,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
@@ -828,12 +932,12 @@ def run_screen(
     torch.backends.cuda.matmul.allow_tf32 = False
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     for key, value in {
-        "format": "molgap-qm9-local-hierarchy-dcu-preflight-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-dcu-preflight-v2",
         "accepted": True,
         "source_commit": source_commit,
+        "architecture": "ogb_edge_state_structural_gps9",
         "cuda_available": True,
         "finite_forward_backward": True,
-        "geometry_valid": False,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
     }.items():
@@ -897,13 +1001,14 @@ def run_screen(
     gain = control_mean - candidate_mae
     nominated = candidate_mae < min(controls) and gain >= required_gain
     summary = {
-        "format": "molgap-qm9-local-hierarchy-screen-v1",
+        "format": "molgap-qm9-edgestate-local-hierarchy-screen-v2",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": manifest["aggregate_sha256"],
         "split_fingerprint": manifest["split_fingerprint"],
         "seed": MODEL_SEED,
         "gpu": torch.cuda.get_device_name(0),
+        "architecture": "ogb_edge_state_structural_gps9",
         "inference_parameter_count": inference_parameters,
         "initial_model_sha256": initial_sha,
         "training_contract": {

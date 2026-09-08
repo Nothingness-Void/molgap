@@ -58,6 +58,28 @@ def fixed_split(
     )
 
 
+def fixed_split_from_pool(
+    source_indices: np.ndarray,
+    train_size: int,
+    validation_size: int,
+    test_size: int,
+    seed: int,
+) -> ScreenSplit:
+    """Select deterministic source indices from an explicitly accepted pool."""
+    pool = np.asarray(source_indices, dtype=np.int64)
+    if pool.ndim != 1 or len(np.unique(pool)) != len(pool):
+        raise ValueError("QM9 source pool must be one-dimensional and unique")
+    positions = fixed_split(
+        len(pool), train_size, validation_size, test_size, seed
+    )
+    return ScreenSplit(
+        train=pool[positions.train],
+        validation=pool[positions.validation],
+        test=pool[positions.test],
+        seed=seed,
+    )
+
+
 def _download(url: str, destination: Path) -> None:
     if destination.exists():
         return
