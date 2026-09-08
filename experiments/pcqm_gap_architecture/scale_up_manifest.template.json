@@ -1,0 +1,81 @@
+{
+  "protocol": "resource_bounded_pcqm_scale_up_v1",
+  "budget": {
+    "total_gpu_hours_max": "FILL_BEFORE_S1",
+    "S1_seed42_gpu_hours_max": "FILL_BEFORE_S1",
+    "S1_confirmation_gpu_hours_max": "FILL_BEFORE_S1",
+    "S2_bridge_gpu_hours_max": "FILL_BEFORE_S1",
+    "S3_full_gpu_hours_max": "FILL_BEFORE_S1",
+    "automatic_budget_extension": false
+  },
+  "dataset": {
+    "name": "pcqm4mv2",
+    "release": "FILL_BEFORE_S1",
+    "official_train_identity_sha256": "FILL_BEFORE_S1",
+    "target": "gap",
+    "units": "eV",
+    "global_target_normalization_sha256": "FILL_BEFORE_S1"
+  },
+  "representations": {
+    "graph_schema": "FILL_BEFORE_S1",
+    "graph_builder_sha256": "FILL_BEFORE_S1",
+    "conformer_method": "FILL_BEFORE_S1_OR_NONE",
+    "conformer_builder_sha256": "FILL_BEFORE_S1_OR_NONE",
+    "invalid_row_policy": "FILL_BEFORE_S1"
+  },
+  "roles": {
+    "nested_order_sha256": "FILL_BEFORE_S1",
+    "dev_iid_source_idx_sha256": "FILL_BEFORE_S1",
+    "dev_cid_shift_source_idx_sha256": "FILL_BEFORE_S1",
+    "official_validation_sealed_until": "S4",
+    "official_test_roles_sealed": true,
+    "stages": {
+      "S1": 100000,
+      "S2": 1000000,
+      "S2_optional_fallback": 500000,
+      "S3": "eligible_full_train"
+    }
+  },
+  "baseline_bank": {
+    "identity": "FILL_BEFORE_S1",
+    "manifest_sha256": "FILL_BEFORE_S1",
+    "has_100k_predictions": "FILL_BEFORE_S1",
+    "has_1m_predictions": "FILL_BEFORE_S1",
+    "has_contract_matched_full_predictions": "FILL_BEFORE_S1",
+    "retrain_per_candidate": false
+  },
+  "comparison": {
+    "candidate": "FILL_BEFORE_S1",
+    "random_initialization": true,
+    "paired_seed_order": [42, 43, 44]
+  },
+  "training": {
+    "loss": "FILL_BEFORE_S1",
+    "optimizer": "FILL_BEFORE_S1",
+    "weight_decay": "FILL_BEFORE_S1",
+    "gradient_clip": "FILL_BEFORE_S1",
+    "effective_batch": "FILL_BEFORE_S1",
+    "precision": "FILL_BEFORE_S1",
+    "sample_exposures_per_row": "FILL_BEFORE_S1",
+    "scheduler_progress_unit": "optimizer_step_fraction",
+    "warmup_fraction": "FILL_BEFORE_S1",
+    "minimum_lr": "FILL_BEFORE_S1",
+    "checkpoint_selection": "FILL_BEFORE_S1",
+    "convergence_rule": "FILL_BEFORE_S1"
+  },
+  "gates": {
+    "S1_seed42_delta_eV_max": -0.002,
+    "S1_mean_delta_eV_max": -0.001,
+    "S1_all_seed_directions_improve": true,
+    "S2_delta_eV_max": -0.001,
+    "S2_minimum_fraction_of_S1_gain": 0.5,
+    "S4_official_validation_delta_eV_max": -0.001,
+    "early_stop_worse_delta_eV": 0.003,
+    "early_stop_consecutive_anchors": 2
+  },
+  "provenance": {
+    "source_commit": "FILL_BEFORE_S1",
+    "created_at": "FILL_BEFORE_S1",
+    "created_by": "FILL_BEFORE_S1"
+  }
+}
