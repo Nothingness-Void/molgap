@@ -56,6 +56,12 @@ def test_single_gpu_fallback_is_one_candidate_and_keeps_durable_outputs() -> Non
     source = SINGLE_RUNNER.read_text(encoding="utf-8")
     for token in (
         "MOLGAP_SINGLE_CANDIDATE",
+        "ensure_pascal_compatible_torch",
+        '"torch==2.7.1"',
+        '"nvidia-cusparselt-cu12==0.6.3"',
+        '"https://download.pytorch.org/whl/cu126"',
+        '"sm_60"',
+        "os.execv",
         "torch.cuda.device_count() != 1",
         "initialization_preflight.json",
         "single_result.json",
