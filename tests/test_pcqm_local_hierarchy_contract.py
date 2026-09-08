@@ -9,6 +9,7 @@ from molgap.pcqm_local_hierarchy import (
     FINETUNE_EPOCHS,
     FUNCTIONAL_GROUP_SMARTS,
     LEARNING_RATE,
+    METRIC_RECOMPUTE_TOLERANCE_EV,
     PRETRAIN_EPOCHS,
     SCRATCH_EPOCHS,
     VALIDATION_GRAPHS,
@@ -27,6 +28,7 @@ def test_training_contract_is_equal_exposure() -> None:
     assert WEIGHT_DECAY == 1e-6
     assert VALIDATION_GRAPHS == 10_000
     assert len(FUNCTIONAL_GROUP_SMARTS) == 12
+    assert METRIC_RECOMPUTE_TOLERANCE_EV == 1e-7
 
 
 def test_remote_scripts_parse_and_keep_roles_sealed() -> None:

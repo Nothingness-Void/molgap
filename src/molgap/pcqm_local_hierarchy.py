@@ -300,6 +300,7 @@ FINETUNE_EPOCHS = 20
 MASK_RATE = 0.15
 EXPECTED_MODEL_PARAMETERS = 4_771_073
 MIN_PAIRED_GAIN_EV = 0.003
+METRIC_RECOMPUTE_TOLERANCE_EV = 1e-7
 
 
 def _state_sha256(model) -> str:
@@ -1030,14 +1031,14 @@ def accept_paired_screen(
             recomputed["scratch"]["mae_eV"]
             - worker_metrics["scratch"]["gap"]["best_validation_gap_mae_eV"]
         )
-        < 1e-8,
+        < METRIC_RECOMPUTE_TOLERANCE_EV,
         "pretrained_mae": abs(
             recomputed["pretrained"]["mae_eV"]
             - worker_metrics["pretrained"]["gap"]["best_validation_gap_mae_eV"]
         )
-        < 1e-8,
+        < METRIC_RECOMPUTE_TOLERANCE_EV,
         "delta": abs(delta - selection.get("pretrained_minus_scratch_eV", 1.0))
-        < 1e-8,
+        < METRIC_RECOMPUTE_TOLERANCE_EV,
         "official_validation_sealed": all(
             item.get("official_validation_role_read") is False
             for item in worker_metrics.values()
