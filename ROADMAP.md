@@ -5,9 +5,12 @@
 
 ## Goal
 
-Select one Gap-only architecture for the official PCQM4Mv2 leaderboard through
-a three-stage funnel: cheap QM9-30K triage, paired PCQM-100K transfer with a
-once-read shadow audit, then an explicit desktop/full-scale decision. All
+Select one Gap-only method for the official PCQM4Mv2 leaderboard. New
+architectures use the three-stage funnel: cheap QM9-30K triage, paired
+PCQM-100K transfer with a once-read shadow audit, then an explicit
+desktop/full-scale decision. Training-only optimization of an already validated
+inference architecture may enter directly at paired PCQM-100K when the user
+records that classification. All
 geometry must be ETKDG-consistent. The default full-run ceiling is 12 A100
 hours unless the user records a separate override.
 
@@ -15,8 +18,8 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | C-MOLCHG-LITE | Accept the released local hierarchical pretraining mechanism against equal-compute scratch | Atom, bond, and chemistry-defined fragment supervision is locally attached and seed-42 evidence is accepted |
-| P2 | B-PCQM100K-TRANSFER | Transfer only a Track C nominee to a fresh paired PCQM-100K job | Selection gain is at least 0.003 eV and the once-read shadow audit agrees |
+| P0 | B-EDGESTATE-LOCAL-PRETRAIN | Compare local atom/bond/functional-group reconstruction against a fresh equal-exposure EdgeState scratch arm on PCQM-100K | CPU sidecar and paired seed-42 outputs pass no-model acceptance; nomination requires at least 0.003 eV gain |
+| P2 | B-SHADOW-AUDIT | Audit a nominated PCQM-100K training method once on the frozen shadow role | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
 GraphState9 remains the accepted 100K efficiency discovery, while the accepted

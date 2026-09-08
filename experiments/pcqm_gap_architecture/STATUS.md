@@ -1,9 +1,17 @@
 # PCQM Gap Architecture Screen Status
 
-Live work is limited to terminal evidence collection for the already released
-relative-value seed-42 job. Continuous Track B discovery is closed; the entries
-below retain operational history. `CURRENT_STATE.md` owns authority boundaries,
-and `ROADMAP.md` owns the replacement three-stage funnel.
+Live work is the user-authorized PCQM-100K tuning question in
+`local_hierarchy_pretraining_seed42_protocol.md`: the accepted EdgeState GPS9
+inference model is held fixed while local atom/bond/functional-group
+pretraining is compared with a fresh equal-exposure scratch arm. Continuous
+Track B architecture discovery remains closed. `CURRENT_STATE.md` owns
+authority boundaries, and `ROADMAP.md` owns task order.
+
+- The first required release is a CPU-only functional-group label sidecar
+  aligned to the accepted 100,000/10,000 graph cache. No GPU task is authorized
+  before its independent acceptance. Seed 43/44, shadow, 1M/full, official
+  validation, test-dev, desktop, and molecular-research-server work remain
+  unauthorized.
 
 - No molecular-research-server access is authorized during architecture
   selection.

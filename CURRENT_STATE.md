@@ -46,20 +46,26 @@ scientifically rejected at seed 42. It increased cost and regressed against its
 fresh paired GraphState9 control; the exact mechanism is closed in
 `experiments/pcqm_gap_architecture/results/relative_value_graphstate_seed42/decision.md`.
 
-Track C now owns literature-inspired triage on QM9-30K. A candidate can reach
-Track B only through a paired PCQM-100K transfer and a once-read shadow audit;
-only a strong transfer is handed to desktop for full-scale work. The governing
+Track C owns literature-inspired architecture triage on QM9-30K. A new
+architecture can reach Track B only through a paired PCQM-100K transfer and a
+once-read shadow audit; only a strong transfer is handed to desktop for
+full-scale work. The governing
 decision, thresholds, and exact scope of the rejected pretraining surrogates
 are in
 `experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
-The first bounded candidate is the locally attached atom/bond/functional-group
-reconstruction question in `experiments/qm9_local_hierarchy/`. The original
+The locally attached atom/bond/functional-group reconstruction question is now
+classified as optimization of the already validated EdgeState model, not a new
+architecture. The user therefore authorized it to enter directly at paired
+PCQM-100K under
+`experiments/pcqm_gap_architecture/local_hierarchy_pretraining_seed42_protocol.md`.
+Its earlier QM9 work stopped after CPU cache acceptance and did not consume DCU
+training. The original
 GraphState/WedgeState contract reached no training because 254 selected QM9
 records failed its required canonical-SMILES round trip. The replacement v2
-protocol freezes a canonical-valid source pool and evaluates the same
-supervision on the accepted pure-2D EdgeState GPS9 backbone. Its isolated
-Kunshan CPU cache-and-acceptance job `121340444` is the only released v2 job;
-no v2 DCU preflight or training result exists yet.
+protocol froze a canonical-valid source pool and the accepted pure-2D EdgeState
+GPS9 backbone. Its isolated Kunshan CPU cache-and-acceptance job `121340444`
+completed and passed mechanical acceptance; no v2 DCU preflight or training
+job was submitted.
 
 ## Prior architecture evidence
 
