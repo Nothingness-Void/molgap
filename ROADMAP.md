@@ -18,8 +18,8 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-EDGESTATE-LOCAL-PRETRAIN | Compare local atom/bond/functional-group reconstruction against a fresh equal-exposure EdgeState scratch arm on PCQM-100K | CPU sidecar and paired seed-42 outputs pass no-model acceptance; nomination requires at least 0.003 eV gain |
-| P2 | B-SHADOW-AUDIT | Audit a nominated PCQM-100K training method once on the frozen shadow role | Shadow direction agrees; no scale-up is automatic |
+| P0 | B-EDGESTATE-ALLOCATION-DECISION | Decide whether the convergence acceleration justifies one fresh paired 10-pretrain/30-Gap screen | Explicit compute authorization, or close local hierarchy without another run |
+| P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
 GraphState9 remains the accepted 100K efficiency discovery, while the accepted

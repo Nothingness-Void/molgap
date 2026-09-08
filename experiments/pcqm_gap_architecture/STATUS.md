@@ -29,6 +29,15 @@ authority boundaries, and `ROADMAP.md` owns task order.
   `kaseichou/molgap-pcqm-edgestate-local-hierarchy-s42`, version 1, and entered
   `RUNNING`. No shadow, extra seed, scale-up, official-role, desktop, or IMS
   successor was submitted.
+- Version 1 reached `COMPLETE` and passed no-model acceptance after an
+  implementation-only float-recomputation tolerance correction. The local
+  hierarchy arm reached `0.13800819 eV` versus fresh scratch at `0.13777319
+  eV`, so the exact 20-pretrain/20-fine-tune schedule failed the `0.003 eV`
+  nomination gate. It substantially accelerated early Gap convergence but did
+  not improve final accuracy at equal total encoder exposure. The schedule is
+  closed without shadow, extra seed, scale-up, desktop, official-role, or IMS
+  successor; exact evidence and attribution are in
+  `results/local_hierarchy_pretraining_seed42/decision.md`.
 
 - No molecular-research-server access is authorized during architecture
   selection.

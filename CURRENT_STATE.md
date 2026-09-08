@@ -70,9 +70,12 @@ job was submitted.
 The PCQM local-label sidecar passed independent acceptance at aggregate SHA-256
 `e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6`.
 Kaggle2 T4x2 kernel `kaseichou/molgap-pcqm-edgestate-local-hierarchy-s42`,
-version 1, is the only released GPU task. It compares fresh scratch40 with
-pretrain20 plus fine-tune20 at identical encoder exposure; no successor is
-authorized before terminal acceptance and coordinator analysis.
+version 1, completed and passed no-model acceptance. Pretrain20 plus
+fine-tune20 accelerated convergence but did not beat fresh scratch40 at equal
+encoder exposure, so the exact schedule is closed. No shadow, extra seed, or
+scale-up was released. The decision and the only justified optional allocation
+follow-up are in
+`experiments/pcqm_gap_architecture/results/local_hierarchy_pretraining_seed42/decision.md`.
 
 ## Prior architecture evidence
 
