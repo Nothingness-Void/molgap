@@ -57,8 +57,9 @@ reconstruction question in `experiments/qm9_local_hierarchy/`. The original
 GraphState/WedgeState contract reached no training because 254 selected QM9
 records failed its required canonical-SMILES round trip. The replacement v2
 protocol freezes a canonical-valid source pool and evaluates the same
-supervision on the accepted pure-2D EdgeState GPS9 backbone; no v2 training
-result exists yet.
+supervision on the accepted pure-2D EdgeState GPS9 backbone. Its isolated
+Kunshan CPU cache-and-acceptance job `121340444` is the only released v2 job;
+no v2 DCU preflight or training result exists yet.
 
 ## Prior architecture evidence
 

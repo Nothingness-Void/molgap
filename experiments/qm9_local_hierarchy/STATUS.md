@@ -78,5 +78,11 @@ failed jobs, logs, source assets, and protocol remain immutable evidence.
 hashes the complete canonical-roundtrip-valid source pool before a deterministic
 30K/3K/3K split, independently accepts the train/validation-only graph cache,
 and uses the accepted pure-2D EdgeState GPS9 inference backbone. This is a new
-scientific contract, not an infrastructure retry. The v2 cache, preflight, and
-training jobs have not yet been released from this status record.
+scientific contract, not an infrastructure retry.
+
+V2 source commit `a300bf9` was released to the isolated remote root
+`/public/home/scnaqkfcy3/molgap-trackc-qm9-edgestate-hierarchy-a300bf9` on
+2026-09-08. CPU cache-and-acceptance job `121340444` was submitted alone and
+entered the queue. No v2 DCU preflight or training job has been submitted.
+Exact source, input, local data-only probe, and contract identities are in
+`launch_edgestate_v2.json`.

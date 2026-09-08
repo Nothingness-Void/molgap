@@ -1,0 +1,46 @@
+{
+  "format": "molgap-qm9-edgestate-local-hierarchy-scnet-launch-v1",
+  "platform": "scnet-kunshan",
+  "submitted_at": "2026-09-08T15:59:27+09:00",
+  "source_commit": "a300bf9",
+  "source_archive_sha256": "f1e63485f660060ae86d6d1ba74ef5a2b4f5e37e54334c731652aa6eca950f6a",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-trackc-qm9-edgestate-hierarchy-a300bf9",
+  "jobs": {
+    "cpu_cache_and_acceptance": "121340444"
+  },
+  "initial_state": {
+    "cpu_cache_and_acceptance": "PENDING",
+    "dcu_preflight": "NOT_SUBMITTED",
+    "dcu_training": "NOT_SUBMITTED"
+  },
+  "frozen_sources": {
+    "processed_qm9_sha256": "90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721",
+    "raw_sdf_sha256": "98c4e97d50ac549b8c9f0b2114b348a9a944718e17e50d9a724b729f1deaa28e",
+    "remote_rdkit_version": "2023.09.6"
+  },
+  "local_data_only_probe": {
+    "rdkit_version": "2026.03.5",
+    "source_rows": 130831,
+    "canonical_valid_rows": 129778,
+    "canonical_invalid_rows": 1053,
+    "canonical_valid_pool_sha256": "37747e554a5aca2168545dec333cab821986072a1ff3e6e6dd081a80dce6526d",
+    "split_fingerprint": "b0ac16dc3152012c",
+    "sample_graphs_checked": 40,
+    "sample_graph_contract_ok": true,
+    "model_inference_executed": false,
+    "authoritative_for_remote_pool": false
+  },
+  "training_contract": {
+    "architecture": "ogb_edge_state_structural_gps9",
+    "hidden_channels": 192,
+    "layers": 9,
+    "heads": 4,
+    "edge_state_channels": 64,
+    "rwse_channels": 16,
+    "batch_size": 48,
+    "seed": 42,
+    "precision": "fp32"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
