@@ -9,6 +9,7 @@ MODEL = ROOT / "src/molgap/pcqm_gap_architecture.py"
 RUNNER = ROOT / "src/molgap/pcqm_local_global_runner.py"
 ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py"
 PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
+KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42"
 BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
 
@@ -59,3 +60,20 @@ def test_acceptance_recomputes_paired_metrics_and_keeps_roles_sealed() -> None:
         '"test_dev_role_read": False',
     ):
         assert token in source
+
+
+def test_kaggle_package_pins_private_dual_t4_inputs() -> None:
+    import json
+
+    wrapper = (KERNEL / "run_screen.py").read_text(encoding="utf-8")
+    ast.parse(wrapper)
+    assert 'EXPECTED_SOURCE_COMMIT = "2f354e07f21818d7fdf6610b5a876483ae014fb8"' in wrapper
+    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"' in wrapper
+    metadata = json.loads((KERNEL / "kernel-metadata.json").read_text(encoding="utf-8"))
+    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-graphstate-width-s42"
+    assert metadata["is_private"] == "true"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["dataset_sources"] == [
+        "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
+        "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+    ]
