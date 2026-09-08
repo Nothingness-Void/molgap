@@ -2442,6 +2442,7 @@ def make_pcqm_gap_encoder(candidate: str):
     local_global_modes = {
         "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",
         "ogb_distance_angle_triangle_edge_state_graph_state9": "graph_state",
+        "ogb_distance_angle_triangle_edge_state_graph_state9_w128": "graph_state",
     }
     if candidate in local_global_modes:
         return OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
@@ -2450,7 +2451,7 @@ def make_pcqm_gap_encoder(candidate: str):
             wedge_channels=16,
             geometry_basis_channels=16,
             global_mode=local_global_modes[candidate],
-            graph_state_channels=64,
+            graph_state_channels=(128 if candidate.endswith("_w128") else 64),
             graph_exchange_rank=32,
         )
     raise ValueError(f"Unknown PCQM Gap candidate: {candidate}")

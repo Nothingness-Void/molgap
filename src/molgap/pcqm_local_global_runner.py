@@ -26,6 +26,7 @@ if RUN_MODE not in {
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
     "relative_value_graphstate",
+    "graph_state_width",
     "conjugated_component_confirmation",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
@@ -48,6 +49,7 @@ if RUN_MODE in {
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
     "relative_value_graphstate",
+    "graph_state_width",
 } and SEED != 42:
     raise RuntimeError("Local-statistics modes require seed 42")
 if RUN_MODE == "conjugated_component_confirmation" and SEED != 43:
@@ -143,6 +145,10 @@ RELATIVE_VALUE_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_relative_value_triangle_edge_state_graph_state9",
 )
+GRAPH_STATE_WIDTH_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_triangle_edge_state_graph_state9_w128",
+)
 PAIRED_GRAPHSTATE_MODES = {
     "ring_graphstate",
     "contact_graphstate",
@@ -153,6 +159,7 @@ PAIRED_GRAPHSTATE_MODES = {
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
     "relative_value_graphstate",
+    "graph_state_width",
     "conjugated_component_confirmation",
 }
 CANDIDATES = (
@@ -166,6 +173,8 @@ CANDIDATES = (
     if RUN_MODE == "hop_path_graphstate"
     else RELATIVE_VALUE_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "relative_value_graphstate"
+    else GRAPH_STATE_WIDTH_CANDIDATES
+    if RUN_MODE == "graph_state_width"
     else PNA_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "pna_statistics_graphstate"
     else RETENTION_GRAPHSTATE_CANDIDATES
@@ -194,6 +203,7 @@ EXPECTED_GLOBAL_BLOCKS = {
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: (),
     RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: (),
+    GRAPH_STATE_WIDTH_CANDIDATES[1]: (),
     COMPONENT_STATE_CANDIDATES[0]: (),
     COMPONENT_STATE_CANDIDATES[1]: (),
 }
@@ -252,6 +262,7 @@ EXPECTED_PARAMETER_COUNTS = {
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: 3_697_537,
     RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: 3_734_977,
+    GRAPH_STATE_WIDTH_CANDIDATES[1]: 3_803_985,
     COMPONENT_STATE_CANDIDATES[0]: 3_672_257,
     COMPONENT_STATE_CANDIDATES[1]: 3_694_033,
 }
@@ -301,7 +312,19 @@ def uses_conjugated_components(candidate: str) -> bool:
 
 
 def uses_graph_state(candidate: str) -> bool:
-    return candidate.endswith("graph_state9") or uses_conjugated_components(candidate)
+    return (
+        candidate.endswith("graph_state9")
+        or candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
+        or uses_conjugated_components(candidate)
+    )
+
+
+def expected_graph_state_channels(candidate: str) -> int | None:
+    if candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]:
+        return 128
+    if uses_graph_state(candidate):
+        return 64
+    return None
 
 
 def expected_input_cache_sha256() -> str:
@@ -892,18 +915,44 @@ def initialization_preflight() -> list[dict]:
             raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
         state = model.state_dict()
         shared_parameter_mismatches = []
+        shared_parameter_shape_differences = []
         if candidate == BASELINE:
             reference_state = {
                 name: value.detach().clone() for name, value in state.items()
             }
         else:
+            expected_width_change = (
+                RUN_MODE == "graph_state_width"
+                and candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
+            )
             for name in sorted(set(reference_state).intersection(state)):
+                if expected_width_change and name.startswith("graph_context."):
+                    if reference_state[name].shape != state[name].shape:
+                        shared_parameter_shape_differences.append(name)
+                    continue
+                if reference_state[name].shape != state[name].shape:
+                    shared_parameter_shape_differences.append(name)
+                    continue
                 if not torch.equal(reference_state[name], state[name]):
                     shared_parameter_mismatches.append(name)
             if shared_parameter_mismatches:
                 raise RuntimeError(
                     f"Shared initialization changed for {candidate}: "
                     f"{shared_parameter_mismatches}"
+                )
+            if expected_width_change:
+                if not shared_parameter_shape_differences or any(
+                    not name.startswith("graph_context.")
+                    for name in shared_parameter_shape_differences
+                ):
+                    raise RuntimeError(
+                        "GraphState width changed tensors outside graph_context: "
+                        f"{shared_parameter_shape_differences}"
+                    )
+            elif shared_parameter_shape_differences:
+                raise RuntimeError(
+                    f"Shared parameter shapes changed for {candidate}: "
+                    f"{shared_parameter_shape_differences}"
                 )
         global_blocks = tuple(
             layer
@@ -918,6 +967,15 @@ def initialization_preflight() -> list[dict]:
         expected_graph_state = uses_graph_state(candidate)
         if graph_state_present != expected_graph_state:
             raise RuntimeError(f"Graph-state identity changed for {candidate}")
+        graph_state_channels = (
+            int(model.graph_context.output_norm.normalized_shape[0])
+            if graph_state_present
+            else None
+        )
+        if graph_state_channels != expected_graph_state_channels(candidate):
+            raise RuntimeError(
+                f"Graph-state width changed for {candidate}: {graph_state_channels}"
+            )
         ring_hierarchy_present = hasattr(model, "ring_update")
         if ring_hierarchy_present != uses_ring_hierarchy(candidate):
             raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
@@ -1050,6 +1108,7 @@ def initialization_preflight() -> list[dict]:
                 "parameter_count": parameter_count,
                 "global_attention_blocks": list(global_blocks),
                 "graph_state_present": graph_state_present,
+                "graph_state_channels": graph_state_channels,
                 "ring_hierarchy_present": ring_hierarchy_present,
                 "ring_injection_zero": ring_injection_zero,
                 "contact_state_present": contact_state_present,
@@ -1070,6 +1129,9 @@ def initialization_preflight() -> list[dict]:
                 "component_state_present": component_state_present,
                 "component_return_zero": component_return_zero,
                 "shared_parameter_mismatches": shared_parameter_mismatches,
+                "shared_parameter_shape_differences": (
+                    shared_parameter_shape_differences
+                ),
             }
         )
         del model, state
@@ -1114,6 +1176,15 @@ def gpu_preflight(
         raise RuntimeError(f"Global schedule changed for {candidate}: {global_blocks}")
     if graph_state_present != uses_graph_state(candidate):
         raise RuntimeError(f"Graph-state identity changed for {candidate}")
+    graph_state_channels = (
+        int(model.graph_context.output_norm.normalized_shape[0])
+        if graph_state_present
+        else None
+    )
+    if graph_state_channels != expected_graph_state_channels(candidate):
+        raise RuntimeError(
+            f"Graph-state width changed for {candidate}: {graph_state_channels}"
+        )
     ring_hierarchy_present = hasattr(model, "ring_update")
     if ring_hierarchy_present != uses_ring_hierarchy(candidate):
         raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
@@ -1181,7 +1252,10 @@ def gpu_preflight(
         ) and bool(
             torch.count_nonzero(model.component_to_atom.value.bias.detach()) == 0
         )
-    initial_function_structurally_equal_to_baseline = True
+    initial_function_structurally_equal_to_baseline = not (
+        RUN_MODE == "graph_state_width"
+        and candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
+    )
     if uses_body_order_moment(candidate):
         initial_function_structurally_equal_to_baseline = (
             body_order_injection_zero
@@ -1200,7 +1274,10 @@ def gpu_preflight(
         initial_function_structurally_equal_to_baseline = hop_path_injection_zero
     if component_state_present:
         initial_function_structurally_equal_to_baseline = component_return_zero
-    if not initial_function_structurally_equal_to_baseline:
+    if (
+        not initial_function_structurally_equal_to_baseline
+        and RUN_MODE != "graph_state_width"
+    ):
         raise RuntimeError("Candidate initial function changed")
     gpu_name = torch.cuda.get_device_name(0)
     if EXPECTED_GPU_TOKEN not in gpu_name:
@@ -1296,6 +1373,7 @@ def gpu_preflight(
         "parameter_count": parameter_count,
         "global_attention_blocks": list(global_blocks),
         "graph_state_present": graph_state_present,
+        "graph_state_channels": graph_state_channels,
         "ring_hierarchy_present": ring_hierarchy_present,
         "ring_return_gradient_nonzero": ring_return_gradient_nonzero,
         "contact_state_present": contact_state_present,
@@ -1342,7 +1420,6 @@ def gpu_preflight(
             "finite_gradients",
             "ring_return_gradient_nonzero",
             "contact_return_gradient_nonzero",
-            "initial_function_structurally_equal_to_baseline",
             "body_order_return_gradient_nonzero",
             "pna_return_gradient_nonzero",
             "retention_return_gradient_nonzero",
@@ -1639,6 +1716,7 @@ def train_one(
                 if uses_graph_state(candidate)
                 else "multihead_attention"
             ),
+            "graph_state_channels": expected_graph_state_channels(candidate),
             "ring_hierarchy": (
                 "symmsssr-ring64+shared-four-point-update+rank32-ring-to-atom"
                 if uses_ring_hierarchy(candidate)
