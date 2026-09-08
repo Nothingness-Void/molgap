@@ -5,71 +5,32 @@
 
 ## Goal
 
-Select one Gap-only architecture for the official PCQM4Mv2 leaderboard that
-fits a full-data run within 12 A100 hours. Internal 100K selection precedes any
-molecular-research-server use, and all geometry must be ETKDG-consistent.
+Select one Gap-only architecture for the official PCQM4Mv2 leaderboard through
+a three-stage funnel: cheap QM9-30K triage, paired PCQM-100K transfer with a
+once-read shadow audit, then an explicit desktop/full-scale decision. All
+geometry must be ETKDG-consistent. The default full-run ceiling is 12 A100
+hours unless the user records a separate override.
 
 ## Active queue
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-LITERATURE-REASSESS | Re-audit the expanded 2025--2026 architecture and pretraining evidence after the first pretraining screens | Rank only OGB-compliant, train-role-only candidates that fit the model and compute budgets |
-| P0 | B-KUNSHAN-DISCOVERY | Execute staged seed-42 architecture screens on Kunshan | Accept and attribute each result within the bounded discovery plan |
-| P0 | B-PCQM-A100-GATE | Desktop benchmarks the frozen GraphState winner on official-train graphs | Throughput, projected epoch time, and at least 15% memory reserve meet the protocol |
-| P1 | B-PCQM-FULL-TRAIN | Desktop trains exactly one frozen Gap-only winner on official PCQM train | Resumable run completes within 12 hours |
-| P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once | Official validation artifacts and timing pass |
-| P3 | B-PCQM-TESTDEV | Produce the final test-dev submission | Explicit user authorization after official validation |
+| P0 | B-RELATIVE-VALUE-CLOSE | Collect terminal evidence for the already released relative-value job | Accept or diagnose once; do not launch a successor |
+| P0 | C-QM9-FUNNEL-CONTRACT | Freeze a direct-Gap QM9-30K paired-screen contract and measure fresh-baseline dispersion | Immutable split, no test access, cost and promotion rule accepted |
+| P1 | C-MOLCHG-LITE | Test one local hierarchical pretraining mechanism against equal-compute scratch | Atom, bond, and chemistry-defined fragment supervision is locally attached and seed-42 evidence is accepted |
+| P2 | B-PCQM100K-TRANSFER | Transfer only a Track C nominee to a fresh paired PCQM-100K job | Selection gain is at least 0.003 eV and the once-read shadow audit agrees |
+| P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
-The GraphState three-seed gate passed; its frozen decision and desktop handoff
-are under
-`experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/`.
-The supplemental single-DCU Kunshan runtime gate completed with mechanical
-acceptance, but it does not close the A100 budget gate.
-Ring-GraphState, ContactState, and the compact invariant body-order basis are
-closed. None revoked the frozen GraphState desktop handoff or authorized a
-second full-data model. On 2026-09-05 the user authorized further server-side
-experiments entirely on Kunshan. Their ordering, hypotheses and shared compute
-cap are owned by `experiments/pcqm_gap_architecture/kunshan_discovery_plan.md`.
-The K1 persistent-VectorState and K2 projected-moment readout screens are
-closed below the material-gain threshold. K3 conjugated-component
-communication completed. Its CPU cache passed and K3a job
-`121082200` completed: the descriptor-only control was directionally positive
-but below the material-gain gate. K3b job `121111542` passed all three frozen
-seed-42 gates, while also exposing `0.000661 eV` repeat drift in the unchanged
-descriptor control. The authorized Kaggle seed-43 paired confirmation repeated
-the positive direction but missed the material-gain threshold. The two-seed
-mean gain remained below `0.001 eV`, so ComponentState is retained only as weak
-positive evidence and closed without seed 44 or full-data action. Its decision
-is under `results/component_state_seed43/`.
+GraphState9 remains the accepted 100K efficiency discovery, while the accepted
+desktop EdgeState continuation remains the strongest full-scale evidence.
+Post-GraphState candidates and pretraining surrogates are summarized by
+`results/architecture_failure_attribution_2026-09-08/decision.md`.
 
-On 2026-09-06 the user reported a restored weekly allowance of 30 GPU-hours on
-each Kaggle account. The two remaining random-initialized local-state questions
-were frozen in `local_statistics_seed42_protocol.md` and completed on 2026-09-07.
-PNA-style neighborhood statistics and gated persistent-edge retention both
-lost to their separate fresh GraphState9 controls; both are closed without
-confirmation seeds. GAPE remains a separate pretraining track and was not part
-of these architecture claims.
-
-Two materially distinct seed-42 Kaggle questions are now released under
-`directed_bond_graphstate_seed42_protocol.md` and
-`signnet_lappe_graphstate_seed42_protocol.md`. The first uses the accepted
-wedge cache directly for directional edge-to-edge memory; it completed with a
-sub-threshold weak positive result and no confirmation. The second passed its
-CPU normalized-Laplacian cache gate, then lost its paired GPU comparison and
-closed without confirmation. Neither route authorized confirmation seeds.
-
-The incremental literature extension's final bounded random-initialized
-architecture question, a static exact-shortest two/three-hop path channel,
-completed. It was a directionally consistent but sub-threshold weak positive
-and closed without confirmation. See
-`results/hop_path_graphstate_seed42/decision.md`.
-
-The post-screen residual attribution selected one materially different use of
-that accepted cache: sparse path-conditioned key/value attention with a
-support-aware return. It replaces uniform path averaging while preserving the
-GraphState9 anchor and the complete data/training contract. Its one-seed paired
-screen is frozen in `relative_value_graphstate_seed42_protocol.md`; no other
-architecture GPU task may run concurrently with it.
+The sparse relative-value job was released before the funnel reset. Its
+one-seed contract is `relative_value_graphstate_seed42_protocol.md`. Terminal
+acceptance closes that job without confirmation or a successor. The replacement
+funnel and its evidence boundaries are frozen in
+`results/three_stage_screening_reset_2026-09-08/decision.md`.
 
 ## Mandatory gates
 
@@ -92,15 +53,20 @@ architecture GPU task may run concurrently with it.
   distillation, residual targets, or prediction fusion. Separately labeled
   pretraining questions require their own scratch and equal-compute controls
   and cannot retroactively change an architecture conclusion.
-- Use only the frozen official-train-derived 100K/10K split for PCQM
-  architecture selection. Never tune on common/OOD/P8-hard or sealed data.
+- Track C QM9 screens are direct-Gap, one-seed paired triage only. A win grants
+  no PCQM or full-scale conclusion.
+- Track B uses the frozen official-train-derived 100K/10K selection contract.
+  Before the first post-reset transfer, freeze one disjoint train-derived
+  shadow role; read it only once after selecting the candidate. Never tune on
+  common/OOD/P8-hard, the shadow role, or sealed official roles.
 - Keep the main databases unchanged: Track B stays on PCQM4Mv2 and Track A
   stays on the existing repaired-2M PubChemQC corpus. External datasets may
   support an explicitly labeled audit, OOD evaluation, or separately approved
   teacher route, but may not replace or silently augment the main training
   database.
-- Do not access the molecular-research server until a candidate passes the
-  three-seed Kaggle gate; later access is restricted to
+- The server discovery agent does not launch full-scale training. A strong
+  Track B transfer is handed to desktop for a separate budget decision; any
+  later molecular-research-server access remains restricted to
   `/lustre/home/users/sm2/chou/`.
 - Predict Gap directly. Track A HOMO/LUMO experiments do not authorize Track B.
 - Test one material mechanism at a time. Scientific failures are not retried
@@ -110,17 +76,10 @@ architecture GPU task may run concurrently with it.
   dual-SchNet residual remain closed unless a new question is recorded here.
 - Remote monitoring is mechanical only: one Luna Max heartbeat per persistent
   monitor thread; terminal evidence is handed to the coordinator for analysis.
-- The active Track B architecture search is an authorized autonomous discovery
-  loop. After each confirmed terminal handoff, the coordinator may accept and
-  diagnose the result, close a scientific failure or repair an infrastructure
-  failure, select one materially distinct backlog hypothesis, commit and push
-  its frozen contract, submit exactly one successor GPU job, and retarget the
-  same heartbeat without asking again. `QUEUED` and `RUNNING` never trigger
-  scientific analysis or a new submission. Stop the loop when no defensible
-  hypothesis remains, remote quota or immutable inputs are unavailable, a
-  candidate reaches the three-seed desktop handoff gate, or the next action
-  would require sealed roles, full-data training, production changes, or the
-  molecular-research server.
+- Continuous Track B architecture search is closed. A monitor may collect and
+  hand off terminal evidence, but it never selects or submits a successor.
+  Each Track C question and Track B transfer needs a frozen protocol and queue
+  entry. Seeds 43/44 require a separate shortlist and compute-budget decision.
 
 ## Conditional backlog
 
@@ -131,6 +90,7 @@ architecture GPU task may run concurrently with it.
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
 | Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |
 | Geometry denoising teacher | Architecture is selected and receives a separate budget | Use the literature configuration while official roles remain sealed |
+| Local hierarchical pretraining beyond MolCHG-lite | MolCHG-lite transfers through PCQM-100K | Change one supervision level at a time with equal-compute scratch |
 | Solid-state Delta head | A separate target is requested | Create an isolated target contract |
 | Paper figures/write-up | Academic delivery is requested | Derive figures only from accepted decision records |
 

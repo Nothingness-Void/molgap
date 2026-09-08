@@ -1,9 +1,9 @@
 # PCQM Gap Architecture Screen Status
 
-Live work is routed through the result-local status files for Kunshan K3b,
-Kaggle1 directed-bond GraphState, and the Kaggle2 SignNet-LapPE CPU cache.
-The entries below retain earlier operational history; CURRENT_STATE.md owns
-the current authority boundaries.
+Live work is limited to terminal evidence collection for the already released
+relative-value seed-42 job. Continuous Track B discovery is closed; the entries
+below retain operational history. `CURRENT_STATE.md` owns authority boundaries,
+and `ROADMAP.md` owns the replacement three-stage funnel.
 
 - No molecular-research-server access is authorized during architecture
   selection.

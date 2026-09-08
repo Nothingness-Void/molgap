@@ -1,11 +1,12 @@
 # Official PCQM Gap Architecture Screen
 
-The Kunshan discovery extension is routed through
-[`kunshan_discovery_plan.md`](kunshan_discovery_plan.md) and the first
-[`persistent-vector protocol`](kunshan_vector_state_protocol.md).
-Live job evidence is in
-[`results/kunshan_vector_state_seed42/STATUS.md`](results/kunshan_vector_state_seed42/STATUS.md).
-The following records describe prior comparisons; CURRENT_STATE.md owns live truth.
+The server-side continuous Track B search is closed. Literature mechanisms now
+enter through the Track C QM9-30K to Track B PCQM-100K promotion funnel frozen
+in
+[`results/three_stage_screening_reset_2026-09-08/decision.md`](results/three_stage_screening_reset_2026-09-08/decision.md).
+The already released relative-value job is retained only for terminal evidence;
+its result cannot launch a successor. The following records describe prior
+comparisons; `CURRENT_STATE.md` owns live truth.
 
 This Track B experiment asks which bounded architecture should be trained for
 the official PCQM4Mv2 leaderboard. It predicts the single official HOMO-LUMO

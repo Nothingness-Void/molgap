@@ -17,115 +17,42 @@
 
 ## Active objective
 
-Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under the hard
-12-hour A100 budget. Selection uses only the official-train-derived
-100K/10K internal split; official validation and test-dev stay sealed.
+Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under an explicit
+full-run compute budget; the default ceiling is 12 A100 hours. Official
+validation and test-dev stay outside server-side architecture discovery.
 
 The no-attention shared GraphState strictly beat fresh full-GPS controls at
-seeds 42, 43, and 44 while using fewer parameters and higher throughput. The
-three-seed gate passed. It remains the frozen desktop handoff and comparison
-anchor. The winner and complete arithmetic are in
+seeds 42, 43, and 44 while using fewer parameters and higher throughput. It is
+the accepted 100K efficiency discovery and server comparison anchor, not the
+strongest accepted full-scale result. The winner and complete arithmetic are in
 `experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/decision.md`.
-The desktop timing and memory gate is described in that directory's
-`desktop_handoff.md`. The single-DCU Kunshan runtime gate
-completed with mechanical acceptance; it establishes SCNet runtime
-compatibility only and does not substitute for the required A100 measurement.
-No full-data or official-role action is authorized before the A100 gate passes.
+The accepted desktop EdgeState continuation remains the strongest accepted
+full-scale official-validation evidence.
 
-The bounded Ring-GraphState comparison completed and closed: its tiny seed-42
-gain did not justify a 15.1% throughput loss or extra seeds, and its candidate
-metrics also missed a required cache-lineage field. The exact decision is
-`experiments/pcqm_gap_architecture/results/ring_graphstate_seed42/decision.md`.
-The non-covalent ContactState screen passed mechanical acceptance but was
-slower and less accurate than its fresh GraphState control, so that mechanism
-is closed. Exact evidence is in
-`experiments/pcqm_gap_architecture/results/contact_state_seed42/decision.md`.
-The repaired body-order comparison completed on Kaggle1 and passed mechanical
-acceptance, but its candidate was less accurate than its fresh GraphState
-control. The exact mechanism is closed by
-`experiments/pcqm_gap_architecture/results/body_order_moment_seed42/decision.md`.
-The bounded Kunshan persistent-VectorState comparison completed and passed
-mechanical acceptance after a provenance-only row-identity repair. Its
-`0.000608 eV` seed-42 reduction was below the `0.001 eV` promotion threshold
-and came with lower throughput, so the mechanism is closed without more seeds
-or full-data training. GraphState9 remains the frozen anchor. The exact result
-and repair boundary are in
-`experiments/pcqm_gap_architecture/results/kunshan_vector_state_seed42/decision.md`.
-The K2 projected first/second-moment readout completed on Kunshan and passed
-mechanical acceptance. Its `0.000328 eV` paired seed-42 improvement was below
-the `0.001 eV` promotion threshold, with unchanged peak memory, so it is closed
-without more seeds or full-data training. GraphState9 remains the frozen
-anchor. The exact result is in
-`experiments/pcqm_gap_architecture/results/kunshan_moment_readout_seed42/decision.md`.
-K3 conjugated-component communication completed. The deterministic component
-cache passed 110,000-graph CPU acceptance. K3a established the repeated
-descriptor as a sub-threshold information-matched control. K3b job `121111542`
-then showed that persistent ComponentState passed the frozen seed-42 accuracy,
-runtime and memory gates. It is the leading single-seed shortlist candidate,
-but descriptor-control drift across K3a/K3b prevents promotion over the
-three-seed GraphState9 handoff without a separate confirmation-budget decision.
-Exact evidence is in
-`experiments/pcqm_gap_architecture/results/kunshan_conjugated_component_seed42/STATUS.md`.
-The bounded seed-43 Kaggle replication completed and passed no-model
-acceptance. ComponentState again improved its matched descriptor control, but
-the gain missed the material threshold; its two-seed mean paired gain also
-remained sub-threshold, with extra parameters and lower throughput. The
-mechanism is retained as weak positive evidence but does not replace the
-simpler three-seed GraphState9 handoff. Exact evidence is in
-`experiments/pcqm_gap_architecture/results/component_state_seed43/decision.md`.
+The bounded Ring-GraphState, ContactState, and body-order comparisons are
+closed. Their details remain in their experiment decision records.
+The bounded Kunshan VectorState, moment-readout, and ComponentState questions
+are closed or retained only as weak evidence in their experiment records.
 
-Both Kaggle accounts were reported restored to 30 weekly GPU-hours on
-2026-09-06. The two independent seed-42 paired local-state screens completed
-and passed no-model acceptance. PNA-style neighborhood statistics and gated
-persistent-edge retention were both slightly worse than their fresh
-GraphState9 controls, so both mechanisms are closed without more seeds. Exact
-evidence is in
-`experiments/pcqm_gap_architecture/results/pna_statistics_graphstate_seed42/decision.md`
-and
-`experiments/pcqm_gap_architecture/results/edge_retention_graphstate_seed42/decision.md`.
+PNA statistics, edge retention, directed-bond memory, SignNet-LapPE, torsion,
+and atom--bond dual-stream questions are closed or weak-only. Their evidence is
+retained in experiment records and the archive indexes.
 
-Two new one-seed information-flow questions were released on 2026-09-07.
-The Kaggle1 non-backtracking directed-bond candidate produced a small paired
-seed-42 gain, but it remained below the `0.001 eV` material threshold and cost
-about 10% throughput; it is retained only as weak positive evidence without
-confirmation seeds. The Kaggle2 eight-mode SignNet-LapPE cache and paired GPU
-screen passed mechanical acceptance, but the candidate generalized worse than
-its fresh GraphState9 control; that spectral injection is closed. Exact
-identities are in
-`experiments/pcqm_gap_architecture/results/directed_bond_graphstate_seed42/STATUS.md`
-and
-`experiments/pcqm_gap_architecture/results/signnet_lappe_graphstate_seed42/STATUS.md`.
+The consolidated attribution is
+`experiments/pcqm_gap_architecture/results/architecture_failure_attribution_2026-09-08/decision.md`.
 
-Recent torsion and atom--bond dual-stream questions are closed; their complete
-records are on `archive` and indexed by
-`experiments/_closed/pcqm_server_archive_index.md`.
-
-The final bounded random-initialized architecture question retained by the
-incremental literature audit is exact-shortest two/three-hop path statistics
-around the frozen GraphState9 encoder. Its cache and paired T4x2 screen passed
-mechanical acceptance. The candidate improved seed-42 paired validation MAE by
-`0.0009066164 eV` and won all final ten epochs, but missed the frozen
-`0.001 eV` material-gain gate while costing 11.93% more epoch time. It is
-closed as weak positive evidence without confirmation; GraphState9 remains the
-server recommendation. The decision is
-`experiments/pcqm_gap_architecture/results/hop_path_graphstate_seed42/decision.md`.
-
-A residual-level audit then selected one successor rather than another generic
-state addition. Sparse relative-value path attention keeps GraphState9 and the
-accepted exact-shortest 2/3-hop cache, but replaces uniform relation averaging
-with target-wise path-conditioned key/value attention and a support-aware
-return. The frozen paired seed-42 contract is
+A residual-level audit selected sparse relative-value path attention before
+the screening reset. Its paired seed-42 job may finish only to close the
+evidence chain; it cannot trigger another architecture job. The frozen contract is
 `experiments/pcqm_gap_architecture/relative_value_graphstate_seed42_protocol.md`;
 its remote result is not yet a scientific conclusion.
 
-The first two same-database pretraining screens completed with accepted
-mechanical evidence but did not pass their compute-normalized material gate.
-Aggregate atom/bond/fragment/molecule source tasks only matched an independent
-scratch-40 trajectory and lost to scratch-60; graph-level ETKDG geometry
-histogram denoising lost to both paired controls. These exact objectives are
-closed, while pretraining as a broader family remains open pending the expanded
-literature audit. The decision is
-`experiments/pcqm_gap_architecture/results/pretraining_dual_account_seed42/decision.md`.
+Track C now owns literature-inspired triage on QM9-30K. A candidate can reach
+Track B only through a paired PCQM-100K transfer and a once-read shadow audit;
+only a strong transfer is handed to desktop for full-scale work. The governing
+decision, thresholds, and exact scope of the rejected pretraining surrogates
+are in
+`experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
 
 ## Prior architecture evidence
 
