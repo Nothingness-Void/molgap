@@ -1,5 +1,5 @@
 {
-  "format": "molgap-qm9-local-hierarchy-scnet-launch-v4",
+  "format": "molgap-qm9-local-hierarchy-scnet-launch-v5",
   "platform": "scnet-kunshan",
   "submitted_at": "2026-09-08",
   "source_commit": "e9e7e6a",
@@ -37,13 +37,18 @@
     "cancelled_network_fallback_training": "CANCELLED_DEPENDENCY",
     "failed_processed_only_cpu_cache": "FAILED_MISSING_OFFLINE_QM9_RAW_SOURCE",
     "cancelled_processed_only_training": "CANCELLED_DEPENDENCY",
-    "fully_offline_cpu_cache": "PENDING_PRIORITY",
-    "dependent_training": "PENDING_DEPENDENCY"
+    "fully_offline_cpu_cache": "FAILED_CANONICAL_SMILES_SANITIZATION",
+    "dependent_training": "CANCELLED_DEPENDENCY"
   },
   "infrastructure_fix_commits": ["d834486", "a1c4ec6"],
   "data_import_decoupling_commit": "43adfc8",
   "staged_qm9_processed_sha256": "90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721",
   "staged_qm9_raw_archive_sha256": "f11d3f8ecc3097a72656a35c4847767852e6f346bf99a54619a1a3b6389ddc02",
+  "terminal_evidence_sha256": "6dfd8c72c943384d4045cfbb5e94d98265bc1bf7868eeafe6ff6a92392b06b37",
+  "failed_source_idx": 96635,
+  "failed_molecule_name": "gdb_98534",
+  "canonical_smiles_failures_in_train_validation_probe": 254,
+  "automatic_retry_authorized": false,
   "offline_wheelhouse_sha256": "71f730affc2c3060d64bf87003ea60451b7af8d62edfe32e56613e5517fe557d",
   "monitor_automation_id": "molgap-qm9-local-hierarchy-offline-monitor",
   "official_pcqm_roles_read": false,

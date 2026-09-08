@@ -27,13 +27,12 @@ dated decision after acceptance.
 - processed-only CPU cache job `121327106`: loaded the staged processed tensor,
   then failed because the raw `gdb9.sdf` archive was not yet staged
 - its training job `121327125`: dependency-cancelled before starting
-- fully-offline CPU cache job `121327900`
-- current training job `121327905`, dependent on `121327900` and reusing the
-  accepted preflight
+- fully-offline CPU cache job `121327900`: failed while rebuilding source index
+  `96635` (`gdb_98534`) because its canonical SMILES did not sanitize
+- dependent training job `121327905`: dependency-cancelled without starting
 - remote root:
   `/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a`
-- fully-offline-chain initial state: cache pending; training pending on its
-  `afterok` dependency
+- no GPU/DCU training result exists
 - official PCQM roles and QM9 held-out role: not read
 
 An earlier submission attempt from `d4c0548` produced no job IDs because all
@@ -62,3 +61,10 @@ raw SDF prerequisite. The frozen DeepChem QM9 archive was staged with SHA-256
 `f11d3f8ecc3097a72656a35c4847767852e6f346bf99a54619a1a3b6389ddc02`;
 jobs `121327900 -> 121327905` therefore have both source assets available fully
 offline.
+The fully-offline run then exposed a data-contract inconsistency rather than an
+environment failure: raw QM9 intentionally contains molecules that RDKit can
+load only with sanitization disabled, while this protocol requires every graph
+to survive a canonical-SMILES round trip. A train/validation-only structural
+probe found 254 such records in the frozen roles. Filtering them before the
+split or vectorizing their unsanitized SDF molecules would change the frozen
+data contract, so neither repair was submitted automatically.
