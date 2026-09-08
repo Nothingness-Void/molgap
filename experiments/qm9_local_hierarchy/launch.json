@@ -13,10 +13,12 @@
     "cancelled_online_cpu_cache": "121320569",
     "cancelled_online_training": "121320574",
     "offline_cpu_dependency_setup": "121323044",
-    "offline_cpu_cache": "121323061",
-    "dependent_training": "121323070"
+    "failed_coupled_cpu_cache": "121323061",
+    "cancelled_coupled_training": "121323070",
+    "decoupled_cpu_cache": "121325769",
+    "dependent_training": "121325771"
   },
-  "dependency": "121323044 -> 121323061 -> 121323070; accepted preflight 121316216 reused",
+  "dependency": "121325769 -> 121325771; accepted setup 121323044 and preflight 121316216 reused",
   "initial_state": {
     "dcu_preflight": "COMPLETED",
     "failed_cpu_cache": "FAILED_IMPORT_LIBHSAKMT",
@@ -24,11 +26,14 @@
     "failed_online_cpu_dependency_setup": "FAILED_DNS",
     "cancelled_online_cpu_cache": "CANCELLED_DEPENDENCY",
     "cancelled_online_training": "CANCELLED_DEPENDENCY",
-    "offline_cpu_dependency_setup": "PENDING_PRIORITY",
-    "offline_cpu_cache": "PENDING_DEPENDENCY",
+    "offline_cpu_dependency_setup": "COMPLETED",
+    "failed_coupled_cpu_cache": "FAILED_UNUSED_TORCH_CLUSTER_IMPORT",
+    "cancelled_coupled_training": "CANCELLED_DEPENDENCY",
+    "decoupled_cpu_cache": "PENDING_PRIORITY",
     "dependent_training": "PENDING_DEPENDENCY"
   },
   "infrastructure_fix_commits": ["d834486", "a1c4ec6"],
+  "data_import_decoupling_commit": "43adfc8",
   "offline_wheelhouse_sha256": "71f730affc2c3060d64bf87003ea60451b7af8d62edfe32e56613e5517fe557d",
   "monitor_automation_id": "molgap-qm9-local-hierarchy-offline-monitor",
   "official_pcqm_roles_read": false,

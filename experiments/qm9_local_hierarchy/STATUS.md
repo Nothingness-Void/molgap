@@ -16,13 +16,17 @@ dated decision after acceptance.
 - its cache `121320569` and training `121320574`: dependency-cancelled before
   starting
 - offline CPU dependency job `121323044`
-- offline CPU cache job `121323061`, dependent on `121323044`
-- current training job `121323070`, dependent on `121323061` and reusing the
+- offline CPU cache job `121323061`: failed before graph construction because
+  importing shared `qm9_screen.py` eagerly loaded the unused 3D `torch_cluster`
+  extension
+- its training job `121323070`: dependency-cancelled before starting
+- decoupled CPU cache job `121325769`
+- current training job `121325771`, dependent on `121325769` and reusing the
   accepted preflight
 - remote root:
   `/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a`
-- offline-chain initial state: CPU environment pending; cache and training
-  pending on `afterok` dependencies
+- decoupled-chain initial state: cache pending; training pending on its
+  `afterok` dependency
 - official PCQM roles and QM9 held-out role: not read
 
 An earlier submission attempt from `d4c0548` produced no job IDs because all
@@ -36,3 +40,7 @@ Commit `a1c4ec6` removed SCNet network dependence. A locally resolved Linux
 wheelhouse with SHA-256
 `71f730affc2c3060d64bf87003ea60451b7af8d62edfe32e56613e5517fe557d`
 was uploaded and verified before the offline chain was submitted.
+Commit `43adfc8` moved shared QM9 acquisition and split primitives into a
+model-free module. This removes an accidental 3D-extension import from the CPU
+cache path without changing the frozen graphs, model, targets, or training
+contract.
