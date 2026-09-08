@@ -1,0 +1,33 @@
+{
+  "format": "molgap-pcqm-graph-state-width-split-launch-v1",
+  "submitted_at": "2026-09-08T15:50:00+09:00",
+  "launch_status": "RUNNING",
+  "execution": "two_isolated_single_gpu_parallel_kernels",
+  "kernels": {
+    "ogb_distance_angle_triangle_edge_state_graph_state9": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
+      "version": 1
+    },
+    "ogb_distance_angle_triangle_edge_state_graph_state9_w128": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
+      "version": 1
+    }
+  },
+  "accept_only_matching_gpu_models": true,
+  "model_source_commit": "c413fc13b8b15e659e90853c429119189577c379",
+  "package_commit": "da9cf48",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
+  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "learning_rate": 0.00016,
+  "weight_decay": 0.000001,
+  "max_epochs": 40,
+  "patience": 8,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false,
+  "full_data_authorized": false
+}
