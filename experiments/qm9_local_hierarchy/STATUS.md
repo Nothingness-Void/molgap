@@ -20,12 +20,16 @@ dated decision after acceptance.
   importing shared `qm9_screen.py` eagerly loaded the unused 3D `torch_cluster`
   extension
 - its training job `121323070`: dependency-cancelled before starting
-- decoupled CPU cache job `121325769`
-- current training job `121325771`, dependent on `121325769` and reusing the
+- decoupled CPU cache job `121325769`: failed before graph construction because
+  the offline node had no staged QM9 source and the fallback download could not
+  resolve DNS
+- its training job `121325771`: dependency-cancelled before starting
+- data-staged CPU cache job `121327106`
+- current training job `121327125`, dependent on `121327106` and reusing the
   accepted preflight
 - remote root:
   `/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a`
-- decoupled-chain initial state: cache pending; training pending on its
+- data-staged-chain initial state: cache running; training pending on its
   `afterok` dependency
 - official PCQM roles and QM9 held-out role: not read
 
@@ -44,3 +48,9 @@ Commit `43adfc8` moved shared QM9 acquisition and split primitives into a
 model-free module. This removes an accidental 3D-extension import from the CPU
 cache path without changing the frozen graphs, model, targets, or training
 contract.
+The next cache attempt exposed a second independent offline prerequisite: the
+processed QM9 source itself had not been staged. The previously used Kaggle
+asset `qm9_v3.pt` was uploaded under a temporary name, verified remotely at
+SHA-256 `90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721`,
+and only then atomically installed. Jobs `121327106 -> 121327125` reuse that
+immutable source without changing the scientific contract.
