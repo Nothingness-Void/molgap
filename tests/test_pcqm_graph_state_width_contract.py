@@ -9,13 +9,14 @@ MODEL = ROOT / "src/molgap/pcqm_gap_architecture.py"
 RUNNER = ROOT / "src/molgap/pcqm_local_global_runner.py"
 ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py"
 PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
+SINGLE_RUNNER = ROOT / "src/molgap/pcqm_graph_state_width_single_runner.py"
 KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42"
 BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
 CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
 
 
 def test_graph_state_width_sources_parse() -> None:
-    for path in (MODEL, RUNNER, ACCEPTANCE):
+    for path in (MODEL, RUNNER, SINGLE_RUNNER, ACCEPTANCE):
         ast.parse(path.read_text(encoding="utf-8"))
 
 
@@ -44,6 +45,22 @@ def test_protocol_freezes_the_bounded_seed42_gate() -> None:
         "official validation",
         "test-dev",
         "full scale gates require separate authorization",
+        "same GPU model",
+    ):
+        assert token in source
+
+
+def test_single_gpu_fallback_is_one_candidate_and_keeps_durable_outputs() -> None:
+    source = SINGLE_RUNNER.read_text(encoding="utf-8")
+    for token in (
+        "MOLGAP_SINGLE_CANDIDATE",
+        "torch.cuda.device_count() != 1",
+        "initialization_preflight.json",
+        "single_result.json",
+        "single_failure.json",
+        "base.gpu_preflight",
+        "base.train_one",
+        '"full_data_authorized": False',
     ):
         assert token in source
 

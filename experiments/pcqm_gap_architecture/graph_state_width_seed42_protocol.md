@@ -33,7 +33,11 @@ fusion, routing, residual target, or data augmentation is introduced.
 - seed 42, FP32, batch 48 per candidate;
 - AdamW, learning rate `1.6e-4`, weight decay `1e-6`;
 - at most 40 epochs, cosine schedule, patience 8;
-- one isolated fresh candidate per Kaggle T4 in a single T4x2 task;
+- preferred execution: one isolated fresh candidate per Kaggle T4 in a single
+  T4x2 task;
+- scheduler fallback after repeated single-P100 allocation: two concurrently
+  submitted single-GPU kernels, one candidate per kernel, accepted only when
+  both report the same GPU model and immutable source/cache identities;
 - 4,000,000-parameter ceiling and 14,400-second search budget.
 
 The two models receive the same seed and all equal-shaped parameters outside
@@ -46,6 +50,10 @@ parameters.
 Every epoch atomically writes a resumable checkpoint and trace. Each candidate
 must emit a hashed best model, last checkpoint, aligned 10K prediction payload,
 metrics, and finite CUDA forward/backward preflight.
+
+The fallback changes only process placement. It does not change model code,
+data order, seed, optimizer, schedule, early stopping, target, or acceptance
+arithmetic. Results from mismatched GPU models are not scientifically accepted.
 
 Promotion requires all of:
 
