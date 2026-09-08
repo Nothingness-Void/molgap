@@ -12,6 +12,12 @@ authority boundaries, and `ROADMAP.md` owns task order.
   before its independent acceptance. Seed 43/44, shadow, 1M/full, official
   validation, test-dev, desktop, and molecular-research-server work remain
   unauthorized.
+- Source commit `1015b0a` was packaged as private Kaggle2 dataset
+  `kaseichou/molgap-pcqm-local-hierarchy-source`. CPU kernel
+  `kaseichou/molgap-pcqm-local-hierarchy-label-cache-s42`, version 1, was
+  submitted once and entered `RUNNING`. Its immutable launch identity is in
+  `results/local_hierarchy_pretraining_seed42/cache_launch_manifest.json`.
+  The paired T4x2 GPU screen remains unsubmitted until cache acceptance.
 
 - No molecular-research-server access is authorized during architecture
   selection.
