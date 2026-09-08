@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-pcqm-edgestate-local-hierarchy-s42",
+  "title": "MolGap PCQM EdgeState Local Hierarchy S42",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-local-hierarchy-source",
+    "kaseichou/molgap-pcqm-geometry-cache-s42-dataset",
+    "kaseichou/molgap-pcqm-local-hierarchy-labels-s42"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
