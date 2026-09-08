@@ -7,15 +7,22 @@
   "remote_root": "/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a",
   "jobs": {
     "dcu_preflight": "121316216",
-    "cpu_cache": "121316249",
-    "dependent_training": "121316265"
+    "failed_cpu_cache": "121316249",
+    "cancelled_dependent_training": "121316265",
+    "cpu_dependency_setup": "121320565",
+    "cpu_cache": "121320569",
+    "dependent_training": "121320574"
   },
-  "dependency": "afterok:121316216:121316249",
+  "dependency": "121320565 -> 121320569 -> 121320574; accepted preflight 121316216 reused",
   "initial_state": {
-    "dcu_preflight": "PENDING_PRIORITY",
-    "cpu_cache": "PENDING_PRIORITY",
+    "dcu_preflight": "COMPLETED",
+    "failed_cpu_cache": "FAILED_IMPORT_LIBHSAKMT",
+    "cancelled_dependent_training": "CANCELLED_DEPENDENCY",
+    "cpu_dependency_setup": "PENDING_PRIORITY",
+    "cpu_cache": "PENDING_DEPENDENCY",
     "dependent_training": "PENDING_DEPENDENCY"
   },
+  "infrastructure_fix_commit": "d834486",
   "official_pcqm_roles_read": false,
   "test_role_read": false
 }

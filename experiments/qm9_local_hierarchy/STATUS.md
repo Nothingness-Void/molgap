@@ -5,16 +5,26 @@ The Track C seed-42 screen was released to SCNet Kunshan from source commit
 file and the adjacent launch record; scientific interpretation belongs in a
 dated decision after acceptance.
 
-- DCU preflight job: `121316216`
-- CPU cache job: `121316249`
-- dependent training job: `121316265`
+- DCU preflight job `121316216`: completed and accepted; inference model
+  `3,665,809` parameters, training-only heads `36,743`, finite forward/backward
+- first CPU cache job `121316249`: infrastructure failure before graph build
+  because the ROCm environment could not load `libhsakmt.so.1` on a CPU node
+- first dependent training job `121316265`: automatically cancelled without
+  starting because its cache dependency failed
+- isolated CPU dependency job `121320565`
+- corrected CPU cache job `121320569`, dependent on `121320565`
+- corrected training job `121320574`, dependent on `121320569` and reusing the
+  accepted preflight
 - remote root:
   `/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a`
-- initial state: preflight/cache pending for priority; training pending on
-  `afterok` dependencies
+- corrected-chain initial state: CPU environment pending; cache and training
+  pending on `afterok` dependencies
 - official PCQM roles and QM9 held-out role: not read
 
 An earlier submission attempt from `d4c0548` produced no job IDs because all
 three resource requests exceeded Kunshan's `DefMemPerCPU=3569M` ratio. Commit
 `e9e7e6a` corrected resource declarations without changing the scientific
 contract.
+Commit `d834486` then isolated pinned CPU-only chemistry dependencies after the
+first cache attempt exposed a CPU/DCU runtime mismatch. It changed only remote
+infrastructure; the frozen scientific source identity remains `e9e7e6a`.
