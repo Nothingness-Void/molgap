@@ -41,11 +41,10 @@ retained in experiment records and the archive indexes.
 The consolidated attribution is
 `experiments/pcqm_gap_architecture/results/architecture_failure_attribution_2026-09-08/decision.md`.
 
-A residual-level audit selected sparse relative-value path attention before
-the screening reset. Its paired seed-42 job may finish only to close the
-evidence chain; it cannot trigger another architecture job. The frozen contract is
-`experiments/pcqm_gap_architecture/relative_value_graphstate_seed42_protocol.md`;
-its remote result is not yet a scientific conclusion.
+Sparse relative-value path attention was mechanically accepted and
+scientifically rejected at seed 42. It increased cost and regressed against its
+fresh paired GraphState9 control; the exact mechanism is closed in
+`experiments/pcqm_gap_architecture/results/relative_value_graphstate_seed42/decision.md`.
 
 Track C now owns literature-inspired triage on QM9-30K. A candidate can reach
 Track B only through a paired PCQM-100K transfer and a once-read shadow audit;
@@ -54,8 +53,9 @@ decision, thresholds, and exact scope of the rejected pretraining surrogates
 are in
 `experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
 The first bounded candidate is the locally attached atom/bond/functional-group
-reconstruction question in `experiments/qm9_local_hierarchy/`; its Kunshan
-preflight, immutable CPU cache, and dependency-gated seed-42 screen are active.
+reconstruction question in `experiments/qm9_local_hierarchy/`. Its Kunshan DCU
+preflight passed, while CPU cache preparation is undergoing an infrastructure-
+only repair; no training result exists yet.
 
 ## Prior architecture evidence
 

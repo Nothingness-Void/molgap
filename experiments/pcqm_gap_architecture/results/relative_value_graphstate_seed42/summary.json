@@ -1,0 +1,32 @@
+{
+  "format": "molgap-relative-value-graphstate-seed42-decision-v1",
+  "date": "2026-09-08",
+  "accepted_mechanically": true,
+  "scientific_decision": "reject",
+  "source_commit": "7ad36a3cbb9f47b42430508795e8de07b3e02684",
+  "cache_aggregate_sha256": "6d3a7df67cfadc26db2a38c006fd20e0d4294c16968fa92b01739daf8527993e",
+  "seed": 42,
+  "baseline": {
+    "parameters": 3665809,
+    "validation_gap_mae_eV": 0.12969738245010376,
+    "mean_graphs_per_second": 575.0127991178333,
+    "best_epoch": 39
+  },
+  "candidate": {
+    "parameters": 3734977,
+    "validation_gap_mae_eV": 0.1310027837753296,
+    "mean_graphs_per_second": 509.4930911688668,
+    "best_epoch": 39
+  },
+  "candidate_minus_baseline_eV": 0.0013053970178589225,
+  "paired_delta_bootstrap_ci95_eV": [
+    -0.0002641468359797727,
+    0.0029769058513920755
+  ],
+  "candidate_to_baseline_epoch_time_ratio": 1.1284804381634,
+  "seed43_44_authorized": false,
+  "full_data_authorized": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

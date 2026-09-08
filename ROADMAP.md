@@ -15,7 +15,6 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-RELATIVE-VALUE-CLOSE | Collect terminal evidence for the already released relative-value job | Accept or diagnose once; do not launch a successor |
 | P0 | C-MOLCHG-LITE | Accept the released local hierarchical pretraining mechanism against equal-compute scratch | Atom, bond, and chemistry-defined fragment supervision is locally attached and seed-42 evidence is accepted |
 | P2 | B-PCQM100K-TRANSFER | Transfer only a Track C nominee to a fresh paired PCQM-100K job | Selection gain is at least 0.003 eV and the once-read shadow audit agrees |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
@@ -25,10 +24,8 @@ desktop EdgeState continuation remains the strongest full-scale evidence.
 Post-GraphState candidates and pretraining surrogates are summarized by
 `results/architecture_failure_attribution_2026-09-08/decision.md`.
 
-The sparse relative-value job was released before the funnel reset. Its
-one-seed contract is `relative_value_graphstate_seed42_protocol.md`. Terminal
-acceptance closes that job without confirmation or a successor. The replacement
-funnel and its evidence boundaries are frozen in
+The sparse relative-value question is closed by its paired seed-42 decision.
+The replacement funnel and its evidence boundaries are frozen in
 `results/three_stage_screening_reset_2026-09-08/decision.md`.
 
 ## Mandatory gates
