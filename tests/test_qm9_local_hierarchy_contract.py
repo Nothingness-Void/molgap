@@ -59,6 +59,9 @@ def test_slurm_separates_cpu_cache_and_dcu_training():
     preflight = (PROTOCOL.parent / "preflight_kunshan.slurm").read_text(
         encoding="utf-8"
     )
+    setup = (PROTOCOL.parent / "setup_cache_env_kunshan.slurm").read_text(
+        encoding="utf-8"
+    )
     assert "#SBATCH --partition=kshctest02" in cpu
     assert "--gres=dcu" not in cpu
     assert "#SBATCH --partition=kshdtest" in gpu
@@ -67,6 +70,9 @@ def test_slurm_separates_cpu_cache_and_dcu_training():
     assert "--gres=dcu:Hygon:1" in preflight
     assert "--time=00:15:00" in preflight
     assert '--preflight "$ROOT/preflight/preflight.json"' in gpu
+    assert "cpu-cache-py311/bin/python" in setup
+    assert "rdkit==2023.9.6" in setup
+    assert 'PYTHONPATH="$ROOT/cpu-deps:$CODE/src"' in cpu
 
 
 def test_remote_preflight_checks_exact_model_and_gradients():
