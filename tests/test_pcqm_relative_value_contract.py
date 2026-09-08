@@ -58,5 +58,4 @@ def test_kernel_requests_t4x2_capable_shape_and_frozen_inputs() -> None:
     entry = ENTRY.read_text(encoding="utf-8")
     assert "MOLGAP_LOCAL_GLOBAL_RUN_MODE" in entry
     assert "relative_value_graphstate" in entry
-    assert "__FROZEN_SOURCE_COMMIT__" in entry
-
+    assert "7ad36a3cbb9f47b42430508795e8de07b3e02684" in entry

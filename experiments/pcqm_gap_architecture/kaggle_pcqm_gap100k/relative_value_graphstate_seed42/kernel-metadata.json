@@ -1,0 +1,20 @@
+{
+  "id": "nothingnessvoid/molgap-pcqm-relative-value-graphstate-s42",
+  "title": "MolGap PCQM Relative Value GraphState S42",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-pcqm-relative-value-source"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "nothingnessvoid/molgap-pcqm-hop-path-cache-s42"
+  ],
+  "model_sources": []
+}
+
