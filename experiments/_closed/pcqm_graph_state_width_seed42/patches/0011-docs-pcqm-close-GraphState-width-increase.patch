@@ -1,0 +1,155 @@
+From 19fefd18f0fe8a353693fb72f49f82fcfb244d94 Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 18:18:13 +0900
+Subject: [PATCH 11/11] docs(pcqm): close GraphState width increase
+
+---
+ .../graph_state_width_seed42/decision.md      | 48 +++++++++++++++++++
+ .../mechanical_acceptance.json                | 31 ++++++++++++
+ .../split_v2_launch_manifest.json             |  5 +-
+ .../terminal_handoff_marker.json              | 24 ++++++++++
+ 4 files changed, 106 insertions(+), 2 deletions(-)
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/decision.md
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/mechanical_acceptance.json
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/terminal_handoff_marker.json
+
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/decision.md b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/decision.md
+new file mode 100644
+index 0000000..dd8524b
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/decision.md
+@@ -0,0 +1,48 @@
++# GraphState Width Seed-42 Decision
++
++## Scope
++
++On 2026-09-08, a paired PCQM-100K screen compared the accepted GraphState64
++encoder with an otherwise identical GraphState128 encoder. Both candidates
++used the same seed-42 initialization contract, immutable 100K/10K data roles,
++ETKDGv3/MMFF94s cache, optimizer, schedule, and direct Gap target.
++
++Kaggle repeatedly ignored the requested T4x2 shape. The protocol-authorized
++fallback ran one candidate per isolated kernel on two matching
++`Tesla P100-PCIE-16GB` devices. The corrected mechanical acceptance passed all
++source, cache, row, target, initialization, finite-value, checkpoint, payload,
++hash, accelerator-identity, and sealed-role checks.
++
++## Result
++
++| Candidate | Parameters | Best epoch | Validation Gap MAE | Throughput |
++|---|---:|---:|---:|---:|
++| GraphState64 | 3,665,809 | 35 | 0.1301066 eV | 602.25 graphs/s |
++| GraphState128 | 3,803,985 | 38 | 0.1305125 eV | 561.57 graphs/s |
++
++GraphState128 regressed by `0.0004059 eV`. The paired bootstrap 95% interval
++for candidate-minus-baseline error was `[-0.0009570, 0.0016199] eV`, which
++crossed zero. It retained `0.9325x` baseline throughput, so the compute gate
++passed, but the required `0.001 eV` material accuracy gain failed.
++
++The wider state added 138,176 parameters (`3.77%`), reduced throughput by
++`6.75%`, and required a later best epoch without improving validation error.
++The evidence therefore did not support GraphState width as the limiting
++bottleneck under this architecture and training contract.
++
++## Decision
++
++The GraphState64-to-128 width increase was rejected and closed at seed 42.
++Seeds 43/44, 1M bridging, full-scale training, official validation, and
++test-dev were not authorized. GraphState64 remained the comparison anchor;
++this result did not change the production registry or the Track B delivery
++candidate.
++
++Mechanical acceptance:
++[`mechanical_acceptance.json`](mechanical_acceptance.json), SHA-256
++`00bfd88f917f93d60117ea89c5134e2c053d9b39b3859943423d3e719a8d4fef`.
++
++Terminal log SHA-256:
++
++- GraphState64: `de1984e7434f39b60006aaded18c1fa0b19c5ea6ff4d4219fea721162ef3543d`
++- GraphState128: `9a511ab4478b41eda81819f84c4df3e42120c20875642ef62a9ce237f9913986`
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/mechanical_acceptance.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/mechanical_acceptance.json
+new file mode 100644
+index 0000000..0b1f55d
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/mechanical_acceptance.json
+@@ -0,0 +1,31 @@
++{
++  "format": "molgap-pcqm-gap100k-graph-state-width-acceptance-v2",
++  "accepted": true,
++  "errors": [],
++  "execution": "two_isolated_single_gpu_parallel_kernels",
++  "gpu_names": [
++    "Tesla P100-PCIE-16GB",
++    "Tesla P100-PCIE-16GB"
++  ],
++  "source_commit": "f68047e36a8bccb8c6052e661c70f6afa63d3280",
++  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
++  "seed": 42,
++  "baseline_validation_gap_mae_eV": 0.1301066130399704,
++  "candidate_validation_gap_mae_eV": 0.130512535572052,
++  "candidate_minus_baseline_eV": 0.00040592419099994004,
++  "paired_delta_bootstrap_ci95_eV": [
++    -0.0009570185357006267,
++    0.0016198604600504037
++  ],
++  "material_gain_at_least_0_001_eV": false,
++  "candidate_to_baseline_throughput_ratio": 0.9324552924006054,
++  "throughput_gate_at_least_0_70x": true,
++  "scientific_gate_passed": false,
++  "preflight_peak_memory_bytes": {
++    "ogb_distance_angle_triangle_edge_state_graph_state9": 270532608,
++    "ogb_distance_angle_triangle_edge_state_graph_state9_w128": 272629760
++  },
++  "model_inference_executed": false,
++  "official_validation_role_read": false,
++  "test_dev_role_read": false
++}
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
+index fc484c7..ea91990 100644
+--- a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
+@@ -1,8 +1,9 @@
+ {
+   "format": "molgap-pcqm-graph-state-width-split-launch-v2",
+   "submitted_at": "2026-09-08T16:03:00+09:00",
+-  "observed_at": "2026-09-08T16:06:00+09:00",
+-  "launch_status": "RUNNING",
++  "observed_at": "2026-09-08T18:10:42+09:00",
++  "launch_status": "COMPLETE",
++  "terminal_status": "COMPLETE",
+   "execution": "two_isolated_single_gpu_parallel_kernels",
+   "runtime_repair": "p100_torch_2_7_1_cu126_sm60",
+   "kernels": {
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/terminal_handoff_marker.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/terminal_handoff_marker.json
+new file mode 100644
+index 0000000..f3c85f2
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/terminal_handoff_marker.json
+@@ -0,0 +1,24 @@
++{
++  "format": "molgap-pcqm-graph-state-width-terminal-handoff-v1",
++  "automation_id": "molgap-kaggle-graphstate-width-monitor",
++  "coordinator_thread_id": "019ef861-8611-7790-a091-a887effa7813",
++  "delivered_at": "2026-09-08T09:08:00Z",
++  "terminal_status": "COMPLETE",
++  "kernels": {
++    "baseline": {
++      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
++      "version": 2
++    },
++    "candidate": {
++      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
++      "version": 2
++    }
++  },
++  "raw_evidence": [
++    "platforms/_records/kaggle/graph_state_width_w64_s42_v2_terminal_20260908",
++    "platforms/_records/kaggle/graph_state_width_w128_s42_v2_terminal_20260908"
++  ],
++  "acceptance_log": "platforms/_records/kaggle/graph_state_width_s42_v2_mechanical_acceptance_20260908/mechanical_acceptance_v3.log",
++  "handoff_delivered": true,
++  "scientific_interpretation_requested_from_coordinator": true
++}
+-- 
+2.53.0.windows.1
+

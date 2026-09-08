@@ -1,0 +1,31 @@
+{
+  "format": "molgap-pcqm-gap100k-graph-state-width-acceptance-v2",
+  "accepted": true,
+  "errors": [],
+  "execution": "two_isolated_single_gpu_parallel_kernels",
+  "gpu_names": [
+    "Tesla P100-PCIE-16GB",
+    "Tesla P100-PCIE-16GB"
+  ],
+  "source_commit": "f68047e36a8bccb8c6052e661c70f6afa63d3280",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "seed": 42,
+  "baseline_validation_gap_mae_eV": 0.1301066130399704,
+  "candidate_validation_gap_mae_eV": 0.130512535572052,
+  "candidate_minus_baseline_eV": 0.00040592419099994004,
+  "paired_delta_bootstrap_ci95_eV": [
+    -0.0009570185357006267,
+    0.0016198604600504037
+  ],
+  "material_gain_at_least_0_001_eV": false,
+  "candidate_to_baseline_throughput_ratio": 0.9324552924006054,
+  "throughput_gate_at_least_0_70x": true,
+  "scientific_gate_passed": false,
+  "preflight_peak_memory_bytes": {
+    "ogb_distance_angle_triangle_edge_state_graph_state9": 270532608,
+    "ogb_distance_angle_triangle_edge_state_graph_state9_w128": 272629760
+  },
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

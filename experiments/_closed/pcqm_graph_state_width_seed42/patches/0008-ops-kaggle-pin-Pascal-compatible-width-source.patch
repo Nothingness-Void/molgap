@@ -1,0 +1,89 @@
+From 5b17bcb28a866c327b6ebac00fea41f521f5913d Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 16:00:17 +0900
+Subject: [PATCH 08/11] ops(kaggle): pin Pascal-compatible width source
+
+---
+ .../graph_state_width_baseline_seed42/kernel-metadata.json    | 2 +-
+ .../graph_state_width_baseline_seed42/run_single.py           | 2 +-
+ .../graph_state_width_candidate_seed42/kernel-metadata.json   | 2 +-
+ .../graph_state_width_candidate_seed42/run_single.py          | 2 +-
+ tests/test_pcqm_graph_state_width_contract.py                 | 4 ++--
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/kernel-metadata.json b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/kernel-metadata.json
+index e4de6a5..3c14f95 100644
+--- a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/kernel-metadata.json
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/kernel-metadata.json
+@@ -9,7 +9,7 @@
+   "enable_internet": "true",
+   "machine_shape": "NvidiaTeslaT4",
+   "dataset_sources": [
+-    "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
++    "nothingnessvoid/molgap-pcqm-graphstate-width-source-v3-20260908",
+     "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset"
+   ],
+   "competition_sources": [],
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/run_single.py b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/run_single.py
+index 528d63f..ec6d141 100644
+--- a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/run_single.py
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_baseline_seed42/run_single.py
+@@ -8,7 +8,7 @@ import sys
+ from pathlib import Path
+ 
+ 
+-EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"
++EXPECTED_SOURCE_COMMIT = "f68047e36a8bccb8c6052e661c70f6afa63d3280"
+ 
+ 
+ def source_python_root() -> Path:
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/kernel-metadata.json b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/kernel-metadata.json
+index b20ef4a..4cc01cf 100644
+--- a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/kernel-metadata.json
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/kernel-metadata.json
+@@ -9,7 +9,7 @@
+   "enable_internet": "true",
+   "machine_shape": "NvidiaTeslaT4",
+   "dataset_sources": [
+-    "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
++    "nothingnessvoid/molgap-pcqm-graphstate-width-source-v3-20260908",
+     "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset"
+   ],
+   "competition_sources": [],
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/run_single.py b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/run_single.py
+index 9f97e42..5bfa65d 100644
+--- a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/run_single.py
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_candidate_seed42/run_single.py
+@@ -8,7 +8,7 @@ import sys
+ from pathlib import Path
+ 
+ 
+-EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"
++EXPECTED_SOURCE_COMMIT = "f68047e36a8bccb8c6052e661c70f6afa63d3280"
+ 
+ 
+ def source_python_root() -> Path:
+diff --git a/tests/test_pcqm_graph_state_width_contract.py b/tests/test_pcqm_graph_state_width_contract.py
+index bb93e55..9d3804c 100644
+--- a/tests/test_pcqm_graph_state_width_contract.py
++++ b/tests/test_pcqm_graph_state_width_contract.py
+@@ -114,7 +114,7 @@ def test_single_gpu_packages_pin_the_same_source_and_isolate_gpu_zero() -> None:
+     for root, expected_id in expected_ids.items():
+         wrapper = (root / "run_single.py").read_text(encoding="utf-8")
+         ast.parse(wrapper)
+-        assert 'EXPECTED_SOURCE_COMMIT = "c413fc13b8b15e659e90853c429119189577c379"' in wrapper
++        assert 'EXPECTED_SOURCE_COMMIT = "f68047e36a8bccb8c6052e661c70f6afa63d3280"' in wrapper
+         assert 'os.environ["CUDA_VISIBLE_DEVICES"] = "0"' in wrapper
+         assert 'os.environ["MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"' in wrapper
+         metadata = json.loads((root / "kernel-metadata.json").read_text(encoding="utf-8"))
+@@ -122,6 +122,6 @@ def test_single_gpu_packages_pin_the_same_source_and_isolate_gpu_zero() -> None:
+         assert metadata["is_private"] == "true"
+         assert metadata["machine_shape"] == "NvidiaTeslaT4"
+         assert metadata["dataset_sources"] == [
+-            "nothingnessvoid/molgap-pcqm-graphstate-width-source-v2-20260908",
++            "nothingnessvoid/molgap-pcqm-graphstate-width-source-v3-20260908",
+             "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+         ]
+-- 
+2.53.0.windows.1
+

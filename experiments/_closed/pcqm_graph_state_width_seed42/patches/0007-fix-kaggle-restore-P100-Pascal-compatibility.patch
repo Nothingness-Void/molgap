@@ -1,0 +1,102 @@
+From f68047e36a8bccb8c6052e661c70f6afa63d3280 Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 15:59:20 +0900
+Subject: [PATCH 07/11] fix(kaggle): restore P100 Pascal compatibility
+
+---
+ .../pcqm_graph_state_width_single_runner.py   | 40 +++++++++++++++++++
+ tests/test_pcqm_graph_state_width_contract.py |  6 +++
+ 2 files changed, 46 insertions(+)
+
+diff --git a/src/molgap/pcqm_graph_state_width_single_runner.py b/src/molgap/pcqm_graph_state_width_single_runner.py
+index ec95d7b..7507dba 100644
+--- a/src/molgap/pcqm_graph_state_width_single_runner.py
++++ b/src/molgap/pcqm_graph_state_width_single_runner.py
+@@ -3,6 +3,8 @@ from __future__ import annotations
+ 
+ import json
+ import os
++import subprocess
++import sys
+ import time
+ from pathlib import Path
+ 
+@@ -10,6 +12,39 @@ from pathlib import Path
+ BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
+ CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
+ ALLOWED = {BASELINE, CANDIDATE}
++PASCAL_COMPAT_RESTART = "MOLGAP_GRAPHSTATE_WIDTH_PASCAL_RESTART"
++
++
++def ensure_pascal_compatible_torch() -> None:
++    """Install the verified CUDA 12.6 build when Kaggle assigns a P100."""
++    import torch
++
++    if not torch.cuda.is_available():
++        raise RuntimeError("Kaggle did not allocate a GPU")
++    if torch.cuda.get_device_capability(0) != (6, 0):
++        return
++    if "sm_60" in set(torch.cuda.get_arch_list()):
++        return
++    if os.environ.get(PASCAL_COMPAT_RESTART) == "1":
++        raise RuntimeError("P100 compatibility install still lacks sm_60")
++    subprocess.check_call(
++        [
++            sys.executable,
++            "-m",
++            "pip",
++            "install",
++            "--quiet",
++            "--no-cache-dir",
++            "--no-deps",
++            "--force-reinstall",
++            "torch==2.7.1",
++            "nvidia-cusparselt-cu12==0.6.3",
++            "--index-url",
++            "https://download.pytorch.org/whl/cu126",
++        ]
++    )
++    os.environ[PASCAL_COMPAT_RESTART] = "1"
++    os.execv(sys.executable, [sys.executable, *sys.argv])
+ 
+ 
+ def main() -> None:
+@@ -22,6 +57,7 @@ def main() -> None:
+     base.OUT.mkdir(parents=True, exist_ok=True)
+     completed = False
+     try:
++        ensure_pascal_compatible_torch()
+         base.install_dependencies()
+         import torch
+ 
+@@ -32,6 +68,10 @@ def main() -> None:
+         gpu_name = torch.cuda.get_device_name(0)
+         if not any(token in gpu_name for token in ("T4", "P100")):
+             raise RuntimeError(f"Unsupported Kaggle GPU: {gpu_name}")
++        if torch.cuda.get_device_capability(0) == (6, 0) and "sm_60" not in set(
++            torch.cuda.get_arch_list()
++        ):
++            raise RuntimeError("P100-compatible torch did not provide sm_60")
+         markers = list(Path("/kaggle/input").rglob("PCQM_GAP100K_SOURCE_COMMIT.txt"))
+         if len(markers) != 1:
+             raise RuntimeError(f"Expected one source marker, found {markers}")
+diff --git a/tests/test_pcqm_graph_state_width_contract.py b/tests/test_pcqm_graph_state_width_contract.py
+index 2a639a3..bb93e55 100644
+--- a/tests/test_pcqm_graph_state_width_contract.py
++++ b/tests/test_pcqm_graph_state_width_contract.py
+@@ -56,6 +56,12 @@ def test_single_gpu_fallback_is_one_candidate_and_keeps_durable_outputs() -> Non
+     source = SINGLE_RUNNER.read_text(encoding="utf-8")
+     for token in (
+         "MOLGAP_SINGLE_CANDIDATE",
++        "ensure_pascal_compatible_torch",
++        '"torch==2.7.1"',
++        '"nvidia-cusparselt-cu12==0.6.3"',
++        '"https://download.pytorch.org/whl/cu126"',
++        '"sm_60"',
++        "os.execv",
+         "torch.cuda.device_count() != 1",
+         "initialization_preflight.json",
+         "single_result.json",
+-- 
+2.53.0.windows.1
+

@@ -1,0 +1,115 @@
+From 434630b5c049ae29cfe4b14c11356722c8b82cf8 Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 15:03:38 +0900
+Subject: [PATCH 02/11] ops(kaggle): package GraphState width screen
+
+---
+ .../kernel-metadata.json                      | 18 ++++++++++
+ .../graph_state_width_seed42/run_screen.py    | 36 +++++++++++++++++++
+ tests/test_pcqm_graph_state_width_contract.py | 18 ++++++++++
+ 3 files changed, 72 insertions(+)
+ create mode 100644 experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/kernel-metadata.json
+ create mode 100644 experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/run_screen.py
+
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/kernel-metadata.json b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/kernel-metadata.json
+new file mode 100644
+index 0000000..7d292fb
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/kernel-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "id": "nothingnessvoid/molgap-pcqm-graphstate-width-s42",
++  "title": "MolGap PCQM GraphState Width S42",
++  "code_file": "run_screen.py",
++  "language": "python",
++  "kernel_type": "script",
++  "is_private": "true",
++  "enable_gpu": "true",
++  "enable_internet": "true",
++  "machine_shape": "NvidiaTeslaT4",
++  "dataset_sources": [
++    "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
++    "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset"
++  ],
++  "competition_sources": [],
++  "kernel_sources": [],
++  "model_sources": []
++}
+diff --git a/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/run_screen.py b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/run_screen.py
+new file mode 100644
+index 0000000..6457394
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42/run_screen.py
+@@ -0,0 +1,36 @@
++"""Kaggle entry point for the frozen GraphState width seed-42 screen."""
++from __future__ import annotations
++
++import os
++import runpy
++import shutil
++import sys
++from pathlib import Path
++
++
++EXPECTED_SOURCE_COMMIT = "2f354e07f21818d7fdf6610b5a876483ae014fb8"
++
++
++def source_python_root() -> Path:
++    matches = list(Path("/kaggle/input").rglob("src/molgap/pcqm_local_global_runner.py"))
++    if len(matches) == 1:
++        return matches[0].parents[1]
++    archives = list(Path("/kaggle/input").rglob("src.zip"))
++    if len(archives) != 1:
++        raise RuntimeError(f"Expected one runner source, found {matches}/{archives}")
++    extracted = Path("/kaggle/working/_molgap_graph_state_width_source")
++    shutil.unpack_archive(archives[0], extracted)
++    modules = list(extracted.rglob("molgap/pcqm_local_global_runner.py"))
++    if len(modules) != 1:
++        raise RuntimeError(f"Unexpected source archive layout: {modules}")
++    return modules[0].parents[1]
++
++
++os.environ["MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"
++os.environ["MOLGAP_LOCAL_GLOBAL_SEED"] = "42"
++os.environ["MOLGAP_LOCAL_GLOBAL_OUTPUT"] = (
++    "/kaggle/working/pcqm_gap100k_graph_state_width_seed42"
++)
++os.environ["MOLGAP_EXPECTED_MODEL_SOURCE_COMMIT"] = EXPECTED_SOURCE_COMMIT
++sys.path.insert(0, str(source_python_root()))
++runpy.run_module("molgap.pcqm_local_global_runner", run_name="__main__")
+diff --git a/tests/test_pcqm_graph_state_width_contract.py b/tests/test_pcqm_graph_state_width_contract.py
+index b7e423a..6a65bbe 100644
+--- a/tests/test_pcqm_graph_state_width_contract.py
++++ b/tests/test_pcqm_graph_state_width_contract.py
+@@ -9,6 +9,7 @@ MODEL = ROOT / "src/molgap/pcqm_gap_architecture.py"
+ RUNNER = ROOT / "src/molgap/pcqm_local_global_runner.py"
+ ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py"
+ PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
++KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42"
+ BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
+ CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
+ 
+@@ -59,3 +60,20 @@ def test_acceptance_recomputes_paired_metrics_and_keeps_roles_sealed() -> None:
+         '"test_dev_role_read": False',
+     ):
+         assert token in source
++
++
++def test_kaggle_package_pins_private_dual_t4_inputs() -> None:
++    import json
++
++    wrapper = (KERNEL / "run_screen.py").read_text(encoding="utf-8")
++    ast.parse(wrapper)
++    assert 'EXPECTED_SOURCE_COMMIT = "2f354e07f21818d7fdf6610b5a876483ae014fb8"' in wrapper
++    assert '"MOLGAP_LOCAL_GLOBAL_RUN_MODE"] = "graph_state_width"' in wrapper
++    metadata = json.loads((KERNEL / "kernel-metadata.json").read_text(encoding="utf-8"))
++    assert metadata["id"] == "nothingnessvoid/molgap-pcqm-graphstate-width-s42"
++    assert metadata["is_private"] == "true"
++    assert metadata["machine_shape"] == "NvidiaTeslaT4"
++    assert metadata["dataset_sources"] == [
++        "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
++        "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
++    ]
+-- 
+2.53.0.windows.1
+

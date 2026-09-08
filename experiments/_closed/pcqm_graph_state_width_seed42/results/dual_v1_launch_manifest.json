@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pcqm-graph-state-width-launch-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-graphstate-width-s42",
+  "version": 1,
+  "terminal_status": "ERROR",
+  "failure_class": "infrastructure_accelerator_allocation",
+  "requested_accelerator": "NvidiaTeslaT4",
+  "observed_gpus": [
+    "Tesla P100-PCIE-16GB"
+  ],
+  "completed_candidates": [],
+  "model_source_commit": "2f354e07f21818d7fdf6610b5a876483ae014fb8",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
+  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "scientific_contract_changed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

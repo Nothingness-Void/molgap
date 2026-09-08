@@ -16,6 +16,10 @@ are not sources of live state.
 | `ideation_2026-06-25.md` | Archived literature ideation snapshot |
 | `phase7_kaggle_handoff.md` | Archived Phase 7 Kaggle handoff |
 
+Closed experiment implementations with their own reproducibility bundles live
+under `experiments/_closed/`. The GraphState width seed-42 bundle is
+[`pcqm_graph_state_width_seed42/`](../../experiments/_closed/pcqm_graph_state_width_seed42/README.md).
+
 Start from `CURRENT_STATE.md` and the reading protocol in `AGENTS.md`; open an
 archive document only when its pointer is relevant to the task. Paths quoted
 inside these documents are historical — the phase-1-7 narrative now lives in

@@ -1,0 +1,206 @@
+From c413fc13b8b15e659e90853c429119189577c379 Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 15:49:08 +0900
+Subject: [PATCH 04/11] fix(kaggle): add isolated single-GPU width fallback
+
+---
+ .../graph_state_width_seed42_protocol.md      |  10 +-
+ .../pcqm_graph_state_width_single_runner.py   | 101 ++++++++++++++++++
+ src/molgap/pcqm_local_global_runner.py        |   1 +
+ tests/test_pcqm_graph_state_width_contract.py |  19 +++-
+ 4 files changed, 129 insertions(+), 2 deletions(-)
+ create mode 100644 src/molgap/pcqm_graph_state_width_single_runner.py
+
+diff --git a/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md b/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
+index e7e1edb..0bdfff3 100644
+--- a/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
++++ b/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
+@@ -33,7 +33,11 @@ fusion, routing, residual target, or data augmentation is introduced.
+ - seed 42, FP32, batch 48 per candidate;
+ - AdamW, learning rate `1.6e-4`, weight decay `1e-6`;
+ - at most 40 epochs, cosine schedule, patience 8;
+-- one isolated fresh candidate per Kaggle T4 in a single T4x2 task;
++- preferred execution: one isolated fresh candidate per Kaggle T4 in a single
++  T4x2 task;
++- scheduler fallback after repeated single-P100 allocation: two concurrently
++  submitted single-GPU kernels, one candidate per kernel, accepted only when
++  both report the same GPU model and immutable source/cache identities;
+ - 4,000,000-parameter ceiling and 14,400-second search budget.
+ 
+ The two models receive the same seed and all equal-shaped parameters outside
+@@ -47,6 +51,10 @@ Every epoch atomically writes a resumable checkpoint and trace. Each candidate
+ must emit a hashed best model, last checkpoint, aligned 10K prediction payload,
+ metrics, and finite CUDA forward/backward preflight.
+ 
++The fallback changes only process placement. It does not change model code,
++data order, seed, optimizer, schedule, early stopping, target, or acceptance
++arithmetic. Results from mismatched GPU models are not scientifically accepted.
++
+ Promotion requires all of:
+ 
+ - GraphState128 improves the paired fresh GraphState64 control by at least
+diff --git a/src/molgap/pcqm_graph_state_width_single_runner.py b/src/molgap/pcqm_graph_state_width_single_runner.py
+new file mode 100644
+index 0000000..ec95d7b
+--- /dev/null
++++ b/src/molgap/pcqm_graph_state_width_single_runner.py
+@@ -0,0 +1,101 @@
++"""Single-GPU fallback runner for one frozen GraphState width candidate."""
++from __future__ import annotations
++
++import json
++import os
++import time
++from pathlib import Path
++
++
++BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
++CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
++ALLOWED = {BASELINE, CANDIDATE}
++
++
++def main() -> None:
++    import molgap.pcqm_local_global_runner as base
++
++    candidate = os.environ.get("MOLGAP_SINGLE_CANDIDATE", "")
++    if candidate not in ALLOWED:
++        raise RuntimeError(f"Unsupported single candidate: {candidate}")
++    task_started = time.perf_counter()
++    base.OUT.mkdir(parents=True, exist_ok=True)
++    completed = False
++    try:
++        base.install_dependencies()
++        import torch
++
++        if torch.cuda.device_count() != 1:
++            raise RuntimeError(
++                f"Expected one isolated GPU, found {torch.cuda.device_count()}"
++            )
++        gpu_name = torch.cuda.get_device_name(0)
++        if not any(token in gpu_name for token in ("T4", "P100")):
++            raise RuntimeError(f"Unsupported Kaggle GPU: {gpu_name}")
++        markers = list(Path("/kaggle/input").rglob("PCQM_GAP100K_SOURCE_COMMIT.txt"))
++        if len(markers) != 1:
++            raise RuntimeError(f"Expected one source marker, found {markers}")
++        source_commit = markers[0].read_text(encoding="utf-8").strip()
++        if source_commit != base.EXPECTED_MODEL_SOURCE_COMMIT:
++            raise RuntimeError(f"GraphState width source changed: {source_commit}")
++
++        cache_root, cache_manifest = base.find_input_cache()
++        initialization = base.initialization_preflight()
++        initialization_row = next(
++            row for row in initialization if row["candidate"] == candidate
++        )
++        base.atomic_json(
++            base.OUT / "initialization_preflight.json",
++            {
++                "format": "molgap-pcqm-graph-state-width-single-init-v1",
++                "complete": True,
++                "candidate": candidate,
++                "source_commit": source_commit,
++                "row": initialization_row,
++                "official_validation_role_read": False,
++                "test_dev_role_read": False,
++            },
++        )
++        graphs = base.load_graphs(cache_root, cache_manifest)
++        gpu_preflight = base.gpu_preflight(graphs, candidate, 0)
++        metrics = base.train_one(graphs, candidate, task_started, 0)
++        completed = True
++        result = {
++            "format": "molgap-pcqm-graph-state-width-single-result-v1",
++            "complete": True,
++            "candidate": candidate,
++            "source_commit": source_commit,
++            "geometry_cache_aggregate_sha256": base.EXPECTED_GEOMETRY_SHA256,
++            "input_cache_aggregate_sha256": cache_manifest["aggregate_sha256"],
++            "seed": base.SEED,
++            "gpu": gpu_name,
++            "execution": "isolated_single_gpu_parallel_kernel",
++            "initialization_preflight": initialization_row,
++            "gpu_preflight": gpu_preflight,
++            "metrics": metrics,
++            "elapsed_s": time.perf_counter() - task_started,
++            "official_validation_role_read": False,
++            "test_dev_role_read": False,
++            "molecular_research_server_accessed": False,
++            "full_data_authorized": False,
++        }
++        base.atomic_json(base.OUT / "single_result.json", result)
++        print(json.dumps(result, indent=2), flush=True)
++    except Exception as error:
++        base.atomic_json(
++            base.OUT / "single_failure.json",
++            {
++                "type": type(error).__name__,
++                "message": str(error),
++                "candidate": candidate,
++                "completed": completed,
++                "elapsed_s": time.perf_counter() - task_started,
++                "official_validation_role_read": False,
++                "test_dev_role_read": False,
++            },
++        )
++        raise
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/src/molgap/pcqm_local_global_runner.py b/src/molgap/pcqm_local_global_runner.py
+index 52e2a95..3d126f9 100644
+--- a/src/molgap/pcqm_local_global_runner.py
++++ b/src/molgap/pcqm_local_global_runner.py
+@@ -241,6 +241,7 @@ if RUN_MODE in PAIRED_GRAPHSTATE_MODES:
+     SEARCH_BUDGET_S = 14_400
+ EXPECTED_GPU_COUNT = 2
+ EXPECTED_GPU_TOKEN = "T4"
++EXPECTED_GPU_TOKEN = os.environ.get("MOLGAP_EXPECTED_GPU_TOKEN", EXPECTED_GPU_TOKEN)
+ LOADER_WORKERS = 0
+ PIN_MEMORY = True
+ CANDIDATE_EXECUTION = "dual_t4_process_isolation"
+diff --git a/tests/test_pcqm_graph_state_width_contract.py b/tests/test_pcqm_graph_state_width_contract.py
+index 6a65bbe..acdacc8 100644
+--- a/tests/test_pcqm_graph_state_width_contract.py
++++ b/tests/test_pcqm_graph_state_width_contract.py
+@@ -9,13 +9,14 @@ MODEL = ROOT / "src/molgap/pcqm_gap_architecture.py"
+ RUNNER = ROOT / "src/molgap/pcqm_local_global_runner.py"
+ ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py"
+ PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
++SINGLE_RUNNER = ROOT / "src/molgap/pcqm_graph_state_width_single_runner.py"
+ KERNEL = ROOT / "experiments/pcqm_gap_architecture/kaggle_pcqm_gap100k/graph_state_width_seed42"
+ BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
+ CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
+ 
+ 
+ def test_graph_state_width_sources_parse() -> None:
+-    for path in (MODEL, RUNNER, ACCEPTANCE):
++    for path in (MODEL, RUNNER, SINGLE_RUNNER, ACCEPTANCE):
+         ast.parse(path.read_text(encoding="utf-8"))
+ 
+ 
+@@ -44,6 +45,22 @@ def test_protocol_freezes_the_bounded_seed42_gate() -> None:
+         "official validation",
+         "test-dev",
+         "full scale gates require separate authorization",
++        "same GPU model",
++    ):
++        assert token in source
++
++
++def test_single_gpu_fallback_is_one_candidate_and_keeps_durable_outputs() -> None:
++    source = SINGLE_RUNNER.read_text(encoding="utf-8")
++    for token in (
++        "MOLGAP_SINGLE_CANDIDATE",
++        "torch.cuda.device_count() != 1",
++        "initialization_preflight.json",
++        "single_result.json",
++        "single_failure.json",
++        "base.gpu_preflight",
++        "base.train_one",
++        '"full_data_authorized": False',
+     ):
+         assert token in source
+ 
+-- 
+2.53.0.windows.1
+

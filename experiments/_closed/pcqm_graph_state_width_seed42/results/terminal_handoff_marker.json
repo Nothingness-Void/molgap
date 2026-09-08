@@ -1,0 +1,24 @@
+{
+  "format": "molgap-pcqm-graph-state-width-terminal-handoff-v1",
+  "automation_id": "molgap-kaggle-graphstate-width-monitor",
+  "coordinator_thread_id": "019ef861-8611-7790-a091-a887effa7813",
+  "delivered_at": "2026-09-08T09:08:00Z",
+  "terminal_status": "COMPLETE",
+  "kernels": {
+    "baseline": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
+      "version": 2
+    },
+    "candidate": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
+      "version": 2
+    }
+  },
+  "raw_evidence": [
+    "platforms/_records/kaggle/graph_state_width_w64_s42_v2_terminal_20260908",
+    "platforms/_records/kaggle/graph_state_width_w128_s42_v2_terminal_20260908"
+  ],
+  "acceptance_log": "platforms/_records/kaggle/graph_state_width_s42_v2_mechanical_acceptance_20260908/mechanical_acceptance_v3.log",
+  "handoff_delivered": true,
+  "scientific_interpretation_requested_from_coordinator": true
+}

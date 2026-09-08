@@ -1,0 +1,67 @@
+From a8a14c8a94232d1260e4155acaebd348aae80ede Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 15:08:56 +0900
+Subject: [PATCH 03/11] ops(kaggle): record width screen allocation failure
+
+---
+ .../v1_failure_diagnosis.md                   | 21 +++++++++++++++++++
+ .../v1_launch_manifest.json                   | 19 +++++++++++++++++
+ 2 files changed, 40 insertions(+)
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_failure_diagnosis.md
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_launch_manifest.json
+
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_failure_diagnosis.md b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_failure_diagnosis.md
+new file mode 100644
+index 0000000..3029d4c
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_failure_diagnosis.md
+@@ -0,0 +1,21 @@
++# GraphState width seed-42 version-1 failure diagnosis
++
++Kaggle kernel `nothingnessvoid/molgap-pcqm-graphstate-width-s42` version 1
++ended with `ERROR` before dependency installation, input loading, CUDA model
++preflight, or any training epoch.
++
++Although the kernel metadata requested `NvidiaTeslaT4`, Kaggle allocated one
++`Tesla P100-PCIE-16GB`. The frozen dual-T4 host check rejected that allocation
++after `0.03794` seconds. `completed_candidates=[]`; official validation and
++test-dev remained unread.
++
++This was an infrastructure allocation failure. Retrying the unchanged kernel
++does not alter the model, source, data, split, geometry, seed, precision,
++optimizer, schedule, checkpoint, or decision contract.
++
++Ignored raw evidence:
++
++- `failure.json` SHA-256
++  `f9932c7ba05cf97a80a012b19cca021e0633833da333371aee2b9128fdb16b3f`;
++- terminal log SHA-256
++  `c2294ca5388dc718a24cf84d60d10ec683ad5fcecc3b28686a58580694dfbcca`.
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_launch_manifest.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_launch_manifest.json
+new file mode 100644
+index 0000000..3a8ceb8
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/v1_launch_manifest.json
+@@ -0,0 +1,19 @@
++{
++  "format": "molgap-pcqm-graph-state-width-launch-v1",
++  "kernel": "nothingnessvoid/molgap-pcqm-graphstate-width-s42",
++  "version": 1,
++  "terminal_status": "ERROR",
++  "failure_class": "infrastructure_accelerator_allocation",
++  "requested_accelerator": "NvidiaTeslaT4",
++  "observed_gpus": [
++    "Tesla P100-PCIE-16GB"
++  ],
++  "completed_candidates": [],
++  "model_source_commit": "2f354e07f21818d7fdf6610b5a876483ae014fb8",
++  "source_dataset": "nothingnessvoid/molgap-pcqm-graphstate-width-source-20260908",
++  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
++  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
++  "scientific_contract_changed": false,
++  "official_validation_role_read": false,
++  "test_dev_role_read": false
++}
+-- 
+2.53.0.windows.1
+

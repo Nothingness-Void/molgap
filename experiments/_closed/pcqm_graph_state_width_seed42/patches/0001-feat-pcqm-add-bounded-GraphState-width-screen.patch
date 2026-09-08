@@ -1,0 +1,644 @@
+From 2f354e07f21818d7fdf6610b5a876483ae014fb8 Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 15:02:13 +0900
+Subject: [PATCH 01/11] feat(pcqm): add bounded GraphState width screen
+
+---
+ .../accept_pcqm100k_graph_state_width.py      | 237 ++++++++++++++++++
+ .../graph_state_width_seed42_protocol.md      |  59 +++++
+ src/molgap/pcqm_gap_architecture.py           |   3 +-
+ src/molgap/pcqm_local_global_runner.py        |  86 ++++++-
+ tests/test_pcqm_graph_state_width_contract.py |  61 +++++
+ 5 files changed, 441 insertions(+), 5 deletions(-)
+ create mode 100644 experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py
+ create mode 100644 experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
+ create mode 100644 tests/test_pcqm_graph_state_width_contract.py
+
+diff --git a/experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py b/experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py
+new file mode 100644
+index 0000000..a1b7c4d
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py
+@@ -0,0 +1,237 @@
++"""Mechanical acceptance for the GraphState64/128 seed-42 screen."""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import math
++from pathlib import Path
++
++
++BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
++CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
++CANDIDATES = (BASELINE, CANDIDATE)
++PARAMETERS = {BASELINE: 3_665_809, CANDIDATE: 3_803_985}
++WIDTHS = {BASELINE: 64, CANDIDATE: 128}
++GEOMETRY_SHA = "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22"
++T4_MEMORY_BYTES = 16 * 1024**3
++
++
++def sha256_file(path: Path) -> str:
++    digest = hashlib.sha256()
++    with path.open("rb") as handle:
++        for block in iter(lambda: handle.read(1024 * 1024), b""):
++            digest.update(block)
++    return digest.hexdigest()
++
++
++def accept(root: Path, expected_source_commit: str) -> dict:
++    import numpy as np
++    import torch
++
++    selection = json.loads((root / "selection.json").read_text(encoding="utf-8"))
++    errors: list[str] = []
++
++    def require(condition: bool, label: str) -> None:
++        if not condition:
++            errors.append(label)
++
++    required = {
++        "complete": True,
++        "run_mode": "graph_state_width",
++        "source_commit": expected_source_commit,
++        "geometry_cache_aggregate_sha256": GEOMETRY_SHA,
++        "input_cache_aggregate_sha256": GEOMETRY_SHA,
++        "seed": 42,
++        "candidates": list(CANDIDATES),
++        "execution": "dual_t4_candidate_parallel",
++        "device_assignments": {"0": [BASELINE], "1": [CANDIDATE]},
++        "search_budget_s": 14_400,
++        "official_validation_role_read": False,
++        "test_dev_role_read": False,
++        "molecular_research_server_accessed": False,
++        "seed43_44_submitted": False,
++        "full_data_authorized": False,
++    }
++    for key, expected in required.items():
++        require(selection.get(key) == expected, key)
++    gpu_names = selection.get("gpu_names", [])
++    require(
++        len(gpu_names) == 2 and all("T4" in name for name in gpu_names),
++        "dual T4 allocation",
++    )
++
++    preflight = selection.get("preflight", [])
++    require(len(preflight) == 2, "preflight count")
++    peak_memory: dict[str, int] = {}
++    for row in preflight:
++        identity = row.get("candidate")
++        require(identity in CANDIDATES, f"preflight identity {identity}")
++        require(row.get("parameter_count") == PARAMETERS.get(identity), f"parameters {identity}")
++        require(row.get("global_attention_blocks") == [], f"attention {identity}")
++        require(row.get("graph_state_present") is True, f"GraphState {identity}")
++        require(row.get("graph_state_channels") == WIDTHS.get(identity), f"width {identity}")
++        require(row.get("shared_parameter_mismatches") == [], f"shared init {identity}")
++        shape_changes = row.get("shared_parameter_shape_differences", [])
++        if identity == BASELINE:
++            require(shape_changes == [], "baseline shape changes")
++        else:
++            require(bool(shape_changes), "candidate width shape changes")
++            require(
++                all(str(name).startswith("graph_context.") for name in shape_changes),
++                "candidate non-GraphState shape changes",
++            )
++        require(
++            all(row.get(key) is True for key in ("finite_prediction", "finite_loss", "finite_gradients")),
++            f"finite {identity}",
++        )
++        memory = row.get("peak_memory_bytes")
++        require(
++            isinstance(memory, int) and 0 < memory <= 0.85 * T4_MEMORY_BYTES,
++            f"memory {identity}",
++        )
++        if isinstance(memory, int):
++            peak_memory[identity] = memory
++
++    runs = selection.get("runs", [])
++    require(len(runs) == 2, "run count")
++    by_name = {row.get("candidate"): row for row in runs}
++    payloads = {}
++    for identity in CANDIDATES:
++        path = root / "results" / identity / "metrics.json"
++        require(path.is_file(), f"metrics {identity}")
++        if not path.is_file():
++            continue
++        metrics = json.loads(path.read_text(encoding="utf-8"))
++        require(metrics == by_name.get(identity), f"selection metrics {identity}")
++        require(metrics.get("complete") is True, f"complete {identity}")
++        require(metrics.get("source_commit") == expected_source_commit, f"source {identity}")
++        require(metrics.get("input_cache_aggregate_sha256") == GEOMETRY_SHA, f"cache {identity}")
++        require(metrics.get("parameter_count") == PARAMETERS[identity], f"parameters {identity}")
++        require(metrics.get("validation_rows") == 10_000, f"rows {identity}")
++        contract = metrics.get("contract", {})
++        require(contract.get("graph_state_channels") == WIDTHS[identity], f"contract width {identity}")
++        require(contract.get("global_mechanism") == "gated_graph_state", f"mechanism {identity}")
++        require(contract.get("global_attention_blocks") == [], f"contract attention {identity}")
++        require(contract.get("max_epochs") == 40, f"epochs {identity}")
++        require(contract.get("precision") == "fp32", f"precision {identity}")
++        require(metrics.get("official_validation_role_read") is False, f"official valid {identity}")
++        require(metrics.get("test_dev_role_read") is False, f"test-dev {identity}")
++
++        artifacts = metrics.get("artifacts", {})
++        artifact_paths = {}
++        for name in ("best_model", "checkpoint", "validation_payload", "trace"):
++            relative = artifacts.get(name)
++            artifact = root / relative if isinstance(relative, str) else root / "__missing__"
++            artifact_paths[name] = artifact
++            require(artifact.is_file(), f"missing {name} {identity}")
++            if artifact.is_file():
++                require(
++                    sha256_file(artifact) == artifacts.get(f"{name}_sha256"),
++                    f"hash {name} {identity}",
++                )
++        if not all(path.is_file() for path in artifact_paths.values()):
++            continue
++
++        payload = torch.load(
++            artifact_paths["validation_payload"], map_location="cpu", weights_only=False
++        )
++        rows = payload.get("row_index")
++        targets = payload.get("target_eV")
++        predictions = payload.get("prediction_eV")
++        require(payload.get("candidate") == identity, f"payload identity {identity}")
++        require(payload.get("source_commit") == expected_source_commit, f"payload source {identity}")
++        require(payload.get("seed") == 42, f"payload seed {identity}")
++        require(all(isinstance(value, torch.Tensor) for value in (rows, targets, predictions)), f"payload tensors {identity}")
++        if all(isinstance(value, torch.Tensor) for value in (rows, targets, predictions)):
++            rows = rows.reshape(-1).cpu()
++            targets = targets.reshape(-1).float().cpu()
++            predictions = predictions.reshape(-1).float().cpu()
++            require(rows.numel() == 10_000 and torch.unique(rows).numel() == 10_000, f"payload rows {identity}")
++            require(bool(torch.isfinite(targets).all()), f"finite targets {identity}")
++            require(bool(torch.isfinite(predictions).all()), f"finite predictions {identity}")
++            recomputed = float(torch.mean(torch.abs(predictions - targets)))
++            require(
++                math.isclose(recomputed, metrics.get("validation_gap_mae_eV", math.inf), rel_tol=0, abs_tol=5e-8),
++                f"recomputed MAE {identity}",
++            )
++            payloads[identity] = (rows, targets, predictions, recomputed)
++
++        best = torch.load(artifact_paths["best_model"], map_location="cpu", weights_only=False)
++        checkpoint = torch.load(artifact_paths["checkpoint"], map_location="cpu", weights_only=False)
++        for label, artifact in (("best", best), ("checkpoint", checkpoint)):
++            require(artifact.get("candidate") == identity, f"{label} identity {identity}")
++            require(artifact.get("source_commit") == expected_source_commit, f"{label} source {identity}")
++            require(artifact.get("seed") == 42, f"{label} seed {identity}")
++            require(isinstance(artifact.get("model"), dict) and bool(artifact["model"]), f"{label} state {identity}")
++
++    comparable = set(payloads) == set(CANDIDATES)
++    require(comparable, "paired payloads")
++    baseline_mae = candidate_mae = delta = throughput_ratio = None
++    ci95 = None
++    if comparable:
++        rows0, targets0, predictions0, baseline_mae = payloads[BASELINE]
++        rows1, targets1, predictions1, candidate_mae = payloads[CANDIDATE]
++        require(torch.equal(rows0, rows1), "paired rows")
++        require(torch.equal(targets0, targets1), "paired targets")
++        paired_delta = torch.abs(predictions1 - targets1) - torch.abs(predictions0 - targets0)
++        delta = float(paired_delta.mean())
++        values = paired_delta.numpy()
++        rng = np.random.default_rng(42)
++        bootstrap = np.empty(1000, dtype=np.float64)
++        for index in range(bootstrap.size):
++            sample = rng.integers(0, values.size, values.size)
++            bootstrap[index] = values[sample].mean()
++        ci95 = [float(np.quantile(bootstrap, 0.025)), float(np.quantile(bootstrap, 0.975))]
++        throughput_ratio = (
++            by_name[CANDIDATE]["mean_throughput_graphs_per_s"]
++            / by_name[BASELINE]["mean_throughput_graphs_per_s"]
++        )
++
++    improves = comparable and candidate_mae < baseline_mae
++    material = comparable and baseline_mae - candidate_mae >= 0.001
++    throughput_gate = throughput_ratio is not None and throughput_ratio >= 0.70
++    selected = CANDIDATE if improves else BASELINE
++    require(selection.get("selected_candidate") == selected, "selection")
++    require(selection.get("selected_strictly_improves_baseline") is improves, "selection gate")
++    result = {
++        "format": "molgap-pcqm-gap100k-graph-state-width-acceptance-v1",
++        "accepted": not errors,
++        "errors": errors,
++        "source_commit": expected_source_commit,
++        "geometry_cache_aggregate_sha256": GEOMETRY_SHA,
++        "seed": 42,
++        "baseline_validation_gap_mae_eV": baseline_mae,
++        "candidate_validation_gap_mae_eV": candidate_mae,
++        "candidate_minus_baseline_eV": delta,
++        "paired_delta_bootstrap_ci95_eV": ci95,
++        "material_gain_at_least_0_001_eV": material,
++        "candidate_to_baseline_throughput_ratio": throughput_ratio,
++        "throughput_gate_at_least_0_70x": throughput_gate,
++        "scientific_gate_passed": bool(material and throughput_gate),
++        "preflight_peak_memory_bytes": peak_memory,
++        "model_inference_executed": False,
++        "official_validation_role_read": False,
++        "test_dev_role_read": False,
++    }
++    if errors:
++        raise RuntimeError(json.dumps(result, indent=2))
++    return result
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("root", type=Path)
++    parser.add_argument("--expected-source-commit", required=True)
++    parser.add_argument("--output", type=Path)
++    args = parser.parse_args()
++    result = accept(args.root, args.expected_source_commit)
++    rendered = json.dumps(result, indent=2) + "\n"
++    if args.output:
++        args.output.parent.mkdir(parents=True, exist_ok=True)
++        args.output.write_text(rendered, encoding="utf-8")
++    print(rendered, end="")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md b/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
+new file mode 100644
+index 0000000..e7e1edb
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md
+@@ -0,0 +1,59 @@
++# GraphState Width Seed-42 Protocol
++
++## Question
++
++Does the accepted GraphState9 encoder lose useful molecule-level information
++because its recurrent graph state is only 64 channels wide?
++
++This is a paired 100K architecture screen. It does not authorize extra seeds,
++the available full PCQM4Mv2 corpus, official validation, test-dev, production
++changes, or molecular-research-server access.
++
++## Frozen pair
++
++Both candidates retain the same OGB categorical inputs, RWSE16, persistent
++EdgeState64, sparse WedgeState16, ETKDGv3/MMFF94s distance-angle bottom
++fusion, nine local ResGatedGraphConv blocks, direct scalar Gap head, and
++GraphState exchanges after blocks 3/6/9:
++
++1. `ogb_distance_angle_triangle_edge_state_graph_state9`: GraphState64.
++2. `ogb_distance_angle_triangle_edge_state_graph_state9_w128`: GraphState128.
++
++Only the recurrent graph-state width changes. The low-rank graph-to-atom
++exchange remains rank 32. No atom-level attention, new geometry, pretraining,
++fusion, routing, residual target, or data augmentation is introduced.
++
++## Data and optimization
++
++- official PCQM4Mv2 database;
++- first 100,000 official-train rows and the frozen 10,000 train-derived
++  internal-validation rows;
++- accepted ETKDGv3/MMFF94s geometry cache with aggregate SHA-256
++  `3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22`;
++- seed 42, FP32, batch 48 per candidate;
++- AdamW, learning rate `1.6e-4`, weight decay `1e-6`;
++- at most 40 epochs, cosine schedule, patience 8;
++- one isolated fresh candidate per Kaggle T4 in a single T4x2 task;
++- 4,000,000-parameter ceiling and 14,400-second search budget.
++
++The two models receive the same seed and all equal-shaped parameters outside
++`graph_context` must initialize bit-identically. Width-dependent
++`graph_context` tensors are recorded explicitly rather than treated as shared
++parameters.
++
++## Durability and decision
++
++Every epoch atomically writes a resumable checkpoint and trace. Each candidate
++must emit a hashed best model, last checkpoint, aligned 10K prediction payload,
++metrics, and finite CUDA forward/backward preflight.
++
++Promotion requires all of:
++
++- GraphState128 improves the paired fresh GraphState64 control by at least
++  `0.001 eV` validation Gap MAE;
++- candidate throughput is at least 70% of the control;
++- at least 15% T4 memory remains after preflight;
++- source, cache, row, target, checkpoint, and sealed-role acceptance passes.
++
++A failure closes this width increase. A pass records one seed-42 candidate;
++seeds 43/44 and the 1M/full scale gates require separate authorization.
+diff --git a/src/molgap/pcqm_gap_architecture.py b/src/molgap/pcqm_gap_architecture.py
+index 47c6a88..0e4d03b 100644
+--- a/src/molgap/pcqm_gap_architecture.py
++++ b/src/molgap/pcqm_gap_architecture.py
+@@ -2442,6 +2442,7 @@ def make_pcqm_gap_encoder(candidate: str):
+     local_global_modes = {
+         "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",
+         "ogb_distance_angle_triangle_edge_state_graph_state9": "graph_state",
++        "ogb_distance_angle_triangle_edge_state_graph_state9_w128": "graph_state",
+     }
+     if candidate in local_global_modes:
+         return OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
+@@ -2450,7 +2451,7 @@ def make_pcqm_gap_encoder(candidate: str):
+             wedge_channels=16,
+             geometry_basis_channels=16,
+             global_mode=local_global_modes[candidate],
+-            graph_state_channels=64,
++            graph_state_channels=(128 if candidate.endswith("_w128") else 64),
+             graph_exchange_rank=32,
+         )
+     raise ValueError(f"Unknown PCQM Gap candidate: {candidate}")
+diff --git a/src/molgap/pcqm_local_global_runner.py b/src/molgap/pcqm_local_global_runner.py
+index 0eba3c6..52e2a95 100644
+--- a/src/molgap/pcqm_local_global_runner.py
++++ b/src/molgap/pcqm_local_global_runner.py
+@@ -26,6 +26,7 @@ if RUN_MODE not in {
+     "signnet_lappe_graphstate",
+     "hop_path_graphstate",
+     "relative_value_graphstate",
++    "graph_state_width",
+     "conjugated_component_confirmation",
+ }:
+     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
+@@ -48,6 +49,7 @@ if RUN_MODE in {
+     "signnet_lappe_graphstate",
+     "hop_path_graphstate",
+     "relative_value_graphstate",
++    "graph_state_width",
+ } and SEED != 42:
+     raise RuntimeError("Local-statistics modes require seed 42")
+ if RUN_MODE == "conjugated_component_confirmation" and SEED != 43:
+@@ -143,6 +145,10 @@ RELATIVE_VALUE_GRAPHSTATE_CANDIDATES = (
+     "ogb_distance_angle_triangle_edge_state_graph_state9",
+     "ogb_distance_angle_relative_value_triangle_edge_state_graph_state9",
+ )
++GRAPH_STATE_WIDTH_CANDIDATES = (
++    "ogb_distance_angle_triangle_edge_state_graph_state9",
++    "ogb_distance_angle_triangle_edge_state_graph_state9_w128",
++)
+ PAIRED_GRAPHSTATE_MODES = {
+     "ring_graphstate",
+     "contact_graphstate",
+@@ -153,6 +159,7 @@ PAIRED_GRAPHSTATE_MODES = {
+     "signnet_lappe_graphstate",
+     "hop_path_graphstate",
+     "relative_value_graphstate",
++    "graph_state_width",
+     "conjugated_component_confirmation",
+ }
+ CANDIDATES = (
+@@ -166,6 +173,8 @@ CANDIDATES = (
+     if RUN_MODE == "hop_path_graphstate"
+     else RELATIVE_VALUE_GRAPHSTATE_CANDIDATES
+     if RUN_MODE == "relative_value_graphstate"
++    else GRAPH_STATE_WIDTH_CANDIDATES
++    if RUN_MODE == "graph_state_width"
+     else PNA_GRAPHSTATE_CANDIDATES
+     if RUN_MODE == "pna_statistics_graphstate"
+     else RETENTION_GRAPHSTATE_CANDIDATES
+@@ -194,6 +203,7 @@ EXPECTED_GLOBAL_BLOCKS = {
+     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
+     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: (),
+     RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: (),
++    GRAPH_STATE_WIDTH_CANDIDATES[1]: (),
+     COMPONENT_STATE_CANDIDATES[0]: (),
+     COMPONENT_STATE_CANDIDATES[1]: (),
+ }
+@@ -252,6 +262,7 @@ EXPECTED_PARAMETER_COUNTS = {
+     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
+     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: 3_697_537,
+     RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: 3_734_977,
++    GRAPH_STATE_WIDTH_CANDIDATES[1]: 3_803_985,
+     COMPONENT_STATE_CANDIDATES[0]: 3_672_257,
+     COMPONENT_STATE_CANDIDATES[1]: 3_694_033,
+ }
+@@ -301,7 +312,19 @@ def uses_conjugated_components(candidate: str) -> bool:
+ 
+ 
+ def uses_graph_state(candidate: str) -> bool:
+-    return candidate.endswith("graph_state9") or uses_conjugated_components(candidate)
++    return (
++        candidate.endswith("graph_state9")
++        or candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
++        or uses_conjugated_components(candidate)
++    )
++
++
++def expected_graph_state_channels(candidate: str) -> int | None:
++    if candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]:
++        return 128
++    if uses_graph_state(candidate):
++        return 64
++    return None
+ 
+ 
+ def expected_input_cache_sha256() -> str:
+@@ -892,12 +915,24 @@ def initialization_preflight() -> list[dict]:
+             raise RuntimeError(f"{candidate} exceeds parameter budget: {parameter_count}")
+         state = model.state_dict()
+         shared_parameter_mismatches = []
++        shared_parameter_shape_differences = []
+         if candidate == BASELINE:
+             reference_state = {
+                 name: value.detach().clone() for name, value in state.items()
+             }
+         else:
++            expected_width_change = (
++                RUN_MODE == "graph_state_width"
++                and candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
++            )
+             for name in sorted(set(reference_state).intersection(state)):
++                if expected_width_change and name.startswith("graph_context."):
++                    if reference_state[name].shape != state[name].shape:
++                        shared_parameter_shape_differences.append(name)
++                    continue
++                if reference_state[name].shape != state[name].shape:
++                    shared_parameter_shape_differences.append(name)
++                    continue
+                 if not torch.equal(reference_state[name], state[name]):
+                     shared_parameter_mismatches.append(name)
+             if shared_parameter_mismatches:
+@@ -905,6 +940,20 @@ def initialization_preflight() -> list[dict]:
+                     f"Shared initialization changed for {candidate}: "
+                     f"{shared_parameter_mismatches}"
+                 )
++            if expected_width_change:
++                if not shared_parameter_shape_differences or any(
++                    not name.startswith("graph_context.")
++                    for name in shared_parameter_shape_differences
++                ):
++                    raise RuntimeError(
++                        "GraphState width changed tensors outside graph_context: "
++                        f"{shared_parameter_shape_differences}"
++                    )
++            elif shared_parameter_shape_differences:
++                raise RuntimeError(
++                    f"Shared parameter shapes changed for {candidate}: "
++                    f"{shared_parameter_shape_differences}"
++                )
+         global_blocks = tuple(
+             layer
+             for layer, block in enumerate(model.convs, start=1)
+@@ -918,6 +967,15 @@ def initialization_preflight() -> list[dict]:
+         expected_graph_state = uses_graph_state(candidate)
+         if graph_state_present != expected_graph_state:
+             raise RuntimeError(f"Graph-state identity changed for {candidate}")
++        graph_state_channels = (
++            int(model.graph_context.output_norm.normalized_shape[0])
++            if graph_state_present
++            else None
++        )
++        if graph_state_channels != expected_graph_state_channels(candidate):
++            raise RuntimeError(
++                f"Graph-state width changed for {candidate}: {graph_state_channels}"
++            )
+         ring_hierarchy_present = hasattr(model, "ring_update")
+         if ring_hierarchy_present != uses_ring_hierarchy(candidate):
+             raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
+@@ -1050,6 +1108,7 @@ def initialization_preflight() -> list[dict]:
+                 "parameter_count": parameter_count,
+                 "global_attention_blocks": list(global_blocks),
+                 "graph_state_present": graph_state_present,
++                "graph_state_channels": graph_state_channels,
+                 "ring_hierarchy_present": ring_hierarchy_present,
+                 "ring_injection_zero": ring_injection_zero,
+                 "contact_state_present": contact_state_present,
+@@ -1070,6 +1129,9 @@ def initialization_preflight() -> list[dict]:
+                 "component_state_present": component_state_present,
+                 "component_return_zero": component_return_zero,
+                 "shared_parameter_mismatches": shared_parameter_mismatches,
++                "shared_parameter_shape_differences": (
++                    shared_parameter_shape_differences
++                ),
+             }
+         )
+         del model, state
+@@ -1114,6 +1176,15 @@ def gpu_preflight(
+         raise RuntimeError(f"Global schedule changed for {candidate}: {global_blocks}")
+     if graph_state_present != uses_graph_state(candidate):
+         raise RuntimeError(f"Graph-state identity changed for {candidate}")
++    graph_state_channels = (
++        int(model.graph_context.output_norm.normalized_shape[0])
++        if graph_state_present
++        else None
++    )
++    if graph_state_channels != expected_graph_state_channels(candidate):
++        raise RuntimeError(
++            f"Graph-state width changed for {candidate}: {graph_state_channels}"
++        )
+     ring_hierarchy_present = hasattr(model, "ring_update")
+     if ring_hierarchy_present != uses_ring_hierarchy(candidate):
+         raise RuntimeError(f"Ring-hierarchy identity changed for {candidate}")
+@@ -1181,7 +1252,10 @@ def gpu_preflight(
+         ) and bool(
+             torch.count_nonzero(model.component_to_atom.value.bias.detach()) == 0
+         )
+-    initial_function_structurally_equal_to_baseline = True
++    initial_function_structurally_equal_to_baseline = not (
++        RUN_MODE == "graph_state_width"
++        and candidate == GRAPH_STATE_WIDTH_CANDIDATES[1]
++    )
+     if uses_body_order_moment(candidate):
+         initial_function_structurally_equal_to_baseline = (
+             body_order_injection_zero
+@@ -1200,7 +1274,10 @@ def gpu_preflight(
+         initial_function_structurally_equal_to_baseline = hop_path_injection_zero
+     if component_state_present:
+         initial_function_structurally_equal_to_baseline = component_return_zero
+-    if not initial_function_structurally_equal_to_baseline:
++    if (
++        not initial_function_structurally_equal_to_baseline
++        and RUN_MODE != "graph_state_width"
++    ):
+         raise RuntimeError("Candidate initial function changed")
+     gpu_name = torch.cuda.get_device_name(0)
+     if EXPECTED_GPU_TOKEN not in gpu_name:
+@@ -1296,6 +1373,7 @@ def gpu_preflight(
+         "parameter_count": parameter_count,
+         "global_attention_blocks": list(global_blocks),
+         "graph_state_present": graph_state_present,
++        "graph_state_channels": graph_state_channels,
+         "ring_hierarchy_present": ring_hierarchy_present,
+         "ring_return_gradient_nonzero": ring_return_gradient_nonzero,
+         "contact_state_present": contact_state_present,
+@@ -1342,7 +1420,6 @@ def gpu_preflight(
+             "finite_gradients",
+             "ring_return_gradient_nonzero",
+             "contact_return_gradient_nonzero",
+-            "initial_function_structurally_equal_to_baseline",
+             "body_order_return_gradient_nonzero",
+             "pna_return_gradient_nonzero",
+             "retention_return_gradient_nonzero",
+@@ -1639,6 +1716,7 @@ def train_one(
+                 if uses_graph_state(candidate)
+                 else "multihead_attention"
+             ),
++            "graph_state_channels": expected_graph_state_channels(candidate),
+             "ring_hierarchy": (
+                 "symmsssr-ring64+shared-four-point-update+rank32-ring-to-atom"
+                 if uses_ring_hierarchy(candidate)
+diff --git a/tests/test_pcqm_graph_state_width_contract.py b/tests/test_pcqm_graph_state_width_contract.py
+new file mode 100644
+index 0000000..b7e423a
+--- /dev/null
++++ b/tests/test_pcqm_graph_state_width_contract.py
+@@ -0,0 +1,61 @@
++from __future__ import annotations
++
++import ast
++from pathlib import Path
++
++
++ROOT = Path(__file__).resolve().parents[1]
++MODEL = ROOT / "src/molgap/pcqm_gap_architecture.py"
++RUNNER = ROOT / "src/molgap/pcqm_local_global_runner.py"
++ACCEPTANCE = ROOT / "experiments/pcqm_gap_architecture/accept_pcqm100k_graph_state_width.py"
++PROTOCOL = ROOT / "experiments/pcqm_gap_architecture/graph_state_width_seed42_protocol.md"
++BASELINE = "ogb_distance_angle_triangle_edge_state_graph_state9"
++CANDIDATE = "ogb_distance_angle_triangle_edge_state_graph_state9_w128"
++
++
++def test_graph_state_width_sources_parse() -> None:
++    for path in (MODEL, RUNNER, ACCEPTANCE):
++        ast.parse(path.read_text(encoding="utf-8"))
++
++
++def test_factory_changes_only_the_graph_state_width_contract() -> None:
++    source = MODEL.read_text(encoding="utf-8")
++    assert CANDIDATE in source
++    assert 'graph_state_channels=(128 if candidate.endswith("_w128") else 64)' in source
++    runner = RUNNER.read_text(encoding="utf-8")
++    assert '"graph_state_width"' in runner
++    assert "GRAPH_STATE_WIDTH_CANDIDATES" in runner
++    assert "GRAPH_STATE_WIDTH_CANDIDATES[1]: 3_803_985" in runner
++    assert "shared_parameter_shape_differences" in runner
++    assert 'name.startswith("graph_context.")' in runner
++
++
++def test_protocol_freezes_the_bounded_seed42_gate() -> None:
++    source = PROTOCOL.read_text(encoding="utf-8")
++    for token in (
++        "100,000",
++        "10,000",
++        "seed 42",
++        "GraphState64",
++        "GraphState128",
++        "0.001 eV",
++        "at least 70%",
++        "official validation",
++        "test-dev",
++        "full scale gates require separate authorization",
++    ):
++        assert token in source
++
++
++def test_acceptance_recomputes_paired_metrics_and_keeps_roles_sealed() -> None:
++    source = ACCEPTANCE.read_text(encoding="utf-8")
++    for token in (
++        BASELINE,
++        CANDIDATE,
++        "paired_delta_bootstrap_ci95_eV",
++        "material_gain_at_least_0_001_eV",
++        "throughput_gate_at_least_0_70x",
++        '"official_validation_role_read": False',
++        '"test_dev_role_read": False',
++    ):
++        assert token in source
+-- 
+2.53.0.windows.1
+

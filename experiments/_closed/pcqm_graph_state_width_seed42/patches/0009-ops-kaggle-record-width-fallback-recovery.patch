@@ -1,0 +1,108 @@
+From 9cfb3443f7dc022895e58cba8ec66ec516e45fec Mon Sep 17 00:00:00 2001
+From: Nothingness-Void <55913486+Nothingness-Void@users.noreply.github.com>
+Date: Tue, 8 Sep 2026 16:07:37 +0900
+Subject: [PATCH 09/11] ops(kaggle): record width fallback recovery
+
+---
+ .../split_v1_failure_diagnosis.md             | 24 +++++++++++++
+ .../split_v1_launch_manifest.json             |  9 ++++-
+ .../split_v2_launch_manifest.json             | 36 +++++++++++++++++++
+ 3 files changed, 68 insertions(+), 1 deletion(-)
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_failure_diagnosis.md
+ create mode 100644 experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
+
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_failure_diagnosis.md b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_failure_diagnosis.md
+new file mode 100644
+index 0000000..3cc0172
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_failure_diagnosis.md
+@@ -0,0 +1,24 @@
++# Split version-1 failure diagnosis
++
++Both isolated seed-42 width kernels received one `Tesla P100-PCIE-16GB`
++instead of the requested T4 allocation. Input discovery and deterministic
++initialization preflight completed, but the first CUDA forward failed before
++epoch 0 because the Kaggle image's bundled PyTorch did not contain an `sm_60`
++kernel image.
++
++No candidate completed, no checkpoint was accepted, and no official
++validation or test-dev role was read. This was a runtime compatibility failure,
++not a model-quality result.
++
++Version 2 keeps the scientific contract unchanged and repairs only the runtime:
++on P100 it installs the repository's previously verified PyTorch 2.7.1/cu126
++stack, restarts the process, verifies `sm_60`, and only then loads the model.
++
++Ignored raw evidence SHA-256:
++
++- W64 log: `1ed2450791c8a05d011f38532fc1c98c79ec79212fbb90b6e43a20bd52e50b66`
++- W64 initialization preflight: `4feddd03fb6396f263fdce02915d2030f19f11ac28db4a9b8b5be04bee09fd39`
++- W64 failure record: `6e0502c7fa1124590410e6021589d490167da73c16feff1652e9e9a5f13535a8`
++- W128 log: `4c1efeea498427e5b14c5caebee745f686464d63d95345d0fbb202192603fdcf`
++- W128 initialization preflight: `fa26c741b0e17bf70faa08d2772a26d5f0c860ff3b882f69fe196c754c685a9d`
++- W128 failure record: `6489bf7d4ead44aaefab87544d44c553c87fe9cd08df126bb33ebf4497b4fce6`
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_launch_manifest.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_launch_manifest.json
+index 9193bb1..81dc321 100644
+--- a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_launch_manifest.json
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v1_launch_manifest.json
+@@ -1,7 +1,14 @@
+ {
+   "format": "molgap-pcqm-graph-state-width-split-launch-v1",
+   "submitted_at": "2026-09-08T15:50:00+09:00",
+-  "launch_status": "RUNNING",
++  "launch_status": "ERROR",
++  "terminal_status": "ERROR",
++  "failure_class": "runtime_cuda_architecture_incompatibility",
++  "requested_accelerator": "NvidiaTeslaT4",
++  "observed_gpus": [
++    "Tesla P100-PCIE-16GB"
++  ],
++  "completed_candidates": [],
+   "execution": "two_isolated_single_gpu_parallel_kernels",
+   "kernels": {
+     "ogb_distance_angle_triangle_edge_state_graph_state9": {
+diff --git a/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
+new file mode 100644
+index 0000000..fc484c7
+--- /dev/null
++++ b/experiments/pcqm_gap_architecture/results/graph_state_width_seed42/split_v2_launch_manifest.json
+@@ -0,0 +1,36 @@
++{
++  "format": "molgap-pcqm-graph-state-width-split-launch-v2",
++  "submitted_at": "2026-09-08T16:03:00+09:00",
++  "observed_at": "2026-09-08T16:06:00+09:00",
++  "launch_status": "RUNNING",
++  "execution": "two_isolated_single_gpu_parallel_kernels",
++  "runtime_repair": "p100_torch_2_7_1_cu126_sm60",
++  "kernels": {
++    "ogb_distance_angle_triangle_edge_state_graph_state9": {
++      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
++      "version": 2
++    },
++    "ogb_distance_angle_triangle_edge_state_graph_state9_w128": {
++      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
++      "version": 2
++    }
++  },
++  "requested_accelerator": "NvidiaTeslaT4",
++  "accept_only_matching_gpu_models": true,
++  "model_source_commit": "f68047e36a8bccb8c6052e661c70f6afa63d3280",
++  "package_commit": "5b17bcb",
++  "source_dataset": "nothingnessvoid/molgap-pcqm-graphstate-width-source-v3-20260908",
++  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
++  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
++  "seed": 42,
++  "precision": "fp32",
++  "batch_size": 48,
++  "learning_rate": 0.00016,
++  "weight_decay": 0.000001,
++  "max_epochs": 40,
++  "patience": 8,
++  "official_validation_role_read": false,
++  "test_dev_role_read": false,
++  "molecular_research_server_accessed": false,
++  "full_data_authorized": false
++}
+-- 
+2.53.0.windows.1
+
