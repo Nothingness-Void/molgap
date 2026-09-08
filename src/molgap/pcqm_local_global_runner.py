@@ -25,6 +25,7 @@ if RUN_MODE not in {
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
+    "relative_value_graphstate",
     "conjugated_component_confirmation",
 }:
     raise RuntimeError(f"Unsupported local/global run mode: {RUN_MODE}")
@@ -46,6 +47,7 @@ if RUN_MODE in {
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
+    "relative_value_graphstate",
 } and SEED != 42:
     raise RuntimeError("Local-statistics modes require seed 42")
 if RUN_MODE == "conjugated_component_confirmation" and SEED != 43:
@@ -137,6 +139,10 @@ HOP_PATH_GRAPHSTATE_CANDIDATES = (
     "ogb_distance_angle_triangle_edge_state_graph_state9",
     "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9",
 )
+RELATIVE_VALUE_GRAPHSTATE_CANDIDATES = (
+    "ogb_distance_angle_triangle_edge_state_graph_state9",
+    "ogb_distance_angle_relative_value_triangle_edge_state_graph_state9",
+)
 PAIRED_GRAPHSTATE_MODES = {
     "ring_graphstate",
     "contact_graphstate",
@@ -146,6 +152,7 @@ PAIRED_GRAPHSTATE_MODES = {
     "directed_bond_graphstate",
     "signnet_lappe_graphstate",
     "hop_path_graphstate",
+    "relative_value_graphstate",
     "conjugated_component_confirmation",
 }
 CANDIDATES = (
@@ -157,6 +164,8 @@ CANDIDATES = (
     if RUN_MODE == "signnet_lappe_graphstate"
     else HOP_PATH_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "hop_path_graphstate"
+    else RELATIVE_VALUE_GRAPHSTATE_CANDIDATES
+    if RUN_MODE == "relative_value_graphstate"
     else PNA_GRAPHSTATE_CANDIDATES
     if RUN_MODE == "pna_statistics_graphstate"
     else RETENTION_GRAPHSTATE_CANDIDATES
@@ -184,6 +193,7 @@ EXPECTED_GLOBAL_BLOCKS = {
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: (),
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: (),
     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: (),
+    RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: (),
     COMPONENT_STATE_CANDIDATES[0]: (),
     COMPONENT_STATE_CANDIDATES[1]: (),
 }
@@ -241,6 +251,7 @@ EXPECTED_PARAMETER_COUNTS = {
     DIRECTED_BOND_GRAPHSTATE_CANDIDATES[1]: 3_741_265,
     SIGNNET_LAPPE_GRAPHSTATE_CANDIDATES[1]: 3_673_109,
     HOP_PATH_GRAPHSTATE_CANDIDATES[1]: 3_697_537,
+    RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]: 3_734_977,
     COMPONENT_STATE_CANDIDATES[0]: 3_672_257,
     COMPONENT_STATE_CANDIDATES[1]: 3_694_033,
 }
@@ -263,7 +274,14 @@ def uses_signnet_lappe(candidate: str) -> bool:
 
 
 def uses_hop_path(candidate: str) -> bool:
-    return candidate == HOP_PATH_GRAPHSTATE_CANDIDATES[1]
+    return candidate in {
+        HOP_PATH_GRAPHSTATE_CANDIDATES[1],
+        RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1],
+    }
+
+
+def uses_relative_value(candidate: str) -> bool:
+    return candidate == RELATIVE_VALUE_GRAPHSTATE_CANDIDATES[1]
 
 
 def uses_ring_hierarchy(candidate: str) -> bool:
@@ -295,7 +313,7 @@ def expected_input_cache_sha256() -> str:
         return EXPECTED_LAPPE_SHA256
     if RUN_MODE == "conjugated_component_confirmation":
         return EXPECTED_COMPONENT_CACHE_SHA256
-    if RUN_MODE == "hop_path_graphstate":
+    if RUN_MODE in {"hop_path_graphstate", "relative_value_graphstate"}:
         return EXPECTED_HOP_PATH_CACHE_SHA256
     return EXPECTED_GEOMETRY_SHA256
 
@@ -702,7 +720,7 @@ def find_input_cache() -> tuple[Path, dict]:
         return find_lappe_cache()
     if RUN_MODE == "conjugated_component_confirmation":
         return find_component_cache()
-    if RUN_MODE == "hop_path_graphstate":
+    if RUN_MODE in {"hop_path_graphstate", "relative_value_graphstate"}:
         return find_hop_path_cache()
     return find_geometry_cache()
 
@@ -776,7 +794,7 @@ def load_graphs(root: Path, manifest: dict) -> dict[str, list]:
                     raise RuntimeError(f"{role} component features changed")
                 if graph.conjugated_component_count.numel() != 1:
                     raise RuntimeError(f"{role} component count changed")
-            if RUN_MODE == "hop_path_graphstate":
+            if RUN_MODE in {"hop_path_graphstate", "relative_value_graphstate"}:
                 if (
                     graph.hop_path_edge_index.ndim != 2
                     or graph.hop_path_edge_index.shape[0] != 2
@@ -1677,7 +1695,10 @@ def train_one(
                 else "none"
             ),
             "hop_path_mixer": (
-                "exact-shortest-2-3-hop+path-count+bond-histogram+"
+                "exact-shortest-2-3-hop+path-key-value-attention+"
+                "support-gate+shared-blocks3-6-9+rank32-zero-return"
+                if uses_relative_value(candidate)
+                else "exact-shortest-2-3-hop+path-count+bond-histogram+"
                 "shared-blocks3-6-9+rank32-zero-return"
                 if uses_hop_path(candidate)
                 else "none"
@@ -1975,7 +1996,7 @@ def main() -> None:
             ),
             "hop_path_cache_aggregate_sha256": (
                 EXPECTED_HOP_PATH_CACHE_SHA256
-                if RUN_MODE == "hop_path_graphstate"
+                if RUN_MODE in {"hop_path_graphstate", "relative_value_graphstate"}
                 else None
             ),
             "geometry_valid_fraction": cache_manifest.get(
