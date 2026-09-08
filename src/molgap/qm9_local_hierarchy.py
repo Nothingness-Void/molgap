@@ -145,7 +145,7 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
     import torch
     from rdkit import Chem, RDLogger
 
-    from .qm9_screen import fixed_split, load_qm9_records, prepare_qm9_files
+    from .qm9_data import fixed_split, load_qm9_records, prepare_qm9_files
 
     output_root.mkdir(parents=True, exist_ok=True)
     manifest_path = output_root / "manifest.json"

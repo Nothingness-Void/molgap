@@ -6,9 +6,6 @@ import hashlib
 import json
 import os
 import time
-import urllib.request
-import zipfile
-from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
@@ -17,14 +14,6 @@ import torch.nn as nn
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
-from .egnn import EGNNWrapper
-from .edge_global_2d import EdgeGlobal2DWrapper
-from .gine import GINEWrapper
-from .gps import (
-    EdgeStateStructuralGPSWrapper,
-    FrontierCenterGapHead,
-    GPSWrapper,
-)
 from .graphs import smiles_to_pyg
 from .geometry_features import (
     ANGLE_FEATURE_DIM,
@@ -32,32 +21,17 @@ from .geometry_features import (
     local_geometry_features,
     select_geometry_features,
 )
-from .schnet import SchNetWrapper
-from .tensornet import TensorNetWrapper
-from .tgt_lite import TGTLiteWrapper
-from .tgt_hybrid import TGTLiteHybridWrapper
-from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
-from .pair_triplet_2d import PairTriplet2DWrapper
-from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
-from .pair_gps_2d import (
-    PairGPS2DR3Wrapper,
-    PairGPS2DWrapper,
-)
 from .structural_encoding import build_rwse_graph_cache, sha256
-from .tgt_egt_hybrid import TGTEGTHybridWrapper
-from .tgt_egt_compact import TGTCompactEGTWrapper
-from .tgt_egt_rich import TGTEGTRichWrapper
-from .tgt_egt_hybrid_plus import TGTEGTHybridPlusWrapper
-from .tgt_egt_hybrid_warmblend import TGTEGTHybridWarmBlendWrapper
-
-QM9_PROCESSED_URL = "https://data.pyg.org/datasets/qm9_v3.zip"
-QM9_RAW_URL = (
-    "https://deepchemdata.s3-us-west-1.amazonaws.com/"
-    "datasets/molnet_publish/qm9.zip"
+from .qm9_data import (
+    DEFAULT_CACHE,
+    ScreenSplit,
+    fixed_split,
+    load_qm9_records,
+    prepare_qm9_files,
 )
+
 TARGET_NAMES = ("HOMO", "LUMO", "Gap")
 TARGET_COLUMNS = (2, 3, 4)
-DEFAULT_CACHE = Path("data/cache/qm9")
 DEFAULT_RESULTS = Path("experiments/qm9_architecture/results")
 DEFAULT_MODELS = Path("models/experiments/qm9_architecture_screen")
 
@@ -480,89 +454,11 @@ ENCODER_CONFIGS = {
 }
 
 
-@dataclass(frozen=True)
-class ScreenSplit:
-    train: np.ndarray
-    validation: np.ndarray
-    test: np.ndarray
-    seed: int
-
-    @property
-    def all_indices(self) -> np.ndarray:
-        return np.concatenate((self.train, self.validation, self.test))
-
-    @property
-    def fingerprint(self) -> str:
-        value = self.all_indices.astype(np.int64).tobytes()
-        return hashlib.sha256(value).hexdigest()[:16]
-
-
 def set_seed(seed: int) -> None:
     np.random.seed(seed)
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-
-
-def fixed_split(
-    n_total: int,
-    train_size: int,
-    validation_size: int,
-    test_size: int,
-    seed: int,
-) -> ScreenSplit:
-    requested = train_size + validation_size + test_size
-    if requested > n_total:
-        raise ValueError(f"Requested {requested} rows from QM9 with {n_total} rows")
-    order = np.random.RandomState(seed).permutation(n_total)[:requested]
-    train_end = train_size
-    validation_end = train_end + validation_size
-    return ScreenSplit(
-        train=order[:train_end],
-        validation=order[train_end:validation_end],
-        test=order[validation_end:],
-        seed=seed,
-    )
-
-
-def _download(url: str, destination: Path) -> None:
-    if destination.exists():
-        return
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    temporary = destination.with_suffix(destination.suffix + ".tmp")
-    urllib.request.urlretrieve(url, temporary)
-    os.replace(temporary, destination)
-
-
-def prepare_qm9_processed(cache_dir: Path = DEFAULT_CACHE) -> Path:
-    processed = cache_dir / "preprocessed" / "qm9_v3.pt"
-    if not processed.exists():
-        archive = cache_dir / "download" / "qm9_v3.zip"
-        _download(QM9_PROCESSED_URL, archive)
-        processed.parent.mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(archive) as source:
-            source.extractall(processed.parent)
-    return processed
-
-
-def prepare_qm9_files(cache_dir: Path = DEFAULT_CACHE) -> dict[str, Path]:
-    processed = prepare_qm9_processed(cache_dir)
-    raw_sdf = cache_dir / "raw" / "gdb9.sdf"
-    if not raw_sdf.exists():
-        archive = cache_dir / "download" / "qm9_raw.zip"
-        _download(QM9_RAW_URL, archive)
-        raw_sdf.parent.mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(archive) as source:
-            source.extractall(raw_sdf.parent)
-    return {"processed": processed, "raw_sdf": raw_sdf}
-
-
-def load_qm9_records(cache_dir: Path = DEFAULT_CACHE) -> list[dict]:
-    processed = prepare_qm9_processed(cache_dir)
-    records = torch.load(processed, map_location="cpu", weights_only=False)
-    if not isinstance(records, list) or not records:
-        raise ValueError(f"Unexpected QM9 payload: {processed}")
-    return records
 
 
 def target_tensor(record: dict) -> torch.Tensor:
@@ -591,6 +487,8 @@ def configure_frontier_head(
     mean: torch.Tensor,
     std: torch.Tensor,
 ) -> dict | None:
+    from .gps import FrontierCenterGapHead
+
     if not isinstance(model.head, FrontierCenterGapHead):
         return None
     center_mean, center_std = frontier_center_stats(records, train_indices)
@@ -1331,16 +1229,28 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
     config.pop("multihop_attention_distance", None)
     consistent_head = bool(config.pop("consistent_head", False))
     if candidate == "gine6":
+        from .gine import GINEWrapper
+
         return GINEWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "edge_global_2d":
+        from .edge_global_2d import EdgeGlobal2DWrapper
+
         return EdgeGlobal2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "pair_triplet_2d":
+        from .pair_triplet_2d import PairTriplet2DWrapper
+
         return PairTriplet2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "pair_triplet_2d_rich":
+        from .pair_triplet_2d_rich import PairTriplet2DRichWrapper
+
         return PairTriplet2DRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "pair_gps_2d":
+        from .pair_gps_2d import PairGPS2DWrapper
+
         return PairGPS2DWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("pair_gps_2d_r3_"):
+        from .pair_gps_2d import PairGPS2DR3Wrapper
+
         return PairGPS2DR3Wrapper(
             in_channels=in_channels,
             edge_dim=edge_dim,
@@ -1351,6 +1261,8 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
         "edge_state_structural_gps",
         "edge_state_structural_orbital",
     }:
+        from .gps import EdgeStateStructuralGPSWrapper, FrontierCenterGapHead
+
         model_classes = {
             "edge_state_structural_gps": EdgeStateStructuralGPSWrapper,
             "edge_state_structural_orbital": EdgeStateStructuralGPSWrapper,
@@ -1365,31 +1277,55 @@ def make_encoder(candidate: str, in_channels: int = 11, edge_dim: int = 4):
             )
         return model, kind
     if candidate == "tgt_egt_hybrid":
+        from .tgt_egt_hybrid import TGTEGTHybridWrapper
+
         return TGTEGTHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate in {"tgt_egt_compact", "tgt_egt_stable"}:
+        from .tgt_egt_compact import TGTCompactEGTWrapper
+
         return TGTCompactEGTWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "tgt_egt_rich":
+        from .tgt_egt_rich import TGTEGTRichWrapper
+
         return TGTEGTRichWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate in {"tgt_egt_hybrid_plus", "tgt_egt_hybrid_frozen"}:
+        from .tgt_egt_hybrid_plus import TGTEGTHybridPlusWrapper
+
         return TGTEGTHybridPlusWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate in {
         "tgt_egt_hybrid_warmblend",
         "tgt_egt_hybrid_warmblend_frozen",
     }:
+        from .tgt_egt_hybrid_warmblend import TGTEGTHybridWarmBlendWrapper
+
         return TGTEGTHybridWarmBlendWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("gps"):
+        from .gps import GPSWrapper
+
         return GPSWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate.startswith("schnet"):
+        from .schnet import SchNetWrapper
+
         return SchNetWrapper(**config, use_charges=False), kind
     if candidate == "tensornet":
+        from .tensornet import TensorNetWrapper
+
         return TensorNetWrapper(**config, use_charges=False), kind
     if candidate == "egnn":
+        from .egnn import EGNNWrapper
+
         return EGNNWrapper(**config), kind
     if candidate == "tgt_lite":
+        from .tgt_lite import TGTLiteWrapper
+
         return TGTLiteWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "tgt_hybrid":
+        from .tgt_hybrid import TGTLiteHybridWrapper
+
         return TGTLiteHybridWrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     if candidate == "tgt_hybrid_v2":
+        from .tgt_hybrid_v2 import TGTLiteHybridV2Wrapper
+
         return TGTLiteHybridV2Wrapper(in_channels=in_channels, edge_dim=edge_dim, **config), kind
     raise ValueError(candidate)
 
@@ -1415,7 +1351,12 @@ def _forward(kind: str, model, batch):
             batch.multihop_edge_index,
             batch.multihop_distance,
         )
-    if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
+    if kind in {
+        "hybrid_egt",
+        "hybrid_egt_rich",
+        "hybrid_egt_plus",
+        "hybrid_egt_warmblend",
+    }:
         return model(
             batch.x,
             batch.edge_index,
@@ -1430,9 +1371,9 @@ def _forward(kind: str, model, batch):
             topology_edge_counts=getattr(batch, "topology_edge_count", None),
             geometry_node_counts=getattr(batch, "geometry_node_count", None),
         )
-    if isinstance(model, (TGTLiteWrapper, TGTLiteHybridWrapper, TGTLiteHybridV2Wrapper)):
+    if kind in {"hybrid", "hybrid_v2"} or type(model).__name__ == "TGTLiteWrapper":
         topology_kwargs = {}
-        if isinstance(model, TGTLiteHybridV2Wrapper):
+        if kind == "hybrid_v2":
             topology_kwargs = {
                 "topology_x": getattr(batch, "topology_x", None),
                 "topology_edges": getattr(batch, "topology_edges", None),
@@ -1479,7 +1420,12 @@ def _encode(kind: str, model, batch):
             batch.multihop_edge_index,
             batch.multihop_distance,
         )
-    if isinstance(model, (TGTEGTHybridWrapper, TGTCompactEGTWrapper, TGTEGTRichWrapper, TGTEGTHybridPlusWrapper, TGTEGTHybridWarmBlendWrapper)):
+    if kind in {
+        "hybrid_egt",
+        "hybrid_egt_rich",
+        "hybrid_egt_plus",
+        "hybrid_egt_warmblend",
+    }:
         return model.encode(
             batch.x,
             batch.edge_index,
@@ -1494,9 +1440,9 @@ def _encode(kind: str, model, batch):
             topology_edge_counts=getattr(batch, "topology_edge_count", None),
             geometry_node_counts=getattr(batch, "geometry_node_count", None),
         )
-    if isinstance(model, (TGTLiteWrapper, TGTLiteHybridWrapper, TGTLiteHybridV2Wrapper)):
+    if kind in {"hybrid", "hybrid_v2"} or type(model).__name__ == "TGTLiteWrapper":
         topology_kwargs = {}
-        if isinstance(model, TGTLiteHybridV2Wrapper):
+        if kind == "hybrid_v2":
             topology_kwargs = {
                 "topology_x": getattr(batch, "topology_x", None),
                 "topology_edges": getattr(batch, "topology_edges", None),

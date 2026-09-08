@@ -37,6 +37,12 @@ def test_local_supervision_is_not_graph_histogram_surrogate():
     assert "moments" not in source.lower()
 
 
+def test_cache_path_uses_model_free_qm9_data_module():
+    source = MODULE.read_text(encoding="utf-8")
+    assert "from .qm9_data import fixed_split" in source
+    assert "from .qm9_screen import" not in source
+
+
 def test_sealed_roles_and_dynamic_drift_gate_are_explicit():
     source = MODULE.read_text(encoding="utf-8")
     protocol = PROTOCOL.read_text(encoding="utf-8")
