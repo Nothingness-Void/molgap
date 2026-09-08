@@ -34,7 +34,10 @@ The replacement funnel and its evidence boundaries are frozen in
    CPU-cache acceptance must pass; model execution remains remote.
 2. A bounded architecture screen cannot directly authorize full-data work.
    Promotion must pass the resource-bounded 100K/1M/full ladder in
-   `experiments/pcqm_gap_architecture/scale_up_protocol.md`.
+   `experiments/pcqm_gap_architecture/scale_up_protocol.md`. Across that ladder,
+   only eligible training-row count may change; batch, model, features,
+   optimization, validation, evaluator, and all other scientific variables are
+   frozen.
 3. Before external evaluation, the matched full-scale candidate, delivery
    baseline, and aligned outputs must be complete and frozen.
 4. Before production promotion, the fixed Track A external gate, loader,

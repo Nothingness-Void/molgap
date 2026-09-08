@@ -40,9 +40,18 @@ but that change must remain identical at every candidate scale.
 
 Freeze `scale_up_manifest.template.json` before S1. Across all stages:
 
+- change only the number of eligible training rows; the candidate's model,
+  feature, optimization, and evaluation contracts are byte-for-byte identical;
+- keep physical batch size fixed as well as effective batch size. An OOM or
+  throughput problem stops scale-up; gradient accumulation, a different batch,
+  or a different number of devices opens a new S1 question;
+- keep depth, width, attention allocation, edge-state width, readout, dropout,
+  loss, optimizer, learning rate, schedule, precision, seed, epoch/exposure
+  rule, clipping, and checkpoint-selection rule unchanged;
+- keep validation identities, validation size, evaluator, and evaluation
+  frequency unchanged. Scaling never substitutes another validation or test
+  role;
 - keep graph schema and ETKDG policy unchanged;
-- keep effective batch fixed; use gradient accumulation when physical batch
-  changes;
 - express warmup and decay in normalized optimizer progress;
 - keep candidate and baseline sample exposures equal;
 - use the same ordered examples and paired seed where both are trained;
@@ -73,7 +82,8 @@ records source-index hashes, overlap checks, stratum counts, and prefix hashes.
 | S4 official validation | Evaluate the frozen candidate once | At least `0.001 eV` better than a contract-matched baseline; otherwise reject |
 
 A failed gate stops the ladder. Width, depth, geometry, optimizer, scheduler,
-seed, or dropout changes open a new S1 question. No post-hoc convergence
+batch, device count, validation role, seed, or dropout changes open a new S1
+question. No post-hoc convergence
 extension is allowed unless its cost and stopping rule were frozen in the
 manifest before S1.
 

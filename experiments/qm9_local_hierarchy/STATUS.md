@@ -68,3 +68,15 @@ to survive a canonical-SMILES round trip. A train/validation-only structural
 probe found 254 such records in the frozen roles. Filtering them before the
 split or vectorizing their unsanitized SDF molecules would change the frozen
 data contract, so neither repair was submitted automatically.
+
+## V2 release boundary
+
+The v1 GraphState/WedgeState question is closed without a training result. Its
+failed jobs, logs, source assets, and protocol remain immutable evidence.
+
+`protocol_edgestate_v2.md` defines the replacement question. V2 freezes and
+hashes the complete canonical-roundtrip-valid source pool before a deterministic
+30K/3K/3K split, independently accepts the train/validation-only graph cache,
+and uses the accepted pure-2D EdgeState GPS9 inference backbone. This is a new
+scientific contract, not an infrastructure retry. The v2 cache, preflight, and
+training jobs have not yet been released from this status record.

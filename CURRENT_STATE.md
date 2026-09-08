@@ -53,9 +53,12 @@ decision, thresholds, and exact scope of the rejected pretraining surrogates
 are in
 `experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
 The first bounded candidate is the locally attached atom/bond/functional-group
-reconstruction question in `experiments/qm9_local_hierarchy/`. Its Kunshan DCU
-preflight passed, while CPU cache preparation is undergoing an infrastructure-
-only repair; no training result exists yet.
+reconstruction question in `experiments/qm9_local_hierarchy/`. The original
+GraphState/WedgeState contract reached no training because 254 selected QM9
+records failed its required canonical-SMILES round trip. The replacement v2
+protocol freezes a canonical-valid source pool and evaluates the same
+supervision on the accepted pure-2D EdgeState GPS9 backbone; no v2 training
+result exists yet.
 
 ## Prior architecture evidence
 

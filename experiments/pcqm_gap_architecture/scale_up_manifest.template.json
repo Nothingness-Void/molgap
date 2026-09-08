@@ -49,12 +49,28 @@
     "random_initialization": true,
     "paired_seed_order": [42, 43, 44]
   },
+  "scale_invariant": {
+    "only_training_row_count_may_change": true,
+    "architecture_sha256": "FILL_BEFORE_S1",
+    "feature_contract_sha256": "FILL_BEFORE_S1",
+    "training_contract_sha256": "FILL_BEFORE_S1",
+    "evaluation_contract_sha256": "FILL_BEFORE_S1",
+    "physical_batch_must_match": true,
+    "effective_batch_must_match": true,
+    "device_count_must_match": true,
+    "validation_identity_must_match": true,
+    "gradient_accumulation_change_allowed": false,
+    "mismatch_action": "restart_at_S1"
+  },
   "training": {
     "loss": "FILL_BEFORE_S1",
     "optimizer": "FILL_BEFORE_S1",
     "weight_decay": "FILL_BEFORE_S1",
     "gradient_clip": "FILL_BEFORE_S1",
     "effective_batch": "FILL_BEFORE_S1",
+    "physical_batch": "FILL_BEFORE_S1",
+    "gradient_accumulation_steps": 1,
+    "device_count": "FILL_BEFORE_S1",
     "precision": "FILL_BEFORE_S1",
     "sample_exposures_per_row": "FILL_BEFORE_S1",
     "scheduler_progress_unit": "optimizer_step_fraction",
