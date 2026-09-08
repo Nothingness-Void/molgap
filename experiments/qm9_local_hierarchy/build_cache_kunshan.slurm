@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=96G
+#SBATCH --mem=48G
 #SBATCH --time=06:00:00
 set -euo pipefail
 : "${CODE:?}"
@@ -26,4 +26,3 @@ mkdir -p "$ROOT/logs" "$ROOT/cache"
 "$PYTHON" -m molgap.qm9_local_hierarchy build-cache \
   --output-root "$ROOT/cache" \
   --source-commit "$SOURCE_COMMIT"
-
