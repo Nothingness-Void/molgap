@@ -83,6 +83,10 @@ def test_acceptance_recomputes_paired_metrics_and_keeps_roles_sealed() -> None:
         "throughput_gate_at_least_0_70x",
         '"official_validation_role_read": False',
         '"test_dev_role_read": False',
+        'SPLIT_EXECUTION = "two_isolated_single_gpu_parallel_kernels"',
+        'len(set(gpu_names)) == 1',
+        '"split source kernel identities"',
+        '"split source kernel versions"',
     ):
         assert token in source
 

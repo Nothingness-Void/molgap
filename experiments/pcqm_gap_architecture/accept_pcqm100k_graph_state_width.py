@@ -15,6 +15,8 @@ PARAMETERS = {BASELINE: 3_665_809, CANDIDATE: 3_803_985}
 WIDTHS = {BASELINE: 64, CANDIDATE: 128}
 GEOMETRY_SHA = "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22"
 T4_MEMORY_BYTES = 16 * 1024**3
+DUAL_T4_EXECUTION = "dual_t4_candidate_parallel"
+SPLIT_EXECUTION = "two_isolated_single_gpu_parallel_kernels"
 
 
 def sha256_file(path: Path) -> str:
@@ -44,7 +46,6 @@ def accept(root: Path, expected_source_commit: str) -> dict:
         "input_cache_aggregate_sha256": GEOMETRY_SHA,
         "seed": 42,
         "candidates": list(CANDIDATES),
-        "execution": "dual_t4_candidate_parallel",
         "device_assignments": {"0": [BASELINE], "1": [CANDIDATE]},
         "search_budget_s": 14_400,
         "official_validation_role_read": False,
@@ -55,11 +56,27 @@ def accept(root: Path, expected_source_commit: str) -> dict:
     }
     for key, expected in required.items():
         require(selection.get(key) == expected, key)
+    execution = selection.get("execution")
+    require(execution in (DUAL_T4_EXECUTION, SPLIT_EXECUTION), "execution")
     gpu_names = selection.get("gpu_names", [])
-    require(
-        len(gpu_names) == 2 and all("T4" in name for name in gpu_names),
-        "dual T4 allocation",
-    )
+    if execution == DUAL_T4_EXECUTION:
+        require(
+            len(gpu_names) == 2 and all("T4" in name for name in gpu_names),
+            "dual T4 allocation",
+        )
+    elif execution == SPLIT_EXECUTION:
+        require(
+            len(gpu_names) == 2
+            and all(isinstance(name, str) and name for name in gpu_names)
+            and len(set(gpu_names)) == 1,
+            "split matching GPU allocation",
+        )
+        source_versions = selection.get("source_kernel_versions", {})
+        require(set(source_versions) == set(CANDIDATES), "split source kernel identities")
+        require(
+            all(isinstance(value, str) and ":v" in value for value in source_versions.values()),
+            "split source kernel versions",
+        )
 
     preflight = selection.get("preflight", [])
     require(len(preflight) == 2, "preflight count")
@@ -108,6 +125,7 @@ def accept(root: Path, expected_source_commit: str) -> dict:
         require(metrics.get("source_commit") == expected_source_commit, f"source {identity}")
         require(metrics.get("input_cache_aggregate_sha256") == GEOMETRY_SHA, f"cache {identity}")
         require(metrics.get("parameter_count") == PARAMETERS[identity], f"parameters {identity}")
+        require(metrics.get("gpu") in gpu_names, f"GPU identity {identity}")
         require(metrics.get("validation_rows") == 10_000, f"rows {identity}")
         contract = metrics.get("contract", {})
         require(contract.get("graph_state_channels") == WIDTHS[identity], f"contract width {identity}")
@@ -195,9 +213,11 @@ def accept(root: Path, expected_source_commit: str) -> dict:
     require(selection.get("selected_candidate") == selected, "selection")
     require(selection.get("selected_strictly_improves_baseline") is improves, "selection gate")
     result = {
-        "format": "molgap-pcqm-gap100k-graph-state-width-acceptance-v1",
+        "format": "molgap-pcqm-gap100k-graph-state-width-acceptance-v2",
         "accepted": not errors,
         "errors": errors,
+        "execution": execution,
+        "gpu_names": gpu_names,
         "source_commit": expected_source_commit,
         "geometry_cache_aggregate_sha256": GEOMETRY_SHA,
         "seed": 42,
