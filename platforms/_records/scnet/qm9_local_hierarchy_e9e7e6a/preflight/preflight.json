@@ -1,0 +1,23 @@
+{
+  "format": "molgap-qm9-local-hierarchy-dcu-preflight-v1",
+  "accepted": true,
+  "source_commit": "e9e7e6a",
+  "gpu": "Device 66a1",
+  "cuda_available": true,
+  "inference_parameter_count": 3665809,
+  "training_head_parameter_count": 36743,
+  "node_state_shape": [
+    8,
+    192
+  ],
+  "edge_state_shape": [
+    12,
+    64
+  ],
+  "finite_forward_backward": true,
+  "peak_memory_mib": 28.96923828125,
+  "geometry_valid": false,
+  "model_inference_executed": true,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
