@@ -53,6 +53,9 @@ only a strong transfer is handed to desktop for full-scale work. The governing
 decision, thresholds, and exact scope of the rejected pretraining surrogates
 are in
 `experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
+The first bounded candidate is the locally attached atom/bond/functional-group
+reconstruction question in `experiments/qm9_local_hierarchy/`; its Kunshan
+preflight, immutable CPU cache, and dependency-gated seed-42 screen are active.
 
 ## Prior architecture evidence
 

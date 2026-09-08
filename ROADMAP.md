@@ -16,8 +16,7 @@ hours unless the user records a separate override.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-RELATIVE-VALUE-CLOSE | Collect terminal evidence for the already released relative-value job | Accept or diagnose once; do not launch a successor |
-| P0 | C-QM9-FUNNEL-CONTRACT | Freeze a direct-Gap QM9-30K paired-screen contract and measure fresh-baseline dispersion | Immutable split, no test access, cost and promotion rule accepted |
-| P1 | C-MOLCHG-LITE | Test one local hierarchical pretraining mechanism against equal-compute scratch | Atom, bond, and chemistry-defined fragment supervision is locally attached and seed-42 evidence is accepted |
+| P0 | C-MOLCHG-LITE | Accept the released local hierarchical pretraining mechanism against equal-compute scratch | Atom, bond, and chemistry-defined fragment supervision is locally attached and seed-42 evidence is accepted |
 | P2 | B-PCQM100K-TRANSFER | Transfer only a Track C nominee to a fresh paired PCQM-100K job | Selection gain is at least 0.003 eV and the once-read shadow audit agrees |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 

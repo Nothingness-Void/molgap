@@ -1,0 +1,21 @@
+{
+  "format": "molgap-qm9-local-hierarchy-scnet-launch-v1",
+  "platform": "scnet-kunshan",
+  "submitted_at": "2026-09-08",
+  "source_commit": "e9e7e6a",
+  "source_archive_sha256": "ad6fc5c2b9dcfd7a5e749419dfbce99eb06f4a811c28877bd2746b042772654f",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a",
+  "jobs": {
+    "dcu_preflight": "121316216",
+    "cpu_cache": "121316249",
+    "dependent_training": "121316265"
+  },
+  "dependency": "afterok:121316216:121316249",
+  "initial_state": {
+    "dcu_preflight": "PENDING_PRIORITY",
+    "cpu_cache": "PENDING_PRIORITY",
+    "dependent_training": "PENDING_DEPENDENCY"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
