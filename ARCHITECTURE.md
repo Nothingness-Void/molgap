@@ -29,6 +29,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
 | `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |
+| `qm9_local_hierarchy.py` | Track C OGB/RWSE cache, local hierarchy pretraining, matched Gap controls, and DCU checkpoints | Changing the bounded QM9 local-supervision question |
 | `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
 | `qm9_payloads.py` | Cached embedding alignment and view combination | Changing architecture-screen payload operations |
 | `qm9_fusion.py` | Frozen embedding gates, residual heads, and routing | Changing QM9 fusion or route screens |
