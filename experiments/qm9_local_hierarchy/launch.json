@@ -1,5 +1,5 @@
 {
-  "format": "molgap-qm9-local-hierarchy-scnet-launch-v3",
+  "format": "molgap-qm9-local-hierarchy-scnet-launch-v4",
   "platform": "scnet-kunshan",
   "submitted_at": "2026-09-08",
   "source_commit": "e9e7e6a",
@@ -17,10 +17,12 @@
     "cancelled_coupled_training": "121323070",
     "failed_network_fallback_cpu_cache": "121325769",
     "cancelled_network_fallback_training": "121325771",
-    "data_staged_cpu_cache": "121327106",
-    "dependent_training": "121327125"
+    "failed_processed_only_cpu_cache": "121327106",
+    "cancelled_processed_only_training": "121327125",
+    "fully_offline_cpu_cache": "121327900",
+    "dependent_training": "121327905"
   },
-  "dependency": "121327106 -> 121327125; accepted setup 121323044 and preflight 121316216 reused",
+  "dependency": "121327900 -> 121327905; accepted setup 121323044 and preflight 121316216 reused",
   "initial_state": {
     "dcu_preflight": "COMPLETED",
     "failed_cpu_cache": "FAILED_IMPORT_LIBHSAKMT",
@@ -33,12 +35,15 @@
     "cancelled_coupled_training": "CANCELLED_DEPENDENCY",
     "failed_network_fallback_cpu_cache": "FAILED_MISSING_OFFLINE_QM9_SOURCE",
     "cancelled_network_fallback_training": "CANCELLED_DEPENDENCY",
-    "data_staged_cpu_cache": "RUNNING",
+    "failed_processed_only_cpu_cache": "FAILED_MISSING_OFFLINE_QM9_RAW_SOURCE",
+    "cancelled_processed_only_training": "CANCELLED_DEPENDENCY",
+    "fully_offline_cpu_cache": "PENDING_PRIORITY",
     "dependent_training": "PENDING_DEPENDENCY"
   },
   "infrastructure_fix_commits": ["d834486", "a1c4ec6"],
   "data_import_decoupling_commit": "43adfc8",
   "staged_qm9_processed_sha256": "90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721",
+  "staged_qm9_raw_archive_sha256": "f11d3f8ecc3097a72656a35c4847767852e6f346bf99a54619a1a3b6389ddc02",
   "offline_wheelhouse_sha256": "71f730affc2c3060d64bf87003ea60451b7af8d62edfe32e56613e5517fe557d",
   "monitor_automation_id": "molgap-qm9-local-hierarchy-offline-monitor",
   "official_pcqm_roles_read": false,

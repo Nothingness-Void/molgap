@@ -24,12 +24,15 @@ dated decision after acceptance.
   the offline node had no staged QM9 source and the fallback download could not
   resolve DNS
 - its training job `121325771`: dependency-cancelled before starting
-- data-staged CPU cache job `121327106`
-- current training job `121327125`, dependent on `121327106` and reusing the
+- processed-only CPU cache job `121327106`: loaded the staged processed tensor,
+  then failed because the raw `gdb9.sdf` archive was not yet staged
+- its training job `121327125`: dependency-cancelled before starting
+- fully-offline CPU cache job `121327900`
+- current training job `121327905`, dependent on `121327900` and reusing the
   accepted preflight
 - remote root:
   `/public/home/scnaqkfcy3/molgap-trackc-qm9-local-hierarchy-e9e7e6a`
-- data-staged-chain initial state: cache running; training pending on its
+- fully-offline-chain initial state: cache pending; training pending on its
   `afterok` dependency
 - official PCQM roles and QM9 held-out role: not read
 
@@ -54,3 +57,8 @@ asset `qm9_v3.pt` was uploaded under a temporary name, verified remotely at
 SHA-256 `90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721`,
 and only then atomically installed. Jobs `121327106 -> 121327125` reuse that
 immutable source without changing the scientific contract.
+That attempt confirmed the processed tensor was found, then exposed the missing
+raw SDF prerequisite. The frozen DeepChem QM9 archive was staged with SHA-256
+`f11d3f8ecc3097a72656a35c4847767852e6f346bf99a54619a1a3b6389ddc02`;
+jobs `121327900 -> 121327905` therefore have both source assets available fully
+offline.
