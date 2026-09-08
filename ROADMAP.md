@@ -32,13 +32,16 @@ The replacement funnel and its evidence boundaries are frozen in
 
 1. Before remote GPU submission, syntax/AST/manifest checks and immutable
    CPU-cache acceptance must pass; model execution remains remote.
-2. Before external evaluation, the full-scale candidate and aligned outputs
-   must be complete and frozen.
-3. Before production promotion, the fixed Track A external gate, loader,
+2. A bounded architecture screen cannot directly authorize full-data work.
+   Promotion must pass the resource-bounded 100K/1M/full ladder in
+   `experiments/pcqm_gap_architecture/scale_up_protocol.md`.
+3. Before external evaluation, the matched full-scale candidate, delivery
+   baseline, and aligned outputs must be complete and frozen.
+4. Before production promotion, the fixed Track A external gate, loader,
    registry, hash, latency, and smoke checks must pass together.
-4. Every failure receives a dated decision and is closed; it is not rewritten
+5. Every failure receives a dated decision and is closed; it is not rewritten
    into `CURRENT_STATE.md`.
-5. Infrastructure-only failures may be diagnosed, repaired, and retried with a
+6. Infrastructure-only failures may be diagnosed, repaired, and retried with a
    new remote version. The architecture, data roles, split, target, seed,
    optimizer, schedule, precision, and sealed-role flags must remain unchanged.
 
@@ -69,6 +72,9 @@ The replacement funnel and its evidence boundaries are frozen in
 - Predict Gap directly. Track A HOMO/LUMO experiments do not authorize Track B.
 - Test one material mechanism at a time. Scientific failures are not retried
   as seed, width, distance, optimizer, or schedule variants.
+- Compare every scale directly with the same delivery baseline. Chained
+  architecture improvements and historical mismatched checkpoints are not
+  scale-up evidence.
 - Preserve invalid-molecule reason codes and ETKDG train/inference consistency.
 - Router, MoE, dataset replacement, ordinary late fusion, and the old
   dual-SchNet residual remain closed unless a new question is recorded here.

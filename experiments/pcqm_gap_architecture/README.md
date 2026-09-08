@@ -17,6 +17,13 @@ The frozen first-round contract is
 state belongs in [`STATUS.md`](STATUS.md). Exact metrics will be written to a
 dated decision only after downloaded artifacts pass acceptance.
 
+Future promotion beyond a bounded screen is governed by the resource-bounded
+[`scale_up_protocol.md`](scale_up_protocol.md). It reuses one immutable baseline
+bank, eliminates most candidates at 100K, and permits only one winner to reach
+the 1M bridge and full scale. A 100K win alone no longer authorizes a full-data
+run. New ladders freeze
+[`scale_up_manifest.template.json`](scale_up_manifest.template.json) before S1.
+
 The accepted first matched comparison is
 [`results/seed42_structural_vs_edge_state/decision.md`](results/seed42_structural_vs_edge_state/decision.md).
 Its winner is a comparator for continued architecture discovery, not a
