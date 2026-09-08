@@ -54,7 +54,9 @@ funnel and its evidence boundaries are frozen in
   pretraining questions require their own scratch and equal-compute controls
   and cannot retroactively change an architecture conclusion.
 - Track C QM9 screens are direct-Gap, one-seed paired triage only. A win grants
-  no PCQM or full-scale conclusion.
+  no PCQM or full-scale conclusion. Inputs use the transferable OGB categorical
+  atom/bond and RWSE contracts; geometry questions use ETKDG, not QM9 DFT
+  coordinates.
 - Track B uses the frozen official-train-derived 100K/10K selection contract.
   Before the first post-reset transfer, freeze one disjoint train-derived
   shadow role; read it only once after selecting the candidate. Never tune on

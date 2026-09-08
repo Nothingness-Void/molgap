@@ -37,9 +37,12 @@ three-stage promotion funnel:
 
 1. **Track C triage — QM9-30K.** Literature mechanisms are screened as direct
    Gap predictors on one immutable 30K train-role subset with a fixed internal
-   selection role. Each candidate is paired with a freshly initialized
-   baseline in the same remote job. This stage uses one seed, does not read a
-   test role, and can only reject a mechanism or nominate it for PCQM transfer.
+   selection role. Graph inputs use the PCQM-transferable OGB categorical
+   atom/bond schema and the same RWSE contract. Any geometry mechanism uses
+   ETKDG rather than QM9 DFT coordinates. Each candidate is paired with a
+   freshly initialized baseline in the same remote job. This stage uses one
+   seed, does not read a test role, and can only reject a mechanism or nominate
+   it for PCQM transfer.
    A 50K variant is not the default; it may be frozen before candidate training
    only if baseline calibration shows that 30K cannot resolve the gate.
 2. **Track B transfer — PCQM-100K.** A nominated mechanism is retrained on the
