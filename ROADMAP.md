@@ -64,6 +64,13 @@ completed. It was a directionally consistent but sub-threshold weak positive
 and closed without confirmation. See
 `results/hop_path_graphstate_seed42/decision.md`.
 
+The post-screen residual attribution selected one materially different use of
+that accepted cache: sparse path-conditioned key/value attention with a
+support-aware return. It replaces uniform path averaging while preserving the
+GraphState9 anchor and the complete data/training contract. Its one-seed paired
+screen is frozen in `relative_value_graphstate_seed42_protocol.md`; no other
+architecture GPU task may run concurrently with it.
+
 ## Mandatory gates
 
 1. Before remote GPU submission, syntax/AST/manifest checks and immutable

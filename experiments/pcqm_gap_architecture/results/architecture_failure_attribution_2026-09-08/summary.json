@@ -1,0 +1,17 @@
+{
+  "format": "molgap-pcqm-architecture-failure-attribution-v1",
+  "date": "2026-09-08",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "model_inference_executed": false,
+  "fresh_graphstate_seed42_mae_span_eV": 0.0007017248392105213,
+  "strongest_weak_positive": {
+    "mechanism": "exact_shortest_2_3_hop_mean_mixer",
+    "candidate_minus_paired_baseline_eV": -0.0009066142797470092,
+    "candidate_win_fraction": 0.5084,
+    "candidate_baseline_absolute_error_correlation": 0.9074902528945646
+  },
+  "selected_experiment": "sparse_relative_value_path_attention_graphstate9",
+  "selection_reason": "Replace uniform path averaging with path-conditioned sparse key/value attention and a support-aware return while preserving the accepted cache and GraphState anchor."
+}
+

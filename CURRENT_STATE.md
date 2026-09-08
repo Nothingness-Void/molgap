@@ -110,6 +110,14 @@ closed as weak positive evidence without confirmation; GraphState9 remains the
 server recommendation. The decision is
 `experiments/pcqm_gap_architecture/results/hop_path_graphstate_seed42/decision.md`.
 
+A residual-level audit then selected one successor rather than another generic
+state addition. Sparse relative-value path attention keeps GraphState9 and the
+accepted exact-shortest 2/3-hop cache, but replaces uniform relation averaging
+with target-wise path-conditioned key/value attention and a support-aware
+return. The frozen paired seed-42 contract is
+`experiments/pcqm_gap_architecture/relative_value_graphstate_seed42_protocol.md`;
+its remote result is not yet a scientific conclusion.
+
 The first two same-database pretraining screens completed with accepted
 mechanical evidence but did not pass their compute-normalized material gate.
 Aggregate atom/bond/fragment/molecule source tasks only matched an independent
