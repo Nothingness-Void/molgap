@@ -71,7 +71,8 @@ def test_slurm_separates_cpu_cache_and_dcu_training():
     assert "--time=00:15:00" in preflight
     assert '--preflight "$ROOT/preflight/preflight.json"' in gpu
     assert "cpu-cache-py311/bin/python" in setup
-    assert "rdkit==2023.9.6" in setup
+    assert "--no-index --no-deps" in setup
+    assert 'WHEELHOUSE="$ROOT/wheelhouse-d834486"' in setup
     assert 'PYTHONPATH="$ROOT/cpu-deps:$CODE/src"' in cpu
 
 

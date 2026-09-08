@@ -67,9 +67,10 @@ PCQM validation/test-dev, or molecular-research-server access.
 
 ## Platform and budget
 
-An isolated CPU-only dependency directory is first built from pinned wheels on
-Kunshan `kshctest02`; it reuses the accepted CPU Torch/PyG base without changing
-the shared environment. The graph cache is then built on the same CPU partition.
+An isolated CPU-only dependency directory is first built from pinned Linux
+wheels uploaded with a recorded archive hash; SCNet network access is not
+required. It reuses the accepted CPU Torch/PyG base without changing the shared
+environment. The graph cache is then built on Kunshan `kshctest02`.
 A separate 15-minute
 single-batch DCU preflight verifies the exact encoder, training-only heads,
 state dimensions, parameter count, finite loss/gradients, and masked geometry.
