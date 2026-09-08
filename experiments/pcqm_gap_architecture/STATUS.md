@@ -18,6 +18,17 @@ authority boundaries, and `ROADMAP.md` owns task order.
   submitted once and entered `RUNNING`. Its immutable launch identity is in
   `results/local_hierarchy_pretraining_seed42/cache_launch_manifest.json`.
   The paired T4x2 GPU screen remains unsubmitted until cache acceptance.
+- The CPU kernel reached `COMPLETE`; all 22 sidecar shards and the 100,000/
+  10,000 role identities passed independent no-model acceptance. The accepted
+  label aggregate is
+  `e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6`.
+  It was uploaded unchanged as private dataset
+  `kaseichou/molgap-pcqm-local-hierarchy-labels-s42`; the source dataset was
+  versioned only to add that accepted SHA marker. Exactly one paired T4x2 GPU
+  task was then submitted as
+  `kaseichou/molgap-pcqm-edgestate-local-hierarchy-s42`, version 1, and entered
+  `RUNNING`. No shadow, extra seed, scale-up, official-role, desktop, or IMS
+  successor was submitted.
 
 - No molecular-research-server access is authorized during architecture
   selection.

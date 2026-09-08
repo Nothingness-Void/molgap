@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-gap100k-local-label-acceptance-v1",
+  "accepted": true,
+  "checks": {
+    "format": true,
+    "complete": true,
+    "source_commit": true,
+    "parent_geometry": true,
+    "parent_graph": true,
+    "smarts": true,
+    "train_graphs": true,
+    "validation_graphs": true,
+    "gpu_unused": true,
+    "no_model_inference": true,
+    "gap_not_auxiliary": true,
+    "official_validation_sealed": true,
+    "test_dev_sealed": true,
+    "ims_unaccessed": true,
+    "all_shards": true,
+    "role_counts": true,
+    "aggregate": true
+  },
+  "source_commit": "1015b0a",
+  "aggregate_sha256": "e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6",
+  "functional_group_contract_sha256": "6ef527e2b30e67b53badef4487015832c6b875eca93b2ec051a11d2ed28ccfe8",
+  "train_graphs": 100000,
+  "validation_graphs": 10000,
+  "atom_rows": 1553799,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
