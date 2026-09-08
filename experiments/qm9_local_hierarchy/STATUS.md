@@ -82,7 +82,13 @@ scientific contract, not an infrastructure retry.
 
 V2 source commit `a300bf9` was released to the isolated remote root
 `/public/home/scnaqkfcy3/molgap-trackc-qm9-edgestate-hierarchy-a300bf9` on
-2026-09-08. CPU cache-and-acceptance job `121340444` was submitted alone and
-entered the queue. No v2 DCU preflight or training job has been submitted.
-Exact source, input, local data-only probe, and contract identities are in
-`launch_edgestate_v2.json`.
+2026-09-08. CPU cache-and-acceptance job `121340444` completed in 313 seconds
+and passed no-model acceptance: 130,194 canonical-valid source rows, 637
+invalid rows, 30,000/3,000 materialized train/validation graphs, zero graph
+failures, split fingerprint `62f1cdefdaec6877`, and aggregate cache SHA-256
+`318b1cf9d9ea03adc256aaf85be8c631b6ad11d20192cb402d7c92503e10c418`.
+No v2 DCU preflight or training job was submitted. The user reclassified this
+question as tuning of the already validated EdgeState model and authorized a
+direct PCQM-100K paired screen, so the accepted QM9 cache remains a reusable
+data asset rather than a training gate. Exact source and input identities are
+in `launch_edgestate_v2.json`.

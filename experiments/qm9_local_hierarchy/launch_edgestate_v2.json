@@ -12,9 +12,18 @@
     "cpu_cache_and_acceptance": "121340444"
   },
   "initial_state": {
-    "cpu_cache_and_acceptance": "PENDING",
+    "cpu_cache_and_acceptance": "COMPLETED_ACCEPTED",
     "dcu_preflight": "NOT_SUBMITTED",
     "dcu_training": "NOT_SUBMITTED"
+  },
+  "terminal_state": {
+    "recorded_at": "2026-09-09T00:28:24+09:00",
+    "cpu_cache_and_acceptance": "COMPLETED_ACCEPTED",
+    "elapsed_seconds": 313,
+    "cache_aggregate_sha256": "318b1cf9d9ea03adc256aaf85be8c631b6ad11d20192cb402d7c92503e10c418",
+    "acceptance_record": "results/edgestate_v2_cache_acceptance.json",
+    "monitor_deleted": true,
+    "successor_reason": "user reclassified the method as accepted-EdgeState tuning and authorized direct PCQM-100K"
   },
   "frozen_sources": {
     "processed_qm9_sha256": "90052e9288b669cc41ecf4899b28ff99e1082e47f2c05eccfb1899572524d721",

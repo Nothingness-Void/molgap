@@ -1,0 +1,31 @@
+{
+  "format": "molgap-qm9-edgestate-local-hierarchy-cache-acceptance-v2",
+  "accepted": true,
+  "source_commit": "a300bf9",
+  "cache_aggregate_sha256": "318b1cf9d9ea03adc256aaf85be8c631b6ad11d20192cb402d7c92503e10c418",
+  "canonical_validity_sha256": "86076bdc48b0bc6570d137de596e2eb568b0d0d55dbfbf615c574714a1cccaa2",
+  "canonical_valid_pool_count": 130194,
+  "canonical_invalid_count": 637,
+  "roles": {
+    "train": 30000,
+    "validation": 3000
+  },
+  "checks": {
+    "source_rows": true,
+    "rdkit_version": true,
+    "processed_source": true,
+    "raw_sdf_source": true,
+    "valid_pool_count": true,
+    "valid_pool_hash": true,
+    "invalid_count": true,
+    "train_hash": true,
+    "validation_hash": true,
+    "roles_disjoint": true,
+    "selected_from_pool": true,
+    "held_out_graphs_absent": true,
+    "test_role_unread": true
+  },
+  "model_inference_executed": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
