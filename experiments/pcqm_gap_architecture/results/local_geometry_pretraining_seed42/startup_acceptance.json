@@ -1,0 +1,39 @@
+{
+  "format": "molgap-pcqm-local-geometry-startup-acceptance-v1",
+  "accepted": true,
+  "preflight": {
+    "job_id": "66397367",
+    "state": "COMPLETED",
+    "gpu": "Z100SM",
+    "finite_forward_backward": true,
+    "inference_parameter_count": 4771073,
+    "training_head_parameter_count": 46210,
+    "distance_loss": 0.07548312097787857,
+    "angle_loss": 0.1449427306652069
+  },
+  "replicates": {
+    "1": {
+      "job_id": "66397375",
+      "state": "RUNNING",
+      "scratch_epoch_0_seconds": 290.0,
+      "scratch_epoch_0_validation_gap_mae_eV": 0.257622,
+      "checkpoint_present": true,
+      "checkpoint_bytes": 57632931,
+      "stderr_empty": true
+    },
+    "2": {
+      "job_id": "66397380",
+      "state": "RUNNING",
+      "scratch_epoch_0_seconds": 290.6,
+      "scratch_epoch_0_validation_gap_mae_eV": 0.258672,
+      "checkpoint_present": true,
+      "checkpoint_bytes": 57632931,
+      "stderr_empty": true
+    }
+  },
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "source_commit": "da5c3ec7de91acd90368774e9e5fe4bbc37c3791",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
