@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-NEXT-ARCHITECTURE | Select one materially different QM9-30K information-flow question; do not retune closed GAPE-lite | Freeze one mechanism, comparator, gate, and compute budget before submission |
+| P1 | C-ADAPTIVE-DENOISING | Run the frozen QM9-30K scratch/fixed/adaptive local-denoising comparison on Kaggle; SCNet work is out of scope | Accepted batch-128 result either clears both material gates or closes the exact mechanism |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -41,6 +41,12 @@ Matched GAPE-lite failed its same-task batch-128 QM9 gate against both fresh
 and equal-compute controls. Its exact generator, noise, width, seed, and
 pretraining allocation are closed in
 `experiments/qm9_gape_pretraining/decision.md`.
+
+The next admitted Track C question is selected in
+`experiments/qm9_adaptive_denoising/evidence_selection.md` and frozen in its
+adjacent `protocol.md`. It changes geometry supervision locality and noise
+adaptation, not the database or downstream target. Only Kaggle execution is
+server-owned; SCNet/Fragment-State work belongs to desktop and is ignored here.
 
 ## Mandatory gates
 
