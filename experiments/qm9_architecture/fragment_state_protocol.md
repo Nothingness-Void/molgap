@@ -62,6 +62,10 @@ and any sealed role remain unread.
 
 ## Remote layout
 
+Xi'an and Kunshan launchers implement the same frozen scientific protocol.
+Their only differences are the accepted runtime, partition, and account-local
+path boundary.
+
 The Xi'an SCNet payload is kept below the account home directory:
 
 ```text
@@ -72,6 +76,6 @@ $HOME/molgap-results/trackc-qm9-fragment-state-<commit>/
   logs/
 ```
 
-The source code is uploaded as a separate read-only copy.  The queue sequence
-is `accept_cache_xian.slurm` -> `preflight_xian.slurm` -> `train_xian.slurm`.
-Existing 96-batch jobs are not modified by this experiment.
+The source code is uploaded as a separate read-only copy.  Each platform runs
+CPU cache build/acceptance, then DCU preflight, then paired training.  Existing
+96-batch jobs are not modified by this experiment.
