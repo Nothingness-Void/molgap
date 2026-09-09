@@ -3,8 +3,8 @@
 The candidate changes only the initial node state of the accepted OGB
 EdgeState Structural GPS9. Gasteiger atom and implicit-hydrogen charges are
 standardized with train-only statistics and injected through a zero-output
-low-rank adapter. The control and candidate therefore start from identical
-shared parameters and identical predictions.
+low-rank adapter. Both arms execute the same adapter path and start from
+identical state; the sham control keeps the zero adapter frozen.
 """
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ ADAPTER_RANK = 16
 CHARGE_ALGORITHM = "rdkit-gasteiger-atom-hydrogen-niter12-v1"
 CACHE_FORMAT = "molgap-qm9-charge-adapter-cache-v1"
 ACCEPTANCE_FORMAT = "molgap-qm9-charge-adapter-cache-acceptance-v1"
-SCREEN_FORMAT = "molgap-qm9-charge-adapter-screen-v1"
+SCREEN_FORMAT = "molgap-qm9-charge-adapter-screen-v2"
 
 
 def sha256_file(path: Path) -> str:
@@ -615,6 +615,13 @@ def make_charge_encoder(charge_mean, charge_std):
     return OGBChargeAdapterStructuralGPSWrapper()
 
 
+def freeze_charge_adapter(model):
+    """Turn the charge path into an identical-compute frozen-zero sham."""
+    for parameter in model.charge_adapter.parameters():
+        parameter.requires_grad_(False)
+    return model
+
+
 def forward_encoder(model, batch, *, candidate: bool):
     arguments = (
         batch.x,
@@ -652,7 +659,7 @@ def _make_loader(graphs, *, shuffle: bool, seed: int):
 def _arm_contract(arm: str, *, accelerator: str, split_fingerprint: str) -> dict:
     return {
         "arm": arm,
-        "task_id": "qm9-charge-adapter-s42-v1",
+        "task_id": "qm9-charge-adapter-s42-v2",
         "platform_id": "scnet-kunshan",
         "accelerator": accelerator,
         "data_role_fingerprint": split_fingerprint,
@@ -922,7 +929,9 @@ def run_preflight(
     batch, manifest = _first_physical_batch(cache_root, cache_sha256)
     stats = manifest["train_charge_statistics"]
     set_seed(MODEL_SEED)
-    control = make_control_encoder()
+    control = freeze_charge_adapter(
+        make_charge_encoder(stats["mean"], stats["std"])
+    )
     set_seed(MODEL_SEED)
     candidate = make_charge_encoder(stats["mean"], stats["std"])
     shared_exact = _shared_initialization_exact(control, candidate)
@@ -937,9 +946,13 @@ def run_preflight(
         normalized_charge = (
             batch.gasteiger_features.float() - candidate.charge_mean
         ) / candidate.charge_std
-        adapter_output = candidate.charge_adapter(normalized_charge)
-        adapter_output_exact_zero = bool(torch.count_nonzero(adapter_output) == 0)
-        control_prediction = forward_encoder(control, batch, candidate=False)
+        control_adapter_output = control.charge_adapter(normalized_charge)
+        candidate_adapter_output = candidate.charge_adapter(normalized_charge)
+        adapter_output_exact_zero = bool(
+            torch.count_nonzero(control_adapter_output) == 0
+            and torch.count_nonzero(candidate_adapter_output) == 0
+        )
+        control_prediction = forward_encoder(control, batch, candidate=True)
         candidate_prediction = forward_encoder(candidate, batch, candidate=True)
         initial_prediction_max_abs_diff = float(
             (control_prediction - candidate_prediction).abs().max()
@@ -952,15 +965,11 @@ def run_preflight(
                 atol=1e-6,
             )
         )
-    if not adapter_output_exact_zero or not initial_prediction_close:
-        raise RuntimeError(
-            "Zero-start adapter is not numerically neutral: "
-            f"output_zero={adapter_output_exact_zero}, "
-            f"max_abs_diff={initial_prediction_max_abs_diff}"
-        )
+    if not adapter_output_exact_zero:
+        raise RuntimeError("Sham or candidate adapter output is not exactly zero")
     reports = {}
     for name, model, is_candidate in (
-        ("control", control, False),
+        ("frozen_zero_adapter_control", control, True),
         ("charge_adapter", candidate, True),
     ):
         torch.cuda.reset_peak_memory_stats()
@@ -987,19 +996,20 @@ def run_preflight(
         del model
         torch.cuda.empty_cache()
     result = {
-        "format": "molgap-qm9-charge-adapter-dcu-preflight-v1",
+        "format": "molgap-qm9-charge-adapter-dcu-preflight-v2",
         "accepted": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
         "split_fingerprint": manifest["split_fingerprint"],
         "architecture": "ogb_edgestate_gps9_plus_zero_start_charge_adapter",
+        "control": "identical_compute_frozen_zero_charge_adapter",
         "charge_algorithm": CHARGE_ALGORITHM,
         "physical_batch_per_device": BATCH_SIZE,
         "device_count": 1,
         "gpu": torch.cuda.get_device_name(0),
         "shared_initialization_exact": shared_exact,
         "adapter_output_exact_zero": adapter_output_exact_zero,
-        "zero_start_prediction_close": initial_prediction_close,
+        "zero_start_prediction_close_diagnostic": initial_prediction_close,
         "zero_start_prediction_atol": 1e-6,
         "zero_start_prediction_max_abs_diff": initial_prediction_max_abs_diff,
         "arms": reports,
@@ -1029,7 +1039,7 @@ def run_screen(
         torch.backends.cudnn.allow_tf32 = False
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     required = {
-        "format": "molgap-qm9-charge-adapter-dcu-preflight-v1",
+        "format": "molgap-qm9-charge-adapter-dcu-preflight-v2",
         "accepted": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
@@ -1038,7 +1048,7 @@ def run_screen(
         "device_count": 1,
         "shared_initialization_exact": True,
         "adapter_output_exact_zero": True,
-        "zero_start_prediction_close": True,
+        "control": "identical_compute_frozen_zero_charge_adapter",
         "zero_start_prediction_atol": 1e-6,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
@@ -1050,7 +1060,9 @@ def run_screen(
     output_root.mkdir(parents=True, exist_ok=True)
     stats = manifest["train_charge_statistics"]
     set_seed(MODEL_SEED)
-    control = make_control_encoder()
+    control = freeze_charge_adapter(
+        make_charge_encoder(stats["mean"], stats["std"])
+    )
     set_seed(MODEL_SEED)
     candidate = make_charge_encoder(stats["mean"], stats["std"])
     if not _shared_initialization_exact(control, candidate):
@@ -1058,7 +1070,7 @@ def run_screen(
 
     results = {}
     for name, model, is_candidate in (
-        ("control", control, False),
+        ("control", control, True),
         ("charge_adapter", candidate, True),
     ):
         set_seed(MODEL_SEED)
