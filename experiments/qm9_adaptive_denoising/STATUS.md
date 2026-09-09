@@ -19,6 +19,11 @@
   33,000 graphs but failed the frozen 99% geometry-validity gate at 96.2576%; no
   final manifest or GPU release exists. The terminal diagnosis is
   `results/cpu_cache_v3_failure_diagnosis.md`.
+- The 99% gate was preserved. A documented difficult-ring ETKDG amendment adds
+  deterministic retries only after the original attempts fail; no molecule is
+  dropped or replaced. CPU kernel version 4 was submitted from commit
+  `d8443fb6a0f87cd2408e7f79b0e47651c5cc205f` and initially observed
+  `QUEUED`; see `results/cpu_cache_v4_launch.json`.
 - The GPU entry point is intentionally hard-blocked by pending cache SHA
   sentinels. It cannot run until the CPU cache is independently accepted and
   its aggregate and manifest hashes are frozen in source.
