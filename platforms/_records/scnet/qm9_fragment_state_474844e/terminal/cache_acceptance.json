@@ -1,0 +1,16 @@
+{
+  "format": "molgap-qm9-fragment-state-cache-acceptance-v1",
+  "accepted": true,
+  "source_commit": "474844e",
+  "cache_aggregate_sha256": "e93d33c33c9fd7d4e822438bcb691b7a5de340ca34761647daf2f3da39b17b8c",
+  "canonical_validity_sha256": "029e7d522d2d10223e5e9ee2cd14cf302ce99641d7b3237c1df9202281c51e83",
+  "graph_count": 33000,
+  "roles": {
+    "train": 30000,
+    "validation": 3000
+  },
+  "gpu_used": false,
+  "model_inference_executed": false,
+  "official_pcqm_roles_read": false,
+  "test_role_materialized": false
+}

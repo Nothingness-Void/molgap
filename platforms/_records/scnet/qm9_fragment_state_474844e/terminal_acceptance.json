@@ -1,0 +1,58 @@
+{
+  "format": "molgap-qm9-fragment-state-terminal-acceptance-v1",
+  "accepted": true,
+  "source_commit": "474844e",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-fragment-state-474844e",
+  "jobs": {
+    "cache_build_and_accept": {
+      "job_id": 121529290,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:05:37"
+    },
+    "batch128_preflight": {
+      "job_id": 121529300,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:07:11"
+    },
+    "paired_training": {
+      "job_id": 121529306,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "01:09:10"
+    }
+  },
+  "cache": {
+    "graphs": 33000,
+    "train": 30000,
+    "validation": 3000,
+    "shards": 17,
+    "aggregate_sha256": "e93d33c33c9fd7d4e822438bcb691b7a5de340ca34761647daf2f3da39b17b8c"
+  },
+  "preflight": {
+    "accepted": true,
+    "batch_size": 128,
+    "control_finite_forward_backward": true,
+    "fragment_state_finite_forward_backward": true
+  },
+  "results": {
+    "control_validation_gap_mae_eV": 0.12744224532445272,
+    "fragment_state_validation_gap_mae_eV": 0.12887452459335327,
+    "paired_gain_eV": -0.0014322792689005492,
+    "minimum_gain_eV": 0.001,
+    "pcqm_transfer_nominated": false
+  },
+  "retrieved_file_sha256": {
+    "cache_acceptance.json": "bfb451377eab2bf4e0e0d2ab8d56e398790ed35df7f03d32ec32ef4dccc5fb87",
+    "cache_manifest.json": "b7c6c77d1a1e3533ecfc6df111a9ac604321bb8c185856874ba4d1505e582198",
+    "completion_manifest.json": "78e9cbeae80f7d53c989e16d945277316668aa2a74240adf0e2d4d038526929c",
+    "control_trace.json": "ad682ed5ec41c9155bbcfc0f869d23a9f4a84804d635dbb63899f20af76129c3",
+    "fragment_state_trace.json": "8c7c36bf65be77fb520e58673ab9e09a814cc3ac6fef12755b8cb2ef3147f786",
+    "metrics.json": "9c670398613863dcba21fc37d37bc3cd75f09eba4f96963e4c818f6cc5a1e6b9",
+    "preflight.json": "27c779db8ebc60580223f6e28570adeaf3fdbdd5b201908095b43f3f48b49c88",
+    "train_stdout.log": "3430e4e4ea63ad8e4f838b58d5ed8f4b12bcaa6560ba840c1cdff95a93302298"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_materialized": false
+}

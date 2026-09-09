@@ -1,0 +1,33 @@
+{
+  "format": "molgap-qm9-fragment-state-screen-v1-preflight",
+  "accepted": true,
+  "source_commit": "474844e",
+  "cache_aggregate_sha256": "e93d33c33c9fd7d4e822438bcb691b7a5de340ca34761647daf2f3da39b17b8c",
+  "gpu": "Device 66a1",
+  "cuda_available": true,
+  "batch_size": 128,
+  "reports": [
+    {
+      "kind": "control",
+      "accepted": true,
+      "parameter_count": 4771073,
+      "batch_size": 128,
+      "node_count": 1126,
+      "fragment_count": 188,
+      "finite_forward_backward": true,
+      "peak_memory_mib": 318.83984375
+    },
+    {
+      "kind": "fragment_state",
+      "accepted": true,
+      "parameter_count": 4794337,
+      "batch_size": 128,
+      "node_count": 1126,
+      "fragment_count": 188,
+      "finite_forward_backward": true,
+      "peak_memory_mib": 362.19970703125
+    }
+  ],
+  "official_pcqm_roles_read": false,
+  "test_role_materialized": false
+}
