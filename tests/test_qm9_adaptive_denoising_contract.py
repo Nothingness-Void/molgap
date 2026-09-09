@@ -233,7 +233,14 @@ def test_gpu_wrapper_requests_t4x2_and_serializes_gpu1_denoising_arms() -> None:
     assert "fixed10_gap30" in source
     assert "adaptive10_gap30" in source
     assert "process.wait()" in source
-    assert "PENDING_CPU_ACCEPTANCE" in source
+    values = _literal_assignments(GPU_RUNNER)
+    assert values["EXPECTED_CACHE_AGGREGATE_SHA256"] == (
+        "42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af"
+    )
+    assert values["EXPECTED_CACHE_MANIFEST_SHA256"] == (
+        "f72142c3d33707c821a7fec6f497396eedb264fc311a26797c4cde16a10b3013"
+    )
+    assert "PENDING_CPU_ACCEPTANCE" not in source
     assert "EXPECTED_CACHE_MANIFEST_SHA256" in source
     assert 'acceptance.get("accepted") is not True' in source
     assert "official" not in source.lower()

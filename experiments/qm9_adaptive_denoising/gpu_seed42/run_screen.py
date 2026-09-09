@@ -10,10 +10,13 @@ import sys
 from pathlib import Path
 
 
-# These two values are replaced only after independent CPU cache acceptance.
-# Their sentinel state intentionally makes premature GPU submission fail closed.
-EXPECTED_CACHE_AGGREGATE_SHA256 = "PENDING_CPU_ACCEPTANCE"
-EXPECTED_CACHE_MANIFEST_SHA256 = "PENDING_CPU_ACCEPTANCE"
+# Frozen only after independent CPU-cache acceptance on 2026-09-10.
+EXPECTED_CACHE_AGGREGATE_SHA256 = (
+    "42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af"
+)
+EXPECTED_CACHE_MANIFEST_SHA256 = (
+    "f72142c3d33707c821a7fec6f497396eedb264fc311a26797c4cde16a10b3013"
+)
 
 
 def sha256_file(path: Path) -> str:
