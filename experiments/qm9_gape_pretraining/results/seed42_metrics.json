@@ -1,0 +1,40 @@
+{
+  "format": "molgap-qm9-gape-lite-screen-compact-v1",
+  "source_commit": "56e5db105ad8c43809664c0e0f001ea9ac9104e1",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "split_fingerprint": "62f1cdefdaec6877",
+  "platform": "kaggle2",
+  "accelerator": "Tesla T4",
+  "seed": 42,
+  "precision": "fp32",
+  "physical_batch_per_model_device": 128,
+  "gap_epochs": 40,
+  "gape_pretrain_epochs": 10,
+  "validation_gap_mae_eV": {
+    "baseline": 0.13014136254787445,
+    "shuffled_control": 0.1291757971048355,
+    "matched_gape": 0.13024109601974487
+  },
+  "parameter_count": {
+    "baseline": 4771073,
+    "shuffled_control": 4777281,
+    "matched_gape": 4777281,
+    "gape_generator": 3616
+  },
+  "best_epoch": {
+    "baseline": 35,
+    "shuffled_control": 38,
+    "matched_gape": 38
+  },
+  "candidate_gain_vs_baseline_eV": -0.00009973347187042236,
+  "candidate_gain_vs_equal_compute_control_eV": -0.0010652989149093628,
+  "required_gain_eV": 0.003,
+  "pcqm_transfer_nominated": false,
+  "acceptance_sha256": "e4e649a9fab198a00c5b4ef1eccd263f820389a6cfbac155979d4a56fddf3849",
+  "completion_manifest_sha256": "111f4b035bdc1bb6a62691dc557c41503ded2a2a0b526c4ac8a577c73fb4e712",
+  "kernel_log_sha256": "5634693431a37abd9bda97f7bd71a60c10c0c8d00d34fae995e74e34b618fa82",
+  "comparability_accepted": true,
+  "model_inference_executed_by_acceptance": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
