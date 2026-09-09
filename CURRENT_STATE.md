@@ -67,6 +67,11 @@ train-standardized, zero-start Gasteiger charge adapter on the unchanged OGB
 EdgeState GPS9. The Kunshan CPU-cache, batch-128 preflight, and paired-training
 chain is recorded at
 `experiments/qm9_architecture/results/charge_adapter_seed42/launch.json`.
+Its first DCU preflight rejected a last-bit zero-add rounding difference before
+training. The accepted cache was preserved, the check was corrected to require
+bitwise-zero adapter output plus `1e-6` prediction equivalence, and the unchanged
+scientific comparison was relaunched as recorded in
+`experiments/qm9_architecture/results/charge_adapter_seed42/relaunch_20fcd1e.json`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired
