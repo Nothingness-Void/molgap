@@ -79,7 +79,9 @@ follow-up are in
 The user explicitly authorized that one fresh paired 10-pretrain/30-Gap
 follow-up. Its frozen contract is
 `experiments/pcqm_gap_architecture/local_hierarchy_allocation10_30_seed42_protocol.md`;
-no other allocation, seed, shadow read, or scale-up is implied.
+Kaggle2 T4x2 kernel `kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42`,
+version 1, is the only released GPU task. No other allocation, seed, shadow
+read, or scale-up is implied.
 
 ## Prior architecture evidence
 

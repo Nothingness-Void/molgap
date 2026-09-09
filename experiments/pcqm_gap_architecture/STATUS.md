@@ -43,6 +43,12 @@ authority boundaries, and `ROADMAP.md` owns task order.
   40 encoder-exposure epochs and requires a fresh scratch40 arm. No remote job
   is recorded until the parameterized runner, acceptance, source package, and
   static contract tests are frozen.
+- Source commit `a6979b6` parameterized the allocation without changing the
+  model or cache contract; four static tests passed and the historical 20/20
+  output remained acceptable. The private source dataset was versioned with
+  the same accepted label SHA. Exactly one T4x2 task was submitted as
+  `kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42`, version 1, and entered
+  `RUNNING`. No other allocation or downstream task was submitted.
 
 - No molecular-research-server access is authorized during architecture
   selection.
