@@ -1,4 +1,4 @@
-"""Kaggle T4x2 entry point for paired EdgeState local-hierarchy training."""
+"""Kaggle T4x2 entry point for the EdgeState 10/30 hierarchy allocation."""
 from __future__ import annotations
 
 import os
@@ -6,6 +6,10 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+
+PRETRAIN_EPOCHS = 10
+FINETUNE_EPOCHS = 30
 
 
 def find_one(pattern: str) -> Path:
@@ -47,7 +51,7 @@ def main() -> None:
     output = Path(
         os.environ.get(
             "MOLGAP_LOCAL_HIERARCHY_OUTPUT",
-            "/kaggle/working/pcqm_gap100k_edgestate_local_hierarchy_s42",
+            "/kaggle/working/pcqm_gap100k_edgestate_hierarchy_10_30_s42",
         )
     )
     source_commit = os.environ.get("MOLGAP_SOURCE_COMMIT") or find_one(
@@ -56,26 +60,28 @@ def main() -> None:
     label_sha256 = os.environ.get("MOLGAP_LOCAL_LABEL_SHA256") or find_one(
         "EXPECTED_LOCAL_LABEL_SHA256.txt"
     ).read_text().strip()
-    pretrain_epochs = int(os.environ.get("MOLGAP_PRETRAIN_EPOCHS", "20"))
-    finetune_epochs = int(os.environ.get("MOLGAP_FINETUNE_EPOCHS", "20"))
+    pretrain_epochs = int(
+        os.environ.get("MOLGAP_PRETRAIN_EPOCHS", str(PRETRAIN_EPOCHS))
+    )
+    finetune_epochs = int(
+        os.environ.get("MOLGAP_FINETUNE_EPOCHS", str(FINETUNE_EPOCHS))
+    )
+    if (pretrain_epochs, finetune_epochs) != (
+        PRETRAIN_EPOCHS,
+        FINETUNE_EPOCHS,
+    ):
+        raise RuntimeError("10/30 allocation contract changed")
     role = os.environ.get("MOLGAP_LOCAL_HIERARCHY_WORKER")
+    kwargs = {
+        "label_sha256": label_sha256,
+        "source_commit": source_commit,
+        "pretrain_epochs": PRETRAIN_EPOCHS,
+        "finetune_epochs": FINETUNE_EPOCHS,
+    }
     if role:
-        run_worker(
-            role,
-            output,
-            label_sha256=label_sha256,
-            source_commit=source_commit,
-            pretrain_epochs=pretrain_epochs,
-            finetune_epochs=finetune_epochs,
-        )
+        run_worker(role, output, **kwargs)
     else:
-        run_paired_screen(
-            output,
-            label_sha256=label_sha256,
-            source_commit=source_commit,
-            pretrain_epochs=pretrain_epochs,
-            finetune_epochs=finetune_epochs,
-        )
+        run_paired_screen(output, **kwargs)
 
 
 if __name__ == "__main__":

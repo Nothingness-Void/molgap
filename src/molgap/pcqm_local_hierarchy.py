@@ -644,7 +644,15 @@ def _undirected_edge_mask(batch, generator):
     return mask
 
 
-def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: str):
+def _pretrain(
+    model,
+    roles,
+    run_dir: Path,
+    *,
+    epochs: int,
+    initial_hash: str,
+    label_sha256: str,
+):
     import time
     import numpy as np
     import torch
@@ -659,12 +667,12 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
         parameters, lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=PRETRAIN_EPOCHS, eta_min=1e-6
+        optimizer, T_max=epochs, eta_min=1e-6
     )
     loader = _loader(roles["train"], shuffle=True, seed=MODEL_SEED)
     mask_generator = torch.Generator().manual_seed(MODEL_SEED + 17)
     trace = []
-    for epoch in range(PRETRAIN_EPOCHS):
+    for epoch in range(epochs):
         model.train()
         heads.module.train()
         totals = {"loss": 0.0, "atom": 0.0, "bond": 0.0, "group": 0.0}
@@ -771,7 +779,15 @@ def _pretrain(model, roles, run_dir: Path, *, initial_hash: str, label_sha256: s
     return model, result
 
 
-def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit: str):
+def run_worker(
+    role: str,
+    output_root: Path,
+    *,
+    label_sha256: str,
+    source_commit: str,
+    pretrain_epochs: int = PRETRAIN_EPOCHS,
+    finetune_epochs: int = FINETUNE_EPOCHS,
+):
     import torch
 
     if torch.cuda.device_count() != 1:
@@ -801,6 +817,7 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
             model,
             roles,
             run_dir,
+            epochs=pretrain_epochs,
             initial_hash=initial_hash,
             label_sha256=label_sha256,
         )
@@ -808,7 +825,7 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
             model,
             roles,
             run_dir,
-            epochs=FINETUNE_EPOCHS,
+            epochs=finetune_epochs,
             stage="finetune_gap",
             initial_hash=initial_hash,
             label_sha256=label_sha256,
@@ -828,8 +845,8 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
         "parent_geometry_cache_aggregate_sha256": graph_manifest["aggregate_sha256"],
         "local_label_cache_aggregate_sha256": label_manifest["aggregate_sha256"],
         "encoder_sample_exposure_epochs": SCRATCH_EPOCHS,
-        "gap_training_epochs": SCRATCH_EPOCHS if role == "scratch" else FINETUNE_EPOCHS,
-        "pretraining_epochs": 0 if role == "scratch" else PRETRAIN_EPOCHS,
+        "gap_training_epochs": SCRATCH_EPOCHS if role == "scratch" else finetune_epochs,
+        "pretraining_epochs": 0 if role == "scratch" else pretrain_epochs,
         "batch_size": BATCH_SIZE,
         "learning_rate": LEARNING_RATE,
         "weight_decay": WEIGHT_DECAY,
@@ -843,13 +860,22 @@ def run_worker(role: str, output_root: Path, *, label_sha256: str, source_commit
     return payload
 
 
-def run_paired_screen(output_root: Path, *, label_sha256: str, source_commit: str):
+def run_paired_screen(
+    output_root: Path,
+    *,
+    label_sha256: str,
+    source_commit: str,
+    pretrain_epochs: int = PRETRAIN_EPOCHS,
+    finetune_epochs: int = FINETUNE_EPOCHS,
+):
     """Run scratch and local-hierarchy training on isolated Kaggle T4 workers."""
     import subprocess
     import sys
     import time
 
     output_root.mkdir(parents=True, exist_ok=True)
+    if pretrain_epochs + finetune_epochs != SCRATCH_EPOCHS:
+        raise ValueError("Candidate encoder exposure must equal scratch exposure")
     names_result = subprocess.run(
         ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
         check=True,
@@ -869,6 +895,8 @@ def run_paired_screen(output_root: Path, *, label_sha256: str, source_commit: st
         environment["MOLGAP_LOCAL_HIERARCHY_OUTPUT"] = str(output_root)
         environment["MOLGAP_LOCAL_LABEL_SHA256"] = label_sha256
         environment["MOLGAP_SOURCE_COMMIT"] = source_commit
+        environment["MOLGAP_PRETRAIN_EPOCHS"] = str(pretrain_epochs)
+        environment["MOLGAP_FINETUNE_EPOCHS"] = str(finetune_epochs)
         workers.append(
             (
                 role,
@@ -939,6 +967,8 @@ def run_paired_screen(output_root: Path, *, label_sha256: str, source_commit: st
         "minimum_paired_gain_eV": MIN_PAIRED_GAIN_EV,
         "passes_seed42_nomination_gate": delta <= -MIN_PAIRED_GAIN_EV,
         "equal_encoder_sample_exposure_epochs": SCRATCH_EPOCHS,
+        "pretraining_epochs": pretrain_epochs,
+        "finetune_epochs": finetune_epochs,
         "shadow_audit_read": False,
         "seed43_44_submitted": False,
         "scale_up_submitted": False,
@@ -967,11 +997,15 @@ def accept_paired_screen(
     *,
     expected_source_commit: str,
     expected_label_sha256: str,
+    expected_pretrain_epochs: int = PRETRAIN_EPOCHS,
+    expected_finetune_epochs: int = FINETUNE_EPOCHS,
 ) -> dict:
     """Recompute terminal metrics from tensors without executing a model."""
     import torch
 
     selection = json.loads((root / "selection.json").read_text(encoding="utf-8"))
+    if expected_pretrain_epochs + expected_finetune_epochs != SCRATCH_EPOCHS:
+        raise ValueError("Expected candidate exposure does not equal scratch exposure")
     worker_metrics = {
         role: json.loads((root / role / "metrics.json").read_text(encoding="utf-8"))
         for role in ("scratch", "pretrained")
@@ -1016,11 +1050,21 @@ def accept_paired_screen(
         "pretrain_epochs": worker_metrics["pretrained"]["pretraining"].get(
             "epochs_completed"
         )
-        == PRETRAIN_EPOCHS,
+        == expected_pretrain_epochs,
         "finetune_epochs": worker_metrics["pretrained"]["gap"].get(
             "epochs_completed"
         )
-        == FINETUNE_EPOCHS,
+        == expected_finetune_epochs,
+        "selection_allocation": selection.get(
+            "pretraining_epochs",
+            worker_metrics["pretrained"].get("pretraining_epochs"),
+        )
+        == expected_pretrain_epochs
+        and selection.get(
+            "finetune_epochs",
+            worker_metrics["pretrained"].get("gap_training_epochs"),
+        )
+        == expected_finetune_epochs,
         "row_identity": torch.equal(
             recomputed["scratch"]["row_id"], recomputed["pretrained"]["row_id"]
         ),

@@ -70,3 +70,23 @@ def test_kaggle_resource_separation() -> None:
     assert gpu["enable_gpu"] == "true"
     assert gpu["machine_shape"] == "NvidiaTeslaT4"
     assert len(gpu["dataset_sources"]) == 3
+
+
+def test_10_30_allocation_changes_only_budget_split() -> None:
+    path = (
+        EXPERIMENT
+        / "kaggle_pcqm_gap100k"
+        / "local_hierarchy_allocation10_30_seed42"
+        / "run_screen.py"
+    )
+    source = path.read_text(encoding="utf-8")
+    ast.parse(source)
+    assert "PRETRAIN_EPOCHS = 10" in source
+    assert "FINETUNE_EPOCHS = 30" in source
+    metadata = json.loads(
+        (path.parent / "kernel-metadata.json").read_text(encoding="utf-8")
+    )
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["dataset_sources"][-1].endswith(
+        "molgap-pcqm-local-hierarchy-labels-s42"
+    )
