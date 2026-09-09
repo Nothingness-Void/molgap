@@ -14,7 +14,7 @@ Track C.
 | Question | Verdict | Directory |
 |---|---|---|
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
-| Can train-role graph alignment add useful topology PE beyond RWSE16? | Open; frozen three-arm QM9-30K GAPE-lite screen | `qm9_gape_pretraining/` |
+| Can train-role graph alignment add useful topology PE beyond RWSE16? | No for the matched GAPE-lite implementation; closed before PCQM transfer | `qm9_gape_pretraining/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; closed R2/R4--R10 routes are indexed in the archive tombstone | `top20_architecture_qm9/` |
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |

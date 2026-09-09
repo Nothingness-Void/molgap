@@ -53,11 +53,11 @@ full-scale work. The governing
 decision, thresholds, and exact scope of the rejected pretraining surrogates
 are in
 `experiments/pcqm_gap_architecture/results/three_stage_screening_reset_2026-09-08/decision.md`.
-The active Track C question is a train-role-only GAPE-lite positional-encoding
-screen. It compares fresh EdgeState GPS9+RWSE16, an equal-compute shuffled-
-alignment PE control, and matched graph-alignment PE inside one Kaggle2 task
-under the global exact-batch-128 contract. Its frozen authority is
-`experiments/qm9_gape_pretraining/protocol.md`.
+The train-role-only GAPE-lite positional-encoding question completed under the
+global same-task, same-platform, exact-batch-128 contract and was rejected
+before PCQM transfer. Matched graph alignment did not beat either the fresh
+EdgeState GPS9+RWSE16 baseline or its equal-compute shuffled-alignment control.
+The decision is `experiments/qm9_gape_pretraining/decision.md`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired

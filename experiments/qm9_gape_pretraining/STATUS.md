@@ -25,3 +25,8 @@ source commit `56e5db105ad8c43809664c0e0f001ea9ac9104e1`. Remote metadata again
 confirms `NvidiaTeslaT4`, the same two datasets, and the same timeout; it was
 `RUNNING` at first verification. All scientific settings remain identical to
 version 1.
+
+Version 2 completed and passed no-inference acceptance. The same-task
+comparability guard passed, but matched GAPE-lite did not beat either required
+control by the frozen margin. The exact question is closed in `decision.md`;
+no PCQM transfer or successor was submitted.

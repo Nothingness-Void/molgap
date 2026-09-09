@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-GAPE-LITE | Run the same-task Kaggle2 QM9-30K graph-alignment PE screen against fresh and shuffled-alignment controls | Accept terminal evidence; require at least 0.003 eV over both controls for PCQM nomination |
+| P1 | C-NEXT-ARCHITECTURE | Select one materially different QM9-30K information-flow question; do not retune closed GAPE-lite | Freeze one mechanism, comparator, gate, and compute budget before submission |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -36,6 +36,11 @@ The EdgeState local-hierarchy 10/30 allocation produced a strong paired
 gate. That optimization question is closed; no shadow, further allocation,
 extra seed, or scale-up follows. Its decision is
 `results/local_hierarchy_allocation10_30_seed42/decision.md`.
+
+Matched GAPE-lite failed its same-task batch-128 QM9 gate against both fresh
+and equal-compute controls. Its exact generator, noise, width, seed, and
+pretraining allocation are closed in
+`experiments/qm9_gape_pretraining/decision.md`.
 
 ## Mandatory gates
 
