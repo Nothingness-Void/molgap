@@ -15,8 +15,10 @@
   manifest was produced; see `results/cpu_cache_v2_failure_diagnosis.md`.
 - The infrastructure was repaired by pinning NumPy 1.26.4 before installing
   RDKit 2023.9.6. The unchanged CPU-cache contract was submitted as version 3
-  from commit `a806c975bed6b7c51e2432561f4f3772b3ab8929` and was observed
-  `RUNNING`; see `results/cpu_cache_v3_launch.json`.
+  from commit `a806c975bed6b7c51e2432561f4f3772b3ab8929`. It processed all
+  33,000 graphs but failed the frozen 99% geometry-validity gate at 96.2576%; no
+  final manifest or GPU release exists. The terminal diagnosis is
+  `results/cpu_cache_v3_failure_diagnosis.md`.
 - The GPU entry point is intentionally hard-blocked by pending cache SHA
   sentinels. It cannot run until the CPU cache is independently accepted and
   its aggregate and manifest hashes are frozen in source.
