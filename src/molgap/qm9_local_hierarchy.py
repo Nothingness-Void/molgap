@@ -238,7 +238,9 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
             part_path = output_root / f"{role}_part_{part_number:03d}.pt"
             expected = np.asarray(indices[start:stop], dtype=np.int64)
             if part_path.is_file():
-                graphs = torch.load(part_path, map_location="cpu")
+                graphs = torch.load(
+                    part_path, map_location="cpu", weights_only=False
+                )
             else:
                 graphs = []
                 for source_idx in expected:
@@ -409,7 +411,7 @@ def load_cache(cache_root: Path, expected_sha256: str | None = None):
         aggregate.update(
             f"{shard['role']}\t{shard['file']}\t{observed_sha}\n".encode("ascii")
         )
-        payload = torch.load(path, map_location="cpu")
+        payload = torch.load(path, map_location="cpu", weights_only=False)
         if len(payload) != shard["graph_count"]:
             raise RuntimeError(f"Cache shard count changed: {path.name}")
         roles[shard["role"]].extend(payload)
@@ -605,7 +607,9 @@ def train_gap(
     start_epoch = 0
     checkpoint_path = output_dir / "last_checkpoint.pt"
     if checkpoint_path.is_file():
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
         if (
             checkpoint.get("source_commit") != source_commit
             or checkpoint.get("cache_sha256") != cache_sha256
@@ -688,7 +692,13 @@ def train_gap(
         )
         if stale >= PATIENCE:
             break
-    model.load_state_dict(torch.load(output_dir / "best_model.pt", map_location=device))
+    model.load_state_dict(
+        torch.load(
+            output_dir / "best_model.pt",
+            map_location=device,
+            weights_only=False,
+        )
+    )
     return model, {
         "best_epoch": best_epoch,
         "validation_gap_mae_eV": best,
@@ -729,7 +739,9 @@ def pretrain_local_hierarchy(
     start_epoch = 0
     checkpoint_path = output_dir / "last_checkpoint.pt"
     if checkpoint_path.is_file():
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
         if (
             checkpoint.get("source_commit") != source_commit
             or checkpoint.get("cache_sha256") != cache_sha256

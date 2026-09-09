@@ -59,3 +59,10 @@ def test_t4x2_runner_isolates_one_worker_per_visible_gpu():
     assert '"0" if role == "baseline" else "1"' in text
     assert 'torch").cuda.device_count() != 2' in text
     assert "process.wait()" in text
+
+
+def test_trusted_pyg_cache_load_is_pytorch26_explicit():
+    loader = (ROOT / "src" / "molgap" / "qm9_local_hierarchy.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'payload = torch.load(path, map_location="cpu", weights_only=False)' in loader
