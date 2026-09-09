@@ -67,15 +67,14 @@ train-standardized, zero-start Gasteiger charge adapter on the unchanged OGB
 EdgeState GPS9. The Kunshan CPU-cache, batch-128 preflight, and paired-training
 chain is recorded at
 `experiments/qm9_architecture/results/charge_adapter_seed42/launch.json`.
-An equal-exposure masked-reconstruction follow-up is queued behind that
-parent's successful terminal state. It compares Charge Adapter scratch60 with
-masked atom/bond/charge pretrain20 plus Gap40, with identical inference models
-and 60 encoder epochs per arm. Its immutable launch record is
-`experiments/qm9_architecture/results/masked_charge_pretraining_seed42/launch.json`.
-The original dependent jobs were cancelled without starting after the parent
-numeric preflight failure. They were requeued behind the corrected parent
-without changing the scientific protocol; the active identities are in
-`experiments/qm9_architecture/results/masked_charge_pretraining_seed42/relaunch_09c773e.json`.
+The first two parent preflights stopped before training. Protocol v2 replaces
+the adapter-free control with an identical-compute adapter frozen at zero and
+reuses the accepted cache. Parent jobs `121571122`/`121571128` are queued. An
+equal-exposure masked-reconstruction follow-up then compares Charge Adapter
+scratch60 with masked atom/bond/charge pretrain20 plus Gap40, using identical
+inference models and 60 encoder epochs per arm. Its dependent jobs
+`121571135`/`121571142` and exact parent contract are recorded in
+`experiments/qm9_architecture/results/masked_charge_pretraining_seed42/relaunch_c293447.json`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired

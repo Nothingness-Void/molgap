@@ -1,0 +1,31 @@
+{
+  "format": "molgap-qm9-masked-charge-pretraining-scnet-relaunch-v2",
+  "relaunch_at_jst": "2026-09-10",
+  "prior_jobs": {
+    "batch128_preflight": "121567645",
+    "equal_exposure_training": "121567659",
+    "state": "CANCELLED_BY_PARENT_DEPENDENCY_WITHOUT_START"
+  },
+  "source_commit": "c2934474dfe741879acb778426148c5ed74c2136",
+  "runtime_archive_sha256": "b044610660a494d07244b6c2cc557a700855248fde062e0c807b4f1870cd50c4",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-masked-charge-pretrain-c293447",
+  "parent": {
+    "screen_format": "molgap-qm9-charge-adapter-screen-v2",
+    "training_job": "121571128",
+    "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-charge-adapter-b6830e7"
+  },
+  "jobs": {
+    "batch128_preflight": "121571135",
+    "equal_exposure_training": "121571142"
+  },
+  "dependencies": {
+    "batch128_preflight": "afterok:121571128",
+    "equal_exposure_training": "afterok:121571135"
+  },
+  "initial_scheduler_state": {
+    "121571135": "PENDING_DEPENDENCY",
+    "121571142": "PENDING_DEPENDENCY"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
