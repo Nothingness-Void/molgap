@@ -87,14 +87,12 @@ scale-up, desktop handoff, official-role access, or IMS work. The complete
 decision is
 `experiments/pcqm_gap_architecture/results/local_hierarchy_allocation10_30_seed42/decision.md`.
 
-The user accepted a new scaling guard after the exact 4,771,073-parameter
-EdgeState plus local-geometry heads passed a real SCNet Xi'an physical-batch-128
-capacity gate with more than 95% device-memory reserve. Every newly frozen PCQM
-50K/100K training screen on Kaggle or SCNet now requires physical batch at
-least 128 per model and device. Already submitted batch-48/96 jobs may finish,
-but a positive result from them requires a fresh paired batch-128 confirmation
-before promotion. The single authority is
-`experiments/pcqm_gap_architecture/screen_batch_policy.md`.
+Every newly frozen Track C or Track B model screen now uses physical batch
+exactly 128 per independent model/device. A scientific comparison is valid
+only when its arms share one task, platform, accelerator class, data roles,
+seed, precision, optimizer, scheduler, row-order policy, and sample exposure.
+Historical cross-task, cross-platform, and non-128 metrics are context only.
+The single authority is `experiments/SCREENING_POLICY.md`.
 
 ## Prior architecture evidence
 

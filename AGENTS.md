@@ -53,6 +53,10 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   the final short list after a material paired gain and a separate explicit
   compute-budget decision. Each experiment protocol may further restrict this
   rule but may not silently broaden it.
+- **Screen comparability**: every newly frozen model screen obeys
+  `experiments/SCREENING_POLICY.md`: physical batch is exactly 128 per
+  independent model/device, and only same-task, same-platform matched arms may
+  decide a scientific claim.
 - **IMS access boundary**: before any molecular-research-server command, read
   and obey the safety boundary in `platforms/REMOTE_HANDOFF.md`. It restricts
   all path access, including read-only discovery and metadata probes.

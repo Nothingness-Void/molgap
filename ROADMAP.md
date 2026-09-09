@@ -44,7 +44,7 @@ extra seed, or scale-up follows. Its decision is
 2. A bounded architecture screen cannot directly authorize full-data work.
    New promotion must pass the resource-bounded ladder in
    `experiments/pcqm_gap_architecture/scale_up_protocol_v2.md`. Every new 50K or
-   100K training screen uses physical batch at least 128 per model and device.
+   100K training screen uses physical batch exactly 128 per model and device.
    Stage-specific high-batch optimization is frozen before S1, and candidate
    and baseline match exactly within every stage.
 3. Before external evaluation, the matched full-scale candidate, delivery
@@ -68,6 +68,9 @@ extra seed, or scale-up follows. Its decision is
   no PCQM or full-scale conclusion. Inputs use the transferable OGB categorical
   atom/bond and RWSE contracts; geometry questions use ETKDG, not QM9 DFT
   coordinates.
+- Only arms from the same task and platform under
+  `experiments/SCREENING_POLICY.md` may decide a screen. Cross-task,
+  cross-platform, or non-128 metrics remain context evidence only.
 - Track B uses the frozen official-train-derived 100K/10K selection contract.
   Before the first post-reset transfer, freeze one disjoint train-derived
   shadow role; read it only once after selecting the candidate. Never tune on
