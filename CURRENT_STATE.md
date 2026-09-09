@@ -74,6 +74,13 @@ version 1, is the only released GPU task. It compares fresh scratch40 with
 pretrain20 plus fine-tune20 at identical encoder exposure; no successor is
 authorized before terminal acceptance and coordinator analysis.
 
+A separate SCNet-only training-optimization question is frozen at
+`experiments/pcqm_gap_architecture/local_geometry_pretraining_scnet_protocol.md`.
+It tests local ETKDG bond/angle reconstruction with the same pure-2D EdgeState
+inference model. The cancelled SCNet chemistry-label job consumed zero runtime;
+the replacement uses the already accepted PCQM geometry cache and requires two
+paired Xi'an replicates before any Kunshan confirmation.
+
 ## Prior architecture evidence
 
 - Track A EdgeState three-seed evidence remains at

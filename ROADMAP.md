@@ -19,6 +19,7 @@ hours unless the user records a separate override.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-EDGESTATE-LOCAL-PRETRAIN | Compare local atom/bond/functional-group reconstruction against a fresh equal-exposure EdgeState scratch arm on PCQM-100K | CPU sidecar and paired seed-42 outputs pass no-model acceptance; nomination requires at least 0.003 eV gain |
+| P0b | B-EDGESTATE-LOCAL-GEOMETRY | Test local ETKDG bond/angle reconstruction as a non-overlapping training-only optimization on SCNet | Two Xi'an paired replicates pass no-model acceptance and each improves by at least 0.003 eV; otherwise close |
 | P2 | B-SHADOW-AUDIT | Audit a nominated PCQM-100K training method once on the frozen shadow role | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
