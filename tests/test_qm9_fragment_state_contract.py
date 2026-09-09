@@ -31,7 +31,7 @@ def test_remote_sequence_requires_cpu_acceptance_then_preflight():
     preflight = (REMOTE / "preflight_xian.slurm").read_text(encoding="utf-8")
     train = (REMOTE / "train_xian.slurm").read_text(encoding="utf-8")
     assert "#SBATCH --gres" not in accept
-    assert "test -s \"$ROOT/acceptance.json\"" in preflight
+    assert "test -s \"$CACHE_ROOT/acceptance.json\"" in preflight
     assert "test -s \"$ROOT/preflight/preflight.json\"" in train
     assert "--cache-sha256" in preflight and "--cache-sha256" in train
     assert "--batch-size" not in train
