@@ -58,6 +58,10 @@ global same-task, same-platform, exact-batch-128 contract and was rejected
 before PCQM transfer. Matched graph alignment did not beat either the fresh
 EdgeState GPS9+RWSE16 baseline or its equal-compute shuffled-alignment control.
 The decision is `experiments/qm9_gape_pretraining/decision.md`.
+The paired SCNet QM9-30K BRICS FragmentState question also failed its frozen
+promotion gate and is closed without PCQM transfer. Its implementation,
+mechanical acceptance, and decision are retained only on `archive` commit
+`bca22b2` under `experiments/qm9_architecture/results/fragment_state_seed42/`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired
