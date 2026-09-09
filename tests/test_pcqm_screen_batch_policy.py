@@ -21,7 +21,7 @@ def test_new_screen_batch128_is_minimum():
     assert MIN_EFFECTIVE_BATCH_PER_MODEL == 128
 
 
-@pytest.mark.parametrize("batch_size", [1, 47, 48, 96, 127])
+@pytest.mark.parametrize("batch_size", [1, 47, 48, 96, 127, 129, 256])
 def test_new_screen_rejects_low_physical_batch(batch_size):
     with pytest.raises(ValueError, match="physical batch"):
         validate_screen_batch(physical_batch_per_device=batch_size)
@@ -34,10 +34,11 @@ def test_two_independent_t4_arms_do_not_form_one_effective_batch():
     assert right["effective_batch_per_optimizer_step"] == 128
 
 
-def test_distributed_batch_is_reported_per_model_optimizer_step():
-    contract = validate_screen_batch(
-        physical_batch_per_device=128,
-        device_count=2,
-        gradient_accumulation_steps=2,
-    )
-    assert contract["effective_batch_per_optimizer_step"] == 512
+def test_distributed_or_accumulated_screen_arm_is_rejected():
+    with pytest.raises(ValueError, match="one visible device"):
+        validate_screen_batch(physical_batch_per_device=128, device_count=2)
+    with pytest.raises(ValueError, match="gradient accumulation"):
+        validate_screen_batch(
+            physical_batch_per_device=128,
+            gradient_accumulation_steps=2,
+        )
