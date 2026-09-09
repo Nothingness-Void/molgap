@@ -13,8 +13,19 @@ from molgap.constants import REPO_ROOT
 
 def tree_sha256(root: Path) -> str:
     digest = hashlib.sha256()
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
-        relative = path.relative_to(root).as_posix()
+    # Path ordering follows host semantics (case-insensitive on Windows and
+    # case-sensitive on Linux).  Sort normalized relative strings explicitly
+    # so the same source tree has one digest on both the packaging and Kaggle
+    # hosts.
+    files = sorted(
+        (
+            (path.relative_to(root).as_posix(), path)
+            for path in root.rglob("*")
+            if path.is_file()
+        ),
+        key=lambda item: item[0],
+    )
+    for relative, path in files:
         digest.update(relative.encode("utf-8") + b"\0")
         digest.update(hashlib.sha256(path.read_bytes()).digest())
     return digest.hexdigest()

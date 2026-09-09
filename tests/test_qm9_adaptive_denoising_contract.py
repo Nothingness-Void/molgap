@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import ast
+import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
@@ -253,3 +255,25 @@ def test_source_packaging_keeps_reusable_logic_out_of_thin_wrappers() -> None:
         assert required in source
     assert "make_encoder" not in _source(CACHE_RUNNER)
     assert "make_encoder" not in _source(GPU_RUNNER)
+
+
+def test_source_tree_digest_uses_cross_platform_relative_path_order(tmp_path: Path) -> None:
+    package = tmp_path / "molgap"
+    (package / "archive").mkdir(parents=True)
+    (package / "archive" / "README.md").write_bytes(b"upper\n")
+    (package / "archive" / "__init__.py").write_bytes(b"lower\n")
+
+    spec = importlib.util.spec_from_file_location("adaptive_packager", SOURCE_PACKAGER)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    digest = hashlib.sha256()
+    for relative in ("archive/README.md", "archive/__init__.py"):
+        digest.update(relative.encode("utf-8") + b"\0")
+        digest.update(hashlib.sha256((package / relative).read_bytes()).digest())
+    assert module.tree_sha256(package) == digest.hexdigest()
+
+    for runner in (CACHE_RUNNER, GPU_RUNNER):
+        source = _source(runner)
+        assert "key=lambda item: item[0]" in source

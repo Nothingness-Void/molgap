@@ -33,8 +33,15 @@ def source_root() -> Path:
 def verify_source_tree(root: Path) -> None:
     digest = hashlib.sha256()
     package = root / "molgap"
-    for path in sorted(item for item in package.rglob("*") if item.is_file()):
-        relative = path.relative_to(package).as_posix()
+    files = sorted(
+        (
+            (path.relative_to(package).as_posix(), path)
+            for path in package.rglob("*")
+            if path.is_file()
+        ),
+        key=lambda item: item[0],
+    )
+    for relative, path in files:
         digest.update(relative.encode("utf-8") + b"\0")
         digest.update(hashlib.sha256(path.read_bytes()).digest())
     expected = find_one("SOURCE_TREE_SHA256.txt").read_text().strip()
