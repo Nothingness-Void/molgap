@@ -14,13 +14,15 @@ from molgap.pcqm_local_geometry_pretraining import (
     PARENT_GEOMETRY_CACHE_SHA256,
     WEIGHT_DECAY,
     _atomic_torch_save,
+    _find_cache,
     _forward,
     _geometry_loss,
     _make_encoder,
     _set_seed,
     _target_stats,
+    _torch_load,
+    _verify_parent_manifest,
     atomic_json,
-    load_roles,
     sha256_file,
 )
 
@@ -29,6 +31,31 @@ BATCH_SIZE = 128
 MEASURED_BATCHES = 32
 WARMUP_BATCHES = 4
 MIN_MEMORY_RESERVE_FRACTION = 0.15
+
+
+def _load_probe_graphs(graph_root: Path, required_graphs: int):
+    graph_root, manifest = _find_cache(
+        "molgap-pcqm-gap100k-etkdg-geometry-cache-v1", graph_root
+    )
+    _verify_parent_manifest(manifest)
+    graphs = []
+    shards = []
+    for item in manifest["shards"]:
+        if item["role"] != "train":
+            continue
+        path = graph_root / item["file"]
+        if sha256_file(path) != item["sha256"]:
+            raise RuntimeError(f"Geometry shard hash changed: {item['file']}")
+        payload = _torch_load(path, map_location="cpu", weights_only=False)
+        if len(payload) != int(item["graph_count"]):
+            raise RuntimeError(f"Geometry shard count changed: {item['file']}")
+        graphs.extend(payload)
+        shards.append({"file": item["file"], "sha256": item["sha256"]})
+        if len(graphs) >= required_graphs:
+            break
+    if len(graphs) < required_graphs:
+        raise RuntimeError("Not enough accepted train graphs for capacity probe")
+    return graphs[:required_graphs], manifest, shards
 
 
 def _run_mode(graphs, *, mode: str, target_mean: float, target_std: float, device):
@@ -125,12 +152,9 @@ def main() -> None:
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("Expected exactly one SCNet DCU")
-    roles, manifest = load_roles(args.graph_root)
-    if manifest.get("aggregate_sha256") != PARENT_GEOMETRY_CACHE_SHA256:
-        raise RuntimeError("Accepted geometry cache identity changed")
     required_graphs = BATCH_SIZE * (WARMUP_BATCHES + MEASURED_BATCHES)
-    graphs = roles["train"][:required_graphs]
-    target_mean, target_std = _target_stats(roles["train"])
+    graphs, manifest, shards = _load_probe_graphs(args.graph_root, required_graphs)
+    target_mean, target_std = _target_stats(graphs)
     device = torch.device("cuda:0")
     rows = []
     checkpoint_model = None
@@ -171,6 +195,8 @@ def main() -> None:
         "measured_batches": MEASURED_BATCHES,
         "minimum_memory_reserve_fraction": MIN_MEMORY_RESERVE_FRACTION,
         "geometry_cache_aggregate_sha256": manifest["aggregate_sha256"],
+        "train_shards_read": shards,
+        "train_graphs_loaded": len(graphs),
         "gpu": torch.cuda.get_device_name(0),
         "torch": torch.__version__,
         "torch_hip": torch.version.hip,
