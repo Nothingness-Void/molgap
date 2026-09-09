@@ -7,6 +7,10 @@ expensive PubChemQC scaling. Reusable model and training logic stays under
 This is Track C discovery work. Track definitions live in `TRACKS.md`; this
 experiment cannot promote a production or leaderboard model directly.
 
+The frozen Gasteiger charge-adapter question is specified in
+`charge_adapter_protocol.md`. Its CLI is `qm9_charge_adapter.py`; it remains an
+isolated Track C screen until the protocol gate is met.
+
 ## QM9
 
 `qm9_screen.py` predicts QM9 HOMO, LUMO, and Gap in eV on one deterministic
