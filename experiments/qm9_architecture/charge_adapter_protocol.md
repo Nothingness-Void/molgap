@@ -1,4 +1,4 @@
-# QM9 Charge-Adapter Screen Protocol
+# QM9 Charge-Adapter Screen Protocol v2
 
 ## Question
 
@@ -15,8 +15,8 @@ keeps every downstream layer unchanged.
 | Field | Control | Candidate |
 |---|---|---|
 | Backbone | OGB EdgeState Structural GPS9 | same |
-| Added input | none | Gasteiger atom and implicit-H charges |
-| Adapter | none | 2 -> 16 -> 192, zero-output initialized |
+| Added input | Gasteiger charges | same |
+| Adapter | 2 -> 16 -> 192, frozen at zero | same, trainable |
 | Target | direct QM9 Gap | same |
 | Split | 30,000 train / 3,000 validation, seed 42 | same |
 | Model seed | 42 | same |
@@ -28,12 +28,18 @@ Charges use RDKit Gasteiger iteration count 12. Each channel is standardized
 with train-only atom statistics. `LayerNorm(1)` is intentionally forbidden:
 normalizing a scalar independently would erase it.
 
-The candidate's shared tensors must equal the control's at initialization and
-its adapter output must be bitwise zero. Predictions must agree within an
-absolute tolerance of `1e-6`, allowing the harmless last-bit difference caused
-by an explicit zero-add kernel on heterogeneous accelerators. A real
-accepted-cache batch of 128 must pass finite forward/backward on SCNet before
-training starts.
+Both arms execute the identical charge-adapter computation graph. The sham
+control permanently freezes its adapter at its bitwise-zero initialization;
+the candidate trains it. All state tensors must be bitwise equal before the
+first update and both adapter outputs must be bitwise zero. Cross-instance
+prediction difference is retained as a DCU diagnostic, not used as a proxy for
+computational equivalence. A real accepted-cache batch of 128 must pass finite
+forward/backward on SCNet before training starts.
+
+This v2 sham-control contract supersedes the earlier comparison against the
+adapter-free backbone. That earlier preflight exposed a DCU rounding difference
+from the extra zero-add path and stopped before either arm trained; widening its
+tolerance would not establish an exact paired comparison.
 
 ## Gate and boundaries
 

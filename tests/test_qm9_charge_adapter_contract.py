@@ -9,8 +9,10 @@ from molgap.qm9_charge_adapter import (
     BATCH_SIZE,
     CHARGE_CHANNELS,
     MIN_GAIN_EV,
+    SCREEN_FORMAT,
     _gasteiger_features,
     _shared_initialization_exact,
+    freeze_charge_adapter,
     make_charge_encoder,
     make_control_encoder,
 )
@@ -24,6 +26,7 @@ def test_frozen_screen_contract():
     assert CHARGE_CHANNELS == 2
     assert ADAPTER_RANK == 16
     assert MIN_GAIN_EV == pytest.approx(0.001)
+    assert SCREEN_FORMAT == "molgap-qm9-charge-adapter-screen-v2"
 
 
 def test_gasteiger_features_are_finite_and_atom_aligned():
@@ -60,12 +63,30 @@ def test_zero_start_candidate_matches_control_prediction():
     assert torch.count_nonzero(candidate.charge_adapter(normalized)) == 0
 
 
-def test_preflight_uses_bounded_numeric_equivalence():
+def test_preflight_uses_identical_compute_sham_control():
     source = (ROOT / "src/molgap/qm9_charge_adapter.py").read_text()
     assert "adapter_output_exact_zero" in source
     assert "zero_start_prediction_max_abs_diff" in source
-    assert "atol=1e-6" in source
-    assert "torch.equal(\n            forward_encoder" not in source
+    assert "identical_compute_frozen_zero_charge_adapter" in source
+    assert "molgap-qm9-charge-adapter-dcu-preflight-v2" in source
+
+
+def test_sham_control_has_identical_state_and_frozen_zero_adapter():
+    torch.manual_seed(42)
+    control = freeze_charge_adapter(
+        make_charge_encoder([0.0, 0.0], [1.0, 1.0])
+    )
+    torch.manual_seed(42)
+    candidate = make_charge_encoder([0.0, 0.0], [1.0, 1.0])
+    assert _shared_initialization_exact(control, candidate)
+    assert not any(
+        parameter.requires_grad
+        for parameter in control.charge_adapter.parameters()
+    )
+    assert all(
+        parameter.requires_grad
+        for parameter in candidate.charge_adapter.parameters()
+    )
 
 
 def test_remote_package_lists_complete_runtime():
