@@ -56,6 +56,16 @@ def test_zero_start_candidate_matches_control_prediction():
             x, edge_index, edge_attr, batch, rwse, charge
         )
     assert torch.equal(control_prediction, candidate_prediction)
+    normalized = (charge - candidate.charge_mean) / candidate.charge_std
+    assert torch.count_nonzero(candidate.charge_adapter(normalized)) == 0
+
+
+def test_preflight_uses_bounded_numeric_equivalence():
+    source = (ROOT / "src/molgap/qm9_charge_adapter.py").read_text()
+    assert "adapter_output_exact_zero" in source
+    assert "zero_start_prediction_max_abs_diff" in source
+    assert "atol=1e-6" in source
+    assert "torch.equal(\n            forward_encoder" not in source
 
 
 def test_remote_package_lists_complete_runtime():
