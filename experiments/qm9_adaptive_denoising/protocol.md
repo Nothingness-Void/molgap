@@ -2,6 +2,17 @@
 
 **Frozen: 2026-09-09.** Track C, seed-42 screening only.
 
+**Cache amendment: 2026-09-10.** The 99% geometry-validity gate remains
+unchanged. After the original standard and random-coordinate ETKDGv3 attempts,
+only failed molecules receive three deterministic small-ring-torsion retries.
+If those fail, one final ETKDGv3 random-coordinate attempt disables chirality
+enforcement and ignores smoothing failure. This last fallback is admissible
+because the downstream model consumes only parity-invariant bond lengths and
+angle cosines, never Cartesian directions or chirality-dependent coordinates.
+Every attempt remains single-conformer, deterministic, ETKDGv3+MMFF94s, and
+recorded. Molecules, roles, split, graph features, training, and gates do not
+change.
+
 ## Question
 
 Does molecule-adaptive atom-specific isotropic coordinate corruption produce a
