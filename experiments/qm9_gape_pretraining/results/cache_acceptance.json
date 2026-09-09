@@ -1,0 +1,22 @@
+{
+  "format": "molgap-qm9-edgestate-local-hierarchy-cache-acceptance-v2",
+  "accepted": true,
+  "source_commit": "3c0b48cca759f01d5a2df4ea445bf73cee7988c7",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "canonical_validity_sha256": "a0882b5ec0e465772cb0f74b687a7a985ef8c89409f36c922606686f5f0d76b8",
+  "canonical_valid_pool_count": 130194,
+  "canonical_invalid_count": 637,
+  "roles": {
+    "train": 30000,
+    "validation": 3000
+  },
+  "atom_feature_channels": 9,
+  "bond_feature_channels": 3,
+  "rwse_channels": 16,
+  "held_out_indices_materialized": false,
+  "shard_count": 17,
+  "gpu_used": false,
+  "model_inference_executed": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

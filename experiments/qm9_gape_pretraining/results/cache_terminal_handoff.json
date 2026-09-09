@@ -1,0 +1,16 @@
+{
+  "format": "molgap-qm9-gape-lite-cache-prep-terminal-handoff-v1",
+  "handoff_id": "qm9-gape-lite-cache-prep-v1-COMPLETE-20260909",
+  "kernel": "kaseichou/molgap-qm9-gape-lite-cache-prep",
+  "kernel_version": 1,
+  "terminal_state": "COMPLETE",
+  "mechanical_acceptance": true,
+  "source_commit": "3c0b48cca759f01d5a2df4ea445bf73cee7988c7",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "canonical_validity_sha256": "a0882b5ec0e465772cb0f74b687a7a985ef8c89409f36c922606686f5f0d76b8",
+  "download_root": "platforms/_records/kaggle/training/qm9_gape_lite_cache_prep_v1",
+  "transient_first_acceptance_failure": "train_part_011 was read before the Kaggle download settled; stable recheck matched all remote hashes",
+  "retry_or_successor_submitted_by_monitor": false,
+  "test_role_read": false,
+  "model_inference_executed": false
+}
