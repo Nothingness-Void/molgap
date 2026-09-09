@@ -62,6 +62,7 @@ DENOISING_PRIOR_SIGMA = 0.1
 KL_WEIGHT = 1.0
 ADAPTIVE_LOG_SCALE_RADIUS = 0.5
 MIN_GEOMETRY_VALID_FRACTION = 0.99
+GEOMETRY_FALLBACK_POLICY = "etkdgv3_difficult_ring_v1"
 MIN_GAIN_VS_SCRATCH_EV = 0.003
 MIN_GAIN_VS_FIXED_EV = 0.001
 TASK_ID = "qm9-adaptive-local-denoising-s42-v1"
@@ -157,6 +158,7 @@ def _attach_geometry(graph, result):
         [0 if result.geometry_valid else 1], dtype=torch.uint8
     )
     graph.geometry_failure_type = str(result.failure_type or "")
+    graph.geometry_embed_attempt = str(result.embed_attempt)
     graph.mmff_converged = torch.tensor(
         [1.0 if result.mmff_converged else 0.0], dtype=torch.float32
     )
@@ -324,6 +326,7 @@ def build_cache(
                             int(graph.num_nodes),
                             graph.edge_index.numpy(),
                             graph.wedge_edge_ids.numpy(),
+                            True,
                         )
                     )
                 results = list(executor.map(_geometry_job, jobs, chunksize=16))
@@ -418,6 +421,7 @@ def build_cache(
         "geometry_method": "ETKDGv3",
         "optimization_method": "MMFF94s",
         "single_conformer": True,
+        "geometry_fallback_policy": GEOMETRY_FALLBACK_POLICY,
         "dft_coordinates_used": False,
         "geometry_failure_mask": True,
         "geometry_failure_type": True,
@@ -485,6 +489,7 @@ def verify_cache(cache_root: Path, expected_sha256: str | None = None) -> dict:
         "geometry_method": "ETKDGv3",
         "optimization_method": "MMFF94s",
         "single_conformer": True,
+        "geometry_fallback_policy": GEOMETRY_FALLBACK_POLICY,
         "dft_coordinates_used": False,
         "gpu_used": False,
         "model_inference_executed": False,

@@ -63,13 +63,17 @@ def compute_etkdg_geometry(
     node_count: int,
     edge_index,
     wedge_edge_ids,
+    difficult_ring_fallback: bool = False,
 ) -> GeometryResult:
     """Build one ETKDGv3 conformer and aligned bond/angle observables.
 
     The first attempt uses standard ETKDGv3.  A deterministic random-coordinate
-    ETKDGv3 attempt is allowed only when embedding fails.  MMFF94s is applied
-    when parameters exist; an embedded but non-converged conformer stays
-    visible through ``mmff_converged=False``.
+    ETKDGv3 attempt is allowed only when embedding fails.  Callers may opt into
+    an additional deterministic difficult-ring policy: three small-ring-torsion
+    retries followed by one relaxed-chirality retry.  The final relaxation is
+    suitable only for parity-invariant distance/angle consumers.  MMFF94s is
+    applied when parameters exist; an embedded but non-converged conformer
+    stays visible through ``mmff_converged=False``.
     """
     from rdkit import Chem
     from rdkit.Chem import AllChem
@@ -94,9 +98,37 @@ def compute_etkdg_geometry(
         status = int(AllChem.EmbedMolecule(with_hydrogens, params))
         if status != 0:
             attempt = "etkdgv3_random_coords"
+            with_hydrogens.RemoveAllConformers()
             params = AllChem.ETKDGv3()
             params.randomSeed = geometry_seed(row_index)
             params.useRandomCoords = True
+            status = int(AllChem.EmbedMolecule(with_hydrogens, params))
+        if status != 0 and difficult_ring_fallback:
+            for retry in range(1, 4):
+                attempt = f"etkdgv3_small_ring_random_coords_{retry}"
+                with_hydrogens.RemoveAllConformers()
+                params = AllChem.ETKDGv3()
+                params.randomSeed = (
+                    geometry_seed(row_index) + retry * 104_729
+                ) % 2_147_483_647 or ETKDG_BASE_SEED
+                params.useRandomCoords = True
+                params.useSmallRingTorsions = True
+                params.maxIterations = 1_000
+                status = int(AllChem.EmbedMolecule(with_hydrogens, params))
+                if status == 0:
+                    break
+        if status != 0 and difficult_ring_fallback:
+            attempt = "etkdgv3_relaxed_chirality_random_coords"
+            with_hydrogens.RemoveAllConformers()
+            params = AllChem.ETKDGv3()
+            params.randomSeed = (
+                geometry_seed(row_index) + 4 * 104_729
+            ) % 2_147_483_647 or ETKDG_BASE_SEED
+            params.useRandomCoords = True
+            params.useSmallRingTorsions = True
+            params.enforceChirality = False
+            params.ignoreSmoothingFailures = True
+            params.maxIterations = 2_000
             status = int(AllChem.EmbedMolecule(with_hydrogens, params))
         if status != 0:
             raise RuntimeError(f"ETKDGv3 embedding failed with status {status}")

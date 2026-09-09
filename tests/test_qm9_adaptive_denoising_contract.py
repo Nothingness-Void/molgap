@@ -72,6 +72,8 @@ def test_reuses_the_accepted_gape_roles_and_freezes_geometry_cache_contract() ->
     assert values["EXPECTED_RAW_SDF_SHA256"] == (
         "98c4e97d50ac549b8c9f0b2114b348a9a944718e17e50d9a724b729f1deaa28e"
     )
+    assert values["MIN_GEOMETRY_VALID_FRACTION"] == 0.99
+    assert values["GEOMETRY_FALLBACK_POLICY"] == "etkdgv3_difficult_ring_v1"
     assert "qm9_gape" in source
     assert "qm9_local_hierarchy" in source
     assert "compute_etkdg_geometry" in source
@@ -83,9 +85,23 @@ def test_reuses_the_accepted_gape_roles_and_freezes_geometry_cache_contract() ->
     assert "node_feat" in source and "edge_feat" in source
     assert "geometry_failure_mask" in source
     assert "geometry_failure_type" in source
+    assert "geometry_embed_attempt" in source
+    assert "geometry_fallback_policy" in source
     assert "test_role_read" in source
     assert "roles[\"test\"]" not in source
     assert "GetConformer" not in source
+
+
+def test_difficult_ring_fallback_is_deterministic_and_opt_in() -> None:
+    source = _source(ROOT / "src" / "molgap" / "pcqm_geometry.py")
+    assert "difficult_ring_fallback: bool = False" in source
+    assert "etkdgv3_small_ring_random_coords_" in source
+    assert "etkdgv3_relaxed_chirality_random_coords" in source
+    assert "params.useSmallRingTorsions = True" in source
+    assert "params.enforceChirality = False" in source
+    assert "params.ignoreSmoothingFailures = True" in source
+    assert "retry * 104_729" in source
+    assert "4 * 104_729" in source
 
 
 def test_cache_is_sharded_atomic_and_model_free() -> None:
