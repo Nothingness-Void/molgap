@@ -1,0 +1,23 @@
+{
+  "format": "molgap-qm9-gape-lite-gpu-terminal-handoff-v1",
+  "handoff_id": "qm9-gape-lite-s42-v1-ERROR-20260909",
+  "kernel": "kaseichou/molgap-qm9-gape-lite-s42",
+  "kernel_version": 1,
+  "terminal_state": "ERROR",
+  "mechanical_acceptance": false,
+  "acceptance_attempted": false,
+  "source_commit": "3c0b48cca759f01d5a2df4ea445bf73cee7988c7",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "error_class": "remote_compatibility_serialization",
+  "error_summary": "Both baseline and GAPE workers failed in load_cache because PyTorch 2.6 weights_only=True rejected torch_geometric.data.data.Data; worker codes [1, 1].",
+  "log_sha256": "d7caa909ecaa590a443b43ba3838efeb7af11455002957af4e3c04104fb94973",
+  "coordinator_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "evidence_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/qm9_gape_lite_s42_v1",
+  "sent_once": true,
+  "duplicate_handoff_allowed": false,
+  "retry_or_successor_submitted": false,
+  "dataset_uploaded": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "model_inference_executed": false
+}

@@ -14,3 +14,8 @@ The only GPU screen is Kaggle2 kernel
 `machine_shape=NvidiaTeslaT4`, both accepted datasets, and a 14,400-second cap;
 the job was `RUNNING` at first verification. Its three arms share one task and
 platform and each independently uses physical batch 128 on one visible T4.
+
+Version 1 ended before training because PyTorch 2.6's new weights-only default
+rejected the trusted PyG cache class. No metric or epoch exists. The bounded
+compatibility diagnosis is in `results/gpu_v1_failure_diagnosis.md`; the frozen
+scientific contract is unchanged and permits one repaired version.
