@@ -1,0 +1,28 @@
+{
+  "format": "molgap-qm9-adaptive-denoising-cache-acceptance-v1",
+  "accepted": true,
+  "kernel": "kaseichou/molgap-qm9-adaptive-denoising-cache-prep",
+  "kernel_version": 4,
+  "source_commit": "d8443fb6a0f87cd2408e7f79b0e47651c5cc205f",
+  "source_tree_sha256": "1c1003bbe1d50eaf3d240a97abd6d39268f696e53a7b2b2bf32749f7e1d0095b",
+  "cache_aggregate_sha256": "42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af",
+  "manifest_sha256": "f72142c3d33707c821a7fec6f497396eedb264fc311a26797c4cde16a10b3013",
+  "acceptance_sha256": "af97509bd4115ecffa178730a593a867785a218fed0a88b6266098a308b6f559",
+  "parent_cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "split_fingerprint": "62f1cdefdaec6877",
+  "roles": {
+    "train": 30000,
+    "validation": 3000
+  },
+  "valid_geometry_count": 32955,
+  "geometry_count": 33000,
+  "valid_geometry_fraction": 0.998636363636364,
+  "failure_count": 45,
+  "geometry_fallback_policy": "etkdgv3_difficult_ring_v1",
+  "minimum_geometry_valid_fraction": 0.99,
+  "dft_coordinates_used": false,
+  "gpu_used": false,
+  "model_inference_executed": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

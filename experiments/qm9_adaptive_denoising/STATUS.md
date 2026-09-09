@@ -22,10 +22,13 @@
 - The 99% gate was preserved. A documented difficult-ring ETKDG amendment adds
   deterministic retries only after the original attempts fail; no molecule is
   dropped or replaced. CPU kernel version 4 was submitted from commit
-  `d8443fb6a0f87cd2408e7f79b0e47651c5cc205f` and initially observed
-  `QUEUED`; see `results/cpu_cache_v4_launch.json`.
-- The GPU entry point is intentionally hard-blocked by pending cache SHA
-  sentinels. It cannot run until the CPU cache is independently accepted and
-  its aggregate and manifest hashes are frozen in source.
+  `d8443fb6a0f87cd2408e7f79b0e47651c5cc205f`, completed, and passed independent
+  no-model acceptance. Geometry is valid for 32,955/33,000 graphs (99.8636%);
+  the 45 residual failures remain masked and recorded. The accepted cache
+  aggregate is `42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af`;
+  see `results/cpu_cache_v4_acceptance.json`.
+- The GPU entry point may be released only after the accepted cache aggregate
+  and manifest hashes are frozen in source and the private cache dataset is
+  published.
 - No GPU experiment has been submitted from this protocol yet.
 - SCNet and all desktop-owned experiments are outside this status record.
