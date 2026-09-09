@@ -49,6 +49,14 @@ authority boundaries, and `ROADMAP.md` owns task order.
   the same accepted label SHA. Exactly one T4x2 task was submitted as
   `kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42`, version 1, and entered
   `RUNNING`. No other allocation or downstream task was submitted.
+- The 10/30 kernel reached `COMPLETE` and passed independent no-model
+  acceptance. Local-hierarchy pretraining reached `0.13515098 eV` versus the
+  fresh scratch40 control at `0.13749303 eV`, a paired `0.00234205 eV`
+  improvement. This is strong positive evidence but misses the frozen `0.003
+  eV` nomination gate by `0.00065795 eV`; the allocation question is closed
+  without shadow, another schedule, extra seeds, scale-up, desktop, official-
+  role, or IMS work. Exact hashes and attribution are in
+  `results/local_hierarchy_allocation10_30_seed42/decision.md`.
 
 - No molecular-research-server access is authorized during architecture
   selection.

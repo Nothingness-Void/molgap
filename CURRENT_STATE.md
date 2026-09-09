@@ -76,12 +76,16 @@ encoder exposure, so the exact schedule is closed. No shadow, extra seed, or
 scale-up was released. The decision and the only justified optional allocation
 follow-up are in
 `experiments/pcqm_gap_architecture/results/local_hierarchy_pretraining_seed42/decision.md`.
-The user explicitly authorized that one fresh paired 10-pretrain/30-Gap
-follow-up. Its frozen contract is
-`experiments/pcqm_gap_architecture/local_hierarchy_allocation10_30_seed42_protocol.md`;
+The user explicitly authorized one fresh paired 10-pretrain/30-Gap follow-up.
 Kaggle2 T4x2 kernel `kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42`,
-version 1, is the only released GPU task. No other allocation, seed, shadow
-read, or scale-up is implied.
+version 1, completed and passed no-model acceptance. The candidate improved
+over its fresh scratch40 control by `0.00234205 eV`, converting the 20/20
+allocation failure into a strong positive signal, but it missed the frozen
+`0.003 eV` nomination gate by `0.00065795 eV`. The local-hierarchy allocation
+question is therefore closed without shadow, another allocation, extra seeds,
+scale-up, desktop handoff, official-role access, or IMS work. The complete
+decision is
+`experiments/pcqm_gap_architecture/results/local_hierarchy_allocation10_30_seed42/decision.md`.
 
 The user accepted a new scaling guard after the exact 4,771,073-parameter
 EdgeState plus local-geometry heads passed a real SCNet Xi'an physical-batch-128

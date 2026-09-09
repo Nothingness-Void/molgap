@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-EDGESTATE-ALLOCATION-10-30 | Let the already submitted batch-48 10-pretrain/30-Gap screen finish under its unchanged 40-epoch exposure contract | A negative result closes the route; a positive result releases only one fresh batch-128 paired confirmation |
+| P1 | C-NEXT-ARCHITECTURE | Select one new architecture-level QM9-30K question from the consolidated attribution; do not reopen allocation tuning | Freeze one mechanism, comparator, gate, and compute budget before submission |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -30,6 +30,12 @@ Post-GraphState candidates and pretraining surrogates are summarized by
 The sparse relative-value question is closed by its paired seed-42 decision.
 The replacement funnel and its evidence boundaries are frozen in
 `results/three_stage_screening_reset_2026-09-08/decision.md`.
+
+The EdgeState local-hierarchy 10/30 allocation produced a strong paired
+`0.00234205 eV` gain but did not clear its predeclared `0.003 eV` nomination
+gate. That optimization question is closed; no shadow, further allocation,
+extra seed, or scale-up follows. Its decision is
+`results/local_hierarchy_allocation10_30_seed42/decision.md`.
 
 ## Mandatory gates
 
