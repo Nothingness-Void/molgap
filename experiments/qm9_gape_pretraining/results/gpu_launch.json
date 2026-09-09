@@ -1,0 +1,18 @@
+{
+  "kernel": "kaseichou/molgap-qm9-gape-lite-s42",
+  "version": 1,
+  "kernel_id_no": 133684066,
+  "platform": "kaggle2",
+  "source_dataset": "kaseichou/molgap-qm9-gape-lite-source",
+  "source_commit": "3c0b48cca759f01d5a2df4ea445bf73cee7988c7",
+  "cache_dataset": "kaseichou/molgap-qm9-gape-lite-cache",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "requested_machine_shape": "NvidiaTeslaT4",
+  "remote_machine_shape": "NvidiaTeslaT4",
+  "accelerator_layout": "T4x2 candidate-level isolation",
+  "physical_batch_per_model_device": 128,
+  "timeout_seconds": 14400,
+  "initial_status": "RUNNING",
+  "test_role_authorized": false,
+  "official_pcqm_roles_authorized": false
+}

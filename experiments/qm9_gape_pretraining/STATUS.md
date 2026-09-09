@@ -6,5 +6,11 @@ Remote metadata confirmed `enable_gpu=false` and `machine_shape=None`. The job
 completed and its downloaded cache passed independent data-only acceptance:
 30,000 train graphs, 3,000 validation graphs, 17 hash-matched shards, aggregate
 SHA-256 `80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340`,
-and no held-out/test role. GPU training remains blocked only until this exact
-accepted cache is available as an immutable private Kaggle dataset.
+and no held-out/test role. The cache was uploaded unchanged as private dataset
+`kaseichou/molgap-qm9-gape-lite-cache`.
+
+The only GPU screen is Kaggle2 kernel
+`kaseichou/molgap-qm9-gape-lite-s42`, version 1. Remote metadata confirms
+`machine_shape=NvidiaTeslaT4`, both accepted datasets, and a 14,400-second cap;
+the job was `RUNNING` at first verification. Its three arms share one task and
+platform and each independently uses physical batch 128 on one visible T4.
