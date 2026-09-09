@@ -40,9 +40,15 @@ not inference parameters.
 | `adaptive10_gap30` | 10 atom-local vector-denoising epochs with invariant atom-specific Gaussian scales, prior `sigma=0.1`, and KL weight `1.0`, then 30 direct-Gap epochs |
 
 The fixed and adaptive arms use the same denoising head and corruption RNG
-contract. The adaptive generator consumes only clean, invariant local node
+contract. The temporary denoising head is an equivariant edge-direction
+readout: invariant final-node states predict scalar directed-bond coefficients,
+which are multiplied by corrupted bond unit vectors and reduced to atom-local
+3D vectors. Thus the objective cannot learn an orientation-dependent Cartesian
+shortcut. The adaptive generator consumes only clean, invariant local node
 environments. Reparameterized sampling and the KL term prevent a zero-noise
-shortcut.
+shortcut. Its log scale is parameterized as
+`log(0.1) + 0.5 * tanh(raw)`, bounding sigma to approximately
+`[0.0607, 0.1649]` while preserving the `0.1` initialization.
 
 ## Training and resource contract
 
@@ -51,7 +57,9 @@ shortcut.
   `adaptive10_gap30`. A device never hosts two independent models at once.
 - Seed 42, FP32, AdamW, learning rate `4e-4`, weight decay `1e-5`, cosine
   schedule to `1e-6`, gradient clipping `1.0`, physical batch exactly 128,
-  no gradient accumulation, maximum 40 encoder passes, Gap patience 8.
+  no gradient accumulation, and exactly 40 encoder passes. Early stopping is
+  disabled because unequal stopping would invalidate the equal-exposure
+  comparison; the best validation epoch is still retained independently.
 - The three arms start from the same downstream encoder tensor hash. Data row
   order and per-arm RNG streams are recorded.
 - Every epoch writes an atomic resumable checkpoint. Models, traces, validation
