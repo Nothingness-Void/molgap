@@ -15,16 +15,17 @@ set -euo pipefail
 : "${ROOT:?submit with ROOT}"
 : "${SOURCE_COMMIT:?submit with SOURCE_COMMIT}"
 : "${PYTHON:?submit with PYTHON}"
+CACHE_ROOT="${CACHE_ROOT:-$ROOT/cache}"
 
-for path in "$CODE" "$ROOT"; do
+for path in "$CODE" "$ROOT" "$CACHE_ROOT"; do
   case "$(realpath -m "$path")" in
     "$HOME"/*) ;;
     *) echo "path outside HOME: $path" >&2; exit 2 ;;
   esac
 done
 test -x "$PYTHON"
-test -s "$ROOT/manifest.json"
-test -s "$ROOT/canonical_validity.json"
+test -s "$CACHE_ROOT/manifest.json"
+test -s "$CACHE_ROOT/canonical_validity.json"
 
 module purge
 module load Pytorch/1.10.0-hpcx-gcc-7.3.1
@@ -40,4 +41,4 @@ export MKL_NUM_THREADS=1
 mkdir -p "$ROOT/logs"
 
 "$PYTHON" "$CODE/experiments/qm9_architecture/qm9_fragment_state.py" \
-  accept-cache --cache-root "$ROOT" --source-commit "$SOURCE_COMMIT"
+  accept-cache --cache-root "$CACHE_ROOT" --source-commit "$SOURCE_COMMIT"

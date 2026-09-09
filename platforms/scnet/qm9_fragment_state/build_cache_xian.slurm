@@ -17,8 +17,9 @@ set -euo pipefail
 : "${SOURCE_ROOT:?submit with SOURCE_ROOT containing qm9 cache files}"
 : "${SOURCE_COMMIT:?submit with SOURCE_COMMIT}"
 : "${PYTHON:?submit with PYTHON}"
+CACHE_ROOT="${CACHE_ROOT:-$ROOT/cache}"
 
-for path in "$CODE" "$ROOT" "$SOURCE_ROOT"; do
+for path in "$CODE" "$ROOT" "$CACHE_ROOT" "$SOURCE_ROOT"; do
   case "$(realpath -m "$path")" in
     "$HOME"/*) ;;
     *) echo "path outside HOME: $path" >&2; exit 2 ;;
@@ -40,7 +41,7 @@ export MKL_NUM_THREADS=16
 mkdir -p "$ROOT/logs"
 
 "$PYTHON" "$CODE/experiments/qm9_architecture/qm9_fragment_state.py" \
-  build-cache --source-root "$SOURCE_ROOT" --output-root "$ROOT" \
+  build-cache --source-root "$SOURCE_ROOT" --output-root "$CACHE_ROOT" \
   --source-commit "$SOURCE_COMMIT"
 "$PYTHON" "$CODE/experiments/qm9_architecture/qm9_fragment_state.py" \
-  accept-cache --cache-root "$ROOT" --source-commit "$SOURCE_COMMIT"
+  accept-cache --cache-root "$CACHE_ROOT" --source-commit "$SOURCE_COMMIT"

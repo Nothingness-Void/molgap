@@ -16,16 +16,17 @@ set -euo pipefail
 : "${ROOT:?submit with ROOT}"
 : "${SOURCE_COMMIT:?submit with SOURCE_COMMIT}"
 : "${PYTHON:?submit with PYTHON}"
+CACHE_ROOT="${CACHE_ROOT:-$ROOT/cache}"
 
-for path in "$CODE" "$ROOT"; do
+for path in "$CODE" "$ROOT" "$CACHE_ROOT"; do
   case "$(realpath -m "$path")" in
     "$HOME"/*) ;;
     *) echo "path outside HOME: $path" >&2; exit 2 ;;
   esac
 done
 test -x "$PYTHON"
-test -s "$ROOT/manifest.json"
-test -s "$ROOT/acceptance.json"
+test -s "$CACHE_ROOT/manifest.json"
+test -s "$CACHE_ROOT/acceptance.json"
 test -s "$ROOT/preflight/preflight.json"
 
 module purge
@@ -41,8 +42,8 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 mkdir -p "$ROOT/output" "$ROOT/logs"
 
-CACHE_SHA="$($PYTHON -c 'import json,sys; p=json.load(open(sys.argv[1])); print(p["aggregate_sha256"])' "$ROOT/manifest.json")"
+CACHE_SHA="$($PYTHON -c 'import json,sys; p=json.load(open(sys.argv[1])); print(p["aggregate_sha256"])' "$CACHE_ROOT/manifest.json")"
 "$PYTHON" "$CODE/experiments/qm9_architecture/qm9_fragment_state.py" \
-  train --cache-root "$ROOT" --output-root "$ROOT/output" \
+  train --cache-root "$CACHE_ROOT" --output-root "$ROOT/output" \
   --source-commit "$SOURCE_COMMIT" --cache-sha256 "$CACHE_SHA" \
   --preflight "$ROOT/preflight/preflight.json"
