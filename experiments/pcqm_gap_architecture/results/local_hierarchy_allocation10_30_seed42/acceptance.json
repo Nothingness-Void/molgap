@@ -1,0 +1,49 @@
+{
+  "format": "molgap-pcqm-gap100k-edgestate-hierarchy-10-30-compact-acceptance-v1",
+  "accepted": true,
+  "kernel": "kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42",
+  "kernel_version": 1,
+  "source_commit": "a6979b6",
+  "seed": 42,
+  "inference_architecture": "ogb_edge_state_structural_gps9",
+  "inference_parameter_count": 4771073,
+  "scratch_gap_epochs": 40,
+  "candidate_pretraining_epochs": 10,
+  "candidate_gap_epochs": 30,
+  "equal_encoder_sample_exposure_epochs": 40,
+  "scratch_validation_gap_mae_eV": 0.13749302923679352,
+  "candidate_validation_gap_mae_eV": 0.1351509839296341,
+  "candidate_minus_scratch_eV": -0.002342045307159424,
+  "required_improvement_eV": 0.003,
+  "gate_shortfall_eV": 0.000657954692840576,
+  "passes_seed42_nomination_gate": false,
+  "best_epoch": {
+    "scratch": 39,
+    "candidate_gap_finetune": 29
+  },
+  "mean_graphs_per_s": {
+    "scratch_gap": 655.096869998004,
+    "candidate_pretraining": 621.4999457450334,
+    "candidate_gap_finetune": 664.5670090495316
+  },
+  "elapsed_s": 6290.460790884999,
+  "artifact_sha256": {
+    "scratch_best_model": "48d426190497006e135260f6709d6f152c36bfcd76e9cfc477cef2fb39c8d502",
+    "scratch_checkpoint": "5a3313cbd1b87ce7efe821b3b38ce7bcc41392c1fd8e769e948d5e5e24115c7f",
+    "scratch_validation_payload": "b006f641690f39b44276cd164b7e1f9b3d82b663c19d77ef452a63738a569651",
+    "candidate_best_model": "32bd482a67455ce9079a948fa45ea3052ee84d8d0c07f4eaff6f19bb387cd56f",
+    "candidate_gap_checkpoint": "bf6a5571c5dcbb9f6f994e601a5fc2e79b4669b36d721e22d75fc10169f1b088",
+    "candidate_pretraining_checkpoint": "cd796c0f51ed75747fcf048fdabf4490cb14b3097549e3188e70911707cd112c",
+    "candidate_validation_payload": "6c99b580264ac4e5c2f69c2889c871b6178e4b24f15a64b14f9badf2d9216f5a",
+    "candidate_final_pretrain_encoder": "0390cedb6e954778f2f0b933d4c9bf9691381edd63a4159428c0c2de3209f67b",
+    "shared_initial_encoder": "f7e56ab7c06a56cc6669cc8251859afd1326cf6c27cdf870069d1a7e2df152cd"
+  },
+  "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "local_label_cache_aggregate_sha256": "e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "shadow_audit_read": false,
+  "molecular_research_server_accessed": false,
+  "successor_submitted": false
+}
