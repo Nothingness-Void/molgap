@@ -27,8 +27,11 @@
   the 45 residual failures remain masked and recorded. The accepted cache
   aggregate is `42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af`;
   see `results/cpu_cache_v4_acceptance.json`.
-- The GPU entry point may be released only after the accepted cache aggregate
-  and manifest hashes are frozen in source and the private cache dataset is
-  published.
-- No GPU experiment has been submitted from this protocol yet.
+- The accepted cache was published privately as
+  `kaseichou/molgap-qm9-adaptive-denoising-cache`. Its aggregate and manifest
+  hashes were frozen in source commit
+  `a77804884a6cb9d43160032a66b08cf140568fa1`.
+- Kaggle2 T4x2 kernel `kaseichou/molgap-qm9-adaptive-denoising-s42`, version 1,
+  was submitted and initially observed `QUEUED`. It is the only GPU experiment
+  released by this protocol; see `results/gpu_seed42_launch.json`.
 - SCNet and all desktop-owned experiments are outside this status record.

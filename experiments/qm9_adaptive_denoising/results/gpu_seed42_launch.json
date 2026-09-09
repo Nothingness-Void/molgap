@@ -1,0 +1,24 @@
+{
+  "format": "molgap-qm9-adaptive-denoising-gpu-launch-v1",
+  "submitted_at": "2026-09-10T02:07:15.1928070+09:00",
+  "kernel": "kaseichou/molgap-qm9-adaptive-denoising-s42",
+  "kernel_version": 1,
+  "initial_status": "QUEUED",
+  "accelerator": "NvidiaTeslaT4x2",
+  "source_dataset": "kaseichou/molgap-qm9-adaptive-denoising-source",
+  "source_commit": "a77804884a6cb9d43160032a66b08cf140568fa1",
+  "source_tree_sha256": "1c1003bbe1d50eaf3d240a97abd6d39268f696e53a7b2b2bf32749f7e1d0095b",
+  "cache_dataset": "kaseichou/molgap-qm9-adaptive-denoising-cache",
+  "cache_aggregate_sha256": "42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af",
+  "cache_manifest_sha256": "f72142c3d33707c821a7fec6f497396eedb264fc311a26797c4cde16a10b3013",
+  "arms": [
+    "scratch40",
+    "fixed10_gap30",
+    "adaptive10_gap30"
+  ],
+  "physical_batch_per_model": 128,
+  "seed": 42,
+  "precision": "FP32",
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
