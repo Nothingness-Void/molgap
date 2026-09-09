@@ -105,6 +105,10 @@ def test_cache_is_sharded_atomic_and_model_free() -> None:
     ):
         assert required in source
     assert "build_cache" in cache_runner
+    assert '"numpy==1.26.4"' in cache_runner
+    assert cache_runner.index('"numpy==1.26.4"') < cache_runner.index(
+        '"rdkit==2023.9.6"'
+    )
     assert "enable_gpu" in _source(CACHE_METADATA)
     assert '"false"' in _source(CACHE_METADATA)
     assert "make_encoder" not in acceptance

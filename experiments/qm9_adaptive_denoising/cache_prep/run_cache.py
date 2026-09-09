@@ -57,6 +57,9 @@ def main() -> None:
             "pip",
             "install",
             "-q",
+            # RDKit 2023.09 wheels use the NumPy 1.x C ABI.  Kaggle's
+            # Python 3.12 CPU image currently starts with NumPy 2.x.
+            "numpy==1.26.4",
             "rdkit==2023.9.6",
             "torch-geometric==2.6.1",
             "ogb==1.3.6",
