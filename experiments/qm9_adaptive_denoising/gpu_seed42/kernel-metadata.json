@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-qm9-adaptive-denoising-s42",
+  "title": "MolGap QM9 Adaptive Denoising S42",
+  "code_file": "run_screen.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-qm9-adaptive-denoising-source",
+    "kaseichou/molgap-qm9-adaptive-denoising-cache"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

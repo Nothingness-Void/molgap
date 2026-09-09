@@ -1,0 +1,17 @@
+{
+  "id": "kaseichou/molgap-qm9-adaptive-denoising-cache-prep",
+  "title": "MolGap QM9 Adaptive Denoising Cache Prep",
+  "code_file": "run_cache.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-qm9-adaptive-denoising-source",
+    "kaseichou/molgap-qm9-gape-lite-cache"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
