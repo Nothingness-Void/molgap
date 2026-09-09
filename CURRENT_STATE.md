@@ -76,6 +76,10 @@ encoder exposure, so the exact schedule is closed. No shadow, extra seed, or
 scale-up was released. The decision and the only justified optional allocation
 follow-up are in
 `experiments/pcqm_gap_architecture/results/local_hierarchy_pretraining_seed42/decision.md`.
+The user explicitly authorized that one fresh paired 10-pretrain/30-Gap
+follow-up. Its frozen contract is
+`experiments/pcqm_gap_architecture/local_hierarchy_allocation10_30_seed42_protocol.md`;
+no other allocation, seed, shadow read, or scale-up is implied.
 
 ## Prior architecture evidence
 

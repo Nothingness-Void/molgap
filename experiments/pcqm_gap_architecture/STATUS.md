@@ -38,6 +38,11 @@ authority boundaries, and `ROADMAP.md` owns task order.
   closed without shadow, extra seed, scale-up, desktop, official-role, or IMS
   successor; exact evidence and attribution are in
   `results/local_hierarchy_pretraining_seed42/decision.md`.
+- The user then explicitly authorized the single evidence-guided 10-pretrain/
+  30-Gap allocation follow-up. Its protocol changes only the split of the same
+  40 encoder-exposure epochs and requires a fresh scratch40 arm. No remote job
+  is recorded until the parameterized runner, acceptance, source package, and
+  static contract tests are frozen.
 
 - No molecular-research-server access is authorized during architecture
   selection.
