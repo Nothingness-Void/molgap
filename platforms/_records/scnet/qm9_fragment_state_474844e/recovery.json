@@ -1,0 +1,29 @@
+{
+  "experiment": "qm9_fragment_state_seed42",
+  "platform": "scnet_kunshan",
+  "source_commit": "474844e",
+  "branch": "codex/scnet-qm9-fragment-state",
+  "failure": {
+    "cache_job": 121521828,
+    "dependent_preflight_job": 121521950,
+    "dependent_training_job": 121521972,
+    "cause": "runtime archive omitted src/molgap/constants.py",
+    "stderr_sha256": "a89551856bc1fe369747ff420a8c46b6fb8ea1235cab289e6ef09987b9cd43c7",
+    "gpu_training_started": false
+  },
+  "repair": {
+    "runtime_archive": "qm9-fragment-state-runtime-474844e.tar.gz",
+    "runtime_archive_sha256": "22bef3926496f00a84c92d3f8cd4fc56ffd1839759dd705aa6b2121a842144c9",
+    "complete_src_molgap_packaged": true,
+    "required_archive_entries_checked": true,
+    "remote_import_smoke": "passed"
+  },
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-fragment-state-474844e",
+  "jobs": {
+    "cache_build_and_accept": 121529290,
+    "batch128_preflight": 121529300,
+    "paired_training": 121529306
+  },
+  "dependency_chain": "121529290 -> afterok:121529300 -> afterok:121529306",
+  "official_test_roles_read": false
+}
