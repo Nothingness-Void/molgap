@@ -69,6 +69,13 @@ use a standalone cron that creates a new task on every poll. The monitor prompt
 must name both its automation id and the coordinator thread that owns scientific
 analysis.
 
+Choose the heartbeat interval from the estimated end-to-end runtime, including
+queueing and acceptance: use 15 minutes for work expected to finish within about
+1 hour, 30 minutes for work expected to finish in about 1-4 hours, and 60 minutes
+for longer runs. Tighten the interval only near a known deadline or expected
+terminal window. Every submitted remote chain must receive this handoff before
+the coordinator stops actively watching it.
+
 - While the remote job is non-terminal, report only the status and newly visible
   mechanical evidence. Do not wake the coordinator, resubmit, or open another
   task.
