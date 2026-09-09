@@ -748,6 +748,7 @@ def train_arm(
     candidate: bool,
     source_commit: str,
     cache_sha256: str,
+    epochs: int = EPOCHS,
 ):
     import torch
     import torch.nn.functional as functional
@@ -761,7 +762,7 @@ def train_arm(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=EPOCHS, eta_min=1e-6
+        optimizer, T_max=epochs, eta_min=1e-6
     )
     train_loader = _make_loader(roles["train"], shuffle=True, seed=MODEL_SEED)
     validation_loader = _make_loader(
@@ -781,7 +782,7 @@ def train_arm(
             "candidate": candidate,
             "seed": MODEL_SEED,
             "batch_size": BATCH_SIZE,
-            "max_epochs": EPOCHS,
+            "max_epochs": epochs,
         }
         if any(checkpoint.get(key) != value for key, value in required.items()):
             raise RuntimeError("Checkpoint contract changed")
@@ -795,9 +796,9 @@ def train_arm(
         start_epoch = int(checkpoint["epoch"]) + 1
         _restore_rng(checkpoint["rng"], train_loader)
         if stale >= PATIENCE:
-            start_epoch = EPOCHS
+            start_epoch = epochs
 
-    for epoch in range(start_epoch, EPOCHS):
+    for epoch in range(start_epoch, epochs):
         model.train()
         absolute = 0.0
         rows = 0
@@ -855,7 +856,7 @@ def train_arm(
                 "candidate": candidate,
                 "seed": MODEL_SEED,
                 "batch_size": BATCH_SIZE,
-                "max_epochs": EPOCHS,
+                "max_epochs": epochs,
                 "best": best,
                 "best_epoch": best_epoch,
                 "stale": stale,

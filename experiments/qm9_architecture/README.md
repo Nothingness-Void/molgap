@@ -11,6 +11,11 @@ The frozen Gasteiger charge-adapter question is specified in
 `charge_adapter_protocol.md`. Its CLI is `qm9_charge_adapter.py`; it remains an
 isolated Track C screen until the protocol gate is met.
 
+The equal-exposure follow-up is frozen in
+`masked_charge_pretraining_protocol.md`. It compares scratch60 against masked
+atom/bond/charge pretrain20 plus Gap40 on the same Charge Adapter inference
+model and starts only after the parent screen completes.
+
 ## QM9
 
 `qm9_screen.py` predicts QM9 HOMO, LUMO, and Gap in eV on one deterministic
