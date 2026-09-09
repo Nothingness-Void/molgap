@@ -935,12 +935,30 @@ def run_preflight(
     control = control.to(device).eval()
     candidate = candidate.to(device).eval()
     with torch.no_grad():
-        initial_prediction_exact = torch.equal(
-            forward_encoder(control, batch, candidate=False),
-            forward_encoder(candidate, batch, candidate=True),
+        normalized_charge = (
+            batch.gasteiger_features.float() - candidate.charge_mean
+        ) / candidate.charge_std
+        adapter_output = candidate.charge_adapter(normalized_charge)
+        adapter_output_exact_zero = bool(torch.count_nonzero(adapter_output) == 0)
+        control_prediction = forward_encoder(control, batch, candidate=False)
+        candidate_prediction = forward_encoder(candidate, batch, candidate=True)
+        initial_prediction_max_abs_diff = float(
+            (control_prediction - candidate_prediction).abs().max()
         )
-    if not initial_prediction_exact:
-        raise RuntimeError("Zero-start adapter changed initial predictions")
+        initial_prediction_close = bool(
+            torch.allclose(
+                control_prediction,
+                candidate_prediction,
+                rtol=0.0,
+                atol=1e-6,
+            )
+        )
+    if not adapter_output_exact_zero or not initial_prediction_close:
+        raise RuntimeError(
+            "Zero-start adapter is not numerically neutral: "
+            f"output_zero={adapter_output_exact_zero}, "
+            f"max_abs_diff={initial_prediction_max_abs_diff}"
+        )
     reports = {}
     for name, model, is_candidate in (
         ("control", control, False),
@@ -981,7 +999,10 @@ def run_preflight(
         "device_count": 1,
         "gpu": torch.cuda.get_device_name(0),
         "shared_initialization_exact": shared_exact,
-        "zero_start_prediction_exact": initial_prediction_exact,
+        "adapter_output_exact_zero": adapter_output_exact_zero,
+        "zero_start_prediction_close": initial_prediction_close,
+        "zero_start_prediction_atol": 1e-6,
+        "zero_start_prediction_max_abs_diff": initial_prediction_max_abs_diff,
         "arms": reports,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
@@ -1017,7 +1038,9 @@ def run_screen(
         "physical_batch_per_device": BATCH_SIZE,
         "device_count": 1,
         "shared_initialization_exact": True,
-        "zero_start_prediction_exact": True,
+        "adapter_output_exact_zero": True,
+        "zero_start_prediction_close": True,
+        "zero_start_prediction_atol": 1e-6,
         "official_pcqm_roles_read": False,
         "test_role_read": False,
     }

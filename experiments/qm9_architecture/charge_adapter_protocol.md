@@ -29,8 +29,11 @@ with train-only atom statistics. `LayerNorm(1)` is intentionally forbidden:
 normalizing a scalar independently would erase it.
 
 The candidate's shared tensors must equal the control's at initialization and
-its adapter output must initially be zero. A real accepted-cache batch of 128
-must pass finite forward/backward on SCNet before training starts.
+its adapter output must be bitwise zero. Predictions must agree within an
+absolute tolerance of `1e-6`, allowing the harmless last-bit difference caused
+by an explicit zero-add kernel on heterogeneous accelerators. A real
+accepted-cache batch of 128 must pass finite forward/backward on SCNet before
+training starts.
 
 ## Gate and boundaries
 
