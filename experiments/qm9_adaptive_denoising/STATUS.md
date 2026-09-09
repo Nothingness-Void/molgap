@@ -32,6 +32,8 @@
   hashes were frozen in source commit
   `a77804884a6cb9d43160032a66b08cf140568fa1`.
 - Kaggle2 T4x2 kernel `kaseichou/molgap-qm9-adaptive-denoising-s42`, version 1,
-  was submitted and initially observed `QUEUED`. It is the only GPU experiment
-  released by this protocol; see `results/gpu_seed42_launch.json`.
+  completed and passed independent no-model acceptance. Adaptive denoising was
+  best numerically but missed both frozen promotion margins, so the exact
+  mechanism is closed without PCQM transfer or another seed. See `decision.md`
+  and `results/gpu_seed42_acceptance.json`.
 - SCNet and all desktop-owned experiments are outside this status record.

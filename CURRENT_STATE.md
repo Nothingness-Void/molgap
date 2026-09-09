@@ -62,9 +62,10 @@ The paired SCNet QM9-30K BRICS FragmentState question also failed its frozen
 promotion gate and is closed without PCQM transfer. Its implementation,
 mechanical acceptance, and decision are retained only on `archive` commit
 `bca22b2` under `experiments/qm9_architecture/results/fragment_state_seed42/`.
-The next server-owned Track C question is the matched QM9 adaptive local
-denoising screen. Its evidence selection and frozen contract are in
-`experiments/qm9_adaptive_denoising/`; no result or promotion exists yet.
+The matched QM9 adaptive local-denoising screen completed and is closed. Its
+adaptive arm was numerically best but missed both frozen material-effect gates;
+no PCQM transfer or extra seed is authorized. The accepted comparison and
+attribution are in `experiments/qm9_adaptive_denoising/decision.md`.
 SCNet and Fragment-State work are desktop-owned and are excluded from this
 server queue.
 The locally attached atom/bond/functional-group reconstruction question is now

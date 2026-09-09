@@ -1,0 +1,25 @@
+{
+  "format": "molgap-qm9-adaptive-denoising-acceptance-v1",
+  "accepted": true,
+  "kernel": "kaseichou/molgap-qm9-adaptive-denoising-s42",
+  "kernel_version": 1,
+  "source_commit": "a77804884a6cb9d43160032a66b08cf140568fa1",
+  "cache_aggregate_sha256": "42bf7d73eb4450235ee4901e021aac267127448505a33096d3d7ea44e08935af",
+  "split_fingerprint": "62f1cdefdaec6877",
+  "validation_gap_mae_eV": {
+    "scratch40": 0.12631656229496002,
+    "fixed10_gap30": 0.1253272145986557,
+    "adaptive10_gap30": 0.1246931254863739
+  },
+  "adaptive_gain_vs_scratch_eV": 0.0016234368085861206,
+  "adaptive_gain_vs_fixed_eV": 0.0006340891122817993,
+  "required_gain_vs_scratch_eV": 0.003,
+  "required_gain_vs_fixed_eV": 0.001,
+  "pcqm100k_transfer_nominated": false,
+  "metrics_sha256": "a29a31b1367ff77c9d153211c5ce544acab092258f6956080b553ae8e115ca30",
+  "completion_manifest_sha256": "6f17e9d18c5a7da155717f9b4161a6a693fe36e99486bb401844881029746b5a",
+  "acceptance_sha256": "b33fda6d606043d5a17cb9f07b3536ff3351b7d946f751bbd66c5d4e0cea073d",
+  "model_inference_executed_by_acceptance": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

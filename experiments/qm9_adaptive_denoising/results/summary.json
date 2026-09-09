@@ -1,0 +1,41 @@
+{
+  "decision_date": "2026-09-10",
+  "decision": "close_without_pcqm_transfer",
+  "inference_parameter_count": 4891057,
+  "results": {
+    "scratch40": {
+      "validation_gap_mae_eV": 0.12631656229496002,
+      "best_epoch": 38,
+      "mean_epoch_seconds": 28.906879641325,
+      "throughput_graphs_per_s": 1038.2207245845048,
+      "peak_memory_mib": 525.919921875
+    },
+    "fixed10_gap30": {
+      "validation_gap_mae_eV": 0.1253272145986557,
+      "best_epoch": 29,
+      "pretrain_loss": 0.4924219439638422,
+      "sigma_mean": 0.10000001639127731,
+      "sigma_std": 1.4901189615557087e-08,
+      "throughput_graphs_per_s": 1075.0423415785667,
+      "peak_memory_mib": 528.54248046875
+    },
+    "adaptive10_gap30": {
+      "validation_gap_mae_eV": 0.1246931254863739,
+      "best_epoch": 28,
+      "pretrain_loss": 0.49138250617270773,
+      "denoise_loss": 0.49060029476246936,
+      "kl_loss": 0.0007822114731521999,
+      "sigma_mean": 0.10054526478052139,
+      "sigma_std": 0.0027527513448148966,
+      "throughput_graphs_per_s": 1112.9378525103336,
+      "peak_memory_mib": 528.54248046875
+    }
+  },
+  "adaptive_gain_vs_scratch_eV": 0.0016234368085861206,
+  "adaptive_gain_vs_fixed_eV": 0.0006340891122817993,
+  "required_gain_vs_scratch_eV": 0.003,
+  "required_gain_vs_fixed_eV": 0.001,
+  "pcqm100k_transfer_nominated": false,
+  "extra_seed_authorized": false,
+  "test_role_read": false
+}
