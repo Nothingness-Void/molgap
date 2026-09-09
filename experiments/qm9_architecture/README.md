@@ -7,6 +7,12 @@ expensive PubChemQC scaling. Reusable model and training logic stays under
 This is Track C discovery work. Track definitions live in `TRACKS.md`; this
 experiment cannot promote a production or leaderboard model directly.
 
+The SCNet Track C fragment-state question is frozen in
+[`fragment_state_protocol.md`](fragment_state_protocol.md).  Its thin CLI is
+[`qm9_fragment_state.py`](qm9_fragment_state.py); the reusable model, cache
+builder, independent cache acceptance, and resumable trainer live in
+`src/molgap/qm9_fragment_state.py`.
+
 ## QM9
 
 `qm9_screen.py` predicts QM9 HOMO, LUMO, and Gap in eV on one deterministic
