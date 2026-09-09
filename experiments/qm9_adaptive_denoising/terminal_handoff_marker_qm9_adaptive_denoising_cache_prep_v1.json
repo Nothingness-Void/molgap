@@ -1,0 +1,22 @@
+{
+  "format": "molgap-qm9-adaptive-denoising-cache-terminal-handoff-v1",
+  "handoff_id": "qm9-adaptive-denoising-cache-prep-v1-ERROR-20260909",
+  "kernel": "kaseichou/molgap-qm9-adaptive-denoising-cache-prep",
+  "kernel_version": 1,
+  "terminal_state": "ERROR",
+  "mechanical_acceptance": false,
+  "acceptance_attempted": false,
+  "source_commit": "6e2fe04483ef02a0d749d024f11148ef02dcd43e",
+  "error_class": "packaged_source_tree_hash_mismatch",
+  "error_summary": "verify_source_tree raised RuntimeError: Packaged source tree hash changed before cache construction.",
+  "log_sha256": "b3c3b9cdd8308c263385a1b18f8941619e8d9c8671e194bfdb610afaab6d19f0",
+  "coordinator_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "evidence_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/qm9_adaptive_denoising_cache_prep_v1",
+  "sent_once": true,
+  "duplicate_handoff_allowed": false,
+  "retry_or_successor_submitted": false,
+  "gpu_submitted": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "model_inference_executed": false
+}
