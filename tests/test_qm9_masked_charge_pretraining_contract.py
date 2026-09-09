@@ -94,3 +94,4 @@ def test_remote_runtime_is_complete_and_resumable():
     assert "last_checkpoint.pt" in source
     assert '"mask_rng"' in source
     assert "CONTROL_EPOCHS" in source
+    assert '"molgap-qm9-charge-adapter-screen-v2"' in source

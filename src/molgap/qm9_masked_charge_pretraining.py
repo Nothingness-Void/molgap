@@ -293,7 +293,7 @@ def pretrain(
 def _load_parent(parent_metrics: Path) -> dict:
     parent = json.loads(parent_metrics.read_text(encoding="utf-8"))
     required = {
-        "format": "molgap-qm9-charge-adapter-screen-v1",
+        "format": "molgap-qm9-charge-adapter-screen-v2",
         "complete": True,
         "charge_algorithm": CHARGE_ALGORITHM,
         "official_pcqm_roles_read": False,
