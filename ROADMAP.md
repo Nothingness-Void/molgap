@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-NEXT-ARCHITECTURE | Select one new architecture-level QM9-30K question from the consolidated attribution; do not reopen allocation tuning | Freeze one mechanism, comparator, gate, and compute budget before submission |
+| P1 | C-GAPE-LITE | Run the same-task Kaggle2 QM9-30K graph-alignment PE screen against fresh and shuffled-alignment controls | Accept terminal evidence; require at least 0.003 eV over both controls for PCQM nomination |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
