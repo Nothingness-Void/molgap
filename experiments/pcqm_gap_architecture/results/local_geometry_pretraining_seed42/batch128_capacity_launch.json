@@ -1,0 +1,18 @@
+{
+  "format": "molgap-pcqm-local-geometry-batch128-launch-v1",
+  "platform": "SCNet Xi'an Card2",
+  "accepted_job": "66412183",
+  "accepted_job_state": "COMPLETED",
+  "accepted_job_elapsed": "00:02:36",
+  "accepted_job_exit_code": "0:0",
+  "accepted_job_max_rss_kib": 2177936,
+  "probe_source_commit": "c3c7a47fc3e897707bbdff1e4aceea09f425d26a",
+  "capacity_json_sha256": "6d606600516df7397dbd90740482b1634b79b5a05bd674c6bc74737884843ba0",
+  "checkpoint_sha256": "4d08f90789af44b637c52c40aec37582ce146d285368e50e474a7e60ca789ebb",
+  "superseded_job": "66411183",
+  "superseded_job_state": "CANCELLED",
+  "superseded_reason": "The first probe loaded the complete 110K cache; it was stopped before a result and replaced by an immutable-shard-bounded probe.",
+  "scientific_training_changed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

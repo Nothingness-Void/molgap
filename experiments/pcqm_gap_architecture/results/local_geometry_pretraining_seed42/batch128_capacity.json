@@ -1,0 +1,51 @@
+{
+  "format": "molgap-pcqm-local-geometry-xian-batch128-capacity-v1",
+  "accepted": true,
+  "source_commit": "c3c7a47fc3e897707bbdff1e4aceea09f425d26a",
+  "architecture": "ogb_edge_state_structural_gps9",
+  "inference_parameters": 4771073,
+  "batch_size": 128,
+  "warmup_batches": 4,
+  "measured_batches": 32,
+  "minimum_memory_reserve_fraction": 0.15,
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "train_shards_read": [
+    {
+      "file": "train-0000.pt",
+      "sha256": "2ed2408945a231e87e3527f9594a75a50c545e1ed3fccc967e7239aadefa4c0d"
+    }
+  ],
+  "train_graphs_loaded": 4608,
+  "gpu": "Z100SM",
+  "torch": "1.10.0a0+git2040069-dtk2210",
+  "torch_hip": "5.2.22451-8f78d635",
+  "rows": [
+    {
+      "mode": "gap",
+      "finite_forward_backward": true,
+      "measured_steps": 32,
+      "measured_graphs": 4096,
+      "elapsed_s": 56.371709960047156,
+      "graphs_per_s": 72.66055975422772,
+      "peak_allocated_bytes": 657969664,
+      "peak_reserved_bytes": 744488960,
+      "total_device_bytes": 17163091968,
+      "reserved_memory_headroom_fraction": 0.956622678396872
+    },
+    {
+      "mode": "local_geometry",
+      "finite_forward_backward": true,
+      "measured_steps": 32,
+      "measured_graphs": 4096,
+      "elapsed_s": 7.973475384991616,
+      "graphs_per_s": 513.7032225257577,
+      "peak_allocated_bytes": 689280512,
+      "peak_reserved_bytes": 805306368,
+      "total_device_bytes": 17163091968,
+      "reserved_memory_headroom_fraction": 0.9530791788856305
+    }
+  ],
+  "checkpoint_sha256": "4d08f90789af44b637c52c40aec37582ce146d285368e50e474a7e60ca789ebb",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
