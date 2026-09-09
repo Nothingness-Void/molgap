@@ -62,6 +62,11 @@ The paired SCNet QM9-30K BRICS FragmentState question also failed its frozen
 promotion gate and is closed without PCQM transfer. Its implementation,
 mechanical acceptance, and decision are retained only on `archive` commit
 `bca22b2` under `experiments/qm9_architecture/results/fragment_state_seed42/`.
+The replacement Track C question removes hard fragments and tests only a
+train-standardized, zero-start Gasteiger charge adapter on the unchanged OGB
+EdgeState GPS9. The Kunshan CPU-cache, batch-128 preflight, and paired-training
+chain is recorded at
+`experiments/qm9_architecture/results/charge_adapter_seed42/launch.json`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired
