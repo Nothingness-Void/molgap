@@ -1,0 +1,21 @@
+{
+  "experiment": "qm9_fragment_state_seed42",
+  "platform": "scnet_kunshan",
+  "source_commit": "9bd699b",
+  "branch": "codex/scnet-qm9-fragment-state",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-fragment-state-9bd699b",
+  "runtime_archive_sha256": "693ea352b8a1d18c90d5d14b219d742c5596776c3ab28e466a7968b482828bf3",
+  "source_root": "/public/home/scnaqkfcy3/molgap-trackc-qm9-edgestate-hierarchy-a300bf9/cache/source",
+  "source_files": {
+    "processed": "preprocessed/qm9_v3.pt",
+    "raw": "raw/gdb9.sdf"
+  },
+  "jobs": {
+    "cache_build_and_accept": 121521828,
+    "batch128_preflight": 121521950,
+    "paired_training": 121521972
+  },
+  "dependency_chain": "121521828 -> afterok:121521950 -> afterok:121521972",
+  "launch_state": "submitted",
+  "official_test_roles_read": false
+}
