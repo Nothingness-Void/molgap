@@ -49,3 +49,10 @@ def test_cli_is_thin():
     source = CLI.read_text(encoding="utf-8")
     assert "from molgap.qm9_fragment_state import" in source
     assert "class OGBFragmentState" not in source
+
+
+def test_runtime_package_includes_complete_molgap_package():
+    source = (REMOTE / "package_runtime.ps1").read_text(encoding="utf-8")
+    assert "src/molgap" in source
+    assert '"src/molgap/constants.py"' in source
+    assert '"src/molgap/qm9_data.py"' in source
