@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-EDGESTATE-ALLOCATION-10-30 | Run one fresh paired 10-pretrain/30-Gap screen under the unchanged 40-epoch exposure contract | Accepted seed-42 result either clears 0.003 eV or closes local-hierarchy allocation |
+| P0 | B-EDGESTATE-ALLOCATION-10-30 | Let the already submitted batch-48 10-pretrain/30-Gap screen finish under its unchanged 40-epoch exposure contract | A negative result closes the route; a positive result releases only one fresh batch-128 paired confirmation |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -36,11 +36,11 @@ The replacement funnel and its evidence boundaries are frozen in
 1. Before remote GPU submission, syntax/AST/manifest checks and immutable
    CPU-cache acceptance must pass; model execution remains remote.
 2. A bounded architecture screen cannot directly authorize full-data work.
-   Promotion must pass the resource-bounded 100K/1M/full ladder in
-   `experiments/pcqm_gap_architecture/scale_up_protocol.md`. Across that ladder,
-   only eligible training-row count may change; batch, model, features,
-   optimization, validation, evaluator, and all other scientific variables are
-   frozen.
+   New promotion must pass the resource-bounded ladder in
+   `experiments/pcqm_gap_architecture/scale_up_protocol_v2.md`. Every new 50K or
+   100K training screen uses physical batch at least 128 per model and device.
+   Stage-specific high-batch optimization is frozen before S1, and candidate
+   and baseline match exactly within every stage.
 3. Before external evaluation, the matched full-scale candidate, delivery
    baseline, and aligned outputs must be complete and frozen.
 4. Before production promotion, the fixed Track A external gate, loader,

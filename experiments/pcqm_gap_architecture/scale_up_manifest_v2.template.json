@@ -1,0 +1,78 @@
+{
+  "protocol": "resource_bounded_pcqm_scale_up_v2",
+  "batch_policy": {
+    "policy": "pcqm-screen-batch-policy-v2",
+    "minimum_screen_physical_batch_per_device": 128,
+    "minimum_screen_effective_batch_per_model": 128,
+    "lower_batch_fallback_allowed": false,
+    "historical_low_batch_comparator_allowed": false
+  },
+  "budget": {
+    "total_gpu_hours_max": "FILL_BEFORE_S1",
+    "per_stage_gpu_hours_max": "FILL_BEFORE_S1",
+    "automatic_budget_extension": false
+  },
+  "dataset": {
+    "name": "pcqm4mv2",
+    "release": "FILL_BEFORE_S1",
+    "official_train_identity_sha256": "FILL_BEFORE_S1",
+    "target": "gap",
+    "units": "eV",
+    "nested_order_sha256": "FILL_BEFORE_S1"
+  },
+  "invariants": {
+    "architecture_sha256": "FILL_BEFORE_S1",
+    "feature_contract_sha256": "FILL_BEFORE_S1",
+    "graph_builder_sha256": "FILL_BEFORE_S1",
+    "invalid_row_policy": "FILL_BEFORE_S1",
+    "evaluation_contract_sha256": "FILL_BEFORE_S1",
+    "official_validation_sealed_until": "S4",
+    "official_test_roles_sealed": true
+  },
+  "stages": {
+    "S1_optional_50K": {
+      "train_rows": 50000,
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1,
+      "effective_batch": 128,
+      "optimizer_contract_sha256": "FILL_BEFORE_S1"
+    },
+    "S1_100K": {
+      "train_rows": 100000,
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1,
+      "effective_batch": 128,
+      "optimizer_contract_sha256": "FILL_BEFORE_S1"
+    },
+    "S2_1M": {
+      "train_rows": 1000000,
+      "physical_batch_per_device": "FILL_BEFORE_S1_MIN_128",
+      "device_count": "FILL_BEFORE_S1",
+      "gradient_accumulation_steps": "FILL_BEFORE_S1",
+      "effective_batch": "FILL_BEFORE_S1_MIN_128",
+      "optimizer_contract_sha256": "FILL_BEFORE_S1"
+    },
+    "S3_full": {
+      "train_rows": "eligible_full_train",
+      "physical_batch_per_device": "FILL_BEFORE_S1_MIN_128",
+      "device_count": "FILL_BEFORE_S1",
+      "gradient_accumulation_steps": "FILL_BEFORE_S1",
+      "effective_batch": "FILL_BEFORE_S1_MIN_128",
+      "optimizer_contract_sha256": "FILL_BEFORE_S1"
+    }
+  },
+  "comparison": {
+    "candidate": "FILL_BEFORE_S1",
+    "paired_seed_order": [42, 43, 44],
+    "fresh_or_immutable_matched_baseline_per_stage": true,
+    "scheduler_progress_unit": "optimizer_step_fraction",
+    "candidate_and_baseline_exposure_match": true
+  },
+  "provenance": {
+    "source_commit": "FILL_BEFORE_S1",
+    "created_at": "FILL_BEFORE_S1",
+    "created_by": "FILL_BEFORE_S1"
+  }
+}

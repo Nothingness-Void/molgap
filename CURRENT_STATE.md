@@ -83,6 +83,15 @@ Kaggle2 T4x2 kernel `kaseichou/molgap-pcqm-edgestate-hierarchy-10-30-s42`,
 version 1, is the only released GPU task. No other allocation, seed, shadow
 read, or scale-up is implied.
 
+The user accepted a new scaling guard after the exact 4,771,073-parameter
+EdgeState plus local-geometry heads passed a real SCNet Xi'an physical-batch-128
+capacity gate with more than 95% device-memory reserve. Every newly frozen PCQM
+50K/100K training screen on Kaggle or SCNet now requires physical batch at
+least 128 per model and device. Already submitted batch-48/96 jobs may finish,
+but a positive result from them requires a fresh paired batch-128 confirmation
+before promotion. The single authority is
+`experiments/pcqm_gap_architecture/screen_batch_policy.md`.
+
 ## Prior architecture evidence
 
 - Track A EdgeState three-seed evidence remains at
