@@ -72,6 +72,10 @@ parent's successful terminal state. It compares Charge Adapter scratch60 with
 masked atom/bond/charge pretrain20 plus Gap40, with identical inference models
 and 60 encoder epochs per arm. Its immutable launch record is
 `experiments/qm9_architecture/results/masked_charge_pretraining_seed42/launch.json`.
+The original dependent jobs were cancelled without starting after the parent
+numeric preflight failure. They were requeued behind the corrected parent
+without changing the scientific protocol; the active identities are in
+`experiments/qm9_architecture/results/masked_charge_pretraining_seed42/relaunch_09c773e.json`.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired
