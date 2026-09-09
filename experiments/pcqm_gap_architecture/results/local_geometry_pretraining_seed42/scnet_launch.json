@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-local-geometry-scnet-launch-v1",
+  "platform": "SCNet Xi'an Card2",
+  "source_branch": "codex/pcqm-evidence-guided-scnet",
+  "source_commit": "da5c3ec7de91acd90368774e9e5fe4bbc37c3791",
+  "source_archive_sha256": "17332d1d75470932e4eabacd3a3ecd359ba0bcb1988a5a63765e53a1935ceaf8",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "preflight_job": "66397367",
+  "preflight_state": "COMPLETED",
+  "preflight_accepted": true,
+  "replicate_jobs": {
+    "1": "66397375",
+    "2": "66397380"
+  },
+  "dependency": "afterok:66397367",
+  "replicates_run_paired_arms_on_one_dcu": true,
+  "batch_size": 96,
+  "time_limit_hours_per_replicate": 12,
+  "atomic_checkpoint_every_epoch": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

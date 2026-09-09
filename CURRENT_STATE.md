@@ -80,6 +80,9 @@ It tests local ETKDG bond/angle reconstruction with the same pure-2D EdgeState
 inference model. The cancelled SCNet chemistry-label job consumed zero runtime;
 the replacement uses the already accepted PCQM geometry cache and requires two
 paired Xi'an replicates before any Kunshan confirmation.
+Its real-cache DCU preflight `66397367` passed; paired replicate jobs `66397375`
+and `66397380` were released under the accepted dependency. Compact launch
+identity is in `results/local_geometry_pretraining_seed42/scnet_launch.json`.
 
 ## Prior architecture evidence
 
