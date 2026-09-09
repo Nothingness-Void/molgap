@@ -19,3 +19,9 @@ Version 1 ended before training because PyTorch 2.6's new weights-only default
 rejected the trusted PyG cache class. No metric or epoch exists. The bounded
 compatibility diagnosis is in `results/gpu_v1_failure_diagnosis.md`; the frozen
 scientific contract is unchanged and permits one repaired version.
+
+Version 2 was submitted with only the trusted-cache deserialization fix at
+source commit `56e5db105ad8c43809664c0e0f001ea9ac9104e1`. Remote metadata again
+confirms `NvidiaTeslaT4`, the same two datasets, and the same timeout; it was
+`RUNNING` at first verification. All scientific settings remain identical to
+version 1.
