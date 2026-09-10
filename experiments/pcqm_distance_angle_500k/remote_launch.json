@@ -1,0 +1,15 @@
+{
+  "platform": "SCNet Kunshan BW-1",
+  "submitted_at": "2026-09-11T02:21:45+09:00",
+  "source_commit": "c2302c7d433dfec73d293cdbd71ee46aa9e4cae5",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/pcqm-distance-angle-500k-c2302c7",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "jobs": {
+    "preflight": "121738961",
+    "ogb_edge_state_structural_gps9": "121738978",
+    "ogb_distance_angle_triangle_edge_state_gps9": "121738985"
+  },
+  "dependency": "both training jobs require successful preflight",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
