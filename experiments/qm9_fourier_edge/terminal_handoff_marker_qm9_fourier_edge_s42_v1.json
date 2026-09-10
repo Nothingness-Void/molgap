@@ -1,0 +1,27 @@
+{
+  "format": "molgap-qm9-fourier-edge-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-qm9-fourier-edge-s42",
+  "kernel_version": 1,
+  "state": "COMPLETE",
+  "accepted": true,
+  "acceptance_status": "passed",
+  "output_root": "platforms/_records/kaggle/training/qm9_fourier_edge_s42_v1/qm9_fourier_edge_s42",
+  "source_commit": "50fdaf00abee6a24a7285908dd830da243de33e9",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "launch_manifest_sha256": "a316aad7ec2da5aff6afe15848b13428fe0b76e40c1691a0f0cf3e07b5cbd341",
+  "acceptance_sha256": "65382d542752d56db1f3c0745a0a2767ff21feba82ee05d6daef1b6ac0245259",
+  "validation_gap_mae_eV": {
+    "full_gps": 0.12808437645435333,
+    "neural_atom_k1": 0.12848038971424103,
+    "fourier_edge_k1": 0.1241975799202919
+  },
+  "candidate_gain_vs_full_gps_eV": 0.003886796534061432,
+  "candidate_gain_vs_k1_eV": 0.004282809793949127,
+  "candidate_epoch_time_ratio": 1.0059378418556628,
+  "pcqm_transfer_nominated": true,
+  "model_inference_executed_by_acceptance": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "local_model_execution": false,
+  "sent_once": true
+}

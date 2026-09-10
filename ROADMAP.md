@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-FOURIER-EDGE | Run the frozen QM9 full-GPS/one-slot/Fourier-Edge comparison on Kaggle2 after static acceptance | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact function replacement |
+| P1 | B-FOURIER-EDGE-TRANSFER | Run one frozen paired PCQM-100K transfer of the accepted QM9 Fourier-Edge architecture | Accepted seed-42 result either releases the once-read shadow audit or closes the transfer after attribution |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -67,12 +67,12 @@ latent width, placement, seed, and schedule variants are therefore prohibited.
 Two post-cardinality scientific attempts remain; no next task is released until
 the new evidence audit names a distinct local or representational bottleneck.
 
-That audit selected `C-FOURIER-EDGE`, route 2/3. It retains the efficient
-one-slot latent skeleton as the matched architecture control and changes only
-the MLP inside persistent EdgeState updates to the official KA-GNN single-
-harmonic Fourier function. A fresh full-GPS anchor remains in the same task.
-The protocol excludes KA-GNN's extra non-covalent edges and any other feature,
-data, optimizer, or schedule change.
+`C-FOURIER-EDGE`, route 2/3, passed both frozen QM9 accuracy gates and its
+runtime/memory gates. The exact candidate advances once to paired PCQM-100K;
+the transfer preserves the one-slot skeleton and single-harmonic EdgeState
+function and excludes KA-GNN proximity edges or any other feature, data, or
+training change. The final route-3/3 discovery attempt remains unused and
+cannot be released before causal attribution of a failed transfer.
 
 ## Bounded autonomous Track C window
 
