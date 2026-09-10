@@ -1,0 +1,29 @@
+{
+  "format": "molgap-pcqm-fourier-edge-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-pcqm-fourier-edge-s42",
+  "kernel_version": 1,
+  "state": "COMPLETE",
+  "accepted": true,
+  "acceptance_status": "passed",
+  "output_root": "platforms/_records/kaggle/training/pcqm_fourier_edge_s42_v1/pcqm_gap100k_fourier_edge_s42",
+  "source_commit": "47f99cf9da7fee306f5165175b4020c6c4aa9fb3",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "launch_manifest_sha256": "5c99f08856b191e182c22485ed93d1e960472e475da57bb3d944250602af7b3f",
+  "acceptance_sha256": "b9520ebb36f632303f7664f803e49846ebc49a2025f9ef4360f9d0de53d30340",
+  "validation_gap_mae_eV": {
+    "full_gps": 0.13605749607086182,
+    "neural_atom_k1": 0.12659579515457153,
+    "fourier_edge_k1": 0.1269524097442627
+  },
+  "candidate_gain_vs_full_gps_eV": 0.009105086326599121,
+  "candidate_gain_vs_k1_eV": -0.0003566145896911621,
+  "candidate_epoch_time_ratio": 0.9741682513454983,
+  "shadow_audit_authorized": false,
+  "model_inference_executed_by_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "shadow_audit_read": false,
+  "local_model_execution": false,
+  "sent_once": true
+}

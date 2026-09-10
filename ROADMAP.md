@@ -18,8 +18,8 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | B-FOURIER-EDGE-TRANSFER | Run one frozen paired PCQM-100K transfer of the accepted QM9 Fourier-Edge architecture | Accepted seed-42 result either releases the once-read shadow audit or closes the transfer after attribution |
-| P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
+| P1 | B-K1-SHADOW | Build one label-sealed official-train-derived shadow role, then audit the frozen K1 model once | Shadow direction agrees or K1 closes; no repeated read or tuning |
+| P2 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the independent audit | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
 GraphState9 remains the accepted 100K efficiency discovery, while the accepted
@@ -67,12 +67,12 @@ latent width, placement, seed, and schedule variants are therefore prohibited.
 Two post-cardinality scientific attempts remain; no next task is released until
 the new evidence audit names a distinct local or representational bottleneck.
 
-`C-FOURIER-EDGE`, route 2/3, passed both frozen QM9 accuracy gates and its
-runtime/memory gates. The exact candidate advances once to paired PCQM-100K;
-the transfer preserves the one-slot skeleton and single-harmonic EdgeState
-function and excludes KA-GNN proximity edges or any other feature, data, or
-training change. The final route-3/3 discovery attempt remains unused and
-cannot be released before causal attribution of a failed transfer.
+`C-FOURIER-EDGE`, route 2/3, passed QM9 but its Fourier mechanism failed the
+architecture-matched K1 gate on PCQM-100K and is closed. The same task exposed
+a large K1-versus-full-GPS gain, consistent across target quartiles. K1 is now
+frozen without modification for one untouched shadow audit; repeating the same
+selection role, adding a seed, or tuning K1 is prohibited. The final route-3/3
+attempt remains unused until the K1 audit resolves.
 
 ## Bounded autonomous Track C window
 

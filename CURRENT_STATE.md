@@ -83,14 +83,17 @@ The single-harmonic Fourier EdgeState question passed its frozen QM9 Track C
 gate against both the fresh full-GPS anchor and the architecture-matched
 one-slot control while retaining its resource advantage. It is nominated for
 exactly one paired PCQM-100K transfer. Kaggle2 T4x2 kernel
-`kaseichou/molgap-pcqm-fourier-edge-s42` version 1 is the sole active server
-GPU screen. This is not yet evidence of PCQM improvement and releases no
-shadow, seed expansion, or full-scale work. The accepted QM9 result and PCQM
-contract are in `experiments/qm9_fourier_edge/decision.md` and
-`experiments/pcqm_fourier_edge_transfer/protocol.md`.
-Route 2/3 succeeded at Track C, so the final route-3/3 discovery attempt remains
-unused; it may be considered only after a written attribution of any PCQM
-transfer failure.
+`kaseichou/molgap-pcqm-fourier-edge-s42` version 1 completed and passed
+mechanical acceptance. Fourier-Edge did not beat its architecture-matched K1
+control and is closed for PCQM. The one-slot latent K1 control itself produced
+a large paired gain over fresh full GPS, with a bootstrap interval excluding
+zero and the same direction in every target quartile. K1 is frozen unchanged
+as the sole candidate for one independent label-sealed shadow audit; this is
+exploratory K1 evidence, not a successful Fourier transfer. The complete
+attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
+Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
+The final route-3/3 discovery attempt remains unused while K1 has an unresolved
+independent-audit path.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.
