@@ -1,0 +1,64 @@
+{
+  "format": "molgap-pcqm-k1-shadow-audit-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-pcqm-k1-shadow-audit",
+  "kernel_version": 3,
+  "state": "COMPLETE",
+  "accepted": true,
+  "acceptance_status": "accepted",
+  "output_root": "platforms/_records/kaggle/training/pcqm_k1_shadow_audit_v3",
+  "acceptance_script": "experiments/pcqm_k1_shadow/accept_audit.py",
+  "launch_manifest": "experiments/pcqm_k1_shadow/launch_audit_v3.json",
+  "launch_manifest_sha256": "6D1322109726EB4F2F489E485D825184352EEA087318ED3EB028D05A9EAC2BEC",
+  "source_commit": "fdba2e21e5f9441c83c6259908fd8eec99b7b34e",
+  "frozen_candidate": "neural_atom_k1",
+  "cache_aggregate_sha256": "4a9e4361247f497f5cd9911a69e69eddb1e0fecea6e33f318ada48aa594f6a44",
+  "shadow_index_sha256": "f68f0223dccb1c0f80e76035c79efe08b0959e4e14d5b1f7ebb5153d6cbc27bd",
+  "shadow_rows": 10000,
+  "shadow_mae_eV": {
+    "full_gps": 0.13400164246559143,
+    "neural_atom_k1": 0.12792469561100006
+  },
+  "paired_delta_k1_minus_full_eV": -0.00607694685459137,
+  "paired_bootstrap_95_ci_eV": [
+    -0.007948308970332146,
+    -0.0042067339545488365
+  ],
+  "bootstrap_seed": 2026091142,
+  "bootstrap_replicates": 20000,
+  "inference_time_ratio_k1_over_full": 0.6324107196577539,
+  "inference": {
+    "full_gps": {
+      "elapsed_s": 2.8152690580000126,
+      "graphs_per_s": 3552.0583624444307,
+      "peak_memory_bytes": 57875968,
+      "total_memory_bytes": 17059545088,
+      "memory_reserve_fraction": 0.9966074143418566,
+      "parameter_count": 4771073
+    },
+    "neural_atom_k1": {
+      "elapsed_s": 1.7804063309999947,
+      "graphs_per_s": 5616.695372220641,
+      "peak_memory_bytes": 53401600,
+      "total_memory_bytes": 17059545088,
+      "memory_reserve_fraction": 0.9968696937858229,
+      "parameter_count": 3658817
+    }
+  },
+  "shadow_labels_read": true,
+  "shadow_label_values_accessed": 10000,
+  "model_inference_executed": true,
+  "model_training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "local_model_execution": false,
+  "successor_submitted": false,
+  "artifact_sha256": {
+    "molgap-pcqm-k1-shadow-audit.log": "4C481D70B65BC32CFADA1676DBE14481B2F91C3345EC9FAFEA5AD6F5FC05A53D",
+    "pcqm_k1_shadow_audit/acceptance.json": "A99E791B73BE91A8376CFB3CAA5C97873B7800B8F568C5C5C68065D3B2C14E10",
+    "pcqm_k1_shadow_audit/audit_payload.pt": "863991C4440C405831975705826B67257BE95A28ECCAD8B4F86306AD13E592C3",
+    "pcqm_k1_shadow_audit/completion_manifest.json": "9FA93917BDA9A3A2EA87F16E26340B25EC8BEA360CC95522F0332660E1BAD3D1",
+    "pcqm_k1_shadow_audit/metrics.json": "15B25E41DF8BA8EE9DDDE0156B9B6268B2BB3FF4DCDA2F499B9CD848AFF5F4A6",
+    "pcqm_k1_shadow_audit/predictions_before_label_read.pt": "65C9AE51368FF62C3DADDA41B91C260422D737FAE53D866B0AC2C7FE5C1A326A"
+  },
+  "sent_once": true
+}
