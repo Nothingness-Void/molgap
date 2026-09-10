@@ -10,6 +10,7 @@ must not be restarted by an automated monitor.
 | Query Pool | Scientific gate failed; closed | `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md` |
 | OGB local-operator sequence | All required candidates failed; closed | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
 | Recurrent graph state | Scientific gate failed; closed | `experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/decision.md` |
+| Distance-angle triangle GraphState9 | Won the paired 100K efficiency screen but failed full-scale transfer (`~0.118368 eV` versus EdgeState GPS9 `0.099638 eV`); all derivatives closed | `experiments/_closed/pcqm_distance_angle_triangle_graphstate/README.md` |
 | Sparse torsion EdgeState | Artifact acceptance passed, scientific gate failed; no seed retry | `experiments/pcqm_gap_architecture/results/sparse_torsion_edge_state_seed42/gpu_decision.md` |
 | Sparse atom--bond dual stream | Artifact acceptance passed, candidate regressed; attribution closed the mechanism | `experiments/pcqm_gap_architecture/results/sparse_atom_bond_dual_stream_seed42/decision.md` |
 | Repaired-2M PairGPS2D attempt (job 1322114) | Wall-time/incomplete; no final metrics; do not resume | `experiments/pubchemqc_pair_gps_2d/` and `platforms/ims/repaired_2m_3d/*pair_gps_2d*` |
@@ -19,7 +20,6 @@ post-result attribution retained on the server is only a no-rerun summary;
 the archive branch owns the complete decision evidence. Large platform records
 remain under their original ignored `platforms/_records/` locations.
 
-The following are not closed routes: the accepted Sparse Triangle and
-distance-plus-angle comparators, shared graph/geometry caches, and the active
-ring-hierarchy question. Their code and live status remain on
-`molgap-server`.
+The accepted Sparse Triangle and distance-plus-angle **EdgeState GPS**
+comparators and shared graph/geometry caches are not part of this GraphState
+closure. Ring-GraphState and every other GraphState derivative are closed.

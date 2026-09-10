@@ -21,13 +21,15 @@ Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under an explicit
 full-run compute budget; the default ceiling is 12 A100 hours. Official
 validation and test-dev stay outside server-side architecture discovery.
 
-The no-attention shared GraphState strictly beat fresh full-GPS controls at
-seeds 42, 43, and 44 while using fewer parameters and higher throughput. It is
-the accepted 100K efficiency discovery and server comparison anchor, not the
-strongest accepted full-scale result. The winner and complete arithmetic are in
-`experiments/pcqm_gap_architecture/results/local_global_allocation_multiseed/decision.md`.
-The accepted desktop EdgeState continuation remains the strongest accepted
-full-scale official-validation evidence.
+The no-attention distance-angle triangle GraphState was a reproducible 100K
+efficiency discovery but failed to transfer at full scale: its continuation
+reached only about `0.118368 eV`, versus `0.099638 eV` for the accepted
+EdgeState GPS9 continuation. GraphState and all derivatives are closed and
+must not be presented as active candidates or comparators. Their complete
+evidence is on `archive` commit `5d1be33`; the server tombstone is
+`experiments/_closed/pcqm_server_archive_index.md`. The accepted desktop
+EdgeState continuation remains the strongest accepted full-scale
+official-validation evidence.
 
 The bounded Ring-GraphState, ContactState, and body-order comparisons are
 closed. Their details remain in their experiment decision records.

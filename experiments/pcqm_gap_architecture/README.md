@@ -368,16 +368,13 @@ the compact attribution and archive pointer.
 The deterministic smallest-ring cache passed no-model acceptance and remains
 ready but deferred. Its acceptance is
 [`results/ring_hierarchy_seed42/cache_acceptance.json`](results/ring_hierarchy_seed42/cache_acceptance.json).
-The matched full-GPS, sparse GPS blocks 3/6/9, and no-attention GraphState
-screen completed. GraphState passed seed 42; its decision is
-[`results/local_global_allocation_seed42/decision.md`](results/local_global_allocation_seed42/decision.md).
-The paired confirmation under
-[`local_global_allocation_multiseed_protocol.md`](local_global_allocation_multiseed_protocol.md)
-passed at seeds 42, 43, and 44. GraphState is frozen as the architecture winner;
-the three-seed arithmetic and bounded desktop handoff are in
-[`results/local_global_allocation_multiseed/decision.md`](results/local_global_allocation_multiseed/decision.md)
-and
-[`results/local_global_allocation_multiseed/desktop_handoff.md`](results/local_global_allocation_multiseed/desktop_handoff.md).
+The no-attention distance-angle triangle GraphState passed its paired 100K
+screen but failed full-scale transfer (`~0.118368 eV` versus the accepted
+EdgeState GPS9 result of `0.099638 eV`). The route and all derivatives are
+closed. Complete protocols, runners, acceptance records, full-data code, and
+decisions are preserved on `archive` at
+`experiments/_closed/pcqm_distance_angle_triangle_graphstate/`; they are not
+active architecture evidence on this branch.
 
 The subsequent Ring-GraphState question closed without confirmation; its
 decision is

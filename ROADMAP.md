@@ -23,9 +23,11 @@ hours unless the user records a separate override.
 | P3 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the independent audit or scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
 | P4 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
-GraphState9 remains the accepted 100K efficiency discovery, while the accepted
-desktop EdgeState continuation remains the strongest full-scale evidence.
-Post-GraphState candidates and pretraining surrogates are summarized by
+GraphState9 is closed: its accepted 100K efficiency gain did not survive
+full-scale transfer. It is historical evidence on `archive`, not a candidate,
+baseline, or restart point. The accepted desktop EdgeState continuation
+remains the strongest full-scale evidence. Post-GraphState candidates and
+pretraining surrogates are summarized by
 `results/architecture_failure_attribution_2026-09-08/decision.md`.
 
 The sparse relative-value question is closed by its paired seed-42 decision.

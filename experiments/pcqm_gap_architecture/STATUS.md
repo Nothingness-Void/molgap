@@ -1,6 +1,11 @@
 # PCQM Gap Architecture Screen Status
 
-Live work is the user-authorized PCQM-100K tuning question in
+The distance-angle triangle GraphState route is closed after its 100K gain
+failed to transfer at full scale. All GraphState references in the chronological
+log below are historical and cannot authorize a restart or successor; complete
+evidence is on `archive` commit `5d1be33`.
+
+The last tuning question recorded in this file was
 `local_hierarchy_pretraining_seed42_protocol.md`: the accepted EdgeState GPS9
 inference model is held fixed while local atom/bond/functional-group
 pretraining is compared with a fresh equal-exposure scratch arm. Continuous
