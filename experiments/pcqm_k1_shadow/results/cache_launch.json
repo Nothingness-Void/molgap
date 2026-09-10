@@ -1,0 +1,20 @@
+{
+  "format": "molgap-pcqm-k1-shadow-cache-launch-v1",
+  "launched_at": "2026-09-10T23:16:18.3989205+09:00",
+  "platform": "kaggle2",
+  "kernel": "kaseichou/molgap-pcqm-k1-shadow-cache",
+  "kernel_version": 1,
+  "source_dataset": "kaseichou/molgap-pcqm-k1-shadow-source",
+  "source_commit": "2d768fc628c972a6e02172f01a13d9d6dc7eb9ac",
+  "official_source_dataset": "piero0/pcqm4mv2",
+  "parent_geometry_dataset": "kaseichou/molgap-pcqm-geometry-cache-s42-dataset",
+  "initial_status": "RUNNING",
+  "accelerator": "CPU",
+  "shadow_graphs": 10000,
+  "shadow_labels_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "monitor_automation_id": "molgap-pcqm-k1-shadow-cache-monitor",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "coordinator_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865"
+}
