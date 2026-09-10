@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-k1-shadow-cache-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-pcqm-k1-shadow-cache",
+  "kernel_version": 1,
+  "state": "ERROR",
+  "accepted": false,
+  "acceptance_status": "not_run_incomplete_error",
+  "output_root": "platforms/_records/kaggle/training/pcqm_k1_shadow_cache_v1",
+  "launch_manifest": "experiments/pcqm_k1_shadow/results/cache_launch.json",
+  "launch_manifest_sha256": "D227B47F0F2240B5F7350A8915045BA99F44EA21C3F95AE7DF03435D5776EC0C",
+  "source_commit": "2d768fc628c972a6e02172f01a13d9d6dc7eb9ac",
+  "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "parent_geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "shadow_graphs": 10000,
+  "failure": "ModuleNotFoundError: No module named 'rdkit'; wrapped by the cache builder as RuntimeError: Shadow reserve exhausted",
+  "log_sha256": "6F9F432A3D3E5057A5DD5E7A4A823CD0933A65F39FBCDE925419816EE135C0C",
+  "shadow_labels_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "local_model_execution": false,
+  "sent_once": true
+}
