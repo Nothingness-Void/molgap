@@ -94,14 +94,20 @@ as the sole candidate for one independent label-sealed shadow audit; this is
 exploratory K1 evidence, not a successful Fourier transfer. The complete
 attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
 Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
-The final route-3/3 discovery attempt remains unused while K1 has an unresolved
-independent-audit path.
+The final route-3/3 discovery attempt remains unused while K1 proceeds through
+its scale bridge.
 The user authorized preparation of a paired K1 500K scale bridge. The bridge
 preserves the accepted 10K development role and changes only train cardinality;
-it is released to `molgap-desktop` only after K1 passes the pending shadow
-audit. The label-sealed shadow cache passed acceptance, and Kaggle2 kernel
-`kaseichou/molgap-pcqm-k1-shadow-audit` version 3 is performing the frozen
-one-time audit without training. Its contract is
+Kaggle2 kernel `kaseichou/molgap-pcqm-k1-shadow-audit` version 3 completed the
+frozen one-time audit without training. K1 reached `0.1279246956 eV` against
+`0.1340016425 eV` for Full-GPS; the paired delta was `-0.0060769469 eV` with
+bootstrap 95% interval `[-0.0079483090, -0.0042067340] eV`. K1 used
+`0.632411` times the control inference time and passed every frozen gate. The
+shadow role is consumed and cannot be reused. The unchanged paired 500K bridge
+is authorized for `molgap-server` execution on Kaggle2: first a CPU-only cache
+build and independent no-model acceptance, then exactly one paired T4x2
+training task. Full-scale work remains desktop-owned. The audit decision and
+scale contract are `experiments/pcqm_k1_shadow/decision.md` and
 `experiments/pcqm_k1_scale500k/protocol.md`.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted

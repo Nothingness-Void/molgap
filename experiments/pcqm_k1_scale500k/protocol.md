@@ -8,10 +8,15 @@ from 100K to 500K?
 
 ## Release boundary
 
-The user authorized this scale bridge on 2026-09-10. Server prepares the
-immutable contract; `molgap-desktop` owns cache construction, accelerator
-training, and result acceptance. Execution is released only after the frozen
-K1 shadow audit passes. A shadow failure closes K1 and cancels this bridge.
+The user authorized this scale bridge on 2026-09-10 and revised its execution
+owner on 2026-09-11. After the frozen K1 shadow audit passed, `molgap-server`
+was authorized to construct and independently accept the cache, then run the
+paired comparison on Kaggle2. This does not authorize full-scale training or
+official validation/test-dev; those remain desktop-owned decisions.
+
+Cache construction is a CPU-only job. The T4x2 training task may be submitted
+only after the retrieved cache passes the frozen no-model acceptance. Each arm
+receives one T4 and an independent model, RNG, optimizer, and checkpoint tree.
 
 ## Frozen data roles
 
@@ -76,5 +81,5 @@ The 100K paired K1 gain was `0.009461689 eV`. At 500K, K1 advances only if:
 - all identity, role, finite-value, checkpoint, and hash checks pass.
 
 Failure closes K1 scale-up without changing architecture or trying another
-seed. Passing authorizes a separate desktop budget decision; it does not open
+seed. Passing authorizes a separate desktop full-run budget decision; it does not open
 official validation or test-dev.

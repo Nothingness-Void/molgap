@@ -14,8 +14,14 @@ its stock Torch omitted `sm_60`; it also stopped before label access. Version 3
 conditionally installs the repository's previously validated
 Torch 2.7.1+cu126 P100 runtime and verifies accelerator compatibility.
 
-The frozen one-time audit is now `RUNNING` as Kaggle2 kernel
-`kaseichou/molgap-pcqm-k1-shadow-audit` version 3. It loads only the exact
-accepted Full-GPS and K1 checkpoints, saves both prediction vectors before its
-sole shadow-label access, and performs no optimization. Passing releases only
-the already prepared 500K bridge to desktop; failure closes K1.
+Kaggle2 kernel `kaseichou/molgap-pcqm-k1-shadow-audit` version 3 completed and
+passed frozen no-model acceptance. K1 reached `0.1279246956 eV`, versus
+`0.1340016425 eV` for the paired Full-GPS control; the paired delta was
+`-0.0060769469 eV` with bootstrap 95% interval
+`[-0.0079483090, -0.0042067340] eV`. K1 also used `0.632411` times the control
+inference time. The shadow role is consumed and cannot be read again.
+
+The decision is `decision.md`. The user subsequently authorized the unchanged
+paired 500K bridge on Kaggle2 under `experiments/pcqm_k1_scale500k/protocol.md`.
+No full-scale training, extra seed, architecture change, or official
+validation/test-dev access was authorized.

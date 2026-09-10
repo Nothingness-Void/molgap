@@ -18,10 +18,9 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | B-K1-SHADOW | Build one label-sealed official-train-derived shadow role, then audit the frozen K1 model once | Shadow direction agrees or K1 closes; no repeated read or tuning |
-| P2 | B-K1-500K | If shadow passes, hand the frozen paired 500K scale bridge to `molgap-desktop` | K1 retains at least half its paired 100K gain, or closes |
-| P3 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the independent audit or scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
-| P4 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
+| P1 | B-K1-500K | Build and accept the exact 500K cache, then run the frozen paired bridge once on Kaggle2 T4x2 | K1 retains at least half its paired 100K gain, or closes |
+| P2 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
+| P3 | B-DESKTOP-HANDOFF | If the 500K gate passes, decide one full-run budget and official-role plan | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
 GraphState9 is closed: its accepted 100K efficiency gain did not survive
 full-scale transfer. It is historical evidence on `archive`, not a candidate,
@@ -73,14 +72,16 @@ the new evidence audit names a distinct local or representational bottleneck.
 `C-FOURIER-EDGE`, route 2/3, passed QM9 but its Fourier mechanism failed the
 architecture-matched K1 gate on PCQM-100K and is closed. The same task exposed
 a large K1-versus-full-GPS gain, consistent across target quartiles. K1 is now
-frozen without modification for one untouched shadow audit; repeating the same
+frozen without modification. Its one-time independent shadow audit passed all
+scientific and resource gates, and that shadow role is consumed; repeating the
 selection role, adding a seed, or tuning K1 is prohibited. The final route-3/3
-attempt remains unused until the K1 audit resolves.
+attempt remains unused while K1 is eligible for the scale bridge.
 
 The user authorized a K1 500K scale bridge on 2026-09-10. Its immutable
 same-validation, paired-baseline contract is
-`experiments/pcqm_k1_scale500k/protocol.md`. Preparation does not bypass the
-pending once-read shadow gate, and accelerator execution remains desktop-owned.
+`experiments/pcqm_k1_scale500k/protocol.md`. The shadow decision released this
+bridge on 2026-09-11. The user assigned this bounded 500K execution to
+`molgap-server` on Kaggle2; any full-scale decision remains desktop-owned.
 
 ## Bounded autonomous Track C window
 
