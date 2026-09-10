@@ -55,6 +55,35 @@ protocol freezes one pure-2D EdgeState GPS9 question, a same-support size
 control, and a fresh comparator. Desktop width/pretraining/full-scale work is
 not a control and cannot change this screen.
 
+## Bounded autonomous Track C window
+
+The user authorized the server coordinator on 2026-09-10 to continue the
+architecture funnel while they are away. This authorization is deliberately
+bounded to one remote GPU task at a time and does not broaden any data,
+platform, seed, or scale boundary.
+
+- A mechanically accepted cardinality result that clears every frozen gate
+  authorizes the coordinator to freeze and submit exactly one paired
+  PCQM-100K transfer with physical batch 128. It does not authorize a shadow
+  read, another seed, desktop/full training, or official roles.
+- A mechanically accepted scientific loss closes the exact mechanism. Before
+  another submission, the coordinator must audit all local decision records,
+  select one materially different untested pure-2D mechanism, write its
+  evidence selection and frozen protocol, pass static/manifest/cache checks,
+  and submit exactly one seed-42 QM9-30K paired screen.
+- Infrastructure failures may be repaired and retried only when the scientific
+  contract is unchanged. Every retry receives a new source identity, launch
+  record, and terminal evidence.
+- Closed GPS-depth/width, extra-global-attention, path-softmax, ring,
+  fragment-state, PNA, directed-bond, GAPE, geometry, teacher, residual,
+  fusion, and adaptive-denoising variants cannot be reopened by this window.
+- Luna Max performs only low-cost mechanical polling. Each terminal state is
+  handed once to this coordinator; the coordinator performs attribution and
+  releases at most one successor before retargeting the persistent monitor.
+- Stop rather than spend compute when no candidate has a distinct information-
+  flow hypothesis, an explicit causal control, a transferable OGB feature
+  contract, and a plausible path under the parameter/runtime gates.
+
 ## Mandatory gates
 
 1. Before remote GPU submission, syntax/AST/manifest checks and immutable

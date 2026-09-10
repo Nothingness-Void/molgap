@@ -74,6 +74,12 @@ independent of the desktop 304-wide/pretraining/full-scale work reported by the
 user; those in-progress results do not alter the accepted incumbent yet.
 SCNet and Fragment-State work are desktop-owned and are excluded from this
 server queue.
+The user authorized a bounded autonomous server discovery window on 2026-09-10.
+Terminal evidence is mechanically collected by Luna Max and handed to the
+coordinator. The coordinator may release exactly one in-scope successor at a
+time under the decision funnel in `ROADMAP.md`; this does not authorize extra
+seeds, official roles, desktop/full-scale work, SCNet, IMS, or concurrent GPU
+candidates.
 The locally attached atom/bond/functional-group reconstruction question is now
 classified as optimization of the already validated EdgeState model, not a new
 architecture. The user therefore authorized it to enter directly at paired
