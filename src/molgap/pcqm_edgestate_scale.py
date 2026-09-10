@@ -20,18 +20,20 @@ SUBSET_FORMAT = "molgap-pcqm-edgestate304-500k-subset-v1"
 RUN_FORMAT = "molgap-pcqm-edgestate304-500k-run-v1"
 TRAIN_ROWS = 500_000
 DEVELOPMENT_ROWS = 50_000
-EXPECTED_PARAMETER_COUNT = 11_270_993
+EXPECTED_PARAMETER_COUNT = 7_610_945
 
 
 @dataclass(frozen=True)
 class EdgeStateScaleConfig:
     hidden_channels: int = 304
-    num_layers: int = 9
+    num_layers: int = 6
     num_heads: int = 4
     edge_state_channels: int = 64
     rwse_dim: int = 16
     dropout: float = 0.05
     batch_size: int = 128
+    loader_workers: int = 4
+    prefetch_factor: int = 4
     learning_rate: float = 2.0e-4
     minimum_learning_rate: float = 1.0e-6
     weight_decay: float = 1.0e-5
@@ -50,6 +52,8 @@ class EdgeStateScaleConfig:
             raise ValueError("paired arms must have equal encoder exposure")
         if self.batch_size != 128:
             raise ValueError("the frozen scale screen requires batch size 128")
+        if self.loader_workers < 0 or self.prefetch_factor <= 0:
+            raise ValueError("loader worker settings must be non-negative")
         if not 0.0 < self.mask_rate < 1.0:
             raise ValueError("mask_rate must fall strictly between zero and one")
 
@@ -283,13 +287,20 @@ def _loader(graphs, config: EdgeStateScaleConfig, *, shuffle: bool, seed: int):
     import torch
     from torch_geometric.loader import DataLoader
 
+    options = {}
+    if config.loader_workers:
+        options.update(
+            num_workers=config.loader_workers,
+            prefetch_factor=config.prefetch_factor,
+            persistent_workers=False,
+        )
     return DataLoader(
         graphs,
         batch_size=config.batch_size,
         shuffle=shuffle,
         generator=torch.Generator().manual_seed(seed),
-        num_workers=0,
         pin_memory=True,
+        **options,
     )
 
 
@@ -907,7 +918,7 @@ def run_worker(
         "role": role,
         "source_commit": source_commit,
         "config": asdict(config),
-        "architecture": "OGB EdgeState GPS9 width304",
+        "architecture": "OGB EdgeState GPS6 width304",
         "parameter_count": params,
         "initial_encoder_sha256": initial_hash,
         "cache_aggregate_sha256": manifest["aggregate_sha256"],
