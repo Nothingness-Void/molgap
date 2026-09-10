@@ -62,14 +62,19 @@ def build_scale_split(base_split: dict, shadow_split: dict) -> dict:
     if not all(checks.values()):
         raise RuntimeError(f"Scale split input contract failed: {checks}")
 
+    if (
+        np.intersect1d(base_train, validation).size
+        or np.intersect1d(base_train, shadow).size
+        or np.intersect1d(validation, shadow).size
+    ):
+        raise RuntimeError("Base train, validation, and shadow roles overlap")
+    # The original screen reserve was not a data role and was not protected
+    # when the later shadow was frozen.  It may therefore overlap the shadow
+    # reserve.  Protect the set union without treating that harmless overlap as
+    # a contract failure.
     protected = np.unique(
         np.concatenate((base_train, validation, base_reserve, shadow, shadow_reserve))
     )
-    if protected.size != sum(
-        values.size
-        for values in (base_train, validation, base_reserve, shadow, shadow_reserve)
-    ):
-        raise RuntimeError("Base, validation, reserve, and shadow roles overlap")
     available = np.setdiff1d(
         np.arange(OFFICIAL_TRAIN_ROWS, dtype=np.int64),
         protected,

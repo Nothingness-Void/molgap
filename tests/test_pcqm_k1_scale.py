@@ -13,7 +13,10 @@ from molgap.pcqm_shadow import SHADOW_SPLIT_SEED, frozen_shadow_split
 
 def test_scale_split_preserves_roles_and_excludes_shadow():
     base = fixed_screen_split()
-    base = {key: value.tolist() if isinstance(value, np.ndarray) else value for key, value in base.items()}
+    base = {
+        key: value.tolist() if isinstance(value, np.ndarray) else value
+        for key, value in base.items()
+    }
     used = set(base["train"]) | set(base["validation"])
     shadow = frozen_shadow_split(used)
     shadow_payload = {
@@ -42,7 +45,10 @@ def test_scale_split_preserves_roles_and_excludes_shadow():
 
 def test_scale_split_is_deterministic():
     base = fixed_screen_split()
-    base = {key: value.tolist() if isinstance(value, np.ndarray) else value for key, value in base.items()}
+    base = {
+        key: value.tolist() if isinstance(value, np.ndarray) else value
+        for key, value in base.items()
+    }
     used = set(base["train"]) | set(base["validation"])
     shadow = frozen_shadow_split(used)
     shadow_payload = {
