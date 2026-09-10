@@ -5,8 +5,10 @@ import json
 import traceback
 from pathlib import Path
 
-from molgap.pcqm_edgestate_scale import (
-    EdgeStateScaleConfig,
+from molgap.pcqm_distance_angle_scale import (
+    ARMS,
+    DistanceAngleScaleConfig,
+    accept_pair,
     accept_subset,
     build_subset_manifest,
     run_preflight,
@@ -16,14 +18,16 @@ from molgap.pcqm_edgestate_scale import (
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("manifest", "accept", "preflight", "train"))
+    parser.add_argument(
+        "command", choices=("manifest", "accept", "preflight", "train", "accept-results")
+    )
     parser.add_argument("--cache-root", type=Path)
     parser.add_argument("--parent-acceptance", type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--role", choices=("scratch", "pretrained"))
+    parser.add_argument("--role", choices=ARMS)
     parser.add_argument("--source-commit")
     args = parser.parse_args()
-    config = EdgeStateScaleConfig()
+    config = DistanceAngleScaleConfig()
     try:
         if args.command == "manifest":
             if args.parent_acceptance is None or args.output is None:
@@ -37,7 +41,7 @@ def main() -> None:
             if args.cache_root is None or args.output is None:
                 parser.error("preflight requires --cache-root and --output")
             result = run_preflight(args.cache_root, args.output, config)
-        else:
+        elif args.command == "train":
             if None in (args.cache_root, args.output, args.role, args.source_commit):
                 parser.error("train requires cache, output, role, and source commit")
             result = run_worker(
@@ -47,9 +51,13 @@ def main() -> None:
                 config,
                 source_commit=args.source_commit,
             )
+        else:
+            if args.output is None:
+                parser.error("accept-results requires --output")
+            result = accept_pair(args.output)
     except Exception as error:
         if args.output is not None:
-            from molgap.pcqm_edgestate_scale import atomic_json
+            from molgap.pcqm_distance_angle_scale import atomic_json
 
             atomic_json(
                 args.output / "failure.json",

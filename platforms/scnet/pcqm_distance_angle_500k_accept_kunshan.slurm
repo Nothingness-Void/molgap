@@ -24,7 +24,7 @@ export OMP_NUM_THREADS=8
 export MKL_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=1
 PYTHON=/public/home/scnaqkfcy3/molgap-envs/cpu-cache-py311/bin/python
-RUNNER="$CODE/platforms/scnet/run_pcqm_edgestate304_500k.py"
+RUNNER="$CODE/platforms/scnet/run_pcqm_distance_angle_500k.py"
 
 "$PYTHON" -u "$RUNNER" accept \
   --cache-root "$CACHE" \

@@ -7,7 +7,7 @@
 
 set -euo pipefail
 : "${ROOT:?submit with ROOT}"
-: "${ROLE:?submit with ROLE=preflight|scratch|pretrained}"
+: "${ROLE:?submit with ROLE=preflight|ogb_edge_state_structural_gps9|ogb_distance_angle_triangle_edge_state_gps9}"
 : "${SOURCE_COMMIT:?submit with SOURCE_COMMIT}"
 
 ROOT="$(realpath "$ROOT")"
@@ -20,7 +20,7 @@ CODE="$ROOT/code"
 OUTPUT="$ROOT/output/$ROLE"
 test -f "$CACHE/manifest.json"
 test -f "$CACHE/acceptance.json"
-test -f "$CODE/src/molgap/pcqm_edgestate_scale.py"
+test -f "$CODE/src/molgap/pcqm_distance_angle_scale.py"
 mkdir -p "$OUTPUT" "$ROOT/logs"
 cd "$ROOT"
 
@@ -33,7 +33,7 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 PYTHON=/public/home/scnaqkfcy3/molgap-envs/graphstate-dtk2310-py310/bin/python
-RUNNER="$CODE/platforms/scnet/run_pcqm_edgestate304_500k.py"
+RUNNER="$CODE/platforms/scnet/run_pcqm_distance_angle_500k.py"
 
 if [[ "$ROLE" == "preflight" ]]; then
   "$PYTHON" -u "$RUNNER" preflight --cache-root "$CACHE" --output "$OUTPUT"

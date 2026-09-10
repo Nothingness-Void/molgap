@@ -1,8 +1,8 @@
-"""Durable 500K PCQM EdgeState width/pretraining comparison.
+"""Durable paired 500K PCQM distance/angle bottom-fusion screen.
 
-The module streams immutable 50K graph shards so the paired SCNet workers do
-not need to materialize the complete 500K role in host memory.  Geometry is
-used only as a train-role auxiliary target; the retained encoder is pure 2D.
+Both arms stream the same immutable 50K graph shards.  The only experimental
+variable is whether ETKDGv3+MMFF94s bond distances and wedge angles are fused
+into the accepted OGB EdgeState Structural GPS9 backbone.
 """
 from __future__ import annotations
 
@@ -17,45 +17,47 @@ from pathlib import Path
 
 
 SUBSET_FORMAT = "molgap-pcqm-edgestate304-500k-subset-v1"
-RUN_FORMAT = "molgap-pcqm-edgestate304-500k-run-v1"
+RUN_FORMAT = "molgap-pcqm-distance-angle-500k-run-v1"
 TRAIN_ROWS = 500_000
 DEVELOPMENT_ROWS = 50_000
-EXPECTED_PARAMETER_COUNT = 7_610_945
+BASELINE = "ogb_edge_state_structural_gps9"
+CANDIDATE = "ogb_distance_angle_triangle_edge_state_gps9"
+ARMS = (BASELINE, CANDIDATE)
+EXPECTED_PARAMETER_COUNTS = {
+    BASELINE: 4_771_073,
+    CANDIDATE: 4_891_057,
+}
 
 
 @dataclass(frozen=True)
-class EdgeStateScaleConfig:
-    hidden_channels: int = 304
-    num_layers: int = 6
+class DistanceAngleScaleConfig:
+    hidden_channels: int = 192
+    num_layers: int = 9
     num_heads: int = 4
     edge_state_channels: int = 64
+    wedge_channels: int = 16
+    geometry_basis_channels: int = 16
     rwse_dim: int = 16
-    dropout: float = 0.05
+    dropout: float = 0.1
     batch_size: int = 128
     loader_workers: int = 4
     prefetch_factor: int = 4
-    learning_rate: float = 2.0e-4
+    learning_rate: float = 1.6e-4
     minimum_learning_rate: float = 1.0e-6
-    weight_decay: float = 1.0e-5
+    weight_decay: float = 1.0e-6
     gradient_clip: float = 1.0
-    scratch_epochs: int = 60
-    pretrain_epochs: int = 20
-    finetune_epochs: int = 40
-    mask_rate: float = 0.15
-    angle_bins: int = 32
+    epochs: int = 60
     seed: int = 42
 
     def validate(self) -> None:
         if self.hidden_channels % self.num_heads:
             raise ValueError("hidden_channels must be divisible by num_heads")
-        if self.pretrain_epochs + self.finetune_epochs != self.scratch_epochs:
-            raise ValueError("paired arms must have equal encoder exposure")
         if self.batch_size != 128:
             raise ValueError("the frozen scale screen requires batch size 128")
         if self.loader_workers < 0 or self.prefetch_factor <= 0:
             raise ValueError("loader worker settings must be non-negative")
-        if not 0.0 < self.mask_rate < 1.0:
-            raise ValueError("mask_rate must fall strictly between zero and one")
+        if self.epochs != 60:
+            raise ValueError("the frozen paired screen requires 60 direct-Gap passes")
 
 
 def atomic_json(path: Path, payload: object) -> None:
@@ -242,25 +244,29 @@ def accept_subset(cache_root: Path, *, verify_payloads: bool = True) -> dict:
     return acceptance
 
 
-def make_model(config: EdgeStateScaleConfig):
-    from .pcqm_gap_architecture import OGBEdgeStateStructuralGPSWrapper
+def make_model(arm: str, config: DistanceAngleScaleConfig):
+    from .pcqm_gap_architecture import make_pcqm_gap_encoder
 
-    return OGBEdgeStateStructuralGPSWrapper(
-        in_channels=9,
-        edge_dim=3,
-        hidden_channels=config.hidden_channels,
-        num_layers=config.num_layers,
-        num_heads=config.num_heads,
-        dropout=config.dropout,
-        n_targets=1,
-        pooling="mean",
-        rwse_dim=config.rwse_dim,
-        edge_state_channels=config.edge_state_channels,
-    )
+    if arm not in ARMS:
+        raise ValueError(f"unsupported arm: {arm}")
+    expected = {
+        "hidden_channels": 192,
+        "num_layers": 9,
+        "num_heads": 4,
+        "edge_state_channels": 64,
+        "wedge_channels": 16,
+        "geometry_basis_channels": 16,
+        "rwse_dim": 16,
+        "dropout": 0.1,
+    }
+    observed = {name: getattr(config, name) for name in expected}
+    if observed != expected:
+        raise RuntimeError(f"architecture contract changed: {observed}")
+    return make_pcqm_gap_encoder(arm)
 
 
-def parameter_count(config: EdgeStateScaleConfig) -> int:
-    return sum(parameter.numel() for parameter in make_model(config).parameters())
+def parameter_count(arm: str, config: DistanceAngleScaleConfig) -> int:
+    return sum(parameter.numel() for parameter in make_model(arm, config).parameters())
 
 
 def set_seed(seed: int) -> None:
@@ -283,7 +289,7 @@ def _role_shards(cache_root: Path, manifest: dict, role: str) -> list[Path]:
     ]
 
 
-def _loader(graphs, config: EdgeStateScaleConfig, *, shuffle: bool, seed: int):
+def _loader(graphs, config: DistanceAngleScaleConfig, *, shuffle: bool, seed: int):
     import torch
     from torch_geometric.loader import DataLoader
 
@@ -338,7 +344,19 @@ def _target_stats(cache_root: Path, manifest: dict) -> tuple[float, float]:
     return mean, math.sqrt(variance)
 
 
-def _forward(model, batch):
+def _forward(model, batch, arm: str):
+    if arm == CANDIDATE:
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+            batch.wedge_edge_ids,
+            batch.edge_distance,
+            batch.wedge_angle_cos,
+            batch.geometry_valid,
+        ).view(-1)
     return model(
         batch.x,
         batch.edge_index,
@@ -348,7 +366,7 @@ def _forward(model, batch):
     ).view(-1)
 
 
-def _learning_rate(config: EdgeStateScaleConfig, epoch: int, epochs: int) -> float:
+def _learning_rate(config: DistanceAngleScaleConfig, epoch: int, epochs: int) -> float:
     warmup = min(3, max(1, epochs // 10))
     if epoch < warmup:
         return config.learning_rate * float(epoch + 1) / warmup
@@ -364,7 +382,7 @@ def _set_optimizer_lr(optimizer, value: float) -> None:
         group["lr"] = value
 
 
-def _evaluate(model, cache_root, manifest, config, mean, std, device):
+def _evaluate(model, cache_root, manifest, config, mean, std, device, *, arm):
     import torch
 
     model.eval()
@@ -378,7 +396,7 @@ def _evaluate(model, cache_root, manifest, config, mean, std, device):
             graphs = _load_graphs(path)
             for batch in _loader(graphs, config, shuffle=False, seed=config.seed):
                 batch = batch.to(device, non_blocking=True)
-                prediction = _forward(model, batch) * std + mean
+                prediction = _forward(model, batch, arm) * std + mean
                 target = batch.y.view(-1).float()
                 absolute_error += float((prediction - target).abs().sum())
                 count += int(target.numel())
@@ -596,7 +614,7 @@ def _train_gap(
         for batch in _iter_train_batches(cache_root, manifest, config, epoch):
             batch = batch.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
-            prediction = _forward(model, batch)
+            prediction = _forward(model, batch, role)
             target = (batch.y.view(-1).float() - mean_tensor) / std_tensor
             loss = functional.l1_loss(prediction, target)
             if not bool(torch.isfinite(loss)):
@@ -611,7 +629,14 @@ def _train_gap(
             )
             count += int(batch.y.numel())
         development = _evaluate(
-            model, cache_root, manifest, config, mean_tensor, std_tensor, device
+            model,
+            cache_root,
+            manifest,
+            config,
+            mean_tensor,
+            std_tensor,
+            device,
+            arm=role,
         )
         elapsed = time.perf_counter() - started
         improved = development["mae_eV"] < best
@@ -777,63 +802,70 @@ def _pretrain(model, cache_root, manifest, config, output, initial_hash):
     return model, result
 
 
-def run_preflight(cache_root: Path, output: Path, config: EdgeStateScaleConfig) -> dict:
+def run_preflight(
+    cache_root: Path, output: Path, config: DistanceAngleScaleConfig
+) -> dict:
     import torch
 
     config.validate()
     acceptance = accept_subset(cache_root, verify_payloads=True)
-    set_seed(config.seed)
-    model = make_model(config).to("cuda:0")
-    params = sum(parameter.numel() for parameter in model.parameters())
-    if params != EXPECTED_PARAMETER_COUNT:
-        raise RuntimeError(
-            f"model parameter count changed: {params} != {EXPECTED_PARAMETER_COUNT}"
-        )
     first_shard = _role_shards(
         cache_root,
         json.loads((cache_root / "manifest.json").read_text(encoding="utf-8")),
         "train",
     )[0]
     graphs = _load_graphs(first_shard)
-    batch = next(iter(_loader(graphs, config, shuffle=False, seed=config.seed)))
     device = torch.device("cuda:0")
-    torch.cuda.reset_peak_memory_stats(device)
-    batch = batch.to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
-    prediction = _forward(model, batch)
-    loss = torch.nn.functional.l1_loss(prediction, batch.y.view(-1).float())
-    loss.backward()
-    optimizer.step()
-    scratch_peak = int(torch.cuda.max_memory_allocated(device))
-    del optimizer, model, batch
-    torch.cuda.empty_cache()
-
-    set_seed(config.seed)
-    model = make_model(config).to(device)
-    heads = RelationHeads(config)
-    heads.module = heads.module.to(device)
-    optimizer = torch.optim.AdamW(
-        list(model.parameters()) + list(heads.module.parameters()),
-        lr=config.learning_rate,
-    )
-    batch = next(iter(_loader(graphs, config, shuffle=False, seed=config.seed)))
-    generator = torch.Generator().manual_seed(config.seed + 31_337)
-    torch.cuda.reset_peak_memory_stats(device)
-    relation_loss, parts = _relation_loss(model, heads, batch, config, generator)
-    relation_loss.backward()
-    optimizer.step()
-    pretrained_peak = int(torch.cuda.max_memory_allocated(device))
+    arm_results = {}
+    baseline_state = None
+    for arm in ARMS:
+        set_seed(config.seed)
+        model = make_model(arm, config)
+        params = sum(parameter.numel() for parameter in model.parameters())
+        if params != EXPECTED_PARAMETER_COUNTS[arm]:
+            raise RuntimeError(
+                f"{arm} parameter count changed: {params} != "
+                f"{EXPECTED_PARAMETER_COUNTS[arm]}"
+            )
+        state = model.state_dict()
+        if arm == BASELINE:
+            baseline_state = {
+                name: value.detach().clone() for name, value in state.items()
+            }
+        else:
+            mismatches = [
+                name
+                for name in sorted(set(baseline_state).intersection(state))
+                if not torch.equal(baseline_state[name], state[name])
+            ]
+            if mismatches:
+                raise RuntimeError(
+                    f"shared initialization changed for {arm}: {mismatches[:10]}"
+                )
+        model = model.to(device)
+        batch = next(iter(_loader(graphs, config, shuffle=False, seed=config.seed)))
+        batch = batch.to(device)
+        optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+        torch.cuda.reset_peak_memory_stats(device)
+        prediction = _forward(model, batch, arm)
+        loss = torch.nn.functional.l1_loss(prediction, batch.y.view(-1).float())
+        if not bool(torch.isfinite(loss)):
+            raise RuntimeError(f"{arm} preflight produced non-finite loss")
+        loss.backward()
+        optimizer.step()
+        arm_results[arm] = {
+            "parameter_count": params,
+            "loss": float(loss.detach()),
+            "peak_memory_bytes": int(torch.cuda.max_memory_allocated(device)),
+        }
+        del optimizer, model, batch
+        torch.cuda.empty_cache()
     payload = {
-        "format": "molgap-pcqm-edgestate304-500k-preflight-v1",
-        "accepted": bool(torch.isfinite(loss) and torch.isfinite(relation_loss)),
+        "format": "molgap-pcqm-distance-angle-500k-preflight-v1",
+        "accepted": True,
         "config": asdict(config),
-        "parameter_count": params,
         "batch_size": config.batch_size,
-        "scratch_loss": float(loss.detach()),
-        "relation_loss": float(relation_loss.detach()),
-        "relation_parts": {name: float(value.detach()) for name, value in parts.items()},
-        "scratch_peak_memory_bytes": scratch_peak,
-        "pretrained_peak_memory_bytes": pretrained_peak,
+        "arms": arm_results,
         "cache_acceptance": acceptance,
         "official_validation_role_read": False,
         "test_dev_role_read": False,
@@ -848,14 +880,14 @@ def run_worker(
     role: str,
     cache_root: Path,
     output: Path,
-    config: EdgeStateScaleConfig,
+    config: DistanceAngleScaleConfig,
     *,
     source_commit: str,
 ) -> dict:
     import torch
 
     config.validate()
-    if role not in {"scratch", "pretrained"}:
+    if role not in ARMS:
         raise ValueError(f"unsupported role: {role}")
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("SCNet worker requires exactly one visible DCU")
@@ -871,54 +903,36 @@ def run_worker(
     if manifest.get("format") != SUBSET_FORMAT or acceptance.get("accepted") is not True:
         raise RuntimeError("500K subset has not passed acceptance")
     set_seed(config.seed)
-    model = make_model(config)
+    model = make_model(role, config)
     params = sum(parameter.numel() for parameter in model.parameters())
-    if params != EXPECTED_PARAMETER_COUNT:
+    if params != EXPECTED_PARAMETER_COUNTS[role]:
         raise RuntimeError(
-            f"model parameter count changed: {params} != {EXPECTED_PARAMETER_COUNT}"
+            f"model parameter count changed: {params} != "
+            f"{EXPECTED_PARAMETER_COUNTS[role]}"
         )
     initial_hash = state_sha256(model)
     mean, std = _target_stats(cache_root, manifest)
     started = time.perf_counter()
-    pretraining = None
-    if role == "pretrained":
-        model, pretraining = _pretrain(
-            model, cache_root, manifest, config, output, initial_hash
-        )
-        model, gap = _train_gap(
-            model,
-            cache_root,
-            manifest,
-            config,
-            output,
-            role=role,
-            stage="finetune_gap",
-            epochs=config.finetune_epochs,
-            initial_hash=initial_hash,
-            mean=mean,
-            std=std,
-        )
-    else:
-        model, gap = _train_gap(
-            model,
-            cache_root,
-            manifest,
-            config,
-            output,
-            role=role,
-            stage="scratch_gap",
-            epochs=config.scratch_epochs,
-            initial_hash=initial_hash,
-            mean=mean,
-            std=std,
-        )
+    model, gap = _train_gap(
+        model,
+        cache_root,
+        manifest,
+        config,
+        output,
+        role=role,
+        stage="direct_gap",
+        epochs=config.epochs,
+        initial_hash=initial_hash,
+        mean=mean,
+        std=std,
+    )
     payload = {
         "format": RUN_FORMAT,
         "complete": True,
         "role": role,
         "source_commit": source_commit,
         "config": asdict(config),
-        "architecture": "OGB EdgeState GPS6 width304",
+        "architecture": role,
         "parameter_count": params,
         "initial_encoder_sha256": initial_hash,
         "cache_aggregate_sha256": manifest["aggregate_sha256"],
@@ -926,7 +940,6 @@ def run_worker(
         "development_rows": DEVELOPMENT_ROWS,
         "target_mean": mean,
         "target_std": std,
-        "pretraining": pretraining,
         "gap": gap,
         "elapsed_s": time.perf_counter() - started,
         "official_validation_role_read": False,
@@ -934,4 +947,100 @@ def run_worker(
     }
     atomic_json(output / "metrics.json", payload)
     atomic_json(completion_path, payload)
+    return payload
+
+
+def accept_pair(output_root: Path) -> dict:
+    """Mechanically accept both completed arms and recompute the paired delta."""
+    import torch
+
+    records = {}
+    for arm in ARMS:
+        arm_root = output_root / arm
+        completion_path = arm_root / "completion_manifest.json"
+        completion = json.loads(completion_path.read_text(encoding="utf-8"))
+        gap = completion.get("gap", {})
+        best_path = arm_root / "direct_gap_best.pt"
+        last_path = arm_root / "direct_gap_last.pt"
+        development_path = arm_root / "direct_gap_development.pt"
+        prediction_payload = _torch_load(development_path)
+        prediction = prediction_payload["prediction_eV"].view(-1).float()
+        target = prediction_payload["target_eV"].view(-1).float()
+        source_idx = prediction_payload["source_idx"].view(-1).long()
+        recomputed_mae = float((prediction - target).abs().mean())
+        checks = {
+            "complete": completion.get("complete") is True,
+            "format": completion.get("format") == RUN_FORMAT,
+            "role": completion.get("role") == arm,
+            "architecture": completion.get("architecture") == arm,
+            "parameter_count": completion.get("parameter_count")
+            == EXPECTED_PARAMETER_COUNTS[arm],
+            "train_rows": completion.get("train_rows") == TRAIN_ROWS,
+            "development_rows": completion.get("development_rows")
+            == DEVELOPMENT_ROWS,
+            "epochs": gap.get("epochs_completed") == 60,
+            "best_exists": best_path.is_file(),
+            "last_exists": last_path.is_file(),
+            "development_exists": development_path.is_file(),
+            "best_sha256": sha256_file(best_path) == gap.get("best_sha256"),
+            "last_sha256": sha256_file(last_path) == gap.get("last_sha256"),
+            "prediction_count": prediction.numel() == DEVELOPMENT_ROWS,
+            "target_count": target.numel() == DEVELOPMENT_ROWS,
+            "source_idx_count": source_idx.numel() == DEVELOPMENT_ROWS,
+            "source_idx_order": torch.equal(
+                source_idx, torch.arange(500_000, 550_000, dtype=torch.long)
+            ),
+            "finite_prediction": bool(torch.isfinite(prediction).all()),
+            "finite_target": bool(torch.isfinite(target).all()),
+            "mae_recomputed": math.isclose(
+                recomputed_mae,
+                float(gap.get("best_development_mae_eV", float("nan"))),
+                rel_tol=0.0,
+                abs_tol=1e-7,
+            ),
+            "official_validation_sealed": completion.get(
+                "official_validation_role_read"
+            )
+            is False,
+            "test_dev_sealed": completion.get("test_dev_role_read") is False,
+        }
+        records[arm] = {
+            "accepted": all(checks.values()),
+            "checks": checks,
+            "best_development_mae_eV": recomputed_mae,
+            "best_epoch": gap.get("best_epoch"),
+            "source_commit": completion.get("source_commit"),
+            "config": completion.get("config"),
+            "cache_aggregate_sha256": completion.get("cache_aggregate_sha256"),
+            "best_sha256": gap.get("best_sha256"),
+            "last_sha256": gap.get("last_sha256"),
+        }
+    baseline = records[BASELINE]
+    candidate = records[CANDIDATE]
+    paired_checks = {
+        "both_accepted": baseline["accepted"] and candidate["accepted"],
+        "same_source_commit": baseline["source_commit"]
+        == candidate["source_commit"],
+        "same_config": baseline["config"] == candidate["config"],
+        "same_cache": baseline["cache_aggregate_sha256"]
+        == candidate["cache_aggregate_sha256"],
+    }
+    delta = (
+        candidate["best_development_mae_eV"]
+        - baseline["best_development_mae_eV"]
+    )
+    payload = {
+        "format": "molgap-pcqm-distance-angle-500k-paired-acceptance-v1",
+        "accepted": all(paired_checks.values()),
+        "paired_checks": paired_checks,
+        "arms": records,
+        "candidate_minus_baseline_mae_eV": delta,
+        "nomination_threshold_eV": -0.001,
+        "nominated": all(paired_checks.values()) and delta <= -0.001,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+    }
+    atomic_json(output_root / "paired_acceptance.json", payload)
+    if not payload["accepted"]:
+        raise RuntimeError(f"paired result acceptance failed: {paired_checks}")
     return payload
