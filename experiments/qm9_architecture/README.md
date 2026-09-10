@@ -13,6 +13,16 @@ The SCNet Track C fragment-state question is frozen in
 builder, independent cache acceptance, and resumable trainer live in
 `src/molgap/qm9_fragment_state.py`.
 
+Two later SCNet seed-42 screens are also retained here as rejected mechanisms:
+
+- `results/charge_adapter_seed42/decision.md`: a train-standardized Gasteiger
+  charge adapter improved by only `0.0003185 eV`, below its frozen transfer gate.
+- `results/masked_charge_pretraining_seed42/decision.md`: masked atom, bond, and
+  charge reconstruction regressed against equal-exposure scratch training.
+
+Their runnable implementations and immutable remote provenance are preserved
+for audit only; neither experiment is eligible for PCQM transfer or scale-up.
+
 ## QM9
 
 `qm9_screen.py` predicts QM9 HOMO, LUMO, and Gap in eV on one deterministic
