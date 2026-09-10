@@ -79,6 +79,12 @@ accepted result and attribution are in
 `experiments/qm9_neural_atom_mixer/decision.md`. One of three post-cardinality
 scientific attempts is consumed; two remain, and each requires a fresh
 all-history audit before submission.
+The first post-failure audit selected a single-module Fourier-KAN edge-dynamics
+question. It keeps the efficient one-slot latent global skeleton as a matched
+control, changes only the persistent EdgeState update function, and retains a
+fresh full-GPS anchor in the same task. Its frozen scope is in
+`experiments/qm9_fourier_edge/protocol.md`; this is route 2/3 and has not yet
+been submitted.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.
