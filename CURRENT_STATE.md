@@ -17,6 +17,14 @@
 
 ## Active objective
 
+An isolated server-side GPTrans-T core transfer is queued on SCNet Kunshan at
+the user's request. Job `121691582` performs a worst-size physical-batch-128
+forward/backward preflight; dependent job `121691587` runs one 60-epoch,
+seed-42, 500K direct-Gap screen only if that gate passes. The immutable
+official-train-derived cache identity is reused, and official validation/test
+roles remain sealed. The frozen contract and launch identity are under
+`experiments/pcqm_gptrans_t_500k/`. This experiment does not modify production.
+
 Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under an explicit
 full-run compute budget; the default ceiling is 12 A100 hours. Official
 validation and test-dev stay outside server-side architecture discovery.

@@ -18,6 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-GPTRANS-T-500K | Run the explicitly authorized GPTrans-T core transfer on the accepted 500K/50K split | Worst-size batch-128 preflight and scratch60 finish; compare only with the matched ESGPS6-304 scratch arm, or close on terminal infrastructure failure |
 | P1 | C-FOURIER-EDGE | Run the frozen QM9 full-GPS/one-slot/Fourier-Edge comparison on Kaggle2 after static acceptance | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact function replacement |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |

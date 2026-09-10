@@ -1,0 +1,30 @@
+{
+  "format": "molgap-pcqm-gptrans-t-core-500k-launch-v1",
+  "launch_date": "2026-09-10",
+  "platform": "SCNet Kunshan BW-1",
+  "source_commit": "d5e9039",
+  "branch": "codex/scnet-gptrans-t-500k",
+  "remote_root_role": "dedicated account result root with accepted-cache link",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "parameter_count": 5246817,
+  "jobs": {
+    "largest_batch128_preflight": 121691582,
+    "scratch60": 121691587
+  },
+  "dependency_order": [
+    "largest_batch128_preflight",
+    "scratch60"
+  ],
+  "initial_state": {
+    "largest_batch128_preflight": "PENDING_PRIORITY",
+    "scratch60": "PENDING_DEPENDENCY"
+  },
+  "monitor_automation": "scnet-esgps6-304-500k-monitor",
+  "code_sha256": {
+    "gptrans.py": "76020400020a475c53cf3628a820b77bf49dc3b8df7dff9ad7506e594126778e",
+    "pcqm_gptrans_scale.py": "2a7aae732d10e2afd99cb02369fd6bdfd4a706065e849929dacbb8fd4324e404",
+    "pcqm_edgestate_scale.py": "bf3379de5400fb14563d3139751785abbea26bdb88a0b065db28605d696df25b",
+    "runner": "81175a0dfc89cfeefc0f642260b67c680b626c512bdf8f0c46d1f1ed259ec271",
+    "slurm": "34bd520822f7520d35578f4e5cd1d8f172a979385dc77150e41f08b862eadc4d"
+  }
+}
