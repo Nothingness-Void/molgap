@@ -38,6 +38,15 @@ def test_candidate_uses_unnormalized_same_support_sum():
     assert "nn.init.zeros_(self.output.weight)" in source
 
 
+def test_zero_return_preflight_allows_only_tight_cuda_roundoff():
+    source = MODULE.read_text(encoding="utf-8")
+    assert "torch.allclose(" in source
+    assert "zero_return_atol = 1e-7" in source
+    assert "zero_return_rtol = 1e-6" in source
+    assert '"zero_return_max_abs_difference"' in source
+    assert "torch.equal(output, baseline_output)" not in source
+
+
 def test_kernel_requests_t4x2_source_and_accepted_cache():
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
     assert metadata["id"] == "kaseichou/molgap-qm9-cardinality-channel-s42"
@@ -59,4 +68,3 @@ def test_protocol_excludes_desktop_and_privileged_inputs():
     assert "No held-out/test graph" in protocol
     assert "teacher distillation" in protocol
     assert "PCQM-100K" in protocol
-

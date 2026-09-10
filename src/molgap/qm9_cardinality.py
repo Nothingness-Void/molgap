@@ -233,8 +233,22 @@ def _preflight(roles, output_root: Path, *, source_commit: str) -> dict:
         elif initial_sha != candidate_initial_sha:
             raise RuntimeError("Candidate initialization changed between controls")
         output = forward_gap(model, batch, augmented=False)
-        if not torch.equal(output, baseline_output):
-            raise RuntimeError(f"Zero-return identity failed for {mode}")
+        # Separate CUDA forwards can differ by roundoff even when the added
+        # branch returns an exact zero.  Bitwise equality therefore tests the
+        # execution schedule, not the intended zero-return model invariant.
+        zero_return_atol = 1e-7
+        zero_return_rtol = 1e-6
+        max_abs_difference = float((output - baseline_output).abs().max().item())
+        if not torch.allclose(
+            output,
+            baseline_output,
+            atol=zero_return_atol,
+            rtol=zero_return_rtol,
+        ):
+            raise RuntimeError(
+                f"Zero-return identity failed for {mode}: "
+                f"max_abs_difference={max_abs_difference}"
+            )
         model.train()
         loss = forward_gap(model, batch, augmented=False).square().mean()
         loss.backward()
@@ -250,6 +264,9 @@ def _preflight(roles, output_root: Path, *, source_commit: str) -> dict:
             "shared_state_sha256": shared_sha,
             "initial_state_sha256": initial_sha,
             "zero_return_identity": True,
+            "zero_return_max_abs_difference": max_abs_difference,
+            "zero_return_atol": zero_return_atol,
+            "zero_return_rtol": zero_return_rtol,
             "finite_output_gradient": finite,
         }
         del model

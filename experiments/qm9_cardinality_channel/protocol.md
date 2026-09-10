@@ -35,8 +35,11 @@ and a parameter-matched support-size control?
 The K<=3 support is derived deterministically from the existing directed bond
 graph inside the forward pass. It is permutation invariant and imports no new
 feature or preprocessing cache. The shared return projection is zero-
-initialized, so both controls must exactly reproduce the baseline function at
-initialization while retaining a finite nonzero return gradient.
+initialized, so both controls must reproduce the baseline function at
+initialization within frozen FP32 CUDA tolerances (`atol=1e-7`, `rtol=1e-6`)
+while retaining a finite nonzero return gradient. The tolerance admits only
+execution-order roundoff between separate forwards; shared parameter hashes
+must still match exactly.
 
 ## Training and resource contract
 

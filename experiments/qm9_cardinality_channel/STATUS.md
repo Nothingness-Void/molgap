@@ -16,3 +16,8 @@
 - The terminal handoff was delivered once to coordinator
   `01a025a1-3b87-7781-8a91-f183193f7865`, and the completed heartbeat deleted
   itself. No candidate decision or transfer nomination was made.
+- The coordinator classified the failure as a CUDA numerical-preflight defect:
+  separate forwards were incorrectly required to be bitwise identical despite
+  exact shared-state hashes and a mathematically zero new return projection.
+  The repair changes only that check to frozen tight FP32 tolerances; it does
+  not change any scientific or training field.
