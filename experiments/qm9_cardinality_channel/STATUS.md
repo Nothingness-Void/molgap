@@ -8,9 +8,11 @@
   `kaseichou/molgap-qm9-cardinality-channel-source` reached `ready` with source
   commit `f40e26e525a12efb065b1c9074a381f68bf6f15f`.
 - Kaggle2 T4x2 kernel `kaseichou/molgap-qm9-cardinality-channel-s42`, version 1,
-  was submitted once and observed `RUNNING`. It is the only released task for
-  this protocol; see `results/gpu_seed42_launch.json`.
-- Persistent Luna Max heartbeat `molgap-qm9-cardinality-monitor` owns mechanical
-  polling in task `01a04479-ca44-7d31-95c4-6be485f256cc`; terminal evidence is
-  handed once to coordinator `01a025a1-3b87-7781-8a91-f183193f7865`, then the
-  heartbeat deletes itself.
+  ended before candidate training because its zero-return preflight required
+  bitwise equality across separate CUDA forwards. The baseline worker completed
+  40 epochs, but the paired screen is scientifically incomplete. See
+  `terminal_report.md`; the retrieved large artifacts remain in ignored platform
+  storage.
+- The terminal handoff was delivered once to coordinator
+  `01a025a1-3b87-7781-8a91-f183193f7865`, and the completed heartbeat deleted
+  itself. No candidate decision or transfer nomination was made.
