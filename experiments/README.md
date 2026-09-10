@@ -21,6 +21,7 @@ Track C.
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Open; Sparse Triangle plus distance-angle geometry is frozen as the comparator, and the smallest-ring hierarchy is the single active question | `pcqm_gap_architecture/` |
+| Does the published GPTrans-T propagation core beat the matched EdgeState bridge? | Open; isolated 500K seed-42 screen with official roles sealed | `pcqm_gptrans_t_500k/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |
