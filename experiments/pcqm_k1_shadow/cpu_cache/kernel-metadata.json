@@ -1,0 +1,18 @@
+{
+  "id": "kaseichou/molgap-pcqm-k1-shadow-cache",
+  "title": "MolGap PCQM K1 Shadow Cache",
+  "code_file": "run_cache.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "piero0/pcqm4mv2",
+    "kaseichou/molgap-pcqm-k1-shadow-source",
+    "kaseichou/molgap-pcqm-geometry-cache-s42-dataset"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
