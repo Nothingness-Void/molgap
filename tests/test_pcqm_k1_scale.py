@@ -1,8 +1,6 @@
-import json
-from pathlib import Path
-
 import numpy as np
 
+from molgap.pcqm_gap_data import fixed_screen_split
 from molgap.pcqm_k1_scale import (
     BASE_TRAIN_SHA256,
     SCALE_TRAIN_ROWS,
@@ -13,21 +11,9 @@ from molgap.pcqm_k1_scale import (
 from molgap.pcqm_shadow import SHADOW_SPLIT_SEED, frozen_shadow_split
 
 
-ROOT = Path(__file__).resolve().parents[1]
-BASE_SPLIT = (
-    ROOT
-    / "platforms"
-    / "_records"
-    / "kaggle"
-    / "training"
-    / "pcqm_gap100k_r1_prep_v2"
-    / "pcqm_gap100k_cache"
-    / "split.json"
-)
-
-
 def test_scale_split_preserves_roles_and_excludes_shadow():
-    base = json.loads(BASE_SPLIT.read_text(encoding="utf-8"))
+    base = fixed_screen_split()
+    base = {key: value.tolist() if isinstance(value, np.ndarray) else value for key, value in base.items()}
     used = set(base["train"]) | set(base["validation"])
     shadow = frozen_shadow_split(used)
     shadow_payload = {
@@ -55,7 +41,8 @@ def test_scale_split_preserves_roles_and_excludes_shadow():
 
 
 def test_scale_split_is_deterministic():
-    base = json.loads(BASE_SPLIT.read_text(encoding="utf-8"))
+    base = fixed_screen_split()
+    base = {key: value.tolist() if isinstance(value, np.ndarray) else value for key, value in base.items()}
     used = set(base["train"]) | set(base["validation"])
     shadow = frozen_shadow_split(used)
     shadow_payload = {
