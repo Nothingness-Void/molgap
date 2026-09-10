@@ -71,12 +71,14 @@ arm recovered most of the parameter-matched size-control regression but did not
 beat the fresh EdgeState GPS9 baseline, so the result does not justify a PCQM
 transfer. The accepted evidence and attribution are in
 `experiments/qm9_cardinality_channel/decision.md`.
-The next server-owned Track C question is a multi-slot Neural-Atom global mixer
-that replaces dense atom-to-atom attention while retaining the EdgeState local
-path. The frozen QM9 comparison and its causal one-slot control are in
-`experiments/qm9_neural_atom_mixer/protocol.md`. It is attempt 1 of at most 3
-new scientific routes authorized after the cardinality decision; infrastructure
-retries do not consume that budget.
+The multi-slot Neural-Atom global mixer completed and is closed. Replacing dense
+GPS attention with latent communication was smaller, faster, and directionally
+better, but four slots did not clear the material baseline gate and added less
+than known run variation over the parameter-identical one-slot control. The
+accepted result and attribution are in
+`experiments/qm9_neural_atom_mixer/decision.md`. One of three post-cardinality
+scientific attempts is consumed; two remain, and each requires a fresh
+all-history audit before submission.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.

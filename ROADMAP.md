@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-NEURAL-ATOM-MIXER | Run the frozen pure-2D QM9 EdgeState full-GPS/one-slot/four-slot global-communication comparison on Kaggle2 | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact mechanism |
+| P1 | C-NEXT-AUDIT | Select one materially different pure-2D route after the Neural-Atom failure attribution; freeze before submission | One causal hypothesis, one matched control, static acceptance, and a credible resource bound exist |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -60,6 +60,13 @@ replace dense atom-to-atom attention with a content-addressed multi-slot
 Neural-Atom communication bottleneck. Its evidence selection and frozen
 one-slot causal control are in `experiments/qm9_neural_atom_mixer/`.
 
+That comparison completed and is closed by its decision record. Latent
+replacement was efficient and directionally useful, but the four-slot arm
+missed the baseline gate and barely separated from one slot. Slot count,
+latent width, placement, seed, and schedule variants are therefore prohibited.
+Two post-cardinality scientific attempts remain; no next task is released until
+the new evidence audit names a distinct local or representational bottleneck.
+
 ## Bounded autonomous Track C window
 
 The user authorized the server coordinator on 2026-09-10 to continue the
@@ -68,8 +75,8 @@ bounded to one remote GPU task at a time and does not broaden any data,
 platform, seed, or scale boundary.
 
 After the accepted cardinality failure, the remaining autonomous discovery
-budget is exactly three new scientific routes. The Neural-Atom mixer is route
-1/3. A route consumes one attempt only when a mechanically accepted scientific
+budget is exactly three new scientific routes. The Neural-Atom mixer consumed
+route 1/3 and failed its frozen gate. A route consumes one attempt only when a mechanically accepted scientific
 result exists; unchanged-contract infrastructure repairs do not consume an
 attempt. Every scientific failure requires a written attribution and a fresh
 all-history evidence audit before one successor may be frozen. If three routes

@@ -1,0 +1,27 @@
+{
+  "format": "molgap-qm9-neural-atom-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-qm9-neural-atom-s42",
+  "kernel_version": 1,
+  "state": "COMPLETE",
+  "accepted": true,
+  "acceptance_status": "passed",
+  "output_root": "platforms/_records/kaggle/training/qm9_neural_atom_s42_v1/qm9_neural_atom_s42",
+  "source_commit": "f2d760b584023e53b3b77aef4d9348c21e6b36f4",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "launch_manifest_sha256": "c0b81e58c87ea11c7e226e97b4c58bcb3bb450c51a877a8cbbea33b1fcb01c72",
+  "acceptance_sha256": "ae2a204f3f6c76e69cf5c1dc56a761ca5bcabdd9e291327f2e9b2951522b24a5",
+  "validation_gap_mae_eV": {
+    "full_gps": 0.12945686280727386,
+    "neural_atom_k1": 0.12778982520103455,
+    "neural_atom_k4": 0.1274414211511612
+  },
+  "candidate_gain_vs_baseline_eV": 0.002015441656112671,
+  "candidate_gain_vs_one_slot_eV": 0.00034840404987335205,
+  "candidate_epoch_time_ratio": 0.8310726663757944,
+  "pcqm_transfer_nominated": false,
+  "model_inference_executed_by_acceptance": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "local_model_execution": false,
+  "sent_once": true
+}
