@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-gap100k-fourier-edge-launch-v1",
+  "launched_at": "2026-09-10T18:56:37.0511645+09:00",
+  "platform": "kaggle2",
+  "kernel": "kaseichou/molgap-pcqm-fourier-edge-s42",
+  "kernel_version": 1,
+  "source_dataset": "kaseichou/molgap-pcqm-fourier-edge-source",
+  "source_commit": "47f99cf9da7fee306f5165175b4020c6c4aa9fb3",
+  "geometry_cache_dataset": "kaseichou/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "initial_status": "RUNNING",
+  "accelerator": "NvidiaTeslaT4x2",
+  "physical_batch_per_device": 128,
+  "submission_count": 1,
+  "monitor_automation_id": "molgap-pcqm-fourier-edge-monitor",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "coordinator_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "shadow_audit_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
