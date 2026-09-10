@@ -1,0 +1,24 @@
+{
+  "format": "molgap-qm9-charge-adapter-scnet-launch-v1",
+  "submitted_at_jst": "2026-09-10",
+  "platform": "SCNet Kunshan",
+  "source_commit": "54ec2f43b9294e06a1a74ba133ceae93366e5e55",
+  "runtime_archive_sha256": "60ec8b03a92e7342f58055e8ae65a5fa11ae7477d5195b38bc5c3c2b8342156e",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-charge-adapter-54ec2f4",
+  "jobs": {
+    "cache_and_acceptance": "121564696",
+    "batch128_preflight": "121564724",
+    "paired_training": "121564731"
+  },
+  "dependencies": {
+    "batch128_preflight": "afterok:121564696",
+    "paired_training": "afterok:121564724"
+  },
+  "initial_scheduler_state": {
+    "121564696": "PENDING_PRIORITY",
+    "121564724": "PENDING_DEPENDENCY",
+    "121564731": "PENDING_DEPENDENCY"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

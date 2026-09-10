@@ -1,0 +1,44 @@
+{
+  "format": "molgap-qm9-masked-charge-pretraining-terminal-acceptance-v1",
+  "accepted": true,
+  "accepted_at_jst": "2026-09-10",
+  "source_commit": "c2934474dfe741879acb778426148c5ed74c2136",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-masked-charge-pretrain-c293447",
+  "jobs": {
+    "preflight": {
+      "id": "121571135",
+      "state": "COMPLETED",
+      "elapsed": "00:03:36",
+      "exit_code": "0:0"
+    },
+    "equal_exposure_training": {
+      "id": "121571142",
+      "state": "COMPLETED",
+      "elapsed": "01:29:35",
+      "exit_code": "0:0"
+    }
+  },
+  "mechanical_checks": {
+    "physical_batch_per_device": 128,
+    "preflight_finite_forward_backward": true,
+    "completion_manifest_artifact_count": 11,
+    "completion_manifest_hash_mismatches": 0,
+    "all_metrics_finite": true,
+    "stderr_files_empty": true,
+    "official_pcqm_roles_read": false,
+    "test_role_read": false
+  },
+  "metrics": {
+    "scratch60_validation_gap_mae_eV": 0.12460874766111374,
+    "masked20_gap40_validation_gap_mae_eV": 0.12468582391738892,
+    "candidate_gain_eV": -0.000077076256275177,
+    "required_gain_eV": 0.001,
+    "pcqm_transfer_nominated": false
+  },
+  "retrieved_artifact_sha256": {
+    "scnet_c293447/preflight.json": "0c1b981ea2725e79e0256d0985c278f91fff923926735d408ea01d440cc5a09d",
+    "scnet_c293447/metrics.json": "be9cc8cfcb84ae5a2b520e53faa86865061332a09efa3d9c3be465b5acda6c2b",
+    "scnet_c293447/completion_manifest.json": "58b055d7adae702beb049883f9f7def8035bfa25dc752336d84f9db6a22d1b62"
+  },
+  "scientific_decision": "REJECTED_NO_EQUAL_EXPOSURE_GAIN"
+}

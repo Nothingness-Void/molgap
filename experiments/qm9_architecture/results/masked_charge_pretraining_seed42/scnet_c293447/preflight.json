@@ -1,0 +1,22 @@
+{
+  "format": "molgap-qm9-masked-charge-pretraining-preflight-v1",
+  "accepted": true,
+  "source_commit": "c2934474dfe741879acb778426148c5ed74c2136",
+  "cache_aggregate_sha256": "e27fdec236faad8c42b6c893483eb68a810eb7f7bf06c8efd28dcbb44999ff15",
+  "parent_metrics_sha256": "ce4231f83f7ca90acf4f364462cfdad2875b25bc8c11b0b0947cd07fe6f614c0",
+  "parent_candidate_gain_eV": 0.00031851232051849365,
+  "physical_batch_per_device": 128,
+  "model_parameters": 4774193,
+  "auxiliary_parameters": 35069,
+  "finite_forward_backward": true,
+  "loss": 3.9610557556152344,
+  "loss_parts": {
+    "atom": 2.314236640930176,
+    "bond": 1.359930396080017,
+    "charge": 0.573777437210083
+  },
+  "peak_memory_mib": 321.10791015625,
+  "gpu": "Device 66a1",
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

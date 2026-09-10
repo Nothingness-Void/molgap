@@ -1,0 +1,112 @@
+{
+  "format": "molgap-qm9-charge-adapter-screen-v2",
+  "complete": true,
+  "source_commit": "b6830e74b844bb81ec16ef96921ede4a941e709d",
+  "cache_aggregate_sha256": "e27fdec236faad8c42b6c893483eb68a810eb7f7bf06c8efd28dcbb44999ff15",
+  "split_fingerprint": "0b8f42df023bd401",
+  "seed": 42,
+  "gpu": "Device 66a1",
+  "architecture": "ogb_edgestate_gps9_plus_zero_start_charge_adapter",
+  "charge_algorithm": "rdkit-gasteiger-atom-hydrogen-niter12-v1",
+  "training_contract": {
+    "train_rows": 30000,
+    "validation_rows": 3000,
+    "epochs": 40,
+    "patience": 8,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "learning_rate": 0.0004,
+    "weight_decay": 1e-05,
+    "scheduler": "cosine-eta1e-6",
+    "gradient_clip_norm": 1.0
+  },
+  "comparability": {
+    "policy": "molgap-screen-comparability-v3",
+    "arm_count": 2,
+    "shared": {
+      "task_id": "qm9-charge-adapter-s42-v2",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "cosine40-eta1e-6-patience8",
+      "sample_exposure": "qm9-train30000-gap40"
+    },
+    "resource": {
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1,
+      "effective_batch_per_optimizer_step": 128
+    }
+  },
+  "arm_contracts": [
+    {
+      "arm": "control",
+      "task_id": "qm9-charge-adapter-s42-v2",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "cosine40-eta1e-6-patience8",
+      "sample_exposure": "qm9-train30000-gap40",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1
+    },
+    {
+      "arm": "charge_adapter",
+      "task_id": "qm9-charge-adapter-s42-v2",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "cosine40-eta1e-6-patience8",
+      "sample_exposure": "qm9-train30000-gap40",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1
+    }
+  ],
+  "results": {
+    "control": {
+      "best_epoch": 38,
+      "validation_gap_mae_eV": 0.12788961827754974,
+      "epochs_completed": 40,
+      "mean_epoch_seconds": 39.36545716207475,
+      "model_sha256": "4202cb3860ead878dd8d4df22f9bb383174e23bd576d531fd982d1e81746d9ba",
+      "payload_sha256": "8876a7df0c9da73c05e45d0224f91352f208d76c80fee449acdf965746da31d8",
+      "checkpoint_sha256": "1760c210b51dfcde796402fa8fbfda5513ee812cf32c5a25422de8bdf3d41813"
+    },
+    "charge_adapter": {
+      "best_epoch": 35,
+      "validation_gap_mae_eV": 0.12757110595703125,
+      "epochs_completed": 40,
+      "mean_epoch_seconds": 41.344230371713635,
+      "model_sha256": "e16fb231a6186ca1a181e7bfe771e43dd1824d7face3b4470ca908b0f994b2cc",
+      "payload_sha256": "18b919f8095f00a70cbf27466957d671229de908b83beea2f4c9e8996b01ec81",
+      "checkpoint_sha256": "44b68c8d1be9774c8bdae6bfb4fd1e998da2b79a7373ab6ff76b0938361fb833"
+    }
+  },
+  "candidate_gain_eV": 0.00031851232051849365,
+  "required_gain_eV": 0.001,
+  "pcqm_transfer_nominated": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "artifact_sha256": {
+    "charge_adapter/best_model.pt": "e16fb231a6186ca1a181e7bfe771e43dd1824d7face3b4470ca908b0f994b2cc",
+    "charge_adapter/best_validation_payload.pt": "18b919f8095f00a70cbf27466957d671229de908b83beea2f4c9e8996b01ec81",
+    "charge_adapter/last_checkpoint.pt": "44b68c8d1be9774c8bdae6bfb4fd1e998da2b79a7373ab6ff76b0938361fb833",
+    "charge_adapter/trace.json": "a1f51d91bdfd82f5b1290e07d01c566727c659e121d5c156a0a58c9f49d609b4",
+    "control/best_model.pt": "4202cb3860ead878dd8d4df22f9bb383174e23bd576d531fd982d1e81746d9ba",
+    "control/best_validation_payload.pt": "8876a7df0c9da73c05e45d0224f91352f208d76c80fee449acdf965746da31d8",
+    "control/last_checkpoint.pt": "1760c210b51dfcde796402fa8fbfda5513ee812cf32c5a25422de8bdf3d41813",
+    "control/trace.json": "6a959f0a7598b6121d9b0d91b94e43d187b2c09f3601c170f0f1aadd5466e801",
+    "metrics.json": "ce4231f83f7ca90acf4f364462cfdad2875b25bc8c11b0b0947cd07fe6f614c0"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "format": "molgap-qm9-charge-adapter-scnet-relaunch-v2",
+  "relaunch_at_jst": "2026-09-10",
+  "prior_attempt": {
+    "preflight_job": "121567627",
+    "state": "FAILED",
+    "elapsed": "00:02:34",
+    "adapter_output_exact_zero": true,
+    "prediction_max_abs_diff_standardized": 0.001544952392578125,
+    "target_std_eV": 1.282490015,
+    "prediction_max_abs_diff_eV": 0.001981386,
+    "diagnosis": "adapter-free control and zero-add candidate used different DCU compute graphs",
+    "paired_training_job": "121567636",
+    "paired_training_state": "CANCELLED_BY_DEPENDENCY_WITHOUT_START"
+  },
+  "repair": {
+    "source_commit": "b6830e74b844bb81ec16ef96921ede4a941e709d",
+    "runtime_archive_sha256": "27b45d8e50cc9dbb7660a5ca8d821e0e8a1b470df4504bdfef1e20e091f74e76",
+    "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-charge-adapter-b6830e7",
+    "control": "identical_compute_frozen_zero_charge_adapter",
+    "candidate": "identical_compute_trainable_zero_charge_adapter",
+    "screen_format": "molgap-qm9-charge-adapter-screen-v2",
+    "preflight_format": "molgap-qm9-charge-adapter-dcu-preflight-v2",
+    "accepted_cache_reused_read_only": true,
+    "cache_manifest_sha256": "438ecd6f0ace4b403e417360fe12194ddd7a41d404fa956d75a38188906db86f",
+    "cache_acceptance_sha256": "49e2626df6f122c9ebfec45d580dcb6272f4ebcff77ae7269799a3a51fd96291"
+  },
+  "jobs": {
+    "batch128_preflight": "121571122",
+    "paired_training": "121571128"
+  },
+  "dependencies": {
+    "paired_training": "afterok:121571122"
+  },
+  "initial_scheduler_state": {
+    "121571122": "PENDING_PRIORITY",
+    "121571128": "PENDING_DEPENDENCY"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

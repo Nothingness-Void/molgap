@@ -1,0 +1,113 @@
+{
+  "format": "molgap-qm9-masked-charge-pretraining-screen-v1",
+  "complete": true,
+  "source_commit": "c2934474dfe741879acb778426148c5ed74c2136",
+  "cache_aggregate_sha256": "e27fdec236faad8c42b6c893483eb68a810eb7f7bf06c8efd28dcbb44999ff15",
+  "parent_charge_screen": {
+    "sha256": "ce4231f83f7ca90acf4f364462cfdad2875b25bc8c11b0b0947cd07fe6f614c0",
+    "candidate_gain_eV": 0.00031851232051849365,
+    "nominated": false
+  },
+  "split_fingerprint": "0b8f42df023bd401",
+  "seed": 42,
+  "gpu": "Device 66a1",
+  "training_contract": {
+    "control_gap_epochs": 60,
+    "candidate_pretrain_epochs": 20,
+    "candidate_gap_epochs": 40,
+    "mask_rate": 0.15,
+    "masked_targets": [
+      "atom_categories",
+      "bond_categories",
+      "gasteiger_charge"
+    ],
+    "physical_batch_per_device": 128,
+    "total_encoder_exposure_epochs_per_arm": 60
+  },
+  "comparability": {
+    "policy": "molgap-screen-comparability-v3",
+    "arm_count": 2,
+    "shared": {
+      "task_id": "qm9-masked-charge-pretraining-s42-v1",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "equal-encoder-exposure60",
+      "sample_exposure": "qm9-train30000-encoder60"
+    },
+    "resource": {
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1,
+      "effective_batch_per_optimizer_step": 128
+    }
+  },
+  "arm_contracts": [
+    {
+      "arm": "scratch60",
+      "task_id": "qm9-masked-charge-pretraining-s42-v1",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "equal-encoder-exposure60",
+      "sample_exposure": "qm9-train30000-encoder60",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1
+    },
+    {
+      "arm": "masked20_gap40",
+      "task_id": "qm9-masked-charge-pretraining-s42-v1",
+      "platform_id": "scnet-kunshan",
+      "accelerator": "Device 66a1",
+      "data_role_fingerprint": "0b8f42df023bd401",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "equal-encoder-exposure60",
+      "sample_exposure": "qm9-train30000-encoder60",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1
+    }
+  ],
+  "results": {
+    "scratch60": {
+      "best_epoch": 54,
+      "validation_gap_mae_eV": 0.12460874766111374,
+      "epochs_completed": 60,
+      "mean_epoch_seconds": 45.54619069956243,
+      "model_sha256": "8362981059d28b6aacdfb8c91112a051bd0e069c155f8f8ed0bdc3829d29319a",
+      "payload_sha256": "160f1a89e2cbf6c3be6812c44d95764dda603881fd178914f2dd0b1b53db3001",
+      "checkpoint_sha256": "f61add34f07d71a3d4e905d348021066bfb0b861671e8c7abfc796a860f9930b"
+    },
+    "masked20_gap40": {
+      "pretraining": {
+        "epochs_completed": 20,
+        "mean_epoch_seconds": 43.98488768879324,
+        "auxiliary_parameters": 35069,
+        "checkpoint_sha256": "bcd33f58cccf9e998af8a66eb953c915ffd29fa24521496a265b94b9d9c84d1f"
+      },
+      "finetuning": {
+        "best_epoch": 38,
+        "validation_gap_mae_eV": 0.12468582391738892,
+        "epochs_completed": 40,
+        "mean_epoch_seconds": 39.57454392202199,
+        "model_sha256": "b072fe324b90c6cce4b27c852e5ae164e02f4b6c2a25c891631fe20a2fbbdcfb",
+        "payload_sha256": "54a1e4e74fbc68b53f54e96caa971af03c67431cdf02bd3b9d90674299f4d376",
+        "checkpoint_sha256": "5a53ca6d26d7703674bda26a68def5c3e53642d1623c43ef273eaf452c0457bb"
+      }
+    }
+  },
+  "candidate_gain_eV": -7.7076256275177e-05,
+  "required_gain_eV": 0.001,
+  "pcqm_transfer_nominated": false,
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

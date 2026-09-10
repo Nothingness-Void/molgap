@@ -1,0 +1,44 @@
+{
+  "format": "molgap-qm9-charge-adapter-dcu-preflight-v2",
+  "accepted": true,
+  "source_commit": "b6830e74b844bb81ec16ef96921ede4a941e709d",
+  "cache_aggregate_sha256": "e27fdec236faad8c42b6c893483eb68a810eb7f7bf06c8efd28dcbb44999ff15",
+  "split_fingerprint": "0b8f42df023bd401",
+  "architecture": "ogb_edgestate_gps9_plus_zero_start_charge_adapter",
+  "control": "identical_compute_frozen_zero_charge_adapter",
+  "charge_algorithm": "rdkit-gasteiger-atom-hydrogen-niter12-v1",
+  "physical_batch_per_device": 128,
+  "device_count": 1,
+  "gpu": "Device 66a1",
+  "shared_initialization_exact": true,
+  "adapter_output_exact_zero": true,
+  "zero_start_prediction_close_diagnostic": false,
+  "zero_start_prediction_atol": 1e-06,
+  "zero_start_prediction_max_abs_diff": 0.002208709716796875,
+  "arms": {
+    "frozen_zero_adapter_control": {
+      "parameters": 4774193,
+      "prediction_shape": [
+        128
+      ],
+      "loss": 6.799067497253418,
+      "finite_forward_backward": true,
+      "peak_memory_mib": 338.87744140625,
+      "initial_state_sha256": "da848e2160c8a355dd1d78df015f851a6bffde3a895ddd22247eee5503ac456b",
+      "shared_state_sha256": "5a805e294c122fec539cad2df45bb2b31a54421b53ad7ef2686043b97232c9c9"
+    },
+    "charge_adapter": {
+      "parameters": 4774193,
+      "prediction_shape": [
+        128
+      ],
+      "loss": 6.7986555099487305,
+      "finite_forward_backward": true,
+      "peak_memory_mib": 357.26806640625,
+      "initial_state_sha256": "e3437a0e204e6e3ca62b451e3c0563b4dd6417551df5f6fe57271b33ee0e58b4",
+      "shared_state_sha256": "8d3c45b2e130a1912e9a595d0c432837d1d982667e64d7f3d8bf6b4df2c210c8"
+    }
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}

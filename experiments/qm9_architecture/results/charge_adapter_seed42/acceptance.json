@@ -1,0 +1,45 @@
+{
+  "format": "molgap-qm9-charge-adapter-terminal-acceptance-v1",
+  "accepted": true,
+  "accepted_at_jst": "2026-09-10",
+  "source_commit": "b6830e74b844bb81ec16ef96921ede4a941e709d",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-charge-adapter-b6830e7",
+  "jobs": {
+    "preflight": {
+      "id": "121571122",
+      "state": "COMPLETED",
+      "elapsed": "00:02:09",
+      "exit_code": "0:0"
+    },
+    "paired_training": {
+      "id": "121571128",
+      "state": "COMPLETED",
+      "elapsed": "00:56:02",
+      "exit_code": "0:0"
+    }
+  },
+  "mechanical_checks": {
+    "physical_batch_per_device": 128,
+    "preflight_finite_forward_backward": true,
+    "adapter_output_exact_zero": true,
+    "completion_manifest_artifact_count": 9,
+    "completion_manifest_hash_mismatches": 0,
+    "all_metrics_finite": true,
+    "stderr_files_empty": true,
+    "official_pcqm_roles_read": false,
+    "test_role_read": false
+  },
+  "metrics": {
+    "control_validation_gap_mae_eV": 0.12788961827754974,
+    "charge_adapter_validation_gap_mae_eV": 0.12757110595703125,
+    "candidate_gain_eV": 0.00031851232051849365,
+    "required_gain_eV": 0.001,
+    "pcqm_transfer_nominated": false
+  },
+  "retrieved_artifact_sha256": {
+    "scnet_b6830e7/preflight.json": "21ae20e8df0732d38cd6649770b1dc5cfb623bf0c3d94f8d7c629cdf09058d36",
+    "scnet_b6830e7/metrics.json": "ce4231f83f7ca90acf4f364462cfdad2875b25bc8c11b0b0947cd07fe6f614c0",
+    "scnet_b6830e7/completion_manifest.json": "aa8a2b1ac504cf1d90dcb98e49dbd123c689fe5b61ae38dac70ed029ad01a2c6"
+  },
+  "scientific_decision": "REJECTED_BELOW_FROZEN_GAIN_GATE"
+}

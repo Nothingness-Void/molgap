@@ -1,0 +1,31 @@
+{
+  "format": "molgap-qm9-charge-adapter-scnet-relaunch-v1",
+  "relaunch_at_jst": "2026-09-10",
+  "infrastructure_diagnosis": {
+    "failed_preflight_job": "121564724",
+    "failure": "bitwise torch.equal rejected a harmless DCU zero-add rounding difference",
+    "cache_job": "121564696",
+    "cache_state": "COMPLETED_AND_ACCEPTED",
+    "training_job": "121564731",
+    "training_state": "CANCELLED_BY_DEPENDENCY_WITHOUT_START"
+  },
+  "repair": {
+    "source_commit": "20fcd1e4dbe23b0840adff59cb1f05f56fc7a3b4",
+    "runtime_archive_sha256": "91d8e997e08b3d14f29d1150a94319326d69b1e5dc0449305002de549e3c26b3",
+    "remote_root": "/public/home/scnaqkfcy3/molgap-results/trackc-qm9-charge-adapter-20fcd1e",
+    "adapter_output_requirement": "bitwise_zero",
+    "shared_parameter_requirement": "bitwise_equal",
+    "prediction_equivalence_atol": 1e-6,
+    "scientific_contract_changed": false,
+    "accepted_cache_reused_read_only": true
+  },
+  "jobs": {
+    "batch128_preflight": "121567627",
+    "paired_training": "121567636"
+  },
+  "dependencies": {
+    "paired_training": "afterok:121567627"
+  },
+  "official_pcqm_roles_read": false,
+  "test_role_read": false
+}
