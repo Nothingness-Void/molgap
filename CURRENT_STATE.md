@@ -156,9 +156,10 @@ The single authority is `experiments/SCREENING_POLICY.md`.
   registry. Official validation/test-dev and future sealed data are locked.
 - The database contracts are unchanged: Track B remains on the official
   PCQM4Mv2 data, and Track A remains on the existing repaired-2M PubChemQC
-  corpus. External databases and public datasets are reference, audit, or
-  separately labeled OOD/teacher material only; they are not replacements or
-  silent training augmentation.
+  corpus. External databases and public datasets are reference or separately
+  labeled OOD material only; they are not replacements or silent training
+  augmentation. Privileged-geometry teachers and teacher distillation are
+  excluded from the OGB leaderboard line.
 - Train and inference geometry must use the same ETKDG construction.
 - Every new remote run needs a protocol, immutable cache acceptance, atomic
   checkpointing, independently retrievable outputs, and a dated decision.

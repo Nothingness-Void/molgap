@@ -89,9 +89,10 @@ work belongs to desktop and is ignored here.
   common/OOD/P8-hard, the shadow role, or sealed official roles.
 - Keep the main databases unchanged: Track B stays on PCQM4Mv2 and Track A
   stays on the existing repaired-2M PubChemQC corpus. External datasets may
-  support an explicitly labeled audit, OOD evaluation, or separately approved
-  teacher route, but may not replace or silently augment the main training
-  database.
+  support an explicitly labeled audit or OOD evaluation, but may not replace
+  or silently augment the main training database. Privileged geometry,
+  teacher models, and teacher distillation are prohibited for the OGB
+  leaderboard line.
 - The server discovery agent does not launch full-scale training. A strong
   Track B transfer is handed to desktop for a separate budget decision; any
   later molecular-research-server access remains restricted to
@@ -119,8 +120,7 @@ work belongs to desktop and is ignored here.
 | Sparse non-covalent ContactState | Closed at seed 42 | Do not retry cutoff, width, depth, seed, or optimizer variants |
 | Compact Cartesian invariant body-order basis | Closed at seed 42 | Do not retry width, radial count, seed, optimizer, or schedule variants |
 | PairGPS2D sealed-test disposition | Explicit authorization | Establish arithmetic equivalence before any benchmark-selected precision claim |
-| Conformer ensemble or NNP geometry | Accepted evidence identifies geometry as the limiting factor | Compare one frozen alternative geometry source as an input/teacher experiment |
-| Geometry denoising teacher | Architecture is selected and receives a separate budget | Use the literature configuration while official roles remain sealed |
+| Alternative deployment-time geometry | A rule-compliant source available identically at training and inference is approved | Compare one frozen source without privileged teachers or sealed-role geometry |
 | Local hierarchical pretraining beyond MolCHG-lite | MolCHG-lite transfers through PCQM-100K | Change one supervision level at a time with equal-compute scratch |
 | Solid-state Delta head | A separate target is requested | Create an isolated target contract |
 | Paper figures/write-up | Academic delivery is requested | Derive figures only from accepted decision records |
