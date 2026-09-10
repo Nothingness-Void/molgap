@@ -53,6 +53,8 @@ def test_predictions_are_frozen_before_label_access():
     assert "graph.row_id = graph.row_index" in source
     assert "batch.row_id" in source
     assert "batch.row_index" not in source
+    assert 'if "y" in graph:' in source
+    assert 'hasattr(graph, "y")' not in source
 
 
 def test_gpu_kernel_uses_only_frozen_inputs():

@@ -97,7 +97,10 @@ def load_shadow_graphs() -> tuple[list, dict]:
         if len(payload) != int(shard["graph_count"]):
             raise RuntimeError(f"Shadow shard count changed: {path.name}")
         for graph in payload:
-            if hasattr(graph, "y"):
+            # ``torch_geometric.data.Data.__getattr__`` returns ``None`` for a
+            # missing store key, so Python's ``hasattr`` is not a valid
+            # membership test here.
+            if "y" in graph:
                 raise RuntimeError("Shadow graph unexpectedly contains labels")
             # PyG increments attributes whose names contain ``index`` during
             # batching.  Preserve the immutable CSV identity under a neutral
