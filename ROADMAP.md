@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-EDGESTATE304-500K | Run the newly authorized paired Kunshan scratch60 vs relation20+Gap40 test at batch 128 | Both arms complete from one accepted cache, or terminal infrastructure failure is diagnosed; report paired delta without opening official roles |
+| P0 | B-ESGPS6-304-500K | Run the compute-matched paired Kunshan scratch60 vs relation20+Gap40 test at batch 128 | Both arms complete from one accepted cache, or terminal infrastructure failure is diagnosed; report paired delta without opening official roles |
 | P1 | C-EVIDENCE-REVIEW | Re-rank only untested mechanisms after the adaptive-denoising closure; SCNet work remains out of scope | One evidence-selected question and frozen protocol, or an explicit stop decision |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |

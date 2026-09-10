@@ -17,12 +17,13 @@
 
 ## Active objective
 
-The user authorized one isolated SCNet scale/pretraining interaction test on
-2026-09-10: EdgeState GPS9 width 304 on 500K official-train-derived molecules,
-comparing scratch60 against local-relation pretrain20 plus Gap40 at exact batch
-128 and equal encoder exposure. Its frozen contract is
-`experiments/pcqm_edgestate304_500k/protocol.md`. This does not reopen the
-closed 100K allocation search and cannot by itself establish a width effect.
+The user replaced the EdgeState GPS9 width-304 run after one epoch because its
+single-DCU cost was too high. Its checkpoints and cancellation record remain
+under `experiments/pcqm_edgestate304_500k/`. The active replacement is a
+compute-matched EdgeState GPS6 width-304 paired SCNet test on 500K
+official-train-derived molecules: scratch60 versus local-relation pretrain20
+plus Gap40, exact batch 128 and equal encoder exposure. Its frozen contract is
+`experiments/pcqm_esgps6_304_500k/protocol.md`.
 
 Track B selects one Gap-only PCQM4Mv2 leaderboard specialist under an explicit
 full-run compute budget; the default ceiling is 12 A100 hours. Official

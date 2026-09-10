@@ -30,5 +30,14 @@
     "official_validation_role_read": false,
     "test_dev_role_read": false
   },
-  "monitor_automation": "scnet-edgestate304-500k-monitor"
+  "training_disposition": {
+    "state": "CANCELLED_BY_USER",
+    "reason": "Replaced by the compute-matched ESGPS6-304 screen",
+    "scratch_epochs_completed": 1,
+    "pretraining_epochs_completed": 1,
+    "scratch_job_state": "CANCELLED",
+    "pretrained_job_state": "CANCELLED",
+    "artifacts_preserved": true
+  },
+  "monitor_automation": "deleted_after_cancellation"
 }
