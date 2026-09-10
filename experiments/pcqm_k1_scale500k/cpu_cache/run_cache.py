@@ -19,10 +19,18 @@ def find_one(pattern: str) -> Path:
 def main() -> None:
     started = time.perf_counter()
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"])
-    archive = find_one("src.zip")
-    source = Path("/kaggle/working/_source")
-    shutil.unpack_archive(archive, source)
-    sys.path.insert(0, str(source / "src"))
+    modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_k1_scale_cache.py"))
+    if len(modules) == 1:
+        python_root = modules[0].parents[1]
+    else:
+        archive = find_one("src.zip")
+        source = Path("/kaggle/working/_source")
+        shutil.unpack_archive(archive, source)
+        modules = list(source.rglob("molgap/pcqm_k1_scale_cache.py"))
+        if len(modules) != 1:
+            raise FileNotFoundError(f"Unexpected source layout: {modules}")
+        python_root = modules[0].parents[1]
+    sys.path.insert(0, str(python_root))
     commit = find_one("SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
     from molgap.pcqm_k1_scale_cache import build_scale_cache
 
