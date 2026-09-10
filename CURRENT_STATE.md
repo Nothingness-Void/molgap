@@ -66,6 +66,12 @@ The matched QM9 adaptive local-denoising screen completed and is closed. Its
 adaptive arm was numerically best but missed both frozen material-effect gates;
 no PCQM transfer or extra seed is authorized. The accepted comparison and
 attribution are in `experiments/qm9_adaptive_denoising/decision.md`.
+The next server-owned Track C question is the pure-2D cardinality-preserving
+channel screen frozen in `experiments/qm9_cardinality_channel/protocol.md`.
+It retains EdgeState GPS9 and compares a shared K<=3 unnormalized source-value
+sum against both a fresh baseline and an explicit support-size control. It is
+independent of the desktop 304-wide/pretraining/full-scale work reported by the
+user; those in-progress results do not alter the accepted incumbent yet.
 SCNet and Fragment-State work are desktop-owned and are excluded from this
 server queue.
 The locally attached atom/bond/functional-group reconstruction question is now

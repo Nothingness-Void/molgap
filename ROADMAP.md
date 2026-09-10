@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-EVIDENCE-REVIEW | Re-rank only untested mechanisms after the adaptive-denoising closure; SCNet work remains out of scope | One evidence-selected question and frozen protocol, or an explicit stop decision |
+| P1 | C-CARDINALITY-CHANNEL | Run the frozen pure-2D QM9 EdgeState GPS9 baseline/size-control/CPA comparison on Kaggle2 | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact mechanism |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -48,6 +48,12 @@ missed both frozen promotion margins, so it receives no PCQM transfer, another
 seed, or noise-parameter variant. Any further Track C admission requires a new
 evidence review and a materially different mechanism. SCNet/Fragment-State
 work belongs to desktop and is ignored here.
+
+That evidence review selected the cardinality-preserving channel in
+`experiments/qm9_cardinality_channel/evidence_selection.md`. Its adjacent
+protocol freezes one pure-2D EdgeState GPS9 question, a same-support size
+control, and a fresh comparator. Desktop width/pretraining/full-scale work is
+not a control and cannot change this screen.
 
 ## Mandatory gates
 
