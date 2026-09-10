@@ -21,3 +21,7 @@
   exact shared-state hashes and a mathematically zero new return projection.
   The repair changes only that check to frozen tight FP32 tolerances; it does
   not change any scientific or training field.
+- The repaired source commit
+  `db0c458e1f2ca3df6f077547cc1fc8b07f8937a1` passed 22 static contract tests.
+  Source dataset version 2 reached `ready`; kernel version 2 was submitted once
+  and observed `RUNNING`. See `results/gpu_seed42_v2_launch.json`.
