@@ -30,6 +30,7 @@ Track C.
 | Did K1 survive a fixed 500K scale bridge? | Yes under its paired-v3 contract | `pcqm_k1_scale500k/` |
 | Did K1 pass its once-read shadow audit? | Yes; role consumed | `pcqm_k1_shadow/` |
 | Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
+| Did the adapted GPTrans-T propagation core pass its historical 500K bridge? | Yes as pre-V4 context; it is not a reusable V4 reference | `pcqm_gptrans_t_500k/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |
