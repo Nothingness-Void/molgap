@@ -42,3 +42,7 @@
   and observed `QUEUED`. See `results/gpu_seed42_v3_launch.json`.
 - Persistent Luna Max heartbeat `molgap-qm9-cardinality-v3-monitor` owns only
   version-3 mechanical polling and will terminate after one terminal handoff.
+- Kernel version 3 completed all three arms and passed no-model acceptance.
+  CPA scored `0.1282242239 eV`, versus `0.1280647814 eV` for the fresh baseline
+  and `0.1289295703 eV` for the size control. It missed both material-effect
+  gates and was closed without PCQM transfer; `decision.md` owns the conclusion.
