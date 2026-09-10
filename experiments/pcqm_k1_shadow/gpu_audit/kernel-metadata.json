@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-pcqm-k1-shadow-audit",
+  "title": "MolGap PCQM K1 Shadow Audit",
+  "code_file": "run_audit.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "piero0/pcqm4mv2",
+    "kaseichou/molgap-pcqm-k1-shadow-audit-source",
+    "kaseichou/molgap-pcqm-k1-shadow-cache-v2",
+    "kaseichou/molgap-pcqm-k1-shadow-checkpoints"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
