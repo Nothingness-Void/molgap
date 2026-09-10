@@ -1,0 +1,27 @@
+{
+  "status": "rejected",
+  "config": {
+    "seed": 42,
+    "epochs": 12,
+    "batch_size": 192,
+    "learning_rate": 0.00016,
+    "minimum_learning_rate": 1e-06,
+    "weight_decay": 1e-06,
+    "max_training_seconds": 43200,
+    "job_seconds": 41400,
+    "precision": "fp32_tf32_off"
+  },
+  "audit_sha256": "f3bd47b6d993d3afff9d53fefb583554478722525159f84b6c6a07a55f60dad4",
+  "code_sha256": "217a3d81d9139b4be7ea4261666898e9bb1f358edbcb40ffc3a9e1c763a34d98",
+  "acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+  "initial_difference": null,
+  "arms": {
+    "graphstate": {
+      "sample_seconds": 12.932596475817263,
+      "sample_rows": 12288,
+      "projected_training_seconds": 51204.07974465827,
+      "memory_headroom": 0.9868434019907362,
+      "parameters": 3665809
+    }
+  }
+}

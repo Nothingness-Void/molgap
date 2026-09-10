@@ -1,0 +1,33 @@
+{
+  "format": "molgap-pcqm-gap100k-local-global-allocation-retry-launch-v1",
+  "submitted_at": "2026-09-02T14:56:19.9368791+09:00",
+  "kernel": "nothingnessvoid/molgap-pcqm-local-global-allocation-s42",
+  "version": 2,
+  "launch_status": "RUNNING",
+  "retry_class": "implementation_only",
+  "scientific_contract_changed": false,
+  "branch": "molgap-server",
+  "repair_commit": "c61e147796ee4195b837bd7e5639ab0dfe97b12c",
+  "submission_commit": "61801ea788f268f98074df5195eb892f6979a60b",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-local-global-source",
+  "source_dataset_status": "ready",
+  "source_marker": "c61e147796ee4195b837bd7e5639ab0dfe97b12c",
+  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "candidates": [
+    "ogb_distance_angle_triangle_edge_state_gps9",
+    "ogb_distance_angle_triangle_edge_state_sparse_gps369",
+    "ogb_distance_angle_triangle_edge_state_graph_state9"
+  ],
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "learning_rate": 0.00016,
+  "weight_decay": 0.000001,
+  "max_epochs": 40,
+  "patience": 8,
+  "search_budget_s": 39600,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

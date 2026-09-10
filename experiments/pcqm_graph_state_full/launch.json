@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-06",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-pcqm-graph-state-full",
+  "source_commit": "ebb3a7e",
+  "server_confirmation_commit": "9068ddb82e6bdf16b841570abbff023b90c07f07",
+  "package_sha256": "38cc6e78835c259c70cb686b1124289aecb504bd5a277a1fa34e60c4a9353f55",
+  "preflight_job": "1448892.ccpbs1",
+  "representative_source_commit": "554458d",
+  "representative_package_sha256": "e8df255a04116d50737bd86aa2a10dc64222f46fce3f0813635a84c12a50e087",
+  "representative_job": "1450725.ccpbs1",
+  "extended_source_commit": "ace0c6b",
+  "segmented_package_sha256": "9089f31a2fca9f5fb6f4e77918fab1cea2eee8f753d2010938d12a7879ae59b8",
+  "cancelled_before_start": {
+    "job": "1450739.ccpbs1",
+    "reason": "Fourteen-hour request was held as long beyond maintenance; replaced by short serialized segments."
+  },
+  "training_jobs": ["1450742.ccpbs1", "1450751.ccpbs1", "1450752.ccpbs1", "1450753.ccpbs1"],
+  "dependencies": ["1450742 -> 1450751", "1450751 -> 1450752", "1450752 -> 1450753"],
+  "dependency_type": "afterok",
+  "output": "training",
+  "graph_cache_rebuilt": false,
+  "official_test_used": false
+}

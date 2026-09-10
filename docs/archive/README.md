@@ -19,6 +19,9 @@ are not sources of live state.
 Closed experiment implementations with their own reproducibility bundles live
 under `experiments/_closed/`. The GraphState width seed-42 bundle is
 [`pcqm_graph_state_width_seed42/`](../../experiments/_closed/pcqm_graph_state_width_seed42/README.md).
+The complete failed full-scale distance-angle triangle GraphState route is
+indexed at
+[`pcqm_distance_angle_triangle_graphstate/`](../../experiments/_closed/pcqm_distance_angle_triangle_graphstate/README.md).
 
 Start from `CURRENT_STATE.md` and the reading protocol in `AGENTS.md`; open an
 archive document only when its pointer is relevant to the task. Paths quoted

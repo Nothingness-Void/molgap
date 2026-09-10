@@ -1,0 +1,40 @@
+{
+  "format": "molgap-pcqm-gap100k-local-global-t4x2-launch-v1",
+  "submitted_at": "2026-09-02T15:08:57.0484790+09:00",
+  "kernel": "nothingnessvoid/molgap-pcqm-local-global-allocation-s42",
+  "version": 3,
+  "launch_status": "RUNNING",
+  "accelerator_request": "NvidiaTeslaT4",
+  "expected_gpu_count": 2,
+  "execution": "dual_t4_candidate_parallel",
+  "device_assignments": {
+    "0": [
+      "ogb_distance_angle_triangle_edge_state_gps9"
+    ],
+    "1": [
+      "ogb_distance_angle_triangle_edge_state_sparse_gps369",
+      "ogb_distance_angle_triangle_edge_state_graph_state9"
+    ]
+  },
+  "loader_workers_per_process": 0,
+  "linux_start_method": "fork",
+  "graph_cache_transport": "read_only_copy_on_write",
+  "session_timeout_s": 39600,
+  "branch": "molgap-server",
+  "runner_commit": "4716516a37db31ef3edf330ee810a03cb1ad1b46",
+  "model_source_commit": "c61e147796ee4195b837bd7e5639ab0dfe97b12c",
+  "source_dataset": "nothingnessvoid/molgap-pcqm-local-global-source",
+  "geometry_dataset": "nothingnessvoid/molgap-pcqm-geometry-cache-s42-dataset",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "scientific_contract_changed": false,
+  "seed": 42,
+  "precision": "fp32",
+  "batch_size": 48,
+  "learning_rate": 0.00016,
+  "weight_decay": 0.000001,
+  "max_epochs": 40,
+  "patience": 8,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}

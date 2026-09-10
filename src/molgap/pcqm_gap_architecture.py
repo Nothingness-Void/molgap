@@ -711,6 +711,38 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
         """Create optional state for a subclass without changing the base."""
         return auxiliary_payload
 
+    def _pre_message_node_injection(
+        self,
+        h: torch.Tensor,
+        pos: torch.Tensor | None,
+        edge_index: torch.Tensor,
+        batch: torch.Tensor,
+        edge_distance: torch.Tensor,
+        geometry_valid: torch.Tensor,
+    ) -> torch.Tensor:
+        """Allow one stateless node feature injection before message passing."""
+        return h
+
+    def _pre_auxiliary_node_injection(
+        self,
+        h: torch.Tensor,
+        auxiliary_payload,
+    ) -> torch.Tensor:
+        """Inject optional cached node data before message passing."""
+        return h
+
+    def _pre_edge_update(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        wedge_edge_ids: torch.Tensor,
+        auxiliary_state,
+    ) -> torch.Tensor:
+        """Allow one directed relation update before the persistent edge update."""
+        return edge_state
+
     def _update_geometry_auxiliary(
         self,
         layer: int,
@@ -735,6 +767,7 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
         wedge_angle_cos,
         geometry_valid,
         auxiliary_payload=None,
+        pos=None,
     ):
         if random_walk_pe is None:
             raise ValueError("Geometry Triangle GPS requires random_walk_pe")
@@ -755,6 +788,15 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
 
         h = self._embed_nodes(x)
         h = h + self.rwse_encoder(random_walk_pe.float())
+        h = self._pre_message_node_injection(
+            h,
+            pos,
+            edge_index,
+            batch,
+            edge_distance,
+            geometry_valid,
+        )
+        h = self._pre_auxiliary_node_injection(h, auxiliary_payload)
         edge_state = self._embed_edges(edge_attr)
         first, second = wedge_edge_ids.unbind(dim=1)
         centers = edge_index[1, first]
@@ -800,6 +842,14 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
                 self.convs,
             )
         ):
+            edge_state = self._pre_edge_update(
+                layer,
+                h,
+                edge_index,
+                edge_state,
+                wedge_edge_ids,
+                auxiliary_state,
+            )
             edge_state = edge_update(h, edge_index, edge_state)
             if distance_features is not None:
                 edge_state = edge_state + self.distance_updates[layer](
@@ -839,6 +889,593 @@ class OGBGeometrySparseTriangleEdgeStateGPSWrapper(
                 auxiliary_state,
             )
         return self._pool(h, batch)
+
+
+class _ScheduledGPSBlock(nn.Module):
+    """Reuse one GPS local branch with optional global atom attention.
+
+    The wrapper receives an already initialized :class:`GPSConv`.  This keeps
+    every shared local/MLP parameter identical under the same seed while
+    removing the unused attention and normalization parameters from local-only
+    blocks.
+    """
+
+    def __init__(self, base, use_global_attention: bool) -> None:
+        super().__init__()
+        self.channels = int(base.channels)
+        self.heads = int(base.heads)
+        self.dropout = float(base.dropout)
+        self.attn_type = base.attn_type
+        self.conv = base.conv
+        self.attn = base.attn if use_global_attention else None
+        self.mlp = base.mlp
+        self.norm1 = base.norm1
+        self.norm2 = base.norm2 if use_global_attention else None
+        self.norm3 = base.norm3
+        self.norm_with_batch = bool(base.norm_with_batch)
+        self.use_global_attention = bool(use_global_attention)
+
+    def _normalize(self, normalizer, value, batch):
+        if normalizer is None:
+            return value
+        if self.norm_with_batch:
+            return normalizer(value, batch=batch)
+        return normalizer(value)
+
+    def forward(self, x, edge_index, batch=None, **kwargs):
+        import torch.nn.functional as functional
+
+        local = self.conv(x, edge_index, **kwargs)
+        local = functional.dropout(
+            local, p=self.dropout, training=self.training
+        )
+        local = self._normalize(self.norm1, local + x, batch)
+        branches = [local]
+
+        if self.use_global_attention:
+            from torch_geometric.utils import to_dense_batch
+
+            dense, mask = to_dense_batch(x, batch)
+            attended, _ = self.attn(
+                dense,
+                dense,
+                dense,
+                key_padding_mask=~mask,
+                need_weights=False,
+            )
+            attended = attended[mask]
+            attended = functional.dropout(
+                attended, p=self.dropout, training=self.training
+            )
+            attended = self._normalize(self.norm2, attended + x, batch)
+            branches.append(attended)
+
+        output = sum(branches)
+        output = output + self.mlp(output)
+        return self._normalize(self.norm3, output, batch)
+
+
+class _SharedGraphContext(nn.Module):
+    """One compact molecule state updated and broadcast at fixed depths."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        graph_channels: int,
+        exchange_rank: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        pooled_channels = 3 * atom_channels
+        self.initial = nn.Sequential(
+            nn.LayerNorm(pooled_channels),
+            nn.Linear(pooled_channels, graph_channels),
+            nn.LayerNorm(graph_channels),
+        )
+        combined_channels = 2 * graph_channels
+        self.atom_summary = nn.Sequential(
+            nn.LayerNorm(pooled_channels),
+            nn.Linear(pooled_channels, graph_channels),
+        )
+        self.update_norm = nn.LayerNorm(combined_channels)
+        self.update_gate = nn.Linear(combined_channels, graph_channels)
+        self.update_value = nn.Sequential(
+            nn.Linear(combined_channels, graph_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(graph_channels, graph_channels),
+        )
+        self.output_norm = nn.LayerNorm(graph_channels)
+        self.graph_to_atom = _LowRankGatedProjection(
+            graph_channels, atom_channels, exchange_rank
+        )
+
+    @staticmethod
+    def _pool(h: torch.Tensor, batch: torch.Tensor) -> torch.Tensor:
+        from torch_geometric.nn import (
+            global_add_pool,
+            global_max_pool,
+            global_mean_pool,
+        )
+
+        return torch.cat(
+            [
+                global_mean_pool(h, batch),
+                global_add_pool(h, batch),
+                global_max_pool(h, batch),
+            ],
+            dim=-1,
+        )
+
+    def initialize(self, h: torch.Tensor, batch: torch.Tensor) -> torch.Tensor:
+        return self.initial(self._pool(h, batch))
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        graph_state: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        atom_summary = self.atom_summary(self._pool(h, batch))
+        combined = self.update_norm(
+            torch.cat([graph_state, atom_summary], dim=-1)
+        )
+        gate = torch.sigmoid(self.update_gate(combined))
+        proposal = self.update_value(combined)
+        graph_state = self.output_norm(graph_state + gate * proposal)
+        return h + self.graph_to_atom(graph_state[batch]), graph_state
+
+
+class OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
+    OGBGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """Allocate global communication sparsely or through a graph state."""
+
+    GLOBAL_MODES = {"sparse_attention", "graph_state"}
+    GLOBAL_BLOCKS = (3, 6, 9)
+
+    def __init__(
+        self,
+        *args,
+        global_mode: str,
+        graph_state_channels: int = 64,
+        graph_exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        if global_mode not in self.GLOBAL_MODES:
+            raise ValueError(f"Unknown local/global mode: {global_mode}")
+        super().__init__(*args, geometry_mode="distance_angle", **kwargs)
+        self.global_mode = global_mode
+        self.convs = nn.ModuleList(
+            _ScheduledGPSBlock(
+                conv,
+                use_global_attention=(
+                    global_mode == "sparse_attention"
+                    and layer in self.GLOBAL_BLOCKS
+                ),
+            )
+            for layer, conv in enumerate(self.convs, start=1)
+        )
+        if global_mode == "graph_state":
+            hidden_channels = self.head[0].in_features
+            dropout = float(kwargs.get("dropout", 0.1))
+            self.graph_context = _SharedGraphContext(
+                hidden_channels,
+                graph_state_channels,
+                graph_exchange_rank,
+                dropout,
+            )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is not None:
+            raise ValueError("Local/global screen does not accept auxiliary input")
+        if self.global_mode == "graph_state":
+            return self.graph_context.initialize(h, batch)
+        return None
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        block = layer + 1
+        if self.global_mode == "graph_state" and block in self.GLOBAL_BLOCKS:
+            h, auxiliary_state = self.graph_context(
+                h, batch, auxiliary_state
+            )
+        return h, edge_state, auxiliary_state
+
+
+class OGBBodyOrderMomentGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState geometry GPS with one stateless rotational-invariant moment."""
+
+    BODY_ORDER_BASIS_CHANNELS = 16
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        self.body_order_basis = _FixedGaussianBasis(
+            0.75, 2.25, self.BODY_ORDER_BASIS_CHANNELS
+        )
+        self.body_order_injection = nn.Sequential(
+            nn.LayerNorm(48),
+            nn.Linear(48, 64),
+            nn.SiLU(),
+            nn.Linear(64, 192, bias=False),
+        )
+        nn.init.zeros_(self.body_order_injection[-1].weight)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        pos,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            pos,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        pos,
+    ):
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            pos=pos,
+        )
+
+    def _pre_message_node_injection(
+        self,
+        h: torch.Tensor,
+        pos: torch.Tensor | None,
+        edge_index: torch.Tensor,
+        batch: torch.Tensor,
+        edge_distance: torch.Tensor,
+        geometry_valid: torch.Tensor,
+    ) -> torch.Tensor:
+        if pos is None:
+            raise ValueError("Body-order moment GPS requires pos")
+        if pos.ndim != 2 or tuple(pos.shape) != (h.shape[0], 3):
+            raise ValueError("pos must align to batched atom coordinates")
+        if edge_index.ndim != 2 or edge_index.shape[0] != 2:
+            raise ValueError("edge_index must have shape [2, E]")
+        if tuple(edge_distance.shape) != (edge_index.shape[1], 1):
+            raise ValueError("edge_distance is not aligned to directed bonds")
+        valid = geometry_valid.reshape(-1).to(device=h.device, dtype=h.dtype)
+        if valid.numel() == 0 or batch.numel() == 0:
+            raise ValueError("geometry_valid and batch must be non-empty")
+        if int(batch.max()) >= valid.shape[0]:
+            raise ValueError("geometry_valid does not cover the batched graphs")
+        if not torch.isfinite(valid).all():
+            raise ValueError("geometry_valid contains non-finite values")
+        node_mask = valid[batch].view(-1, 1)
+        finite_pos = torch.isfinite(pos).all(dim=1, keepdim=True)
+        if bool(((node_mask > 0) & ~finite_pos).any()):
+            raise ValueError("valid geometry contains non-finite positions")
+        safe_pos = torch.where(finite_pos, pos, torch.zeros_like(pos))
+
+        node_count = h.shape[0]
+        source, destination = edge_index.unbind(dim=0)
+        if destination.numel() == 0:
+            invariants = h.new_zeros((node_count, 48))
+        else:
+            displacement = safe_pos[destination] - safe_pos[source]
+            direction = displacement / displacement.norm(
+                dim=1, keepdim=True
+            ).clamp_min_(torch.finfo(displacement.dtype).eps)
+            radial = self.body_order_basis(edge_distance.float()) * node_mask[
+                destination
+            ]
+
+            scalar_density = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS)
+            )
+            scalar_density.index_add_(0, destination, radial)
+
+            vector_moment = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS, 3)
+            )
+            vector_moment.index_add_(
+                0, destination, radial.unsqueeze(-1) * direction.unsqueeze(1)
+            )
+
+            rank2_moment = h.new_zeros(
+                (node_count, self.BODY_ORDER_BASIS_CHANNELS, 3, 3)
+            )
+            outer = direction.unsqueeze(-1) * direction.unsqueeze(-2)
+            rank2_moment.index_add_(
+                0,
+                destination,
+                radial.unsqueeze(-1).unsqueeze(-1) * outer.unsqueeze(1),
+            )
+
+            invariants = torch.cat(
+                [
+                    scalar_density,
+                    vector_moment.square().sum(dim=-1),
+                    rank2_moment.square().sum(dim=(-1, -2)),
+                ],
+                dim=-1,
+            )
+        return h + self.body_order_injection(invariants) * node_mask
+
+
+class _SharedContactStateUpdate(nn.Module):
+    """One recurrent through-space relation update shared across depth."""
+
+    def __init__(
+        self,
+        atom_channels: int,
+        contact_channels: int,
+        exchange_rank: int,
+        dropout: float,
+    ) -> None:
+        super().__init__()
+        self.endpoint_projection = nn.Linear(atom_channels, contact_channels)
+        combined_channels = 3 * contact_channels
+        self.update_norm = nn.LayerNorm(combined_channels)
+        self.update_gate = nn.Linear(combined_channels, contact_channels)
+        self.update_value = nn.Sequential(
+            nn.Linear(combined_channels, contact_channels),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(contact_channels, contact_channels),
+        )
+        self.output_norm = nn.LayerNorm(contact_channels)
+        self.contact_to_atom = _LowRankGatedProjection(
+            contact_channels, atom_channels, exchange_rank
+        )
+
+    def forward(
+        self,
+        h: torch.Tensor,
+        contact_state: torch.Tensor,
+        contact_edge_index: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        if contact_state.shape[0] == 0:
+            return h, contact_state
+        source, target = contact_edge_index.unbind(dim=0)
+        combined = self.update_norm(
+            torch.cat(
+                [
+                    contact_state,
+                    self.endpoint_projection(h[source]),
+                    self.endpoint_projection(h[target]),
+                ],
+                dim=-1,
+            )
+        )
+        gate = torch.sigmoid(self.update_gate(combined))
+        proposal = self.update_value(combined)
+        contact_state = self.output_norm(contact_state + gate * proposal)
+
+        incoming = contact_state.new_zeros((h.shape[0], contact_state.shape[1]))
+        counts = contact_state.new_zeros((h.shape[0], 1))
+        incoming.index_add_(0, target, contact_state)
+        counts.index_add_(
+            0, target, contact_state.new_ones((target.shape[0], 1))
+        )
+        incoming = incoming / counts.clamp_min_(1.0)
+        return h + self.contact_to_atom(incoming), contact_state
+
+
+class OGBContactStateGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState winner plus one narrow non-covalent ContactState."""
+
+    CONTACT_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        contact_channels: int = 32,
+        contact_basis_channels: int = 16,
+        contact_exchange_rank: int = 16,
+        **kwargs,
+    ) -> None:
+        if contact_channels <= 0 or contact_basis_channels < 2:
+            raise ValueError("contact channels/basis are invalid")
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        atom_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.contact_channels = int(contact_channels)
+        self.contact_basis_channels = int(contact_basis_channels)
+        self.contact_distance_basis = _FixedGaussianBasis(
+            0.25, 5.0, self.contact_basis_channels
+        )
+        initial_channels = 2 * atom_channels + self.contact_basis_channels
+        self.contact_initial = nn.Sequential(
+            nn.LayerNorm(initial_channels),
+            nn.Linear(initial_channels, self.contact_channels),
+            nn.LayerNorm(self.contact_channels),
+        )
+        self.contact_update = _SharedContactStateUpdate(
+            atom_channels,
+            self.contact_channels,
+            contact_exchange_rank,
+            dropout,
+        )
+
+    @staticmethod
+    def _validate_contact_payload(
+        contact_edge_index: torch.Tensor,
+        contact_distance: torch.Tensor,
+        node_count: int,
+    ) -> None:
+        if contact_edge_index.ndim != 2 or contact_edge_index.shape[0] != 2:
+            raise ValueError("contact_edge_index must have shape [2, C]")
+        if tuple(contact_distance.shape) != (contact_edge_index.shape[1], 1):
+            raise ValueError("contact distances are not aligned")
+        if contact_edge_index.shape[1] and (
+            int(contact_edge_index.min()) < 0
+            or int(contact_edge_index.max()) >= node_count
+        ):
+            raise ValueError("contact relation has an invalid atom id")
+        if not torch.isfinite(contact_distance).all() or (
+            contact_distance.numel()
+            and (
+                bool((contact_distance <= 0).any())
+                or bool((contact_distance > 5.0).any())
+            )
+        ):
+            raise ValueError("contact distance is outside (0, 5.0]")
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        contact_edge_index,
+        contact_distance,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            contact_edge_index,
+            contact_distance,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        contact_edge_index,
+        contact_distance,
+    ):
+        self._validate_contact_payload(
+            contact_edge_index, contact_distance, x.shape[0]
+        )
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            auxiliary_payload={
+                "contact_edge_index": contact_edge_index,
+                "contact_distance": contact_distance,
+            },
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is None:
+            raise ValueError("ContactState payload is required")
+        contact_edge_index = auxiliary_payload["contact_edge_index"]
+        contact_distance = auxiliary_payload["contact_distance"]
+        if contact_edge_index.shape[1]:
+            source, target = contact_edge_index.unbind(dim=0)
+            distance_features = self.contact_distance_basis(
+                contact_distance.float()
+            )
+            contact_state = self.contact_initial(
+                torch.cat([h[source], h[target], distance_features], dim=-1)
+            )
+        else:
+            contact_state = h.new_empty((0, self.contact_channels))
+        return {
+            **auxiliary_payload,
+            "contact_state": contact_state,
+            "graph_state": self.graph_context.initialize(h, batch),
+        }
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        if layer in self.CONTACT_LAYERS:
+            h, contact_state = self.contact_update(
+                h,
+                auxiliary_state["contact_state"],
+                auxiliary_state["contact_edge_index"],
+            )
+            auxiliary_state["contact_state"] = contact_state
+        block = layer + 1
+        if block in self.GLOBAL_BLOCKS:
+            h, graph_state = self.graph_context(
+                h, batch, auxiliary_state["graph_state"]
+            )
+            auxiliary_state["graph_state"] = graph_state
+        return h, edge_state, auxiliary_state
 
 
 class _SharedRingHierarchyUpdate(nn.Module):
@@ -1124,6 +1761,172 @@ class OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper(
             auxiliary_state["ring_edge_attr"],
         )
         auxiliary_state["ring_state"] = ring_state
+        return h, edge_state, auxiliary_state
+
+
+class OGBRingHierarchyGraphStateGeometrySparseTriangleEdgeStateWrapper(
+    OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper
+):
+    """GraphState winner with one persistent deterministic ring hierarchy."""
+
+    HIERARCHY_LAYERS = (1, 3, 5, 7)
+
+    def __init__(
+        self,
+        *args,
+        ring_channels: int = 64,
+        ring_feature_channels: int = 12,
+        ring_edge_channels: int = 4,
+        ring_exchange_rank: int = 32,
+        **kwargs,
+    ) -> None:
+        if ring_channels <= 0 or ring_feature_channels <= 0:
+            raise ValueError("ring channels must be positive")
+        super().__init__(*args, global_mode="graph_state", **kwargs)
+        hidden_channels = self.head[0].in_features
+        dropout = float(kwargs.get("dropout", 0.1))
+        self.ring_channels = int(ring_channels)
+        self.ring_feature_channels = int(ring_feature_channels)
+        self.ring_edge_channels = int(ring_edge_channels)
+        self.ring_feature_encoder = nn.Sequential(
+            nn.LayerNorm(self.ring_feature_channels),
+            nn.Linear(self.ring_feature_channels, self.ring_channels),
+            nn.LayerNorm(self.ring_channels),
+        )
+        self.ring_update = _SharedRingHierarchyUpdate(
+            hidden_channels,
+            self.ring_channels,
+            self.ring_edge_channels,
+            ring_exchange_rank,
+            dropout,
+        )
+        self.ring_initial_norm = nn.LayerNorm(self.ring_channels)
+
+    def forward(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        embedding = self.encode(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+        )
+        return self.head(embedding)
+
+    def encode(
+        self,
+        x,
+        edge_index,
+        edge_attr,
+        batch,
+        random_walk_pe,
+        wedge_edge_ids,
+        edge_distance,
+        wedge_angle_cos,
+        geometry_valid,
+        ring_features,
+        atom_ring_index,
+        ring_edge_index,
+        ring_edge_attr,
+    ):
+        OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper._validate_ring_payload(
+            ring_features,
+            atom_ring_index,
+            ring_edge_index,
+            ring_edge_attr,
+            x.shape[0],
+            self.ring_feature_channels,
+            self.ring_edge_channels,
+        )
+        return self._encode_geometry(
+            x,
+            edge_index,
+            edge_attr,
+            batch,
+            random_walk_pe,
+            wedge_edge_ids,
+            edge_distance,
+            wedge_angle_cos,
+            geometry_valid,
+            auxiliary_payload={
+                "ring_features": ring_features,
+                "atom_ring_index": atom_ring_index,
+                "ring_edge_index": ring_edge_index,
+                "ring_edge_attr": ring_edge_attr,
+            },
+        )
+
+    def _initialize_geometry_auxiliary(
+        self,
+        h: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_payload,
+    ):
+        if auxiliary_payload is None:
+            raise ValueError("ring hierarchy payload is required")
+        ring_features = auxiliary_payload["ring_features"]
+        atom_ring_index = auxiliary_payload["atom_ring_index"]
+        ring_state = self.ring_feature_encoder(ring_features.float())
+        if ring_state.shape[0]:
+            atom_ids, ring_ids = atom_ring_index.unbind(dim=0)
+            atom_context = self.ring_update._membership_mean(
+                h, atom_ids, ring_ids, ring_state.shape[0]
+            )
+            ring_state = self.ring_initial_norm(
+                ring_state + self.ring_update.atom_projection(atom_context)
+            )
+        return {
+            **auxiliary_payload,
+            "ring_state": ring_state,
+            "graph_state": self.graph_context.initialize(h, batch),
+        }
+
+    def _update_geometry_auxiliary(
+        self,
+        layer: int,
+        h: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_state: torch.Tensor,
+        batch: torch.Tensor,
+        auxiliary_state,
+    ):
+        if layer in self.HIERARCHY_LAYERS:
+            h, ring_state = self.ring_update(
+                h,
+                auxiliary_state["ring_state"],
+                auxiliary_state["atom_ring_index"],
+                auxiliary_state["ring_edge_index"],
+                auxiliary_state["ring_edge_attr"],
+            )
+            auxiliary_state["ring_state"] = ring_state
+        block = layer + 1
+        if block in self.GLOBAL_BLOCKS:
+            h, graph_state = self.graph_context(
+                h, batch, auxiliary_state["graph_state"]
+            )
+            auxiliary_state["graph_state"] = graph_state
         return h, edge_state, auxiliary_state
 
 
@@ -1515,6 +2318,39 @@ class OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper(
 
 def make_pcqm_gap_encoder(candidate: str):
     """Build one frozen first-round candidate with a scalar Gap head."""
+    if candidate == (
+        "ogb_distance_angle_relative_value_triangle_edge_state_graph_state9"
+    ):
+        from .pcqm_relative_value import make_relative_value_encoder
+
+        return make_relative_value_encoder(candidate)
+    if candidate == (
+        "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9"
+    ):
+        from .pcqm_hop_path import make_hop_path_encoder
+
+        return make_hop_path_encoder(candidate)
+    if candidate in {
+        "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
+        "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component",
+    }:
+        from .pcqm_conjugated_state import make_conjugated_encoder
+
+        return make_conjugated_encoder(candidate)
+    if candidate in {
+        "ogb_distance_angle_pna_statistics_triangle_edge_state_graph_state9",
+        "ogb_distance_angle_retention_triangle_edge_state_graph_state9",
+    }:
+        from .pcqm_local_statistics import make_local_statistics_encoder
+
+        return make_local_statistics_encoder(candidate)
+    if candidate in {
+        "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
+        "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
+    }:
+        from .pcqm_directed_spectral import make_directed_spectral_encoder
+
+        return make_directed_spectral_encoder(candidate)
     common = {
         "in_channels": 9,
         "edge_dim": 3,
@@ -1532,12 +2368,6 @@ def make_pcqm_gap_encoder(candidate: str):
         return OGBEdgeStateStructuralGPSWrapper(
             **common,
             edge_state_channels=64,
-        )
-    if candidate == "ogb_recurrent_graph_state_gps9":
-        return OGBGraphTokenStructuralGPSWrapper(
-            **common,
-            edge_state_channels=64,
-            token_channels=16,
         )
     if candidate == "ogb_sparse_triangle_edge_state_gps9":
         return OGBSparseTriangleEdgeStateGPSWrapper(
@@ -1558,23 +2388,6 @@ def make_pcqm_gap_encoder(candidate: str):
             geometry_mode=geometry_modes[candidate],
             geometry_basis_channels=16,
         )
-    if candidate == "ogb_distance_angle_torsion_triangle_edge_state_gps9":
-        return OGBTorsionGeometrySparseTriangleEdgeStateGPSWrapper(
-            **common,
-            edge_state_channels=64,
-            wedge_channels=16,
-            torsion_channels=16,
-            geometry_basis_channels=16,
-        )
-    if candidate == "ogb_distance_angle_dual_stream_triangle_edge_state_gps9":
-        return OGBDualStreamGeometrySparseTriangleEdgeStateGPSWrapper(
-            **common,
-            edge_state_channels=64,
-            wedge_channels=16,
-            geometry_basis_channels=16,
-            bond_attention_heads=4,
-            exchange_rank=32,
-        )
     if candidate == "ogb_distance_angle_ring_hierarchy_triangle_edge_state_gps9":
         return OGBRingHierarchyGeometrySparseTriangleEdgeStateGPSWrapper(
             **common,
@@ -1586,20 +2399,58 @@ def make_pcqm_gap_encoder(candidate: str):
             ring_edge_channels=4,
             exchange_rank=32,
         )
-    if candidate == "ogb_query_pool_structural_gps9":
-        return OGBQueryPoolStructuralGPSWrapper(
+    if candidate == (
+        "ogb_distance_angle_ring_hierarchy_triangle_edge_state_graph_state9"
+    ):
+        return OGBRingHierarchyGraphStateGeometrySparseTriangleEdgeStateWrapper(
             **common,
-            num_pool_queries=4,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
+            ring_channels=64,
+            ring_feature_channels=12,
+            ring_edge_channels=4,
+            ring_exchange_rank=32,
         )
-    local_operators = {
-        "ogb_gated_local_gps9": "resgated",
-        "ogb_edge_attention_local_gps9": "transformer",
-        "ogb_gen_local_gps9": "gen",
-        "ogb_gatv2_local_gps9": "gatv2",
-    }
-    if candidate in local_operators:
-        return OGBLocalOperatorStructuralGPSWrapper(
+    if candidate == (
+        "ogb_distance_angle_contact_state_triangle_edge_state_graph_state9"
+    ):
+        return OGBContactStateGraphStateGeometrySparseTriangleEdgeStateWrapper(
             **common,
-            local_operator=local_operators[candidate],
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
+            contact_channels=32,
+            contact_basis_channels=16,
+            contact_exchange_rank=16,
+        )
+    if candidate == (
+        "ogb_distance_angle_body_order_triangle_edge_state_graph_state9"
+    ):
+        return OGBBodyOrderMomentGraphStateGeometrySparseTriangleEdgeStateWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            graph_state_channels=64,
+            graph_exchange_rank=32,
+        )
+    local_global_modes = {
+        "ogb_distance_angle_triangle_edge_state_sparse_gps369": "sparse_attention",
+        "ogb_distance_angle_triangle_edge_state_graph_state9": "graph_state",
+    }
+    if candidate in local_global_modes:
+        return OGBLocalGlobalGeometrySparseTriangleEdgeStateGPSWrapper(
+            **common,
+            edge_state_channels=64,
+            wedge_channels=16,
+            geometry_basis_channels=16,
+            global_mode=local_global_modes[candidate],
+            graph_state_channels=64,
+            graph_exchange_rank=32,
         )
     raise ValueError(f"Unknown PCQM Gap candidate: {candidate}")
