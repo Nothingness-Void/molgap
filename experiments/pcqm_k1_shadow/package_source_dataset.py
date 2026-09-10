@@ -14,7 +14,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
-        "--dataset-id", default="kaseichou/molgap-pcqm-k1-shadow-source"
+        "--dataset-id", default="kaseichou/molgap-pcqm-k1-shadow-source-v2"
     )
     args = parser.parse_args()
     output = args.output.resolve()

@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 OUT = Path("/kaggle/working/pcqm_k1_shadow_cache")
+RDKIT_VERSION = "2026.3.6"
 
 
 def find_one(pattern: str) -> Path:
@@ -43,8 +44,21 @@ def main() -> None:
             "--no-deps",
             "torch-geometric==2.6.1",
             "ogb==1.3.6",
+            f"rdkit=={RDKIT_VERSION}",
         ]
     )
+    # Fail before entering reserve-replacement logic if the runtime lacks the
+    # chemistry parser. A dependency failure is not a bad molecular record.
+    from rdkit import Chem
+    from ogb.utils.mol import smiles2graph
+
+    if Chem.MolFromSmiles("CC") is None:
+        raise RuntimeError("RDKit runtime probe failed")
+    probe = smiles2graph("CC")
+    if tuple(probe["node_feat"].shape[1:]) != (9,):
+        raise RuntimeError("OGB/RDKit atom schema probe failed")
+    if tuple(probe["edge_feat"].shape[1:]) != (3,):
+        raise RuntimeError("OGB/RDKit bond schema probe failed")
     sys.path.insert(0, str(source_root()))
     from molgap.pcqm_shadow import build_shadow_cache
 
@@ -66,6 +80,7 @@ def main() -> None:
         "official_validation_role_read": False,
         "test_dev_role_read": False,
         "gpu_used": False,
+        "rdkit_version": RDKIT_VERSION,
     }
     temporary = OUT / ".run_summary.json.tmp"
     temporary.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")

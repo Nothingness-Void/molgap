@@ -47,6 +47,17 @@ def test_cpu_kernel_has_only_frozen_inputs():
     assert metadata["enable_gpu"] == "false"
     assert metadata["dataset_sources"] == [
         "piero0/pcqm4mv2",
-        "kaseichou/molgap-pcqm-k1-shadow-source",
+        "kaseichou/molgap-pcqm-k1-shadow-source-v2",
         "kaseichou/molgap-pcqm-geometry-cache-s42-dataset",
     ]
+
+
+def test_cpu_kernel_pins_and_preflights_rdkit():
+    source = ENTRY.read_text(encoding="utf-8")
+    assert 'RDKIT_VERSION = "2026.3.6"' in source
+    assert 'f"rdkit=={RDKIT_VERSION}"' in source
+    assert 'Chem.MolFromSmiles("CC")' in source
+    assert 'smiles2graph("CC")' in source
+    assert source.index("from rdkit import Chem") < source.index(
+        "from molgap.pcqm_shadow import build_shadow_cache"
+    )
