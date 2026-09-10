@@ -94,6 +94,10 @@ attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
 Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
 The final route-3/3 discovery attempt remains unused while K1 has an unresolved
 independent-audit path.
+The user authorized preparation of a paired K1 500K scale bridge. The bridge
+preserves the accepted 10K development role and changes only train cardinality;
+it is released to `molgap-desktop` only after K1 passes the pending shadow
+audit. Its contract is `experiments/pcqm_k1_scale500k/protocol.md`.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.

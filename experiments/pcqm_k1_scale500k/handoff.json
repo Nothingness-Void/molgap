@@ -1,0 +1,30 @@
+{
+  "format": "molgap-pcqm-k1-scale500k-desktop-handoff-v1",
+  "prepared_by_branch": "molgap-server",
+  "execution_owner": "molgap-desktop",
+  "release_condition": "accepted K1 shadow audit",
+  "candidate": "neural_atom_k1",
+  "candidate_source_commit": "47f99cf9da7fee306f5165175b4020c6c4aa9fb3",
+  "expected_parameter_count": 3658817,
+  "train_rows": 500000,
+  "validation_rows": 10000,
+  "base_train_sha256": "d08e04ef73090b77963a6959d7efa22d22a4085e3869a0e13086491b8f8c9678",
+  "validation_sha256": "40b210c03789249f89950d7eb9df6de93ec151903f75077cfa64fe0a94eca5b0",
+  "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "paired_arms": [
+    "full_gps",
+    "neural_atom_k1"
+  ],
+  "seed": 42,
+  "precision": "fp32",
+  "physical_batch_per_model_device": 128,
+  "gradient_accumulation_steps": 1,
+  "epochs": 40,
+  "learning_rate": 0.0004,
+  "weight_decay": 0.00001,
+  "minimum_learning_rate": 0.000001,
+  "minimum_gain_eV": 0.0047308445,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "shadow_labels_read_by_scale_job": false
+}

@@ -19,8 +19,9 @@ hours unless the user records a separate override.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P1 | B-K1-SHADOW | Build one label-sealed official-train-derived shadow role, then audit the frozen K1 model once | Shadow direction agrees or K1 closes; no repeated read or tuning |
-| P2 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the independent audit | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
-| P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
+| P2 | B-K1-500K | If shadow passes, hand the frozen paired 500K scale bridge to `molgap-desktop` | K1 retains at least half its paired 100K gain, or closes |
+| P3 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the independent audit or scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
+| P4 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
 GraphState9 remains the accepted 100K efficiency discovery, while the accepted
 desktop EdgeState continuation remains the strongest full-scale evidence.
@@ -73,6 +74,11 @@ a large K1-versus-full-GPS gain, consistent across target quartiles. K1 is now
 frozen without modification for one untouched shadow audit; repeating the same
 selection role, adding a seed, or tuning K1 is prohibited. The final route-3/3
 attempt remains unused until the K1 audit resolves.
+
+The user authorized a K1 500K scale bridge on 2026-09-10. Its immutable
+same-validation, paired-baseline contract is
+`experiments/pcqm_k1_scale500k/protocol.md`. Preparation does not bypass the
+pending once-read shadow gate, and accelerator execution remains desktop-owned.
 
 ## Bounded autonomous Track C window
 
