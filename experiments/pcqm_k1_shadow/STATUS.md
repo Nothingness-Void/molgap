@@ -9,9 +9,13 @@ identity. No target label or model inference entered cache construction.
 Audit version 1 failed before model construction or label access because
 `hasattr` is not a valid PyG store-membership test. The unchanged-contract fix
 uses `"y" in graph`; its evidence is `terminal_report_audit_v1.md`.
+Version 2 then reached the first GPU operation but Kaggle assigned a P100 while
+its stock Torch omitted `sm_60`; it also stopped before label access. Version 3
+conditionally installs the repository's previously validated
+Torch 2.7.1+cu126 P100 runtime and verifies accelerator compatibility.
 
 The frozen one-time audit is now `RUNNING` as Kaggle2 kernel
-`kaseichou/molgap-pcqm-k1-shadow-audit` version 2. It loads only the exact
+`kaseichou/molgap-pcqm-k1-shadow-audit` version 3. It loads only the exact
 accepted Full-GPS and K1 checkpoints, saves both prediction vectors before its
 sole shadow-label access, and performs no optimization. Passing releases only
 the already prepared 500K bridge to desktop; failure closes K1.

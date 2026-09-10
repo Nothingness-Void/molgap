@@ -98,7 +98,7 @@ The user authorized preparation of a paired K1 500K scale bridge. The bridge
 preserves the accepted 10K development role and changes only train cardinality;
 it is released to `molgap-desktop` only after K1 passes the pending shadow
 audit. The label-sealed shadow cache passed acceptance, and Kaggle2 kernel
-`kaseichou/molgap-pcqm-k1-shadow-audit` version 2 is performing the frozen
+`kaseichou/molgap-pcqm-k1-shadow-audit` version 3 is performing the frozen
 one-time audit without training. Its contract is
 `experiments/pcqm_k1_scale500k/protocol.md`.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
