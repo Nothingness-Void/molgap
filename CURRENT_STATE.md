@@ -18,8 +18,10 @@
 ## Active objective
 
 An isolated server-side GPTrans-T core transfer is queued on SCNet Kunshan at
-the user's request. Job `121691582` performs a worst-size physical-batch-128
-forward/backward preflight; dependent job `121691587` runs one 60-epoch,
+the user's request. The first preflight failed before model execution because
+its minimal deployment omitted the cache pickle class; no training started.
+The corrected job `121693797` performs a worst-size physical-batch-128
+forward/backward preflight; dependent job `121693799` runs one 60-epoch,
 seed-42, 500K direct-Gap screen only if that gate passes. The immutable
 official-train-derived cache identity is reused, and official validation/test
 roles remain sealed. The frozen contract and launch identity are under
