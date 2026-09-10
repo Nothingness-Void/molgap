@@ -1,14 +1,13 @@
 # Status
 
-K1 is frozen as the sole candidate before shadow-label access. The label-sealed
-10K shadow-cache implementation passed its static and policy tests without
-model execution. Version 1 failed before graph construction because its Kaggle
-CPU image lacked RDKit; the terminal evidence is `terminal_report.md`.
+The repaired label-sealed 10K shadow cache passed independent mechanical
+acceptance. Its aggregate SHA-256 is
+`4a9e4361247f497f5cd9911a69e69eddb1e0fecea6e33f318ada48aa594f6a44`;
+all 10,000 graphs contain only OGB atom/bond features, RWSE16, and immutable row
+identity. No target label or model inference entered cache construction.
 
-The unchanged-contract infrastructure repair pins a NumPy-2-compatible RDKit
-wheel and performs an OGB/RDKit schema probe before reserve replacement.
-Private source dataset `kaseichou/molgap-pcqm-k1-shadow-source-v2` freezes the
-repair commit `aa81281edf15fc1516f036ef9850a39b7ee669d0`. Kernel
-`kaseichou/molgap-pcqm-k1-shadow-cache` version 2 was submitted once and
-confirmed `RUNNING`. The retry still reads only official-train `idx/smiles`;
-no shadow Gap label, official validation, or test-dev role is released.
+The frozen one-time audit is now `RUNNING` as Kaggle2 kernel
+`kaseichou/molgap-pcqm-k1-shadow-audit` version 1. It loads only the exact
+accepted Full-GPS and K1 checkpoints, saves both prediction vectors before its
+sole shadow-label access, and performs no optimization. Passing releases only
+the already prepared 500K bridge to desktop; failure closes K1.
