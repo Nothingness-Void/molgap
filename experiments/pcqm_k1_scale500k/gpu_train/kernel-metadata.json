@@ -1,0 +1,15 @@
+{
+  "id": "kaseichou/molgap-pcqm-k1-scale500k-s42",
+  "title": "MolGap PCQM K1 Scale500K S42",
+  "code_file": "run_train.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["kaseichou/molgap-pcqm-k1-scale500k-source"],
+  "competition_sources": [],
+  "kernel_sources": ["kaseichou/molgap-pcqm-k1-scale500k-cache"],
+  "model_sources": []
+}
