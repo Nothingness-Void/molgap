@@ -1,0 +1,22 @@
+{
+  "format": "molgap-qm9-cardinality-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-qm9-cardinality-channel-s42",
+  "kernel_version": 2,
+  "state": "ERROR",
+  "accepted": false,
+  "acceptance_status": "not_run_incomplete_error",
+  "output_root": "platforms/_records/kaggle/training/qm9_cardinality_channel_s42_v2",
+  "source_commit": "db0c458e1f2ca3df6f077547cc1fc8b07f8937a1",
+  "source_tree_sha256": "1c1003bbe1d50eaf3d240a97abd6d39268f696e53a7b2b2bf32749f7e1d0095b",
+  "cache_aggregate_sha256": "80a2d256ccbbde8de5862e7ad4fd61ea7c1255a19217e590033a94cabe1c6340",
+  "launch_manifest_sha256": "792c14376f8750a8e1d78ee756826a28b971ae7f2ec297c20c59952567c98275",
+  "failure": "Zero-return identity failed for size_control: max_abs_difference=6.103515625e-05",
+  "baseline_epochs_completed": 40,
+  "baseline_best_epoch": 38,
+  "baseline_validation_gap_mae_eV": 0.1304904967546463,
+  "log_sha256": "b22ac1034408259ecccfaaab13e1caabb44cf9f2e7b57ffed76a57f1c0fa348c",
+  "official_pcqm_roles_read": false,
+  "test_role_read": false,
+  "local_model_execution": false,
+  "sent_once": true
+}
