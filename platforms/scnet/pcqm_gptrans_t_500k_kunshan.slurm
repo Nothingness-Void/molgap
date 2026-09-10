@@ -22,6 +22,7 @@ test -f "$CACHE/manifest.json"
 test -f "$CACHE/acceptance.json"
 test -f "$CODE/src/molgap/gptrans.py"
 test -f "$CODE/src/molgap/pcqm_gptrans_scale.py"
+test -f "$CODE/src/molgap/pcqm_wedge.py"
 mkdir -p "$OUTPUT" "$ROOT/logs"
 cd "$ROOT"
 

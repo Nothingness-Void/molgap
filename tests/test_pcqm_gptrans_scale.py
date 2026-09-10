@@ -67,6 +67,10 @@ def test_thin_entrypoint_and_sealed_protocol() -> None:
     assert "Official validation, test-dev, and test-challenge are not read" in protocol
     assert "physical batch 128" in protocol
     assert "offline multi-hop edge-sequence" in protocol
+    slurm = (
+        ROOT / "platforms" / "scnet" / "pcqm_gptrans_t_500k_kunshan.slurm"
+    ).read_text(encoding="utf-8")
+    assert 'test -f "$CODE/src/molgap/pcqm_wedge.py"' in slurm
 
 
 def test_largest_graph_gate_uses_every_training_shard(tmp_path: Path) -> None:
