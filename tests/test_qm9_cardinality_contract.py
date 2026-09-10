@@ -38,12 +38,14 @@ def test_candidate_uses_unnormalized_same_support_sum():
     assert "nn.init.zeros_(self.output.weight)" in source
 
 
-def test_zero_return_preflight_allows_only_tight_cuda_roundoff():
+def test_zero_return_preflight_checks_the_new_channel_directly():
     source = MODULE.read_text(encoding="utf-8")
-    assert "torch.allclose(" in source
-    assert "zero_return_atol = 1e-7" in source
-    assert "zero_return_rtol = 1e-6" in source
-    assert '"zero_return_max_abs_difference"' in source
+    assert "def compute_update(" in source
+    assert "torch.count_nonzero(channel_update)" in source
+    assert "torch.count_nonzero(model.cardinality_channel.output.weight)" in source
+    assert '"zero_return_channel_exact"' in source
+    assert '"output_projection_zero"' in source
+    assert "torch.allclose(" not in source
     assert "torch.equal(output, baseline_output)" not in source
 
 

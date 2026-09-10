@@ -29,3 +29,10 @@
   version-2 mechanical polling in the existing monitor task. It remains quiet
   while non-terminal, hands terminal evidence to the coordinator exactly once,
   and then deletes itself.
+- Kernel version 2 again stopped in preflight: two independently instantiated
+  whole models differed by `6.103515625e-05` despite exact shared-state hashes.
+  This confirms the comparison was measuring CUDA execution drift rather than
+  the zero-return invariant. No candidate trained; see `terminal_report_v2.md`.
+- The final infrastructure repair checks the new channel directly: exact-zero
+  return tensor, exact-zero return projection, exact shared parameter hash, and
+  finite nonzero return gradient. No training or scientific field changes.

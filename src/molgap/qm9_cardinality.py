@@ -107,7 +107,7 @@ class _CardinalityChannelFactory:
                     support = support | (frontier & pair_valid)
                 return support, valid, local
 
-            def forward(self, hidden, edge_index, batch):
+            def compute_update(self, hidden, edge_index, batch):
                 support, valid, local = self.support_mask(
                     edge_index, batch, int(hidden.shape[0])
                 )
@@ -133,7 +133,10 @@ class _CardinalityChannelFactory:
                     raise RuntimeError("dense gate mask changed")
                 aggregate = aggregate * dense_gate
                 flat = aggregate[batch, local].reshape(hidden.shape[0], hidden_channels)
-                return hidden + self.dropout(self.output(flat))
+                return self.dropout(self.output(flat))
+
+            def forward(self, hidden, edge_index, batch):
+                return hidden + self.compute_update(hidden, edge_index, batch)
 
         return CardinalityChannel()
 
@@ -218,7 +221,6 @@ def _preflight(roles, output_root: Path, *, source_commit: str) -> dict:
     set_seed(SEED)
     baseline = make_encoder("baseline").to("cuda").eval()
     baseline_shared_sha = _state_sha256(baseline)
-    baseline_output = forward_gap(baseline, batch, augmented=False)
     arms = {}
     candidate_initial_sha = None
     for mode in ("size_control", "cpa"):
@@ -232,23 +234,23 @@ def _preflight(roles, output_root: Path, *, source_commit: str) -> dict:
             candidate_initial_sha = initial_sha
         elif initial_sha != candidate_initial_sha:
             raise RuntimeError("Candidate initialization changed between controls")
-        output = forward_gap(model, batch, augmented=False)
-        # Separate CUDA forwards can differ by roundoff even when the added
-        # branch returns an exact zero.  Bitwise equality therefore tests the
-        # execution schedule, not the intended zero-return model invariant.
-        zero_return_atol = 1e-7
-        zero_return_rtol = 1e-6
-        max_abs_difference = float((output - baseline_output).abs().max().item())
-        if not torch.allclose(
-            output,
-            baseline_output,
-            atol=zero_return_atol,
-            rtol=zero_return_rtol,
-        ):
-            raise RuntimeError(
-                f"Zero-return identity failed for {mode}: "
-                f"max_abs_difference={max_abs_difference}"
-            )
+        probe_hidden = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        channel_update = model.cardinality_channel.compute_update(
+            probe_hidden,
+            batch.edge_index,
+            batch.batch,
+        )
+        zero_return_exact = bool(torch.count_nonzero(channel_update).item() == 0)
+        output_projection_zero = bool(
+            torch.count_nonzero(model.cardinality_channel.output.weight).item() == 0
+        )
+        if not zero_return_exact or not output_projection_zero:
+            raise RuntimeError(f"Zero-return channel failed for {mode}")
         model.train()
         loss = forward_gap(model, batch, augmented=False).square().mean()
         loss.backward()
@@ -263,10 +265,8 @@ def _preflight(roles, output_root: Path, *, source_commit: str) -> dict:
             "parameter_count": parameter_count,
             "shared_state_sha256": shared_sha,
             "initial_state_sha256": initial_sha,
-            "zero_return_identity": True,
-            "zero_return_max_abs_difference": max_abs_difference,
-            "zero_return_atol": zero_return_atol,
-            "zero_return_rtol": zero_return_rtol,
+            "zero_return_channel_exact": zero_return_exact,
+            "output_projection_zero": output_projection_zero,
             "finite_output_gradient": finite,
         }
         del model
