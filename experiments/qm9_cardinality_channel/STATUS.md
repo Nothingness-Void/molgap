@@ -10,3 +10,7 @@
 - Kaggle2 T4x2 kernel `kaseichou/molgap-qm9-cardinality-channel-s42`, version 1,
   was submitted once and observed `RUNNING`. It is the only released task for
   this protocol; see `results/gpu_seed42_launch.json`.
+- Persistent Luna Max heartbeat `molgap-qm9-cardinality-monitor` owns mechanical
+  polling in task `01a04479-ca44-7d31-95c4-6be485f256cc`; terminal evidence is
+  handed once to coordinator `01a025a1-3b87-7781-8a91-f183193f7865`, then the
+  heartbeat deletes itself.
