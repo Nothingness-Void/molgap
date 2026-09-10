@@ -40,7 +40,10 @@ checkpoint update, threshold selection, or architecture change is allowed.
 
 K1 passes only if its shadow MAE is strictly lower than full GPS, the paired
 bootstrap interval excludes zero in K1's favor, and inference cost remains
-within the existing resource envelope. A reversal or interval including zero
+within the existing resource envelope. Before label access this envelope is
+frozen as K1/full-GPS inference time ratio at most `1.25` and at least `15%`
+memory reserve for both models. The paired bootstrap uses seed `2026091142`
+and 20,000 row-level replicates. A reversal or interval including zero
 closes K1 without another shadow, seed, or tuning run. Passing authorizes only
 a desktop handoff for a separate scale-budget decision, not server full-scale
 training or official validation/test-dev access.
