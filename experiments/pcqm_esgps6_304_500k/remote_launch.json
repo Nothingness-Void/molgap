@@ -1,0 +1,37 @@
+{
+  "format": "molgap-pcqm-esgps6-304-500k-launch-v1",
+  "launch_date": "2026-09-10",
+  "platform": "SCNet Kunshan BW-1",
+  "source_commit": "01b26e2",
+  "branch": "codex/scnet-esgps6-304-500k",
+  "remote_root_role": "dedicated account result root with accepted-cache link",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "jobs": {
+    "cache_acceptance": 121681655,
+    "batch128_preflight": 121681671,
+    "scratch60": 121681687,
+    "relation20_gap40": 121681724
+  },
+  "dependency_order": [
+    "cache_acceptance",
+    "batch128_preflight",
+    [
+      "scratch60",
+      "relation20_gap40"
+    ]
+  ],
+  "duplicate_submission": {
+    "job_id": 121681797,
+    "state": "CANCELLED",
+    "elapsed": "00:00:00",
+    "reason": "The first sbatch succeeded after the local SSH call timed out"
+  },
+  "resource_diagnostics": {
+    "requested_cpus_per_worker": 8,
+    "loader_workers": 4,
+    "prefetch_factor": 4,
+    "report_if_first_epoch_exceeds_s": 1200,
+    "report_if_average_cpu_cores_below": 1.5
+  },
+  "monitor_automation": "scnet-esgps6-304-500k-monitor"
+}
