@@ -25,3 +25,7 @@
   `db0c458e1f2ca3df6f077547cc1fc8b07f8937a1` passed 22 static contract tests.
   Source dataset version 2 reached `ready`; kernel version 2 was submitted once
   and observed `RUNNING`. See `results/gpu_seed42_v2_launch.json`.
+- Persistent Luna Max heartbeat `molgap-qm9-cardinality-v2-monitor` now owns
+  version-2 mechanical polling in the existing monitor task. It remains quiet
+  while non-terminal, hands terminal evidence to the coordinator exactly once,
+  and then deletes itself.
