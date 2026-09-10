@@ -8,6 +8,9 @@ import sys
 from pathlib import Path
 
 
+PASCAL_COMPAT_RESTART = "MOLGAP_K1_SHADOW_PASCAL_RESTART"
+
+
 def find_one(pattern: str) -> Path:
     matches = list(Path("/kaggle/input").rglob(pattern))
     if len(matches) != 1:
@@ -28,7 +31,40 @@ def source_root() -> Path:
     return modules[0].parents[1]
 
 
+def ensure_pascal_compatible_torch() -> None:
+    """Replace Kaggle's stock Torch only when a P100 cannot execute it."""
+    import torch
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("Kaggle did not allocate a GPU")
+    if torch.cuda.get_device_capability(0) != (6, 0):
+        return
+    if "sm_60" in set(torch.cuda.get_arch_list()):
+        return
+    if os.environ.get(PASCAL_COMPAT_RESTART) == "1":
+        raise RuntimeError("P100 compatibility install still lacks sm_60")
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--quiet",
+            "--no-cache-dir",
+            "--no-deps",
+            "--force-reinstall",
+            "torch==2.7.1",
+            "nvidia-cusparselt-cu12==0.6.3",
+            "--index-url",
+            "https://download.pytorch.org/whl/cu126",
+        ]
+    )
+    os.environ[PASCAL_COMPAT_RESTART] = "1"
+    os.execv(sys.executable, [sys.executable, *sys.argv])
+
+
 def main() -> None:
+    ensure_pascal_compatible_torch()
     subprocess.check_call(
         [
             sys.executable,

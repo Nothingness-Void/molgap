@@ -58,7 +58,15 @@ def test_predictions_are_frozen_before_label_access():
 
 
 def test_gpu_kernel_uses_only_frozen_inputs():
-    ast.parse(ENTRY.read_text(encoding="utf-8"))
+    source = ENTRY.read_text(encoding="utf-8")
+    ast.parse(source)
+    assert 'torch.cuda.get_device_capability(0) != (6, 0)' in source
+    assert '"sm_60" in set(torch.cuda.get_arch_list())' in source
+    assert '"torch==2.7.1"' in source
+    assert '"https://download.pytorch.org/whl/cu126"' in source
+    assert source.index("ensure_pascal_compatible_torch()") < source.index(
+        '"torch-geometric==2.6.1"'
+    )
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
     assert metadata["enable_gpu"] == "true"
     assert metadata["dataset_sources"] == [
