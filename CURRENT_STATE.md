@@ -66,12 +66,20 @@ The matched QM9 adaptive local-denoising screen completed and is closed. Its
 adaptive arm was numerically best but missed both frozen material-effect gates;
 no PCQM transfer or extra seed is authorized. The accepted comparison and
 attribution are in `experiments/qm9_adaptive_denoising/decision.md`.
-The next server-owned Track C question is the pure-2D cardinality-preserving
-channel screen frozen in `experiments/qm9_cardinality_channel/protocol.md`.
-It retains EdgeState GPS9 and compares a shared K<=3 unnormalized source-value
-sum against both a fresh baseline and an explicit support-size control. It is
-independent of the desktop 304-wide/pretraining/full-scale work reported by the
-user; those in-progress results do not alter the accepted incumbent yet.
+The pure-2D cardinality-preserving channel screen is closed. Its source-content
+arm recovered most of the parameter-matched size-control regression but did not
+beat the fresh EdgeState GPS9 baseline, so the result does not justify a PCQM
+transfer. The accepted evidence and attribution are in
+`experiments/qm9_cardinality_channel/decision.md`.
+The next server-owned Track C question is a multi-slot Neural-Atom global mixer
+that replaces dense atom-to-atom attention while retaining the EdgeState local
+path. The frozen QM9 comparison and its causal one-slot control are in
+`experiments/qm9_neural_atom_mixer/protocol.md`. It is attempt 1 of at most 3
+new scientific routes authorized after the cardinality decision; infrastructure
+retries do not consume that budget.
+This work is independent of the desktop 304-wide/pretraining/full-scale work
+reported by the user; those in-progress results do not alter the accepted
+incumbent yet.
 SCNet and Fragment-State work are desktop-owned and are excluded from this
 server queue.
 The user authorized a bounded autonomous server discovery window on 2026-09-10.

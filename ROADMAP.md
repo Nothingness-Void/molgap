@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-CARDINALITY-CHANNEL | Run the frozen pure-2D QM9 EdgeState GPS9 baseline/size-control/CPA comparison on Kaggle2 | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact mechanism |
+| P1 | C-NEURAL-ATOM-MIXER | Run the frozen pure-2D QM9 EdgeState full-GPS/one-slot/four-slot global-communication comparison on Kaggle2 | Accepted seed-42 result either nominates one PCQM-100K transfer or closes the exact mechanism |
 | P2 | B-SHADOW-AUDIT | Audit only a PCQM-100K method that clears its material nomination gate | Shadow direction agrees; no scale-up is automatic |
 | P3 | B-DESKTOP-HANDOFF | Hand exactly one strong transfer to `molgap-desktop` | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -49,11 +49,16 @@ seed, or noise-parameter variant. Any further Track C admission requires a new
 evidence review and a materially different mechanism. SCNet/Fragment-State
 work belongs to desktop and is ignored here.
 
-That evidence review selected the cardinality-preserving channel in
-`experiments/qm9_cardinality_channel/evidence_selection.md`. Its adjacent
-protocol freezes one pure-2D EdgeState GPS9 question, a same-support size
-control, and a fresh comparator. Desktop width/pretraining/full-scale work is
-not a control and cannot change this screen.
+The cardinality-preserving channel is closed by
+`experiments/qm9_cardinality_channel/decision.md`. The size-only control
+regressed and source content recovered most of that loss, but the candidate did
+not beat the fresh EdgeState GPS9 comparator. The exact support-size/source-sum
+mechanism receives no hop, placement, width, seed, optimizer, or schedule retry.
+
+The post-failure evidence audit selected one materially different question:
+replace dense atom-to-atom attention with a content-addressed multi-slot
+Neural-Atom communication bottleneck. Its evidence selection and frozen
+one-slot causal control are in `experiments/qm9_neural_atom_mixer/`.
 
 ## Bounded autonomous Track C window
 
@@ -62,7 +67,15 @@ architecture funnel while they are away. This authorization is deliberately
 bounded to one remote GPU task at a time and does not broaden any data,
 platform, seed, or scale boundary.
 
-- A mechanically accepted cardinality result that clears every frozen gate
+After the accepted cardinality failure, the remaining autonomous discovery
+budget is exactly three new scientific routes. The Neural-Atom mixer is route
+1/3. A route consumes one attempt only when a mechanically accepted scientific
+result exists; unchanged-contract infrastructure repairs do not consume an
+attempt. Every scientific failure requires a written attribution and a fresh
+all-history evidence audit before one successor may be frozen. If three routes
+fail, stop and report; do not create a fourth.
+
+- A mechanically accepted active-candidate result that clears every frozen gate
   authorizes the coordinator to freeze and submit exactly one paired
   PCQM-100K transfer with physical batch 128. It does not authorize a shadow
   read, another seed, desktop/full training, or official roles.
