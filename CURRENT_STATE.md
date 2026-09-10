@@ -109,6 +109,11 @@ build and independent no-model acceptance, then exactly one paired T4x2
 training task. Full-scale work remains desktop-owned. The audit decision and
 scale contract are `experiments/pcqm_k1_shadow/decision.md` and
 `experiments/pcqm_k1_scale500k/protocol.md`.
+The Kaggle2 500K cache attempt reached no graph construction: cache v1 failed
+source-tree resolution and the single unchanged-contract retry v2 failed
+because RDKit was omitted from the isolated CPU dependency install. No GPU job
+was submitted and K1 has no 500K result. The infrastructure evidence is
+`experiments/pcqm_k1_scale500k/terminal_report_cache_v2.md`.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.
