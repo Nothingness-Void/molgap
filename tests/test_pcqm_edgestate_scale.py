@@ -18,9 +18,11 @@ def test_frozen_equal_exposure_contract() -> None:
     config = EdgeStateScaleConfig()
     config.validate()
     assert config.hidden_channels == 304
-    assert config.num_layers == 9
+    assert config.num_layers == 6
     assert config.num_heads == 4
     assert config.batch_size == 128
+    assert config.loader_workers == 4
+    assert config.prefetch_factor == 4
     assert config.scratch_epochs == config.pretrain_epochs + config.finetune_epochs
     assert (config.scratch_epochs, config.pretrain_epochs, config.finetune_epochs) == (
         60,
@@ -31,7 +33,7 @@ def test_frozen_equal_exposure_contract() -> None:
 
 def test_inference_parameter_count() -> None:
     assert parameter_count(EdgeStateScaleConfig()) == EXPECTED_PARAMETER_COUNT
-    assert EXPECTED_PARAMETER_COUNT == 11_270_993
+    assert EXPECTED_PARAMETER_COUNT == 7_610_945
 
 
 def test_thin_scnet_entrypoint_parses() -> None:

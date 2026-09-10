@@ -29,8 +29,8 @@ module load compiler/dtk/23.10
 module load mpi/openmpi/gcc-9.3.0/4.1.5
 export PYTHONNOUSERSITE=1
 export PYTHONPATH="$CODE/src${PYTHONPATH:+:$PYTHONPATH}"
-export OMP_NUM_THREADS=4
-export MKL_NUM_THREADS=4
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 PYTHON=/public/home/scnaqkfcy3/molgap-envs/graphstate-dtk2310-py310/bin/python
 RUNNER="$CODE/platforms/scnet/run_pcqm_edgestate304_500k.py"
