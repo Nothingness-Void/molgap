@@ -1,0 +1,17 @@
+{
+  "id": "kaseichou/molgap-pcqm-k1-scale500k-cache",
+  "title": "MolGap PCQM K1 Scale500K Cache",
+  "code_file": "run_cache.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "kaseichou/molgap-pcqm-k1-scale500k-source",
+    "piero0/pcqm4mv2"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
