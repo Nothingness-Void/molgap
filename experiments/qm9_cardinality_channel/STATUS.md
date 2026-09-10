@@ -40,3 +40,5 @@
   `9b0393bc9212671cc727a8e23391d7d882c472ff` passed 22 static contract tests.
   Source dataset version 3 reached `ready`; kernel version 3 was submitted once
   and observed `QUEUED`. See `results/gpu_seed42_v3_launch.json`.
+- Persistent Luna Max heartbeat `molgap-qm9-cardinality-v3-monitor` owns only
+  version-3 mechanical polling and will terminate after one terminal handoff.
