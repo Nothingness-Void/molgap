@@ -36,3 +36,7 @@
 - The final infrastructure repair checks the new channel directly: exact-zero
   return tensor, exact-zero return projection, exact shared parameter hash, and
   finite nonzero return gradient. No training or scientific field changes.
+- Repaired source commit
+  `9b0393bc9212671cc727a8e23391d7d882c472ff` passed 22 static contract tests.
+  Source dataset version 3 reached `ready`; kernel version 3 was submitted once
+  and observed `QUEUED`. See `results/gpu_seed42_v3_launch.json`.
