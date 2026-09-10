@@ -1,0 +1,34 @@
+{
+  "format": "molgap-pcqm-edgestate304-500k-launch-v1",
+  "launch_date": "2026-09-10",
+  "platform": "SCNet Kunshan BW-1",
+  "code_commit": "2bf8ec5",
+  "branch": "codex/scnet-edgestate304-500k",
+  "remote_root_role": "dedicated account result root",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "jobs": {
+    "cache_acceptance": 121673179,
+    "batch128_preflight": 121673290,
+    "scratch60": 121673317,
+    "relation20_gap40": 121673332
+  },
+  "dependency_order": [
+    "cache_acceptance",
+    "batch128_preflight",
+    [
+      "scratch60",
+      "relation20_gap40"
+    ]
+  ],
+  "cache_acceptance": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:02:19",
+    "accepted": true,
+    "train_rows": 500000,
+    "development_rows": 50000,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false
+  },
+  "monitor_automation": "scnet-edgestate304-500k-monitor"
+}

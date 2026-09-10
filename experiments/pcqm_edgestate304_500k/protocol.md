@@ -45,6 +45,12 @@ fresh matched width-192 arm is not included. Report the paired pretraining
 delta and absolute development MAEs separately; do not compare the 50K
 development score numerically with official-validation results.
 
+The pretraining arm is retained only if its best development MAE improves over
+the paired scratch arm by at least `0.001 eV`, with finite training throughout
+and no cache or identity mismatch. Smaller changes are recorded as descriptive
+evidence and do not authorize another scale-up. Throughput and convergence
+speed are secondary diagnostics, not substitutes for this primary gate.
+
 The run is resumable at every completed epoch. A preflight must pass a real
 batch-128 forward/backward step for both objectives before either training job
 is released.
