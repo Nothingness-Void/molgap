@@ -1,4 +1,9 @@
+from pathlib import Path
+
 from molgap.pcqm_k1_scale import (
+    FIXED_500K_DATASET,
+    FIXED_500K_GEOMETRY_SHA256,
+    FIXED_500K_MANIFEST_SHA256,
     ROLE_ROWS_READ,
     SCALE_TRAIN_ROWS,
     SCNET_REFERENCE_CACHE_SHA256,
@@ -10,6 +15,9 @@ from molgap.pcqm_k1_scale import (
     build_scale_split,
     index_sha256,
 )
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_scale_split_matches_scnet_roles_exactly():
@@ -52,3 +60,22 @@ def test_unsanitized_ogb_fallback_contract():
     assert payload["edge_feat"].shape == (18, 3)
     assert len(UNSANITIZED_OGB_SOURCE_INDICES) == 10
     assert index_sha256(UNSANITIZED_OGB_SOURCE_INDICES) == UNSANITIZED_OGB_INDEX_SHA256
+
+
+def test_scale_runner_uses_accepted_cross_platform_fixed_dataset():
+    import json
+
+    acceptance = json.loads(
+        (
+            REPO_ROOT
+            / "platforms/_records/kaggle/pcqm_fixed_datasets_kaggle2_v1/acceptance.json"
+        ).read_text(encoding="utf-8")
+    )["datasets"]["500k"]
+
+    assert FIXED_500K_DATASET == acceptance["ref"]
+    assert FIXED_500K_MANIFEST_SHA256 == acceptance["manifest_sha256"]
+    assert FIXED_500K_GEOMETRY_SHA256 == (
+        "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d"
+    )
+    assert SCNET_REFERENCE_CACHE_SHA256 == acceptance["scnet_aggregate_sha256"]
+    assert acceptance["bytewise_identical_to_scnet"] is True

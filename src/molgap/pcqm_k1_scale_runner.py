@@ -11,11 +11,12 @@ import numpy as np
 
 from .pcqm_gap_data import sha256_file
 from .pcqm_k1_scale import (
+    FIXED_500K_DATASET,
+    FIXED_500K_GEOMETRY_SHA256,
+    FIXED_500K_MANIFEST_SHA256,
     SCALE_TRAIN_ROWS,
     SCNET_REFERENCE_CACHE_SHA256,
-    TRAIN_SHA256,
     VALIDATION_ROWS,
-    VALIDATION_SHA256,
 )
 from .screen_policy import validate_paired_screen_contract, validate_screen_arm
 
@@ -27,7 +28,7 @@ PRECISION = "fp32"
 LOADER_WORKERS = 2
 MIN_GAIN_EV = 0.001
 EXPECTED_PARAMETERS = {"full_gps": 4_771_073, "neural_atom_k1": 3_658_817}
-TASK_ID = "pcqm-k1-scale500k-s42-v3"
+TASK_ID = "pcqm-k1-scale500k-fixed-s42-v4"
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -44,49 +45,122 @@ def find_cache(expected_sha256: str) -> tuple[Path, dict]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        if payload.get("format") == "molgap-pcqm-k1-scale500k-cache-v4":
+        if (
+            payload.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+            and payload.get("identity", {}).get("name")
+            == "ogb-train-500k-scnet-v1"
+        ):
             candidates.append((path.parent, payload))
     if len(candidates) != 1:
         raise FileNotFoundError(f"Expected one scale cache, found {candidates}")
     root, manifest = candidates[0]
-    if manifest.get("aggregate_sha256") != expected_sha256:
-        raise RuntimeError("Scale-cache aggregate identity changed")
-    if manifest.get("train_index_sha256") != TRAIN_SHA256:
-        raise RuntimeError("SCNet-matched train identity changed")
-    if manifest.get("validation_index_sha256") != VALIDATION_SHA256:
-        raise RuntimeError("SCNet-matched development identity changed")
+    manifest_path = root / "manifest.json"
+    if expected_sha256 != FIXED_500K_MANIFEST_SHA256:
+        raise RuntimeError("Expected fixed-manifest identity changed")
+    if sha256_file(manifest_path) != expected_sha256:
+        raise RuntimeError("Fixed 500K manifest content changed")
+    if manifest.get("status") != "complete":
+        raise RuntimeError("Fixed 500K manifest is incomplete")
+    identity = manifest.get("identity", {})
+    if identity != {
+        "name": "ogb-train-500k-scnet-v1",
+        "train_rows": SCALE_TRAIN_ROWS,
+        "development_rows": VALIDATION_ROWS,
+        "kaggle1": True,
+        "scnet_compatible": True,
+    }:
+        raise RuntimeError("Fixed 500K identity changed")
+    roles = manifest.get("roles", {})
+    if roles.get("train") != {
+        "source_idx_start": 0,
+        "source_idx_stop": SCALE_TRAIN_ROWS,
+        "rows": SCALE_TRAIN_ROWS,
+    } or roles.get("development") != {
+        "source_idx_start": SCALE_TRAIN_ROWS,
+        "source_idx_stop": SCALE_TRAIN_ROWS + VALIDATION_ROWS,
+        "rows": VALIDATION_ROWS,
+    }:
+        raise RuntimeError("Fixed 500K row roles changed")
+    graph_contract = manifest.get("graph_contract", {})
+    for key, expected in {
+        "feature_schema": "ogb",
+        "node_feature_dim": 9,
+        "edge_feature_dim": 3,
+        "rwse_dim": 16,
+        "geometry_method": "ETKDGv3",
+        "optimization_method": "MMFF94s",
+    }.items():
+        if graph_contract.get(key) != expected:
+            raise RuntimeError(f"Fixed graph contract changed: {key}")
+    if manifest.get("geometry_aggregate_sha256") != FIXED_500K_GEOMETRY_SHA256:
+        raise RuntimeError("Fixed geometry aggregate changed")
     if (
-        manifest.get("scnet_reference_cache_aggregate_sha256")
+        manifest.get("scnet_compatibility", {}).get("aggregate_sha256")
         != SCNET_REFERENCE_CACHE_SHA256
     ):
         raise RuntimeError("SCNet reference cache identity changed")
-    for key in ("official_validation_role_read", "test_dev_role_read", "shadow_labels_read"):
+    if manifest.get("scnet_compatibility", {}).get("bytewise_identical_geometry_shards") is not True:
+        raise RuntimeError("SCNet byte identity changed")
+    if manifest.get("source_indices_embedded_in_graphs") is not True:
+        raise RuntimeError("Fixed graphs lost source indices")
+    for key in (
+        "official_validation_role_read",
+        "test_dev_role_read",
+        "test_challenge_role_read",
+    ):
         if manifest.get(key) is not False:
             raise RuntimeError(f"Sealed role changed: {key}")
     return root, manifest
 
 
-def load_roles(root: Path, manifest: dict) -> dict[str, list]:
+def load_roles(root: Path, manifest: dict):
     import torch
+    from torch.utils.data import ConcatDataset
+    from torch_geometric.data import InMemoryDataset
+
+    class PackedGraphDataset(InMemoryDataset):
+        def __init__(self, path: Path):
+            super().__init__(root=None)
+            self.data, self.slices = torch.load(
+                path, map_location="cpu", weights_only=False
+            )
 
     roles = {"train": [], "validation": []}
-    aggregate = hashlib.sha256()
-    for shard in manifest["shards"]:
+    fixed_aggregate = hashlib.sha256()
+    scnet_aggregate = hashlib.sha256()
+    for shard in manifest["geometry_shards"]:
         path = root / shard["file"]
         if sha256_file(path) != shard["sha256"]:
             raise RuntimeError(f"Scale shard changed: {path.name}")
-        payload = torch.load(path, map_location="cpu", weights_only=False)
-        if len(payload) != shard["graph_count"]:
+        payload = PackedGraphDataset(path)
+        if len(payload) != shard["rows"]:
             raise RuntimeError(f"Scale shard count changed: {path.name}")
-        roles[shard["role"]].extend(payload)
-        aggregate.update(
-            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode("ascii")
+        role = "validation" if shard["role"] == "development" else shard["role"]
+        roles[role].append(payload)
+        fixed_aggregate.update(
+            f"{shard['role']}\tstore/geometry/{shard['file']}\t"
+            f"{shard['sha256']}\n".encode("ascii")
         )
-    if aggregate.hexdigest() != manifest["aggregate_sha256"]:
-        raise RuntimeError("Scale-cache aggregate recomputation changed")
+        scnet_aggregate.update(
+            f"{shard['role']}\t{shard['file']}\t{shard['sha256']}\n".encode(
+                "ascii"
+            )
+        )
+    if fixed_aggregate.hexdigest() != FIXED_500K_GEOMETRY_SHA256:
+        raise RuntimeError("Fixed geometry aggregate recomputation changed")
+    if scnet_aggregate.hexdigest() != SCNET_REFERENCE_CACHE_SHA256:
+        raise RuntimeError("SCNet aggregate recomputation changed")
+    roles = {role: ConcatDataset(shards) for role, shards in roles.items()}
     if len(roles["train"]) != SCALE_TRAIN_ROWS or len(roles["validation"]) != VALIDATION_ROWS:
         raise RuntimeError("Scale role counts changed")
     return roles
+
+
+def _targets(graphs):
+    import torch
+
+    values = [dataset.data.y.view(-1) for dataset in graphs.datasets]
+    return torch.cat(values)
 
 
 def _contract(arm: str, accelerator: str, cache_sha256: str) -> dict:
@@ -131,15 +205,18 @@ def _evaluate_fp32(model, loader, mean, std):
     model.eval()
     targets = []
     predictions = []
+    source_indices = []
     with torch.no_grad():
         for batch in loader:
             batch = batch.to("cuda", non_blocking=True)
             prediction = forward_gap(model, batch, augmented=False) * std + mean
             targets.append(batch.y.view(-1).cpu())
             predictions.append(prediction.float().cpu())
+            source_indices.append(batch.source_idx.view(-1).long().cpu())
     target = torch.cat(targets)
     prediction = torch.cat(predictions)
-    return float((prediction - target).abs().mean()), target, prediction
+    source_idx = torch.cat(source_indices)
+    return float((prediction - target).abs().mean()), target, prediction, source_idx
 
 
 def train_gap_fp32(
@@ -166,7 +243,7 @@ def train_gap_fp32(
     output.mkdir(parents=True, exist_ok=True)
     model = model.to("cuda")
     initial_sha = state_sha256(model)
-    targets = torch.stack([graph.y.view(()) for graph in roles["train"]])
+    targets = _targets(roles["train"])
     mean = targets.mean().to("cuda")
     std = targets.std().clamp_min(1e-6).to("cuda")
     train_loader = _loader(roles["train"], shuffle=True)
@@ -198,7 +275,7 @@ def train_gap_fp32(
                 (prediction.detach().float() - target.float()).abs().sum()
             )
             rows += int(target.numel())
-        validation_mae, target_eV, prediction_eV = _evaluate_fp32(
+        validation_mae, target_eV, prediction_eV, source_idx = _evaluate_fp32(
             model, validation_loader, mean, std
         )
         improved = validation_mae < best
@@ -208,7 +285,11 @@ def train_gap_fp32(
             atomic_torch_save(output / "best_model.pt", model.state_dict())
             atomic_torch_save(
                 output / "best_validation_payload.pt",
-                {"target_eV": target_eV, "prediction_eV": prediction_eV},
+                {
+                    "source_idx": source_idx,
+                    "target_eV": target_eV,
+                    "prediction_eV": prediction_eV,
+                },
             )
         row = {
             "epoch": epoch,
@@ -279,7 +360,7 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
     if parameters != EXPECTED_PARAMETERS[arm]:
         raise RuntimeError(f"{arm} parameter count changed: {parameters}")
     torch.cuda.reset_peak_memory_stats()
-    batch = next(iter(DataLoader(roles["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))).to("cuda")
+    batch = next(iter(DataLoader(roles["train"], batch_size=BATCH_SIZE))).to("cuda")
     loss = functional.l1_loss(
         forward_gap(model, batch, augmented=False), batch.y.view(-1)
     )
@@ -333,8 +414,20 @@ def aggregate(output: Path, *, source_commit: str, cache_sha256: str) -> dict:
         for arm in EXPECTED_PARAMETERS
     }
     target = payloads["full_gps"]["target_eV"].contiguous()
+    source_idx = payloads["full_gps"]["source_idx"].contiguous()
+    expected_source_idx = torch.arange(
+        SCALE_TRAIN_ROWS,
+        SCALE_TRAIN_ROWS + VALIDATION_ROWS,
+        dtype=torch.long,
+    )
+    if not torch.equal(source_idx, expected_source_idx):
+        raise RuntimeError("Fixed development source indices changed")
     if not torch.equal(target, payloads["neural_atom_k1"]["target_eV"].contiguous()):
         raise RuntimeError("Paired validation targets changed")
+    if not torch.equal(
+        source_idx, payloads["neural_atom_k1"]["source_idx"].contiguous()
+    ):
+        raise RuntimeError("Paired validation source indices changed")
     errors = {
         arm: (payload["prediction_eV"].contiguous() - target).abs()
         for arm, payload in payloads.items()
@@ -345,10 +438,13 @@ def aggregate(output: Path, *, source_commit: str, cache_sha256: str) -> dict:
     gain = mae["full_gps"] - mae["neural_atom_k1"]
     passed = gain >= MIN_GAIN_EV and ci[1] < 0.0
     summary = {
-        "format": "molgap-pcqm-k1-scale500k-result-v3",
+        "format": "molgap-pcqm-k1-scale500k-result-v4",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
+        "fixed_dataset": FIXED_500K_DATASET,
+        "fixed_geometry_aggregate_sha256": FIXED_500K_GEOMETRY_SHA256,
+        "scnet_aggregate_sha256": SCNET_REFERENCE_CACHE_SHA256,
         "precision": PRECISION,
         "loader_workers_per_arm": LOADER_WORKERS,
         "results": results,

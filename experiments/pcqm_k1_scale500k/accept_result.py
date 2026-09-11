@@ -9,9 +9,12 @@ from pathlib import Path
 from molgap.pcqm_gap_data import sha256_file
 from molgap.pcqm_k1_scale_runner import (
     EXPECTED_PARAMETERS,
+    FIXED_500K_DATASET,
+    FIXED_500K_GEOMETRY_SHA256,
     LOADER_WORKERS,
     MIN_GAIN_EV,
     PRECISION,
+    SCNET_REFERENCE_CACHE_SHA256,
 )
 from molgap.pcqm_k1_scale import VALIDATION_ROWS
 from molgap.pcqm_k1_shadow_audit import paired_bootstrap
@@ -25,10 +28,13 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
     metrics = json.loads((root / "metrics.json").read_text(encoding="utf-8"))
     completion = json.loads((root / "completion_manifest.json").read_text(encoding="utf-8"))
     for key, expected in {
-        "format": "molgap-pcqm-k1-scale500k-result-v3",
+        "format": "molgap-pcqm-k1-scale500k-result-v4",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
+        "fixed_dataset": FIXED_500K_DATASET,
+        "fixed_geometry_aggregate_sha256": FIXED_500K_GEOMETRY_SHA256,
+        "scnet_aggregate_sha256": SCNET_REFERENCE_CACHE_SHA256,
         "minimum_gain_eV": MIN_GAIN_EV,
         "precision": PRECISION,
         "loader_workers_per_arm": LOADER_WORKERS,
@@ -65,8 +71,18 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
             raise RuntimeError(f"{arm} payload SHA changed")
         payloads[arm] = torch.load(payload, map_location="cpu", weights_only=False)
     target = payloads["full_gps"]["target_eV"].contiguous()
+    source_idx = payloads["full_gps"]["source_idx"].contiguous()
+    expected_source_idx = torch.arange(
+        500_000, 500_000 + VALIDATION_ROWS, dtype=torch.long
+    )
+    if not torch.equal(source_idx, expected_source_idx):
+        raise RuntimeError("Fixed development source indices changed")
     if target.numel() != VALIDATION_ROWS or not torch.equal(target, payloads["neural_atom_k1"]["target_eV"].contiguous()):
         raise RuntimeError("Scale validation alignment changed")
+    if not torch.equal(
+        source_idx, payloads["neural_atom_k1"]["source_idx"].contiguous()
+    ):
+        raise RuntimeError("Scale source-index alignment changed")
     errors = {
         arm: (value["prediction_eV"].contiguous() - target).abs()
         for arm, value in payloads.items()
@@ -85,10 +101,13 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
         if sha256_file(root / relative) != expected:
             raise RuntimeError(f"Artifact changed: {relative}")
     return {
-        "format": "molgap-pcqm-k1-scale500k-acceptance-v2",
+        "format": "molgap-pcqm-k1-scale500k-acceptance-v3",
         "accepted": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
+        "fixed_dataset": FIXED_500K_DATASET,
+        "fixed_geometry_aggregate_sha256": FIXED_500K_GEOMETRY_SHA256,
+        "scnet_aggregate_sha256": SCNET_REFERENCE_CACHE_SHA256,
         "recomputed_validation_gap_mae_eV": mae,
         "recomputed_paired_gain_full_minus_k1_eV": gain,
         "recomputed_paired_bootstrap_95_ci_k1_minus_full_eV": list(ci),
