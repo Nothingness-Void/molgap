@@ -3,12 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 
 from molgap.pcqm_gap_data import sha256_file
 from molgap.pcqm_k1_scale_runner import (
     EXPECTED_PARAMETERS,
+    EPOCHS,
     FIXED_500K_DATASET,
     FIXED_500K_GEOMETRY_SHA256,
     LOADER_WORKERS,
@@ -66,6 +68,59 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
             raise RuntimeError(f"{arm} optimized runtime contract changed")
         if result["preflight"]["memory_reserve_fraction"] < 0.15:
             raise RuntimeError(f"{arm} memory reserve failed")
+        if result["preflight"].get("finite_forward_backward") is not True:
+            raise RuntimeError(f"{arm} preflight finiteness changed")
+        training = result["training"]
+        if training.get("epochs_completed") != EPOCHS or not 0 <= int(
+            training.get("best_epoch", -1)
+        ) < EPOCHS:
+            raise RuntimeError(f"{arm} epoch completion changed")
+        for key in ("validation_gap_mae_eV", "mean_epoch_seconds"):
+            if not math.isfinite(float(training.get(key, float("nan")))):
+                raise RuntimeError(f"{arm} non-finite training evidence: {key}")
+        for filename, sha_key in (
+            ("best_model.pt", "best_model_sha256"),
+            ("last_checkpoint.pt", "checkpoint_sha256"),
+        ):
+            if sha256_file(root / arm / filename) != training.get(sha_key):
+                raise RuntimeError(f"{arm} {filename} SHA changed")
+        checkpoint = torch.load(
+            root / arm / "last_checkpoint.pt",
+            map_location="cpu",
+            weights_only=False,
+        )
+        for key, expected in {
+            "epoch": EPOCHS - 1,
+            "source_commit": source_commit,
+            "cache_sha256": cache_sha256,
+            "batch_size": 128,
+            "precision": PRECISION,
+            "loader_workers": LOADER_WORKERS,
+            "seed": 42,
+        }.items():
+            if checkpoint.get(key) != expected:
+                raise RuntimeError(f"{arm} checkpoint contract changed: {key}")
+        trace = checkpoint.get("trace", [])
+        if [row.get("epoch") for row in trace] != list(range(EPOCHS)):
+            raise RuntimeError(f"{arm} checkpoint trace is incomplete")
+        for row in trace:
+            for key in (
+                "train_normalized_mae",
+                "validation_gap_mae_eV",
+                "seconds",
+                "learning_rate",
+            ):
+                if not math.isfinite(float(row.get(key, float("nan")))):
+                    raise RuntimeError(f"{arm} non-finite trace value: {key}")
+        if checkpoint.get("scheduler", {}).get("last_epoch") != EPOCHS:
+            raise RuntimeError(f"{arm} scheduler completion changed")
+        for state in checkpoint.get("model", {}).values():
+            if torch.is_tensor(state) and not bool(torch.isfinite(state).all()):
+                raise RuntimeError(f"{arm} model contains non-finite tensors")
+        for state in checkpoint.get("optimizer", {}).get("state", {}).values():
+            for value in state.values():
+                if torch.is_tensor(value) and not bool(torch.isfinite(value).all()):
+                    raise RuntimeError(f"{arm} optimizer contains non-finite tensors")
         payload = root / arm / "best_validation_payload.pt"
         if sha256_file(payload) != result["training"]["payload_sha256"]:
             raise RuntimeError(f"{arm} payload SHA changed")
@@ -79,6 +134,13 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
         raise RuntimeError("Fixed development source indices changed")
     if target.numel() != VALIDATION_ROWS or not torch.equal(target, payloads["neural_atom_k1"]["target_eV"].contiguous()):
         raise RuntimeError("Scale validation alignment changed")
+    for arm, payload in payloads.items():
+        for key in ("target_eV", "prediction_eV"):
+            value = payload.get(key)
+            if value is None or value.numel() != VALIDATION_ROWS or not bool(
+                torch.isfinite(value).all()
+            ):
+                raise RuntimeError(f"{arm} payload is incomplete or non-finite: {key}")
     if not torch.equal(
         source_idx, payloads["neural_atom_k1"]["source_idx"].contiguous()
     ):
@@ -98,7 +160,12 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
     if list(ci) != metrics["paired_bootstrap_95_ci_k1_minus_full_eV"] or passed != metrics["scale_gate_passed"]:
         raise RuntimeError("Scale decision recomputation changed")
     for relative, expected in completion["artifact_sha256"].items():
-        if sha256_file(root / relative) != expected:
+        path = (root / relative).resolve()
+        try:
+            path.relative_to(root.resolve())
+        except ValueError as error:
+            raise RuntimeError(f"Artifact path escaped result root: {relative}") from error
+        if sha256_file(path) != expected:
             raise RuntimeError(f"Artifact changed: {relative}")
     return {
         "format": "molgap-pcqm-k1-scale500k-acceptance-v3",
@@ -112,6 +179,8 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
         "recomputed_paired_gain_full_minus_k1_eV": gain,
         "recomputed_paired_bootstrap_95_ci_k1_minus_full_eV": list(ci),
         "scale_gate_passed": passed,
+        "historical_tail_batch_policy": "partial-final-batch-32-per-epoch",
+        "eligible_as_v4_reference": False,
         "model_inference_executed": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,

@@ -67,3 +67,18 @@ protocol and compute budget. Its schedule must be defined in optimizer steps or
 sample exposure rather than copying 40 epochs onto the 6.76-times larger full
 training role. Passing this bridge is not production promotion and is not an
 official leaderboard result.
+
+## Later execution audit
+
+The optimizer-independent preflight memory value and concurrent T4x2 epoch
+times are relative evidence only: the former omitted AdamW state and the latter
+included validation plus shared CPU/I/O contention. The historical 500K loader
+also emitted one 32-row tail batch per epoch, so this result remains a valid
+paired v3 comparison but is not a reusable v4 cross-platform reference. The
+hardened successor protocol and optimizer-inclusive resource gate are in
+`../pcqm_k1_full/decision.md` and `../pcqm_k1_full/training_contract.json`.
+
+The downloaded source archive contained generated cache/metadata files, but
+all 139 Python sources matched the frozen commit after line-ending
+normalization. Future packaging includes tracked source files only and records
+the deterministic archive SHA-256.
