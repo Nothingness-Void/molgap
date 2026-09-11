@@ -3,7 +3,7 @@
   "authorized_by": "user",
   "authorized_action": "Delete all Kaggle datasets except the accepted cross-platform fixed PCQM 100K and 500K mirrors; retain kernels and local evidence.",
   "created_at": "2026-09-11",
-  "status": "planned",
+  "status": "complete",
   "accepted_fixed_assets": {
     "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
     "geometry_sha256": "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d"
@@ -137,6 +137,33 @@
       ]
     }
   ],
+  "execution": {
+    "completed_at": "2026-09-11T22:49:58.4959202+09:00",
+    "kaseichou": {
+      "requested_delete_count": 36,
+      "deleted_count": 36,
+      "failed_count": 0,
+      "remaining_dataset_count": 2
+    },
+    "nothingnessvoid": {
+      "requested_delete_count": 71,
+      "deleted_count": 71,
+      "failed_count": 0,
+      "remaining_dataset_count": 2,
+      "note": "molgap-pcqm-hop-path-source returned a nonzero status in the bulk pass and was deleted successfully by one exact-target retry."
+    },
+    "verification": {
+      "inventory_method": "Kaggle CLI --mine --page-size 200",
+      "all_retained_statuses": "ready",
+      "unexpected_remaining_refs": [],
+      "retained_refs": [
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+        "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ]
+    }
+  },
   "deletion_is_irreversible": true,
   "kernels_deleted": false,
   "local_records_deleted": false
