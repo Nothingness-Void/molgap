@@ -28,7 +28,7 @@ def main() -> None:
             "--no-deps",
             "torch-geometric==2.6.1",
             "ogb==1.3.6",
-            "rdkit==2025.3.5",
+            "rdkit==2026.3.6",
         ]
     )
     modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_k1_scale_cache.py"))
@@ -54,7 +54,7 @@ def main() -> None:
     output = Path("/kaggle/working/pcqm_k1_scale500k_cache")
     manifest = build_scale_cache(find_one("data.csv"), output, source_commit=commit)
     summary = {
-        "format": "molgap-pcqm-k1-scale500k-cache-run-v1",
+        "format": "molgap-pcqm-k1-scale500k-cache-run-v2",
         "complete": True,
         "source_commit": commit,
         "aggregate_sha256": manifest["aggregate_sha256"],
@@ -62,7 +62,6 @@ def main() -> None:
         "gpu_used": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,
-        "shadow_labels_read": False,
     }
     (output / "run_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=2), flush=True)

@@ -1,5 +1,5 @@
 {
-  "format": "molgap-pcqm-k1-scale500k-execution-v2",
+  "format": "molgap-pcqm-k1-scale500k-execution-v3",
   "prepared_by_branch": "molgap-server",
   "execution_owner": "molgap-server:kaggle2",
   "release_condition": "accepted K1 shadow audit",
@@ -16,12 +16,10 @@
   "candidate_source_commit": "47f99cf9da7fee306f5165175b4020c6c4aa9fb3",
   "expected_parameter_count": 3658817,
   "train_rows": 500000,
-  "validation_rows": 10000,
-  "train_sha256": "13e10854286089f129505bd290df4e9e75453a343448b307d3d7772c34afb334",
-  "added_train_sha256": "eb746a1a36ef6de66e07a003374342e33bea7b2cd216d3aad5036153e3252c12",
-  "base_train_sha256": "d08e04ef73090b77963a6959d7efa22d22a4085e3869a0e13086491b8f8c9678",
-  "validation_sha256": "40b210c03789249f89950d7eb9df6de93ec151903f75077cfa64fe0a94eca5b0",
-  "parent_graph_cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "validation_rows": 50000,
+  "train_sha256": "a9c8b2b698c67f30348c6edbccff00eb9e2c06b064ee4d1a11e607f9531a0f8e",
+  "validation_sha256": "9ae885e5e74d82820d83758942eaf3e6ae2a7dcefbc1f0f4c174ce94c6786bb9",
+  "scnet_reference_cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
   "paired_arms": [
     "full_gps",
     "neural_atom_k1"
@@ -36,7 +34,7 @@
   "learning_rate": 0.0004,
   "weight_decay": 0.00001,
   "minimum_learning_rate": 0.000001,
-  "minimum_gain_eV": 0.0047308445,
+  "minimum_gain_eV": 0.001,
   "official_validation_role_read": false,
   "test_dev_role_read": false,
   "shadow_labels_read_by_scale_job": false

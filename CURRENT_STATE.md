@@ -96,8 +96,12 @@ attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
 Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
 The final route-3/3 discovery attempt remains unused while K1 proceeds through
 its scale bridge.
-The user authorized preparation of a paired K1 500K scale bridge. The bridge
-preserves the accepted 10K development role and changes only train cardinality;
+The user authorized preparation of a paired K1 500K benchmark. The corrected
+contract now matches the accepted SCNet source-index roles exactly: train
+`0..499999` and development `500000..549999`; the earlier random 500K/10K draft
+was never used for GPU training. The one-time shadow audit still provides
+independent evidence for freezing K1, but this 500K run is a common-data
+architecture benchmark rather than an exact nested retention test.
 Kaggle2 kernel `kaseichou/molgap-pcqm-k1-shadow-audit` version 3 completed the
 frozen one-time audit without training. K1 reached `0.1279246956 eV` against
 `0.1340016425 eV` for Full-GPS; the paired delta was `-0.0060769469 eV` with
@@ -109,14 +113,10 @@ build and independent no-model acceptance, then exactly one paired T4x2
 training task. Full-scale work remains desktop-owned. The audit decision and
 scale contract are `experiments/pcqm_k1_shadow/decision.md` and
 `experiments/pcqm_k1_scale500k/protocol.md`.
-The Kaggle2 500K cache attempt reached no graph construction: cache v1 failed
-source-tree resolution and the single unchanged-contract retry v2 failed
-because RDKit was omitted from the isolated CPU dependency install. No GPU job
-was submitted and K1 has no 500K result. The infrastructure evidence is
-`experiments/pcqm_k1_scale500k/terminal_report_cache_v2.md`.
-The user authorized an unchanged-contract cache v3 repair. It adds only the
-missing RDKit dependency plus an OGB molecular-parsing preflight; successful
-cache acceptance still precedes any GPU submission.
+Kaggle2 cache v1-v2 failed before construction; v3 exposed the invalid random
+role draft by stopping on an unparseable Si row. No GPU job was submitted and
+K1 has no 500K result. Cache v4 will build the exact SCNet 500K/50K roles and
+must reject any skipped or replaced row before GPU submission.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.

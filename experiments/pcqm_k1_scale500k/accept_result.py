@@ -13,6 +13,7 @@ from molgap.pcqm_k1_scale_runner import (
     MIN_GAIN_EV,
     PRECISION,
 )
+from molgap.pcqm_k1_scale import VALIDATION_ROWS
 from molgap.pcqm_k1_shadow_audit import paired_bootstrap
 from molgap.screen_policy import validate_paired_screen_contract
 
@@ -24,7 +25,7 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
     metrics = json.loads((root / "metrics.json").read_text(encoding="utf-8"))
     completion = json.loads((root / "completion_manifest.json").read_text(encoding="utf-8"))
     for key, expected in {
-        "format": "molgap-pcqm-k1-scale500k-result-v2",
+        "format": "molgap-pcqm-k1-scale500k-result-v3",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
@@ -64,7 +65,7 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
             raise RuntimeError(f"{arm} payload SHA changed")
         payloads[arm] = torch.load(payload, map_location="cpu", weights_only=False)
     target = payloads["full_gps"]["target_eV"].contiguous()
-    if target.numel() != 10_000 or not torch.equal(target, payloads["neural_atom_k1"]["target_eV"].contiguous()):
+    if target.numel() != VALIDATION_ROWS or not torch.equal(target, payloads["neural_atom_k1"]["target_eV"].contiguous()):
         raise RuntimeError("Scale validation alignment changed")
     errors = {
         arm: (value["prediction_eV"].contiguous() - target).abs()
@@ -84,7 +85,7 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
         if sha256_file(root / relative) != expected:
             raise RuntimeError(f"Artifact changed: {relative}")
     return {
-        "format": "molgap-pcqm-k1-scale500k-acceptance-v1",
+        "format": "molgap-pcqm-k1-scale500k-acceptance-v2",
         "accepted": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,

@@ -10,7 +10,13 @@ from pathlib import Path
 import numpy as np
 
 from .pcqm_gap_data import sha256_file
-from .pcqm_k1_scale import SCALE_TRAIN_ROWS, VALIDATION_ROWS
+from .pcqm_k1_scale import (
+    SCALE_TRAIN_ROWS,
+    SCNET_REFERENCE_CACHE_SHA256,
+    TRAIN_SHA256,
+    VALIDATION_ROWS,
+    VALIDATION_SHA256,
+)
 from .screen_policy import validate_paired_screen_contract, validate_screen_arm
 
 
@@ -19,7 +25,7 @@ BATCH_SIZE = 128
 EPOCHS = 40
 PRECISION = "fp32"
 LOADER_WORKERS = 2
-MIN_GAIN_EV = 0.0047308445
+MIN_GAIN_EV = 0.001
 EXPECTED_PARAMETERS = {"full_gps": 4_771_073, "neural_atom_k1": 3_658_817}
 TASK_ID = "pcqm-k1-scale500k-s42-v3"
 
@@ -38,13 +44,22 @@ def find_cache(expected_sha256: str) -> tuple[Path, dict]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        if payload.get("format") == "molgap-pcqm-k1-scale500k-cache-v1":
+        if payload.get("format") == "molgap-pcqm-k1-scale500k-cache-v3":
             candidates.append((path.parent, payload))
     if len(candidates) != 1:
         raise FileNotFoundError(f"Expected one scale cache, found {candidates}")
     root, manifest = candidates[0]
     if manifest.get("aggregate_sha256") != expected_sha256:
         raise RuntimeError("Scale-cache aggregate identity changed")
+    if manifest.get("train_index_sha256") != TRAIN_SHA256:
+        raise RuntimeError("SCNet-matched train identity changed")
+    if manifest.get("validation_index_sha256") != VALIDATION_SHA256:
+        raise RuntimeError("SCNet-matched development identity changed")
+    if (
+        manifest.get("scnet_reference_cache_aggregate_sha256")
+        != SCNET_REFERENCE_CACHE_SHA256
+    ):
+        raise RuntimeError("SCNet reference cache identity changed")
     for key in ("official_validation_role_read", "test_dev_role_read", "shadow_labels_read"):
         if manifest.get(key) is not False:
             raise RuntimeError(f"Sealed role changed: {key}")

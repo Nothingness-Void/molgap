@@ -7,7 +7,15 @@ import json
 from pathlib import Path
 
 from molgap.pcqm_gap_data import sha256_file
-from molgap.pcqm_k1_scale import SCALE_TRAIN_ROWS, VALIDATION_ROWS, index_sha256
+from molgap.pcqm_k1_scale import (
+    ROLE_ROWS_READ,
+    SCALE_TRAIN_ROWS,
+    SCNET_REFERENCE_CACHE_SHA256,
+    TRAIN_SHA256,
+    VALIDATION_ROWS,
+    VALIDATION_SHA256,
+    index_sha256,
+)
 
 
 def accept(root: Path, *, source_commit: str | None = None) -> dict:
@@ -22,16 +30,29 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
         if not value:
             errors.append(name)
 
-    require(manifest.get("format") == "molgap-pcqm-k1-scale500k-cache-v1", "format")
+    require(manifest.get("format") == "molgap-pcqm-k1-scale500k-cache-v3", "format")
     require(manifest.get("complete") is True, "complete")
     if source_commit:
         require(manifest.get("source_commit") == source_commit, "source_commit")
     require(manifest.get("train_graphs") == SCALE_TRAIN_ROWS, "train_rows")
     require(manifest.get("validation_graphs") == VALIDATION_ROWS, "validation_rows")
+    require(manifest.get("official_train_rows_read") == ROLE_ROWS_READ, "rows_read")
     require(len(split.get("train", [])) == SCALE_TRAIN_ROWS, "split_train_rows")
     require(len(split.get("validation", [])) == VALIDATION_ROWS, "split_validation_rows")
     require(index_sha256(split.get("train", [])) == manifest.get("train_index_sha256"), "train_sha")
     require(index_sha256(split.get("validation", [])) == manifest.get("validation_index_sha256"), "validation_sha")
+    require(manifest.get("train_index_sha256") == TRAIN_SHA256, "scnet_train_sha")
+    require(manifest.get("validation_index_sha256") == VALIDATION_SHA256, "scnet_validation_sha")
+    require(split.get("train") == list(range(SCALE_TRAIN_ROWS)), "scnet_train_rows")
+    require(
+        split.get("validation") == list(range(SCALE_TRAIN_ROWS, ROLE_ROWS_READ)),
+        "scnet_validation_rows",
+    )
+    require(
+        manifest.get("scnet_reference_cache_aggregate_sha256")
+        == SCNET_REFERENCE_CACHE_SHA256,
+        "scnet_reference_cache",
+    )
     require(set(split.get("train", [])).isdisjoint(split.get("validation", [])), "role_overlap")
     require(sha256_file(split_path) == manifest.get("split_file_sha256"), "split_file_sha")
     for key in ("official_validation_role_read", "test_dev_role_read", "shadow_labels_read"):
@@ -40,6 +61,14 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
     require(manifest.get("atom_feature_dim") == 9, "atom_dim")
     require(manifest.get("bond_feature_dim") == 3, "bond_dim")
     require(manifest.get("rwse_dim") == 16, "rwse_dim")
+    require(manifest.get("failed_graph_attempts") == 0, "failed_graph_attempts")
+    require(manifest.get("unresolved_graphs") == 0, "unresolved_graphs")
+    failures_path = root / manifest.get("failures_file", "")
+    require(failures_path.is_file(), "failures_file")
+    if failures_path.is_file():
+        require(sha256_file(failures_path) == manifest.get("failures_file_sha256"), "failures_sha")
+        failures = json.loads(failures_path.read_text(encoding="utf-8"))
+        require(failures.get("attempts") == [], "failures_empty")
 
     aggregate = hashlib.sha256()
     counts = {"train": 0, "validation": 0}
@@ -70,7 +99,7 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
     require(seen_rows["validation"] == split.get("validation"), "validation_row_alignment")
     require(aggregate.hexdigest() == manifest.get("aggregate_sha256"), "aggregate_sha")
     result = {
-        "format": "molgap-pcqm-k1-scale500k-cache-acceptance-v1",
+        "format": "molgap-pcqm-k1-scale500k-cache-acceptance-v2",
         "accepted": not errors,
         "errors": sorted(set(errors)),
         "source_commit": manifest.get("source_commit"),
@@ -79,6 +108,9 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
         "validation_index_sha256": manifest.get("validation_index_sha256"),
         "train_graphs": counts["train"],
         "validation_graphs": counts["validation"],
+        "scnet_reference_cache_aggregate_sha256": manifest.get(
+            "scnet_reference_cache_aggregate_sha256"
+        ),
         "model_inference_executed": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,

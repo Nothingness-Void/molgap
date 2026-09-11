@@ -1,43 +1,32 @@
-# K1 PCQM 500K scale bridge
+# K1 PCQM 500K SCNet-matched benchmark
 
 ## Question
 
-Does the frozen one-slot Neural-Atom K1 architecture retain its paired
-advantage over fresh full GPS when only the training-role cardinality changes
-from 100K to 500K?
+On the exact accepted SCNet 500K/50K source-index roles, does the frozen
+one-slot Neural-Atom K1 architecture outperform a fresh full-GPS control?
 
 ## Release boundary
 
-The user authorized this scale bridge on 2026-09-10 and revised its execution
-owner on 2026-09-11. After the frozen K1 shadow audit passed, `molgap-server`
-was authorized to construct and independently accept the cache, then run the
-paired comparison on Kaggle2. This does not authorize full-scale training or
-official validation/test-dev; those remain desktop-owned decisions.
-
-Cache construction is a CPU-only job. The T4x2 training task may be submitted
-only after the retrieved cache passes the frozen no-model acceptance. Each arm
-receives one T4 and an independent model, RNG, optimizer, and checkpoint tree.
+The user authorized this bounded benchmark for `molgap-server` on Kaggle2.
+It does not authorize full-scale training or official validation/test-dev;
+those remain desktop-owned decisions. Cache construction is CPU-only and must
+pass no-model acceptance before one paired T4x2 training task is submitted.
 
 ## Frozen data roles
 
-- Source: first 3,378,606 official PCQM4Mv2 training rows only.
-- Base train: the exact accepted 100K role, SHA-256
-  `d08e04ef73090b77963a6959d7efa22d22a4085e3869a0e13086491b8f8c9678`.
-- Development: the exact accepted 10K role, unchanged, SHA-256
-  `40b210c03789249f89950d7eb9df6de93ec151903f75077cfa64fe0a94eca5b0`.
-- Added train: 400K deterministic rows selected from the official-train
-  complement with NumPy `default_rng(2026091050)`, excluding the base train,
-  unchanged development role, all construction reserves, and the accepted K1
-  shadow role.
-- Final train: union of the original 100K and added 400K, exactly 500K rows.
-- Official validation, test-dev, test-challenge, and shadow labels remain
-  unread.
-
-The executable row-identity contract is `molgap.pcqm_k1_scale`. Desktop must
-build an immutable pure-2D cache from its output and accept every shard and the
-aggregate identity before accelerator work. The existing prefix-500K/50K cache
-must not be substituted because it changes the development role and cannot
-measure retention of the accepted 100K effect.
+- Source: official PCQM4Mv2 training rows only.
+- Train: source indices `0..499999`, exactly 500,000 rows, SHA-256
+  `a9c8b2b698c67f30348c6edbccff00eb9e2c06b064ee4d1a11e607f9531a0f8e`.
+- Development: source indices `500000..549999`, exactly 50,000 rows, SHA-256
+  `9ae885e5e74d82820d83758942eaf3e6ae2a7dcefbc1f0f4c174ce94c6786bb9`.
+- These row identities exactly match the accepted SCNet ESGPS6-304 and
+  GPTrans-T screens. Their accepted rich-cache reference is
+  `676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20`.
+- Kaggle rebuilds only the pure-2D OGB graph and RWSE16 views needed by K1;
+  equality with SCNet is a row/target-role claim, not a byte-identical cache
+  claim.
+- No replacement or skipped row is allowed. Official validation, test-dev,
+  test-challenge, and the consumed K1 shadow role remain unread.
 
 ## Frozen architecture
 
@@ -47,47 +36,36 @@ measure retention of the accepted 100K effect.
 - Node width 192, nine local persistent-EdgeState blocks, EdgeState width 64.
 - One 64-channel Neural-Atom slot at layers 3, 6, and 9.
 - No dense atom-to-atom global attention in K1.
-- Mean pooling and one direct scalar Gap head.
-- Expected inference parameters: 3,658,817.
-- Pure 2D; no coordinates, geometry targets, pretraining, warm start,
-  distillation, residual target, prediction fusion, or teacher.
+- Mean pooling and one direct scalar Gap head; 3,658,817 parameters.
+- Pure 2D; no geometry, pretraining, warm start, teacher, residual target, or
+  prediction fusion.
 
 ## Paired training contract
 
-Two fresh arms run in one task/platform on the same accelerator class:
+Two fresh arms run concurrently, one per T4:
 
-1. `full_gps`: accepted 192-wide nine-layer EdgeState GPS control;
-2. `neural_atom_k1`: frozen candidate above.
+1. `full_gps`: 192-wide nine-layer persistent-EdgeState full-attention GPS;
+2. `neural_atom_k1`: the frozen candidate above.
 
-`full_gps` means fresh full-attention GPS, not a checkpoint trained on the
-complete PCQM dataset. Both arms start from seed-42 initialization on this
-500K role; no historical checkpoint is loaded.
+Both use seed 42, FP32 throughout, physical batch 128 per device, no
+accumulation, fused AdamW at `4e-4`, weight decay `1e-5`, clipping 1.0, and
+cosine 40 epochs to `1e-6`. Both use identical deterministic row order, two
+pinned-memory loader workers, and independent RNG/optimizer/checkpoint trees.
+Pinned transfer and loader workers are execution settings only. The user
+withdrew the unlaunched FP16 AMP amendment before GPU submission.
 
-Both use seed 42, FP32 throughout, physical batch 128 per model/device, no
-accumulation, fused AdamW with learning rate `4e-4`, weight
-decay `1e-5`, clipping 1.0, cosine 40 epochs to `1e-6`, two pinned-memory
-loader workers per arm, identical deterministic row order, and exactly 40
-direct-Gap passes. The optimizer schedule is indexed by optimizer step over
-500K and is identical between arms. No parameter, width, depth, feature,
-dropout, target, or validation change is allowed. Pinned non-blocking transfer
-and two loader workers per arm are throughput-only settings. The user withdrew
-the unlaunched FP16 AMP amendment on 2026-09-11 so this bridge remains directly
-comparable with the established FP32 screens.
+Every epoch saves an atomic checkpoint, trace, best model, and aligned 50K
+development predictions. A real batch-128 FP32 forward/backward preflight and
+at least 15% memory reserve are mandatory.
 
-Every epoch saves an atomic resumable checkpoint, trace, best model, and
-aligned development predictions. A real batch-128 forward/backward preflight
-and at least 15% memory reserve are mandatory.
+SCNet results share data roles, seed, FP32, and physical batch, but some use a
+different architecture-specific schedule. Therefore K1-versus-full-GPS is the
+causal paired claim; cross-platform SCNet values are contextual comparisons.
 
 ## Decision gate
 
-The 100K paired K1 gain was `0.009461689 eV`. At 500K, K1 advances only if:
-
-- its paired development MAE is lower than fresh full GPS;
-- the paired row-bootstrap 95% interval excludes zero in K1's favor;
-- the gain is at least `0.0047308445 eV`, retaining at least half of the 100K
-  gain;
-- all identity, role, finite-value, checkpoint, and hash checks pass.
-
-Failure closes K1 scale-up without changing architecture or trying another
-seed. Passing authorizes a separate desktop full-run budget decision; it does not open
-official validation or test-dev.
+K1 advances only if its paired development MAE is at least `0.001 eV` lower
+than fresh full GPS, the paired row-bootstrap 95% interval excludes zero in
+K1's favor, and all identity, finite-value, checkpoint, and hash checks pass.
+Failure closes this K1 scale benchmark without another seed. Passing authorizes
+only a separate desktop full-run budget decision.
