@@ -122,6 +122,9 @@ frozen unsanitized OGB topology fallback with an exact ten-row hash and still
 rejects any skipped, replaced, missing, or additional fallback row before GPU
 submission. The persistent Luna monitor hands any terminal state once to the
 coordinator and then pauses.
+Kaggle2 cache version 5 is running from commit
+`7dca87ffe9f2b4d93ea07c6f1f2fabf81c2c28b1`; its dedicated heartbeat is
+`molgap-k1-scale500k-cache-v5`. No GPU scale job has been submitted.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.

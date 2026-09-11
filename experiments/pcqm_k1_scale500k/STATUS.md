@@ -25,6 +25,9 @@ confirmed that all ten preserve their topology and OGB categorical features
 under the same unsanitized fallback. Version 5 freezes that ten-row ledger and
 its hash; it does not skip, replace, or relabel any sample. GPU training remains
 blocked until the complete 500K/50K cache passes frozen no-model acceptance.
+Kaggle2 cache version 5 was submitted from commit
+`7dca87ffe9f2b4d93ea07c6f1f2fabf81c2c28b1` and was `RUNNING` at the last
+mechanical check.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired
