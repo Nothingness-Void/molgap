@@ -9,6 +9,8 @@ verify its remote state, and do not create a local slot-trigger process.
 Retrieved outputs and acceptance evidence belong in
 `platforms/_records/kaggle/`.
 
-Kaggle1's fixed OGB PCQM4Mv2 100K/500K graph datasets are accepted under
-`platforms/_records/kaggle/pcqm_fixed_datasets_v1/`. The account is explicitly
+Both Kaggle accounts hold accepted, byte-identical fixed OGB PCQM4Mv2
+100K/500K graph datasets. Evidence is under
+`platforms/_records/kaggle/pcqm_fixed_datasets_v1/` and
+`platforms/_records/kaggle/pcqm_fixed_datasets_kaggle2_v1/`. Both accounts are
 excluded from holding the 1M and full identities.

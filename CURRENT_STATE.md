@@ -74,7 +74,7 @@ must not be represented as this new conservative head.
 ## Execution State
 
 - Official PCQM4Mv2 identities are accepted: IMS holds hardlinked 100K, matched
-  500K, 1M, and full views; Kaggle1 holds accepted 100K and 500K graph datasets.
+  500K, 1M, and full views; both Kaggle accounts mirror the 100K/500K graphs.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
