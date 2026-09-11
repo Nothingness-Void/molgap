@@ -42,8 +42,10 @@ binds both arms directly to
 `kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1`. Its manifest SHA-256 is
 `630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751`;
 the 11 packed graph shards are byte-identical to the accepted SCNet and IMS
-500K views. The next status update must identify the launched Kaggle version
-and frozen source commit.
+500K views. Kaggle kernel version 2 was submitted from source commit
+`36215d9539acdd75542608637ec1e2db5341d3ff` and entered `RUNNING`. The existing
+Luna Max heartbeat was retargeted to version 2; it ignores version 1 and hands
+off one terminal report to the coordinator.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired

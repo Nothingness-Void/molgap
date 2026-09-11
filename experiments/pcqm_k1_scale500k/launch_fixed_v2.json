@@ -1,0 +1,30 @@
+{
+  "format": "molgap-pcqm-k1-scale500k-fixed-launch-v1",
+  "launched_at": "2026-09-11T16:56:31+09:00",
+  "kernel": "kaseichou/molgap-pcqm-k1-scale500k-s42",
+  "kernel_version": 2,
+  "status_after_launch": "RUNNING",
+  "source_dataset": "kaseichou/molgap-pcqm-k1-scale500k-source",
+  "source_commit": "36215d9539acdd75542608637ec1e2db5341d3ff",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "fixed_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "fixed_geometry_aggregate_sha256": "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d",
+  "scnet_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "bytewise_identical_across_kaggle1_kaggle2_scnet_ims": true,
+  "paired_arms": [
+    "full_gps",
+    "neural_atom_k1"
+  ],
+  "seed": 42,
+  "precision": "fp32",
+  "physical_batch_per_model_device": 128,
+  "epochs": 40,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "shadow_labels_read": false,
+  "supersedes_kernel_version": 1,
+  "superseded_version_is_scientifically_decisional": false,
+  "monitor_automation_id": "molgap-k1-scale500k-gpu-v1",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "coordinator_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865"
+}
