@@ -87,49 +87,23 @@ one-slot control while retaining its resource advantage. It is nominated for
 exactly one paired PCQM-100K transfer. Kaggle2 T4x2 kernel
 `kaseichou/molgap-pcqm-fourier-edge-s42` version 1 completed and passed
 mechanical acceptance. Fourier-Edge did not beat its architecture-matched K1
-control and is closed for PCQM. The one-slot latent K1 control itself produced
-a large paired gain over fresh full GPS, with a bootstrap interval excluding
-zero and the same direction in every target quartile. K1 is frozen unchanged
-as the sole candidate for one independent label-sealed shadow audit; this is
-exploratory K1 evidence, not a successful Fourier transfer. The complete
-attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
-Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
-The final route-3/3 discovery attempt remains unused while K1 proceeds through
-its scale bridge.
-The user authorized preparation of a paired K1 500K benchmark. Its train
-`0..499999` and development `500000..549999` roles now consume the accepted
-fixed graph payload that is byte-identical across Kaggle1, Kaggle2, SCNet, and
-IMS. The earlier random 500K/10K draft was never used for GPU training. The
-one-time shadow audit still provides independent evidence for freezing K1;
-this 500K run is a common-data architecture benchmark rather than an exact
-nested retention test.
-Kaggle2 kernel `kaseichou/molgap-pcqm-k1-shadow-audit` version 3 completed the
-frozen one-time audit without training. K1 reached `0.1279246956 eV` against
-`0.1340016425 eV` for Full-GPS; the paired delta was `-0.0060769469 eV` with
-bootstrap 95% interval `[-0.0079483090, -0.0042067340] eV`. K1 used
-`0.632411` times the control inference time and passed every frozen gate. The
-shadow role is consumed and cannot be reused. The unchanged paired 500K bridge
-is authorized for `molgap-server` execution on Kaggle2: first a CPU-only cache
-build and independent no-model acceptance, then exactly one paired T4x2
-training task. Full-scale work remains desktop-owned. The audit decision and
-scale contract are `experiments/pcqm_k1_shadow/decision.md` and
-`experiments/pcqm_k1_scale500k/protocol.md`.
-The locally rebuilt 550K cache passed its historical parser acceptance but is
-superseded for scientific comparison by the repository-wide fixed-dataset
-decision. GPU version 1 used that local rebuild and is non-decisional. The
-replacement binds the unchanged fresh Full-GPS/K1 pair directly to Kaggle2
-fixed-manifest SHA-256 `630d3004...ae9751` and SCNet aggregate
-`676a506c...1b20`; no graph reconstruction occurs in the GPU task. Version 2
-failed before data/model work because its legacy submission path provisioned
-one GPU. Unchanged version 3 uses an explicit T4 accelerator override and is
-the sole active K1 scale task. The persistent Luna monitor hands any terminal
-state once to the coordinator and then pauses.
-The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
-fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
-loader workers while retaining physical batch 128 and all scientific inputs.
-This work is independent of the desktop 304-wide/pretraining/full-scale work
-reported by the user; those in-progress results do not alter the accepted
-incumbent yet.
+control and is closed for PCQM. The one-slot Neural-Atom K1 control passed its
+PCQM-100K paired comparison, one-time label-sealed shadow audit, and the fixed
+cross-platform 500K/50K scale bridge. At 500K, K1 reached `0.1048590988 eV`
+against `0.1146809459 eV` for fresh Full-GPS; the paired gain was
+`0.0098218471 eV` and the K1-minus-control bootstrap 95% interval was
+`[-0.0105039993, -0.0091549593] eV`. K1 also used `23.31%` fewer parameters
+and ran `15.16%` more graphs per second under the paired contract.
+
+K1 is frozen unchanged as the sole server-side candidate eligible for a
+desktop full-scale budget decision. This is not a production promotion or an
+official leaderboard result, and it does not establish superiority over a
+separately configured desktop 304-wide/pretrained model. No K1 tuning, extra
+seed, server successor, official-role read, or server full run is authorized.
+The consumed shadow cannot be reused. The final route-3/3 discovery attempt is
+parked while K1 follows the desktop handoff. Decisions are
+`experiments/pcqm_k1_shadow/decision.md` and
+`experiments/pcqm_k1_scale500k/decision.md`.
 SCNet and Fragment-State work are desktop-owned and are excluded from this
 server queue.
 The user authorized a bounded autonomous server discovery window on 2026-09-10.

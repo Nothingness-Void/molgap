@@ -18,9 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | B-K1-500K | Run frozen K1 vs full GPS once on Kaggle2 T4x2 using the accepted cross-platform fixed 500K/50K graph payload | K1 wins by at least 0.001 eV with paired CI, or closes |
-| P2 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
-| P3 | B-DESKTOP-HANDOFF | If the 500K gate passes, decide one full-run budget and official-role plan | Explicit full-run budget, one-time official validation, and submission authority are recorded |
+| P1 | B-DESKTOP-HANDOFF | Review frozen K1 for one full-scale execution | Explicit compute budget, optimizer-step/sample-exposure schedule, one-time official validation, and submission authority are recorded |
 
 GraphState9 is closed: its accepted 100K efficiency gain did not survive
 full-scale transfer. It is historical evidence on `archive`, not a candidate,
@@ -72,16 +70,16 @@ the new evidence audit names a distinct local or representational bottleneck.
 `C-FOURIER-EDGE`, route 2/3, passed QM9 but its Fourier mechanism failed the
 architecture-matched K1 gate on PCQM-100K and is closed. The same task exposed
 a large K1-versus-full-GPS gain, consistent across target quartiles. K1 is now
-frozen without modification. Its one-time independent shadow audit passed all
-scientific and resource gates, and that shadow role is consumed; repeating the
+frozen without modification. Its one-time independent shadow audit and fixed
+500K scale bridge passed all scientific and resource gates. Repeating a
 selection role, adding a seed, or tuning K1 is prohibited. The final route-3/3
-attempt remains unused while K1 is eligible for the scale bridge.
+attempt remains unused and parked during desktop handoff.
 
-The user authorized a K1 500K scale benchmark on 2026-09-10 and required exact
-cross-platform fixed-data identity on 2026-09-11. Its immutable paired-baseline contract is
-`experiments/pcqm_k1_scale500k/protocol.md`. The shadow decision released this
-bridge on 2026-09-11. The user assigned this bounded 500K execution to
-`molgap-server` on Kaggle2; any full-scale decision remains desktop-owned.
+The K1 500K scale benchmark completed and passed on 2026-09-11 using exact
+cross-platform fixed-data identity. Its decision is
+`experiments/pcqm_k1_scale500k/decision.md`. Full-scale execution remains
+desktop-owned and requires a separate budget and protocol; the 500K 40-epoch
+count must not be copied directly onto the 6.76-times larger full role.
 
 ## Bounded autonomous Track C window
 
