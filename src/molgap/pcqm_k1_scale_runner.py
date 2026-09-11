@@ -44,7 +44,7 @@ def find_cache(expected_sha256: str) -> tuple[Path, dict]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        if payload.get("format") == "molgap-pcqm-k1-scale500k-cache-v3":
+        if payload.get("format") == "molgap-pcqm-k1-scale500k-cache-v4":
             candidates.append((path.parent, payload))
     if len(candidates) != 1:
         raise FileNotFoundError(f"Expected one scale cache, found {candidates}")

@@ -58,6 +58,8 @@ def main() -> None:
         "complete": True,
         "source_commit": commit,
         "aggregate_sha256": manifest["aggregate_sha256"],
+        "parser_fallback_count": manifest["parser_fallback_count"],
+        "parser_fallback_index_sha256": manifest["parser_fallback_index_sha256"],
         "elapsed_s": time.perf_counter() - started,
         "gpu_used": False,
         "official_validation_role_read": False,

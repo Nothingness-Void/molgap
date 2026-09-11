@@ -3,6 +3,8 @@ from molgap.pcqm_k1_scale import (
     SCALE_TRAIN_ROWS,
     SCNET_REFERENCE_CACHE_SHA256,
     TRAIN_SHA256,
+    UNSANITIZED_OGB_INDEX_SHA256,
+    UNSANITIZED_OGB_SOURCE_INDICES,
     VALIDATION_ROWS,
     VALIDATION_SHA256,
     build_scale_split,
@@ -38,3 +40,15 @@ def test_scale_split_is_deterministic_and_disjoint():
     assert set(first["train"]).isdisjoint(first["validation"])
     assert len(first["train"]) == SCALE_TRAIN_ROWS
     assert len(first["validation"]) == VALIDATION_ROWS
+
+
+def test_unsanitized_ogb_fallback_contract():
+    from molgap.pcqm_k1_scale_cache import _unsanitized_ogb_payload
+
+    payload = _unsanitized_ogb_payload("O[Si]123O[Si]3(O1)(O2)O")
+    assert payload["num_nodes"] == 7
+    assert payload["node_feat"].shape == (7, 9)
+    assert payload["edge_index"].shape == (2, 18)
+    assert payload["edge_feat"].shape == (18, 3)
+    assert len(UNSANITIZED_OGB_SOURCE_INDICES) == 10
+    assert index_sha256(UNSANITIZED_OGB_SOURCE_INDICES) == UNSANITIZED_OGB_INDEX_SHA256

@@ -12,6 +12,8 @@ from molgap.pcqm_k1_scale import (
     SCALE_TRAIN_ROWS,
     SCNET_REFERENCE_CACHE_SHA256,
     TRAIN_SHA256,
+    UNSANITIZED_OGB_INDEX_SHA256,
+    UNSANITIZED_OGB_SOURCE_INDICES,
     VALIDATION_ROWS,
     VALIDATION_SHA256,
     index_sha256,
@@ -30,7 +32,7 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
         if not value:
             errors.append(name)
 
-    require(manifest.get("format") == "molgap-pcqm-k1-scale500k-cache-v3", "format")
+    require(manifest.get("format") == "molgap-pcqm-k1-scale500k-cache-v4", "format")
     require(manifest.get("complete") is True, "complete")
     if source_commit:
         require(manifest.get("source_commit") == source_commit, "source_commit")
@@ -69,6 +71,22 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
         require(sha256_file(failures_path) == manifest.get("failures_file_sha256"), "failures_sha")
         failures = json.loads(failures_path.read_text(encoding="utf-8"))
         require(failures.get("attempts") == [], "failures_empty")
+    fallback_path = root / manifest.get("parser_fallback_file", "")
+    require(fallback_path.is_file(), "parser_fallback_file")
+    if fallback_path.is_file():
+        require(
+            sha256_file(fallback_path) == manifest.get("parser_fallback_file_sha256"),
+            "parser_fallback_sha",
+        )
+        fallback = json.loads(fallback_path.read_text(encoding="utf-8"))
+        fallback_indices = [int(item["row_index"]) for item in fallback.get("entries", [])]
+        require(tuple(fallback_indices) == UNSANITIZED_OGB_SOURCE_INDICES, "parser_fallback_rows")
+        require(index_sha256(fallback_indices) == UNSANITIZED_OGB_INDEX_SHA256, "parser_fallback_index_sha")
+        require(manifest.get("parser_fallback_count") == len(fallback_indices), "parser_fallback_count")
+        require(
+            manifest.get("parser_fallback_index_sha256") == UNSANITIZED_OGB_INDEX_SHA256,
+            "manifest_parser_fallback_sha",
+        )
 
     aggregate = hashlib.sha256()
     counts = {"train": 0, "validation": 0}
@@ -99,7 +117,7 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
     require(seen_rows["validation"] == split.get("validation"), "validation_row_alignment")
     require(aggregate.hexdigest() == manifest.get("aggregate_sha256"), "aggregate_sha")
     result = {
-        "format": "molgap-pcqm-k1-scale500k-cache-acceptance-v2",
+        "format": "molgap-pcqm-k1-scale500k-cache-acceptance-v3",
         "accepted": not errors,
         "errors": sorted(set(errors)),
         "source_commit": manifest.get("source_commit"),
@@ -108,6 +126,8 @@ def accept(root: Path, *, source_commit: str | None = None) -> dict:
         "validation_index_sha256": manifest.get("validation_index_sha256"),
         "train_graphs": counts["train"],
         "validation_graphs": counts["validation"],
+        "parser_fallback_count": manifest.get("parser_fallback_count"),
+        "parser_fallback_index_sha256": manifest.get("parser_fallback_index_sha256"),
         "scnet_reference_cache_aggregate_sha256": manifest.get(
             "scnet_reference_cache_aggregate_sha256"
         ),

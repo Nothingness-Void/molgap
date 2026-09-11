@@ -16,12 +16,87 @@ from .pcqm_gap_data import (
 from .pcqm_k1_scale import (
     ROLE_ROWS_READ,
     SCALE_TRAIN_ROWS,
+    UNSANITIZED_OGB_INDEX_SHA256,
+    UNSANITIZED_OGB_SOURCE_INDICES,
     VALIDATION_ROWS,
     build_scale_split,
+    index_sha256,
 )
 
 
 SHARD_SIZE = 5_000
+
+
+def _unsanitized_ogb_payload(smiles: str) -> dict:
+    """Preserve OGB topology for known hypervalent molecules RDKit rejects."""
+    import numpy as np
+    from ogb.utils.features import atom_to_feature_vector, bond_to_feature_vector
+    from rdkit import Chem
+
+    molecule = Chem.MolFromSmiles(smiles, sanitize=False)
+    if molecule is None:
+        raise ValueError("RDKit could not parse the unsanitized SMILES")
+    molecule.UpdatePropertyCache(strict=False)
+    node_features = np.asarray(
+        [atom_to_feature_vector(atom) for atom in molecule.GetAtoms()],
+        dtype=np.int64,
+    )
+    edges = []
+    edge_features = []
+    for bond in molecule.GetBonds():
+        source = bond.GetBeginAtomIdx()
+        target = bond.GetEndAtomIdx()
+        features = bond_to_feature_vector(bond)
+        edges.extend(((source, target), (target, source)))
+        edge_features.extend((features, features))
+    if edges:
+        edge_index = np.asarray(edges, dtype=np.int64).T
+        edge_attr = np.asarray(edge_features, dtype=np.int64)
+    else:
+        edge_index = np.empty((2, 0), dtype=np.int64)
+        edge_attr = np.empty((0, 3), dtype=np.int64)
+    return {
+        "edge_index": edge_index,
+        "edge_feat": edge_attr,
+        "node_feat": node_features,
+        "num_nodes": len(node_features),
+    }
+
+
+def _make_scale_graph(row):
+    """Use the normal OGB parser, with one frozen unsanitized OGB fallback."""
+    try:
+        return _make_graph(row), None
+    except Exception as strict_error:
+        import torch
+        from torch_geometric.data import Data
+        from torch_geometric.transforms import AddRandomWalkPE
+
+        payload = _unsanitized_ogb_payload(str(row.smiles))
+        graph = Data(
+            x=torch.as_tensor(payload["node_feat"], dtype=torch.long),
+            edge_index=torch.as_tensor(payload["edge_index"], dtype=torch.long),
+            edge_attr=torch.as_tensor(payload["edge_feat"], dtype=torch.long),
+            y=torch.tensor([float(row.homolumogap)], dtype=torch.float32),
+            row_index=torch.tensor([int(row.idx)], dtype=torch.long),
+        )
+        graph = AddRandomWalkPE(
+            walk_length=RWSE_DIM,
+            attr_name="random_walk_pe",
+        )(graph)
+        if graph.x.ndim != 2 or graph.x.shape[1] != 9:
+            raise RuntimeError("Unsanitized fallback atom features changed")
+        if graph.edge_attr.ndim != 2 or graph.edge_attr.shape[1] != 3:
+            raise RuntimeError("Unsanitized fallback bond features changed")
+        if tuple(graph.random_walk_pe.shape) != (graph.num_nodes, RWSE_DIM):
+            raise RuntimeError("Unsanitized fallback RWSE changed")
+        fallback = {
+            "row_index": int(row.idx),
+            "method": "rdkit-sanitize-false-update-property-cache-strict-false-ogb",
+            "strict_error_type": type(strict_error).__name__,
+            "strict_error_message": str(strict_error),
+        }
+        return graph, fallback
 
 
 def _read_frozen_roles(source_csv: Path):
@@ -62,9 +137,10 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
     split = build_scale_split()
     atomic_json(output / "split.json", split)
     failures_path = output / "failures.json"
+    fallback_path = output / "parser_fallback_ledger.json"
     progress_path = output / "progress.json"
     progress = {
-        "format": "molgap-pcqm-k1-scale500k-progress-v3",
+        "format": "molgap-pcqm-k1-scale500k-progress-v4",
         "source_commit": source_commit,
         "next": {"train": 0, "validation": 0},
         "shards": [],
@@ -76,11 +152,12 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
         },
         "bondless_graphs": 0,
         "failures": [],
+        "parser_fallbacks": [],
     }
     if progress_path.exists():
         progress = json.loads(progress_path.read_text(encoding="utf-8"))
         if (
-            progress.get("format") != "molgap-pcqm-k1-scale500k-progress-v3"
+            progress.get("format") != "molgap-pcqm-k1-scale500k-progress-v4"
             or progress.get("source_commit") != source_commit
         ):
             raise RuntimeError("Scale-cache resume source changed")
@@ -89,6 +166,7 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
     ranges = progress["feature_ranges"]
     bondless = int(progress.get("bondless_graphs", 0))
     failures = list(progress.get("failures", []))
+    parser_fallbacks = list(progress.get("parser_fallbacks", []))
     for role in ("train", "validation"):
         positions = split[role]
         offset = int(progress["next"].get(role, 0))
@@ -98,7 +176,9 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
             for slot, position in enumerate(positions[offset:stop], start=offset):
                 row = frame.iloc[int(position)]
                 try:
-                    graph = _make_graph(row)
+                    graph, fallback = _make_scale_graph(row)
+                    if fallback is not None:
+                        parser_fallbacks.append({"role": role, "slot": slot, **fallback})
                 except Exception as error:
                     failures.append(
                         {
@@ -153,6 +233,7 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
                     "feature_ranges": ranges,
                     "bondless_graphs": bondless,
                     "failures": failures,
+                    "parser_fallbacks": parser_fallbacks,
                     "official_validation_role_read": False,
                     "test_dev_role_read": False,
                 }
@@ -163,6 +244,14 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
                 {
                     "format": "molgap-pcqm-k1-scale500k-failures-v2",
                     "attempts": failures,
+                },
+            )
+            atomic_json(
+                fallback_path,
+                {
+                    "format": "molgap-pcqm-k1-scale500k-parser-fallback-v1",
+                    "method": "rdkit-sanitize-false-update-property-cache-strict-false-ogb",
+                    "entries": parser_fallbacks,
                 },
             )
             del graphs
@@ -183,8 +272,13 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
         raise RuntimeError(f"Incomplete scale cache: {counts}")
     if failures:
         raise RuntimeError("SCNet-matched scale cache has unresolved graph failures")
+    fallback_indices = [item["row_index"] for item in parser_fallbacks]
+    if tuple(fallback_indices) != UNSANITIZED_OGB_SOURCE_INDICES:
+        raise RuntimeError(f"Unsanitized OGB fallback ledger changed: {fallback_indices}")
+    if index_sha256(fallback_indices) != UNSANITIZED_OGB_INDEX_SHA256:
+        raise RuntimeError("Unsanitized OGB fallback identity changed")
     manifest = {
-        "format": "molgap-pcqm-k1-scale500k-cache-v3",
+        "format": "molgap-pcqm-k1-scale500k-cache-v4",
         "complete": True,
         "source_dataset": "piero0/pcqm4mv2",
         "source_commit": source_commit,
@@ -199,6 +293,10 @@ def build_scale_cache(source_csv: Path, output: Path, *, source_commit: str) -> 
         "failures_file_sha256": sha256_file(failures_path),
         "failed_graph_attempts": 0,
         "unresolved_graphs": 0,
+        "parser_fallback_file": fallback_path.name,
+        "parser_fallback_file_sha256": sha256_file(fallback_path),
+        "parser_fallback_count": len(parser_fallbacks),
+        "parser_fallback_index_sha256": UNSANITIZED_OGB_INDEX_SHA256,
         "atom_feature_dim": 9,
         "bond_feature_dim": 3,
         "rwse_dim": RWSE_DIM,
