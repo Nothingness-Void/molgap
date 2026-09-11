@@ -25,9 +25,16 @@ confirmed that all ten preserve their topology and OGB categorical features
 under the same unsanitized fallback. Version 5 freezes that ten-row ledger and
 its hash; it does not skip, replace, or relabel any sample. GPU training remains
 blocked until the complete 500K/50K cache passes frozen no-model acceptance.
-Kaggle2 cache version 5 was submitted from commit
-`7dca87ffe9f2b4d93ea07c6f1f2fabf81c2c28b1` and was `RUNNING` at the last
-mechanical check.
+Kaggle2 cache version 5 completed and passed frozen no-model acceptance:
+500,000 train graphs, 50,000 development graphs, ten expected parser
+fallbacks, and zero unresolved rows. Its cache aggregate is
+`40a8a981b8ded5d009817b14189b4b4518db611a311013bfc5e3d657e97d5229`.
+
+The sole paired GPU task `kaseichou/molgap-pcqm-k1-scale500k-s42` version 1
+was submitted from source commit
+`1652b7130ad64b7b85793947266528ccebe937a4` and was `RUNNING` at the last
+mechanical check. It runs fresh Full-GPS and frozen K1 concurrently on T4x2
+with FP32, seed 42, physical batch 128, and 40 epochs per arm.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired

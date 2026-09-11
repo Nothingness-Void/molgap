@@ -122,9 +122,13 @@ frozen unsanitized OGB topology fallback with an exact ten-row hash and still
 rejects any skipped, replaced, missing, or additional fallback row before GPU
 submission. The persistent Luna monitor hands any terminal state once to the
 coordinator and then pauses.
-Kaggle2 cache version 5 is running from commit
-`7dca87ffe9f2b4d93ea07c6f1f2fabf81c2c28b1`; its dedicated heartbeat is
-`molgap-k1-scale500k-cache-v5`. No GPU scale job has been submitted.
+Kaggle2 cache version 5 completed and passed frozen no-model acceptance with
+all 550,000 SCNet-matched role graphs, the exact ten-row parser ledger, and
+zero unresolved rows. The paired T4x2 GPU task
+`kaseichou/molgap-pcqm-k1-scale500k-s42` version 1 is running fresh Full-GPS
+and frozen K1 in FP32 with seed 42, physical batch 128, and 40 epochs per arm.
+Its dedicated heartbeat is `molgap-k1-scale500k-gpu-v1`; no other K1 scale GPU
+task is authorized or running.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.
