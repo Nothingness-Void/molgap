@@ -1,6 +1,6 @@
 {
   "format": "molgap-pcqm-geometry-transfer-500k-launch-v1",
-  "status": "local_preflight",
+  "status": "submitted",
   "date": "2026-09-12",
   "platform": "scnet-kunshan",
   "models": [
@@ -13,6 +13,27 @@
   "physical_batch_per_device": 128,
   "drop_last": true,
   "seed": 42,
+  "source_commit": "01d5c88cb4118e9cc6888440a5e1842ddaf12988",
+  "source_archive_sha256": "722f32cfc5c20f6de4f1decdf8835c7541c74399daf9422210b4712faf697f4b",
+  "remote_root": "/public/home/scnaqkfcy3/molgap-results/pcqm-geometry-transfer-500k-01d5c88",
+  "jobs": {
+    "geometry_gptrans_t_preflight": "121849083",
+    "geometry_neural_atom_k1_preflight": "121849089",
+    "geometry_gptrans_t_train": "121849091",
+    "geometry_neural_atom_k1_train": "121849093",
+    "fusion": "121849105"
+  },
+  "dependencies": {
+    "121849091": "afterok:121849083",
+    "121849093": "afterok:121849089",
+    "121849105": "afterok:121849091:121849093"
+  },
+  "submission_state": {
+    "checked_at": "2026-09-12T02:30:00+09:00",
+    "preflights": "PENDING/Priority",
+    "training": "PENDING/Dependency",
+    "fusion": "PENDING/Dependency"
+  },
   "official_validation_role_read": false,
   "test_dev_role_read": false,
   "test_challenge_role_read": false
