@@ -56,3 +56,10 @@ arms therefore use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers per arm. Physical batch 128 and every scientific variable remain
 unchanged. The `full_gps` arm is a fresh full-attention control, not the old
 full-data checkpoint.
+
+Version 3 completed both 40-epoch arms and passed frozen no-inference
+acceptance. Full-GPS reached `0.1146809459 eV`; frozen K1 reached
+`0.1048590988 eV`. The paired gain was `0.0098218471 eV`, with K1-minus-control
+bootstrap 95% interval `[-0.0105039993, -0.0091549593] eV`; the scale gate
+passed. K1 is frozen for a separate desktop full-scale budget decision. No
+server successor, extra seed, official-role read, or full run is authorized.

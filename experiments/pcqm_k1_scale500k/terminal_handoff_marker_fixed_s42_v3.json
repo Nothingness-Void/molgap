@@ -1,0 +1,76 @@
+{
+  "format": "molgap-pcqm-k1-scale500k-gpu-terminal-handoff-v1",
+  "kernel": "kaseichou/molgap-pcqm-k1-scale500k-s42",
+  "kernel_version": 3,
+  "state": "COMPLETE",
+  "accepted": true,
+  "acceptance_status": "accepted",
+  "output_root": "platforms/_records/kaggle/training/pcqm_k1_scale500k_fixed_s42_v3",
+  "result_root": "platforms/_records/kaggle/training/pcqm_k1_scale500k_fixed_s42_v3/pcqm_k1_scale500k_s42",
+  "acceptance_script": "experiments/pcqm_k1_scale500k/accept_result.py",
+  "source_commit": "36215d9539acdd75542608637ec1e2db5341d3ff",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "cache_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "fixed_geometry_aggregate_sha256": "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d",
+  "scnet_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "shared_contract": {
+    "seed": 42,
+    "precision": "fp32",
+    "accelerator": "Tesla T4",
+    "physical_batch_per_device": 128,
+    "device_count": 1,
+    "epochs": 40,
+    "optimizer": "fused-adamw-lr4e-4-wd1e-5-clip1",
+    "schedule": "cosine40-eta1e-6"
+  },
+  "arms": {
+    "full_gps": {
+      "best_epoch": 35,
+      "validation_gap_mae_eV": 0.1146809458732605,
+      "mean_epoch_seconds": 454.0458193907501,
+      "derived_500k_graphs_per_second": 1101.210447595162,
+      "peak_memory_mib": 534.03564453125,
+      "memory_reserve_fraction": 0.9641867733258728,
+      "parameter_count": 4771073,
+      "best_model_sha256": "241fbf3bc3048a68f5b87401225b72852024347c2d2dfcbde4141d625def2073",
+      "best_validation_payload_sha256": "05b4cdba7743b4fe2d298d295a84805ee2e17f4b4e5fe227549ad3261c590bc6",
+      "checkpoint_sha256": "b777f51cbce4f592c83b2de3223f4c686cf9140e03bfce120b49c98e90c0aa82"
+    },
+    "neural_atom_k1": {
+      "best_epoch": 38,
+      "validation_gap_mae_eV": 0.10485909879207611,
+      "mean_epoch_seconds": 394.2719251265501,
+      "derived_500k_graphs_per_second": 1268.1602927713257,
+      "peak_memory_mib": 436.6923828125,
+      "memory_reserve_fraction": 0.9707147576146228,
+      "parameter_count": 3658817,
+      "best_model_sha256": "d4db17256eae15500a1d1b59b270de2173c160899d406bc28f7f643e7cd2321d",
+      "best_validation_payload_sha256": "ecd27ee2ca521708cea067878ce3802ccaa7cb336e33c5fc5a5529b6958707e7",
+      "checkpoint_sha256": "1b943d71b8165a5f585ce39482b2c3340b744786d082b6889ffac0796b63ff6f"
+    }
+  },
+  "paired_gain_full_minus_k1_eV": 0.009821847081184387,
+  "paired_bootstrap_95_ci_k1_minus_full_eV": [
+    -0.010503999279379844,
+    -0.009154959342956544
+  ],
+  "minimum_gain_eV": 0.001,
+  "scale_gate_passed": true,
+  "model_inference_executed_by_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "shadow_labels_read": false,
+  "artifact_sha256": {
+    "molgap-pcqm-k1-scale500k-s42.log": "13D73EFF4F9FF5C4C694C2BFB897BB694E9C85DD52DD0015D99B5915F441406B",
+    "pcqm_k1_scale500k_s42/acceptance.json": "9CE944B2F3F5133E64D28CA5B8FCB8C10E0AFDFC82FACA33C47CD3FCBA06A6CC",
+    "pcqm_k1_scale500k_s42/completion_manifest.json": "9FADE8BB8B0396641AB11048E7549539F2D7C18C8EDD314934FDC9E82B9487F0",
+    "pcqm_k1_scale500k_s42/metrics.json": "05E59AA2214D8696DA159A0D6F9BA88C2CEA7AFCE91334D3EC21E3C8020A5A1A",
+    "pcqm_k1_scale500k_s42/full_gps/best_model.pt": "241FBF3BC3048A68F5B87401225B72852024347C2D2DFCBDE4141D625DEF2073",
+    "pcqm_k1_scale500k_s42/full_gps/best_validation_payload.pt": "05B4CDBA7743B4FE2D298D295A84805EE2E17F4B4E5FE227549AD3261C590BC6",
+    "pcqm_k1_scale500k_s42/full_gps/last_checkpoint.pt": "B777F51CBCE4F592C83B2DE3223F4C686CF9140E03BFCE120B49C98E90C0AA82",
+    "pcqm_k1_scale500k_s42/neural_atom_k1/best_model.pt": "D4DB17256EAE15500A1D1B59B270DE2173C160899D406BC28F7F643E7CD2321D",
+    "pcqm_k1_scale500k_s42/neural_atom_k1/best_validation_payload.pt": "ECD27EE2CA521708CEA067878CE3802CCAA7CB336E33C5FC5A5529B6958707E7",
+    "pcqm_k1_scale500k_s42/neural_atom_k1/last_checkpoint.pt": "1B943D71B8165A5F585CE39482B2C3340B744786D082B6889FFAC0796B63FF6F"
+  },
+  "sent_once": true
+}
