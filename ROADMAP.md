@@ -18,7 +18,7 @@ hours unless the user records a separate override.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | B-K1-500K | Build and accept the SCNet-matched 500K/50K cache, then run frozen K1 vs full GPS once on Kaggle2 T4x2 | K1 wins by at least 0.001 eV with paired CI, or closes |
+| P1 | B-K1-500K | Run frozen K1 vs full GPS once on Kaggle2 T4x2 using the accepted cross-platform fixed 500K/50K graph payload | K1 wins by at least 0.001 eV with paired CI, or closes |
 | P2 | C-ROUTE-3-AUDIT | Use the final architecture attempt only if K1 fails the scale bridge | A materially distinct evidence-backed mechanism is frozen, or discovery stops |
 | P3 | B-DESKTOP-HANDOFF | If the 500K gate passes, decide one full-run budget and official-role plan | Explicit full-run budget, one-time official validation, and submission authority are recorded |
 
@@ -78,7 +78,7 @@ selection role, adding a seed, or tuning K1 is prohibited. The final route-3/3
 attempt remains unused while K1 is eligible for the scale bridge.
 
 The user authorized a K1 500K scale benchmark on 2026-09-10 and required exact
-SCNet data-role matching on 2026-09-11. Its immutable paired-baseline contract is
+cross-platform fixed-data identity on 2026-09-11. Its immutable paired-baseline contract is
 `experiments/pcqm_k1_scale500k/protocol.md`. The shadow decision released this
 bridge on 2026-09-11. The user assigned this bounded 500K execution to
 `molgap-server` on Kaggle2; any full-scale decision remains desktop-owned.

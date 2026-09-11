@@ -96,12 +96,13 @@ attribution is in `experiments/pcqm_fourier_edge_transfer/decision.md`.
 Route 2/3 succeeded at Track C but failed to transfer its Fourier mechanism.
 The final route-3/3 discovery attempt remains unused while K1 proceeds through
 its scale bridge.
-The user authorized preparation of a paired K1 500K benchmark. The corrected
-contract now matches the accepted SCNet source-index roles exactly: train
-`0..499999` and development `500000..549999`; the earlier random 500K/10K draft
-was never used for GPU training. The one-time shadow audit still provides
-independent evidence for freezing K1, but this 500K run is a common-data
-architecture benchmark rather than an exact nested retention test.
+The user authorized preparation of a paired K1 500K benchmark. Its train
+`0..499999` and development `500000..549999` roles now consume the accepted
+fixed graph payload that is byte-identical across Kaggle1, Kaggle2, SCNet, and
+IMS. The earlier random 500K/10K draft was never used for GPU training. The
+one-time shadow audit still provides independent evidence for freezing K1;
+this 500K run is a common-data architecture benchmark rather than an exact
+nested retention test.
 Kaggle2 kernel `kaseichou/molgap-pcqm-k1-shadow-audit` version 3 completed the
 frozen one-time audit without training. K1 reached `0.1279246956 eV` against
 `0.1340016425 eV` for Full-GPS; the paired delta was `-0.0060769469 eV` with
@@ -113,22 +114,14 @@ build and independent no-model acceptance, then exactly one paired T4x2
 training task. Full-scale work remains desktop-owned. The audit decision and
 scale contract are `experiments/pcqm_k1_shadow/decision.md` and
 `experiments/pcqm_k1_scale500k/protocol.md`.
-Kaggle2 cache v1-v2 failed before construction; v3 exposed the invalid random
-role draft by stopping on an unparseable Si row. No GPU job was submitted and
-K1 has no 500K result. Kaggle2 CPU cache v4 stopped mechanically on the first
-of ten hypervalent-silicon source rows that current RDKit cannot strictly
-sanitize. All ten remain in the exact SCNet 500K/50K roles; cache v5 uses one
-frozen unsanitized OGB topology fallback with an exact ten-row hash and still
-rejects any skipped, replaced, missing, or additional fallback row before GPU
-submission. The persistent Luna monitor hands any terminal state once to the
-coordinator and then pauses.
-Kaggle2 cache version 5 completed and passed frozen no-model acceptance with
-all 550,000 SCNet-matched role graphs, the exact ten-row parser ledger, and
-zero unresolved rows. The paired T4x2 GPU task
-`kaseichou/molgap-pcqm-k1-scale500k-s42` version 1 is running fresh Full-GPS
-and frozen K1 in FP32 with seed 42, physical batch 128, and 40 epochs per arm.
-Its dedicated heartbeat is `molgap-k1-scale500k-gpu-v1`; no other K1 scale GPU
-task is authorized or running.
+The locally rebuilt 550K cache passed its historical parser acceptance but is
+superseded for scientific comparison by the repository-wide fixed-dataset
+decision. GPU version 1 used that local rebuild and is non-decisional. The
+replacement binds the unchanged fresh Full-GPS/K1 pair directly to Kaggle2
+fixed-manifest SHA-256 `630d3004...ae9751` and SCNet aggregate
+`676a506c...1b20`; no graph reconstruction occurs in the GPU task. The
+persistent Luna monitor hands any terminal state once to the coordinator and
+then pauses.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.
