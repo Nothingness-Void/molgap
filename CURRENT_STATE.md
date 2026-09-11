@@ -114,6 +114,9 @@ source-tree resolution and the single unchanged-contract retry v2 failed
 because RDKit was omitted from the isolated CPU dependency install. No GPU job
 was submitted and K1 has no 500K result. The infrastructure evidence is
 `experiments/pcqm_k1_scale500k/terminal_report_cache_v2.md`.
+The user authorized an unchanged-contract cache v3 repair. It adds only the
+missing RDKit dependency plus an OGB molecular-parsing preflight; successful
+cache acceptance still precedes any GPU submission.
 This work is independent of the desktop 304-wide/pretraining/full-scale work
 reported by the user; those in-progress results do not alter the accepted
 incumbent yet.

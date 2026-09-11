@@ -10,3 +10,7 @@ No GPU training was submitted and no scientific result exists. The exact
 version-2 evidence is `terminal_report_cache_v2.md`. A further run must retain
 the frozen split, architecture, seed 42, FP32, physical batch 128, optimizer,
 schedule, 40 epochs, and decision gate.
+
+The user authorized another unchanged-contract infrastructure repair on
+2026-09-11. Cache version 3 adds only the missing `rdkit==2025.3.5` package and
+an RDKit/OGB parsing preflight before cache construction.
