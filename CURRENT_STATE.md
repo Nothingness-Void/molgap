@@ -1,9 +1,8 @@
 # Current State
 
-> This file owns only live project truth: the production identity, active
-> candidate, blocker, and immediate handoff. Metrics and historical conclusions
-> belong to their dated decision records under `production/` or `experiments/`.
-> Task ordering belongs only in `ROADMAP.md`.
+> This file owns only live project truth: production identity, active candidate,
+> blocker, and immediate handoff. Historical evidence belongs to dated decisions;
+> task ordering belongs only in `ROADMAP.md`.
 
 ## Production Identity
 
@@ -22,11 +21,10 @@ production decision linked above.
 
 ## Active Objective
 
-Track B is open for an official PCQM4Mv2 leaderboard specialist. The target is
-the single official HOMO-LUMO Gap, not the Track A three-target contract.
-Architecture selection uses only an internal 100K/10K split derived from the
-official PCQM training role on Kaggle. Official validation and test-dev remain
-sealed during selection.
+Track B is open for an official PCQM4Mv2 leaderboard specialist targeting only
+the HOMO-LUMO Gap, not the Track A three-target contract. Architecture selection
+uses an internal 100K/10K split derived from the official training role. Official
+validation and test-dev remain sealed during selection.
 
 The first matched official-PCQM question completed and froze persistent
 real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
@@ -75,10 +73,11 @@ must not be represented as this new conservative head.
 
 ## Execution State
 
-- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`,
-  version 1, completed. Its three required candidates passed no-inference
-  artifact acceptance but all failed the scientific advancement gate; the
-  time-gated fourth candidate was not launched.
+- Official PCQM4Mv2 identities are accepted: IMS holds hardlinked 100K, matched
+  500K, 1M, and full views; Kaggle1 holds accepted 100K and 500K graph datasets.
+- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
+  completed. Three candidates passed artifact acceptance but failed the
+  advancement gate; the time-gated fourth candidate was not launched.
 - The official-train-derived PCQM 100K graph cache and all completed seed-42
   comparisons are accepted. Kaggle2 is running the sole matched recurrent
   graph-state seed-42 screen; no multiseed or full-data run is authorized.
@@ -115,6 +114,7 @@ must not be represented as this new conservative head.
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
 | What is the active leaderboard experiment? | `experiments/pcqm_gap_architecture/README.md` |
 | What was submitted for OGB review? | `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md` |
+| Which official PCQM scale identities may remote jobs consume? | `platforms/_records/ims/pcqm_fixed_datasets_v1/README.md` and `platforms/_records/kaggle/pcqm_fixed_datasets_v1/README.md` |
 | Where are all active and completed experiment questions indexed? | `experiments/README.md` |
 | How are remote jobs packaged and retained? | `platforms/README.md` |
 | Which model artifacts exist? | `models/README.md` |

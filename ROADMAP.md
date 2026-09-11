@@ -1,9 +1,8 @@
 # Roadmap - Priorities and Backlog
 
-This file owns only task order, triggers, and exit conditions. Live model and
-job state is in `CURRENT_STATE.md`; completed methods, metrics, and conclusions
-belong to each experiment's decision record. Track ownership is defined in
-`TRACKS.md`.
+This file owns task order, triggers, and exit conditions. Live state is in
+`CURRENT_STATE.md`; completed evidence belongs to experiment decisions, and
+track ownership is defined in `TRACKS.md`.
 
 ## Goal
 
@@ -70,9 +69,10 @@ R9 is owned by
 - Architecture claims use random initialization; no pretraining, warm start,
   fine-tuning, or distillation may be credited as an architecture gain.
 - Do not tune on common/OOD/P8-hard or sealed data.
-- PCQM leaderboard architecture questions use the frozen official-train-derived
-  100K/10K Kaggle split. QM9 and PubChemQC results are historical inspiration,
-  not advancement gates or reusable weights.
+- PCQM leaderboard questions use accepted official-train identities under
+  `platforms/_records/`; selection uses the frozen 100K/10K split. Do not rebuild
+  graph caches or redefine roles. QM9 and PubChemQC are inspiration only, not
+  advancement gates or reusable weights.
 - The explicit convergence diagnostic above is the only IMS exception before
   the three-seed Kaggle gate; all IMS work remains under
   `/lustre/home/users/sm2/chou/`.
