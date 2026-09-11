@@ -159,7 +159,9 @@ def load_roles(root: Path, manifest: dict):
 def _targets(graphs):
     import torch
 
-    values = [dataset.data.y.view(-1) for dataset in graphs.datasets]
+    # Packed shards are immutable here; read their collated backing tensor
+    # directly so PyG does not invalidate its per-graph cache on `.data` access.
+    values = [dataset._data.y.view(-1) for dataset in graphs.datasets]
     return torch.cat(values)
 
 
