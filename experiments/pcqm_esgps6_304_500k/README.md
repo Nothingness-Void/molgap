@@ -7,3 +7,7 @@ batch, seed, optimizer, target, and equal encoder-exposure rule.
 
 The immutable protocol is [protocol.md](protocol.md). Remote artifacts use a
 new dedicated result root and never overwrite the cancelled run.
+
+The paired run completed and passed its frozen gate. See
+[`results/decision.md`](results/decision.md) and
+[`results/acceptance.json`](results/acceptance.json).

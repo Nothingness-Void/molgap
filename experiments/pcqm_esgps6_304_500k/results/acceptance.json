@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm-esgps6-304-500k-terminal-acceptance-v1",
+  "accepted": true,
+  "source_commit": "01b26e2",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "train_rows": 500000,
+  "development_rows": 50000,
+  "development_source_idx_range": [500000, 549999],
+  "development_source_idx_ordered": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "arms": {
+    "scratch60": {
+      "job_id": 121681687,
+      "state": "COMPLETED",
+      "epochs_completed": 60,
+      "best_epoch": 48,
+      "reported_best_development_mae_eV": 0.10767169813156129,
+      "recomputed_best_development_mae_eV": 0.10767170041799545,
+      "best_sha256": "3b5ebcaf07c794785c95af7ff1c9993cb5f65a0702c841943dc280a81d333cb3",
+      "last_sha256": "f8f4a020691fc66f463093d139246efd61c259cf09648121f1131f8588bf38f8",
+      "development_payload_sha256": "21c44bac81dc667cd4a0ef2e7cdc69fc7edcdde5a8f8256594536bccf4c51c8c"
+    },
+    "relation20_gap40": {
+      "job_id": 121681724,
+      "state": "COMPLETED",
+      "pretrain_epochs_completed": 20,
+      "gap_epochs_completed": 40,
+      "best_epoch": 37,
+      "reported_best_development_mae_eV": 0.10600242189407348,
+      "recomputed_best_development_mae_eV": 0.10600242018699646,
+      "best_sha256": "49cf21dcdc4e09b601290e91a220b016db0490a1886a0edcbaeece7aa97510f5",
+      "last_sha256": "83a6292e5a4b30a54148c1036be76888f801dd2d828983dc9306facf0a38dded",
+      "development_payload_sha256": "1439416e5fcd34430b4ca3e6ff4d9905984b8588c3bcd69a45d455e3619331f0",
+      "pretraining_gap_labels_read": false
+    }
+  },
+  "pretrained_minus_scratch_mae_eV": -0.00166927623748781,
+  "gate_eV": -0.001,
+  "gate_passed": true
+}
