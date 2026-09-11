@@ -1,0 +1,255 @@
+{
+  "format": "molgap-pcqm4mv2-fixed-subset-v1",
+  "status": "complete",
+  "identity": {
+    "name": "ogb-train-500k-scnet-v1",
+    "train_rows": 500000,
+    "development_rows": 50000,
+    "kaggle1": true,
+    "scnet_compatible": true
+  },
+  "source": {
+    "dataset": "OGB-LSC PCQM4Mv2",
+    "official_archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "official_train_rows": 3378606,
+    "official_valid_rows": 73545,
+    "external_data_used": false
+  },
+  "roles": {
+    "train": {
+      "source_idx_start": 0,
+      "source_idx_stop": 500000,
+      "rows": 500000
+    },
+    "development": {
+      "source_idx_start": 500000,
+      "source_idx_stop": 550000,
+      "rows": 50000
+    }
+  },
+  "graph_contract": {
+    "feature_schema": "ogb",
+    "node_feature_dim": 9,
+    "edge_feature_dim": 3,
+    "rwse_dim": 16,
+    "geometry_method": "ETKDGv3",
+    "optimization_method": "MMFF94s"
+  },
+  "assets": {
+    "topology": [
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0000.pt",
+        "rows": 50000,
+        "source_idx_min": 0,
+        "source_idx_max": 49999,
+        "sha256": "86487c2e844de8f3b5dab5ba20bf25a351e454c81543c98d98ec7816ee74962e",
+        "bytes": 155990417
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0001.pt",
+        "rows": 50000,
+        "source_idx_min": 50000,
+        "source_idx_max": 99999,
+        "sha256": "dac3c79e37fdc9b6167407078c8adc30c77c568db07f6eb509178472ced5a1ed",
+        "bytes": 156162769
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0002.pt",
+        "rows": 50000,
+        "source_idx_min": 100000,
+        "source_idx_max": 149999,
+        "sha256": "55fe8184cae90ce6b6c6897ae545f1b0090b19dab992c5e2ec449006770b0b7d",
+        "bytes": 156530961
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0003.pt",
+        "rows": 50000,
+        "source_idx_min": 150000,
+        "source_idx_max": 199999,
+        "sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19",
+        "bytes": 158757713
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0004.pt",
+        "rows": 50000,
+        "source_idx_min": 200000,
+        "source_idx_max": 249999,
+        "sha256": "6f58cfed3bcac2bbfa3906fa56ea4ddfb274a4b69d4548a2a754098e1777c090",
+        "bytes": 156780177
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0005.pt",
+        "rows": 50000,
+        "source_idx_min": 250000,
+        "source_idx_max": 299999,
+        "sha256": "29ecf4b6d4e92a536273197b2886522dcea66997f0ec94f9ee0af0a408ce9cbb",
+        "bytes": 157863313
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0006.pt",
+        "rows": 50000,
+        "source_idx_min": 300000,
+        "source_idx_max": 349999,
+        "sha256": "1b1d52398d0440d736c9b828f8e4053b2160600c8497a7187908ea0405352eab",
+        "bytes": 155944401
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0007.pt",
+        "rows": 50000,
+        "source_idx_min": 350000,
+        "source_idx_max": 399999,
+        "sha256": "7b6a2692c621e566de7d1bf4c3421371d0a4b19bc38c1ca2cdf2c2756134894e",
+        "bytes": 154557905
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0008.pt",
+        "rows": 50000,
+        "source_idx_min": 400000,
+        "source_idx_max": 449999,
+        "sha256": "1c00ca8c6c0eb1baf63b06a51bf239652373d38112d57256b1e70913119bf79c",
+        "bytes": 155619857
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0009.pt",
+        "rows": 50000,
+        "source_idx_min": 450000,
+        "source_idx_max": 499999,
+        "sha256": "39aeb3e52f340442c33272139bb5d900ee34698bd4a5a11d64ceb176441b45e2",
+        "bytes": 156503249
+      },
+      {
+        "role": "development",
+        "file": "store/topology/train/train_shard_0010.pt",
+        "rows": 50000,
+        "source_idx_min": 500000,
+        "source_idx_max": 549999,
+        "sha256": "3879dc27106034c27c893bac7d182d54fbbe93906efb83108e9dac541e0894ae",
+        "bytes": 164318865
+      }
+    ],
+    "geometry": [
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0000.pt",
+        "rows": 50000,
+        "source_idx_min": 0,
+        "source_idx_max": 49999,
+        "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+        "bytes": 202363317
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0001.pt",
+        "rows": 50000,
+        "source_idx_min": 50000,
+        "source_idx_max": 99999,
+        "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+        "bytes": 202787061
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0002.pt",
+        "rows": 50000,
+        "source_idx_min": 100000,
+        "source_idx_max": 149999,
+        "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+        "bytes": 203498165
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0003.pt",
+        "rows": 50000,
+        "source_idx_min": 150000,
+        "source_idx_max": 199999,
+        "sha256": "fd97e30f7421f935b3975f90988ab3f04896594f5aafda9b67b98717d20ac3b1",
+        "bytes": 206032693
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0004.pt",
+        "rows": 50000,
+        "source_idx_min": 200000,
+        "source_idx_max": 249999,
+        "sha256": "d107621e6b5395e1534928be0377b3529ac5ace4e5fe4ffcef52ee72a9567afd",
+        "bytes": 203880309
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0005.pt",
+        "rows": 50000,
+        "source_idx_min": 250000,
+        "source_idx_max": 299999,
+        "sha256": "63cadbbe3109b94019da0188d5d429b84a96ea763b0b5319a773f6d104c9c305",
+        "bytes": 205399541
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0006.pt",
+        "rows": 50000,
+        "source_idx_min": 300000,
+        "source_idx_max": 349999,
+        "sha256": "42ebd3ef40b8594c13dec0f4f7966963105fe95dd66cde613c5d82534792146b",
+        "bytes": 203054325
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0007.pt",
+        "rows": 50000,
+        "source_idx_min": 350000,
+        "source_idx_max": 399999,
+        "sha256": "ba214cc1d5aa6716887079d0fa39080e1477fe4fb3348db1277481af6d2be07f",
+        "bytes": 201454965
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0008.pt",
+        "rows": 50000,
+        "source_idx_min": 400000,
+        "source_idx_max": 449999,
+        "sha256": "5336817d71e253aaafc73f50daeec9e9e068d65e62acac86a40a5e1e85ef99a5",
+        "bytes": 202626101
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0009.pt",
+        "rows": 50000,
+        "source_idx_min": 450000,
+        "source_idx_max": 499999,
+        "sha256": "4753e34c24d535b56f0da81ff92c5bd70348dee4d1acf216f2cc2c2bca669104",
+        "bytes": 203743093
+      },
+      {
+        "role": "development",
+        "file": "store/geometry/train/train_shard_0010.pt",
+        "rows": 50000,
+        "source_idx_min": 500000,
+        "source_idx_max": 549999,
+        "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1",
+        "bytes": 213447349
+      }
+    ]
+  },
+  "aggregates": {
+    "topology": "7ce4bd6a17d606c99e7eacb35a14dc1f25acf6c2bdcdb8c2d021ca1fb41bdddd",
+    "geometry": "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "scnet_compatibility": {
+    "format": "molgap-pcqm-edgestate304-500k-subset-v1",
+    "aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+    "bytewise_identical_geometry_shards": true
+  }
+}

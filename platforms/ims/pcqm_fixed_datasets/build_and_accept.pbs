@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+
+set -euo pipefail
+BOUNDARY=/lustre/home/users/sm2/chou
+CODE="$BOUNDARY/molgap-pcqm-fixed-v1/code"
+OUTPUT="$BOUNDARY/pcqm4mv2-fixed-v1"
+PYTHON="$BOUNDARY/molgap/.venv/bin/python"
+
+test "$(realpath "$BOUNDARY")" = /lustre/home/users/sm2/chou
+mkdir -p "$OUTPUT/logs"
+export PYTHONPATH="$CODE/src"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+
+"$PYTHON" "$CODE/platforms/ims/pcqm_fixed_datasets/build_and_accept.py" \
+  --boundary "$BOUNDARY" \
+  --output-root "$OUTPUT" \
+  --archive "$BOUNDARY/molgap-pcqm-edge-state-full/inputs/pcqm4m-v2.zip" \
+  --row-manifest "$BOUNDARY/molgap-pcqm-edge-state-full/inputs/rows/manifest.json" \
+  --topology-acceptance "$BOUNDARY/molgap-pcqm-edge-state-full/rich_full/graphs/acceptance.json" \
+  --geometry-root "$BOUNDARY/molgap-pcqm-geometry-warmstart/graph_cache" \
+  --geometry-acceptance "$BOUNDARY/molgap-pcqm-geometry-warmstart/artifacts/geometry_acceptance.json" \
+  --verify-content 2>&1 | tee "$OUTPUT/logs/build_and_accept.log"

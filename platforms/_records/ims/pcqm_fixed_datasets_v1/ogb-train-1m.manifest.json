@@ -1,0 +1,430 @@
+{
+  "format": "molgap-pcqm4mv2-fixed-subset-v1",
+  "status": "complete",
+  "identity": {
+    "name": "ogb-train-1m",
+    "train_rows": 1000000,
+    "development_rows": 50000,
+    "kaggle1": false,
+    "scnet_compatible": false
+  },
+  "source": {
+    "dataset": "OGB-LSC PCQM4Mv2",
+    "official_archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "official_train_rows": 3378606,
+    "official_valid_rows": 73545,
+    "external_data_used": false
+  },
+  "roles": {
+    "train": {
+      "source_idx_start": 0,
+      "source_idx_stop": 1000000,
+      "rows": 1000000
+    },
+    "development": {
+      "source_idx_start": 1000000,
+      "source_idx_stop": 1050000,
+      "rows": 50000
+    }
+  },
+  "graph_contract": {
+    "feature_schema": "ogb",
+    "node_feature_dim": 9,
+    "edge_feature_dim": 3,
+    "rwse_dim": 16,
+    "geometry_method": "ETKDGv3",
+    "optimization_method": "MMFF94s"
+  },
+  "assets": {
+    "topology": [
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0000.pt",
+        "rows": 50000,
+        "source_idx_min": 0,
+        "source_idx_max": 49999,
+        "sha256": "86487c2e844de8f3b5dab5ba20bf25a351e454c81543c98d98ec7816ee74962e",
+        "bytes": 155990417
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0001.pt",
+        "rows": 50000,
+        "source_idx_min": 50000,
+        "source_idx_max": 99999,
+        "sha256": "dac3c79e37fdc9b6167407078c8adc30c77c568db07f6eb509178472ced5a1ed",
+        "bytes": 156162769
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0002.pt",
+        "rows": 50000,
+        "source_idx_min": 100000,
+        "source_idx_max": 149999,
+        "sha256": "55fe8184cae90ce6b6c6897ae545f1b0090b19dab992c5e2ec449006770b0b7d",
+        "bytes": 156530961
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0003.pt",
+        "rows": 50000,
+        "source_idx_min": 150000,
+        "source_idx_max": 199999,
+        "sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19",
+        "bytes": 158757713
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0004.pt",
+        "rows": 50000,
+        "source_idx_min": 200000,
+        "source_idx_max": 249999,
+        "sha256": "6f58cfed3bcac2bbfa3906fa56ea4ddfb274a4b69d4548a2a754098e1777c090",
+        "bytes": 156780177
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0005.pt",
+        "rows": 50000,
+        "source_idx_min": 250000,
+        "source_idx_max": 299999,
+        "sha256": "29ecf4b6d4e92a536273197b2886522dcea66997f0ec94f9ee0af0a408ce9cbb",
+        "bytes": 157863313
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0006.pt",
+        "rows": 50000,
+        "source_idx_min": 300000,
+        "source_idx_max": 349999,
+        "sha256": "1b1d52398d0440d736c9b828f8e4053b2160600c8497a7187908ea0405352eab",
+        "bytes": 155944401
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0007.pt",
+        "rows": 50000,
+        "source_idx_min": 350000,
+        "source_idx_max": 399999,
+        "sha256": "7b6a2692c621e566de7d1bf4c3421371d0a4b19bc38c1ca2cdf2c2756134894e",
+        "bytes": 154557905
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0008.pt",
+        "rows": 50000,
+        "source_idx_min": 400000,
+        "source_idx_max": 449999,
+        "sha256": "1c00ca8c6c0eb1baf63b06a51bf239652373d38112d57256b1e70913119bf79c",
+        "bytes": 155619857
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0009.pt",
+        "rows": 50000,
+        "source_idx_min": 450000,
+        "source_idx_max": 499999,
+        "sha256": "39aeb3e52f340442c33272139bb5d900ee34698bd4a5a11d64ceb176441b45e2",
+        "bytes": 156503249
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0010.pt",
+        "rows": 50000,
+        "source_idx_min": 500000,
+        "source_idx_max": 549999,
+        "sha256": "3879dc27106034c27c893bac7d182d54fbbe93906efb83108e9dac541e0894ae",
+        "bytes": 164318865
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0011.pt",
+        "rows": 50000,
+        "source_idx_min": 550000,
+        "source_idx_max": 599999,
+        "sha256": "364ae8c053f388ab69aa8be1b7c547fdd21f161294d4d5536b81be8ed9062097",
+        "bytes": 166893585
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0012.pt",
+        "rows": 50000,
+        "source_idx_min": 600000,
+        "source_idx_max": 649999,
+        "sha256": "6d4f10a5606487146fcebb2ae193e1fdb984bbdd9a13bc426b6c49d0349f04b9",
+        "bytes": 167385233
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0013.pt",
+        "rows": 50000,
+        "source_idx_min": 650000,
+        "source_idx_max": 699999,
+        "sha256": "12e5847ef3b1b56428294c4eb04977255ecca9863f0fcfd1c60886b935719070",
+        "bytes": 169188945
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0014.pt",
+        "rows": 50000,
+        "source_idx_min": 700000,
+        "source_idx_max": 749999,
+        "sha256": "b249e56e01cb17ed314a63fa914d44ebd839c59b6d0512c5a952df6ff14239c1",
+        "bytes": 168695953
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0015.pt",
+        "rows": 50000,
+        "source_idx_min": 750000,
+        "source_idx_max": 799999,
+        "sha256": "944d277dfe7b8d684fed0b39a1b302102a0ad709aaed58f8f464da0afeff2081",
+        "bytes": 164645969
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0016.pt",
+        "rows": 50000,
+        "source_idx_min": 800000,
+        "source_idx_max": 849999,
+        "sha256": "692acadfad7297c19147bbe439313aa881fcbeb941e77c346766431fb04f1444",
+        "bytes": 170418897
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0017.pt",
+        "rows": 50000,
+        "source_idx_min": 850000,
+        "source_idx_max": 899999,
+        "sha256": "453a21e281e3daab583edda2b543c69a79d873450a1954ef721d41e842b00480",
+        "bytes": 165096209
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0018.pt",
+        "rows": 50000,
+        "source_idx_min": 900000,
+        "source_idx_max": 949999,
+        "sha256": "b938847bdca25dd871da807dbe0615ca258bac36e8824a079dafc3669ca77383",
+        "bytes": 169794705
+      },
+      {
+        "role": "train",
+        "file": "store/topology/train/train_shard_0019.pt",
+        "rows": 50000,
+        "source_idx_min": 950000,
+        "source_idx_max": 999999,
+        "sha256": "19d8659cfcc2e64731155bc50a1a781d9e0b0fed3900ec5352d34b9a6259f5ce",
+        "bytes": 168257105
+      },
+      {
+        "role": "development",
+        "file": "store/topology/train/train_shard_0020.pt",
+        "rows": 50000,
+        "source_idx_min": 1000000,
+        "source_idx_max": 1049999,
+        "sha256": "06a544bce966ff36828093bbe3ab2a722fa4d50fdccbaa80085e79ebf85571cf",
+        "bytes": 168454417
+      }
+    ],
+    "geometry": [
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0000.pt",
+        "rows": 50000,
+        "source_idx_min": 0,
+        "source_idx_max": 49999,
+        "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+        "bytes": 202363317
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0001.pt",
+        "rows": 50000,
+        "source_idx_min": 50000,
+        "source_idx_max": 99999,
+        "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+        "bytes": 202787061
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0002.pt",
+        "rows": 50000,
+        "source_idx_min": 100000,
+        "source_idx_max": 149999,
+        "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+        "bytes": 203498165
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0003.pt",
+        "rows": 50000,
+        "source_idx_min": 150000,
+        "source_idx_max": 199999,
+        "sha256": "fd97e30f7421f935b3975f90988ab3f04896594f5aafda9b67b98717d20ac3b1",
+        "bytes": 206032693
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0004.pt",
+        "rows": 50000,
+        "source_idx_min": 200000,
+        "source_idx_max": 249999,
+        "sha256": "d107621e6b5395e1534928be0377b3529ac5ace4e5fe4ffcef52ee72a9567afd",
+        "bytes": 203880309
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0005.pt",
+        "rows": 50000,
+        "source_idx_min": 250000,
+        "source_idx_max": 299999,
+        "sha256": "63cadbbe3109b94019da0188d5d429b84a96ea763b0b5319a773f6d104c9c305",
+        "bytes": 205399541
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0006.pt",
+        "rows": 50000,
+        "source_idx_min": 300000,
+        "source_idx_max": 349999,
+        "sha256": "42ebd3ef40b8594c13dec0f4f7966963105fe95dd66cde613c5d82534792146b",
+        "bytes": 203054325
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0007.pt",
+        "rows": 50000,
+        "source_idx_min": 350000,
+        "source_idx_max": 399999,
+        "sha256": "ba214cc1d5aa6716887079d0fa39080e1477fe4fb3348db1277481af6d2be07f",
+        "bytes": 201454965
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0008.pt",
+        "rows": 50000,
+        "source_idx_min": 400000,
+        "source_idx_max": 449999,
+        "sha256": "5336817d71e253aaafc73f50daeec9e9e068d65e62acac86a40a5e1e85ef99a5",
+        "bytes": 202626101
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0009.pt",
+        "rows": 50000,
+        "source_idx_min": 450000,
+        "source_idx_max": 499999,
+        "sha256": "4753e34c24d535b56f0da81ff92c5bd70348dee4d1acf216f2cc2c2bca669104",
+        "bytes": 203743093
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0010.pt",
+        "rows": 50000,
+        "source_idx_min": 500000,
+        "source_idx_max": 549999,
+        "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1",
+        "bytes": 213447349
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0011.pt",
+        "rows": 50000,
+        "source_idx_min": 550000,
+        "source_idx_max": 599999,
+        "sha256": "5b7285113152980afecd7d4799775a4f3102336230d6acbd03c107795bbaa558",
+        "bytes": 215735797
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0012.pt",
+        "rows": 50000,
+        "source_idx_min": 600000,
+        "source_idx_max": 649999,
+        "sha256": "dc17102604220e77eacd5f72c13face5f3bf1db55dc79af71a29ac94c873e612",
+        "bytes": 217412341
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0013.pt",
+        "rows": 50000,
+        "source_idx_min": 650000,
+        "source_idx_max": 699999,
+        "sha256": "e557b193c960ddcfd5eaca217fe4991269e581ed2dfd9e3f60b51b598e17252b",
+        "bytes": 219063029
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0014.pt",
+        "rows": 50000,
+        "source_idx_min": 700000,
+        "source_idx_max": 749999,
+        "sha256": "02565cf8cfe0f98275c40cb04b41e03b739d1eed68cb3b1f19dc3eefcabcb269",
+        "bytes": 218839797
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0015.pt",
+        "rows": 50000,
+        "source_idx_min": 750000,
+        "source_idx_max": 799999,
+        "sha256": "b6080a3e92ec490b21b08911b412c1b6ffb311aa4bc71f0a17881daa1a407488",
+        "bytes": 212772725
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0016.pt",
+        "rows": 50000,
+        "source_idx_min": 800000,
+        "source_idx_max": 849999,
+        "sha256": "bf4ae8872a81e9752e9d63562fc7ce66bad84da8ed218643a0666c113b1f23ef",
+        "bytes": 221248053
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0017.pt",
+        "rows": 50000,
+        "source_idx_min": 850000,
+        "source_idx_max": 899999,
+        "sha256": "27d679fe547f04f95a696682f79ce9020c3ba6e9de494c9ef4d4c1e465a400d5",
+        "bytes": 212954933
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0018.pt",
+        "rows": 50000,
+        "source_idx_min": 900000,
+        "source_idx_max": 949999,
+        "sha256": "33cfdc5bb54932c784d71a83584bc50467ad0faa2f9fe2105daf11029d1cce6e",
+        "bytes": 219168885
+      },
+      {
+        "role": "train",
+        "file": "store/geometry/train/train_shard_0019.pt",
+        "rows": 50000,
+        "source_idx_min": 950000,
+        "source_idx_max": 999999,
+        "sha256": "af9322078f3bcb3ab49d8e5d83ae5b55e6b77e6b25274e2979b509ae365eb943",
+        "bytes": 217409397
+      },
+      {
+        "role": "development",
+        "file": "store/geometry/train/train_shard_0020.pt",
+        "rows": 50000,
+        "source_idx_min": 1000000,
+        "source_idx_max": 1049999,
+        "sha256": "2d4bec7b53cb959e45eae0c5ad4cfdbd6132d07b86bf3fc2136ab0cac5a65077",
+        "bytes": 217636597
+      }
+    ]
+  },
+  "aggregates": {
+    "topology": "ac006aa6ba80f217c23419e1bf33689b685ed58b3cdf90021b1d6421ec3ffd36",
+    "geometry": "c8c411755879e27ca112a1496927c2d58f2dfd1bac66a78d2af3c6e03032fb59"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

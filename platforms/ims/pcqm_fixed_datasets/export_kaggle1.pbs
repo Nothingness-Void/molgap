@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=1:mpiprocs=1:ompthreads=1
+#PBS -l walltime=00:30:00
+#PBS -j oe
+
+set -euo pipefail
+BOUNDARY=/lustre/home/users/sm2/chou
+CODE="$BOUNDARY/molgap-pcqm-fixed-v1/code"
+PYTHON="$BOUNDARY/molgap/.venv/bin/python"
+
+test "$(realpath "$BOUNDARY")" = /lustre/home/users/sm2/chou
+export PYTHONPATH="$CODE/src"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+
+"$PYTHON" "$CODE/platforms/ims/pcqm_fixed_datasets/export_kaggle1.py" \
+  --fixed-root "$BOUNDARY/pcqm4mv2-fixed-v1" \
+  --export-root "$BOUNDARY/pcqm4mv2-kaggle1-exports-v3"
