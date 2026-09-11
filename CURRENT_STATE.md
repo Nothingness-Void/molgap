@@ -186,6 +186,9 @@ The single authority is `experiments/SCREENING_POLICY.md`.
 
 ## Prior architecture evidence
 
+- Official PCQM4Mv2 identities are accepted: IMS holds hardlinked 100K,
+  SCNet-matched 500K, 1M, and full views; both Kaggle accounts mirror the
+  byte-identical accepted 100K/500K graph payloads.
 - Track A EdgeState three-seed evidence remains at
   `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
 - The independent PairGPS2D 100K validation and A100 throughput decisions are

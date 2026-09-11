@@ -1,0 +1,55 @@
+{
+  "format": "molgap-pcqm4mv2-kaggle-fixed-mirror-acceptance-v1",
+  "status": "accepted",
+  "accepted_at": "2026-09-11",
+  "owner": "kaseichou",
+  "source": {
+    "dataset": "OGB-LSC PCQM4Mv2",
+    "license": "CC BY 4.0",
+    "official_archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "external_data_used": false,
+    "mirror_authority": "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+  },
+  "datasets": {
+    "100k": {
+      "ref": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "url": "https://www.kaggle.com/datasets/kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "dataset_id": 11980462,
+      "accepted_version": 1,
+      "private": true,
+      "train_rows": 100000,
+      "development_rows": 50000,
+      "graph_shards": 3,
+      "graph_bytes": 608648543,
+      "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+    },
+    "500k": {
+      "ref": "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "url": "https://www.kaggle.com/datasets/kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "dataset_id": 11980476,
+      "accepted_version": 1,
+      "private": true,
+      "train_rows": 500000,
+      "development_rows": 50000,
+      "graph_shards": 11,
+      "graph_bytes": 2248286919,
+      "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "scnet_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "bytewise_identical_to_scnet": true
+    }
+  },
+  "checks": {
+    "kaggle_status_ready": true,
+    "manifest_roundtrip_sha256": true,
+    "manifest_matches_kaggle1": true,
+    "visible_file_paths_match_manifest": true,
+    "visible_file_sizes_match_manifest": true,
+    "local_payload_content_sha256": true,
+    "source_indices_embedded_in_graphs": true,
+    "official_validation_included": false,
+    "test_dev_included": false,
+    "test_challenge_included": false,
+    "one_million_exported": false,
+    "full_exported": false
+  }
+}
