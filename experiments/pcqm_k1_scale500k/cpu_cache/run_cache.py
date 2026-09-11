@@ -18,7 +18,19 @@ def find_one(pattern: str) -> Path:
 
 def main() -> None:
     started = time.perf_counter()
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"])
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            "--no-deps",
+            "torch-geometric==2.6.1",
+            "ogb==1.3.6",
+            "rdkit==2025.3.5",
+        ]
+    )
     modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_k1_scale_cache.py"))
     if len(modules) == 1:
         python_root = modules[0].parents[1]
@@ -32,6 +44,11 @@ def main() -> None:
         python_root = modules[0].parents[1]
     sys.path.insert(0, str(python_root))
     commit = find_one("SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
+    from rdkit import Chem
+    from ogb.utils.mol import smiles2graph
+
+    if Chem.MolFromSmiles("CC") is None or smiles2graph("CC")["num_nodes"] != 2:
+        raise RuntimeError("RDKit/OGB molecular parsing preflight failed")
     from molgap.pcqm_k1_scale_cache import build_scale_cache
 
     output = Path("/kaggle/working/pcqm_k1_scale500k_cache")
