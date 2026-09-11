@@ -1,0 +1,27 @@
+{
+  "format": "molgap-training-pipeline-audit-resolution-v1",
+  "recorded_date": "2026-09-12",
+  "status": "repaired-in-successor-contract",
+  "historical_500k_result_rewritten": false,
+  "remote_training_started": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "resolutions": {
+    "full_scale_overtraining": "exact-20000000-sample-exposure-156250-steps",
+    "checkpoint_resume": "model-optimizer-scheduler-cursor-rng-target-runtime-source-data",
+    "self_contained_model": "state-config-feature-contract-target-stats-and-identities",
+    "architecture_drift": "source-commit-parameter-count-and-seed42-initial-state-sha256",
+    "a100_tf32_ambiguity": "explicitly-disabled",
+    "partial_optimizer_batch": "global-pass-drop-last-physical-128",
+    "acceptance_self_report_trust": "independent-step-scheduler-finite-hash-and-bundle-checks",
+    "environment_drift": "complete-package-runtime-fingerprint-and-reusable-certificate",
+    "resource_measurement": "optimizer-inclusive-reserved-memory-training-only-throughput-and-utilization",
+    "training_stochasticity": "reference-variation-floor-required-row-bootstrap-insufficient-alone",
+    "development_role_reuse": "selection-only-plus-one-disjoint-once-read-audit",
+    "source_archive_pollution": "tracked-files-only-deterministic-zip-with-sha256",
+    "cross_platform_baseline_waste": "one-immutable-reference-per-scientific-contract-no-per-candidate-rerun",
+    "row_order_omission": "row-order-fingerprint-required-by-v4",
+    "per_batch_cuda_synchronization": "device-side-loss-accumulation-and-periodic-finite-checks"
+  },
+  "training_contract_sha256": "5535fdb9adbed0d80d113f859c318c87872e0e9c94890eee89a719c5961adddf"
+}
