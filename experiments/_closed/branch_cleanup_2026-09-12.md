@@ -27,6 +27,7 @@ The local `codex/pcqm-torsion-seed42` ref was removed after its tip
 | `codex/scnet-esgps6-304-500k` | `03f5253dcf86edb87512a4bbd5dcececa5a7c0dd` | Positive 500K relation-pretraining result awaiting owner integration |
 | `codex/scnet-gptrans-t-500k` | `c86970d0e309f23c4380de8d5935ec961d0bb209` | Positive 500K architecture result awaiting owner integration |
 | `codex/scnet-distance-angle-triangle-500k` | `a701e36860112f36385d107d0c9e3cc337b98afc` | Launch record has no terminal decision in Git |
+| `codex/exp/gptrans-k1-geometry-500k` | `01d5c88cb4118e9cc6888440a5e1842ddaf12988` | Created concurrently during cleanup for an active 500K geometry-transfer screen |
 
 The redundant `codex/scnet-edgestate304-500k` ref at
 `f19bfd5df9e7b3c35aea2cf8072ea7657b8af73d` was removed only after verifying
