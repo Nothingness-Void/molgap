@@ -14,3 +14,9 @@ schedule, 40 epochs, and decision gate.
 The user authorized another unchanged-contract infrastructure repair on
 2026-09-11. Cache version 3 adds only the missing `rdkit==2025.3.5` package and
 an RDKit/OGB parsing preflight before cache construction.
+
+Before GPU submission, the user authorized the same fast T4 mode for both
+paired arms: FP16 AMP, fused AdamW, pinned non-blocking transfer, and two loader
+workers per arm. Physical batch 128 and every scientific variable remain
+unchanged. The `full_gps` arm is a fresh full-attention control, not the old
+full-data checkpoint.

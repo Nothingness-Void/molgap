@@ -27,7 +27,9 @@
     "neural_atom_k1"
   ],
   "seed": 42,
-  "precision": "fp32",
+  "precision": "fp16_amp",
+  "optimizer_implementation": "fused_adamw",
+  "loader_workers_per_arm": 2,
   "physical_batch_per_model_device": 128,
   "gradient_accumulation_steps": 1,
   "epochs": 40,
