@@ -7,7 +7,12 @@ import os
 from pathlib import Path
 
 from molgap.pcqm_gap_data import sha256_file
-from molgap.pcqm_k1_scale_runner import EXPECTED_PARAMETERS, MIN_GAIN_EV
+from molgap.pcqm_k1_scale_runner import (
+    EXPECTED_PARAMETERS,
+    LOADER_WORKERS,
+    MIN_GAIN_EV,
+    PRECISION,
+)
 from molgap.pcqm_k1_shadow_audit import paired_bootstrap
 from molgap.screen_policy import validate_paired_screen_contract
 
@@ -19,11 +24,13 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
     metrics = json.loads((root / "metrics.json").read_text(encoding="utf-8"))
     completion = json.loads((root / "completion_manifest.json").read_text(encoding="utf-8"))
     for key, expected in {
-        "format": "molgap-pcqm-k1-scale500k-result-v1",
+        "format": "molgap-pcqm-k1-scale500k-result-v2",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
         "minimum_gain_eV": MIN_GAIN_EV,
+        "precision": PRECISION,
+        "loader_workers_per_arm": LOADER_WORKERS,
         "model_inference_executed_by_acceptance": False,
         "official_validation_role_read": False,
         "test_dev_role_read": False,
@@ -44,6 +51,12 @@ def accept(root: Path, *, source_commit: str, cache_sha256: str) -> dict:
             raise RuntimeError(f"{arm} parameter count changed")
         if result["preflight"]["physical_batch_per_device"] != 128:
             raise RuntimeError(f"{arm} batch changed")
+        if (
+            result["preflight"].get("precision") != PRECISION
+            or result["training"].get("precision") != PRECISION
+            or result["training"].get("loader_workers") != LOADER_WORKERS
+        ):
+            raise RuntimeError(f"{arm} optimized runtime contract changed")
         if result["preflight"]["memory_reserve_fraction"] < 0.15:
             raise RuntimeError(f"{arm} memory reserve failed")
         payload = root / arm / "best_validation_payload.pt"

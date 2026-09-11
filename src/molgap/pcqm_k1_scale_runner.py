@@ -7,6 +7,8 @@ import os
 import time
 from pathlib import Path
 
+import numpy as np
+
 from .pcqm_gap_data import sha256_file
 from .pcqm_k1_scale import SCALE_TRAIN_ROWS, VALIDATION_ROWS
 from .screen_policy import validate_paired_screen_contract, validate_screen_arm
@@ -15,9 +17,11 @@ from .screen_policy import validate_paired_screen_contract, validate_screen_arm
 SEED = 42
 BATCH_SIZE = 128
 EPOCHS = 40
+PRECISION = "fp16_amp"
+LOADER_WORKERS = 2
 MIN_GAIN_EV = 0.0047308445
 EXPECTED_PARAMETERS = {"full_gps": 4_771_073, "neural_atom_k1": 3_658_817}
-TASK_ID = "pcqm-k1-scale500k-s42-v1"
+TASK_ID = "pcqm-k1-scale500k-s42-v2"
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -78,8 +82,8 @@ def _contract(arm: str, accelerator: str, cache_sha256: str) -> dict:
         "accelerator": accelerator,
         "data_role_fingerprint": cache_sha256,
         "seed": SEED,
-        "precision": "fp32",
-        "optimizer_fingerprint": "adamw-lr4e-4-wd1e-5-clip1",
+        "precision": PRECISION,
+        "optimizer_fingerprint": "fused-adamw-lr4e-4-wd1e-5-clip1",
         "schedule_fingerprint": "cosine40-eta1e-6",
         "sample_exposure": "pcqm-official-train-derived500000-gap40",
         "physical_batch_per_device": BATCH_SIZE,
@@ -88,12 +92,170 @@ def _contract(arm: str, accelerator: str, cache_sha256: str) -> dict:
     }
 
 
+def _loader(graphs, *, shuffle: bool):
+    import torch
+    from torch_geometric.loader import DataLoader
+
+    return DataLoader(
+        graphs,
+        batch_size=BATCH_SIZE,
+        shuffle=shuffle,
+        num_workers=LOADER_WORKERS,
+        persistent_workers=True,
+        pin_memory=True,
+        prefetch_factor=2,
+        generator=torch.Generator().manual_seed(SEED),
+    )
+
+
+def _evaluate_amp(model, loader, mean, std):
+    import torch
+
+    from .qm9_gape import forward_gap
+
+    model.eval()
+    targets = []
+    predictions = []
+    with torch.no_grad():
+        for batch in loader:
+            batch = batch.to("cuda", non_blocking=True)
+            with torch.autocast(device_type="cuda", dtype=torch.float16):
+                prediction = forward_gap(model, batch, augmented=False) * std + mean
+            targets.append(batch.y.view(-1).cpu())
+            predictions.append(prediction.float().cpu())
+    target = torch.cat(targets)
+    prediction = torch.cat(predictions)
+    return float((prediction - target).abs().mean()), target, prediction
+
+
+def train_gap_amp(
+    model,
+    roles,
+    output: Path,
+    *,
+    source_commit: str,
+    cache_sha256: str,
+) -> dict:
+    """Train one arm under the common optimized T4 contract."""
+    import torch
+    import torch.nn.functional as functional
+
+    from .qm9_gape import (
+        atomic_json as write_json,
+        atomic_torch_save,
+        forward_gap,
+        set_seed,
+        state_sha256,
+    )
+
+    set_seed(SEED)
+    output.mkdir(parents=True, exist_ok=True)
+    model = model.to("cuda")
+    initial_sha = state_sha256(model)
+    targets = torch.stack([graph.y.view(()) for graph in roles["train"]])
+    mean = targets.mean().to("cuda")
+    std = targets.std().clamp_min(1e-6).to("cuda")
+    train_loader = _loader(roles["train"], shuffle=True)
+    validation_loader = _loader(roles["validation"], shuffle=False)
+    optimizer = torch.optim.AdamW(
+        model.parameters(), lr=4e-4, weight_decay=1e-5, fused=True
+    )
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=EPOCHS, eta_min=1e-6
+    )
+    scaler = torch.amp.GradScaler("cuda")
+    best = float("inf")
+    best_epoch = -1
+    trace = []
+    for epoch in range(EPOCHS):
+        model.train()
+        absolute = 0.0
+        rows = 0
+        started = time.perf_counter()
+        for batch in train_loader:
+            batch = batch.to("cuda", non_blocking=True)
+            optimizer.zero_grad(set_to_none=True)
+            with torch.autocast(device_type="cuda", dtype=torch.float16):
+                prediction = forward_gap(model, batch, augmented=False)
+                target = (batch.y.view(-1) - mean) / std
+                loss = functional.l1_loss(prediction, target)
+            scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            scaler.step(optimizer)
+            scaler.update()
+            absolute += float(
+                (prediction.detach().float() - target.float()).abs().sum()
+            )
+            rows += int(target.numel())
+        validation_mae, target_eV, prediction_eV = _evaluate_amp(
+            model, validation_loader, mean, std
+        )
+        improved = validation_mae < best
+        if improved:
+            best = validation_mae
+            best_epoch = epoch
+            atomic_torch_save(output / "best_model.pt", model.state_dict())
+            atomic_torch_save(
+                output / "best_validation_payload.pt",
+                {"target_eV": target_eV, "prediction_eV": prediction_eV},
+            )
+        row = {
+            "epoch": epoch,
+            "train_normalized_mae": absolute / rows,
+            "validation_gap_mae_eV": validation_mae,
+            "seconds": time.perf_counter() - started,
+            "learning_rate": optimizer.param_groups[0]["lr"],
+            "loss_scale": scaler.get_scale(),
+            "improved": improved,
+        }
+        trace.append(row)
+        scheduler.step()
+        atomic_torch_save(
+            output / "last_checkpoint.pt",
+            {
+                "epoch": epoch,
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "scaler": scaler.state_dict(),
+                "trace": trace,
+                "source_commit": source_commit,
+                "cache_sha256": cache_sha256,
+                "batch_size": BATCH_SIZE,
+                "precision": PRECISION,
+                "loader_workers": LOADER_WORKERS,
+                "seed": SEED,
+            },
+        )
+        write_json(output / "trace.json", {"epochs": trace})
+        print(
+            f"{output.name} ep{epoch:02d} train={row['train_normalized_mae']:.6f} "
+            f"val={validation_mae:.6f}eV {row['seconds']:.1f}s"
+            f"{' *' if improved else ''}",
+            flush=True,
+        )
+    return {
+        "initial_model_sha256": initial_sha,
+        "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
+        "best_epoch": best_epoch,
+        "validation_gap_mae_eV": best,
+        "epochs_completed": len(trace),
+        "mean_epoch_seconds": float(np.mean([row["seconds"] for row in trace])),
+        "precision": PRECISION,
+        "loader_workers": LOADER_WORKERS,
+        "best_model_sha256": sha256_file(output / "best_model.pt"),
+        "payload_sha256": sha256_file(output / "best_validation_payload.pt"),
+        "checkpoint_sha256": sha256_file(output / "last_checkpoint.pt"),
+    }
+
+
 def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str) -> dict:
     import torch
     import torch.nn.functional as functional
     from torch_geometric.loader import DataLoader
 
-    from .qm9_gape import forward_gap, set_seed, train_gap
+    from .qm9_gape import forward_gap, set_seed
     from .qm9_neural_atom import make_encoder
 
     if arm not in EXPECTED_PARAMETERS:
@@ -101,7 +263,6 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("Each scale worker requires one visible T4")
     validate_screen_arm(physical_batch_per_device=BATCH_SIZE)
-    torch.backends.cuda.matmul.allow_tf32 = False
     root, manifest = find_cache(cache_sha256)
     roles = load_roles(root, manifest)
     set_seed(SEED)
@@ -111,17 +272,21 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
         raise RuntimeError(f"{arm} parameter count changed: {parameters}")
     torch.cuda.reset_peak_memory_stats()
     batch = next(iter(DataLoader(roles["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))).to("cuda")
-    loss = functional.l1_loss(forward_gap(model, batch, augmented=False), batch.y.view(-1))
-    loss.backward()
+    scaler = torch.amp.GradScaler("cuda")
+    with torch.autocast(device_type="cuda", dtype=torch.float16):
+        loss = functional.l1_loss(
+            forward_gap(model, batch, augmented=False), batch.y.view(-1)
+        )
+    scaler.scale(loss).backward()
     peak = int(torch.cuda.max_memory_allocated())
     total = int(torch.cuda.get_device_properties(0).total_memory)
     reserve = 1.0 - peak / total
     if not bool(torch.isfinite(loss)) or reserve < 0.15:
         raise RuntimeError(f"{arm} batch-128 preflight failed")
-    del model, batch, loss
+    del model, batch, loss, scaler
     torch.cuda.empty_cache()
     set_seed(SEED)
-    training = train_gap(
+    training = train_gap_amp(
         make_encoder(arm),
         roles,
         output / arm,
@@ -137,6 +302,8 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
             "peak_memory_mib": peak / 1024**2,
             "total_memory_mib": total / 1024**2,
             "memory_reserve_fraction": reserve,
+            "precision": PRECISION,
+            "loader_workers": LOADER_WORKERS,
         },
         "training": training,
         "contract": _contract(arm, torch.cuda.get_device_name(0), cache_sha256),
@@ -173,10 +340,12 @@ def aggregate(output: Path, *, source_commit: str, cache_sha256: str) -> dict:
     gain = mae["full_gps"] - mae["neural_atom_k1"]
     passed = gain >= MIN_GAIN_EV and ci[1] < 0.0
     summary = {
-        "format": "molgap-pcqm-k1-scale500k-result-v1",
+        "format": "molgap-pcqm-k1-scale500k-result-v2",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,
+        "precision": PRECISION,
+        "loader_workers_per_arm": LOADER_WORKERS,
         "results": results,
         "comparability": comparability,
         "validation_gap_mae_eV": mae,
