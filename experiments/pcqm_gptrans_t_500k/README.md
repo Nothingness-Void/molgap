@@ -9,3 +9,7 @@ can beat the matched six-layer EdgeState GPS at the 500K bridge scale.
 
 This is an architecture screen. It does not alter the production registry or
 authorize official validation/test access.
+
+The 500K run completed and passed its frozen gate. See
+[`results/decision.md`](results/decision.md) and
+[`results/acceptance.json`](results/acceptance.json).
