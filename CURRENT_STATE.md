@@ -119,9 +119,11 @@ superseded for scientific comparison by the repository-wide fixed-dataset
 decision. GPU version 1 used that local rebuild and is non-decisional. The
 replacement binds the unchanged fresh Full-GPS/K1 pair directly to Kaggle2
 fixed-manifest SHA-256 `630d3004...ae9751` and SCNet aggregate
-`676a506c...1b20`; no graph reconstruction occurs in the GPU task. The
-persistent Luna monitor hands any terminal state once to the coordinator and
-then pauses.
+`676a506c...1b20`; no graph reconstruction occurs in the GPU task. Version 2
+failed before data/model work because its legacy submission path provisioned
+one GPU. Unchanged version 3 uses an explicit T4 accelerator override and is
+the sole active K1 scale task. The persistent Luna monitor hands any terminal
+state once to the coordinator and then pauses.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.
