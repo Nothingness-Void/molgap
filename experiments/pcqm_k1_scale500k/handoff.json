@@ -1,5 +1,5 @@
 {
-  "format": "molgap-pcqm-k1-scale500k-execution-v3",
+  "format": "molgap-pcqm-k1-scale500k-execution-v4",
   "prepared_by_branch": "molgap-server",
   "execution_owner": "molgap-server:kaggle2",
   "release_condition": "accepted K1 shadow audit",
@@ -20,6 +20,10 @@
   "train_sha256": "a9c8b2b698c67f30348c6edbccff00eb9e2c06b064ee4d1a11e607f9531a0f8e",
   "validation_sha256": "9ae885e5e74d82820d83758942eaf3e6ae2a7dcefbc1f0f4c174ce94c6786bb9",
   "scnet_reference_cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "fixed_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "fixed_geometry_aggregate_sha256": "30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d",
+  "bytewise_identical_to_scnet": true,
   "paired_arms": [
     "full_gps",
     "neural_atom_k1"

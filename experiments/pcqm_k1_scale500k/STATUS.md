@@ -30,11 +30,20 @@ Kaggle2 cache version 5 completed and passed frozen no-model acceptance:
 fallbacks, and zero unresolved rows. Its cache aggregate is
 `40a8a981b8ded5d009817b14189b4b4518db611a311013bfc5e3d657e97d5229`.
 
-The sole paired GPU task `kaseichou/molgap-pcqm-k1-scale500k-s42` version 1
-was submitted from source commit
-`1652b7130ad64b7b85793947266528ccebe937a4` and was `RUNNING` at the last
-mechanical check. It runs fresh Full-GPS and frozen K1 concurrently on T4x2
-with FP32, seed 42, physical batch 128, and 40 epochs per arm.
+The paired GPU task `kaseichou/molgap-pcqm-k1-scale500k-s42` version 1 was
+submitted from source commit `1652b7130ad64b7b85793947266528ccebe937a4`
+against the accepted locally rebuilt cache. The repository-wide fixed-dataset
+decision superseded that input while it was running. Version 1 is therefore
+historical execution evidence only and cannot decide a cross-platform claim,
+even if Kaggle retains terminal artifacts.
+
+The replacement keeps every architecture and training variable unchanged but
+binds both arms directly to
+`kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1`. Its manifest SHA-256 is
+`630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751`;
+the 11 packed graph shards are byte-identical to the accepted SCNet and IMS
+500K views. The next status update must identify the launched Kaggle version
+and frozen source commit.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired

@@ -20,20 +20,18 @@ pass no-model acceptance before one paired T4x2 training task is submitted.
 - Development: source indices `500000..549999`, exactly 50,000 rows, SHA-256
   `9ae885e5e74d82820d83758942eaf3e6ae2a7dcefbc1f0f4c174ce94c6786bb9`.
 - These row identities exactly match the accepted SCNet ESGPS6-304 and
-  GPTrans-T screens. Their accepted rich-cache reference is
+  GPTrans-T screens. All four execution surfaces now use the same accepted
+  graph bytes. The fixed Kaggle manifest SHA-256 is
+  `630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751`;
+  its SCNet-compatible aggregate is
   `676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20`.
-- Kaggle rebuilds only the pure-2D OGB graph and RWSE16 views needed by K1;
-  equality with SCNet is a row/target-role claim, not a byte-identical cache
-  claim.
-- No replacement or skipped row is allowed. Ten frozen hypervalent-silicon
-  source rows that current RDKit cannot strictly sanitize use the same
-  connectivity with `sanitize=False`, `UpdatePropertyCache(strict=False)`, and
-  the standard OGB atom/bond feature functions. Their ordered source-index
-  ledger SHA-256 is
-  `93e7e2478d86c41c598c833225af5fcbd914f3e4ba3cced87a7fe9f469108097`;
-  any additional or missing fallback invalidates the cache.
-  Official validation, test-dev,
-  test-challenge, and the consumed K1 shadow role remain unread.
+- The paired job consumes the immutable packed geometry shards directly. It
+  does not rebuild RDKit, RWSE, or ETKDG assets. The geometry aggregate is
+  `30b57ac10ddcd1decb7729b299b9b92fbfdf0fe7de15700b40bd488cd3a9ac4d`.
+- The accepted locally rebuilt cache with aggregate `40a8a981...` remains
+  parser provenance only and is excluded from cross-platform scientific
+  comparison. No replacement or skipped row is allowed. Official validation,
+  test-dev, test-challenge, and the consumed K1 shadow role remain unread.
 
 ## Frozen architecture
 
