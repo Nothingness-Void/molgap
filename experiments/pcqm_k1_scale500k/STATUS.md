@@ -18,6 +18,10 @@ and decision gate.
 
 Cache version 4 pins the same `rdkit==2026.3.6` release recorded by the accepted
 SCNet-compatible cache lineage and rejects any skipped or replaced source row.
+Kaggle2 kernel `kaseichou/molgap-pcqm-k1-scale500k-cache` version 4 was
+submitted from source commit `754eee2314baaa67e3e5d2b180f579008e201101` and
+was `RUNNING` at the last mechanical check. GPU training remains blocked until
+the complete 500K/50K cache passes the frozen no-model acceptance.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired

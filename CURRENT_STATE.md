@@ -115,8 +115,11 @@ scale contract are `experiments/pcqm_k1_shadow/decision.md` and
 `experiments/pcqm_k1_scale500k/protocol.md`.
 Kaggle2 cache v1-v2 failed before construction; v3 exposed the invalid random
 role draft by stopping on an unparseable Si row. No GPU job was submitted and
-K1 has no 500K result. Cache v4 will build the exact SCNet 500K/50K roles and
-must reject any skipped or replaced row before GPU submission.
+K1 has no 500K result. Kaggle2 CPU cache v4 is running from commit
+`754eee2314baaa67e3e5d2b180f579008e201101` to build the exact SCNet 500K/50K
+roles and must reject any skipped or replaced row before GPU submission. The
+persistent Luna monitor is `molgap-k1-scale500k-cache-v4`; it hands any terminal
+state once to the coordinator and then pauses.
 The user withdrew the unlaunched FP16 AMP amendment before GPU launch. Both
 fresh 500K arms use FP32, fused AdamW, pinned non-blocking transfer, and two
 loader workers while retaining physical batch 128 and all scientific inputs.
