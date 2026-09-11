@@ -55,3 +55,5 @@ handoff, SCNet work, or IMS work is authorized by this result.
 This successful Track C result does not consume the final route-3/3 discovery
 attempt. If the PCQM transfer fails, its cause must be recorded before any
 materially different route is considered.
+
+Machine provenance: `results/gpu_seed42_launch.json`.

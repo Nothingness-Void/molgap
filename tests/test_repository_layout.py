@@ -16,6 +16,7 @@ EXCLUDED_PARTS = {
     "_closed",       # settled experiments
     "_retired",      # replaced production evidence
     "_records",      # downloaded remote payloads
+    "_staging",      # generated remote source bundles
     "packages",      # generated Kaggle copies, not source entrypoints
     "bundle",        # frozen remote wheel/notebook payloads
     "__pycache__",

@@ -15,12 +15,21 @@ Track C.
 |---|---|---|
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can train-role graph alignment add useful topology PE beyond RWSE16? | No for the matched GAPE-lite implementation; closed before PCQM transfer | `qm9_gape_pretraining/` |
+| Does adaptive atom-local denoising transfer on QM9? | No material gain; closed | `qm9_adaptive_denoising/` |
+| Does a cardinality-preserving source channel improve QM9? | No versus the frozen reference; closed | `qm9_cardinality_channel/` |
+| Can Fourier edge features improve the local K1 backbone? | QM9 signal did not transfer to PCQM; closed | `qm9_fourier_edge/` |
+| Did the QM9 local-hierarchy cache attempt train a model? | No; infrastructure-only cache acceptance | `qm9_local_hierarchy/` |
+| Do multiple Neural-Atom slots beat the one-slot control? | No material separation; closed | `qm9_neural_atom_mixer/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; closed R2/R4--R10 routes are indexed in the archive tombstone | `top20_architecture_qm9/` |
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
-| Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Open; Sparse Triangle plus distance-angle geometry is frozen as the comparator, and the smallest-ring hierarchy is the single active question | `pcqm_gap_architecture/` |
+| Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Discovery history retained; closed routes are indexed, and K1 is the sole desktop handoff | `pcqm_gap_architecture/` |
+| Did Fourier Edge transfer to PCQM-100K? | No; closed at seed 42 | `pcqm_fourier_edge_transfer/` |
+| Did K1 survive a fixed 500K scale bridge? | Yes under its paired-v3 contract | `pcqm_k1_scale500k/` |
+| Did K1 pass its once-read shadow audit? | Yes; role consumed | `pcqm_k1_shadow/` |
+| Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |

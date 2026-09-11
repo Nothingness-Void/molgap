@@ -1,8 +1,7 @@
 # AGENTS — Reading Protocol
 
-MolGap: ML prediction of HOMO/LUMO/Gap (eV) for organic electronic molecules,
-trained on PubChemQC B3LYP/6-31G* data. This file is **how to navigate the repo**,
-not a project description. One fact lives in one place — follow the links.
+MolGap predicts HOMO/LUMO/Gap (eV) for organic molecules from PubChemQC
+B3LYP/6-31G*. This file is a navigation protocol; one fact lives in one place.
 
 ## Read in this order
 1. **This file** — protocol + hard constraints (below).
@@ -16,10 +15,8 @@ not a project description. One fact lives in one place — follow the links.
    `experiments/`, or `platforms/`. Then the specific decision record it links.
 7. The specific code files your task touches.
 
-`production/history/` retains the frozen phase 1-7 records. Never infer the
-current model or an open question from that historical tree.
-
-Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
+`production/history/` is frozen history; never infer live state from it. Do not
+read all docs for current truth—read `CURRENT_STATE.md`.
 
 ## Hard constraints (do not break)
 - **Python**: always `.venv\Scripts\python.exe` — system Python lacks torch/pyg.
@@ -41,22 +38,20 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   after an immutable graph cache passes acceptance; GPU/DCU time is reserved
   for encoder training, embedding extraction, and fusion.
 - **Kaggle multi-candidate screens**: when two or more independent candidates
-  can be isolated without changing their scientific contracts, explicitly
-  request `NvidiaTeslaT4` and use the T4x2 allocation for candidate-level
-  parallelism. Give every worker an independent model, RNG, optimizer,
-  checkpoint directory, and one visible GPU. Use a single accelerator only
-  for one-model jobs, memory-constrained candidates, or mechanisms that cannot
-  be deterministically isolated; record that exception in the protocol.
+  can be isolated, request `NvidiaTeslaT4` and use T4x2 candidate parallelism.
+  Give each worker an independent model, RNG, optimizer, checkpoint directory,
+  and one visible GPU. Record why any job instead requires one accelerator.
 - **Seed-budget governance**: architecture discovery defaults to one paired
-  seed-42 screen. A seed-42 win records a promising candidate but never
-  automatically triggers seeds 43/44. Multi-seed confirmation is reserved for
-  the final short list after a material paired gain and a separate explicit
-  compute-budget decision. Each experiment protocol may further restrict this
-  rule but may not silently broaden it.
+  seed-42 screen. A win never automatically triggers seeds 43/44; reserve
+  multi-seed confirmation for the final shortlist after a material gain and an
+  explicit compute decision. Protocols may restrict but not broaden this rule.
 - **Screen comparability**: every newly frozen model screen obeys
   `experiments/SCREENING_POLICY.md`: physical batch is exactly 128 per
-  independent model/device, and only same-task, same-platform matched arms may
-  decide a scientific claim.
+  independent model/device. A baseline is trained and frozen once per benchmark
+  contract, not once per candidate. Cross-platform candidates compare directly
+  with that immutable reference when the scientific-contract fingerprint is
+  identical and each platform/runtime has one reusable accepted calibration
+  certificate. Platform identity remains provenance, not a forced match.
 - **Fixed PCQM data identity**: every PCQM 100K/500K screen on Kaggle, SCNet,
   or IMS consumes the accepted cross-platform fixed dataset assets. Never
   rebuild graphs per platform or substitute a platform-local split/cache for a
@@ -68,18 +63,13 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
 
 ## Remote monitor handoff
 
-Remote polling is a bounded waiting stage, not a decision-making loop. Use one
-dedicated Luna Max heartbeat attached to one persistent monitor thread; never
-use a standalone cron that creates a new task on every poll. The monitor prompt
-must name both its automation id and the coordinator thread that owns scientific
-analysis.
+Remote polling is bounded waiting, not a decision loop. Use one Luna Max
+heartbeat on one persistent monitor thread, never a cron that creates tasks.
+Name its automation id and the coordinator that owns scientific analysis.
 
-Choose the heartbeat interval from the estimated end-to-end runtime, including
-queueing and acceptance: use 15 minutes for work expected to finish within about
-1 hour, 30 minutes for work expected to finish in about 1-4 hours, and 60 minutes
-for longer runs. Tighten the interval only near a known deadline or expected
-terminal window. Every submitted remote chain must receive this handoff before
-the coordinator stops actively watching it.
+Choose intervals from end-to-end runtime: 15 minutes under about 1 hour, 30
+minutes for 1-4 hours, and 60 minutes beyond that. Tighten only near a known
+terminal window. Handoff every remote chain before the coordinator stops watching.
 
 - While the remote job is non-terminal, report only the status and newly visible
   mechanical evidence. Do not wake the coordinator, resubmit, or open another
@@ -124,12 +114,10 @@ The repository has four long-lived branches with non-overlapping roles:
   process records, and provenance that must remain reproducible but should not
   stay in an active integration branch.
 
-Do not create one long-lived branch per experiment. Work directly on the
-owning integration branch when safe. Create a short-lived `codex/<topic>` branch
-only when parallel work, worktree isolation, or a risky change requires it.
-Afterward, merge accepted work into `molgap-server`, preserve rejected compact
-evidence in `archive`, verify the commits are reachable remotely, and delete
-the inactive temporary branch.
+Do not create one long-lived branch per experiment. Work on the owning branch;
+use short-lived `codex/<topic>` only for parallel, isolated, or risky work. Merge
+accepted work into `molgap-server`, preserve rejected compact evidence in
+`archive`, verify remote reachability, then delete the temporary branch.
 
 Before branching or integrating, fetch the remote, inspect the worktree, and
 preserve unrelated user changes. Never overwrite another machine's branch.

@@ -65,3 +65,5 @@ No desktop/full-scale handoff follows unless that untouched shadow agrees.
 
 The final route-3/3 architecture-discovery attempt remains unused. It cannot be
 submitted while K1 has an unresolved independent-audit path.
+
+Machine provenance: `results/gpu_seed42_launch.json`.

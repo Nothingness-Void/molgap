@@ -30,3 +30,4 @@ validation/test-dev.
 Mechanical evidence is in `terminal_report_audit_v3.md`; the retrieved remote
 payload remains under
 `platforms/_records/kaggle/training/pcqm_k1_shadow_audit_v3/`.
+Machine provenance: `terminal_handoff_marker_audit_v3.json`.

@@ -48,3 +48,5 @@ placement, optimizer, schedule, desktop/full-scale, official-role, SCNet, or
 IMS follow-up. The two preflight-only infrastructure failures remain separately
 preserved in `terminal_report.md` and `terminal_report_v2.md`; they do not alter
 the accepted scientific result in `terminal_report_v3.md`.
+
+Machine provenance: `results/gpu_seed42_v3_launch.json`.

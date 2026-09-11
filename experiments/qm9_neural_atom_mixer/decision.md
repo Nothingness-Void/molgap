@@ -54,3 +54,5 @@ slot/width/placement/schedule retry, desktop/full-scale handoff, official-role
 access, SCNet work, or IMS work. Its efficiency signal remains design evidence
 only. One of the three post-cardinality scientific attempts is consumed; two
 remain, each requiring a new all-history evidence audit before submission.
+
+Machine provenance: `results/gpu_seed42_launch.json`.
