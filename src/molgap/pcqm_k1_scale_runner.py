@@ -17,11 +17,11 @@ from .screen_policy import validate_paired_screen_contract, validate_screen_arm
 SEED = 42
 BATCH_SIZE = 128
 EPOCHS = 40
-PRECISION = "fp16_amp"
+PRECISION = "fp32"
 LOADER_WORKERS = 2
 MIN_GAIN_EV = 0.0047308445
 EXPECTED_PARAMETERS = {"full_gps": 4_771_073, "neural_atom_k1": 3_658_817}
-TASK_ID = "pcqm-k1-scale500k-s42-v2"
+TASK_ID = "pcqm-k1-scale500k-s42-v3"
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -108,7 +108,7 @@ def _loader(graphs, *, shuffle: bool):
     )
 
 
-def _evaluate_amp(model, loader, mean, std):
+def _evaluate_fp32(model, loader, mean, std):
     import torch
 
     from .qm9_gape import forward_gap
@@ -119,8 +119,7 @@ def _evaluate_amp(model, loader, mean, std):
     with torch.no_grad():
         for batch in loader:
             batch = batch.to("cuda", non_blocking=True)
-            with torch.autocast(device_type="cuda", dtype=torch.float16):
-                prediction = forward_gap(model, batch, augmented=False) * std + mean
+            prediction = forward_gap(model, batch, augmented=False) * std + mean
             targets.append(batch.y.view(-1).cpu())
             predictions.append(prediction.float().cpu())
     target = torch.cat(targets)
@@ -128,7 +127,7 @@ def _evaluate_amp(model, loader, mean, std):
     return float((prediction - target).abs().mean()), target, prediction
 
 
-def train_gap_amp(
+def train_gap_fp32(
     model,
     roles,
     output: Path,
@@ -136,7 +135,7 @@ def train_gap_amp(
     source_commit: str,
     cache_sha256: str,
 ) -> dict:
-    """Train one arm under the common optimized T4 contract."""
+    """Train one arm under the common FP32 T4 contract."""
     import torch
     import torch.nn.functional as functional
 
@@ -163,7 +162,6 @@ def train_gap_amp(
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=EPOCHS, eta_min=1e-6
     )
-    scaler = torch.amp.GradScaler("cuda")
     best = float("inf")
     best_epoch = -1
     trace = []
@@ -175,20 +173,17 @@ def train_gap_amp(
         for batch in train_loader:
             batch = batch.to("cuda", non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
-            with torch.autocast(device_type="cuda", dtype=torch.float16):
-                prediction = forward_gap(model, batch, augmented=False)
-                target = (batch.y.view(-1) - mean) / std
-                loss = functional.l1_loss(prediction, target)
-            scaler.scale(loss).backward()
-            scaler.unscale_(optimizer)
+            prediction = forward_gap(model, batch, augmented=False)
+            target = (batch.y.view(-1) - mean) / std
+            loss = functional.l1_loss(prediction, target)
+            loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            scaler.step(optimizer)
-            scaler.update()
+            optimizer.step()
             absolute += float(
                 (prediction.detach().float() - target.float()).abs().sum()
             )
             rows += int(target.numel())
-        validation_mae, target_eV, prediction_eV = _evaluate_amp(
+        validation_mae, target_eV, prediction_eV = _evaluate_fp32(
             model, validation_loader, mean, std
         )
         improved = validation_mae < best
@@ -206,7 +201,6 @@ def train_gap_amp(
             "validation_gap_mae_eV": validation_mae,
             "seconds": time.perf_counter() - started,
             "learning_rate": optimizer.param_groups[0]["lr"],
-            "loss_scale": scaler.get_scale(),
             "improved": improved,
         }
         trace.append(row)
@@ -218,7 +212,6 @@ def train_gap_amp(
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
                 "scheduler": scheduler.state_dict(),
-                "scaler": scaler.state_dict(),
                 "trace": trace,
                 "source_commit": source_commit,
                 "cache_sha256": cache_sha256,
@@ -272,25 +265,22 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
         raise RuntimeError(f"{arm} parameter count changed: {parameters}")
     torch.cuda.reset_peak_memory_stats()
     batch = next(iter(DataLoader(roles["train"][:BATCH_SIZE], batch_size=BATCH_SIZE))).to("cuda")
-    scaler = torch.amp.GradScaler("cuda")
-    with torch.autocast(device_type="cuda", dtype=torch.float16):
-        loss = functional.l1_loss(
-            forward_gap(model, batch, augmented=False), batch.y.view(-1)
-        )
-    scaler.scale(loss).backward()
+    loss = functional.l1_loss(
+        forward_gap(model, batch, augmented=False), batch.y.view(-1)
+    )
+    loss.backward()
     peak = int(torch.cuda.max_memory_allocated())
     total = int(torch.cuda.get_device_properties(0).total_memory)
     reserve = 1.0 - peak / total
     if not bool(torch.isfinite(loss)) or reserve < 0.15:
         raise RuntimeError(f"{arm} batch-128 preflight failed")
-    del model, batch, loss, scaler
+    del model, batch, loss
     torch.cuda.empty_cache()
     set_seed(SEED)
-    training = train_gap_amp(
+    training = train_gap_fp32(
         make_encoder(arm),
         roles,
         output / arm,
-        augmented=False,
         source_commit=source_commit,
         cache_sha256=cache_sha256,
     )
@@ -340,7 +330,7 @@ def aggregate(output: Path, *, source_commit: str, cache_sha256: str) -> dict:
     gain = mae["full_gps"] - mae["neural_atom_k1"]
     passed = gain >= MIN_GAIN_EV and ci[1] < 0.0
     summary = {
-        "format": "molgap-pcqm-k1-scale500k-result-v2",
+        "format": "molgap-pcqm-k1-scale500k-result-v3",
         "complete": True,
         "source_commit": source_commit,
         "cache_aggregate_sha256": cache_sha256,

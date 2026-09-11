@@ -63,16 +63,16 @@ Two fresh arms run in one task/platform on the same accelerator class:
 complete PCQM dataset. Both arms start from seed-42 initialization on this
 500K role; no historical checkpoint is loaded.
 
-Both use seed 42, FP16 automatic mixed precision, physical batch 128 per
-model/device, no accumulation, fused AdamW with learning rate `4e-4`, weight
+Both use seed 42, FP32 throughout, physical batch 128 per model/device, no
+accumulation, fused AdamW with learning rate `4e-4`, weight
 decay `1e-5`, clipping 1.0, cosine 40 epochs to `1e-6`, two pinned-memory
 loader workers per arm, identical deterministic row order, and exactly 40
 direct-Gap passes. The optimizer schedule is indexed by optimizer step over
 500K and is identical between arms. No parameter, width, depth, feature,
-dropout, target, or validation change is allowed. This matched speed amendment
-was explicitly authorized on 2026-09-11 before GPU submission; comparison with
-the historical FP32 100K gain is contextual, while the paired 500K comparison
-remains causal.
+dropout, target, or validation change is allowed. Pinned non-blocking transfer
+and two loader workers per arm are throughput-only settings. The user withdrew
+the unlaunched FP16 AMP amendment on 2026-09-11 so this bridge remains directly
+comparable with the established FP32 screens.
 
 Every epoch saves an atomic resumable checkpoint, trace, best model, and
 aligned development predictions. A real batch-128 forward/backward preflight
