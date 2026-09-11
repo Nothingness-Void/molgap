@@ -18,10 +18,13 @@ and decision gate.
 
 Cache version 4 pins the same `rdkit==2026.3.6` release recorded by the accepted
 SCNet-compatible cache lineage and rejects any skipped or replaced source row.
-Kaggle2 kernel `kaseichou/molgap-pcqm-k1-scale500k-cache` version 4 was
-submitted from source commit `754eee2314baaa67e3e5d2b180f579008e201101` and
-was `RUNNING` at the last mechanical check. GPU training remains blocked until
-the complete 500K/50K cache passes the frozen no-model acceptance.
+Kaggle2 kernel `kaseichou/molgap-pcqm-k1-scale500k-cache` version 4 stopped at
+source row `51128`, the first of ten hypervalent-silicon rows in the exact
+SCNet role that current RDKit cannot strictly sanitize. A local data-only audit
+confirmed that all ten preserve their topology and OGB categorical features
+under the same unsanitized fallback. Version 5 freezes that ten-row ledger and
+its hash; it does not skip, replace, or relabel any sample. GPU training remains
+blocked until the complete 500K/50K cache passes frozen no-model acceptance.
 
 The unlaunched FP16 AMP amendment was withdrawn by the user on 2026-09-11 to
 retain direct comparability with the established FP32 screens. Both paired

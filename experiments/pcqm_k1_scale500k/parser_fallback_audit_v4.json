@@ -1,0 +1,26 @@
+{
+  "format": "molgap-pcqm-k1-scale500k-parser-fallback-audit-v1",
+  "source_dataset": "piero0/pcqm4mv2:data.csv",
+  "audited_source_indices": [0, 549999],
+  "rows_audited": 550000,
+  "strict_rdkit_failures": 10,
+  "unsanitized_ogb_fallback_successes": 10,
+  "unsanitized_ogb_fallback_failures": 0,
+  "ordered_index_sha256": "93e7e2478d86c41c598c833225af5fcbd914f3e4ba3cced87a7fe9f469108097",
+  "entries": [
+    {"source_idx": 51128, "smiles": "O[Si]123O[Si]3(O1)(O2)O"},
+    {"source_idx": 142541, "smiles": "C1[SiH2]2[SiH2]1C2"},
+    {"source_idx": 155174, "smiles": "Cl[SiH]12C[SiH2]2C1"},
+    {"source_idx": 155175, "smiles": "Cl[SiH]12C[SiH]2(C1)Cl"},
+    {"source_idx": 155176, "smiles": "Cl[Si]12(Cl)C[SiH]2(C1)Cl"},
+    {"source_idx": 155180, "smiles": "c1ccc(cc1)[SiH]12C[SiH]2(C1)c1ccccc1"},
+    {"source_idx": 155181, "smiles": "Br[SiH]12C[SiH2]2C1"},
+    {"source_idx": 193600, "smiles": "C[Si]1234C[Si]564C42[Si]23(C1)[Si]54(C2)(C6)C"},
+    {"source_idx": 411357, "smiles": "CO[Si]12(C)O[Si]2(O1)(C)OC"},
+    {"source_idx": 505556, "smiles": "CC1(C)[Si]2[Si]1(C2)(C)C"}
+  ],
+  "fallback_method": "RDKit MolFromSmiles(sanitize=false), UpdatePropertyCache(strict=false), OGB atom_to_feature_vector/bond_to_feature_vector",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

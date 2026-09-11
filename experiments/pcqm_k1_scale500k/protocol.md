@@ -25,7 +25,14 @@ pass no-model acceptance before one paired T4x2 training task is submitted.
 - Kaggle rebuilds only the pure-2D OGB graph and RWSE16 views needed by K1;
   equality with SCNet is a row/target-role claim, not a byte-identical cache
   claim.
-- No replacement or skipped row is allowed. Official validation, test-dev,
+- No replacement or skipped row is allowed. Ten frozen hypervalent-silicon
+  source rows that current RDKit cannot strictly sanitize use the same
+  connectivity with `sanitize=False`, `UpdatePropertyCache(strict=False)`, and
+  the standard OGB atom/bond feature functions. Their ordered source-index
+  ledger SHA-256 is
+  `93e7e2478d86c41c598c833225af5fcbd914f3e4ba3cced87a7fe9f469108097`;
+  any additional or missing fallback invalidates the cache.
+  Official validation, test-dev,
   test-challenge, and the consumed K1 shadow role remain unread.
 
 ## Frozen architecture
