@@ -13,9 +13,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-GEOMETRY-TRANSFER-500K | Test accepted distance/angle bottom fusion in GPTrans-T and K1 on the fixed SCNet 500K/50K roles | Both resumable seed-42 jobs terminate and the aligned component/equal/OOF-convex/Oracle report is accepted; no sealed role is opened |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
-K1 is frozen. Do not tune its slots, width, depth, placement, optimizer,
+K1 is frozen outside the explicitly isolated geometry-transfer experiment. Do not tune its slots, width, depth, placement, optimizer,
 schedule, seed, or consumed data roles. The full contract is exactly 156,250
 physical-BS128 optimizer steps, not 40 full-data epochs. Server prepares and
 reviews the handoff but does not launch it.

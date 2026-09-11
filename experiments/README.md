@@ -28,6 +28,7 @@ Track C.
 | Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Discovery history retained; closed routes are indexed, and K1 is the sole desktop handoff | `pcqm_gap_architecture/` |
 | Did Fourier Edge transfer to PCQM-100K? | No; closed at seed 42 | `pcqm_fourier_edge_transfer/` |
 | Did K1 survive a fixed 500K scale bridge? | Yes under its paired-v3 contract | `pcqm_k1_scale500k/` |
+| Do accepted bond distances/angles improve GPTrans-T and K1 at fixed 500K, and can they blend? | Active bounded SCNet seed-42 experiment | `pcqm_geometry_transfer_500k/` |
 | Did K1 pass its once-read shadow audit? | Yes; role consumed | `pcqm_k1_shadow/` |
 | Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |

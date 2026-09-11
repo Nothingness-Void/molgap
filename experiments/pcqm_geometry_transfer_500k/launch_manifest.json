@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pcqm-geometry-transfer-500k-launch-v1",
+  "status": "local_preflight",
+  "date": "2026-09-12",
+  "platform": "scnet-kunshan",
+  "models": [
+    "geometry_gptrans_t",
+    "geometry_neural_atom_k1"
+  ],
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "train_rows": 500000,
+  "development_rows": 50000,
+  "physical_batch_per_device": 128,
+  "drop_last": true,
+  "seed": 42,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
