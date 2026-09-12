@@ -44,6 +44,17 @@ ARCHITECTURE_CONFIGS = {
         "allocation_normalization_axis": "neural-atoms-per-original-atom",
         "back_projection": "transpose-of-the-same-allocation",
     },
+    "neural_atom_k1_h4": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "four-head-atom-selection-within-one-latent-token",
+        "active_slots": 1,
+        "allocation_heads": 4,
+        "head_channels": 16,
+        "allocation_normalization_axis": "original-atoms-per-head",
+        "back_projection": "head-wise-transpose-of-the-same-allocation",
+    },
 }
 
 
@@ -228,6 +239,66 @@ def _cluster_mixer_update(mixer, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
+def _multihead_single_slot_update(mixer, hidden, batch):
+    """Let four channel heads select atoms while retaining one latent token.
+
+    K1 uses one 64-channel query and one atom distribution.  This equation
+    reshapes the existing projections into four 16-channel heads, normalizes
+    each head over original atoms, concatenates the four pooled views into one
+    64-channel token, and reuses each head's assignment for return.  It adds no
+    parameters, slots, exchange layers, or optimization steps.
+    """
+    import torch
+    from torch_geometric.utils import to_dense_batch
+
+    allocation_heads = 4
+    head_channels = mixer.latent_channels // allocation_heads
+    if head_channels * allocation_heads != mixer.latent_channels:
+        raise ValueError("latent channels must divide allocation heads")
+    if mixer.active_slots != 1:
+        raise ValueError("multi-head single-slot allocation requires one slot")
+
+    dense, valid = to_dense_batch(mixer.node_norm(hidden), batch)
+    batch_size, max_nodes, _ = dense.shape
+    keys = mixer.node_key(dense).reshape(
+        batch_size, max_nodes, allocation_heads, head_channels
+    )
+    values = mixer.node_value(dense).reshape(
+        batch_size, max_nodes, allocation_heads, head_channels
+    )
+    seeds = mixer.slot_seed[:1]
+    queries = mixer.slot_query(seeds).reshape(
+        1, allocation_heads, head_channels
+    )
+    logits = torch.einsum("khd,bnhd->bhkn", queries, keys)
+    logits = logits / math.sqrt(head_channels)
+    logits = logits.masked_fill(~valid[:, None, None, :], float("-inf"))
+    assignment = torch.softmax(logits, dim=-1)
+    pooled = torch.einsum("bhkn,bnhd->bkhd", assignment, values).reshape(
+        batch_size, 1, mixer.latent_channels
+    )
+    slots = seeds.unsqueeze(0) + pooled
+    attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
+    slots = mixer.slot_norm1(slots + attended)
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+    slot_heads = slots.reshape(
+        batch_size, 1, allocation_heads, head_channels
+    )
+    returned = torch.einsum(
+        "bhkn,bkhd->bnhd", assignment, slot_heads
+    ).reshape(batch_size, max_nodes, mixer.latent_channels)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "assignment": assignment,
+        "valid": valid,
+        "active_slots": 1,
+        "allocation_heads": allocation_heads,
+        "head_channels": head_channels,
+        "allocation_normalization_axis": "atoms-per-head",
+    }
+    return update, slots, assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
@@ -305,8 +376,13 @@ def make_encoder(mode: str):
                         graph_count,
                     )
                     h = h + update + relation_update
-                else:
+                elif self.mode == "neural_atom_k4_cluster":
                     update, _, _, _, _ = _cluster_mixer_update(
+                        mixer, h, batch
+                    )
+                    h = h + update
+                else:
+                    update, _, _, _, _ = _multihead_single_slot_update(
                         mixer, h, batch
                     )
                     h = h + update

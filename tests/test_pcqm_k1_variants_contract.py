@@ -7,6 +7,7 @@ from torch_geometric.data import Batch, Data
 from molgap.pcqm_k1_variants import (
     ARCHITECTURE_CONFIGS,
     _cluster_mixer_update,
+    _multihead_single_slot_update,
     make_encoder,
 )
 from molgap.pcqm_k1_variants_runner import (
@@ -87,6 +88,7 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
         "neural_atom_k1_g": 3_698_180,
         "neural_atom_k1_r": 3_739_841,
         "neural_atom_k4_cluster": 3_658_817,
+        "neural_atom_k1_h4": 3_658_817,
     }
     for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
         torch.manual_seed(42)
@@ -140,4 +142,48 @@ def test_clustered_neural_atoms_allocate_each_atom_across_slots():
         rtol=0,
     )
     assert torch.count_nonzero(assignment.masked_select(~valid.unsqueeze(1))) == 0
+    assert torch.count_nonzero(update) == 0
+
+
+def test_multihead_single_slot_selects_atoms_per_head():
+    batch = _batch()
+    torch.manual_seed(42)
+    reference = make_encoder("neural_atom_k1_v4").eval()
+    torch.manual_seed(42)
+    model = make_encoder("neural_atom_k1_h4").eval()
+    with torch.no_grad():
+        expected = reference(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+        )
+        observed = model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+        )
+    assert torch.equal(expected, observed)
+    mixer = model.base.neural_atom_mixers["3"]
+    hidden = torch.randn(batch.num_nodes, 192)
+    with torch.no_grad():
+        update, slots, assignment, valid, diagnostics = (
+            _multihead_single_slot_update(mixer, hidden, batch.batch)
+        )
+    assert slots.shape == (2, 1, 64)
+    assert assignment.shape[:3] == (2, 4, 1)
+    assert diagnostics["active_slots"] == 1
+    assert diagnostics["allocation_heads"] == 4
+    assert torch.allclose(
+        assignment.sum(dim=-1),
+        torch.ones_like(assignment.sum(dim=-1)),
+        atol=1e-6,
+        rtol=0,
+    )
+    assert torch.count_nonzero(
+        assignment.masked_select(~valid[:, None, None, :])
+    ) == 0
     assert torch.count_nonzero(update) == 0

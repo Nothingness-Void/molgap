@@ -16,6 +16,7 @@ from .pcqm_k1_variants import (
     ARCHITECTURE_CONFIGS,
     MIXER_LAYERS,
     _cluster_mixer_update,
+    _multihead_single_slot_update,
     make_encoder,
 )
 from .screen_policy import canonical_fingerprint, validate_screen_arm
@@ -440,6 +441,51 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             raise RuntimeError(
                 f"Paper-allocation invariant failed: {mechanism_checks}"
             )
+    elif mode == "neural_atom_k1_h4":
+        mixer = model.base.neural_atom_mixers[str(MIXER_LAYERS[0])]
+        probe = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        update, _, assignment, valid, diagnostics = _multihead_single_slot_update(
+            mixer, probe, batch.batch
+        )
+        valid_head_mass = assignment.sum(dim=-1)
+        padding_mass = assignment.masked_select(
+            ~valid[:, None, None, :]
+        ).abs().sum()
+        mechanism_checks = {
+            "active_slots": diagnostics["active_slots"],
+            "allocation_heads": diagnostics["allocation_heads"],
+            "head_channels": diagnostics["head_channels"],
+            "allocation_normalization_axis": diagnostics[
+                "allocation_normalization_axis"
+            ],
+            "valid_head_allocation_mass_one": bool(
+                torch.allclose(
+                    valid_head_mass,
+                    torch.ones_like(valid_head_mass),
+                    atol=1e-6,
+                    rtol=0,
+                )
+            ),
+            "padding_allocation_mass_zero": bool(padding_mass.item() == 0.0),
+            "zero_return_exact": bool(torch.count_nonzero(update).item() == 0),
+        }
+        if mechanism_checks != {
+            "active_slots": 1,
+            "allocation_heads": 4,
+            "head_channels": 16,
+            "allocation_normalization_axis": "atoms-per-head",
+            "valid_head_allocation_mass_one": True,
+            "padding_allocation_mass_zero": True,
+            "zero_return_exact": True,
+        }:
+            raise RuntimeError(
+                f"Multi-view allocation invariant failed: {mechanism_checks}"
+            )
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     model.train()
@@ -454,6 +500,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     elif mode == "neural_atom_k1_r":
         candidate_parameters = list(model.relation_slots.parameters())
     elif mode == "neural_atom_k4_cluster":
+        candidate_parameters = list(model.base.neural_atom_mixers.parameters())
+    elif mode == "neural_atom_k1_h4":
         candidate_parameters = list(model.base.neural_atom_mixers.parameters())
     candidate_trainable = mode == "neural_atom_k1_v4" or any(
         parameter.grad is not None
