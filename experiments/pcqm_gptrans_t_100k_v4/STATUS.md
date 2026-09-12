@@ -43,6 +43,11 @@ remains byte-hashed. This preserves exact code identity across Windows and Linux
 without weakening archive verification. Dependent job `121895247` was cancelled
 without running.
 
+Preflight `121904334` completed both seeded optimizer-step repetitions but the
+resulting states were not bitwise identical. No training job was submitted.
+The next bounded diagnostic reports both losses, state hashes, and the maximum
+parameter delta before any decision about platform suitability or tolerance.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
