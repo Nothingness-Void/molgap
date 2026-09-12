@@ -52,10 +52,9 @@ archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 
 SCNet experiments and full training are desktop-owned. One explicitly requested
 GPTrans-T 100K V4 reference is active on the desktop experiment branch. The
-retry-2 fixed-contract preflight is queued as Slurm job `121922250`; the single
-seed-42 60-epoch run (`121922252`) is submitted with `afterok` dependency and
-cannot start unless preflight succeeds. Source and artifact identities plus
-mechanical status are recorded in
+retry-2 fixed-contract preflight (`121922250`) is running; the single seed-42
+60-epoch run (`121922252`) is pending on `afterok` and cannot start unless
+preflight succeeds. Source and artifact identities plus mechanical status are recorded in
 `experiments/pcqm_gptrans_t_100k_v4/STATUS.md`. This does not reopen candidate
 discovery or authorize any full-role training.
 
