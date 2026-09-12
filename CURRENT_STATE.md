@@ -37,17 +37,17 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
-The user reopened one bounded server-side K1 architecture question after the
-all-history audit. `experiments/pcqm_k1_variants_100k/` freezes two isolated
-PCQM-100K v4 candidates: molecule-conditioned exchange strength (K1-G) and a
-distinct EdgeState-derived relation slot (K1-R). One P100 job establishes the
-reusable K1-v4 reference while one T4x2 job trains G and R independently. No
-result or promotion exists until joint no-inference acceptance passes.
+The bounded K1-v4 selective-global screen completed with no winner. K1-G was
+materially worse; K1-R was statistically indistinguishable and slightly worse.
+Both are closed without extra seeds or scale-up. The accepted K1-v4 reference
+remains reusable only for its exact benchmark contract. Authority:
+`experiments/pcqm_k1_variants_100k/decision.md`.
 
 GraphState and its derivatives failed full-scale transfer and are archive-only.
 The local-hierarchy allocation, GAPE, adaptive denoising, cardinality channel,
-multi-slot Neural-Atom, Fourier Edge, geometry, path, ring, PNA, directed-bond,
-fragment, dual-stream, and attention variants are closed by their own records.
+multi-slot Neural-Atom, K1-G, K1-R, Fourier Edge, geometry, path, ring, PNA,
+directed-bond, fragment, dual-stream, and attention variants are closed by
+their own records.
 The consolidated attribution is
 `experiments/pcqm_gap_architecture/results/architecture_failure_attribution_2026-09-08/decision.md`;
 archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
