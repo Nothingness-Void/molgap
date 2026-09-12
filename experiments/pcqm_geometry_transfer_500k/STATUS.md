@@ -20,8 +20,10 @@ metrics, and hashes. GPTrans-T reached `0.1027374789 eV`; K1 reached
 `0.1043544337 eV` on the aligned development role. The first fusion attempt
 could not import DTK PyTorch on the CPU partition because the OpenMPI and HSA
 runtime libraries were absent. Retry `121892309` confirmed the second missing
-library after OpenMPI was added. Retry `121892470` uses one short DCU allocation
-to provide the unchanged DTK runtime and does not retrain either encoder.
+library after OpenMPI was added. Retry `121892470` used one short DCU allocation
+to provide the unchanged DTK runtime and completed in 126 seconds without
+retraining either encoder. The accepted fusion metrics are recorded in
+`results/fusion_metrics.json` and the interpretation is in `decision.md`.
 
 Outputs remain isolated under the experiment's durable remote root. No official
 validation, test-dev, or test-challenge role was opened, and no production model

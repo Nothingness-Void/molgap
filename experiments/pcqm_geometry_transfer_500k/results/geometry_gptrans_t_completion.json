@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm-geometry-transfer-500k-run-v1",
+  "complete": true,
+  "model_id": "geometry_gptrans_t",
+  "config": {
+    "model_id": "geometry_gptrans_t",
+    "batch_size": 128,
+    "loader_workers": 4,
+    "prefetch_factor": 4,
+    "gradient_clip": 1.0,
+    "seed": 42,
+    "precision": "fp32",
+    "drop_last": true,
+    "epochs": 60,
+    "learning_rate": 0.001,
+    "minimum_learning_rate": 1e-06,
+    "weight_decay": 0.05,
+    "warmup_epochs": 4,
+    "ema_decay": 0.9999
+  },
+  "source_commit": "01d5c88cb4118e9cc6888440a5e1842ddaf12988",
+  "cache_aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "parameter_count": 5251425,
+  "initial_model_sha256": "cdfde47b9672dde305900e0164b5e519200f7eb63da471ba6a56f6c699d71285",
+  "best_epoch": 59,
+  "best_development_mae_eV": 0.10273747891187668,
+  "epochs_completed": 60,
+  "optimizer_steps_per_epoch": 3900,
+  "presented_rows_per_epoch": 499200,
+  "wall_seconds": 33326.44391637016,
+  "mean_epoch_seconds": 554.4048872193166,
+  "accelerator": "Device 66a1",
+  "artifacts": {
+    "best_model.pt": "334a6c7c0b28177fcfd8fe0dbe3db1144d697ab240c2e3f72acf9ff19573d1a5",
+    "best_validation_payload.pt": "9a67ec0f6ed947311d9e7fe390cfefbdbaf99d330da6cc34c8ef183b9de91f19",
+    "last_checkpoint.pt": "02ba5310eea1fce6e4aebcde6f1f7f6eda17e6db007465dbbb832084a77286c9",
+    "trace.json": "c6821781c06211268516ab91b82382cf0bdcbf341ce7145c42bbc1986d38575e"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
