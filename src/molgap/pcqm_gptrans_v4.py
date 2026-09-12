@@ -557,6 +557,7 @@ def run_preflight(
 
     repeat_hashes = []
     repeat_losses = []
+    repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
         model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
@@ -570,10 +571,28 @@ def run_preflight(
         )
         torch.cuda.synchronize()
         repeat_hashes.append(_state_sha256(model))
+        repeat_states.append(
+            {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
+        )
         del model, optimizer, scheduler, ema
         torch.cuda.empty_cache()
     if repeat_hashes[0] != repeat_hashes[1] or repeat_losses[0] != repeat_losses[1]:
-        raise RuntimeError("Seeded optimizer-step calibration is not deterministic")
+        max_name = ""
+        max_delta = 0.0
+        for name in repeat_states[0]:
+            left = repeat_states[0][name]
+            right = repeat_states[1][name]
+            if not left.is_floating_point():
+                continue
+            delta = float((left - right).abs().max())
+            if delta > max_delta:
+                max_name = name
+                max_delta = delta
+        raise RuntimeError(
+            "Seeded optimizer-step calibration is not deterministic: "
+            f"losses={repeat_losses} hashes={repeat_hashes} "
+            f"max_parameter_delta={max_delta:.9g} parameter={max_name}"
+        )
 
     configure_fp32_determinism(SEED)
     model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
