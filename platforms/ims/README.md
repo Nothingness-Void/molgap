@@ -11,3 +11,8 @@ retrieved outputs belong in `platforms/_records/ims/`.
 The fixed official PCQM4Mv2 data views used across future scale experiments are
 owned by `pcqm_fixed_datasets/`. They reuse accepted graph payloads and freeze
 source indices, roles, feature schema, and hashes without rebuilding graphs.
+
+Committed V4 model variants use `v4_submit/` for immutable source packaging,
+fixed-dataset lookup, fail-closed staging, preflight dependencies, and atomic
+submission records. Scientific contracts and checkpoint semantics remain with
+the owning experiment.

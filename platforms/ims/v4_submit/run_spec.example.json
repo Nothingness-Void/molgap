@@ -1,0 +1,44 @@
+{
+  "format": "molgap-ims-v4-run-v1",
+  "run_id": "replace-with-unique-run-id",
+  "model_id": "replace-with-frozen-model-id",
+  "dataset_id": "ogb-train-100k",
+  "runtime_id": "ims-a100-torch271-v1",
+  "source": {
+    "commit": "filled-by-submit-helper",
+    "archive_sha256": "filled-by-submit-helper"
+  },
+  "contract": {
+    "path": "experiments/replace/training_contract.json",
+    "sha256": "filled-by-submit-helper",
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "tf32": false,
+    "tail_batch_policy": "drop_last"
+  },
+  "resources": {
+    "queue": "H",
+    "ncpus": 8,
+    "ompthreads": 4,
+    "ngpus": 1,
+    "preflight_walltime": "00:45:00",
+    "train_walltime": "08:00:00"
+  },
+  "stages": {
+    "preflight": {
+      "entrypoint": "experiments/replace/run.py",
+      "args": ["preflight", "--dataset-root", "{dataset_root}", "--manifest", "{dataset_manifest}", "--output", "{preflight_output}"],
+      "required_outputs": ["preflight/preflight.json"]
+    },
+    "train": {
+      "entrypoint": "experiments/replace/run.py",
+      "args": ["train", "--dataset-root", "{dataset_root}", "--manifest", "{dataset_manifest}", "--preflight", "{preflight_output}/preflight.json", "--output", "{training_output}"],
+      "required_outputs": ["training/completion_manifest.json"]
+    }
+  },
+  "sealed_roles": {
+    "official_validation_read": false,
+    "test_dev_read": false,
+    "test_challenge_read": false
+  }
+}
