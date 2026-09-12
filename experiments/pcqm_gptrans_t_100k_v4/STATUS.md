@@ -55,6 +55,19 @@ does not justify rejecting Kunshan. Future preflights retain both state hashes
 and the measured maximum delta in the runtime certificate instead of requiring
 GPU tensor byte identity.
 
+Portable retry on 2026-09-12 uses source commit
+`7f36a1d71ae0f063c53f07bd1e5b725dcc2ecebc` and source archive SHA-256
+`85d22d12f857a88032d584f5aac1d19434c9cf4c040145254ccf6f479510b881`.
+The archive contains 12 explicitly allowlisted files and passed remote archive,
+inventory, and extracted-file hash checks. The accepted dataset manifest and
+seed-42 initial-state artifact hashes were reverified before submission.
+
+Preflight `121921969` is queued. The only authorized baseline job,
+`121921971`, is queued with `afterok:121921969`; it cannot train if preflight
+fails. Both use the frozen 60-epoch, physical-BS128 contract and write logs and
+atomic checkpoints under a new run directory. No prior result directory or
+input cache was modified.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
