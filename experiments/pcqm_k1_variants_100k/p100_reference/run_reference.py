@@ -71,10 +71,16 @@ def install_dependencies() -> None:
 
 
 def source_root() -> Path:
+    modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_k1_variants.py"))
+    if len(modules) == 1:
+        return modules[0].parents[1]
     archive = find_one("src.zip")
     root = Path("/kaggle/working/_molgap_source")
     shutil.unpack_archive(archive, root)
-    return root / "src"
+    modules = list(root.rglob("molgap/pcqm_k1_variants.py"))
+    if len(modules) != 1:
+        raise FileNotFoundError(f"Unexpected source layout: {modules}")
+    return modules[0].parents[1]
 
 
 def main() -> None:
@@ -98,4 +104,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
