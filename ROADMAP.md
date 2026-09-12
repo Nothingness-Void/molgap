@@ -6,13 +6,16 @@ track ownership is defined in `TRACKS.md`.
 
 ## Goal
 
-Select one pure-2D, Gap-only architecture for the official PCQM4Mv2 leaderboard
-under a hard 12-hour A100 full-training budget. Kaggle 100K selection must
-finish before any molecular-research-server use.
+Select and compare pure-2D, Gap-only models for official PCQM4Mv2 under a hard
+12-hour A100 job limit. On 2026-09-13 the user explicitly authorized the
+frozen full-train K1 and GPTrans-T runs on IMS; this supersedes the earlier
+Kaggle-before-IMS sequencing only for those contracts. Sealed-role access
+remains separately gated.
 ## Active Queue
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
+| P0 | B-PCQM-K1-GPTTRANS-FULL | Train frozen K1 and GPTrans-T on identical official-train rows and 20M presentations; then compare individually and by fixed 50:50 blend | Both preflights pass, both artifacts pass mechanical acceptance, and any blend is evaluated without train-role leakage | `experiments/pcqm_k1_gptrans_full_fusion/` |
 | P1 | B-PCQM-EDGE-CONTINUATION | Continue the completed rich-feature EdgeState run in an isolated output directory | Retrieve atomic artifacts and determine whether the best official-validation Gap MAE improves beyond 0.102063 eV; otherwise close convergence without changing production | experiments/pcqm_edge_state_full/results/convergence_40/ |
 | P0 | B-PCQM100K-GLOBAL-STATE | Run one recurrent graph-state EdgeState candidate under the frozen seed-42 contract | Downloaded artifacts pass no-inference acceptance and the candidate strictly beats the EdgeState comparator, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
 | P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |

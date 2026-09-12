@@ -21,18 +21,17 @@ production decision linked above.
 
 ## Active Objective
 
-Track B is open for an official PCQM4Mv2 leaderboard specialist targeting only
-the HOMO-LUMO Gap, not the Track A three-target contract. Architecture selection
-uses an internal 100K/10K split derived from the official training role. Official
-validation and test-dev remain sealed during selection.
+Track B remains an official PCQM4Mv2 Gap-only line, isolated from the Track A
+three-target production contract. On 2026-09-13 the user explicitly authorized
+full official-train runs for frozen Neural-Atom K1 and GPTrans-T under separate
+20M-sample-exposure contracts. The two A100 preflights and their dependent
+training chains are being staged on IMS; neither run may access official
+validation, test-dev, or challenge-test. A learned blend is gated on an
+independent calibration role. The experiment protocol is
+`experiments/pcqm_k1_gptrans_full_fusion/protocol.md`.
 
-The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
-three matched local-operator replacements then failed their strict gates and
-are closed. The next seed-42 question is a recurrent graph state inside the
-accepted EdgeState backbone, selected by the resource-bounded route audit. It
-has no seed-43/44 or full-data authorization. Exact completed conclusions
-belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
+Earlier 100K architecture-screen decisions remain unchanged and are indexed in
+`experiments/pcqm_gap_architecture/results/`.
 
 In parallel, the strict OGB-rich EdgeState baseline completed full official-only
 training from random initialization. Its public reproduction repository and
@@ -78,9 +77,9 @@ must not be represented as this new conservative head.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
-- The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. Kaggle2 is running the sole matched recurrent
-  graph-state seed-42 screen; no multiseed or full-data run is authorized.
+- The official-train-derived PCQM 100K graph cache and completed seed-42
+  comparisons are accepted. The new full-run authorization is limited to the
+  K1 and GPTrans-T contracts; other architecture screens are not promoted.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.
