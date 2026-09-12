@@ -34,7 +34,7 @@ Track C.
 | Do K1's two directional simplifications combine materially? | One explicitly authorized interaction screen | `pcqm_k1_combined_simplification_100k/` |
 | Does the paper's atom-wise Neural-Atom grouping improve sparse K1? | Attempt 1 protocol under validation | `pcqm_k1_paper_allocation_100k/` |
 | Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
-| Did the adapted GPTrans-T propagation core pass its historical 500K bridge? | Yes as pre-V4 context; it is not a reusable V4 reference | `pcqm_gptrans_t_500k/` |
+| What is the reusable GPTrans-T reference under the V4 cross-platform contract? | Frozen 100K protocol under execution; no accepted result yet | `pcqm_gptrans_t_100k_v4/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |
