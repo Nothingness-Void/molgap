@@ -80,13 +80,15 @@ training hours, below the six-hour preflight ceiling. The fixed graph manifest,
 source archive, and seed-42 initial-state hashes passed acceptance.
 
 The only authorized baseline job, `121922252`, started via
-`afterok:121922250` and was RUNNING in the latest read-only snapshot. At about
-four minutes elapsed, Slurm reported 8.35 GiB peak resident memory, 1.61 GB
-disk reads, and 2.36 MB disk writes. The training log and output directory did
-not yet contain an epoch record or checkpoint; this is before the first
-epoch-boundary atomic save, not evidence of a completed epoch. The run remains
-under its isolated result directory and uses the frozen 60-epoch, physical-BS128
-contract. No prior result directory or input cache was modified.
+`afterok:121922250` and remained RUNNING in the latest read-only snapshot at
+6:28 elapsed. Slurm reported 4:20 accumulated CPU time, 8.46 GiB peak resident
+memory, 1.62 GB disk reads, and 7.43 MB disk writes. The training log and output
+directory still had no epoch record or checkpoint. The runner emits its first
+log line and atomically saves state at the epoch boundary; therefore progress
+through the first epoch is not yet verified. No error was present in stdout or
+stderr. The run remains under its isolated result directory and uses the frozen
+60-epoch, physical-BS128 contract. No prior result directory or input cache was
+modified.
 
 - Retry-2 remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-4e327422-r2`
 - Retry-2 source archive SHA256: `37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5`
