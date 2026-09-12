@@ -27,7 +27,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
 | `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
 | `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing GPTrans node-to-node/node-to-pair/pair-to-node behavior |
-| `pcqm_gptrans_scale.py` | Durable 500K GPTrans bridge training and acceptance artifacts | Changing the frozen GPTrans scale-screen runtime |
+| `pcqm_gptrans_v4.py` | V4-certified fixed-100K GPTrans reference runtime | Changing GPTrans baseline data, optimizer, determinism, recovery, or evidence contracts |
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
 | `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |

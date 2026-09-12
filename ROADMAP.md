@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-GPTRANS-100K-V4-REFERENCE | Train the reusable GPTrans-T baseline once on the accepted fixed 100K/50K role | Deterministic runtime certificate, 60 exact BS128 epochs, aligned 50K development predictions, artifact hashes, and mechanical acceptance pass; no sealed role is read |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 K1 is frozen. Do not tune its slots, width, depth, placement, optimizer,
@@ -22,7 +23,9 @@ reviews the handoff but does not launch it.
 
 ## Architecture funnel
 
-Discovery is parked while P1 is unresolved. If the user reopens it:
+Candidate discovery remains parked while P1 is unresolved. The explicitly
+authorized P0 baseline freezes comparison infrastructure but does not release a
+new candidate. If the user later reopens candidate discovery:
 
 1. Audit all accepted and rejected evidence before naming one distinct
    information-flow bottleneck.
