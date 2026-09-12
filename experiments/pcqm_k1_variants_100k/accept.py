@@ -29,6 +29,7 @@ EXPECTED_PARAMETERS = {
     "neural_atom_k1_v4": 3_658_817,
     "neural_atom_k1_g": 3_698_180,
     "neural_atom_k1_r": 3_739_841,
+    "neural_atom_k4_cluster": 3_658_817,
 }
 
 

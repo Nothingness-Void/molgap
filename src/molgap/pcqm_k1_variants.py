@@ -34,6 +34,16 @@ ARCHITECTURE_CONFIGS = {
         "relation_channels": RELATION_CHANNELS,
         "relation_source": "current-directed-real-bond-edge-state",
     },
+    "neural_atom_k4_cluster": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "four-clustered-atom-slots-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "atom-wise-soft-assignment-across-neural-atoms",
+        "active_slots": 4,
+        "allocation_heads": 1,
+        "allocation_normalization_axis": "neural-atoms-per-original-atom",
+        "back_projection": "transpose-of-the-same-allocation",
+    },
 }
 
 
@@ -179,8 +189,47 @@ def _mixer_update_with_slots(mixer, hidden, batch):
     return update, slots, assignment, valid
 
 
+def _cluster_mixer_update(mixer, hidden, batch):
+    """Use the paper's atom-wise soft grouping instead of slot-wise pooling.
+
+    The published implementation normalizes every original atom's allocation
+    over the neural-atom dimension.  The frozen K1/K4 implementation instead
+    normalizes each slot over original atoms.  Keeping the same projections,
+    slot exchange, and transposed return isolates that normalization direction.
+    """
+    import torch
+    from torch_geometric.utils import to_dense_batch
+
+    dense, valid = to_dense_batch(mixer.node_norm(hidden), batch)
+    keys = mixer.node_key(dense)
+    values = mixer.node_value(dense)
+    seeds = mixer.slot_seed[: mixer.active_slots]
+    queries = mixer.slot_query(seeds)
+    logits = torch.einsum("kd,bnd->bkn", queries, keys)
+    logits = logits / math.sqrt(mixer.latent_channels)
+    assignment = torch.softmax(logits, dim=1)
+    assignment = assignment * valid.unsqueeze(1).to(assignment.dtype)
+    slots = seeds.unsqueeze(0) + torch.einsum(
+        "bkn,bnd->bkd", assignment, values
+    )
+    attended, _ = mixer.slot_attention(
+        slots, slots, slots, need_weights=False
+    )
+    slots = mixer.slot_norm1(slots + attended)
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+    returned = torch.einsum("bkn,bkd->bnd", assignment, slots)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "assignment": assignment,
+        "valid": valid,
+        "active_slots": mixer.active_slots,
+        "allocation_normalization_axis": "slots",
+    }
+    return update, slots, assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
-    """Build frozen K1 or one isolated K1-G/K1-R candidate."""
+    """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
 
@@ -196,6 +245,9 @@ def make_encoder(mode: str):
             super().__init__()
             self.mode = mode
             self.base = make_k1("neural_atom_k1")
+            if mode == "neural_atom_k4_cluster":
+                for mixer in self.base.neural_atom_mixers.values():
+                    mixer.active_slots = 4
             if mode == "neural_atom_k1_g":
                 self.molecule_gates = nn.ModuleDict(
                     {
@@ -203,7 +255,7 @@ def make_encoder(mode: str):
                         for layer in MIXER_LAYERS
                     }
                 )
-            else:
+            elif mode == "neural_atom_k1_r":
                 self.relation_slots = nn.ModuleDict(
                     {
                         str(layer): _RelationSlotFactory.make()
@@ -238,7 +290,7 @@ def make_encoder(mode: str):
                     update, _ = mixer.compute_update(h, batch)
                     scale = self.molecule_gates[str(layer)](h, batch)
                     h = h + scale[batch] * update
-                else:
+                elif self.mode == "neural_atom_k1_r":
                     update, slots, assignment, valid = _mixer_update_with_slots(
                         mixer, h, batch
                     )
@@ -253,6 +305,11 @@ def make_encoder(mode: str):
                         graph_count,
                     )
                     h = h + update + relation_update
+                else:
+                    update, _, _, _, _ = _cluster_mixer_update(
+                        mixer, h, batch
+                    )
+                    h = h + update
             return self.base._pool(h, batch)
 
     return K1Variant()

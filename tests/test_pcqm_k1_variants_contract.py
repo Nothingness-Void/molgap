@@ -4,7 +4,11 @@ from pathlib import Path
 import torch
 from torch_geometric.data import Batch, Data
 
-from molgap.pcqm_k1_variants import ARCHITECTURE_CONFIGS, make_encoder
+from molgap.pcqm_k1_variants import (
+    ARCHITECTURE_CONFIGS,
+    _cluster_mixer_update,
+    make_encoder,
+)
 from molgap.pcqm_k1_variants_runner import (
     BATCH_SIZE,
     EPOCHS,
@@ -82,6 +86,7 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
         "neural_atom_k1_v4": 3_658_817,
         "neural_atom_k1_g": 3_698_180,
         "neural_atom_k1_r": 3_739_841,
+        "neural_atom_k4_cluster": 3_658_817,
     }
     for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
         torch.manual_seed(42)
@@ -96,6 +101,43 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
             )
         assert torch.equal(expected, observed)
         assert candidate.base.state_dict().keys() == reference.state_dict().keys()
+    torch.manual_seed(42)
+    clustered = make_encoder("neural_atom_k4_cluster").eval()
+    with torch.no_grad():
+        clustered_initial = clustered(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+        )
+    assert torch.equal(expected, clustered_initial)
+    assert all(
+        mixer.active_slots == 4
+        for mixer in clustered.base.neural_atom_mixers.values()
+    )
     for mode, expected_count in expected_counts.items():
         assert sum(p.numel() for p in make_encoder(mode).parameters()) == expected_count
     assert set(ARCHITECTURE_CONFIGS) == set(expected_counts)
+
+
+def test_clustered_neural_atoms_allocate_each_atom_across_slots():
+    batch = _batch()
+    torch.manual_seed(42)
+    model = make_encoder("neural_atom_k4_cluster").eval()
+    mixer = model.base.neural_atom_mixers["3"]
+    hidden = torch.randn(batch.num_nodes, 192)
+    with torch.no_grad():
+        update, _, assignment, valid, diagnostics = _cluster_mixer_update(
+            mixer, hidden, batch.batch
+        )
+    assert diagnostics["allocation_normalization_axis"] == "slots"
+    assert assignment.shape[1] == 4
+    assert torch.allclose(
+        assignment.sum(dim=1).masked_select(valid),
+        torch.ones_like(valid, dtype=assignment.dtype).masked_select(valid),
+        atol=1e-6,
+        rtol=0,
+    )
+    assert torch.count_nonzero(assignment.masked_select(~valid.unsqueeze(1))) == 0
+    assert torch.count_nonzero(update) == 0
