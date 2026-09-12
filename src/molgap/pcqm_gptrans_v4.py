@@ -232,7 +232,8 @@ def _target_stats(shards) -> tuple[float, float]:
     values = torch.cat([shard._data.y.view(-1).double() for shard in shards])
     if values.numel() != TRAIN_ROWS or not bool(torch.isfinite(values).all()):
         raise RuntimeError("Training targets are incomplete or non-finite")
-    return float(values.mean()), float(values.std(correction=1).clamp_min(1e-6))
+    # SCNet's frozen PyTorch predates the ``correction`` keyword overload.
+    return float(values.mean()), float(values.std(unbiased=True).clamp_min(1e-6))
 
 
 def _make_model():

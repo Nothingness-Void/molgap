@@ -18,6 +18,7 @@ from molgap.pcqm_gptrans_v4 import (
     _make_model,
     _scientific_fields,
     _state_sha256,
+    _target_stats,
     validate_source_archive,
 )
 from molgap.screen_policy import REFERENCE_MATCH_FIELDS, validate_screen_arm
@@ -86,6 +87,14 @@ def test_schedule_and_contract_are_frozen():
     )
     for key, value in fields.items():
         assert contract[key] == value
+
+
+def test_target_stats_use_legacy_torch_compatible_sample_std():
+    shard = type("Shard", (), {})()
+    shard._data = type("Data", (), {"y": torch.arange(100_000, dtype=torch.float64)})()
+    mean, std = _target_stats([shard])
+    assert mean == float(shard._data.y.mean())
+    assert std == float(shard._data.y.std(unbiased=True))
 
 
 def test_remote_payload_requires_v4_guards():
