@@ -51,9 +51,12 @@ archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 `experiments/_closed/qm9_top20_archive_index.md`.
 
 SCNet experiments and full training are desktop-owned. One explicitly requested
-GPTrans-T 100K V4 reference is active on the desktop experiment branch; its
-mechanical status is owned by `experiments/pcqm_gptrans_t_100k_v4/STATUS.md`.
-It does not reopen candidate discovery or authorize any full-role training.
+GPTrans-T 100K V4 reference is active on the desktop experiment branch. Its
+fixed-contract preflight is queued as Slurm job `121921969`; the single seed-42
+60-epoch run (`121921971`) is submitted with `afterok` dependency and cannot
+start unless preflight succeeds. Source and artifact identities plus mechanical
+status are recorded in `experiments/pcqm_gptrans_t_100k_v4/STATUS.md`. This does
+not reopen candidate discovery or authorize any full-role training.
 
 ## Data and comparison contract
 
