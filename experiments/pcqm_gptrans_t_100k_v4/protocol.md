@@ -17,7 +17,8 @@ under the reference-screen V4 contract?
 - One visible accelerator, physical BS128, no accumulation, global epoch
   permutation, and exactly 781 full optimizer batches per epoch. The final 32
   rows of each permutation are excluded; no short optimizer batch is allowed.
-- AdamW with `foreach=False` and `fused=False`, LR `1e-3`, weight decay `0.05`,
+- Unfused AdamW with `foreach=False` (the legacy runtime omits the unsupported
+  `fused` keyword), LR `1e-3`, weight decay `0.05`,
   four-epoch warmup, 60-epoch cosine schedule to `1e-6`, clipping 1.0, and EMA
   0.9999.
 - Best development EMA selection. The reused development role makes this a

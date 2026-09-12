@@ -22,6 +22,12 @@ and no longer depends on framework-default initialization. A replacement chain
 is not accepted evidence until the mechanical acceptance in this experiment
 passes.
 
+Portable-state preflight `121893879` then reached optimizer construction and
+failed because the legacy SCNet AdamW API does not expose the newer `fused`
+keyword; dependent job `121893917` was cancelled without running. Omitting that
+unsupported keyword retains the frozen unfused optimizer semantics because
+`foreach=False` remains explicit.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
