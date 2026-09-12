@@ -193,9 +193,13 @@ class OGBGPTransTiny(nn.Module):
         node_count: int,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         batch_size = int(batch.max().item()) + 1 if batch.numel() else 0
-        counts = torch.bincount(batch, minlength=batch_size)
-        offsets = torch.cat((counts.new_zeros(1), counts.cumsum(0)[:-1]))
-        local = torch.arange(node_count, device=batch.device) - offsets[batch]
+        positions = torch.arange(node_count, device=batch.device)
+        boundaries = torch.cat(
+            (positions.new_zeros(1), torch.where(batch[1:] != batch[:-1])[0] + 1)
+        )
+        if int(boundaries.numel()) != batch_size:
+            raise RuntimeError("PyG batch indices must be contiguous and ordered")
+        local = positions - boundaries[batch]
         return batch[edge_index[0]], local[edge_index[0]], local[edge_index[1]]
 
     def _shortest_path(

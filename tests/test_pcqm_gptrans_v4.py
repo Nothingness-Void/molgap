@@ -21,6 +21,7 @@ from molgap.pcqm_gptrans_v4 import (
     _target_stats,
     validate_source_archive,
 )
+from molgap.gptrans import OGBGPTransTiny
 from molgap.screen_policy import REFERENCE_MATCH_FIELDS, validate_screen_arm
 from molgap.training_reproducibility import configure_fp32_determinism, sha256_file
 
@@ -67,9 +68,25 @@ def test_global_sampler_has_only_full_unique_batches():
     assert next_epoch[0] != batches[0]
 
 
+def test_local_edge_offsets_match_bincount_reference():
+    batch = torch.tensor([0, 0, 0, 1, 1, 2, 2, 2, 2], dtype=torch.long)
+    edge_index = torch.tensor(
+        [[0, 1, 3, 4, 5, 8], [1, 2, 4, 3, 8, 5]], dtype=torch.long
+    )
+    edge_batch, edge_src, edge_dst = OGBGPTransTiny._local_edges(
+        edge_index, batch, int(batch.numel())
+    )
+    counts = torch.bincount(batch, minlength=3)
+    offsets = torch.cat((counts.new_zeros(1), counts.cumsum(0)[:-1]))
+    local = torch.arange(batch.numel()) - offsets[batch]
+    assert torch.equal(edge_batch, batch[edge_index[0]])
+    assert torch.equal(edge_src, local[edge_index[0]])
+    assert torch.equal(edge_dst, local[edge_index[1]])
+
+
 def test_schedule_and_contract_are_frozen():
     parameter = torch.nn.Parameter(torch.tensor(1.0))
-    optimizer = torch.optim.AdamW([parameter], lr=1e-3, foreach=False, fused=False)
+    optimizer = torch.optim.AdamW([parameter], lr=1e-3, foreach=False)
     scheduler = FrozenEpochScheduler(optimizer)
     assert scheduler.step(0) == 0.00025
     assert scheduler.step(3) == 0.001
