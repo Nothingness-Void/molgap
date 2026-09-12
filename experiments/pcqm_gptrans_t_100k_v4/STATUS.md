@@ -48,6 +48,13 @@ resulting states were not bitwise identical. No training job was submitted.
 The next bounded diagnostic reports both losses, state hashes, and the maximum
 parameter delta before any decision about platform suitability or tolerance.
 
+Diagnostic `121905044` measured identical FP32 losses (`1.0190001726`) and a
+maximum repeated-state difference of `1.49011612e-8`, isolated to one attention
+weight. This is below a frozen `1e-7` numerical reproducibility tolerance and
+does not justify rejecting Kunshan. Future preflights retain both state hashes
+and the measured maximum delta in the runtime certificate instead of requiring
+GPU tensor byte identity.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
