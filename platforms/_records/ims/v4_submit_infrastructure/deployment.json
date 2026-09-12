@@ -1,0 +1,26 @@
+{
+  "format": "molgap-ims-v4-infrastructure-deployment-v1",
+  "status": "accepted",
+  "deployed_on": "2026-09-12",
+  "source_commit": "f174cf96f4d3246c56fe5e99441ade4b30ced08e",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-v4-submit",
+  "authorized_boundary": "/lustre/home/users/sm2/chou",
+  "files": {
+    "launcher.py": "f58227e6a97049419729943c65f138f608771f75882316b65f6bcf50c29c3eda",
+    "dataset_registry.json": "4b397b714ffbf75d922ea6e64b9675493d54f9e1f805d8623995b93763d52c3e",
+    "runtime_registry.json": "895dc52d7307f7560831a58fd447d3aa75c01c8e79a572c148bc1045c612282d",
+    "run_spec.example.json": "973c03a8865c5577874d51b215b2f00cfeca52c989dd688081ed479322e3bbd5",
+    "README.md": "1b9bb3ec659490f5ae1423d164a0045d3ae2b78a605846d8b3bd369895d8e7d1"
+  },
+  "accepted_dataset_ids": [
+    "ogb-train-100k",
+    "ogb-train-500k-scnet-v1",
+    "ogb-train-1m",
+    "ogb-train-full"
+  ],
+  "runtime_id": "ims-a100-torch271-v1",
+  "remote_compile_passed": true,
+  "remote_registry_audit_passed": true,
+  "gpu_job_submitted": false,
+  "paths_outside_authorized_boundary_accessed": false
+}

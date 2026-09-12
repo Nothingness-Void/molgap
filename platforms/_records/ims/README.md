@@ -7,3 +7,5 @@ these snapshots only for complete remote provenance.
 
 - `experiment_records_20260825_133205JST/` - six IMS MolGap project roots,
   1,272 verified record files.
+- `v4_submit_infrastructure/` - accepted reusable V4 launcher deployment,
+  source identity, and remote registry-audit evidence.

@@ -2,6 +2,7 @@ import importlib.util
 import hashlib
 import io
 import json
+import subprocess
 import tarfile
 from datetime import datetime
 from pathlib import Path
@@ -16,6 +17,11 @@ SPEC = importlib.util.spec_from_file_location("ims_v4_launcher", MODULE_PATH)
 launcher = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(launcher)
+SUBMIT_PATH = ROOT / "platforms/ims/v4_submit/submit_from_windows.py"
+SUBMIT_SPEC = importlib.util.spec_from_file_location("ims_v4_submit", SUBMIT_PATH)
+submit = importlib.util.module_from_spec(SUBMIT_SPEC)
+assert SUBMIT_SPEC.loader is not None
+SUBMIT_SPEC.loader.exec_module(submit)
 
 
 def valid_spec():
@@ -145,3 +151,32 @@ def test_safe_extract_rejects_path_escape(tmp_path):
         handle.addfile(member, io.BytesIO(b"x"))
     with pytest.raises(RuntimeError):
         launcher.safe_extract(archive, tmp_path / "code")
+
+
+def test_windows_packager_fills_source_and_contract_hashes(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / "experiments/model").mkdir(parents=True)
+    contract = repo / "experiments/model/training_contract.json"
+    contract.write_text('{"physical_batch_per_device": 128}\n', encoding="utf-8")
+    (repo / "experiments/model/run.py").write_text("print('ok')\n", encoding="utf-8")
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.name", "test"], cwd=repo, check=True)
+    subprocess.run(["git", "add", "."], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-qm", "fixture"], cwd=repo, check=True)
+    run_spec = valid_spec()
+    template = tmp_path / "spec.json"
+    template.write_text(json.dumps(run_spec), encoding="utf-8")
+    output = tmp_path / "payload"
+    packaged = submit.package(repo, template, output)
+    assert packaged["source"]["commit"] == subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=repo, text=True
+    ).strip()
+    assert packaged["source"]["archive_sha256"] == submit.sha256_file(
+        output / "source.tar.gz"
+    )
+    assert packaged["contract"]["sha256"] == hashlib.sha256(
+        contract.read_bytes()
+    ).hexdigest()
+    assert (output / "source_files.json").is_file()
