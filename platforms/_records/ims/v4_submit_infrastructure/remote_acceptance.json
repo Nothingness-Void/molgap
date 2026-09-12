@@ -1,0 +1,21 @@
+{
+  "format": "molgap-ims-v4-infrastructure-remote-acceptance-v1",
+  "status": "accepted",
+  "accepted_on": "2026-09-12",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-v4-submit",
+  "source_commit": "f174cf96f4d3246c56fe5e99441ade4b30ced08e",
+  "installation_sha256": "6dc27933e0f8968c2074ce0dc7e6589bcacc40071035442347c42d0ee90138da",
+  "infrastructure_status_sha256": "9cdafeecd7aca807dab167d928efa1697dc6a46583b326d3cf7904589def52b7",
+  "checks": {
+    "local_remote_file_hashes_match": true,
+    "remote_python_compile": true,
+    "remote_cli_startup": true,
+    "fixed_root_content_acceptance": true,
+    "four_dataset_manifests": true,
+    "runtime_registered": true,
+    "authorized_boundary_enforced": true,
+    "recursive_remote_delete_used": false,
+    "gpu_job_submitted": false
+  },
+  "visible_account_jobs_after_install": []
+}
