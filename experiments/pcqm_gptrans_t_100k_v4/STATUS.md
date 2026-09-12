@@ -28,6 +28,14 @@ keyword; dependent job `121893917` was cancelled without running. Omitting that
 unsupported keyword retains the frozen unfused optimizer semantics because
 `foreach=False` remains explicit.
 
+Preflight `121894576` then passed source, data, initialization, and optimizer
+construction before the first forward exposed a deterministic-kernel gap in
+DTK: CUDA `bincount` is unavailable while strict deterministic algorithms are
+enabled. The replacement local-node indexing derives the same offsets from
+ordered PyG batch boundaries without a reduction. This changes no model
+parameter, tensor shape, prediction equation, data role, or initial state.
+Dependent job `121894610` was cancelled without running.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
