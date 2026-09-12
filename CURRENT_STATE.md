@@ -38,12 +38,13 @@ official-validation read, test-dev read, or submission is authorized.
 ## Discovery state
 
 The user reopened discovery for at most three sequential, attribution-gated
-attempts. Attempt 1 tested the Neural Atoms paper's atom-wise soft grouping and
-failed despite identical size, initialization, and training contract; its
-decision is `experiments/pcqm_k1_paper_allocation_100k/decision.md`. Attempt 2
-preserves K1's one returned molecular slot and changes only how multiple views
-select atoms within that rank-one bottleneck. Attempt 3 remains conditional on
-terminal analysis of attempt 2.
+attempts. Attempts 1 and 2 tested paper-style multi-slot grouping and
+channel-wise multi-head atom selection; both fit training more tightly and
+generalized worse under otherwise matched contracts. Their decisions are
+`experiments/pcqm_k1_paper_allocation_100k/decision.md` and
+`experiments/pcqm_k1_multiview_pool_100k/decision.md`. Attempt 3 retains one
+slot and one atom distribution and changes only its fixed query into a small
+molecule-conditioned query.
 
 The bounded K1-v4 selective-global screen completed with no winner. K1-G was
 materially worse; K1-R was statistically indistinguishable and slightly worse.

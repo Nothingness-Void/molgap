@@ -1,0 +1,27 @@
+{
+  "decision_date": "2026-09-13",
+  "attempt": 2,
+  "candidate": "neural_atom_k1_h4",
+  "accepted": true,
+  "scientific_pass": false,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidate_development_gap_mae_eV": 0.14322854578495026,
+  "candidate_gain_eV": -0.00185491144657135,
+  "candidate_minus_reference_error_bootstrap_95_eV": [
+    0.00093195965164341,
+    0.00278496938408352
+  ],
+  "parameter_count": 3658817,
+  "best_epoch": 36,
+  "optimizer_steps": 31240,
+  "sample_presentations": 3998720,
+  "mean_epoch_seconds": 140.82614301535,
+  "mean_graphs_per_second": 709.8681953471064,
+  "peak_reserved_mib": 600.0,
+  "best_model_sha256": "98b9e42c8c9c8018acb5c65af53fe54964918041594c05a6950a2f2103d7cc1e",
+  "payload_sha256": "6a8e2db4646785ef5c5a28712a5d56e86dcbdd49b8a9bc8febf0cc90be020153",
+  "checkpoint_sha256": "dffb534b3528e6910432cd2eb120dee984b4e0ec7b79defbf0fa490e0da5666c",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "model_inference_executed_during_acceptance": false
+}
