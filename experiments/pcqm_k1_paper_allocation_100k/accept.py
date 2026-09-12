@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -12,14 +13,24 @@ from molgap.pcqm_k1_variants_runner import (
     MINIMUM_GAIN_EV,
     STOCHASTICITY_FLOOR_EV,
 )
+from molgap.constants import REPO_ROOT
 from molgap.screen_policy import (
     evaluate_reference_gain,
     validate_reference_screen_contract,
 )
-from experiments.pcqm_k1_variants_100k.accept import (
-    _bootstrap_upper,
-    _load_arm,
-)
+
+
+def _load_shared_acceptance_helpers():
+    path = REPO_ROOT / "experiments/pcqm_k1_variants_100k/accept.py"
+    spec = importlib.util.spec_from_file_location("molgap_k1_v4_accept", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load shared acceptance helpers from {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module._bootstrap_upper, module._load_arm
+
+
+_bootstrap_upper, _load_arm = _load_shared_acceptance_helpers()
 
 
 REFERENCE = "neural_atom_k1_v4"
@@ -91,4 +102,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
-
