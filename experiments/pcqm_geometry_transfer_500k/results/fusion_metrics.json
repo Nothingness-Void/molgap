@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-geometry-transfer-500k-fusion-v1",
+  "complete": true,
+  "source_idx_start": 500000,
+  "source_idx_stop": 550000,
+  "rows": 50000,
+  "component_metrics": {
+    "geometry_gptrans_t": 0.10273747891187668,
+    "geometry_neural_atom_k1": 0.10435443371534348
+  },
+  "development_mae_eV": {
+    "geometry_gptrans_t": 0.10273748508453369,
+    "geometry_neural_atom_k1": 0.10435443648815156,
+    "equal_blend": 0.09959315315008163,
+    "five_fold_oof_convex_blend": 0.09954582981585502,
+    "oracle_upper_bound": 0.08089703503608704
+  },
+  "five_fold_reference_weights": [
+    0.553,
+    0.5650000000000001,
+    0.555,
+    0.5670000000000001,
+    0.55
+  ],
+  "oracle_only_for_headroom": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "component_artifact_sha256": {
+    "geometry_gptrans_t": "9a67ec0f6ed947311d9e7fe390cfefbdbaf99d330da6cc34c8ef183b9de91f19",
+    "geometry_neural_atom_k1": "0a82885721de3da762c97cb86d69277cb29194c2664358ac508f36b00bd54686"
+  }
+}
