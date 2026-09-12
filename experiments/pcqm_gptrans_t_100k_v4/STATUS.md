@@ -62,8 +62,17 @@ The archive contains 12 explicitly allowlisted files and passed remote archive,
 inventory, and extracted-file hash checks. The accepted dataset manifest and
 seed-42 initial-state artifact hashes were reverified before submission.
 
-Preflight `121921969` is queued. The only authorized baseline job,
-`121921971`, is queued with `afterok:121921969`; it cannot train if preflight
+Preflight `121921969` failed during graph-cache deserialization with
+`ModuleNotFoundError: molgap.pcqm_wedge`; dependent training job `121921971`
+was canceled by the `afterok` dependency before training. The graph payload
+contains `WedgeData`, so retry-2 added the tracked defining module
+`src/molgap/pcqm_wedge.py` to the archive allowlist. The rebuilt 13-file source
+archive has SHA-256
+`37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5` and passed
+remote archive, inventory, and extracted-file hash checks.
+
+Retry-2 preflight `121922250` is queued. The only authorized baseline job,
+`121922252`, is queued with `afterok:121922250`; it cannot train if preflight
 fails. Both use the frozen 60-epoch, physical-BS128 contract and write logs and
 atomic checkpoints under a new run directory. No prior result directory or
 input cache was modified.
