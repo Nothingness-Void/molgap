@@ -55,6 +55,18 @@ ARCHITECTURE_CONFIGS = {
         "allocation_normalization_axis": "original-atoms-per-head",
         "back_projection": "head-wise-transpose-of-the-same-allocation",
     },
+    "neural_atom_k1_dynamic_query": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "molecule-conditioned-single-allocation-query",
+        "active_slots": 1,
+        "allocation_heads": 1,
+        "query_context": "mean-current-node-state",
+        "context_projection": "zero-initialized-linear-192-to-64",
+        "allocation_normalization_axis": "original-atoms",
+        "back_projection": "transpose-of-the-same-allocation",
+    },
 }
 
 
@@ -299,6 +311,51 @@ def _multihead_single_slot_update(mixer, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
+def _dynamic_query_single_slot_update(mixer, conditioner, hidden, batch):
+    """Condition K1's sole atom distribution on the current molecule.
+
+    The mean current node state changes only the single slot query.  Pooling,
+    slot processing, transposed return, and the local path remain K1-identical.
+    A zero-initialized context projection nests the initial graph function
+    exactly inside the frozen reference.
+    """
+    import torch
+    from torch_geometric.nn import global_mean_pool
+    from torch_geometric.utils import to_dense_batch
+
+    if mixer.active_slots != 1:
+        raise ValueError("dynamic K1 query requires exactly one slot")
+    normalized_hidden = mixer.node_norm(hidden)
+    dense, valid = to_dense_batch(normalized_hidden, batch)
+    keys = mixer.node_key(dense)
+    values = mixer.node_value(dense)
+    seeds = mixer.slot_seed[:1]
+    fixed_query = mixer.slot_query(seeds).unsqueeze(0)
+    graph_context = global_mean_pool(normalized_hidden, batch)
+    query = fixed_query + conditioner(graph_context).unsqueeze(1)
+    logits = torch.einsum("bkd,bnd->bkn", query, keys)
+    logits = logits / math.sqrt(mixer.latent_channels)
+    logits = logits.masked_fill(~valid.unsqueeze(1), float("-inf"))
+    assignment = torch.softmax(logits, dim=-1)
+    slots = seeds.unsqueeze(0) + torch.einsum(
+        "bkn,bnd->bkd", assignment, values
+    )
+    attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
+    slots = mixer.slot_norm1(slots + attended)
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+    returned = torch.einsum("bkn,bkd->bnd", assignment, slots)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "assignment": assignment,
+        "valid": valid,
+        "active_slots": 1,
+        "allocation_heads": 1,
+        "query_context": "mean-current-node-state",
+        "allocation_normalization_axis": "atoms",
+    }
+    return update, slots, assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
@@ -333,6 +390,19 @@ def make_encoder(mode: str):
                         for layer in MIXER_LAYERS
                     }
                 )
+            elif mode == "neural_atom_k1_dynamic_query":
+                self.query_conditioners = nn.ModuleDict(
+                    {
+                        str(layer): nn.Linear(
+                            HIDDEN_CHANNELS,
+                            64,
+                            bias=False,
+                        )
+                        for layer in MIXER_LAYERS
+                    }
+                )
+                for conditioner in self.query_conditioners.values():
+                    nn.init.zeros_(conditioner.weight)
 
         def forward(self, x, edge_index, edge_attr, batch, random_walk_pe):
             return self.base.head(
@@ -381,9 +451,17 @@ def make_encoder(mode: str):
                         mixer, h, batch
                     )
                     h = h + update
-                else:
+                elif self.mode == "neural_atom_k1_h4":
                     update, _, _, _, _ = _multihead_single_slot_update(
                         mixer, h, batch
+                    )
+                    h = h + update
+                else:
+                    update, _, _, _, _ = _dynamic_query_single_slot_update(
+                        mixer,
+                        self.query_conditioners[str(layer)],
+                        h,
+                        batch,
                     )
                     h = h + update
             return self.base._pool(h, batch)
