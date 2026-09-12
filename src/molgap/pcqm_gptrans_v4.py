@@ -54,7 +54,7 @@ EXPECTED_INITIAL_STATE_ARTIFACT_SHA256 = (
     "073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a"
 )
 EXPECTED_ARCHITECTURE_SHA256 = (
-    "602d79eaf77f0623ec2b68057bd48793b0132b594823748b0aa84633fb24cb60"
+    "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2"
 )
 MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
 GEOMETRY_AGGREGATE_SHA256 = (
@@ -276,6 +276,12 @@ def _state_sha256(model) -> str:
     return digest.hexdigest()
 
 
+def _source_sha256(path: Path) -> str:
+    """Hash source semantics independently of Git checkout line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _batch_sha256(batch) -> str:
     digest = hashlib.sha256()
     for name in ("x", "edge_index", "edge_attr", "y", "batch"):
@@ -289,7 +295,7 @@ def _batch_sha256(batch) -> str:
 
 def _verify_model_identity(model) -> tuple[int, str]:
     architecture_path = Path(__file__).with_name("gptrans.py")
-    architecture_sha256 = sha256_file(architecture_path)
+    architecture_sha256 = _source_sha256(architecture_path)
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())

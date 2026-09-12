@@ -36,6 +36,13 @@ ordered PyG batch boundaries without a reduction. This changes no model
 parameter, tensor shape, prediction equation, data role, or initial state.
 Dependent job `121894610` was cancelled without running.
 
+Preflight `121895215` then stopped at source identity because Windows checkout
+line endings and exported archive line endings produced different raw file
+hashes. Source identity now hashes LF-normalized bytes, while the archive itself
+remains byte-hashed. This preserves exact code identity across Windows and Linux
+without weakening archive verification. Dependent job `121895247` was cancelled
+without running.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`

@@ -17,6 +17,7 @@ from molgap.pcqm_gptrans_v4 import (
     _forward,
     _make_model,
     _scientific_fields,
+    _source_sha256,
     _state_sha256,
     _target_stats,
     validate_source_archive,
@@ -34,7 +35,7 @@ def test_frozen_model_identity_and_backward():
     model = _make_model()
     assert sum(parameter.numel() for parameter in model.parameters()) == EXPECTED_PARAMETERS
     assert _state_sha256(model) == EXPECTED_INITIAL_MODEL_SHA256
-    assert sha256_file(ROOT / "src/molgap/gptrans.py") == EXPECTED_ARCHITECTURE_SHA256
+    assert _source_sha256(ROOT / "src/molgap/gptrans.py") == EXPECTED_ARCHITECTURE_SHA256
 
     x = torch.zeros((6, 9), dtype=torch.long)
     edge_index = torch.tensor(
