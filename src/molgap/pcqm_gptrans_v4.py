@@ -372,7 +372,6 @@ def _make_training_state(initial_state_path: Path):
         lr=LEARNING_RATE,
         weight_decay=WEIGHT_DECAY,
         foreach=False,
-        fused=False,
     )
     scheduler = FrozenEpochScheduler(optimizer)
     ema = ExponentialMovingAverage(model)
