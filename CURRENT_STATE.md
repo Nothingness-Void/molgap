@@ -24,10 +24,12 @@ production decision linked above.
 Track B remains an official PCQM4Mv2 Gap-only line, isolated from the Track A
 three-target production contract. On 2026-09-13 the user explicitly authorized
 full official-train runs for frozen Neural-Atom K1 and GPTrans-T under separate
-20M-sample-exposure contracts. The two A100 preflights and their dependent
-training chains are being staged on IMS; neither run may access official
-validation, test-dev, or challenge-test. A learned blend is gated on an
-independent calibration role. The experiment protocol is
+20M-sample-exposure contracts. Their A100 preflights and dependent training and
+acceptance chains are queued on IMS. After both base artifacts pass acceptance,
+a dependent fusion job will read official-valid exactly once, fit one scalar on
+a fixed 20% calibration partition, and compare on the remaining 80%; this
+consumes that validation role for this experiment. No test-dev/challenge-test
+access is allowed. The experiment protocol is
 `experiments/pcqm_k1_gptrans_full_fusion/protocol.md`.
 
 Earlier 100K architecture-screen decisions remain unchanged and are indexed in
@@ -77,9 +79,17 @@ must not be represented as this new conservative head.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
-- The official-train-derived PCQM 100K graph cache and completed seed-42
-  comparisons are accepted. The new full-run authorization is limited to the
-  K1 and GPTrans-T contracts; other architecture screens are not promoted.
+- On IMS, K1 preflight `1497500.ccpbs1` and GPTrans-T preflight
+  `1497502.ccpbs1` are queued. Their training jobs `1497501.ccpbs1` and
+  `1497503.ccpbs1`, base acceptance jobs `1497505.ccpbs1` and
+  `1497506.ccpbs1`, fusion study `1497525.ccpbs1`, and fusion acceptance
+  `1497527.ccpbs1` are dependency-held. The fusion study depends on both base
+  acceptances; fusion acceptance depends on the study. At the 2026-09-13 01:45
+  JST snapshot, no user task was running, no GPU nodes were free, and 27 GPU
+  jobs were waiting. The latest detailed listing and scheduler summary showed 2
+  queued and 6 held tasks. Job identities, dependency
+  chain, hashes, fusion role policy, and the persistent monitor are recorded in
+  `experiments/pcqm_k1_gptrans_full_fusion/results/submission_record_20260913.json`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.
