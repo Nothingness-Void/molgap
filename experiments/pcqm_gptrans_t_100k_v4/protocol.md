@@ -32,10 +32,13 @@ pass `validate_reference_screen_contract`.
 
 ## Execution gates
 
-The preflight hashes every input shard, runs two identical optimizer steps,
-requires bitwise-identical losses and model states, measures optimizer-inclusive
-memory and throughput, and emits `molgap-runtime-certificate-v1`. Training
-refuses a changed runtime, source archive, cache, initialization, or certificate.
+The preflight hashes every input shard and runs two identical optimizer steps.
+It accepts loss and floating-point state differences up to the frozen `1e-7`
+absolute tolerance, records both exact state hashes and the maximum tensor
+difference, measures optimizer-inclusive memory and throughput, and emits
+`molgap-runtime-certificate-v1`. Non-floating state must match exactly.
+Training refuses a changed runtime, source archive, cache, initialization, or
+certificate.
 
 Every epoch atomically saves model, optimizer, scheduler, EMA, RNG, trace, and
 the exact next-epoch cursor. Best weights and aligned 50K predictions are stored

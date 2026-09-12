@@ -168,6 +168,14 @@ def validate_runtime_certificate(certificate: Mapping, contract: Mapping) -> dic
         value = certificate.get(key)
         if not isinstance(value, str) or len(value) != 64:
             mismatches[key] = {"expected": "sha256", "actual": value}
+    expected_calibration = contract.get("runtime_calibration_fingerprint")
+    if expected_calibration is not None and certificate.get(
+        "runtime_calibration_fingerprint"
+    ) != expected_calibration:
+        mismatches["runtime_calibration_fingerprint"] = {
+            "expected": expected_calibration,
+            "actual": certificate.get("runtime_calibration_fingerprint"),
+        }
     if certificate.get("calibration_checks_passed") is not True:
         mismatches["calibration_checks_passed"] = {
             "expected": True,

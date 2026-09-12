@@ -42,7 +42,8 @@ def configure_fp32_determinism(seed: int) -> dict:
     torch.backends.cudnn.allow_tf32 = False
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
-    torch.set_float32_matmul_precision("highest")
+    if hasattr(torch, "set_float32_matmul_precision"):
+        torch.set_float32_matmul_precision("highest")
     torch.use_deterministic_algorithms(True, warn_only=False)
     return {
         "seed": int(seed),
@@ -52,7 +53,11 @@ def configure_fp32_determinism(seed: int) -> dict:
         "cudnn_deterministic": True,
         "deterministic_algorithms": True,
         "cublas_workspace_config": os.environ["CUBLAS_WORKSPACE_CONFIG"],
-        "float32_matmul_precision": torch.get_float32_matmul_precision(),
+        "float32_matmul_precision": (
+            torch.get_float32_matmul_precision()
+            if hasattr(torch, "get_float32_matmul_precision")
+            else "tf32-disabled-by-backend-flags"
+        ),
     }
 
 
