@@ -50,6 +50,9 @@ EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (
     "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6"
 )
+EXPECTED_INITIAL_STATE_ARTIFACT_SHA256 = (
+    "073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a"
+)
 EXPECTED_ARCHITECTURE_SHA256 = (
     "47184da88c33251b53b0fc9e269ca8aece3d6c96a57f2cce0eafa8d1671992a5"
 )
@@ -236,10 +239,12 @@ def _target_stats(shards) -> tuple[float, float]:
     return float(values.mean()), float(values.std(unbiased=True).clamp_min(1e-6))
 
 
-def _make_model():
+def _make_model(initial_state_path: Path | None = None):
+    import torch
+
     from .gptrans import OGBGPTransTiny
 
-    return OGBGPTransTiny(
+    model = OGBGPTransTiny(
         node_channels=256,
         pair_channels=32,
         num_layers=12,
@@ -250,6 +255,17 @@ def _make_model():
         layer_scale=1.0,
         n_targets=1,
     )
+    if initial_state_path is None:
+        return model
+    if sha256_file(initial_state_path) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
+        raise RuntimeError("Frozen GPTrans-T initial-state artifact changed")
+    payload = torch.load(initial_state_path, map_location="cpu")
+    if payload.get("format") != "molgap-gptrans-t-seed42-initial-state-v1":
+        raise RuntimeError("Frozen GPTrans-T initial-state format changed")
+    model.load_state_dict(payload["model_state"], strict=True)
+    if payload.get("state_sha256") != _state_sha256(model):
+        raise RuntimeError("Frozen GPTrans-T initial-state payload is inconsistent")
+    return model
 
 
 def _state_sha256(model) -> str:
@@ -281,7 +297,10 @@ def _verify_model_identity(model) -> tuple[int, str]:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
     if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
-        raise RuntimeError("Frozen GPTrans-T seed-42 initialization changed")
+        raise RuntimeError(
+            "Frozen GPTrans-T seed-42 initialization changed: "
+            f"observed={initial_sha256} expected={EXPECTED_INITIAL_MODEL_SHA256}"
+        )
     return parameters, architecture_sha256
 
 
@@ -343,10 +362,10 @@ class FrozenEpochScheduler:
         self.epoch = int(state["epoch"])
 
 
-def _make_training_state():
+def _make_training_state(initial_state_path: Path):
     import torch
 
-    model = _make_model().to("cuda")
+    model = _make_model(initial_state_path).to("cuda")
     _verify_model_identity(model)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -509,6 +528,7 @@ def run_preflight(
     source_commit: str,
     output: Path,
     platform_id: str,
+    initial_state_path: Path,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -534,7 +554,7 @@ def run_preflight(
     repeat_losses = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model, optimizer, scheduler, ema = _make_training_state()
+        model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
         scheduler.step(0)
         repeat_losses.append(
             float(
@@ -551,7 +571,7 @@ def run_preflight(
         raise RuntimeError("Seeded optimizer-step calibration is not deterministic")
 
     configure_fp32_determinism(SEED)
-    model, optimizer, scheduler, ema = _make_training_state()
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -679,6 +699,7 @@ def run_training(
     source_commit: str,
     output: Path,
     platform_id: str,
+    initial_state_path: Path,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -724,7 +745,7 @@ def run_training(
         raise RuntimeError("Target statistics differ from preflight")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, ema = _make_training_state()
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []

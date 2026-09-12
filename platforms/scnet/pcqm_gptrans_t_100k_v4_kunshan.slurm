@@ -12,6 +12,7 @@ set -euo pipefail
 : "${SOURCE_COMMIT:?submit with SOURCE_COMMIT}"
 : "${SOURCE_ARCHIVE:?submit with SOURCE_ARCHIVE}"
 : "${SOURCE_ARCHIVE_SHA256:?submit with SOURCE_ARCHIVE_SHA256}"
+: "${INITIAL_STATE:?submit with INITIAL_STATE}"
 
 ROOT="$(realpath "$ROOT")"
 ACCOUNT_HOME="$(realpath "${ACCOUNT_HOME:-$HOME}")"
@@ -31,6 +32,7 @@ PLATFORM_ID="scnet-kunshan-dtk23.10-dcu66a1"
 test -f "$RUNNER"
 test -f "$MANIFEST"
 test -f "$SOURCE_ARCHIVE"
+test -f "$INITIAL_STATE"
 mkdir -p "$OUTPUT" "$ROOT/logs"
 cd "$ROOT"
 
@@ -52,7 +54,8 @@ case "$MODE" in
       --source-archive-sha256 "$SOURCE_ARCHIVE_SHA256" \
       --source-commit "$SOURCE_COMMIT" \
       --output "$OUTPUT/preflight" \
-      --platform-id "$PLATFORM_ID"
+      --platform-id "$PLATFORM_ID" \
+      --initial-state "$INITIAL_STATE"
     ;;
   train)
     test -f "$PREFLIGHT"
@@ -64,7 +67,8 @@ case "$MODE" in
       --source-archive-sha256 "$SOURCE_ARCHIVE_SHA256" \
       --source-commit "$SOURCE_COMMIT" \
       --output "$OUTPUT/training" \
-      --platform-id "$PLATFORM_ID"
+      --platform-id "$PLATFORM_ID" \
+      --initial-state "$INITIAL_STATE"
     ;;
   *)
     echo "unsupported MODE=$MODE" >&2

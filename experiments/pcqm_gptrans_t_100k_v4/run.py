@@ -18,6 +18,7 @@ def main() -> None:
     common.add_argument("--source-commit", required=True)
     common.add_argument("--output", type=Path, required=True)
     common.add_argument("--platform-id", required=True)
+    common.add_argument("--initial-state", type=Path, required=True)
     subparsers.add_parser("preflight", parents=[common])
     train = subparsers.add_parser("train", parents=[common])
     train.add_argument("--preflight", type=Path, required=True)
@@ -31,6 +32,7 @@ def main() -> None:
             source_commit=args.source_commit,
             output=args.output,
             platform_id=args.platform_id,
+            initial_state_path=args.initial_state,
         )
     else:
         result = run_training(
@@ -42,6 +44,7 @@ def main() -> None:
             source_commit=args.source_commit,
             output=args.output,
             platform_id=args.platform_id,
+            initial_state_path=args.initial_state,
         )
     print(result, flush=True)
 
