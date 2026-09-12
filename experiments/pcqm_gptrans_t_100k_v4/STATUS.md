@@ -71,16 +71,26 @@ archive has SHA-256
 `37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5` and passed
 remote archive, inventory, and extracted-file hash checks.
 
-Retry-2 preflight `121922250` is running on a Kunshan DCU node. At the latest
-read-only snapshot it had read about 1.06 GB, used 0.76 GiB peak memory, and had
-not emitted an error; this is consistent with loading/checking the three fixed
-graph shards. The only authorized baseline job, `121922252`, remains pending
-with `afterok:121922250`; it cannot train if preflight fails. Both use the
-frozen 60-epoch, physical-BS128 contract and write logs and atomic checkpoints
-under a new run directory. No prior result directory or input cache was
-modified.
+Retry-2 preflight `121922250` completed with exit code 0 on 2026-09-12. Its
+runtime certificate is accepted for the frozen FP32, TF32-disabled,
+deterministic, physical-BS128 runtime. The repeated optimizer-step losses were
+identical; maximum parameter delta was `1.49011612e-8`, below the frozen
+`1e-7` tolerance. Calibration measured 600.95 graphs/s and estimated 2.7725
+training hours, below the six-hour preflight ceiling. The fixed graph manifest,
+source archive, and seed-42 initial-state hashes passed acceptance.
 
-- Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
+The only authorized baseline job, `121922252`, started via
+`afterok:121922250` and was RUNNING in the latest read-only snapshot. At about
+four minutes elapsed, Slurm reported 8.35 GiB peak resident memory, 1.61 GB
+disk reads, and 2.36 MB disk writes. The training log and output directory did
+not yet contain an epoch record or checkpoint; this is before the first
+epoch-boundary atomic save, not evidence of a completed epoch. The run remains
+under its isolated result directory and uses the frozen 60-epoch, physical-BS128
+contract. No prior result directory or input cache was modified.
+
+- Retry-2 remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-4e327422-r2`
+- Retry-2 source archive SHA256: `37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5`
+- Initial portable-retry root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
 - Dataset manifest SHA256: `1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d`
