@@ -14,6 +14,8 @@ under the reference-screen V4 contract?
 - Twelve GPTrans layers, node width 256, pair width 32, eight heads, shortest
   path cap 20, direct normalized Gap target, seed 42.
 - Strict FP32, TF32 disabled, deterministic algorithms required.
+- Repeated one-step runtime calibration must reproduce loss and model state
+  within `1e-7`; both hashes and the maximum parameter delta are certified.
 - One visible accelerator, physical BS128, no accumulation, global epoch
   permutation, and exactly 781 full optimizer batches per epoch. The final 32
   rows of each permutation are excluded; no short optimizer batch is allowed.

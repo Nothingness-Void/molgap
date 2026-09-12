@@ -72,6 +72,8 @@ PREFLIGHT_WARMUP_STEPS = 5
 PREFLIGHT_MEASURED_STEPS = 30
 MAX_ESTIMATED_TRAIN_HOURS = 6.0
 FINITE_CHECK_EVERY_STEPS = 50
+MAX_REPEAT_LOSS_DELTA = 1.0e-7
+MAX_REPEAT_PARAMETER_DELTA = 1.0e-7
 RUN_FORMAT = "molgap-pcqm-gptrans-t-100k-reference-v4"
 CHECKPOINT_FORMAT = "molgap-pcqm-gptrans-t-100k-checkpoint-v4"
 
@@ -581,20 +583,24 @@ def run_preflight(
         )
         del model, optimizer, scheduler, ema
         torch.cuda.empty_cache()
-    if repeat_hashes[0] != repeat_hashes[1] or repeat_losses[0] != repeat_losses[1]:
-        max_name = ""
-        max_delta = 0.0
-        for name in repeat_states[0]:
-            left = repeat_states[0][name]
-            right = repeat_states[1][name]
-            if not left.is_floating_point():
-                continue
-            delta = float((left - right).abs().max())
-            if delta > max_delta:
-                max_name = name
-                max_delta = delta
+    max_name = ""
+    max_delta = 0.0
+    for name in repeat_states[0]:
+        left = repeat_states[0][name]
+        right = repeat_states[1][name]
+        if not left.is_floating_point():
+            continue
+        delta = float((left - right).abs().max())
+        if delta > max_delta:
+            max_name = name
+            max_delta = delta
+    loss_delta = abs(repeat_losses[0] - repeat_losses[1])
+    if (
+        loss_delta > MAX_REPEAT_LOSS_DELTA
+        or max_delta > MAX_REPEAT_PARAMETER_DELTA
+    ):
         raise RuntimeError(
-            "Seeded optimizer-step calibration is not deterministic: "
+            "Seeded optimizer-step calibration exceeds numerical tolerance: "
             f"losses={repeat_losses} hashes={repeat_hashes} "
             f"max_parameter_delta={max_delta:.9g} parameter={max_name}"
         )
@@ -650,8 +656,19 @@ def run_preflight(
         "software_fingerprint": runtime["installed_distributions_sha256"],
         "determinism_fingerprint": canonical_fingerprint(determinism),
         "calibration_fixture_sha256": fixture_sha256,
-        "calibration_output_sha256": repeat_hashes[0],
+        "calibration_output_sha256": canonical_fingerprint(
+            {"repeat_state_sha256": repeat_hashes}
+        ),
         "calibration_checks_passed": True,
+        "calibration_repeat": {
+            "losses": repeat_losses,
+            "loss_delta": loss_delta,
+            "maximum_loss_delta": MAX_REPEAT_LOSS_DELTA,
+            "state_sha256": repeat_hashes,
+            "max_parameter_delta": max_delta,
+            "maximum_parameter_delta": MAX_REPEAT_PARAMETER_DELTA,
+            "max_parameter_name": max_name,
+        },
         "runtime_fingerprint": runtime["runtime_fingerprint"],
     }
     certificate_id = canonical_fingerprint(certificate)

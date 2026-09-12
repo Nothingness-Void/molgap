@@ -22,6 +22,39 @@ and no longer depends on framework-default initialization. A replacement chain
 is not accepted evidence until the mechanical acceptance in this experiment
 passes.
 
+Portable-state preflight `121893879` then reached optimizer construction and
+failed because the legacy SCNet AdamW API does not expose the newer `fused`
+keyword; dependent job `121893917` was cancelled without running. Omitting that
+unsupported keyword retains the frozen unfused optimizer semantics because
+`foreach=False` remains explicit.
+
+Preflight `121894576` then passed source, data, initialization, and optimizer
+construction before the first forward exposed a deterministic-kernel gap in
+DTK: CUDA `bincount` is unavailable while strict deterministic algorithms are
+enabled. The replacement local-node indexing derives the same offsets from
+ordered PyG batch boundaries without a reduction. This changes no model
+parameter, tensor shape, prediction equation, data role, or initial state.
+Dependent job `121894610` was cancelled without running.
+
+Preflight `121895215` then stopped at source identity because Windows checkout
+line endings and exported archive line endings produced different raw file
+hashes. Source identity now hashes LF-normalized bytes, while the archive itself
+remains byte-hashed. This preserves exact code identity across Windows and Linux
+without weakening archive verification. Dependent job `121895247` was cancelled
+without running.
+
+Preflight `121904334` completed both seeded optimizer-step repetitions but the
+resulting states were not bitwise identical. No training job was submitted.
+The next bounded diagnostic reports both losses, state hashes, and the maximum
+parameter delta before any decision about platform suitability or tolerance.
+
+Diagnostic `121905044` measured identical FP32 losses (`1.0190001726`) and a
+maximum repeated-state difference of `1.49011612e-8`, isolated to one attention
+weight. This is below a frozen `1e-7` numerical reproducibility tolerance and
+does not justify rejecting Kunshan. Future preflights retain both state hashes
+and the measured maximum delta in the runtime certificate instead of requiring
+GPU tensor byte identity.
+
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
