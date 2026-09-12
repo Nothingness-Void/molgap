@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-#SBATCH --partition=kshctest02
-#SBATCH --time=00:30:00
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=4G
+#SBATCH --partition=kshdtest
+#SBATCH --gres=dcu:Hygon:1
+#SBATCH --time=00:10:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=27G
 
 set -euo pipefail
 : "${ROOT:?submit with ROOT}"
@@ -24,6 +25,7 @@ cd "$ROOT"
 
 module purge
 module load compiler/dtk/23.10
+module load mpi/openmpi/gcc-9.3.0/4.1.5
 export PYTHONNOUSERSITE=1
 export PYTHONPATH="$CODE/src${PYTHONPATH:+:$PYTHONPATH}"
 export OMP_NUM_THREADS=1
