@@ -54,6 +54,14 @@ def write_archive(path: Path, files: list[Path]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--dataset-id",
+        default="kaseichou/molgap-pcqm-k1-v4-variants-source",
+    )
+    parser.add_argument(
+        "--title",
+        default="MolGap PCQM K1 V4 Variants Source",
+    )
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -78,8 +86,8 @@ def main() -> None:
     (output / "dataset-metadata.json").write_text(
         json.dumps(
             {
-                "title": "MolGap PCQM K1 V4 Variants Source",
-                "id": "kaseichou/molgap-pcqm-k1-v4-variants-source",
+                "title": args.title,
+                "id": args.dataset_id,
                 "licenses": [{"name": "other"}],
                 "isPrivate": True,
             },
@@ -92,4 +100,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
