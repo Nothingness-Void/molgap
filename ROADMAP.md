@@ -13,12 +13,14 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-K1-V4-VARIANTS | Establish one reusable K1-v4 PCQM-100K reference and test isolated K1-G/K1-R candidates on Kaggle2 | Both remote arms pass joint acceptance; only a candidate gaining at least 0.003 eV with favorable aligned-row bootstrap is nominated |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
-K1 is frozen. Do not tune its slots, width, depth, placement, optimizer,
-schedule, seed, or consumed data roles. The full contract is exactly 156,250
-physical-BS128 optimizer steps, not 40 full-data epochs. Server prepares and
-reviews the handoff but does not launch it.
+The K1 full candidate remains frozen. P0 is a separate architecture question
+and cannot alter that handoff. K1-G and K1-R each change one mechanism, do not
+combine, and cannot authorize full training automatically. The existing full
+contract remains exactly 156,250 physical-BS128 optimizer steps, not 40
+full-data epochs; server prepares and reviews it but does not launch it.
 
 ## Architecture funnel
 

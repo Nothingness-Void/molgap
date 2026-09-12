@@ -37,9 +37,12 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
-Server architecture discovery is parked during the K1 desktop handoff. No
-remote GPU candidate is active. Reopening Track C requires a new all-history
-evidence audit and one materially distinct route under `ROADMAP.md`.
+The user reopened one bounded server-side K1 architecture question after the
+all-history audit. `experiments/pcqm_k1_variants_100k/` freezes two isolated
+PCQM-100K v4 candidates: molecule-conditioned exchange strength (K1-G) and a
+distinct EdgeState-derived relation slot (K1-R). One P100 job establishes the
+reusable K1-v4 reference while one T4x2 job trains G and R independently. No
+result or promotion exists until joint no-inference acceptance passes.
 
 GraphState and its derivatives failed full-scale transfer and are archive-only.
 The local-hierarchy allocation, GAPE, adaptive denoising, cardinality channel,
@@ -51,8 +54,7 @@ archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 `experiments/_closed/qm9_top20_archive_index.md`.
 
 SCNet experiments and full training are desktop-owned and excluded from the
-server queue. The earlier server autonomous window does not authorize another
-task while discovery is parked.
+server queue. This bounded screen does not modify the frozen K1 full handoff.
 
 ## Data and comparison contract
 

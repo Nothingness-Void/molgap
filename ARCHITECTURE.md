@@ -68,6 +68,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pubchemqc_architecture.py` | PubChemQC scaffold-screen SchNet training over one or two ETKDG views | Changing the 100K architecture-screen 3D protocol |
 | `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
 | `pcqm_k1_full_runner.py` | Frozen K1 full-role preflight, exact-step training, atomic resume, and self-contained bundle | Changing the audited K1 desktop handoff contract |
+| `pcqm_k1_variants.py`, `pcqm_k1_variants_runner.py` | Isolated K1-G/K1-R global-allocation models and their fixed PCQM-100K v4 training contract | Changing the bounded K1 selective-global architecture screen |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
 | `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
