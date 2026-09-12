@@ -71,11 +71,14 @@ archive has SHA-256
 `37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5` and passed
 remote archive, inventory, and extracted-file hash checks.
 
-Retry-2 preflight `121922250` is queued. The only authorized baseline job,
-`121922252`, is queued with `afterok:121922250`; it cannot train if preflight
-fails. Both use the frozen 60-epoch, physical-BS128 contract and write logs and
-atomic checkpoints under a new run directory. No prior result directory or
-input cache was modified.
+Retry-2 preflight `121922250` is running on a Kunshan DCU node. At the latest
+read-only snapshot it had read about 1.06 GB, used 0.76 GiB peak memory, and had
+not emitted an error; this is consistent with loading/checking the three fixed
+graph shards. The only authorized baseline job, `121922252`, remains pending
+with `afterok:121922250`; it cannot train if preflight fails. Both use the
+frozen 60-epoch, physical-BS128 contract and write logs and atomic checkpoints
+under a new run directory. No prior result directory or input cache was
+modified.
 
 - Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
