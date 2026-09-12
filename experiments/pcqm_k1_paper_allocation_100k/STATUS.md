@@ -1,8 +1,12 @@
 # Status
 
-Attempt 1 protocol and implementation passed local static, contract, and
-small-batch forward checks. No local training or sealed-role access occurred.
-Kaggle2 kernel `kaseichou/molgap-pcqm-k1-paper-allocation-s42` version 1 was
-submitted on 2026-09-12 and reached `RUNNING`. Launch provenance is
-`results/launch.json`. Attempts 2 and 3 remain conditional on terminal
-attribution.
+Attempt 1 completed and passed no-inference acceptance on 2026-09-13, but was
+scientifically negative. Four paper-style grouped latent atoms produced
+development Gap MAE 0.1434529871 eV versus the frozen K1-v4 reference
+0.1413736343 eV; the paired bootstrap interval was entirely unfavorable. The
+mechanism is closed without another seed or scale-up. See `decision.md` and
+`results/attempt1_summary.json`.
+
+Attempt 2 is limited to one returned molecular slot with multi-view atom
+selection. Attempt 3 remains conditional on the terminal attribution of
+attempt 2. No local training or sealed-role access occurred.

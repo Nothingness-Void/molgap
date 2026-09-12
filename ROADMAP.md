@@ -13,11 +13,13 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | C-K1-PAPER-ALLOCATION-R1 | Test four paper-style atom-grouping slots inside the frozen sparse K1 skeleton | Terminal no-inference acceptance; either a material v4 gain or a dated failure attribution consuming attempt 1/3 |
+| P0 | C-K1-MULTIVIEW-POOL-R2 | Test four atom-selection heads feeding one returned K1 molecular slot | Terminal no-inference acceptance; either a material v4 gain or a dated failure attribution consuming attempt 2/3 |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
-The K1 full candidate remains frozen. The completed K1-G/K1-R screen selected
-no candidate and did not alter that handoff. The existing full contract remains
+Attempt 1's paper-style four-slot grouping was accepted mechanically and failed
+scientifically; it is closed by its decision record. The K1 full candidate
+remains frozen. The completed K1-G/K1-R screen selected no candidate and did
+not alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
 prepares and reviews it but does not launch it.
 
