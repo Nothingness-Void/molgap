@@ -569,8 +569,8 @@ def accept_fusion_study(
     }
     if any(identity.get(key) != value for key, value in expected_identity.items()):
         raise RuntimeError("Fusion identity or role contract changed")
-    if len(identity.get("fusion_code_sha256", "")) != 64:
-        raise RuntimeError("Fusion implementation hash is missing")
+    if identity.get("fusion_code_sha256") != sha256_file(Path(__file__)):
+        raise RuntimeError("Fusion implementation hash differs from the executed source")
 
     base_acceptances = {}
     for name, contract_sha in (("k1", K1_CONTRACT_SHA256), ("gptrans", GP_CONTRACT_SHA256)):
@@ -600,6 +600,7 @@ def accept_fusion_study(
         or completion.get("status") != "complete"
         or completion.get("accepted") is not False
         or completion.get("identity") != identity
+        or completion.get("metrics") != metrics
     ):
         raise RuntimeError("Fusion completion manifest is incomplete or mismatched")
     if (
@@ -624,6 +625,17 @@ def accept_fusion_study(
         artifact_path.relative_to(output)
         if not artifact_path.is_file() or sha256_file(artifact_path) != expected_sha:
             raise RuntimeError(f"Fusion artifact SHA failed: {relative}")
+    expected_artifacts = {
+        "identity.json",
+        "metrics.json",
+        "official_valid_predictions.pt",
+    }
+    for record in valid_shards:
+        name = f"valid_{record['shard_index']:04d}"
+        expected_artifacts.add(f"prediction_parts/{name}.pt")
+        expected_artifacts.add(f"prediction_parts/{name}.json")
+    if set(completion.get("artifacts", {})) != expected_artifacts:
+        raise RuntimeError("Fusion completion artifact inventory changed")
 
     final = torch.load(predictions_path, map_location="cpu", weights_only=False)
     expected_keys = {
@@ -664,6 +676,9 @@ def accept_fusion_study(
         int(calibration.sum()) != split_metrics.get("calibration_rows")
         or int(heldout.sum()) != split_metrics.get("holdout_rows")
         or calibrated_alpha != split_metrics.get("k1_weight")
+        or metrics.get("official_valid", {}).get("rows") != EXPECTED_VALID_ROWS
+        or metrics.get("official_valid", {}).get("source_idx_sha256")
+        != hashlib.sha256(indices.tobytes()).hexdigest()
     ):
         raise RuntimeError("Fusion split or selected scalar weight changed")
 
@@ -697,6 +712,8 @@ def accept_fusion_study(
             sidecar.get("shard_index") != record["shard_index"]
             or sidecar.get("graph_sha256") != record["sha256"]
             or sidecar.get("rows") != record["rows"]
+            or sidecar.get("k1_bundle_sha256") != identity["k1_bundle_sha256"]
+            or sidecar.get("gptrans_bundle_sha256") != identity["gptrans_bundle_sha256"]
             or sidecar.get("sha256") != sha256_file(part_path)
         ):
             raise RuntimeError(f"Fusion prediction part identity failed: {part_path.name}")
