@@ -1,0 +1,27 @@
+{
+  "format": "molgap-ims-v4-dataset-registry-v1",
+  "boundary": "/lustre/home/users/sm2/chou",
+  "fixed_root": "/lustre/home/users/sm2/chou/pcqm4mv2-fixed-v1",
+  "acceptance": {
+    "path": "acceptance.json",
+    "sha256": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e"
+  },
+  "datasets": {
+    "ogb-train-100k": {
+      "manifest": "subsets/ogb-train-100k/manifest.json",
+      "manifest_sha256": "fed575a4ae3fa43290d83aa35e42ab85467a0c155b29e453cfbf5db9be5fe256"
+    },
+    "ogb-train-500k-scnet-v1": {
+      "manifest": "subsets/ogb-train-500k-scnet-v1/manifest.json",
+      "manifest_sha256": "6a53bb27f04d62eaea5bfd7da57dfa0b6a35f40d1c1648a68e92f0d5b68e3ef0"
+    },
+    "ogb-train-1m": {
+      "manifest": "subsets/ogb-train-1m/manifest.json",
+      "manifest_sha256": "22ec1ea6aa9e017713307ea0a5867b346413fb0fa3797e804a0e4a4840a831ec"
+    },
+    "ogb-train-full": {
+      "manifest": "subsets/ogb-train-full/manifest.json",
+      "manifest_sha256": "3068631c27d32b7fdfc8b19366ec4eb7e47c8aadf4fcbbe3c686c685cc5f408c"
+    }
+  }
+}
