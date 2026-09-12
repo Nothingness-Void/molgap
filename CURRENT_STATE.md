@@ -50,9 +50,10 @@ The consolidated attribution is
 archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 `experiments/_closed/qm9_top20_archive_index.md`.
 
-SCNet experiments and full training are desktop-owned and excluded from the
-server queue. The earlier server autonomous window does not authorize another
-task while discovery is parked.
+SCNet experiments and full training are desktop-owned. One explicitly requested
+GPTrans-T 100K V4 reference is active on the desktop experiment branch; its
+mechanical status is owned by `experiments/pcqm_gptrans_t_100k_v4/STATUS.md`.
+It does not reopen candidate discovery or authorize any full-role training.
 
 ## Data and comparison contract
 
