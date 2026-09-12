@@ -37,18 +37,32 @@ the exact runtime, model parameter count and initialization hash, cache hashes,
 full-batch forward/backward, memory headroom, and projected wall time. A failed
 preflight blocks its training job. Each run writes atomic checkpoints every
 500 optimizer steps, records source/cache/runtime identities, and can resume
-only from a matching checkpoint. Official validation and test roles remain
-sealed.
+only from a matching checkpoint. Both base-training jobs keep official
+validation and test roles sealed; the later fusion study has its own explicitly
+defined official-valid calibration/holdout access below.
 
-## Fusion gate
+## Fusion study
 
-The accepted full cache contains no independent development/calibration rows.
-The base models train on every official training row, so fitting a blend weight
-on their in-sample predictions would be leakage and is not accepted evidence.
-The user authorized the two full training runs on 2026-09-13, but did not
-specify a calibration role. A learned blend therefore remains gated on a
-separately accepted, source-aligned calibration cache that neither base model
-trains on. Official-validation graphs can support a calibration/holdout split
-only after an explicit role decision; test-dev and challenge-test remain
-forbidden. A fixed 50:50 prediction average needs no training labels and can be
-evaluated once on the authorized final evaluation role.
+An accepted official-valid graph cache is available at
+`/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/graphs`.
+It contains 73,545 official-valid rows, uses the accepted OGB feature schema,
+and matches the full-train source-row manifest. The user authorized a fusion
+experiment on 2026-09-13. This study reads official validation once and spends
+that role on a pre-registered calibration/holdout analysis; it is not an
+untouched official score for later model selection.
+
+- Sort by `source_idx`; calibrate on rows where `source_idx % 5 == 0` and do not
+  fit on the other four fifths.
+- Fit only one convex scalar coefficient for K1 versus GPTrans-T. Search the
+  closed interval [0, 1] on a fixed 0.001 grid, minimizing calibration MAE.
+- Compare both single models, fixed 50:50, and the calibrated blend on the
+  four-fifths holdout. Also report fixed 50:50 on all official-valid rows; this
+  fixed blend has no fitted parameter.
+- Save prediction chunks atomically with input/model hashes. A separate CPU
+  acceptance job verifies identity, alignment, metrics, and artifact hashes.
+- Never read test-dev or challenge-test. Do not represent the calibrated
+  official-valid result as a leaderboard/test result, or repeat tuning on this
+  consumed validation role.
+
+Mechanical artifact acceptance does not itself imply scientific advancement;
+holdout deltas determine whether the combination is useful.
