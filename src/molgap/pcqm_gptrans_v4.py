@@ -5,7 +5,6 @@ import hashlib
 import json
 import math
 import subprocess
-import tarfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -28,6 +27,16 @@ from .training_reproducibility import (
     configure_fp32_determinism,
     restore_rng_state,
     sha256_file,
+)
+from .v4_runtime import (
+    certify_numerical_repeatability,
+    load_frozen_initial_state,
+    make_adamw_compat,
+    model_state_sha256,
+    normalized_source_sha256,
+    sample_std_compat,
+    torch_load_compat,
+    validate_standard_source_bundle,
 )
 
 
@@ -204,7 +213,9 @@ def _load_datasets(paths: tuple[Path, ...]):
     class PackedGraphs(InMemoryDataset):
         def __init__(self, path: Path):
             super().__init__(root=None)
-            self.data, self.slices = torch.load(path, map_location="cpu", weights_only=False)
+            self.data, self.slices = torch_load_compat(
+                path, map_location="cpu", weights_only=False
+            )
 
     shards = [PackedGraphs(path) for path in paths]
     return ConcatDataset(shards), shards
@@ -238,7 +249,7 @@ def _target_stats(shards) -> tuple[float, float]:
     if values.numel() != TRAIN_ROWS or not bool(torch.isfinite(values).all()):
         raise RuntimeError("Training targets are incomplete or non-finite")
     # SCNet's frozen PyTorch predates the ``correction`` keyword overload.
-    return float(values.mean()), float(values.std(unbiased=True).clamp_min(1e-6))
+    return float(values.mean()), float(sample_std_compat(values).clamp_min(1e-6))
 
 
 def _make_model(initial_state_path: Path | None = None):
@@ -259,29 +270,96 @@ def _make_model(initial_state_path: Path | None = None):
     )
     if initial_state_path is None:
         return model
-    if sha256_file(initial_state_path) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
-        raise RuntimeError("Frozen GPTrans-T initial-state artifact changed")
-    payload = torch.load(initial_state_path, map_location="cpu")
-    if payload.get("format") != "molgap-gptrans-t-seed42-initial-state-v1":
-        raise RuntimeError("Frozen GPTrans-T initial-state format changed")
-    model.load_state_dict(payload["model_state"], strict=True)
-    if payload.get("state_sha256") != _state_sha256(model):
-        raise RuntimeError("Frozen GPTrans-T initial-state payload is inconsistent")
+    load_frozen_initial_state(
+        model,
+        initial_state_path,
+        expected_file_sha256=EXPECTED_INITIAL_STATE_ARTIFACT_SHA256,
+        expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
+        expected_format="molgap-gptrans-t-seed42-initial-state-v1",
+    )
     return model
 
 
+def _model_config() -> dict:
+    return {
+        "node_channels": 256,
+        "pair_channels": 32,
+        "num_layers": 12,
+        "num_heads": 8,
+        "shortest_path_cap": 20,
+        "dropout": 0.1,
+        "drop_path": 0.1,
+        "layer_scale": 1.0,
+        "n_targets": 1,
+    }
+
+
+def run_v4_spec(*, mode: str, run_spec: dict, runtime_certificate: dict | None):
+    """Family adapter used by the shared V4 CLI dispatcher."""
+    expected_contract = _scientific_fields()
+    observed_contract = run_spec["scientific_contract"]
+    mismatches = {
+        key: {"expected": expected_contract[key], "actual": observed_contract.get(key)}
+        for key in expected_contract
+        if observed_contract.get(key) != expected_contract[key]
+    }
+    if mismatches:
+        raise RuntimeError(f"GPTrans V4 frozen scientific contract changed: {mismatches}")
+    if run_spec["model_config"] != _model_config():
+        raise RuntimeError("This frozen GPTrans reference adapter does not accept architecture variants")
+
+    options = run_spec["runner_parameters"]
+    required = (
+        "dataset_root",
+        "manifest_path",
+        "source_archive",
+        "output",
+        "initial_state_path",
+    )
+    missing = [key for key in required if not options.get(key)]
+    if missing:
+        raise ValueError(f"GPTrans V4 runner_parameters missing: {missing}")
+    archive_path = Path(options["source_archive"])
+    if sha256_file(archive_path) != run_spec["source"]["bundle_sha256"]:
+        raise RuntimeError("Installed GPTrans source bundle differs from run spec")
+    common = {
+        "dataset_root": Path(options["dataset_root"]),
+        "manifest_path": Path(options["manifest_path"]),
+        "source_archive": archive_path,
+        "source_archive_sha256": run_spec["source"]["bundle_sha256"],
+        "source_commit": run_spec["source"]["source_commit"],
+        "output": Path(options["output"]),
+        "platform_id": run_spec["platform_id"],
+        "initial_state_path": Path(options["initial_state_path"]),
+        "runtime_calibration_fingerprint": run_spec[
+            "runtime_calibration_fingerprint"
+        ],
+    }
+    if mode == "preflight":
+        return run_preflight(**common)
+    if mode != "train" or runtime_certificate is None:
+        raise ValueError("GPTrans V4 adapter requires preflight or certified training")
+    preflight_path = options.get("preflight_path")
+    if not preflight_path:
+        raise ValueError("GPTrans V4 training requires runner_parameters.preflight_path")
+    preflight = json.loads(Path(preflight_path).read_text(encoding="utf-8"))
+    if preflight.get("runtime_certificate_id") != run_spec["runtime_certificate_id"]:
+        raise RuntimeError("Training run spec does not match the accepted preflight certificate")
+    if preflight.get("runtime_certificate") != runtime_certificate:
+        raise RuntimeError("Supplied runtime certificate differs from accepted preflight")
+    return run_training(
+        **common,
+        preflight_path=Path(preflight_path),
+    )
+
+
 def _state_sha256(model) -> str:
-    digest = hashlib.sha256()
-    for name, value in sorted(model.state_dict().items()):
-        digest.update(name.encode("utf-8") + b"\0")
-        digest.update(value.detach().cpu().contiguous().numpy().tobytes())
-    return digest.hexdigest()
+    return model_state_sha256(model)
 
 
 def _source_sha256(path: Path) -> str:
     """Hash source semantics independently of Git checkout line endings."""
-    payload = path.read_bytes().replace(b"\r\n", b"\n")
-    return hashlib.sha256(payload).hexdigest()
+    return normalized_source_sha256(path)
 
 
 def _batch_sha256(batch) -> str:
@@ -375,10 +453,11 @@ def _make_training_state(initial_state_path: Path):
 
     model = _make_model(initial_state_path).to("cuda")
     _verify_model_identity(model)
-    optimizer = torch.optim.AdamW(
+    optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
         weight_decay=WEIGHT_DECAY,
+        fused=False,
         foreach=False,
     )
     scheduler = FrozenEpochScheduler(optimizer)
@@ -492,38 +571,9 @@ def validate_source_archive(
     source_archive: Path, source_archive_sha256: str, source_commit: str
 ) -> str:
     """Bind the extracted runtime to an immutable tracked-file archive."""
-    source_archive = source_archive.resolve()
-    if not source_archive.is_file():
-        raise FileNotFoundError(source_archive)
-    if sha256_file(source_archive) != source_archive_sha256:
-        raise RuntimeError("Source archive identity changed")
-    commit_path = source_archive.with_name("SOURCE_COMMIT.txt")
-    sha_path = source_archive.with_name("SOURCE_ARCHIVE_SHA256.txt")
-    inventory_path = source_archive.with_name("SOURCE_FILES.json")
-    for path in (commit_path, sha_path, inventory_path):
-        if not path.is_file():
-            raise FileNotFoundError(path)
-    if commit_path.read_text(encoding="utf-8").strip() != source_commit:
-        raise RuntimeError("Source commit sidecar changed")
-    if sha_path.read_text(encoding="utf-8").strip() != source_archive_sha256:
-        raise RuntimeError("Source archive SHA sidecar changed")
-    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
-    expected = {item["path"]: item["sha256"] for item in inventory["files"]}
-    observed: dict[str, str] = {}
-    with tarfile.open(source_archive, "r:gz") as archive:
-        for member in archive.getmembers():
-            if not member.isfile():
-                continue
-            handle = archive.extractfile(member)
-            if handle is None:
-                raise RuntimeError(f"Cannot read source member: {member.name}")
-            digest = hashlib.sha256()
-            for block in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(block)
-            observed[member.name] = digest.hexdigest()
-    if observed != expected:
-        raise RuntimeError("Source archive file inventory changed")
-    return source_archive_sha256
+    return validate_standard_source_bundle(
+        source_archive, source_archive_sha256, source_commit
+    )
 
 
 def run_preflight(
@@ -536,6 +586,7 @@ def run_preflight(
     output: Path,
     platform_id: str,
     initial_state_path: Path,
+    runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -544,6 +595,20 @@ def run_preflight(
         raise RuntimeError("V4 preflight requires exactly one visible accelerator")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
     validate_screen_arm(physical_batch_per_device=PHYSICAL_BATCH)
+    if runtime_calibration_fingerprint is None:
+        runtime_calibration_fingerprint = canonical_fingerprint(
+            {
+                "source_archive_sha256": source_archive_sha256,
+                "model_family": "gptrans-t",
+                "model_id": "gptrans_t_core_12x256_pair32",
+                "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
+                "model_config": _model_config(),
+                "scientific_contract": _scientific_fields(),
+                "physical_batch_per_device": PHYSICAL_BATCH,
+                "device_count": 1,
+                "gradient_accumulation_steps": 1,
+            }
+        )
     assets = validate_fixed_assets(dataset_root, manifest_path, verify_content=True)
     runtime = build_runtime_manifest(determinism)
     train_graphs, train_shards = _load_datasets(assets.train_paths)
@@ -557,7 +622,6 @@ def run_preflight(
         raise RuntimeError("Preflight did not receive physical batch 128")
     fixture_sha256 = _batch_sha256(batch)
 
-    repeat_hashes = []
     repeat_losses = []
     repeat_states = []
     for _ in range(2):
@@ -572,33 +636,18 @@ def run_preflight(
             )
         )
         torch.cuda.synchronize()
-        repeat_hashes.append(_state_sha256(model))
         repeat_states.append(
             {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
         )
         del model, optimizer, scheduler, ema
         torch.cuda.empty_cache()
-    max_name = ""
-    max_delta = 0.0
-    for name in repeat_states[0]:
-        left = repeat_states[0][name]
-        right = repeat_states[1][name]
-        if not left.is_floating_point():
-            continue
-        delta = float((left - right).abs().max())
-        if delta > max_delta:
-            max_name = name
-            max_delta = delta
-    loss_delta = abs(repeat_losses[0] - repeat_losses[1])
-    if (
-        loss_delta > MAX_REPEAT_LOSS_DELTA
-        or max_delta > MAX_REPEAT_PARAMETER_DELTA
-    ):
-        raise RuntimeError(
-            "Seeded optimizer-step calibration exceeds numerical tolerance: "
-            f"losses={repeat_losses} hashes={repeat_hashes} "
-            f"max_parameter_delta={max_delta:.9g} parameter={max_name}"
-        )
+    repeatability = certify_numerical_repeatability(
+        losses=repeat_losses,
+        states=repeat_states,
+        maximum_loss_delta=MAX_REPEAT_LOSS_DELTA,
+        maximum_parameter_delta=MAX_REPEAT_PARAMETER_DELTA,
+    )
+    repeat_hashes = repeatability["state_sha256"]
 
     configure_fp32_determinism(SEED)
     model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
@@ -655,14 +704,9 @@ def run_preflight(
             {"repeat_state_sha256": repeat_hashes}
         ),
         "calibration_checks_passed": True,
+        "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
         "calibration_repeat": {
-            "losses": repeat_losses,
-            "loss_delta": loss_delta,
-            "maximum_loss_delta": MAX_REPEAT_LOSS_DELTA,
-            "state_sha256": repeat_hashes,
-            "max_parameter_delta": max_delta,
-            "maximum_parameter_delta": MAX_REPEAT_PARAMETER_DELTA,
-            "max_parameter_name": max_name,
+            **repeatability,
         },
         "runtime_fingerprint": runtime["runtime_fingerprint"],
     }
@@ -672,6 +716,7 @@ def run_preflight(
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
+        "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
     }
     validate_runtime_certificate(certificate, provisional_contract)
     result = {
@@ -741,6 +786,7 @@ def run_training(
     output: Path,
     platform_id: str,
     initial_state_path: Path,
+    runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -765,6 +811,20 @@ def run_training(
         raise RuntimeError("Preflight source commit changed")
     certificate = preflight["runtime_certificate"]
     certificate_id = preflight["runtime_certificate_id"]
+    if runtime_calibration_fingerprint is None:
+        runtime_calibration_fingerprint = canonical_fingerprint(
+            {
+                "source_archive_sha256": source_archive_sha256,
+                "model_family": "gptrans-t",
+                "model_id": "gptrans_t_core_12x256_pair32",
+                "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
+                "model_config": _model_config(),
+                "scientific_contract": _scientific_fields(),
+                "physical_batch_per_device": PHYSICAL_BATCH,
+                "device_count": 1,
+                "gradient_accumulation_steps": 1,
+            }
+        )
     runtime = build_runtime_manifest(determinism)
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
@@ -773,6 +833,7 @@ def run_training(
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
+        "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
     }
     validate_runtime_certificate(certificate, provisional_contract)
 
@@ -793,7 +854,9 @@ def run_training(
     best = float("inf")
     best_epoch = -1
     if checkpoint_path.is_file():
-        checkpoint = torch.load(checkpoint_path, map_location="cuda", weights_only=False)
+        checkpoint = torch_load_compat(
+            checkpoint_path, map_location="cuda", weights_only=False
+        )
         if checkpoint.get("format") != CHECKPOINT_FORMAT:
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("scientific_fields") != _scientific_fields():
@@ -844,15 +907,7 @@ def run_training(
             best_payload = {
                 "format": RUN_FORMAT,
                 "model_config": {
-                    "node_channels": 256,
-                    "pair_channels": 32,
-                    "num_layers": 12,
-                    "num_heads": 8,
-                    "shortest_path_cap": 20,
-                    "dropout": 0.1,
-                    "drop_path": 0.1,
-                    "layer_scale": 1.0,
-                    "n_targets": 1,
+                    **_model_config(),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
                 "target_stats": target_stats,
@@ -925,6 +980,7 @@ def run_training(
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
+        "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
         "physical_batch_per_device": PHYSICAL_BATCH,
         "device_count": 1,
         "gradient_accumulation_steps": 1,
@@ -949,6 +1005,7 @@ def run_training(
         "best_epoch": best_epoch,
         "manifest_sha256": MANIFEST_SHA256,
         "runtime_certificate_id": certificate_id,
+        "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
         "source_archive_sha256": source_archive_sha256,
         "source_commit": source_commit,
         "best_model_sha256": result_sha256,
