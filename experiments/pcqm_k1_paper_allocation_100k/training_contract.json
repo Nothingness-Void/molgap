@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm-k1-paper-allocation-contract-v1",
+  "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+  "dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "roles": {
+    "train": [0, 100000],
+    "development": [100000, 150000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "reference": "neural_atom_k1_v4",
+  "candidate": "neural_atom_k4_cluster",
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "epochs": 40,
+  "optimizer_steps_per_epoch": 781,
+  "sample_presentations_per_epoch": 99968,
+  "total_optimizer_steps": 31240,
+  "total_sample_presentations": 3998720,
+  "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.0004,
+    "weight_decay": 0.00001,
+    "gradient_clip": 1.0
+  },
+  "schedule": {
+    "name": "CosineAnnealingLR",
+    "eta_min": 0.000001
+  },
+  "minimum_gain_eV": 0.003,
+  "stochasticity_floor_eV": 0.003
+}

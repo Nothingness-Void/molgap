@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-K1-PAPER-ALLOCATION-R1 | Test four paper-style atom-grouping slots inside the frozen sparse K1 skeleton | Terminal no-inference acceptance; either a material v4 gain or a dated failure attribution consuming attempt 1/3 |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 The K1 full candidate remains frozen. The completed K1-G/K1-R screen selected
@@ -22,7 +23,8 @@ prepares and reviews it but does not launch it.
 
 ## Architecture funnel
 
-Discovery is parked while P1 is unresolved. If the user reopens it:
+Discovery is reopened for the bounded three-attempt K1 mechanism sequence. For
+each attempt:
 
 1. Audit all accepted and rejected evidence before naming one distinct
    information-flow bottleneck.

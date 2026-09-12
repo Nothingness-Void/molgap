@@ -37,6 +37,12 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
+The user reopened discovery for at most three sequential, attribution-gated
+attempts. Attempt 1 tests the Neural Atoms paper's missing atom-wise soft
+grouping equation while retaining K1's sparse three-exchange skeleton. Its
+authority is `experiments/pcqm_k1_paper_allocation_100k/protocol.md`; attempts 2
+and 3 are selected only after terminal analysis of the preceding attempt.
+
 The bounded K1-v4 selective-global screen completed with no winner. K1-G was
 materially worse; K1-R was statistically indistinguishable and slightly worse.
 Both are closed without extra seeds or scale-up. The accepted K1-v4 reference
