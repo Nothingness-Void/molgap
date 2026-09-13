@@ -53,9 +53,15 @@ def _paired(candidate_payload, other_payload):
 
 def accept(reference_root: Path, no_slot_root: Path, uniform_root: Path, candidate_root: Path):
     reference, reference_payload = _load_arm(reference_root, REFERENCE)
-    no_slot, no_slot_payload = _load_arm(no_slot_root, NO_SLOT, expected_parameters=3_608_897)
-    uniform, uniform_payload = _load_arm(uniform_root, UNIFORM, expected_parameters=3_658_817)
-    candidate, candidate_payload = _load_arm(candidate_root, CANDIDATE, expected_parameters=3_608_897)
+    no_slot, no_slot_payload = _load_arm(
+        no_slot_root, NO_SLOT, expected_parameters={NO_SLOT: 3_608_897}
+    )
+    uniform, uniform_payload = _load_arm(
+        uniform_root, UNIFORM, expected_parameters={UNIFORM: 3_658_817}
+    )
+    candidate, candidate_payload = _load_arm(
+        candidate_root, CANDIDATE, expected_parameters={CANDIDATE: 3_608_897}
+    )
     certificates = {
         reference["contract"]["runtime_certificate_id"]: reference["runtime_certificate"],
         candidate["contract"]["runtime_certificate_id"]: candidate["runtime_certificate"],

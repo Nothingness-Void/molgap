@@ -41,6 +41,11 @@ def test_sources_and_remote_entrypoints_parse():
     for path in paths:
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
 
+    combined_acceptance = paths[-2].read_text(encoding="utf-8")
+    assert "expected_parameters={NO_SLOT: 3_608_897}" in combined_acceptance
+    assert "expected_parameters={UNIFORM: 3_658_817}" in combined_acceptance
+    assert "expected_parameters={CANDIDATE: 3_608_897}" in combined_acceptance
+
 
 def test_v4_exposure_and_row_order_are_frozen():
     assert BATCH_SIZE == 128
