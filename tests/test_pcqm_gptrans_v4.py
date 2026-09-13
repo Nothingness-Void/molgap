@@ -127,6 +127,20 @@ def test_remote_payload_requires_v4_guards():
     assert "Optimizer received a non-128 batch" in runner
 
 
+def test_kaggle_entrypoints_parse_and_pin_p100():
+    import ast
+
+    package = ROOT / "experiments/pcqm_gptrans_t_100k_v4/package_kaggle_source.py"
+    entry = ROOT / "experiments/pcqm_gptrans_t_100k_v4/kaggle_p100/run_reference.py"
+    ast.parse(package.read_text(encoding="utf-8"), filename=str(package))
+    ast.parse(entry.read_text(encoding="utf-8"), filename=str(entry))
+    metadata = json.loads(
+        (ROOT / "experiments/pcqm_gptrans_t_100k_v4/kaggle_p100/kernel-metadata.json").read_text()
+    )
+    assert metadata["machine_shape"] == "NvidiaTeslaP100"
+    assert metadata["dataset_sources"][1] == "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+
+
 def test_source_archive_is_bound_to_commit_and_inventory(tmp_path):
     payload = tmp_path / "payload.txt"
     payload.write_text("fixed source\n", encoding="utf-8")

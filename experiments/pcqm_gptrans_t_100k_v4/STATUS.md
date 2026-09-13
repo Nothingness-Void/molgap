@@ -1,5 +1,10 @@
 # Status
 
+Kaggle2 P100 execution is authorized as autonomous discovery round 1. The
+scientific tensor initialization remains unchanged; only its portable artifact
+serialization is rebound to the integration runtime. Launch awaits committed
+packaging and tests.
+
 The first SCNet Kunshan preflight `121888568` failed before training because
 the frozen SCNet PyTorch does not support `Tensor.std(correction=1)`; dependent
 training job `121888573` was therefore cancelled without running. The

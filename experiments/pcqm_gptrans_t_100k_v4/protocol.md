@@ -25,6 +25,11 @@ under the reference-screen V4 contract?
   selection reference rather than an unbiased final estimate.
 - Stochasticity and material-gain floors are both `0.003 eV`.
 
+The frozen state artifact serializes the same seed-42 tensor state (model-state
+SHA-256 `8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6`)
+with the integration runtime; its byte SHA-256 is
+`9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c`.
+
 The baseline is trained once. A later candidate may run on another platform
 only when all V4 scientific fingerprints match and both runtime certificates
 pass `validate_reference_screen_contract`.
