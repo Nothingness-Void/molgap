@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-k1-readout-selector-launch-v1",
+  "submitted_at_utc": "2026-09-13T04:35:52.6560363Z",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-pcqm-k1-readout-selector-s42",
+  "kernel_version": 1,
+  "accelerator_request": "NvidiaTeslaT4x2",
+  "observed_initial_state": "RUNNING",
+  "source_dataset": "kaseichou/molgap-pcqm-k1-readout-selector-source",
+  "source_dataset_status": "ready",
+  "source_commit": "ce2df144a61c66be7ddd608d19dc7b37e184fc78",
+  "source_archive_sha256": "effdf2f785f6918d14c43ef278e891109a86aa37d462b504ffca9283cf85ca10",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "candidates": [
+    "neural_atom_k1_repset_readout",
+    "neural_atom_k1_tied_selector"
+  ],
+  "reference_retrained": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
+
