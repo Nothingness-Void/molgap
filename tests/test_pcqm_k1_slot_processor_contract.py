@@ -53,8 +53,25 @@ def test_round2_sources_parse():
         ROOT / "src/molgap/pcqm_k1_variants.py",
         ROOT / "src/molgap/pcqm_k1_variants_runner.py",
         EXPERIMENT / "accept.py",
+        EXPERIMENT / "t4x2_candidates/run_candidates.py",
     ):
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+
+
+def test_round2_t4x2_kernel_is_private_and_isolated():
+    metadata = json.loads(
+        (EXPERIMENT / "t4x2_candidates/kernel-metadata.json").read_text()
+    )
+    assert metadata["is_private"] == "true"
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"
+    assert metadata["dataset_sources"] == [
+        "kaseichou/molgap-pcqm-k1-slot-processor-source",
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+    ]
+    source = (EXPERIMENT / "t4x2_candidates/run_candidates.py").read_text()
+    assert 'environment["CUDA_VISIBLE_DEVICES"] = str(device)' in source
+    assert 'output / mode_name' in source
+    assert "subprocess.Popen" in source
 
 
 def test_round2_contract_is_exact_v4():
@@ -157,4 +174,3 @@ def test_no_attention_retains_one_slot_pool_ffn_and_zero_return():
         )
         assert torch.count_nonzero(assignment.masked_select(~valid.unsqueeze(1))) == 0
         assert torch.count_nonzero(update) == 0
-
