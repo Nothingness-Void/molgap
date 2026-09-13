@@ -13,30 +13,36 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
+| P0 | B-K1-ROUND1 | Run the frozen RepSet-readout and tied-selector arms in one Kaggle2 T4x2 v4 job | Both arms receive no-inference acceptance and one dated scientific decision |
+| P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
-The bounded three-attempt sequence was accepted mechanically and failed
+The earlier bounded three-attempt sequence was accepted mechanically and failed
 scientifically; multi-slot grouping, multi-head selection, and dynamic-query
-addressing are closed by their decision records. The K1 full candidate remains
-frozen. The completed K1-G/K1-R screen also selected no candidate and did not
-alter that handoff. The existing full contract remains
+addressing are closed by their decision records. The separately authorized new
+sequence allows at most three rounds, with attribution between rounds. Round 1
+tests only final node-set readout and cross-layer selector sharing under v4.
+The K1 full candidate remains frozen. The completed K1-G/K1-R screen also
+selected no candidate and did not alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
 prepares and reviews it but does not launch it.
 
 ## Architecture funnel
 
-Discovery is reopened for the bounded three-attempt K1 mechanism sequence. For
-each attempt:
+Discovery is reopened for a separately bounded three-round K1 sequence. For
+each round:
 
 1. Audit all accepted and rejected evidence before naming one distinct
    information-flow bottleneck.
-2. Freeze one seed-42 QM9-30K screen with transferable OGB categorical features,
-   direct Gap, FP32, physical BS128, and no teacher, residual target, fusion, or
+2. Freeze at most two independent seed-42 candidates in one T4x2 job on the
+   accepted PCQM-100K v4 benchmark: direct Gap, deterministic FP32, physical
+   BS128 per device, and no teacher, target residual, prediction fusion, or
    privileged geometry.
-3. A material QM9 win may receive one PCQM-100K transfer on the accepted fixed
-   data. A PCQM win may receive one disjoint once-read audit; no automatic extra
-   seed or scale-up follows.
-4. Full-data work always needs a separate desktop budget decision.
+3. Compare directly with the one immutable K1-v4 reference; never retrain a
+   baseline when the complete scientific fingerprint matches.
+4. A negative round receives a decision and mechanism-level attribution before
+   one distinct next round is released. A material win receives shortlist
+   status only; no automatic seed, shadow, scale-up, or official-role access.
+5. Full-data work always needs a separate desktop budget decision.
 
 Closed mechanisms are indexed in
 `experiments/_closed/pcqm_server_archive_index.md` and
