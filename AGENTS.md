@@ -90,6 +90,8 @@ terminal window. Handoff every remote chain before the coordinator stops watchin
   the atomic marker. Only after the terminal marker is durable, create a
   temporary one-minute heartbeat attached to the existing coordinator thread.
   It consumes the marker once and deletes itself before controller analysis.
+  It must omit model and reasoning-effort overrides so the coordinator keeps
+  the settings currently selected in that thread.
   Never keep a coordinator heartbeat active while the remote job is queued or
   running, and never create a task/chat for handoff.
 - After the terminal handoff is delivered, pause or delete the heartbeat in the
