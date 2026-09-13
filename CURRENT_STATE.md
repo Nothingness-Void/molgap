@@ -26,12 +26,20 @@ three-target production contract. On 2026-09-13 the user explicitly authorized
 full official-train runs for frozen Neural-Atom K1 and GPTrans-T under separate
 20M-sample-exposure contracts. The first execution attempt exposed a K1 host
 memory cgroup limit and a GPTrans source-path bug; K1's step-5000 atomic
-checkpoint was retained and verified. A repaired dependency chain is now
-queued on IMS, preserving the model/data/training contracts and changing only
-the host-memory allocation and GPTrans path/package identity. After both base
-artifacts pass acceptance, the dependent fusion job will read official-valid
-exactly once, fit one scalar on a fixed 20% calibration partition, and compare
-on the remaining 80%; this consumes that validation role for this experiment.
+checkpoint was retained and verified. K1 later resumed to step 105,500 before
+the same host-memory cgroup limit terminated it again. R2 preflight passed, but
+resume failed before training because the guard treated a new runtime
+certificate instance ID as a changed runtime, although the accepted runtime
+fingerprint and frozen asset identities were unchanged. A local, tested fix now
+preserves certificate lineage without weakening contract, data, source, or
+runtime-fingerprint checks. The PBS service is currently unavailable, so no
+successor has been submitted. Exact R2 identities, hashes, failure, and retry
+gate are recorded in
+`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
+After both base artifacts pass acceptance, the dependent fusion job will read
+the official-valid role exactly once, fit one scalar on a fixed 20% calibration
+partition, and compare on the remaining 80%; this consumes that validation
+role for this experiment.
 No test-dev/challenge-test access is allowed. The experiment protocol is
 `experiments/pcqm_k1_gptrans_full_fusion/protocol.md`.
 
@@ -82,20 +90,19 @@ must not be represented as this new conservative head.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
-- The first IMS attempt ended: K1 training `1497501.ccpbs1` was killed by its
-  8-core host-memory cgroup at optimizer step 5,000; its atomic checkpoint
-  remains valid. GPTrans preflight `1497502.ccpbs1` failed before training due
-  to a source path resolving one package directory too high. No base acceptance
-  or fusion ran. Recovery jobs are `1498717.ccpbs1` (K1 resume),
-  `1498719.ccpbs1` (K1 acceptance), `1498718.ccpbs1` (GPTrans preflight),
-  `1498724.ccpbs1` (GPTrans full training), `1498725.ccpbs1` (GPTrans
-  acceptance), `1498726.ccpbs1` (fusion study), and `1498728.ccpbs1` (fusion
-  acceptance). At the first post-submit snapshot, the two root jobs were
-  queued and the five dependent jobs were held. Fusion requires both base
-  acceptances. The checkpoint, source identities, resource-only repair, job
-  states, and persistent monitor are recorded in
-  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`
-  and `repair_record_20260913_r1.json`.
+- The IMS K1/GPTrans full-scale task remains open under its frozen contracts. K1
+  R1 `1498717.ccpbs1` completed the resume at step 105,500 then hit the same
+  host-memory cgroup limit; the checkpoint was preserved. R2 preflight
+  `1502817.ccpbs1` passed, but resume `1502818.ccpbs1` failed before training
+  because a newly accepted runtime-certificate instance ID was incorrectly
+  treated as a changed runtime. Acceptance `1502819.ccpbs1` depends on resume
+  success. The live checkpoint and trace match their pre-retry hashes.
+  `jobinfo -c` currently fails against both PBS servers, so no R3 is submitted
+  until scheduler state is available. The V4 asset audit and minimal repair are
+  recorded in
+  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
+  GPTrans and fusion recovery history remains in
+  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.

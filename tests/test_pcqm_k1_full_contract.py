@@ -21,6 +21,7 @@ from molgap.pcqm_k1_full_runner import (
     TRAINING_CONTRACT,
     TRAINING_CONTRACT_SHA256,
     DeterministicPassBatchSampler,
+    _resume_runtime_certificate_ids,
     _canonical_manifest_sha256,
     _architecture_source_sha256,
     progress_from_step,
@@ -73,6 +74,30 @@ def test_resumable_sampler_never_emits_a_partial_batch():
     flattened = [index for batch in complete for index in batch]
     assert len(flattened) == len(set(flattened)) == 256
     assert min(flattened) >= 0 and max(flattened) < 300
+
+
+def test_resume_accepts_new_certificate_for_same_runtime_and_keeps_lineage():
+    original_id = "1" * 64
+    recertified_id = "2" * 64
+    checkpoint = {"runtime_certificate_id": original_id}
+
+    assert _resume_runtime_certificate_ids(checkpoint, recertified_id) == [
+        original_id,
+        recertified_id,
+    ]
+    assert _resume_runtime_certificate_ids(checkpoint, original_id) == [original_id]
+
+    checkpoint["runtime_certificate_ids"] = [original_id, recertified_id]
+    checkpoint["runtime_certificate_id"] = recertified_id
+    assert _resume_runtime_certificate_ids(checkpoint, recertified_id) == [
+        original_id,
+        recertified_id,
+    ]
+    assert _resume_runtime_certificate_ids(checkpoint, original_id) == [
+        original_id,
+        recertified_id,
+        original_id,
+    ]
 
 
 def test_full_manifest_identity_is_logical_not_line_ending_dependent():

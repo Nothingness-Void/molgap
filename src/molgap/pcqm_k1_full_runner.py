@@ -575,7 +575,7 @@ def _save_checkpoint(
     target_stats: dict,
     trace: list[dict],
     runtime_fingerprint: str,
-    runtime_certificate_id: str,
+    runtime_certificate_ids: list[str],
     source_commit: str,
     source_archive_sha256: str,
 ) -> None:
@@ -595,7 +595,8 @@ def _save_checkpoint(
             "trace": trace,
             "rng_state": capture_rng_state(),
             "runtime_fingerprint": runtime_fingerprint,
-            "runtime_certificate_id": runtime_certificate_id,
+            "runtime_certificate_id": runtime_certificate_ids[-1],
+            "runtime_certificate_ids": runtime_certificate_ids,
             "source_commit": source_commit,
             "source_archive_sha256": source_archive_sha256,
             "official_validation_role_read": False,
@@ -603,6 +604,34 @@ def _save_checkpoint(
             "test_challenge_role_read": False,
         },
     )
+
+
+def _resume_runtime_certificate_ids(
+    checkpoint: dict, current_certificate_id: str
+) -> list[str]:
+    def is_sha256(value) -> bool:
+        return (
+            isinstance(value, str)
+            and len(value) == 64
+            and all(character in "0123456789abcdef" for character in value)
+        )
+
+    certificate_ids = checkpoint.get("runtime_certificate_ids")
+    if certificate_ids is None:
+        previous_id = checkpoint.get("runtime_certificate_id")
+        certificate_ids = [previous_id] if previous_id else []
+    if (
+        not isinstance(certificate_ids, list)
+        or not certificate_ids
+        or any(not is_sha256(value) for value in certificate_ids)
+        or checkpoint.get("runtime_certificate_id") != certificate_ids[-1]
+        or not is_sha256(current_certificate_id)
+    ):
+        raise RuntimeError("Resume checkpoint has invalid runtime certificate history")
+    certificate_ids = list(certificate_ids)
+    if current_certificate_id != certificate_ids[-1]:
+        certificate_ids.append(current_certificate_id)
+    return certificate_ids
 
 
 def train_full(
@@ -655,6 +684,7 @@ def train_full(
     atomic_json(output / "training_contract.json", TRAINING_CONTRACT)
     trace: list[dict] = []
     global_step = 0
+    runtime_certificate_ids = [runtime_certificate_id]
 
     if resume:
         if not checkpoint_path.is_file():
@@ -667,7 +697,6 @@ def train_full(
             "training_contract_sha256": TRAINING_CONTRACT_SHA256,
             "target_stats": target_stats,
             "runtime_fingerprint": runtime["runtime_fingerprint"],
-            "runtime_certificate_id": runtime_certificate_id,
             "source_commit": source_commit,
             "source_archive_sha256": source_archive_sha256,
             "official_validation_role_read": False,
@@ -676,6 +705,9 @@ def train_full(
         }.items():
             if checkpoint.get(key) != expected:
                 raise RuntimeError(f"Resume checkpoint contract changed: {key}")
+        runtime_certificate_ids = _resume_runtime_certificate_ids(
+            checkpoint, runtime_certificate_id
+        )
         model.load_state_dict(checkpoint["model"])
         optimizer.load_state_dict(checkpoint["optimizer"])
         scheduler.load_state_dict(checkpoint["scheduler"])
@@ -744,7 +776,7 @@ def train_full(
                     target_stats=target_stats,
                     trace=trace,
                     runtime_fingerprint=runtime["runtime_fingerprint"],
-                    runtime_certificate_id=runtime_certificate_id,
+                    runtime_certificate_ids=runtime_certificate_ids,
                     source_commit=source_commit,
                     source_archive_sha256=source_archive_sha256,
                 )
@@ -769,6 +801,7 @@ def train_full(
         "source_commit": source_commit,
         "source_archive_sha256": source_archive_sha256,
         "runtime_certificate_id": runtime_certificate_id,
+        "runtime_certificate_ids": runtime_certificate_ids,
         "runtime_fingerprint": runtime["runtime_fingerprint"],
         "global_step": global_step,
         "sample_presentations": global_step * PHYSICAL_BATCH,
@@ -817,6 +850,7 @@ def train_full(
         "source_archive_sha256": source_archive_sha256,
         "runtime_fingerprint": runtime["runtime_fingerprint"],
         "runtime_certificate_id": runtime_certificate_id,
+        "runtime_certificate_ids": runtime_certificate_ids,
         "completed_optimizer_steps": global_step,
         "final_learning_rate": optimizer.param_groups[0]["lr"],
     }

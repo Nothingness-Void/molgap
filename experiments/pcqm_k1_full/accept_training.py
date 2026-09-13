@@ -78,6 +78,21 @@ def accept(root: Path) -> dict:
     certificate_id = canonical_fingerprint(certificate)
     if certificate_id != summary.get("runtime_certificate_id"):
         raise RuntimeError("Runtime certificate identity changed")
+    certificate_ids = summary.get("runtime_certificate_ids")
+    if certificate_ids is None:
+        certificate_ids = [certificate_id]
+    if (
+        not isinstance(certificate_ids, list)
+        or not certificate_ids
+        or certificate_ids[-1] != certificate_id
+        or any(
+            not isinstance(value, str)
+            or len(value) != 64
+            or any(character not in "0123456789abcdef" for character in value)
+            for value in certificate_ids
+        )
+    ):
+        raise RuntimeError("Runtime certificate history is invalid")
     for key, expected in {
         "status": "accepted",
         "precision": "fp32",
@@ -99,6 +114,12 @@ def accept(root: Path) -> dict:
         raise RuntimeError("Model bundle SHA changed")
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
     bundle = torch.load(bundle_path, map_location="cpu", weights_only=False)
+    checkpoint_certificate_ids = checkpoint.get("runtime_certificate_ids")
+    if checkpoint_certificate_ids is None:
+        checkpoint_certificate_ids = [checkpoint.get("runtime_certificate_id")]
+    bundle_certificate_ids = bundle.get("runtime_certificate_ids")
+    if bundle_certificate_ids is None:
+        bundle_certificate_ids = [bundle.get("runtime_certificate_id")]
     for key, expected in {
         "format": CHECKPOINT_FORMAT,
         "training_contract_sha256": TRAINING_CONTRACT_SHA256,
@@ -106,9 +127,12 @@ def accept(root: Path) -> dict:
         "official_validation_role_read": False,
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
+        "runtime_certificate_id": certificate_id,
     }.items():
         if checkpoint.get(key) != expected:
             raise RuntimeError(f"Final checkpoint changed: {key}")
+    if checkpoint_certificate_ids != certificate_ids:
+        raise RuntimeError("Final checkpoint certificate history changed")
     if checkpoint.get("scheduler", {}).get("last_epoch") != MAX_OPTIMIZER_STEPS:
         raise RuntimeError("Scheduler step count changed")
     optimizer_groups = checkpoint.get("optimizer", {}).get("param_groups", [])
@@ -135,6 +159,8 @@ def accept(root: Path) -> dict:
     }.items():
         if bundle.get(key) != expected:
             raise RuntimeError(f"Model bundle changed: {key}")
+    if bundle_certificate_ids != certificate_ids:
+        raise RuntimeError("Model bundle certificate history changed")
     if not math.isclose(
         float(bundle.get("final_learning_rate")), MIN_LEARNING_RATE, abs_tol=1e-12
     ):
@@ -181,6 +207,7 @@ def accept(root: Path) -> dict:
         "model_inference_executed": False,
         "training_contract_sha256": TRAINING_CONTRACT_SHA256,
         "runtime_certificate_id": certificate_id,
+        "runtime_certificate_ids": certificate_ids,
         "source_commit": summary["source_commit"],
         "source_archive_sha256": summary["source_archive_sha256"],
         "global_step": MAX_OPTIMIZER_STEPS,

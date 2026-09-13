@@ -35,7 +35,11 @@ preserved. Training outputs remain independently retrievable under
 progress, hashes, and acceptance remain under `outputs/fusion_study/`. The
 frozen inputs and evaluation-role contract are in
 `experiments/pcqm_k1_gptrans_full_fusion/protocol.md`; recovery evidence is in
-`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`.
+`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md` and
+`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
+Do not submit another K1 resume until PBS state is queryable; the R2-only
+certificate-lineage fix preserves every frozen data, source, runtime
+fingerprint, and training-contract identity.
 
 The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
