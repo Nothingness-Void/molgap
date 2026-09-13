@@ -76,19 +76,19 @@ terminal window. Handoff every remote chain before the coordinator stops watchin
   task.
 - On any confirmed terminal state, including `COMPLETE`, unrecoverable `ERROR`,
   cancellation, or an unknown state that is verified as no longer queued or
-  running, collect the terminal logs/artifacts and
-  run only the frozen mechanical acceptance, if one exists. Then use the Codex
-  thread-message capability to send one structured terminal handoff to the
-  coordinator thread. The message must include job identity, terminal state,
-  artifact location, acceptance output, essential metrics/hashes, and an
-  explicit request for coordinator analysis.
+  running, collect terminal logs/artifacts and run only frozen mechanical
+  acceptance. Then deliver one structured terminal handoff to the coordinator.
+  Prefer the Codex thread-message capability when it is permitted.
 - A monitor must use the authoritative integration checkout named in its
   prompt; never inherit an old task cwd or a detached `.codex/worktrees`
   checkout. Verify the named protocol exists before remote work.
-- Terminal handoff is a transaction. Persist its stages atomically, require a
-  successful `send_message_to_thread` acknowledgement, and mark delivery only
-  after that acknowledgement. A missing acknowledgement keeps the heartbeat
-  active to retry delivery only.
+- Terminal handoff is a transaction. Persist its stages atomically. A direct
+  message is delivered only after a successful `send_message_to_thread`
+  acknowledgement; otherwise retry delivery only.
+- Delegated tasks may be policy-blocked from cross-thread messaging. Test that
+  path once. If blocked, do not keep retrying it: write `handoff_ready=true` to
+  the atomic marker and use one heartbeat attached to the existing coordinator
+  thread to consume that marker. This bridge must not create tasks/chats.
 - After the terminal handoff is delivered, pause or delete the heartbeat in the
   same turn. A completed monitor has no reason to remain active. If message
   delivery itself fails, leave the heartbeat active only long enough to retry
