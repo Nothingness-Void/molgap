@@ -32,6 +32,8 @@ EXPECTED_PARAMETERS = {
     "neural_atom_k4_cluster": 3_658_817,
     "neural_atom_k1_h4": 3_658_817,
     "neural_atom_k1_dynamic_query": 3_695_681,
+    "neural_atom_k1_repset_readout": 3_683_985,
+    "neural_atom_k1_tied_selector": 3_622_401,
 }
 
 

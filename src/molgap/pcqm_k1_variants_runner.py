@@ -18,6 +18,7 @@ from .pcqm_k1_variants import (
     _cluster_mixer_update,
     _dynamic_query_single_slot_update,
     _multihead_single_slot_update,
+    _tied_selector_single_slot_update,
     make_encoder,
 )
 from .screen_policy import canonical_fingerprint, validate_screen_arm
@@ -281,6 +282,19 @@ def _state_sha256(model) -> str:
     return digest.hexdigest()
 
 
+def _shared_k1_state_sha256(model, mode: str) -> str:
+    """Hash the unchanged K1 state retained by an isolated candidate."""
+    digest = hashlib.sha256()
+    for name, value in sorted(model.state_dict().items()):
+        if mode == "neural_atom_k1_tied_selector" and (
+            ".node_key." in name or ".slot_query." in name
+        ):
+            continue
+        digest.update(name.encode("utf-8") + b"\0")
+        digest.update(value.detach().cpu().contiguous().numpy().tobytes())
+    return digest.hexdigest()
+
+
 def _batch_sha256(batch) -> str:
     digest = hashlib.sha256()
     for name in ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx"):
@@ -389,10 +403,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
 
     configure_fp32_determinism(SEED)
     baseline = make_encoder("neural_atom_k1_v4").to("cuda").eval()
-    baseline_sha = _state_sha256(baseline)
+    baseline_sha = _shared_k1_state_sha256(baseline, mode)
     configure_fp32_determinism(SEED)
     model = make_encoder(mode).to("cuda").eval()
-    shared_sha = _state_sha256(_base_state(model))
+    shared_sha = _shared_k1_state_sha256(_base_state(model), mode)
     if shared_sha != baseline_sha:
         raise RuntimeError(f"K1 shared initialization changed for {mode}")
     batch = next(iter(_train_loader(roles["train"], 0))).to("cuda", non_blocking=True)
@@ -540,6 +554,120 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             raise RuntimeError(
                 f"Dynamic-query invariant failed: {mechanism_checks}"
             )
+    elif mode == "neural_atom_k1_repset_readout":
+        readout = model.repset_readout
+        probe = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        readout.eval()
+        with torch.no_grad():
+            correction = readout(probe, batch.batch)
+        mechanism_checks = {
+            "hidden_sets": readout.n_hidden_sets,
+            "elements_per_hidden_set": readout.n_elements,
+            "prototype_shape": list(readout.prototype.shape),
+            "graph_correction_shape": list(correction.shape),
+            "zero_representation_return_exact": bool(
+                torch.count_nonzero(correction).item() == 0
+            ),
+            "target_residual": False,
+        }
+        if mechanism_checks != {
+            "hidden_sets": 8,
+            "elements_per_hidden_set": 8,
+            "prototype_shape": [192, 64],
+            "graph_correction_shape": [int(batch.num_graphs), 192],
+            "zero_representation_return_exact": True,
+            "target_residual": False,
+        }:
+            raise RuntimeError(f"RepSet readout invariant failed: {mechanism_checks}")
+    elif mode == "neural_atom_k1_tied_selector":
+        probe = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        layer_checks = []
+        for layer in MIXER_LAYERS:
+            mixer = model.base.neural_atom_mixers[str(layer)]
+            update, _, assignment, valid, diagnostics = (
+                _tied_selector_single_slot_update(
+                    mixer,
+                    model.shared_selector,
+                    probe,
+                    batch.batch,
+                )
+            )
+            layer_checks.append(
+                {
+                    "layer": layer,
+                    "selector_scope": diagnostics["selector_scope"],
+                    "value_scope": diagnostics["value_scope"],
+                    "allocation_mass_one": bool(
+                        torch.allclose(
+                            assignment.sum(dim=-1),
+                            torch.ones_like(assignment.sum(dim=-1)),
+                            atol=1e-6,
+                            rtol=0,
+                        )
+                    ),
+                    "padding_mass_zero": bool(
+                        assignment.masked_select(~valid.unsqueeze(1))
+                        .abs()
+                        .sum()
+                        .item()
+                        == 0.0
+                    ),
+                    "zero_return_exact": bool(
+                        torch.count_nonzero(update).item() == 0
+                    ),
+                    "selector_modules_removed": bool(
+                        not hasattr(mixer, "node_key")
+                        and not hasattr(mixer, "slot_query")
+                    ),
+                }
+            )
+        independent_values = len(
+            {
+                id(model.base.neural_atom_mixers[str(layer)].node_value)
+                for layer in MIXER_LAYERS
+            }
+        ) == len(MIXER_LAYERS)
+        independent_returns = len(
+            {
+                id(model.base.neural_atom_mixers[str(layer)].return_projection)
+                for layer in MIXER_LAYERS
+            }
+        ) == len(MIXER_LAYERS)
+        mechanism_checks = {
+            "shared_selector_count": 1,
+            "independent_value_modules": independent_values,
+            "independent_return_modules": independent_returns,
+            "layers": layer_checks,
+        }
+        if not (
+            independent_values
+            and independent_returns
+            and all(
+                all(
+                    value is True
+                    for key, value in check.items()
+                    if key
+                    in {
+                        "allocation_mass_one",
+                        "padding_mass_zero",
+                        "zero_return_exact",
+                        "selector_modules_removed",
+                    }
+                )
+                for check in layer_checks
+            )
+        ):
+            raise RuntimeError(f"Tied-selector invariant failed: {mechanism_checks}")
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     model.train()
@@ -559,6 +687,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.base.neural_atom_mixers.parameters())
     elif mode == "neural_atom_k1_dynamic_query":
         candidate_parameters = list(model.query_conditioners.parameters())
+    elif mode == "neural_atom_k1_repset_readout":
+        candidate_parameters = list(model.repset_readout.parameters())
+    elif mode == "neural_atom_k1_tied_selector":
+        candidate_parameters = list(model.shared_selector.parameters())
     candidate_trainable = mode == "neural_atom_k1_v4" or any(
         parameter.grad is not None
         and bool(torch.isfinite(parameter.grad).all())

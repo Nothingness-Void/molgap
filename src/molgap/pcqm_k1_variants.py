@@ -1,6 +1,7 @@
 """Isolated K1 global-allocation variants for the fixed PCQM 100K screen."""
 from __future__ import annotations
 
+import copy
 import math
 
 
@@ -10,6 +11,9 @@ RELATION_CHANNELS = 32
 GATE_HIDDEN_CHANNELS = 32
 MIXER_LAYERS = (3, 6, 9)
 GATE_RANGE = (0.5, 1.5)
+REPSET_HIDDEN_SETS = 8
+REPSET_ELEMENTS = 8
+REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
     "neural_atom_k1_v4": {
@@ -67,7 +71,109 @@ ARCHITECTURE_CONFIGS = {
         "allocation_normalization_axis": "original-atoms",
         "back_projection": "transpose-of-the-same-allocation",
     },
+    "neural_atom_k1_repset_readout": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "repset-final-node-set-readout-residual",
+        "readout": "mean-plus-zero-initialized-repset",
+        "repset_hidden_sets": REPSET_HIDDEN_SETS,
+        "repset_elements_per_hidden_set": REPSET_ELEMENTS,
+        "repset_output_channels": REPSET_CHANNELS,
+        "target_residual": False,
+    },
+    "neural_atom_k1_tied_selector": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "shared-atom-selector-across-exchange-layers",
+        "shared_selector": ["node_norm", "node_key", "direct_query"],
+        "independent_per_layer": [
+            "node_value",
+            "slot_seed",
+            "slot_attention",
+            "slot_ffn",
+            "return_projection",
+        ],
+    },
 }
+
+
+class _RepSetReadoutFactory:
+    @staticmethod
+    def make():
+        import torch
+        import torch.nn as nn
+        from torch_geometric.utils import to_dense_batch
+
+        class RepSetReadout(nn.Module):
+            """Published RepSet equation with a nested representation return.
+
+            The set transform follows the authors' open implementation.  Its
+            final map returns a graph representation correction and is zero
+            initialized, so this remains a single-encoder readout rather than
+            a target-space residual model.
+            """
+
+            def __init__(self):
+                super().__init__()
+                self.n_hidden_sets = REPSET_HIDDEN_SETS
+                self.n_elements = REPSET_ELEMENTS
+                self.prototype = nn.Parameter(
+                    torch.empty(
+                        HIDDEN_CHANNELS,
+                        self.n_hidden_sets * self.n_elements,
+                    )
+                )
+                nn.init.normal_(self.prototype)
+                self.hidden_set_norm = nn.BatchNorm1d(self.n_hidden_sets)
+                self.hidden_set_projection = nn.Linear(
+                    self.n_hidden_sets,
+                    REPSET_CHANNELS,
+                )
+                self.activation = nn.LeakyReLU()
+                self.return_projection = nn.Linear(
+                    REPSET_CHANNELS,
+                    HIDDEN_CHANNELS,
+                    bias=False,
+                )
+                nn.init.zeros_(self.return_projection.weight)
+
+            def forward(self, hidden, batch):
+                dense, valid = to_dense_batch(hidden, batch)
+                scores = self.activation(dense @ self.prototype)
+                scores = scores.reshape(
+                    dense.shape[0],
+                    dense.shape[1],
+                    self.n_elements,
+                    self.n_hidden_sets,
+                )
+                scores = scores.max(dim=2).values
+                scores = scores * valid.unsqueeze(-1).to(scores.dtype)
+                set_embedding = scores.sum(dim=1)
+                set_embedding = self.hidden_set_norm(set_embedding)
+                set_embedding = self.activation(
+                    self.hidden_set_projection(set_embedding)
+                )
+                return self.return_projection(set_embedding)
+
+        return RepSetReadout()
+
+
+class _SharedSelectorFactory:
+    @staticmethod
+    def make(template):
+        import torch.nn as nn
+
+        class SharedSelector(nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.node_norm = copy.deepcopy(template.node_norm)
+                self.node_key = copy.deepcopy(template.node_key)
+                query = template.slot_query(template.slot_seed[:1]).detach()
+                self.query = nn.Parameter(query.squeeze(0).clone())
+
+        return SharedSelector()
 
 
 class _MoleculeGateFactory:
@@ -356,6 +462,42 @@ def _dynamic_query_single_slot_update(mixer, conditioner, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
+def _tied_selector_single_slot_update(mixer, selector, hidden, batch):
+    """Reuse one atom selector while retaining layer-specific slot content."""
+    import torch
+    from torch_geometric.utils import to_dense_batch
+
+    if mixer.active_slots != 1:
+        raise ValueError("tied K1 selector requires exactly one slot")
+    selector_dense, valid = to_dense_batch(selector.node_norm(hidden), batch)
+    value_dense, value_valid = to_dense_batch(mixer.node_norm(hidden), batch)
+    if not torch.equal(valid, value_valid):
+        raise RuntimeError("Selector and value layouts differ")
+    keys = selector.node_key(selector_dense)
+    values = mixer.node_value(value_dense)
+    logits = torch.einsum("d,bnd->bn", selector.query, keys)
+    logits = logits / math.sqrt(mixer.latent_channels)
+    logits = logits.masked_fill(~valid, float("-inf"))
+    assignment = torch.softmax(logits, dim=-1).unsqueeze(1)
+    seeds = mixer.slot_seed[:1]
+    slots = seeds.unsqueeze(0) + torch.einsum(
+        "bkn,bnd->bkd", assignment, values
+    )
+    attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
+    slots = mixer.slot_norm1(slots + attended)
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+    returned = torch.einsum("bkn,bkd->bnd", assignment, slots)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "assignment": assignment,
+        "valid": valid,
+        "active_slots": 1,
+        "selector_scope": "shared-across-layers-3-6-9",
+        "value_scope": "independent-per-layer",
+    }
+    return update, slots, assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
@@ -403,6 +545,14 @@ def make_encoder(mode: str):
                 )
                 for conditioner in self.query_conditioners.values():
                     nn.init.zeros_(conditioner.weight)
+            elif mode == "neural_atom_k1_repset_readout":
+                self.repset_readout = _RepSetReadoutFactory.make()
+            elif mode == "neural_atom_k1_tied_selector":
+                template = self.base.neural_atom_mixers[str(MIXER_LAYERS[0])]
+                self.shared_selector = _SharedSelectorFactory.make(template)
+                for mixer in self.base.neural_atom_mixers.values():
+                    del mixer.node_key
+                    del mixer.slot_query
 
         def forward(self, x, edge_index, edge_attr, batch, random_walk_pe):
             return self.base.head(
@@ -456,6 +606,16 @@ def make_encoder(mode: str):
                         mixer, h, batch
                     )
                     h = h + update
+                elif self.mode == "neural_atom_k1_repset_readout":
+                    h = mixer(h, batch)
+                elif self.mode == "neural_atom_k1_tied_selector":
+                    update, _, _, _, _ = _tied_selector_single_slot_update(
+                        mixer,
+                        self.shared_selector,
+                        h,
+                        batch,
+                    )
+                    h = h + update
                 else:
                     update, _, _, _, _ = _dynamic_query_single_slot_update(
                         mixer,
@@ -464,6 +624,9 @@ def make_encoder(mode: str):
                         batch,
                     )
                     h = h + update
-            return self.base._pool(h, batch)
+            pooled = self.base._pool(h, batch)
+            if self.mode == "neural_atom_k1_repset_readout":
+                pooled = pooled + self.repset_readout(h, batch)
+            return pooled
 
     return K1Variant()
