@@ -13,7 +13,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-NEXT-AUTHORITY | Decide whether to open one materially distinct K1 geometry question; no K1 micro-variant or automatic successor | A new protocol is explicitly authorized, or server architecture discovery remains stopped |
+| P0 | B-K1-COMBINE | Test the explicitly authorized no-slot-attention plus uniform-return interaction on V4 | Accepted terminal decision; no automatic scale-up |
+| P0 | B-GPTRANS-V4 | Run pure-2D GPTrans-T as Kaggle2 autonomous round 1 of at most three | Accepted result and attribution release at most one next round |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -30,6 +31,12 @@ The K1 full candidate remains frozen. The completed K1-G/K1-R screen also
 selected no candidate and did not alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
 prepares and reviews it but does not launch it.
+
+The later user authorization reopens exactly one interaction test of the two
+directional simplifications and at most three Kaggle2 rounds. The interaction
+test is not precedent for arbitrary chaining. Kaggle2 successors require a
+terminal acceptance and written failure attribution by the coordinator; the
+monitor cannot choose them.
 
 ## Architecture funnel
 

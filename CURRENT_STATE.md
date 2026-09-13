@@ -45,6 +45,14 @@ uniform normalized return; inverse-score return regressed. No candidate cleared
 the frozen `0.003 eV` material/run-variation gate, so K1-v4 remains unchanged.
 Authority: `experiments/pcqm_k1_return_allocation_100k/decision.md`.
 
+The user explicitly reopened one interaction screen combining the two
+directionally positive simplifications, plus a separate Kaggle2 discovery loop
+of at most three evidence-gated rounds. The interaction candidate removes
+length-one slot attention and uses uniform normalized return; it does not alter
+the frozen K1 handoff unless it clears the V4 gate. Kaggle2 round 1 evaluates a
+pure-2D GPTrans-T reference on the same accepted 100K/50K data identity. Luna
+only monitors; this coordinator owns each terminal attribution and successor.
+
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
 molecule-conditioned single query all fit training more tightly and generalized
