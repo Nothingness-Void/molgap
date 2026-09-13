@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 import subprocess
 import tarfile
 from pathlib import Path
@@ -49,6 +50,9 @@ def main() -> None:
             handle.add(source, arcname=relative)
             inventory.append({"path": relative, "sha256": sha256_file(source)})
     archive_sha = sha256_file(archive)
+    # Kaggle expands recognized archives in datasets. Preserve an identical
+    # byte stream under a neutral suffix for runtime provenance validation.
+    shutil.copyfile(archive, output / "source_payload.bin")
     configure_fp32_determinism(42)
     model = _make_model()
     state_sha = _state_sha256(model)

@@ -48,11 +48,16 @@ def main() -> None:
     import torch
     if torch.cuda.device_count() != 1 or "P100" not in torch.cuda.get_device_name(0):
         raise RuntimeError(f"GPTrans V4 requires one P100, found {[torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())]}")
-    archive = find_one("source.tar.gz")
-    source_root = Path("/kaggle/working/_gptrans_source")
-    if not source_root.exists():
-        shutil.unpack_archive(archive, source_root)
-    sys.path.insert(0, str(source_root / "src"))
+    archive = find_one("source_payload.bin")
+    modules = list(Path("/kaggle/input").rglob("src/molgap/pcqm_gptrans_v4.py"))
+    if len(modules) == 1:
+        python_root = modules[0].parents[1]
+    else:
+        source_root = Path("/kaggle/working/_gptrans_source")
+        if not source_root.exists():
+            shutil.unpack_archive(archive, source_root)
+        python_root = source_root / "src"
+    sys.path.insert(0, str(python_root))
     from molgap.pcqm_gptrans_v4 import run_preflight, run_training
     root, manifest = find_fixed_cache()
     source_commit = find_one("SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
