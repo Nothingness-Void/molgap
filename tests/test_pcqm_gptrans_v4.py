@@ -133,7 +133,12 @@ def test_kaggle_entrypoints_parse_and_pin_p100():
     package = ROOT / "experiments/pcqm_gptrans_t_100k_v4/package_kaggle_source.py"
     entry = ROOT / "experiments/pcqm_gptrans_t_100k_v4/kaggle_p100/run_reference.py"
     ast.parse(package.read_text(encoding="utf-8"), filename=str(package))
-    ast.parse(entry.read_text(encoding="utf-8"), filename=str(entry))
+    entry_source = entry.read_text(encoding="utf-8")
+    ast.parse(entry_source, filename=str(entry))
+    assert 'STAGE_ENV = "MOLGAP_GPTRANS_STAGE"' in entry_source
+    assert 'run_stage("preflight", context)' in entry_source
+    assert 'run_stage("training", context)' in entry_source
+    assert "subprocess.check_call([sys.executable, str(Path(__file__).resolve())]" in entry_source
     metadata = json.loads(
         (ROOT / "experiments/pcqm_gptrans_t_100k_v4/kaggle_p100/kernel-metadata.json").read_text()
     )
