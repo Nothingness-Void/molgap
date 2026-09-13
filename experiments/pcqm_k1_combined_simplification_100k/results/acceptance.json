@@ -1,0 +1,254 @@
+{
+  "format": "molgap-pcqm-k1-combined-simplification-acceptance-v1",
+  "accepted": true,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidate_development_gap_mae_eV": 0.13921122252941132,
+  "candidate_record": {
+    "format": "molgap-pcqm-k1-variant-arm-v1",
+    "complete": true,
+    "source_commit": "dd076ceb09645f2710a17496b57b96e808364fa3",
+    "fixed_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+    "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+    "architecture": {
+      "backbone": "neural_atom_k1",
+      "global_exchange": "one-atom-slot-64",
+      "exchange_layers": [
+        3,
+        6,
+        9
+      ],
+      "change": "combine-two-directional-k1-simplifications",
+      "source_allocation": "learned-softmax-over-atoms",
+      "slot_processor": "no-self-attention-plus-slot-ffn",
+      "return_allocation": "uniform-over-valid-atoms",
+      "return_mass_per_graph": 1.0,
+      "removed": [
+        "slot-self-attention"
+      ]
+    },
+    "preflight": {
+      "mode": "neural_atom_k1_no_attention_uniform_return",
+      "parameter_count": 3608897,
+      "shared_k1_initial_state_sha256": "325c5c7c65b3dcf5072fb074f20e1d58a19128cdf6145c57b3db870f7cc78805",
+      "exact_k1_function_at_initialization": true,
+      "candidate_mechanism_trainable_after_two_steps": true,
+      "exchange_layers": [
+        3,
+        6,
+        9
+      ],
+      "mechanism_checks": {
+        "source_allocation": "learned-softmax-over-atoms",
+        "return_allocation": "uniform",
+        "added_parameters": 0,
+        "slot_processor": "none",
+        "layers": [
+          {
+            "layer": 3,
+            "active_slots": 1,
+            "source_allocation": "learned-softmax-over-atoms",
+            "return_allocation": "uniform",
+            "slot_shape": [
+              128,
+              1,
+              64
+            ],
+            "source_mass_one": true,
+            "return_mass_one": true,
+            "source_padding_mass_zero": true,
+            "return_padding_mass_zero": true,
+            "zero_return_exact": true,
+            "slot_attention_module_removed": true,
+            "slot_processor": "none",
+            "uniform_return_exact": true
+          },
+          {
+            "layer": 6,
+            "active_slots": 1,
+            "source_allocation": "learned-softmax-over-atoms",
+            "return_allocation": "uniform",
+            "slot_shape": [
+              128,
+              1,
+              64
+            ],
+            "source_mass_one": true,
+            "return_mass_one": true,
+            "source_padding_mass_zero": true,
+            "return_padding_mass_zero": true,
+            "zero_return_exact": true,
+            "slot_attention_module_removed": true,
+            "slot_processor": "none",
+            "uniform_return_exact": true
+          },
+          {
+            "layer": 9,
+            "active_slots": 1,
+            "source_allocation": "learned-softmax-over-atoms",
+            "return_allocation": "uniform",
+            "slot_shape": [
+              128,
+              1,
+              64
+            ],
+            "source_mass_one": true,
+            "return_mass_one": true,
+            "source_padding_mass_zero": true,
+            "return_padding_mass_zero": true,
+            "zero_return_exact": true,
+            "slot_attention_module_removed": true,
+            "slot_processor": "none",
+            "uniform_return_exact": true
+          }
+        ]
+      }
+    },
+    "runtime_certificate": {
+      "format": "molgap-runtime-certificate-v1",
+      "status": "accepted",
+      "platform_id": "kaggle1",
+      "accelerator": "Tesla P100-PCIE-16GB",
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "deterministic_algorithms": true,
+      "physical_batch_per_device": 128,
+      "tail_batch_policy": "drop_last",
+      "software_fingerprint": "4937ef4412677aa6e69cbef4547f1441ad7c15dc7678000bc94bad93776ccffb",
+      "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "calibration_output_sha256": "8368ec94f198009ef67eac75de35a7fa077d79b8eb7379a8e029c5c0869f91b3",
+      "runtime_fingerprint": "c82e0232352160bf939364dc84d04050d5417bcb26e8844dce595f8b1c08e0fc",
+      "calibration_checks_passed": true
+    },
+    "contract": {
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_no_attention_uniform_return",
+      "model_id": "neural_atom_k1_no_attention_uniform_return",
+      "architecture_fingerprint": "47da3e6ce0053363719d4d9c18d702fcca9dd09a1731ef542b88b2c7b613cdf3",
+      "source_archive_sha256": "1e7cbab74b9f6caded28697f12518be5b102e6778a6b02a201147791dae4e5f1",
+      "result_artifact_sha256": "574f440de65818de81725746f4591f98d75819429e46e6e9fccf376ba4bc6396",
+      "platform_id": "kaggle1",
+      "accelerator": "Tesla P100-PCIE-16GB",
+      "runtime_certificate_id": "4aa2e253c9ca42814742a9bf90b82be6edaacc5f4d9b3ac0a618f54623620bd7",
+      "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+      "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+      "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+      "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+      "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+      "sample_exposure": 3998720,
+      "tail_batch_policy": "drop_last",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1
+    },
+    "training": {
+      "parameter_count": 3608897,
+      "best_epoch": 35,
+      "development_gap_mae_eV": 0.13921122252941132,
+      "epochs_completed": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "mean_epoch_seconds": 116.91705449969997,
+      "mean_graphs_per_second": 855.0335143813987,
+      "peak_allocated_mib": 605.82763671875,
+      "peak_reserved_mib": 644.0,
+      "total_memory_mib": 16269.25,
+      "best_model_sha256": "2fa7544e3421f28dbdc715c3d707950d54b3374c6636b14433e55377f4d02167",
+      "payload_sha256": "574f440de65818de81725746f4591f98d75819429e46e6e9fccf376ba4bc6396",
+      "checkpoint_sha256": "f139de43aeba769acbe8dc347311391bafb27def952d4744c646079e355efd66"
+    },
+    "pure_2d": true,
+    "geometry_attributes_removed_before_batching": true,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "comparability": {
+    "policy": "molgap-reference-comparability-v4",
+    "comparison_mode": "immutable-reference-no-baseline-rerun",
+    "scientific_contract_sha256": "64172e22eaafe61464fbefa678861e758151698e8c3b5dc291094fc365186272",
+    "shared": {
+      "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+      "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+      "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+      "seed": 42,
+      "precision": "fp32",
+      "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+      "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+      "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+      "sample_exposure": 3998720,
+      "tail_batch_policy": "drop_last"
+    },
+    "reference_run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+    "candidate_run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_no_attention_uniform_return",
+    "cross_platform": true,
+    "runtime_certificates": [
+      {
+        "certificate_id": "5f3ffb7efa89a9dd769a7a5eba7acfa141367fb9a9ac1ab6fd4bf92407dc00d9",
+        "platform_id": "kaggle2"
+      },
+      {
+        "certificate_id": "4aa2e253c9ca42814742a9bf90b82be6edaacc5f4d9b3ac0a618f54623620bd7",
+        "platform_id": "kaggle1"
+      }
+    ],
+    "resource": {
+      "physical_batch_per_device": 128,
+      "device_count_per_model": 1,
+      "gradient_accumulation_steps": 1,
+      "tail_batch_policy": "drop_last"
+    }
+  },
+  "versus_reference": {
+    "gain_eV": 0.0021624118089675903,
+    "candidate_minus_other_error_bootstrap_95_eV": [
+      -0.003020536183612421,
+      -0.0012869453174062073
+    ],
+    "fraction_rows_improved": 0.51068
+  },
+  "versus_no_slot_attention": {
+    "gain_eV": 0.00039970874786376953,
+    "candidate_minus_other_error_bootstrap_95_eV": [
+      -0.0012345395021839066,
+      0.0004317616367188741
+    ],
+    "fraction_rows_improved": 0.50516
+  },
+  "versus_uniform_return": {
+    "gain_eV": 0.0003361254930496216,
+    "candidate_minus_other_error_bootstrap_95_eV": [
+      -0.0011497164756292476,
+      0.00047355474744108467
+    ],
+    "fraction_rows_improved": 0.50198
+  },
+  "gate": {
+    "gain_eV": 0.0021624118089675903,
+    "required_gain_eV": 0.003,
+    "training_stochasticity_accounted": true,
+    "row_bootstrap_is_sufficient_alone": false,
+    "paired_row_bootstrap_upper_eV": -0.0012869453174062073,
+    "passed": false,
+    "memory_reserve_fraction": 0.9604161224395715,
+    "memory_gate_passed": true
+  },
+  "selected_candidate": null,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
