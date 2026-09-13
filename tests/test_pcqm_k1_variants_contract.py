@@ -35,6 +35,8 @@ def test_sources_and_remote_entrypoints_parse():
         ROOT / "experiments/pcqm_k1_variants_100k/t4x2_candidates/run_candidates.py",
         ROOT / "experiments/pcqm_k1_variants_100k/accept.py",
         ROOT / "experiments/pcqm_k1_variants_100k/package_source_dataset.py",
+        ROOT / "experiments/pcqm_k1_combined_simplification_100k/accept.py",
+        ROOT / "experiments/pcqm_k1_combined_simplification_100k/p100_candidate/run_candidate.py",
     ]
     for path in paths:
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
@@ -98,6 +100,7 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
         "neural_atom_k1_no_slot_attention": 3_608_897,
         "neural_atom_k1_uniform_return": 3_658_817,
         "neural_atom_k1_inverse_return": 3_658_817,
+        "neural_atom_k1_no_attention_uniform_return": 3_608_897,
     }
     for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
         torch.manual_seed(42)
@@ -140,6 +143,7 @@ def test_return_allocation_candidates_decouple_source_and_recipients():
     for mode, return_mode in (
         ("neural_atom_k1_uniform_return", "uniform"),
         ("neural_atom_k1_inverse_return", "inverse-score"),
+        ("neural_atom_k1_no_attention_uniform_return", "uniform"),
     ):
         torch.manual_seed(42)
         model = make_encoder(mode).eval()
@@ -151,6 +155,9 @@ def test_return_allocation_candidates_decouple_source_and_recipients():
                     hidden,
                     batch.batch,
                     return_mode,
+                    remove_slot_attention=(
+                        mode == "neural_atom_k1_no_attention_uniform_return"
+                    ),
                 )
             )
         assert slots.shape == (2, 1, 64)
@@ -161,6 +168,9 @@ def test_return_allocation_candidates_decouple_source_and_recipients():
         assert torch.count_nonzero(source.masked_select(~valid.unsqueeze(1))) == 0
         assert torch.count_nonzero(returned.masked_select(~valid.unsqueeze(1))) == 0
         assert torch.count_nonzero(update) == 0
+        assert diagnostics["slot_attention_module_removed"] is (
+            mode == "neural_atom_k1_no_attention_uniform_return"
+        )
         if return_mode == "uniform":
             expected = valid.unsqueeze(1).to(returned.dtype)
             expected = expected / expected.sum(dim=-1, keepdim=True)

@@ -45,7 +45,9 @@ LEARNING_RATE = 4e-4
 WEIGHT_DECAY = 1e-5
 MINIMUM_GAIN_EV = 0.003
 STOCHASTICITY_FLOOR_EV = 0.003
-FIXED_DATASET = "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+FIXED_DATASET = os.environ.get(
+    "MOLGAP_FIXED_DATASET", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+)
 FIXED_MANIFEST_SHA256 = (
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
 )
@@ -53,7 +55,7 @@ FIXED_GEOMETRY_SHA256 = (
     "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5"
 )
 BENCHMARK_ID = "pcqm4mv2-ogb-fixed-100k-gap-v4"
-PLATFORM_ID = "kaggle2"
+PLATFORM_ID = os.environ.get("MOLGAP_PLATFORM_ID", "kaggle2")
 FORBIDDEN_MODEL_FIELDS = (
     "pos",
     "edge_distance",
@@ -295,6 +297,7 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
         if mode in {
             "neural_atom_k1_collapsed_mha",
             "neural_atom_k1_no_slot_attention",
+            "neural_atom_k1_no_attention_uniform_return",
         } and ".slot_attention." in name:
             continue
         digest.update(name.encode("utf-8") + b"\0")
@@ -784,11 +787,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     elif mode in {
         "neural_atom_k1_uniform_return",
         "neural_atom_k1_inverse_return",
+        "neural_atom_k1_no_attention_uniform_return",
     }:
         return_mode = (
             "uniform"
-            if mode == "neural_atom_k1_uniform_return"
+            if mode in {
+                "neural_atom_k1_uniform_return",
+                "neural_atom_k1_no_attention_uniform_return",
+            }
             else "inverse-score"
+        )
+        remove_slot_attention = (
+            mode == "neural_atom_k1_no_attention_uniform_return"
         )
         probe = torch.linspace(
             -1.0,
@@ -811,6 +821,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
                 probe,
                 batch.batch,
                 return_mode,
+                remove_slot_attention=remove_slot_attention,
             )
             source_padding = source_assignment.masked_select(
                 ~valid.unsqueeze(1)
@@ -843,6 +854,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
                 "source_padding_mass_zero": bool(source_padding.item() == 0.0),
                 "return_padding_mass_zero": bool(return_padding.item() == 0.0),
                 "zero_return_exact": bool(torch.count_nonzero(update).item() == 0),
+                "slot_attention_module_removed": diagnostics[
+                    "slot_attention_module_removed"
+                ],
+                "slot_processor": diagnostics["slot_processor"],
             }
             if return_mode == "uniform":
                 expected = valid.unsqueeze(1).to(return_assignment.dtype)
@@ -867,10 +882,15 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
                 else "return_differs_from_source"
             ),
         }
+        if remove_slot_attention:
+            required.add("slot_attention_module_removed")
         mechanism_checks = {
             "source_allocation": "learned-softmax-over-atoms",
             "return_allocation": return_mode,
             "added_parameters": 0,
+            "slot_processor": (
+                "none" if remove_slot_attention else "length-one-self-attention"
+            ),
             "layers": layer_checks,
         }
         if not all(
@@ -878,6 +898,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             and check["source_allocation"] == "learned-softmax-over-atoms"
             and check["return_allocation"] == return_mode
             and check["slot_shape"] == [int(batch.num_graphs), 1, 64]
+            and (not remove_slot_attention or check["slot_processor"] == "none")
             and all(check[name] is True for name in required)
             for check in layer_checks
         ):
@@ -909,7 +930,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.shared_selector.parameters())
     elif mode == "neural_atom_k1_collapsed_mha":
         candidate_parameters = list(model.collapsed_slot_projections.parameters())
-    elif mode == "neural_atom_k1_no_slot_attention":
+    elif mode in {
+        "neural_atom_k1_no_slot_attention",
+        "neural_atom_k1_no_attention_uniform_return",
+    }:
         candidate_parameters = [
             parameter
             for mixer in model.base.neural_atom_mixers.values()
@@ -919,6 +943,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     elif mode in {
         "neural_atom_k1_uniform_return",
         "neural_atom_k1_inverse_return",
+        "neural_atom_k1_no_attention_uniform_return",
     }:
         candidate_parameters = [
             parameter

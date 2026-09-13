@@ -134,6 +134,17 @@ ARCHITECTURE_CONFIGS = {
         "return_mass_per_graph": 1.0,
         "added_parameters": 0,
     },
+    "neural_atom_k1_no_attention_uniform_return": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "combine-two-directional-k1-simplifications",
+        "source_allocation": "learned-softmax-over-atoms",
+        "slot_processor": "no-self-attention-plus-slot-ffn",
+        "return_allocation": "uniform-over-valid-atoms",
+        "return_mass_per_graph": 1.0,
+        "removed": ["slot-self-attention"],
+    },
 }
 
 
@@ -600,7 +611,9 @@ def _single_slot_processor_update(mixer, processor, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
-def _return_allocation_update(mixer, hidden, batch, return_mode):
+def _return_allocation_update(
+    mixer, hidden, batch, return_mode, *, remove_slot_attention=False
+):
     """Separate atoms that build K1's slot from atoms that receive it.
 
     The frozen K1 equation reuses one learned atom distribution in both
@@ -629,8 +642,15 @@ def _return_allocation_update(mixer, hidden, batch, return_mode):
     slots = seeds.unsqueeze(0) + torch.einsum(
         "bkn,bnd->bkd", source_assignment, values
     )
-    attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
-    slots = mixer.slot_norm1(slots + attended)
+    if remove_slot_attention:
+        if hasattr(mixer, "slot_attention"):
+            raise RuntimeError("Combined simplification retained slot attention")
+        slots = mixer.slot_norm1(slots)
+        slot_processor = "none"
+    else:
+        attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
+        slots = mixer.slot_norm1(slots + attended)
+        slot_processor = "length-one-self-attention"
     slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
 
     if return_mode == "uniform":
@@ -654,6 +674,8 @@ def _return_allocation_update(mixer, hidden, batch, return_mode):
         "source_allocation": "learned-softmax-over-atoms",
         "return_allocation": return_mode,
         "return_mass_per_graph": 1.0,
+        "slot_processor": slot_processor,
+        "slot_attention_module_removed": not hasattr(mixer, "slot_attention"),
     }
     return update, slots, source_assignment, return_assignment, valid, diagnostics
 
@@ -723,7 +745,10 @@ def make_encoder(mode: str):
                         )
                     )
                     del mixer.slot_attention
-            elif mode == "neural_atom_k1_no_slot_attention":
+            elif mode in {
+                "neural_atom_k1_no_slot_attention",
+                "neural_atom_k1_no_attention_uniform_return",
+            }:
                 for mixer in self.base.neural_atom_mixers.values():
                     del mixer.slot_attention
 
@@ -808,10 +833,14 @@ def make_encoder(mode: str):
                 elif self.mode in {
                     "neural_atom_k1_uniform_return",
                     "neural_atom_k1_inverse_return",
+                    "neural_atom_k1_no_attention_uniform_return",
                 }:
                     return_mode = (
                         "uniform"
-                        if self.mode == "neural_atom_k1_uniform_return"
+                        if self.mode in {
+                            "neural_atom_k1_uniform_return",
+                            "neural_atom_k1_no_attention_uniform_return",
+                        }
                         else "inverse-score"
                     )
                     update, _, _, _, _, _ = _return_allocation_update(
@@ -819,6 +848,10 @@ def make_encoder(mode: str):
                         h,
                         batch,
                         return_mode,
+                        remove_slot_attention=(
+                            self.mode
+                            == "neural_atom_k1_no_attention_uniform_return"
+                        ),
                     )
                     h = h + update
                 else:
