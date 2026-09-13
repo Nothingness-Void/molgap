@@ -6,49 +6,37 @@ track ownership is defined in `TRACKS.md`.
 
 ## Goal
 
-Select one pure-2D, Gap-only architecture for the official PCQM4Mv2 leaderboard
-under a hard 12-hour A100 full-training budget. Kaggle 100K selection must
-finish before any molecular-research-server use.
+Select and validate a direct-Gap PCQM4Mv2 model using the fixed V4 comparison
+contract for new screens. The desktop integration branch owns Kunshan screens,
+full training, official evaluation, and submission; the separate server agent
+owns only its own experiment branch.
 ## Active Queue
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P1 | B-PCQM-EDGE-CONTINUATION | Continue the completed rich-feature EdgeState run in an isolated output directory | Retrieve atomic artifacts and determine whether the best official-validation Gap MAE improves beyond 0.102063 eV; otherwise close convergence without changing production | experiments/pcqm_edge_state_full/results/convergence_40/ |
-| P0 | B-PCQM100K-GLOBAL-STATE | Run one recurrent graph-state EdgeState candidate under the frozen seed-42 contract | Downloaded artifacts pass no-inference acceptance and the candidate strictly beats the EdgeState comparator, or the mechanism closes | `experiments/pcqm_gap_architecture/` |
-| P0 | B-PCQM100K-MULTISEED | Confirm the seed-42 challenger at seeds 43/44 without changing data or training parameters | Challenger improves every seed and the three-seed mean, or closes | `experiments/pcqm_gap_architecture/` |
-| P1 | B-PCQM-A100-GATE | Benchmark only the frozen Kaggle winner on official-train graphs | At least 1,800 graphs/s, no epoch above 32 minutes, projected run at most 10.5 hours, and at least 15% memory reserve | `experiments/pcqm_gap_architecture/` |
-| P1 | B-PCQM-FULL-TRAIN | Train exactly one frozen Gap-only winner on official PCQM train | Timing gate passes; one resumable run completes inside the 12-hour budget | `experiments/pcqm_gap_architecture/` |
-| P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
-| P3 | B-PCQM-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after official-validation acceptance | `experiments/pcqm_gap_architecture/` |
+| P0 | B-KUNSHAN-V4-REFERENCE | Reconcile and accept the single GPTrans-T seed-42 100K/50K V4 reference | Verify terminal scheduler state, 60 physical-BS128 epochs, runtime certificate, outputs, and frozen acceptance; do not infer status from the 2026-09-12 snapshot | Branch `codex/exp/gptrans-t-100k-v4` |
+| P0 | B-FULL-K1-GPTRANS-CHAIN | Reconcile the already-submitted K1 resume, GPTrans-T preflight/full run, and dependent fusion chain | Continue only declared `afterok` dependencies; accept each stage and update the monitor handoff; do not resubmit from stale status | Branch `codex/pcqm-k1-gptrans-full-fusion` |
+| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Only after the V4 reference is accepted; issue a new frozen contract/runtime certificate and explicit launch authorization | Branch `codex/exp/gptrans-k1-geometry-500k` |
+| P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
-The accepted 100K EdgeState screen is evidence, not an active task. Its exact
-decision is
-`experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
+The V4 runtime policy and detailed baseline protocol remain on their active
+experiment branch until that reference is accepted. V4 requires fixed data and
+row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
+selection rule, sample exposure, role access, and a runtime certificate for
+each platform/software tuple.
 
-The official-PCQM cache and first matched seed-42 comparator are accepted
-evidence. Their exact decision is
-`experiments/pcqm_gap_architecture/results/seed42_structural_vs_edge_state/decision.md`.
+The historical Kaggle recurrent graph-state experiment completed below its
+frozen comparator and is archived at commit `285e1dc`; it is not active.
 
-The learned-query and local-operator seed-42 screens are closed evidence. Their
-exact decisions are `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`
-and
-`experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md`.
+The 500K distance-angle OOF fusion is a positive nomination recorded on branch
+`codex/exp/gptrans-k1-geometry-500k` at `6d8630e`. Its own audit found that
+runtime certificates and a matching frozen V4 reference were absent, so it is
+not yet eligible as a V4 cross-platform or causal geometry result. Keep the
+branch isolated until a separately authorized V4 bridge is accepted.
 
-The separate strict OGB-rich EdgeState baseline completed public reproducibility
-acceptance and its OGB-LSC form was submitted on 2026-08-28. It is awaiting
-code/report validity review; do not resubmit it or claim a score before OGB
-acceptance. Status is owned by
-`experiments/pcqm_edge_state_full/results/rich_full/submission_status.md`.
-
-The accepted R3 validation gate, failed R5/R6/R7/R8/R9 branches, and untriggered R4
-fallback are evidence. Their exact dispositions are
-`experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md`,
-`experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md`, and
-`experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md`, with R7
-owned by `experiments/top20_architecture_qm9/graph_token_r7_decision.md` and R8
-owned by `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md`.
-R9 is owned by
-`experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md`.
+Completed PCQM, OGB submission, and QM9 screen decisions are indexed in
+`experiments/README.md`; do not reopen closed candidates by changing seeds or
+training schedules.
 
 ## Mandatory Gates
 
@@ -69,16 +57,17 @@ R9 is owned by
 - Architecture claims use random initialization; no pretraining, warm start,
   fine-tuning, or distillation may be credited as an architecture gain.
 - Do not tune on common/OOD/P8-hard or sealed data.
-- PCQM leaderboard questions use accepted official-train identities under
-  `platforms/_records/`; selection uses the frozen 100K/10K split. Do not rebuild
-  graph caches or redefine roles. QM9 and PubChemQC are inspiration only, not
+- New PCQM screens use the accepted official-train identities and the V4-frozen
+  100K train / 50K development roles. Historical Kaggle runs retain their
+  original 100K/10K contract and are not silently relabeled V4. Do not rebuild
+  caches or redefine roles. QM9 and PubChemQC are inspiration only, not
   advancement gates or reusable weights.
-- The explicit convergence diagnostic above is the only IMS exception before
-  the three-seed Kaggle gate; all IMS work remains under
-  `/lustre/home/users/sm2/chou/`.
-- Predict Gap directly. HOMO/LUMO auxiliary targets, 3D inputs, residual
-  targets, pretrained checkpoints, and prediction fusion are outside this
-  screen.
+- The authorized full K1/GPTrans-T chain uses IMS only under
+  `/lustre/home/users/sm2/chou/`; follow `platforms/REMOTE_HANDOFF.md` for every
+  command and preserve its declared dependencies and output isolation.
+- Architecture screens predict Gap directly. Any separately authorized full
+  K1/GPTrans-T fusion must obey its own frozen 20/80 official-valid contract;
+  test-dev and challenge-test stay sealed until separate explicit authority.
 - Continued pure-2D discovery tests one materially new architecture at a time.
   Every failure gets a decision record and cannot be retried as a seed or
   schedule variation; the next attempt must change the information flow.
@@ -114,7 +103,3 @@ experiment unless the project objective changes.
 | Extend the supported element set | Rejected-use analysis justifies refetch and retraining |
 | Conformer ensemble or NNP geometry | Residual evidence identifies geometry as the limiting factor |
 | Paper figures and write-up | An academic delivery is requested |
-
-Completed work is indexed, without duplicated metrics, in
-`experiments/README.md`, `experiments/_closed/README.md`, and
-`production/README.md`.
