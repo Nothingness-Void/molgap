@@ -1,11 +1,11 @@
 # Status
 
-Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 2 is
-running as autonomous discovery round 1. Version 1 failed before source loading
-because the newly created source dataset was not yet mounted; it also exposed
-the stock-PyTorch P100 compatibility requirement. Version 2 preserves every
-scientific field, uses the ready source dataset, and installs the established
-P100-compatible wheel before model import.
+Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 3 is
+running as autonomous discovery round 1. Versions 1/2 failed before model
+loading: the dataset was initially not mounted, then Kaggle expanded the source
+archive. Version 3 consumes the expanded immutable source tree while retaining
+an identical neutral-suffix archive for provenance validation, and installs the
+established P100-compatible wheel first. Every scientific field is unchanged.
 
 The scientific tensor initialization remains unchanged; only its portable
 artifact serialization is rebound to the integration runtime.
