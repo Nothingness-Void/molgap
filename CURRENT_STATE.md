@@ -38,15 +38,14 @@ official-validation read, test-dev read, or submission is authorized.
 ## Discovery state
 
 A separately authorized three-round K1 architecture sequence is active under
-the frozen PCQM-100K v4 contract. Round 1 closed both RepSet final readout and
-cross-layer tied selector without a winner. Its dated attribution authorizes
-one round-2 screen, `experiments/pcqm_k1_slot_processor_100k/`, about K1's
-redundant length-one slot-attention processor;
-no baseline retraining, extra seed, sealed-role read, or scale-up is authorized.
-Authority: `experiments/pcqm_k1_readout_selector_100k/decision.md`.
-The sole round-2 T4x2 kernel is recorded in the experiment `STATUS.md`; one GPU
-collapses single-token attention to its active value/output maps and the other
-removes that attention residual entirely.
+the frozen PCQM-100K v4 contract. Round 1 closed RepSet final readout and the
+cross-layer tied selector. Round 2 then tested K1's redundant length-one slot
+attention in one T4x2 job. Removing it improved paired errors but gained only
+0.0017627 eV, below the frozen 0.003 eV material/run-variation gate; collapsing
+it gained less. Both mechanisms are closed without an extra seed, sealed-role
+read, or scale-up. One final round remains available only after a distinct
+information-flow hypothesis is frozen. Authority:
+`experiments/pcqm_k1_slot_processor_100k/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

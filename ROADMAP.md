@@ -13,15 +13,17 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-ROUND2 | Test collapsed and removed length-one slot attention in one Kaggle2 T4x2 v4 job | Both arms receive no-inference acceptance and one dated scientific decision |
+| P0 | B-K1-ROUND3 | Select one distinct final K1 information-flow question from accepted evidence; do not continue one-token attention micro-variants | One frozen protocol names at most two isolated seed-42 candidates under the unchanged v4 contract |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
 scientifically; multi-slot grouping, multi-head selection, and dynamic-query
 addressing are closed by their decision records. The separately authorized new
 sequence allows at most three rounds, with attribution between rounds. Round 1
-closed final node-set readout and cross-layer selector sharing. Round 2 may
-change only K1's mathematically degenerate one-token slot processor under v4.
+closed final node-set readout and cross-layer selector sharing. Round 2 closed
+K1's mathematically degenerate one-token slot processor: removing it was
+directionally positive but below the material/run-variation gate. Round 3 must
+address a distinct information-flow bottleneck.
 The K1 full candidate remains frozen. The completed K1-G/K1-R screen also
 selected no candidate and did not alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
