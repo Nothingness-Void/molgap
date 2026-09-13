@@ -1,0 +1,61 @@
+{
+  "format": "molgap-pcqm-k1-gptrans-recovery-v1",
+  "recorded_at": "2026-09-13T13:49:17+09:00",
+  "original_submission_record": "submission_record_20260913.json",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full",
+  "diagnosis": {
+    "k1_failed_job": "1497501.ccpbs1",
+    "k1_failure": "host-memory cgroup limit exceeded",
+    "k1_observed_memory_mb": 15296,
+    "k1_cgroup_limit_mb": 15296,
+    "k1_checkpoint": "outputs/k1/full/last_checkpoint.pt",
+    "k1_checkpoint_bytes": 44364755,
+    "k1_checkpoint_sha256": "ffca5b7f338506b173a4230d30c64ebcdf999ffcffda203f246927e560bc3c98",
+    "k1_checkpoint_global_step": 5000,
+    "k1_contract_sha256": "84fc78437c6f092dabcf2407af7bc75817ddde63424b412b143555e1adae6a50",
+    "k1_source_commit": "8105498cadd47db672f3334a9ad169c5a95aea6e",
+    "k1_source_archive_sha256": "e24b7c033bbe90c101a94f465f0ec258e6688a4527c2400d35fff7acf07b2af3",
+    "gptrans_failed_preflight_job": "1497502.ccpbs1",
+    "gptrans_failure": "runner resolved src/gptrans.py instead of src/molgap/gptrans.py",
+    "gptrans_training_started": false,
+    "fusion_started": false
+  },
+  "repair": {
+    "scientific_contract_changed": false,
+    "gpu_job_resources": "1 A100, 16 CPU cores, same FP32/batch/data/seed/exposure",
+    "k1_resume_from_existing_checkpoint": true,
+    "gptrans_source_path_helper": "Path(__file__).resolve().with_name('gptrans.py')",
+    "gptrans_source_commit": "90251ac75d5bed4e53f9ad9c897da0d8563f5d9f",
+    "gptrans_source_archive": "inputs/gptrans_recovery_r1/src.zip",
+    "gptrans_source_archive_sha256": "830050e646960e345c4cac181da26103ef297f55098074bd74b1313040a49152",
+    "gptrans_preflight_output": "outputs/gptrans/preflight_r1",
+    "atomic_checkpoint_interval_steps": 500,
+    "pbs_walltime_hours": 12,
+    "application_max_wall_seconds": 41000,
+    "official_validation_role_consumed_only_by_fusion": true,
+    "test_dev_or_challenge_access": false
+  },
+  "jobs": {
+    "k1_resume": {"id": "1498717.ccpbs1", "state": "Queue"},
+    "k1_acceptance": {"id": "1498719.ccpbs1", "state": "Hold", "dependency": "afterok:1498717.ccpbs1"},
+    "gptrans_preflight": {"id": "1498718.ccpbs1", "state": "Queue"},
+    "gptrans_train": {"id": "1498724.ccpbs1", "state": "Hold", "dependency": "afterok:1498718.ccpbs1"},
+    "gptrans_acceptance": {"id": "1498725.ccpbs1", "state": "Hold", "dependency": "afterok:1498724.ccpbs1"},
+    "fusion_study": {"id": "1498726.ccpbs1", "state": "Hold", "dependency": "afterok:1498719.ccpbs1:1498725.ccpbs1"},
+    "fusion_acceptance": {"id": "1498728.ccpbs1", "state": "Hold", "dependency": "afterok:1498726.ccpbs1"}
+  },
+  "validation": {
+    "focused_pytest_passed": 16,
+    "pbs_scripts_bash_n_passed": 8,
+    "source_archive_members": 121,
+    "remote_source_archive_validation": true,
+    "uploaded_pbs_sha256_all_match_local": true,
+    "k1_checkpoint_sha256_rechecked": true
+  },
+  "monitor": {
+    "automation_id": "molgap-full-k1-monitor",
+    "status": "ACTIVE",
+    "interval_minutes": 30,
+    "coordinator_thread_id": "019ef861-8611-7790-a091-a887effa7813"
+  }
+}

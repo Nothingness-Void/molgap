@@ -24,12 +24,15 @@ production decision linked above.
 Track B remains an official PCQM4Mv2 Gap-only line, isolated from the Track A
 three-target production contract. On 2026-09-13 the user explicitly authorized
 full official-train runs for frozen Neural-Atom K1 and GPTrans-T under separate
-20M-sample-exposure contracts. Their A100 preflights and dependent training and
-acceptance chains are queued on IMS. After both base artifacts pass acceptance,
-a dependent fusion job will read official-valid exactly once, fit one scalar on
-a fixed 20% calibration partition, and compare on the remaining 80%; this
-consumes that validation role for this experiment. No test-dev/challenge-test
-access is allowed. The experiment protocol is
+20M-sample-exposure contracts. The first execution attempt exposed a K1 host
+memory cgroup limit and a GPTrans source-path bug; K1's step-5000 atomic
+checkpoint was retained and verified. A repaired dependency chain is now
+queued on IMS, preserving the model/data/training contracts and changing only
+the host-memory allocation and GPTrans path/package identity. After both base
+artifacts pass acceptance, the dependent fusion job will read official-valid
+exactly once, fit one scalar on a fixed 20% calibration partition, and compare
+on the remaining 80%; this consumes that validation role for this experiment.
+No test-dev/challenge-test access is allowed. The experiment protocol is
 `experiments/pcqm_k1_gptrans_full_fusion/protocol.md`.
 
 Earlier 100K architecture-screen decisions remain unchanged and are indexed in
@@ -79,17 +82,20 @@ must not be represented as this new conservative head.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
-- On IMS, K1 preflight `1497500.ccpbs1` and GPTrans-T preflight
-  `1497502.ccpbs1` are queued. Their training jobs `1497501.ccpbs1` and
-  `1497503.ccpbs1`, base acceptance jobs `1497505.ccpbs1` and
-  `1497506.ccpbs1`, fusion study `1497525.ccpbs1`, and fusion acceptance
-  `1497527.ccpbs1` are dependency-held. The fusion study depends on both base
-  acceptances; fusion acceptance depends on the study. At the 2026-09-13 01:45
-  JST snapshot, no user task was running, no GPU nodes were free, and 27 GPU
-  jobs were waiting. The latest detailed listing and scheduler summary showed 2
-  queued and 6 held tasks. Job identities, dependency
-  chain, hashes, fusion role policy, and the persistent monitor are recorded in
-  `experiments/pcqm_k1_gptrans_full_fusion/results/submission_record_20260913.json`.
+- The first IMS attempt ended: K1 training `1497501.ccpbs1` was killed by its
+  8-core host-memory cgroup at optimizer step 5,000; its atomic checkpoint
+  remains valid. GPTrans preflight `1497502.ccpbs1` failed before training due
+  to a source path resolving one package directory too high. No base acceptance
+  or fusion ran. Recovery jobs are `1498717.ccpbs1` (K1 resume),
+  `1498719.ccpbs1` (K1 acceptance), `1498718.ccpbs1` (GPTrans preflight),
+  `1498724.ccpbs1` (GPTrans full training), `1498725.ccpbs1` (GPTrans
+  acceptance), `1498726.ccpbs1` (fusion study), and `1498728.ccpbs1` (fusion
+  acceptance). At the first post-submit snapshot, the two root jobs were
+  queued and the five dependent jobs were held. Fusion requires both base
+  acceptances. The checkpoint, source identities, resource-only repair, job
+  states, and persistent monitor are recorded in
+  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`
+  and `repair_record_20260913_r1.json`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.

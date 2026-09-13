@@ -24,6 +24,19 @@ remains separately gated.
 | P2 | B-PCQM-OFFICIAL-VALID | Evaluate the frozen full-data model once on official validation | Artifacts and inference timing pass the official protocol; no architecture tuning reopens | `experiments/pcqm_gap_architecture/` |
 | P3 | B-PCQM-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after official-validation acceptance | `experiments/pcqm_gap_architecture/` |
 
+P0 execution contract and recovery plan: both candidates retain seed 42, FP32,
+physical batch 128, 20,000,000 sample presentations, one A100, and a 12-hour
+PBS wall limit with an application stop at 41,000 seconds. GPU jobs request 16
+CPU cores to provide the corresponding host-memory quota; the original K1
+checkpoint resumes atomically every 500 steps. GPTrans uses a separately
+versioned source archive and preflight output so the failed attempt is
+preserved. Training outputs remain independently retrievable under
+`outputs/k1/full/` and `outputs/gptrans/full/`; fusion prediction chunks,
+progress, hashes, and acceptance remain under `outputs/fusion_study/`. The
+frozen inputs and evaluation-role contract are in
+`experiments/pcqm_k1_gptrans_full_fusion/protocol.md`; recovery evidence is in
+`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`.
+
 The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is
 `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md`.
