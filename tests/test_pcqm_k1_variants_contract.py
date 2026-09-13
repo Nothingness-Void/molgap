@@ -93,6 +93,8 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
         "neural_atom_k1_dynamic_query": 3_695_681,
         "neural_atom_k1_repset_readout": 3_683_985,
         "neural_atom_k1_tied_selector": 3_622_401,
+        "neural_atom_k1_collapsed_mha": 3_633_857,
+        "neural_atom_k1_no_slot_attention": 3_608_897,
     }
     for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
         torch.manual_seed(42)

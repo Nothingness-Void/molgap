@@ -18,6 +18,7 @@ from .pcqm_k1_variants import (
     _cluster_mixer_update,
     _dynamic_query_single_slot_update,
     _multihead_single_slot_update,
+    _single_slot_processor_update,
     _tied_selector_single_slot_update,
     make_encoder,
 )
@@ -289,6 +290,11 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
         if mode == "neural_atom_k1_tied_selector" and (
             ".node_key." in name or ".slot_query." in name
         ):
+            continue
+        if mode in {
+            "neural_atom_k1_collapsed_mha",
+            "neural_atom_k1_no_slot_attention",
+        } and ".slot_attention." in name:
             continue
         digest.update(name.encode("utf-8") + b"\0")
         digest.update(value.detach().cpu().contiguous().numpy().tobytes())
@@ -668,6 +674,112 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             )
         ):
             raise RuntimeError(f"Tied-selector invariant failed: {mechanism_checks}")
+    elif mode in {
+        "neural_atom_k1_collapsed_mha",
+        "neural_atom_k1_no_slot_attention",
+    }:
+        probe = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        layer_checks = []
+        for layer in MIXER_LAYERS:
+            mixer = model.base.neural_atom_mixers[str(layer)]
+            processor = (
+                model.collapsed_slot_projections[str(layer)]
+                if mode == "neural_atom_k1_collapsed_mha"
+                else None
+            )
+            update, slots, assignment, valid, diagnostics = (
+                _single_slot_processor_update(
+                    mixer,
+                    processor,
+                    probe,
+                    batch.batch,
+                )
+            )
+            check = {
+                "layer": layer,
+                "active_slots": diagnostics["active_slots"],
+                "slot_processor": diagnostics["slot_processor"],
+                "slot_attention_module_removed": diagnostics[
+                    "slot_attention_module_removed"
+                ],
+                "slot_shape": list(slots.shape),
+                "allocation_mass_one": bool(
+                    torch.allclose(
+                        assignment.sum(dim=-1),
+                        torch.ones_like(assignment.sum(dim=-1)),
+                        atol=1e-6,
+                        rtol=0,
+                    )
+                ),
+                "padding_mass_zero": bool(
+                    assignment.masked_select(~valid.unsqueeze(1))
+                    .abs()
+                    .sum()
+                    .item()
+                    == 0.0
+                ),
+                "zero_return_exact": bool(
+                    torch.count_nonzero(update).item() == 0
+                ),
+            }
+            if mode == "neural_atom_k1_collapsed_mha":
+                reference_mixer = baseline.neural_atom_mixers[str(layer)]
+                raw_slots = torch.linspace(
+                    -0.5,
+                    0.5,
+                    steps=int(batch.num_graphs) * 64,
+                    device="cuda",
+                ).reshape(int(batch.num_graphs), 1, 64)
+                with torch.no_grad():
+                    expected_attention, _ = reference_mixer.slot_attention(
+                        raw_slots,
+                        raw_slots,
+                        raw_slots,
+                        need_weights=False,
+                    )
+                    collapsed_attention = processor(raw_slots)
+                check["matches_length_one_attention_in_eval"] = bool(
+                    torch.allclose(
+                        expected_attention,
+                        collapsed_attention,
+                        atol=1e-6,
+                        rtol=1e-6,
+                    )
+                )
+            layer_checks.append(check)
+        expected_processor = (
+            "collapsed-value-output"
+            if mode == "neural_atom_k1_collapsed_mha"
+            else "none"
+        )
+        mechanism_checks = {
+            "attention_sequence_length": 1,
+            "slot_processor": expected_processor,
+            "layers": layer_checks,
+        }
+        required_flags = {
+            "slot_attention_module_removed",
+            "allocation_mass_one",
+            "padding_mass_zero",
+            "zero_return_exact",
+        }
+        if mode == "neural_atom_k1_collapsed_mha":
+            required_flags.add("matches_length_one_attention_in_eval")
+        if not all(
+            check["active_slots"] == 1
+            and check["slot_processor"] == expected_processor
+            and check["slot_shape"] == [int(batch.num_graphs), 1, 64]
+            and all(check[name] is True for name in required_flags)
+            for check in layer_checks
+        ):
+            raise RuntimeError(
+                f"Single-slot processor invariant failed: {mechanism_checks}"
+            )
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     model.train()
@@ -691,6 +803,15 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.repset_readout.parameters())
     elif mode == "neural_atom_k1_tied_selector":
         candidate_parameters = list(model.shared_selector.parameters())
+    elif mode == "neural_atom_k1_collapsed_mha":
+        candidate_parameters = list(model.collapsed_slot_projections.parameters())
+    elif mode == "neural_atom_k1_no_slot_attention":
+        candidate_parameters = [
+            parameter
+            for mixer in model.base.neural_atom_mixers.values()
+            for module in (mixer.slot_ffn, mixer.return_projection)
+            for parameter in module.parameters()
+        ]
     candidate_trainable = mode == "neural_atom_k1_v4" or any(
         parameter.grad is not None
         and bool(torch.isfinite(parameter.grad).all())

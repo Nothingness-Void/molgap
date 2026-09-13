@@ -96,6 +96,24 @@ ARCHITECTURE_CONFIGS = {
             "return_projection",
         ],
     },
+    "neural_atom_k1_collapsed_mha": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "collapse-length-one-slot-self-attention",
+        "removed": ["slot-query-projection", "slot-key-projection"],
+        "retained": ["slot-value-projection", "slot-output-projection"],
+        "attention_sequence_length": 1,
+    },
+    "neural_atom_k1_no_slot_attention": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "remove-length-one-slot-self-attention",
+        "removed": ["slot-self-attention"],
+        "retained": ["atom-selection", "slot-ffn", "slot-return"],
+        "attention_sequence_length": 1,
+    },
 }
 
 
@@ -174,6 +192,32 @@ class _SharedSelectorFactory:
                 self.query = nn.Parameter(query.squeeze(0).clone())
 
         return SharedSelector()
+
+
+class _CollapsedSlotProjectionFactory:
+    @staticmethod
+    def make(attention):
+        import torch
+        import torch.nn as nn
+
+        class CollapsedSlotProjection(nn.Module):
+            """The active V and output maps of length-one self-attention."""
+
+            def __init__(self):
+                super().__init__()
+                channels = int(attention.embed_dim)
+                self.value = nn.Linear(channels, channels, bias=True)
+                self.output = nn.Linear(channels, channels, bias=True)
+                with torch.no_grad():
+                    self.value.weight.copy_(attention.in_proj_weight[2 * channels :])
+                    self.value.bias.copy_(attention.in_proj_bias[2 * channels :])
+                    self.output.weight.copy_(attention.out_proj.weight)
+                    self.output.bias.copy_(attention.out_proj.bias)
+
+            def forward(self, slots):
+                return self.output(self.value(slots))
+
+        return CollapsedSlotProjection()
 
 
 class _MoleculeGateFactory:
@@ -498,6 +542,44 @@ def _tied_selector_single_slot_update(mixer, selector, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
+def _single_slot_processor_update(mixer, processor, hidden, batch):
+    """Run K1 pooling/return with a chosen length-one slot processor."""
+    import torch
+    from torch_geometric.utils import to_dense_batch
+
+    if mixer.active_slots != 1:
+        raise ValueError("single-slot processor variants require one slot")
+    dense, valid = to_dense_batch(mixer.node_norm(hidden), batch)
+    keys = mixer.node_key(dense)
+    values = mixer.node_value(dense)
+    seeds = mixer.slot_seed[:1]
+    queries = mixer.slot_query(seeds)
+    logits = torch.einsum("kd,bnd->bkn", queries, keys)
+    logits = logits / math.sqrt(mixer.latent_channels)
+    logits = logits.masked_fill(~valid.unsqueeze(1), float("-inf"))
+    assignment = torch.softmax(logits, dim=-1)
+    slots = seeds.unsqueeze(0) + torch.einsum(
+        "bkn,bnd->bkd", assignment, values
+    )
+    if processor is None:
+        slots = mixer.slot_norm1(slots)
+        processor_name = "none"
+    else:
+        slots = mixer.slot_norm1(slots + processor(slots))
+        processor_name = "collapsed-value-output"
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+    returned = torch.einsum("bkn,bkd->bnd", assignment, slots)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "assignment": assignment,
+        "valid": valid,
+        "active_slots": 1,
+        "slot_processor": processor_name,
+        "slot_attention_module_removed": not hasattr(mixer, "slot_attention"),
+    }
+    return update, slots, assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
@@ -553,6 +635,19 @@ def make_encoder(mode: str):
                 for mixer in self.base.neural_atom_mixers.values():
                     del mixer.node_key
                     del mixer.slot_query
+            elif mode == "neural_atom_k1_collapsed_mha":
+                self.collapsed_slot_projections = nn.ModuleDict()
+                for layer in MIXER_LAYERS:
+                    mixer = self.base.neural_atom_mixers[str(layer)]
+                    self.collapsed_slot_projections[str(layer)] = (
+                        _CollapsedSlotProjectionFactory.make(
+                            mixer.slot_attention
+                        )
+                    )
+                    del mixer.slot_attention
+            elif mode == "neural_atom_k1_no_slot_attention":
+                for mixer in self.base.neural_atom_mixers.values():
+                    del mixer.slot_attention
 
         def forward(self, x, edge_index, edge_attr, batch, random_walk_pe):
             return self.base.head(
@@ -612,6 +707,22 @@ def make_encoder(mode: str):
                     update, _, _, _, _ = _tied_selector_single_slot_update(
                         mixer,
                         self.shared_selector,
+                        h,
+                        batch,
+                    )
+                    h = h + update
+                elif self.mode == "neural_atom_k1_collapsed_mha":
+                    update, _, _, _, _ = _single_slot_processor_update(
+                        mixer,
+                        self.collapsed_slot_projections[str(layer)],
+                        h,
+                        batch,
+                    )
+                    h = h + update
+                elif self.mode == "neural_atom_k1_no_slot_attention":
+                    update, _, _, _, _ = _single_slot_processor_update(
+                        mixer,
+                        None,
                         h,
                         batch,
                     )
