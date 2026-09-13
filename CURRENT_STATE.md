@@ -40,7 +40,8 @@ official-validation read, test-dev read, or submission is authorized.
 A separately authorized three-round K1 architecture sequence is active under
 the frozen PCQM-100K v4 contract. Round 1 closed both RepSet final readout and
 cross-layer tied selector without a winner. Its dated attribution authorizes
-one round-2 question about K1's redundant length-one slot-attention processor;
+one round-2 screen, `experiments/pcqm_k1_slot_processor_100k/`, about K1's
+redundant length-one slot-attention processor;
 no baseline retraining, extra seed, sealed-role read, or scale-up is authorized.
 Authority: `experiments/pcqm_k1_readout_selector_100k/decision.md`.
 
