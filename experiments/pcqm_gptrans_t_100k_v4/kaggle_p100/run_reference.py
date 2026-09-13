@@ -29,7 +29,21 @@ def find_fixed_cache() -> tuple[Path, Path]:
     return matches[0].parent, matches[0]
 
 
+def ensure_p100_torch() -> None:
+    probe = subprocess.run(
+        [sys.executable, "-c", "import torch; raise SystemExit(0 if 'sm_60' in torch.cuda.get_arch_list() else 3)"],
+        check=False,
+    )
+    if probe.returncode != 0:
+        subprocess.check_call([
+            sys.executable, "-m", "pip", "install", "-q", "--upgrade",
+            "--force-reinstall", "torch==2.4.1", "--index-url",
+            "https://download.pytorch.org/whl/cu121",
+        ])
+
+
 def main() -> None:
+    ensure_p100_torch()
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"])
     import torch
     if torch.cuda.device_count() != 1 or "P100" not in torch.cuda.get_device_name(0):
