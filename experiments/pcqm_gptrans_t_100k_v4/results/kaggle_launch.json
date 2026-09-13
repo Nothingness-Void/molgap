@@ -1,9 +1,10 @@
 {
   "format": "molgap-gptrans-t-v4-kaggle-launch-v1",
   "kernel": "kaseichou/molgap-pcqm-gptrans-t-v4-s42",
-  "active_version": 3,
+  "active_version": 4,
   "status_at_record": "RUNNING",
-  "failed_infrastructure_versions": [1, 2],
+  "failed_infrastructure_versions": [1, 2, 3],
+  "latest_infrastructure_repair": "fresh_process_stage_isolation",
   "source_dataset": "kaseichou/molgap-gptrans-t-v4-source",
   "source_commit": "814d10466d98a583117a20d65329ff9f27836203",
   "source_archive_sha256": "7ef0c76882e3cbec63bab853ae1c4ed123eccdfec4ed3ba47c3415ab2c1c94cd",
