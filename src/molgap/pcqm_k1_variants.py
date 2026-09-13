@@ -114,6 +114,26 @@ ARCHITECTURE_CONFIGS = {
         "retained": ["atom-selection", "slot-ffn", "slot-return"],
         "attention_sequence_length": 1,
     },
+    "neural_atom_k1_uniform_return": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "decouple-learned-source-from-uniform-recipient-allocation",
+        "source_allocation": "learned-softmax-over-atoms",
+        "return_allocation": "uniform-over-valid-atoms",
+        "return_mass_per_graph": 1.0,
+        "added_parameters": 0,
+    },
+    "neural_atom_k1_inverse_return": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "decouple-learned-source-from-complementary-recipient-allocation",
+        "source_allocation": "learned-softmax-over-atoms",
+        "return_allocation": "softmax-of-negative-source-logits",
+        "return_mass_per_graph": 1.0,
+        "added_parameters": 0,
+    },
 }
 
 
@@ -580,6 +600,64 @@ def _single_slot_processor_update(mixer, processor, hidden, batch):
     return update, slots, assignment, valid, diagnostics
 
 
+def _return_allocation_update(mixer, hidden, batch, return_mode):
+    """Separate atoms that build K1's slot from atoms that receive it.
+
+    The frozen K1 equation reuses one learned atom distribution in both
+    directions.  This variant keeps its source pooling and slot processor
+    unchanged, but gives the normalized return path either uniform recipients
+    or the complementary distribution implied by the negative source logits.
+    Both choices preserve unit return mass per graph and add no parameters.
+    """
+    import torch
+    from torch_geometric.utils import to_dense_batch
+
+    if mixer.active_slots != 1:
+        raise ValueError("return-allocation variants require one slot")
+    if return_mode not in {"uniform", "inverse-score"}:
+        raise ValueError(f"Unknown return allocation: {return_mode}")
+
+    dense, valid = to_dense_batch(mixer.node_norm(hidden), batch)
+    keys = mixer.node_key(dense)
+    values = mixer.node_value(dense)
+    seeds = mixer.slot_seed[:1]
+    queries = mixer.slot_query(seeds)
+    logits = torch.einsum("kd,bnd->bkn", queries, keys)
+    logits = logits / math.sqrt(mixer.latent_channels)
+    masked_logits = logits.masked_fill(~valid.unsqueeze(1), float("-inf"))
+    source_assignment = torch.softmax(masked_logits, dim=-1)
+    slots = seeds.unsqueeze(0) + torch.einsum(
+        "bkn,bnd->bkd", source_assignment, values
+    )
+    attended, _ = mixer.slot_attention(slots, slots, slots, need_weights=False)
+    slots = mixer.slot_norm1(slots + attended)
+    slots = mixer.slot_norm2(slots + mixer.slot_ffn(slots))
+
+    if return_mode == "uniform":
+        return_assignment = valid.unsqueeze(1).to(logits.dtype)
+        return_assignment = return_assignment / return_assignment.sum(
+            dim=-1, keepdim=True
+        )
+    else:
+        inverse_logits = (-logits).masked_fill(
+            ~valid.unsqueeze(1), float("-inf")
+        )
+        return_assignment = torch.softmax(inverse_logits, dim=-1)
+
+    returned = torch.einsum("bkn,bkd->bnd", return_assignment, slots)
+    update = mixer.dropout(mixer.return_projection(returned[valid]))
+    diagnostics = {
+        "source_assignment": source_assignment,
+        "return_assignment": return_assignment,
+        "valid": valid,
+        "active_slots": 1,
+        "source_allocation": "learned-softmax-over-atoms",
+        "return_allocation": return_mode,
+        "return_mass_per_graph": 1.0,
+    }
+    return update, slots, source_assignment, return_assignment, valid, diagnostics
+
+
 def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
@@ -725,6 +803,22 @@ def make_encoder(mode: str):
                         None,
                         h,
                         batch,
+                    )
+                    h = h + update
+                elif self.mode in {
+                    "neural_atom_k1_uniform_return",
+                    "neural_atom_k1_inverse_return",
+                }:
+                    return_mode = (
+                        "uniform"
+                        if self.mode == "neural_atom_k1_uniform_return"
+                        else "inverse-score"
+                    )
+                    update, _, _, _, _, _ = _return_allocation_update(
+                        mixer,
+                        h,
+                        batch,
+                        return_mode,
                     )
                     h = h + update
                 else:

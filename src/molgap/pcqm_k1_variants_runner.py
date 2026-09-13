@@ -18,6 +18,7 @@ from .pcqm_k1_variants import (
     _cluster_mixer_update,
     _dynamic_query_single_slot_update,
     _multihead_single_slot_update,
+    _return_allocation_update,
     _single_slot_processor_update,
     _tied_selector_single_slot_update,
     make_encoder,
@@ -780,6 +781,109 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             raise RuntimeError(
                 f"Single-slot processor invariant failed: {mechanism_checks}"
             )
+    elif mode in {
+        "neural_atom_k1_uniform_return",
+        "neural_atom_k1_inverse_return",
+    }:
+        return_mode = (
+            "uniform"
+            if mode == "neural_atom_k1_uniform_return"
+            else "inverse-score"
+        )
+        probe = torch.linspace(
+            -1.0,
+            1.0,
+            steps=int(batch.num_nodes) * 192,
+            device="cuda",
+        ).reshape(int(batch.num_nodes), 192)
+        layer_checks = []
+        for layer in MIXER_LAYERS:
+            mixer = model.base.neural_atom_mixers[str(layer)]
+            (
+                update,
+                slots,
+                source_assignment,
+                return_assignment,
+                valid,
+                diagnostics,
+            ) = _return_allocation_update(
+                mixer,
+                probe,
+                batch.batch,
+                return_mode,
+            )
+            source_padding = source_assignment.masked_select(
+                ~valid.unsqueeze(1)
+            ).abs().sum()
+            return_padding = return_assignment.masked_select(
+                ~valid.unsqueeze(1)
+            ).abs().sum()
+            check = {
+                "layer": layer,
+                "active_slots": diagnostics["active_slots"],
+                "source_allocation": diagnostics["source_allocation"],
+                "return_allocation": diagnostics["return_allocation"],
+                "slot_shape": list(slots.shape),
+                "source_mass_one": bool(
+                    torch.allclose(
+                        source_assignment.sum(dim=-1),
+                        torch.ones_like(source_assignment.sum(dim=-1)),
+                        atol=1e-6,
+                        rtol=0,
+                    )
+                ),
+                "return_mass_one": bool(
+                    torch.allclose(
+                        return_assignment.sum(dim=-1),
+                        torch.ones_like(return_assignment.sum(dim=-1)),
+                        atol=1e-6,
+                        rtol=0,
+                    )
+                ),
+                "source_padding_mass_zero": bool(source_padding.item() == 0.0),
+                "return_padding_mass_zero": bool(return_padding.item() == 0.0),
+                "zero_return_exact": bool(torch.count_nonzero(update).item() == 0),
+            }
+            if return_mode == "uniform":
+                expected = valid.unsqueeze(1).to(return_assignment.dtype)
+                expected = expected / expected.sum(dim=-1, keepdim=True)
+                check["uniform_return_exact"] = bool(
+                    torch.equal(return_assignment, expected)
+                )
+            else:
+                check["return_differs_from_source"] = bool(
+                    not torch.equal(return_assignment, source_assignment)
+                )
+            layer_checks.append(check)
+        required = {
+            "source_mass_one",
+            "return_mass_one",
+            "source_padding_mass_zero",
+            "return_padding_mass_zero",
+            "zero_return_exact",
+            (
+                "uniform_return_exact"
+                if return_mode == "uniform"
+                else "return_differs_from_source"
+            ),
+        }
+        mechanism_checks = {
+            "source_allocation": "learned-softmax-over-atoms",
+            "return_allocation": return_mode,
+            "added_parameters": 0,
+            "layers": layer_checks,
+        }
+        if not all(
+            check["active_slots"] == 1
+            and check["source_allocation"] == "learned-softmax-over-atoms"
+            and check["return_allocation"] == return_mode
+            and check["slot_shape"] == [int(batch.num_graphs), 1, 64]
+            and all(check[name] is True for name in required)
+            for check in layer_checks
+        ):
+            raise RuntimeError(
+                f"Return-allocation invariant failed: {mechanism_checks}"
+            )
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     model.train()
@@ -810,6 +914,16 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             parameter
             for mixer in model.base.neural_atom_mixers.values()
             for module in (mixer.slot_ffn, mixer.return_projection)
+            for parameter in module.parameters()
+        ]
+    elif mode in {
+        "neural_atom_k1_uniform_return",
+        "neural_atom_k1_inverse_return",
+    }:
+        candidate_parameters = [
+            parameter
+            for mixer in model.base.neural_atom_mixers.values()
+            for module in (mixer.node_key, mixer.node_value, mixer.return_projection)
             for parameter in module.parameters()
         ]
     candidate_trainable = mode == "neural_atom_k1_v4" or any(

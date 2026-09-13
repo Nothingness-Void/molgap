@@ -9,6 +9,7 @@ from molgap.pcqm_k1_variants import (
     _cluster_mixer_update,
     _dynamic_query_single_slot_update,
     _multihead_single_slot_update,
+    _return_allocation_update,
     make_encoder,
 )
 from molgap.pcqm_k1_variants_runner import (
@@ -95,6 +96,8 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
         "neural_atom_k1_tied_selector": 3_622_401,
         "neural_atom_k1_collapsed_mha": 3_633_857,
         "neural_atom_k1_no_slot_attention": 3_608_897,
+        "neural_atom_k1_uniform_return": 3_658_817,
+        "neural_atom_k1_inverse_return": 3_658_817,
     }
     for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
         torch.manual_seed(42)
@@ -127,6 +130,43 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
     for mode, expected_count in expected_counts.items():
         assert sum(p.numel() for p in make_encoder(mode).parameters()) == expected_count
     assert set(ARCHITECTURE_CONFIGS) == set(expected_counts)
+
+
+def test_return_allocation_candidates_decouple_source_and_recipients():
+    batch = _batch()
+    hidden = torch.linspace(-1.0, 1.0, steps=batch.num_nodes * 192).reshape(
+        batch.num_nodes, 192
+    )
+    for mode, return_mode in (
+        ("neural_atom_k1_uniform_return", "uniform"),
+        ("neural_atom_k1_inverse_return", "inverse-score"),
+    ):
+        torch.manual_seed(42)
+        model = make_encoder(mode).eval()
+        mixer = model.base.neural_atom_mixers["3"]
+        with torch.no_grad():
+            update, slots, source, returned, valid, diagnostics = (
+                _return_allocation_update(
+                    mixer,
+                    hidden,
+                    batch.batch,
+                    return_mode,
+                )
+            )
+        assert slots.shape == (2, 1, 64)
+        assert diagnostics["source_allocation"] == "learned-softmax-over-atoms"
+        assert diagnostics["return_allocation"] == return_mode
+        assert torch.allclose(source.sum(dim=-1), torch.ones((2, 1)), atol=1e-6)
+        assert torch.allclose(returned.sum(dim=-1), torch.ones((2, 1)), atol=1e-6)
+        assert torch.count_nonzero(source.masked_select(~valid.unsqueeze(1))) == 0
+        assert torch.count_nonzero(returned.masked_select(~valid.unsqueeze(1))) == 0
+        assert torch.count_nonzero(update) == 0
+        if return_mode == "uniform":
+            expected = valid.unsqueeze(1).to(returned.dtype)
+            expected = expected / expected.sum(dim=-1, keepdim=True)
+            assert torch.equal(returned, expected)
+        else:
+            assert not torch.equal(source, returned)
 
 
 def test_clustered_neural_atoms_allocate_each_atom_across_slots():
