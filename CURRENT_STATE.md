@@ -37,14 +37,14 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
-The user reopened discovery for at most three sequential, attribution-gated
-attempts. Attempts 1 and 2 tested paper-style multi-slot grouping and
-channel-wise multi-head atom selection; both fit training more tightly and
-generalized worse under otherwise matched contracts. Their decisions are
-`experiments/pcqm_k1_paper_allocation_100k/decision.md` and
-`experiments/pcqm_k1_multiview_pool_100k/decision.md`. Attempt 3 retains one
-slot and one atom distribution and changes only its fixed query into a small
-molecule-conditioned query.
+The bounded three-attempt K1 mechanism sequence is complete. Paper-style
+multi-slot grouping, channel-wise multi-head atom selection, and a
+molecule-conditioned single query all fit training more tightly and generalized
+worse under otherwise matched v4 contracts. Their decisions are
+`experiments/pcqm_k1_paper_allocation_100k/decision.md`,
+`experiments/pcqm_k1_multiview_pool_100k/decision.md`, and
+`experiments/pcqm_k1_dynamic_query_100k/decision.md`. No attempt qualifies for
+another seed, shadow access, scale-up, official evaluation, or submission.
 
 The bounded K1-v4 selective-global screen completed with no winner. K1-G was
 materially worse; K1-R was statistically indistinguishable and slightly worse.

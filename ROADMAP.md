@@ -13,13 +13,13 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | C-K1-DYNAMIC-QUERY-R3 | Test one molecule-conditioned query feeding the unchanged single-slot K1 exchange | Terminal no-inference acceptance and a final dated decision closing the bounded three-attempt sequence |
-| P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
+| P0 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
-Attempts 1 and 2 were accepted mechanically and failed scientifically; both
-multi-slot and multi-head addressing are closed by their decision records. The
-K1 full candidate remains frozen. The completed K1-G/K1-R screen selected no
-candidate and did not alter that handoff. The existing full contract remains
+The bounded three-attempt sequence was accepted mechanically and failed
+scientifically; multi-slot grouping, multi-head selection, and dynamic-query
+addressing are closed by their decision records. The K1 full candidate remains
+frozen. The completed K1-G/K1-R screen also selected no candidate and did not
+alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
 prepares and reviews it but does not launch it.
 
