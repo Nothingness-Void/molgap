@@ -1,9 +1,14 @@
 # Status
 
-Kaggle2 P100 execution is authorized as autonomous discovery round 1. The
-scientific tensor initialization remains unchanged; only its portable artifact
-serialization is rebound to the integration runtime. Launch awaits committed
-packaging and tests.
+Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 2 is
+running as autonomous discovery round 1. Version 1 failed before source loading
+because the newly created source dataset was not yet mounted; it also exposed
+the stock-PyTorch P100 compatibility requirement. Version 2 preserves every
+scientific field, uses the ready source dataset, and installs the established
+P100-compatible wheel before model import.
+
+The scientific tensor initialization remains unchanged; only its portable
+artifact serialization is rebound to the integration runtime.
 
 The first SCNet Kunshan preflight `121888568` failed before training because
 the frozen SCNet PyTorch does not support `Tensor.std(correction=1)`; dependent
