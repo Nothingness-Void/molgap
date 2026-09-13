@@ -26,4 +26,4 @@ fi
 "$PYTHON" "$CODE_ROOT/experiments/pcqm_k1_gptrans_full_fusion/run_gptrans_full.py" preflight \
   --dataset-root "$DATA_ROOT" \
   --manifest "$DATA_ROOT/subsets/ogb-train-full/manifest.json" \
-  --output "$RUN_ROOT/outputs/gptrans/preflight"
+  --output "$RUN_ROOT/outputs/gptrans/preflight_r1"

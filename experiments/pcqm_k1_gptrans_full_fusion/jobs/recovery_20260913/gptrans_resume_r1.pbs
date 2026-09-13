@@ -29,7 +29,7 @@ SOURCE_COMMIT=$(tr -d '\r\n' < "$GPTRANS_SOURCE_ROOT/SOURCE_COMMIT.txt")
   --dataset-root "$DATA_ROOT" \
   --manifest "$DATA_ROOT/subsets/ogb-train-full/manifest.json" \
   --output "$RUN_ROOT/outputs/gptrans/full" \
-  --preflight "$RUN_ROOT/outputs/gptrans/preflight/preflight.json" \
+  --preflight "$RUN_ROOT/outputs/gptrans/preflight_r1/preflight.json" \
   --source-commit "$SOURCE_COMMIT" \
   --source-archive "$GPTRANS_SOURCE_ROOT/src.zip" \
   --resume \
