@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-k1-slot-processor-launch-v1",
+  "submitted_at_utc": "2026-09-13T08:39:58.8985126Z",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-pcqm-k1-slot-processor-s42",
+  "kernel_version": 1,
+  "accelerator_request": "NvidiaTeslaT4x2",
+  "observed_initial_state": "RUNNING",
+  "source_dataset": "kaseichou/molgap-pcqm-k1-slot-processor-source",
+  "source_dataset_status": "ready",
+  "source_commit": "2c7b40b1b652e75cfa74563167c980b074c8a69e",
+  "source_archive_sha256": "075f42b4498e93be987f0b604ed04c50dbea355d9b40f4d13f74b044c9efac66",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "candidates": [
+    "neural_atom_k1_collapsed_mha",
+    "neural_atom_k1_no_slot_attention"
+  ],
+  "reference_retrained": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

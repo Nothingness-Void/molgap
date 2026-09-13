@@ -44,6 +44,9 @@ one round-2 screen, `experiments/pcqm_k1_slot_processor_100k/`, about K1's
 redundant length-one slot-attention processor;
 no baseline retraining, extra seed, sealed-role read, or scale-up is authorized.
 Authority: `experiments/pcqm_k1_readout_selector_100k/decision.md`.
+The sole round-2 T4x2 kernel is recorded in the experiment `STATUS.md`; one GPU
+collapses single-token attention to its active value/output maps and the other
+removes that attention residual entirely.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
