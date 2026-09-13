@@ -108,6 +108,10 @@ TRAINING_CONTRACT = {
 TRAINING_CONTRACT_SHA256 = canonical_fingerprint(TRAINING_CONTRACT)
 
 
+def _gptrans_source_path() -> Path:
+    return Path(__file__).resolve().with_name("gptrans.py")
+
+
 class ExponentialMovingAverage:
     def __init__(self, model, decay: float) -> None:
         self.decay = float(decay)
@@ -222,7 +226,7 @@ def run_preflight(*, dataset_root: Path, manifest_path: Path, output: Path) -> d
 
     determinism = configure_fp32_determinism(SEED)
     accelerator = _runtime_gate()
-    source_path = Path(__file__).resolve().parents[1] / "gptrans.py"
+    source_path = _gptrans_source_path()
     if _architecture_source_sha256(source_path) != GPTRANS_SOURCE_SHA256:
         raise RuntimeError("GPTrans-T source hash changed")
     runtime = build_runtime_manifest(determinism)
@@ -364,7 +368,7 @@ def train_full(*, dataset_root: Path, manifest_path: Path, output: Path,
     determinism = configure_fp32_determinism(SEED)
     accelerator = _runtime_gate()
     runtime = build_runtime_manifest(determinism)
-    source_path = Path(__file__).resolve().parents[1] / "gptrans.py"
+    source_path = _gptrans_source_path()
     if _architecture_source_sha256(source_path) != GPTRANS_SOURCE_SHA256:
         raise RuntimeError("GPTrans-T source changed after preflight")
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))

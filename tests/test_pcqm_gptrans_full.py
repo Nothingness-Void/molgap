@@ -12,6 +12,7 @@ from molgap.pcqm_gptrans_full_runner import (
     TRAINING_CONTRACT_SHA256,
     WARMUP_STEPS,
     GPTRANS_SOURCE_SHA256,
+    _gptrans_source_path,
     _learning_rate,
 )
 from molgap.pcqm_k1_full_runner import _architecture_source_sha256
@@ -43,4 +44,20 @@ def test_gptrans_full_schedule_uses_frozen_sample_exposure():
 
 
 def test_gptrans_architecture_source_hash_is_frozen():
-    assert _architecture_source_sha256(ROOT / "src/molgap/gptrans.py") == GPTRANS_SOURCE_SHA256
+    expected_path = (ROOT / "src/molgap/gptrans.py").resolve()
+    assert _gptrans_source_path() == expected_path
+    assert _architecture_source_sha256(_gptrans_source_path()) == GPTRANS_SOURCE_SHA256
+
+
+def test_recovery_jobs_keep_the_frozen_ogb_archive_hash():
+    recovery_jobs = (
+        ROOT
+        / "experiments/pcqm_k1_gptrans_full_fusion/jobs/recovery_20260913"
+    )
+    expected = (
+        "export MOLGAP_OGB_SOURCE_SHA256="
+        "a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33"
+    )
+    scripts = sorted(recovery_jobs.glob("*.pbs"))
+    assert len(scripts) == 8
+    assert all(expected in script.read_text(encoding="utf-8") for script in scripts)
