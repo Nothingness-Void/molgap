@@ -39,13 +39,12 @@ official-validation read, test-dev read, or submission is authorized.
 
 A separately authorized three-round K1 architecture sequence is active under
 the frozen PCQM-100K v4 contract. Round 1 closed RepSet final readout and the
-cross-layer tied selector. Round 2 then tested K1's redundant length-one slot
-attention in one T4x2 job. Removing it improved paired errors but gained only
-0.0017627 eV, below the frozen 0.003 eV material/run-variation gate; collapsing
-it gained less. Both mechanisms are closed without an extra seed, sealed-role
-read, or scale-up. One final round remains available only after a distinct
-information-flow hypothesis is frozen. Authority:
-`experiments/pcqm_k1_slot_processor_100k/decision.md`.
+cross-layer tied selector. Round 2 closed length-one slot processing after a
+directional but sub-threshold simplification. Round 3 is frozen to test one
+remaining information-flow question: keep learned slot construction but return
+global context uniformly or to underrepresented atoms instead of reusing the
+source weights. Authority:
+`experiments/pcqm_k1_return_allocation_100k/protocol.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
