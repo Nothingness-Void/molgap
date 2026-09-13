@@ -37,14 +37,13 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
-A separately authorized three-round K1 architecture sequence is active under
-the frozen PCQM-100K v4 contract. Round 1 closed RepSet final readout and the
-cross-layer tied selector. Round 2 closed length-one slot processing after a
-directional but sub-threshold simplification. Round 3 is frozen to test one
-remaining information-flow question: keep learned slot construction but return
-global context uniformly or to underrepresented atoms instead of reusing the
-source weights. Authority:
-`experiments/pcqm_k1_return_allocation_100k/protocol.md`.
+The separately authorized three-round K1 architecture sequence is complete.
+Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
+found a directional but sub-threshold gain from removing length-one slot
+attention. Round 3 found a similarly directional but sub-threshold gain from
+uniform normalized return; inverse-score return regressed. No candidate cleared
+the frozen `0.003 eV` material/run-variation gate, so K1-v4 remains unchanged.
+Authority: `experiments/pcqm_k1_return_allocation_100k/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

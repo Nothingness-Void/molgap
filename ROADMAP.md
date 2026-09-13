@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-ROUND3 | Run the frozen uniform-return and inverse-score-return K1 candidates in one T4x2 job | Accepted terminal artifacts and a dated decision; no automatic seed or scale-up |
+| P0 | B-NEXT-AUTHORITY | Decide whether to open one materially distinct K1 geometry question; no K1 micro-variant or automatic successor | A new protocol is explicitly authorized, or server architecture discovery remains stopped |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -22,10 +22,10 @@ addressing are closed by their decision records. The separately authorized new
 sequence allows at most three rounds, with attribution between rounds. Round 1
 closed final node-set readout and cross-layer selector sharing. Round 2 closed
 K1's mathematically degenerate one-token slot processor: removing it was
-directionally positive but below the material/run-variation gate. Round 3 tests
-source/recipient allocation asymmetry without adding parameters: learned K1
-source pooling is retained while normalized uniform or inverse-score weights
-return the slot to atoms.
+directionally positive but below the material/run-variation gate. Round 3
+closed source/recipient allocation asymmetry: uniform return was directionally
+positive but sub-threshold, while inverse-score return regressed. The sequence
+does not release a chained simplification or another K1 micro-variant.
 The K1 full candidate remains frozen. The completed K1-G/K1-R screen also
 selected no candidate and did not alter that handoff. The existing full contract remains
 exactly 156,250 physical-BS128 optimizer steps, not 40 full-data epochs; server
@@ -33,8 +33,9 @@ prepares and reviews it but does not launch it.
 
 ## Architecture funnel
 
-Discovery is reopened for a separately bounded three-round K1 sequence. For
-each round:
+The separately bounded three-round K1 sequence is complete. Any later,
+materially distinct architecture question must be explicitly reopened and
+then follow this funnel:
 
 1. Audit all accepted and rejected evidence before naming one distinct
    information-flow bottleneck.
