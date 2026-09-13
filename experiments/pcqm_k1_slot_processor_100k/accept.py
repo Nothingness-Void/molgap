@@ -19,6 +19,10 @@ CANDIDATES = (
     "neural_atom_k1_collapsed_mha",
     "neural_atom_k1_no_slot_attention",
 )
+EXPECTED_PARAMETERS = {
+    "neural_atom_k1_collapsed_mha": 3_633_857,
+    "neural_atom_k1_no_slot_attention": 3_608_897,
+}
 
 
 def _load_shared_acceptance_helpers():
@@ -38,7 +42,11 @@ def accept(reference_root: Path, candidate_root: Path) -> dict:
     reference, reference_payload = _load_arm(reference_root, REFERENCE)
     candidates = {}
     for mode in CANDIDATES:
-        candidate, payload = _load_arm(candidate_root, mode)
+        candidate, payload = _load_arm(
+            candidate_root,
+            mode,
+            expected_parameters=EXPECTED_PARAMETERS,
+        )
         if not torch.equal(reference_payload["target"], payload["target"]):
             raise RuntimeError(f"Development targets differ: {mode}")
         if not torch.equal(reference_payload["source_idx"], payload["source_idx"]):
@@ -117,4 +125,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
-

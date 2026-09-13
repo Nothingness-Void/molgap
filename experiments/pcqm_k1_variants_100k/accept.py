@@ -37,7 +37,13 @@ EXPECTED_PARAMETERS = {
 }
 
 
-def _load_arm(root: Path, mode: str) -> tuple[dict, dict]:
+def _load_arm(
+    root: Path,
+    mode: str,
+    *,
+    expected_parameters: dict[str, int] | None = None,
+) -> tuple[dict, dict]:
+    parameter_table = EXPECTED_PARAMETERS if expected_parameters is None else expected_parameters
     arm_root = root / mode
     record = json.loads((arm_root / "arm_record.json").read_text(encoding="utf-8"))
     completion = json.loads(
@@ -59,14 +65,14 @@ def _load_arm(root: Path, mode: str) -> tuple[dict, dict]:
         if record.get(key) != expected:
             raise RuntimeError(f"Arm contract changed for {mode}: {key}")
     training = record["training"]
-    if training.get("parameter_count") != EXPECTED_PARAMETERS[mode]:
+    if training.get("parameter_count") != parameter_table[mode]:
         raise RuntimeError(f"Parameter count changed: {mode}")
     if training.get("epochs_completed") != EPOCHS or training.get("sample_presentations") != SAMPLE_EXPOSURE:
         raise RuntimeError(f"Training exposure changed: {mode}")
     preflight = record["preflight"]
     if (
         preflight.get("mode") != mode
-        or preflight.get("parameter_count") != EXPECTED_PARAMETERS[mode]
+        or preflight.get("parameter_count") != parameter_table[mode]
         or preflight.get("exact_k1_function_at_initialization") is not True
         or preflight.get("candidate_mechanism_trainable_after_two_steps") is not True
     ):
