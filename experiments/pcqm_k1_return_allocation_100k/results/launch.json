@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-k1-return-allocation-launch-v1",
+  "submitted_at_utc": "2026-09-13T13:58:32.2858386Z",
+  "platform": "kaggle2",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-pcqm-k1-return-allocation-s42",
+  "kernel_version": 1,
+  "accelerator": "NvidiaTeslaT4x2",
+  "post_submit_status": "RUNNING",
+  "source_dataset": "kaseichou/molgap-pcqm-k1-return-allocation-source",
+  "source_commit": "8d0770ff1ba4b0f841ec18a8bf544141866204f7",
+  "source_archive_sha256": "1e4f504fd77d3ea55bde597cc30067352261b06df7615b3f1830838c928f2d30",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "candidate_modes": [
+    "neural_atom_k1_uniform_return",
+    "neural_atom_k1_inverse_return"
+  ],
+  "reference_retrained": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
