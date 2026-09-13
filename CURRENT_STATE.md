@@ -37,13 +37,12 @@ official-validation read, test-dev read, or submission is authorized.
 
 ## Discovery state
 
-A new, separately authorized three-round K1 architecture sequence is active
-under the frozen PCQM-100K v4 contract. Round 1 is
-`experiments/pcqm_k1_readout_selector_100k/`: one T4x2 job isolates a compact
-RepSet final-node readout and a selector shared across K1's three exchange
-layers. Both reuse the accepted K1-v4 reference; no baseline retraining, extra
-seed, sealed-role read, or scale-up is authorized by launch alone. A terminal
-failure requires a dated attribution before one distinct successor is chosen.
+A separately authorized three-round K1 architecture sequence is active under
+the frozen PCQM-100K v4 contract. Round 1 closed both RepSet final readout and
+cross-layer tied selector without a winner. Its dated attribution authorizes
+one round-2 question about K1's redundant length-one slot-attention processor;
+no baseline retraining, extra seed, sealed-role read, or scale-up is authorized.
+Authority: `experiments/pcqm_k1_readout_selector_100k/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

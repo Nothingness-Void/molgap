@@ -82,6 +82,13 @@ terminal window. Handoff every remote chain before the coordinator stops watchin
   coordinator thread. The message must include job identity, terminal state,
   artifact location, acceptance output, essential metrics/hashes, and an
   explicit request for coordinator analysis.
+- A monitor must use the authoritative integration checkout named in its
+  prompt; never inherit an old task cwd or a detached `.codex/worktrees`
+  checkout. Verify the named protocol exists before remote work.
+- Terminal handoff is a transaction. Persist its stages atomically, require a
+  successful `send_message_to_thread` acknowledgement, and mark delivery only
+  after that acknowledgement. A missing acknowledgement keeps the heartbeat
+  active to retry delivery only.
 - After the terminal handoff is delivered, pause or delete the heartbeat in the
   same turn. A completed monitor has no reason to remain active. If message
   delivery itself fails, leave the heartbeat active only long enough to retry

@@ -1,0 +1,31 @@
+{
+  "format": "molgap-pcqm-k1-readout-selector-summary-v1",
+  "decision_date": "2026-09-13",
+  "kernel": "kaseichou/molgap-pcqm-k1-readout-selector-s42",
+  "kernel_version": 1,
+  "mechanical_acceptance": true,
+  "selected_candidate": null,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidates": {
+    "neural_atom_k1_repset_readout": {
+      "development_gap_mae_eV": 0.14210806787014008,
+      "gain_vs_reference_eV": -0.0007344335317611694,
+      "paired_error_delta_bootstrap_95_eV": [-0.0001722728531603934, 0.0016259334719507022],
+      "parameter_count": 3683985,
+      "best_epoch": 39,
+      "passed": false
+    },
+    "neural_atom_k1_tied_selector": {
+      "development_gap_mae_eV": 0.14184275269508362,
+      "gain_vs_reference_eV": -0.0004691183567047119,
+      "paired_error_delta_bootstrap_95_eV": [-0.0004616974969394505, 0.0013987419311888506],
+      "parameter_count": 3622401,
+      "best_epoch": 38,
+      "passed": false
+    }
+  },
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
