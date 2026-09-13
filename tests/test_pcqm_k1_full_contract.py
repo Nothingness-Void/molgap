@@ -56,6 +56,15 @@ def test_full_schedule_preserves_reference_sample_exposure_exactly():
         )
     )
     assert frozen == TRAINING_CONTRACT
+    audit = json.loads(
+        (REPO_ROOT / "experiments/pcqm_k1_full/audit_checklist.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert audit["training_contract_sha256"] == TRAINING_CONTRACT_SHA256
+    assert audit["superseded_training_contract_sha256"] == (
+        "5535fdb9adbed0d80d113f859c318c87872e0e9c94890eee89a719c5961adddf"
+    )
 
 
 def test_architecture_source_hashes_are_line_ending_independent():
