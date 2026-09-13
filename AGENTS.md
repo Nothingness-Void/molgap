@@ -87,8 +87,11 @@ terminal window. Handoff every remote chain before the coordinator stops watchin
   acknowledgement; otherwise retry delivery only.
 - Delegated tasks may be policy-blocked from cross-thread messaging. Test that
   path once. If blocked, do not keep retrying it: write `handoff_ready=true` to
-  the atomic marker and use one heartbeat attached to the existing coordinator
-  thread to consume that marker. This bridge must not create tasks/chats.
+  the atomic marker. Only after the terminal marker is durable, create a
+  temporary one-minute heartbeat attached to the existing coordinator thread.
+  It consumes the marker once and deletes itself before controller analysis.
+  Never keep a coordinator heartbeat active while the remote job is queued or
+  running, and never create a task/chat for handoff.
 - After the terminal handoff is delivered, pause or delete the heartbeat in the
   same turn. A completed monitor has no reason to remain active. If message
   delivery itself fails, leave the heartbeat active only long enough to retry
