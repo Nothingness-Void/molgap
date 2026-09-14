@@ -31,10 +31,11 @@ Track C.
 | Did K1 pass its once-read shadow audit? | Yes; role consumed | `pcqm_k1_shadow/` |
 | Can molecule-conditioned strength or a relation slot improve K1? | No; both v4 variants closed | `pcqm_k1_variants_100k/` |
 | Should K1 use different source and recipient atom allocations? | Uniform return was directionally positive but sub-threshold; round 3 closed | `pcqm_k1_return_allocation_100k/` |
-| Do K1's two directional simplifications combine materially? | One explicitly authorized interaction screen | `pcqm_k1_combined_simplification_100k/` |
+| Do K1's two directional simplifications combine materially? | Directionally positive but below the frozen gate; closed | `pcqm_k1_combined_simplification_100k/` |
 | Does the paper's atom-wise Neural-Atom grouping improve sparse K1? | Attempt 1 protocol under validation | `pcqm_k1_paper_allocation_100k/` |
 | Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
-| What is the reusable GPTrans-T reference under the V4 cross-platform contract? | Mechanically accepted at 100K but not competitive; frozen for reference and closed for promotion | `pcqm_gptrans_t_100k_v4/` |
+| What is the reusable GPTrans-T reference under the V4 cross-platform contract? | Mechanically accepted at 100K; weak at this scale but retained for controlled comparisons | `pcqm_gptrans_t_100k_v4/` |
+| Does the same GPTrans-T core transfer at 500K? | Yes; it beat matched ESGPS6-304 scratch and remains a scale candidate | `pcqm_gptrans_t_500k/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |

@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
+| P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
 scientifically; multi-slot grouping, multi-head selection, and dynamic-query
@@ -37,11 +37,11 @@ separate authorization permits at most three Kaggle2 rounds. Successors require
 a terminal acceptance and written failure attribution by the coordinator; the
 monitor cannot choose them.
 
-Kaggle2 round 1 accepted GPTrans-T mechanically and rejected it scientifically
-for the 100K funnel. Two possible round slots remain unused; neither is a quota
-that must be spent. A successor needs a distinct information-flow hypothesis
-and must not reconstruct the closed dense PairGPS route through incremental
-patches.
+Kaggle2 round 1 accepted GPTrans-T mechanically and found it weak at 100K.
+The earlier accepted 500K run of the same core was positive, so GPTrans remains
+in the desktop-owned matched full-run comparison. Two possible Kaggle round
+slots remain unused; neither is a quota that must be spent, and no duplicate
+scale job is authorized while the desktop comparison exists.
 
 ## Architecture funnel
 

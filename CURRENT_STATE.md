@@ -14,8 +14,8 @@
 
 ## Track B candidate
 
-Neural-Atom K1 is the sole frozen server-side candidate eligible for a desktop
-full-run budget decision. It replaces dense per-layer global GPS attention with
+Neural-Atom K1 and the adapted GPTrans-T core are the two frozen architectures
+in the desktop-owned matched full-run comparison. K1 replaces dense per-layer global GPS attention with
 three exchanges through one 64-channel molecular slot while retaining local
 persistent real-bond EdgeState processing. Its PCQM-100K, once-read shadow, and
 fixed 500K bridge passed; evidence is in:
@@ -28,12 +28,20 @@ K1 is frozen at 3,658,817 parameters and architecture commit
 an official leaderboard result, or evidence against the separately configured
 desktop 304-wide/pretrained model.
 
-The audited full-role implementation is `experiments/pcqm_k1_full/`. It fixes
-sample exposure at 20M presentations (156,250 BS128 steps), uses strict
-FP32/no-TF32, atomically resumes all training state, requires an accepted
-optimizer-inclusive runtime preflight, and emits a self-contained model bundle.
-It is unlaunched and desktop-owned. No server full run, K1 tuning, extra seed,
-official-validation read, test-dev read, or submission is authorized.
+GPTrans-T is frozen at 5,246,817 parameters. Its 100K reference was weak, but
+the same propagation core passed the accepted SCNet 500K gate and was
+numerically slightly better than K1's separate 500K run. Because their
+architecture-specific optimization contracts differ, the full matched study—not
+the cross-job 500K scalar difference—owns the final comparison. Authority:
+`experiments/pcqm_gptrans_t_500k/results/decision.md`.
+
+The audited full-role implementation is `experiments/pcqm_k1_full/`. The
+desktop-owned branch `codex/pcqm-k1-gptrans-full-fusion` has launched a matched
+K1/GPTrans comparison at 20M presentations, seed 42, strict FP32/no-TF32, and
+physical BS128. Its recoverable checkpoints and scheduler recovery remain
+desktop-owned; server must not launch a duplicate or interfere. Official-role
+use and any final submission remain governed by that experiment's frozen
+contract.
 
 ## Discovery state
 
@@ -53,9 +61,10 @@ It is closed and does not alter the frozen K1 handoff. Authority:
 The separate Kaggle2 discovery loop remains bounded to at most three
 evidence-gated rounds. Round 1 completed a pure-2D GPTrans-T reference on the
 accepted 100K/50K data identity. It was mechanically accepted but substantially
-underperformed the contextual K1 reference, so GPTrans tuning and scale-up are
-closed. No round-2 job is released without a distinct information-flow
-hypothesis. Authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
+underperformed the contextual K1 reference. Reconciliation with the prior
+accepted 500K run shows scale sensitivity rather than architecture failure.
+No round-2 Kaggle job is released while desktop already owns the matched
+full-scale comparison. Authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
