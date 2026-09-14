@@ -29,3 +29,28 @@ the latter would incorrectly reject a genuine immediate information-flow change.
 The release carried [three-round authority](results/authorization.json).
 It did not release a scale-up, extra seed or official-role use. No training
 result was claimed at release; operational provenance belongs to `STATUS.md`.
+
+## Terminal decision — 2026-09-15
+
+Both arms completed 40 epochs and passed frozen no-inference acceptance. The
+read-only-normalized arm scored `0.1417749524 eV`, regressing by
+`0.0004013181 eV`. The context-and-read-normalized arm scored
+`0.1404833347 eV`, improving by `0.0008902997 eV`; its paired bootstrap 95%
+interval was barely favorable (`[-0.00177465, -0.00000570] eV`). Neither met
+the `0.003 eV` material/run-variation gate, so `selected_candidate=null`.
+
+The stored raw edge RMS rose smoothly from about `0.37` to `0.66–0.68` across
+nine layers while every read view stayed near unit RMS. This rules out a
+catastrophic activation explosion in the train-only preflight. The contrast
+between arms indicates that normalizing the historical edge state before the
+next update is directionally preferable to exposing the update MLP to its raw
+scale; it does not establish a standalone promotion.
+
+The isolated storage/read question is closed without another seed, norm
+variant, optimizer rescue or scale-up. Because the favorable arm changes
+real-bond recurrence while the earlier no-slot-attention and uniform-return
+signals change the separate global slot path, round 2 may test the two pairwise
+interactions independently. This is an additivity test, not automatic stacking:
+third-round triple composition is conditional on accepted pairwise evidence.
+Exact mechanical evidence: [acceptance](results/acceptance.json) and
+[summary](results/summary.json).

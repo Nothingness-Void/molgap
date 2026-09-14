@@ -1,0 +1,26 @@
+{
+  "format": "molgap-k1-edge-memory-summary-v1",
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidates": {
+    "neural_atom_k1_edge_read_norm": {
+      "development_gap_mae_eV": 0.1417749524116516,
+      "gain_eV": -0.0004013180732727051,
+      "best_epoch": 39,
+      "parameter_count": 3658817,
+      "passed": false
+    },
+    "neural_atom_k1_edge_context_read_norm": {
+      "development_gap_mae_eV": 0.1404833346605301,
+      "gain_eV": 0.0008902996778488159,
+      "best_epoch": 37,
+      "parameter_count": 3658817,
+      "paired_bootstrap_95_eV": [-0.001774649565935135, -0.000005699875116348309],
+      "passed": false
+    }
+  },
+  "selected_candidate": null,
+  "minimum_gain_eV": 0.003,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "model_inference_executed_by_acceptance": false
+}

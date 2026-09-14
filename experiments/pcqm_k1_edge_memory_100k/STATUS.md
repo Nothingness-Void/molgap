@@ -7,4 +7,5 @@ the successful push. Exact identities: `results/submission.json`.
 Remote training preflight and final acceptance have not yet been observed.
 Twenty-six local static/policy tests passed; no local model was executed.
 Two further rounds remain conditional on controller terminal attribution.
-Monitoring handoff is defined by `monitor.md`; do not repeat submission.
+The job reached COMPLETE and frozen acceptance passed. Both scientific gates
+failed; the task is closed and its monitor was removed. Do not repeat submission.
