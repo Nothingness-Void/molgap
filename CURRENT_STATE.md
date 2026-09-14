@@ -77,7 +77,7 @@ or K1 promotion. Authority and consolidated evidence:
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
 closed isolated K1 real-bond storage/read normalization: one arm regressed and
 the other was directionally favorable but below the material gate. Round 2 is
-authorized to test that weak relation-recurrence signal separately with the two
+running to test that weak relation-recurrence signal separately with the two
 previously favorable global-slot simplifications; no desktop handoff changes.
 Authority: `experiments/pcqm_k1_edge_memory_100k/decision.md`.
 
