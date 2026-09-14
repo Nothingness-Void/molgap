@@ -35,8 +35,8 @@ preserves certificate lineage without weakening contract, data, source, or
 runtime-fingerprint checks. PBS recovered on 2026-09-14. R3 deployed that fix
 with memory-mapped graph loading and resumes a verified copy of the step-105,500
 checkpoint in an isolated output directory. GPTrans completed all 156,250
-steps; its acceptance retry now receives the accepted preflight path explicitly.
-The five-job recovery chain is submitted. Exact identities and dependencies are
+steps and passed full mechanical acceptance in R3. K1 continuation is queued
+for an A100, with acceptance and fusion dependency-held. Exact identities are
 in `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
 After both base artifacts pass acceptance, the dependent fusion job will read
 the official-valid role exactly once, fit one scalar on a fixed 20% calibration
@@ -94,9 +94,9 @@ must not be represented as this new conservative head.
   advancement gate; the time-gated fourth candidate was not launched.
 - The IMS full-scale R3 chain is submitted: GPTrans acceptance `1507508`, K1
   resume `1507509`, K1 acceptance `1507510`, fusion `1507511`, and fusion
-  acceptance `1507512` (all `.ccpbs1`). At the initial 2026-09-14 14:58 JST
-  snapshot, GPTrans acceptance was running, K1 was GPU-queued, and downstream
-  jobs were dependency-held. Recovery evidence and output locations are in
+  acceptance `1507512` (all `.ccpbs1`). GPTrans acceptance completed with
+  `accepted=true`; K1 is GPU-queued and downstream jobs are dependency-held.
+  Recovery evidence and output locations are in
   `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
