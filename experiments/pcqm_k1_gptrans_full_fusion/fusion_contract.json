@@ -1,0 +1,54 @@
+{
+  "format": "molgap-pcqm-k1-gptrans-fusion-contract-v1",
+  "model_inputs": {
+    "k1_model_id": "neural_atom_k1",
+    "gptrans_model_id": "gptrans_t_core",
+    "require_accepted_base_training_artifacts": true,
+    "inference_precision": "fp32"
+  },
+  "evaluation_role": {
+    "dataset": "PCQM4Mv2 official valid",
+    "graph_cache": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/graphs",
+    "graph_acceptance_sha256": "83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed",
+    "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "rows": 73545,
+    "feature_schema": "ogb-node9-edge3-rwse16",
+    "validation_role_consumed_for_this_single_study": true,
+    "test_dev_read": false,
+    "test_challenge_read": false
+  },
+  "calibration": {
+    "ordering": "ascending source_idx",
+    "calibration_predicate": "source_idx % 5 == 0",
+    "holdout_predicate": "source_idx % 5 != 0",
+    "fitted_parameters": 1,
+    "blend": "alpha * K1 + (1 - alpha) * GPTrans-T",
+    "alpha_range": [0.0, 1.0],
+    "alpha_grid_step": 0.001,
+    "objective": "calibration MAE in eV",
+    "tie_break": "closest to 0.5, then smaller alpha",
+    "holdout_is_not_used_for_fitting": true
+  },
+  "comparisons": [
+    "K1 MAE on calibration and holdout",
+    "GPTrans-T MAE on calibration and holdout",
+    "fixed 50:50 MAE on calibration, holdout, and all official-valid rows",
+    "calibrated blend MAE on calibration and holdout"
+  ],
+  "durability": {
+    "prediction_parts": 8,
+    "atomic_part_writes": true,
+    "resume_verified_parts_by_input_model_and_contract_hash": true,
+    "mechanical_cpu_acceptance_required": true
+  },
+  "resources": {
+    "accelerator": "exactly one A100",
+    "walltime": "04:00:00"
+  },
+  "interpretation": {
+    "official_validation_metrics_are_not_test_or_leaderboard_scores": true,
+    "no_repeated_tuning_on_consumed_official_validation_role": true,
+    "mechanical_acceptance_does_not_decide_scientific_advancement": true,
+    "production_registry_change": false
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "format": "molgap-ims-full-recovery-r3",
+  "repair_commit": "1a85b07",
+  "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/recovery_20260914_r3",
+  "checkpoint_sha256": "17e1f4165a0e97ef411ea40ef98deceefd656525045da020fa7f229aa808bf8c",
+  "source_hashes": {
+    "code/src/molgap/pcqm_k1_full_runner.py": "9ec288a4e3371b0a56ac16e96443e24772268ece3cdcbe33b28309220573f421",
+    "jobs/k1_accept.pbs": "2dfe02836010c642b337d4005e3e9401807dc3b9861f29fc80cbea6d40f45b57",
+    "jobs/gptrans_accept.pbs": "08f8db5db4f52f76a892e4ff409528338698d300312dfbe1e17b9c641be62f61",
+    "jobs/fusion_accept.pbs": "d28d9e54f2c146992fb4b64c86168bc7cf55695dbd9429c45f705e0847e146fc",
+    "code/experiments/pcqm_k1_full/accept_training.py": "00f812102414b9219bf1f7cfa442ffaf3ad4d70f6b3e94f90cb3b897d7fb5cb9",
+    "jobs/fusion_study.pbs": "b814844691947c7611207254bb120fb6a0b351da90ed6e99037b39e6bab323d8",
+    "jobs/k1_resume.pbs": "138e77d934bf85a87310acb30a1fcd243e0556f53b73ec04e24352ace9822510",
+    "code/src/molgap/pcqm_gptrans_full_acceptance.py": "a89ea17b7e145ed440e9357903771dfba010b43f92299a96ae01c52a5be55f61"
+  },
+  "jobs": {
+    "gptrans_accept": {
+      "id": "1507508.ccpbs1",
+      "afterok": []
+    },
+    "k1_resume": {
+      "id": "1507509.ccpbs1",
+      "afterok": []
+    },
+    "k1_accept": {
+      "id": "1507510.ccpbs1",
+      "afterok": [
+        "1507509.ccpbs1"
+      ]
+    },
+    "fusion_study": {
+      "id": "1507511.ccpbs1",
+      "afterok": [
+        "1507508.ccpbs1",
+        "1507510.ccpbs1"
+      ]
+    },
+    "fusion_accept": {
+      "id": "1507512.ccpbs1",
+      "afterok": [
+        "1507511.ccpbs1"
+      ]
+    }
+  }
+}

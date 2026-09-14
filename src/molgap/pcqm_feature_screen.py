@@ -20,11 +20,11 @@ from rdkit import Chem
 from torch_geometric.data import Data, InMemoryDataset
 from torch_geometric.loader import DataLoader
 
-from .gps import (
+from .categorical_gps import (
     CategoricalEdgeStateStructuralGPSWrapper,
     CategoricalRadicalContextEdgeStateStructuralGPSWrapper,
-    EdgeStateStructuralGPSWrapper,
 )
+from .gps import EdgeStateStructuralGPSWrapper
 from .ogb_features import (
     ATOM_FEATURE_DIMS,
     BOND_FEATURE_DIMS,

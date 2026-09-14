@@ -138,6 +138,12 @@ def active_experiment_dirs() -> list[Path]:
         path
         for path in (REPO_ROOT / "experiments").iterdir()
         if path.is_dir() and not path.name.startswith("_")
+        # Import caches can remain after a tracked experiment is moved.
+        and any(
+            item.is_file()
+            and not EXCLUDED_PARTS.intersection(item.relative_to(path).parts)
+            for item in path.rglob("*")
+        )
     )
 
 

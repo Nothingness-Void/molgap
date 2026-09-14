@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -N molgap-k1-gpt-fusion-accept
+#PBS -q H
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=01:00:00
+#PBS -o /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/logs/fusion_accept.out
+#PBS -e /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/logs/fusion_accept.err
+set -euo pipefail
+
+RUN_ROOT=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full
+GRAPH_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/graphs
+VENDOR_ROOT=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+CODE_ROOT="$RUN_ROOT/code"
+export PYTHONPATH="$VENDOR_ROOT/code/platforms/ims/pcqm_route_b/shims:$VENDOR_ROOT/vendor-cu126-torch271:$RUN_ROOT/inputs/ogb-1.3.6.zip:$CODE_ROOT/src"
+export MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+"$PYTHON" "$CODE_ROOT/experiments/pcqm_k1_gptrans_full_fusion/run_fusion_study.py" accept \
+  --training-root "$RUN_ROOT" \
+  --graph-root "$GRAPH_ROOT" \
+  --output "$RUN_ROOT/outputs/fusion_study"

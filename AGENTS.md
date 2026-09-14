@@ -45,14 +45,15 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   all path access, including read-only discovery and metadata probes.
 
 ## Branch ownership
-- Desktop/Kaggle work is owned by `molgap-desktop`; molecular-server work is
-  owned by `molgap-server`. Never modify or merge into the other owner's branch.
-- Start each architecture or question on `codex/exp/<question>` from its owner
-  branch. Do not create branches for individual seeds or remote job versions.
-- Merge accepted desktop results into `molgap-desktop`. Merge rejected results
-  into `molgap-archive` with their evidence and rejection reason.
+- Desktop full training, official evaluation, and its SCNet work belong to
+  `molgap-desktop`; server discovery belongs to `molgap-server`. Compute host
+  alone does not determine ownership. See `BRANCHES.md` for checkout routing.
+- Work on the owning integration branch when safe. Use a temporary `codex/`
+  branch for concurrent work or isolation, never for individual seeds/retries.
+- Merge reviewed desktop implementations into `molgap-desktop`. Preserve
+  rejected or inactive histories in `archive` with their disposition.
 - Keep only active experiment branches. Delete a completed experiment branch
-  after its commits are reachable from `molgap-desktop` or `molgap-archive`.
+  after its commits are reachable remotely from `molgap-desktop` or `archive`.
 - Promote an accepted owner branch to `master` only as a separate explicit step.
 
 ## Conventions

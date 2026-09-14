@@ -29,7 +29,7 @@ The Kunshan 500K distance-angle OOF blend is positive nomination evidence, but
 its V4 audit found no runtime certificate or matching V4 reference. It is not
 formal V4 cross-platform/causal evidence. Keep code and records isolated on
 `codex/exp/gptrans-k1-geometry-500k` at `6d8630e` pending the declared bridge.
-Its tests pass there; its base classes are absent from this desktop snapshot.
+Its V4 comparability audit remains binding after full-run code integration.
 
 The older Kaggle2 recurrent screen is closed and missed its comparator by
 `0.0006301 eV`; it is archived at commit `285e1dc`. Do not resume or scale it.
@@ -53,9 +53,13 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   Kaggle accounts mirror accepted 100K/500K graphs.
 - Legacy local-operator Kaggle screen is closed; recurrent graph-state is
   negative and archived. Neither is an active Kunshan experiment.
-- V4 reference and official-train K1/GPTrans-T full/fusion remain separate
-  experiment branches. Their last-known snapshots are 2026-09-12 and 2026-09-13;
-  check the monitor/scheduler before claiming live state or resubmitting.
+- The full K1/GPTrans-T implementation is integrated in this branch. The
+  2026-09-14 evidence accepts GPTrans training at 156,250 steps; K1 recovery
+  and dependent fusion have no terminal acceptance in this snapshot.
+- Independent frozen GPTrans official-valid evaluation was submitted as CPU
+  job 1507573.ccpbs1 on 2026-09-14. Its MAE is not yet recorded here.
+  Follow the experiment results linked below; verify scheduler state before
+  any successor or resubmission. These are recorded snapshots, not live polls.
 - The K1/GPTrans-T fusion has one-time authorization for its frozen official-
   valid calibration/holdout split. Test-dev/challenge remain sealed.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
@@ -66,8 +70,8 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 ## Boundaries
 
 - Track B predicts only Gap and cannot replace Track A without a separate
-  production gate. Official validation is not a screen-tuning role; the one
-  authorized fusion use is recorded above. Test-dev/challenge stay sealed.
+  production gate. Official validation is not a screen-tuning role; the authorized
+  frozen-model scoring and fusion uses are recorded above. Test-dev/challenge stay sealed.
 - IMS access is limited to `/lustre/home/users/sm2/chou/` and governed by
   `platforms/REMOTE_HANDOFF.md`.
 - Common/OOD/P8-hard are one-time Track A acceptance roles, not tuning data.
@@ -84,6 +88,6 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 | V4 reference status? | Branch `codex/exp/gptrans-t-100k-v4`; last snapshot: `121922252`, 2026-09-12 |
 | 500K geometry nomination? | Branch `codex/exp/gptrans-k1-geometry-500k` at `6d8630e`; not V4-comparable |
 | Recurrent Kaggle disposition? | `archive` branch at `285e1dc`; negative, closed |
-| Full K1/GPTrans-T chain? | Branch `codex/pcqm-k1-gptrans-full-fusion`; last snapshot recorded 2026-09-13 |
+| Full K1/GPTrans-T chain? | `experiments/pcqm_k1_gptrans_full_fusion/README.md` and its linked 2026-09-14 recovery/evaluation evidence |
 | What was submitted for OGB review? | `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md` |
 | Experiment/data/remote/model indices? | `experiments/README.md`, `platforms/README.md`, `models/README.md` |

@@ -12,7 +12,7 @@ import torch
 from rdkit import Chem
 from torch_geometric.data import Batch
 
-from molgap.gps import (
+from molgap.categorical_gps import (
     CategoricalConcatFeatureEncoder,
     CategoricalEdgeStateStructuralGPSWrapper,
     CategoricalRadicalContextEdgeStateStructuralGPSWrapper,

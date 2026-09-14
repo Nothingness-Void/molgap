@@ -22,7 +22,8 @@ import torch.nn as nn
 from torch_geometric.nn import GINEConv
 from torch_geometric.utils import to_dense_batch
 
-from .gps import CategoricalFeatureEncoder, FrontierCenterGapHead
+from .categorical_gps import CategoricalFeatureEncoder
+from .gps import FrontierCenterGapHead
 
 
 class _PairGPSBlock(nn.Module):

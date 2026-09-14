@@ -1,0 +1,103 @@
+{
+  "format": "molgap-pcqm-k1-gptrans-full-submission-v1",
+  "recorded_at": "2026-09-13T01:51:45+09:00",
+  "authorization": "User authorized full official-train K1 and GPTrans-T runs, followed by a one-time official-valid fusion calibration/holdout study, on 2026-09-13.",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full",
+  "data": {
+    "root": "/lustre/home/users/sm2/chou/pcqm4mv2-fixed-v1",
+    "rows": 3378606,
+    "official_valid_rows": 73545,
+    "official_validation_graph_cache": "/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/graphs",
+    "official_validation_graph_acceptance_sha256": "83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed",
+    "official_validation_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "manifest_raw_sha256": "3068631c27d32b7fdfc8b19366ec4eb7e47c8aadf4fcbbe3c686c685cc5f408c",
+    "manifest_canonical_sha256": "7d358a679d299bd5de6c5822e42dcef34b0e0b9fa9598c684709509c0b94021d",
+    "topology_aggregate_sha256": "be18a9964754c8428b5c62433136bd0bafb6c75016811c79e223aec30f3dbe98",
+    "official_validation_graph_cache_present": true
+  },
+  "source": {
+    "commit": "8105498cadd47db672f3334a9ad169c5a95aea6e",
+    "archive_sha256": "e24b7c033bbe90c101a94f465f0ec258e6688a4527c2400d35fff7acf07b2af3",
+    "ogb_1_3_6_archive_sha256": "a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33",
+    "fusion_feature_commit": "f993428a",
+    "fusion_metric_report_commit": "77553b8",
+    "fusion_acceptance_hardening_commit": "9e0251f"
+  },
+  "contracts": {
+    "k1_sha256": "84fc78437c6f092dabcf2407af7bc75817ddde63424b412b143555e1adae6a50",
+    "gptrans_t_sha256": "732a9a73f341a2caad151fde20fea82cb3623e4e242337e95fb05b3fe33d2cad",
+    "shared_train_rows": 3378606,
+    "shared_physical_batch": 128,
+    "shared_sample_presentations": 20000000,
+    "shared_seed": 42,
+    "shared_precision": "fp32"
+  },
+  "jobs": {
+    "k1_preflight": {
+      "id": "1497500.ccpbs1",
+      "state_at_record": "Queue"
+    },
+    "k1_train": {
+      "id": "1497501.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497500.ccpbs1"
+    },
+    "gptrans_preflight": {
+      "id": "1497502.ccpbs1",
+      "state_at_record": "Queue"
+    },
+    "gptrans_train": {
+      "id": "1497503.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497502.ccpbs1"
+    },
+    "k1_acceptance": {
+      "id": "1497505.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497501.ccpbs1"
+    },
+    "gptrans_acceptance": {
+      "id": "1497506.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497503.ccpbs1"
+    },
+    "fusion_study": {
+      "id": "1497525.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497505.ccpbs1:1497506.ccpbs1",
+      "walltime": "04:00:00",
+      "gpu": "one A100"
+    },
+    "fusion_acceptance": {
+      "id": "1497527.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1497525.ccpbs1"
+    }
+  },
+  "queue_snapshot": {
+    "user_running_jobs": 0,
+    "free_gpu_nodes": 0,
+    "user_queued_jobs": 2,
+    "user_held_jobs": 6,
+    "gpu_jobs_waiting_including_these_jobs": 27,
+    "captured_at": "2026-09-13T01:51:45+09:00"
+  },
+  "role_boundary": {
+    "base_training_official_validation_role_read": false,
+    "fusion_study_official_validation_role_read": true,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false,
+    "blend_fit_on_train_predictions": false
+  },
+  "fusion": {
+    "contract_sha256": "c1e01cb94fcfc6600988c46d215f3c68ea35f92b5c74400de2a4f1e951b6cb4d",
+    "source_sha256": "17d27d68ca95e894071cf3dc7122dda0bc09dd4148f83928cacf57092444d4bf",
+    "entrypoint_sha256": "b417d4f93086ed9309518254254894c19bf6ce8508365eef9777091e8480c733",
+    "calibration_rule": "source_idx % 5 == 0; 0.001 convex scalar MAE grid",
+    "holdout_rule": "source_idx % 5 != 0",
+    "validation_role_consumed_once": true,
+    "test_dev_or_challenge_read": false,
+    "monitor_automation_id": "molgap-full-k1-monitor",
+    "monitor_interval_minutes": 30
+  }
+}

@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| How is frozen K1 trained and packaged for the full role? | Exact exposure and resumable artifact contract; used by the full comparison | `pcqm_k1_full/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; its one-time QM9 test remains sealed | `top20_architecture_qm9/` |
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |
@@ -21,7 +22,7 @@ Track C.
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | What happened in the legacy PCQM-100K Kaggle architecture screen? | Closed; recurrent graph-state missed the frozen EdgeState comparator and is archived at commit `285e1dc`; it is not the current Kunshan line | `pcqm_gap_architecture/` |
 | What is the fixed-contract PCQM reference for current desktop screens? | GPTrans-T seed-42 100K/50K V4 reference on SCNet Kunshan; status remains on its isolated active branch until reconciled | `branch codex/exp/gptrans-t-100k-v4: experiments/pcqm_gptrans_t_100k_v4/` |
-| What is the status of the official-train K1/GPTrans-T full pair and fusion? | Submitted recovery chain; latest recorded job states and recovery evidence are on its isolated branch | `branch codex/pcqm-k1-gptrans-full-fusion: experiments/pcqm_k1_gptrans_full_fusion/` |
+| What is the status of the official-train K1/GPTrans-T full pair and fusion? | Integrated training/acceptance code; follow its dated recovery and evaluation evidence | `pcqm_k1_gptrans_full_fusion/` |
 | Can EdgeState Structural GPS transfer under a strict official PCQM4Mv2 protocol? | Full official-only baseline submitted; public reproduction passed a clean-clone audit and OGB review is pending | `pcqm_edge_state_full/` |
 | Did the early full repaired-2M PairGPS2D attempt establish a model? | No; the run was stopped and superseded by the matched validation-only protocol | `pubchemqc_pair_gps_2d/` |
 | Do GPTrans-T and Neural-Atom K1 with distance-angle geometry yield a useful 500K blend? | Positive OOF nomination evidence; V4 comparability gate not met, so it remains isolated pending a matched bridge | `branch codex/exp/gptrans-k1-geometry-500k: experiments/pcqm_geometry_transfer_500k/` |

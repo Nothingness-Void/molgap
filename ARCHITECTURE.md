@@ -25,6 +25,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
 | `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
 | `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
+| `categorical_gps.py` | Desktop categorical and radical-context GPS encoders | Extending categorical features without modifying frozen K1 GPS source |
 | `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
@@ -83,6 +84,13 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `archive/phase8_*` | Closed reusable experiment snapshots | Reproducing the linked archive branch only |
 
 ## Loading Structure
+
+The desktop full-run implementation is indexed by
+`experiments/pcqm_k1_gptrans_full_fusion/README.md`: `pcqm_k1_full_runner.py`
+and `pcqm_gptrans_full_runner.py` own training; `pcqm_gptrans_full_acceptance.py`
+owns artifact acceptance; `pcqm_gptrans_official_eval.py` owns frozen scoring;
+`pcqm_k1_gptrans_fusion.py` owns the authorized calibration/holdout comparison.
+Temporary worktree ownership is recorded only in `BRANCHES.md`.
 
 - `load_repaired_2m_2d(key=...)` loads a pure-2D multi-expert registry entry:
   several direct-output GPS predictors plus either a dense soft gate
