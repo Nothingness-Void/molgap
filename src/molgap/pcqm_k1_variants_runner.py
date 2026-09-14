@@ -409,6 +409,7 @@ def _base_state(model):
 
 
 def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
+    from .k1_edge_memory import MODES as EDGE_MEMORY_MODES, PARAMETERS, check_mechanism
     import torch
 
     configure_fp32_determinism(SEED)
@@ -424,7 +425,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         baseline_prediction = _forward(baseline, batch)
         candidate_prediction = _forward(model, batch)
     exact_nested_initialization = bool(torch.equal(baseline_prediction, candidate_prediction))
-    if mode != "neural_atom_k1_v4" and not exact_nested_initialization:
+    if mode != "neural_atom_k1_v4" and mode not in EDGE_MEMORY_MODES and not exact_nested_initialization:
         raise RuntimeError(f"Candidate is not functionally nested in K1: {mode}")
     mechanism_checks = {}
     if mode == "neural_atom_k4_cluster":
@@ -907,13 +908,27 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             )
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
+    if mode in EDGE_MEMORY_MODES:
+        mechanism_checks = check_mechanism(model, batch)
+        if sum(p.numel() for p in model.parameters()) != PARAMETERS:
+            raise RuntimeError("Edge-memory parameter identity changed")
     model.train()
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     _optimizer_step(model, optimizer, batch, mean, std)
+    if mode in EDGE_MEMORY_MODES:
+        from .k1_edge_memory import snapshot_step, check_resume_equivalence
+        snapshot = snapshot_step(model, optimizer)
     _optimizer_step(model, optimizer, batch, mean, std)
+    if mode in EDGE_MEMORY_MODES:
+        mechanism_checks["resume_two_step_bitwise_equal"] = check_resume_equivalence(
+            model, optimizer, snapshot, batch, mean, std, _optimizer_step
+        )
+        del snapshot
     candidate_parameters = []
+    if mode in EDGE_MEMORY_MODES:
+        candidate_parameters = list(model.base.edge_updates.parameters())
     if mode == "neural_atom_k1_g":
         candidate_parameters = list(model.molecule_gates.parameters())
     elif mode == "neural_atom_k1_r":
@@ -967,6 +982,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         "parameter_count": parameter_count,
         "shared_k1_initial_state_sha256": shared_sha,
         "exact_k1_function_at_initialization": exact_nested_initialization,
+        "initialization_policy": "identical-tensors-altered-edge-dataflow" if mode in EDGE_MEMORY_MODES else "nested-function",
         "candidate_mechanism_trainable_after_two_steps": candidate_trainable,
         "exchange_layers": list(MIXER_LAYERS),
         "mechanism_checks": mechanism_checks,
@@ -1018,9 +1034,12 @@ def train_arm(
     *,
     source_commit: str,
     source_archive_sha256: str,
+    resume_from: Path | None = None,
 ) -> dict:
     import torch
     import torch.nn.functional as functional
+    from .training_reproducibility import capture_rng_state, restore_rng_state
+    from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
@@ -1051,8 +1070,38 @@ def train_arm(
     best = math.inf
     best_epoch = -1
     trace = []
+    start_epoch = 0
+    if resume_from is not None:
+        import shutil
+        checkpoint = torch.load(resume_from / "last_checkpoint.pt", map_location="cpu", weights_only=False)
+        for key, expected in {
+            "mode": mode, "source_commit": source_commit,
+            "source_archive_sha256": source_archive_sha256,
+            "runtime_certificate_id": runtime["runtime_certificate_id"],
+            "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
+            "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+        }.items():
+            if checkpoint.get(key) != expected:
+                raise RuntimeError(f"Resume identity mismatch: {key}")
+        model.load_state_dict(checkpoint["model"], strict=True)
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        scheduler.load_state_dict(checkpoint["scheduler"])
+        trace = checkpoint["trace"]
+        start_epoch = checkpoint["epoch"] + 1
+        if len(trace) != start_epoch or not 0 <= start_epoch <= EPOCHS:
+            raise RuntimeError("Resume epoch/trace mismatch")
+        best, best_epoch = checkpoint["best"], checkpoint["best_epoch"]
+        for name, digest in checkpoint["best_artifact_sha256"].items():
+            if sha256_file(resume_from / name) != digest:
+                raise RuntimeError(f"Resume selected artifact corrupted: {name}")
+            if (resume_from / name).resolve() != (output / name).resolve():
+                shutil.copyfile(resume_from / name, output / name)
+        # Match the uninterrupted persistent dev loader's already-started workers.
+        # Their initial base-seed draw must not advance the restored model RNG.
+        iter(development_loader)
+        restore_rng_state(checkpoint["rng_state"])
     torch.cuda.reset_peak_memory_stats()
-    for epoch in range(EPOCHS):
+    for epoch in range(start_epoch, EPOCHS):
         model.train()
         absolute = 0.0
         rows = 0
@@ -1063,6 +1112,8 @@ def train_arm(
             prediction = _forward(model, batch)
             target = (batch.y.view(-1) - mean) / std
             loss = functional.l1_loss(prediction, target)
+            if not torch.isfinite(loss):
+                raise RuntimeError("Nonfinite training loss")
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
@@ -1074,6 +1125,8 @@ def train_arm(
             model, development_loader, mean, std
         )
         improved = validation_mae < best
+        if not math.isfinite(validation_mae):
+            raise RuntimeError("Nonfinite development MAE")
         if improved:
             best = validation_mae
             best_epoch = epoch
@@ -1111,12 +1164,29 @@ def train_arm(
                 "source_commit": source_commit,
                 "source_archive_sha256": source_archive_sha256,
                 "runtime_certificate_id": runtime["runtime_certificate_id"],
+                "rng_state": capture_rng_state(),
+                "best": best,
+                "best_epoch": best_epoch,
+                "best_artifact_sha256": {
+                    name: sha256_file(output / name)
+                    for name in ("best_model.pt", "best_development_payload.pt")
+                },
+                "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
+                "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
                 "official_validation_role_read": False,
                 "test_dev_role_read": False,
                 "test_challenge_role_read": False,
             },
         )
         atomic_json(output / "trace.json", {"epochs": trace})
+        if mode in EDGE_MEMORY_MODES and (epoch + 1) % 10 == 0:
+            import tarfile
+            chunk = output / f"recovery_epoch_{epoch + 1:02d}.tar"
+            temporary = chunk.with_suffix(".tmp")
+            with tarfile.open(temporary, "w") as archive:
+                for name in ("last_checkpoint.pt", "best_model.pt", "best_development_payload.pt", "trace.json", "preflight.json", "runtime_certificate.json"):
+                    archive.add(output / name, arcname=name)
+            os.replace(temporary, chunk)
         print(
             f"{mode} ep{epoch:02d} train={row['train_normalized_mae']:.6f} "
             f"dev={validation_mae:.6f}eV {row['seconds']:.1f}s"

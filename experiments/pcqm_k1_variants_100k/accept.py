@@ -42,6 +42,7 @@ def _load_arm(
     mode: str,
     *,
     expected_parameters: dict[str, int] | None = None,
+    initialization_policy: str = "nested-function",
 ) -> tuple[dict, dict]:
     parameter_table = EXPECTED_PARAMETERS if expected_parameters is None else expected_parameters
     arm_root = root / mode
@@ -73,10 +74,21 @@ def _load_arm(
     if (
         preflight.get("mode") != mode
         or preflight.get("parameter_count") != parameter_table[mode]
-        or preflight.get("exact_k1_function_at_initialization") is not True
+        or (initialization_policy == "nested-function" and preflight.get("exact_k1_function_at_initialization") is not True)
         or preflight.get("candidate_mechanism_trainable_after_two_steps") is not True
     ):
         raise RuntimeError(f"Architecture preflight changed: {mode}")
+    if initialization_policy != "nested-function":
+        from molgap.k1_edge_memory import MODES
+        if mode not in MODES or initialization_policy != "identical-tensors-altered-edge-dataflow":
+            raise RuntimeError("Unrecognized initialization exception")
+        checks = preflight.get("mechanism_checks", {})
+        if preflight.get("initialization_policy") != initialization_policy or checks.get("equations_verified") is not True or checks.get("real_bonds_only") is not True:
+            raise RuntimeError("Edge memory equation verification missing")
+        if len(checks.get("layers", [])) != 9 or checks.get("normalized_update_context") != (mode == MODES[1]):
+            raise RuntimeError("Edge-memory read policy changed")
+        if checks.get("resume_two_step_bitwise_equal") is not True:
+            raise RuntimeError("Resume equivalence check missing")
     for relative, expected in completion["artifact_sha256"].items():
         if sha256_file(arm_root / relative) != expected:
             raise RuntimeError(f"Artifact hash changed: {mode}/{relative}")
@@ -85,6 +97,8 @@ def _load_arm(
     target = payload["target_eV"].view(-1).float().contiguous()
     prediction = payload["prediction_eV"].view(-1).float().contiguous()
     source_idx = payload["source_idx"].view(-1).long().contiguous()
+    if not torch.isfinite(target).all() or not torch.isfinite(prediction).all():
+        raise RuntimeError(f"Nonfinite development payload: {mode}")
     if target.numel() != DEVELOPMENT_ROWS or prediction.shape != target.shape:
         raise RuntimeError(f"Development payload shape changed: {mode}")
     expected_idx = torch.arange(100_000, 150_000, dtype=torch.long)
@@ -114,13 +128,19 @@ def _bootstrap_upper(delta: np.ndarray, *, seed: int = 20260912) -> tuple[float,
     return float(interval[1]), [float(value) for value in interval]
 
 
-def accept(reference_root: Path, candidate_root: Path) -> dict:
+def accept(reference_root: Path, candidate_root: Path, *,
+           modes=("neural_atom_k1_g", "neural_atom_k1_r"),
+           expected_parameters=None, initialization_policy="nested-function") -> dict:
     reference, reference_payload = _load_arm(
         reference_root, "neural_atom_k1_v4"
     )
     candidates = {}
-    for mode in ("neural_atom_k1_g", "neural_atom_k1_r"):
-        record, payload = _load_arm(candidate_root, mode)
+    for mode in modes:
+        record, payload = _load_arm(candidate_root, mode,
+                                    expected_parameters=expected_parameters,
+                                    initialization_policy=initialization_policy)
+        if initialization_policy != "nested-function" and record["preflight"]["shared_k1_initial_state_sha256"] != reference["preflight"]["shared_k1_initial_state_sha256"]:
+            raise RuntimeError("Shared frozen-reference initialization changed")
         if not torch.equal(reference_payload["target"], payload["target"]):
             raise RuntimeError(f"Development targets differ: {mode}")
         if not torch.equal(reference_payload["source_idx"], payload["source_idx"]):

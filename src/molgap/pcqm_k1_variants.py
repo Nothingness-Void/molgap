@@ -16,6 +16,16 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_edge_read_norm": {
+        "backbone": "neural_atom_k1", "exchange_layers": list(MIXER_LAYERS),
+        "change": "real-bond-raw-residual-storage-normalized-node-read",
+        "normalized_update_context": False, "added_parameters": 0,
+    },
+    "neural_atom_k1_edge_context_read_norm": {
+        "backbone": "neural_atom_k1", "exchange_layers": list(MIXER_LAYERS),
+        "change": "real-bond-raw-residual-storage-normalized-context-and-node-read",
+        "normalized_update_context": True, "added_parameters": 0,
+    },
     "neural_atom_k1_v4": {
         "backbone": "neural_atom_k1",
         "global_exchange": "one-atom-slot-64",
@@ -684,6 +694,11 @@ def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
+
+    from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
+    if mode in EDGE_MEMORY_MODES:
+        from .k1_edge_memory import make_encoder as make_edge_memory
+        return make_edge_memory(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 
