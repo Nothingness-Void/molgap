@@ -1,0 +1,46 @@
+{
+  "format": "molgap-pcqm-k1-full-convergence-submission-v1",
+  "submitted_at": "2026-09-15T02:36:01+09:00",
+  "authorization": "User authorized convergence continuations for both accepted full K1 and GPTrans-T models on 2026-09-15.",
+  "source_branch": "codex/exp/gptrans-full-convergence",
+  "source_commit": "0458688a0c14896d436dbf2bdac64cd4bb81bfda",
+  "source_archive_sha256": "7ee146cbaec4a49983c07e040bab720b946b03bd1d105d2be3fa1e3487d50f28",
+  "contract_sha256": "f7af853937b0a77ecafee776ea4b497fa58329abd6ffe2ae707fa4c10a98609f",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1",
+  "source": {
+    "checkpoint_sha256": "dbb560449c2797ced5f7a0026f074fa80d08aed14f8946de5ce19bde05193855",
+    "model_bundle_sha256": "60b95d86736829fd38690fb33654199a753f693a333aa55f451d1983653fa3b7",
+    "official_valid_metrics_sha256": "70a6aa0408935dccbcd328f01df43966add06544dab94176698e666044f28961",
+    "global_step": 156250,
+    "official_valid_gap_mae_eV": 0.10667223528212925
+  },
+  "jobs": {
+    "preflight": {
+      "id": "1511905.ccpbs1",
+      "state_at_record": "Queue"
+    },
+    "convergence_training": {
+      "id": "1511906.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1511905.ccpbs1"
+    },
+    "acceptance": {
+      "id": "1511907.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1511906.ccpbs1"
+    }
+  },
+  "verification": {
+    "local_tests": "15 passed",
+    "git_diff_check": "passed",
+    "remote_archive_sha256": "passed",
+    "remote_pbs_syntax": "passed",
+    "cuda_forward_backward": "deferred to job 1511905.ccpbs1"
+  },
+  "role_boundary": {
+    "official_validation_role_read": true,
+    "official_validation_use": "fixed convergence selection only",
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  }
+}
