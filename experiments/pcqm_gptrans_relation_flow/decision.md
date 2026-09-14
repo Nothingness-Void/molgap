@@ -1,5 +1,34 @@
 # Evidence review — 2026-09-14
 
+## Terminal decision — 2026-09-14
+
+Both arms completed all 60 epochs and passed the frozen no-inference acceptance.
+`pair_prenorm` passed the mechanism shortlist gate, narrowly: 0.1535023336 eV,
+gain 0.0031248707 against the reference; paired bootstrap upper95%
+-0.0020781866. `centered_logits` scored 0.1582139173, regressing by
+0.0015867130, and was closed. Exact provenance and comparison certificate:
+[acceptance](results/acceptance.json). The shortlisted model is frozen by
+SHA `7939902eaa66706181ac8033030edf450abe2d0d36c1bdbbe04872012051be41`.
+No additional seeds, scale-up or K1/full superiority claim was released.
+
+Both candidates reduced final live-model training error by about 0.0024 eV,
+but only pair pre-normalization improved EMA development error. Centering's
+improved early curve therefore did not predict its final outcome. The raw
+logit offset may convey useful relation information despite node softmax being
+offset-invariant; the result did not establish a unique causal explanation.
+Pair pre-normalization supports testing controlled relation flow, not the
+unmeasured claim that pair activations had exploded. All three best epochs were
+59, so EMA/finite-training-horizon caveats survived.
+
+The notebook took 11,038 seconds (3.07 wall hours, about 6.13 T4 device-hours).
+P100/T4 wall-time differences cannot isolate architectural cost. Both arms used
+the same T4 runtime, and whole training/validation durations were similar.
+The last user-authorized round was released as a separate persistent-pair
+readback question, using the untouched GPTrans reference, not combining with
+either arm: [release](../pcqm_gptrans_memory_readback/protocol.md).
+
+## Pre-submission review
+
 The user reopened two Kaggle2 architecture rounds after the GPTrans reference.
 This decision released the first of those two rounds, not a full-data repeat.
 

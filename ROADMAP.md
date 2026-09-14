@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-GPTRANS-RELATION-FLOW | Execute the two user-reopened Kaggle2 rounds: first isolate pair pre-normalization and centered-logit propagation; attribute terminal results before designing the second | At most two new rounds; frozen GPTrans V4 comparison; no seed/scale/official-role promotion |
+| P0 | B-GPTRANS-MEMORY-READBACK | Execute the final authorized Kaggle2 round after relation-flow attribution: read accumulated pairs directly into nodes | Frozen GPTrans V4 comparison; no third round, seeds, scale or official roles |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed

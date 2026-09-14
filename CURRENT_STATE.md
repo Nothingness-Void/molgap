@@ -64,10 +64,12 @@ accepted 100K/50K data identity. It was mechanically accepted but substantially
 underperformed the contextual K1 reference. Reconciliation with the accepted
 500K run does not isolate a causal scale effect: exposure, EMA time scale and
 evaluation roles differ. The user explicitly reopened the two unused Kaggle2
-rounds. The first isolates two GPTrans relation-flow mechanisms under its own
-frozen 100K contract without duplicating the desktop full study. Authority:
-`experiments/pcqm_gptrans_relation_flow/decision.md`; progress:
-`experiments/pcqm_gptrans_relation_flow/STATUS.md`.
+rounds. The first completed: Pair PreNorm passed the mechanism-shortlist gate;
+Centered Logits regressed and is closed. No K1/full promotion follows.
+Authority: `experiments/pcqm_gptrans_relation_flow/decision.md`.
+The last authorized round independently tests persistent-pair readback, without
+stacking either first-round candidate; protocol and operational truth:
+`experiments/pcqm_gptrans_memory_readback/`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

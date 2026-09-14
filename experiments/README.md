@@ -35,7 +35,8 @@ Track C.
 | Does the paper's atom-wise Neural-Atom grouping improve sparse K1? | Attempt 1 protocol under validation | `pcqm_k1_paper_allocation_100k/` |
 | Can frozen K1 be executed reproducibly on the full official training role? | Hardened protocol complete; no training or official-role access authorized | `pcqm_k1_full/` |
 | What is the reusable GPTrans-T reference under the V4 cross-platform contract? | Mechanically accepted at 100K; weak at this scale but retained for controlled comparisons | `pcqm_gptrans_t_100k_v4/` |
-| Does normalized or centered relation propagation improve GPTrans-T? | Two-round user authorization; first isolated T4x2 protocol frozen | `pcqm_gptrans_relation_flow/` |
+| Does normalized or centered relation propagation improve GPTrans-T? | Pair PreNorm shortlisted; centering closed; no scale promotion | `pcqm_gptrans_relation_flow/` |
+| Should accumulated pair memory directly return to nodes? | Last authorized T4x2 round protocol frozen | `pcqm_gptrans_memory_readback/` |
 | Does the same GPTrans-T core transfer at 500K? | Yes; it beat matched ESGPS6-304 scratch and remains a scale candidate | `pcqm_gptrans_t_500k/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |

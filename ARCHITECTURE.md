@@ -28,6 +28,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
 | `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing GPTrans node-to-node/node-to-pair/pair-to-node behavior |
 | `gptrans_variants.py`, `gptrans_variant_checks.py` | Isolated parameter-free relation-flow hypotheses and remote-only model checks | Changing GPTrans candidates without modifying the frozen core |
+| `gptrans_memory.py`, `gptrans_kaggle_runtime.py` | Persistent pair readback variants and shared isolated Kaggle staging | Testing relation memory without changing the frozen optimizer/data |
 | `pcqm_gptrans_v4.py` | V4-certified fixed-100K GPTrans reference runtime | Changing GPTrans baseline data, optimizer, determinism, recovery, or evidence contracts |
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |

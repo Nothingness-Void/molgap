@@ -1,5 +1,11 @@
 # Operational status
 
+2026-09-14 terminal: version 1 COMPLETE; both arms passed mechanical acceptance.
+The temporary controller heartbeat was deleted and terminal handoff consumed.
+Pair PreNorm was shortlisted; Centered Logits closed (decision.md). The monitor
+was paused by B and will be retargeted only after the second round is submitted.
+The following paragraphs retain original submission provenance, not live status.
+
 2026-09-14: Kaggle2 `kaseichou/molgap-gptrans-relation-flow-s42` version 1
 was submitted and returned RUNNING. The pulled metadata confirmed T4x2 and
 the fixed 100K dataset. The remote entrypoint matched after newline
