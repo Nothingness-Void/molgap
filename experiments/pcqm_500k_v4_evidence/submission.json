@@ -5,11 +5,15 @@
   "source_dataset": "nothingnessvoid/molgap-500k-v4-evidence-source-811a40969e",
   "data_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
   "kernels": [
-    {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 1, "arms": ["full_gps", "neural_atom_k1"], "requested_gpu": "T4x2", "startup_snapshot": "RUNNING"},
-    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 2, "arms": ["gptrans"], "requested_gpu": "T4x2_one_worker", "startup_snapshot": "SUBMITTED"}
+    {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 2, "arms": ["full_gps", "neural_atom_k1"], "requested_gpu": "T4x2", "startup_snapshot": "RUNNING"},
+    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 3, "arms": ["gptrans"], "requested_gpu": "T4x2_one_worker", "startup_snapshot": "RUNNING"}
   ],
   "stage_epochs_max": 4,
   "startup_preflight_verified": false,
-  "gptrans_v1_disposition": "Requested P100 but received T4x2; allocation guard failed before training. V2 explicitly requests T4x2 and isolates a single worker; source archive unchanged.",
+  "superseded_versions": [
+    "Edge/K1 v1 exited before training because Kaggle auto-extracted the source ZIP and the raw archive hash input was unavailable.",
+    "GPTrans v1 exited before training because the requested P100 metadata received T4x2.",
+    "GPTrans v2 exited before training for the same auto-extracted source ZIP issue."
+  ],
   "resume_rule": "Accept stage, publish a new private checkpoint dataset, mount it and pass --resume to the unchanged source runner. Never start from scratch for stage2+."
 }
