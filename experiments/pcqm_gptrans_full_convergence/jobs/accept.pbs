@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -N gpt-conv-acc
+#PBS -q H
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=2
+#PBS -l walltime=00:20:00
+#PBS -o /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260914_r1/logs/accept.out
+#PBS -e /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260914_r1/logs/accept.err
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260914_r1
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+export PYTHONPATH="$VENDOR/code/platforms/ims/pcqm_route_b/shims:$VENDOR/vendor-cu126-torch271:$ROOT/code/src"
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 PYTHONUNBUFFERED=1
+cd "$ROOT"
+"$PYTHON" "$ROOT/code/experiments/pcqm_gptrans_full_convergence/run.py" accept --output "$ROOT/output"
