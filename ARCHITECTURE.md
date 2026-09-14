@@ -20,6 +20,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `k1_edge_memory.py`, `k1_edge_kaggle_runtime.py` | Real-bond storage/read separation and isolated K1 Kaggle execution | Testing normalized edge reads without modifying the frozen backbone tensors |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |

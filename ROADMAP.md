@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-K1-EDGE-MEMORY | Execute round1 of the newly authorized three-round Kaggle2 sequence; isolate real-bond storage/read normalization | Frozen acceptance and controller attribution before any successor; ledger: `experiments/pcqm_k1_edge_memory_100k/results/authorization.json` |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -43,9 +44,10 @@ in the desktop-owned matched full-run comparison. The user subsequently
 authorized use of the two remaining Kaggle round slots. Both have completed
 and received terminal decisions. Pair PreNorm alone reached the mechanism
 shortlist; centered-logit and both memory-readback variants closed. Consolidated
-authority: `experiments/pcqm_gptrans_memory_readback/decision.md`. No server
-scientific submission remains authorized. Additional rounds, combinations,
-seeds, scale bridges or evaluation roles require new user direction. The
+authority: `experiments/pcqm_gptrans_memory_readback/decision.md`. The user's
+later authorization releases three new evidence-gated rounds under
+`experiments/pcqm_k1_edge_memory_100k/protocol.md`, not retries of closed arms.
+Additional seeds, scale bridges or evaluation roles remain unauthorized. The
 desktop comparison remains independently owned and must not be duplicated.
 
 ## Architecture funnel

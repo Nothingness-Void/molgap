@@ -68,11 +68,17 @@ rounds. The first completed: Pair PreNorm passed the mechanism-shortlist gate;
 Centered Logits regressed and is closed. No K1/full promotion follows.
 Authority: `experiments/pcqm_gptrans_relation_flow/decision.md`.
 The last authorized round completed: both persistent-pair readback variants
-failed to improve the reference and are closed. The two-round authorization is
-exhausted; server discovery and monitoring are stopped pending user direction.
+failed to improve the reference and are closed. That two-round authorization
+was exhausted without a full-scale promotion.
 Pair PreNorm is the only retained seed42 mechanism shortlist, not a full-scale
 or K1 promotion. Authority and consolidated evidence:
 `experiments/pcqm_gptrans_memory_readback/decision.md`.
+
+The user reopened three additional evidence-gated Kaggle2 rounds. The first
+prepares isolated K1 real-bond storage/read normalization candidates; it does
+not stack closed slot simplifications or change the desktop handoff. Operational
+state: `experiments/pcqm_k1_edge_memory_100k/STATUS.md`; method and gates:
+`experiments/pcqm_k1_edge_memory_100k/protocol.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
