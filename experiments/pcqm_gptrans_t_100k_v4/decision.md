@@ -22,8 +22,8 @@ validation and all test roles remained unread.
 GPTrans-T is contextually worse by `0.0152535700 eV` while using 43.39% more
 parameters. This is not a strict causal paired comparison because the published
 GPTrans optimizer, schedule, EMA selection, and sample exposure differ from
-K1's frozen V4 contract. It is sufficient to reject GPTrans-T as the next
-bounded candidate under the 100K funnel.
+K1's frozen V4 contract. It establishes poor 100K sample efficiency, not an
+architecture-wide rejection.
 
 ## Attribution
 
@@ -42,25 +42,29 @@ memory while supplying a weaker local chemical inductive bias at 100K. This is
 consistent with the earlier QM9 PairGPS result, where dense pair-state repairs
 lost to sparse persistent EdgeState.
 
-The published full-data GPTrans result is not contradicted. The present result
-shows that its compact form is not sample-efficient enough for this project's
-mandatory 100K admission stage.
+The earlier accepted SCNet 500K result used the same adapted core and reached
+`0.1039478481 eV`, beating its matched ESGPS6-304 scratch comparator by
+`0.0037238458 eV`. It was also numerically `0.0009112507 eV` below the frozen
+K1 500K score, although those K1 and GPTrans runs used architecture-specific
+optimization contracts and therefore do not form a strict causal pair. The
+100K result is consequently a false-negative screen for this scale-sensitive
+architecture rather than evidence against its 500K/full-data potential.
 
 ## Decision
 
-Mechanically freeze this run as the only GPTrans-T V4 reference, but reject it
-for promotion, extra seeds, scale-up, official-role access, or submission. Do
-not spend another round on width, depth, EMA, learning-rate, or exposure tuning.
+Mechanically freeze this run as the only GPTrans-T 100K V4 reference and do not
+tune its width, depth, EMA, learning rate, or exposure on the consumed role.
+Do not use the 100K score to close GPTrans-T: the accepted 500K evidence retains
+it as a full-scale candidate. The desktop-owned matched full K1/GPTrans study is
+the appropriate discriminator; server must not submit a duplicate successor.
 
 One of the separately authorized maximum three Kaggle2 scientific rounds is
-consumed. No immediate successor is released: adding the omitted EdgeState
-local path would substantially recreate the already rejected PairGPS family,
-so another job requires a distinct information-flow hypothesis rather than a
-repair of this score.
+consumed. No immediate Kaggle successor is released because the next relevant
+scale question is already under the desktop full-run contract.
 
 ## Evidence pointers
 
 - No-inference acceptance: `results/kaggle_acceptance.json`.
 - Retrieved record:
   `platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/`.
-
+- Accepted 500K evidence: `../pcqm_gptrans_t_500k/results/decision.md`.
