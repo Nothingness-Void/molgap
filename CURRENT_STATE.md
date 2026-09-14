@@ -98,6 +98,11 @@ must not be represented as this new conservative head.
   `accepted=true`; K1 is GPU-queued and downstream jobs are dependency-held.
   Recovery evidence and output locations are in
   `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
+- User authorized independent GPTrans official-valid scoring before K1 completes.
+  CPU job `1507573.ccpbs1` is running on `ccc235`; it scores the frozen accepted
+  bundle, fits no parameters, and retains resumable prediction shards. Evidence:
+  `experiments/pcqm_k1_gptrans_full_fusion/results/gptrans_official_eval_submission.json`.
+  Its MAE is pending; do not substitute training loss for official-valid MAE.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.
