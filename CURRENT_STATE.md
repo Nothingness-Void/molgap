@@ -61,10 +61,13 @@ It is closed and does not alter the frozen K1 handoff. Authority:
 The separate Kaggle2 discovery loop remains bounded to at most three
 evidence-gated rounds. Round 1 completed a pure-2D GPTrans-T reference on the
 accepted 100K/50K data identity. It was mechanically accepted but substantially
-underperformed the contextual K1 reference. Reconciliation with the prior
-accepted 500K run shows scale sensitivity rather than architecture failure.
-No round-2 Kaggle job is released while desktop already owns the matched
-full-scale comparison. Authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
+underperformed the contextual K1 reference. Reconciliation with the accepted
+500K run does not isolate a causal scale effect: exposure, EMA time scale and
+evaluation roles differ. The user explicitly reopened the two unused Kaggle2
+rounds. The first isolates two GPTrans relation-flow mechanisms under its own
+frozen 100K contract without duplicating the desktop full study. Authority:
+`experiments/pcqm_gptrans_relation_flow/decision.md`; progress:
+`experiments/pcqm_gptrans_relation_flow/STATUS.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

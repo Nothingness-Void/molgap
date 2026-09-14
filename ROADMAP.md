@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-GPTRANS-RELATION-FLOW | Execute the two user-reopened Kaggle2 rounds: first isolate pair pre-normalization and centered-logit propagation; attribute terminal results before designing the second | At most two new rounds; frozen GPTrans V4 comparison; no seed/scale/official-role promotion |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -39,9 +40,15 @@ monitor cannot choose them.
 
 Kaggle2 round 1 accepted GPTrans-T mechanically and found it weak at 100K.
 The earlier accepted 500K run of the same core was positive, so GPTrans remains
-in the desktop-owned matched full-run comparison. Two possible Kaggle round
-slots remain unused; neither is a quota that must be spent, and no duplicate
-scale job is authorized while the desktop comparison exists.
+in the desktop-owned matched full-run comparison. The user subsequently
+authorized use of the two remaining Kaggle round slots. Release and audit:
+`experiments/pcqm_gptrans_relation_flow/decision.md`. The coordinator may
+autonomously submit one distinct second round after terminal acceptance and
+written attribution of the first. Freeze its protocol/tests/source, remain on
+Kaggle2 fixed-100K with the complete reference-specific V4 contract, and hand
+the new job to the same Luna monitor. Infrastructure repairs preserve the
+contract and never rerun a completed arm. No third new round, desktop
+duplicate, full training or official role is released.
 
 ## Architecture funnel
 
@@ -55,7 +62,8 @@ then follow this funnel:
    accepted PCQM-100K v4 benchmark: direct Gap, deterministic FP32, physical
    BS128 per device, and no teacher, target residual, prediction fusion, or
    privileged geometry.
-3. Compare directly with the one immutable K1-v4 reference; never retrain a
+3. Compare directly with the immutable reference for that exact contract
+   (K1-v4 for K1, GPTrans-v4 for GPTrans); never retrain a
    baseline when the complete scientific fingerprint matches.
 4. A negative round receives a decision and mechanism-level attribution before
    one distinct next round is released. A material win receives shortlist
