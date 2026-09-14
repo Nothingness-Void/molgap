@@ -29,12 +29,13 @@ export PYTHONPATH="$ROOT/code/src"
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
+SOURCE_COMMIT="$(tr -d '\r\n' < "$ROOT/SOURCE_COMMIT.txt")"
 SOURCE_ARCHIVE_SHA256="$(tr -d '\r\n' < "$ROOT/SOURCE_ARCHIVE_SHA256.txt")"
 "$PYTHON" -u experiments/pcqm_ogb_rich_edgegps9_100k_v4/run.py \
   --dataset-root "$DATA" \
   --manifest "$DATA/manifest.json" \
   --source-archive "$ROOT/source.tar.gz" \
-  --source-commit "$(cat "$ROOT/SOURCE_COMMIT.txt")" \
+  --source-commit "$SOURCE_COMMIT" \
   --source-archive-sha256 "$SOURCE_ARCHIVE_SHA256" \
   --output "$ROOT/output" \
   --platform-id scnet-kunshan
