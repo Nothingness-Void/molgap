@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from pathlib import Path
 
 from molgap.pcqm_gptrans_convergence import (
     BASE_VALID_MAE_EV,
@@ -26,3 +27,12 @@ def test_continuation_learning_rate_is_monotonic_and_bounded():
     assert values[-1] == pytest.approx(MIN_LR)
     with pytest.raises(ValueError):
         continuation_learning_rate(0)
+
+
+def test_all_pbs_jobs_mount_the_frozen_ogb_archive():
+    root = Path("experiments/pcqm_gptrans_full_convergence/jobs")
+    for path in sorted(root.glob("*.pbs")):
+        text = path.read_text(encoding="utf-8")
+        assert "OGB_ARCHIVE=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip" in text
+        assert "$OGB_ARCHIVE:$ROOT/code/src" in text
+        assert "MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33" in text
