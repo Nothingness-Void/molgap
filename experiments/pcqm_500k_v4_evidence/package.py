@@ -25,14 +25,14 @@ def main():
     print("GPU allocation:", names, flush=True)
     if len(names) != 2 or not all(EXPECTED_GPU in n for n in names):
         raise RuntimeError("Unexpected accelerator allocation")
-    # All imports of Torch happen in new workers after installing the frozen runtime.
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"])
-    archives = list(Path("/kaggle/input").rglob("evidence_source.zip"))
+    archives = list(Path("/kaggle/input").rglob("evidence_source.bin"))
     if len(archives) != 1:
         raise RuntimeError(f"Expected unique source archive: {archives}")
     if hashlib.sha256(archives[0].read_bytes()).hexdigest() != SOURCE_SHA:
         raise RuntimeError("Source archive hash changed")
+    # All imports of Torch happen in new workers after installing the frozen runtime.
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"])
     runtime = Path("/kaggle/working/runtime")
     with zipfile.ZipFile(archives[0]) as archive:
         archive.extractall(runtime)
@@ -56,18 +56,18 @@ if __name__ == "__main__":
 
 def main():
     output = ROOT / 'platforms' / '_records' / 'kaggle' / 'staging' / 'pcqm_500k_v4_evidence'
-    source = output / 'source'
+    source = output / 'source_raw'
     source.mkdir(parents=True, exist_ok=True)
     names = subprocess.check_output(['git', 'ls-files', 'src'], cwd=ROOT, text=True).splitlines()
     names.append('src/molgap/pcqm_500k_v4_evidence.py')
-    with zipfile.ZipFile(source / 'evidence_source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(source / 'evidence_source.bin', 'w', zipfile.ZIP_DEFLATED) as archive:
         for name in sorted(set(names)):
             if name.endswith('.py'):
                 item = zipfile.ZipInfo(name, date_time=(2020, 1, 1, 0, 0, 0))
                 item.compress_type = zipfile.ZIP_DEFLATED
                 archive.writestr(item, (ROOT / name).read_bytes().replace(b'\r\n', b'\n'))
-    sha = hashlib.sha256((source / 'evidence_source.zip').read_bytes()).hexdigest()
-    slug = 'nothingnessvoid/molgap-500k-v4-evidence-source-' + sha[:10]
+    sha = hashlib.sha256((source / 'evidence_source.bin').read_bytes()).hexdigest()
+    slug = 'nothingnessvoid/molgap-500k-v4-source-raw-' + sha[:10]
     (source / 'dataset-metadata.json').write_text(json.dumps({
         'id': slug, 'title': 'MolGap 500K V4 Evidence Source ' + sha[:10],
         'licenses': [{'name': 'other'}]}, indent=2))
