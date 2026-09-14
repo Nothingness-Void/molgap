@@ -13,7 +13,6 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-GPTRANS-MEMORY-READBACK | Execute the final authorized Kaggle2 round after relation-flow attribution: read accumulated pairs directly into nodes | Frozen GPTrans V4 comparison; no third round, seeds, scale or official roles |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -41,14 +40,13 @@ monitor cannot choose them.
 Kaggle2 round 1 accepted GPTrans-T mechanically and found it weak at 100K.
 The earlier accepted 500K run of the same core was positive, so GPTrans remains
 in the desktop-owned matched full-run comparison. The user subsequently
-authorized use of the two remaining Kaggle round slots. Release and audit:
-`experiments/pcqm_gptrans_relation_flow/decision.md`. The coordinator may
-autonomously submit one distinct second round after terminal acceptance and
-written attribution of the first. Freeze its protocol/tests/source, remain on
-Kaggle2 fixed-100K with the complete reference-specific V4 contract, and hand
-the new job to the same Luna monitor. Infrastructure repairs preserve the
-contract and never rerun a completed arm. No third new round, desktop
-duplicate, full training or official role is released.
+authorized use of the two remaining Kaggle round slots. Both have completed
+and received terminal decisions. Pair PreNorm alone reached the mechanism
+shortlist; centered-logit and both memory-readback variants closed. Consolidated
+authority: `experiments/pcqm_gptrans_memory_readback/decision.md`. No server
+scientific submission remains authorized. Additional rounds, combinations,
+seeds, scale bridges or evaluation roles require new user direction. The
+desktop comparison remains independently owned and must not be duplicated.
 
 ## Architecture funnel
 

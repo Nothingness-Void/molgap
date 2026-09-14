@@ -1,5 +1,14 @@
 # Operational status
 
+2026-09-14 terminal: version 1 COMPLETE; both 60-epoch arms accepted mechanically,
+neither shortlisted. A consumed the durable terminal marker once without
+repeating download or acceptance. The temporary controller heartbeat was deleted;
+the persistent monitor automation file was already absent after B's handoff.
+No monitor restart, new chat or successor training was submitted. Both authorized
+architecture rounds are complete. Scientific conclusions: `decision.md`.
+
+The paragraphs below retain original submission/dispatch provenance.
+
 2026-09-14: Kaggle2 kernel `kaseichou/molgap-gptrans-memory-readback-s42`
 version 1 submitted; status RUNNING. Pulled remote metadata confirmed T4x2,
 private source and the accepted fixed 100K dataset. This platform state does
