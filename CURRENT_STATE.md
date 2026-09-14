@@ -57,9 +57,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   2026-09-14 evidence accepts GPTrans training at 156,250 steps; K1 recovery
   and dependent fusion have no terminal acceptance in this snapshot.
 - Independent frozen GPTrans official-valid evaluation was submitted as CPU
-  job 1507573.ccpbs1 on 2026-09-14. Its MAE is not yet recorded here.
-  Follow the experiment results linked below; verify scheduler state before
-  any successor or resubmission. These are recorded snapshots, not live polls.
+  job 1507573.ccpbs1 and accepted at 0.1090123132 eV over 73,545 rows. A bounded
+  convergence continuation is isolated on `codex/exp/gptrans-full-convergence`:
+  preflight 1507991, training 1507994 and acceptance 1507996. It restores the
+  accepted optimizer/EMA checkpoint, may add six full-data-equivalent passes,
+  and consumes official validation under a fixed patience-three stop rule.
+  These are recorded snapshots, not live polls.
 - The K1/GPTrans-T fusion has one-time authorization for its frozen official-
   valid calibration/holdout split. Test-dev/challenge remain sealed.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
