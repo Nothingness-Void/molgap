@@ -59,10 +59,13 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - Independent frozen GPTrans official-valid evaluation was submitted as CPU
   job 1507573.ccpbs1 and accepted at 0.1090123132 eV over 73,545 rows. A bounded
   convergence continuation is isolated on `codex/exp/gptrans-full-convergence`:
-  preflight 1507991, training 1507994 and acceptance 1507996. It restores the
-  accepted optimizer/EMA checkpoint, may add six full-data-equivalent passes,
-  and consumes official validation under a fixed patience-three stop rule.
-  These are recorded snapshots, not live polls.
+  R1 preflight 1507991 failed before CUDA execution because its PBS omitted the
+  frozen OGB archive. Commit `9e35f90` repaired all three runtime paths and
+  passed remote import verification. R2 uses preflight 1511027, training
+  1511028 and acceptance 1511029. It restores the accepted optimizer/EMA
+  checkpoint, may add six full-data-equivalent passes, and consumes official
+  validation under a fixed patience-three stop rule. These are recorded
+  snapshots, not live polls.
 - The K1/GPTrans-T fusion has one-time authorization for its frozen official-
   valid calibration/holdout split. Test-dev/challenge remain sealed.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
