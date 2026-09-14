@@ -75,7 +75,7 @@ or K1 promotion. Authority and consolidated evidence:
 `experiments/pcqm_gptrans_memory_readback/decision.md`.
 
 The user reopened three additional evidence-gated Kaggle2 rounds. The first
-prepares isolated K1 real-bond storage/read normalization candidates; it does
+has submitted isolated K1 real-bond storage/read normalization candidates; it does
 not stack closed slot simplifications or change the desktop handoff. Operational
 state: `experiments/pcqm_k1_edge_memory_100k/STATUS.md`; method and gates:
 `experiments/pcqm_k1_edge_memory_100k/protocol.md`.
