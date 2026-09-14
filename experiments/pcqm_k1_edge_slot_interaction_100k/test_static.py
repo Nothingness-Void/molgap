@@ -50,6 +50,9 @@ class ContractTests(unittest.TestCase):
         for forbidden in ("make_encoder", ".to(\"cuda\")", "load_state_dict"):
             self.assertNotIn(forbidden, source)
         self.assertIn("initialization_policy=\"identical-tensors-altered-edge-dataflow\"", source)
+        self.assertIn("EXPECTED_SHARED_INITIAL_STATE_SHA256", source)
+        self.assertIn("source_archive_sha256", source)
+        self.assertIn("recovery_epoch_", source)
 
     def test_round_three_is_conditional(self):
         protocol = (ROOT / "protocol.md").read_text(encoding="utf-8")

@@ -133,7 +133,8 @@ def _bootstrap_upper(delta: np.ndarray, *, seed: int = 20260912) -> tuple[float,
 
 def accept(reference_root: Path, candidate_root: Path, *,
            modes=("neural_atom_k1_g", "neural_atom_k1_r"),
-           expected_parameters=None, initialization_policy="nested-function") -> dict:
+           expected_parameters=None, initialization_policy="nested-function",
+           expected_shared_initial_state_sha256=None) -> dict:
     reference, reference_payload = _load_arm(
         reference_root, "neural_atom_k1_v4"
     )
@@ -142,8 +143,14 @@ def accept(reference_root: Path, candidate_root: Path, *,
         record, payload = _load_arm(candidate_root, mode,
                                     expected_parameters=expected_parameters,
                                     initialization_policy=initialization_policy)
-        if initialization_policy != "nested-function" and record["preflight"]["shared_k1_initial_state_sha256"] != reference["preflight"]["shared_k1_initial_state_sha256"]:
-            raise RuntimeError("Shared frozen-reference initialization changed")
+        if initialization_policy != "nested-function":
+            expected_shared_sha = reference["preflight"]["shared_k1_initial_state_sha256"]
+            if expected_shared_initial_state_sha256 is not None:
+                if mode not in expected_shared_initial_state_sha256:
+                    raise RuntimeError(f"Missing expected shared initialization: {mode}")
+                expected_shared_sha = expected_shared_initial_state_sha256[mode]
+            if record["preflight"]["shared_k1_initial_state_sha256"] != expected_shared_sha:
+                raise RuntimeError(f"Shared frozen-reference initialization changed: {mode}")
         if not torch.equal(reference_payload["target"], payload["target"]):
             raise RuntimeError(f"Development targets differ: {mode}")
         if not torch.equal(reference_payload["source_idx"], payload["source_idx"]):
