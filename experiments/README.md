@@ -14,6 +14,7 @@ Track C.
 | Question | Verdict | Directory |
 |---|---|---|
 | Should K1 normalize stored bond memory or only its reads? | Bounded two-arm protocol; no outcome assumed | `pcqm_k1_edge_memory_100k/` |
+| Are K1 edge-context normalization and global-slot simplifications additive? | Round2 pairwise interaction protocol; no outcome assumed | `pcqm_k1_edge_slot_interaction_100k/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can train-role graph alignment add useful topology PE beyond RWSE16? | No for the matched GAPE-lite implementation; closed before PCQM transfer | `qm9_gape_pretraining/` |
 | Does adaptive atom-local denoising transfer on QM9? | No material gain; closed | `qm9_adaptive_denoising/` |
