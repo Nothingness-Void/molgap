@@ -22,7 +22,9 @@ retained. Cross-platform equivalence is assessed through the V4 validator;
 the certificate is not a guarantee of identical final training trajectories.
 
 Use Kaggle1 only. One T4x2 kernel isolates EdgeState and K1 into separate
-processes/devices; a P100 kernel runs GPTrans. Physical BS128 is invariant.
+processes/devices; another T4 allocation runs GPTrans on one isolated device.
+The initial P100 request received T4x2 and exited before training; its successor
+explicitly requests T4x2. Physical BS128 is invariant.
 Each invocation runs at most four full epochs and ends early at an epoch
 boundary if projected runtime approaches three hours. It publishes best/last,
 RNG, optimizer, deterministic schedule cursor, initial state, all epoch

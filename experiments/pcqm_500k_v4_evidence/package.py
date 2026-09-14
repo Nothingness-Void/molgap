@@ -23,7 +23,7 @@ SOURCE_SHA = __SHA__
 def main():
     names = subprocess.check_output(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True).strip().splitlines()
     print("GPU allocation:", names, flush=True)
-    if len(names) != len(ARMS) or not all(EXPECTED_GPU in n for n in names):
+    if len(names) != 2 or not all(EXPECTED_GPU in n for n in names):
         raise RuntimeError("Unexpected accelerator allocation")
     # All imports of Torch happen in new workers after installing the frozen runtime.
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"])
@@ -73,7 +73,7 @@ def main():
         'licenses': [{'name': 'other'}]}, indent=2))
     for tag, arms, gpu, machine in (
         ('edge-k1', ['full_gps', 'neural_atom_k1'], 'T4', 'NvidiaTeslaT4'),
-        ('gptrans', ['gptrans'], 'P100', 'NvidiaTeslaP100')):
+        ('gptrans', ['gptrans'], 'T4', 'NvidiaTeslaT4')):
         package = output / tag
         package.mkdir(exist_ok=True)
         (package / 'run.py').write_text(ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr(gpu)).replace('__SHA__', repr(sha)), encoding='utf-8')

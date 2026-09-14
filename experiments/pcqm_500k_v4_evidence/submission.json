@@ -6,9 +6,10 @@
   "data_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
   "kernels": [
     {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 1, "arms": ["full_gps", "neural_atom_k1"], "requested_gpu": "T4x2", "startup_snapshot": "RUNNING"},
-    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 1, "arms": ["gptrans"], "requested_gpu": "P100", "startup_snapshot": "RUNNING"}
+    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 2, "arms": ["gptrans"], "requested_gpu": "T4x2_one_worker", "startup_snapshot": "SUBMITTED"}
   ],
   "stage_epochs_max": 4,
   "startup_preflight_verified": false,
+  "gptrans_v1_disposition": "Requested P100 but received T4x2; allocation guard failed before training. V2 explicitly requests T4x2 and isolates a single worker; source archive unchanged.",
   "resume_rule": "Accept stage, publish a new private checkpoint dataset, mount it and pass --resume to the unchanged source runner. Never start from scratch for stage2+."
 }
