@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-15",
+  "source_base_commit": "70500c5",
+  "source_sha256": "811a40969ece2df05d95556901fcc7c3ebcaa6f46c95e19a4e9fa2e856fad3ae",
+  "source_dataset": "nothingnessvoid/molgap-500k-v4-evidence-source-811a40969e",
+  "data_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "kernels": [
+    {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 1, "arms": ["full_gps", "neural_atom_k1"], "requested_gpu": "T4x2", "startup_snapshot": "RUNNING"},
+    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 1, "arms": ["gptrans"], "requested_gpu": "P100", "startup_snapshot": "RUNNING"}
+  ],
+  "stage_epochs_max": 4,
+  "startup_preflight_verified": false,
+  "resume_rule": "Accept stage, publish a new private checkpoint dataset, mount it and pass --resume to the unchanged source runner. Never start from scratch for stage2+."
+}
