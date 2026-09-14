@@ -13,3 +13,9 @@ This consumes the last user-authorized architecture round. Monitor B must
 handoff terminal evidence for controller analysis, then stop. Exact acceptance
 and idempotent handoff: `monitor.md`; same persistent heartbeat
 `molgap-luna-training-monitor` on B, 30 minutes and quiet during healthy runs.
+
+The heartbeat retarget returned ACTIVE. Immediate thread-message dispatch
+returned `thread not found` (also with explicit local host), although B remained
+readable as `MolGap Luna training monitor`. No duplicate task was created.
+Immediate acknowledgement is unconfirmed; the saved heartbeat owns the
+scheduled check and terminal transaction. Its target is the established B id.
