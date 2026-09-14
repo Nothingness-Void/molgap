@@ -40,9 +40,12 @@ were also preserved in archive. Their positive results retain their original
 contracts; archival does not reclassify them as rejected. GPTrans full execution
 is integrated separately. Retrieve an old file with `git show <commit>:<path>`.
 
-The local master commit 36a8156 is already reachable from remote desktop but
-is ahead of origin/master. It was retained without promoting submission-process
-history onto the minimal delivery branch.
+The old local master tip 36a8156 was already reachable from remote desktop.
+The local master ref was aligned to origin/master after verifying that
+preservation; no submission-process history was promoted to delivery.
+
+The primary local checkout D:/文档/molgap now uses molgap-desktop. The previous
+desktop checkout is a detached snapshot; use the primary checkout for new work.
 
 Two worktrees had tracked user edits and were excluded from branch deletion:
 the GPTrans V4 reference and Xian audit. Resolve those edits before consolidation.
