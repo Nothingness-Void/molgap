@@ -1,7 +1,7 @@
 # Operational state
 
-Round2 submitted as Kaggle2
-`kaseichou/molgap-k1-edge-slot-interaction-s42` version1, requested T4x2.
-The source dataset was private and ready; the first observed state was RUNNING.
-Exact identities are in `results/submission.json`. Remote preflight and results
-are not yet accepted. Do not duplicate submission.
+Kaggle2 `kaseichou/molgap-k1-edge-slot-interaction-s42` version1 reached
+COMPLETE. Its 30 downloaded files occupy 595,965,056 bytes in ignored platform
+records. Corrected no-inference acceptance passed; both promotion gates and the
+frozen pairwise-additivity condition failed. The heartbeat was removed. Do not
+repeat, resume, or scale this task.

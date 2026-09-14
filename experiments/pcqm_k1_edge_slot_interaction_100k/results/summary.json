@@ -1,0 +1,42 @@
+{
+  "format": "molgap-k1-edge-slot-interaction-summary-v1",
+  "date": "2026-09-15",
+  "kernel": "kaseichou/molgap-k1-edge-slot-interaction-s42",
+  "kernel_version": 1,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidates": {
+    "neural_atom_k1_edge_context_no_slot_attention": {
+      "development_gap_mae_eV": 0.14165431261062622,
+      "gain_eV": -0.00028067827224731445,
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0006261205489039421,
+        0.0011973441073298448
+      ],
+      "isolated_parent_gain_sum_eV": 0.0026530027389526367,
+      "gain_minus_parent_sum_eV": -0.002933681011199951,
+      "exceeds_larger_parent": false,
+      "within_additivity_tolerance": false,
+      "promotion_passed": false
+    },
+    "neural_atom_k1_edge_context_uniform_return": {
+      "development_gap_mae_eV": 0.13959993422031403,
+      "gain_eV": 0.0017737001180648804,
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0026982951866388323,
+        -0.0008843179345130937
+      ],
+      "isolated_parent_gain_sum_eV": 0.0027165859937667847,
+      "gain_minus_parent_sum_eV": -0.0009428858757019043,
+      "exceeds_larger_parent": false,
+      "within_additivity_tolerance": false,
+      "promotion_passed": false
+    }
+  },
+  "selected_candidate": null,
+  "triple_composition_authorized": false,
+  "accepted": true,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

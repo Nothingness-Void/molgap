@@ -76,10 +76,13 @@ or K1 promotion. Authority and consolidated evidence:
 
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
 closed isolated K1 real-bond storage/read normalization: one arm regressed and
-the other was directionally favorable but below the material gate. Round 2 is
-running to test that weak relation-recurrence signal separately with the two
-previously favorable global-slot simplifications; no desktop handoff changes.
-Authority: `experiments/pcqm_k1_edge_memory_100k/decision.md`.
+the other was directionally favorable but below the material gate. Round 2
+tested that weak relation-recurrence signal with the two favorable global-slot
+simplifications. Neither pair passed the material gate or retained both parent
+effects, so triple stacking is closed. One authorized round remains, pending a
+fresh evidence audit rather than another micro-variant. Authorities:
+`experiments/pcqm_k1_edge_memory_100k/decision.md` and
+`experiments/pcqm_k1_edge_slot_interaction_100k/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

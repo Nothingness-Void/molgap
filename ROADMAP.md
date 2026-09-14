@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-EDGE-INTERACTION | Execute round2: pair the weak edge-context normalization signal independently with no-slot-attention and uniform-return | Frozen acceptance and controller attribution; triple composition only if pairwise evidence supports additivity |
+| P0 | B-ARCHITECTURE-ROUND3 | Audit accepted and rejected evidence, then either release one materially distinct information-flow question or stop | One frozen seed42 screen at most; no K1 edge/slot triple or closed-mechanism retry |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
