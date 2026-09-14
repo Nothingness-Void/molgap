@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-14",
+  "authorized_rounds": 2,
+  "completed_rounds": 2,
+  "scientific_rounds_remaining": 0,
+  "reference_mae_eV": 0.15662720430791377,
+  "scientific_contract_sha256": "062603c4793462d1db703704ad0b8472a21ea3e094efd5cee20ff8fade120195",
+  "parameters_per_model": 5246817,
+  "material_gain_floor_eV": 0.003,
+  "candidates": [
+    {"variant": "pair_prenorm", "round": 1, "mae_eV": 0.1535023336213827, "gain_eV": 0.003124870686531067, "verdict": "seed42_mechanism_shortlist", "best_model_sha256": "7939902eaa66706181ac8033030edf450abe2d0d36c1bdbbe04872012051be41", "evidence": "experiments/pcqm_gptrans_relation_flow/results/acceptance.json"},
+    {"variant": "centered_logits", "round": 1, "mae_eV": 0.15821391727387904, "gain_eV": -0.001586712965965271, "verdict": "closed", "evidence": "experiments/pcqm_gptrans_relation_flow/results/acceptance.json"},
+    {"variant": "memory_value", "round": 2, "mae_eV": 0.15787046183526515, "gain_eV": -0.0012432575273513794, "verdict": "closed", "last_live_train_mae_eV": 0.09867532504691387, "evidence": "experiments/pcqm_gptrans_memory_readback/results/acceptance.json"},
+    {"variant": "memory_message", "round": 2, "mae_eV": 0.15822110423505306, "gain_eV": -0.0015938999271392822, "verdict": "closed", "last_live_train_mae_eV": 0.09901566139309313, "evidence": "experiments/pcqm_gptrans_memory_readback/results/acceptance.json"}
+  ],
+  "all_best_epochs_zero_based": 59,
+  "epochs_each": 60,
+  "physical_batch_each": 128,
+  "precision": "fp32_no_tf32",
+  "round_wall_seconds": [11038.253945587, 11687.451544484],
+  "approx_allocated_t4_device_hours": 12.625391938928335,
+  "account_billing_or_quota_verified": false,
+  "causal_failure_mechanism_proven": false,
+  "k1_superiority_established": false,
+  "scale_or_official_evaluation_authorized": false,
+  "model_inference_executed_locally": false,
+  "sealed_roles_read": false
+}
