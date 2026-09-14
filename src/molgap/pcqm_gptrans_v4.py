@@ -239,10 +239,11 @@ def _target_stats(shards) -> tuple[float, float]:
     return float(values.mean()), float(values.std(unbiased=True).clamp_min(1e-6))
 
 
-def _make_model(initial_state_path: Path | None = None):
+def _make_model(initial_state_path: Path | None = None, variant: str = "reference"):
     import torch
 
     from .gptrans import OGBGPTransTiny
+    from .gptrans_variants import apply_variant
 
     model = OGBGPTransTiny(
         node_channels=256,
@@ -256,7 +257,7 @@ def _make_model(initial_state_path: Path | None = None):
         n_targets=1,
     )
     if initial_state_path is None:
-        return model
+        return apply_variant(model, variant)
     if sha256_file(initial_state_path) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
         raise RuntimeError("Frozen GPTrans-T initial-state artifact changed")
     payload = torch.load(initial_state_path, map_location="cpu")
@@ -265,7 +266,7 @@ def _make_model(initial_state_path: Path | None = None):
     model.load_state_dict(payload["model_state"], strict=True)
     if payload.get("state_sha256") != _state_sha256(model):
         raise RuntimeError("Frozen GPTrans-T initial-state payload is inconsistent")
-    return model
+    return apply_variant(model, variant)
 
 
 def _state_sha256(model) -> str:
@@ -368,10 +369,10 @@ class FrozenEpochScheduler:
         self.epoch = int(state["epoch"])
 
 
-def _make_training_state(initial_state_path: Path):
+def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     import torch
 
-    model = _make_model(initial_state_path).to("cuda")
+    model = _make_model(initial_state_path, variant).to("cuda")
     _verify_model_identity(model)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -534,6 +535,7 @@ def run_preflight(
     output: Path,
     platform_id: str,
     initial_state_path: Path,
+    variant: str = "reference",
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -560,7 +562,7 @@ def run_preflight(
     repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
+        model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
         scheduler.step(0)
         repeat_losses.append(
             float(
@@ -595,7 +597,7 @@ def run_preflight(
         )
 
     configure_fp32_determinism(SEED)
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -659,6 +661,9 @@ def run_preflight(
     validate_runtime_certificate(certificate, provisional_contract)
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
+        "variant": variant,
+        "parameters": EXPECTED_PARAMETERS,
+        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_variants.py")),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -691,11 +696,12 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256) -> None:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference") -> None:
     atomic_torch_save(
         path,
         {
             "format": CHECKPOINT_FORMAT,
+            "variant": variant,
             "epoch": epoch,
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
@@ -724,6 +730,7 @@ def run_training(
     output: Path,
     platform_id: str,
     initial_state_path: Path,
+    variant: str = "reference",
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -734,7 +741,7 @@ def run_training(
     completion_path = output / "completion_manifest.json"
     if completion_path.is_file():
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
-        if completion.get("complete") is True:
+        if completion.get("complete") is True and completion.get("variant", "reference") == variant:
             return completion
         raise RuntimeError("Existing completion manifest is incompatible")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
@@ -742,6 +749,8 @@ def run_training(
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     if preflight.get("accepted") is not True:
         raise RuntimeError("V4 preflight was not accepted")
+    if preflight.get("variant", "reference") != variant:
+        raise RuntimeError("Preflight model variant changed")
     if preflight.get("source_archive_sha256") != source_archive_sha256:
         raise RuntimeError("Preflight source archive changed")
     if preflight.get("source_commit") != source_commit:
@@ -769,7 +778,7 @@ def run_training(
         raise RuntimeError("Target statistics differ from preflight")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path)
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []
@@ -779,6 +788,8 @@ def run_training(
         checkpoint = torch.load(checkpoint_path, map_location="cuda", weights_only=False)
         if checkpoint.get("format") != CHECKPOINT_FORMAT:
             raise RuntimeError("Checkpoint format changed")
+        if checkpoint.get("variant", "reference") != variant:
+            raise RuntimeError("Checkpoint architecture variant changed")
         if checkpoint.get("scientific_fields") != _scientific_fields():
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
@@ -827,6 +838,7 @@ def run_training(
             best_payload = {
                 "format": RUN_FORMAT,
                 "model_config": {
+                    "variant": variant,
                     "node_channels": 256,
                     "pair_channels": 32,
                     "num_layers": 12,
@@ -886,23 +898,31 @@ def run_training(
             target_stats=target_stats,
             runtime_certificate_id=certificate_id,
             source_archive_sha256=source_archive_sha256,
+            variant=variant,
         )
         print(
-            f"gptrans_t_100k_v4 ep{epoch:02d} train={row['train_mae_eV']:.6f} "
+            f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
             f"dev={row['development_mae_eV']:.6f}eV best={best:.6f}@{best_epoch} "
             f"lr={learning_rate:.3e} {row['elapsed_seconds']:.1f}s"
             + (" *" if improved else ""),
             flush=True,
         )
+        if variant != "reference" and (epoch + 1) % 10 == 0:
+            import os
+            import shutil
+            chunk = output / f"checkpoint_epoch_{epoch:02d}.pt"
+            temporary = chunk.with_suffix(".pt.tmp")
+            shutil.copyfile(checkpoint_path, temporary)
+            os.replace(temporary, chunk)
 
     best_model_path = output / "best_model.pt"
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
         **_scientific_fields(),
-        "run_id": "gptrans-t-100k-v4-seed42",
-        "model_id": "gptrans_t_core_12x256_pair32",
-        "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256,
+        "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
+        "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
+        "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
         "source_archive_sha256": source_archive_sha256,
         "result_artifact_sha256": result_sha256,
         "platform_id": platform_id,
@@ -924,6 +944,11 @@ def run_training(
     atomic_json(output / "frozen_reference.json", reference)
     completion = {
         "format": RUN_FORMAT,
+        "variant": variant,
+        "parameters": EXPECTED_PARAMETERS,
+        "variant_source_sha256": preflight.get("variant_source_sha256"),
+        "checkpoint_sha256": sha256_file(checkpoint_path),
+        "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
         "complete": True,
         "epochs": EPOCHS,
         "optimizer_steps": BATCHES_PER_EPOCH * EPOCHS,
