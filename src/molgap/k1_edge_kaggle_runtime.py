@@ -8,7 +8,13 @@ import subprocess
 import sys
 import time
 
-from molgap.k1_edge_memory import MODES
+from molgap.k1_edge_memory import MODES as EDGE_MEMORY_MODES
+from molgap.k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
+
+ALLOWED_MODES = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
+MODES = tuple(json.loads(os.environ.get("MOLGAP_SCREEN_MODES", json.dumps(EDGE_MEMORY_MODES))))
+if len(MODES) != 2 or any(mode not in ALLOWED_MODES for mode in MODES):
+    raise RuntimeError(f"Invalid two-arm screen: {MODES}")
 
 ROOT = Path("/kaggle/working/pcqm_k1_edge_memory")
 

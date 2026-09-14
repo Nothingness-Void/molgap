@@ -30,7 +30,7 @@ class ContractTests(unittest.TestCase):
     def test_initialization_exception_scoped(self):
         text = (REPO_ROOT / "experiments/pcqm_k1_variants_100k/accept.py").read_text()
         self.assertIn('initialization_policy: str = "nested-function"', text)
-        self.assertIn("mode not in MODES", text)
+        self.assertIn("mode not in modes", text)
         self.assertIn('reference["preflight"]["shared_k1_initial_state_sha256"]', text)
 
     def test_recovery_rng_and_chunks(self):

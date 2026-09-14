@@ -79,13 +79,16 @@ def _load_arm(
     ):
         raise RuntimeError(f"Architecture preflight changed: {mode}")
     if initialization_policy != "nested-function":
-        from molgap.k1_edge_memory import MODES
-        if mode not in MODES or initialization_policy != "identical-tensors-altered-edge-dataflow":
+        from molgap.k1_edge_memory import MODES as EDGE_MODES
+        from molgap.k1_edge_slot_interaction import MODES as INTERACTION_MODES
+        modes = EDGE_MODES + INTERACTION_MODES
+        if mode not in modes or initialization_policy != "identical-tensors-altered-edge-dataflow":
             raise RuntimeError("Unrecognized initialization exception")
         checks = preflight.get("mechanism_checks", {})
         if preflight.get("initialization_policy") != initialization_policy or checks.get("equations_verified") is not True or checks.get("real_bonds_only") is not True:
             raise RuntimeError("Edge memory equation verification missing")
-        if len(checks.get("layers", [])) != 9 or checks.get("normalized_update_context") != (mode == MODES[1]):
+        expected_context_norm = mode != EDGE_MODES[0]
+        if len(checks.get("layers", [])) != 9 or checks.get("normalized_update_context") != expected_context_norm:
             raise RuntimeError("Edge-memory read policy changed")
         if checks.get("resume_two_step_bitwise_equal") is not True:
             raise RuntimeError("Resume equivalence check missing")

@@ -298,6 +298,7 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
             "neural_atom_k1_collapsed_mha",
             "neural_atom_k1_no_slot_attention",
             "neural_atom_k1_no_attention_uniform_return",
+            "neural_atom_k1_edge_context_no_slot_attention",
         } and ".slot_attention." in name:
             continue
         digest.update(name.encode("utf-8") + b"\0")
@@ -410,6 +411,12 @@ def _base_state(model):
 
 def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES, PARAMETERS, check_mechanism
+    from .k1_edge_slot_interaction import (
+        MODES as EDGE_SLOT_MODES,
+        PARAMETERS as EDGE_SLOT_PARAMETERS,
+        check_mechanism as check_edge_slot,
+    )
+    active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     import torch
 
     configure_fp32_determinism(SEED)
@@ -425,7 +432,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         baseline_prediction = _forward(baseline, batch)
         candidate_prediction = _forward(model, batch)
     exact_nested_initialization = bool(torch.equal(baseline_prediction, candidate_prediction))
-    if mode != "neural_atom_k1_v4" and mode not in EDGE_MEMORY_MODES and not exact_nested_initialization:
+    if mode != "neural_atom_k1_v4" and mode not in active_edge_modes and not exact_nested_initialization:
         raise RuntimeError(f"Candidate is not functionally nested in K1: {mode}")
     mechanism_checks = {}
     if mode == "neural_atom_k4_cluster":
@@ -908,26 +915,33 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             )
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
-    if mode in EDGE_MEMORY_MODES:
-        mechanism_checks = check_mechanism(model, batch)
-        if sum(p.numel() for p in model.parameters()) != PARAMETERS:
+    if mode in active_edge_modes:
+        mechanism_checks = (
+            check_mechanism(model, batch)
+            if mode in EDGE_MEMORY_MODES
+            else check_edge_slot(model, batch)
+        )
+        expected_parameters = (
+            PARAMETERS if mode in EDGE_MEMORY_MODES else EDGE_SLOT_PARAMETERS[mode]
+        )
+        if sum(p.numel() for p in model.parameters()) != expected_parameters:
             raise RuntimeError("Edge-memory parameter identity changed")
     model.train()
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     _optimizer_step(model, optimizer, batch, mean, std)
-    if mode in EDGE_MEMORY_MODES:
+    if mode in active_edge_modes:
         from .k1_edge_memory import snapshot_step, check_resume_equivalence
         snapshot = snapshot_step(model, optimizer)
     _optimizer_step(model, optimizer, batch, mean, std)
-    if mode in EDGE_MEMORY_MODES:
+    if mode in active_edge_modes:
         mechanism_checks["resume_two_step_bitwise_equal"] = check_resume_equivalence(
             model, optimizer, snapshot, batch, mean, std, _optimizer_step
         )
         del snapshot
     candidate_parameters = []
-    if mode in EDGE_MEMORY_MODES:
+    if mode in active_edge_modes:
         candidate_parameters = list(model.base.edge_updates.parameters())
     if mode == "neural_atom_k1_g":
         candidate_parameters = list(model.molecule_gates.parameters())
@@ -982,7 +996,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         "parameter_count": parameter_count,
         "shared_k1_initial_state_sha256": shared_sha,
         "exact_k1_function_at_initialization": exact_nested_initialization,
-        "initialization_policy": "identical-tensors-altered-edge-dataflow" if mode in EDGE_MEMORY_MODES else "nested-function",
+        "initialization_policy": "identical-tensors-altered-edge-dataflow" if mode in active_edge_modes else "nested-function",
         "candidate_mechanism_trainable_after_two_steps": candidate_trainable,
         "exchange_layers": list(MIXER_LAYERS),
         "mechanism_checks": mechanism_checks,
@@ -1040,6 +1054,8 @@ def train_arm(
     import torch.nn.functional as functional
     from .training_reproducibility import capture_rng_state, restore_rng_state
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
+    from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
+    active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
@@ -1179,7 +1195,7 @@ def train_arm(
             },
         )
         atomic_json(output / "trace.json", {"epochs": trace})
-        if mode in EDGE_MEMORY_MODES and (epoch + 1) % 10 == 0:
+        if mode in active_edge_modes and (epoch + 1) % 10 == 0:
             import tarfile
             chunk = output / f"recovery_epoch_{epoch + 1:02d}.tar"
             temporary = chunk.with_suffix(".tmp")

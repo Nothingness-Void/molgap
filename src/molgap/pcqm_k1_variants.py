@@ -16,6 +16,18 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_edge_context_no_slot_attention": {
+        "backbone": "neural_atom_k1",
+        "exchange_layers": list(MIXER_LAYERS),
+        "changes": ["raw-real-bond-storage-normalized-context-read", "remove-length-one-slot-self-attention"],
+        "added_parameters": 0,
+    },
+    "neural_atom_k1_edge_context_uniform_return": {
+        "backbone": "neural_atom_k1",
+        "exchange_layers": list(MIXER_LAYERS),
+        "changes": ["raw-real-bond-storage-normalized-context-read", "uniform-slot-return"],
+        "added_parameters": 0,
+    },
     "neural_atom_k1_edge_read_norm": {
         "backbone": "neural_atom_k1", "exchange_layers": list(MIXER_LAYERS),
         "change": "real-bond-raw-residual-storage-normalized-node-read",
@@ -699,6 +711,10 @@ def make_encoder(mode: str):
     if mode in EDGE_MEMORY_MODES:
         from .k1_edge_memory import make_encoder as make_edge_memory
         return make_edge_memory(mode)
+    from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
+    if mode in EDGE_SLOT_MODES:
+        from .k1_edge_slot_interaction import make_encoder as make_edge_slot
+        return make_edge_slot(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

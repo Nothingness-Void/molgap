@@ -91,10 +91,11 @@ def snapshot_step(model, optimizer):
 
 def check_resume_equivalence(model, optimizer, snapshot, batch, mean, std, step):
     """Compare step two with an exact step-one restart on a train-only fixture."""
+    import copy
     import torch
     from .training_reproducibility import capture_rng_state, restore_rng_state
     after = capture_rng_state()
-    replay = make_encoder(model.mode).to("cuda").train()
+    replay = copy.deepcopy(model).to("cuda").train()
     replay.load_state_dict(snapshot["model"])
     replay_optimizer = torch.optim.AdamW(replay.parameters(), lr=4e-4, weight_decay=1e-5)
     replay_optimizer.load_state_dict(snapshot["optimizer"])
