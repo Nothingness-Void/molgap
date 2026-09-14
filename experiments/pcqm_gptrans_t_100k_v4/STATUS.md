@@ -1,5 +1,21 @@
 # Status
 
+Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 4
+completed and passed no-inference acceptance. It is frozen as the sole GPTrans-T
+V4 reference but failed the 100K architecture admission test; see
+`decision.md`. Versions 1/2 failed before model
+loading: the dataset was initially not mounted, then Kaggle expanded the source
+archive. Version 3 passed model/data preflight but stopped before training when
+the second runtime fingerprint differed from the fingerprint captured earlier
+in the same Python process. Version 4 executes preflight and training in fresh
+processes, matching the production two-job contract and preventing imported
+module state from entering the certificate boundary. It retains the expanded
+immutable source tree, neutral-suffix provenance archive, and established
+P100-compatible wheel. Every scientific field was unchanged.
+
+The scientific tensor initialization remains unchanged; only its portable
+artifact serialization is rebound to the integration runtime.
+
 The first SCNet Kunshan preflight `121888568` failed before training because
 the frozen SCNet PyTorch does not support `Tensor.std(correction=1)`; dependent
 training job `121888573` was therefore cancelled without running. The
@@ -48,51 +64,7 @@ resulting states were not bitwise identical. No training job was submitted.
 The next bounded diagnostic reports both losses, state hashes, and the maximum
 parameter delta before any decision about platform suitability or tolerance.
 
-Diagnostic `121905044` measured identical FP32 losses (`1.0190001726`) and a
-maximum repeated-state difference of `1.49011612e-8`, isolated to one attention
-weight. This is below a frozen `1e-7` numerical reproducibility tolerance and
-does not justify rejecting Kunshan. Future preflights retain both state hashes
-and the measured maximum delta in the runtime certificate instead of requiring
-GPU tensor byte identity.
-
-Portable retry on 2026-09-12 uses source commit
-`7f36a1d71ae0f063c53f07bd1e5b725dcc2ecebc` and source archive SHA-256
-`85d22d12f857a88032d584f5aac1d19434c9cf4c040145254ccf6f479510b881`.
-The archive contains 12 explicitly allowlisted files and passed remote archive,
-inventory, and extracted-file hash checks. The accepted dataset manifest and
-seed-42 initial-state artifact hashes were reverified before submission.
-
-Preflight `121921969` failed during graph-cache deserialization with
-`ModuleNotFoundError: molgap.pcqm_wedge`; dependent training job `121921971`
-was canceled by the `afterok` dependency before training. The graph payload
-contains `WedgeData`, so retry-2 added the tracked defining module
-`src/molgap/pcqm_wedge.py` to the archive allowlist. The rebuilt 13-file source
-archive has SHA-256
-`37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5` and passed
-remote archive, inventory, and extracted-file hash checks.
-
-Retry-2 preflight `121922250` completed with exit code 0 on 2026-09-12. Its
-runtime certificate is accepted for the frozen FP32, TF32-disabled,
-deterministic, physical-BS128 runtime. The repeated optimizer-step losses were
-identical; maximum parameter delta was `1.49011612e-8`, below the frozen
-`1e-7` tolerance. Calibration measured 600.95 graphs/s and estimated 2.7725
-training hours, below the six-hour preflight ceiling. The fixed graph manifest,
-source archive, and seed-42 initial-state hashes passed acceptance.
-
-The only authorized baseline job, `121922252`, started via
-`afterok:121922250` and remained RUNNING in the latest read-only snapshot at
-6:28 elapsed. Slurm reported 4:20 accumulated CPU time, 8.46 GiB peak resident
-memory, 1.62 GB disk reads, and 7.43 MB disk writes. The training log and output
-directory still had no epoch record or checkpoint. The runner emits its first
-log line and atomically saves state at the epoch boundary; therefore progress
-through the first epoch is not yet verified. No error was present in stdout or
-stderr. The run remains under its isolated result directory and uses the frozen
-60-epoch, physical-BS128 contract. No prior result directory or input cache was
-modified.
-
-- Retry-2 remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-4e327422-r2`
-- Retry-2 source archive SHA256: `37740c829d8b48586c4d13eed105cc0cc04698e3a9f426f636ceb6bac3381ca5`
-- Initial portable-retry root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
+- Remote root: `/public/home/scnaqkfcy3/molgap-results/pcqm-gptrans-t-100k-v4-d5aad8a`
 - Source archive SHA256: `a79bb8d581e434a9b637879d1108c07eb869482b93f7ac265b7aac60a25ff791`
 - Frozen initial-state artifact SHA256: `073fce25752f9fc5e15670177cd9e69286d681985a3f3e6bed757efef00b124a`
 - Dataset manifest SHA256: `1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d`
