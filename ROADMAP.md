@@ -31,15 +31,16 @@ CPU cores to provide the corresponding host-memory quota; the original K1
 checkpoint resumes atomically every 500 steps. GPTrans uses a separately
 versioned source archive and preflight output so the failed attempt is
 preserved. Training outputs remain independently retrievable under
-`outputs/k1/full/` and `outputs/gptrans/full/`; fusion prediction chunks,
-progress, hashes, and acceptance remain under `outputs/fusion_study/`. The
+the output locations recorded by each recovery manifest; fusion prediction
+chunks, progress, hashes, and acceptance follow the same recovery identity. The
 frozen inputs and evaluation-role contract are in
 `experiments/pcqm_k1_gptrans_full_fusion/protocol.md`; recovery evidence is in
 `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md` and
 `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
-Do not submit another K1 resume until PBS state is queryable; the R2-only
-certificate-lineage fix preserves every frozen data, source, runtime
-fingerprint, and training-contract identity.
+R3 deployment and dependency identities are recorded in
+`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
+Reuse the accepted mmap preflight only when its runtime fingerprint still
+matches; preserve certificate lineage and every frozen training identity.
 
 The accepted 100K EdgeState screen is evidence, not an active task. Its exact
 decision is

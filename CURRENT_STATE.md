@@ -32,10 +32,12 @@ resume failed before training because the guard treated a new runtime
 certificate instance ID as a changed runtime, although the accepted runtime
 fingerprint and frozen asset identities were unchanged. A local, tested fix now
 preserves certificate lineage without weakening contract, data, source, or
-runtime-fingerprint checks. The PBS service is currently unavailable, so no
-successor has been submitted. Exact R2 identities, hashes, failure, and retry
-gate are recorded in
-`experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
+runtime-fingerprint checks. PBS recovered on 2026-09-14. R3 deployed that fix
+with memory-mapped graph loading and resumes a verified copy of the step-105,500
+checkpoint in an isolated output directory. GPTrans completed all 156,250
+steps; its acceptance retry now receives the accepted preflight path explicitly.
+The five-job recovery chain is submitted. Exact identities and dependencies are
+in `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
 After both base artifacts pass acceptance, the dependent fusion job will read
 the official-valid role exactly once, fit one scalar on a fixed 20% calibration
 partition, and compare on the remaining 80%; this consumes that validation
@@ -90,19 +92,12 @@ must not be represented as this new conservative head.
 - Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42` version 1
   completed. Three candidates passed artifact acceptance but failed the
   advancement gate; the time-gated fourth candidate was not launched.
-- The IMS K1/GPTrans full-scale task remains open under its frozen contracts. K1
-  R1 `1498717.ccpbs1` completed the resume at step 105,500 then hit the same
-  host-memory cgroup limit; the checkpoint was preserved. R2 preflight
-  `1502817.ccpbs1` passed, but resume `1502818.ccpbs1` failed before training
-  because a newly accepted runtime-certificate instance ID was incorrectly
-  treated as a changed runtime. Acceptance `1502819.ccpbs1` depends on resume
-  success. The live checkpoint and trace match their pre-retry hashes.
-  `jobinfo -c` currently fails against both PBS servers, so no R3 is submitted
-  until scheduler state is available. The V4 asset audit and minimal repair are
-  recorded in
-  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r2.md`.
-  GPTrans and fusion recovery history remains in
-  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260913_r1.md`.
+- The IMS full-scale R3 chain is submitted: GPTrans acceptance `1507508`, K1
+  resume `1507509`, K1 acceptance `1507510`, fusion `1507511`, and fusion
+  acceptance `1507512` (all `.ccpbs1`). At the initial 2026-09-14 14:58 JST
+  snapshot, GPTrans acceptance was running, K1 was GPU-queued, and downstream
+  jobs were dependency-held. Recovery evidence and output locations are in
+  `experiments/pcqm_k1_gptrans_full_fusion/results/recovery_20260914_r3.md`.
 - All accepted 100K architecture outputs have local manifests, metrics,
   predictions, and hashes under the experiment and `platforms/_records/` trees.
 - IMS continuation `1364434.ccpbs1` completed and passed artifact acceptance.
