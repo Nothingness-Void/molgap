@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-ARCHITECTURE-ROUND3 | Audit accepted and rejected evidence, then either release one materially distinct information-flow question or stop | One frozen seed42 screen at most; no K1 edge/slot triple or closed-mechanism retry |
+| P0 | B-K1-GPSPP-LOCAL | Execute the final authorized round: equal-parameter sender-only and bidirectional local adapters on frozen K1 | Frozen acceptance and controller attribution; no automatic seed or scale-up |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
