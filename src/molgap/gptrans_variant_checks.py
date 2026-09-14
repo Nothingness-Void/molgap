@@ -23,6 +23,19 @@ def run_checks(initial_state: Path, variant: str) -> dict:
     assert torch.allclose(norm.mean(1), torch.zeros_like(norm[:, 0]), atol=1e-6)
     norm.square().sum().backward()
     assert bool(torch.isfinite(pair.grad).all())
+    if variant in ("memory_value", "memory_message"):
+        from .gptrans_memory import readback
+        delta = torch.randn_like(pair)
+        observed = readback(pair, delta, mask, variant)
+        changed_padding = pair.detach().clone()
+        changed_padding[..., -1] = 1000
+        assert torch.allclose(observed, readback(changed_padding, delta, mask, variant), atol=1e-6)
+        assert not torch.allclose(observed, readback(pair + 1, delta, mask, variant))
+        # With zero history both definitions reduce to the original direct message.
+        original = (torch.softmax(delta.masked_fill(mask, float("-inf")), dim=-1) * delta).sum(-1).transpose(1, 2)
+        assert torch.allclose(original, readback(torch.zeros_like(pair), delta, mask, variant), atol=1e-6)
+        readback(pair, delta, mask, variant).sum().backward()
+        assert bool(torch.isfinite(pair.grad).all())
     x = torch.zeros(4, 9, dtype=torch.long, device="cuda")
     edges = torch.tensor([[0, 1, 2, 3], [1, 0, 3, 2]], device="cuda")
     bonds = torch.zeros(4, 3, dtype=torch.long, device="cuda")

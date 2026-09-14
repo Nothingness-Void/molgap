@@ -243,7 +243,10 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     from .gptrans import OGBGPTransTiny
-    from .gptrans_variants import apply_variant
+    if variant in ("memory_value", "memory_message"):
+        from .gptrans_memory import apply_memory_variant as apply_variant
+    else:
+        from .gptrans_variants import apply_variant
 
     model = OGBGPTransTiny(
         node_channels=256,
@@ -663,7 +666,7 @@ def run_preflight(
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_variants.py")),
+        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,

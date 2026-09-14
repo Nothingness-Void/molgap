@@ -23,7 +23,7 @@ def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def accept(root, reference_root, submission_path, output):
+def accept(root, reference_root, submission_path, output, modes=MODES):
     spec = importlib.util.spec_from_file_location("gptrans_reference_accept", REPO_ROOT / "experiments/pcqm_gptrans_t_100k_v4/accept_result.py")
     helper = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(helper)
@@ -36,7 +36,7 @@ def accept(root, reference_root, submission_path, output):
     base_payload = torch.load(reference_root / "development_predictions.pt", map_location="cpu", weights_only=False)
     base_error = (base_payload["prediction_eV"].view(-1).double() - base_payload["target_eV"].view(-1).double()).abs()
     arms = []
-    for mode in MODES:
+    for mode in modes:
         arm = root / mode
         training = arm / "training"
         mechanical = helper.accept(training, arm / "mechanical_acceptance.json")

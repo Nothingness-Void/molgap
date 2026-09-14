@@ -10,7 +10,7 @@ from pathlib import Path
 from molgap.constants import REPO_ROOT
 
 
-def main():
+def main(experiment="pcqm_gptrans_relation_flow", dataset_id="kaseichou/molgap-gptrans-relation-flow-source", title="MolGap GPTrans Relation Flow Source"):
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--initial-state", type=Path, required=True)
@@ -19,7 +19,7 @@ def main():
         raise FileExistsError(args.output)
     if hashlib.sha256(args.initial_state.read_bytes()).hexdigest() != "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c":
         raise RuntimeError("Frozen untrained-state bytes changed")
-    dirty = subprocess.check_output(["git", "status", "--porcelain", "--", "src", "experiments/pcqm_gptrans_relation_flow"], cwd=REPO_ROOT, text=True).strip()
+    dirty = subprocess.check_output(["git", "status", "--porcelain", "--", "src", "experiments/" + experiment], cwd=REPO_ROOT, text=True).strip()
     if dirty:
         raise RuntimeError("Commit source and protocol before packaging")
     args.output.mkdir(parents=True)
@@ -39,7 +39,7 @@ def main():
     (args.output / "SOURCE_COMMIT.txt").write_text(commit + "\n", encoding="utf-8")
     (args.output / "SOURCE_ARCHIVE_SHA256.txt").write_text(sha + "\n", encoding="utf-8")
     (args.output / "SOURCE_FILES.json").write_text(json.dumps({"files": inventory}, indent=2), encoding="utf-8")
-    (args.output / "dataset-metadata.json").write_text(json.dumps({"title": "MolGap GPTrans Relation Flow Source", "id": "kaseichou/molgap-gptrans-relation-flow-source", "licenses": [{"name": "other"}], "isPrivate": True}, indent=2), encoding="utf-8")
+    (args.output / "dataset-metadata.json").write_text(json.dumps({"title": title, "id": dataset_id, "licenses": [{"name": "other"}], "isPrivate": True}, indent=2), encoding="utf-8")
     print(json.dumps({"source_commit": commit, "archive_sha256": sha, "files": len(inventory)}))
 
 
