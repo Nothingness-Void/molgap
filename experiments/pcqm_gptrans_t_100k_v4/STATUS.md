@@ -1,7 +1,9 @@
 # Status
 
-Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 4 is
-running as autonomous discovery round 1. Versions 1/2 failed before model
+Kaggle2 P100 kernel `kaseichou/molgap-pcqm-gptrans-t-v4-s42` version 4
+completed and passed no-inference acceptance. It is frozen as the sole GPTrans-T
+V4 reference but failed the 100K architecture admission test; see
+`decision.md`. Versions 1/2 failed before model
 loading: the dataset was initially not mounted, then Kaggle expanded the source
 archive. Version 3 passed model/data preflight but stopped before training when
 the second runtime fingerprint differed from the fingerprint captured earlier
@@ -9,7 +11,7 @@ in the same Python process. Version 4 executes preflight and training in fresh
 processes, matching the production two-job contract and preventing imported
 module state from entering the certificate boundary. It retains the expanded
 immutable source tree, neutral-suffix provenance archive, and established
-P100-compatible wheel. Every scientific field is unchanged.
+P100-compatible wheel. Every scientific field was unchanged.
 
 The scientific tensor initialization remains unchanged; only its portable
 artifact serialization is rebound to the integration runtime.

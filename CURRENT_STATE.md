@@ -51,9 +51,11 @@ It is closed and does not alter the frozen K1 handoff. Authority:
 `experiments/pcqm_k1_combined_simplification_100k/decision.md`.
 
 The separate Kaggle2 discovery loop remains bounded to at most three
-evidence-gated rounds. Round 1 evaluates a pure-2D GPTrans-T reference on the
-same accepted 100K/50K data identity. Luna only monitors; this coordinator owns
-each terminal attribution and successor.
+evidence-gated rounds. Round 1 completed a pure-2D GPTrans-T reference on the
+accepted 100K/50K data identity. It was mechanically accepted but substantially
+underperformed the contextual K1 reference, so GPTrans tuning and scale-up are
+closed. No round-2 job is released without a distinct information-flow
+hypothesis. Authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a

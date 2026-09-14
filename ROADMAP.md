@@ -13,7 +13,6 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-GPTRANS-V4 | Run pure-2D GPTrans-T as Kaggle2 autonomous round 1 of at most three | Accepted result and attribution release at most one next round |
 | P1 | B-DESKTOP-HANDOFF | Review frozen Neural-Atom K1 for one full-role execution | Desktop explicitly approves budget; the intended runtime passes `experiments/pcqm_k1_full/` preflight; one-time official evaluation and submission authority are recorded separately |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -37,6 +36,12 @@ closed without scale-up. It is not precedent for arbitrary chaining. The
 separate authorization permits at most three Kaggle2 rounds. Successors require
 a terminal acceptance and written failure attribution by the coordinator; the
 monitor cannot choose them.
+
+Kaggle2 round 1 accepted GPTrans-T mechanically and rejected it scientifically
+for the 100K funnel. Two possible round slots remain unused; neither is a quota
+that must be spent. A successor needs a distinct information-flow hypothesis
+and must not reconstruct the closed dense PairGPS route through incremental
+patches.
 
 ## Architecture funnel
 
