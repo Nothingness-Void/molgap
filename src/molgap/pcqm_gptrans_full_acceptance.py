@@ -40,7 +40,15 @@ def _state_dict_sha256(state_dict) -> str:
     return digest.hexdigest()
 
 
-def accept(root: Path) -> dict:
+def _resolve_preflight_path(root: Path, preflight_path: Path | None) -> Path:
+    path = preflight_path or (root.parent / "preflight" / "preflight.json")
+    path = path.resolve()
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    return path
+
+
+def accept(root: Path, *, preflight_path: Path | None = None) -> dict:
     import torch
 
     root = root.resolve()
@@ -54,7 +62,7 @@ def accept(root: Path) -> dict:
         (root / "runtime_certificate.json").read_text(encoding="utf-8")
     )
     preflight = json.loads(
-        (root.parent / "preflight" / "preflight.json").read_text(encoding="utf-8")
+        _resolve_preflight_path(root, preflight_path).read_text(encoding="utf-8")
     )
 
     if contract != TRAINING_CONTRACT or canonical_fingerprint(contract) != TRAINING_CONTRACT_SHA256:
@@ -176,8 +184,9 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--preflight", type=Path)
     args = parser.parse_args()
-    print(accept(args.root), flush=True)
+    print(accept(args.root, preflight_path=args.preflight), flush=True)
 
 
 if __name__ == "__main__":

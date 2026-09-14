@@ -242,7 +242,7 @@ def _load_graphs(paths: list[Path]):
         def __init__(self, path: Path):
             super().__init__(root=None)
             self.data, self.slices = torch.load(
-                path, map_location="cpu", weights_only=False
+                path, map_location="cpu", weights_only=False, mmap=True
             )
 
     shards = [PackedGraphDataset(path) for path in paths]

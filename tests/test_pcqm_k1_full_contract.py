@@ -85,6 +85,31 @@ def test_resumable_sampler_never_emits_a_partial_batch():
     assert min(flattened) >= 0 and max(flattened) < 300
 
 
+def test_full_graph_shards_use_memory_mapped_loading(tmp_path, monkeypatch):
+    import torch
+    from torch_geometric.data import Data, InMemoryDataset
+
+    import molgap.pcqm_k1_full_runner as runner
+
+    graph_path = tmp_path / "graphs.pt"
+    data, slices = InMemoryDataset.collate(
+        [Data(x=torch.tensor([[1]])), Data(x=torch.tensor([[2]]))]
+    )
+    torch.save((data, slices), graph_path)
+    monkeypatch.setattr(runner, "TRAIN_ROWS", 2)
+    original_load = torch.load
+    observed = []
+
+    def checked_load(*args, **kwargs):
+        observed.append(kwargs.get("mmap"))
+        return original_load(*args, **kwargs)
+
+    monkeypatch.setattr(torch, "load", checked_load)
+    dataset, _ = runner._load_graphs([graph_path])
+    assert len(dataset) == 2
+    assert observed == [True]
+
+
 def test_resume_accepts_new_certificate_for_same_runtime_and_keeps_lineage():
     original_id = "1" * 64
     recertified_id = "2" * 64

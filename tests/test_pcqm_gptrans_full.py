@@ -15,6 +15,7 @@ from molgap.pcqm_gptrans_full_runner import (
     _gptrans_source_path,
     _learning_rate,
 )
+from molgap.pcqm_gptrans_full_acceptance import _resolve_preflight_path
 from molgap.pcqm_k1_full_runner import _architecture_source_sha256
 from molgap.training_reproducibility import canonical_fingerprint
 
@@ -61,3 +62,12 @@ def test_recovery_jobs_keep_the_frozen_ogb_archive_hash():
     scripts = sorted(recovery_jobs.glob("*.pbs"))
     assert len(scripts) == 8
     assert all(expected in script.read_text(encoding="utf-8") for script in scripts)
+
+
+def test_gptrans_acceptance_can_use_versioned_preflight_path(tmp_path):
+    full = tmp_path / "full"
+    preflight = tmp_path / "preflight_r1" / "preflight.json"
+    full.mkdir()
+    preflight.parent.mkdir()
+    preflight.write_text("{}", encoding="utf-8")
+    assert _resolve_preflight_path(full, preflight) == preflight.resolve()
