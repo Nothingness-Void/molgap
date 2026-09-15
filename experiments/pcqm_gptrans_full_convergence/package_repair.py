@@ -11,7 +11,7 @@ BASE = '/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full'
 
 
 def main():
-    out = ROOT / 'platforms/_records/ims/convergence_repair_r3'
+    out = ROOT / 'platforms/_records/ims/convergence_repair_r4'
     out.mkdir(parents=True, exist_ok=True)
     tracked = subprocess.check_output(['git', 'ls-files', 'src'], cwd=ROOT, text=True).splitlines()
     files = {p: (ROOT / p).read_bytes().replace(b'\r\n', b'\n')
@@ -22,8 +22,15 @@ def main():
     for required in ('pcqm_k1_full_runner', 'pcqm_gptrans_full_runner',
                      'pcqm_k1_convergence', 'pcqm_gptrans_convergence'):
         assert f'src/molgap/{required}.py' in files, required
+    for name in ('experiments/pcqm_k1_gptrans_full_fusion/fusion_contract.json',
+                 'experiments/pcqm_k1_gptrans_full_fusion/training_contract.json',
+                 'experiments/pcqm_k1_full/training_contract.json'):
+        files[name] = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
     for name, data in files.items():
-        compile(data, name, 'exec')
+        if name.endswith('.py'):
+            compile(data, name, 'exec')
+        elif name.endswith('.json'):
+            json.loads(data)
     hashes = {p: hashlib.sha256(data).hexdigest() for p, data in files.items()}
     files['runtime_files.json'] = json.dumps(hashes, indent=2).encode()
     verifier = '''import hashlib,json,pathlib
@@ -33,6 +40,12 @@ for name, expected in json.loads((root/'runtime_files.json').read_text()).items(
     path.relative_to(root)
     assert hashlib.sha256(path.read_bytes()).hexdigest()==expected, name
 print('Runtime file hashes verified', flush=True)
+import sys
+sys.path.insert(0, str(root/'src'))
+from molgap.pcqm_k1_gptrans_fusion import VALID_GRAPH_ROOT, _validate_fusion_contract, sha256_file
+acceptance_path=VALID_GRAPH_ROOT/'acceptance.json'
+_validate_fusion_contract(json.loads(acceptance_path.read_text()), sha256_file(acceptance_path))
+print('Actual graph/fusion contract validation passed', flush=True)
 '''
     files['verify_runtime.py'] = verifier.encode()
     with tarfile.open(out / 'runtime.tar.gz', 'w:gz') as tar:
@@ -41,8 +54,8 @@ print('Runtime file hashes verified', flush=True)
             info.size = len(data)
             tar.addfile(info, io.BytesIO(data))
     for family, old, new in (
-        ('gptrans', 'gptrans_convergence_20260915_r2', 'gptrans_convergence_20260915_r3'),
-        ('k1', 'k1_convergence_20260915_r1', 'k1_convergence_20260915_r2'),
+        ('gptrans', 'gptrans_convergence_20260915_r2', 'gptrans_convergence_20260916_r4'),
+        ('k1', 'k1_convergence_20260915_r1', 'k1_convergence_20260916_r3'),
     ):
         jobs = ROOT / f'experiments/pcqm_{family}_full_convergence/jobs'
         train = (jobs / 'train.pbs').read_text().replace(old, new)
