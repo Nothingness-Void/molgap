@@ -114,8 +114,12 @@ The consolidated attribution is
 archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 `experiments/_closed/qm9_top20_archive_index.md`.
 
-SCNet experiments and full training are desktop-owned and excluded from the
-server queue. The new screen does not modify the frozen K1 full handoff.
+Desktop continues to own SCNet full training, official evaluation, and final
+submission. By explicit user authorization, server may use the new Kunshan
+account for V4 architecture screens after its reusable runtime passes the
+generic DCU check and the candidate-specific preflight. The active runtime
+construction is specified in `platforms/scnet/KUNSHAN_V4_RUNTIME.md`; it does
+not modify the frozen K1 full handoff.
 
 The coordinator explicitly reopened one fresh seed-42 K1 question: condition
 the three sparse slot selectors on the incident persistent real-bond state.
@@ -127,10 +131,13 @@ The user then authorized one infrastructure-only retry with an explicit CLI P100
 accelerator override and the unchanged scientific contract. Version 2 also
 received a Tesla T4 and terminated before candidate execution; its diagnosis is
 `experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis_v2.md`.
-Version 3 is running with accelerator-flexible binding: it fixes one visible GPU
-and certifies the actual assigned CUDA runtime while leaving the scientific
-contract unchanged. No scientific result exists until its saved-artifact
-acceptance completes; the earlier failures do not change frozen K1.
+Version 3 completed with accelerator-flexible binding and passed saved-artifact
+acceptance without model inference. It reached `0.1410829425 eV` on the fixed
+development role, a `0.0002906919 eV` gain over K1-v4, while the paired
+bootstrap interval crossed zero and the `0.003 eV` material gate failed.
+`selected_candidate=null`; the mechanism is closed without shadow/official
+roles, another seed, scale-up, or successor. The decision and attribution are
+in `experiments/pcqm_k1_edge_conditioned_slot_100k/decision.md`.
 
 ## Data and comparison contract
 

@@ -13,15 +13,22 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Monitor the accelerator-flexible, unchanged-contract Kaggle2 version-3 run | Saved-artifact acceptance records the result; a below-gate result closes the question, while a pass only nominates a shortlist |
-| P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
+| P0 | B-KUNSHAN-V4-RUNTIME | Build the reusable Python/DTK/PyG environment without DCU time, then run one bounded DCU determinism check | Generic runtime evidence is accepted; every later candidate still requires its own V4 preflight |
+| P1 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Closed: classify the completed accelerator-flexible, unchanged-contract Kaggle2 version-3 run | Saved-artifact acceptance passed; the candidate was below the material gate and the question is closed |
+| P2 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The P0 version-1 submission produced no scientific evidence and is retained as
 an infrastructure failure. Version 2 used the same source and scientific
 contract with an explicit CLI P100 override, but also received a Tesla T4 and
 terminated before candidate execution. Both terminal attributions are retained.
-Version 3 requests T4, pins one visible device, accepts the actual assigned CUDA
-model, and is the only active run; no K1 candidate result exists yet.
+Version 3 requested T4, pinned one visible device, accepted the actual assigned
+CUDA model, and completed the unchanged scientific contract. Its
+edge-conditioned-slot candidate improved the immutable K1-v4 development MAE
+by only `0.0002906919 eV`; the paired bootstrap interval crossed zero and the
+`0.003 eV` material gate failed. The candidate is mechanically accepted but
+scientifically closed with `selected_candidate=null`. No successor is released;
+the full attribution is in
+`experiments/pcqm_k1_edge_conditioned_slot_100k/decision.md`.
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
 scientifically; multi-slot grouping, multi-head selection, and dynamic-query
@@ -122,7 +129,8 @@ width, depth, seed, cutoff, optimizer, or schedule variant.
 - One material mechanism per experiment; no chained gains or comparison with a
   scientifically mismatched checkpoint.
 - Seeds 43/44 require an explicit shortlist and compute-budget decision.
-- Server does architecture discovery; desktop owns SCNet, full training,
+- Server does architecture discovery and may run accepted-contract V4 screens
+  on the explicitly authorized Kunshan account. Desktop owns full training,
   official evaluation, and submission.
 - Any molecular-research-server action first obeys
   `platforms/REMOTE_HANDOFF.md`; access is restricted to

@@ -16,3 +16,8 @@ Machine-local SSH routing belongs in the ignored `.scnet/` directory, never in
 tracked scripts. When `.scnet/kunshan.json` exists, use that profile for new
 user-authorized Kunshan work; connectivity evidence is kept separately under
 `platforms/_records/scnet/` without private-key contents.
+
+The accepted-data V4 screening runtime for the `changfeng2006` Kunshan account
+is specified in `KUNSHAN_V4_RUNTIME.md`. Build it with
+`setup_kunshan_v4_env.slurm`, then require `verify_kunshan_v4_env.slurm` to pass
+on one real DCU before submitting an experiment-specific V4 preflight.
