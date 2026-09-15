@@ -16,6 +16,22 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_gpspp_sender": {
+        "backbone": "neural_atom_k1",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "zero-initialized-edge-conditioned-sender-return",
+        "local_adapter_layers": 9,
+        "directional_aggregation": "sender-only",
+        "added_parameters": 857088,
+    },
+    "neural_atom_k1_gpspp_bidirectional": {
+        "backbone": "neural_atom_k1",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "zero-initialized-edge-conditioned-bidirectional-return",
+        "local_adapter_layers": 9,
+        "directional_aggregation": "receiver-and-sender-separate",
+        "added_parameters": 857088,
+    },
     "neural_atom_k1_edge_context_no_slot_attention": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -715,6 +731,10 @@ def make_encoder(mode: str):
     if mode in EDGE_SLOT_MODES:
         from .k1_edge_slot_interaction import make_encoder as make_edge_slot
         return make_edge_slot(mode)
+    from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
+    if mode in GPSPP_LOCAL_MODES:
+        from .k1_gpspp_local import make_encoder as make_gpspp_local
+        return make_gpspp_local(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

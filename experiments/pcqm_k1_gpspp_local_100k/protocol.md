@@ -38,9 +38,9 @@ absent and unread.
 Remote preflight must verify the exact K1 shared-state hash, exact initial
 predictions, both directional equations, finite gradients after two real
 optimizer steps, deterministic runtime calibration, at least 15% memory
-reserve and projected completion within ten wall hours. Each T4 owns one model,
-RNG, optimizer, checkpoint tree and log. Atomic per-epoch checkpoints and
-ten-epoch recovery chunks are mandatory.
+reserve and an enforced ten-hour wall bound. Each T4 owns one model, RNG,
+optimizer, checkpoint tree and log. Atomic per-epoch checkpoints and ten-epoch
+recovery chunks are mandatory.
 
 ## Decision gate
 
@@ -55,4 +55,3 @@ another seed, scale-up, shadow, official evaluation or desktop handoff.
 This is the third and final round under the authorization recorded by
 `../pcqm_k1_edge_memory_100k/results/authorization.json`. Any scientific loss
 closes the adapter family without width, placement, seed or optimizer rescue.
-

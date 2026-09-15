@@ -416,7 +416,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as EDGE_SLOT_PARAMETERS,
         check_mechanism as check_edge_slot,
     )
+    from .k1_gpspp_local import (
+        MODES as GPSPP_LOCAL_MODES,
+        PARAMETERS as GPSPP_LOCAL_PARAMETERS,
+        check_mechanism as check_gpspp_local,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
+    recoverable_modes = active_edge_modes + GPSPP_LOCAL_MODES
     import torch
 
     configure_fp32_determinism(SEED)
@@ -926,16 +932,24 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         )
         if sum(p.numel() for p in model.parameters()) != expected_parameters:
             raise RuntimeError("Edge-memory parameter identity changed")
+    elif mode in GPSPP_LOCAL_MODES:
+        mechanism_checks = check_gpspp_local(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != GPSPP_LOCAL_PARAMETERS[mode]
+        ):
+            raise RuntimeError("GPSPP-local parameter identity changed")
     model.train()
+    torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     _optimizer_step(model, optimizer, batch, mean, std)
-    if mode in active_edge_modes:
+    if mode in recoverable_modes:
         from .k1_edge_memory import snapshot_step, check_resume_equivalence
         snapshot = snapshot_step(model, optimizer)
     _optimizer_step(model, optimizer, batch, mean, std)
-    if mode in active_edge_modes:
+    if mode in recoverable_modes:
         mechanism_checks["resume_two_step_bitwise_equal"] = check_resume_equivalence(
             model, optimizer, snapshot, batch, mean, std, _optimizer_step
         )
@@ -943,6 +957,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     candidate_parameters = []
     if mode in active_edge_modes:
         candidate_parameters = list(model.base.edge_updates.parameters())
+    elif mode in GPSPP_LOCAL_MODES:
+        candidate_parameters = list(model.local_adapters.parameters())
     if mode == "neural_atom_k1_g":
         candidate_parameters = list(model.molecule_gates.parameters())
     elif mode == "neural_atom_k1_r":
@@ -989,6 +1005,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     if not candidate_trainable:
         raise RuntimeError(f"Candidate-only mechanism has no finite gradient: {mode}")
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    peak_reserved_mib = torch.cuda.max_memory_reserved() / 1024**2
+    total_memory_mib = torch.cuda.get_device_properties(0).total_memory / 1024**2
+    memory_reserve_fraction = 1.0 - peak_reserved_mib / total_memory_mib
+    if memory_reserve_fraction < 0.15:
+        raise RuntimeError("Architecture preflight retained less than 15% memory")
     del baseline, model, optimizer
     torch.cuda.empty_cache()
     return {
@@ -998,6 +1019,9 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         "exact_k1_function_at_initialization": exact_nested_initialization,
         "initialization_policy": "identical-tensors-altered-edge-dataflow" if mode in active_edge_modes else "nested-function",
         "candidate_mechanism_trainable_after_two_steps": candidate_trainable,
+        "preflight_peak_reserved_mib": peak_reserved_mib,
+        "preflight_total_memory_mib": total_memory_mib,
+        "preflight_memory_reserve_fraction": memory_reserve_fraction,
         "exchange_layers": list(MIXER_LAYERS),
         "mechanism_checks": mechanism_checks,
     }
@@ -1055,7 +1079,9 @@ def train_arm(
     from .training_reproducibility import capture_rng_state, restore_rng_state
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
     from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
+    from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
+    recovery_chunk_modes = active_edge_modes + GPSPP_LOCAL_MODES
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
@@ -1195,7 +1221,7 @@ def train_arm(
             },
         )
         atomic_json(output / "trace.json", {"epochs": trace})
-        if mode in active_edge_modes and (epoch + 1) % 10 == 0:
+        if mode in recovery_chunk_modes and (epoch + 1) % 10 == 0:
             import tarfile
             chunk = output / f"recovery_epoch_{epoch + 1:02d}.tar"
             temporary = chunk.with_suffix(".tmp")

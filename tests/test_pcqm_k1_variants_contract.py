@@ -137,7 +137,9 @@ def test_candidates_are_exactly_nested_in_k1_at_initialization():
     )
     for mode, expected_count in expected_counts.items():
         assert sum(p.numel() for p in make_encoder(mode).parameters()) == expected_count
-    assert set(ARCHITECTURE_CONFIGS) == set(expected_counts)
+    # Specialized experiment modules also register modes in the shared runner;
+    # this core test owns only the historical generic-variant subset above.
+    assert set(expected_counts).issubset(ARCHITECTURE_CONFIGS)
 
 
 def test_return_allocation_candidates_decouple_source_and_recipients():
