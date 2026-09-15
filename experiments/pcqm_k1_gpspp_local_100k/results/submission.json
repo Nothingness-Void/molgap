@@ -2,7 +2,7 @@
   "submitted_at": "2026-09-15",
   "platform": "kaggle2",
   "kernel": "kaseichou/molgap-k1-gpspp-local-s42",
-  "kernel_version": 1,
+  "kernel_version": 2,
   "requested_accelerator": "NvidiaTeslaT4x2",
   "source_dataset": "kaseichou/molgap-k1-gpspp-local-source",
   "source_dataset_status": "ready",
@@ -15,6 +15,13 @@
     "neural_atom_k1_gpspp_bidirectional"
   ],
   "status_observed_after_submission": "RUNNING",
+  "infrastructure_retry": {
+    "previous_version": 1,
+    "previous_status": "ERROR",
+    "failure_stage": "launcher-source-root-selection-before-model-import",
+    "scientific_contract_executed": false,
+    "repair_scope": "kernel-launcher-only"
+  },
   "official_validation_role_read": false,
   "test_dev_role_read": false,
   "test_challenge_role_read": false
