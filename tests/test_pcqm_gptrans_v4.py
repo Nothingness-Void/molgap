@@ -127,6 +127,21 @@ def test_remote_payload_requires_v4_guards():
     assert "Optimizer received a non-128 batch" in runner
 
 
+def test_kunshan_v4_environment_is_offline_and_resource_separated():
+    setup = (ROOT / "platforms/scnet/setup_kunshan_v4_env.slurm").read_text()
+    verify = (ROOT / "platforms/scnet/verify_kunshan_v4_env.slurm").read_text()
+    assert "#SBATCH --partition=kshctest02" in setup
+    assert "--no-index --find-links \"$WHEELHOUSE\"" in setup
+    assert "curl " not in setup
+    assert "torch-geometric==2.5.3" in setup
+    assert "numpy==1.26.4" in setup
+    assert "#SBATCH --partition=kshdtest" in verify
+    assert "#SBATCH --gres=dcu:Hygon:1" in verify
+    assert '"physical_batch_per_device": 128' in verify
+    assert '"precision": "fp32"' in verify
+    assert '"training_executed": False' in verify
+
+
 def test_kaggle_entrypoints_parse_and_pin_p100():
     import ast
 
