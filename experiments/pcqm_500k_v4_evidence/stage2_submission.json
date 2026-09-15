@@ -1,0 +1,17 @@
+{
+  "source_sha256": "811a40969ece2df05d95556901fcc7c3ebcaa6f46c95e19a4e9fa2e856fad3ae",
+  "source_dataset": "nothingnessvoid/molgap-500k-v4-source-raw-811a40969e",
+  "resume_dataset": "nothingnessvoid/molgap-500k-v4-resume-e4-1a515e03c5",
+  "resume_dataset_version": 1,
+  "resume_archive_sha256": "1a515e03c5e7f6819c78c9aa0ffd3c61c7e06d65c43021aadb6442607caf1267",
+  "start_epoch": 4,
+  "stage_epochs_max": 4,
+  "intended_next_epoch": 8,
+  "startup_preflight_verified": false,
+  "kernels": [
+    {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 3, "arms": ["full_gps", "neural_atom_k1"]},
+    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 4, "arms": ["gptrans"]}
+  ],
+  "contract_changed": false,
+  "checkpoint_rule": "Explicit --resume; verify archive and per-arm hashes, restore model/optimizer/RNG/global epoch. Fail closed on source/science/runtime mismatch."
+}
