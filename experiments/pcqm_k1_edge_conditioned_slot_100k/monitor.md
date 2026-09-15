@@ -7,6 +7,7 @@ Authoritative checkout: `C:\Users\Adminn\Documents\molgap` on
 - version: `1`
 - source: `kaseichou/molgap-k1-edge-conditioned-slot-source`
 - submission record: `results/submission.json`
+- automation: `molgap-k1-edge-conditioned-slot-monitor`
 
 Use `KAGGLE_CONFIG_DIR=C:\Users\Adminn\Desktop` and the project venv Kaggle
 CLI. Do not use a browser or print credentials. While the kernel is
