@@ -1,11 +1,11 @@
 # Operational state
 
-Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 2
-terminated `ERROR`. It was the user-authorized infrastructure-only retry of
-version 1, submitted with the explicit CLI accelerator override
-`NvidiaTeslaP100`. The source dataset, archive hash, model, data, seed, strict
-FP32/no-TF32 mode, physical BS128, optimizer, schedule, role access, and all
-scientific gates were unchanged.
+Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 3 is
+`RUNNING`. It is the user-authorized infrastructure-only repair after versions
+1 and 2 both received a Tesla T4 despite requesting a P100. Version 3 requests
+T4 explicitly, exposes only the first assigned CUDA device, accepts the actual
+assigned GPU model, and records its runtime identity through the existing
+optimizer-inclusive certificate.
 
 Version 1 terminated before candidate execution because Kaggle allocated a
 Tesla T4 to the metadata-only P100 request. It produced no epoch, metric,
@@ -14,13 +14,13 @@ evidence rather than a scientific failure. Its terminal log and downloaded
 source archive are retained.
 
 Version 2 kept the one-device P100 runtime guard but Kaggle exposed a Tesla T4,
-so it terminated before candidate execution with
-RuntimeError: Candidate requires one P100, got Tesla T4. It produced no
-candidate output, epoch, metric, checkpoint, or acceptance result. The
-terminal diagnosis is in `results/failure_diagnosis_v2.md`; the durable
-terminal handoff and downloaded source/log remain under
-`platforms/_records/kaggle/training/k1_edge_conditioned_slot_s42_v2/`.
+so it terminated before candidate execution. It produced no candidate output,
+epoch, metric, checkpoint, or acceptance result. Its diagnosis is in
+`results/failure_diagnosis_v2.md`.
 
-Do not submit another retry, candidate, seed, scale bridge, or official/test
-evaluation from this terminal error. Version-1 identity is in
-`results/submission.json`; version-2 identity is in `results/retry_v2.json`.
+Version 3 changes only resource binding and dependency compatibility. The
+source dataset, archive hash, model, data, seed, strict FP32/no-TF32 mode,
+physical BS128, optimizer, schedule, role access, and all scientific gates are
+unchanged. Until terminal acceptance, do not submit another retry, candidate,
+seed, scale bridge, or official/test evaluation. Submission identities are in
+`results/submission.json`, `results/retry_v2.json`, and `results/retry_v3.json`.

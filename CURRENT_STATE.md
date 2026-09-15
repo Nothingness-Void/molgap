@@ -127,8 +127,10 @@ The user then authorized one infrastructure-only retry with an explicit CLI P100
 accelerator override and the unchanged scientific contract. Version 2 also
 received a Tesla T4 and terminated before candidate execution; its diagnosis is
 `experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis_v2.md`.
-No scientific result exists, and the edge-conditioned-slot question remains
-without a result; the failures do not change frozen K1.
+Version 3 is running with accelerator-flexible binding: it fixes one visible GPU
+and certifies the actual assigned CUDA runtime while leaving the scientific
+contract unchanged. No scientific result exists until its saved-artifact
+acceptance completes; the earlier failures do not change frozen K1.
 
 ## Data and comparison contract
 
