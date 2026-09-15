@@ -119,9 +119,13 @@ server queue. The new screen does not modify the frozen K1 full handoff.
 
 The coordinator explicitly reopened one fresh seed-42 K1 question: condition
 the three sparse slot selectors on the incident persistent real-bond state.
-The protocol is `experiments/pcqm_k1_edge_conditioned_slot_100k/protocol.md`;
-the screen is limited to the fixed PCQM-100K v4 contract and has no result
-until its private Kaggle run and saved-artifact acceptance complete.
+The protocol is `experiments/pcqm_k1_edge_conditioned_slot_100k/protocol.md`.
+Its Kaggle2 v1 submission terminated before training because the launcher
+requested one P100 but the runtime allocated a Tesla T4. The terminal diagnosis
+is `experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis.md`;
+no scientific result or acceptance output exists, and no automatic retry is
+released. This infrastructure failure does not close the architecture question
+or change frozen K1.
 
 ## Data and comparison contract
 

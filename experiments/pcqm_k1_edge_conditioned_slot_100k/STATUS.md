@@ -1,15 +1,15 @@
 # Operational state
 
-Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 1 is
-`RUNNING` on one P100. It uses private source dataset
-`kaseichou/molgap-k1-edge-conditioned-slot-source` and the accepted fixed
-100K graph dataset. Submission identities are in `results/submission.json`.
+Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 1
+terminated `ERROR` before candidate execution. The launcher requested exactly
+one P100, but Kaggle allocated a Tesla T4 and the explicit compatibility guard
+raised `RuntimeError: Candidate requires one P100, got Tesla T4`.
 
-The persistent Luna Max monitor is
-`molgap-k1-edge-conditioned-slot-monitor`; it is attached to the existing
-monitor task and hands terminal evidence to the coordinator only after the
-kernel leaves the queue.
+No training epoch, metric, checkpoint, or acceptance output was produced. This
+is an infrastructure/resource-selection failure, not a scientific result for
+the edge-conditioned slot architecture. The downloaded source archive and
+terminal log are retained under the platform record directory; the terminal
+handoff records the failure and its delivery state. No retry, repair, extra
+seed, scale bridge, or official/test evaluation is authorized by this record.
 
-Until terminal acceptance, do not submit a second candidate, extra seed, scale
-bridge, or official/test evaluation. The coordinator owns all scientific
-interpretation.
+Submission identities and the terminal fields are in `results/submission.json`.
