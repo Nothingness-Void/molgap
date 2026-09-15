@@ -13,7 +13,6 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-GPSPP-LOCAL | Execute the final authorized round: equal-parameter sender-only and bidirectional local adapters on frozen K1 | Frozen acceptance and controller attribution; no automatic seed or scale-up |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
@@ -37,6 +36,11 @@ closed without scale-up. It is not precedent for arbitrary chaining. The
 separate authorization permits at most three Kaggle2 rounds. Successors require
 a terminal acceptance and written failure attribution by the coordinator; the
 monitor cannot choose them.
+
+That later three-round authorization is exhausted. Edge-state normalization,
+edge/slot pairwise interactions and GPS++-style directional local adapters all
+failed the material gate. The final adapter round showed stronger training fit
+without development improvement, closing further K1 local-capacity additions.
 
 Kaggle2 round 1 accepted GPTrans-T mechanically and found it weak at 100K.
 The earlier accepted 500K run of the same core was positive, so GPTrans remains

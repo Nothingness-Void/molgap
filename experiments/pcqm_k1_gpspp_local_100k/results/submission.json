@@ -15,7 +15,9 @@
     "neural_atom_k1_gpspp_sender",
     "neural_atom_k1_gpspp_bidirectional"
   ],
-  "status_observed_after_submission": "QUEUED",
+  "terminal_status": "COMPLETE",
+  "mechanical_acceptance_passed": true,
+  "selected_candidate": null,
   "infrastructure_retry": {
     "previous_versions": [1, 2],
     "previous_status": "ERROR",

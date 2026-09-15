@@ -1,0 +1,50 @@
+{
+  "decision_date": "2026-09-15",
+  "kernel": "kaseichou/molgap-k1-gpspp-local-s42",
+  "kernel_version": 3,
+  "source_commit": "8139a0a866e1d169b7d53b91693556fd665059b9",
+  "source_archive_sha256": "7aa77876dfbd6a76735c4581e830fcf9e634abdeef69e1bd9064617433e1e223",
+  "reference": {
+    "mode": "neural_atom_k1_v4",
+    "parameters": 3658817,
+    "development_gap_mae_eV": 0.1413736343383789,
+    "epoch_39_train_normalized_mae": 0.0772630692138867
+  },
+  "candidates": {
+    "neural_atom_k1_gpspp_sender": {
+      "parameters": 4515905,
+      "best_epoch": 35,
+      "development_gap_mae_eV": 0.14296679198741913,
+      "gain_vs_reference_eV": -0.0015931576490402222,
+      "paired_error_delta_bootstrap_95_eV": [
+        0.0006835380892753601,
+        0.0025307217750549314
+      ],
+      "epoch_39_train_normalized_mae": 0.0707475625016701,
+      "mean_graphs_per_second": 476.07022187359973,
+      "passed": false
+    },
+    "neural_atom_k1_gpspp_bidirectional": {
+      "parameters": 4515905,
+      "best_epoch": 39,
+      "development_gap_mae_eV": 0.14157916605472565,
+      "gain_vs_reference_eV": -0.00020553171634674072,
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0006970279988050461,
+        0.0011565639748573303
+      ],
+      "epoch_39_train_normalized_mae": 0.068685027423688,
+      "mean_graphs_per_second": 473.51304386107245,
+      "passed": false
+    }
+  },
+  "bidirectional_improvement_over_sender_eV": 0.00138762593269348,
+  "parameter_increase_fraction_vs_k1": 0.234252765306382,
+  "selected_candidate": null,
+  "mechanical_acceptance_passed": true,
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "decision": "close-directional-local-adapter-family"
+}
