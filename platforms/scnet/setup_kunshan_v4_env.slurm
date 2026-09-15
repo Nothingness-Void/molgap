@@ -69,8 +69,13 @@ test -r "$TORCH_WHEEL"
   "typing-extensions==4.15.0" \
   "requests==2.32.5" \
   "littleutils==0.2.4" \
-  "outdated==0.2.2"
-"$PYTHON" -m pip install --no-index --find-links "$WHEELHOUSE" \
+  "outdated==0.2.2" \
+  "aiohttp==3.12.15" \
+  "async-timeout==5.0.1" \
+  "fsspec==2025.9.0" \
+  "jinja2==3.1.6" \
+  "pyparsing==3.2.4"
+"$PYTHON" -m pip install --no-index --find-links "$WHEELHOUSE" --no-deps \
   "ogb==1.3.6" \
   "torch-geometric==2.5.3"
 
