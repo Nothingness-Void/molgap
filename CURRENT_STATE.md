@@ -110,11 +110,13 @@ server queue. The new screen does not modify the frozen K1 full handoff.
 
 ## Data and comparison contract
 
-The matched 500K V4 benchmark has reached epoch 16 for GPTrans-T; EdgeState/K1
-stage 4 remains pending terminal acceptance. The four-epoch execution cap is
-retired. A long-stage successor is prepared under
-`experiments/pcqm_500k_v4_evidence/long_stage_repair.md` and may be submitted
-only after all epoch-16 checkpoints pass acceptance.
+The matched 500K V4 benchmark has accepted aligned epoch-16 checkpoints for
+EdgeState, K1, and GPTrans-T. The four-epoch execution cap is retired. A single
+long continuation is now running from epoch 16 toward the fixed epoch-60
+contract: Edge/K1 kernel version 6 and GPTrans-T kernel version 7. Both mount
+the accepted `nothingnessvoid/molgap-500k-v4-resume-e16-248f775983` checkpoint
+dataset and the immutable V4 source. Submission identity and hashes are in
+`experiments/pcqm_500k_v4_evidence/stage5_submission.json`.
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
   `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed

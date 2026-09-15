@@ -1,0 +1,29 @@
+{
+  "submitted_at": "2026-09-16",
+  "source_dataset": "nothingnessvoid/molgap-500k-v4-source-raw-4218940805",
+  "source_sha256": "4218940805a84dbf69971452e3c113c7f5e8281df8be62371836b8bc3ff2b649",
+  "resume_dataset": "nothingnessvoid/molgap-500k-v4-resume-e16-248f775983",
+  "resume_dataset_version": 1,
+  "resume_archive_sha256": "248f77598300a22736099270ffcb8754627c78cd7c2784424f976efea97c897f",
+  "resume_source_sha256": "811a40969ece2df05d95556901fcc7c3ebcaa6f46c95e19a4e9fa2e856fad3ae",
+  "start_epoch": 16,
+  "target_epoch": 60,
+  "stage_epochs": 44,
+  "max_stage_seconds": 41400,
+  "contract_changed": false,
+  "startup_preflight_verified": true,
+  "kernels": [
+    {
+      "id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42",
+      "version": 6,
+      "arms": ["full_gps", "neural_atom_k1"],
+      "status_at_submission": "RUNNING"
+    },
+    {
+      "id": "nothingnessvoid/molgap-500k-v4-gptrans-s42",
+      "version": 7,
+      "arms": ["gptrans"],
+      "status_at_submission": "RUNNING"
+    }
+  ]
+}
