@@ -1,5 +1,6 @@
 """Build immutable source and two small Kaggle entry packages."""
 from pathlib import Path
+import argparse
 import hashlib
 import json
 import subprocess
@@ -19,6 +20,7 @@ import zipfile
 ARMS = __ARMS__
 EXPECTED_GPU = __GPU__
 SOURCE_SHA = __SHA__
+RESUME_SHA = __RESUME_SHA__
 
 def main():
     names = subprocess.check_output(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True).strip().splitlines()
@@ -36,6 +38,19 @@ def main():
     runtime = Path("/kaggle/working/runtime")
     with zipfile.ZipFile(archives[0]) as archive:
         archive.extractall(runtime)
+    resume_root = None
+    if RESUME_SHA is not None:
+        inputs = list(Path("/kaggle/input").rglob("stage_resume.bin"))
+        if len(inputs) != 1 or hashlib.sha256(inputs[0].read_bytes()).hexdigest() != RESUME_SHA:
+            raise RuntimeError("Missing or changed accepted resume archive")
+        resume_root = Path("/kaggle/working/accepted_resume")
+        with zipfile.ZipFile(inputs[0]) as archive:
+            archive.extractall(resume_root)
+        for arm in ARMS:
+            result = json.loads((resume_root / arm / "stage_manifest.json").read_text())
+            if result["arm"] != arm or result["next_epoch"] != 4:
+                raise RuntimeError("Wrong first-stage resume identity")
+        print("Accepted resume archive verified; continuing epoch 4.", flush=True)
     workers = []
     for gpu, arm in enumerate(ARMS):
         env = os.environ.copy()
@@ -43,6 +58,8 @@ def main():
                    PYTHONHASHSEED="42", CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2", MKL_NUM_THREADS="2")
         command = [sys.executable, "-u", "-m", "molgap.pcqm_500k_v4_evidence", "--arm", arm,
                    "--output", f"/kaggle/working/evidence/{arm}", "--source-sha", SOURCE_SHA, "--stage-epochs", "4"]
+        if resume_root is not None:
+            command.extend(["--resume", str(resume_root / arm)])
         workers.append(subprocess.Popen(command, env=env))
     codes = [worker.wait() for worker in workers]
     if any(codes):
@@ -55,7 +72,51 @@ if __name__ == "__main__":
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--resume-stage1', action='store_true')
+    args = parser.parse_args()
     output = ROOT / 'platforms' / '_records' / 'kaggle' / 'staging' / 'pcqm_500k_v4_evidence'
+    resume_sha = None
+    resume_slug = None
+    if args.resume_stage1:
+        from accept_stage import accept
+        roots = ROOT / 'platforms/_records/kaggle/training/pcqm_500k_v4_stage1'
+        inputs = {
+            'full_gps': roots / 'edge-k1-v2/evidence/full_gps',
+            'neural_atom_k1': roots / 'edge-k1-v2/evidence/neural_atom_k1',
+            'gptrans': roots / 'gptrans-v3/evidence/gptrans',
+        }
+        resume_dir = output / 'resume_stage1'
+        resume_dir.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(resume_dir / 'stage_resume.bin', 'w', zipfile.ZIP_DEFLATED) as archive:
+            for arm, root in inputs.items():
+                accepted = accept(root)
+                if accepted['next_epoch'] != 4 or accepted['training_complete']:
+                    raise ValueError('Expected accepted first-stage epoch 4 checkpoint')
+                manifest = json.loads((root / 'stage_manifest.json').read_text())
+                for name in sorted(set(manifest['artifacts']) | {'stage_manifest.json'}):
+                    archive.write(root / name, arm + '/' + name)
+        resume_sha = hashlib.sha256((resume_dir / 'stage_resume.bin').read_bytes()).hexdigest()
+        resume_slug = 'nothingnessvoid/molgap-500k-v4-resume-e4-' + resume_sha[:10]
+        (resume_dir / 'dataset-metadata.json').write_text(json.dumps({
+            'id': resume_slug, 'title': 'MolGap 500K V4 Accepted Epoch4 ' + resume_sha[:10],
+            'licenses': [{'name': 'other'}]}, indent=2))
+        record = json.loads((ROOT / 'experiments/pcqm_500k_v4_evidence/submission.json').read_text())
+        sha = record['source_sha256']
+        slug = 'nothingnessvoid/molgap-500k-v4-source-raw-' + sha[:10]
+        # Resume packaging must not regenerate or change frozen training source.
+        for tag, arms in (('edge-k1', ['full_gps', 'neural_atom_k1']), ('gptrans', ['gptrans'])):
+            package = output / (tag + '-stage2')
+            package.mkdir(exist_ok=True)
+            entry = ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr('T4'))
+            entry = entry.replace('__SHA__', repr(sha)).replace('__RESUME_SHA__', repr(resume_sha))
+            (package / 'run.py').write_text(entry, encoding='utf-8')
+            metadata = json.loads((output / tag / 'kernel-metadata.json').read_text())
+            metadata['dataset_sources'] = [slug, 'nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1', resume_slug]
+            (package / 'kernel-metadata.json').write_text(json.dumps(metadata, indent=2))
+        print(json.dumps({'resume_directory': str(resume_dir), 'resume_sha256': resume_sha,
+            'resume_dataset': resume_slug, 'source_sha256': sha}, indent=2))
+        return
     source = output / 'source_raw'
     source.mkdir(parents=True, exist_ok=True)
     names = subprocess.check_output(['git', 'ls-files', 'src'], cwd=ROOT, text=True).splitlines()
@@ -76,7 +137,7 @@ def main():
         ('gptrans', ['gptrans'], 'T4', 'NvidiaTeslaT4')):
         package = output / tag
         package.mkdir(exist_ok=True)
-        (package / 'run.py').write_text(ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr(gpu)).replace('__SHA__', repr(sha)), encoding='utf-8')
+        (package / 'run.py').write_text(ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr(gpu)).replace('__SHA__', repr(sha)).replace('__RESUME_SHA__', 'None'), encoding='utf-8')
         (package / 'kernel-metadata.json').write_text(json.dumps({
             'id': 'nothingnessvoid/molgap-500k-v4-' + tag + '-s42',
             'title': 'MolGap 500K V4 ' + tag + ' S42', 'code_file': 'run.py',
