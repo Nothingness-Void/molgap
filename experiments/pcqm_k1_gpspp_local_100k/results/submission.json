@@ -1,0 +1,21 @@
+{
+  "submitted_at": "2026-09-15",
+  "platform": "kaggle2",
+  "kernel": "kaseichou/molgap-k1-gpspp-local-s42",
+  "kernel_version": 1,
+  "requested_accelerator": "NvidiaTeslaT4x2",
+  "source_dataset": "kaseichou/molgap-k1-gpspp-local-source",
+  "source_dataset_status": "ready",
+  "source_commit": "b1cf662340dc5565aa43e2ef91d46bb1f0c0a025",
+  "source_archive_sha256": "9f255cbd43b111997e968e0ff305b5d61440529760da42733a681b18acf83cfa",
+  "source_file_count": 154,
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "modes": [
+    "neural_atom_k1_gpspp_sender",
+    "neural_atom_k1_gpspp_bidirectional"
+  ],
+  "status_observed_after_submission": "RUNNING",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

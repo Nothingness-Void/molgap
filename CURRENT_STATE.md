@@ -79,10 +79,13 @@ closed isolated K1 real-bond storage/read normalization: one arm regressed and
 the other was directionally favorable but below the material gate. Round 2
 tested that weak relation-recurrence signal with the two favorable global-slot
 simplifications. Neither pair passed the material gate or retained both parent
-effects, so triple stacking is closed. One authorized round remains, pending a
-fresh evidence audit rather than another micro-variant. Authorities:
+effects, so triple stacking is closed. The final authorized round is running on
+Kaggle2: an equal-parameter pair tests GPS++-style sender-only versus separate
+receiver/sender local aggregation while preserving frozen K1 at initialization.
+Authorities:
 `experiments/pcqm_k1_edge_memory_100k/decision.md` and
-`experiments/pcqm_k1_edge_slot_interaction_100k/decision.md`.
+`experiments/pcqm_k1_edge_slot_interaction_100k/decision.md`; the live protocol
+is `experiments/pcqm_k1_gpspp_local_100k/protocol.md`.
 
 The bounded three-attempt K1 mechanism sequence is complete. Paper-style
 multi-slot grouping, channel-wise multi-head atom selection, and a
