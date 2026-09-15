@@ -11,3 +11,8 @@ entrypoints use workload names such as `train_repaired_2m_gps_oof.slurm`.
 
 Read `CURRENT_STATE.md` for live jobs and `platforms/REMOTE_HANDOFF.md` for
 resume rules. Retrieved outputs belong in `platforms/_records/scnet/`.
+
+Machine-local SSH routing belongs in the ignored `.scnet/` directory, never in
+tracked scripts. When `.scnet/kunshan.json` exists, use that profile for new
+user-authorized Kunshan work; connectivity evidence is kept separately under
+`platforms/_records/scnet/` without private-key contents.
