@@ -23,6 +23,9 @@ EXPECTED_GPU = __GPU__
 SOURCE_SHA = __SHA__
 RESUME_SHA = __RESUME_SHA__
 RESUME_EPOCH = __RESUME_EPOCH__
+RESUME_SOURCE_SHA = __RESUME_SOURCE_SHA__
+STAGE_EPOCHS = __STAGE_EPOCHS__
+MAX_STAGE_SECONDS = __MAX_STAGE_SECONDS__
 
 def main():
     names = subprocess.check_output(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True).strip().splitlines()
@@ -59,9 +62,12 @@ def main():
         env.update(CUDA_VISIBLE_DEVICES=str(gpu), PYTHONPATH=str(runtime / "src"),
                    PYTHONHASHSEED="42", CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2", MKL_NUM_THREADS="2")
         command = [sys.executable, "-u", "-m", "molgap.pcqm_500k_v4_evidence", "--arm", arm,
-                   "--output", f"/kaggle/working/evidence/{arm}", "--source-sha", SOURCE_SHA, "--stage-epochs", "4"]
+                   "--output", f"/kaggle/working/evidence/{arm}", "--source-sha", SOURCE_SHA,
+                   "--stage-epochs", str(STAGE_EPOCHS), "--max-stage-seconds", str(MAX_STAGE_SECONDS)]
         if resume_root is not None:
             command.extend(["--resume", str(resume_root / arm)])
+        if RESUME_SOURCE_SHA is not None:
+            command.extend(["--resume-source-sha", RESUME_SOURCE_SHA])
         workers.append(subprocess.Popen(command, env=env))
     codes = [worker.wait() for worker in workers]
     if any(codes):
@@ -85,6 +91,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--resume-stage1', action='store_true')
     parser.add_argument('--resume-stage', type=int)
+    parser.add_argument('--long-stage', action='store_true')
     args = parser.parse_args()
     output = ROOT / 'platforms' / '_records' / 'kaggle' / 'staging' / 'pcqm_500k_v4_evidence'
     resume_sha = None
@@ -122,8 +129,17 @@ def main():
             'id': resume_slug, 'title': f'MolGap 500K V4 Accepted Epoch{resume_epoch} ' + resume_sha[:10],
             'licenses': [{'name': 'other'}]}, indent=2))
         record = json.loads((ROOT / 'experiments/pcqm_500k_v4_evidence/submission.json').read_text())
-        sha = record['source_sha256']
-        slug = 'nothingnessvoid/molgap-500k-v4-source-raw-' + sha[:10]
+        resume_source_sha = previous['source_sha256']
+        if args.long_stage:
+            source_path = output / 'source_raw/evidence_source.bin'
+            metadata = json.loads((output / 'source_raw/dataset-metadata.json').read_text())
+            sha = hashlib.sha256(source_path.read_bytes()).hexdigest()
+            if metadata['id'] != 'nothingnessvoid/molgap-500k-v4-source-raw-' + sha[:10]:
+                raise ValueError('Current source dataset identity mismatch')
+            slug = metadata['id']
+        else:
+            sha = record['source_sha256']
+            slug = 'nothingnessvoid/molgap-500k-v4-source-raw-' + sha[:10]
         # Resume packaging must not regenerate or change frozen training source.
         for tag, arms in (('edge-k1', ['full_gps', 'neural_atom_k1']), ('gptrans', ['gptrans'])):
             package = output / (tag + f'-stage{stage+1}')
@@ -131,6 +147,9 @@ def main():
             entry = ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr('T4'))
             entry = entry.replace('__SHA__', repr(sha)).replace('__RESUME_SHA__', repr(resume_sha))
             entry = entry.replace('__RESUME_EPOCH__', str(resume_epoch))
+            entry = entry.replace('__RESUME_SOURCE_SHA__', repr(resume_source_sha if sha != resume_source_sha else None))
+            entry = entry.replace('__STAGE_EPOCHS__', str(60 - resume_epoch if args.long_stage else 4))
+            entry = entry.replace('__MAX_STAGE_SECONDS__', str(41_400 if args.long_stage else 10_800))
             (package / 'run.py').write_text(entry, encoding='utf-8')
             metadata = json.loads((output / tag / 'kernel-metadata.json').read_text())
             metadata['dataset_sources'] = [slug, 'nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1', resume_slug]
@@ -158,7 +177,10 @@ def main():
         ('gptrans', ['gptrans'], 'T4', 'NvidiaTeslaT4')):
         package = output / tag
         package.mkdir(exist_ok=True)
-        (package / 'run.py').write_text(ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr(gpu)).replace('__SHA__', repr(sha)).replace('__RESUME_SHA__', 'None').replace('__RESUME_EPOCH__', '0'), encoding='utf-8')
+        entry = ENTRY.replace('__ARMS__', repr(arms)).replace('__GPU__', repr(gpu))
+        entry = entry.replace('__SHA__', repr(sha)).replace('__RESUME_SHA__', 'None').replace('__RESUME_EPOCH__', '0')
+        entry = entry.replace('__RESUME_SOURCE_SHA__', 'None').replace('__STAGE_EPOCHS__', '60').replace('__MAX_STAGE_SECONDS__', '41400')
+        (package / 'run.py').write_text(entry, encoding='utf-8')
         (package / 'kernel-metadata.json').write_text(json.dumps({
             'id': 'nothingnessvoid/molgap-500k-v4-' + tag + '-s42',
             'title': 'MolGap 500K V4 ' + tag + ' S42', 'code_file': 'run.py',

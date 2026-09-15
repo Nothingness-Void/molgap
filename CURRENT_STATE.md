@@ -110,6 +110,12 @@ server queue. The new screen does not modify the frozen K1 full handoff.
 
 ## Data and comparison contract
 
+The matched 500K V4 benchmark has reached epoch 16 for GPTrans-T; EdgeState/K1
+stage 4 remains pending terminal acceptance. The four-epoch execution cap is
+retired. A long-stage successor is prepared under
+`experiments/pcqm_500k_v4_evidence/long_stage_repair.md` and may be submitted
+only after all epoch-16 checkpoints pass acceptance.
+
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
   `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed
   under `platforms/_records/kaggle/`.

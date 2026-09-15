@@ -25,8 +25,11 @@ Use Kaggle1 only. One T4x2 kernel isolates EdgeState and K1 into separate
 processes/devices; another T4 allocation runs GPTrans on one isolated device.
 The initial P100 request received T4x2 and exited before training; its successor
 explicitly requests T4x2. Physical BS128 is invariant.
-Each invocation runs at most four full epochs and ends early at an epoch
-boundary if projected runtime approaches three hours. It publishes best/last,
+Each invocation requests the full remaining epoch budget and ends only when the
+60-epoch contract completes or the projected next epoch approaches the Kaggle
+session limit. The original four-epoch staging policy was an execution mistake
+and was retired after epoch 16; it added queue and publication latency without
+changing the scientific comparison. Each invocation publishes best/last,
 RNG, optimizer, deterministic schedule cursor, initial state, all epoch
 development predictions, timing, and manifests. The next stage must mount a
 new private dataset containing the previous accepted outputs and verify its
