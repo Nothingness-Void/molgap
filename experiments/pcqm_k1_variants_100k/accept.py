@@ -81,7 +81,8 @@ def _load_arm(
     if initialization_policy != "nested-function":
         from molgap.k1_edge_memory import MODES as EDGE_MODES
         from molgap.k1_edge_slot_interaction import MODES as INTERACTION_MODES
-        modes = EDGE_MODES + INTERACTION_MODES
+        from molgap.k1_edge_conditioned_slot import MODES as CONDITIONED_MODES
+        modes = EDGE_MODES + INTERACTION_MODES + CONDITIONED_MODES
         if mode not in modes or initialization_policy != "identical-tensors-altered-edge-dataflow":
             raise RuntimeError("Unrecognized initialization exception")
         checks = preflight.get("mechanism_checks", {})
@@ -90,6 +91,14 @@ def _load_arm(
         expected_context_norm = mode != EDGE_MODES[0]
         if len(checks.get("layers", [])) != 9 or checks.get("normalized_update_context") != expected_context_norm:
             raise RuntimeError("Edge-memory read policy changed")
+        if mode in CONDITIONED_MODES:
+            if (
+                checks.get("edge_context_source")
+                != "mean-incident-directed-real-bond-state"
+                or checks.get("zero_initialized_edge_key") is not True
+                or len(checks.get("slot_layers", [])) != 3
+            ):
+                raise RuntimeError("Edge-conditioned slot verification missing")
         if checks.get("resume_two_step_bitwise_equal") is not True:
             raise RuntimeError("Resume equivalence check missing")
     for relative, expected in completion["artifact_sha256"].items():

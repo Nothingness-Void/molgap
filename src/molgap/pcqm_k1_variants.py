@@ -59,6 +59,18 @@ ARCHITECTURE_CONFIGS = {
         "global_exchange": "one-atom-slot-64",
         "exchange_layers": list(MIXER_LAYERS),
     },
+    "neural_atom_k1_edge_conditioned_slot": {
+        "backbone": "neural_atom_k1",
+        "global_exchange": "one-atom-slot-64",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "incident-real-bond-state-conditioned-slot-key",
+        "edge_context": "mean-incident-directed-real-bond-state",
+        "edge_context_channels": EDGE_STATE_CHANNELS,
+        "edge_key_projection": "zero-initialized-64-to-64",
+        "added_parameters": 12_288,
+        "initialization_policy": "identical-tensors-altered-edge-dataflow",
+        "geometry": False,
+    },
     "neural_atom_k1_g": {
         "backbone": "neural_atom_k1",
         "global_exchange": "one-atom-slot-64",
@@ -731,6 +743,10 @@ def make_encoder(mode: str):
     if mode in EDGE_SLOT_MODES:
         from .k1_edge_slot_interaction import make_encoder as make_edge_slot
         return make_edge_slot(mode)
+    from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
+    if mode in EDGE_CONDITIONED_MODES:
+        from .k1_edge_conditioned_slot import make_encoder as make_edge_conditioned
+        return make_edge_conditioned(mode)
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     if mode in GPSPP_LOCAL_MODES:
         from .k1_gpspp_local import make_encoder as make_gpspp_local

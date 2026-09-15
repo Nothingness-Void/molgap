@@ -416,13 +416,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as EDGE_SLOT_PARAMETERS,
         check_mechanism as check_edge_slot,
     )
+    from .k1_edge_conditioned_slot import (
+        MODES as EDGE_CONDITIONED_MODES,
+        PARAMETERS as EDGE_CONDITIONED_PARAMETERS,
+        check_mechanism as check_edge_conditioned,
+    )
     from .k1_gpspp_local import (
         MODES as GPSPP_LOCAL_MODES,
         PARAMETERS as GPSPP_LOCAL_PARAMETERS,
         check_mechanism as check_gpspp_local,
     )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
-    recoverable_modes = active_edge_modes + GPSPP_LOCAL_MODES
+    recoverable_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
     import torch
 
     configure_fp32_determinism(SEED)
@@ -919,6 +924,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             raise RuntimeError(
                 f"Return-allocation invariant failed: {mechanism_checks}"
             )
+    elif mode in EDGE_CONDITIONED_MODES:
+        mechanism_checks = check_edge_conditioned(model, batch)
+        expected_parameters = EDGE_CONDITIONED_PARAMETERS[mode]
+        if sum(parameter.numel() for parameter in model.parameters()) != expected_parameters:
+            raise RuntimeError("Edge-conditioned-slot parameter identity changed")
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     if mode in active_edge_modes:
@@ -957,6 +967,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     candidate_parameters = []
     if mode in active_edge_modes:
         candidate_parameters = list(model.base.edge_updates.parameters())
+    elif mode in EDGE_CONDITIONED_MODES:
+        candidate_parameters = list(model.edge_conditioned_keys.parameters())
     elif mode in GPSPP_LOCAL_MODES:
         candidate_parameters = list(model.local_adapters.parameters())
     if mode == "neural_atom_k1_g":
@@ -1017,7 +1029,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         "parameter_count": parameter_count,
         "shared_k1_initial_state_sha256": shared_sha,
         "exact_k1_function_at_initialization": exact_nested_initialization,
-        "initialization_policy": "identical-tensors-altered-edge-dataflow" if mode in active_edge_modes else "nested-function",
+        "initialization_policy": (
+            "identical-tensors-altered-edge-dataflow"
+            if mode in active_edge_modes or mode in EDGE_CONDITIONED_MODES
+            else "nested-function"
+        ),
         "candidate_mechanism_trainable_after_two_steps": candidate_trainable,
         "preflight_peak_reserved_mib": peak_reserved_mib,
         "preflight_total_memory_mib": total_memory_mib,
@@ -1079,9 +1095,10 @@ def train_arm(
     from .training_reproducibility import capture_rng_state, restore_rng_state
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
     from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
+    from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
-    recovery_chunk_modes = active_edge_modes + GPSPP_LOCAL_MODES
+    recovery_chunk_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
