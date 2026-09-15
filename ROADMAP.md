@@ -13,12 +13,12 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Terminal infrastructure failure before candidate execution: the P100 request received a Tesla T4 | Preserve the diagnosis; any reroute requires an explicit resource/launcher decision, with no automatic retry |
+| P0 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Monitor the explicit-P100, unchanged-contract Kaggle2 version-2 retry | Saved-artifact acceptance records the result; a below-gate result closes the question, while a pass only nominates a shortlist |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
-The P0 submission produced no scientific evidence and must not be interpreted
-as a model failure. Its source archive and terminal log are retained in the
-platform record; a future reroute must first resolve the accelerator contract.
+The P0 version-1 submission produced no scientific evidence and is retained as
+an infrastructure failure. Version 2 uses the same source and scientific
+contract with an explicit CLI P100 override; it is the only active retry.
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed
 scientifically; multi-slot grouping, multi-head selection, and dynamic-query

@@ -1,15 +1,19 @@
 # Operational state
 
-Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 1
-terminated `ERROR` before candidate execution. The launcher requested exactly
-one P100, but Kaggle allocated a Tesla T4 and the explicit compatibility guard
-raised `RuntimeError: Candidate requires one P100, got Tesla T4`.
+Kaggle2 kernel `kaseichou/molgap-k1-edge-conditioned-slot-s42` version 2 is
+`RUNNING`. It is the user-authorized infrastructure-only retry of version 1,
+submitted with the explicit CLI accelerator override
+`NvidiaTeslaP100`. The source dataset, archive hash, model, data, seed, strict
+FP32/no-TF32 mode, physical BS128, optimizer, schedule, role access, and all
+scientific gates are unchanged.
 
-No training epoch, metric, checkpoint, or acceptance output was produced. This
-is an infrastructure/resource-selection failure, not a scientific result for
-the edge-conditioned slot architecture. The downloaded source archive and
-terminal log are retained under the platform record directory; the terminal
-handoff records the failure and its delivery state. No retry, repair, extra
-seed, scale bridge, or official/test evaluation is authorized by this record.
+Version 1 terminated before candidate execution because Kaggle allocated a
+Tesla T4 to the metadata-only P100 request. It produced no epoch, metric,
+checkpoint, or acceptance output and remains classified as infrastructure
+evidence rather than a scientific failure. Its terminal log and downloaded
+source archive are retained.
 
-Submission identities and the terminal fields are in `results/submission.json`.
+Version 2 keeps the one-device P100 runtime guard. Until terminal acceptance,
+do not submit another retry, candidate, seed, scale bridge, or official/test
+evaluation. Version-1 identity is in `results/submission.json`; version-2
+identity is in `results/retry_v2.json`.
