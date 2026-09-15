@@ -239,6 +239,16 @@ def run_preflight(
         model, optimizer, batch, torch.tensor(mean_value, device="cuda"),
         torch.tensor(std_value, device="cuda"), check_finite=True,
     )
+    output.mkdir(parents=True, exist_ok=True)
+    probe_path = output / "resume_probe.pt"
+    atomic_torch_save(probe_path, {"model": model.state_dict(),
+        "optimizer": optimizer.state_dict(), "rng": capture_rng_state()})
+    restored = torch.load(probe_path, map_location="cpu", weights_only=False)
+    model.load_state_dict(restored["model"], strict=True)
+    optimizer.load_state_dict(restored["optimizer"])
+    restore_rng_state(restored["rng"])
+    _optimizer_step(model, optimizer, batch, torch.tensor(mean_value, device="cuda"),
+                    torch.tensor(std_value, device="cuda"), check_finite=True)
     valid_dataset = PackedGraphs(Path(valid_records[0]["path"]))
     valid_batch = next(iter(DataLoader(valid_dataset, batch_size=PHYSICAL_BATCH, shuffle=False))).to("cuda")
     with torch.inference_mode():
@@ -248,6 +258,7 @@ def run_preflight(
     runtime = build_runtime_manifest(determinism)
     result = {
         "format": "molgap-pcqm-k1-convergence-preflight-v1",
+        "resume_optimizer_roundtrip_passed": True,
         "accepted": True,
         "contract_sha256": CONTRACT_SHA256,
         "source_checkpoint_sha256": acceptance["checkpoint_sha256"],
@@ -310,6 +321,7 @@ def train_convergence(
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     if (
         preflight.get("accepted") is not True
+        or preflight.get("resume_optimizer_roundtrip_passed") is not True
         or preflight.get("contract_sha256") != CONTRACT_SHA256
         or preflight.get("runtime_fingerprint") != runtime["runtime_fingerprint"]
         or preflight.get("accelerator") != accelerator
