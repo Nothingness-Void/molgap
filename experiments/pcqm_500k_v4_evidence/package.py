@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import zipfile
 
 ARMS = __ARMS__
@@ -44,7 +45,7 @@ def main():
         inputs = list(Path("/kaggle/input").rglob("stage_resume.bin"))
         if len(inputs) != 1 or hashlib.sha256(inputs[0].read_bytes()).hexdigest() != RESUME_SHA:
             raise RuntimeError("Missing or changed accepted resume archive")
-        resume_root = Path("/kaggle/working/accepted_resume")
+        resume_root = Path(tempfile.mkdtemp(prefix="molgap_accepted_resume_"))
         with zipfile.ZipFile(inputs[0]) as archive:
             archive.extractall(resume_root)
         for arm in ARMS:
