@@ -109,7 +109,8 @@ def evaluate(model, graphs, mean, std):
     return result
 
 
-def run(arm, output, source_sha, stage_epochs=4, resume=None):
+def run(arm, output, source_sha, stage_epochs=60, resume=None,
+        resume_source_sha=None, max_stage_seconds=41_400):
     import shutil
     import torch
     output.mkdir(parents=True, exist_ok=True)
@@ -173,7 +174,9 @@ def run(arm, output, source_sha, stage_epochs=4, resume=None):
             if sha256_file(resume / name) != checksums[name]:
                 raise RuntimeError(f"Resume hash mismatch: {name}")
         state = torch.load(resume / "last_checkpoint.pt", map_location="cpu", weights_only=False)
-        if state["contract"] != contract or state["arm"] != arm or state["source_sha256"] != source_sha:
+        expected_resume_source = resume_source_sha or source_sha
+        if (state["contract"] != contract or state["arm"] != arm
+                or state["source_sha256"] != expected_resume_source):
             raise RuntimeError("Resume scientific/source identity mismatch")
         if state["runtime_software"] != runtime["installed_distributions_sha256"] or state["accelerator"] != certificate["accelerator"]:
             raise RuntimeError("Resume runtime changed; requalification required")
@@ -222,13 +225,15 @@ def run(arm, output, source_sha, stage_epochs=4, resume=None):
         atomic_json(output / "progress.json", {"status": "RUNNING", "next_epoch": epoch+1, "best": best})
         print(f"{arm} ep{epoch:02d} dev={mae:.8f} best={best:.8f}@{best_epoch} {trace[-1]['seconds']:.1f}s", flush=True)
         # End at an epoch boundary well before Kaggle's session limit.
-        if time.monotonic() - stage_start + 1.5 * trace[-1]["seconds"] > 3 * 3600:
+        if (max_stage_seconds is not None and
+                time.monotonic() - stage_start + 1.5 * trace[-1]["seconds"] > max_stage_seconds):
             break
     status = "COMPLETE" if trace[-1]["epoch"] + 1 == EPOCHS else "STAGE_COMPLETE"
     artifacts = {p.name: sha256_file(p) for p in output.iterdir() if p.is_file() and p.name != "stage_manifest.json"}
     atomic_json(output / "stage_manifest.json", {"status": status, "arm": arm,
         "next_epoch": trace[-1]["epoch"]+1, "best_development_mae_eV": best, "best_epoch": best_epoch,
         "parameters": PARAMETERS[arm], "contract": contract, "source_sha256": source_sha,
+        "resume_source_sha256": resume_source_sha,
         "runtime_certificate_id": certificate_id, "artifacts": artifacts,
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})
 
@@ -240,9 +245,12 @@ def main():
     parser.add_argument("--source-sha", required=True)
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--stage-epochs", type=int, default=4)
+    parser.add_argument("--resume-source-sha")
+    parser.add_argument("--max-stage-seconds", type=int, default=41_400)
     args = parser.parse_args()
     try:
-        run(args.arm, args.output, args.source_sha, args.stage_epochs, args.resume)
+        run(args.arm, args.output, args.source_sha, args.stage_epochs, args.resume,
+            args.resume_source_sha, args.max_stage_seconds)
     except Exception as error:
         atomic_json(args.output / "failure.json", {"type": type(error).__name__, "error": str(error)})
         raise
