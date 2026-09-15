@@ -2,25 +2,29 @@
   "submitted_at": "2026-09-15",
   "platform": "kaggle2",
   "kernel": "kaseichou/molgap-k1-gpspp-local-s42",
-  "kernel_version": 2,
+  "kernel_version": 3,
   "requested_accelerator": "NvidiaTeslaT4x2",
   "source_dataset": "kaseichou/molgap-k1-gpspp-local-source",
   "source_dataset_status": "ready",
-  "source_commit": "b1cf662340dc5565aa43e2ef91d46bb1f0c0a025",
-  "source_archive_sha256": "9f255cbd43b111997e968e0ff305b5d61440529760da42733a681b18acf83cfa",
+  "source_dataset_version": 2,
+  "source_commit": "8139a0a866e1d169b7d53b91693556fd665059b9",
+  "source_archive_sha256": "7aa77876dfbd6a76735c4581e830fcf9e634abdeef69e1bd9064617433e1e223",
   "source_file_count": 154,
   "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
   "modes": [
     "neural_atom_k1_gpspp_sender",
     "neural_atom_k1_gpspp_bidirectional"
   ],
-  "status_observed_after_submission": "RUNNING",
+  "status_observed_after_submission": "QUEUED",
   "infrastructure_retry": {
-    "previous_version": 1,
+    "previous_versions": [1, 2],
     "previous_status": "ERROR",
-    "failure_stage": "launcher-source-root-selection-before-model-import",
+    "failure_stages": [
+      "launcher-source-root-selection-before-model-import",
+      "train-only-mechanism-preflight-before-epoch-zero"
+    ],
     "scientific_contract_executed": false,
-    "repair_scope": "kernel-launcher-only"
+    "repair_scope": "launcher-and-preflight-scope-only"
   },
   "official_validation_role_read": false,
   "test_dev_role_read": false,
