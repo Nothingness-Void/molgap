@@ -56,6 +56,8 @@ class ContractTests(unittest.TestCase):
         runtime = (REPO_ROOT / "src/molgap/k1_edge_kaggle_runtime.py").read_text()
         self.assertIn("CUDA_VISIBLE_DEVICES=str(device)", runtime)
         self.assertIn("torch==2.4.1", runtime)
+        self.assertIn("MOLGAP_K1_OUTPUT_ROOT", runtime)
+        self.assertIn("ALLOWED_MODE_PAIRS", runtime)
         launcher = (root / "t4x2_candidates/run_candidates.py").read_text()
         self.assertNotIn("src.zip", launcher)
         self.assertLess(launcher.index("Source identity mismatch"), launcher.index("from molgap"))

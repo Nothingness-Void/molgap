@@ -1,4 +1,6 @@
-"""Package committed source only; no model import or local execution."""
+"""Package committed source plus a neutral archive for the private screen."""
+from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -6,34 +8,121 @@ from pathlib import Path
 import shutil
 import subprocess
 import tarfile
+
 from molgap.constants import REPO_ROOT
 
 
-def main():
+def tracked_source_files() -> list[Path]:
+    dirty = subprocess.check_output(
+        [
+            "git",
+            "status",
+            "--porcelain",
+            "--",
+            "src",
+            "experiments/pcqm_k1_edge_memory_100k",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+    ).strip()
+    if dirty:
+        raise RuntimeError(
+            "Source packaging requires a clean committed src and experiment tree"
+        )
+    raw = subprocess.check_output(
+        ["git", "ls-files", "-z", "--", "src"], cwd=REPO_ROOT
+    )
+    files = []
+    for item in raw.split(b"\0"):
+        if not item:
+            continue
+        path = REPO_ROOT / item.decode("utf-8")
+        if (
+            path.is_file()
+            and "__pycache__" not in path.parts
+            and path.suffix not in {".pyc", ".pyo"}
+            and not any(part.endswith(".egg-info") for part in path.parts)
+        ):
+            files.append(path)
+    files.sort(key=lambda path: path.relative_to(REPO_ROOT).as_posix())
+    if not files:
+        raise RuntimeError("Tracked source inventory is empty")
+    return files
+
+
+def build_payload(output: Path, files: list[Path]) -> str:
+    inventory = []
+    archive_path = output / "source.tar.gz"
+    with tarfile.open(archive_path, mode="w:gz") as archive:
+        for source in files:
+            relative = source.relative_to(REPO_ROOT).as_posix()
+            archive.add(source, arcname=relative, recursive=False)
+            inventory.append(
+                {
+                    "path": relative,
+                    "sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+                }
+            )
+
+            # Kaggle-safe expanded source: the launcher can use this directly
+            # and never depends on an archive suffix being auto-expanded.
+            expanded = output / relative
+            expanded.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, expanded)
+
+    shutil.copyfile(archive_path, output / "source_payload.bin")
+    archive_sha = hashlib.sha256((output / "source_payload.bin").read_bytes()).hexdigest()
+    (output / "SOURCE_FILES.json").write_text(
+        json.dumps({"files": inventory}, indent=2) + "\n", encoding="utf-8"
+    )
+    return archive_sha
+
+
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--dataset-id", default="kaseichou/molgap-k1-edge-memory-source"
+    )
+    parser.add_argument("--title", default="MolGap K1 Edge Memory Source")
     args = parser.parse_args()
-    if args.output.exists():
-        raise FileExistsError(args.output)
-    dirty = subprocess.check_output(["git", "status", "--porcelain", "--", "src", "experiments/pcqm_k1_edge_memory_100k"], cwd=REPO_ROOT, text=True).strip()
-    if dirty:
-        raise RuntimeError("Commit protocol/source before packaging")
-    args.output.mkdir(parents=True)
-    files = subprocess.check_output(["git", "ls-files", "-z", "src"], cwd=REPO_ROOT).decode().split("\0")
-    inventory = []
-    with tarfile.open(args.output / "source.tar.gz", "w:gz") as archive:
-        for name in sorted(filter(None, files)):
-            source = REPO_ROOT / name
-            archive.add(source, arcname=name)
-            inventory.append({"path":name,"sha256":hashlib.sha256(source.read_bytes()).hexdigest()})
-    shutil.copyfile(args.output / "source.tar.gz", args.output / "source_payload.bin")
-    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip()
-    sha = hashlib.sha256((args.output / "source_payload.bin").read_bytes()).hexdigest()
-    for name, value in {"SOURCE_COMMIT.txt":commit,"SOURCE_ARCHIVE_SHA256.txt":sha}.items():
-        (args.output / name).write_text(value + "\n", encoding="utf-8")
-    (args.output / "SOURCE_FILES.json").write_text(json.dumps({"files":inventory},indent=2),encoding="utf-8")
-    (args.output / "dataset-metadata.json").write_text(json.dumps({"id":"kaseichou/molgap-k1-edge-memory-source","title":"MolGap K1 Edge Memory Source","licenses":[{"name":"other"}],"isPrivate":True},indent=2),encoding="utf-8")
-    print(json.dumps({"source_commit":commit,"source_archive_sha256":sha,"files":len(inventory)}))
+    output = args.output.resolve()
+    if output.exists():
+        raise FileExistsError(output)
+
+    files = tracked_source_files()
+    output.mkdir(parents=True)
+    archive_sha = build_payload(output, files)
+    commit = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True
+    ).strip()
+    (output / "SOURCE_COMMIT.txt").write_text(commit + "\n", encoding="utf-8")
+    (output / "SOURCE_ARCHIVE_SHA256.txt").write_text(
+        archive_sha + "\n", encoding="utf-8"
+    )
+    (output / "dataset-metadata.json").write_text(
+        json.dumps(
+            {
+                "id": args.dataset_id,
+                "title": args.title,
+                "licenses": [{"name": "other"}],
+                "isPrivate": True,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(
+        json.dumps(
+            {
+                "source_commit": commit,
+                "source_archive_sha256": archive_sha,
+                "files": len(files),
+            }
+        )
+    )
+
 
 if __name__ == "__main__":
     main()

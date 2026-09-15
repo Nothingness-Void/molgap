@@ -8,6 +8,11 @@
   "enable_gpu": true,
   "enable_internet": true,
   "machine_shape": "NvidiaTeslaT4",
-  "dataset_sources": ["kaseichou/molgap-k1-edge-memory-source", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"],
-  "competition_sources": [], "kernel_sources": [], "model_sources": []
+  "dataset_sources": [
+    "kaseichou/molgap-k1-edge-memory-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
 }
