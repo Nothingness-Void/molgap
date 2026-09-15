@@ -1,0 +1,15 @@
+{
+  "source_sha256": "811a40969ece2df05d95556901fcc7c3ebcaa6f46c95e19a4e9fa2e856fad3ae",
+  "resume_dataset": "nothingnessvoid/molgap-500k-v4-resume-e8-b68feead71",
+  "resume_dataset_version": 1,
+  "resume_archive_sha256": "b68feead71a0169add1d624a78af5c26f739185dab6c26e3365252eaecaaa78b",
+  "start_epoch": 8,
+  "stage_epochs_max": 4,
+  "intended_next_epoch": 12,
+  "startup_preflight_verified": false,
+  "contract_changed": false,
+  "kernels": [
+    {"id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42", "version": 4, "arms": ["full_gps", "neural_atom_k1"]},
+    {"id": "nothingnessvoid/molgap-500k-v4-gptrans-s42", "version": 5, "arms": ["gptrans"]}
+  ]
+}
