@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Run one seed-42 K1 edge-conditioned slot screen on the fixed PCQM-100K v4 benchmark | Saved-artifact acceptance records the result; below-gate closes this question, while a pass only nominates a shortlist |
 | P1 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The earlier bounded three-attempt sequence was accepted mechanically and failed

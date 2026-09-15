@@ -117,6 +117,12 @@ archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 SCNet experiments and full training are desktop-owned and excluded from the
 server queue. The new screen does not modify the frozen K1 full handoff.
 
+The coordinator explicitly reopened one fresh seed-42 K1 question: condition
+the three sparse slot selectors on the incident persistent real-bond state.
+The protocol is `experiments/pcqm_k1_edge_conditioned_slot_100k/protocol.md`;
+the screen is limited to the fixed PCQM-100K v4 contract and has no result
+until its private Kaggle run and saved-artifact acceptance complete.
+
 ## Data and comparison contract
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
