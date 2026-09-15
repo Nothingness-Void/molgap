@@ -13,9 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-KUNSHAN-V4-RUNTIME | Build the reusable Python/DTK/PyG environment without DCU time, then run one bounded DCU determinism check | Generic runtime evidence is accepted; every later candidate still requires its own V4 preflight |
-| P1 | B-K1-EDGE-CONDITIONED-SLOT-S42 | Closed: classify the completed accelerator-flexible, unchanged-contract Kaggle2 version-3 run | Saved-artifact acceptance passed; the candidate was below the material gate and the question is closed |
-| P2 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
+| P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The P0 version-1 submission produced no scientific evidence and is retained as
 an infrastructure failure. Version 2 used the same source and scientific

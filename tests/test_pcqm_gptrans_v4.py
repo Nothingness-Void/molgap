@@ -141,6 +141,21 @@ def test_kunshan_v4_environment_is_offline_and_resource_separated():
     assert '"precision": "fp32"' in verify
     assert '"training_executed": False' in verify
 
+    acceptance = json.loads(
+        (ROOT / "platforms/scnet/kunshan_v4_runtime_acceptance.json").read_text()
+    )
+    assert acceptance["accepted"] is True
+    assert acceptance["v4_gate"]["physical_batch_per_device"] == 128
+    assert acceptance["v4_gate"]["precision"] == "fp32"
+    assert acceptance["v4_gate"]["training_executed"] is False
+    assert acceptance["artifact_sha256"]["environment_dcu.json"] == (
+        "3131a543c8b7f77fdd167eb2e264ec6ff1765a24683a092ca12e409f58407437"
+    )
+    for name in ("setup_kunshan_v4_env.slurm", "verify_kunshan_v4_env.slurm"):
+        assert acceptance["adapter_sha256"][name] == hashlib.sha256(
+            (ROOT / "platforms/scnet" / name).read_bytes()
+        ).hexdigest()
+
 
 def test_kaggle_entrypoints_parse_and_pin_p100():
     import ast

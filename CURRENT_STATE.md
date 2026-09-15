@@ -116,10 +116,11 @@ archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
 
 Desktop continues to own SCNet full training, official evaluation, and final
 submission. By explicit user authorization, server may use the new Kunshan
-account for V4 architecture screens after its reusable runtime passes the
-generic DCU check and the candidate-specific preflight. The active runtime
-construction is specified in `platforms/scnet/KUNSHAN_V4_RUNTIME.md`; it does
-not modify the frozen K1 full handoff.
+account for V4 architecture screens. Its reusable Python 3.10/DTK 23.10/PyG
+runtime has passed the generic one-DCU FP32 BS128 determinism check; every
+candidate still requires its own source/cache/memory/throughput V4 preflight.
+Authority: `platforms/scnet/KUNSHAN_V4_RUNTIME.md`. This infrastructure result
+does not modify the frozen K1 full handoff.
 
 The coordinator explicitly reopened one fresh seed-42 K1 question: condition
 the three sparse slot selectors on the incident persistent real-bond state.

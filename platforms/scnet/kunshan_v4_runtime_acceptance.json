@@ -1,0 +1,73 @@
+{
+  "format": "molgap-kunshan-v4-runtime-acceptance-v1",
+  "accepted": true,
+  "accepted_at": "2026-09-16",
+  "adapter_commit": "bff5a27f51a733f82d04ae09345708a0883d71ee",
+  "adapter_sha256": {
+    "setup_kunshan_v4_env.slurm": "03fcbe6c6081810a880c14a362abc93b6ad999e01380dd29a5191f730767f9b6",
+    "verify_kunshan_v4_env.slurm": "80559c578f29ea3810ba3435a8862a1d4105f3f6f1955bbe390b430095049f79"
+  },
+  "bootstrap": {
+    "root": "/public/home/changfeng2006/molgap-v4-bootstrap/molgap-v4-100k",
+    "source_commit": "7f36a1d71ae0f063c53f07bd1e5b725dcc2ecebc",
+    "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "train_rows": 100000,
+    "internal_development_rows": 50000,
+    "official_validation_included": false,
+    "test_dev_included": false,
+    "test_challenge_included": false
+  },
+  "runtime": {
+    "root": "/public/home/changfeng2006/molgap-v4-bootstrap/runtime-v4",
+    "python": "3.10.18",
+    "numpy": "1.26.4",
+    "ogb": "1.3.6",
+    "torch_metadata": "1.13.1+git7d2dd01.abi0.dtk2310",
+    "torch_runtime": "1.13.1",
+    "torch_hip": "5.4.23392",
+    "torch_geometric": "2.5.3",
+    "device_name": "Device 66a1",
+    "device_count": 1
+  },
+  "v4_gate": {
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "tf32": false,
+    "deterministic_algorithms": true,
+    "optimizer_step_loss": 0.8048479557037354,
+    "optimizer_step_state_sha256": "df90d244dffcf153914931bd28cf98028360d429ba037d619d144b510d424089",
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "training_executed": false
+  },
+  "jobs": {
+    "accepted_cpu": {
+      "id": "122216095",
+      "partition": "kshctest02",
+      "state": "COMPLETED",
+      "elapsed_seconds": 130
+    },
+    "accepted_dcu": {
+      "id": "122216438",
+      "partition": "kshdtest",
+      "state": "COMPLETED",
+      "node": "e10r4n11",
+      "elapsed_seconds": 156,
+      "accelerators": 1,
+      "accelerator_hours": 0.043333333333333335
+    },
+    "cpu_only_infrastructure_failures": [
+      "122213713",
+      "122214328",
+      "122215655"
+    ]
+  },
+  "artifact_sha256": {
+    "environment_cpu.json": "10909f71cb3069d93842ad19c10a82eb32f2da39acc609bdd9189bd52b3f769f",
+    "environment_dcu.json": "3131a543c8b7f77fdd167eb2e264ec6ff1765a24683a092ca12e409f58407437",
+    "environment.freeze.txt": "29c56a328d46c5677dc1d59205fda1dac05d1283af10d1297f9c3d9320e6b77c",
+    "miniconda_installer": "647b55a8da07136fa2543fbf6b9719d3a4c2369dec5dd31d2c4bda2b51107717",
+    "vendor_torch_wheel": "a16c161964a1b35d19bea7e38c8a2b089cb0720e8bed041b26bdb44b4d3a3199"
+  },
+  "scope": "Reusable runtime only; every candidate still requires an experiment-specific V4 preflight."
+}

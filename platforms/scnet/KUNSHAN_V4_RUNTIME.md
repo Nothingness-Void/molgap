@@ -36,9 +36,22 @@ is necessary but not sufficient: every architecture must still pass its own
 immutable-cache, source, memory, throughput, and optimizer-inclusive V4
 preflight before training.
 
-## Live operation
+## Acceptance
 
-- CPU environment job: `122213713`, submitted 2026-09-16.
-- No architecture training was submitted by this setup operation.
-- Large environments and logs remain remote or in ignored platform records;
-  Git stores only the adapter and compact acceptance evidence.
+The reusable runtime is accepted. CPU job `122216095` completed in 2m10s with
+all pinned packages present and `pip check` clean. DCU job `122216438` completed
+in 2m36s on `Device 66a1`: one visible accelerator, FP32, TF32 disabled,
+physical BS128, and two independently initialized optimizer steps produced the
+same loss and state hash. It consumed about 0.0434 of the reported 200
+accelerator-hours. No architecture training or protected role access occurred.
+
+The compact machine-readable record is
+`platforms/scnet/kunshan_v4_runtime_acceptance.json`. Full environments and logs
+remain remote or in ignored `platforms/_records/scnet/` storage.
+
+Three preceding CPU-only infrastructure attempts are retained in the raw logs:
+compute-node DNS was unavailable, the first offline wheelhouse omitted
+`async-timeout`, and the CPU node could not load the DCU-only `libhsakmt` shared
+library. Each fault was isolated without consuming accelerator time; the final
+adapter uses a complete offline wheelhouse and defers vendor-Torch import to the
+DCU gate.
