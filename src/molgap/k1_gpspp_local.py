@@ -1,6 +1,8 @@
 """Zero-initialized GPS++-style directional local adapters for frozen K1."""
 from __future__ import annotations
 
+from .qm9_neural_atom import MIXER_LAYERS
+
 
 MODES = (
     "neural_atom_k1_gpspp_sender",
@@ -93,7 +95,6 @@ def make_encoder(mode):
 
     import torch.nn as nn
 
-    from .qm9_neural_atom import MIXER_LAYERS
     from .qm9_neural_atom import make_encoder as frozen_encoder
 
     class GPSPPDirectionalLocalK1(nn.Module):

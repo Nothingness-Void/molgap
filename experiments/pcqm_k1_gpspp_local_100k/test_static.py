@@ -25,6 +25,15 @@ class ContractTests(unittest.TestCase):
 
     def test_directional_design_and_parameter_identity(self):
         source = (REPO_ROOT / "src/molgap/k1_gpspp_local.py").read_text()
+        tree = ast.parse(source)
+        module_imports = [
+            alias.name
+            for node in tree.body
+            if isinstance(node, ast.ImportFrom)
+            and node.module == "qm9_neural_atom"
+            for alias in node.names
+        ]
+        self.assertIn("MIXER_LAYERS", module_imports)
         for token in (
             "neural_atom_k1_gpspp_sender",
             "neural_atom_k1_gpspp_bidirectional",
