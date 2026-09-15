@@ -123,10 +123,12 @@ The protocol is `experiments/pcqm_k1_edge_conditioned_slot_100k/protocol.md`.
 Its Kaggle2 v1 submission terminated before training because the metadata-only
 P100 request received a Tesla T4. The terminal diagnosis is
 `experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis.md`.
-The user then authorized one infrastructure-only retry: version 2 is running
-with an explicit CLI P100 accelerator override and the unchanged scientific
-contract. No scientific result exists until saved-artifact acceptance completes;
-the v1 failure does not close the architecture question or change frozen K1.
+The user then authorized one infrastructure-only retry with an explicit CLI P100
+accelerator override and the unchanged scientific contract. Version 2 also
+received a Tesla T4 and terminated before candidate execution; its diagnosis is
+`experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis_v2.md`.
+No scientific result exists, and the edge-conditioned-slot question remains
+without a result; the failures do not change frozen K1.
 
 ## Data and comparison contract
 
