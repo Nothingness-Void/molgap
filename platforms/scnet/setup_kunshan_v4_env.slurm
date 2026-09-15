@@ -83,37 +83,39 @@ export PYTHONPATH="$BOOTSTRAP_ROOT/code/src"
 cd "$BOOTSTRAP_ROOT"
 "$PYTHON" - <<'PY'
 import json
+import importlib.metadata
 import pathlib
 import platform
 import sys
 
 import networkx
 import numpy
-import ogb
 import pandas
 import scipy
 import sklearn
-import torch
-import torch_geometric
 
 assert sys.version_info[:2] == (3, 10)
 assert numpy.__version__ == "1.26.4"
-assert torch.__version__ == "1.13.1+git7d2dd01.abi0.dtk2310"
-assert torch_geometric.__version__ == "2.5.3"
+torch_version = importlib.metadata.version("torch")
+pyg_version = importlib.metadata.version("torch-geometric")
+ogb_version = importlib.metadata.version("ogb")
+assert torch_version == "1.13.1+git7d2dd01.abi0.dtk2310"
+assert pyg_version == "2.5.3"
+assert ogb_version == "1.3.6"
 
 payload = {
     "format": "molgap-kunshan-v4-environment-v1",
-    "accepted_cpu_imports": True,
+    "accepted_cpu_packages": True,
+    "accelerator_imports_deferred_to_dcu_check": True,
     "python": platform.python_version(),
     "numpy": numpy.__version__,
     "scipy": scipy.__version__,
     "pandas": pandas.__version__,
     "scikit_learn": sklearn.__version__,
     "networkx": networkx.__version__,
-    "ogb": ogb.__version__,
-    "torch": torch.__version__,
-    "torch_hip": torch.version.hip,
-    "torch_geometric": torch_geometric.__version__,
+    "ogb": ogb_version,
+    "torch": torch_version,
+    "torch_geometric": pyg_version,
     "official_validation_role_read": False,
     "test_dev_role_read": False,
     "training_executed": False,
