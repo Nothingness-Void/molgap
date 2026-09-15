@@ -95,25 +95,15 @@ def verified_source() -> tuple[Path, str, str]:
         raise RuntimeError("Source identity mismatch: payload hash changed")
     expected = inventory()
     verify_archive(archive, expected)
-    modules = sorted(
-        path
-        for path in Path("/kaggle/input").rglob(
-            "src/molgap/k1_edge_kaggle_runtime.py"
-        )
-        if path.is_file()
+    # Kaggle may auto-expand both source.tar.gz and its generated src.zip,
+    # yielding several equivalent mounted roots. Never choose among them:
+    # expand the already hash-verified neutral payload into one private root.
+    expanded = Path("/kaggle/working") / (
+        "_k1_gpspp_source_" + expected_sha[:12]
     )
-    roots = sorted({path.parents[1] for path in modules}, key=str)
-    if len(roots) > 1:
-        raise RuntimeError("Source identity mismatch: ambiguous source roots")
-    if roots:
-        root = roots[0]
-    else:
-        expanded = Path("/kaggle/working") / (
-            "_k1_gpspp_source_" + expected_sha[:12]
-        )
-        if not (expanded / "src").is_dir():
-            shutil.unpack_archive(archive, expanded, format="gztar")
-        root = expanded / "src"
+    if not (expanded / "src").is_dir():
+        shutil.unpack_archive(archive, expanded, format="gztar")
+    root = expanded / "src"
     verify_tree(root, expected)
     return root, commit, expected_sha
 

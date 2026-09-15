@@ -82,6 +82,8 @@ class ContractTests(unittest.TestCase):
         launcher = (ROOT / "t4x2_candidates/run_candidates.py").read_text()
         self.assertIn("MOLGAP_SCREEN_MODES", launcher)
         self.assertIn("MOLGAP_K1_OUTPUT_ROOT", launcher)
+        self.assertNotIn("ambiguous source roots", launcher)
+        self.assertIn("hash-verified neutral payload", launcher)
         self.assertLess(
             launcher.index("Source identity mismatch"),
             launcher.index("from molgap.k1_edge_kaggle_runtime"),
