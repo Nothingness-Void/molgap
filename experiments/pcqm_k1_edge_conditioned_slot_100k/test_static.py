@@ -50,15 +50,18 @@ class ContractTests(unittest.TestCase):
         self.assertIn("EDGE_CONDITIONED_MODES", runner)
         self.assertIn("resume_two_step_bitwise_equal", runner)
 
-    def test_remote_job_is_private_single_p100(self):
+    def test_remote_job_is_private_single_assigned_gpu(self):
         metadata = json.loads((ROOT / "p100_candidate/kernel-metadata.json").read_text(encoding="utf-8"))
         self.assertTrue(metadata["is_private"])
-        self.assertEqual(metadata["machine_shape"], "NvidiaTeslaP100")
+        self.assertEqual(metadata["machine_shape"], "NvidiaTeslaT4")
         self.assertEqual(metadata["kernel_sources"], [])
         self.assertEqual(metadata["model_sources"], [])
         launcher = (ROOT / "p100_candidate/run_candidate.py").read_text(encoding="utf-8")
         self.assertIn("source_payload.bin", launcher)
         self.assertIn("MODE = \"neural_atom_k1_edge_conditioned_slot\"", launcher)
+        self.assertIn('os.environ["CUDA_VISIBLE_DEVICES"] = first', launcher)
+        self.assertIn("requires exactly one visible CUDA accelerator", launcher)
+        self.assertNotIn("Candidate requires one P100", launcher)
         self.assertNotIn("test", launcher.lower().replace("test_candidate", ""))
 
     def test_no_local_model_execution_is_promised(self):

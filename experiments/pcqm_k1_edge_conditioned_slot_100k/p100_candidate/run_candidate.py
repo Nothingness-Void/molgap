@@ -1,4 +1,4 @@
-"""Kaggle2 P100 entry point for the single K1 edge-conditioned candidate."""
+"""Kaggle2 entry point for the single K1 edge-conditioned candidate."""
 from __future__ import annotations
 
 import hashlib
@@ -20,9 +20,23 @@ def find_one(pattern: str) -> Path:
     return matches[0]
 
 
-def ensure_p100_torch() -> None:
+def pin_one_visible_gpu() -> None:
+    """Expose exactly one assigned accelerator to preserve the v4 contract."""
+    visible = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
+    first = visible.split(",", maxsplit=1)[0].strip() or "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = first
+
+
+def ensure_compatible_torch() -> None:
+    probe_code = (
+        "import torch; "
+        "available=torch.cuda.is_available(); "
+        "cap=torch.cuda.get_device_capability(0) if available else (-1,-1); "
+        "arch=f'sm_{cap[0]}{cap[1]}'; "
+        "raise SystemExit(0 if available and arch in torch.cuda.get_arch_list() else 3)"
+    )
     probe = subprocess.run(
-        [sys.executable, "-c", "import torch; raise SystemExit(0 if 'sm_60' in torch.cuda.get_arch_list() else 3)"],
+        [sys.executable, "-c", probe_code],
         check=False,
     )
     if probe.returncode == 0:
@@ -42,15 +56,15 @@ def ensure_p100_torch() -> None:
         ]
     )
     verified = subprocess.run(
-        [sys.executable, "-c", "import torch; raise SystemExit(0 if 'sm_60' in torch.cuda.get_arch_list() else 4)"],
+        [sys.executable, "-c", probe_code],
         check=False,
     )
     if verified.returncode:
-        raise RuntimeError("Installed PyTorch still lacks P100 sm_60 support")
+        raise RuntimeError("Installed PyTorch does not support the assigned CUDA accelerator")
 
 
 def install_dependencies() -> None:
-    ensure_p100_torch()
+    ensure_compatible_torch()
     subprocess.check_call(
         [sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"]
     )
@@ -88,14 +102,35 @@ def verify_source(root: Path) -> tuple[str, str]:
 
 
 def main() -> None:
+    pin_one_visible_gpu()
     install_dependencies()
     root = source_root()
     commit, digest = verify_source(root)
     sys.path.insert(0, str(root))
     import torch
 
-    if torch.cuda.device_count() != 1 or "P100" not in torch.cuda.get_device_name(0):
-        raise RuntimeError(f"Candidate requires one P100, got {torch.cuda.get_device_name(0)}")
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise RuntimeError(
+            f"Candidate requires exactly one visible CUDA accelerator, got {torch.cuda.device_count()}"
+        )
+    capability = torch.cuda.get_device_capability(0)
+    architecture = f"sm_{capability[0]}{capability[1]}"
+    if architecture not in torch.cuda.get_arch_list():
+        raise RuntimeError(
+            f"PyTorch lacks {architecture} support for {torch.cuda.get_device_name(0)}"
+        )
+    print(
+        json.dumps(
+            {
+                "event": "gpu_runtime",
+                "device": torch.cuda.get_device_name(0),
+                "capability": list(capability),
+                "visible_device_count": torch.cuda.device_count(),
+            },
+            sort_keys=True,
+        ),
+        flush=True,
+    )
     from molgap.pcqm_k1_variants_runner import train_arm
 
     train_arm(

@@ -9,7 +9,8 @@ global layer, geometry input, or target-space correction?
 - `STATUS.md` — operational state.
 - `accept.py` — saved-artifact-only acceptance.
 - `package_source.py` — deterministic private Kaggle source package.
-- `p100_candidate/` — one seed-42 Kaggle candidate launcher.
+- `p100_candidate/` — one seed-42 accelerator-flexible Kaggle launcher; the
+  directory name is retained only for version-history continuity.
 
 The candidate is compared directly with the immutable K1-v4 reference under
 the same fixed PCQM-100K data identity. Large outputs remain under
