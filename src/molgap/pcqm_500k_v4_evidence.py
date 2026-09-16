@@ -17,7 +17,13 @@ from .pcqm_k1_scale_runner import find_cache, load_roles, _targets
 from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
 from .pcqm_gptrans_v4 import _state_sha256, _batch_sha256, _forward
 
-PARAMETERS = {"full_gps": 4771073, "neural_atom_k1": 3658817, "gptrans": 5246817}
+PARAMETERS = {
+    "full_gps": 4_771_073,
+    "neural_atom_k1": 3_658_817,
+    "gptrans": 5_246_817,
+    "edge_local_only": 3_433_601,
+    "edge_sparse_global_369": 3_879_425,
+}
 EPOCHS = 60
 BS = 128
 STEPS = 500000 // BS
@@ -52,6 +58,9 @@ def make_model(arm):
     if arm == "gptrans":
         from .pcqm_gptrans_v4 import _make_model
         model = _make_model()
+    elif arm in {"edge_local_only", "edge_sparse_global_369"}:
+        from .pcqm_500k_v4_ablation import make_ablation_encoder
+        model = make_ablation_encoder(arm)
     else:
         from .qm9_neural_atom import make_encoder
         model = make_encoder(arm)
@@ -69,11 +78,13 @@ def optimizer_for(model):
 def loader(graphs, epoch=None):
     import torch
     from torch_geometric.loader import DataLoader
+    workers = int(os.environ.get("MOLGAP_V4_LOADER_WORKERS", "2"))
     sampler = None if epoch is None else torch.randperm(
         len(graphs), generator=torch.Generator().manual_seed(42 + epoch)
     )[:STEPS * BS].tolist()
     return DataLoader(graphs, batch_size=BS, sampler=sampler, shuffle=False,
-                      num_workers=2, pin_memory=True, persistent_workers=True,
+                      num_workers=workers, pin_memory=True,
+                      persistent_workers=workers > 0,
                       generator=torch.Generator().manual_seed(9000 + (epoch or 0)))
 
 
@@ -110,7 +121,8 @@ def evaluate(model, graphs, mean, std):
 
 
 def run(arm, output, source_sha, stage_epochs=60, resume=None,
-        resume_source_sha=None, max_stage_seconds=41_400):
+        resume_source_sha=None, max_stage_seconds=41_400,
+        platform_id="kaggle1", preflight_only=False):
     import shutil
     import torch
     output.mkdir(parents=True, exist_ok=True)
@@ -148,9 +160,10 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         raise RuntimeError("BS128 optimizer-inclusive memory reserve below 15%")
     certificate = {
         "format": "molgap-runtime-certificate-v1", "status": "accepted",
-        "platform_id": "kaggle1", "accelerator": torch.cuda.get_device_name(0),
+        "platform_id": platform_id, "accelerator": torch.cuda.get_device_name(0),
         "precision": "fp32", "tf32_enabled": False, "deterministic_algorithms": True,
         "physical_batch_per_device": BS, "tail_batch_policy": "drop_last",
+        "loader_workers": int(os.environ.get("MOLGAP_V4_LOADER_WORKERS", "2")),
         "software_fingerprint": runtime["installed_distributions_sha256"],
         "determinism_fingerprint": canonical_fingerprint(settings),
         "calibration_fixture_sha256": fixture_sha,
@@ -158,9 +171,30 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         "calibration_checks_passed": True, "runtime_fingerprint": runtime["runtime_fingerprint"],
     }
     certificate_id = canonical_fingerprint(certificate)
-    validate_runtime_certificate(certificate, {"platform_id": "kaggle1",
+    validate_runtime_certificate(certificate, {"platform_id": platform_id,
         "accelerator": certificate["accelerator"], "runtime_certificate_id": certificate_id})
     atomic_json(output / "runtime_certificate.json", certificate)
+    if preflight_only:
+        artifacts = {
+            path.name: sha256_file(path)
+            for path in output.iterdir()
+            if path.is_file() and path.name != "stage_manifest.json"
+        }
+        atomic_json(output / "stage_manifest.json", {
+            "status": "PREFLIGHT_COMPLETE",
+            "arm": arm,
+            "next_epoch": 0,
+            "parameters": PARAMETERS[arm],
+            "contract": contract,
+            "source_sha256": source_sha,
+            "runtime_certificate_id": certificate_id,
+            "artifacts": artifacts,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+            "test_challenge_role_read": False,
+        })
+        print(f"PREFLIGHT ONLY PASS {arm} parameters={PARAMETERS[arm]} peak={peak}", flush=True)
+        return
     del batch
     torch.cuda.empty_cache()
     configure_fp32_determinism(42)
@@ -184,8 +218,9 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         optimizer.load_state_dict(state["optimizer"])
         restore_rng_state(state["rng"])
         start_epoch, trace, best, best_epoch = state["next_epoch"], state["trace"], state["best"], state["best_epoch"]
-        for name in ("best_model.pt", "best_predictions.pt", "initial_state.pt"):
-            shutil.copy2(resume / name, output / name)
+        if resume.resolve() != output.resolve():
+            for name in ("best_model.pt", "best_predictions.pt", "initial_state.pt"):
+                shutil.copy2(resume / name, output / name)
     else:
         atomic_torch_save(output / "initial_state.pt", {"model": model.state_dict(), "state_sha256": initial_sha})
     print(f"PREFLIGHT PASS {arm} parameters={PARAMETERS[arm]} resume_epoch={start_epoch} peak={peak}", flush=True)
@@ -223,6 +258,18 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
             "source_sha256": source_sha, "runtime_software": runtime["installed_distributions_sha256"],
             "accelerator": certificate["accelerator"]})
         atomic_json(output / "progress.json", {"status": "RUNNING", "next_epoch": epoch+1, "best": best})
+        running_artifacts = {
+            path.name: sha256_file(path)
+            for path in output.iterdir()
+            if path.is_file() and path.name != "stage_manifest.json"
+        }
+        atomic_json(output / "stage_manifest.json", {"status": "RUNNING", "arm": arm,
+            "next_epoch": epoch+1, "best_development_mae_eV": best, "best_epoch": best_epoch,
+            "parameters": PARAMETERS[arm], "contract": contract, "source_sha256": source_sha,
+            "resume_source_sha256": resume_source_sha,
+            "runtime_certificate_id": certificate_id, "artifacts": running_artifacts,
+            "official_validation_role_read": False, "test_dev_role_read": False,
+            "test_challenge_role_read": False})
         print(f"{arm} ep{epoch:02d} dev={mae:.8f} best={best:.8f}@{best_epoch} {trace[-1]['seconds']:.1f}s", flush=True)
         # End at an epoch boundary well before Kaggle's session limit.
         if (max_stage_seconds is not None and
@@ -247,10 +294,13 @@ def main():
     parser.add_argument("--stage-epochs", type=int, default=4)
     parser.add_argument("--resume-source-sha")
     parser.add_argument("--max-stage-seconds", type=int, default=41_400)
+    parser.add_argument("--platform-id", default="kaggle1")
+    parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
     try:
         run(args.arm, args.output, args.source_sha, args.stage_epochs, args.resume,
-            args.resume_source_sha, args.max_stage_seconds)
+            args.resume_source_sha, args.max_stage_seconds, args.platform_id,
+            args.preflight_only)
     except Exception as error:
         atomic_json(args.output / "failure.json", {"type": type(error).__name__, "error": str(error)})
         raise

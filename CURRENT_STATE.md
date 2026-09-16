@@ -133,6 +133,13 @@ the final one-epoch submission are recorded in
 `experiments/pcqm_500k_v4_evidence/stage5_edge_k1_acceptance.md` and
 `experiments/pcqm_500k_v4_evidence/stage6_full_gps_submission.json`.
 
+The complete matched-500K V4 cache is also accepted locally: 500K training and
+50K internal-development rows across 11 immutable shards. The RTX 5060 passed
+deterministic FP32 BS128 runtime gates for the frozen `edge_local_only` and
+`edge_sparse_global_369` causal arms. Local resume/logging infrastructure is
+ready, but formal training has not started. Exact commands and certificates:
+`experiments/pcqm_500k_v4_evidence/local_v4_infrastructure.md`.
+
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
   `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed
   under `platforms/_records/kaggle/`.
