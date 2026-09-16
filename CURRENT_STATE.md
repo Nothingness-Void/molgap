@@ -161,9 +161,10 @@ unchanged. Authority:
 One distinct seed-42 screen is active on Kunshan: K1 PairToken preserves the
 complete K1-v4 path and adds one zero-initialized, pre-normalized all-pair
 relation token at layer 6. It tests whether the positive GPTrans Pair PreNorm
-signal transfers without restoring dense atom-to-atom attention. Job
-`122272523` is bounded to five hours under the fixed PCQM-100K v4 contract;
-Luna Max owns mechanical monitoring and the coordinator owns interpretation.
+signal transfers without restoring dense atom-to-atom attention. The first job
+failed before training on a corrected parameter-count constant; unchanged
+retry `122275244` is bounded to five hours under the fixed PCQM-100K v4
+contract. Luna Max owns mechanical monitoring and the coordinator owns interpretation.
 Authority: `experiments/pcqm_k1_pair_token_100k/protocol.md`.
 
 ## Data and comparison contract
