@@ -18,7 +18,9 @@ class ContractTests(unittest.TestCase):
             REPO_ROOT / "src/molgap/k1_pair_token.py",
             REPO_ROOT / "src/molgap/pcqm_k1_variants.py",
             REPO_ROOT / "src/molgap/pcqm_k1_variants_runner.py",
+            REPO_ROOT / "src/molgap/pcqm_k1_pair_token_audit.py",
             ROOT / "run_candidate.py",
+            ROOT / "run_causal_audit.py",
             ROOT / "accept.py",
         ):
             ast.parse(path.read_text(encoding="utf-8"))
