@@ -3,7 +3,7 @@
 #SBATCH --partition=kshdtest
 #SBATCH --gres=dcu:Hygon:1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
+#SBATCH --mem=24G
 #SBATCH --time=05:00:00
 #SBATCH --output=/public/home/changfeng2006/molgap-v4-bootstrap/k1-pair-token/logs/job-%j.out
 #SBATCH --error=/public/home/changfeng2006/molgap-v4-bootstrap/k1-pair-token/logs/job-%j.err
@@ -34,4 +34,3 @@ test -f "${CACHE}/manifest.json"
   --output-root "${ATTEMPT_ROOT}/output/${MODE:-neural_atom_k1_pair_token}" \
   --source-commit "${SOURCE_COMMIT}" \
   --source-archive-sha256 "${SOURCE_ARCHIVE_SHA256}"
-
