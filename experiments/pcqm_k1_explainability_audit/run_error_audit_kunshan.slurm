@@ -1,9 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=molgap-k1-xai-stage1
-#SBATCH --partition=kshctest02
+#SBATCH --partition=kshdtest
+#SBATCH --gres=dcu:Hygon:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=24G
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH --output=/public/home/changfeng2006/molgap-v4-bootstrap/k1-xai-stage1/logs/job-%j.out
 #SBATCH --error=/public/home/changfeng2006/molgap-v4-bootstrap/k1-xai-stage1/logs/job-%j.err
 
