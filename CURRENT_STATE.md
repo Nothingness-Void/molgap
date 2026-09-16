@@ -164,7 +164,8 @@ atom-to-atom attention. It reached `0.1383300573 eV`, improving K1-v4 by
 `0.0030435771 eV`, with a favorable paired interval and 22,848 added
 parameters. The margin is only `0.0000435771 eV` above the material gate, so no
 seed or scale expansion is released. Frozen-checkpoint causal audit job
-`122303028` is active to identify the responsible component. Authority:
+`122303028` failed before inference on a DTK PyTorch API incompatibility;
+unchanged retry `122305552` is active to identify the responsible component. Authority:
 `experiments/pcqm_k1_pair_token_100k/decision.md`.
 
 ## Data and comparison contract
