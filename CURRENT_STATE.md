@@ -162,12 +162,15 @@ K1 PairToken is the only new seed-42 mechanism winner. It preserves K1-v4 and
 adds one pre-normalized all-pair relation token at layer 6 without dense
 atom-to-atom attention. It reached `0.1383300573 eV`, improving K1-v4 by
 `0.0030435771 eV`, with a favorable paired interval and 22,848 added
-parameters. The margin is only `0.0000435771 eV` above the material gate, so no
-seed or scale expansion is released. Frozen-checkpoint causal audit job
+parameters. The margin is only `0.0000435771 eV` above the material gate.
+Frozen-checkpoint causal audit job
 `122305552` showed that learned pair selection, cross-node pairs, and per-pair
 normalization are all active; uniform averaging, diagonal-only pairs, or
-removing normalization regressed. No successor is active. Authority:
-`experiments/pcqm_k1_pair_token_100k/decision.md`.
+removing normalization regressed. The user explicitly released one matched-V4
+500K scale bridge on Kunshan on 2026-09-17; it uses the accepted fixed 500K/50K
+cache and does not retrain the frozen K1 reference. Authority:
+`experiments/pcqm_k1_pair_token_100k/decision.md` and
+`experiments/pcqm_k1_pair_token_500k/protocol.md`.
 
 ## Data and comparison contract
 

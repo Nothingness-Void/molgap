@@ -13,12 +13,14 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | B-K1-PAIR-500K | Run the explicitly authorized PairToken matched-V4 500K bridge on Kunshan | Accept 60 complete epochs and compare with the frozen K1 500K reference; no automatic seed/full/official follow-up |
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The PairToken causal audit is complete. It retains normalized, learned
 cross-node pair selection as the mechanism and closes uniform, diagonal-only,
-and unnormalized variants. A later explicitly authorized screen may test one
-efficient approximation of the all-pair selector; no successor is active.
+and unnormalized variants. The user explicitly authorized one 500K scale
+bridge of the unchanged candidate. This does not release an efficient
+approximation, another seed, full training, or any official role.
 
 The K1 causal audit is complete. Round 2 rejected both attenuation and
 amplification of layer 6, so the conditional scalar-repair Round 3 is not
