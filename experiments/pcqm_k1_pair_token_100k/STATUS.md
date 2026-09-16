@@ -35,3 +35,7 @@ The unchanged audit retry is job `122305552`, source commit
 `9d6cfabdffbce45ab0450500cc75bbb71906954d`, source archive SHA-256
 `f7901a54ed1c31ddffe27aab1686ea4f43bda0a7323d272b5d38b83b2e183830`.
 
+Job `122305552` completed and passed all frozen mechanical checks. Learned
+pair selection, cross-node pairs, and per-pair normalization were all necessary
+inside the trained model. No successor, extra seed, or scale-up is active. The
+scientific interpretation is `results/causal_audit_decision.md`.

@@ -26,3 +26,7 @@ is released by this decision. A frozen-checkpoint causal audit is released to
 determine whether learned pair selection, cross-node pairs, or pair-channel
 normalization carries the improvement.
 
+The audit completed and found all three to be active: learned selection and
+pair normalization were indispensable, while cross-node pairs carried nearly
+all relation content. Authority:
+`results/causal_audit_decision.md`.
