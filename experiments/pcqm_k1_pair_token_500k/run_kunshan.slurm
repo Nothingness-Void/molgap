@@ -24,6 +24,10 @@ SOURCE_ROOT="${SOURCE_ROOT:?SOURCE_ROOT must name the immutable source tree}"
 SOURCE_COMMIT="${SOURCE_COMMIT:?SOURCE_COMMIT is required}"
 SOURCE_ARCHIVE_SHA256="${SOURCE_ARCHIVE_SHA256:?SOURCE_ARCHIVE_SHA256 is required}"
 ATTEMPT_ROOT="${JOB_ROOT}/attempts/${SLURM_JOB_ID}"
+EXTRA_ARGS=()
+if [[ "${PREFLIGHT_ONLY:-0}" == "1" ]]; then
+  EXTRA_ARGS+=(--preflight-only)
+fi
 
 mkdir -p "${JOB_ROOT}/logs" "${ATTEMPT_ROOT}/output"
 test -f "${SOURCE_ROOT}/src/molgap/pcqm_k1_pair_token_500k.py"
@@ -34,4 +38,5 @@ test -f "${CACHE}/manifest.json"
   --cache-root "${CACHE}" \
   --output-root "${ATTEMPT_ROOT}/output/neural_atom_k1_pair_token" \
   --source-commit "${SOURCE_COMMIT}" \
-  --source-archive-sha256 "${SOURCE_ARCHIVE_SHA256}"
+  --source-archive-sha256 "${SOURCE_ARCHIVE_SHA256}" \
+  "${EXTRA_ARGS[@]}"

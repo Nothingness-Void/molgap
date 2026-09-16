@@ -199,6 +199,7 @@ def run(
     source_commit: str,
     source_archive_sha256: str,
     resume: Path | None = None,
+    preflight_only: bool = False,
 ) -> dict:
     import torch
 
@@ -268,6 +269,22 @@ def run(
             "memory_reserve_fraction": 1.0 - peak / total,
         },
     )
+    if preflight_only:
+        result = {
+            "format": "molgap-k1-pair-token-500k-preflight-v1",
+            "complete": True,
+            "training_started": False,
+            "parameter_count": PARAMETERS,
+            "contract": contract,
+            "runtime_certificate_id": certificate_id,
+            "source_commit": source_commit,
+            "source_archive_sha256": source_archive_sha256,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+            "test_challenge_role_read": False,
+        }
+        atomic_json(output / "preflight_complete.json", result)
+        return result
     del batch
     torch.cuda.empty_cache()
 

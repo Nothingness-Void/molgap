@@ -15,6 +15,7 @@ def main() -> None:
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--source-archive-sha256", required=True)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
 
     source_root = args.source_root.resolve()
@@ -34,9 +35,9 @@ def main() -> None:
         source_commit=args.source_commit,
         source_archive_sha256=args.source_archive_sha256,
         resume=args.resume,
+        preflight_only=args.preflight_only,
     )
 
 
 if __name__ == "__main__":
     main()
-
