@@ -111,12 +111,21 @@ server queue. The new screen does not modify the frozen K1 full handoff.
 ## Data and comparison contract
 
 The matched 500K V4 benchmark has accepted aligned epoch-16 checkpoints for
-EdgeState, K1, and GPTrans-T. The four-epoch execution cap is retired. A single
-long continuation is now running from epoch 16 toward the fixed epoch-60
-contract: Edge/K1 kernel version 6 and GPTrans-T kernel version 7. Both mount
-the accepted `nothingnessvoid/molgap-500k-v4-resume-e16-248f775983` checkpoint
-dataset and the immutable V4 source. Submission identity and hashes are in
-`experiments/pcqm_500k_v4_evidence/stage5_submission.json`.
+EdgeState, K1, and GPTrans-T. The four-epoch execution cap is retired. GPTrans-T
+version 7 completed the fixed epoch-60 contract and passed frozen acceptance;
+its best internal-development MAE was `0.10686753690242767 eV` at epoch 56.
+K1 version 6 also completed and passed frozen acceptance at
+`0.1048598662018776 eV`. EdgeState version 6 stopped cleanly after epoch 58
+with a valid checkpoint, so only its unchanged final epoch is running in
+`nothingnessvoid/molgap-500k-v4-full-gps-final-epoch` version 7. The paired
+three-arm decision remains blocked on that acceptance. All arms used the accepted
+`nothingnessvoid/molgap-500k-v4-resume-e16-248f775983` checkpoint dataset and
+immutable V4 source. Submission identity and terminal GPTrans evidence are in
+`experiments/pcqm_500k_v4_evidence/stage5_submission.json` and
+`experiments/pcqm_500k_v4_evidence/stage5_gptrans_acceptance.md`; Edge/K1 and
+the final one-epoch submission are recorded in
+`experiments/pcqm_500k_v4_evidence/stage5_edge_k1_acceptance.md` and
+`experiments/pcqm_500k_v4_evidence/stage6_full_gps_submission.json`.
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
   `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed
