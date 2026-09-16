@@ -26,3 +26,8 @@ highly cyclic/high-RWSE topology extremes, while no existing variant cleared
 the overall material-gain gate. Stage 2 is informative but remains a
 no-training frozen-checkpoint causal audit; no architecture successor has been
 released. The complete interpretation is in `results/stage1_decision.md`.
+
+The user authorized a bounded three-round causal sequence. Round 1 is frozen
+checkpoint job `122253291`, first observed running on Kunshan node `e06r4n09`.
+It performs layer-3/6/9 exchange interventions and internal-state measurement
+without training. Rounds 2 and 3 remain conditional on accepted causal evidence.
