@@ -19,3 +19,8 @@ the cache's recorded `molgap.pcqm_wedge.WedgeData` class. No prediction payload
 or scientific result was read. The next infrastructure-only retry keeps the
 analysis contract unchanged, ships the complete tracked `src/molgap/` tree,
 and requires a graph/payload preflight in the same job before Stage 1 begins.
+
+Infrastructure retry `122250328` was submitted from commit `73ace53` with the
+complete source archive and was first observed `RUNNING` on DCU node
+`e06r4n13`. Its frozen submission identity is recorded under `results/`; the
+terminal scientific status remains pending mechanical acceptance.
