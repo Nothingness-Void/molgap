@@ -119,9 +119,12 @@ K1 version 6 also completed and passed frozen acceptance at
 with a valid checkpoint. Its first unchanged final-epoch successor, version 7,
 failed before training because the wrapper retained a superseded resume-source
 identity. The provenance-only correction is documented in
-`experiments/pcqm_500k_v4_evidence/stage6_failure.md`; version 8 was `RUNNING`
-at its 2026-09-16 submission check. The paired three-arm decision remains
-blocked on that acceptance. All arms used the accepted
+`experiments/pcqm_500k_v4_evidence/stage6_failure.md`; version 8 completed and
+passed frozen acceptance. On the aligned 50K internal-development role, K1,
+GPTrans-T and EdgeState reached `0.104860`, `0.106868` and `0.111349 eV`.
+K1 and GPTrans-T cleared the `0.003 eV` nomination floor over EdgeState; K1's
+`0.002008 eV` advantage over GPTrans-T did not. The final decision is
+`experiments/pcqm_500k_v4_evidence/final_decision.md`. All arms used the accepted
 `nothingnessvoid/molgap-500k-v4-resume-e16-248f775983` checkpoint dataset and
 immutable V4 source. Submission identity and terminal GPTrans evidence are in
 `experiments/pcqm_500k_v4_evidence/stage5_submission.json` and

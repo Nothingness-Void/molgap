@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-16",
+  "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
+  "rows": 50000,
+  "source_idx_and_target_alignment": true,
+  "bootstrap_seed": 20260916,
+  "bootstrap_replicates": 10000,
+  "mae_eV": {
+    "edge_state": 0.1113488057088852,
+    "k1": 0.10485986978054046,
+    "gptrans_t": 0.10686752763271332
+  },
+  "paired_improvements": {
+    "k1_over_edge_state": {
+      "improvement_eV": 0.006488935928344727,
+      "bootstrap_95pct_eV": [
+        0.005829544547319413,
+        0.00715496518778801
+      ],
+      "probability_improvement_ge_0p003": 1.0
+    },
+    "gptrans_t_over_edge_state": {
+      "improvement_eV": 0.004481278076171875,
+      "bootstrap_95pct_eV": [
+        0.003804058342814445,
+        0.005176004652023315
+      ],
+      "probability_improvement_ge_0p003": 1.0
+    },
+    "k1_over_gptrans_t": {
+      "improvement_eV": 0.0020076578521728517,
+      "bootstrap_95pct_eV": [
+        0.0013247437608242035,
+        0.002692212152481079
+      ],
+      "probability_improvement_ge_0p003": 0.0015
+    }
+  },
+  "nomination_floor_eV": 0.003,
+  "decision": {
+    "k1_vs_edge_state": "pass",
+    "gptrans_t_vs_edge_state": "pass",
+    "k1_vs_gptrans_t": "below_materiality_floor"
+  }
+}
