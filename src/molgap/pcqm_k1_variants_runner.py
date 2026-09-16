@@ -150,16 +150,24 @@ class _PackedGraphDatasetFactory:
 
 def find_fixed_cache() -> tuple[Path, dict]:
     candidates = []
-    for path in Path("/kaggle/input").rglob("manifest.json"):
-        try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            continue
-        if (
-            payload.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
-            and payload.get("identity", {}).get("name") == "ogb-train-100k"
-        ):
-            candidates.append((path.parent, payload))
+    explicit_root = os.environ.get("MOLGAP_FIXED_CACHE_ROOT")
+    search_roots = [Path(explicit_root)] if explicit_root else [Path("/kaggle/input")]
+    for search_root in search_roots:
+        paths = (
+            [search_root / "manifest.json"]
+            if (search_root / "manifest.json").is_file()
+            else search_root.rglob("manifest.json")
+        )
+        for path in paths:
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if (
+                payload.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+                and payload.get("identity", {}).get("name") == "ogb-train-100k"
+            ):
+                candidates.append((path.parent, payload))
     if len(candidates) != 1:
         raise FileNotFoundError(f"Expected one fixed 100K cache, found {candidates}")
     root, manifest = candidates[0]
@@ -425,6 +433,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         MODES as GPSPP_LOCAL_MODES,
         PARAMETERS as GPSPP_LOCAL_PARAMETERS,
         check_mechanism as check_gpspp_local,
+    )
+    from .k1_pair_token import (
+        MODES as PAIR_TOKEN_MODES,
+        PARAMETERS as PAIR_TOKEN_PARAMETERS,
+        check_mechanism as check_pair_token,
     )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
@@ -949,6 +962,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != GPSPP_LOCAL_PARAMETERS[mode]
         ):
             raise RuntimeError("GPSPP-local parameter identity changed")
+    elif mode in PAIR_TOKEN_MODES:
+        mechanism_checks = check_pair_token(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != PAIR_TOKEN_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Pair-token parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -971,6 +991,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.edge_conditioned_keys.parameters())
     elif mode in GPSPP_LOCAL_MODES:
         candidate_parameters = list(model.local_adapters.parameters())
+    elif mode in PAIR_TOKEN_MODES:
+        candidate_parameters = list(model.relation_token.parameters())
     if mode == "neural_atom_k1_g":
         candidate_parameters = list(model.molecule_gates.parameters())
     elif mode == "neural_atom_k1_r":
@@ -1097,8 +1119,14 @@ def train_arm(
     from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
     from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
+    from .k1_pair_token import MODES as PAIR_TOKEN_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
-    recovery_chunk_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
+    recovery_chunk_modes = (
+        active_edge_modes
+        + EDGE_CONDITIONED_MODES
+        + GPSPP_LOCAL_MODES
+        + PAIR_TOKEN_MODES
+    )
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
