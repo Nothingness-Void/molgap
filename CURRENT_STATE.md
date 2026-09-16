@@ -116,9 +116,12 @@ version 7 completed the fixed epoch-60 contract and passed frozen acceptance;
 its best internal-development MAE was `0.10686753690242767 eV` at epoch 56.
 K1 version 6 also completed and passed frozen acceptance at
 `0.1048598662018776 eV`. EdgeState version 6 stopped cleanly after epoch 58
-with a valid checkpoint, so only its unchanged final epoch is running in
-`nothingnessvoid/molgap-500k-v4-full-gps-final-epoch` version 7. The paired
-three-arm decision remains blocked on that acceptance. All arms used the accepted
+with a valid checkpoint. Its first unchanged final-epoch successor, version 7,
+failed before training because the wrapper retained a superseded resume-source
+identity. The provenance-only correction is documented in
+`experiments/pcqm_500k_v4_evidence/stage6_failure.md`; version 8 was `RUNNING`
+at its 2026-09-16 submission check. The paired three-arm decision remains
+blocked on that acceptance. All arms used the accepted
 `nothingnessvoid/molgap-500k-v4-resume-e16-248f775983` checkpoint dataset and
 immutable V4 source. Submission identity and terminal GPTrans evidence are in
 `experiments/pcqm_500k_v4_evidence/stage5_submission.json` and
