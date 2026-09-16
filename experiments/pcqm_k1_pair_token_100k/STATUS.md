@@ -18,3 +18,10 @@ The unchanged retry is Kunshan job `122275244`, source commit
 `6050934248df2f208d62d4195448f82a047ce814eb9de8f5bea2de89f7e72334`.
 It is the only active scientific attempt for this screen.
 
+Job `122275244` completed and passed no-inference acceptance. PairToken improved
+the frozen K1-v4 reference by `0.0030435771 eV`, with a fully favorable paired
+interval, and is retained as a seed-42 mechanism winner. The gain is only
+`0.0000435771 eV` above the material threshold, so no seed or scale expansion
+is released. Frozen causal audit job `122303028` now isolates the source of the
+gain without training.
+
