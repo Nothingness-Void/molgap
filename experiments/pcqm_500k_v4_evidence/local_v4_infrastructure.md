@@ -59,5 +59,7 @@ D:\文档\molgap\.venv\Scripts\python.exe `
   --repo-root .
 ```
 
-Replace the arm with `edge_sparse_global_369` for the second run. Formal
-training was not started while building this infrastructure.
+Replace the arm with `edge_sparse_global_369` for the second run. Both formal
+runs later completed all 60 epochs and passed acceptance. Their dated outcome
+is recorded in `local_ablation_decision.md`; raw checkpoints remain under the
+ignored local output root shown above.

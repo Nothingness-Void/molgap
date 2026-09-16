@@ -134,11 +134,18 @@ the final one-epoch submission are recorded in
 `experiments/pcqm_500k_v4_evidence/stage6_full_gps_submission.json`.
 
 The complete matched-500K V4 cache is also accepted locally: 500K training and
-50K internal-development rows across 11 immutable shards. The RTX 5060 passed
-deterministic FP32 BS128 runtime gates for the frozen `edge_local_only` and
-`edge_sparse_global_369` causal arms. Local resume/logging infrastructure is
-ready, but formal training has not started. Exact commands and certificates:
-`experiments/pcqm_500k_v4_evidence/local_v4_infrastructure.md`.
+50K internal-development rows across 11 immutable shards. The RTX 5060
+completed the frozen `edge_local_only` and `edge_sparse_global_369` causal arms
+at `0.107227` and `0.109116 eV`. Removing every-layer dense global attention
+improved EdgeState by `0.004122 eV`; adding dense attention back only at layers
+3/6/9 worsened the local backbone by `0.001889 eV`. K1 remained the strongest
+standalone arm at `0.104860 eV`; its molecular slot improved local-only by a
+favorable but sub-threshold `0.002367 eV`. Dense global attention is closed for
+this backbone. The local arms were strict same-transform comparisons. A
+`1.33e-14 eV` cross-runtime standard-deviation reduction difference changed
+their raw transform hash versus historical Kaggle arms, so the numerically
+equivalent cross-platform comparison carries an explicit policy exception.
+Authority: `experiments/pcqm_500k_v4_evidence/local_ablation_decision.md`.
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
   `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed

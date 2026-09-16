@@ -9,6 +9,10 @@
 - Residual attribution and frozen two-arm ablation: `residual_attribution.md`.
 - Local RTX 5060 V4 runtime preflight: `local_5060_preflight.md`.
 - Complete local cache, resume and execution guide: `local_v4_infrastructure.md`.
+- Local two-arm mechanical acceptance: `local_ablation_acceptance.json`.
+- Global-communication ablation decision: `local_ablation_decision.md`.
+- Reproducible residual and blend analysis: `analyze_local_ablation.py` and
+  `local_ablation_analysis.json`.
 
 This desktop-owned active experiment was branched from server 70500c5 to reuse
 the latest scientific contract and architecture implementations. Stage outputs

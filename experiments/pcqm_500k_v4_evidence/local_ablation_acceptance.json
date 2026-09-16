@@ -1,0 +1,59 @@
+{
+  "format": "molgap-pcqm-500k-v4-local-ablation-acceptance-v1",
+  "accepted": true,
+  "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
+  "data_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "rows": {
+    "train": 500000,
+    "internal_development": 50000
+  },
+  "contract": {
+    "seed": 42,
+    "epochs": 60,
+    "steps_per_epoch": 3906,
+    "sample_exposure": 29998080,
+    "physical_batch_per_device": 128,
+    "tail_batch_policy": "drop_last",
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "runtime": {
+    "accelerator": "NVIDIA GeForce RTX 5060",
+    "torch": "2.7.1+cu128",
+    "runtime_fingerprint": "55e14a6215f4ee9f24ce397d57cf434be1be8538faa59aac3f7956a5e6d92bcd"
+  },
+  "arms": {
+    "edge_local_only": {
+      "accepted": true,
+      "parameters": 3433601,
+      "best_epoch": 48,
+      "best_development_mae_eV": 0.10722693055868149,
+      "runtime_certificate_id": "90da324cda200c2eb4686b21b01a5d2b5b00627c800b055a3740ae8abe6d0820",
+      "stage_manifest_sha256": "847f8f0e1ed274f65a9d881289d49940c3598b7e88b2c555d2f2f48936fa8b7e",
+      "prediction_sha256": "0ee08987519feaf464f99932a1d1288c23a12b4554a789e23eb6b2238c96d68f"
+    },
+    "edge_sparse_global_369": {
+      "accepted": true,
+      "parameters": 3879425,
+      "best_epoch": 53,
+      "best_development_mae_eV": 0.10911556333303452,
+      "runtime_certificate_id": "438fee62a15f19a7045431aaa9c0cf6b674b7e95788b92907f56e11d403751ce",
+      "stage_manifest_sha256": "37629e95e35008c6802c4f3e8b581de1f48ff67829d803ff435573212b1820af",
+      "prediction_sha256": "82f353895ee4e9e5020ccd089d35462ddc08bdbf345a3a27dc14741a528d1032"
+    }
+  },
+  "target_transform_audit": {
+    "local_fingerprint": "40263a69639e770286ed4f906acc1211c015e9d8d3743e040a12df51bb10cda5",
+    "historical_kaggle_fingerprint": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+    "mean_eV_both": 5.413434769952119,
+    "local_std_eV": 1.1767286473112264,
+    "historical_kaggle_std_eV": 1.176728647311213,
+    "absolute_std_difference_eV": 1.3322676295501878e-14,
+    "relative_std_difference": 1.1321791413801103e-14,
+    "maximum_normalized_target_difference": 1.0835776720341528e-13,
+    "interpretation": "CPU reduction-order noise only; exact local-arm comparison is strict, while historical cross-platform comparisons require this recorded exception to the literal raw-fingerprint rule."
+  }
+}
