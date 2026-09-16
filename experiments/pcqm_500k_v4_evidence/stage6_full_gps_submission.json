@@ -4,8 +4,15 @@
   "target_epoch": 60,
   "resume_dataset": "nothingnessvoid/molgap-500k-v4-full-gps-e59-b27dd0af00",
   "resume_archive_sha256": "b27dd0af00c5f7248f1c2fa18a8025c41c1c30755fcf4959f90e1be6c143b5ae",
+  "resume_checkpoint_source_sha256": "4218940805a84dbf69971452e3c113c7f5e8281df8be62371836b8bc3ff2b649",
   "kernel": "nothingnessvoid/molgap-500k-v4-full-gps-final-epoch",
-  "kernel_version": 7,
-  "status_after_submission": "RUNNING",
+  "kernel_version": 8,
+  "status_at_submission_check": "RUNNING",
+  "predecessor": {
+    "kernel_version": 7,
+    "terminal_status": "ERROR",
+    "error": "Resume scientific/source identity mismatch",
+    "training_epochs_completed": 0
+  },
   "package": "D:\\\u6587\u6863\\molgap-500k-v4-evidence\\platforms\\_records\\kaggle\\staging\\pcqm_500k_v4_evidence\\full-gps-final-e59"
 }

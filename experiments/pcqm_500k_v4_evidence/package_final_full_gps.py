@@ -57,6 +57,7 @@ def main() -> None:
         "RESUME_EPOCH = 16": "RESUME_EPOCH = 59",
         "STAGE_EPOCHS = 44": "STAGE_EPOCHS = 1",
         "MAX_STAGE_SECONDS = 41400": "MAX_STAGE_SECONDS = 10800",
+        "RESUME_SOURCE_SHA = '811a40969ece2df05d95556901fcc7c3ebcaa6f46c95e19a4e9fa2e856fad3ae'": "RESUME_SOURCE_SHA = None",
     }
     for old, new in replacements.items():
         if text.count(old) != 1:
@@ -67,6 +68,7 @@ def main() -> None:
     package.mkdir(parents=True, exist_ok=True)
     (package / "run.py").write_text(text)
     metadata = json.loads((STAGING / "edge-k1-stage5" / "kernel-metadata.json").read_text())
+    metadata["id"] = "nothingnessvoid/molgap-500k-v4-full-gps-final-epoch"
     metadata["title"] = "MolGap 500K V4 Full GPS Final Epoch"
     metadata["dataset_sources"] = [
         "nothingnessvoid/molgap-500k-v4-source-raw-4218940805",
@@ -80,6 +82,16 @@ def main() -> None:
         "target_epoch": 60,
         "resume_dataset": resume_slug,
         "resume_archive_sha256": resume_sha,
+        "resume_checkpoint_source_sha256": "4218940805a84dbf69971452e3c113c7f5e8281df8be62371836b8bc3ff2b649",
+        "kernel": "nothingnessvoid/molgap-500k-v4-full-gps-final-epoch",
+        "kernel_version": 8,
+        "status_at_submission_check": "RUNNING",
+        "predecessor": {
+            "kernel_version": 7,
+            "terminal_status": "ERROR",
+            "error": "Resume scientific/source identity mismatch",
+            "training_epochs_completed": 0,
+        },
         "package": str(package),
     }
     (EXPERIMENT / "stage6_full_gps_submission.json").write_text(json.dumps(record, indent=2) + "\n")
