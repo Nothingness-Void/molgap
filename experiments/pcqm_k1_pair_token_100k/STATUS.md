@@ -25,3 +25,9 @@ interval, and is retained as a seed-42 mechanism winner. The gain is only
 is released. Frozen causal audit job `122303028` now isolates the source of the
 gain without training.
 
+Audit job `122303028` failed before producing a prediction because the DTK
+PyTorch build does not accept tuple dimensions in `torch.any`. No training or
+scientific result occurred. The mathematically identical flattened reduction
+is released for one infrastructure-only retry; audit interventions are
+unchanged.
+

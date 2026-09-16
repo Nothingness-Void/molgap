@@ -54,7 +54,9 @@ def _relation_update(module, hidden, batch, mode: str):
         pair_valid = pair_valid & diagonal
     elif mode == "off_diagonal_only":
         off_diagonal = pair_valid & ~diagonal
-        has_off_diagonal = off_diagonal.any(dim=(1, 2), keepdim=True)
+        # DTK's frozen PyTorch build does not support tuple dimensions for
+        # torch.any; flattening the two pair axes is exactly equivalent.
+        has_off_diagonal = off_diagonal.flatten(1).any(dim=1).view(-1, 1, 1)
         pair_valid = torch.where(
             has_off_diagonal,
             off_diagonal,
@@ -225,4 +227,3 @@ def run_audit(
     }
     _atomic_json(output_root / "completion_manifest.json", result)
     return result
-
