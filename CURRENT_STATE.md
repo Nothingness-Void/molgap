@@ -140,6 +140,14 @@ bootstrap interval crossed zero and the `0.003 eV` material gate failed.
 roles, another seed, scale-up, or successor. The decision and attribution are
 in `experiments/pcqm_k1_edge_conditioned_slot_100k/decision.md`.
 
+Before another architecture is released, server discovery is running a
+post-hoc K1 explainability audit. Stage 1 joins 20 frozen same-contract K1-v4
+development prediction payloads to the accepted graph cache and maps paired
+errors across molecular/topological strata without training or model
+inference. A causal frozen-checkpoint Stage 2 is allowed only if Stage 1 finds
+a coherent failure stratum. Authority:
+`experiments/pcqm_k1_explainability_audit/protocol.md`.
+
 ## Data and comparison contract
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under

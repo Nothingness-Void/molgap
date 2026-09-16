@@ -14,6 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
+| P1 | B-K1-XAI-STAGE1 | Run the zero-training paired K1 error map on Kunshan before another architecture screen | Accepted compact attribution identifies a coherent failure stratum, or discovery pauses |
 
 The P0 version-1 submission produced no scientific evidence and is retained as
 an infrastructure failure. Version 2 used the same source and scientific
