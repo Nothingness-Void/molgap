@@ -1,4 +1,8 @@
 import math
+import importlib.util
+from pathlib import Path
+
+import numpy as np
 import torch
 
 from molgap.pcqm_500k_v4_ablation import (
@@ -7,6 +11,20 @@ from molgap.pcqm_500k_v4_ablation import (
     make_ablation_encoder,
 )
 from molgap.pcqm_500k_v4_evidence import scientific_contract, schedule
+
+
+def _analysis_module():
+    path = (
+        Path(__file__).parents[1]
+        / "experiments"
+        / "pcqm_500k_v4_evidence"
+        / "analyze_local_ablation.py"
+    )
+    spec = importlib.util.spec_from_file_location("pcqm_v4_ablation_analysis", path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_exposure_excludes_every_tail_batch():
@@ -52,3 +70,24 @@ def test_ablation_forward_shapes():
         output = make_ablation_encoder(arm)(x, edge_index, edge_attr, batch, rwse)
         assert output.shape == (2, 1)
         assert torch.isfinite(output).all()
+
+
+def test_weighted_median_blend_finds_exact_l1_solution():
+    analysis = _analysis_module()
+    target = np.array([0.25, 0.75, 1.25, 1.75])
+    first = np.array([1.0, 1.0, 2.0, 2.0])
+    second = np.array([0.0, 0.0, 1.0, 1.0])
+    weight = analysis._weighted_median_weight(first, second, target)
+    assert weight == 0.25
+
+
+def test_crossfit_pair_keeps_every_row_held_out_once():
+    analysis = _analysis_module()
+    source_idx = np.arange(20)
+    target = source_idx.astype(np.float64) / 10
+    first = target + 0.1
+    second = target - 0.1
+    result = analysis._crossfit_pair(first, second, target, source_idx)
+    assert len(result["fold_weights_first"]) == 5
+    assert math.isclose(result["mean_weight_first"], 0.5)
+    assert result["oof_mae_eV"] < 1e-12
