@@ -3,7 +3,7 @@
 #SBATCH --partition=kshdtest
 #SBATCH --gres=dcu:Hygon:1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
+#SBATCH --mem=24G
 #SBATCH --time=24:00:00
 #SBATCH --output=/public/home/changfeng2006/molgap-v4-bootstrap/k1-pair-token-500k/logs/job-%j.out
 #SBATCH --error=/public/home/changfeng2006/molgap-v4-bootstrap/k1-pair-token-500k/logs/job-%j.err
