@@ -5,6 +5,7 @@
 - Reusable implementation: `src/molgap/pcqm_500k_v4_evidence.py`.
 - No-inference stage validation: `accept_stage.py`.
 - Package builder: `package.py`.
+- Final matched three-arm decision: `final_decision.md`.
 
 This desktop-owned active experiment was branched from server 70500c5 to reuse
 the latest scientific contract and architecture implementations. Stage outputs
