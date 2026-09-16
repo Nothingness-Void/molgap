@@ -13,3 +13,8 @@ certification passed and no scientific evidence was produced. The corrected
 identity is 3,681,665 parameters; the architecture and all training settings
 remain unchanged for one infrastructure-only retry.
 
+The unchanged retry is Kunshan job `122275244`, source commit
+`424d04d9555dac743cde994710ec2c4f015ca2e3`, source archive SHA-256
+`6050934248df2f208d62d4195448f82a047ce814eb9de8f5bea2de89f7e72334`.
+It is the only active scientific attempt for this screen.
+
