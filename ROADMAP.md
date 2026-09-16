@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-PAIR-TOKEN | Test one layer-6 pre-normalized all-pair relation token under the fixed 100K v4 contract | `>=0.003 eV` paired gain shortlists the mechanism; otherwise close it |
+| P1 | B-K1-PAIR-TOKEN-XAI | Diagnose the narrowly accepted PairToken checkpoint with frozen counterfactuals | Identify one coherent causal component or pause further variants |
 
 The K1 causal audit is complete. Round 2 rejected both attenuation and
 amplification of layer 6, so the conditional scalar-repair Round 3 is not
