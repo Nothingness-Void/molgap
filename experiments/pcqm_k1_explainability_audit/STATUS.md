@@ -31,3 +31,12 @@ The user authorized a bounded three-round causal sequence. Round 1 is frozen
 checkpoint job `122253291`, first observed running on Kunshan node `e06r4n09`.
 It performs layer-3/6/9 exchange interventions and internal-state measurement
 without training. Rounds 2 and 3 remain conditional on accepted causal evidence.
+
+Round-1 job `122253291` failed during diagnostic aggregation because CUDA
+`bincount` has no deterministic implementation under the frozen deterministic
+runtime. It produced no scientific artifact and did not train a model. The
+instrumentation now moves descriptor and diagnostic reductions to CPU while
+leaving frozen-checkpoint inference on the accelerator. The unchanged audit was
+submitted once as job `122268096` from source commit `a18dc2a`; it was observed
+running on node `e10r4n11`. No Round-2 or Round-3 candidate is released until
+this retry passes mechanical acceptance and receives a scientific decision.
