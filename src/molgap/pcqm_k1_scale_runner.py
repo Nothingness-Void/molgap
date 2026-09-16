@@ -39,8 +39,15 @@ def atomic_json(path: Path, value: dict) -> None:
 
 
 def find_cache(expected_sha256: str) -> tuple[Path, dict]:
+    explicit_root = os.environ.get("MOLGAP_FIXED_500K_CACHE_ROOT")
+    search_root = Path(explicit_root) if explicit_root else Path("/kaggle/input")
     candidates = []
-    for path in Path("/kaggle/input").rglob("manifest.json"):
+    paths = (
+        [search_root / "manifest.json"]
+        if explicit_root
+        else search_root.rglob("manifest.json")
+    )
+    for path in paths:
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
