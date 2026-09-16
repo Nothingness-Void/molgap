@@ -46,3 +46,9 @@ Round 1 found that all three exchanges are necessary, but layer 6 has the
 strongest topology-dependent update-magnitude and node-dispersion inflation.
 Round 2 is released as a frozen-checkpoint layer-6 residual-strength audit over
 coefficients `0.50, 0.75, 1.00, 1.25, 1.50`. Round 3 remains conditional.
+
+Round 2 was submitted once to Kunshan as job `122270044` from immutable source
+commit `7b1a4ea` and minimal source archive SHA-256
+`528883b21a25c37e09c6d22634062d9d0a666023ff5fbcd72486dea3453eb2ee`.
+It was first observed pending for priority. No other job for this account was
+queued or running at submission time.
