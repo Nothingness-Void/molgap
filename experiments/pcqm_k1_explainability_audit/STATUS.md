@@ -20,7 +20,9 @@ or scientific result was read. The next infrastructure-only retry keeps the
 analysis contract unchanged, ships the complete tracked `src/molgap/` tree,
 and requires a graph/payload preflight in the same job before Stage 1 begins.
 
-Infrastructure retry `122250328` was submitted from commit `73ace53` with the
-complete source archive and was first observed `RUNNING` on DCU node
-`e06r4n13`. Its frozen submission identity is recorded under `results/`; the
-terminal scientific status remains pending mechanical acceptance.
+Infrastructure retry `122250328` completed and passed mechanical acceptance.
+The paired map found coherent deficits at small/sparse/weakly conjugated and
+highly cyclic/high-RWSE topology extremes, while no existing variant cleared
+the overall material-gain gate. Stage 2 is informative but remains a
+no-training frozen-checkpoint causal audit; no architecture successor has been
+released. The complete interpretation is in `results/stage1_decision.md`.
