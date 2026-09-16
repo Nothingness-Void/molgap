@@ -52,3 +52,9 @@ commit `7b1a4ea` and minimal source archive SHA-256
 `528883b21a25c37e09c6d22634062d9d0a666023ff5fbcd72486dea3453eb2ee`.
 It was first observed pending for priority. No other job for this account was
 queued or running at submission time.
+
+Round 2 completed and passed mechanical acceptance. Every non-unit layer-6
+coefficient materially worsened the frozen K1 prediction on the overall,
+topology-extreme, and middle-control groups. The scalar-strength hypothesis is
+rejected and the bounded causal sequence ends without spending Round 3. The
+terminal interpretation is `results/stage2_round2_decision.md`.

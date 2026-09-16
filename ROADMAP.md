@@ -14,7 +14,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-XAI-STAGE2 | Run the no-training frozen-checkpoint layer-6 strength intervention released by causal Round 1 | A coherent strength direction releases one minimal Round-3 repair, otherwise K1 discovery pauses |
+
+The K1 causal audit is complete. Round 2 rejected both attenuation and
+amplification of layer 6, so the conditional scalar-repair Round 3 is not
+released. Any new screen must first freeze a distinct information-flow
+hypothesis and may not reopen strength gates or schedules.
 
 The P0 version-1 submission produced no scientific evidence and is retained as
 an infrastructure failure. Version 2 used the same source and scientific

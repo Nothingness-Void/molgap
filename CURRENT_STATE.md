@@ -152,9 +152,11 @@ bottleneck. Authority:
 Its frozen-checkpoint causal Round 1 also completed and reproduced K1-v4.
 Deleting any global exchange was strongly harmful, but layer 6 showed the
 largest topology-dependent update-magnitude and node-dispersion inflation.
-A no-training Round-2 layer-6 strength audit is released; no architecture or
-scale-up is released. Authority:
-`experiments/pcqm_k1_explainability_audit/results/stage2_round1_decision.md`.
+The no-training Round-2 strength audit found coefficient `1.0` to be a sharp
+optimum: every attenuation or amplification worsened all audited strata. The
+scalar-strength hypothesis and its conditional Round 3 are closed; K1-v4 is
+unchanged. Authority:
+`experiments/pcqm_k1_explainability_audit/results/stage2_round2_decision.md`.
 
 ## Data and comparison contract
 
