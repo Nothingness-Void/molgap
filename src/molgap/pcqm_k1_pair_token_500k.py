@@ -90,7 +90,6 @@ def optimizer_for(model):
         lr=learning_rate(0),
         weight_decay=1e-5,
         foreach=False,
-        fused=False,
     )
 
 
