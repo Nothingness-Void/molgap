@@ -40,3 +40,9 @@ leaving frozen-checkpoint inference on the accelerator. The unchanged audit was
 submitted once as job `122268096` from source commit `a18dc2a`; it was observed
 running on node `e10r4n11`. No Round-2 or Round-3 candidate is released until
 this retry passes mechanical acceptance and receives a scientific decision.
+
+The unchanged retry `122268096` completed and passed every mechanical check.
+Round 1 found that all three exchanges are necessary, but layer 6 has the
+strongest topology-dependent update-magnitude and node-dispersion inflation.
+Round 2 is released as a frozen-checkpoint layer-6 residual-strength audit over
+coefficients `0.50, 0.75, 1.00, 1.25, 1.50`. Round 3 remains conditional.
