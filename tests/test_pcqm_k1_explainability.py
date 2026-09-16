@@ -64,3 +64,28 @@ def test_stage2_diagnostic_reductions_are_cpu_only():
     assert "Diagnostic segment reductions must remain on CPU" in source
     assert "batch.batch.detach().cpu()" in source
     assert 'details["assignment"][:, 0].detach().float().cpu()' in source
+
+
+def test_round2_changes_only_layer6_strength_without_training():
+    from molgap.pcqm_k1_strength_audit import STRENGTHS, TARGET_LAYER
+
+    assert TARGET_LAYER == 6
+    assert tuple(STRENGTHS.values()) == (0.50, 0.75, 1.00, 1.25, 1.50)
+    source = (ROOT / "src/molgap/pcqm_k1_strength_audit.py").read_text(
+        encoding="utf-8"
+    )
+    assert "optimizer" not in source
+    assert ".backward(" not in source
+    assert 'batch_size != 128' in source
+    assert "layer == TARGET_LAYER" in source
+
+
+def test_round2_protocol_keeps_roles_sealed_and_round3_conditional():
+    protocol = (
+        ROOT / "experiments/pcqm_k1_explainability_audit/round2_protocol.md"
+    ).read_text(encoding="utf-8")
+    assert "Perform no training" in protocol
+    assert "physical inference batch 128" in protocol
+    assert "official validation" in protocol
+    assert "If it identifies no coherent direction" in protocol
+    assert "Round 3 may train exactly one minimal nested repair" in protocol
