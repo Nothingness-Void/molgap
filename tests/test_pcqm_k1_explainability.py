@@ -55,3 +55,12 @@ def test_stage2_is_frozen_and_bounded():
     assert len(EXPECTED_CHECKPOINT_SHA256) == 64
     assert "performs no training" in protocol
     assert "at most one minimal nested repair" in protocol
+
+
+def test_stage2_diagnostic_reductions_are_cpu_only():
+    source = (ROOT / "src/molgap/pcqm_k1_causal_audit.py").read_text(
+        encoding="utf-8"
+    )
+    assert "Diagnostic segment reductions must remain on CPU" in source
+    assert "batch.batch.detach().cpu()" in source
+    assert 'details["assignment"][:, 0].detach().float().cpu()' in source

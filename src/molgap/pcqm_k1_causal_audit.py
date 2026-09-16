@@ -65,6 +65,8 @@ def _normal_interval(values: np.ndarray) -> list[float]:
 def _segment_mean(values, graph_index, graph_count):
     import torch
 
+    if values.is_cuda or graph_index.is_cuda:
+        raise RuntimeError("Diagnostic segment reductions must remain on CPU")
     output = torch.zeros(
         (graph_count,) + tuple(values.shape[1:]),
         dtype=values.dtype,
@@ -153,20 +155,25 @@ def _descriptors(batch):
     import torch
 
     graph_count = int(batch.num_graphs)
-    node_count = torch.bincount(batch.batch, minlength=graph_count).float()
-    edge_batch = batch.batch[batch.edge_index[0]]
+    node_batch = batch.batch.detach().cpu()
+    edge_source = batch.edge_index[0].detach().cpu()
+    edge_batch = node_batch[edge_source]
+    node_count = torch.bincount(node_batch, minlength=graph_count).float()
     directed_edge_count = torch.bincount(edge_batch, minlength=graph_count).float()
+    edge_attr = batch.edge_attr.detach().cpu()
+    node_features = batch.x.detach().cpu()
+    rwse = batch.random_walk_pe.detach().float().cpu()
     return {
         "atom_count": node_count,
         "bond_count": directed_edge_count / 2.0,
         "conjugated_bond_fraction": _segment_mean(
-            (batch.edge_attr[:, 2] != 0).float(), edge_batch, graph_count
+            (edge_attr[:, 2] != 0).float(), edge_batch, graph_count
         ),
         "ring_atom_fraction": _segment_mean(
-            (batch.x[:, 8] != 0).float(), batch.batch, graph_count
+            (node_features[:, 8] != 0).float(), node_batch, graph_count
         ),
         "rwse_mean": _segment_mean(
-            batch.random_walk_pe.float().mean(dim=1), batch.batch, graph_count
+            rwse.mean(dim=1), node_batch, graph_count
         ),
     }
 
@@ -189,8 +196,11 @@ def _forward_counterfactual(model, batch, dropped_layers, collect_diagnostics):
         mixer = model.neural_atom_mixers[str(layer)]
         update, details = mixer.compute_update(h, batch.batch)
         if collect_diagnostics:
-            assignment = details["assignment"][:, 0]
-            valid = details["valid"]
+            assignment = details["assignment"][:, 0].detach().float().cpu()
+            valid = details["valid"].detach().cpu()
+            hidden_for_stats = h.detach().float().cpu()
+            update_for_stats = update.detach().float().cpu()
+            batch_for_stats = batch.batch.detach().cpu()
             safe = assignment.clamp_min(torch.finfo(assignment.dtype).tiny)
             entropy = -(assignment * safe.log()).sum(dim=-1)
             valid_count = valid.sum(dim=-1).clamp_min(1)
@@ -200,14 +210,22 @@ def _forward_counterfactual(model, batch, dropped_layers, collect_diagnostics):
                 torch.zeros_like(entropy),
             )
             hidden_rms = _segment_mean(
-                h.square().mean(dim=1), batch.batch, graph_count
+                hidden_for_stats.square().mean(dim=1),
+                batch_for_stats,
+                graph_count,
             ).sqrt()
             update_rms = _segment_mean(
-                update.square().mean(dim=1), batch.batch, graph_count
+                update_for_stats.square().mean(dim=1),
+                batch_for_stats,
+                graph_count,
             ).sqrt()
-            before_dispersion = _graph_dispersion(h, batch.batch, graph_count)
+            before_dispersion = _graph_dispersion(
+                hidden_for_stats, batch_for_stats, graph_count
+            )
             after_dispersion = _graph_dispersion(
-                h + update, batch.batch, graph_count
+                hidden_for_stats + update_for_stats,
+                batch_for_stats,
+                graph_count,
             )
             diagnostics[layer] = {
                 "assignment_entropy_normalized": normalized_entropy,
