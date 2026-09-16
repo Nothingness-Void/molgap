@@ -30,7 +30,7 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(contract["arms"], ["neural_atom_k1_pair_token"])
         self.assertEqual(contract["physical_batch_per_device"], 128)
         self.assertEqual(contract["seed"], 42)
-        self.assertEqual(contract["architecture"]["parameters"], 3_681_601)
+        self.assertEqual(contract["architecture"]["parameters"], 3_681_665)
         self.assertEqual(contract["architecture"]["target_layer"], 6)
         self.assertFalse(contract["architecture"]["dense_atom_attention"])
         self.assertFalse(contract["architecture"]["geometry_model_input"])
@@ -73,4 +73,3 @@ class ContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -24,7 +24,7 @@ ARCHITECTURE_CONFIGS = {
         "pair_channels": 32,
         "relation_tokens": 1,
         "dense_atom_to_atom_attention": False,
-        "added_parameters": 22_784,
+        "added_parameters": 22_848,
         "initialization_policy": "nested-function",
         "geometry": False,
     },

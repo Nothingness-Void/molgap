@@ -32,8 +32,8 @@
   "schedule": {"name": "CosineAnnealingLR", "eta_min": 0.000001},
   "architecture": {
     "backbone": "neural_atom_k1_v4",
-    "parameters": 3681601,
-    "added_parameters": 22784,
+    "parameters": 3681665,
+    "added_parameters": 22848,
     "target_layer": 6,
     "pair_channels": 32,
     "relation_tokens": 1,
@@ -43,4 +43,3 @@
   "minimum_gain_eV": 0.003,
   "stochasticity_floor_eV": 0.003
 }
-

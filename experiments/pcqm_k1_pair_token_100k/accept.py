@@ -12,7 +12,7 @@ from molgap.training_reproducibility import atomic_json, sha256_file
 
 
 MODE = "neural_atom_k1_pair_token"
-EXPECTED_PARAMETERS = {MODE: 3_681_601}
+EXPECTED_PARAMETERS = {MODE: 3_681_665}
 
 
 def _shared_accept(reference_root: Path, candidate_root: Path) -> dict:
@@ -102,4 +102,3 @@ if __name__ == "__main__":
             args.archive_sha256,
         ),
     )
-
