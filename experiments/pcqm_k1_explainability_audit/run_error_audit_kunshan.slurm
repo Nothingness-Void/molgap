@@ -19,10 +19,19 @@ ROOT=/public/home/changfeng2006/molgap-v4-bootstrap
 JOB_ROOT="${ROOT}/k1-xai-stage1"
 PYTHON="${ROOT}/runtime-v4/miniconda3-py310-25.7.0-2/bin/python"
 CACHE="${ROOT}/molgap-v4-100k/input/pcqm4mv2-ogb-fixed-100k-v1"
+SOURCE_ROOT="${SOURCE_ROOT:-${JOB_ROOT}/source}"
+ATTEMPT_ROOT="${JOB_ROOT}/attempts/${SLURM_JOB_ID}"
 
-mkdir -p "${JOB_ROOT}/logs" "${JOB_ROOT}/output"
-export PYTHONPATH="${JOB_ROOT}/source/src"
-"${PYTHON}" "${JOB_ROOT}/source/experiments/pcqm_k1_explainability_audit/run_error_audit.py" \
+mkdir -p "${JOB_ROOT}/logs" "${ATTEMPT_ROOT}/output"
+test -f "${SOURCE_ROOT}/src/molgap/pcqm_k1_explainability.py"
+test -f "${SOURCE_ROOT}/src/molgap/pcqm_wedge.py"
+test -f "${SOURCE_ROOT}/experiments/pcqm_k1_explainability_audit/preflight_error_audit.py"
+export PYTHONPATH="${SOURCE_ROOT}/src"
+"${PYTHON}" "${SOURCE_ROOT}/experiments/pcqm_k1_explainability_audit/preflight_error_audit.py" \
   --cache-root "${CACHE}" \
   --payload-root "${JOB_ROOT}/payloads" \
-  --output-root "${JOB_ROOT}/output"
+  --output "${ATTEMPT_ROOT}/preflight.json"
+"${PYTHON}" "${SOURCE_ROOT}/experiments/pcqm_k1_explainability_audit/run_error_audit.py" \
+  --cache-root "${CACHE}" \
+  --payload-root "${JOB_ROOT}/payloads" \
+  --output-root "${ATTEMPT_ROOT}/output"

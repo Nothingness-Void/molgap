@@ -26,3 +26,13 @@ def test_runtime_has_frozen_identities():
     assert REFERENCE == "neural_atom_k1_v4"
     assert len(EXPECTED_MANIFEST_SHA256) == 64
     assert len(EXPECTED_GEOMETRY_SHA256) == 64
+
+
+def test_kunshan_job_gates_pickle_dependency_and_preflight():
+    text = (
+        ROOT
+        / "experiments/pcqm_k1_explainability_audit/run_error_audit_kunshan.slurm"
+    ).read_text(encoding="utf-8")
+    assert "src/molgap/pcqm_wedge.py" in text
+    assert "preflight_error_audit.py" in text
+    assert "attempts/${SLURM_JOB_ID}" in text
