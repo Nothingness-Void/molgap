@@ -36,3 +36,22 @@ def test_kunshan_job_gates_pickle_dependency_and_preflight():
     assert "src/molgap/pcqm_wedge.py" in text
     assert "preflight_error_audit.py" in text
     assert "attempts/${SLURM_JOB_ID}" in text
+
+
+def test_stage2_is_frozen_and_bounded():
+    from molgap.pcqm_k1_causal_audit import (
+        ABLATIONS,
+        EXPECTED_CHECKPOINT_SHA256,
+        EXPECTED_PARAMETERS,
+        MIXER_LAYERS,
+    )
+
+    protocol = (
+        ROOT / "experiments/pcqm_k1_explainability_audit/stage2_protocol.md"
+    ).read_text(encoding="utf-8")
+    assert MIXER_LAYERS == (3, 6, 9)
+    assert ABLATIONS["drop_all_global"] == MIXER_LAYERS
+    assert EXPECTED_PARAMETERS == 3_658_817
+    assert len(EXPECTED_CHECKPOINT_SHA256) == 64
+    assert "performs no training" in protocol
+    assert "at most one minimal nested repair" in protocol
