@@ -56,3 +56,15 @@ merge `65f0f53`. Its accepted reference and closed promotion decision remain in
 contained reusable reference infrastructure but no terminal experiment
 disposition; merge `becbcf8` preserves that history in `archive` without
 activating its tree. Both temporary branch refs were then retired.
+
+## V5 workflow boundary
+
+The V5 contract is the stable operating topology for this checkout. The
+`molgap-desktop` branch owns full/evaluation/submission work and any explicitly
+desktop-owned 500K question; `molgap-server` owns its independent bounded
+100K/500K research loop. Desktop shutdown does not transfer jobs to the server,
+and no live cross-machine monitor, takeover, or conversation bridge is implied.
+When desktop returns, reconcile the authoritative remote state and durable
+artifacts before resuming or submitting anything. Exchange evidence through
+reviewed Git commits and compact indexes. See the [V5 common contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md)
+and [V5 desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md).

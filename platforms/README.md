@@ -8,6 +8,9 @@ For cross-platform takeover, connection-independent resume rules, and the
 bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
 For the shared immutable-source, run-spec, runtime-certificate, and submission
 workflow used by V4 screens, read `V4_EXECUTION_CONTRACT.md`.
+For the stable V5 machine topology, desktop offline behavior, and evidence
+handoff boundary, read `docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md`
+and `docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md`.
 
 | Platform | Path | Role |
 |---|---|---|

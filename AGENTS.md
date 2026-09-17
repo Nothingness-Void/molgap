@@ -56,6 +56,25 @@ Do not read all docs to find "the current truth" — it's in `CURRENT_STATE.md`.
   after its commits are reachable remotely from `molgap-desktop` or `archive`.
 - Promote an accepted owner branch to `master` only as a separate explicit step.
 
+## Desktop offline behavior
+
+Desktop work is operationally independent from the server A/B research loop.
+Desktop has no default heartbeat monitor. If the desktop is powered off, no
+server agent automatically monitors, adopts, repairs, or advances
+desktop-owned jobs. Silent time after a remote desktop-owned job finishes is
+accepted by design.
+
+Therefore desktop-owned remote work must be durable and recoverable: freeze
+source/configuration before submission, keep checkpoints and remote artifacts,
+and reconcile scheduler/artifact state when the desktop returns.
+
+Desktop normally owns full-scale training, official evaluation, final
+submission, and explicitly desktop-owned 500K work. The server independently
+owns its bounded 100K/500K loop. Cross-machine live handoff is not part of the
+default architecture. Read the [common V5 contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md)
+and [desktop V5 handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md) for
+the detailed operating rules.
+
 ## Conventions
 - Docs in English (LLM efficiency). One file answers one question.
 - Don't double-write a fact; if it must appear twice, the second is a link.
