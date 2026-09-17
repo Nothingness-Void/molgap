@@ -7,6 +7,8 @@ import json
 import math
 from pathlib import Path
 
+from molgap.server_acceptance import make_outcome
+
 
 EXPECTED_MANIFEST = "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
 EXPECTED_PARAMETERS = 3_681_665
@@ -59,11 +61,18 @@ def accept(root: Path) -> dict:
     if not all(math.isfinite(item["development_mae_eV"]) for item in trace):
         raise RuntimeError("Non-finite development metric")
     expected_idx = torch.arange(500_000, 550_000, dtype=torch.long)
-    if not torch.equal(payload["source_idx"].long(), expected_idx):
+    source_idx = payload["source_idx"]
+    prediction = payload["prediction"]
+    target = payload["target"]
+    if source_idx.ndim != 1 or prediction.ndim != 1 or target.ndim != 1:
+        raise RuntimeError("Development payload tensors must be one-dimensional")
+    if not torch.isfinite(prediction).all() or not torch.isfinite(target).all():
+        raise RuntimeError("Development predictions or targets are non-finite")
+    if not torch.equal(source_idx.long(), expected_idx):
         raise RuntimeError("Development source indices changed")
-    if payload["target"].numel() != 50_000:
+    if target.numel() != 50_000 or prediction.numel() != 50_000:
         raise RuntimeError("Development payload row count changed")
-    recomputed = float((payload["prediction"] - payload["target"]).abs().mean())
+    recomputed = float((prediction - target).abs().mean())
     if abs(recomputed - metrics["development_gap_mae_eV"]) > 1e-7:
         raise RuntimeError("Saved predictions do not reproduce the reported MAE")
     for key in (
@@ -79,7 +88,26 @@ def accept(root: Path) -> dict:
 
     gain = EXPECTED_REFERENCE - recomputed
     return {
+        # Kept for callers of the historical mechanical CLI.  V5 consumers must
+        # use the separate outcome fields below rather than this compatibility bit.
         "accepted": True,
+        "v5_outcome": make_outcome(
+            execution_status="COMPLETE",
+            artifact_status="ACCEPTED",
+            # This no-inference checker has no reference prediction bundle,
+            # paired analysis, bootstrap, or native-cost ledger yet.
+            comparison_status="PENDING",
+            scientific_status="PENDING",
+            transfer_status="NOT_READY",
+            budget_decision="PENDING",
+            full_handoff_status="NONE",
+        ),
+        "v5_missing_evidence": [
+            "reference_prediction_bundle",
+            "paired_analysis",
+            "paired_bootstrap",
+            "actual_native_cost",
+        ],
         "model_inference_executed": False,
         "development_gap_mae_eV": recomputed,
         "frozen_k1_reference_mae_eV": EXPECTED_REFERENCE,
@@ -111,4 +139,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -76,6 +76,12 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_k1_variants.py`, `pcqm_k1_variants_runner.py` | Isolated K1 information-flow variants and their fixed PCQM-100K v4 training contract | Changing the bounded K1 architecture screens |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
 | `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
+| `server_control.py` | Server-local V5 binding, generation fencing, durable A/B events, and recovery state | Changing server-only operational handoff semantics |
+| `server_acceptance.py` | V5 fail-closed comparison evidence and separate transfer/handoff outcomes | Changing strict server 100K/500K promotion evidence |
+| `research_funnel.py` | Hypothesis cards and trajectory outcome validation before bounded training | Changing the V5 evidence-first screening funnel |
+| `evidence_index.py` | Deterministic discoverable index of positive, negative, and inconclusive evidence | Changing reusable evidence export/indexing |
+| `cost_ledger.py` | Append-only hardware-native cost records without cross-unit conversion | Changing experiment cost accounting |
+| `runtime_profiling.py` | Stage timing for loader, transfer, compute, validation, archive, and allocation | Changing pre-contract performance diagnostics |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
 | `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
