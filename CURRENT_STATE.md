@@ -185,6 +185,15 @@ it did not change the BS128 contract. Authorities:
 `experiments/v5_legacy_evidence_migration/decision.md` and
 `experiments/pcqm_k1_pair_token_batch_profile/results/decision_122388380.md`.
 
+One server-owned V5 scale question is active: the unchanged GPTrans-T core and
+its parameter-free Pair PreNorm mechanism are running as a newly matched 500K
+pair on Kunshan. This establishes one reusable strict drop-last reference
+because the historical GPTrans 500K run predates that comparison contract.
+Preflight jobs `122425237`/`122425241` gate training jobs
+`122425440`/`122425441` with scheduler `afterok` dependencies. The experiment
+does not duplicate the desktop full comparison and does not access protected
+roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md`.
+
 ## Data and comparison contract
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
