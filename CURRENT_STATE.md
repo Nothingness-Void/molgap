@@ -20,10 +20,10 @@ bundles still target their v3 base. Asset hashes are indexed in `models/README.m
 ## Active Objective
 
 Track B is a PCQM4Mv2 Gap-only line, separate from Track A. New cross-platform
-screens use V4, not historical Kaggle BS48 contracts. The Kunshan GPTrans-T
-seed-42 100K/50K V4 reference is isolated on `codex/exp/gptrans-t-100k-v4`;
-preflight `121922250` passed and training `121922252` was RUNNING in the last
-recorded (2026-09-12) snapshot. Verify live state before releasing successors.
+screens use V4, not historical Kaggle BS48 contracts. The GPTrans-T seed-42
+100K/50K V4 reference completed on Kaggle2 and passed mechanical acceptance at
+`0.156627 eV`. It is frozen as a reusable reference but closed for 100K
+promotion; authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
 
 The Kunshan 500K distance-angle OOF blend is positive nomination evidence, but
 its V4 audit found no runtime certificate or matching V4 reference. It is not
@@ -101,7 +101,7 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 |---|---|
 | What ships now? | `production/README.md` |
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
-| V4 reference status? | Branch `codex/exp/gptrans-t-100k-v4`; last snapshot: `121922252`, 2026-09-12 |
+| V4 reference status? | `experiments/pcqm_gptrans_t_100k_v4/decision.md`; accepted and closed for 100K promotion |
 | 500K geometry nomination? | `experiments/pcqm_geometry_transfer_500k/decision.md`; positive but not V4-comparable |
 | Recurrent Kaggle disposition? | `archive` branch at `285e1dc`; negative, closed |
 | Full K1/GPTrans-T chain? | `experiments/pcqm_k1_gptrans_full_fusion/README.md` and its linked 2026-09-14 recovery/evaluation evidence |

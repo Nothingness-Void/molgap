@@ -21,7 +21,7 @@ Track C.
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | What happened in the legacy PCQM-100K Kaggle architecture screen? | Closed; recurrent graph-state missed the frozen EdgeState comparator and is archived at commit `285e1dc`; it is not the current Kunshan line | `pcqm_gap_architecture/` |
-| What is the fixed-contract PCQM reference for current desktop screens? | GPTrans-T seed-42 100K/50K V4 reference on SCNet Kunshan; status remains on its isolated active branch until reconciled | `branch codex/exp/gptrans-t-100k-v4: experiments/pcqm_gptrans_t_100k_v4/` |
+| What is the fixed-contract GPTrans-T PCQM reference? | Kaggle2 seed-42 100K/50K V4 run mechanically accepted at 0.156627 eV; frozen for reuse but closed for 100K promotion | `pcqm_gptrans_t_100k_v4/` |
 | Which architecture wins the matched PCQM 500K V4 comparison, and is global attention useful? | K1 and GPTrans-T beat EdgeState; K1 leads but not materially, while matched local ablation rejects dense and sparse global attention | `pcqm_500k_v4_evidence/` |
 | Did the adapted GPTrans-T propagation core pass its historical 500K bridge? | Yes as pre-V4 context; it is not a reusable V4 reference | `pcqm_gptrans_t_500k/` |
 | What contract defined the historical EdgeState304 500K comparator? | Frozen pre-V4 comparator protocol retained for provenance | `pcqm_edgestate304_500k/` |

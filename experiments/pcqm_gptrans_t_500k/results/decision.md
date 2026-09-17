@@ -18,3 +18,5 @@ and is not a byte-identical reproduction. The result nominates the adapted core
 for a separately controlled scale decision; it does not authorize official
 validation/test access by itself.
 
+Machine-readable evidence: `acceptance.json`.
+

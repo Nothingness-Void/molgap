@@ -14,15 +14,15 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-KUNSHAN-V4-REFERENCE | Reconcile and accept the single GPTrans-T seed-42 100K/50K V4 reference | Verify terminal scheduler state, 60 physical-BS128 epochs, runtime certificate, outputs, and frozen acceptance; do not infer status from the 2026-09-12 snapshot | Branch `codex/exp/gptrans-t-100k-v4` |
 | P0 | B-FULL-CONVERGENCE | Reconcile the repaired GPTrans-T and K1 convergence chains | Inspect GPU jobs `1516700`/`1516701` and dependent acceptance jobs `1516703`/`1516704`; accept terminal artifacts or diagnose without resubmitting from a stale snapshot | Branch `codex/exp/gptrans-full-convergence` |
 | P0 | B-DISTANCE-ANGLE-500K | Reconcile the already-submitted paired distance-angle Triangle EdgeState screen | Retrieve jobs `121738961`/`121738978`/`121738985` and write a terminal decision; do not relaunch from the stale snapshot | Branch `codex/scnet-distance-angle-triangle-500k` |
 | P1 | B-XIAN-DETERMINISM | Finish the bounded Xi'an determinism/repeatability audit before any training card-hours | Accept repeatable full-model replay or keep Xi'an pre-screen-only | Branch `codex/exp/xian-determinism-audit` |
-| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Only after the V4 reference is accepted; issue a new frozen contract/runtime certificate and explicit launch authorization | `experiments/pcqm_geometry_transfer_500k/` |
+| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
-The V4 runtime policy and detailed baseline protocol remain on their active
-experiment branch until that reference is accepted. V4 requires fixed data and
+The accepted V4 reference and runtime policy are documented in
+`experiments/pcqm_gptrans_t_100k_v4/` and `platforms/V4_EXECUTION_CONTRACT.md`.
+V4 requires fixed data and
 row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
 selection rule, sample exposure, role access, and a runtime certificate for
 each platform/software tuple.

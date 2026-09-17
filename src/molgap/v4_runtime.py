@@ -33,7 +33,11 @@ def torch_load_compat(
     except (TypeError, ValueError):
         signature_known = False
         parameters = {}
-    if "weights_only" in parameters:
+    accepts_kwargs = any(
+        parameter.kind is inspect.Parameter.VAR_KEYWORD
+        for parameter in parameters.values()
+    )
+    if "weights_only" in parameters or accepts_kwargs:
         kwargs["weights_only"] = weights_only
     elif not signature_known:
         try:
@@ -42,7 +46,7 @@ def torch_load_compat(
             message = str(error)
             if "unexpected keyword argument" not in message or "weights_only" not in message:
                 raise
-    if "mmap" in parameters:
+    if "mmap" in parameters or accepts_kwargs:
         kwargs["mmap"] = mmap
     return torch.load(path, **kwargs)
 

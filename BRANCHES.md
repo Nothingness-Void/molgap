@@ -15,7 +15,6 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 | Branch | Reason retained / evidence entry |
 |---|---|
-| codex/exp/gptrans-t-100k-v4 | V4 reference reconciliation and portable execution contract; `experiments/pcqm_gptrans_t_100k_v4/STATUS.md` |
 | codex/exp/gptrans-full-convergence | Active repaired GPTrans-T/K1 convergence and terminal acceptance chain |
 | codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
 | codex/exp/ogb-rich-edgegps-v4-100k | Separate reference/infra work without terminal disposition |
