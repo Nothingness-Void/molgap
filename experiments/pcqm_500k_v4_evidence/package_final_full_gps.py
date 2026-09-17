@@ -6,8 +6,10 @@ import json
 from pathlib import Path
 import zipfile
 
+from molgap.constants import REPO_ROOT
 
-ROOT = Path(__file__).resolve().parents[2]
+
+ROOT = REPO_ROOT
 EXPERIMENT = ROOT / "experiments" / "pcqm_500k_v4_evidence"
 STAGING = ROOT / "platforms" / "_records" / "kaggle" / "staging" / "pcqm_500k_v4_evidence"
 INPUT = (

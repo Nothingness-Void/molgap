@@ -6,7 +6,10 @@ import json
 import subprocess
 import zipfile
 
-ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT
+
+
+ROOT = REPO_ROOT
 
 ENTRY = '''"""Bounded matched-500K evidence entry; source supplied by immutable dataset."""
 import hashlib

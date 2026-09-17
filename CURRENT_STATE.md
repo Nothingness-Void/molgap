@@ -56,8 +56,10 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - The matched 500K V4 experiment completed. K1 (`0.104860 eV`) and GPTrans-T
   (`0.106868 eV`) beat EdgeState (`0.111349 eV`) on the aligned 50K development
   role; K1's advantage over GPTrans-T remained below the `0.003 eV` nomination
-  floor. The accepted decision belongs to branch
-  `codex/exp/pcqm-500k-v4-evidence` pending desktop integration.
+  floor. The local matched ablation also rejected dense/sparse global attention;
+  K1's molecular-slot gain over local-only was positive but sub-threshold.
+  Authorities: `experiments/pcqm_500k_v4_evidence/final_decision.md` and
+  `experiments/pcqm_500k_v4_evidence/local_ablation_decision.md`.
 - Xi'an probe `67440607` reproduced predictions but not cross-process gradient
   hashes. Formal Xi'an V4 training remains gated; branch
   `codex/exp/xian-determinism-audit` owns the follow-up audit.
