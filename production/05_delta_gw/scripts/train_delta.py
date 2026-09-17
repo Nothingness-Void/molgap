@@ -11,14 +11,17 @@ We report, on a SCAFFOLD-split held-out test set, the GW-accuracy MAE of:
                    else the model is fitting noise.
 
 Inputs (from compute_delta.py):
-  production/05_delta_gw/results/delta_oe62.csv             gw_*, pred_*, delta_*, smiles
-  production/05_delta_gw/results/delta_oe62_embeddings.npz  emb_2d, emb_3d, smiles
+  an explicit output directory/delta_oe62.csv             gw_*, pred_*, delta_*, smiles
+  an explicit output directory/delta_oe62_embeddings.npz  emb_2d, emb_3d, smiles
 Outputs:
-  production/05_delta_gw/results/delta_model_metrics.json
-  production/05_delta_gw/results/delta_lgbm_{homo,lumo,gap}.txt  (LightGBM boosters)
+  the explicit output directory/delta_model_metrics.json
+  the explicit output directory/delta_lgbm_{homo,lumo,gap}.txt  (LightGBM boosters)
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_delta.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_delta.py \\
+      --csv experiments/oe62_delta/results/delta_oe62.csv \\
+      --npz experiments/oe62_delta/results/delta_oe62_embeddings.npz \\
+      --out-dir experiments/oe62_delta/results
 """
 from __future__ import annotations
 
@@ -35,15 +38,11 @@ from rdkit.Chem import Crippen, Descriptors, Lipinski
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 
-from molgap.constants import DELTA_GW_DIR
 from molgap.utils import murcko_scaffold_smiles
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-PHASE9 = DELTA_GW_DIR / "results"
-CSV = PHASE9 / "delta_oe62.csv"
-NPZ = PHASE9 / "delta_oe62_embeddings.npz"
 TARGETS = ("homo", "lumo", "gap")
 SEED = 42
 TEST_FRAC = 0.2
@@ -57,9 +56,9 @@ LGB_PARAMS = dict(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--csv", type=Path, default=CSV)
-    parser.add_argument("--npz", type=Path, default=NPZ)
-    parser.add_argument("--out-dir", type=Path, default=PHASE9)
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--npz", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--out-prefix", default="delta_model")
     parser.add_argument("--model-prefix", default="delta_lgbm")
     parser.add_argument("--predictions-out", type=Path, default=None)

@@ -14,12 +14,16 @@ only in `TRACKS.md`.
 |---|---|---|
 | `01_acquire/` | Which molecules do we train on? | Sampling specs, fetch and feature-selection CLIs |
 | `02_graphs/` | How are they represented? | 2D bond and 3D ETKDG caches, fixed splits, build CLIs |
-| `03_train/` | What are the encoder and fusion weights? | Model-named training evidence (`gps7_schnet_500k_v3/`, `routed_gps7_gps9_schnet_500k_v4/`) and training CLIs |
-| `04_evaluate/` | Which candidate ships? | Common/OOD/hard evaluations, model inventory, PCQM proxy |
-| `05_delta_gw/` | Can B3LYP be lifted toward GW? | Delta-model training and diagnostics |
-| `06_uq/` | How much do we trust a row? | Calibration, OOD scoring, UQ bundle assets |
+| `03_train/` | What are the encoder and fusion weights? | The registered routed-v4 compatibility record and training CLIs |
+| `04_evaluate/` | Which candidate ships? | Current acceptance, freeze, latency, model inventory, and API checks |
+| `05_delta_gw/` | Can B3LYP be lifted toward GW? | Reusable Delta interfaces; historical outputs are on the archive branch |
+| `06_uq/` | How much do we trust a row? | Reusable calibration/OOD interfaces; historical outputs are on the archive branch |
 | `07_database/` | The deliverable. | Predicted-property database build |
-| `history/` | What did phases 1-7 establish? | Frozen; retained for reproducibility, not extended |
+
+Phase 1-7 history, retired v2/v3 production records, and historical Delta/UQ
+outputs are deliberately absent from this tree. They are preserved on the
+`archive` branch. Large ignored legacy runtime assets are under
+`models/archive/`, `data/raw/archive/`, and `data/cache/archive/`.
 
 Stage directories are numbered because the order is a dependency, not a calendar.
 Renaming a stage means editing one constant in `src/molgap/constants.py`.

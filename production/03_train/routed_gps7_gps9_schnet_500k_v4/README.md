@@ -5,12 +5,17 @@ dual-GPS v4 B3LYP predictor. It is still registered and loadable, but it is the
 previous production baseline; the recommended predictor is only in
 `CURRENT_STATE.md`.
 
-- Base path: GPS7 + SchNet 500K v3.
+- Base path: GPS7 + SchNet 500K v3, retained only as a compatibility bundle
+  under `models/compatibility/routed_v4/`.
 - Routed expert: GPS9.
 - Rule: invoke the dual-GPS fusion only when the base v3 predicted Gap is below
   4 eV.
 - Training data: the same expansion 500K labels and SchNet branch as v3.
 - Decision: `gps_arch_routed_decision.md`.
+
+The complete v3 production record is preserved on the `archive` branch. This
+directory keeps only the v4 decision and the one compact v3 metric needed by
+the compatibility registry entry; it is not a second v3 result store.
 
 Model checkpoints remain under `models/`; this directory owns metrics,
 decisions, and locally ignored evaluation intermediates.

@@ -26,7 +26,6 @@ from molgap.constants import (
     EVALUATE_DIR,
     EXPERIMENTS_DIR,
     MODEL_REGISTRY,
-    PRODUCTION_DIR,
     REPO_ROOT,
     TARGET_COLS,
 )
@@ -58,6 +57,11 @@ def atomic_write(path: Path, payload: str) -> None:
 
 def relative(path: Path) -> str:
     return path.relative_to(REPO_ROOT).as_posix()
+
+
+def archive_pointer(path: Path, archive_root: Path) -> str:
+    """Represent an input from the separately checked-out archive branch."""
+    return "archive:" + path.relative_to(archive_root).as_posix()
 
 
 def paired_accuracy() -> dict[str, object]:
@@ -189,13 +193,19 @@ def corpus() -> dict[str, object]:
     }
 
 
-def delta_and_uq() -> dict[str, object]:
+def delta_and_uq(archive_root: Path | None) -> dict[str, object]:
+    if archive_root is None:
+        raise ValueError(
+            "historical Delta/UQ evidence is on the archive branch; "
+            "pass --archive-root explicitly"
+        )
+    archive_root = archive_root.resolve()
     delta_path = (
-        PRODUCTION_DIR / "05_delta_gw" / "results"
+        archive_root / "production" / "05_delta_gw" / "results"
         / "delta_model_v3_desc_pred_metrics.json"
     )
-    uq_path = PRODUCTION_DIR / "06_uq" / "results_v3" / "uq_ensemble_metrics.json"
-    config_path = PRODUCTION_DIR / "06_uq" / "results_v3" / "feature_config.json"
+    uq_path = archive_root / "production" / "06_uq" / "results_v3" / "uq_ensemble_metrics.json"
+    config_path = archive_root / "production" / "06_uq" / "results_v3" / "feature_config.json"
     delta = read_json(delta_path)
     uq = read_json(uq_path)
     config = read_json(config_path)
@@ -233,7 +243,11 @@ def delta_and_uq() -> dict[str, object]:
                 for target in TARGETS
             },
         },
-        "sources": [relative(delta_path), relative(uq_path), relative(config_path)],
+        "sources": [
+            archive_pointer(delta_path, archive_root),
+            archive_pointer(uq_path, archive_root),
+            archive_pointer(config_path, archive_root),
+        ],
     }
 
 
@@ -347,6 +361,10 @@ def load_optional(path: Path) -> dict | None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--archive-root", type=Path, default=None,
+        help="path to a checkout of the repository's archive branch",
+    )
     args = parser.parse_args()
 
     cost = load_optional(FREEZE / "cost_comparison" / "dft_vs_ml_cost.json")
@@ -380,7 +398,7 @@ def main() -> None:
         "architecture": architecture(),
         "accuracy": accuracy,
         "transferability": transferability(),
-        "delta_and_uq": delta_and_uq(),
+        "delta_and_uq": delta_and_uq(args.archive_root),
         "geometry_leverage": geometry_leverage(),
         "rejected_paths": rejected_paths(),
         "cost_vs_dft": cost,

@@ -21,12 +21,15 @@ one for the binned plot and the shipped threshold.
 OOD threshold: the 95th percentile of fit-set self-distances (leave-one-out),
 i.e. "farther than 95% of training molecules are from each other" → flagged OOD.
 
-Outputs (production/06_uq/results/):
+Outputs (under the explicitly selected output directory):
   ood_metrics.json            spearman(dist, |err|) + binned MAE + threshold + flagged frac
   ood_distance_vs_error.png   binned MAE across distance deciles (the validation plot)
 
 Usage:
-  .venv\\Scripts\\python.exe production/06_uq/scripts/ood_score.py
+  .venv\\Scripts\\python.exe production/06_uq/scripts/ood_score.py \\
+      --csv experiments/oe62_delta/results/delta_oe62.csv \\
+      --npz experiments/oe62_delta/results/delta_oe62_embeddings.npz \\
+      --out-dir experiments/oe62_uq/results
 """
 from __future__ import annotations
 
@@ -51,13 +54,8 @@ from scipy.stats import spearmanr
 from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import GroupShuffleSplit
 
-from molgap.constants import DELTA_GW_DIR, UQ_DIR
 from molgap.utils import murcko_scaffold_smiles
 
-DELTA_OUT_DIR = DELTA_GW_DIR / "results"
-UQ_OUT_DIR = UQ_DIR / "results"
-CSV = DELTA_OUT_DIR / "delta_oe62.csv"
-NPZ = DELTA_OUT_DIR / "delta_oe62_embeddings.npz"
 TARGETS = ("homo", "lumo", "gap")
 SEED = 42
 TEST_FRAC = 0.2
@@ -125,9 +123,9 @@ def self_distance_threshold(ref, metric, q=95.0):
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--csv", type=Path, default=CSV)
-    parser.add_argument("--npz", type=Path, default=NPZ)
-    parser.add_argument("--out-dir", type=Path, default=UQ_OUT_DIR)
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--npz", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument(
         "--feature-mode",
         choices=["embedding", "embedding_desc", "embedding_desc_pred"],

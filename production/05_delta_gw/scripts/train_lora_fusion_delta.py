@@ -8,10 +8,15 @@ This keeps the B3LYP production model intact:
   - train only LoRA parameters on OE62 GW labels using frozen 2D/3D embeddings.
 
 It is a fast feasibility test for model-side Δ adaptation. The comparison target
-is the existing LightGBM Δ model in production/05_delta_gw/results/delta_model_metrics.json.
+is the existing LightGBM Δ model in the historical archive branch.
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_lora_fusion_delta.py --rank 8
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_lora_fusion_delta.py \\
+      --csv experiments/oe62_delta/results/delta_oe62.csv \\
+      --npz experiments/oe62_delta/results/delta_oe62_embeddings.npz \\
+      --checkpoint experiments/oe62_lora/results/fusion_adapter.pt \\
+      --metrics experiments/oe62_lora/results/metrics.json \\
+      --predictions experiments/oe62_lora/results/predictions.csv --rank 8
 """
 from __future__ import annotations
 
@@ -29,16 +34,10 @@ from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 
-from molgap.constants import MODELS_DIR, TARGET_COLS, DELTA_GW_DIR
+from molgap.constants import TARGET_COLS
 from molgap.inference import load_hybrid
 from molgap.utils import murcko_scaffold_smiles
 
-PHASE9 = DELTA_GW_DIR / "results"
-CSV = PHASE9 / "delta_oe62.csv"
-NPZ = PHASE9 / "delta_oe62_embeddings.npz"
-DEFAULT_CKPT = MODELS_DIR / "hybrid_fusion_lora_gw_r8.pt"
-DEFAULT_METRICS = PHASE9 / "lora_fusion_delta_metrics.json"
-DEFAULT_PREDS = PHASE9 / "lora_fusion_delta_predictions.csv"
 SEED = 42
 TEST_FRAC = 0.2
 
@@ -83,9 +82,9 @@ def resolve_device(arg: str | None) -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def load_data():
-    df = pd.read_csv(CSV)
-    npz = np.load(NPZ, allow_pickle=True)
+def load_data(csv_path: Path, npz_path: Path):
+    df = pd.read_csv(csv_path)
+    npz = np.load(npz_path, allow_pickle=True)
     e2d = torch.tensor(npz["emb_2d"], dtype=torch.float32)
     e3d = torch.tensor(npz["emb_3d"], dtype=torch.float32)
     smiles = npz["smiles"]
@@ -141,6 +140,8 @@ def evaluate(model, e2d, e3d, y_true, idx, device, batch_size=1024):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--npz", type=Path, required=True)
     parser.add_argument("--rank", type=int, default=8)
     parser.add_argument("--alpha", type=float, default=16.0)
     parser.add_argument("--lora-dropout", type=float, default=0.0)
@@ -150,9 +151,13 @@ def main():
     parser.add_argument("--epochs", type=int, default=500)
     parser.add_argument("--patience", type=int, default=60)
     parser.add_argument("--log-every", type=int, default=10)
-    parser.add_argument("--checkpoint", type=str, default=str(DEFAULT_CKPT))
-    parser.add_argument("--metrics", type=str, default=str(DEFAULT_METRICS))
-    parser.add_argument("--predictions", type=str, default=str(DEFAULT_PREDS))
+    parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument("--metrics", type=Path, required=True)
+    parser.add_argument("--predictions", type=Path, required=True)
+    parser.add_argument(
+        "--lgbm-reference", type=Path, default=None,
+        help="optional explicit historical Delta metrics for comparison",
+    )
     parser.add_argument("--device", type=str, default=None)
     args = parser.parse_args()
 
@@ -161,7 +166,7 @@ def main():
     device = resolve_device(args.device)
     print(f"Device: {device}", flush=True)
 
-    df, e2d, e3d, y_gw, pred_b3, gw = load_data()
+    df, e2d, e3d, y_gw, pred_b3, gw = load_data(args.csv, args.npz)
     train, val, test, n_scaffolds = scaffold_split(df["smiles"].tolist())
     print(
         f"OE62 GW: n={len(df)} scaffolds={n_scaffolds} "
@@ -250,9 +255,10 @@ def main():
         "const_delta": metrics_block(y_test, const),
         "lora_gw": metrics_block(y_test, pred_lora),
     }
-    lgbm_path = PHASE9 / "delta_model_metrics.json"
-    if lgbm_path.exists():
-        blocks["lightgbm_delta_reference"] = json.loads(lgbm_path.read_text())
+    if args.lgbm_reference is not None and args.lgbm_reference.exists():
+        blocks["lightgbm_delta_reference"] = json.loads(
+            args.lgbm_reference.read_text(encoding="utf-8")
+        )
 
     print("\nScaffold-test GW MAE/R2")
     for name in ["raw_b3lyp", "const_delta", "lora_gw"]:
@@ -277,9 +283,7 @@ def main():
         "metrics": blocks,
     }
 
-    ckpt_path = Path(args.checkpoint)
-    if not ckpt_path.is_absolute():
-        ckpt_path = MODELS_DIR / ckpt_path
+    ckpt_path = args.checkpoint
     ckpt_path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
@@ -297,11 +301,11 @@ def main():
     for i, target in enumerate(TARGET_COLS):
         pred_df[f"gw_pred_lora_{target}"] = pred_lora[:, i]
         pred_df[f"gw_pred_const_{target}"] = const[:, i]
-    pred_path = Path(args.predictions)
+    pred_path = args.predictions
     pred_path.parent.mkdir(parents=True, exist_ok=True)
     pred_df.to_csv(pred_path, index=False, encoding="utf-8")
 
-    metrics_path = Path(args.metrics)
+    metrics_path = args.metrics
     metrics_path.parent.mkdir(parents=True, exist_ok=True)
     metrics_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"\nSaved checkpoint: {ckpt_path}", flush=True)

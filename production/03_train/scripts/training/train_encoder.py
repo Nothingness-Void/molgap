@@ -26,7 +26,13 @@ import torch.nn as nn
 from sklearn.metrics import mean_absolute_error, r2_score
 from torch_geometric.loader import DataLoader
 
-from molgap.constants import MODELS_DIR, PARAMS_GPS_2D, PARAMS_SCHNET_300K, SEED, TRAIN_DIR
+from molgap.constants import (
+    EXPERIMENTS_DIR,
+    GRAPHS_DIR,
+    PARAMS_GPS_2D,
+    PARAMS_SCHNET_300K,
+    SEED,
+)
 from molgap.gps import (
     EdgeStateStructuralGPSWrapper,
     GatedStructuralGPSWrapper,
@@ -38,9 +44,9 @@ from molgap.retention import retention_loss
 from molgap.schnet import SchNetWrapper
 from molgap.utils import ensure_dirs
 
-TRAIN_OUT_DIR = TRAIN_DIR
-GRAPH_2D = TRAIN_OUT_DIR / "pyg_2d_graphs_bond_replacement_300k.pt"
-GRAPH_3D = TRAIN_OUT_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
+GRAPH_2D = GRAPHS_DIR / "pyg_2d_graphs_bond_replacement_300k.pt"
+GRAPH_3D = GRAPHS_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
+LEGACY_OUTPUT_ROOT = EXPERIMENTS_DIR / "_closed" / "legacy" / "replacement_300k"
 GPS_KINDS = {
     "gps",
     "structural_gps",
@@ -921,13 +927,16 @@ def main():
     if args.retention_targets_cache is not None and args.retention_teacher is None:
         parser.error("--retention-targets-cache requires --retention-teacher")
 
-    ensure_dirs(TRAIN_OUT_DIR, MODELS_DIR)
     graph_path = args.graphs or (
         GRAPH_2D if args.kind in GPS_KINDS else GRAPH_3D
     )
-    model_out = args.model_out or MODELS_DIR / f"phase8_{args.kind}_replacement_300k.pt"
-    metrics_out = args.metrics_out or TRAIN_OUT_DIR / f"{args.kind}_replacement_300k_metrics.json"
-    embeddings_out = args.embeddings_out or TRAIN_OUT_DIR / f"{args.kind}_replacement_300k_embeddings.pt"
+    output_root = LEGACY_OUTPUT_ROOT / args.kind
+    model_out = args.model_out or output_root / "model.pt"
+    metrics_out = args.metrics_out or output_root / "metrics.json"
+    embeddings_out = args.embeddings_out or output_root / "embeddings.pt"
+    ensure_dirs(model_out.parent, metrics_out.parent, embeddings_out.parent)
+    if args.predictions_out is not None:
+        ensure_dirs(args.predictions_out.parent)
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)

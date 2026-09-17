@@ -16,13 +16,16 @@ official valid set (not the full valid the leaderboard averages over), and PCQM4
 gaps use DFT geometry while we use ETKDG.
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/benchmark_pcqm4mv2.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/benchmark_pcqm4mv2.py \\
+      --train-csv data/raw/archive/legacy/phase7_chonsfcl_mw200_1000_300k.csv \\
+      --out-json experiments/pcqm_benchmark/results/pcqm4mv2_benchmark.json
 """
 from __future__ import annotations
 
 import json
 import zipfile
 import urllib.request
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -31,7 +34,7 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors
 from sklearn.metrics import mean_absolute_error
 
-from molgap.constants import RAW_DIR, DELTA_GW_DIR
+from molgap.constants import RAW_DIR
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
 from molgap.utils import canonicalize_smiles
 
@@ -41,12 +44,10 @@ BASE = RAW_DIR / "pcqm4m-v2"
 DATA_CSV = BASE / "raw" / "data.csv.gz"
 SPLIT_PT = BASE / "split_dict.pt"
 
-TRAIN_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
 ALLOWED = {"C", "H", "O", "N", "S", "F", "Cl"}
 MW_MIN, MW_MAX = 200.0, 1000.0
 N_SAMPLE = 3000
 SEED = 42
-OUT = DELTA_GW_DIR / "results" / "pcqm4mv2_benchmark.json"
 
 
 def ensure_data():
@@ -71,6 +72,12 @@ def in_dist(smiles):
 
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--train-csv", type=Path, required=True)
+    parser.add_argument("--out-json", type=Path, required=True)
+    args = parser.parse_args()
     ensure_data()
     df = pd.read_csv(DATA_CSV)  # columns: idx, smiles, homolumogap
     split = torch.load(SPLIT_PT, weights_only=False)
@@ -78,7 +85,7 @@ def main():
     valid = df.iloc[valid_idx].reset_index(drop=True)
     print(f"PCQM4Mv2 validation set: {len(valid)} molecules")
 
-    train = pd.read_csv(TRAIN_CSV)
+    train = pd.read_csv(args.train_csv)
     train_canon = set(train["canonical_smiles"].dropna())
     print(f"Our training set: {len(train_canon)} canonical SMILES")
 
@@ -118,11 +125,12 @@ def main():
     print(f"\n  Caveats: in-dist non-overlap subset (not full valid);")
     print(f"           PCQM4Mv2 uses DFT geometry, we use ETKDG.")
 
-    OUT.write_text(json.dumps({
+    args.out_json.parent.mkdir(parents=True, exist_ok=True)
+    args.out_json.write_text(json.dumps({
         "n_valid_total": int(len(valid)), "n_overlap": n_overlap, "n_ood": n_ood,
         "n_evaluated": int(len(sv)), "gap_mae": mae, "leaderboard_sota": 0.07,
     }, indent=2))
-    print(f"\nSaved {OUT}")
+    print(f"\nSaved {args.out_json}")
 
 
 if __name__ == "__main__":

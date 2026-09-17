@@ -12,7 +12,7 @@ Usage:
   .venv\\Scripts\\python.exe production/02_graphs/scripts/data/build_graphs.py --which both
   .venv\\Scripts\\python.exe production/02_graphs/scripts/data/build_graphs.py --which 3d --resume
   .venv\\Scripts\\python.exe production/02_graphs/scripts/data/build_graphs.py --max-rows 1000
-  .venv\\Scripts\\python.exe production/02_graphs/scripts/data/build_graphs.py --csv data/raw/phase7_chonsfcl_mw200_1000_300k.csv --tag old30k --max-rows 30000
+  .venv\\Scripts\\python.exe production/02_graphs/scripts/data/build_graphs.py --csv data/raw/archive/legacy/phase7_chonsfcl_mw200_1000_300k.csv --tag legacy_30k --max-rows 30000
 """
 from __future__ import annotations
 
@@ -255,7 +255,7 @@ def main():
     parser.add_argument("--out-2d", type=Path, default=OUT_2D)
     parser.add_argument("--out-3d", type=Path, default=OUT_3D)
     parser.add_argument("--tag", type=str, default=None,
-                        help="output/run tag, e.g. old30k or replacement30k")
+                        help="output/run tag, e.g. legacy_30k or replacement_300k")
     parser.add_argument("--start-row", type=int, default=0,
                         help="first filtered CSV row to build; preserves original source_idx values")
     parser.add_argument("--max-rows", type=int, default=None)

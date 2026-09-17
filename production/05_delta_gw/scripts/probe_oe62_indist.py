@@ -26,10 +26,6 @@ import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
-from molgap.constants import DELTA_GW_DIR
-
-OUT = DELTA_GW_DIR / "results" / "oe62_indist.json"
-
 # Same in-distribution box as the training set (see production/01_acquire/scripts).
 ALLOWED_ELEMENTS = {"C", "H", "O", "N", "S", "F", "Cl"}
 MW_MIN, MW_MAX = 200.0, 1000.0
@@ -78,6 +74,7 @@ def main():
                "(https://nomad-lab.eu/prod/v1/gui/dataset/doi/10.17172/NOMAD/2019.12.10-8). "
                "Load format: pd.read_json(path, orient='split').")
     ap.add_argument("--oe62-json", help="path to OE62 df_5k.json (or df_62k.json)")
+    ap.add_argument("--out-json", help="explicit experiment output path")
     ap.add_argument("--self-test", action="store_true",
                     help="run logic on a tiny synthetic OE62-schema frame")
     args = ap.parse_args()
@@ -88,6 +85,8 @@ def main():
     else:
         if not args.oe62_json:
             ap.error("--oe62-json is required (or use --self-test)")
+        if not args.out_json:
+            ap.error("--out-json is required for a non-self-test run")
         df = pd.read_json(args.oe62_json, orient="split")
         print(f"Loaded {len(df)} rows from {args.oe62_json}\n")
 
@@ -156,9 +155,10 @@ def main():
         print(f"  in-dist GW gap: {g['min']:.2f} … {g['max']:.2f} eV (median {g['p50']:.2f})")
 
     if not args.self_test:
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        OUT.write_text(json.dumps(report, indent=2))
-        print(f"\nSaved {OUT}")
+        out_path = Path(args.out_json)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(report, indent=2))
+        print(f"\nSaved {out_path}")
 
 
 def _synthetic_frame():

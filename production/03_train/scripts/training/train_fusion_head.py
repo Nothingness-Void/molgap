@@ -1,14 +1,14 @@
 """
-Train Phase 8 embedding fusion heads on aligned encoder embeddings.
+Train the retained replacement-300k embedding fusion heads on aligned encoder
+embeddings. This is a closed compatibility probe, not a production candidate.
 
 The active 1M path uses `--head baseline` with one or two aligned 2D embedding
 payloads. `--head moe` is retained only to reproduce the closed head-capacity
 experiments; it is not a production candidate.
 
 Usage:
-  .venv\\Scripts\\python.exe production/03_train/scripts/training/train_fusion_head.py
-  .venv\\Scripts\\python.exe production/03_train/scripts/training/train_fusion_head.py --max-samples 2000 --epochs 3
-  .venv\\Scripts\\python.exe production/03_train/scripts/training/train_fusion_head.py --head baseline --out production/02_graphs/fusion_replacement_300k_metrics.json
+  .venv\\Scripts\\python.exe production/03_train/scripts/training/train_fusion_head.py --emb-2d <2d-embeddings> --emb-3d <3d-embeddings>
+  .venv\\Scripts\\python.exe production/03_train/scripts/training/train_fusion_head.py --emb-2d <2d-embeddings> --emb-3d <3d-embeddings> --max-samples 2000 --epochs 3
 """
 from __future__ import annotations
 
@@ -23,14 +23,12 @@ import torch.nn as nn
 from sklearn.metrics import mean_absolute_error, r2_score
 from torch.utils.data import DataLoader, TensorDataset
 
-from molgap.constants import MODELS_DIR, SEED, TRAIN_DIR
+from molgap.constants import EXPERIMENTS_DIR, GRAPHS_DIR, SEED
 from molgap.fusion import FusionHead, MoEFusionHead
 from molgap.utils import ensure_dirs, load_aligned_encoder_embeddings
 
-TRAIN_OUT_DIR = TRAIN_DIR
-EMB_2D = TRAIN_OUT_DIR / "gps_replacement_300k_embeddings.pt"
-EMB_3D = TRAIN_OUT_DIR / "schnet_replacement_300k_embeddings.pt"
-GRAPH_3D = TRAIN_OUT_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
+LEGACY_OUTPUT_ROOT = EXPERIMENTS_DIR / "_closed" / "legacy" / "replacement_300k" / "fusion_head"
+GRAPH_3D = GRAPHS_DIR / "pyg_3d_graphs_etkdg_replacement_300k.pt"
 
 
 def make_split(n: int, max_samples: int | None):
@@ -152,10 +150,12 @@ def make_replay_weights(source_idx, train_idx, boundary: int | None, old_weight:
 
 def main():
     parser = argparse.ArgumentParser(description="Phase 8 baseline/MoE fusion A/B")
-    parser.add_argument("--emb-2d", type=Path, default=EMB_2D)
+    parser.add_argument("--emb-2d", type=Path, required=True,
+                        help="aligned 2D embedding payload")
     parser.add_argument("--emb-2d-extra", type=Path, default=None,
                         help="optional second aligned 2D embedding payload to concatenate")
-    parser.add_argument("--emb-3d", type=Path, default=EMB_3D)
+    parser.add_argument("--emb-3d", type=Path, required=True,
+                        help="aligned 3D embedding payload")
     parser.add_argument("--graphs-3d", type=Path, default=GRAPH_3D)
     parser.add_argument("--graphs-3d-extra", type=Path, default=None,
                         help="optional non-overlapping second 3D graph cache")
@@ -172,13 +172,15 @@ def main():
                         help="source_idx below this value is the replay pool; disabled by default")
     parser.add_argument("--replay-weight", type=float, default=1.0,
                         help="relative sampling weight for rows below --replay-boundary")
-    parser.add_argument("--out", type=Path, default=TRAIN_OUT_DIR / "moe_replacement_300k_metrics.json")
+    parser.add_argument("--out", type=Path, default=LEGACY_OUTPUT_ROOT / "metrics.json")
     parser.add_argument("--baseline-model-out", type=Path,
-                        default=MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt")
+                        default=LEGACY_OUTPUT_ROOT / "baseline_model.pt")
     parser.add_argument("--moe-model-out", type=Path, default=None)
     args = parser.parse_args()
 
-    ensure_dirs(TRAIN_OUT_DIR, MODELS_DIR)
+    ensure_dirs(args.out.parent, args.baseline_model_out.parent)
+    if args.moe_model_out is not None:
+        ensure_dirs(args.moe_model_out.parent)
     torch.manual_seed(SEED)
     np.random.seed(SEED)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -220,7 +222,9 @@ def main():
         baseline_out = (
             args.baseline_model_out
             if not suffix
-            else MODELS_DIR / f"phase8_hybrid_fusion_baseline{suffix}.pt"
+            else args.baseline_model_out.with_name(
+                f"{args.baseline_model_out.stem}{suffix}{args.baseline_model_out.suffix}"
+            )
         )
         torch.save(base.state_dict(), baseline_out)
         result["baseline"] = base_metrics
@@ -231,7 +235,8 @@ def main():
             MoEFusionHead(args.hidden, 0.0, n_experts=args.experts),
             h2, h3, y, split, args, device, replay_weights,
         )
-        moe_out = args.moe_model_out or MODELS_DIR / f"phase8_hybrid_moe_e{args.experts}{suffix}.pt"
+        moe_out = args.moe_model_out or LEGACY_OUTPUT_ROOT / f"moe_e{args.experts}{suffix}.pt"
+        ensure_dirs(moe_out.parent)
         torch.save(moe.state_dict(), moe_out)
         result["moe"] = moe_metrics
         result["moe_model"] = str(moe_out)

@@ -31,4 +31,5 @@ feature and supervision failures, plus the only authorized repair gate, are in
 
 The completed rich-feature run, public clean-clone audit, and OGB form receipt
 are recorded under `results/rich_full/`. Live review status remains owned by
-`CURRENT_STATE.md`.
+`CURRENT_STATE.md`. The V5 pointer-only wrapper is `v5_evidence.json`; it does
+not change the external-submission boundary.

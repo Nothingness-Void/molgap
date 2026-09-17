@@ -21,9 +21,9 @@ avoiding unsupported extrapolation outside its applicability domain?
 
 | Family | Role | Evidence |
 |---|---|---|
-| Constant correction | Lower-bound bias baseline | `production/05_delta_gw/results/` |
-| Descriptor/embedding LightGBM | Cheap database-scale Delta path | `production/05_delta_gw/results/v3_delta_decision.md` |
-| Encoder/readout LoRA | Higher-capacity model-side Delta path | `production/06_uq/results_lora_v3/lora_uq_decision.md` |
+| Constant correction | Lower-bound bias baseline | `archive` branch: `production/05_delta_gw/results/` |
+| Descriptor/embedding LightGBM | Cheap database-scale Delta path | `archive` branch: `production/05_delta_gw/results/v3_delta_decision.md` |
+| Encoder/readout LoRA | Higher-capacity model-side Delta path | `archive` branch: `production/06_uq/results_lora_v3/lora_uq_decision.md` |
 | Ensemble and calibration | Predictive uncertainty and coverage audit | `production/06_uq/METHOD.md` |
 
 The v1 and v3 experiments are historical controls. They do not determine which
@@ -44,7 +44,7 @@ base model should be used for a future rerun; that choice comes only from
 - Training scripts: `production/05_delta_gw/scripts/`.
 - B3LYP inference and embeddings: `src/molgap/inference.py`.
 - Historical detailed narrative:
-  `docs/archive/phase9_detailed_history_through_v3_20260706.md`.
+  `archive` branch: `docs/archive/phase9_detailed_history_through_v3_20260706.md`.
 - Phase 10 delivery/UQ contract: `production/06_uq/METHOD.md`.
 
 Exact metrics belong in the linked result records, not in this method map.

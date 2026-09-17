@@ -1,9 +1,10 @@
 """Compare DFT and ML prediction cost on the same ten commercial OLED molecules.
 
-The DFT side is parsed from the retained Phase 5 Gaussian 16 outputs; nothing is
-recomputed. The ML side is timed live on the same SMILES with the registered
-repaired-2M presets. Reporting both on one identical molecule set is the point:
-a speedup quoted across different molecules is not a speedup.
+The DFT side is parsed from the retained Phase 5 Gaussian 16 outputs in an
+explicit archive checkout; nothing is recomputed. The ML side is timed live on
+the same SMILES with the registered repaired-2M presets. Reporting both on one
+identical molecule set is the point: a speedup quoted across different
+molecules is not a speedup.
 
 Three DFT cost scopes are reported separately because they answer different
 questions:
@@ -33,7 +34,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from molgap.constants import COMMERCIAL_DIR, EVALUATE_DIR, PRODUCTION_HISTORY_DIR
+from molgap.constants import COMMERCIAL_DIR, EVALUATE_DIR
 from molgap.inference import (
     load_repaired_2m_2d,
     predict_smiles_batch_repaired_2m_2d,
@@ -41,13 +42,7 @@ from molgap.inference import (
 
 
 PRESETS = ("repaired_2m_dense_2d", "repaired_2m_equal_2d")
-DEFAULT_GAUSSIAN_DIR = (
-    PRODUCTION_HISTORY_DIR / "phase5" / "gaussian_validation" / "gjf"
-)
 DEFAULT_MOLECULES = COMMERCIAL_DIR / "gaussian_validation_10.csv"
-DEFAULT_REFERENCE = (
-    PRODUCTION_HISTORY_DIR / "phase5" / "gaussian_validation" / "ml_vs_gaussian.csv"
-)
 DEFAULT_OUTPUT = (
     EVALUATE_DIR / "project_freeze" / "cost_comparison" / "dft_vs_ml_cost.json"
 )
@@ -273,9 +268,15 @@ def markdown(result: dict[str, object]) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--gaussian-dir", type=Path, default=DEFAULT_GAUSSIAN_DIR)
+    parser.add_argument(
+        "--gaussian-dir", type=Path, required=True,
+        help="Phase 5 Gaussian output directory in an explicit archive checkout",
+    )
     parser.add_argument("--molecules", type=Path, default=DEFAULT_MOLECULES)
-    parser.add_argument("--reference", type=Path, default=DEFAULT_REFERENCE)
+    parser.add_argument(
+        "--reference", type=Path, required=True,
+        help="Phase 5 ML/Gaussian reference CSV in the same archive checkout",
+    )
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--scale-rows", type=int, default=1000)

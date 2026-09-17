@@ -9,6 +9,8 @@ This turns the v3 Encoder-LoRA accuracy probe into a UQ candidate:
 5. validate a simple embedding-distance OOD score against LoRA ensemble error.
 
 The B3LYP base is not modified. Checkpoints are local artifacts under models/.
+All input, checkpoint, and output paths are explicit because historical UQ
+bundles are preserved on the archive branch rather than under production.
 """
 from __future__ import annotations
 
@@ -27,7 +29,7 @@ from scipy.stats import spearmanr
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.neighbors import NearestNeighbors
 
-from molgap.constants import MODELS_DIR, TARGET_COLS, DELTA_GW_DIR, UQ_DIR
+from molgap.constants import TARGET_COLS
 from molgap.inference import load_hybrid
 
 from train_encoder_lora_delta import (
@@ -38,18 +40,14 @@ from train_encoder_lora_delta import (
     evaluate,
 )
 
-PHASE9 = DELTA_GW_DIR / "results"
-OUT_DIR = UQ_DIR / "results_lora_v3"
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--csv", type=Path, default=PHASE9 / "delta_oe62_v3.csv")
-    parser.add_argument("--graph-cache", type=Path, default=PHASE9 / "delta_oe62_v3_graphs.pt")
-    parser.add_argument("--embedding-npz", type=Path, default=PHASE9 / "delta_oe62_v3_embeddings.npz")
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--graph-cache", type=Path, required=True)
+    parser.add_argument("--embedding-npz", type=Path, required=True)
     parser.add_argument("--hybrid-key", default="phase8_expansion_hybrid")
     parser.add_argument("--checkpoint", type=Path, action="append", required=True)
-    parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
+    parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--device", default=None)
     return parser.parse_args()

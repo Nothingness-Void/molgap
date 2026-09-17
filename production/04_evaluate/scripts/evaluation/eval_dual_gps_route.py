@@ -10,7 +10,14 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 
-from molgap.constants import CACHE_DIR, GRAPHS_DIR, MODELS_DIR, SEED, TRAIN_DIR
+from molgap.constants import (
+    CACHE_DIR,
+    GRAPHS_DIR,
+    MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID,
+    MODEL_PHASE8_EXPANSION_HYBRID,
+    SEED,
+    TRAIN_DIR,
+)
 from molgap.fusion import FusionHead
 from molgap.utils import load_aligned_encoder_embeddings
 
@@ -40,11 +47,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--fusion-base", type=Path,
-        default=MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt",
+        default=MODEL_PHASE8_EXPANSION_HYBRID,
     )
     parser.add_argument(
         "--fusion-dual", type=Path,
-        default=MODELS_DIR / "phase8_hybrid_fusion_expansion_500k_dualgps.pt",
+        default=MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID,
     )
     parser.add_argument(
         "--common-predictions", type=Path,

@@ -22,15 +22,17 @@ Why calibration is non-negotiable: an uncalibrated σ is fake confidence. If the
 model says ±0.4 eV, ~68% of molecules must actually fall within ±0.4 eV, else the
 flag misleads everything downstream (OOD gating, "send-to-GW" active learning).
 
-Outputs (production/06_uq/results/):
+Outputs (under the explicitly selected output directory):
   uq_ensemble_metrics.json              per-target MAE, ENCE before/after, coverage, scale s
   reliability_{homo,lumo,gap}.png       observed vs expected coverage curve
   ensemble_lgbm/{target}_m{k}.txt       N saved boosters per target (reused by inference)
   ensemble_calibration.json             {target: {scale, sigma_mean}} for inference
 
 Usage:
-  .venv\\Scripts\\python.exe production/06_uq/scripts/train_ensemble.py
-  .venv\\Scripts\\python.exe production/06_uq/scripts/train_ensemble.py --members 10
+  .venv\\Scripts\\python.exe production/06_uq/scripts/train_ensemble.py \\
+      --csv experiments/oe62_delta/results/delta_oe62.csv \\
+      --npz experiments/oe62_delta/results/delta_oe62_embeddings.npz \\
+      --out-dir experiments/oe62_uq/results --members 10
 """
 from __future__ import annotations
 
@@ -56,13 +58,8 @@ from scipy.special import erfinv
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import mean_absolute_error, r2_score
 
-from molgap.constants import DELTA_GW_DIR, UQ_DIR
 from molgap.utils import murcko_scaffold_smiles
 
-DELTA_OUT_DIR = DELTA_GW_DIR / "results"
-UQ_OUT_DIR = UQ_DIR / "results"
-CSV = DELTA_OUT_DIR / "delta_oe62.csv"
-NPZ = DELTA_OUT_DIR / "delta_oe62_embeddings.npz"
 TARGETS = ("homo", "lumo", "gap")
 SEED = 42
 TEST_FRAC = 0.2
@@ -190,9 +187,9 @@ def reliability_curve(errors, sigmas, target, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--members", type=int, default=10, help="ensemble size")
-    ap.add_argument("--csv", type=str, default=str(CSV))
-    ap.add_argument("--npz", type=str, default=str(NPZ))
-    ap.add_argument("--out-dir", type=str, default=str(UQ_OUT_DIR))
+    ap.add_argument("--csv", type=str, required=True)
+    ap.add_argument("--npz", type=str, required=True)
+    ap.add_argument("--out-dir", type=str, required=True)
     ap.add_argument(
         "--feature-mode",
         choices=["embedding", "embedding_desc", "embedding_desc_pred"],

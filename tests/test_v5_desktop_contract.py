@@ -333,6 +333,8 @@ def test_desktop_agents_patch_has_no_server_style_monitor():
         "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
         "experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json",
         "experiments/pcqm_geometry_transfer_500k/v5_evidence.json",
+        "experiments/pcqm_edge_state_full/v5_evidence.json",
+        "experiments/pcqm_gine_expert/v5_evidence.json",
     ),
 )
 def test_migrated_v5_evidence_envelopes_validate(relative_path):
@@ -350,6 +352,24 @@ def test_geometry_migration_does_not_upgrade_incompatible_evidence():
 
     assert evidence["outcome"]["comparison_status"] == "incompatible_with_strict_v4"
     assert evidence["outcome"]["transfer_status"] == "blocked"
+    assert evidence["migration"]["scientific_reinterpretation"] is False
+
+
+def test_external_edgestate_migration_preserves_submission_boundary():
+    path = REPO_ROOT / "experiments/pcqm_edge_state_full/v5_evidence.json"
+    evidence = json.loads(path.read_text(encoding="utf-8"))
+
+    assert evidence["outcome"]["scientific_status"] == "external_submission_pending_review"
+    assert evidence["role_use"]["test_dev"] == "consumed"
+    assert evidence["migration"]["scientific_reinterpretation"] is False
+
+
+def test_gine_migration_preserves_specialist_only_boundary():
+    path = REPO_ROOT / "experiments/pcqm_gine_expert/v5_evidence.json"
+    evidence = json.loads(path.read_text(encoding="utf-8"))
+
+    assert evidence["outcome"]["scientific_status"] == "accepted_specialist_not_leaderboard"
+    assert evidence["outcome"]["transfer_status"] == "task_routed_only"
     assert evidence["migration"]["scientific_reinterpretation"] is False
 
 

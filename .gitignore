@@ -29,6 +29,10 @@ models/**/*.pt
 models/**/*.joblib
 data/cache/*
 !data/cache/README.md
+!data/cache/archive/
+!data/cache/archive/legacy/
+data/cache/archive/legacy/*
+!data/cache/archive/legacy/README.md
 
 # Large inputs: downloaded or produced by the pipeline
 data/commercial/*.data
@@ -42,6 +46,9 @@ data/raw/phase3_*.csv
 data/raw/archive-r02-router-candidates/
 data/raw/phase8_repair_v2_checkpoint_dataset/
 !data/commercial/commercial_molecules_template.csv
+!data/raw/archive/
+!data/raw/archive/legacy/
+!data/raw/archive/legacy/README.md
 
 # Keep empty directory structure
 !data/raw/.gitkeep

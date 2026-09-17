@@ -10,7 +10,10 @@ Targets:
   --targets gps schnet fusion   # both encoders + fusion adapters
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_encoder_lora_delta.py --targets gps fusion --rank 4
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_encoder_lora_delta.py \\
+      --csv experiments/oe62_delta/results/delta_oe62.csv \\
+      --graph-cache experiments/oe62_delta/results/delta_oe62_graphs.pt \\
+      --out-dir experiments/oe62_lora/results --targets gps fusion --rank 4
 """
 from __future__ import annotations
 
@@ -28,14 +31,11 @@ from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from torch_geometric.data import Batch
 
-from molgap.constants import MODELS_DIR, TARGET_COLS, DELTA_GW_DIR
+from molgap.constants import TARGET_COLS
 from molgap.graphs import smiles_to_2d_pyg, smiles_to_pyg
 from molgap.inference import load_hybrid
 from molgap.utils import murcko_scaffold_smiles
 
-PHASE9 = DELTA_GW_DIR / "results"
-CSV = PHASE9 / "delta_oe62.csv"
-GRAPH_CACHE = PHASE9 / "delta_oe62_graphs.pt"
 SEED = 42
 TEST_FRAC = 0.2
 
@@ -178,10 +178,12 @@ def main():
     parser.add_argument("--split-seed", type=int, default=42)
     parser.add_argument("--name", type=str, default=None)
     parser.add_argument("--hybrid-key", default="phase7_hybrid")
-    parser.add_argument("--csv", type=Path, default=CSV)
-    parser.add_argument("--graph-cache", type=Path, default=GRAPH_CACHE)
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--graph-cache", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--device", type=str, default=None)
     args = parser.parse_args()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -301,7 +303,7 @@ def main():
             flush=True,
         )
 
-    out_ckpt = MODELS_DIR / f"hybrid_encoder_lora_gw_{name}.pt"
+    out_ckpt = args.out_dir / f"hybrid_encoder_lora_gw_{name}.pt"
     torch.save(
         {
             "targets": targets,
@@ -335,13 +337,13 @@ def main():
         "n_test": int(len(test)),
         "metrics": blocks,
     }
-    out_metrics = PHASE9 / f"encoder_lora_delta_{name}_metrics.json"
+    out_metrics = args.out_dir / f"encoder_lora_delta_{name}_metrics.json"
     out_metrics.write_text(json.dumps(result, indent=2), encoding="utf-8")
     pred_df = df.iloc[test].reset_index(drop=True).copy()
     for i, target in enumerate(TARGET_COLS):
         pred_df[f"gw_pred_encoder_lora_{target}"] = pred_lora[:, i]
         pred_df[f"gw_pred_const_{target}"] = const[:, i]
-    out_pred = PHASE9 / f"encoder_lora_delta_{name}_predictions.csv"
+    out_pred = args.out_dir / f"encoder_lora_delta_{name}_predictions.csv"
     pred_df.to_csv(out_pred, index=False, encoding="utf-8")
     print(f"\nSaved checkpoint: {out_ckpt}", flush=True)
     print(f"Saved metrics: {out_metrics}", flush=True)

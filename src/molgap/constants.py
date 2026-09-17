@@ -17,7 +17,15 @@ MODELS_DIR = REPO_ROOT / "models"
 PRODUCTION_DIR = REPO_ROOT / "production"
 EXPERIMENTS_DIR = REPO_ROOT / "experiments"
 PLATFORMS_DIR = REPO_ROOT / "platforms"
-PRODUCTION_HISTORY_DIR = PRODUCTION_DIR / "history"
+
+# Historical runtime assets stay outside the delivery line. Large ignored
+# files use these local archive paths; their reproducibility records live on
+# the repository's `archive` branch.
+LEGACY_RAW_DIR = RAW_DIR / "archive" / "legacy"
+LEGACY_CACHE_DIR = CACHE_DIR / "archive" / "legacy"
+LEGACY_MODEL_DIR = MODELS_DIR / "archive" / "legacy_checkpoints"
+LEGACY_METRICS_DIR = MODELS_DIR / "archive" / "legacy_metrics"
+ROUTED_V4_COMPAT_DIR = MODELS_DIR / "compatibility" / "routed_v4"
 
 # Stage output roots. Thin CLIs write here instead of composing paths from a
 # calendar phase number, so a stage can be renamed in one place.
@@ -34,49 +42,48 @@ METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
 
 # ── Data files ──
 
-DATA_PHASE3 = RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
-DATA_PHASE6_LARGE = RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv"
+DATA_PHASE3 = LEGACY_RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
+DATA_PHASE6_LARGE = LEGACY_RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv"
 
 # ── Graph caches ──
 
-GRAPHS_PHASE4 = PRODUCTION_HISTORY_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
-GRAPHS_PHASE6 = PRODUCTION_HISTORY_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt"
+GRAPHS_PHASE4 = LEGACY_CACHE_DIR / "pyg_3d_graphs_etkdg.pt"
+GRAPHS_PHASE6 = LEGACY_CACHE_DIR / "pyg_3d_graphs_etkdg_expanded.pt"
 
 # ── Model checkpoints ──
 
-MODEL_PHASE4 = MODELS_DIR / "gnn_schnet_3d_tuned.pt"
-MODEL_PHASE6 = MODELS_DIR / "gnn_schnet_3d_optuna_expanded.pt"
+MODEL_PHASE4 = LEGACY_MODEL_DIR / "gnn_schnet_3d_tuned.pt"
+MODEL_PHASE6 = LEGACY_MODEL_DIR / "gnn_schnet_3d_optuna_expanded.pt"
 
 # Phase 7 (300k, raw eV — no normalization)
-MODEL_SCHNET_300K = MODELS_DIR / "gnn_schnet_3d_300k.pt"
-MODEL_GPS_2D = MODELS_DIR / "gps_2d_300k.pt"
-MODEL_HYBRID = MODELS_DIR / "hybrid_fusion_optuna.pt"
-FUSION_METRICS = PRODUCTION_HISTORY_DIR / "phase7" / "fusion_optuna_metrics.json"
+MODEL_SCHNET_300K = LEGACY_MODEL_DIR / "gnn_schnet_3d_300k.pt"
+MODEL_GPS_2D = LEGACY_MODEL_DIR / "gps_2d_300k.pt"
+MODEL_HYBRID = LEGACY_MODEL_DIR / "hybrid_fusion_optuna.pt"
+FUSION_METRICS = LEGACY_METRICS_DIR / "phase7_fusion_optuna_metrics.json"
 
 # Phase 8 replacement300k v2 candidate (raw eV — no normalization)
-MODEL_PHASE8_REPLACEMENT_GPS = MODELS_DIR / "phase8_gps_replacement_300k.pt"
-MODEL_PHASE8_REPLACEMENT_SCHNET = MODELS_DIR / "phase8_schnet_replacement_300k.pt"
-MODEL_PHASE8_REPLACEMENT_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_GPS = LEGACY_MODEL_DIR / "phase8_gps_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_SCHNET = LEGACY_MODEL_DIR / "phase8_schnet_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_HYBRID = LEGACY_MODEL_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
 FUSION_PHASE8_REPLACEMENT_METRICS = (
-    TRAIN_DIR / "_retired" / "gps7_schnet_300k_v2"
-    / "fusion_replacement_300k_metrics.json"
+    LEGACY_METRICS_DIR / "phase8_replacement_300k_fusion_metrics.json"
 )
 
-# Phase 8 expansion500k v3 component (raw eV - no normalization). The routed v4
-# production path below reuses this hybrid; ``load_hybrid`` keeps v3 as its
-# compatibility default because that API returns one hybrid trio.
-MODEL_PHASE8_EXPANSION_GPS = MODELS_DIR / "phase8_gps_expansion_500k.pt"
-MODEL_PHASE8_EXPANSION_SCHNET = MODELS_DIR / "phase8_schnet_expansion_500k.pt"
-MODEL_PHASE8_EXPANSION_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_expansion_500k.pt"
+# The routed-v4 loader retains the old v3 component as an explicit
+# compatibility bundle; it is not the recommended predictor.
+MODEL_PHASE8_EXPANSION_GPS = ROUTED_V4_COMPAT_DIR / "gps7_500k_v3_compat.pt"
+MODEL_PHASE8_EXPANSION_SCHNET = ROUTED_V4_COMPAT_DIR / "schnet_500k_v3_compat.pt"
+MODEL_PHASE8_EXPANSION_HYBRID = ROUTED_V4_COMPAT_DIR / "gps7_schnet_500k_v3_compat.pt"
 FUSION_PHASE8_EXPANSION_METRICS = (
-    TRAIN_DIR / "gps7_schnet_500k_v3" / "fusion_expansion_500k_metrics.json"
+    TRAIN_DIR / "routed_gps7_gps9_schnet_500k_v4"
+    / "gps7_schnet_500k_v3_compat_metrics.json"
 )
 
 # Phase 8 fixed-data architecture candidate: the v3 GPS plus a 9-layer GPS and
 # a dual-GPS fusion head. Inference routes only base-predicted Gap < 4 eV rows.
-MODEL_PHASE8_EXPANSION_GPS_DEPTH9 = MODELS_DIR / "phase8_gps_expansion_500k_depth9.pt"
+MODEL_PHASE8_EXPANSION_GPS_DEPTH9 = ROUTED_V4_COMPAT_DIR / "gps9_500k_v4_expert.pt"
 MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
-    MODELS_DIR / "phase8_hybrid_fusion_expansion_500k_dualgps.pt"
+    ROUTED_V4_COMPAT_DIR / "gps7_gps9_schnet_500k_v4.pt"
 )
 
 # Repaired-2M pure-2D Track A models. The three GPS encoders are direct
@@ -98,7 +105,9 @@ MODELS_REPAIRED_2M_DENSE_GATES = tuple(
 
 # Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
 # appending the residual-tail probe pool. Experimental only; not a default.
-MODEL_PHASE8_TAIL_PROBE_HYBRID = MODELS_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
+MODEL_PHASE8_TAIL_PROBE_HYBRID = (
+    LEGACY_MODEL_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
+)
 FUSION_PHASE8_TAIL_PROBE_METRICS = (
     EXPERIMENTS_DIR / "_closed" / "legacy" / "pilots_30k" / "fusion_tail_probe_30k_metrics.json"
 )
@@ -107,9 +116,9 @@ FUSION_PHASE8_TAIL_PROBE_METRICS = (
 # SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
 # training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
 # and experiments/_closed/ab3d/comparison.md. These artifacts are kept for the A/B record.
-MODEL_TENSORNET_300K = MODELS_DIR / "tensornet_3d_300k.pt"
-MODEL_HYBRID_TENSORNET = MODELS_DIR / "hybrid_fusion_tensornet.pt"
-FUSION_TENSORNET_METRICS = PRODUCTION_HISTORY_DIR / "phase7" / "fusion_tensornet_metrics.json"
+MODEL_TENSORNET_300K = LEGACY_MODEL_DIR / "tensornet_3d_300k.pt"
+MODEL_HYBRID_TENSORNET = LEGACY_MODEL_DIR / "hybrid_fusion_tensornet.pt"
+FUSION_TENSORNET_METRICS = LEGACY_METRICS_DIR / "phase7_fusion_tensornet_metrics.json"
 
 # ── Model hyperparameters ──
 

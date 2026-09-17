@@ -881,30 +881,37 @@ def predict_smiles_ensemble(
 # ── M1: GW prediction with uncertainty (Δ-ensemble + calibration + OOD) ──
 # The frozen-embedding Δ-learning path (Phase 9/10), wrapped so a single SMILES
 # yields a GW-level (value, σ, ood_flag) instead of a bare number. Artifacts come
-# from production/06_uq/scripts: the 10 LightGBM members per target, the σ-recalibration
-# scales, and the OOD reference bundle (standardized fit embeddings + threshold).
+# from the historical archive branch: the 10 LightGBM members per target, the
+# sigma-recalibration scales, and the OOD reference bundle (standardized fit
+# embeddings + threshold). The desktop branch intentionally has no implicit UQ
+# bundle because it is not calibrated for the current production predictor.
 
 
 def load_uq_bundle(
     device: torch.device | str | None = None,
     *,
+    archive_root: str | Path | None = None,
     results_subdir: str = "results",
 ) -> dict:
     """Load everything predict_smiles_with_uq needs, once, for reuse across calls.
 
-    Returns a dict with: the SchNet hybrid trio (for B3LYP + 384-d features —
-    MUST be the SAME hybrid that produced the Δ-model's training embeddings,
-    i.e. phase7_hybrid, 192+192-d), the per-target LightGBM members, the
-    calibration scales, and the OOD reference arrays.
+    ``archive_root`` must point to a checked-out copy of the repository's
+    ``archive`` branch. Historical UQ bundles are deliberately not resolved
+    from the desktop delivery tree. The bundle's hybrid must be the SAME
+    hybrid that produced the Delta-model embeddings, normally ``phase7_hybrid``
+    with 192+192 dimensions.
     """
     import json
     import lightgbm as lgb
 
-    from .constants import PRODUCTION_DIR
-
-    # UQ assets live under the calibration stage; `results_subdir` selects which
-    # trained variant (results, results_v3, results_lora_v3) to load.
-    uq_dir = PRODUCTION_DIR / "06_uq" / results_subdir
+    if archive_root is None:
+        raise FileNotFoundError(
+            "Historical UQ bundles live on the archive branch; pass "
+            "archive_root=Path('<archive checkout>') explicitly."
+        )
+    uq_dir = Path(archive_root).expanduser().resolve() / "production" / "06_uq" / results_subdir
+    if not uq_dir.is_dir():
+        raise FileNotFoundError(f"UQ bundle directory does not exist: {uq_dir}")
     cfg_path = uq_dir / "feature_config.json"
     feature_cfg = (
         json.loads(cfg_path.read_text(encoding="utf-8"))
@@ -923,7 +930,7 @@ def load_uq_bundle(
         if not m:
             raise FileNotFoundError(
                 f"No ensemble boosters for '{t}' in {uq_dir / 'ensemble_lgbm'}. "
-                "Run production/06_uq/scripts/train_ensemble.py first."
+                "Check the selected archive bundle or run the explicit UQ CLI."
             )
         members[t] = m
 
@@ -931,6 +938,7 @@ def load_uq_bundle(
     ood = np.load(uq_dir / "ood_reference.npz")
     return {
         "hybrid": hybrid, "members": members, "calib": calib,
+        "archive_root": str(Path(archive_root).expanduser().resolve()),
         "results_subdir": results_subdir,
         "feature_cfg": feature_cfg,
         "ref_std": ood["ref_std"], "ood_mu": ood["mu"], "ood_sd": ood["sd"],
@@ -983,6 +991,7 @@ def predict_smiles_with_uq(
     bundle: dict | None = None,
     device: torch.device | str | None = None,
     *,
+    archive_root: str | Path | None = None,
     results_subdir: str = "results",
 ) -> dict | None:
     """Predict GW-level HOMO/LUMO/Gap for one SMILES, with uncertainty.
@@ -1001,12 +1010,16 @@ def predict_smiles_with_uq(
          "lumo": {...}, "gap": {...},
          "ood": bool, "ood_distance": float, "ood_threshold": float}
 
-    Pass ``bundle=load_uq_bundle()`` to reuse loaded artifacts across many calls.
+    Pass ``bundle=load_uq_bundle(archive_root=...)`` to reuse loaded artifacts
+    across many calls. The archive argument is required when no bundle is
+    supplied.
     """
     from sklearn.neighbors import NearestNeighbors
 
     if bundle is None:
-        bundle = load_uq_bundle(device, results_subdir=results_subdir)
+        bundle = load_uq_bundle(
+            device, archive_root=archive_root, results_subdir=results_subdir
+        )
 
     # B3LYP prediction + the 384-d fusion embedding (one forward pass).
     vi, preds, e2d, e3d = predict_smiles_batch_hybrid(

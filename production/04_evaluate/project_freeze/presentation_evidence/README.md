@@ -3,7 +3,7 @@
 Every number the interview deck quotes, resolved to a local file.
 
 ```powershell
-.venv\Scripts\python.exe production\04_evaluate\scripts\evaluation\build_presentation_evidence.py
+.venv\Scripts\python.exe production\04_evaluate\scripts\evaluation\build_presentation_evidence.py --archive-root D:\文档\molgap-archive-width
 ```
 
 Output: `presentation_evidence.json`. It recomputes the derived statistics the
@@ -28,13 +28,15 @@ already accepted records. It creates no new model claim.
 
 ## Numbers in the outline that need fixing
 
+The builder requires an explicit checkout of the `archive` branch because the
+Delta/UQ records are historical and are no longer part of the production tree.
 Three claims in the draft outline do not match the local records.
 
 **Slide 12: Delta/UQ is bound to `phase8_expansion_hybrid` (the v3 single
 hybrid), not to routed-v4.** The outline says routed-v4. Both are previous-
 generation bases and the substance of the limitation is unchanged, but the
-registry key is wrong. `production/06_uq/results_v3/feature_config.json` is
-authoritative.
+registry key is wrong. The archive branch's
+`production/06_uq/results_v3/feature_config.json` is authoritative.
 
 **Slide 10's footnote is now stale.** It says packaging is unfinished and the
 registry still points at routed-v4. Packaging closed on 2026-07-31; the

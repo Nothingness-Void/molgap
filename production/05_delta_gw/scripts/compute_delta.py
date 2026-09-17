@@ -6,13 +6,14 @@ This is the moment of truth for Δ-learning: how far is B3LYP from GW, and does 
 gap have learnable structure? We also dump the 192-d embeddings here so the Δ model
 (P9.4) trains on exactly these features without recomputing.
 
-Outputs (production/05_delta_gw/results/):
+Outputs (under the explicitly selected output directory):
   delta_oe62.csv             per-molecule: smiles, GW, pred-B3LYP, Δ
   delta_oe62_embeddings.npz  emb_2d / emb_3d / smiles (Δ-model features)
   delta_oe62_summary.json    Δ distribution + residual-compression stats
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/compute_delta.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/compute_delta.py \\
+      --oe62 data/raw/oe62_df_5k.json --out-dir experiments/oe62_delta/results
 """
 from __future__ import annotations
 
@@ -27,7 +28,6 @@ import pandas as pd
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-from molgap.constants import DELTA_GW_DIR
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
 
 # Reuse the in-distribution screen from the probe script (same dir).
@@ -36,14 +36,16 @@ from probe_oe62_indist import (
 )
 
 OE62 = "data/raw/oe62_df_5k.json"
-OUTDIR = DELTA_GW_DIR / "results"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--oe62", type=Path, default=Path(OE62))
     parser.add_argument("--hybrid-key", default="phase7_hybrid")
-    parser.add_argument("--out-dir", type=Path, default=OUTDIR)
+    parser.add_argument(
+        "--out-dir", type=Path, required=True,
+        help="explicit experiment output directory; no production default is used",
+    )
     parser.add_argument("--out-prefix", default="delta_oe62")
     return parser.parse_args()
 

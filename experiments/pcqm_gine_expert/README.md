@@ -7,4 +7,5 @@ replacing the general predictor?
 
 Read `results/local_scaleup_1m_v7_decision.md` for the accepted local scale-up,
 `results/REMOTE_LOG.md` for completed remote rounds, and `CURRENT_STATE.md` for
-live status.
+live status. The V5 pointer-only wrapper is `v5_evidence.json`; it preserves
+the specialist-only boundary.

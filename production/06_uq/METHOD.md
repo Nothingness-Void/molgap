@@ -28,9 +28,9 @@ Each accepted molecule must include:
 | Delta candidates | `production/05_delta_gw/METHOD.md`, `production/05_delta_gw/scripts/` |
 | Ensemble calibration | `production/06_uq/scripts/train_ensemble.py` |
 | Embedding-distance OOD | `production/06_uq/scripts/ood_score.py` |
-| Historical v1 UQ record | `production/06_uq/results/` |
-| Historical v3 LightGBM UQ record | `production/06_uq/results_v3/` |
-| Historical v3 LoRA UQ record | `production/06_uq/results_lora_v3/` |
+| Historical v1 UQ record | `archive` branch: `production/06_uq/results/` |
+| Historical v3 LightGBM UQ record | `archive` branch: `production/06_uq/results_v3/` |
+| Historical v3 LoRA UQ record | `archive` branch: `production/06_uq/results_lora_v3/` |
 
 Historical bundles are comparison evidence, not implicit defaults.
 
@@ -47,5 +47,5 @@ The ordered implementation queue is in `ROADMAP.md`.
 
 ## Archive
 
-The detailed v1 M1-UQ narrative is preserved at
+The detailed v1 M1-UQ narrative is preserved on the `archive` branch at
 `docs/archive/phase10_m1_uq_v1_history.md`.

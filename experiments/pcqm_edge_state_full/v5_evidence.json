@@ -1,0 +1,74 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-edgestate-rich-full-submission",
+  "track": "B",
+  "scope": "historical_official_full_training_and_external_submission",
+  "legacy_contract": "molgap-pcqm-rich-full-acceptance-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "durable_ims_and_external_outputs_verified",
+    "comparison_status": "official_validation_complete_test_outputs_prepared",
+    "scientific_status": "external_submission_pending_review",
+    "transfer_status": "external_specialist_reference_only",
+    "budget_decision": "closed_no_resubmission",
+    "full_handoff_status": "complete_closed"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_edge_state_full/results/rich_full/acceptance.json",
+      "experiments/pcqm_edge_state_full/results/rich_full/submission.json",
+      "experiments/pcqm_edge_state_full/results/rich_full/submission_preparation.json",
+      "experiments/pcqm_edge_state_full/results/rich_full/submission_status.json",
+      "experiments/pcqm_edge_state_full/results/rich_full/decision.md",
+      "platforms/_records/ims/pcqm_rich_full_20260828/completion_manifest.json",
+      "platforms/_records/ims/pcqm_rich_full_20260828/metrics.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/training/best.pt",
+      "sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15",
+      "availability": "durable_ims_verified"
+    },
+    {
+      "name": "resumable_last_checkpoint",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/training/last.pt",
+      "sha256": "1f30ea262c1f13dd37a6939726b1a28702ee89a43a82618281b3708920650d2c",
+      "availability": "durable_ims_verified"
+    },
+    {
+      "name": "official_validation_predictions",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/training/valid_predictions.pt",
+      "sha256": "925253128a874d194d61e795ad71d6543b29bbd25f0fcea37e2ce35c74cecab1",
+      "availability": "durable_ims_verified"
+    },
+    {
+      "name": "test_dev_submission",
+      "locator": "external://pcqm4mv2-edgestate/submissions/official/y_pred_pcqm4m-v2_test-dev.npz",
+      "sha256": "a11cb93c5056c4b503ec0a337bcb3cdd75a390f59f792f4860c00ab29a6a2f3d",
+      "availability": "local_external_verified"
+    },
+    {
+      "name": "test_challenge_submission",
+      "locator": "external://pcqm4mv2-edgestate/submissions/official/y_pred_pcqm4m-v2_test-challenge.npz",
+      "sha256": "a20c00049c885121789bccea78359aa3dba70630367003a09cde999430f4e13d",
+      "availability": "local_external_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train": "consumed",
+    "official_validation": "consumed",
+    "test_dev": "consumed",
+    "test_challenge": "consumed"
+  },
+  "migration": {
+    "migrated_at": "2026-09-17",
+    "verification_scope": "local acceptance, IMS completion records, and external submission hashes",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

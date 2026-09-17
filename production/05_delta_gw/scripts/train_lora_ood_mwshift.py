@@ -17,8 +17,10 @@ Fair A/B on the SAME shifted split, all retrained on the low-MW pool only:
   raw B3LYP / const Δ / LightGBM Δ / encoder-LoRA (GPS+SchNet+Fusion).
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_lora_ood_mwshift.py
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_lora_ood_mwshift.py --seeds 42 1 2
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/train_lora_ood_mwshift.py \\
+      --graph-cache experiments/oe62_delta/results/delta_oe62_graphs.pt \\
+      --embedding-npz experiments/oe62_delta/results/delta_oe62_embeddings.npz \\
+      --out-dir experiments/oe62_lora_ood/results
 """
 from __future__ import annotations
 
@@ -40,7 +42,7 @@ from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from torch_geometric.data import Batch
 
-from molgap.constants import MODELS_DIR, TARGET_COLS, DELTA_GW_DIR
+from molgap.constants import TARGET_COLS
 from molgap.inference import load_hybrid
 
 if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
@@ -50,9 +52,6 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         pass
 RDLogger.DisableLog("rdApp.*")
 
-PHASE9 = DELTA_GW_DIR / "results"
-GRAPH_CACHE = PHASE9 / "delta_oe62_graphs.pt"
-NPZ = PHASE9 / "delta_oe62_embeddings.npz"
 MW_QUANTILE = 0.8
 
 LGB_PARAMS = dict(
@@ -134,14 +133,14 @@ def metrics_block(y_true, y_pred):
 
 
 # ── data ─────────────────────────────────────────────────────────────────────
-def load_data():
-    obj = torch.load(GRAPH_CACHE, weights_only=False)
+def load_data(graph_cache: Path, embedding_npz: Path):
+    obj = torch.load(graph_cache, weights_only=False)
     df, g2d, g3d = obj["df"], obj["g2d"], obj["g3d"]
     smiles = df["smiles"].tolist()
     mw = np.array([Descriptors.MolWt(Chem.MolFromSmiles(s)) for s in smiles], dtype=np.float32)
 
     # align frozen embeddings (for the LightGBM baseline) by SMILES
-    npz = np.load(NPZ, allow_pickle=True)
+    npz = np.load(embedding_npz, allow_pickle=True)
     emb_by_smi = {s: np.hstack([npz["emb_2d"][i], npz["emb_3d"][i]]).astype(np.float32)
                   for i, s in enumerate(npz["smiles"])}
     X = np.stack([emb_by_smi[s] for s in smiles])  # [n, 384], df-order
@@ -238,6 +237,9 @@ def train_lightgbm_delta(X, gw, raw, train, val, test, seed):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--graph-cache", type=Path, required=True)
+    ap.add_argument("--embedding-npz", type=Path, required=True)
+    ap.add_argument("--out-dir", type=Path, required=True)
     ap.add_argument("--rank", type=int, default=4)
     ap.add_argument("--alpha", type=float, default=8.0)
     ap.add_argument("--lora-dropout", type=float, default=0.0)
@@ -250,11 +252,12 @@ def main():
     ap.add_argument("--split-seed", type=int, default=42)
     ap.add_argument("--device", type=str, default=None)
     args = ap.parse_args()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
 
     device = torch.device(args.device) if args.device else torch.device(
         "cuda" if torch.cuda.is_available() else "cpu")
 
-    df, g2d, g3d, mw, X, gw, raw = load_data()
+    df, g2d, g3d, mw, X, gw, raw = load_data(args.graph_cache, args.embedding_npz)
     train, val, test, thr = mw_shift_split(mw, args.split_seed)
     print(f"Device: {device}", flush=True)
     print(f"MW-shift split: thr(q{int(MW_QUANTILE*100)})={thr:.1f} | "
@@ -313,7 +316,7 @@ def main():
         "lora_best_val_mae": best_vals, "lora_per_seed_avg_mae": per_seed,
         "metrics": blocks,
     }
-    out = PHASE9 / "lora_ood_mwshift_metrics.json"
+    out = args.out_dir / "lora_ood_mwshift_metrics.json"
     out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"\nSaved {out}", flush=True)
 

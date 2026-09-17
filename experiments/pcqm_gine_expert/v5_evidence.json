@@ -1,0 +1,66 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+  "track": "B",
+  "scope": "historical_local_one_million_gap_specialist",
+  "legacy_contract": "molgap-pcqm-gine-expanded-local-contract-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "committed_local_artifacts_hash_verified",
+    "comparison_status": "fixed_official_validation_5k_complete",
+    "scientific_status": "accepted_specialist_not_leaderboard",
+    "transfer_status": "task_routed_only",
+    "budget_decision": "closed_no_production_promotion",
+    "full_handoff_status": "complete_closed"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md",
+      "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/input_contract.json",
+      "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/completion_manifest.json",
+      "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/acceptance.json",
+      "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/metrics.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_checkpoint",
+      "locator": "repo://experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_best.pt",
+      "sha256": "9b971c1c9f770b80966af38107b30da21143c75b5567879a941173afb2d5955e",
+      "availability": "local_hash_verified"
+    },
+    {
+      "name": "resumable_last_checkpoint",
+      "locator": "repo://experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_last.pt",
+      "sha256": "6cc657143bb7a2396df781934ffe021c3ee9cd6b0fafa4b09af0df711431cc44",
+      "availability": "local_hash_verified"
+    },
+    {
+      "name": "official_validation_5k_predictions",
+      "locator": "repo://experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_official_valid_5k_predictions.csv",
+      "sha256": "a16abc67eb01c2b787303e5aa5d628ba0ad03f01c9c847fef17d522371357f88",
+      "availability": "local_hash_verified"
+    },
+    {
+      "name": "completion_manifest",
+      "locator": "repo://experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/completion_manifest.json",
+      "sha256": "ac09ee201737488b328396f0319d374f9ae01ff9639f4a760484ce794c1e6da5",
+      "availability": "committed_authority"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train": "consumed",
+    "official_validation": "consumed",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-17",
+    "verification_scope": "local completion manifest, acceptance checks, and fixed official-validation prediction hash",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

@@ -44,10 +44,13 @@ Rules:
 - Bump the version only when an accepted change alters training data,
   architecture, routing behavior, targets, or the shipped inference contract.
 
-Retired production evidence belongs under:
+Retired production evidence is preserved on the `archive` branch under its
+original production path. It must not be recreated in the desktop delivery
+tree. When a desktop pointer is necessary, write it explicitly as an archive
+branch pointer, for example:
 
 ```text
-production/03_train/_retired/<model_result_directory>/
+archive branch: production/03_train/_retired/<model_result_directory>/
 ```
 
 ## Experiment directories
@@ -99,6 +102,8 @@ example `common_metrics.json` and `ood_metrics.json`.
 - Thin command-line adapters: the owning tree's `scripts/`.
 - Production decisions and compact metrics: `production/`.
 - Question-specific evidence: `experiments/<question>/results/`.
+- Historical production evidence: the `archive` branch, never a new desktop
+  `production/history/` or `production/03_train/_retired/` tree.
 - Large reproducible embeddings and graph caches: `data/cache/`.
 - Selected checkpoints: `models/`.
 - Platform submission and scheduler records: `platforms/`.

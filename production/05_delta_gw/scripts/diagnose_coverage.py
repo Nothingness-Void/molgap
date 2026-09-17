@@ -15,11 +15,14 @@ predict its gap with the Hybrid, then bin by similarity and report gap MAE per b
 Prereq: PCQM4Mv2 already downloaded by benchmark_pcqm4mv2.py.
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/diagnose_coverage.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/diagnose_coverage.py \\
+      --train-csv data/raw/archive/legacy/phase7_chonsfcl_mw200_1000_300k.csv \\
+      --out-json experiments/pcqm_coverage/results/coverage_diagnostic.json
 """
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -28,18 +31,16 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, Descriptors, DataStructs
 from sklearn.metrics import mean_absolute_error
 
-from molgap.constants import RAW_DIR, DELTA_GW_DIR
+from molgap.constants import RAW_DIR
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
 from molgap.utils import canonicalize_smiles
 
 DATA_CSV = RAW_DIR / "pcqm4m-v2" / "raw" / "data.csv.gz"
 SPLIT_PT = RAW_DIR / "pcqm4m-v2" / "split_dict.pt"
-TRAIN_CSV = RAW_DIR / "phase7_chonsfcl_mw200_1000_300k.csv"
 ALLOWED = {"C", "H", "O", "N", "S", "F", "Cl"}
 MW_MIN, MW_MAX = 200.0, 1000.0
 N_SAMPLE = 3000
 SEED = 42
-OUT = DELTA_GW_DIR / "results" / "coverage_diagnostic.json"
 
 
 def fp_of(smiles):
@@ -60,13 +61,19 @@ def in_dist(smiles):
 
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--train-csv", type=Path, required=True)
+    parser.add_argument("--out-json", type=Path, required=True)
+    args = parser.parse_args()
     if not DATA_CSV.exists():
         raise SystemExit("PCQM4Mv2 not found — run benchmark_pcqm4mv2.py first to download.")
 
     df = pd.read_csv(DATA_CSV)
     split = torch.load(SPLIT_PT, weights_only=False)
     valid = df.iloc[np.array(split["valid"])].reset_index(drop=True)
-    train = pd.read_csv(TRAIN_CSV)
+    train = pd.read_csv(args.train_csv)
     train_canon = set(train["canonical_smiles"].dropna())
 
     # Same subset as the benchmark (in-dist, non-overlap, same sample).
@@ -128,10 +135,11 @@ def main():
     print("\n  低相似度 MAE 高、高相似度 MAE 低 → 覆盖不足(未见化学结构)是主因")
     print("  各层 MAE 接近 → 不是覆盖问题(几何/方法)")
 
-    OUT.write_text(json.dumps({"overall_mae": overall,
-                               "mean_max_sim": float(sv["max_sim"].mean()),
-                               "layers": layers}, indent=2))
-    print(f"\nSaved {OUT}")
+    args.out_json.parent.mkdir(parents=True, exist_ok=True)
+    args.out_json.write_text(json.dumps({"overall_mae": overall,
+                                         "mean_max_sim": float(sv["max_sim"].mean()),
+                                         "layers": layers}, indent=2))
+    print(f"\nSaved {args.out_json}")
 
 
 if __name__ == "__main__":

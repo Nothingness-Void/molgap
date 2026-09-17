@@ -13,11 +13,14 @@ near-GW = B3LYP + Δ. Molecules outside the in-dist screen (elements/MW) get an
 OOD flag — their Δ is extrapolated and less trustworthy.
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/predict_experimental_delta.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/predict_experimental_delta.py \\
+      --archive-root <archive-checkout> \\
+      --delta-dir <archive-checkout>/production/05_delta_gw/results \\
+      --out-dir experiments/experimental_delta/results
 """
 from __future__ import annotations
 
-import sys
+import argparse
 import json
 from pathlib import Path
 
@@ -27,25 +30,21 @@ import lightgbm as lgb
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
-from molgap.constants import TARGET_COLS, DELTA_GW_DIR
+from molgap.constants import TARGET_COLS
 from molgap.inference import load_hybrid, predict_smiles_batch_hybrid
 
-# Experimental-data loaders live in production/history/scripts_phase7.
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "phase7"))
-from validate_all_experimental import (  # noqa: E402
-    parse_hopv, EXTRA_MOLECULES, OLED_CSV, HOPV_PATH, ALLOWED_ELEMENTS,
-)
-
-PHASE9 = DELTA_GW_DIR / "results"
 TARGETS = ("homo", "lumo", "gap")
+ALLOWED_ELEMENTS = {"C", "H", "N", "O", "S", "F", "Cl"}
 MW_MIN, MW_MAX = 200.0, 1000.0
 
 
-def load_delta_models():
+def load_delta_models(delta_dir: Path):
     """Load LightGBM Δ models via model_str (model_file fails on the 文档 path)."""
     out = {}
     for t in TARGETS:
-        out[t] = lgb.Booster(model_str=(PHASE9 / f"delta_lgbm_{t}.txt").read_text())
+        out[t] = lgb.Booster(
+            model_str=(delta_dir / f"delta_lgbm_{t}.txt").read_text(encoding="utf-8")
+        )
     return out
 
 
@@ -58,7 +57,19 @@ def in_distribution(smiles):
     return not (els - ALLOWED_ELEMENTS) and MW_MIN <= Descriptors.MolWt(mol) <= MW_MAX
 
 
-def collect_experimental():
+def collect_experimental(archive_root: Path):
+    # This historical loader is intentionally resolved from the archive branch;
+    # the desktop branch no longer carries the old Phase 7 input module.
+    import sys
+
+    loader_dir = archive_root / "production" / "history" / "scripts_phase7"
+    if not loader_dir.is_dir():
+        raise FileNotFoundError(f"archived experimental loader is missing: {loader_dir}")
+    sys.path.insert(0, str(loader_dir))
+    from validate_all_experimental import (  # noqa: E402
+        parse_hopv, EXTRA_MOLECULES, OLED_CSV, HOPV_PATH,
+    )
+
     recs = []
     oled = pd.read_csv(OLED_CSV)
     for _, r in oled.iterrows():
@@ -79,7 +90,14 @@ def stats(y_exp, y_pred):
 
 
 def main():
-    exp = collect_experimental()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--archive-root", type=Path, required=True)
+    parser.add_argument("--delta-dir", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
+    args = parser.parse_args()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+
+    exp = collect_experimental(args.archive_root)
     print(f"Experimental molecules: {len(exp)}")
 
     models = load_hybrid(key="phase7_hybrid")
@@ -89,7 +107,7 @@ def main():
     print(f"Predicted (3D valid): {len(ev)}/{len(exp)}")
 
     X = np.hstack([e2d, e3d]).astype(np.float32)
-    dmodels = load_delta_models()
+    dmodels = load_delta_models(args.delta_dir)
     ev["in_dist"] = [in_distribution(s) for s in ev["smiles"]]
     for k, t in enumerate(TARGETS):
         ev[f"b3lyp_{t}"] = preds[:, k]
@@ -117,9 +135,11 @@ def main():
     print("\n  MAE down from raw→nearGW = Δ moved predictions toward experiment.")
     print("  Residual ME (nearGW) = leftover bias, likely gas-phase GW vs solid/solution.")
 
-    ev.to_csv(PHASE9 / "experimental_delta_comparison.csv", index=False, encoding="utf-8")
-    (PHASE9 / "experimental_delta_metrics.json").write_text(json.dumps(results, indent=2))
-    print(f"\nSaved experimental_delta_comparison.csv + _metrics.json to {PHASE9}")
+    ev.to_csv(args.out_dir / "experimental_delta_comparison.csv", index=False, encoding="utf-8")
+    (args.out_dir / "experimental_delta_metrics.json").write_text(
+        json.dumps(results, indent=2), encoding="utf-8"
+    )
+    print(f"\nSaved experimental_delta_comparison.csv + _metrics.json to {args.out_dir}")
 
 
 if __name__ == "__main__":

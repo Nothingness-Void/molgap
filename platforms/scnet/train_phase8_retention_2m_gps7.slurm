@@ -42,7 +42,7 @@ ARGS=(
 )
 if [[ "$RETENTION_VARIANT" == "replay_distill" ]]; then
   ARGS+=(
-    --retention-teacher models/phase8_gps_expansion_500k.pt
+    --retention-teacher models/compatibility/routed_v4/gps7_500k_v3_compat.pt
     --retention-boundary 500000
     --retention-weight 0.25
     --retention-targets-cache "$RUN_ROOT/retention_targets_500k.pt"

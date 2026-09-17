@@ -14,11 +14,15 @@ inference (they only have ETKDG), so this measures the geometry-noise ceiling, i
 is not a production path.
 
 Usage:
-  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/diagnose_geometry.py
+  .venv\\Scripts\\python.exe production/05_delta_gw/scripts/diagnose_geometry.py \\
+      --oe62 data/raw/oe62_df_5k.json \\
+      --out-dir experiments/oe62_geometry/results
 """
 from __future__ import annotations
 
+import argparse
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -30,7 +34,6 @@ from torch_geometric.loader import DataLoader
 from rdkit import Chem
 from rdkit.Chem import rdDetermineBonds
 
-from molgap.constants import DELTA_GW_DIR
 from molgap.inference import load_hybrid
 from molgap.graphs import smiles_to_2d_pyg
 from molgap.utils import compute_gasteiger_charges, murcko_scaffold_smiles
@@ -41,7 +44,6 @@ from probe_oe62_indist import (
 from train_delta import fit_lgbm, TARGETS, SEED, TEST_FRAC
 
 OE62 = "data/raw/oe62_df_5k.json"
-PHASE9 = DELTA_GW_DIR / "results"
 ETKDG_BASELINE = {"homo": 0.197, "lumo": 0.217, "gap": 0.303}  # from delta_model_metrics
 
 
@@ -71,7 +73,11 @@ def xyz_to_3d_data(xyz_str):
 
 
 def main():
-    df = pd.read_json(OE62, orient="split")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--oe62", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
+    args = parser.parse_args()
+    df = pd.read_json(args.oe62, orient="split")
     print(f"Loaded {len(df)} OE62 rows")
 
     # ── In-distribution candidates with GW + PBE geometry ──
@@ -155,8 +161,11 @@ def main():
     print("  Near zero = geometry is not the bottleneck (residual is GW/label floor).")
     print("  Caveat: different valid-molecule set than ETKDG run; read the trend, not 3rd decimal.")
 
-    (PHASE9 / "geometry_diagnostic.json").write_text(json.dumps(results, indent=2))
-    print(f"\nSaved geometry_diagnostic.json to {PHASE9}")
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+    (args.out_dir / "geometry_diagnostic.json").write_text(
+        json.dumps(results, indent=2), encoding="utf-8"
+    )
+    print(f"\nSaved geometry_diagnostic.json to {args.out_dir}")
 
 
 if __name__ == "__main__":
