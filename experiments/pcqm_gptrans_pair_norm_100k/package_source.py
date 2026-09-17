@@ -94,7 +94,7 @@ def main() -> None:
         json.dumps(
             {
                 "title": "MolGap GPTrans Pair Norm V5 Source",
-                "id": "nvoid912/molgap-gptrans-pair-norm-v5-source",
+                "id": "nvoid912/molgap-gptrans-pair-norm-v5-source-v2",
                 "licenses": [{"name": "other"}],
                 "isPrivate": True,
             },
