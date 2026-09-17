@@ -1,0 +1,38 @@
+{
+  "format": "molgap-v5-kaggle-tpu-preflight-v1",
+  "status": "failed",
+  "started_at_unix": 1789669871.344809,
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+  "phases": {
+    "mounts": {
+      "status": "passed",
+      "runtime_manifest": "/kaggle/input/datasets/nvoid912/molgap-v5-desktop-runtime/runtime_manifest.json",
+      "runtime_source_commit": "24d9b13fad48bab1d0a8a92fec2b0b88b57224c9",
+      "data_manifest": "/kaggle/input/datasets/nvoid912/pcqm4mv2-ogb-fixed-100k-v1/manifest.json",
+      "data_identity": {
+        "name": "ogb-train-100k",
+        "train_rows": 100000,
+        "development_rows": 50000,
+        "kaggle1": true,
+        "scnet_compatible": false
+      },
+      "first_shard": "/kaggle/input/datasets/nvoid912/pcqm4mv2-ogb-fixed-100k-v1/train/train_shard_0000.pt"
+    },
+    "jax_devices": {
+      "status": "failed",
+      "count": 1,
+      "devices": [
+        "TFRT_CPU_0"
+      ],
+      "jax": "0.7.2",
+      "jaxlib": "0.7.2"
+    }
+  },
+  "error": {
+    "type": "ModuleNotFoundError",
+    "message": "No module named 'torch_xla'",
+    "traceback": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 119, in main\n    import torch_xla\nModuleNotFoundError: No module named 'torch_xla'\n"
+  },
+  "finished_at_unix": 1789669880.3261914
+}

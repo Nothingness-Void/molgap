@@ -76,8 +76,14 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `codex/exp/gptrans-full-convergence`. GPU jobs `1516700`/`1516701` and their
   dependent acceptance jobs were queued in the last snapshot; neither model is
   proven converged until terminal acceptance.
-- Accepted PCQM scale identities are held on IMS and mirrored to both Kaggle
-  accounts for the 100K/500K roles.
+- Accepted PCQM scale identities are held on IMS and mirrored to the accepted
+  Kaggle account datasets for the 100K/500K roles.
+- Kaggle3 account `nvoid912` now has accepted private, byte-identical 100K and
+  500K fixed-data mirrors plus the accepted V5 desktop runtime source layer.
+  Script and notebook batch probes both retained `TpuV5E8` metadata but ran on
+  CPU, so TPU training is blocked pending an interactive allocation and
+  PyTorch/XLA/PyG compatibility gate. Evidence is under
+  `platforms/_records/kaggle/preflight/`.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and

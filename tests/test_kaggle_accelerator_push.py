@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from molgap import kaggle_accelerator_push
 
 
@@ -50,11 +52,20 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     result = kaggle_accelerator_push.push_kernel_with_accelerator(
         package_dir=package,
         credential_path=credentials,
-        accelerator="TpuV5E8",
+        accelerator="NvidiaTeslaT4",
     )
 
     assert result["status"] == "submitted"
-    assert captured["json"]["machineShape"] == "TpuV5E8"
-    assert captured["json"]["enableTpu"] is True
-    assert captured["json"]["enableGpu"] is False
+    assert captured["json"]["machineShape"] == "NvidiaTeslaT4"
+    assert captured["json"]["enableTpu"] is False
+    assert captured["json"]["enableGpu"] is True
     assert "secret-value" not in json.dumps(result)
+
+
+def test_push_kernel_rejects_unverified_tpu_batch_path(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="executed both script and notebook"):
+        kaggle_accelerator_push.push_kernel_with_accelerator(
+            package_dir=tmp_path,
+            credential_path=tmp_path / "kaggle.json",
+            accelerator="TpuV5E8",
+        )

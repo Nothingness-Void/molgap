@@ -1,0 +1,20 @@
+{
+  "id": "nvoid912/molgap-v5-tpu-preflight",
+  "id_no": 134764213,
+  "title": "MolGap V5 TPU Preflight",
+  "code_file": "molgap-v5-tpu-preflight.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": true,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [
+    "nvoid912/molgap-v5-desktop-runtime",
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": []
+}

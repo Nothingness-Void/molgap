@@ -9,7 +9,8 @@ from requests.auth import HTTPBasicAuth
 
 
 KAGGLE_KERNEL_PUSH_URL = "https://www.kaggle.com/api/v1/kernels/push"
-ALLOWED_ACCELERATORS = {"NvidiaTeslaT4", "TpuV5E8"}
+ALLOWED_ACCELERATORS = {"NvidiaTeslaT4"}
+UNSUPPORTED_BATCH_ACCELERATORS = {"TpuV5E8"}
 
 
 def push_kernel_with_accelerator(
@@ -19,6 +20,12 @@ def push_kernel_with_accelerator(
     accelerator: str,
     timeout_seconds: int = 120,
 ) -> dict[str, Any]:
+    if accelerator in UNSUPPORTED_BATCH_ACCELERATORS:
+        raise ValueError(
+            "Kaggle accepted TpuV5E8 metadata but executed both script and "
+            "notebook batch probes on CPU; use an interactive allocation probe "
+            "before enabling TPU workloads"
+        )
     if accelerator not in ALLOWED_ACCELERATORS:
         raise ValueError(f"Unsupported accelerator: {accelerator}")
     package = package_dir.resolve()
