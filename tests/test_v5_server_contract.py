@@ -9,6 +9,7 @@ from molgap.evidence_index import load_evidence_index, write_evidence_index
 from molgap.research_funnel import HypothesisCard, validate_trajectory
 from molgap.runtime_profiling import PROFILE_STAGES, RuntimeProfile
 from molgap.screen_policy import REFERENCE_MATCH_FIELDS, canonical_fingerprint
+from molgap.screen_backtest import ScaleObservation, backtest_low_cost_screening
 from molgap.server_acceptance import (
     READY_FOR_DESKTOP,
     assess_strict_comparison,
@@ -371,3 +372,25 @@ def test_hypothesis_card_and_trajectory_require_evidence_first() -> None:
         "decision": {"status": "closed"},
     }
     assert validate_trajectory(record)["action"]["kind"] == "NO_TRAIN"
+
+
+def test_scale_backtest_does_not_release_ladder_from_heterogeneous_history() -> None:
+    result = backtest_low_cost_screening(
+        [
+            ScaleObservation("k1", "100K", "500K", 0.009, 0.010, False, False),
+            ScaleObservation("graphstate", "100K", "full", 0.002, -0.019, False, False),
+            ScaleObservation("gptrans", "100K", "500K", 0.001, 0.004, False, False),
+        ]
+    )
+    assert result["calibration_status"] == "PENDING"
+    assert result["early_stop_rule_released"] is False
+
+
+def test_scale_backtest_requires_three_same_contract_trace_pairs() -> None:
+    observations = [
+        ScaleObservation(f"family-{index}", "B/16", "B", 0.001, 0.002, True, True)
+        for index in range(3)
+    ]
+    result = backtest_low_cost_screening(observations)
+    assert result["calibration_status"] == "CALIBRATED"
+    assert result["early_stop_rule_released"] is True

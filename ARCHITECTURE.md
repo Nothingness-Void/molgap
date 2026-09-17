@@ -82,6 +82,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `evidence_index.py` | Deterministic discoverable index of positive, negative, and inconclusive evidence | Changing reusable evidence export/indexing |
 | `cost_ledger.py` | Append-only hardware-native cost records without cross-unit conversion | Changing experiment cost accounting |
 | `runtime_profiling.py` | Stage timing for loader, transfer, compute, validation, archive, and allocation | Changing pre-contract performance diagnostics |
+| `screen_backtest.py` | Conservative same-contract trace gate for future low-cost screening ladders | Changing prospective early-stop calibration rules |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
 | `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
