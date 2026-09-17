@@ -166,20 +166,24 @@ parameters. The margin is only `0.0000435771 eV` above the material gate.
 Frozen-checkpoint causal audit job
 `122305552` showed that learned pair selection, cross-node pairs, and per-pair
 normalization are all active; uniform averaging, diagonal-only pairs, or
-removing normalization regressed. The user explicitly released one matched-V4
-500K scale bridge on Kunshan on 2026-09-17; it uses the accepted fixed 500K/50K
-cache and does not retrain the frozen K1 reference. Authority:
+removing normalization regressed. Its matched-V4 500K bridge completed at
+`0.1043037325 eV`, only `0.0005561373 eV` better than the frozen K1 scalar and
+below the `0.003 eV` gate. V5 execution/artifact acceptance passed, strict
+paired comparison remained pending because the exact reference prediction
+bundle was unavailable, and the route was closed as
+`NEGATIVE_UNDER_CONTRACT`. Authority:
 `experiments/pcqm_k1_pair_token_100k/decision.md` and
-`experiments/pcqm_k1_pair_token_500k/protocol.md`.
+`experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md`.
 
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact
 sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
 non-destructive V5 sidecar. The old K1 500K run remains paired-v3 evidence, not
-a strict V4 reference. The PairToken matched60-v4 500K candidate lacks a local
-aligned reference prediction bundle, so its eventual V5 execution/artifact
-acceptance cannot become a strict paired comparison from the scalar reference
-alone. Authority: `experiments/v5_legacy_evidence_migration/decision.md`.
+a strict V4 reference. The PairToken profiling sweep reproduced BS128
+throughput but was non-monotonic and only partially covered V5 timing stages;
+it did not change the BS128 contract. Authorities:
+`experiments/v5_legacy_evidence_migration/decision.md` and
+`experiments/pcqm_k1_pair_token_batch_profile/results/decision_122388380.md`.
 
 ## Data and comparison contract
 

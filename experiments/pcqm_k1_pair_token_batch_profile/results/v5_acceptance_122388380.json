@@ -1,0 +1,68 @@
+{
+  "format": "molgap-v5-profiling-acceptance-v1",
+  "decision_date": "2026-09-17",
+  "run_id": "122388380",
+  "platform": "scnet-kunshan",
+  "source_commit": "3adbd2e120937dab2dfefc2ce1b120079abb7710",
+  "source_archive_sha256": "2a2c08f76a64f820959924a17e5bdf490779c196c27de50030fb66867b451c1e",
+  "model_inference_executed_by_acceptance": false,
+  "scientific_contract_change_authorized": false,
+  "v5_outcome": {
+    "execution_status": "COMPLETE",
+    "artifact_status": "ACCEPTED",
+    "comparison_status": "NOT_APPLICABLE",
+    "scientific_status": "NOT_APPLICABLE",
+    "transfer_status": "NOT_READY",
+    "budget_decision": "PROFILING_ONLY",
+    "full_handoff_status": "NONE"
+  },
+  "profiling_coverage": "PARTIAL",
+  "covered": [
+    "loader/collate",
+    "H2D",
+    "forward/loss",
+    "backward/optimizer",
+    "allocation duration",
+    "graph-size tail behavior",
+    "peak allocated/reserved memory"
+  ],
+  "missing": [
+    "validation or train-role evaluation timing",
+    "real model checkpoint/hash/archive timing",
+    "order-randomized repeated batch measurements"
+  ],
+  "representative_results": [
+    {"batch": 64, "graphs_per_second": 186.8420847560708, "peak_reserved_gib": 0.294921875, "reserve_fraction": 0.9815493646138808},
+    {"batch": 128, "graphs_per_second": 549.7004127785297, "peak_reserved_gib": 0.52734375, "reserve_fraction": 0.967008797653959},
+    {"batch": 256, "graphs_per_second": 225.4214416330132, "peak_reserved_gib": 1.021484375, "reserve_fraction": 0.9360948191593352},
+    {"batch": 512, "graphs_per_second": 294.8565127586376, "peak_reserved_gib": 1.974609375, "reserve_fraction": 0.876466275659824},
+    {"batch": 1024, "graphs_per_second": 484.3709919403268, "peak_reserved_gib": 3.876953125, "reserve_fraction": 0.7574535679374389},
+    {"batch": 2048, "graphs_per_second": 643.2048859101307, "peak_reserved_gib": 7.3203125, "reserve_fraction": 0.5420332355816226}
+  ],
+  "contract_batch_crosscheck": {
+    "profile_batch128_graphs_per_second": 549.7004127785297,
+    "training_mean_graphs_per_second": 551.7430238069762,
+    "relative_difference": -0.003702104493991865
+  },
+  "interpretation": {
+    "loader_h2d_bottleneck": false,
+    "dominant_stages": "forward plus backward/optimizer",
+    "fastest_single_pass_safe_batch": 2048,
+    "batch2048_speedup_vs_batch128_representative": 1.170100646386282,
+    "batch2048_contract_change_released": false,
+    "reason": "The sweep was non-monotonic and had no repeated randomized order; it supports a future contract study but not a batch change."
+  },
+  "actual_native_cost": {
+    "DCU_hours": 0.20027777777777778,
+    "wall_hours": 0.20027777777777778,
+    "queue_hours": 0.013333333333333334,
+    "allocated_CPU_hours": 1.6022222222222222,
+    "scheduler_elapsed_seconds": 721,
+    "allocated_dcu": 1
+  },
+  "artifact_sha256": {
+    "completion_manifest": "172fffdb6378c49c77683ab85120a3eda907369938b714910da4b43071706c9e",
+    "acceptance": "8e3527137479389ff30fde7d6f40d9e3575918f02a5bb1d85aa867b07e2586ad",
+    "stdout": "df8aceae18b83cd4e3056fbb1c9086cb2580658933de21f1eb5b219d355c6022"
+  }
+}

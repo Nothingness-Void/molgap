@@ -13,15 +13,12 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-PAIR-500K | Run the explicitly authorized PairToken matched-V4 500K bridge on Kunshan | Accept 60 complete epochs under V5; strict paired comparison requires the exact matched reference bundle and otherwise remains pending; no automatic seed/full/official follow-up |
-| P1 | OPS-PAIRTOKEN-PROFILE | After the active PairToken job releases the DCU, run one train-role-only profiling sweep on Kunshan | Record stage timings, tail behavior, throughput and memory; do not change BS128 or emit a scientific result |
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
-The PairToken causal audit is complete. It retains normalized, learned
-cross-node pair selection as the mechanism and closes uniform, diagonal-only,
-and unnormalized variants. The user explicitly authorized one 500K scale
-bridge of the unchanged candidate. This does not release an efficient
-approximation, another seed, full training, or any official role.
+The PairToken causal audit and 500K scale bridge are complete. The 500K point
+gain was below the material gate, so no efficient approximation, another seed,
+full training, protected role, or desktop handoff was released. The associated
+batch profiler did not authorize a departure from BS128.
 
 The K1 causal audit is complete. Round 2 rejected both attenuation and
 amplification of layer 6, so the conditional scalar-repair Round 3 is not

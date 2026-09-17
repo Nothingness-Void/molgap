@@ -1,0 +1,77 @@
+{
+  "format": "molgap-v5-terminal-acceptance-v1",
+  "decision_date": "2026-09-17",
+  "run_id": "122312462",
+  "platform": "scnet-kunshan",
+  "source_commit": "9a56b65ab373e8f52af3911ce57bd5ec5d09963b",
+  "source_archive_sha256": "91fb93ad949b6d75690e71dd69c0f0e50cdfcc2576f4f0b29cd8086dd69190f5",
+  "model_inference_executed_by_acceptance": false,
+  "v5_outcome": {
+    "execution_status": "COMPLETE",
+    "artifact_status": "ACCEPTED",
+    "comparison_status": "PENDING",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_READY",
+    "budget_decision": "STOP_FOR_COST",
+    "full_handoff_status": "NONE"
+  },
+  "candidate": {
+    "development_gap_mae_eV": 0.10430373251438141,
+    "best_epoch": 48,
+    "epochs_completed": 60,
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080,
+    "parameter_count": 3681665,
+    "mean_graphs_per_second": 551.7430238069762
+  },
+  "scalar_reference": {
+    "development_gap_mae_eV": 0.10485986978054046,
+    "gain_eV": 0.0005561372661590513,
+    "material_gain_required_eV": 0.003,
+    "material_gate_passed": false
+  },
+  "strict_comparison": {
+    "status": "PENDING",
+    "missing_evidence": [
+      "matched60-v4 K1 reference prediction bundle",
+      "paired analysis",
+      "paired bootstrap"
+    ],
+    "reason": "The exact aligned K1 reference bundle was not recoverable; a scalar reference cannot support a strict paired V5 comparison. The candidate nevertheless failed the predeclared absolute material-gain threshold."
+  },
+  "role_history": {
+    "train": "official-train-derived fixed 500K",
+    "development": "reused selection role, rows 500000:550000",
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false,
+    "shadow_role_read": false
+  },
+  "resume_cursor": {
+    "next_epoch": 60,
+    "trace_epochs": 60,
+    "last_global_step": 234360,
+    "last_sample_presentations": 29998080
+  },
+  "actual_native_cost": {
+    "DCU_hours": 15.1575,
+    "wall_hours": 15.1575,
+    "queue_hours": 0.019444444444444445,
+    "allocated_CPU_hours": 121.26,
+    "scheduler_elapsed_seconds": 54567,
+    "allocated_dcu": 1
+  },
+  "artifact_sha256": {
+    "completion_manifest": "211ba31b9abb76854bbfe117ddab252d9f42472ff4c17824b0b61d93458df694",
+    "acceptance": "2aaa6dd6fc7705276c2e2682c841f4350bbf605cf8ef53dbd6e54e338433489b",
+    "best_model": "cd428d17736b4c6af7595faac340e54f70b0506d6f8daa45405985c20e9ef105",
+    "best_predictions": "35fdaa76f10e166ccb123b6005929a420f18b2678a286023d4aa62e48ec9ca01",
+    "last_checkpoint": "cc07993db5f6cf7f97b768b40a0e2bd3ba20f5d69f09946a75be19fc9fbe0e3a",
+    "stdout": "0cb42d19014d07720ba1d8af80275acb80a5853908555ef320fd29c06ce14292",
+    "stderr": "266aa27aba358256c01b85c0f83d1017c98f65550f3ad357d0c5721a758e2592"
+  },
+  "artifact_caveats": [
+    "progress.json retained status RUNNING at next_epoch 60; the scheduler, completion manifest, metrics, trace, and checkpoint consistently prove terminal completion",
+    "development was repeatedly used for selection and is not an independent final estimate"
+  ]
+}

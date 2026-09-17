@@ -6,5 +6,7 @@ Submitted once to Kunshan as SLURM job `122388380` from immutable source commit
 
 The submission used `afterok:122312462`; the predecessor had already completed
 successfully when SLURM evaluated the dependency, so the profiling job began on
-`e10r4n11`. No result has been accepted yet. BS128 remains the scientific
-contract regardless of profiling output.
+`e10r4n11`. It completed in 721 seconds and passed mechanical artifact
+acceptance. V5 profiling coverage was partial and did not authorize a batch
+change; BS128 remains the scientific contract. See
+`results/decision_122388380.md`.
