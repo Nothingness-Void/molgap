@@ -404,11 +404,15 @@ No desktop wake is required.
 Root `AGENTS.md` files should remain short.
 
 Detailed operational rules live in:
-- `SERVER_AGENT_HANDOFF_V4.md`;
-- `DESKTOP_AGENT_HANDOFF_V4.md`;
-- `MOLGAP_COMMON_DIRECTION_V4.md`.
+- `docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md` for shared topology and
+  evidence boundaries;
+- `docs/operations/SERVER_AGENT_HANDOFF_V5_FINAL.md` for the server-only A/B
+  loop;
+- the desktop branch's short `AGENTS.md`, `CURRENT_STATE.md`, and relevant
+  experiment documents for desktop-specific work.
 
-Implementation agents may read the three V4 docs once during bootstrap.
+Implementation agents should read only the applicable V5 contract documents
+once during bootstrap.
 
 Runtime monitor B should not.
 
@@ -429,7 +433,7 @@ A dedicated implementation Luna Max may safely:
 - add ledger/profiling utilities;
 - import reviewed shared commits.
 
-It should not, as part of V4 implementation:
+It should not, as part of V5 implementation:
 - submit new scientific training;
 - consume new protected evaluation roles;
 - change scientific thresholds;
@@ -442,7 +446,7 @@ If scientific meaning is ambiguous, preserve state and report rather than guess.
 ## C21. Correct rollout order
 
 1. inspect current real state;
-2. install V4 docs;
+2. install the applicable V5 contract documents;
 3. patch server/desktop AGENTS narrowly and differently;
 4. test that no cross-machine monitoring is introduced;
 5. improve server-local A/B durability/idempotency;

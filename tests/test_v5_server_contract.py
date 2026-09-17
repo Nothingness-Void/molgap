@@ -408,3 +408,21 @@ def test_root_agent_keeps_desktop_outside_server_monitoring() -> None:
     assert "must not monitor, adopt" in lowered
     assert "no default cross-machine live control plane" in lowered
     assert "hourly" not in lowered
+
+
+def test_v5_contracts_do_not_reference_superseded_operational_docs() -> None:
+    paths = (
+        Path("docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md"),
+        Path("docs/operations/SERVER_AGENT_HANDOFF_V5_FINAL.md"),
+    )
+    text = "\n".join(path.read_text(encoding="utf-8") for path in paths)
+    forbidden = (
+        "MOLGAP_COMMON_DIRECTION_V4.md",
+        "SERVER_AGENT_HANDOFF_V4.md",
+        "DESKTOP_AGENT_HANDOFF_V4.md",
+        "install V4 docs",
+        "as part of V4 implementation",
+        "three V4 docs",
+    )
+    for stale_reference in forbidden:
+        assert stale_reference not in text

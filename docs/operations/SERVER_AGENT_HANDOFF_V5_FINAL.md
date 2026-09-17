@@ -201,7 +201,7 @@ monitor, adopt, or continue desktop-owned jobs when desktop is offline.
 Cross-machine live handoff is not part of the default architecture.
 
 Detailed policy:
-docs/operations/MOLGAP_COMMON_DIRECTION_V4.md
+docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md
 ```
 
 Preserve all existing scientific/data/platform safety rules.
@@ -525,7 +525,7 @@ Phase S0:
 - no code changes.
 
 Phase S1:
-- install V4 docs;
+- install the applicable V5 contract documents;
 - narrow `AGENTS.md` correction;
 - no training.
 
