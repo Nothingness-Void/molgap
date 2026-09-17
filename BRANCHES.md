@@ -17,7 +17,6 @@ dated evidence. Fetch before comparing a remote snapshot.
 |---|---|
 | codex/exp/gptrans-full-convergence | Active repaired GPTrans-T/K1 convergence and terminal acceptance chain |
 | codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
-| codex/exp/ogb-rich-edgegps-v4-100k | Separate reference/infra work without terminal disposition |
 | codex/scnet-distance-angle-triangle-500k | Submitted experiment without a terminal decision at its branch tip |
 
 Inspect these named branches only when working on their question. Their old
@@ -50,3 +49,10 @@ branches were integrated or preserved in `archive` before their local and
 remote branch refs were removed. The GPTrans V4 and Xi'an worktrees were
 committed and pushed, but remain active until their terminal questions close.
 No remote scheduler was queried and no compute workload was changed by this audit.
+
+The completed GPTrans-T 100K V4 branch was integrated into `molgap-desktop` by
+merge `65f0f53`. Its accepted reference and closed promotion decision remain in
+`experiments/pcqm_gptrans_t_100k_v4/`. The OGB-rich EdgeGPS9 100K V4 branch
+contained reusable reference infrastructure but no terminal experiment
+disposition; merge `becbcf8` preserves that history in `archive` without
+activating its tree. Both temporary branch refs were then retired.
