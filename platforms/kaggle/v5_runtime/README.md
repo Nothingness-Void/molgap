@@ -10,3 +10,8 @@ Future kernels mount this runtime plus one accepted fixed-data role and carry
 only a small experiment-specific entrypoint and immutable run spec. Each run
 must still perform its own hardware/runtime preflight and bind the resulting
 certificate before training.
+
+After publication, download the complete expanded dataset and run
+`accept_runtime.py`. Kaggle expands the deterministic archive into
+`molgap_runtime/`; acceptance therefore verifies every expanded file against
+`SOURCE_FILES.json` instead of trusting dataset readiness alone.
