@@ -1,0 +1,20 @@
+{
+  "hypothesis_id": "B-GPTRANS-PRENORM-500K-V5",
+  "family_id": "gptrans_relation_flow",
+  "current_baseline_deficiency": "Persistent dense pair memory is unnormalized before repeated attention consumption, and the GPTrans core is strongly scale-sensitive.",
+  "supporting_evidence": [
+    "Pair PreNorm improved the exact GPTrans 100K V4 reference by 0.0031248707 eV with a favorable paired interval.",
+    "The unchanged GPTrans propagation core passed the historical 500K bridge while its 100K endpoint was weak."
+  ],
+  "alternative_explanation": "The 100K gain may be run variation or may disappear when the larger dataset stabilizes pair-state statistics.",
+  "one_changed_mechanism": "Per-pair LayerNorm across the 32 relation channels before every GPTrans attention block.",
+  "earliest_cheap_falsifier": "Optimizer-inclusive deterministic BS128 preflight on the accepted fixed 500K cache.",
+  "closed_related_routes": [
+    "centered_logits",
+    "memory_value",
+    "memory_message",
+    "PairToken scale bridge"
+  ],
+  "expected_native_cost": "about 20 DCU-hours for one permanently frozen matched reference and one candidate, run concurrently",
+  "what_decision_this_result_changes": "Whether Pair PreNorm transfers beyond the 100K mechanism shortlist and merits a server READY_FOR_DESKTOP package."
+}
