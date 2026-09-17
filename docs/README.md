@@ -18,7 +18,7 @@ Contents:
 
 | Path | Role |
 |---|---|
-| `operations/` | Platform runbooks (e.g. SCNet DCU environment) |
+| `operations/` | Platform runbooks and the durable MolGap V5 operating contracts |
 | `archive/` | Superseded narrative documents, kept for provenance |
 
 Method documents now live beside the work they describe: the Delta-learning and

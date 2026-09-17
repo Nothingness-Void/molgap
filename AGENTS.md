@@ -18,6 +18,10 @@ B3LYP/6-31G*. This file is a navigation protocol; one fact lives in one place.
 `production/history/` is frozen history; never infer live state from it. Do not
 read all docs for current truth—read `CURRENT_STATE.md`.
 
+The durable V5 contracts live in `docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md`
+and `docs/operations/SERVER_AGENT_HANDOFF_V5_FINAL.md`. They supersede older V3/V4
+handoff rules; this root file stays a short navigation and safety protocol.
+
 ## Hard constraints (do not break)
 - **Python**: always `.venv\Scripts\python.exe` — system Python lacks torch/pyg.
 - **Train-inference consistency**: training and inference MUST use the same conformer
@@ -63,51 +67,28 @@ read all docs for current truth—read `CURRENT_STATE.md`.
 
 ## Remote monitor handoff
 
-Remote polling is bounded waiting, not a decision loop. Use one Luna Max
-heartbeat on one persistent monitor thread, never a cron that creates tasks.
-Name its automation id and the coordinator that owns scientific analysis.
+The always-on server runs one local two-conversation research loop for
+server-owned chains only. Conversation A owns bounded server-side 100K/500K
+interpretation, release validation, and authorized submission. Conversation B
+uses the configured Luna Max runtime and a fixed 30-minute heartbeat.
 
-Choose intervals from end-to-end runtime: 15 minutes under about 1 hour, 30
-minutes for 1-4 hours, and 60 minutes beyond that. Tighten only near a known
-terminal window. Handoff every remote chain before the coordinator stops watching.
+- B reads only the compact local binding, last observation, and unresolved
+  event/outbox; it must not reread the repository on every tick.
+- B checks only the exact server-owned bound job. Healthy `QUEUED`/`RUNNING`
+  status is silent. Confirmed completion or an actionable execution fault is
+  persisted atomically as one idempotent event for the existing server A.
+- API/status uncertainty is recorded as `UNKNOWN`, not treated as failure.
+- B never selects candidates, edits code/contracts, changes scientific fields,
+  retries/cancels/submits jobs, opens protected roles, or creates another A.
+- A claims events idempotently, collects evidence, separates infrastructure
+  from scientific outcomes, and chooses zero or one justified covered action.
+  A then rebinds B or pauses/closes the chain.
+- A submission timeout is `SUBMIT_UNKNOWN`; it requires reconciliation before
+  any retry. Duplicate ticks must not create duplicate successors.
 
-- While the remote job is non-terminal, report only the status and newly visible
-  mechanical evidence. Do not wake the coordinator, resubmit, or open another
-  task.
-- On any confirmed terminal state, including `COMPLETE`, unrecoverable `ERROR`,
-  cancellation, or an unknown state that is verified as no longer queued or
-  running, collect terminal logs/artifacts and run only frozen mechanical
-  acceptance. Then deliver one structured terminal handoff to the coordinator.
-  Prefer the Codex thread-message capability when it is permitted.
-- A monitor must use the authoritative integration checkout named in its
-  prompt; never inherit an old task cwd or a detached `.codex/worktrees`
-  checkout. Verify the named protocol exists before remote work.
-- Terminal handoff is a transaction. Persist its stages atomically. A direct
-  message is delivered only after a successful `send_message_to_thread`
-  acknowledgement; otherwise retry delivery only.
-- Delegated tasks may be policy-blocked from cross-thread messaging. Test that
-  path once. If blocked, do not keep retrying it: write `handoff_ready=true` to
-  the atomic marker. Only after the terminal marker is durable, create a
-  temporary one-minute heartbeat attached to the existing coordinator thread.
-  It consumes the marker once and deletes itself before controller analysis.
-  It must omit model and reasoning-effort overrides so the coordinator keeps
-  the settings currently selected in that thread.
-  Never keep a coordinator heartbeat active while the remote job is queued or
-  running, and never create a task/chat for handoff.
-- After the terminal handoff is delivered, pause or delete the heartbeat in the
-  same turn. A completed monitor has no reason to remain active. If message
-  delivery itself fails, leave the heartbeat active only long enough to retry
-  that delivery; do not repeat remote work or scientific interpretation.
-- Make terminal handoff idempotent: before sending, check the experiment status,
-  decision record, and any recorded handoff marker. Never send duplicate terminal
-  prompts or rerun an already accepted job.
-- Luna Max owns economical polling and mechanical evidence collection. The
-  coordinator owns result interpretation, repository decisions, follow-up
-  architecture selection, and any new submission authorization.
-- When `ROADMAP.md` explicitly authorizes an autonomous discovery loop, the
-  coordinator may use a terminal handoff to select, prepare, and submit exactly
-  one next in-scope experiment, then retarget and reactivate the same persistent
-  heartbeat. The monitor must never choose or submit the successor itself.
+Desktop is operationally independent. The server must not monitor, adopt,
+continue, wake, or take custody of desktop-owned jobs when the desktop is
+offline. There is no default cross-machine live control plane.
 
 ## Branch governance
 
