@@ -1,0 +1,18 @@
+{
+  "format": "molgap-pcqm-k1-gptrans-fusion-acceptance-v1",
+  "accepted": true,
+  "acceptance_scope": "mechanical_artifact_and_protocol_checks_only",
+  "identity_sha256": "24fbfd88ad42e44ba26b545f3b9f9084ade52b385bb3d818b06d5e6ff01da3eb",
+  "completion_manifest_sha256": "caf230c2eac557b4f326700ce30c9b6f60de50ce1c783c9ce13970d5711dc860",
+  "metrics_sha256": "70a6aa0408935dccbcd328f01df43966add06544dab94176698e666044f28961",
+  "prediction_sha256": "b580d8295f159d7efc284d6bdb143b05452b4ce1c05bfac6a869ceba2ca7234b",
+  "official_valid_rows": 73545,
+  "calibration_rows": 14933,
+  "holdout_rows": 58612,
+  "k1_weight": 0.552,
+  "gptrans_t_weight": 0.44799999999999995,
+  "official_validation_role_read": true,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "scientific_advancement_decided": false
+}

@@ -1,0 +1,41 @@
+{
+  "format": "molgap-pcqm-k1-gptrans-fusion-study-v1",
+  "status": "complete",
+  "models": {
+    "k1_bundle_sha256": "60b95d86736829fd38690fb33654199a753f693a333aa55f451d1983653fa3b7",
+    "k1_training_contract_sha256": "84fc78437c6f092dabcf2407af7bc75817ddde63424b412b143555e1adae6a50",
+    "gptrans_bundle_sha256": "0bc1c464f2e3cd64eb0926ae90e4f4f8c8094ce3a044405e3050f42518f1fb9e",
+    "gptrans_training_contract_sha256": "732a9a73f341a2caad151fde20fea82cb3623e4e242337e95fb05b3fe33d2cad"
+  },
+  "official_valid": {
+    "rows": 73545,
+    "graph_acceptance_sha256": "83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed",
+    "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+    "source_idx_sha256": "521f5cedad3e995d901940d86df36b4665ded9b52076f74d7d48583e39f10fa5",
+    "k1_mae_eV": 0.10667223528212925,
+    "gptrans_t_mae_eV": 0.10901231147696869,
+    "fixed_equal_blend_mae_eV": 0.1022267625790432
+  },
+  "calibration_holdout": {
+    "split": "source_idx modulo 5 equals 0 for calibration; all other rows held out",
+    "calibration_rows": 14933,
+    "holdout_rows": 58612,
+    "optimized_objective": "MAE eV",
+    "grid_step": 0.001,
+    "k1_weight": 0.552,
+    "gptrans_t_weight": 0.44799999999999995,
+    "calibration_k1_mae_eV": 0.10648905242239008,
+    "calibration_gptrans_t_mae_eV": 0.10868747900680745,
+    "calibration_equal_blend_mae_eV": 0.10209473153890708,
+    "calibration_calibrated_blend_mae_eV": 0.10203023558816339,
+    "holdout_k1_mae_eV": 0.10671890609432616,
+    "holdout_gptrans_t_mae_eV": 0.1090950713772778,
+    "holdout_equal_blend_mae_eV": 0.1022604010749545,
+    "holdout_calibrated_blend_mae_eV": 0.10218628751017783
+  },
+  "official_validation_role_read": true,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "production_registry_changed": false,
+  "prediction_sha256": "b580d8295f159d7efc284d6bdb143b05452b4ce1c05bfac6a869ceba2ca7234b"
+}

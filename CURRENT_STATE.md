@@ -49,19 +49,33 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 
 ## Execution State
 
-- Accepted PCQM scale identities (100K, 500K, 1M, full) are held on IMS; both
-  Kaggle accounts mirror accepted 100K/500K graphs.
-- Legacy local-operator Kaggle screen is closed; recurrent graph-state is
-  negative and archived. Neither is an active Kunshan experiment.
-- The full K1/GPTrans-T implementation is integrated in this branch. The
-  2026-09-14 evidence accepts GPTrans training at 156,250 steps; K1 recovery
-  and dependent fusion have no terminal acceptance in this snapshot.
-- Independent frozen GPTrans official-valid evaluation was submitted as CPU
-  job 1507573.ccpbs1 on 2026-09-14. Its MAE is not yet recorded here.
-  Follow the experiment results linked below; verify scheduler state before
-  any successor or resubmission. These are recorded snapshots, not live polls.
-- The K1/GPTrans-T fusion has one-time authorization for its frozen official-
-  valid calibration/holdout split. Test-dev/challenge remain sealed.
+- Kunshan V4 bootstrap passed source and graph checks. CPU setup `122210841`
+  and dependent DCU gate `122210845` were pending in the 2026-09-16 snapshot;
+  no formal training was submitted. Evidence is in
+  `platforms/_records/scnet/kunshan_v4_bootstrap_20260916/README.md`.
+- The matched 500K V4 experiment completed. K1 (`0.104860 eV`) and GPTrans-T
+  (`0.106868 eV`) beat EdgeState (`0.111349 eV`) on the aligned 50K development
+  role; K1's advantage over GPTrans-T remained below the `0.003 eV` nomination
+  floor. The accepted decision belongs to branch
+  `codex/exp/pcqm-500k-v4-evidence` pending desktop integration.
+- Xi'an probe `67440607` reproduced predictions but not cross-process gradient
+  hashes. Formal Xi'an V4 training remains gated; branch
+  `codex/exp/xian-determinism-audit` owns the follow-up audit.
+- The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
+  73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
+  0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated
+  blend scored 0.102186 eV on its frozen four-fifths holdout, but remained
+  behind the 0.099638 eV EdgeState reference. The route is closed without
+  promotion; exact evidence is under
+  `experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/`.
+- The one-time K1/GPTrans-T official-validation calibration role is consumed.
+  Test-dev/challenge remain sealed.
+- GPTrans/K1 convergence repairs are isolated on
+  `codex/exp/gptrans-full-convergence`. GPU jobs `1516700`/`1516701` and their
+  dependent acceptance jobs were queued in the last snapshot; neither model is
+  proven converged until terminal acceptance.
+- Accepted PCQM scale identities are held on IMS and mirrored to both Kaggle
+  accounts for the 100K/500K roles.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and

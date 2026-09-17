@@ -17,6 +17,8 @@ role.
 - Independent official-valid evaluation: `results/gptrans_official_eval_protocol.md`
   and `results/gptrans_official_eval_submission.json`
 - Integration decision: `decision.md`
+- Accepted K1/fusion evidence and scientific decision (2026-09-15):
+  `results/accepted_k1_gptrans_fusion_r3/decision.md`
 
 Full training starts only after each model's A100 preflight passes. Every
 checkpoint is atomic and contains the exact resumable cursor and RNG state.

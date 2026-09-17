@@ -1,0 +1,17 @@
+{
+  "format": "molgap-runtime-certificate-v1",
+  "status": "accepted",
+  "platform_id": "ims-a100-mmap-r2",
+  "accelerator": "NVIDIA A100-SXM4-80GB",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "tail_batch_policy": "drop_last",
+  "software_fingerprint": "735c929dfe81b886cf9882ce5062fc84c79060e78bcc36b12d26e6213e79faab",
+  "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+  "calibration_fixture_sha256": "6d658412dc41d27cb0bda48aed27edb004c70e53927250a1185bd0a3bf6ad8dc",
+  "calibration_output_sha256": "1cfdb7d7543aa6ac24ca7ff5b46e87879e8c8a5555ceb60d06e14fa26c76097b",
+  "calibration_checks_passed": true,
+  "runtime_fingerprint": "a6de619bfd9bd1a95ac421b4276a717c8691f857f363954ca4a9ad555c783775"
+}
