@@ -2369,28 +2369,6 @@ def make_pcqm_gap_encoder(candidate: str):
             **common,
             edge_state_channels=64,
         )
-    if candidate == "ogb_recurrent_graph_state_gps9":
-        return OGBGraphTokenStructuralGPSWrapper(
-            **common,
-            edge_state_channels=64,
-            token_channels=16,
-        )
-    if candidate == "ogb_query_pool_structural_gps9":
-        return OGBQueryPoolStructuralGPSWrapper(
-            **common,
-            num_pool_queries=4,
-        )
-    local_operators = {
-        "ogb_gated_local_gps9": "resgated",
-        "ogb_edge_attention_local_gps9": "transformer",
-        "ogb_gen_local_gps9": "gen",
-        "ogb_gatv2_local_gps9": "gatv2",
-    }
-    if candidate in local_operators:
-        return OGBLocalOperatorStructuralGPSWrapper(
-            **common,
-            local_operator=local_operators[candidate],
-        )
     if candidate == "ogb_sparse_triangle_edge_state_gps9":
         return OGBSparseTriangleEdgeStateGPSWrapper(
             **common,
