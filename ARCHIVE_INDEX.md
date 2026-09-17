@@ -1,15 +1,14 @@
 # MolGap Archive Index
 
-This branch (`archive`) is the durable history line for rejected or
-inactive experiments. It is not a live-state or production branch. `master`
-owns the production baseline; `molgap-server` owns server-side discovery and
+This branch (`archive`) is the durable history line for rejected or inactive
+experiments. It is not a live-state or production branch. `master` owns the
+production baseline; `molgap-server` owns server-side discovery and
 `molgap-desktop` owns full training and official evaluation.
 
-The archive intentionally contains dependency snapshots and the source history
+The archive intentionally contains dependency snapshots and source history
 needed to reproduce a closed question. Presence here does not mean that a
-method is a candidate. The authoritative live decision remains on
-`molgap-server` only for accepted or still-active work; the full decision and
-implementation for a closed method live here.
+method is a candidate. Read the desktop branch's `CURRENT_STATE.md` before
+using this index for a historical pointer.
 
 ## Archived PCQM questions
 
@@ -28,9 +27,8 @@ decision.
 
 ## Other closed architecture families
 
-These records were already present in the inherited experiment tree and are
-kept on this branch as historical evidence. They must not be reopened merely
-because their source files remain available:
+These records are retained as historical evidence. They must not be reopened
+merely because their source files remain available:
 
 | Family | Closed records |
 |---|---|
@@ -39,24 +37,73 @@ because their source files remain available:
 | Resource-bounded negative branches | `experiments/resource_bounded_architecture/results/gap_rwse_100k_screen/decision.md`, `gated_structural_100k_seed42/`, and `fusion_failure_audit.json` |
 | Historical PCQM operator questions | `experiments/pcqm_gap_architecture/results/query_pool_seed42/decision.md`, `local_operator_search_seed42/decision.md`, and `recurrent_graph_state_seed42/` |
 
-The exact metrics, hashes, logs, and acceptance payloads belong to the
-decision paths above. Large checkpoints and transient working outputs remain
-in their platform record locations rather than being copied into Git.
+The exact metrics, hashes, logs, and acceptance payloads belong to the decision
+paths above. Large checkpoints and transient working outputs remain in their
+platform record locations rather than being copied into Git.
 
-The archived commits preserve candidate source, protocols, launch metadata,
-terminal logs, metrics, acceptance payloads, and failure evidence where those
-items were committed by the source branch. Large checkpoints and transient
-working outputs remain in their platform record locations rather than being
-copied into Git.
+## Desktop migration boundary
+
+The desktop migration was prepared from commit `638c9f9` on 2026-09-17. The
+following tracked trees remain here at their original paths and were removed
+from `molgap-desktop`:
+
+| Archived tree | Contents |
+|---|---|
+| `production/history/` | Frozen Phase 1-7 narratives, scripts, plots, and metrics |
+| `production/03_train/_retired/` | Replaced 300K production records |
+| `production/03_train/gps7_schnet_500k_v3/` | Full V3 route record |
+| `production/04_evaluate/model_versions_v1_v2_v3/` | Old model comparison record |
+| `production/04_evaluate/overview/` | Superseded presentation reports |
+| `production/04_evaluate/pcqm_proxy/` | Historical PCQM proxy metrics |
+| `production/04_evaluate/validation_data.xlsx` | Frozen validation workbook |
+| `production/05_delta_gw/results/` | Historical Delta-learning outputs |
+| `production/06_uq/results*/` | Historical UQ and LoRA-UQ outputs |
+| `docs/archive/` | Dated narratives and closed design notes |
+
+Large ignored payloads were moved to the corresponding paths in this local
+archive checkout, but are intentionally not committed or pushed. Their
+compact records and hashes are the durable source; retrieve large payloads
+from the recorded remote locator when needed.
+
+## Desktop exceptions
+
+The desktop branch deliberately retains only what the public compatibility
+loader still needs:
+
+- `models/compatibility/routed_v4/` contains five routed-v4 checkpoint assets.
+- `models/archive/legacy_checkpoints/` and `models/archive/legacy_metrics/`
+  contain local-only legacy runtime assets and compact legacy metrics.
+- `data/raw/archive/legacy/` and `data/cache/archive/legacy/` contain local-only
+  Phase 3/4/6/7 payloads.
+
+These exceptions are not active production candidates. Their paths and roles
+are documented in the desktop branch's `models/README.md` and `NAMING.md`.
+
+## V4 and V5 evidence
+
+The current V5 envelopes remain on the desktop branch because they are active
+reference pointers, not archived production trees:
+
+| Evidence | Disposition |
+|---|---|
+| GPTrans-T 100K V4 | Reusable reference, closed for 100K promotion |
+| Matched 500K V4 bridge | Nomination evidence; V5 wrapper waits for a second durable K1 copy |
+| Full K1/GPTrans-T fusion | Closed without promotion |
+| Geometry-transfer 500K | Incompatible nomination; blocked |
+| OGB-rich EdgeState | External submission pending review; not a MolGap promotion |
+| GINE 1M | Local PCQM specialist; not a leaderboard result |
+
+Use the desktop `models/REFERENCE_INDEX.md` and each experiment's
+`v5_evidence.json` for the authoritative V5 wrapper and current disposition.
 
 ## Retention policy
 
-- Keep the original remote experiment branches until their history is no
-  longer needed; this archive does not delete them.
+- Keep original remote experiment branches until their history is no longer
+  needed; this archive does not delete them.
 - Do not start new training from this branch. New work belongs to
   `molgap-server` or `molgap-desktop` and must have a roadmap entry.
-- A closed PCQM experiment is archived once its decision is final and its
-  compact evidence is retrievable. Do not create another permanent branch for
-  a seed, kernel version, or retry.
-- `CURRENT_STATE.md` and `ROADMAP.md` in the production/server lines remain
-  authoritative for live work; this index is the archive entry point.
+- A closed experiment is archived once its decision is final and its compact
+  evidence is retrievable. Do not create another permanent branch for a seed,
+  kernel version, or retry.
+- Live state and production identity remain authoritative on the desktop/server
+  lines; this index is historical context only.

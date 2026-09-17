@@ -3,6 +3,10 @@
 Archived documents preserve dated narratives and closed design branches. They
 are not sources of live state.
 
+The branch-level migration map is [`ARCHIVE_INDEX.md`](../../ARCHIVE_INDEX.md).
+All paths in this branch are frozen historical context; do not use them to
+infer the current model or start a new run.
+
 | Document | Role |
 |---|---|
 | `phase8_detailed_history_through_p8_12_20260711.md` | Detailed Phase 8 narrative through P8.12 |
@@ -25,6 +29,6 @@ indexed at
 
 Start from `CURRENT_STATE.md` and the reading protocol in `AGENTS.md`; open an
 archive document only when its pointer is relevant to the task. Paths quoted
-inside these documents are historical — the phase-1-7 narrative now lives in
+inside these documents are historical. The phase-1-7 narrative lives in
 `production/history/`, and the Phase 8 decision timeline is
 `experiments/_closed/PHASE8_TIMELINE.md`.
