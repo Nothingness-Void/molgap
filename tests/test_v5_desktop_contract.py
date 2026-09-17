@@ -191,6 +191,49 @@ def test_shared_helper_failure_has_no_local_bypass():
     assert result["next_action"] == "preserve_failure_and_report"
 
 
+def test_full_runner_checkpoint_retains_resume_state(tmp_path):
+    import torch
+
+    from molgap.pcqm_k1_full_runner import _save_checkpoint
+
+    model = torch.nn.Linear(2, 1)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1.0e-3)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)
+    certificate_id = "a" * 64
+    source_commit = "b" * 40
+    source_archive_sha256 = "c" * 64
+    checkpoint_path = tmp_path / "last_checkpoint.pt"
+
+    _save_checkpoint(
+        checkpoint_path,
+        model=model,
+        optimizer=optimizer,
+        scheduler=scheduler,
+        global_step=128,
+        target_stats={"mean_eV": 0.0, "sample_std_eV": 1.0},
+        trace=[{"global_step": 128}],
+        runtime_fingerprint="d" * 64,
+        runtime_certificate_ids=[certificate_id],
+        source_commit=source_commit,
+        source_archive_sha256=source_archive_sha256,
+    )
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+
+    assert {
+        "model",
+        "optimizer",
+        "scheduler",
+        "rng_state",
+        "global_step",
+        "pass_index",
+        "next_batch_in_pass",
+    }.issubset(checkpoint)
+    assert checkpoint["global_step"] == 128
+    assert checkpoint["runtime_certificate_ids"] == [certificate_id]
+    assert checkpoint["source_commit"] == source_commit
+    assert checkpoint["source_archive_sha256"] == source_archive_sha256
+
+
 def test_desktop_agents_patch_has_no_server_style_monitor():
     text = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8")
     section = text.split("## Desktop offline behavior", maxsplit=1)[1]
