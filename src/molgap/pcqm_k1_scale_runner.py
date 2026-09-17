@@ -19,6 +19,12 @@ from .pcqm_k1_scale import (
     VALIDATION_ROWS,
 )
 from .screen_policy import validate_paired_screen_contract, validate_screen_arm
+from .v4_runtime import (
+    make_adamw_compat,
+    sample_std_compat,
+    torch_load_compat,
+    validate_adamw_mode,
+)
 
 
 SEED = 42
@@ -126,7 +132,7 @@ def load_roles(root: Path, manifest: dict):
     class PackedGraphDataset(InMemoryDataset):
         def __init__(self, path: Path):
             super().__init__(root=None)
-            self.data, self.slices = torch.load(
+            self.data, self.slices = torch_load_compat(
                 path, map_location="cpu", weights_only=False
             )
 
@@ -252,10 +258,10 @@ def train_gap_fp32(
     initial_sha = state_sha256(model)
     targets = _targets(roles["train"])
     mean = targets.mean().to("cuda")
-    std = targets.std().clamp_min(1e-6).to("cuda")
+    std = sample_std_compat(targets).clamp_min(1e-6).to("cuda")
     train_loader = _loader(roles["train"], shuffle=True)
     validation_loader = _loader(roles["validation"], shuffle=False)
-    optimizer = torch.optim.AdamW(
+    optimizer = make_adamw_compat(
         model.parameters(), lr=4e-4, weight_decay=1e-5, fused=True
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
@@ -354,6 +360,7 @@ def run_worker(arm: str, output: Path, *, source_commit: str, cache_sha256: str)
     from .qm9_gape import forward_gap, set_seed
     from .qm9_neural_atom import make_encoder
 
+    validate_adamw_mode(fused=True)
     if arm not in EXPECTED_PARAMETERS:
         raise ValueError(arm)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
@@ -417,7 +424,11 @@ def aggregate(output: Path, *, source_commit: str, cache_sha256: str) -> dict:
     }
     comparability = validate_paired_screen_contract([item["contract"] for item in results.values()])
     payloads = {
-        arm: torch.load(output / arm / "best_validation_payload.pt", map_location="cpu", weights_only=False)
+        arm: torch_load_compat(
+            output / arm / "best_validation_payload.pt",
+            map_location="cpu",
+            weights_only=False,
+        )
         for arm in EXPECTED_PARAMETERS
     }
     target = payloads["full_gps"]["target_eV"].contiguous()

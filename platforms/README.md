@@ -6,6 +6,8 @@ job status.
 
 For cross-platform takeover, connection-independent resume rules, and the
 bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
+For the shared immutable-source, run-spec, runtime-certificate, and submission
+workflow used by V4 screens, read `V4_EXECUTION_CONTRACT.md`.
 
 | Platform | Path | Role |
 |---|---|---|

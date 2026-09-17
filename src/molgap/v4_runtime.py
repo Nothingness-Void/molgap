@@ -16,7 +16,13 @@ from .training_reproducibility import sha256_file
 V4_RUNTIME_FORMAT = "molgap-v4-runtime-primitives-v1"
 
 
-def torch_load_compat(path: Path, *, map_location="cpu", weights_only: bool = False):
+def torch_load_compat(
+    path: Path,
+    *,
+    map_location="cpu",
+    weights_only: bool = False,
+    mmap: bool = False,
+):
     """Load a trusted artifact on both legacy and current PyTorch."""
     import torch
 
@@ -36,6 +42,8 @@ def torch_load_compat(path: Path, *, map_location="cpu", weights_only: bool = Fa
             message = str(error)
             if "unexpected keyword argument" not in message or "weights_only" not in message:
                 raise
+    if "mmap" in parameters:
+        kwargs["mmap"] = mmap
     return torch.load(path, **kwargs)
 
 

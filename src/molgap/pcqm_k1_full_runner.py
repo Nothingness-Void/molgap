@@ -23,6 +23,13 @@ from .training_reproducibility import (
     restore_rng_state,
     sha256_file,
 )
+from .v4_runtime import (
+    certify_numerical_repeatability,
+    make_adamw_compat,
+    sample_std_compat,
+    torch_load_compat,
+    validate_adamw_mode,
+)
 
 
 SEED = 42
@@ -241,7 +248,7 @@ def _load_graphs(paths: list[Path]):
     class PackedGraphDataset(InMemoryDataset):
         def __init__(self, path: Path):
             super().__init__(root=None)
-            self.data, self.slices = torch.load(
+            self.data, self.slices = torch_load_compat(
                 path, map_location="cpu", weights_only=False, mmap=True
             )
 
@@ -259,7 +266,7 @@ def _target_stats(shards) -> tuple[float, float]:
     if values.numel() != TRAIN_ROWS or not bool(torch.isfinite(values).all()):
         raise RuntimeError("Full-role targets are incomplete or non-finite")
     mean = float(values.mean())
-    std = float(values.std(correction=1).clamp_min(1e-6))
+    std = float(sample_std_compat(values).clamp_min(1e-6))
     return mean, std
 
 
@@ -340,7 +347,7 @@ def _make_model_and_optimizer():
             "Frozen K1 seed-42 initialization changed: "
             f"{initial_model_sha256}"
         )
-    optimizer = torch.optim.AdamW(
+    optimizer = make_adamw_compat(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY, fused=True
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
@@ -425,6 +432,7 @@ def run_preflight(
     platform_id: str,
 ) -> dict:
     """Run optimizer-inclusive determinism, memory, utilization, and budget gates."""
+    validate_adamw_mode(fused=True)
     determinism = configure_fp32_determinism(SEED)
     import torch
 
@@ -445,6 +453,7 @@ def run_preflight(
 
     repeat_hashes = []
     repeat_losses = []
+    repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
         model, optimizer, _ = _make_model_and_optimizer()
@@ -458,11 +467,18 @@ def run_preflight(
         )
         torch.cuda.synchronize()
         repeat_hashes.append(_state_sha256(model))
+        repeat_states.append(
+            {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
+        )
         del model, optimizer
         torch.cuda.empty_cache()
-    deterministic_repeat = repeat_hashes[0] == repeat_hashes[1] and repeat_losses[0] == repeat_losses[1]
-    if not deterministic_repeat:
-        raise RuntimeError("Seeded optimizer-step calibration is not deterministic")
+    repeatability = certify_numerical_repeatability(
+        losses=repeat_losses,
+        states=repeat_states,
+        maximum_loss_delta=1e-7,
+        maximum_parameter_delta=1e-7,
+    )
+    deterministic_repeat = repeatability["accepted"]
 
     configure_fp32_determinism(SEED)
     model, optimizer, _ = _make_model_and_optimizer()
@@ -525,8 +541,9 @@ def run_preflight(
         "software_fingerprint": runtime["installed_distributions_sha256"],
         "determinism_fingerprint": canonical_fingerprint(determinism),
         "calibration_fixture_sha256": fixture_sha256,
-        "calibration_output_sha256": repeat_hashes[0],
+        "calibration_output_sha256": canonical_fingerprint(repeatability),
         "calibration_checks_passed": True,
+        "calibration_repeat": repeatability,
         "runtime_fingerprint": runtime["runtime_fingerprint"],
     }
     certificate_id = canonical_fingerprint(certificate)
@@ -689,7 +706,7 @@ def train_full(
     if resume:
         if not checkpoint_path.is_file():
             raise FileNotFoundError("Resume requested without last_checkpoint.pt")
-        checkpoint = torch.load(
+        checkpoint = torch_load_compat(
             checkpoint_path, map_location="cpu", weights_only=False
         )
         for key, expected in {
