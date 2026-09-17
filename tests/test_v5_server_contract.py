@@ -74,7 +74,7 @@ def test_duplicate_terminal_delivery_creates_one_event_and_one_decision(tmp_path
         attempt_id="attempt-1",
         monitor_generation=1,
         remote_status="COMPLETE",
-        remote_state_version="terminal-1",
+        remote_state_version="terminal-2",
     )
     assert first.event_id == second.event_id
     assert len(store.snapshot()["events"]) == 1

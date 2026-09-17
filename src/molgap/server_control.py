@@ -227,7 +227,13 @@ class LocalServerControlStore:
             "attempt_id": binding["attempt_id"],
             "monitor_generation": binding["monitor_generation"],
             "event_type": event_type,
-            "remote_state_version": remote_state_version or "terminal",
+            # A terminal state is one event per bound attempt.  Scheduler/API
+            # version strings may change between duplicate observations and
+            # must not manufacture a second successor path.
+            "remote_state_version": (
+                remote_state_version if event_type not in EVENT_STATUSES else "terminal"
+            )
+            or "terminal",
         }
         digest = hashlib.sha256(
             json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
