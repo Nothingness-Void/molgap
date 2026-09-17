@@ -1,0 +1,495 @@
+{
+  "format": "molgap-xian-reduction-determinism-audit-v1",
+  "complete": true,
+  "job_id": "66832418",
+  "node": "c06r2n07",
+  "python": "3.9.12",
+  "torch": "1.10.0a0+git2040069-dtk2210",
+  "torch_hip": "5.2.22451-8f78d635",
+  "torch_scatter": "2.0.9",
+  "device_name": "Z100SM",
+  "settings": {
+    "requested_strict": true,
+    "deterministic_algorithms_enabled": true,
+    "cublas_workspace_config": ":4096:8",
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": true
+  },
+  "shape": {
+    "rows": 262144,
+    "width": 32,
+    "groups": 4096
+  },
+  "seed": 42,
+  "results": {
+    "native_index_add_sum": {
+      "successful_repetitions": 12,
+      "all_forward_bitwise_equal": true,
+      "all_gradient_bitwise_equal": true,
+      "max_forward_abs_diff": 0.0,
+      "max_gradient_abs_diff": 0.0,
+      "errors": [],
+      "elapsed_s": 4.054688232019544,
+      "repetitions": [
+        {
+          "repetition": 0,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 1,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 2,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 3,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 4,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 5,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 6,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 7,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 8,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 9,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 10,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 11,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        }
+      ]
+    },
+    "torch_scatter_add": {
+      "successful_repetitions": 0,
+      "all_forward_bitwise_equal": false,
+      "all_gradient_bitwise_equal": false,
+      "max_forward_abs_diff": null,
+      "max_gradient_abs_diff": null,
+      "errors": [
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+      ],
+      "elapsed_s": 0.07434408739209175,
+      "repetitions": [
+        {
+          "repetition": 0,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 1,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 2,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 3,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 4,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 5,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 6,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 7,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 8,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 9,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 10,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 11,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        }
+      ]
+    },
+    "torch_scatter_mean": {
+      "successful_repetitions": 0,
+      "all_forward_bitwise_equal": false,
+      "all_gradient_bitwise_equal": false,
+      "max_forward_abs_diff": null,
+      "max_gradient_abs_diff": null,
+      "errors": [
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+        "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+      ],
+      "elapsed_s": 0.06606286950409412,
+      "repetitions": [
+        {
+          "repetition": 0,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 1,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 2,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 3,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 4,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 5,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 6,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 7,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 8,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 9,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 10,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        },
+        {
+          "repetition": 11,
+          "error": "RuntimeError: scatter_add_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+        }
+      ]
+    },
+    "sorted_segment_csr_sum": {
+      "successful_repetitions": 12,
+      "all_forward_bitwise_equal": true,
+      "all_gradient_bitwise_equal": true,
+      "max_forward_abs_diff": 0.0,
+      "max_gradient_abs_diff": 0.0,
+      "errors": [],
+      "elapsed_s": 0.8257232625037432,
+      "repetitions": [
+        {
+          "repetition": 0,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 1,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 2,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 3,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 4,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 5,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 6,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 7,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 8,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 9,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 10,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 11,
+          "error": null,
+          "forward_sha256": "8f1b81d7de4f511c7e1a2ef8a9fa9066ad3b265b2bd69e1c4a7c16a0a87e965d",
+          "gradient_sha256": "c585c196439df3e9ec496db93d42d6d6e66ed01ee8df809b9caf542d4814402f",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        }
+      ]
+    },
+    "sorted_segment_csr_mean": {
+      "successful_repetitions": 12,
+      "all_forward_bitwise_equal": true,
+      "all_gradient_bitwise_equal": true,
+      "max_forward_abs_diff": 0.0,
+      "max_gradient_abs_diff": 0.0,
+      "errors": [],
+      "elapsed_s": 0.8189727235585451,
+      "repetitions": [
+        {
+          "repetition": 0,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 1,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 2,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 3,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 4,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 5,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 6,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 7,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 8,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 9,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 10,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        },
+        {
+          "repetition": 11,
+          "error": null,
+          "forward_sha256": "8a813d7787f57e8d4f82f1a7d0a92ccc8c292e4ff712131b7b97ba575309f19d",
+          "gradient_sha256": "e0c81d9bb1424e6a0f175378eb13d8c3b03606b80e5d4af11d37e1981cbc4e03",
+          "forward_max_abs_diff": 0.0,
+          "gradient_max_abs_diff": 0.0
+        }
+      ]
+    }
+  },
+  "dataset_read": false,
+  "model_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

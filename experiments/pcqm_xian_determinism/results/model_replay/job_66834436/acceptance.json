@@ -1,0 +1,14 @@
+{
+  "format": "molgap-xian-model-determinism-acceptance-v1",
+  "complete": true,
+  "same_contract": true,
+  "initial_model_bitwise_replay": true,
+  "prediction_bitwise_replay": true,
+  "gradient_bitwise_replay": true,
+  "differing_gradient_parameter_count": 0,
+  "differing_gradient_parameters": [],
+  "accepted": true,
+  "short_training_retest_authorized": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| How large is same-allocation same-seed PCQM training drift? | Active bounded Kaggle T4x2 calibration | `pcqm_training_repeatability/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; its one-time QM9 test remains sealed | `top20_architecture_qm9/` |
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |
@@ -20,6 +21,7 @@ Track C.
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | Which bounded pure-2D architecture should serve the official PCQM4Mv2 Gap leaderboard? | Open; EdgeState remains the seed-42 comparator after learned-query and three matched local-operator challengers failed | `pcqm_gap_architecture/` |
+| Can Xi'an Card2 reductions support repeatable scientific ranking? | Open; operator replay must pass before any repeated short training | `pcqm_xian_determinism/` |
 | Can EdgeState Structural GPS transfer under a strict official PCQM4Mv2 protocol? | Full official-only baseline submitted; public reproduction passed a clean-clone audit and OGB review is pending | `pcqm_edge_state_full/` |
 | Did the early full repaired-2M PairGPS2D attempt establish a model? | No; the run was stopped and superseded by the matched validation-only protocol | `pubchemqc_pair_gps_2d/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |

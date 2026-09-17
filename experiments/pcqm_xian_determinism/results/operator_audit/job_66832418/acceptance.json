@@ -1,0 +1,16 @@
+{
+  "format": "molgap-xian-reduction-determinism-acceptance-v1",
+  "complete": true,
+  "default_audit": "/work/home/acf9jvb3sm/molgap-results/xian-determinism-audit-20260912/output/default.json",
+  "strict_audit": "/work/home/acf9jvb3sm/molgap-results/xian-determinism-audit-20260912/output/strict.json",
+  "strict_repeat_audit": "/work/home/acf9jvb3sm/molgap-results/xian-determinism-audit-20260912/output/strict-repeat.json",
+  "same_runtime": true,
+  "cross_process_replay_required": true,
+  "strict_scatter_bitwise_replay": false,
+  "strict_sorted_csr_bitwise_replay": true,
+  "operator_fix_candidate": "sorted_segment_csr",
+  "model_replay_required": true,
+  "training_retest_authorized": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
