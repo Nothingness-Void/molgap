@@ -9,5 +9,6 @@ source archive SHA-256:
 `91fb93ad949b6d75690e71dd69c0f0e50cdfcc2576f4f0b29cd8086dd69190f5`.
 
 Heartbeat `molgap-pairtoken-500k-monitor` on the persistent Luna monitor task
-owns hourly mechanical polling and terminal handoff. No official validation,
+owns 30-minute mechanical polling and terminal-event handoff. Server B does not
+perform acceptance or scientific interpretation. No official validation,
 test-dev, test-challenge, or shadow role is authorized.
