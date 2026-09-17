@@ -241,6 +241,10 @@ def assess_strict_comparison(
         }
     paired = validate_paired_predictions(reference_bundle, candidate_bundle)
     _validate_artifacts(artifact_hashes)
+    if not isinstance(paired_analysis, Mapping) or not paired_analysis:
+        raise ValueError("paired_analysis must be a non-empty mapping")
+    if not isinstance(bootstrap, Mapping) or not bootstrap:
+        raise ValueError("paired_bootstrap must be a non-empty mapping")
     if not isinstance(resume_cursor, Mapping) or not resume_cursor:
         raise ValueError("resume_cursor must be a non-empty mapping")
     if not isinstance(role_history, Mapping) or not role_history:
