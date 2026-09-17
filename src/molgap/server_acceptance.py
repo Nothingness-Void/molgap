@@ -146,6 +146,8 @@ def validate_paired_predictions(
         raise ValueError("reference and candidate source_idx are not aligned")
     if reference_checked["rows"] != candidate_checked["rows"]:
         raise ValueError("reference and candidate row counts differ")
+    if reference_checked["target"] != candidate_checked["target"]:
+        raise ValueError("reference and candidate targets are not aligned")
     return {"reference": reference_checked, "candidate": candidate_checked}
 
 

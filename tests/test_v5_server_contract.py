@@ -240,6 +240,11 @@ def test_prediction_validation_rejects_nan_inf_shape_and_alignment() -> None:
             make_bundle(),
             {"prediction": [0.1, 0.2, 0.3], "target": [0.1, 0.1, 0.4], "source_idx": [10, 12, 13]},
         )
+    with pytest.raises(ValueError, match="targets are not aligned"):
+        validate_paired_predictions(
+            make_bundle(),
+            {"prediction": [0.1, 0.2, 0.3], "target": [0.1, 0.2, 0.4], "source_idx": [10, 11, 12]},
+        )
 
 
 def test_missing_reference_or_bootstrap_is_pending_not_retraining() -> None:
