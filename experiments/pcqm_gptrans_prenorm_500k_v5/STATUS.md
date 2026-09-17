@@ -11,5 +11,9 @@ Kunshan jobs submitted on 2026-09-18:
 | reference | `122425237` | `122425440` | training has `afterok:122425237` |
 | Pair PreNorm | `122425241` | `122425441` | training has `afterok:122425241` |
 
+Low-cost monitor B heartbeat:
+`molgap-gptrans-v5-kunshan-monitor`. Healthy queue/training states are silent;
+terminal success or actionable failure is handed once to server A.
+
 No scientific result is assumed until both arms pass independent artifact
 acceptance and the paired comparison is recomputed without model inference.
