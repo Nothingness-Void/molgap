@@ -172,6 +172,15 @@ cache and does not retrain the frozen K1 reference. Authority:
 `experiments/pcqm_k1_pair_token_100k/decision.md` and
 `experiments/pcqm_k1_pair_token_500k/protocol.md`.
 
+Server acceptance now follows the V5 seven-state outcome model without
+rewriting historical V4 decisions. A local audit found complete raw artifact
+sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
+non-destructive V5 sidecar. The old K1 500K run remains paired-v3 evidence, not
+a strict V4 reference. The PairToken matched60-v4 500K candidate lacks a local
+aligned reference prediction bundle, so its eventual V5 execution/artifact
+acceptance cannot become a strict paired comparison from the scalar reference
+alone. Authority: `experiments/v5_legacy_evidence_migration/decision.md`.
+
 ## Data and comparison contract
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under

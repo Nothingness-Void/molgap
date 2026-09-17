@@ -426,3 +426,23 @@ def test_v5_contracts_do_not_reference_superseded_operational_docs() -> None:
     )
     for stale_reference in forbidden:
         assert stale_reference not in text
+
+
+def test_pairtoken_100k_v5_overlay_preserves_historical_evidence() -> None:
+    import json
+
+    path = Path(
+        "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json"
+    )
+    overlay = json.loads(path.read_text(encoding="utf-8"))
+    outcome = overlay["v5_outcome"]
+    assert overlay["historical_record_mutated"] is False
+    assert overlay["model_inference_executed"] is False
+    assert outcome["execution_status"] == "COMPLETE"
+    assert outcome["artifact_status"] == "ACCEPTED"
+    assert outcome["comparison_status"] == "ACCEPTED"
+    assert outcome["scientific_status"] == "QUALIFIED"
+    assert outcome["transfer_status"] == "NOT_READY"
+    assert outcome["budget_decision"] == "PENDING"
+    assert outcome["full_handoff_status"] == "NONE"
+    assert outcome["paired_rows"] == 50_000

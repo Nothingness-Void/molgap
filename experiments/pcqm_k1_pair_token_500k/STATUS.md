@@ -12,3 +12,9 @@ Heartbeat `molgap-pairtoken-500k-monitor` on the persistent Luna monitor task
 owns 30-minute mechanical polling and terminal-event handoff. Server B does not
 perform acceptance or scientific interpretation. No official validation,
 test-dev, test-challenge, or shadow role is authorized.
+
+Terminal handling follows V5. Candidate execution and artifact acceptance may
+complete from the durable output, but strict comparison remains pending unless
+the exact matched60-v4 K1 reference contract and aligned prediction bundle are
+retrieved. The frozen scalar reference alone cannot satisfy the V5 comparison
+transaction.

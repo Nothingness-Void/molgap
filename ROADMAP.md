@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-K1-PAIR-500K | Run the explicitly authorized PairToken matched-V4 500K bridge on Kunshan | Accept 60 complete epochs and compare with the frozen K1 500K reference; no automatic seed/full/official follow-up |
+| P0 | B-K1-PAIR-500K | Run the explicitly authorized PairToken matched-V4 500K bridge on Kunshan | Accept 60 complete epochs under V5; strict paired comparison requires the exact matched reference bundle and otherwise remains pending; no automatic seed/full/official follow-up |
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 
 The PairToken causal audit is complete. It retains normalized, learned
