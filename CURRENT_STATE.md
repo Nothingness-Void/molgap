@@ -81,7 +81,11 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
-  independently retrievable outputs before launch.
+ independently retrievable outputs before launch.
+- Desktop operations follow the installed V5 topology: desktop-owned remote
+  work remains durable and desktop-owned while offline; no default desktop
+  heartbeat, server fallback, or cross-machine takeover is part of live work.
+  Reconcile authoritative remote state when the desktop returns.
 
 ## Boundaries
 

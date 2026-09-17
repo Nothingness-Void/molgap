@@ -14,9 +14,11 @@
 - Reproducible residual and blend analysis: `analyze_local_ablation.py` and
   `local_ablation_analysis.json`.
 
-This desktop-owned active experiment was branched from server 70500c5 to reuse
+This desktop-owned experiment was branched from server 70500c5 to reuse
 the latest scientific contract and architecture implementations. Stage outputs
 belong under `platforms/_records/kaggle/training/pcqm_500k_v4_stageN/`.
-The existing monitor task reports terminal state to the controller; it does
-not select experiments or submit successors. The controller accepts each
-stage, publishes immutable resume assets, and submits the next stage.
+The stage records and submission JSON preserve their historical execution
+metadata. Any monitor-task fields in those records are evidence of that earlier
+run, not a V5 desktop requirement. V5 desktop work does not create or require
+a desktop monitor, server fallback, or cross-machine takeover; when the desktop
+returns, it reconciles the authoritative scheduler and durable artifacts.
