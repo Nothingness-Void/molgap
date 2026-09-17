@@ -139,7 +139,7 @@ owns its own bounded 100K/500K loop. Cross-machine live handoff is not part of
 the default architecture.
 
 Details:
-docs/operations/MOLGAP_COMMON_DIRECTION_V4.md
+docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md
 ```
 
 Do not add a server-style 30-minute monitor section to desktop.
@@ -315,13 +315,13 @@ Required behavior:
 
 - desktop AGENTS patch does not add server-style monitor logic;
 - shutdown procedure requires durable remote artifacts, not server handoff;
-- stale desktop conversation after shutdown queries real remote status before resubmission;
-- server-owned active 500K is not duplicated by desktop;
+- stale desktop conversation after shutdown verifies exact remote job identity before resubmission;
+- server-owned 500K is not taken over or duplicated by desktop;
 - desktop-owned 500K remains desktop-owned while desktop is off;
 - missing reference payload => comparison pending, not baseline rerun;
 - incompatible v3 result => not strict v4 comparator;
-- consumed role => not called untouched;
-- 100K positive / 500K incomplete => no automatic full;
+- consumed role => not called untouched; untouched protected role still requires authorization;
+- incomplete D8 evidence => no automatic full;
 - full runner resume preserves model/optimizer/scheduler/RNG/cursor;
 - Track B positive => no automatic Track A registry change;
 - imported common helper failure => no local bypass.
@@ -333,7 +333,7 @@ Phase D0:
 - no code changes.
 
 Phase D1:
-- install V4 docs;
+- install V5 docs;
 - narrow desktop `AGENTS.md` and `BRANCHES.md` clarifications.
 
 Phase D2:
@@ -403,5 +403,4 @@ If a V5 invariant appears wrong:
 - do not activate it without explicit user authorization.
 
 No desktop agent may self-declare V6.
-
 

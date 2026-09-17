@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -71,6 +72,17 @@ def test_non_authoritative_remote_state_cannot_trigger_resubmission():
     assert result["automatic_resubmission"] is False
 
 
+def test_authoritative_status_without_exact_job_identity_stays_unknown():
+    result = v5.reconcile_desktop_remote_state(
+        _binding(),
+        {"authoritative": True, "state": "complete"},
+    )
+
+    assert result["execution_status"] == "unknown"
+    assert result["next_action"] == "query_authoritative_status"
+    assert result["automatic_resubmission"] is False
+
+
 def test_server_owned_active_500k_is_not_duplicated_by_desktop():
     result = v5.authorize_desktop_500k_action(
         experiment_owner="server",
@@ -81,6 +93,19 @@ def test_server_owned_active_500k_is_not_duplicated_by_desktop():
     assert result["allowed"] is False
     assert result["reason"] == "server_owned_active_experiment"
     assert result["server_fallback"] is False
+
+
+def test_server_owned_terminal_500k_is_not_taken_over_by_desktop():
+    result = v5.authorize_desktop_500k_action(
+        experiment_owner="server",
+        desktop_online=True,
+        remote_state="complete",
+    )
+
+    assert result["allowed"] is False
+    assert result["reason"] == "server_owned_experiment"
+    assert result["next_action"] == "leave_with_server_owner"
+    assert result["ownership_transfer"] is False
 
 
 def test_desktop_owned_500k_remains_owned_while_desktop_is_offline():
@@ -164,6 +189,25 @@ def test_consumed_role_is_not_called_untouched():
     assert result["can_read"] is False
 
 
+def test_untouched_protected_role_still_requires_explicit_authorization():
+    result = v5.decide_role_use({}, "test_dev")
+
+    assert result["role_use_status"] == "untouched"
+    assert result["can_read"] is False
+    assert result["authorization_status"] == "required"
+
+
+def test_explicitly_authorized_untouched_protected_role_can_be_read():
+    result = v5.decide_role_use(
+        {},
+        "test_dev",
+        explicit_authorization=True,
+    )
+
+    assert result["can_read"] is True
+    assert result["authorization_status"] == "authorized"
+
+
 def test_positive_100k_with_incomplete_500k_does_not_admit_full():
     result = v5.admit_full_scale(
         candidate_100k={"qualified": True},
@@ -175,6 +219,46 @@ def test_positive_100k_with_incomplete_500k_does_not_admit_full():
     assert result["allowed"] is False
     assert result["automatic_full"] is False
     assert result["reason"] == "500k_incomplete"
+
+
+def test_bare_completion_booleans_do_not_admit_full():
+    result = v5.admit_full_scale(
+        candidate_100k={"qualified": True},
+        candidate_500k={"complete": True, "qualified": True},
+        reference={"complete": True},
+        paired_comparison={"complete": True},
+        explicit_desktop_authorization=True,
+    )
+
+    assert result["allowed"] is False
+    assert result["reason"] == "candidate_identity_not_frozen"
+
+
+def test_complete_d8_evidence_and_explicit_authorization_admit_full():
+    result = v5.admit_full_scale(
+        candidate_100k={"qualified": True},
+        candidate_500k={
+            "complete": True,
+            "qualified": True,
+            "identity_frozen": True,
+            "target_hardware_cost_recorded": True,
+            "role_use_history_recorded": True,
+            "recovery_schedule_recorded": True,
+            "duplicate_full_evidence_checked": True,
+        },
+        reference={"complete": True, "immutable": True},
+        paired_comparison={
+            "complete": True,
+            "artifacts_aligned": True,
+            "strict_comparison_passed": True,
+            "statistical_limitations_recorded": True,
+        },
+        explicit_desktop_authorization=True,
+    )
+
+    assert result["allowed"] is True
+    assert result["full_handoff_status"] == "authorized"
+    assert result["automatic_full"] is False
 
 
 def test_track_b_positive_does_not_change_track_a_registry_automatically():
@@ -241,3 +325,50 @@ def test_desktop_agents_patch_has_no_server_style_monitor():
     assert "no default heartbeat monitor" in section
     assert "server agent automatically monitors" in section
     assert "30-minute" not in section
+
+
+@pytest.mark.parametrize(
+    "relative_path",
+    (
+        "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
+        "experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json",
+        "experiments/pcqm_geometry_transfer_500k/v5_evidence.json",
+    ),
+)
+def test_migrated_v5_evidence_envelopes_validate(relative_path):
+    evidence = json.loads((REPO_ROOT / relative_path).read_text(encoding="utf-8"))
+
+    result = v5.validate_v5_evidence_envelope(evidence, repo_root=REPO_ROOT)
+
+    assert result["valid"] is True
+    assert result["evidence_id"] == evidence["evidence_id"]
+
+
+def test_geometry_migration_does_not_upgrade_incompatible_evidence():
+    path = REPO_ROOT / "experiments/pcqm_geometry_transfer_500k/v5_evidence.json"
+    evidence = json.loads(path.read_text(encoding="utf-8"))
+
+    assert evidence["outcome"]["comparison_status"] == "incompatible_with_strict_v4"
+    assert evidence["outcome"]["transfer_status"] == "blocked"
+    assert evidence["migration"]["scientific_reinterpretation"] is False
+
+
+def test_matched_500k_migration_waits_for_second_durable_k1_copy():
+    envelope = REPO_ROOT / "experiments/pcqm_500k_v4_evidence/v5_evidence.json"
+    reference_index = (REPO_ROOT / "models/REFERENCE_INDEX.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert not envelope.exists()
+    assert "second durable" in reference_index
+
+
+def test_v5_evidence_rejects_overloaded_accepted_flag():
+    evidence = {
+        "format": v5.V5_EVIDENCE_FORMAT,
+        "contract": v5.V5_CONTRACT_ID,
+        "accepted": True,
+    }
+
+    with pytest.raises(ValueError, match="separate outcome dimensions"):
+        v5.validate_v5_evidence_envelope(evidence)

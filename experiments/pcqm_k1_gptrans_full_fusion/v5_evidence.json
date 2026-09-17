@@ -1,0 +1,60 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+  "track": "B",
+  "scope": "historical_full_training_and_fusion",
+  "legacy_contract": "molgap-pcqm-k1-gptrans-full-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "durable_remote_verified",
+    "comparison_status": "complete",
+    "scientific_status": "closed_without_promotion",
+    "transfer_status": "not_qualified",
+    "budget_decision": "closed",
+    "full_handoff_status": "complete_closed"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_gptrans_full_fusion/training_contract.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/fusion_contract.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/results/gptrans_full_acceptance_r3.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/k1/acceptance.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/fusion/acceptance.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_k1_model_bundle",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/recovery_20260914_r3/outputs/k1/full/model_bundle.pt",
+      "sha256": "60b95d86736829fd38690fb33654199a753f693a333aa55f451d1983653fa3b7",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "accepted_gptrans_model_bundle",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/outputs/gptrans/full/model_bundle.pt",
+      "sha256": "0bc1c464f2e3cd64eb0926ae90e4f4f8c8094ce3a044405e3050f42518f1fb9e",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "official_validation_fusion_predictions",
+      "locator": "ims:///lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/recovery_20260914_r3/outputs/fusion_study/official_valid_predictions.pt",
+      "sha256": "b580d8295f159d7efc284d6bdb143b05452b4ce1c05bfac6a869ceba2ca7234b",
+      "availability": "durable_remote_verified"
+    }
+  ],
+  "role_use": {
+    "official_train": "consumed",
+    "official_validation": "consumed",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-17",
+    "verification_scope": "IMS path existence and SHA256 for both model bundles and fusion predictions",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

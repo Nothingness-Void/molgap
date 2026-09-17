@@ -36,3 +36,10 @@ All six SHA256 values are recorded in
 Reusable PCQM reference and evidence identities are indexed in
 `REFERENCE_INDEX.md`. The index is asynchronous evidence only; it does not
 change the production registry or represent live workload state.
+
+Historical evidence enters V5 through a pointer-only `v5_evidence.json` in the
+owning experiment directory. Validate it with
+`molgap.v5_desktop.validate_v5_evidence_envelope`; keep the original decision
+and acceptance records authoritative, and never upgrade scientific status as
+part of format migration. `REFERENCE_INDEX.md` records completed and blocked
+migrations.

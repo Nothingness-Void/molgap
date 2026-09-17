@@ -1,0 +1,46 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+  "track": "B",
+  "scope": "historical_incompatible_nomination_evidence",
+  "legacy_contract": "pcqm-geometry-transfer-500k-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "committed_metadata_only",
+    "comparison_status": "incompatible_with_strict_v4",
+    "scientific_status": "nomination_only",
+    "transfer_status": "blocked",
+    "budget_decision": "hold",
+    "full_handoff_status": "blocked"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_geometry_transfer_500k/protocol.md",
+      "experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json",
+      "experiments/pcqm_geometry_transfer_500k/v4_comparability_audit.md",
+      "experiments/pcqm_geometry_transfer_500k/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "committed_fusion_metrics",
+      "locator": "repo://experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json",
+      "sha256": "de1fbc6449ed21d53fd82211a028ab6fce10d2ae986544993db5f7779badd585",
+      "availability": "committed_metadata"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-17",
+    "verification_scope": "Committed decision, metrics, and V4 comparability audit only",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
