@@ -9,3 +9,5 @@ these snapshots only for complete remote provenance.
   1,272 verified record files.
 - `v4_submit_infrastructure/` - accepted reusable V4 launcher deployment,
   source identity, and remote registry-audit evidence.
+- `geometry_scratch_audit/` - compact IMS numerical audit manifests; tensor
+  shards remain local and are ignored.

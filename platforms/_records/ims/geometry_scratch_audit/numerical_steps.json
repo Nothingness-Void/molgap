@@ -1,0 +1,66 @@
+[
+  {
+    "batch": 0,
+    "fp32": {
+      "loss": 0.0951317548751831,
+      "finite": true,
+      "gradient_norm": 3.5323097705841064,
+      "update_l2": 0.04320827330409602
+    },
+    "fp16": {
+      "loss": 0.09172479808330536,
+      "finite": false,
+      "gradient_norm": Infinity,
+      "update_l2": 0.0
+    },
+    "relative_gradient_l2": Infinity
+  },
+  {
+    "batch": 1,
+    "fp32": {
+      "loss": 0.3431994915008545,
+      "finite": true,
+      "gradient_norm": 5.791624546051025,
+      "update_l2": 0.043040335747027356
+    },
+    "fp16": {
+      "loss": 0.347420871257782,
+      "finite": false,
+      "gradient_norm": Infinity,
+      "update_l2": 0.0
+    },
+    "relative_gradient_l2": Infinity
+  },
+  {
+    "batch": 2,
+    "fp32": {
+      "loss": 0.1267681121826172,
+      "finite": true,
+      "gradient_norm": 4.557061672210693,
+      "update_l2": 0.043148307780749275
+    },
+    "fp16": {
+      "loss": 0.13004665076732635,
+      "finite": false,
+      "gradient_norm": Infinity,
+      "update_l2": 0.0
+    },
+    "relative_gradient_l2": Infinity
+  },
+  {
+    "batch": 3,
+    "fp32": {
+      "loss": 0.07461773604154587,
+      "finite": true,
+      "gradient_norm": 0.7232227921485901,
+      "update_l2": 0.04341977832652652
+    },
+    "fp16": {
+      "loss": 0.08096175640821457,
+      "finite": true,
+      "gradient_norm": 1.0232552289962769,
+      "update_l2": 0.04342785476654257
+    },
+    "relative_gradient_l2": 0.632634361865829
+  }
+]

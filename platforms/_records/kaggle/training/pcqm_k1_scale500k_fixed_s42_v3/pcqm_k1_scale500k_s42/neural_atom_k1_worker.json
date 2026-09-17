@@ -1,0 +1,40 @@
+{
+  "arm": "neural_atom_k1",
+  "preflight": {
+    "physical_batch_per_device": 128,
+    "finite_forward_backward": true,
+    "peak_memory_mib": 436.6923828125,
+    "total_memory_mib": 14911.6875,
+    "memory_reserve_fraction": 0.9707147576146228,
+    "precision": "fp32",
+    "loader_workers": 2
+  },
+  "training": {
+    "initial_model_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+    "parameter_count": 3658817,
+    "best_epoch": 38,
+    "validation_gap_mae_eV": 0.10485909879207611,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 394.2719251265501,
+    "precision": "fp32",
+    "loader_workers": 2,
+    "best_model_sha256": "d4db17256eae15500a1d1b59b270de2173c160899d406bc28f7f643e7cd2321d",
+    "payload_sha256": "ecd27ee2ca521708cea067878ce3802ccaa7cb336e33c5fc5a5529b6958707e7",
+    "checkpoint_sha256": "1b943d71b8165a5f585ce39482b2c3340b744786d082b6889ffac0796b63ff6f"
+  },
+  "contract": {
+    "arm": "neural_atom_k1",
+    "task_id": "pcqm-k1-scale500k-fixed-s42-v4",
+    "platform_id": "kaggle2",
+    "accelerator": "Tesla T4",
+    "data_role_fingerprint": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "seed": 42,
+    "precision": "fp32",
+    "optimizer_fingerprint": "fused-adamw-lr4e-4-wd1e-5-clip1",
+    "schedule_fingerprint": "cosine40-eta1e-6",
+    "sample_exposure": "pcqm-official-train-derived500000-gap40",
+    "physical_batch_per_device": 128,
+    "device_count": 1,
+    "gradient_accumulation_steps": 1
+  }
+}

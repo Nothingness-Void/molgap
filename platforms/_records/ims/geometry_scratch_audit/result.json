@@ -1,0 +1,125 @@
+{
+  "status": "accepted",
+  "identity": {
+    "format": "pcqm-geometry-audit-v1",
+    "source_sha256": "ca5118128e5d1626901d054fcc152863a2fb40678c1ae914be9ea42db7e447fb",
+    "acceptance_sha256": "650b1fbd14771888ba1c9342cdcba240b420bd91b0dced974ae654a4b65ab9d2",
+    "reference_sha256": "98c27df7291841f2147672d76d2924adbc0b96822938fab31239e5971260ea56",
+    "config_sha256": "7f09b3b0456a71cdb745a16ace6c7e4afe807afbac786d18a6f15a5e6e97da15",
+    "code_sha256": "247bfe6f0f35afc4807582706aa0c63430b22628f0d69259d33f29c604385613"
+  },
+  "rows": 73545,
+  "mae_eV": {
+    "source_fp32": 0.09969422899247901,
+    "source_fp16": 0.09963943922622612,
+    "candidate_fp32": 0.0996942296343565,
+    "candidate_fp16": 0.09963855845687164
+  },
+  "initial_fp32_max_difference_eV": 2.86102294921875e-06,
+  "source_fp16_mean_difference_vs_retained_eV": 0.00012257584603503346,
+  "candidate_fp16_mean_difference_vs_fp32_eV": 0.00029420474311336875,
+  "fp16_finite": false,
+  "source_config_dropout": 0.05,
+  "candidate_factory_dropout": 0.1,
+  "numerical_steps": [
+    {
+      "batch": 0,
+      "fp32": {
+        "loss": 0.0951317548751831,
+        "finite": true,
+        "gradient_norm": 3.5323097705841064,
+        "update_l2": 0.04320827330409602
+      },
+      "fp16": {
+        "loss": 0.09172479808330536,
+        "finite": false,
+        "gradient_norm": Infinity,
+        "update_l2": 0.0
+      },
+      "relative_gradient_l2": Infinity
+    },
+    {
+      "batch": 1,
+      "fp32": {
+        "loss": 0.3431994915008545,
+        "finite": true,
+        "gradient_norm": 5.791624546051025,
+        "update_l2": 0.043040335747027356
+      },
+      "fp16": {
+        "loss": 0.347420871257782,
+        "finite": false,
+        "gradient_norm": Infinity,
+        "update_l2": 0.0
+      },
+      "relative_gradient_l2": Infinity
+    },
+    {
+      "batch": 2,
+      "fp32": {
+        "loss": 0.1267681121826172,
+        "finite": true,
+        "gradient_norm": 4.557061672210693,
+        "update_l2": 0.043148307780749275
+      },
+      "fp16": {
+        "loss": 0.13004665076732635,
+        "finite": false,
+        "gradient_norm": Infinity,
+        "update_l2": 0.0
+      },
+      "relative_gradient_l2": Infinity
+    },
+    {
+      "batch": 3,
+      "fp32": {
+        "loss": 0.07461773604154587,
+        "finite": true,
+        "gradient_norm": 0.7232227921485901,
+        "update_l2": 0.04341977832652652
+      },
+      "fp16": {
+        "loss": 0.08096175640821457,
+        "finite": true,
+        "gradient_norm": 1.0232552289962769,
+        "update_l2": 0.04342785476654257
+      },
+      "relative_gradient_l2": 0.632634361865829
+    }
+  ],
+  "official_test_used": false,
+  "parts": [
+    {
+      "path": "parts/valid_shard_0067.pt",
+      "sha256": "9ef893901d6e55c76bb53d99a103a5f4cad4f8ec0e0a3a3b38388546161de0f0"
+    },
+    {
+      "path": "parts/valid_shard_0068.pt",
+      "sha256": "d0f9a8cc1d8b41bb057676586c9df2fcccdfb7adea245cf32f1384827eeda639"
+    },
+    {
+      "path": "parts/valid_shard_0069.pt",
+      "sha256": "da64dc7b095c7490b3781e1bd8a41b13ebeb0c01184ff5b2304511c096dc0439"
+    },
+    {
+      "path": "parts/valid_shard_0070.pt",
+      "sha256": "0b6167007ffe239cedcd6370ce5c8764f05ca001a54221530a844b65c359fd9a"
+    },
+    {
+      "path": "parts/valid_shard_0071.pt",
+      "sha256": "67759f8f1b7d87a3463761bf7f762c9cd81177ff6c009b56b1f7214e769c2726"
+    },
+    {
+      "path": "parts/valid_shard_0072.pt",
+      "sha256": "6cd96c9af31bc2967a30b6af231101fc3e6e70cd6744e61399d4f344ef928956"
+    },
+    {
+      "path": "parts/valid_shard_0073.pt",
+      "sha256": "5fa6df63f7731c2ff8d3edf2e43ad8dcc2cd31d31734421a269b24fe6fbb1355"
+    },
+    {
+      "path": "parts/valid_shard_0074.pt",
+      "sha256": "e3ee0e144106c2a0420be873f5ddfeb583cbc00490b128d6271aabb0b9a39aa4"
+    }
+  ]
+}
