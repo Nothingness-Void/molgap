@@ -26,7 +26,7 @@ Track C.
 | What is the status of the official-train K1/GPTrans-T full pair and fusion? | Integrated training/acceptance code; follow its dated recovery and evaluation evidence | `pcqm_k1_gptrans_full_fusion/` |
 | Can EdgeState Structural GPS transfer under a strict official PCQM4Mv2 protocol? | Full official-only baseline submitted; public reproduction passed a clean-clone audit and OGB review is pending | `pcqm_edge_state_full/` |
 | Did the early full repaired-2M PairGPS2D attempt establish a model? | No; the run was stopped and superseded by the matched validation-only protocol | `pubchemqc_pair_gps_2d/` |
-| Do GPTrans-T and Neural-Atom K1 with distance-angle geometry yield a useful 500K blend? | Positive OOF nomination evidence; V4 comparability gate not met, so it remains isolated pending a matched bridge | `branch codex/exp/gptrans-k1-geometry-500k: experiments/pcqm_geometry_transfer_500k/` |
+| Do GPTrans-T and Neural-Atom K1 with distance-angle geometry yield a useful 500K blend? | Positive OOF nomination evidence; V4 comparability gate not met, so no scale-up is authorized without a matched bridge | `pcqm_geometry_transfer_500k/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
 | Do multiple pure-2D experts beat one? | Fixed two-expert ensemble is strongest but needs four passes | `multi2d_experts/` |

@@ -27,9 +27,9 @@ recorded (2026-09-12) snapshot. Verify live state before releasing successors.
 
 The Kunshan 500K distance-angle OOF blend is positive nomination evidence, but
 its V4 audit found no runtime certificate or matching V4 reference. It is not
-formal V4 cross-platform/causal evidence. Keep code and records isolated on
-`codex/exp/gptrans-k1-geometry-500k` at `6d8630e` pending the declared bridge.
-Its V4 comparability audit remains binding after full-run code integration.
+formal V4 cross-platform/causal evidence. Its decision and binding comparability
+audit are in `experiments/pcqm_geometry_transfer_500k/`; no scale-up is
+authorized without the declared matched bridge.
 
 The older Kaggle2 recurrent screen is closed and missed its comparator by
 `0.0006301 eV`; it is archived at commit `285e1dc`. Do not resume or scale it.
@@ -102,7 +102,7 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 | What ships now? | `production/README.md` |
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
 | V4 reference status? | Branch `codex/exp/gptrans-t-100k-v4`; last snapshot: `121922252`, 2026-09-12 |
-| 500K geometry nomination? | Branch `codex/exp/gptrans-k1-geometry-500k` at `6d8630e`; not V4-comparable |
+| 500K geometry nomination? | `experiments/pcqm_geometry_transfer_500k/decision.md`; positive but not V4-comparable |
 | Recurrent Kaggle disposition? | `archive` branch at `285e1dc`; negative, closed |
 | Full K1/GPTrans-T chain? | `experiments/pcqm_k1_gptrans_full_fusion/README.md` and its linked 2026-09-14 recovery/evaluation evidence |
 | What was submitted for OGB review? | `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md` |
