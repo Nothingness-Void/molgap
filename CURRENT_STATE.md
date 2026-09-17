@@ -189,10 +189,14 @@ One server-owned V5 scale question is active: the unchanged GPTrans-T core and
 its parameter-free Pair PreNorm mechanism are running as a newly matched 500K
 pair on Kunshan. This establishes one reusable strict drop-last reference
 because the historical GPTrans 500K run predates that comparison contract.
-Preflight jobs `122425237`/`122425241` gate training jobs
-`122425440`/`122425441` with scheduler `afterok` dependencies. The experiment
+Initial preflight jobs `122425237`/`122425241` failed before training because a
+new wrapper omitted the previously accepted bounded GPTrans DCU repeatability
+tolerance; dependent jobs never allocated. The unchanged-contract repair is
+now in preflight jobs `122432949`/`122432955`, gating training jobs
+`122432964`/`122432972` with scheduler `afterok` dependencies. The experiment
 does not duplicate the desktop full comparison and does not access protected
-roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md`.
+roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and
+its `STATUS.md`.
 
 ## Data and comparison contract
 
