@@ -11,15 +11,14 @@ dated evidence. Fetch before comparing a remote snapshot.
 | molgap-server | Independent server discovery; read its own CURRENT_STATE.md |
 | archive | Inactive/rejected histories; never infer live state here |
 
-## Temporary branches retained by the 2026-09-14 audit
+## Active temporary branches
 
 | Branch | Reason retained / evidence entry |
 |---|---|
-| codex/exp/gptrans-t-100k-v4 | Uncommitted runner/architecture edits in its worktree; experiments/pcqm_gptrans_t_100k_v4/STATUS.md |
-| codex/exp/xian-determinism-audit | Uncommitted control-document edits; committed tip already reachable from desktop |
-| codex/exp/gptrans-k1-geometry-500k | Unaccepted V4 bridge; experiments/pcqm_geometry_transfer_500k/ |
+| codex/exp/gptrans-t-100k-v4 | V4 reference reconciliation and portable execution contract; `experiments/pcqm_gptrans_t_100k_v4/STATUS.md` |
+| codex/exp/gptrans-full-convergence | Active repaired GPTrans-T/K1 convergence and terminal acceptance chain |
+| codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
 | codex/exp/ogb-rich-edgegps-v4-100k | Separate reference/infra work without terminal disposition |
-| codex/ims-v4-submit-infra | Accepted deployment records; dependency review needed before code integration |
 | codex/scnet-distance-angle-triangle-500k | Submitted experiment without a terminal decision at its branch tip |
 
 Inspect these named branches only when working on their question. Their old
@@ -47,6 +46,8 @@ preservation; no submission-process history was promoted to delivery.
 The primary local checkout D:/文档/molgap now uses molgap-desktop. The previous
 desktop checkout is a detached snapshot; use the primary checkout for new work.
 
-Two worktrees had tracked user edits and were excluded from branch deletion:
-the GPTrans V4 reference and Xian audit. Resolve those edits before consolidation.
+The completed matched-500K V4, geometry-transfer, and IMS V4 infrastructure
+branches were integrated or preserved in `archive` before their local and
+remote branch refs were removed. The GPTrans V4 and Xi'an worktrees were
+committed and pushed, but remain active until their terminal questions close.
 No remote scheduler was queried and no compute workload was changed by this audit.

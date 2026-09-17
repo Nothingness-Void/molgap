@@ -16,7 +16,9 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 |---|---|---|---|---|
 | P0 | B-KUNSHAN-V4-REFERENCE | Reconcile and accept the single GPTrans-T seed-42 100K/50K V4 reference | Verify terminal scheduler state, 60 physical-BS128 epochs, runtime certificate, outputs, and frozen acceptance; do not infer status from the 2026-09-12 snapshot | Branch `codex/exp/gptrans-t-100k-v4` |
 | P0 | B-FULL-CONVERGENCE | Reconcile the repaired GPTrans-T and K1 convergence chains | Inspect GPU jobs `1516700`/`1516701` and dependent acceptance jobs `1516703`/`1516704`; accept terminal artifacts or diagnose without resubmitting from a stale snapshot | Branch `codex/exp/gptrans-full-convergence` |
-| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Only after the V4 reference is accepted; issue a new frozen contract/runtime certificate and explicit launch authorization | Branch `codex/exp/gptrans-k1-geometry-500k` |
+| P0 | B-DISTANCE-ANGLE-500K | Reconcile the already-submitted paired distance-angle Triangle EdgeState screen | Retrieve jobs `121738961`/`121738978`/`121738985` and write a terminal decision; do not relaunch from the stale snapshot | Branch `codex/scnet-distance-angle-triangle-500k` |
+| P1 | B-XIAN-DETERMINISM | Finish the bounded Xi'an determinism/repeatability audit before any training card-hours | Accept repeatable full-model replay or keep Xi'an pre-screen-only | Branch `codex/exp/xian-determinism-audit` |
+| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Only after the V4 reference is accepted; issue a new frozen contract/runtime certificate and explicit launch authorization | `experiments/pcqm_geometry_transfer_500k/` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
 The V4 runtime policy and detailed baseline protocol remain on their active
@@ -28,11 +30,11 @@ each platform/software tuple.
 The historical Kaggle recurrent graph-state experiment completed below its
 frozen comparator and is archived at commit `285e1dc`; it is not active.
 
-The 500K distance-angle OOF fusion is a positive nomination recorded on branch
-`codex/exp/gptrans-k1-geometry-500k` at `6d8630e`. Its own audit found that
+The 500K distance-angle OOF fusion is a positive nomination recorded in
+`experiments/pcqm_geometry_transfer_500k/`. Its own audit found that
 runtime certificates and a matching frozen V4 reference were absent, so it is
-not yet eligible as a V4 cross-platform or causal geometry result. Keep the
-branch isolated until a separately authorized V4 bridge is accepted.
+not yet eligible as a V4 cross-platform or causal geometry result. Do not
+launch a bridge until it is separately authorized.
 
 Completed PCQM, OGB submission, and QM9 screen decisions are indexed in
 `experiments/README.md`; do not reopen closed candidates by changing seeds or
