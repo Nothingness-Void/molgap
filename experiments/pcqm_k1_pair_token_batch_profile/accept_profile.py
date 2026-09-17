@@ -76,8 +76,24 @@ def accept(root: Path) -> dict:
             failures.append(f"artifact hash mismatch: {name}")
     result = {
         "accepted": not failures,
+        "v5_outcome": {
+            "execution_status": "COMPLETE" if not failures else "FAILED",
+            "artifact_status": "ACCEPTED" if not failures else "REJECTED",
+            "comparison_status": "NOT_APPLICABLE",
+            "scientific_status": "NOT_APPLICABLE",
+            "transfer_status": "NOT_READY",
+            "budget_decision": "PROFILING_ONLY",
+            "full_handoff_status": "NONE",
+        },
+        "v5_profiling_coverage": "PARTIAL",
+        "v5_missing_stage_evidence": [
+            "validation_or_train-role-evaluation_timing",
+            "real_model_checkpoint_hash_archive_timing",
+            "repeated_order-randomized_batch_measurements",
+        ],
         "model_inference_executed": False,
         "scientific_result_accepted": False,
+        "scientific_contract_change_authorized": False,
         "failures": failures,
         "source_commit": payload.get("source_commit"),
         "slurm_job_id": payload.get("slurm_job_id"),

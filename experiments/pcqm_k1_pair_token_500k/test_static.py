@@ -26,3 +26,11 @@ def test_slurm_uses_accepted_cache_and_one_dcu():
     assert "pcqm4mv2-ogb-fixed-500k-scnet-v1" in text
     assert "--time=24:00:00" in text
 
+
+def test_runner_terminalizes_progress_before_completion_manifest():
+    source = (
+        ROOT.parents[1] / "src/molgap/pcqm_k1_pair_token_500k.py"
+    ).read_text(encoding="utf-8")
+    terminal = source.index('"status": "COMPLETE"')
+    manifest = source.index('output / "completion_manifest.json"')
+    assert terminal < manifest

@@ -45,5 +45,7 @@ def test_acceptance_is_mechanical_and_no_inference():
     source = ACCEPTANCE.read_text(encoding="utf-8")
     assert '"model_inference_executed": False' in source
     assert '"scientific_result_accepted": False' in source
+    assert '"v5_profiling_coverage": "PARTIAL"' in source
+    assert '"scientific_contract_change_authorized": False' in source
     assert "make_model" not in source
     assert "torch.load" not in source

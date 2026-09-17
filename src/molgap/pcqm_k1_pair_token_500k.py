@@ -435,6 +435,15 @@ def run(
         "test_challenge_role_read": False,
     }
     atomic_json(output / "metrics.json", result)
+    atomic_json(
+        output / "progress.json",
+        {
+            "status": "COMPLETE",
+            "next_epoch": EPOCHS,
+            "best": best,
+            "best_epoch": best_epoch,
+        },
+    )
     artifacts = {
         path.name: sha256_file(path)
         for path in sorted(output.iterdir())
