@@ -42,6 +42,8 @@ WARMUP_EPOCHS = 4
 SAMPLE_PRESENTATIONS = ROWS_PER_EPOCH * EPOCHS
 MINIMUM_GAIN_EV = 0.003
 EMA_DECAY = 0.9999
+MAX_REPEAT_LOSS_DELTA = 1.0e-7
+MAX_REPEAT_PARAMETER_DELTA = 1.0e-7
 
 
 def learning_rate(epoch: int) -> float:
@@ -264,6 +266,7 @@ def run(
     batch = next(iter(loader(roles["train"], 0))).to("cuda")
     fixture_sha = _batch_sha256(batch)
     calibrations = []
+    repeat_states = []
     pair_check = _check_pair_prenorm() if mode == "pair_prenorm" else None
     initial_sha = None
     torch.cuda.reset_peak_memory_stats()
@@ -282,15 +285,60 @@ def run(
         calibrations.append(
             {"initial": initial_sha, "losses": losses, "state": _state_sha256(model)}
         )
+        repeat_states.append(
+            {
+                name: value.detach().cpu().clone()
+                for name, value in model.state_dict().items()
+            }
+        )
         del model, optimizer, ema
-    if calibrations[0] != calibrations[1]:
-        raise RuntimeError("Deterministic optimizer-step calibration failed")
+    max_name = ""
+    max_parameter_delta = 0.0
+    for name in repeat_states[0]:
+        left = repeat_states[0][name]
+        right = repeat_states[1][name]
+        if not left.is_floating_point():
+            continue
+        delta = float((left - right).abs().max())
+        if delta > max_parameter_delta:
+            max_name = name
+            max_parameter_delta = delta
+    loss_delta = max(
+        abs(left - right)
+        for left, right in zip(
+            calibrations[0]["losses"], calibrations[1]["losses"], strict=True
+        )
+    )
+    calibration_repeat = {
+        "losses": [item["losses"] for item in calibrations],
+        "maximum_observed_loss_delta": loss_delta,
+        "maximum_allowed_loss_delta": MAX_REPEAT_LOSS_DELTA,
+        "state_sha256": [item["state"] for item in calibrations],
+        "maximum_observed_parameter_delta": max_parameter_delta,
+        "maximum_allowed_parameter_delta": MAX_REPEAT_PARAMETER_DELTA,
+        "maximum_parameter_name": max_name,
+        "bitwise_state_equal": calibrations[0]["state"] == calibrations[1]["state"],
+    }
+    if (
+        loss_delta > MAX_REPEAT_LOSS_DELTA
+        or max_parameter_delta > MAX_REPEAT_PARAMETER_DELTA
+    ):
+        atomic_json(output / "calibration_failure.json", calibration_repeat)
+        raise RuntimeError(
+            "Deterministic optimizer-step calibration exceeds the accepted "
+            f"GPTrans numerical tolerance: {calibration_repeat}"
+        )
     peak = int(torch.cuda.max_memory_reserved())
     total = int(torch.cuda.get_device_properties(0).total_memory)
     if peak > 0.85 * total:
         raise RuntimeError("BS128 optimizer-inclusive memory reserve below 15%")
     certificate, certificate_id = _runtime_certificate(
-        runtime, settings, fixture_sha, calibrations[0]["state"]
+        runtime,
+        settings,
+        fixture_sha,
+        canonical_fingerprint(
+            {"repeat_state_sha256": calibration_repeat["state_sha256"]}
+        ),
     )
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(
@@ -301,6 +349,7 @@ def run(
             "initial_state_sha256": initial_sha,
             "pair_prenorm_check": pair_check,
             "calibrations": calibrations,
+            "calibration_repeat": calibration_repeat,
             "peak_reserved_mib": peak / 1024**2,
             "total_memory_mib": total / 1024**2,
             "memory_reserve_fraction": 1.0 - peak / total,

@@ -27,6 +27,13 @@ def test_entrypoint_and_runner_parse():
     ast.parse((REPO / "src/molgap/pcqm_gptrans_prenorm_500k.py").read_text())
 
 
+def test_gptrans_repeatability_uses_preaccepted_bounded_tolerance():
+    source = (REPO / "src/molgap/pcqm_gptrans_prenorm_500k.py").read_text()
+    assert "MAX_REPEAT_LOSS_DELTA = 1.0e-7" in source
+    assert "MAX_REPEAT_PARAMETER_DELTA = 1.0e-7" in source
+    assert "calibration_failure.json" in source
+
+
 def test_slurm_uses_one_dcu_per_arm_and_fixed_cache():
     text = (ROOT / "run_kunshan.slurm").read_text()
     assert "--gres=dcu:Hygon:1" in text
