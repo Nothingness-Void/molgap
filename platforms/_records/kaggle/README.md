@@ -12,6 +12,7 @@ organized by lifecycle so a new reader does not need to inspect run names.
 | `evaluation/datasets/` | Model/embedding datasets used by fixed evaluation runs |
 | `evaluation/reference/` | Immutable PCQM reference samples |
 | `training/` | Compact manifests and metrics from completed training runs; weights and logs remain local |
+| `pcqm_fixed_datasets_kaggle3_v1/` | Accepted Kaggle3 private mirrors of the frozen 100K/500K PCQM4Mv2 graph roles |
 | `archive/audits/` | Asset audits and status probes |
 | `archive/checks/` | Preflight and candidate-fetch checks |
 | `archive/acquisition_attempts/` | Failed, partial, or superseded residual-fetch runs |
