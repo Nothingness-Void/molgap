@@ -600,5 +600,3 @@ When an implementation agent discovers tension with V5:
 5. keep the proposal inactive until explicit user authorization.
 
 No agent may self-declare V6.
-
-

@@ -9,4 +9,3 @@ These are the durable copies of the user-authorized MolGap V5 contracts.
 
 The V5 files supersede older V3/V4 handoff documents. `AGENTS.md` remains a
 short navigation file; it does not duplicate the full contracts.
-

@@ -533,5 +533,3 @@ Examples:
 A new model family, better early stopping, a different optimizer, or a new GPU platform is NOT by itself a reason for V6.
 
 Until explicit user authorization, V5 remains authoritative.
-
-
