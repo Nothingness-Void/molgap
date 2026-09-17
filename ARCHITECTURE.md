@@ -72,6 +72,9 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_k1_full_runner.py` | Frozen K1 full-role preflight, exact-step training, atomic resume, and self-contained bundle | Changing the audited K1 desktop handoff contract |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
 | `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
+| `v4_runtime.py` | Legacy-compatible Torch loading/statistics/optimizer setup, source bundle validation, and bounded numerical-repeatability certificates | Changing shared V4 runtime compatibility behavior |
+| `v4_bundle.py` | Deterministic, allowlisted, commit-bound minimal source archives | Changing V4 source packaging or reproducibility |
+| `v4_submission.py`, `v4_cli.py`, `v4_audit.py` | Run-spec identities, adapter dispatch, local preflight, and fail-closed static checks | Changing V4 preparation and submission checks |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
 | `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
