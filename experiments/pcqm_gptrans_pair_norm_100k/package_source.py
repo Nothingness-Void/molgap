@@ -26,6 +26,7 @@ EXPERIMENT = "experiments/pcqm_gptrans_pair_norm_100k"
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--initial-state", type=Path, required=True)
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -57,20 +58,18 @@ def main() -> None:
     archive_sha = sha256_file(archive)
     shutil.copyfile(archive, output / "source_payload.bin")
 
+    initial_state = args.initial_state.resolve()
+    if sha256_file(initial_state) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
+        raise RuntimeError("Frozen initial-state artifact identity changed")
+    payload = torch.load(initial_state, map_location="cpu", weights_only=False)
     configure_fp32_determinism(42)
     model = _make_model()
+    model.load_state_dict(payload["model_state"], strict=True)
     state_sha = _state_sha256(model)
     if state_sha != EXPECTED_INITIAL_MODEL_SHA256:
         raise RuntimeError(f"Frozen initial tensor state changed: {state_sha}")
     state_path = output / "initial_state.pt"
-    torch.save(
-        {
-            "format": "molgap-gptrans-t-seed42-initial-state-v1",
-            "model_state": model.state_dict(),
-            "state_sha256": state_sha,
-        },
-        state_path,
-    )
+    shutil.copyfile(initial_state, state_path)
     if sha256_file(state_path) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
         raise RuntimeError("Frozen initial-state serialization changed")
 
