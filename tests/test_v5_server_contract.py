@@ -394,3 +394,12 @@ def test_scale_backtest_requires_three_same_contract_trace_pairs() -> None:
     result = backtest_low_cost_screening(observations)
     assert result["calibration_status"] == "CALIBRATED"
     assert result["early_stop_rule_released"] is True
+
+
+def test_root_agent_keeps_desktop_outside_server_monitoring() -> None:
+    text = Path("AGENTS.md").read_text(encoding="utf-8")
+    lowered = text.lower()
+    assert "fixed 30-minute heartbeat" in lowered
+    assert "must not monitor, adopt" in lowered
+    assert "no default cross-machine live control plane" in lowered
+    assert "hourly" not in lowered
