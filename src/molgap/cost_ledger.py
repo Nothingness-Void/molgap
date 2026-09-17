@@ -61,7 +61,11 @@ class CostEntry:
             "note": self.note,
         }
         payload["entry_id"] = self.entry_id or hashlib.sha256(
-            json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+            json.dumps(
+                {key: value for key, value in payload.items() if key != "recorded_at"},
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
         ).hexdigest()[:24]
         return payload
 

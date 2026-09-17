@@ -323,7 +323,7 @@ def test_strict_positive_500k_only_emits_ready_for_desktop(tmp_path: Path) -> No
 
 def test_cost_ledger_keeps_native_units_separate(tmp_path: Path) -> None:
     ledger = NativeCostLedger(tmp_path / "cost.json")
-    entry = CostEntry("run", "training", "T4_device_hours", 2.0, "scnet", entry_id="one")
+    entry = CostEntry("run", "training", "T4_device_hours", 2.0, "scnet")
     assert ledger.record(entry) == ledger.record(entry)
     ledger.record(CostEntry("run", "acceptance", "queue_hours", 3.0, "scnet", entry_id="two"))
     totals = ledger.totals_by_native_unit()
