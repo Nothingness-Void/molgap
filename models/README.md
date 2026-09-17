@@ -32,3 +32,7 @@ whose `model.path` and `model.sha256` name exactly this file.
 
 All six SHA256 values are recorded in
 `production/04_evaluate/project_freeze/public_inference_consistency/repaired_2m_public_inference.json`.
+
+Reusable PCQM reference and evidence identities are indexed in
+`REFERENCE_INDEX.md`. The index is asynchronous evidence only; it does not
+change the production registry or represent live workload state.
