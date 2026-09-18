@@ -10,3 +10,6 @@ release root
 No scientific model training, development evaluation or protected-role access
 is authorized. Output is written under
 `/public/home/changfeng2006/molgap-v4-bootstrap/gptrans-shortest-path-profile-v5/attempts/122484011/output`.
+The existing 30-minute Luna heartbeat
+`molgap-gptrans-v5-kunshan-retry-monitor` was extended to cover this profile;
+no second cron or task was created.
