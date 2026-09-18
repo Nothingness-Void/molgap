@@ -24,6 +24,8 @@ class SparsePairContractTests(unittest.TestCase):
             ROOT / "run.py",
             ROOT / "accept.py",
             ROOT / "accept_profiles.py",
+            ROOT / "kaggle_profile.py",
+            ROOT / "kaggle_train.py",
         )
         for path in paths:
             ast.parse(path.read_text(encoding="utf-8"))
