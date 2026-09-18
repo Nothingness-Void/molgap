@@ -55,8 +55,10 @@ before training on accelerator/precision preflight assumptions and have no
 scientific result. The logs established a compatible Tesla T4 and identified
 the final issue: the entry point asserted no-TF32 without explicitly disabling
 both backend flags. The final covered repair does so before V5 calibration;
-no model, data or optimization field changes. Completion grants no automatic
-extra seed, 500K run or protected-role use.
+no model, data or optimization field changes. Kaggle1 kernel
+`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 4 is running and passed the
+three earlier immediate failure points. Completion grants no automatic extra
+seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2

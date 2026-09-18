@@ -50,5 +50,6 @@ without first setting both PyTorch backend flags to false. Evidence is
 
 The final covered infrastructure repair explicitly disables CUDA matmul and
 cuDNN TF32 before retaining the same assertion. No scientific-contract field
-changes. No additional seed, protected role, 500K job or successor is
-authorized.
+changes. Kernel version 4 was submitted, remained `RUNNING` beyond the three
+previous preflight failure points, and is bound to the V5 monitor. No
+additional seed, protected role, 500K job or successor is authorized.
