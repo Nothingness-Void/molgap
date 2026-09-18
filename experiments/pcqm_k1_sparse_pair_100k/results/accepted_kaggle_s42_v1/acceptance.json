@@ -1,0 +1,28 @@
+{
+  "format": "molgap-k1-sparse-pair-100k-acceptance-v1",
+  "accepted": true,
+  "candidate": "neural_atom_k1_sparse_pair",
+  "candidate_development_mae_eV": 0.14110969007015228,
+  "baseline_k1_development_mae_eV": 0.1413736343383789,
+  "gain_vs_k1_eV": 0.00026394426822662354,
+  "minimum_gain_eV": 0.003,
+  "paired_candidate_minus_k1": {
+    "delta": -0.0002639571022987366,
+    "ci95": [
+      -0.0011787418522238731,
+      0.0006223918405175207
+    ],
+    "probability_better": 0.7144,
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "scientific_gate_passed": false,
+  "source_commit": "fb35e8bfe7b4b729caa2341727c1ffb6ca90d3e1",
+  "source_archive_sha256": "c619a537ffe725eee9a42798e217a9b8dacd4d69205a1825608fab484a4f02b3",
+  "candidate_completion_sha256": "7e4dae1a18a9377ba0935a5d45ca1929f63d3e97e2db8e139d5f93ed3354581a",
+  "baseline_payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

@@ -14,7 +14,6 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P0 | B-K1-SPARSE-PAIR-100K | Test a topology-conditioned sparse pair return nested in frozen K1 | Profile identical BS128/FP32 source on Kaggle T4 and Kunshan DCU, train once on the faster accepted platform, then require at least 0.003 eV gain plus favorable paired bootstrap evidence | Branch `codex/exp/k1-sparse-pair-spse-100k` |
 | P0 | B-FULL-CONVERGENCE | Reconcile the repaired GPTrans-T and K1 convergence chains | Inspect GPU jobs `1516700`/`1516701` and dependent acceptance jobs `1516703`/`1516704`; accept terminal artifacts or diagnose without resubmitting from a stale snapshot | Branch `codex/exp/gptrans-full-convergence` |
 | P0 | B-DISTANCE-ANGLE-500K | Reconcile the already-submitted paired distance-angle Triangle EdgeState screen | Retrieve jobs `121738961`/`121738978`/`121738985` and write a terminal decision; do not relaunch from the stale snapshot | Branch `codex/scnet-distance-angle-triangle-500k` |
 | P1 | B-XIAN-DETERMINISM | Finish the bounded Xi'an determinism/repeatability audit before any training card-hours | Accept repeatable full-model replay or keep Xi'an pre-screen-only | Branch `codex/exp/xian-determinism-audit` |

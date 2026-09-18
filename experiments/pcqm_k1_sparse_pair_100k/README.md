@@ -6,6 +6,5 @@ the evidence and falsifier, `protocol.md` for the frozen contract, and
 `STATUS.md` for remote execution state. Accepted mechanical profile evidence is
 indexed in `results/REMOTE_LOG.md`.
 
-No scientific result exists until the selected-platform training artifact and
-the frozen K1 payload pass `accept.py`. The official validation, test-dev, and
-challenge roles remain sealed.
+The terminal decision is `decision.md`. The official validation, test-dev, and
+challenge roles remained sealed.

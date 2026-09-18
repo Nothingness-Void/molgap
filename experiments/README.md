@@ -14,7 +14,7 @@ Track C.
 | Question | Verdict | Directory |
 |---|---|---|
 | How is frozen K1 trained and packaged for the full role? | Exact exposure and resumable artifact contract; used by the full comparison | `pcqm_k1_full/` |
-| Can topology-conditioned sparse pair returns materially improve frozen K1? | Active 100K/50K V5 screen; dual-platform profile precedes one seed-42 training run | `pcqm_k1_sparse_pair_100k/` |
+| Can topology-conditioned sparse pair returns materially improve frozen K1? | No; the accepted seed-42 run improved only 0.000264 eV, missed the 0.003 eV gate, and its paired interval crossed zero | `pcqm_k1_sparse_pair_100k/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; its one-time QM9 test remains sealed | `top20_architecture_qm9/` |
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |

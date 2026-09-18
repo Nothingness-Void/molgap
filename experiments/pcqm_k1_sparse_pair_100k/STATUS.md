@@ -16,9 +16,13 @@ The frozen model source is commit `fb35e8b` with source-archive SHA-256
 
 - Kaggle training kernel
   `nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b` version 1 was
-  submitted with the accepted profile, immutable source bundle, fixed 100K
-  data, FP32/no TF32, physical BS128, and the frozen 40-epoch schedule.
+  completed with the accepted profile, immutable source bundle, fixed 100K
+  data, FP32/no TF32, physical BS128, and the frozen 40-epoch schedule. All 40
+  epochs, 31,240 optimizer steps, four recovery archives, and artifact hashes
+  passed mechanical acceptance.
 
-No scientific training result exists yet. The second-platform profile gate was
-not completed; Kaggle release was an explicit operational selection and is
-recorded as such rather than reported as a dual-profile comparison result.
+The candidate reached `0.1411096901 eV`, a `0.0002639443 eV` gain over frozen
+K1. It missed the `0.003 eV` gate and its paired 95% interval crossed zero, so
+the route is closed without another seed or scale-up. The second-platform
+profile gate was not completed; Kaggle release was an explicit operational
+selection and is not reported as a dual-profile comparison result.

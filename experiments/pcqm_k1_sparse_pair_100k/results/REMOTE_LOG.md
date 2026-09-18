@@ -18,3 +18,22 @@
 The two earlier Kaggle versions were mechanical source-closure failures before
 model construction. They are not scientific runs and consumed no training
 exposure.
+
+## Kaggle training version 1
+
+- Kernel: `nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b`.
+- Completed epochs / optimizer steps: `40` / `31,240`.
+- Best epoch: `36`.
+- Development Gap MAE: `0.14110969007015228 eV`.
+- Gain versus frozen K1: `0.00026394426822662354 eV`.
+- Paired candidate-minus-K1 95% interval:
+  `[-0.0011787418522238731, 0.0006223918405175207] eV`.
+- Mean training throughput: `826.6882 graphs/s`.
+- Best-model SHA-256:
+  `42c360f7661e18ce2301a1503fd95dc0a1a24e514dc84edde6c7bda52dd6db80`.
+- Prediction-payload SHA-256:
+  `6ab5ae1a0b2eb574bd3849108473c739273c3f6187c0d7423b63b1103141b6bc`.
+- Completion-manifest SHA-256:
+  `7e4dae1a18a9377ba0935a5d45ca1929f63d3e97e2db8e139d5f93ed3354581a`.
+
+Mechanical acceptance passed; the scientific gate failed.
