@@ -28,10 +28,16 @@ role was read.
 ## Interpretation
 
 The zero-initialized sparse pair return trained correctly and remained cheap,
-but the K1 residual did not contain enough recoverable signal in bounded
-three-hop path counts and pairwise RWSE. The result is consistent with a small
-optimization or regularization effect rather than a missing relation mechanism.
+but it did not improve molecules uniformly. It substantially improved K1-hard
+rows while damaging K1-easy rows, leaving a `49.73%` row win rate and only the
+small net gain above. A fixed 50:50 average was exploratory-positive at
+`0.135340 eV`, but requires two encoder passes and cannot distinguish useful
+sparse-pair information from ordinary optimizer-trajectory diversity without
+an inert-branch or independent K1 control. It therefore does not reverse the
+standalone rejection or release another run.
 
 Machine evidence is in `results/accepted_kaggle_s42_v1/acceptance.json` and
 `results/accepted_kaggle_s42_v1/completion_manifest.json`. Remote provenance is
-in `results/REMOTE_LOG.md`.
+in `results/REMOTE_LOG.md`. The no-inference residual attribution is in
+`attribution.md` and
+`results/accepted_kaggle_s42_v1/residual_attribution.json`.

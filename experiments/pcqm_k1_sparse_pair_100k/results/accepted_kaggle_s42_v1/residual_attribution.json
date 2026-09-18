@@ -1,0 +1,145 @@
+{
+  "format": "molgap-k1-sparse-pair-residual-attribution-v1",
+  "analysis_type": "no-inference-paired-prediction-analysis",
+  "rows": 50000,
+  "source_idx_range": [100000, 149999],
+  "source_idx_exact": true,
+  "target_exact": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "models": {
+    "k1": {
+      "mae_eV": 0.14137364135205746,
+      "signed_bias_eV": 0.006707381266951561,
+      "residual_std_eV": 0.219661643196255
+    },
+    "sparse_pair": {
+      "mae_eV": 0.14110968424737452,
+      "signed_bias_eV": 0.0037951101344823835,
+      "residual_std_eV": 0.2194152736191609
+    }
+  },
+  "paired_standalone": {
+    "gain_vs_k1_eV": 0.00026395710468292237,
+    "median_row_gain_eV": -0.0003886222839355469,
+    "candidate_win_rate": 0.49734,
+    "gain_vs_k1_absolute_error_correlation": 0.3082840465516508,
+    "gain_vs_target_correlation": -0.016071917263595602,
+    "signed_residual_correlation": 0.8495148353268173,
+    "prediction_correlation": 0.9934882883084197,
+    "mean_absolute_prediction_disagreement_eV": 0.07703282059192658
+  },
+  "baseline_difficulty_slices": [
+    {
+      "baseline_absolute_error": "[0,0.05)",
+      "rows": 15096,
+      "k1_mae_eV": 0.02418280698884146,
+      "candidate_mae_eV": 0.05985577742479817,
+      "candidate_gain_eV": -0.035672970435956707,
+      "candidate_win_rate": 0.2739136195018548
+    },
+    {
+      "baseline_absolute_error": "[0.05,0.10)",
+      "rows": 11115,
+      "k1_mae_eV": 0.07349310835041659,
+      "candidate_mae_eV": 0.0822714690201142,
+      "candidate_gain_eV": -0.008778360669697612,
+      "candidate_win_rate": 0.5260458839406208
+    },
+    {
+      "baseline_absolute_error": "[0.10,0.20)",
+      "rows": 12627,
+      "k1_mae_eV": 0.1429492517086732,
+      "candidate_mae_eV": 0.13212059701981638,
+      "candidate_gain_eV": 0.01082865468885682,
+      "candidate_win_rate": 0.6021224360497347
+    },
+    {
+      "baseline_absolute_error": "[0.20,+inf)",
+      "rows": 11162,
+      "k1_mae_eV": 0.36568019285603165,
+      "candidate_mae_eV": 0.31976054825624284,
+      "candidate_gain_eV": 0.045919644599788784,
+      "candidate_win_rate": 0.6523920444364809
+    }
+  ],
+  "hardest_k1_fractions": [
+    {
+      "fraction": 0.01,
+      "rows": 500,
+      "k1_mae_eV": 1.117081786096096,
+      "candidate_mae_eV": 0.9827692188620567,
+      "candidate_gain_eV": 0.1343125672340393,
+      "candidate_win_rate": 0.666
+    },
+    {
+      "fraction": 0.05,
+      "rows": 2500,
+      "k1_mae_eV": 0.6533275681376457,
+      "candidate_mae_eV": 0.5716878325343132,
+      "candidate_gain_eV": 0.08163973560333251,
+      "candidate_win_rate": 0.6832
+    },
+    {
+      "fraction": 0.10,
+      "rows": 5000,
+      "k1_mae_eV": 0.5093856362521648,
+      "candidate_mae_eV": 0.4437299078166485,
+      "candidate_gain_eV": 0.06565572843551636,
+      "candidate_win_rate": 0.678
+    },
+    {
+      "fraction": 0.20,
+      "rows": 10000,
+      "k1_mae_eV": 0.3840221664518118,
+      "candidate_mae_eV": 0.33594319444596765,
+      "candidate_gain_eV": 0.048078972005844114,
+      "candidate_win_rate": 0.6554
+    }
+  ],
+  "signed_residual_slices": {
+    "k1_underpredicts": {
+      "rows": 24911,
+      "candidate_gain_eV": -0.0016580513865383714
+    },
+    "k1_overpredicts": {
+      "rows": 25089,
+      "candidate_gain_eV": 0.002172329440161166
+    }
+  },
+  "static_blend_exploration": {
+    "fixed_50_50_mae_eV": 0.13534006523311137,
+    "fixed_50_50_gain_vs_k1_eV": 0.006033576118946088,
+    "five_fold_source_idx_oof_weights_on_k1": [0.5043, 0.4882, 0.5046, 0.4836, 0.499],
+    "five_fold_source_idx_oof_weight_mean_on_k1": 0.49594,
+    "five_fold_source_idx_oof_mae_eV": 0.13535610129603431,
+    "five_fold_source_idx_oof_gain_vs_k1_eV": 0.006017540056023146,
+    "oracle_per_row_mae_eV": 0.10862685007035733,
+    "oracle_per_row_gain_vs_k1_eV": 0.03274679128170013,
+    "status": "exploratory-only-not-an-authorized-promotion",
+    "cost": "two full encoder passes"
+  },
+  "calibration_diagnostics": {
+    "prediction_shift_mean_eV": -0.0029122711324691773,
+    "prediction_shift_std_eV": 0.12044070591430477,
+    "shift_vs_negative_k1_residual_correlation": 0.27619493681109347,
+    "linear_shrinkage_slope": 0.15143796921233302,
+    "linear_shrinkage_r2": 0.07628364312008395
+  },
+  "training_curve": {
+    "best_epoch": 36,
+    "best_mae_eV": 0.14110969007015228,
+    "final_mae_eV": 0.1412641555070877,
+    "final_minus_best_eV": 0.0001544654369354248,
+    "epochs_with_new_best": 28
+  },
+  "interpretation": {
+    "standalone_mechanism": "rejected",
+    "primary_pattern": "large gains on K1-hard rows offset by regressions on K1-easy rows",
+    "not_just_global_calibration": true,
+    "mechanism_specificity_proven": false,
+    "reason_mechanism_specificity_is_unproven": "No same-architecture independent K1 rerun or inert-branch control separates pair-path information from optimizer trajectory diversity.",
+    "next_action": "Do not scale or add seeds under the frozen stop rule; retain the fixed-blend result only as exploratory ensemble evidence."
+  }
+}
