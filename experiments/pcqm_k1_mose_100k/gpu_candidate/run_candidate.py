@@ -20,7 +20,46 @@ def find_one(name: str) -> Path:
     return matches[0]
 
 
+def pin_one_visible_gpu() -> None:
+    """Expose one assigned accelerator before any process imports torch."""
+    visible = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
+    first = visible.split(",", maxsplit=1)[0].strip() or "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = first
+
+
+def ensure_compatible_torch() -> None:
+    """Install the pinned wheel only when the image cannot execute its GPU."""
+    probe_code = (
+        "import torch; "
+        "available=torch.cuda.is_available(); "
+        "cap=torch.cuda.get_device_capability(0) if available else (-1,-1); "
+        "arch=f'sm_{cap[0]}{cap[1]}'; "
+        "raise SystemExit(0 if available and arch in torch.cuda.get_arch_list() else 3)"
+    )
+    probe = subprocess.run([sys.executable, "-c", probe_code], check=False)
+    if probe.returncode == 0:
+        return
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-q",
+            "--upgrade",
+            "--force-reinstall",
+            "torch==2.4.1",
+            "--index-url",
+            "https://download.pytorch.org/whl/cu121",
+        ]
+    )
+    verified = subprocess.run([sys.executable, "-c", probe_code], check=False)
+    if verified.returncode:
+        raise RuntimeError("Installed PyTorch cannot execute the assigned CUDA accelerator")
+
+
 def install_dependencies() -> None:
+    ensure_compatible_torch()
     subprocess.check_call(
         [sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"]
     )
@@ -50,14 +89,16 @@ def verify_source(root: Path) -> tuple[str, str]:
 
 def main() -> None:
     os.environ["MOLGAP_PLATFORM_ID"] = "kaggle1"
+    pin_one_visible_gpu()
     install_dependencies()
     root = source_root()
     commit, digest = verify_source(root)
     sys.path.insert(0, str(root / "src"))
     import torch
 
-    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
-        raise RuntimeError("K1-MoSE requires exactly one visible CUDA device")
+    device_names = [torch.cuda.get_device_name(index) for index in range(torch.cuda.device_count())]
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1 or "P100" not in device_names[0]:
+        raise RuntimeError(f"K1-MoSE requires one compatible P100, found {device_names}")
     if torch.backends.cuda.matmul.allow_tf32 or torch.backends.cudnn.allow_tf32:
         raise RuntimeError("TF32 must be disabled before training")
     from molgap.pcqm_k1_variants_runner import train_arm
@@ -72,4 +113,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
