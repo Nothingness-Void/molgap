@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-18",
+  "source_commit": "44611f9",
+  "runtime_archive_sha256": "855bc44065671b6a4919cac2df24bbde1faffb7d5c255c258c624dab1b998322",
+  "scientific_contract_changed": false,
+  "diagnosis": {
+    "failure": "host cgroup memory limit exceeded",
+    "observed_host_memory_mb": 15296,
+    "gpu_oom": false,
+    "new_validation_reached": false
+  },
+  "resource_repair": {
+    "ncpus": 16,
+    "ompthreads": 4,
+    "jobtype": "gpu",
+    "ngpus": 1,
+    "walltime": "72:00:00",
+    "max_wall_seconds": 252000
+  },
+  "k1": {
+    "parent_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260916_r3",
+    "parent_checkpoint_sha256": "a8a4c02868d419b21e0ae9a5d280c303c8fb5a60829c30249d976b63db1900db",
+    "parent_continuation_step": 18075,
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260918_r4",
+    "training_job": "1543823.ccpbs1",
+    "acceptance_job": "1543824.ccpbs1",
+    "acceptance_dependency": "afterok:1543823.ccpbs1"
+  },
+  "gptrans": {
+    "parent_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260916_r4",
+    "parent_checkpoint_sha256": "a686c6e1d12666a4dca6dac1b0472175863228a0fb0ae7b663bb465fbd90abb6",
+    "parent_continuation_step": 19812,
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260918_r5",
+    "training_job": "1543825.ccpbs1",
+    "acceptance_job": "1543827.ccpbs1",
+    "acceptance_dependency": "afterok:1543825.ccpbs1"
+  },
+  "submission_snapshot": {
+    "k1_training": "Queue",
+    "k1_acceptance": "Hold",
+    "gptrans_training": "Queue",
+    "gptrans_acceptance": "Hold"
+  }
+}

@@ -56,17 +56,14 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - The full K1/GPTrans-T implementation is integrated in this branch. The
   2026-09-14 evidence accepts GPTrans training at 156,250 steps; K1 recovery
   and dependent fusion have no terminal acceptance in this snapshot.
-- Independent frozen GPTrans official-valid evaluation was submitted as CPU
-  job 1507573.ccpbs1 and accepted at 0.1090123132 eV over 73,545 rows. A bounded
-  convergence continuation is isolated on `codex/exp/gptrans-full-convergence`.
-  Both failed deployments were repaired and resubmitted on 2026-09-16:
-  GPTrans training/preflight 1524399, acceptance 1524401; K1 training/preflight
-  1524398, acceptance 1524402. Deployed contract validation passed for both;
-  GPU preflight and training results await execution. Continuation restores
-  each accepted 156,250-step checkpoint under its frozen six-pass/patience-three
-  protocol. Repair evidence and job identities:
-  `experiments/pcqm_gptrans_full_convergence/results/repair_20260916.md` and
-  `experiments/pcqm_gptrans_full_convergence/repair_submission_r4.json`.
+- Independent frozen GPTrans official-valid evaluation was accepted at
+  0.1090123132 eV over 73,545 rows. The 2026-09-16 K1 and GPTrans convergence
+  jobs stopped before a new validation because both hit a 15,296 MB host-memory
+  cgroup limit, not GPU OOM or model failure. Their verified atomic checkpoints
+  now resume under 16-CPU, explicit-GPU, 72-hour jobs: K1 1543823 with
+  acceptance 1543824, and GPTrans 1543825 with acceptance 1543827. Neither
+  model is proven converged until terminal acceptance. Evidence:
+  `experiments/pcqm_gptrans_full_convergence/results/resource_repair_20260918.md`.
 - The K1/GPTrans-T fusion has one-time authorization for its frozen official-
   valid calibration/holdout split. Test-dev/challenge remain sealed.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision

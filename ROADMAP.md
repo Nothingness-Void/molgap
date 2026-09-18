@@ -15,7 +15,7 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
 | P0 | B-KUNSHAN-V4-REFERENCE | Reconcile and accept the single GPTrans-T seed-42 100K/50K V4 reference | Verify terminal scheduler state, 60 physical-BS128 epochs, runtime certificate, outputs, and frozen acceptance; do not infer status from the 2026-09-12 snapshot | Branch `codex/exp/gptrans-t-100k-v4` |
-| P0 | B-FULL-K1-GPTRANS-CHAIN | Reconcile the already-submitted K1 resume, GPTrans-T preflight/full run, and dependent fusion chain | Continue only declared `afterok` dependencies; accept each stage and update the monitor handoff; do not resubmit from stale status | `experiments/pcqm_k1_gptrans_full_fusion/` |
+| P0 | B-FULL-CONVERGENCE | Reconcile the repaired K1 and GPTrans-T convergence chains | Inspect K1 `1543823`/`1543824` and GPTrans `1543825`/`1543827`; accept terminal artifacts or diagnose before any successor | Branch `codex/fix/ims-convergence-runtime` |
 | P0 | B-GPTRANS-VALID-FIRST | Retrieve the authorized independent frozen GPTrans official-valid evaluation | Accept persisted predictions and report MAE without tuning; follow the dated submission evidence | `experiments/pcqm_k1_gptrans_full_fusion/` |
 | P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Only after the V4 reference is accepted; issue a new frozen contract/runtime certificate and explicit launch authorization | Branch `codex/exp/gptrans-k1-geometry-500k` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
