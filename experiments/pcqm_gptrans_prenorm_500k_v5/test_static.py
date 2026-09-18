@@ -40,3 +40,13 @@ def test_slurm_uses_one_dcu_per_arm_and_fixed_cache():
     assert "pcqm4mv2-ogb-fixed-500k-scnet-v1" in text
     assert "--time=16:00:00" in text
     assert "PRELIM" not in text
+
+
+def test_resume_slurm_preserves_source_and_requires_atomic_checkpoint():
+    text = (ROOT / "run_kunshan_resume.slurm").read_text()
+    assert "--gres=dcu:Hygon:1" in text
+    assert "--time=16:00:00" in text
+    assert 'test -f "${RESUME_ROOT}/last_checkpoint.pt"' in text
+    assert 'test -f "${RESUME_ROOT}/best_model.pt"' in text
+    assert '--source-commit "${SOURCE_COMMIT}"' in text
+    assert '--resume "${RESUME_ROOT}"' in text
