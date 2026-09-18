@@ -53,3 +53,7 @@ def test_all_pbs_jobs_mount_the_frozen_ogb_archive():
     for text in (preflight, train):
         assert 'source-root "$BASE/outputs/k1/full"' in text
         assert 'source-evaluation "$BASE/outputs/fusion_study/metrics.json"' in text
+    assert "ncpus=16:mpiprocs=1:ompthreads=4:jobtype=gpu:ngpus=1" in train
+    assert "walltime=72:00:00" in train
+    assert "--max-wall-seconds 252000" in train
+    assert "acceptance deferred" in (root / "accept.pbs").read_text(encoding="utf-8")

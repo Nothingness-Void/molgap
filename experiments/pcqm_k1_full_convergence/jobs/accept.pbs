@@ -14,4 +14,8 @@ export PYTHONPATH="$VENDOR/code/platforms/ims/pcqm_route_b/shims:$VENDOR/vendor-
 export MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 PYTHONUNBUFFERED=1
 cd "$ROOT"
+if [[ ! -f "$ROOT/output/completion_manifest.json" ]]; then
+  echo "Training paused with a durable checkpoint; acceptance deferred."
+  exit 0
+fi
 "$PYTHON" "$ROOT/code/experiments/pcqm_k1_full_convergence/run.py" accept --output "$ROOT/output"

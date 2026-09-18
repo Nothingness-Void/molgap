@@ -11,7 +11,7 @@ BASE = '/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full'
 
 
 def main():
-    out = ROOT / 'platforms/_records/ims/convergence_repair_r4'
+    out = ROOT / 'platforms/_records/ims/convergence_repair_r5'
     out.mkdir(parents=True, exist_ok=True)
     tracked = subprocess.check_output(['git', 'ls-files', 'src'], cwd=ROOT, text=True).splitlines()
     files = {p: (ROOT / p).read_bytes().replace(b'\r\n', b'\n')
@@ -53,9 +53,22 @@ print('Actual graph/fusion contract validation passed', flush=True)
             info = tarfile.TarInfo('code/' + name)
             info.size = len(data)
             tar.addfile(info, io.BytesIO(data))
-    for family, old, new in (
-        ('gptrans', 'gptrans_convergence_20260915_r2', 'gptrans_convergence_20260916_r4'),
-        ('k1', 'k1_convergence_20260915_r1', 'k1_convergence_20260916_r3'),
+    resume_parents = {}
+    for family, old, parent, new, checkpoint_sha256 in (
+        (
+            'gptrans',
+            'gptrans_convergence_20260915_r2',
+            'gptrans_convergence_20260916_r4',
+            'gptrans_convergence_20260918_r5',
+            'a686c6e1d12666a4dca6dac1b0472175863228a0fb0ae7b663bb465fbd90abb6',
+        ),
+        (
+            'k1',
+            'k1_convergence_20260915_r1',
+            'k1_convergence_20260916_r3',
+            'k1_convergence_20260918_r4',
+            'a8a4c02868d419b21e0ae9a5d280c303c8fb5a60829c30249d976b63db1900db',
+        ),
     ):
         jobs = ROOT / f'experiments/pcqm_{family}_full_convergence/jobs'
         train = (jobs / 'train.pbs').read_text().replace(old, new)
@@ -72,9 +85,18 @@ print('Actual graph/fusion contract validation passed', flush=True)
         environment = pre.split('cd "$ROOT"\n', 1)[0].split('set -euo pipefail\n', 1)[1]
         (out / f'{family}_imports.sh').write_text('set -euo pipefail\n' + environment +
             'cd "$ROOT"\n' + validation, newline='\n')
+        resume_parents[family] = {
+            'parent_root': f'{BASE}/{parent}',
+            'successor_root': f'{BASE}/{new}',
+            'checkpoint_sha256': checkpoint_sha256,
+            'copy': ['output/last_checkpoint.pt'],
+        }
+    (out / 'resume_parents.json').write_text(
+        json.dumps(resume_parents, indent=2) + '\n', encoding='utf-8', newline='\n'
+    )
     print(json.dumps({'archive': str(out / 'runtime.tar.gz'),
         'sha256': hashlib.sha256((out / 'runtime.tar.gz').read_bytes()).hexdigest(),
-        'runtime_files': len(hashes)}, indent=2))
+        'runtime_files': len(hashes), 'resume_parents': resume_parents}, indent=2))
 
 
 if __name__ == '__main__':
