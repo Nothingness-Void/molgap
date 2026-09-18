@@ -25,6 +25,8 @@ def test_colab_v5_notebook_is_gated_and_pinned() -> None:
     assert '"training_authorized": False' in source
     assert "PHYSICAL_BATCH_PER_DEVICE = 128" in source
     assert 'PRECISION = "fp32"' in source
+    assert 'sys.path.insert(0, source_python)' in source
+    assert "importlib.invalidate_caches()" in source
 
 
 def test_colab_v5_notebook_binds_only_accepted_fixed_roles() -> None:
@@ -51,4 +53,3 @@ def test_colab_v5_notebook_has_durable_resume_layout() -> None:
     assert "checkpoint_interval" in source
     assert "resume_contract" in source
     assert "Run ID already belongs to a different immutable spec" in source
-

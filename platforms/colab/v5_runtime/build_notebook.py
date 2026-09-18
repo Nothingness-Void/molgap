@@ -115,6 +115,14 @@ subprocess.check_call([
     "torch-geometric==2.6.1", "ogb==1.3.6", "kaggle==1.7.4.5",
 ])
 
+# Editable-install .pth files are processed only when Python starts. Colab
+# keeps the current kernel alive, so expose the frozen src tree immediately.
+import importlib
+source_python = str(SOURCE_ROOT / "src")
+if source_python not in sys.path:
+    sys.path.insert(0, source_python)
+importlib.invalidate_caches()
+
 from molgap.v5_desktop import V5_CONTRACT_ID, V5_DESKTOP_CONTRACT_ID
 assert V5_CONTRACT_ID == COMMON_CONTRACT
 assert V5_DESKTOP_CONTRACT_ID == DESKTOP_CONTRACT
@@ -376,4 +384,3 @@ print(json.dumps(summary, indent=2))'''
 
 if __name__ == "__main__":
     main()
-
