@@ -1,0 +1,26 @@
+{
+  "format": "molgap-k1-mose-trajectory-analysis-v1",
+  "source_experiment": "pcqm_k1_mose_100k",
+  "reference": "neural_atom_k1_v4",
+  "candidate": "neural_atom_k1_mose",
+  "best_reference_development_gap_mae_eV": 0.1413736343383789,
+  "best_candidate_development_gap_mae_eV": 0.14025451242923737,
+  "gain_eV": 0.0011191219091415405,
+  "mean_epoch_delta_candidate_minus_reference_eV": {
+    "epochs_0_14": 0.014678305387496949,
+    "epochs_25_39": -0.0009701013565063477
+  },
+  "mose_mean_log1p_count_quintiles": [
+    {"quintile": 1, "rows": 10000, "min": 0.0, "max": 0.8800187110900879, "mean_error_delta_eV": -0.0031019719317555428},
+    {"quintile": 2, "rows": 10000, "min": 0.8800187110900879, "max": 0.9133226275444031, "mean_error_delta_eV": -0.0018571496475487947},
+    {"quintile": 3, "rows": 10000, "min": 0.9133238792419434, "max": 0.9398764371871948, "mean_error_delta_eV": -0.001080170040950179},
+    {"quintile": 4, "rows": 10000, "min": 0.9398764371871948, "max": 0.9923612475395203, "mean_error_delta_eV": -0.0011989978374913335},
+    {"quintile": 5, "rows": 10000, "min": 0.9923717975616455, "max": 2.2401115894317627, "mean_error_delta_eV": 0.0016426732763648033}
+  ],
+  "interpretation": "Late-epoch advantage rules out simple undertraining; the sign reversal at high count magnitude supports a structural-count calibration intervention.",
+  "released_intervention": "hidden BatchNorm in the MoSE structural MLP",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

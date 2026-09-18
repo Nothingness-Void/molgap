@@ -45,6 +45,16 @@ contract.
 
 ## Discovery state
 
+One server-owned seed-42 V5 screen is released: K1-MoSE hidden normalization.
+Post-run trajectory analysis found that the closed MoSE replacement was
+stably favorable late in training but reversed from improvement to regression
+in the highest structural-count-magnitude quintile. The published PCQM MoSE
+encoder uses hidden-layer BatchNorm that the prior MolGap implementation
+omitted. The new question adds only that hidden normalization, reuses the
+accepted MoSE cache and immutable K1-v4 reference, and preserves the full V5
+data/training contract. Authority:
+`experiments/pcqm_k1_mose_hidden_bn_100k/protocol.md`.
+
 The V5 K1-MoSE information-source screen is complete. It replaced K1-v4's
 RWSE16 input with 31 rooted motif-homomorphism counts while preserving the
 EdgeState/K1 information flow and all non-intervention contract fields. The
