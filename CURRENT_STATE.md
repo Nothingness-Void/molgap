@@ -55,6 +55,7 @@ before training on accelerator-preflight assumptions and have no scientific
 result. Version 2 proved that Kaggle allocated a compatible Tesla T4 despite
 the P100 request. The covered repair uses one isolated T4 and requires the V5
 runtime calibration certificate; no model, data or optimization field changes.
+Kaggle1 kernel `nothingnessvoid/molgap-pcqm-k1-mose-s42` version 3 is running.
 Completion grants no automatic extra seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.

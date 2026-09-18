@@ -43,5 +43,6 @@ scientific contract matches and the runtime issues an accepted deterministic
 calibration certificate. The next covered repair therefore requests T4,
 isolates one visible device and removes only the accelerator-name guard. It
 does not change data, model, initialization, seed, precision, batch, optimizer,
-schedule, exposure or gate. No additional seed, protected role, 500K job or
-successor is authorized.
+schedule, exposure or gate. Kernel version 3 was submitted and entered
+`RUNNING`. No additional seed, protected role, 500K job or successor is
+authorized.
