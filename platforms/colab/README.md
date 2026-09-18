@@ -4,6 +4,11 @@ This directory contains durable Colab launch bundles, currently centered on
 repaired-2M 3D graph construction. Notebooks are platform adapters; reusable
 graph and acceptance logic remains in `src/molgap/`.
 
+The reusable Track B platform bootstrap is under `v5_runtime/`. It freezes the
+desktop V5 contracts, exact source identity, accepted 100K/500K fixed-data
+identities, paid-accelerator preflight, and durable Drive run layout without
+authorizing training.
+
 Each long run must emit resumable bounded parts and manifests. Live status is
 owned by `CURRENT_STATE.md`; downloaded evidence belongs in
 `platforms/_records/`.
