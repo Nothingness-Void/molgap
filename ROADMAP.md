@@ -15,6 +15,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 | P1 | B-GPTRANS-PRENORM-500K-V5 | Accept the server-owned matched GPTrans reference/Pair-PreNorm Kunshan bridge | Both arms terminate; no-inference paired V5 acceptance records science, transfer, cost, and handoff states |
+| P2 | OPS-GPTRANS-SP-PROFILE-V5 | Profile exact cached shortest paths against current online reconstruction without reading development | Train-only artifact acceptance records equivalence, stage timing, memory, and repeated-order throughput; no scientific contract changes |
 
 The PairToken causal audit and 500K scale bridge are complete. The 500K point
 gain was below the material gate, so no efficient approximation, another seed,
