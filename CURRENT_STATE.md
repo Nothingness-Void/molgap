@@ -198,10 +198,10 @@ does not duplicate the desktop full comparison and does not access protected
 roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and
 its `STATUS.md`.
 
-A separate profiling-only Kunshan task is being prepared to measure GPTrans-T's
-online shortest-path reconstruction against an exact cached integer tensor.
-It uses train rows only, produces no model result, and cannot alter the running
-scientific contract. Authority:
+A separate profiling-only Kunshan job `122484011` is queued to measure
+GPTrans-T's online shortest-path reconstruction against an exact cached integer
+tensor. It uses train rows only, produces no model result, and cannot alter the
+running scientific contract. Authority:
 `experiments/pcqm_gptrans_shortest_path_profile_v5/protocol.md`.
 
 ## Data and comparison contract
