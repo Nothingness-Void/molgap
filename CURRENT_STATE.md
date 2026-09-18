@@ -45,6 +45,15 @@ contract.
 
 ## Discovery state
 
+The user explicitly released one new V5 information-source question from the
+literature audit: replace K1-v4's RWSE16 input with 31 rooted MoSE counts while
+leaving the EdgeState/K1 information flow unchanged.  The protocol is
+`experiments/pcqm_k1_mose_100k/protocol.md`.  Source and cache code are staged
+for Kaggle1, but no MoSE compute is running because Kaggle1 already has the
+separate `nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b` GPU task in
+progress.  V5 resource separation requires that task to terminate before the
+MoSE CPU cache is released; GPU training remains gated by cache acceptance.
+
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
 found a directional but sub-threshold gain from removing length-one slot
