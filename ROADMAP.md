@@ -18,6 +18,7 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 | P0 | B-DISTANCE-ANGLE-500K | Reconcile the already-submitted paired distance-angle Triangle EdgeState screen | Retrieve jobs `121738961`/`121738978`/`121738985` and write a terminal decision; do not relaunch from the stale snapshot | Branch `codex/scnet-distance-angle-triangle-500k` |
 | P1 | B-XIAN-DETERMINISM | Finish the bounded Xi'an determinism/repeatability audit before any training card-hours | Accept repeatable full-model replay or keep Xi'an pre-screen-only | Branch `codex/exp/xian-determinism-audit` |
 | P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
+| P1 | B-GPTRANS-PAIR-NORM-500K | Test the shortlisted GPTrans pair-update normalization at matched 500K scale | Stop as negative at the preregistered epoch-30/40 futility gates, or complete 60 epochs and require at least 0.003 eV paired gain | Branch `codex/exp/gptrans-pair-norm-500k` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
 The accepted V4 reference and runtime policy are documented in

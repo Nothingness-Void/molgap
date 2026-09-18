@@ -1,0 +1,36 @@
+{
+  "format": "molgap-matched-prefix-futility-backtest-v1",
+  "created_before_500k_launch": true,
+  "gates": [
+    {
+      "completed_epochs": 30,
+      "reference_best_mae_eV": 0.112521231174469,
+      "maximum_deficit_eV": 0.006
+    },
+    {
+      "completed_epochs": 40,
+      "reference_best_mae_eV": 0.10822822153568268,
+      "maximum_deficit_eV": 0.003
+    }
+  ],
+  "accepted_100k_pair_update_norm": {
+    "trace_sha256": "8aa614299b8b60339811bc277f8866746a506324126a3d4404ec78a896352084",
+    "candidate_minus_reference_best_eV_at_epoch30": -0.02317941188812256,
+    "candidate_minus_reference_best_eV_at_epoch40": -0.01556318998336792,
+    "stopped": false
+  },
+  "rejected_100k_pair_post_norm": {
+    "trace_sha256": "791375bf4cdc24983bf3ff7c1f4fc36d1bbb15e5881828ee35e7202f3e189571",
+    "candidate_minus_reference_best_eV_at_epoch30": 0.007488161325454712,
+    "candidate_minus_reference_best_eV_at_epoch40": 0.00517253577709198,
+    "stopped_at_epoch": 30
+  },
+  "reference_100k_trace_sha256": "68b884995ab9ef0f7f919dbd3fdac45de989a73440a7825c56ee5fb837edeede",
+  "reference_500k_trace_sha256": "22cb2bea6ee531402b951334fb791f091ec64c68b3e6f539fe1c9851dcdce1d4",
+  "late_improvement_checks": {
+    "gptrans_500k_best_epoch": 56,
+    "edge_state_500k_best_epoch": 54,
+    "k1_500k_best_epoch_in_40_epoch_trace": 38,
+    "ordinary_patience_rejected": true
+  }
+}

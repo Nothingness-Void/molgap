@@ -1,0 +1,35 @@
+{
+  "format": "molgap-gptrans-pair-update-norm-500k-v5-contract-v1",
+  "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
+  "candidate": "gptrans_t_core_12x256_pair32/pair_update_norm",
+  "parameters": 5246817,
+  "roles": {
+    "train": [0, 500000],
+    "development": [500000, 550000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "physical_batch_per_device": 128,
+  "device_count": 1,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "maximum_epochs": 60,
+  "futility_gates": [
+    {
+      "completed_epochs": 30,
+      "reference_best_mae_eV": 0.112521231174469,
+      "maximum_deficit_eV": 0.006
+    },
+    {
+      "completed_epochs": 40,
+      "reference_best_mae_eV": 0.10822822153568268,
+      "maximum_deficit_eV": 0.003
+    }
+  ],
+  "reference_trace_sha256": "22cb2bea6ee531402b951334fb791f091ec64c68b3e6f539fe1c9851dcdce1d4",
+  "minimum_final_gain_eV": 0.003
+}
