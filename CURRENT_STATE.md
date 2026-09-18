@@ -90,6 +90,11 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   post-normalizing accumulated pair memory scored 0.158614 eV and was rejected.
   This is mechanism evidence only, not scale or official-evaluation authority;
   see `experiments/pcqm_gptrans_pair_norm_100k/decision.md`.
+- The matched 500K PairNorm bridge is running as Kaggle3 kernel
+  `nvoid912/molgap-gptrans-pair-update-norm-500k-v1`, version 1. Sixty epochs
+  is only its competitive-run ceiling: preregistered matched-prefix futility
+  gates stop a clear loser after epoch 30 or 40. The frozen protocol and launch
+  identity are under `experiments/pcqm_gptrans_pair_norm_500k/`.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
