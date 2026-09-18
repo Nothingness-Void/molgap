@@ -29,6 +29,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
 | `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing GPTrans node-to-node/node-to-pair/pair-to-node behavior |
 | `pcqm_gptrans_v4.py` | V4-certified fixed-100K GPTrans reference runtime | Changing GPTrans baseline data, optimizer, determinism, recovery, or evidence contracts |
+| `k1_sparse_pair.py` | Zero-initialized topology-conditioned sparse pair return nested in frozen K1 | Changing bounded path/RWSE pair features, sender selection, or directional node return |
+| `pcqm_k1_sparse_pair_100k.py` | Fixed 100K/50K V5 profile, training, resume, and evidence runtime for K1 sparse pairs | Changing the sparse-pair screen contract or remote artifact behavior |
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
 | `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |

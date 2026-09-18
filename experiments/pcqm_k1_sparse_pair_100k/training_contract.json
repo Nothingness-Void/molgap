@@ -1,0 +1,48 @@
+{
+  "format": "molgap-k1-sparse-pair-100k-contract-v1",
+  "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v5",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "roles": {
+    "train": [0, 100000],
+    "development": [100000, 150000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "model": {
+    "name": "neural_atom_k1_sparse_pair",
+    "backbone": "neural_atom_k1_v4",
+    "parameters": 3681233,
+    "added_parameters": 22416,
+    "target_layer": 6,
+    "pair_channels": 32,
+    "maximum_pair_distance": 3,
+    "path_orders": 5,
+    "path_encoding": "bounded-nonbacktracking-counts-not-exact-spse",
+    "selection": "candidate-senders-per-receiver",
+    "return": "directional-pair-to-receiver",
+    "persistent_dense_pair_state": false,
+    "geometry_model_input": false,
+    "initialization_policy": "exact-k1-function-zero-residual"
+  },
+  "training": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "physical_batch_per_device": 128,
+    "gradient_accumulation_steps": 1,
+    "tail_batch_policy": "drop_last",
+    "epochs": 40,
+    "optimizer_steps_per_epoch": 781,
+    "total_optimizer_steps": 31240,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0004,
+    "weight_decay": 0.00001,
+    "gradient_clip": 1.0,
+    "schedule": "cosine-to-1e-6",
+    "loss": "normalized-gap-L1"
+  },
+  "minimum_gain_eV": 0.003,
+  "baseline_k1_development_mae_eV": 0.1413736343
+}
