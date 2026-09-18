@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-trace-manifest-v1",
+  "type": "object",
+  "required": ["schema", "trajectory_id", "run_id", "contract_ref", "model_identity", "reference_id", "comparison_role", "x_axis", "presentation_semantics_ref", "weight_semantics", "metric_semantics", "evaluation_role_identity", "selection_semantics", "trace_artifact_ref", "terminal_evidence_ref", "comparability_identity", "exposure", "backtest_eligibility"],
+  "properties": {
+    "schema": {"const": "molgap-trace-manifest-v1"},
+    "trajectory_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "contract_ref": {"type": "string", "minLength": 1},
+    "model_identity": {"type": "string", "minLength": 1},
+    "reference_id": {"type": "string", "minLength": 1},
+    "comparison_role": {"enum": ["candidate", "reference"]},
+    "x_axis": {"enum": ["optimizer_steps", "presentations", "epochs"]},
+    "presentation_semantics_ref": {"type": "string", "minLength": 1},
+    "weight_semantics": {"type": "string", "minLength": 1},
+    "metric_semantics": {"type": "string", "minLength": 1},
+    "evaluation_role_identity": {"type": "string", "minLength": 1},
+    "selection_semantics": {"type": "string", "minLength": 1},
+    "trace_artifact_ref": {"type": "string", "minLength": 1},
+    "terminal_evidence_ref": {"type": "string", "minLength": 1},
+    "comparability_identity": {
+      "type": "object",
+      "required": ["scientific_contract", "dataset_identity", "row_split_identity", "architecture_identity", "optimizer_identity", "lr_schedule_identity", "target_transform_identity", "precision_identity", "ema_semantics", "evaluation_role_identity", "selection_role_identity", "x_axis_semantics", "terminal_endpoint_identity", "matched_architecture_required"]
+    },
+    "exposure": {
+      "type": "object",
+      "required": ["optimizer_steps", "sample_presentations"]
+    },
+    "backtest_eligibility": {"type": "object"}
+  },
+  "additionalProperties": false
+}

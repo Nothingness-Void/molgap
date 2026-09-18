@@ -1,0 +1,95 @@
+{
+  "broken_required_pointers": [],
+  "cost_completeness": {
+    "trajectories_total": 8,
+    "with_complete_native_measurement": 0,
+    "with_cost_event": 1,
+    "with_incomplete_native_measurement": 1,
+    "without_cost_event": 7
+  },
+  "counts_by_severity": {
+    "INFO": 1,
+    "WARN": 5
+  },
+  "format": "molgap-rml-completeness-report-v1",
+  "issues": [
+    {
+      "code": "trace_unavailable_for_backtest",
+      "count": 8,
+      "items": [
+        "TB-edgestate-rich-full-v1",
+        "TB-geometry-transfer-500k-context",
+        "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-k1-gptrans-full-fusion-r3",
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist"
+      ],
+      "severity": "INFO"
+    },
+    {
+      "code": "historical_partial_record",
+      "count": 8,
+      "items": [
+        "TB-edgestate-rich-full-v1",
+        "TB-geometry-transfer-500k-context",
+        "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-k1-gptrans-full-fusion-r3",
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "incomplete_native_cost_measurement",
+      "count": 1,
+      "items": [
+        "TB-edgestate-rich-full-v1"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "missing_cost_event",
+      "count": 7,
+      "items": [
+        "TB-geometry-transfer-500k-context",
+        "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-k1-gptrans-full-fusion-r3",
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "missing_explicit_role_identity",
+      "count": 8,
+      "items": [
+        "TB-edgestate-rich-full-v1",
+        "TB-geometry-transfer-500k-context",
+        "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-k1-gptrans-full-fusion-r3",
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
+      "count": 3,
+      "items": [
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist"
+      ],
+      "severity": "WARN"
+    }
+  ],
+  "ready_prerequisites_missing": []
+}

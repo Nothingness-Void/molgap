@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-route-b-four-encoder-specialist",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gps-schnet-bounded-fusion",
+  "question": "Can the historical four-encoder bounded fusion establish a PCQM Gap specialist?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-route-b-four-encoder-specialist",
+    "observed_deficiency": null,
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "changed_mechanism": "GPS9, GPS11-160, and dual-SchNet bounded fusion",
+    "cheapest_falsifier": "fixed validation fusion gate",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "retain the Track B specialist record",
+    "decision_changed_if_negative": "close the historical fusion route",
+    "historical_unknowns": ["no V5 evidence envelope", "native cost not normalized"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_route_b/results/HANDOFF.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": [],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "four_encoder_training_and_bounded_fusion",
+      "run_ids": [],
+      "attempt_ids": [],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_route_b/results/run_plan.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-geometry-transfer-500k-context",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "distance-angle-transfer",
+  "question": "Do distance and angle features yield a qualified 500K K1/GPTrans-T transfer gain?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-geometry-transfer-500k-context",
+    "observed_deficiency": null,
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["runtime or reference mismatch may explain the apparent gain"],
+    "changed_mechanism": "distance-angle geometry features",
+    "cheapest_falsifier": "matched V4 bridge",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "consider geometry transfer under a matched contract",
+    "decision_changed_if_negative": "keep geometry transfer blocked",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_geometry_transfer_500k/protocol.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_geometry_transfer_500k/v5_evidence.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "historical_geometry_transfer_comparison",
+      "run_ids": [],
+      "attempt_ids": [],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-geometry-transfer-500k-contextual"],
+    "evidence_refs": ["experiments/pcqm_geometry_transfer_500k/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_geometry_transfer_500k/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["explicitly authorized matched V4 or V5 bridge"]
+  }
+}

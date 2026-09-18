@@ -1,8 +1,10 @@
 # IMS Adapter
 
-This directory contains scheduler and environment adapters for workloads on the
-IMS molecular research server, including PCQM Route B and secondary-conformer
-construction.
+This directory contains scheduler and environment adapters for NVIDIA A100 and
+CPU workloads on the IMS molecular research server, including PCQM Route B and
+secondary-conformer construction. `A100` is the canonical accelerator label in
+plans and status records; exact strings such as `NVIDIA A100-SXM4-80GB` remain
+only in runtime certificates and measured historical evidence.
 
 Project writes must remain under the approved user project root. Reusable model
 logic stays in `src/molgap/`, live status stays in `CURRENT_STATE.md`, and

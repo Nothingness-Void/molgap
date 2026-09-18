@@ -1,0 +1,124 @@
+{
+  "edges": [
+    {
+      "source": "TB-edgestate-rich-full-v1:A001",
+      "target": "experiments/pcqm_edge_state_full/results/rich_full/acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-geometry-transfer-500k-context:A001",
+      "target": "experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gine-1m-gap-specialist-v7:A001",
+      "target": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference:A001",
+      "target": "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-gptrans-full-fusion-r3:A001",
+      "target": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm:A001",
+      "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-recurrent-graph-state-100k-seed42:A001",
+      "target": "experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-route-b-four-encoder-specialist:A001",
+      "target": "experiments/pcqm_route_b/results/run_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-matched-500k-v4-three-arm",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-matched-500k-v4-three-arm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-edgestate-rich-full-submission",
+      "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-matched-500k-v4-three-arm",
+      "type": "reference_used"
+    }
+  ],
+  "format": "molgap-rml-trajectory-graph-v1",
+  "nodes": [
+    {
+      "id": "pcqm-edgestate-rich-full-submission",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-geometry-transfer-500k-contextual",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gine-1m-local-specialist-v7",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-t-100k-v4-reference",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-gptrans-full-fusion-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "TB-edgestate-rich-full-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-geometry-transfer-500k-context",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gine-1m-gap-specialist-v7",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-t-100k-v4-reference",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-matched-500k-v4-three-arm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-recurrent-graph-state-100k-seed42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    }
+  ]
+}

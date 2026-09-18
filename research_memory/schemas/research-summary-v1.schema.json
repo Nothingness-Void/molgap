@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-research-summary-v1",
+  "type": "object",
+  "required": ["format", "source_digest", "evidence", "trajectories", "transfer", "roles", "cost", "backtest", "memory_gaps"],
+  "properties": {
+    "format": {"const": "molgap-rml-research-summary-v1"},
+    "source_digest": {"type": "string"},
+    "evidence": {"type": "object"},
+    "trajectories": {"type": "object"},
+    "transfer": {"type": "object"},
+    "roles": {"type": "object"},
+    "cost": {
+      "type": "object",
+      "required": ["totals_by_hardware", "unknown_events", "completeness"],
+      "properties": {
+        "totals_by_hardware": {"type": "object"},
+        "unknown_events": {"type": "integer", "minimum": 0},
+        "completeness": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "backtest": {"type": "object"},
+    "memory_gaps": {"type": "array"}
+  },
+  "additionalProperties": false
+}

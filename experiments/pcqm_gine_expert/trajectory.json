@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gine-1m-gap-specialist-v7",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gine-gap-specialist",
+  "question": "Can the one-million-row GINE model serve as a task-routed PCQM Gap specialist?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gine-1m-gap-specialist-v7",
+    "observed_deficiency": null,
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "changed_mechanism": "task-specific GINE Gap specialist",
+    "cheapest_falsifier": "fixed official-validation specialist evaluation",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "retain deterministic task routing",
+    "decision_changed_if_negative": "close the specialist route",
+    "historical_unknowns": ["native CUDA cost is not normalized into events"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/input_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_gine_expert/v5_evidence.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "specialist_training_and_fixed_evaluation",
+      "run_ids": ["local-scaleup-1m-v7-frozen-bn"],
+      "attempt_ids": ["accepted-v7"],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/acceptance.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-gine-1m-local-specialist-v7"],
+    "evidence_refs": ["experiments/pcqm_gine_expert/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}

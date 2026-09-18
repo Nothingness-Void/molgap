@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-trajectory-graph-v1",
+  "type": "object",
+  "required": ["format", "nodes", "edges"],
+  "properties": {
+    "format": {"const": "molgap-rml-trajectory-graph-v1"},
+    "nodes": {"type": "array"},
+    "edges": {"type": "array"}
+  },
+  "additionalProperties": false
+}

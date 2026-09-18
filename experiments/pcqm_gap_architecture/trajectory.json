@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-recurrent-graph-state-100k-seed42",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "historical",
+  "family_id": "recurrent-graph-state",
+  "question": "Does one compact recurrent molecule state improve the frozen EdgeState comparator?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-recurrent-graph-state-100k-seed42",
+    "observed_deficiency": "the frozen comparator lacked a recurrent molecule-level state",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "changed_mechanism": "shared recurrent graph state through the GPS stack",
+    "cheapest_falsifier": "one seed-42 100K screen",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "authorize only the predeclared next gate",
+    "decision_changed_if_negative": "close the recurrent graph-state family",
+    "historical_unknowns": ["terminal evidence is preserved on archive commit 285e1dc"]
+  },
+  "state_at_start": {
+    "source_commit": "96ca9ba",
+    "contract_refs": ["experiments/pcqm_gap_architecture/recurrent_graph_state_seed42_protocol.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": [],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["kaseichou/molgap-pcqm-gap100k-recurrent-state-seed42:v1"],
+      "attempt_ids": ["attempt-001"],
+      "source_commit": "96ca9ba",
+      "evidence_refs": ["experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["git://285e1dc/experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/decision.md"]
+  },
+  "decision": {
+    "decision_ref": "git://285e1dc/experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["materially new pure-2D information-flow question"]
+  }
+}

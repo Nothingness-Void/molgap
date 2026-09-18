@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-edgestate-rich-full-v1",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "edge-state-structural-gps",
+  "question": "Can OGB-rich EdgeState Structural GPS transfer to the official PCQM4Mv2 full role?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-edgestate-rich-full-v1",
+    "observed_deficiency": null,
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "changed_mechanism": "persistent real-bond EdgeState with OGB categorical features",
+    "cheapest_falsifier": null,
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": "cost-TB-edgestate-rich-full-training",
+    "decision_changed_if_positive": "preserve as an official Track B specialist reference",
+    "decision_changed_if_negative": "close the full EdgeState route",
+    "historical_unknowns": ["prospective hypothesis card was not recorded"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_edge_state_full/results/rich_full/acceptance.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_edge_state_full/v5_evidence.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "full_training_and_official_evaluation",
+      "run_ids": ["1355016.ccpbs1"],
+      "attempt_ids": ["attempt-001"],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_edge_state_full/results/rich_full/acceptance.json"],
+      "cost_event_ids": ["cost-TB-edgestate-rich-full-training"]
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-edgestate-rich-full-submission"],
+    "evidence_refs": ["experiments/pcqm_edge_state_full/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_edge_state_full/results/rich_full/decision.md",
+    "outcome": "CLOSED",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}

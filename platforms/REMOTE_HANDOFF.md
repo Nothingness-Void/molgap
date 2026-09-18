@@ -57,9 +57,16 @@ fusion after an immutable graph cache passes acceptance.
 | SCNet | Formal 2D graph build, GPS training/re-embedding, high-memory CPU graph jobs | `platforms/scnet/` |
 | Kaggle | Acquisition, external evaluation, GPU 3D, embedding/fusion, portable long jobs | `platforms/kaggle/` and experiment-local Kaggle packages |
 | Colab | User-operated Drive-backed 3D graph/training notebooks | `platforms/colab/` |
-| IMS, called the molecular research server in user-facing Chinese | A100/CPU jobs that fit the strict user directory and scheduler contract | `platforms/ims/` |
+| IMS/RCCS, called the molecular research server in user-facing Chinese | NVIDIA A100/CPU jobs that fit the strict user directory and scheduler contract | `platforms/ims/` |
 
 ## Molecular Research Server (IMS/RCCS)
+
+The canonical accelerator name for this platform is **NVIDIA A100**. Use
+`A100` in plans, workload placement, status summaries, and resource ledgers.
+Runtime certificates and historical evidence may retain the exact device string
+reported by the allocated node, such as `NVIDIA A100-SXM4-80GB`; that is
+hardware evidence, not a separate platform class. Do not describe this
+platform's GPU queue as a generic GPU, V100, T4, or H100 resource.
 
 ### Safety boundary
 

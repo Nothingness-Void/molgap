@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-edgestate-rich-full-training",
+  "trajectory_id": "TB-edgestate-rich-full-v1",
+  "action_id": "A001",
+  "run_id": "1355016.ccpbs1",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "platform": "ims",
+  "hardware": "IMS_GPU_UNSPECIFIED",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 12.13586895375228, "status": "measured"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_edge_state_full/results/rich_full/acceptance.json"
+}

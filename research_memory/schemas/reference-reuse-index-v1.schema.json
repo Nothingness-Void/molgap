@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-reference-reuse-index-v1",
+  "type": "object",
+  "required": ["format", "references", "missing_reference_ids", "missing_reference_policy", "human_reference_index"],
+  "properties": {
+    "format": {"const": "molgap-rml-reference-reuse-index-v1"},
+    "references": {"type": "array"},
+    "missing_reference_ids": {"type": "array", "items": {"type": "string"}},
+    "missing_reference_policy": {"type": "string"},
+    "human_reference_index": {"type": "string"}
+  },
+  "additionalProperties": false
+}

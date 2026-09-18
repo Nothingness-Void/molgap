@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-trajectory-v1",
+  "type": "object",
+  "required": ["schema", "trajectory_id", "record_mode", "track", "owner", "family_id", "question", "hypothesis", "state_at_start", "actions", "result", "decision"],
+  "properties": {
+    "schema": {"const": "molgap-trajectory-v1"},
+    "trajectory_id": {"type": "string", "minLength": 1},
+    "record_mode": {"enum": ["prospective", "retrospective_partial"]},
+    "track": {"type": "string", "minLength": 1},
+    "owner": {"enum": ["server", "desktop", "shared", "historical"]},
+    "family_id": {"type": "string", "minLength": 1},
+    "question": {"type": "string", "minLength": 1},
+    "hypothesis": {"type": "object"},
+    "state_at_start": {"type": "object"},
+    "actions": {"type": "array"},
+    "result": {"type": "object"},
+    "decision": {"type": "object"},
+    "readiness": {"type": "object"}
+  },
+  "additionalProperties": false
+}

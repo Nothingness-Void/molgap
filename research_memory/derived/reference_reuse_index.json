@@ -1,0 +1,116 @@
+{
+  "format": "molgap-rml-reference-reuse-index-v1",
+  "human_reference_index": "models/REFERENCE_INDEX.md",
+  "missing_reference_ids": [],
+  "missing_reference_policy": "comparison_pending_no_automatic_rerun",
+  "references": [
+    {
+      "artifact_availability": [
+        "durable_ims_verified",
+        "local_external_verified"
+      ],
+      "comparison_status": "official_validation_complete_test_outputs_prepared",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-edgestate-rich-full-submission",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "consumed",
+        "test_dev": "consumed"
+      },
+      "scientific_scope": "historical_official_full_training_and_external_submission",
+      "source_envelope": "experiments/pcqm_edge_state_full/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "external_specialist_reference_only",
+      "used_by_trajectory_ids": [
+        "TB-k1-gptrans-full-fusion-r3"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "incompatible_with_strict_v4",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_incompatible_nomination_evidence",
+      "source_envelope": "experiments/pcqm_geometry_transfer_500k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "blocked",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_authority",
+        "local_hash_verified"
+      ],
+      "comparison_status": "fixed_official_validation_5k_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_local_one_million_gap_specialist",
+      "source_envelope": "experiments/pcqm_gine_expert/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "task_routed_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
+      "comparison_status": "reference_accepted_contextual_comparison_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_reference",
+      "source_envelope": "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "reusable_reference",
+      "used_by_trajectory_ids": [
+        "TB-matched-500k-v4-three-arm"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
+      "comparison_status": "complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_use": {
+        "official_train": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_full_training_and_fusion",
+      "source_envelope": "experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-k1-gptrans-full-fusion-r3",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "k1-gptrans-fusion",
+  "question": "Can full K1 and GPTrans-T retain their 500K promise and beat the EdgeState reference through fixed fusion?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-k1-gptrans-full-fusion-r3",
+    "observed_deficiency": "the two 500K candidates retained complementary residuals",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the 500K ordering may not transfer to the full role"],
+    "changed_mechanism": "fixed K1 and GPTrans-T prediction fusion",
+    "cheapest_falsifier": "one frozen official-validation fusion study",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "consider the fused Track B specialist",
+    "decision_changed_if_negative": "close the pair without promotion",
+    "historical_unknowns": ["native A100 cost is not normalized into events"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": [
+      "experiments/pcqm_k1_gptrans_full_fusion/training_contract.json",
+      "experiments/pcqm_k1_gptrans_full_fusion/fusion_contract.json"
+    ],
+    "reference_ids": ["pcqm-edgestate-rich-full-submission"],
+    "parent_trajectory_ids": ["TB-matched-500k-v4-three-arm"],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "full_training_and_fixed_fusion",
+      "run_ids": ["ims-recovery-20260914-r3"],
+      "attempt_ids": ["accepted-r3"],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-k1-gptrans-full-fusion-r3"],
+    "evidence_refs": ["experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}

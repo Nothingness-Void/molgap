@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-matched-500k-v4-three-arm",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "matched-500k-architecture-comparison",
+  "question": "Which of K1, GPTrans-T, and EdgeState survives the matched 500K V4 comparison?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-matched-500k-v4-three-arm",
+    "observed_deficiency": "100K evidence did not reliably predict target-scale behavior",
+    "supporting_evidence_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "alternative_explanations": [],
+    "changed_mechanism": "matched three-arm architecture comparison",
+    "cheapest_falsifier": "one shared 500K/50K V4 comparison transaction",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "nominate a candidate family for full consideration",
+    "decision_changed_if_negative": "retain EdgeState as the reference family",
+    "historical_unknowns": ["native device-hours are not consolidated"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_500k_v4_evidence/protocol.md"],
+    "reference_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "parent_trajectory_ids": ["TB-gptrans-t-100k-v4-reference"],
+    "prior_evidence_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "role_snapshot_refs": [],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "matched_500k_training_and_paired_comparison",
+      "run_ids": ["matched-500k-v4-stage5"],
+      "attempt_ids": ["accepted-stage5"],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_500k_v4_evidence/final_comparison.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["experiments/pcqm_500k_v4_evidence/final_decision.md"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_500k_v4_evidence/final_decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["second durable K1 artifact copy enables a V5 envelope"]
+  }
+}

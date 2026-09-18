@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-ready-for-desktop-index-v1",
+  "type": "object",
+  "required": ["format", "valid", "invalid", "superseded", "consumed", "blocked"],
+  "properties": {
+    "format": {"const": "molgap-rml-ready-for-desktop-index-v1"},
+    "valid": {"type": "array"},
+    "invalid": {"type": "array"},
+    "superseded": {"type": "array"},
+    "consumed": {"type": "array"},
+    "blocked": {"type": "array"}
+  },
+  "additionalProperties": false
+}

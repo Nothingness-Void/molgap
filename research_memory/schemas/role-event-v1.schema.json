@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-role-event-v1",
+  "type": "object",
+  "required": ["schema", "role_event_id", "trajectory_id", "action_id", "run_id", "dataset_identity", "row_manifest_hash", "role_name", "access_kind", "selection_used", "evidence_ref"],
+  "properties": {
+    "schema": {"const": "molgap-role-event-v1"},
+    "role_event_id": {"type": "string", "minLength": 1},
+    "trajectory_id": {"type": "string", "minLength": 1},
+    "action_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "dataset_identity": {"type": "string", "minLength": 1},
+    "row_manifest_hash": {"type": "string", "minLength": 1},
+    "role_name": {"type": "string", "minLength": 1},
+    "access_kind": {"enum": ["training_membership", "prediction_input", "labels_read", "metric_computed", "selection_used", "external_submission"]},
+    "selection_used": {"type": "boolean"},
+    "evidence_ref": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

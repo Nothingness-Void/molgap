@@ -1,0 +1,166 @@
+{
+  "cross_hardware_total": null,
+  "estimated_event_count": 0,
+  "event_count": 1,
+  "format": "molgap-rml-cost-ledger-v1",
+  "infrastructure_event_ids": [],
+  "measurement_missing_event_count": 1,
+  "not_applicable_event_count": 0,
+  "retry_event_ids": [],
+  "totals_by_category": {
+    "training": {
+      "IMS_GPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 12.13586895375228
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  },
+  "totals_by_hardware": {
+    "IMS_GPU_UNSPECIFIED": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 12.13586895375228
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  },
+  "totals_by_trajectory": {
+    "TB-edgestate-rich-full-v1": {
+      "IMS_GPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "IMS_GPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 12.13586895375228
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  }
+}

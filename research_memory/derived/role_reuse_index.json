@@ -1,0 +1,183 @@
+{
+  "ambiguous_historical_role_record_count": 22,
+  "coarse_historical_role_records": [
+    {
+      "evidence_id": "pcqm-edgestate-rich-full-submission",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-edgestate-rich-full-submission",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-edgestate-rich-full-submission",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-edgestate-rich-full-submission",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-edgestate-rich-full-submission",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    }
+  ],
+  "explicit_role_event_count": 0,
+  "format": "molgap-rml-role-reuse-index-v1",
+  "full_training_membership_conflicts": [],
+  "identities": {},
+  "protected_roles_reported_untouched": {
+    "official_validation": [
+      "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "test_challenge": [
+      "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ],
+    "test_dev": [
+      "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ]
+  },
+  "repeatedly_selected_role_identities": {},
+  "reused_role_identities": {}
+}

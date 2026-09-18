@@ -1,0 +1,132 @@
+{
+  "format": "molgap-rml-trajectory-index-v1",
+  "source_digest": "5f453b055e6ba04531f2142a49a9fa8fc8e6114238b0e3012988b135bf3650d2",
+  "trajectories": [
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_edge_state_full/results/rich_full/decision.md",
+      "family_id": "edge-state-structural-gps",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_edge_state_full/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-edgestate-rich-full-submission"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-edgestate-rich-full-v1"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_geometry_transfer_500k/decision.md",
+      "family_id": "distance-angle-transfer",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_geometry_transfer_500k/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-geometry-transfer-500k-contextual"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-geometry-transfer-500k-context"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_decision.md",
+      "family_id": "gine-gap-specialist",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gine_expert/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gine-1m-local-specialist-v7"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-gine-1m-gap-specialist-v7"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "family_id": "gptrans-t",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gptrans_t_100k_v4/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
+      "family_id": "k1-gptrans-fusion",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-matched-500k-v4-three-arm"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_gptrans_full_fusion/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-gptrans-full-fusion-r3"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-gptrans-full-fusion-r3"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_500k_v4_evidence/final_decision.md",
+      "family_id": "matched-500k-architecture-comparison",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_500k_v4_evidence/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-matched-500k-v4-three-arm"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "git://285e1dc/experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/decision.md",
+      "family_id": "recurrent-graph-state",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gap_architecture/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-recurrent-graph-state-100k-seed42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md",
+      "family_id": "gps-schnet-bounded-fusion",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_route_b/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-route-b-four-encoder-specialist"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ and `docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md`.
 | Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |
 | SCNet | `scnet/` | Slurm job files, DCU environment checks, storage migration |
 | Colab | `colab/` | Drive-backed resumable notebooks for graph construction, GPU training, and fusion |
-| IMS | `ims/` | Shared-cluster CPU/GPU queue adapters, bounded arrays, and staged handoffs |
+| IMS | `ims/` | Shared-cluster CPU/NVIDIA A100 queue adapters, bounded arrays, and staged handoffs |
 | — | `_records/` | Retrieved outputs, staging payloads, acceptance records |
 
 The complete 2026-08-25 IMS experiment-record snapshot and its remote/local

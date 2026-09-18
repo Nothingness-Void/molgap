@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-t-100k-v4-reference",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Can the compact GPTrans-T core establish a fixed 100K V4 reference?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-t-100k-v4-reference",
+    "observed_deficiency": null,
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "changed_mechanism": "compact node/all-pairs propagation",
+    "cheapest_falsifier": "one fixed seed-42 100K/50K V4 run",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "freeze a reusable contextual reference",
+    "decision_changed_if_negative": "close 100K promotion",
+    "historical_unknowns": ["native device-hours were not consolidated"]
+  },
+  "state_at_start": {
+    "source_commit": "unknown_retrospective",
+    "contract_refs": ["experiments/pcqm_gptrans_t_100k_v4/training_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "fixed_reference_training",
+      "run_ids": ["kaggle2-gptrans-t-100k-v4-seed42"],
+      "attempt_ids": ["accepted-attempt"],
+      "source_commit": "unknown_retrospective",
+      "evidence_refs": ["experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "evidence_refs": ["experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+    "outcome": "CLOSED",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}

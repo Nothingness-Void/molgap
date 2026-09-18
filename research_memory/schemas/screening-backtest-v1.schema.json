@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-screening-backtest-v1",
+  "type": "object",
+  "required": ["format", "status", "trace_count", "included_comparable_groups", "included_trajectory_ids", "excluded_traces", "candidate_prefix_rule", "false_stop_count", "false_stop_rate", "false_promote_count", "false_promote_rate", "slow_starter_count", "native_cost_saved", "native_cost_added", "family_coverage", "confounding_warnings", "recommended_early_stop", "policy_activated"],
+  "properties": {
+    "format": {"const": "molgap-rml-screening-backtest-v1"},
+    "status": {"enum": ["available", "insufficient_evidence"]},
+    "trace_count": {"type": "integer", "minimum": 0},
+    "included_comparable_groups": {"type": "array"},
+    "included_trajectory_ids": {"type": "array"},
+    "excluded_traces": {"type": "array"},
+    "candidate_prefix_rule": {},
+    "false_stop_count": {"type": ["integer", "null"]},
+    "false_stop_rate": {"type": ["number", "null"]},
+    "false_promote_count": {"type": ["integer", "null"]},
+    "false_promote_rate": {"type": ["number", "null"]},
+    "slow_starter_count": {"type": ["integer", "null"]},
+    "native_cost_saved": {"type": ["number", "null"]},
+    "native_cost_added": {"type": ["number", "null"]},
+    "family_coverage": {"type": "array"},
+    "confounding_warnings": {"type": "array"},
+    "recommended_early_stop": {},
+    "policy_activated": {"const": false}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-completeness-report-v1",
+  "type": "object",
+  "required": ["format", "issues", "counts_by_severity", "broken_required_pointers", "ready_prerequisites_missing", "cost_completeness"],
+  "properties": {
+    "format": {"const": "molgap-rml-completeness-report-v1"},
+    "issues": {"type": "array"},
+    "counts_by_severity": {"type": "object"},
+    "broken_required_pointers": {"type": "array"},
+    "ready_prerequisites_missing": {"type": "array"},
+    "cost_completeness": {
+      "type": "object",
+      "required": ["trajectories_total", "with_cost_event", "without_cost_event", "with_complete_native_measurement", "with_incomplete_native_measurement"],
+      "properties": {
+        "trajectories_total": {"type": "integer", "minimum": 0},
+        "with_cost_event": {"type": "integer", "minimum": 0},
+        "without_cost_event": {"type": "integer", "minimum": 0},
+        "with_complete_native_measurement": {"type": "integer", "minimum": 0},
+        "with_incomplete_native_measurement": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
