@@ -1,0 +1,15 @@
+{
+  "format": "molgap-pcqm-k1-mose-infrastructure-failure-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-s42",
+  "version": 1,
+  "remote_status": "ERROR",
+  "execution_stage": "accelerator-preflight",
+  "model_training_started": false,
+  "scientific_result": false,
+  "error": "RuntimeError: K1-MoSE requires exactly one visible CUDA device",
+  "root_cause": "The entry point combined CUDA availability and visible-device count in one strict guard and did not repair an image whose bundled PyTorch lacked the assigned P100 architecture.",
+  "covered_repair": "Pin one assigned device before importing torch, probe wheel architecture compatibility, and install the established torch 2.4.1 cu121 P100-compatible wheel only when required.",
+  "scientific_contract_changed": false,
+  "preserved_log": "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v1/molgap-pcqm-k1-mose-s42.log",
+  "preserved_log_sha256": "a2d0cb695254209841ef026297b07f7ba193b6d5c2589ecc2ffd9f00ad78ed6c"
+}

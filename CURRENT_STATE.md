@@ -50,9 +50,11 @@ The active V5 information-source question replaces K1-v4's RWSE16 input with
 unchanged. The protocol is `experiments/pcqm_k1_mose_100k/protocol.md`. The
 150,000-row deterministic cache passed local no-model acceptance with sealed
 official roles and is published as immutable private dataset
-`nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. The single authorized Kaggle1
-seed-42 screen `nothingnessvoid/molgap-pcqm-k1-mose-s42` version 1 is running.
-Its completion grants no automatic extra seed, 500K run or protected-role use.
+`nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. GPU version 1 stopped before
+training on an over-strict accelerator preflight and has no scientific result.
+The contract-preserving P100 runtime repair is running as Kaggle1 seed-42
+kernel `nothingnessvoid/molgap-pcqm-k1-mose-s42` version 2. Its completion
+grants no automatic extra seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2

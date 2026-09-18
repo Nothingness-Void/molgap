@@ -22,6 +22,15 @@ The immutable private dataset is
 
 After confirming that no other recent Kaggle1 GPU training remained active,
 the single authorized seed-42 screen
-`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 1 was submitted and entered
-`RUNNING`. No additional seed, protected role, 500K job or successor is
-authorized by this submission.
+`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 1 was submitted. It stopped
+at accelerator preflight before model training because the entry point used a
+combined strict CUDA guard without the established P100-compatible PyTorch
+repair. This is an infrastructure failure, not a scientific result; compact
+evidence is `results/gpu_v1_infrastructure_failure.json`.
+
+The covered repair pins one assigned device before importing PyTorch, probes
+whether the bundled wheel supports that accelerator, and installs the pinned
+PyTorch 2.4.1 cu121 wheel only when required. It changes no data, model,
+initialization, seed, precision, batch, optimizer, schedule, exposure or gate.
+Kernel version 2 was submitted and entered `RUNNING`. No additional seed,
+protected role, 500K job or successor is authorized by this retry.
