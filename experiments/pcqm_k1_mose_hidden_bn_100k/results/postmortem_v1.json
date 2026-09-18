@@ -1,0 +1,17 @@
+{
+  "format": "molgap-k1-mose-hidden-bn-postmortem-v1",
+  "stratifier": "per-node mean log1p MoSE count magnitude, graph-mean aggregated",
+  "rows_per_quintile": 10000,
+  "quintiles": [
+    {"quintile": 1, "mose_minus_k1_eV": -0.0031019719317555428, "hidden_bn_minus_k1_eV": -0.00085192930418998, "hidden_bn_minus_mose_eV": 0.002250042511150241},
+    {"quintile": 2, "mose_minus_k1_eV": -0.0018571496475487947, "hidden_bn_minus_k1_eV": 0.0006374650984071195, "hidden_bn_minus_mose_eV": 0.002494614804163575},
+    {"quintile": 3, "mose_minus_k1_eV": -0.001080170040950179, "hidden_bn_minus_k1_eV": 0.0016310926293954253, "hidden_bn_minus_mose_eV": 0.0027112627867609262},
+    {"quintile": 4, "mose_minus_k1_eV": -0.0011989978374913335, "hidden_bn_minus_k1_eV": -0.000008502435775881168, "hidden_bn_minus_mose_eV": 0.0011904955608770251},
+    {"quintile": 5, "mose_minus_k1_eV": 0.0016426732763648033, "hidden_bn_minus_k1_eV": 0.0049559250473976135, "hidden_bn_minus_mose_eV": 0.0033132522366940975}
+  ],
+  "conclusion": "Hidden BatchNorm removed useful MoSE signal and amplified the high-count regression; close normalization variants.",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

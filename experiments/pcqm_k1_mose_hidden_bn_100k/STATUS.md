@@ -10,5 +10,6 @@ Private Kaggle1 source dataset
 SHA-256
 `c7d3286931ef018616fcc3e9a571d74ab24cc5b1521b4722f1cba2889bb75279`.
 The only GPU screen, `nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42`
-version 1, was submitted on 2026-09-19 and entered `RUNNING`. No duplicate,
-extra seed, scale job or protected-role access is authorized while it runs.
+version 1, completed on 2026-09-19. No-model V5 acceptance passed after a
+local acceptance-table repair. The candidate regressed versus both K1-v4 and
+the unnormalized MoSE predecessor and is closed. Authority: `decision.md`.

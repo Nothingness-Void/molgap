@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-k1-mose-hidden-bn-acceptance-summary-v1",
+  "accepted": true,
+  "scientific_gate_passed": false,
+  "selected_candidate": null,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "predecessor_development_gap_mae_eV": 0.14025451242923737,
+  "candidate_development_gap_mae_eV": 0.1426464468240738,
+  "candidate_gain_over_reference_eV": -0.0012728124856948853,
+  "candidate_gain_over_predecessor_eV": -0.0023919343948364258,
+  "paired_error_delta_bootstrap_95_eV": [
+    0.00031732479041814805,
+    0.0022565160030126575
+  ],
+  "required_gain_eV": 0.003,
+  "parameter_count": 3662081,
+  "best_epoch": 39,
+  "mean_graphs_per_second": 930.0859346939974,
+  "peak_reserved_mib": 602.0,
+  "source_commit": "df0f6255f6c7912d9ac4791752c2f05b97d6c50b",
+  "source_archive_sha256": "c7d3286931ef018616fcc3e9a571d74ab24cc5b1521b4722f1cba2889bb75279",
+  "artifact_sha256": {
+    "arm_record.json": "34478f4f4718e96f2595982b9e816b58fe3ce17c974def001cd4473a5f9c7f6e",
+    "best_development_payload.pt": "c9bb54c87c10f320dde2720ecb664918f4a9e3f73e0efa95ffccb40d796c836c",
+    "best_model.pt": "5e129902a453f43d983b0d03129720513974c8d3f5d4e892a03cc065b9412c60",
+    "last_checkpoint.pt": "183f40941ac6081c0d785f792f8a1053ccc6356a7198283ba3c7e9635b2a0356"
+  },
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
