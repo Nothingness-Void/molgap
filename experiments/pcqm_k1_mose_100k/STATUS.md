@@ -62,6 +62,11 @@ the intended tensor shapes and parameter identity. The private source dataset
 was repackaged at commit `1948328a9ff450f34dcf950ecaffc453d6a2405b`
 with archive SHA-256
 `152ec8f0d9136afa75332b93c7c31bef8f14be3798bab979c4bd4ca67f087d14`.
-Kernel version 5 was submitted and remained `RUNNING` beyond the v4 failure
-point. No additional seed, protected role, 500K job or successor is
-authorized.
+
+Kernel version 5 completed and passed V5 artifact/execution acceptance without
+model inference. MoSE reached `0.1402545124 eV` versus K1-v4 at
+`0.1413736343 eV`, a favorable `0.0011191219 eV` gain with paired interval
+`[-0.0020334447, -0.0002045147] eV`. The gain is below the frozen `0.003 eV`
+promotion gate. The route is closed as directional but sub-threshold; no
+additional seed, protected role, 500K job or successor is authorized.
+Authority: `decision.md`; acceptance: `results/acceptance_v5.json`.

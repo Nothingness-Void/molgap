@@ -14,7 +14,12 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-MOSE-100K-V5 | Monitor and mechanically accept the running Kaggle1 K1-v4/MoSE31 seed-42 screen | Close below 0.003 eV gain; otherwise record 500K-shortlist status only |
+| P1 | B-V5-GATE-CALIBRATION | Calibrate a prospective training-stochasticity gate from accepted same-contract repeats; do not reinterpret closed candidates | Freeze a documented estimator and threshold before any later candidate screen |
+
+The K1-MoSE screen completed with a favorable paired row-bootstrap interval
+but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
+The later gate-calibration task may govern new protocols only; it cannot
+retroactively promote MoSE or any other closed candidate.
 
 The GPTrans-T/Pair-PreNorm 500K bridge stopped after checkpointed partial runs.
 Its late matched curve was consistently unfavorable and completion required

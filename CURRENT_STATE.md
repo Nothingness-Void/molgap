@@ -45,21 +45,23 @@ contract.
 
 ## Discovery state
 
-The active V5 information-source question replaces K1-v4's RWSE16 input with
-31 rooted MoSE counts while leaving the EdgeState/K1 information flow
-unchanged. The protocol is `experiments/pcqm_k1_mose_100k/protocol.md`. The
-150,000-row deterministic cache passed local no-model acceptance with sealed
-official roles and is published as immutable private dataset
-`nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. GPU versions 1--3 stopped
-before training on accelerator/precision preflight assumptions. Version 4
-passed those checks and then exposed an `AtomEncoder` interface bug during
-runtime-certificate model construction; training still did not start, so none
-is a scientific result. The covered implementation repair uses the frozen
-192-channel architecture constant. The repaired immutable source package is at
-commit `1948328a9ff450f34dcf950ecaffc453d6a2405b`, and Kaggle1 kernel
-`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 5 is running beyond the v4
-failure point. No model shape or scientific field changes. Completion grants
-no automatic extra seed, 500K run or protected-role use.
+The V5 K1-MoSE information-source screen is complete. It replaced K1-v4's
+RWSE16 input with 31 rooted motif-homomorphism counts while preserving the
+EdgeState/K1 information flow and all non-intervention contract fields. The
+accepted seed-42 candidate reached `0.1402545124 eV` versus K1-v4 at
+`0.1413736343 eV`: a directional `0.0011191219 eV` gain with a favorable paired
+row-bootstrap interval. It nevertheless failed the prospectively frozen
+`0.003 eV` promotion gate, which accounts conservatively for training-level
+variation that row bootstrap cannot measure. The outcome is
+`NEGATIVE_UNDER_CONTRACT` / `DIRECTIONAL_SUBTHRESHOLD`; no extra seed, 500K
+bridge, protected role, full training, or desktop handoff is authorized.
+Authority: `experiments/pcqm_k1_mose_100k/decision.md`.
+
+The `0.003 eV` value is a policy gate, not a permanently fixed V5 constant.
+Any replacement must be calibrated from same-contract repeatability evidence
+and frozen before another candidate is observed. The prior nominally identical
+scratch-through-40 jobs differed by `0.0026921320 eV`, so the present MoSE
+result does not justify lowering the gate retroactively.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
