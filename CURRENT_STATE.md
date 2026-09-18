@@ -198,11 +198,12 @@ does not duplicate the desktop full comparison and does not access protected
 roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and
 its `STATUS.md`.
 
-A separate profiling-only Kunshan job `122484011` is queued to measure
-GPTrans-T's online shortest-path reconstruction against an exact cached integer
-tensor. It uses train rows only, produces no model result, and cannot alter the
-running scientific contract. Authority:
-`experiments/pcqm_gptrans_shortest_path_profile_v5/protocol.md`.
+The separate train-only GPTrans shortest-path profile completed. Exact cached
+distances accelerated the isolated path stage but improved representative
+end-to-end throughput by only `1.0238x`, regressed the graph-size tail, and
+missed the strict trajectory-equivalence tolerance. No implementation follow-up
+or scientific-contract change was released. Authority:
+`experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md`.
 
 ## Data and comparison contract
 

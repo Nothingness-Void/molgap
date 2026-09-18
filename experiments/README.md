@@ -40,7 +40,7 @@ Track C.
 | Does normalized or centered relation propagation improve GPTrans-T? | Pair PreNorm shortlisted; centering closed; no scale promotion | `pcqm_gptrans_relation_flow/` |
 | Should accumulated pair memory directly return to nodes? | Both arms closed; two-round budget exhausted; PreNorm alone retained from prior round | `pcqm_gptrans_memory_readback/` |
 | Does the same GPTrans-T core transfer at 500K? | Yes; it beat matched ESGPS6-304 scratch and remains a scale candidate | `pcqm_gptrans_t_500k/` |
-| Can exact cached shortest paths reduce GPTrans-T runtime under V5? | Profiling-only; no scientific outcome or contract change | `pcqm_gptrans_shortest_path_profile_v5/` |
+| Can exact cached shortest paths reduce GPTrans-T runtime under V5? | No; isolated path work was cheap relative to end-to-end compute and strict equivalence failed | `pcqm_gptrans_shortest_path_profile_v5/` |
 | Can historical V4 evidence be represented under V5 without rewriting history? | Yes for evidence-complete runs through non-destructive sidecars; incomplete strict comparisons remain pending | `v5_legacy_evidence_migration/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |

@@ -1,0 +1,43 @@
+{
+  "format": "molgap-gptrans-shortest-path-profile-summary-v1",
+  "decision_date": "2026-09-18",
+  "job_id": "122484011",
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed": "00:04:13",
+  "node": "e06r4n19",
+  "source_commit": "46aa38baca934eae38b8b948de428d909f9b932f",
+  "source_archive_sha256": "8c95332bc40aec0c8a08e0b42a2a6641b9090ef52f34cc60ce1790336b2f0139",
+  "completion_manifest_sha256": "cab852c0279385a6ac87f57b715f7c8e8476445003d92681db95be02a1246fde",
+  "physical_batch_per_device": 128,
+  "precision": "fp32",
+  "parameter_count": 5246817,
+  "representative": {
+    "distance_exact": true,
+    "path_stage_speedup": 52.33730288645168,
+    "median_end_to_end_speedup": 1.0238102567495275,
+    "all_equivalence_checks_passed": false,
+    "maximum_loss_delta": 2.384185791015625e-7,
+    "maximum_model_delta": 1.1920928955078125e-7,
+    "maximum_ema_delta": 1.4901161193847656e-8,
+    "dynamic_peak_reserved_mib": 856.0,
+    "cached_peak_reserved_mib": 856.0
+  },
+  "graph_size_tail": {
+    "distance_exact": true,
+    "path_stage_speedup": 45.050931852122766,
+    "median_end_to_end_speedup": 0.9080609880251114,
+    "all_equivalence_checks_passed": false,
+    "maximum_loss_delta": 1.1920928955078125e-7,
+    "maximum_model_delta": 1.1920928955078125e-7,
+    "maximum_ema_delta": 1.4901161193847656e-8,
+    "dynamic_peak_reserved_mib": 986.0,
+    "cached_peak_reserved_mib": 986.0
+  },
+  "minimum_median_representative_speedup": 1.05,
+  "exact_cached_shortest_path_followup_eligible": false,
+  "scientific_contract_changed": false,
+  "development_role_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
