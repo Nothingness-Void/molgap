@@ -1,0 +1,128 @@
+{
+  "format": "molgap-gptrans-pair-update-500k-profile-v1",
+  "status": "complete",
+  "model": "gptrans_t_core_12x256_pair32/pair_update_norm",
+  "parameters": 5246817,
+  "hardware": {
+    "allocated": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "profile_device": "Tesla T4"
+  },
+  "software": {
+    "python": "3.12.13",
+    "torch": "2.10.0+cu128"
+  },
+  "data": {
+    "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "shard_sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+    "rows_read": 50000,
+    "development_role_read": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "execution": {
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "deterministic_algorithms": true,
+    "physical_batch_per_device": 128,
+    "active_device_count": 1,
+    "optimizer": "adamw-unfused-foreachFalse"
+  },
+  "cases": [
+    {
+      "name": "workers0",
+      "workers": 0,
+      "prefetch_factor": null,
+      "warmup_steps": 10,
+      "measured_steps": 80,
+      "batch_size": 128,
+      "median_step_seconds": 0.15917322199999262,
+      "p90_step_seconds": 0.16440587900001447,
+      "mean_loader_seconds": 0.04481428097499958,
+      "mean_h2d_seconds": 0.0005216695124985904,
+      "mean_compute_seconds": 0.11967779913750007,
+      "graphs_per_second": 804.1553622631698,
+      "projected_epoch_seconds": 621.7306051319712,
+      "projected_60_epoch_hours": 10.362176752199519,
+      "peak_allocated_bytes": 844134912,
+      "peak_reserved_bytes": 895483904,
+      "total_device_bytes": 15636037632,
+      "reserved_fraction": 0.057270513481455405,
+      "last_loss": 0.8845064043998718
+    },
+    {
+      "name": "workers2_pf2",
+      "workers": 2,
+      "prefetch_factor": 2,
+      "warmup_steps": 10,
+      "measured_steps": 80,
+      "batch_size": 128,
+      "median_step_seconds": 0.13759865800003013,
+      "p90_step_seconds": 0.1429605299999821,
+      "mean_loader_seconds": 0.00022799722499726726,
+      "mean_h2d_seconds": 0.0007237188750053747,
+      "mean_compute_seconds": 0.1369344125499971,
+      "graphs_per_second": 930.2416306994213,
+      "projected_epoch_seconds": 537.4603581481176,
+      "projected_60_epoch_hours": 8.957672635801961,
+      "peak_allocated_bytes": 844134912,
+      "peak_reserved_bytes": 895483904,
+      "total_device_bytes": 15636037632,
+      "reserved_fraction": 0.057270513481455405,
+      "last_loss": 0.8845064043998718
+    },
+    {
+      "name": "workers4_pf2",
+      "workers": 4,
+      "prefetch_factor": 2,
+      "warmup_steps": 10,
+      "measured_steps": 80,
+      "batch_size": 128,
+      "median_step_seconds": 0.13926904549998653,
+      "p90_step_seconds": 0.14869810800001915,
+      "mean_loader_seconds": 0.00023259958750116995,
+      "mean_h2d_seconds": 0.000861371375000175,
+      "mean_compute_seconds": 0.1389364695999987,
+      "graphs_per_second": 919.0843488620907,
+      "projected_epoch_seconds": 543.9848917229474,
+      "projected_60_epoch_hours": 9.066414862049124,
+      "peak_allocated_bytes": 844134912,
+      "peak_reserved_bytes": 895483904,
+      "total_device_bytes": 15636037632,
+      "reserved_fraction": 0.057270513481455405,
+      "last_loss": 0.8845064043998718
+    },
+    {
+      "name": "workers4_pf4",
+      "workers": 4,
+      "prefetch_factor": 4,
+      "warmup_steps": 10,
+      "measured_steps": 80,
+      "batch_size": 128,
+      "median_step_seconds": 0.13877278100002854,
+      "p90_step_seconds": 0.14895185799997535,
+      "mean_loader_seconds": 0.00022229282500063618,
+      "mean_h2d_seconds": 0.0008196184374988036,
+      "mean_compute_seconds": 0.13838867168749686,
+      "graphs_per_second": 922.3710808243706,
+      "projected_epoch_seconds": 542.0464825861116,
+      "projected_60_epoch_hours": 9.03410804310186,
+      "peak_allocated_bytes": 844134912,
+      "peak_reserved_bytes": 895483904,
+      "total_device_bytes": 15636037632,
+      "reserved_fraction": 0.057270513481455405,
+      "last_loss": 0.8845064043998718
+    }
+  ],
+  "recommendation": {
+    "case": "workers2_pf2",
+    "speedup_vs_workers0": 1.1567934187262041,
+    "projected_epoch_seconds": 537.4603581481176,
+    "projected_60_epoch_hours": 8.957672635801961,
+    "planning_estimate_only": true,
+    "authorizes_training": false
+  }
+}

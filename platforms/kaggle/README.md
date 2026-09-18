@@ -22,3 +22,9 @@ Kaggle3 (`nvoid912`) additionally holds accepted private mirrors at
 `platforms/_records/kaggle/*kaggle3_v1/` directories. The Kaggle3 batch API did
 not allocate TPU v5e-8 despite correct remote metadata; TPU remains gated by an
 interactive hardware and framework preflight.
+
+Kaggle CLI 1.7 prefers `%USERPROFILE%/.kaggle/access_token` over a legacy
+`kaggle.json`, even when `KAGGLE_CONFIG_DIR` points elsewhere. For account
+rotation, isolate both `USERPROFILE` and `KAGGLE_CONFIG_DIR` in the submitting
+process, verify access to one private input owned by the intended account, and
+only then push. Do not edit or delete the user's global OAuth token.
