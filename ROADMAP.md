@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-MOSE-100K-V5 | Build and accept the deterministic MoSE31 cache, then run one K1-v4 replacement seed-42 screen | Close below 0.003 eV gain; otherwise record 500K-shortlist status only |
+| P1 | B-K1-MOSE-100K-V5 | Monitor and mechanically accept the running Kaggle1 K1-v4/MoSE31 seed-42 screen | Close below 0.003 eV gain; otherwise record 500K-shortlist status only |
 
 The GPTrans-T/Pair-PreNorm 500K bridge stopped after checkpointed partial runs.
 Its late matched curve was consistently unfavorable and completion required
