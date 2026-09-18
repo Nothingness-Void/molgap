@@ -205,6 +205,13 @@ missed the strict trajectory-equivalence tolerance. No implementation follow-up
 or scientific-contract change was released. Authority:
 `experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md`.
 
+A broader train-only V5 GPTrans execution profile is now queued on Kunshan as
+job `122499114`. It decomposes the full BS128 optimizer step and separately
+tests sparse host-synchronizing finite checks, tensor-list AdamW, and tensor-list
+EMA under strict trajectory equivalence. It does not modify or duplicate the
+two active scientific training arms. Authority:
+`experiments/pcqm_gptrans_step_profile_v5/protocol.md` and its `STATUS.md`.
+
 ## Data and comparison contract
 
 - PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
