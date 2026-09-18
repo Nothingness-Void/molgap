@@ -93,7 +93,10 @@ def accept(
         reference_root, "neural_atom_k1_v4"
     )
     _, predecessor_payload = shared._load_arm(
-        predecessor_root, PREDECESSOR_MODE
+        predecessor_root,
+        PREDECESSOR_MODE,
+        expected_parameters={PREDECESSOR_MODE: 3_661_697},
+        initialization_policy=INITIALIZATION_POLICY,
     )
     candidate, candidate_payload = shared._load_arm(
         candidate_root,

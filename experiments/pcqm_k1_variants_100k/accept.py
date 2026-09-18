@@ -15,6 +15,7 @@ from molgap.pcqm_k1_variants_runner import (
     FIXED_GEOMETRY_SHA256,
     FIXED_MANIFEST_SHA256,
     MINIMUM_GAIN_EV,
+    MOSE_MODES,
     SAMPLE_EXPOSURE,
     STOCHASTICITY_FLOOR_EV,
 )
@@ -81,7 +82,7 @@ def _load_arm(
     if initialization_policy == "feature-replacement-shared-k1-state":
         checks = preflight.get("mechanism_checks", {})
         if (
-            mode != "neural_atom_k1_mose"
+            mode not in MOSE_MODES
             or preflight.get("initialization_policy") != initialization_policy
             or preflight.get("exact_k1_function_at_initialization") is not False
             or checks.get("rwse_replaced_not_concatenated") is not True
