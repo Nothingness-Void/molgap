@@ -1,0 +1,35 @@
+{
+  "format": "molgap-k1-sparse-pair-runtime-certificate-v1",
+  "status": "accepted",
+  "platform_id": "kaggle3-t4",
+  "accelerator": "Tesla T4",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "tail_batch_policy": "drop_last",
+  "runtime_fingerprint": "c6653bd92ee5d532a18e609c6846d8ed54e6724323cdc78b0014d6986244f630",
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "source_archive_sha256": "c619a537ffe725eee9a42798e217a9b8dacd4d69205a1825608fab484a4f02b3",
+  "source_commit": "fb35e8bfe7b4b729caa2341727c1ffb6ca90d3e1",
+  "optimizer_step_repeatability": {
+    "steps": 2,
+    "repeat_count": 2,
+    "losses": [
+      [
+        0.8628785014152527,
+        0.780103325843811
+      ],
+      [
+        0.8628785014152527,
+        0.780103325843811
+      ]
+    ],
+    "state_sha256": [
+      "0b58692832c4edffba4281657b9857bb6438829ac60497cb6b702d6dcb62ed57",
+      "0b58692832c4edffba4281657b9857bb6438829ac60497cb6b702d6dcb62ed57"
+    ],
+    "exact": true
+  },
+  "certificate_id": "1c8455b4b203facff121798cfae9061428bd74c19aec3173da07fa209ed212de"
+}
