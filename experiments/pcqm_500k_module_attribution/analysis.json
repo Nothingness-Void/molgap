@@ -1,0 +1,1354 @@
+{
+  "format": "molgap-pcqm-500k-module-attribution-v1",
+  "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
+  "rows": 50000,
+  "model_inference_executed": false,
+  "encoder_training_executed": false,
+  "diagnostic_fit_executed": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "identity": {
+    "graph_sha256": "3879dc27106034c27c893bac7d182d54fbbe93906efb83108e9dac541e0894ae",
+    "prediction_sha256": {
+      "edge_state": "c31fafb651fcfef08381627ac86f6639cae91f664ae7a39574d4ca0383b91ce0",
+      "gptrans_t": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf"
+    },
+    "source_idx_min": 500000,
+    "source_idx_max": 549999,
+    "source_idx_and_target_alignment": true
+  },
+  "mae_eV": {
+    "edge_state": 0.1113488057088852,
+    "gptrans_t": 0.10686752763271332
+  },
+  "signed_residual_correlation": {
+    "edge_state__gptrans_t": 0.8475356372037052
+  },
+  "tail_jaccard": {
+    "top_1pct": {
+      "edge_state__gptrans_t": 0.5151515151515151
+    },
+    "top_5pct": {
+      "edge_state__gptrans_t": 0.49566257852228535
+    },
+    "top_10pct": {
+      "edge_state__gptrans_t": 0.5082956259426847
+    }
+  },
+  "feature_correlations": {
+    "atom_count": {
+      "gptrans_t_over_edge_state": -0.012396546477958577
+    },
+    "bond_count": {
+      "gptrans_t_over_edge_state": -0.011728289745634958
+    },
+    "mean_degree": {
+      "gptrans_t_over_edge_state": -0.0014713708962033533
+    },
+    "max_degree": {
+      "gptrans_t_over_edge_state": 0.005086125586841011
+    },
+    "leaf_fraction": {
+      "gptrans_t_over_edge_state": 0.0042800103217333595
+    },
+    "branch_atom_fraction": {
+      "gptrans_t_over_edge_state": -0.0012218663198184537
+    },
+    "component_count": {
+      "gptrans_t_over_edge_state": 0.0
+    },
+    "cycle_rank": {
+      "gptrans_t_over_edge_state": -0.0043775391712633
+    },
+    "diameter": {
+      "gptrans_t_over_edge_state": 0.0011246739375707113
+    },
+    "mean_shortest_path": {
+      "gptrans_t_over_edge_state": -0.002219545700532611
+    },
+    "heteroatom_fraction": {
+      "gptrans_t_over_edge_state": -0.00990449303909418
+    },
+    "aromatic_atom_fraction": {
+      "gptrans_t_over_edge_state": -0.013149339308479007
+    },
+    "ring_atom_fraction": {
+      "gptrans_t_over_edge_state": -0.00793077453548463
+    },
+    "charged_atom_fraction": {
+      "gptrans_t_over_edge_state": -0.0014497625647903578
+    },
+    "radical_atom_fraction": {
+      "gptrans_t_over_edge_state": 0.012371382700514091
+    },
+    "non_single_bond_fraction": {
+      "gptrans_t_over_edge_state": -0.011092512429641339
+    },
+    "aromatic_bond_fraction": {
+      "gptrans_t_over_edge_state": -0.012702306979778914
+    },
+    "conjugated_bond_fraction": {
+      "gptrans_t_over_edge_state": -0.009675219765323364
+    },
+    "stereo_bond_fraction": {
+      "gptrans_t_over_edge_state": 0.031609738938762684
+    },
+    "rwse_mean": {
+      "gptrans_t_over_edge_state": 0.009951710308064394
+    },
+    "rwse_last_mean": {
+      "gptrans_t_over_edge_state": 0.005100060207490746
+    },
+    "rwse_node_variance": {
+      "gptrans_t_over_edge_state": 0.0033197502212740124
+    }
+  },
+  "feature_rankings": {
+    "gptrans_t_over_edge_state": [
+      {
+        "feature": "stereo_bond_fraction",
+        "spearman": 0.031609738938762684,
+        "absolute_spearman": 0.031609738938762684,
+        "quartile_gain_spread_eV": 0.0
+      },
+      {
+        "feature": "aromatic_atom_fraction",
+        "spearman": -0.013149339308479007,
+        "absolute_spearman": 0.013149339308479007,
+        "quartile_gain_spread_eV": 0.0035730181407060677
+      },
+      {
+        "feature": "aromatic_bond_fraction",
+        "spearman": -0.012702306979778914,
+        "absolute_spearman": 0.012702306979778914,
+        "quartile_gain_spread_eV": 0.0039017883332478544
+      },
+      {
+        "feature": "atom_count",
+        "spearman": -0.012396546477958577,
+        "absolute_spearman": 0.012396546477958577,
+        "quartile_gain_spread_eV": 0.0038611148706731804
+      },
+      {
+        "feature": "radical_atom_fraction",
+        "spearman": 0.012371382700514091,
+        "absolute_spearman": 0.012371382700514091,
+        "quartile_gain_spread_eV": 0.0
+      },
+      {
+        "feature": "bond_count",
+        "spearman": -0.011728289745634958,
+        "absolute_spearman": 0.011728289745634958,
+        "quartile_gain_spread_eV": 0.002840294166444912
+      },
+      {
+        "feature": "non_single_bond_fraction",
+        "spearman": -0.011092512429641339,
+        "absolute_spearman": 0.011092512429641339,
+        "quartile_gain_spread_eV": 0.005270156065070548
+      },
+      {
+        "feature": "rwse_mean",
+        "spearman": 0.009951710308064394,
+        "absolute_spearman": 0.009951710308064394,
+        "quartile_gain_spread_eV": 0.002782353425589416
+      },
+      {
+        "feature": "heteroatom_fraction",
+        "spearman": -0.00990449303909418,
+        "absolute_spearman": 0.00990449303909418,
+        "quartile_gain_spread_eV": 0.0006539142965319867
+      },
+      {
+        "feature": "conjugated_bond_fraction",
+        "spearman": -0.009675219765323364,
+        "absolute_spearman": 0.009675219765323364,
+        "quartile_gain_spread_eV": 0.004873900485565067
+      },
+      {
+        "feature": "ring_atom_fraction",
+        "spearman": -0.00793077453548463,
+        "absolute_spearman": 0.00793077453548463,
+        "quartile_gain_spread_eV": 0.0015881748701464474
+      },
+      {
+        "feature": "rwse_last_mean",
+        "spearman": 0.005100060207490746,
+        "absolute_spearman": 0.005100060207490746,
+        "quartile_gain_spread_eV": 0.002893761944205492
+      },
+      {
+        "feature": "max_degree",
+        "spearman": 0.005086125586841011,
+        "absolute_spearman": 0.005086125586841011,
+        "quartile_gain_spread_eV": 0.0022601889404480283
+      },
+      {
+        "feature": "cycle_rank",
+        "spearman": -0.0043775391712633,
+        "absolute_spearman": 0.0043775391712633,
+        "quartile_gain_spread_eV": 0.0011147346622528385
+      },
+      {
+        "feature": "leaf_fraction",
+        "spearman": 0.0042800103217333595,
+        "absolute_spearman": 0.0042800103217333595,
+        "quartile_gain_spread_eV": 0.0035345981516509612
+      },
+      {
+        "feature": "rwse_node_variance",
+        "spearman": 0.0033197502212740124,
+        "absolute_spearman": 0.0033197502212740124,
+        "quartile_gain_spread_eV": 0.0026717617526411776
+      },
+      {
+        "feature": "mean_shortest_path",
+        "spearman": -0.002219545700532611,
+        "absolute_spearman": 0.002219545700532611,
+        "quartile_gain_spread_eV": 0.0015374633295202568
+      },
+      {
+        "feature": "mean_degree",
+        "spearman": -0.0014713708962033533,
+        "absolute_spearman": 0.0014713708962033533,
+        "quartile_gain_spread_eV": 0.0024246580924508535
+      },
+      {
+        "feature": "charged_atom_fraction",
+        "spearman": -0.0014497625647903578,
+        "absolute_spearman": 0.0014497625647903578,
+        "quartile_gain_spread_eV": 0.0
+      },
+      {
+        "feature": "branch_atom_fraction",
+        "spearman": -0.0012218663198184537,
+        "absolute_spearman": 0.0012218663198184537,
+        "quartile_gain_spread_eV": 0.001658656220897222
+      },
+      {
+        "feature": "diameter",
+        "spearman": 0.0011246739375707113,
+        "absolute_spearman": 0.0011246739375707113,
+        "quartile_gain_spread_eV": 0.0014124208364419358
+      },
+      {
+        "feature": "component_count",
+        "spearman": 0.0,
+        "absolute_spearman": 0.0,
+        "quartile_gain_spread_eV": 0.0
+      }
+    ]
+  },
+  "feature_bins": {
+    "atom_count": {
+      "bins": [
+        {
+          "rows": 7455,
+          "feature_min": 5.0,
+          "feature_max": 12.0,
+          "feature_mean": 10.87887323943662,
+          "mae_eV": {
+            "edge_state": 0.11232096792306778,
+            "gptrans_t": 0.10513075794012734
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.007190209982940449
+          }
+        },
+        {
+          "rows": 13078,
+          "feature_min": 13.0,
+          "feature_max": 14.0,
+          "feature_mean": 13.607585257684661,
+          "mae_eV": {
+            "edge_state": 0.11197046685572483,
+            "gptrans_t": 0.10756615725364282
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0044043096020820035
+          }
+        },
+        {
+          "rows": 9665,
+          "feature_min": 15.0,
+          "feature_max": 15.0,
+          "feature_mean": 15.0,
+          "mae_eV": {
+            "edge_state": 0.11603657205180067,
+            "gptrans_t": 0.11118001892229959
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0048565531295010666
+          }
+        },
+        {
+          "rows": 19802,
+          "feature_min": 16.0,
+          "feature_max": 19.0,
+          "feature_mean": 16.514998485001517,
+          "mae_eV": {
+            "edge_state": 0.10828422559125173,
+            "gptrans_t": 0.10495513047898446
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0033290951122672686
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0038611148706731804
+      }
+    },
+    "bond_count": {
+      "bins": [
+        {
+          "rows": 10865,
+          "feature_min": 4.0,
+          "feature_max": 13.0,
+          "feature_mean": 11.677680625862862,
+          "mae_eV": {
+            "edge_state": 0.11520689772506272,
+            "gptrans_t": 0.10909011371663459
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0061167840084281324
+          }
+        },
+        {
+          "rows": 13867,
+          "feature_min": 14.0,
+          "feature_max": 15.0,
+          "feature_mean": 14.55541934088123,
+          "mae_eV": {
+            "edge_state": 0.11568028206280918,
+            "gptrans_t": 0.11115330154656625
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00452698051624294
+          }
+        },
+        {
+          "rows": 7862,
+          "feature_min": 16.0,
+          "feature_max": 16.0,
+          "feature_mean": 16.0,
+          "mae_eV": {
+            "edge_state": 0.10790701750670642,
+            "gptrans_t": 0.10309923010544449
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0048077874012619325
+          }
+        },
+        {
+          "rows": 17406,
+          "feature_min": 17.0,
+          "feature_max": 22.0,
+          "feature_mean": 17.685798000689417,
+          "mae_eV": {
+            "edge_state": 0.10704434669991683,
+            "gptrans_t": 0.10376785685793362
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0032764898419832206
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.002840294166444912
+      }
+    },
+    "mean_degree": {
+      "bins": [
+        {
+          "rows": 1165,
+          "feature_min": 1.6,
+          "feature_max": 1.8823529411764706,
+          "feature_mean": 1.8470627961059674,
+          "mae_eV": {
+            "edge_state": 0.19396643249773673,
+            "gptrans_t": 0.1890538035544203
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004912628943316415
+          }
+        },
+        {
+          "rows": 21557,
+          "feature_min": 2.0,
+          "feature_max": 2.111111111111111,
+          "feature_mean": 2.0011236360450075,
+          "mae_eV": {
+            "edge_state": 0.11481033886950495,
+            "gptrans_t": 0.10971843168300517
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005091907186499773
+          }
+        },
+        {
+          "rows": 11004,
+          "feature_min": 2.1176470588235294,
+          "feature_max": 2.125,
+          "feature_mean": 2.1217191074903243,
+          "mae_eV": {
+            "edge_state": 0.10478129304785679,
+            "gptrans_t": 0.10211404395380787
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0026672490940489193
+          }
+        },
+        {
+          "rows": 16274,
+          "feature_min": 2.1333333333333333,
+          "feature_max": 2.75,
+          "feature_mean": 2.1786488263336365,
+          "mae_eV": {
+            "edge_state": 0.10529000662872448,
+            "gptrans_t": 0.1004218710235051
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0048681356052193816
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0024246580924508535
+      }
+    },
+    "max_degree": {
+      "bins": [
+        {
+          "rows": 22,
+          "feature_min": 2.0,
+          "feature_max": 2.0,
+          "feature_mean": 2.0,
+          "mae_eV": {
+            "edge_state": 0.18566518480127508,
+            "gptrans_t": 0.17892471226778897
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.006740472533486106
+          }
+        },
+        {
+          "rows": 49978,
+          "feature_min": 3.0,
+          "feature_max": 6.0,
+          "feature_mean": 3.2247388851094483,
+          "mae_eV": {
+            "edge_state": 0.1113160921081002,
+            "gptrans_t": 0.10683580851506212
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004480283593038078
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0022601889404480283
+      }
+    },
+    "leaf_fraction": {
+      "bins": [
+        {
+          "rows": 12154,
+          "feature_min": 0.0,
+          "feature_max": 0.125,
+          "feature_mean": 0.08232790370912285,
+          "mae_eV": {
+            "edge_state": 0.10678999965787621,
+            "gptrans_t": 0.10188544977450814
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004904549883368064
+          }
+        },
+        {
+          "rows": 11118,
+          "feature_min": 0.13333333333333333,
+          "feature_max": 0.1875,
+          "feature_mean": 0.16271915694751476,
+          "mae_eV": {
+            "edge_state": 0.10370071902723701,
+            "gptrans_t": 0.10149053352988652
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.002210185497350499
+          }
+        },
+        {
+          "rows": 12911,
+          "feature_min": 0.2,
+          "feature_max": 0.2777777777777778,
+          "feature_mean": 0.23345384967576716,
+          "mae_eV": {
+            "edge_state": 0.11063081151186548,
+            "gptrans_t": 0.10594445983590371
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00468635167596176
+          }
+        },
+        {
+          "rows": 13817,
+          "feature_min": 0.2857142857142857,
+          "feature_max": 0.6666666666666666,
+          "feature_mean": 0.3515001383778764,
+          "mae_eV": {
+            "edge_state": 0.12218394933979272,
+            "gptrans_t": 0.11643916569079125
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00574478364900146
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0035345981516509612
+      }
+    },
+    "branch_atom_fraction": {
+      "bins": [
+        {
+          "rows": 11994,
+          "feature_min": 0.0,
+          "feature_max": 0.23076923076923078,
+          "feature_mean": 0.19030331217748456,
+          "mae_eV": {
+            "edge_state": 0.11645547588686159,
+            "gptrans_t": 0.1117077120864751
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00474776380038647
+          }
+        },
+        {
+          "rows": 12784,
+          "feature_min": 0.23529411764705882,
+          "feature_max": 0.2777777777777778,
+          "feature_mean": 0.25464743464610023,
+          "mae_eV": {
+            "edge_state": 0.11288360303013734,
+            "gptrans_t": 0.10778476819116273
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00509883483897461
+          }
+        },
+        {
+          "rows": 12605,
+          "feature_min": 0.2857142857142857,
+          "feature_max": 0.3125,
+          "feature_mean": 0.2997263990879969,
+          "mae_eV": {
+            "edge_state": 0.10623398779498731,
+            "gptrans_t": 0.10279380917690993
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.003440178618077388
+          }
+        },
+        {
+          "rows": 12617,
+          "feature_min": 0.3333333333333333,
+          "feature_max": 0.7333333333333333,
+          "feature_mean": 0.3620912852616183,
+          "mae_eV": {
+            "edge_state": 0.11004913294476905,
+            "gptrans_t": 0.10540680364902191
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004642329295747129
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.001658656220897222
+      }
+    },
+    "component_count": {
+      "bins": [
+        {
+          "rows": 50000,
+          "feature_min": 1.0,
+          "feature_max": 1.0,
+          "feature_mean": 1.0,
+          "mae_eV": {
+            "edge_state": 0.1113488057088852,
+            "gptrans_t": 0.10686752763271332
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004481278076171875
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0
+      }
+    },
+    "cycle_rank": {
+      "bins": [
+        {
+          "rows": 1165,
+          "feature_min": 0.0,
+          "feature_max": 0.0,
+          "feature_mean": 0.0,
+          "mae_eV": {
+            "edge_state": 0.19396643249773673,
+            "gptrans_t": 0.1890538035544203
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004912628943316415
+          }
+        },
+        {
+          "rows": 21339,
+          "feature_min": 1.0,
+          "feature_max": 1.0,
+          "feature_mean": 1.0,
+          "mae_eV": {
+            "edge_state": 0.1150456816607448,
+            "gptrans_t": 0.10994705495115263
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005098626709592181
+          }
+        },
+        {
+          "rows": 27496,
+          "feature_min": 2.0,
+          "feature_max": 7.0,
+          "feature_mean": 2.1800625545533894,
+          "mae_eV": {
+            "edge_state": 0.10497925482345662,
+            "gptrans_t": 0.10099536277611727
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.003983892047339343
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0011147346622528385
+      }
+    },
+    "diameter": {
+      "bins": [
+        {
+          "rows": 7365,
+          "feature_min": 2.0,
+          "feature_max": 6.0,
+          "feature_mean": 5.540936863543788,
+          "mae_eV": {
+            "edge_state": 0.1198310096492107,
+            "gptrans_t": 0.1145289071465704
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005302102502640299
+          }
+        },
+        {
+          "rows": 9632,
+          "feature_min": 7.0,
+          "feature_max": 7.0,
+          "feature_mean": 7.0,
+          "mae_eV": {
+            "edge_state": 0.12170921574250804,
+            "gptrans_t": 0.11781953407630968
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.003889681666198363
+          }
+        },
+        {
+          "rows": 11669,
+          "feature_min": 8.0,
+          "feature_max": 8.0,
+          "feature_mean": 8.0,
+          "mae_eV": {
+            "edge_state": 0.11258688357344465,
+            "gptrans_t": 0.10833141829076877
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004255465282675887
+          }
+        },
+        {
+          "rows": 21334,
+          "feature_min": 9.0,
+          "feature_max": 15.0,
+          "feature_mean": 9.735914502671791,
+          "mae_eV": {
+            "edge_state": 0.10306578180029341,
+            "gptrans_t": 0.09847726203446046
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004588519765832961
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0014124208364419358
+      }
+    },
+    "mean_shortest_path": {
+      "bins": [
+        {
+          "rows": 12466,
+          "feature_min": 1.5,
+          "feature_max": 3.2583333333333333,
+          "feature_mean": 2.91499254976926,
+          "mae_eV": {
+            "edge_state": 0.11071307266502496,
+            "gptrans_t": 0.10613934973279603
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004573722932228934
+          }
+        },
+        {
+          "rows": 12466,
+          "feature_min": 3.2637362637362637,
+          "feature_max": 3.6083333333333334,
+          "feature_mean": 3.4442988211483474,
+          "mae_eV": {
+            "edge_state": 0.1182928190708696,
+            "gptrans_t": 0.11351541319188731
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004777405878982287
+          }
+        },
+        {
+          "rows": 12441,
+          "feature_min": 3.6095238095238096,
+          "feature_max": 3.9281045751633985,
+          "feature_mean": 3.768075637761378,
+          "mae_eV": {
+            "edge_state": 0.1093346613720772,
+            "gptrans_t": 0.10582105108860096
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0035136102834762402
+          }
+        },
+        {
+          "rows": 12627,
+          "feature_min": 3.933333333333333,
+          "feature_max": 5.889705882352941,
+          "feature_mean": 4.209126750708166,
+          "mae_eV": {
+            "edge_state": 0.10710543414386517,
+            "gptrans_t": 0.10205436053086868
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005051073612996497
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0015374633295202568
+      }
+    },
+    "heteroatom_fraction": {
+      "bins": [
+        {
+          "rows": 12169,
+          "feature_min": 0.0,
+          "feature_max": 0.17647058823529413,
+          "feature_mean": 0.1325961850564251,
+          "mae_eV": {
+            "edge_state": 0.09925828881090928,
+            "gptrans_t": 0.09508427868090029
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0041740101300089955
+          }
+        },
+        {
+          "rows": 11456,
+          "feature_min": 0.18181818181818182,
+          "feature_max": 0.23529411764705882,
+          "feature_mean": 0.20921189441429286,
+          "mae_eV": {
+            "edge_state": 0.10322983416223992,
+            "gptrans_t": 0.09840190973569894
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004827924426540982
+          }
+        },
+        {
+          "rows": 12372,
+          "feature_min": 0.25,
+          "feature_max": 0.3076923076923077,
+          "feature_mean": 0.27431963669839515,
+          "mae_eV": {
+            "edge_state": 0.11718545624287122,
+            "gptrans_t": 0.1128911149278259
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004294341315045312
+          }
+        },
+        {
+          "rows": 14003,
+          "feature_min": 0.3125,
+          "feature_max": 0.9,
+          "feature_mean": 0.3815461624308258,
+          "mae_eV": {
+            "edge_state": 0.12334119289472836,
+            "gptrans_t": 0.11871132204160259
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004629870853125773
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0006539142965319867
+      }
+    },
+    "aromatic_atom_fraction": {
+      "bins": [
+        {
+          "rows": 22878,
+          "feature_min": 0.0,
+          "feature_max": 0.35714285714285715,
+          "feature_mean": 0.1493600682106336,
+          "mae_eV": {
+            "edge_state": 0.13512418465302098,
+            "gptrans_t": 0.12939839351530497
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005725791137715988
+          }
+        },
+        {
+          "rows": 14147,
+          "feature_min": 0.375,
+          "feature_max": 0.45454545454545453,
+          "feature_mean": 0.399929371304928,
+          "mae_eV": {
+            "edge_state": 0.09383125151645474,
+            "gptrans_t": 0.09167847851944481
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00215277299700992
+          }
+        },
+        {
+          "rows": 12975,
+          "feature_min": 0.46153846153846156,
+          "feature_max": 1.0,
+          "feature_mean": 0.6318880201670338,
+          "mae_eV": {
+            "edge_state": 0.08852704999993533,
+            "gptrans_t": 0.08370131014858827
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004825739851347054
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0035730181407060677
+      }
+    },
+    "ring_atom_fraction": {
+      "bins": [
+        {
+          "rows": 10462,
+          "feature_min": 0.0,
+          "feature_max": 0.38461538461538464,
+          "feature_mean": 0.304250183111426,
+          "mae_eV": {
+            "edge_state": 0.12897200841699497,
+            "gptrans_t": 0.1233278314348526
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005644176982142369
+          }
+        },
+        {
+          "rows": 13770,
+          "feature_min": 0.4,
+          "feature_max": 0.5555555555555556,
+          "feature_mean": 0.45872099320148146,
+          "mae_eV": {
+            "edge_state": 0.11252715823956824,
+            "gptrans_t": 0.10847115612757231
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004056002111995922
+          }
+        },
+        {
+          "rows": 13034,
+          "feature_min": 0.5625,
+          "feature_max": 0.7058823529411765,
+          "feature_mean": 0.6405725585209785,
+          "mae_eV": {
+            "edge_state": 0.10330394472431255,
+            "gptrans_t": 0.0990573179050514
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004246626819261144
+          }
+        },
+        {
+          "rows": 12734,
+          "feature_min": 0.7142857142857143,
+          "feature_max": 1.0,
+          "feature_mean": 0.8133529852996058,
+          "mae_eV": {
+            "edge_state": 0.10383010435763419,
+            "gptrans_t": 0.0996041862504419
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004225918107192295
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0015881748701464474
+      }
+    },
+    "charged_atom_fraction": {
+      "bins": [
+        {
+          "rows": 50000,
+          "feature_min": 0.0,
+          "feature_max": 0.26666666666666666,
+          "feature_mean": 0.002305991681521093,
+          "mae_eV": {
+            "edge_state": 0.1113488057088852,
+            "gptrans_t": 0.10686752763271332
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004481278076171875
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0
+      }
+    },
+    "radical_atom_fraction": {
+      "bins": [
+        {
+          "rows": 50000,
+          "feature_min": 0.0,
+          "feature_max": 0.6666666666666666,
+          "feature_mean": 0.007718171615965734,
+          "mae_eV": {
+            "edge_state": 0.1113488057088852,
+            "gptrans_t": 0.10686752763271332
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004481278076171875
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0
+      }
+    },
+    "non_single_bond_fraction": {
+      "bins": [
+        {
+          "rows": 12485,
+          "feature_min": 0.0,
+          "feature_max": 0.2727272727272727,
+          "feature_mean": 0.0784936232104196,
+          "mae_eV": {
+            "edge_state": 0.1620947013151469,
+            "gptrans_t": 0.15464670713491138
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.007447994180235521
+          }
+        },
+        {
+          "rows": 11961,
+          "feature_min": 0.2777777777777778,
+          "feature_max": 0.3888888888888889,
+          "feature_mean": 0.3458944270693621,
+          "mae_eV": {
+            "edge_state": 0.0917940546303985,
+            "gptrans_t": 0.08920615117652153
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.002587903453876976
+          }
+        },
+        {
+          "rows": 10782,
+          "feature_min": 0.4,
+          "feature_max": 0.47619047619047616,
+          "feature_mean": 0.4321231150327116,
+          "mae_eV": {
+            "edge_state": 0.09880121410766486,
+            "gptrans_t": 0.09662337599249989
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.002177838115164973
+          }
+        },
+        {
+          "rows": 14772,
+          "feature_min": 0.5,
+          "feature_max": 1.0,
+          "feature_mean": 0.6301433664416483,
+          "mae_eV": {
+            "edge_state": 0.09345143254681909,
+            "gptrans_t": 0.08826321614424516
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005188216402573925
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.005270156065070548
+      }
+    },
+    "aromatic_bond_fraction": {
+      "bins": [
+        {
+          "rows": 21178,
+          "feature_min": 0.0,
+          "feature_max": 0.3333333333333333,
+          "feature_mean": 0.1259923639321677,
+          "mae_eV": {
+            "edge_state": 0.1376055168614688,
+            "gptrans_t": 0.1315480585881362
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.006057458273332578
+          }
+        },
+        {
+          "rows": 16133,
+          "feature_min": 0.35294117647058826,
+          "feature_max": 0.42857142857142855,
+          "feature_mean": 0.3841503046488443,
+          "mae_eV": {
+            "edge_state": 0.09486403603743822,
+            "gptrans_t": 0.09270836609735349
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0021556699400847234
+          }
+        },
+        {
+          "rows": 12689,
+          "feature_min": 0.45454545454545453,
+          "feature_max": 1.0,
+          "feature_mean": 0.6126272528020483,
+          "mae_eV": {
+            "edge_state": 0.08848523571282867,
+            "gptrans_t": 0.08367779388505898
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004807441827769689
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0039017883332478544
+      }
+    },
+    "conjugated_bond_fraction": {
+      "bins": [
+        {
+          "rows": 11983,
+          "feature_min": 0.0,
+          "feature_max": 0.3076923076923077,
+          "feature_mean": 0.10569070095615894,
+          "mae_eV": {
+            "edge_state": 0.16004230579569453,
+            "gptrans_t": 0.15271239776916937
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0073299080265251775
+          }
+        },
+        {
+          "rows": 12747,
+          "feature_min": 0.3125,
+          "feature_max": 0.45454545454545453,
+          "feature_mean": 0.38660751848629965,
+          "mae_eV": {
+            "edge_state": 0.0947139547171757,
+            "gptrans_t": 0.09225794717621558
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0024560075409601105
+          }
+        },
+        {
+          "rows": 12106,
+          "feature_min": 0.46153846153846156,
+          "feature_max": 0.6190476190476191,
+          "feature_mean": 0.5319032704279364,
+          "mae_eV": {
+            "edge_state": 0.09737095531699638,
+            "gptrans_t": 0.09335094861662843
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004020006700367961
+          }
+        },
+        {
+          "rows": 13164,
+          "feature_min": 0.625,
+          "feature_max": 1.0,
+          "feature_mean": 0.7604109010693267,
+          "mae_eV": {
+            "edge_state": 0.09598615688598108,
+            "gptrans_t": 0.09171263161345986
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004273525272521231
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.004873900485565067
+      }
+    },
+    "stereo_bond_fraction": {
+      "bins": [
+        {
+          "rows": 50000,
+          "feature_min": 0.0,
+          "feature_max": 0.23529411764705882,
+          "feature_mean": 0.005644828503711631,
+          "mae_eV": {
+            "edge_state": 0.1113488057088852,
+            "gptrans_t": 0.10686752763271332
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004481278076171875
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0
+      }
+    },
+    "rwse_mean": {
+      "bins": [
+        {
+          "rows": 12499,
+          "feature_min": 0.09915344866125711,
+          "feature_max": 0.13063256522670674,
+          "feature_mean": 0.1259120198181433,
+          "mae_eV": {
+            "edge_state": 0.10408625781836534,
+            "gptrans_t": 0.10054890800832854
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.003537349810036805
+          }
+        },
+        {
+          "rows": 12501,
+          "feature_min": 0.13063533676581252,
+          "feature_max": 0.1362634921388235,
+          "feature_mean": 0.1334795328277097,
+          "mae_eV": {
+            "edge_state": 0.10598412770937371,
+            "gptrans_t": 0.10225079930426549
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0037333284051082067
+          }
+        },
+        {
+          "rows": 12500,
+          "feature_min": 0.13626375307436925,
+          "feature_max": 0.1427087015938014,
+          "feature_mean": 0.13931771556599531,
+          "mae_eV": {
+            "edge_state": 0.10936172123908997,
+            "gptrans_t": 0.1050270060634613
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004334715175628662
+          }
+        },
+        {
+          "rows": 12500,
+          "feature_min": 0.14270940323095616,
+          "feature_max": 0.2124981164932251,
+          "feature_mean": 0.1490887897623989,
+          "mae_eV": {
+            "edge_state": 0.12596296423912048,
+            "gptrans_t": 0.11964326100349426
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.006319703235626221
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.002782353425589416
+      }
+    },
+    "rwse_last_mean": {
+      "bins": [
+        {
+          "rows": 12497,
+          "feature_min": 0.08871858846396208,
+          "feature_max": 0.16000000227774894,
+          "feature_mean": 0.14473205954115234,
+          "mae_eV": {
+            "edge_state": 0.11652536639082076,
+            "gptrans_t": 0.1116749014751028
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004850464915717956
+          }
+        },
+        {
+          "rows": 12503,
+          "feature_min": 0.16000264237324396,
+          "feature_max": 0.17713514482602477,
+          "feature_mean": 0.16847340401403282,
+          "mae_eV": {
+            "edge_state": 0.10695493856277655,
+            "gptrans_t": 0.10450829288191599
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.002446645680860568
+          }
+        },
+        {
+          "rows": 12499,
+          "feature_min": 0.1771365785423447,
+          "feature_max": 0.19540670207318137,
+          "feature_mean": 0.18615324698799246,
+          "mae_eV": {
+            "edge_state": 0.1056529431164155,
+            "gptrans_t": 0.10031253549134944
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.00534040762506606
+          }
+        },
+        {
+          "rows": 12501,
+          "feature_min": 0.19541219715029,
+          "feature_max": 0.4000610411167145,
+          "feature_mean": 0.21041751454299776,
+          "mae_eV": {
+            "edge_state": 0.11626342282982961,
+            "gptrans_t": 0.1109752476515746
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005288175178255027
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.002893761944205492
+      }
+    },
+    "rwse_node_variance": {
+      "bins": [
+        {
+          "rows": 12500,
+          "feature_min": 0.0,
+          "feature_max": 0.00298645647967735,
+          "feature_mean": 0.0021381397087781666,
+          "mae_eV": {
+            "edge_state": 0.10619245008468628,
+            "gptrans_t": 0.10104767246246338
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.0051447776222229005
+          }
+        },
+        {
+          "rows": 12488,
+          "feature_min": 0.0029864965532425173,
+          "feature_max": 0.004254148420873379,
+          "feature_mean": 0.003621574078128164,
+          "mae_eV": {
+            "edge_state": 0.10145947275102177,
+            "gptrans_t": 0.09854215474215781
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.002917318008863949
+          }
+        },
+        {
+          "rows": 12512,
+          "feature_min": 0.004254692440941276,
+          "feature_max": 0.005710015447091089,
+          "feature_mean": 0.004939506585838668,
+          "mae_eV": {
+            "edge_state": 0.11222505311260138,
+            "gptrans_t": 0.10795241730559207
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.004272635807009304
+          }
+        },
+        {
+          "rows": 12500,
+          "feature_min": 0.005710228575464293,
+          "feature_max": 0.0248385140825182,
+          "feature_mean": 0.007346984438106879,
+          "mae_eV": {
+            "edge_state": 0.12550791193008423,
+            "gptrans_t": 0.1199188321685791
+          },
+          "mean_gain_eV": {
+            "gptrans_t_over_edge_state": 0.005589079761505127
+          }
+        }
+      ],
+      "gain_spread_eV": {
+        "gptrans_t_over_edge_state": 0.0026717617526411776
+      }
+    }
+  },
+  "structural_diagnostic_crossfit": {
+    "gptrans_t_vs_edge_state": {
+      "feature_names": [
+        "aromatic_atom_fraction",
+        "aromatic_bond_fraction",
+        "atom_count",
+        "bond_count",
+        "branch_atom_fraction",
+        "charged_atom_fraction",
+        "component_count",
+        "conjugated_bond_fraction",
+        "cycle_rank",
+        "diameter",
+        "heteroatom_fraction",
+        "leaf_fraction",
+        "max_degree",
+        "mean_degree",
+        "mean_shortest_path",
+        "non_single_bond_fraction",
+        "radical_atom_fraction",
+        "ring_atom_fraction",
+        "rwse_last_mean",
+        "rwse_mean",
+        "rwse_node_variance",
+        "stereo_bond_fraction"
+      ],
+      "gain_regression_oof_r2": 0.0021543537464139284,
+      "gain_regression_oof_pearson": 0.05187727142033028,
+      "winner_classifier_oof_auc": 0.5335628040430535,
+      "diagnostic_fit_only": true
+    }
+  }
+}

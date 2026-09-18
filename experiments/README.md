@@ -23,6 +23,7 @@ Track C.
 | What happened in the legacy PCQM-100K Kaggle architecture screen? | Closed; recurrent graph-state missed the frozen EdgeState comparator and is archived at commit `285e1dc`; it is not the current Kunshan line | `pcqm_gap_architecture/` |
 | What is the fixed-contract GPTrans-T PCQM reference? | Kaggle2 seed-42 100K/50K V4 run mechanically accepted at 0.156627 eV; frozen for reuse but closed for 100K promotion | `pcqm_gptrans_t_100k_v4/` |
 | Which architecture wins the matched PCQM 500K V4 comparison, and is global attention useful? | K1 and GPTrans-T beat EdgeState; K1 leads but not materially, while matched local ablation rejects dense and sparse global attention | `pcqm_500k_v4_evidence/` |
+| What module explains the matched 500K residual differences? | Dense attention fails broadly; selective normalized relation extraction and bounded update injection are the supported repair | `pcqm_500k_module_attribution/` |
 | Did the adapted GPTrans-T propagation core pass its historical 500K bridge? | Yes as pre-V4 context; it is not a reusable V4 reference | `pcqm_gptrans_t_500k/` |
 | What contract defined the historical EdgeState304 500K comparator? | Frozen pre-V4 comparator protocol retained for provenance | `pcqm_edgestate304_500k/` |
 | What is the status of the official-train K1/GPTrans-T full pair and fusion? | Integrated training/acceptance code; follow its dated recovery and evaluation evidence | `pcqm_k1_gptrans_full_fusion/` |
