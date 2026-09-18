@@ -1,0 +1,16 @@
+{
+  "format": "molgap-pcqm-k1-mose-infrastructure-failure-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-s42",
+  "version": 3,
+  "remote_status": "ERROR",
+  "execution_stage": "precision-preflight",
+  "model_training_started": false,
+  "scientific_result": false,
+  "observed_accelerator": "Tesla T4",
+  "error": "RuntimeError: TF32 must be disabled before training",
+  "root_cause": "The entry point asserted the frozen no-TF32 contract without first setting both PyTorch backend flags to false.",
+  "covered_repair": "Set CUDA matmul and cuDNN TF32 flags to false explicitly, then retain the assertion.",
+  "scientific_contract_changed": false,
+  "preserved_log": "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v3/molgap-pcqm-k1-mose-s42.log",
+  "preserved_log_sha256": "4a067e35be34c3f37cca5efb5e24a4d6a3767b589e5281b2b1ee86bb9d0031be"
+}

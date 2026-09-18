@@ -43,6 +43,12 @@ scientific contract matches and the runtime issues an accepted deterministic
 calibration certificate. The next covered repair therefore requests T4,
 isolates one visible device and removes only the accelerator-name guard. It
 does not change data, model, initialization, seed, precision, batch, optimizer,
-schedule, exposure or gate. Kernel version 3 was submitted and entered
-`RUNNING`. No additional seed, protected role, 500K job or successor is
+schedule, exposure or gate. Kernel version 3 reached the assigned T4 but then
+stopped before training because the entry point asserted the no-TF32 contract
+without first setting both PyTorch backend flags to false. Evidence is
+`results/gpu_v3_tf32_preflight_failure.json`.
+
+The final covered infrastructure repair explicitly disables CUDA matmul and
+cuDNN TF32 before retaining the same assertion. No scientific-contract field
+changes. No additional seed, protected role, 500K job or successor is
 authorized.

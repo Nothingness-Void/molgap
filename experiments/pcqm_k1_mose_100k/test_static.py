@@ -45,6 +45,8 @@ class MoSEContractTest(unittest.TestCase):
         self.assertIn("def pin_one_visible_gpu()", runtime)
         self.assertIn("def ensure_compatible_torch()", runtime)
         self.assertIn('"torch==2.4.1"', runtime)
+        self.assertIn("torch.backends.cuda.matmul.allow_tf32 = False", runtime)
+        self.assertIn("torch.backends.cudnn.allow_tf32 = False", runtime)
         self.assertLess(runtime.index("pin_one_visible_gpu()\n    install_dependencies()"), runtime.index("import torch\n"))
 
 

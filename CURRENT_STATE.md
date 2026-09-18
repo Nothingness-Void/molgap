@@ -50,13 +50,13 @@ The active V5 information-source question replaces K1-v4's RWSE16 input with
 unchanged. The protocol is `experiments/pcqm_k1_mose_100k/protocol.md`. The
 150,000-row deterministic cache passed local no-model acceptance with sealed
 official roles and is published as immutable private dataset
-`nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. GPU versions 1 and 2 stopped
-before training on accelerator-preflight assumptions and have no scientific
-result. Version 2 proved that Kaggle allocated a compatible Tesla T4 despite
-the P100 request. The covered repair uses one isolated T4 and requires the V5
-runtime calibration certificate; no model, data or optimization field changes.
-Kaggle1 kernel `nothingnessvoid/molgap-pcqm-k1-mose-s42` version 3 is running.
-Completion grants no automatic extra seed, 500K run or protected-role use.
+`nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. GPU versions 1--3 stopped
+before training on accelerator/precision preflight assumptions and have no
+scientific result. The logs established a compatible Tesla T4 and identified
+the final issue: the entry point asserted no-TF32 without explicitly disabling
+both backend flags. The final covered repair does so before V5 calibration;
+no model, data or optimization field changes. Completion grants no automatic
+extra seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
