@@ -31,3 +31,24 @@ silent; terminal success or actionable failure is handed once to server A.
 
 No scientific result is assumed until both arms pass independent artifact
 acceptance and the paired comparison is recomputed without model inference.
+
+The first training allocations reached their 16-hour wall limit with atomic
+checkpoints intact; this was a scheduler timeout, not a scientific or code
+failure. Reference job `122432964` saved `next_epoch=37` with checkpoint
+SHA-256 `061db203ee6a7690399133d1c5cea9d5b579795037fc0bc2ab324e2faacb3735`.
+Pair PreNorm job `122432972` saved `next_epoch=39` with checkpoint SHA-256
+`3c364e10cfb2a9c33726bcc9eb4a1faa0972a2b779f5d51faabf97eebaca6465`.
+
+One unchanged-contract continuation per arm was submitted through the
+versioned atomic-resume wrapper at commit
+`2e610044eb376c95f46bb5df9f7b073ed51ac7dd`, archive SHA-256
+`dc35a31a43238c13a7a626be9d44f23651fd428568313316600967137212827f`:
+
+| Arm | Continuation | Resume cursor | Initial state |
+|---|---:|---:|---|
+| reference | `122518428` | epoch 37 | pending for priority |
+| Pair PreNorm | `122518430` | epoch 39 | pending for priority |
+
+The scientific source, cache, model, optimizer, schedule, precision and batch
+remain the frozen retry identities above. The wrapper only supplies the
+already-supported `--resume` path and writes to a new attempt directory.

@@ -192,11 +192,13 @@ because the historical GPTrans 500K run predates that comparison contract.
 Initial preflight jobs `122425237`/`122425241` failed before training because a
 new wrapper omitted the previously accepted bounded GPTrans DCU repeatability
 tolerance; dependent jobs never allocated. The unchanged-contract repair is
-now in preflight jobs `122432949`/`122432955`, gating training jobs
-`122432964`/`122432972` with scheduler `afterok` dependencies. The experiment
-does not duplicate the desktop full comparison and does not access protected
-roles. Authority: `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and
-its `STATUS.md`.
+in preflight jobs `122432949`/`122432955` and training jobs
+`122432964`/`122432972`. Both training allocations ended only at the 16-hour
+wall with complete epoch checkpoints. Unchanged-contract continuation jobs
+`122518428`/`122518430` resume at epochs 37/39 respectively; they are pending
+for priority. The experiment does not duplicate the desktop full comparison
+and does not access protected roles. Authority:
+`experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and its `STATUS.md`.
 
 The separate train-only GPTrans shortest-path profile completed. Exact cached
 distances accelerated the isolated path stage but improved representative
