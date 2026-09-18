@@ -55,9 +55,11 @@ before training on accelerator/precision preflight assumptions. Version 4
 passed those checks and then exposed an `AtomEncoder` interface bug during
 runtime-certificate model construction; training still did not start, so none
 is a scientific result. The covered implementation repair uses the frozen
-192-channel architecture constant and requires a new immutable source package.
-No model shape or scientific field changes. Completion grants no automatic
-extra seed, 500K run or protected-role use.
+192-channel architecture constant. The repaired immutable source package is at
+commit `1948328a9ff450f34dcf950ecaffc453d6a2405b`, and Kaggle1 kernel
+`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 5 is running beyond the v4
+failure point. No model shape or scientific field changes. Completion grants
+no automatic extra seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2

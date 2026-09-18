@@ -59,5 +59,9 @@ training still did not start. Evidence is
 The covered code repair uses the already frozen `HIDDEN_CHANNELS=192`
 architecture constant rather than introspecting `AtomEncoder`. It preserves
 the intended tensor shapes and parameter identity. The private source dataset
-must be repackaged from the repaired commit before any retry. No additional
-seed, protected role, 500K job or successor is authorized.
+was repackaged at commit `1948328a9ff450f34dcf950ecaffc453d6a2405b`
+with archive SHA-256
+`152ec8f0d9136afa75332b93c7c31bef8f14be3798bab979c4bd4ca67f087d14`.
+Kernel version 5 was submitted and remained `RUNNING` beyond the v4 failure
+point. No additional seed, protected role, 500K job or successor is
+authorized.
