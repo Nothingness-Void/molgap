@@ -1,0 +1,14 @@
+{
+  "format": "molgap-pcqm-k1-mose-cache-failure-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-cache-prep",
+  "kernel_version": 1,
+  "status": "ERROR",
+  "failure_class": "infrastructure_missing_dependency",
+  "exception": "ModuleNotFoundError: No module named 'torch_geometric'",
+  "failed_before_graph_load": true,
+  "scientific_result": false,
+  "model_training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

@@ -4,8 +4,12 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
+
+
+PYG_WHEEL_SHA256 = "8faeb353f9655f7dbec44c5e0b44c721773bdfb279994da96b9b8b12fd30f427"
 
 
 def find_one(name: str) -> Path:
@@ -35,9 +39,36 @@ def verify_source(root: Path) -> None:
             raise RuntimeError(f"Source file hash mismatch: {item['path']}")
 
 
+def install_offline_pyg() -> None:
+    wheel = find_one("torch_geometric-2.6.1-py3-none-any.whl")
+    if hashlib.sha256(wheel.read_bytes()).hexdigest() != PYG_WHEEL_SHA256:
+        raise RuntimeError("Offline torch-geometric wheel hash mismatch")
+    target = Path("/kaggle/working/_offline_pyg")
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--quiet",
+            "--no-deps",
+            "--target",
+            str(target),
+            str(wheel),
+        ],
+        check=True,
+    )
+    sys.path.insert(0, str(target))
+    import torch_geometric
+
+    if torch_geometric.__version__ != "2.6.1":
+        raise RuntimeError(f"Unexpected torch-geometric version: {torch_geometric.__version__}")
+
+
 def main() -> None:
     root = source_root()
     verify_source(root)
+    install_offline_pyg()
     sys.path.insert(0, str(root / "src"))
     from molgap.pcqm_mose import build_mose_cache
 
@@ -50,4 +81,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
