@@ -40,6 +40,20 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "teacher": False,
     },
+    "neural_atom_k1_rwse_mose_residual_gate": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "retain-rwse16-and-add-zero-initialized-node-gated-mose31-residual",
+        "rwse_channels": 16,
+        "mose_channels": 31,
+        "mose_transform": "log1p",
+        "mose_residual_mlp": "linear31x64-silu-linear64x192-zero-output",
+        "gate": "sigmoid-mean-mose-linear1x16-silu-linear16x1",
+        "expected_parameters": 3_673_394,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_pair_token": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -816,6 +830,58 @@ def make_encoder(mode: str):
         )
         model.rwse_encoder = nn.Sequential(*layers)
         return model
+
+    if mode == "neural_atom_k1_rwse_mose_residual_gate":
+        import torch.nn as nn
+
+        class K1RWSEMoSEResidualGate(nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.mode = mode
+                self.base = make_k1("neural_atom_k1")
+                self.mose_residual = nn.Sequential(
+                    nn.Linear(31, 64),
+                    nn.SiLU(),
+                    nn.Linear(64, HIDDEN_CHANNELS),
+                )
+                self.mose_gate = nn.Sequential(
+                    nn.Linear(1, 16),
+                    nn.SiLU(),
+                    nn.Linear(16, 1),
+                    nn.Sigmoid(),
+                )
+                nn.init.zeros_(self.mose_residual[-1].weight)
+                nn.init.zeros_(self.mose_residual[-1].bias)
+
+            def forward(self, x, edge_index, edge_attr, batch, random_walk_pe):
+                return self.base.head(
+                    self.encode(x, edge_index, edge_attr, batch, random_walk_pe)
+                )
+
+            def encode(self, x, edge_index, edge_attr, batch, random_walk_pe):
+                expected = (x.shape[0], 47)
+                if tuple(random_walk_pe.shape) != expected:
+                    raise ValueError(
+                        f"combined RWSE/MoSE input must have shape {expected}, "
+                        f"got {tuple(random_walk_pe.shape)}"
+                    )
+                rwse = random_walk_pe[:, :16].float()
+                mose = random_walk_pe[:, 16:].float()
+                h = self.base._embed_nodes(x)
+                h = h + self.base.rwse_encoder(rwse)
+                gate = self.mose_gate(mose.mean(dim=-1, keepdim=True))
+                h = h + gate * self.mose_residual(mose)
+                edge_state = self.base._embed_edges(edge_attr)
+                for layer, (edge_update, block) in enumerate(
+                    zip(self.base.edge_updates, self.base.local_blocks), start=1
+                ):
+                    edge_state = edge_update(h, edge_index, edge_state)
+                    h = block(h, edge_index, batch, edge_attr=edge_state)
+                    if layer in MIXER_LAYERS:
+                        h = self.base.neural_atom_mixers[str(layer)](h, batch)
+                return self.base._pool(h, batch)
+
+        return K1RWSEMoSEResidualGate()
 
     import torch.nn as nn
 

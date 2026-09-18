@@ -274,9 +274,10 @@ def find_mose_cache() -> tuple[Path, dict]:
 class MoSEGraphDataset:
     """Replace RWSE with aligned MoSE counts without mutating fixed graphs."""
 
-    def __init__(self, base, payload):
+    def __init__(self, base, payload, *, retain_rwse: bool = False):
         self.base = base
         self.payload = payload
+        self.retain_rwse = retain_rwse
         self._data = base._data
         if len(base) != int(payload["source_idx"].numel()):
             raise RuntimeError("MoSE/base part row mismatch")
@@ -298,11 +299,18 @@ class MoSEGraphDataset:
         counts = self.payload["counts"][start:stop]
         if counts.shape != (graph.num_nodes, MOSE_DIM):
             raise RuntimeError("MoSE/base node alignment mismatch")
-        graph.random_walk_pe = torch.log1p(counts.float())
+        mose = torch.log1p(counts.float())
+        if self.retain_rwse:
+            rwse = graph.random_walk_pe.float()
+            if rwse.shape != (graph.num_nodes, 16):
+                raise RuntimeError("Fixed RWSE16 identity changed")
+            graph.random_walk_pe = torch.cat((rwse, mose), dim=-1)
+        else:
+            graph.random_walk_pe = mose
         return graph
 
 
-def attach_mose_roles(roles, fixed_manifest: dict):
+def attach_mose_roles(roles, fixed_manifest: dict, *, retain_rwse: bool = False):
     import torch
     from torch.utils.data import ConcatDataset
 
@@ -345,11 +353,12 @@ def attach_mose_roles(roles, fixed_manifest: dict):
         role = mose_item["role"]
         base = roles[role].datasets[role_offsets[role]]
         role_offsets[role] += 1
-        wrapped[role].append(MoSEGraphDataset(base, payload))
+        wrapped[role].append(
+            MoSEGraphDataset(base, payload, retain_rwse=retain_rwse)
+        )
         aggregate.update(
             f"{mose_item['file']}\t{mose_item['sha256']}\t{mose_item['source_start']}\t{mose_item['source_stop']}\n".encode("ascii")
         )
     if aggregate.hexdigest() != manifest["aggregate_sha256"]:
         raise RuntimeError("MoSE aggregate hash changed")
     return {role: ConcatDataset(parts) for role, parts in wrapped.items()}, manifest
-

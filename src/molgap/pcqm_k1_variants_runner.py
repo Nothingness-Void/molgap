@@ -86,7 +86,21 @@ MOSE_FEATURE_FINGERPRINT = _hash_mapping(
         "geometry_model_input": False,
     }
 )
-MOSE_MODES = ("neural_atom_k1_mose", "neural_atom_k1_mose_hidden_bn")
+MOSE_RWSE_FEATURE_FINGERPRINT = _hash_mapping(
+    {
+        "atom": "ogb-nine-categorical",
+        "bond": "ogb-three-categorical-real-bonds",
+        "rwse": 16,
+        "mose": "rooted-all5-plus-c6-log1p-31",
+        "geometry_model_input": False,
+    }
+)
+MOSE_REPLACEMENT_MODES = (
+    "neural_atom_k1_mose",
+    "neural_atom_k1_mose_hidden_bn",
+)
+MOSE_DUAL_MODES = ("neural_atom_k1_rwse_mose_residual_gate",)
+MOSE_MODES = MOSE_REPLACEMENT_MODES + MOSE_DUAL_MODES
 TARGET_FINGERPRINT = _hash_mapping(
     {"name": "pcqm4mv2-homo-lumo-gap", "column": "gap", "unit": "eV"}
 )
@@ -308,7 +322,7 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
     """Hash the unchanged K1 state retained by an isolated candidate."""
     digest = hashlib.sha256()
     for name, value in sorted(model.state_dict().items()):
-        if mode in MOSE_MODES and "rwse_encoder." in name:
+        if mode in MOSE_REPLACEMENT_MODES and "rwse_encoder." in name:
             continue
         if mode == "neural_atom_k1_tied_selector" and (
             ".node_key." in name or ".slot_query." in name
@@ -470,7 +484,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     if shared_sha != baseline_sha:
         raise RuntimeError(f"K1 shared initialization changed for {mode}")
     batch = next(iter(_train_loader(roles["train"], 0))).to("cuda", non_blocking=True)
-    if mode in MOSE_MODES:
+    if mode in MOSE_REPLACEMENT_MODES:
         with torch.no_grad():
             candidate_prediction = _forward(model, batch)
         exact_nested_initialization = False
@@ -495,6 +509,49 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         }
         if mechanism_checks != expected_checks:
             raise RuntimeError(f"MoSE feature invariant failed: {mechanism_checks}")
+    elif mode in MOSE_DUAL_MODES:
+        with torch.no_grad():
+            baseline_prediction = baseline(
+                batch.x,
+                batch.edge_index,
+                batch.edge_attr,
+                batch.batch,
+                batch.random_walk_pe[:, :16],
+            ).view(-1)
+            candidate_prediction = _forward(model, batch)
+        exact_nested_initialization = bool(
+            torch.equal(baseline_prediction, candidate_prediction)
+        )
+        mechanism_checks = {
+            "combined_input_shape": list(batch.random_walk_pe.shape),
+            "rwse_channels": 16,
+            "mose_channels": 31,
+            "mose_input_finite": bool(
+                torch.isfinite(batch.random_walk_pe[:, 16:]).all()
+            ),
+            "mose_input_nonnegative": bool(
+                (batch.random_walk_pe[:, 16:] >= 0).all()
+            ),
+            "zero_initialized_residual_output": bool(
+                torch.count_nonzero(model.mose_residual[-1].weight).item() == 0
+                and torch.count_nonzero(model.mose_residual[-1].bias).item() == 0
+            ),
+            "exact_k1_output": exact_nested_initialization,
+            "candidate_output_finite": bool(torch.isfinite(candidate_prediction).all()),
+        }
+        if mechanism_checks != {
+            "combined_input_shape": [int(batch.num_nodes), 47],
+            "rwse_channels": 16,
+            "mose_channels": 31,
+            "mose_input_finite": True,
+            "mose_input_nonnegative": True,
+            "zero_initialized_residual_output": True,
+            "exact_k1_output": True,
+            "candidate_output_finite": True,
+        }:
+            raise RuntimeError(
+                f"RWSE/MoSE residual invariant failed: {mechanism_checks}"
+            )
     else:
         with torch.no_grad():
             baseline_prediction = _forward(baseline, batch)
@@ -1039,7 +1096,12 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     elif mode in PAIR_TOKEN_MODES:
         candidate_parameters = list(model.relation_token.parameters())
     elif mode in MOSE_MODES:
-        candidate_parameters = list(model.rwse_encoder.parameters())
+        if mode in MOSE_REPLACEMENT_MODES:
+            candidate_parameters = list(model.rwse_encoder.parameters())
+        else:
+            candidate_parameters = list(model.mose_residual.parameters()) + list(
+                model.mose_gate.parameters()
+            )
     if mode == "neural_atom_k1_g":
         candidate_parameters = list(model.molecule_gates.parameters())
     elif mode == "neural_atom_k1_r":
@@ -1085,6 +1147,23 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     )
     if not candidate_trainable:
         raise RuntimeError(f"Candidate-only mechanism has no finite gradient: {mode}")
+    if mode in MOSE_DUAL_MODES:
+        residual_trainable = any(
+            parameter.grad is not None
+            and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.mose_residual.parameters()
+        )
+        gate_trainable = any(
+            parameter.grad is not None
+            and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.mose_gate.parameters()
+        )
+        mechanism_checks["residual_trainable_after_two_steps"] = residual_trainable
+        mechanism_checks["gate_trainable_after_two_steps"] = gate_trainable
+        if not residual_trainable or not gate_trainable:
+            raise RuntimeError("Selective MoSE residual or gate has no finite gradient")
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     if (
         mode in MOSE_MODES
@@ -1106,7 +1185,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         "exact_k1_function_at_initialization": exact_nested_initialization,
         "initialization_policy": (
             "feature-replacement-shared-k1-state"
-            if mode in MOSE_MODES
+            if mode in MOSE_REPLACEMENT_MODES
             else (
                 "identical-tensors-altered-edge-dataflow"
                 if mode in active_edge_modes or mode in EDGE_CONDITIONED_MODES
@@ -1145,8 +1224,12 @@ def _contract(
         "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "feature_fingerprint": (
             MOSE_FEATURE_FINGERPRINT
-            if mode in MOSE_MODES
-            else FEATURE_FINGERPRINT
+            if mode in MOSE_REPLACEMENT_MODES
+            else (
+                MOSE_RWSE_FEATURE_FINGERPRINT
+                if mode in MOSE_DUAL_MODES
+                else FEATURE_FINGERPRINT
+            )
         ),
         "target_fingerprint": TARGET_FINGERPRINT,
         "seed": SEED,
@@ -1204,7 +1287,11 @@ def train_arm(
     if mode in MOSE_MODES:
         from .pcqm_mose import attach_mose_roles
 
-        roles, mose_manifest = attach_mose_roles(roles, manifest)
+        roles, mose_manifest = attach_mose_roles(
+            roles,
+            manifest,
+            retain_rwse=mode in MOSE_DUAL_MODES,
+        )
     output.mkdir(parents=True, exist_ok=True)
     certificate, runtime = build_runtime_certificate(
         roles,
