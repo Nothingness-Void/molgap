@@ -194,24 +194,20 @@ it did not change the BS128 contract. Authorities:
 `experiments/v5_legacy_evidence_migration/decision.md` and
 `experiments/pcqm_k1_pair_token_batch_profile/results/decision_122388380.md`.
 
-One server-owned V5 scale question is active: the unchanged GPTrans-T core and
-its parameter-free Pair PreNorm mechanism are running as a newly matched 500K
-pair on Kunshan. This establishes one reusable strict drop-last reference
-because the historical GPTrans 500K run predates that comparison contract.
-Initial preflight jobs `122425237`/`122425241` failed before training because a
-new wrapper omitted the previously accepted bounded GPTrans DCU repeatability
-tolerance; dependent jobs never allocated. The unchanged-contract repair is
-in preflight jobs `122432949`/`122432955` and training jobs
-`122432964`/`122432972`. Both training allocations ended only at the 16-hour
-wall with complete epoch checkpoints. Unchanged-contract continuation jobs
-The first continuation redundantly reran stochastic calibration; reference job
-`122518428` failed by one FP32 ULP before restoring its checkpoint, and the
-still-unallocated Pair job `122518430` was cancelled at zero runtime. Certified
-continuations `122520066`/`122520074` now reuse the already accepted matching
-runtime certificate without loosening its gate and resume at epochs 37/39.
-They are pending for priority. The experiment does not duplicate the desktop
-full comparison and does not access protected roles. Authority:
-`experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and its `STATUS.md`.
+The server-owned V5 GPTrans-T/Pair-PreNorm 500K scale question is closed without
+another continuation. Initial preflights failed before training, repaired
+preflights passed, and training jobs `122432964`/`122432972` reached the
+16-hour wall with atomic checkpoints through reference epoch 36 and candidate
+epoch 38. A first continuation redundantly reran calibration; certified
+continuations `122520066`/`122520074` then passed identity checks but failed
+before adding an epoch because restored EMA tensors remained on CPU.
+
+The preserved curve was already unfavorable: Pair PreNorm was worse at every
+common epoch from 20 through 36 and would need a relative `0.0044580414 eV`
+reversal to clear the material gate. Finishing would cost about 18.2 additional
+DCU-hours, so the V5 outcome is `INCONCLUSIVE` science, `STOP_FOR_COST`, and no
+desktop handoff. The experiment did not access protected roles. Authority:
+`experiments/pcqm_gptrans_prenorm_500k_v5/decision.md`.
 
 The separate train-only GPTrans shortest-path profile completed. Exact cached
 distances accelerated the isolated path stage but improved representative

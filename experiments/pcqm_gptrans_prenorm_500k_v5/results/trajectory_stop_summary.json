@@ -1,0 +1,52 @@
+{
+  "format": "molgap-gptrans-prenorm-500k-v5-trajectory-stop-v1",
+  "decision_date": "2026-09-19",
+  "reference": {
+    "job": "122432964",
+    "completed_epochs": 37,
+    "next_epoch": 37,
+    "best_epoch": 36,
+    "best_development_mae_eV": 0.1070033386349678,
+    "mean_epoch_seconds_after_warmup": 1514.772125690724,
+    "estimated_remaining_hours": 9.677710247468514
+  },
+  "pair_prenorm": {
+    "job": "122432972",
+    "completed_epochs": 39,
+    "next_epoch": 39,
+    "best_epoch": 38,
+    "best_development_mae_eV": 0.1077689453959465,
+    "mean_epoch_seconds_after_warmup": 1464.7483459269363,
+    "estimated_remaining_hours": 8.544365351240462
+  },
+  "matched_curve": {
+    "last_common_epoch": 36,
+    "pair_better_epoch_count": 4,
+    "common_epoch_count": 37,
+    "pair_minus_reference_at_epoch36_eV": 0.0014580413699150085,
+    "pair_minus_reference_mean_epochs20_36_eV": 0.0012765995719853569,
+    "pair_minus_reference_mean_epochs25_36_eV": 0.0013923825075229008,
+    "pair_minus_reference_mean_epochs30_36_eV": 0.0013958896909441268,
+    "reference_slope_epochs30_36_eV_per_epoch": -0.0003709798412663596,
+    "pair_slope_epochs30_36_eV_per_epoch": -0.0003269732530627932,
+    "required_relative_reversal_from_epoch36_eV": 0.004458041369915011,
+    "promotion_gain_eV": 0.003
+  },
+  "continuation_failures": {
+    "reference_job": "122520066",
+    "pair_job": "122520074",
+    "failure_class": "infrastructure_resume_ema_device_mismatch",
+    "new_epoch_written": false,
+    "original_checkpoints_preserved": true
+  },
+  "execution": "PARTIAL_CHECKPOINTED",
+  "artifacts": "PARTIAL_ACCEPTED",
+  "strict_comparison": "NOT_AVAILABLE",
+  "science": "INCONCLUSIVE",
+  "transfer": "NOT_READY",
+  "budget": "STOP_FOR_COST",
+  "desktop_handoff": "NONE",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

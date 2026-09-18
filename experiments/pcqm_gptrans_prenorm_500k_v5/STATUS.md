@@ -67,5 +67,13 @@ SHA-256 `a1d30b15363d85260d36a41503d38394b22ef949f81f56177aad106c0e3d615a`:
 
 | Arm | Certified continuation | Resume cursor | Initial state |
 |---|---:|---:|---|
-| reference | `122520066` | epoch 37 | pending for priority |
-| Pair PreNorm | `122520074` | epoch 39 | pending for priority |
+| reference | `122520066` | epoch 37 | failed before first resumed epoch |
+| Pair PreNorm | `122520074` | epoch 39 | failed before first resumed epoch |
+
+Both certified continuations later allocated and failed before adding an epoch:
+restored EMA tensors remained on CPU while the models were on the accelerator.
+Curve review then closed the experiment under `STOP_FOR_COST`. Pair PreNorm was
+worse at every common epoch from 20 through 36, its late convergence slope was
+no better than the reference, and reaching the frozen promotion gate would
+require an unsupported `0.0044580414 eV` relative reversal. No repair or
+further continuation is released. Historical decision: `decision.md`.
