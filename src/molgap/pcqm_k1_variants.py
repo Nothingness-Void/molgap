@@ -16,6 +16,17 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_mose": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "replace-rwse16-with-rooted-mose31",
+        "structural_encoding": "all-connected-2-through-5-node-homomorphisms-plus-c6",
+        "structural_channels": 31,
+        "input_transform": "log1p",
+        "expected_parameters": 3_661_697,
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_pair_token": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -772,6 +783,21 @@ def make_encoder(mode: str):
 
     if mode == "neural_atom_k1_v4":
         return make_k1("neural_atom_k1")
+
+    if mode == "neural_atom_k1_mose":
+        import torch.nn as nn
+
+        from .pcqm_mose import MOSE_DIM
+
+        model = make_k1("neural_atom_k1")
+        hidden_channels = model.node_emb.out_features
+        model.rwse_dim = MOSE_DIM
+        model.rwse_encoder = nn.Sequential(
+            nn.Linear(MOSE_DIM, hidden_channels),
+            nn.SiLU(),
+            nn.Linear(hidden_channels, hidden_channels),
+        )
+        return model
 
     import torch.nn as nn
 
