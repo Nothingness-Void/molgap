@@ -1,0 +1,365 @@
+"""RML validation and repository-pointer safety."""
+
+from __future__ import annotations
+
+import json
+from collections.abc import Iterable, Mapping
+from pathlib import Path
+from typing import Any
+from urllib.parse import urlparse
+
+from molgap.v5_common import validate_v5_evidence_envelope
+
+from .discovery import DiscoveredRecords, discover_records
+from .schemas import (
+    validate_id,
+    validate_cost_event,
+    validate_ready_package,
+    validate_role_event,
+    validate_trace_manifest,
+    validate_trajectory,
+)
+
+
+ALLOWED_REMOTE_SCHEMES = frozenset(
+    {"external", "git", "https", "http", "ims", "kaggle", "scnet"}
+)
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"JSON record must be an object: {path}")
+    return value
+
+
+def resolve_repo_pointer(repo_root: Path, pointer: str) -> Path | None:
+    parsed = urlparse(pointer)
+    if parsed.scheme in ALLOWED_REMOTE_SCHEMES:
+        return None
+    if parsed.scheme == "repo":
+        pointer = f"{parsed.netloc}{parsed.path}".lstrip("/")
+    elif parsed.scheme:
+        raise ValueError(f"unsupported pointer scheme: {pointer}")
+    path = (repo_root / pointer).resolve()
+    try:
+        path.relative_to(repo_root)
+    except ValueError as exc:
+        raise ValueError(f"repository pointer escapes root: {pointer}") from exc
+    if not path.is_file():
+        raise ValueError(f"required repository pointer is missing: {pointer}")
+    return path
+
+
+def _validate_pointers(root: Path, pointers: Iterable[str]) -> None:
+    for pointer in pointers:
+        if not isinstance(pointer, str) or not pointer.strip():
+            raise ValueError("record pointer must be non-empty text")
+        resolve_repo_pointer(root, pointer)
+
+
+def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
+    state = record["state_at_start"]
+    pointers = [*state["contract_refs"], *state["role_snapshot_refs"]]
+    budget_ref = state.get("budget_snapshot_ref")
+    if isinstance(budget_ref, str) and budget_ref:
+        pointers.append(budget_ref)
+    for action in record["actions"]:
+        pointers.extend(action["evidence_refs"])
+    pointers.extend(record["result"]["evidence_refs"])
+    pointers.append(record["decision"]["decision_ref"])
+    readiness = record.get("readiness")
+    if isinstance(readiness, Mapping):
+        comparison_ref = readiness.get("paired_comparison_ref")
+        if isinstance(comparison_ref, str) and comparison_ref:
+            pointers.append(comparison_ref)
+        role_refs = readiness.get("role_history_refs")
+        if isinstance(role_refs, list):
+            pointers.extend(role_refs)
+    return pointers
+
+
+def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
+    root = Path(repo_root).resolve()
+    discovered = discover_records(root)
+    records: dict[str, list[tuple[Path, dict[str, Any]]]] = {
+        "evidence": [],
+        "trajectories": [],
+        "costs": [],
+        "roles": [],
+        "traces": [],
+        "ready": [],
+    }
+    ids: dict[str, dict[str, Path]] = {
+        "evidence_id": {},
+        "trajectory_id": {},
+        "hypothesis_id": {},
+        "cost_event_id": {},
+        "role_event_id": {},
+        "package_id": {},
+    }
+
+    def unique(kind: str, value: str, path: Path) -> None:
+        prior = ids[kind].get(value)
+        if prior is not None:
+            raise ValueError(f"duplicate {kind} {value}: {prior} and {path}")
+        ids[kind][value] = path
+
+    for path in discovered.evidence:
+        record = load_json(path)
+        validate_v5_evidence_envelope(record, repo_root=root)
+        validate_id(record["evidence_id"], f"{path}:evidence_id")
+        unique("evidence_id", record["evidence_id"], path)
+        records["evidence"].append((path, record))
+    for path in discovered.trajectories:
+        record = validate_trajectory(load_json(path))
+        unique("trajectory_id", record["trajectory_id"], path)
+        unique("hypothesis_id", record["hypothesis"]["hypothesis_id"], path)
+        _validate_pointers(root, _trajectory_pointers(record))
+        records["trajectories"].append((path, record))
+    for path in discovered.costs:
+        record = validate_cost_event(load_json(path))
+        unique("cost_event_id", record["cost_event_id"], path)
+        _validate_pointers(root, [record["evidence_ref"]])
+        records["costs"].append((path, record))
+    for path in discovered.roles:
+        record = validate_role_event(load_json(path))
+        unique("role_event_id", record["role_event_id"], path)
+        _validate_pointers(root, [record["evidence_ref"]])
+        records["roles"].append((path, record))
+    for path in discovered.traces:
+        record = validate_trace_manifest(load_json(path))
+        _validate_pointers(
+            root,
+            [
+                record["contract_ref"],
+                record["presentation_semantics_ref"],
+                record["trace_artifact_ref"],
+                record["terminal_evidence_ref"],
+            ],
+        )
+        records["traces"].append((path, record))
+    for path in discovered.ready:
+        record = validate_ready_package(load_json(path))
+        unique("package_id", record["package_id"], path)
+        _validate_pointers(
+            root,
+            [
+                *record["contract_refs"],
+                *record["comparison_refs"],
+                *record["role_history_refs"],
+                record["cost_summary_ref"],
+                *record["artifact_refs"],
+            ],
+        )
+        records["ready"].append((path, record))
+
+    trajectory_by_id = {
+        record["trajectory_id"]: record for _, record in records["trajectories"]
+    }
+    evidence_ids = {record["evidence_id"] for _, record in records["evidence"]}
+    action_ids = {
+        record["trajectory_id"]: {action["action_id"] for action in record["actions"]}
+        for _, record in records["trajectories"]
+    }
+    def require_ids(path: Path, field: str, values: Iterable[str], known: set[str]) -> None:
+        missing = sorted(set(values) - known)
+        if missing:
+            raise ValueError(f"{path}:{field} contains missing IDs: {missing}")
+
+    cost_ids = {record["cost_event_id"] for _, record in records["costs"]}
+    for path, record in records["trajectories"]:
+        missing_parents = sorted(
+            set(record["state_at_start"]["parent_trajectory_ids"]) - set(trajectory_by_id)
+        )
+        if missing_parents:
+            raise ValueError(
+                f"{path}:state_at_start.parent_trajectory_ids contains missing IDs: "
+                f"{missing_parents}"
+            )
+        require_ids(
+            path,
+            "state_at_start.prior_trajectory_ids",
+            record["state_at_start"].get("prior_trajectory_ids", []),
+            set(trajectory_by_id),
+        )
+        require_ids(
+            path,
+            "hypothesis.supporting_evidence_ids",
+            record["hypothesis"]["supporting_evidence_ids"],
+            evidence_ids,
+        )
+        require_ids(
+            path,
+            "state_at_start.prior_evidence_ids",
+            record["state_at_start"]["prior_evidence_ids"],
+            evidence_ids,
+        )
+        require_ids(
+            path,
+            "state_at_start.reference_ids",
+            record["state_at_start"]["reference_ids"],
+            evidence_ids,
+        )
+        require_ids(
+            path,
+            "result.evidence_ids",
+            record["result"]["evidence_ids"],
+            evidence_ids,
+        )
+        for action in record["actions"]:
+            require_ids(
+                path,
+                f"actions.{action['action_id']}.cost_event_ids",
+                action["cost_event_ids"],
+                cost_ids,
+            )
+        readiness = record.get("readiness")
+        if isinstance(readiness, Mapping):
+            require_ids(
+                path,
+                "readiness.candidate_evidence_id",
+                [readiness["candidate_evidence_id"]],
+                evidence_ids,
+            )
+            require_ids(
+                path,
+                "readiness.compatible_reference_id",
+                [readiness["compatible_reference_id"]],
+                evidence_ids,
+            )
+            require_ids(
+                path,
+                "readiness.qualification_100k_evidence_ids",
+                readiness["qualification_100k_evidence_ids"],
+                evidence_ids,
+            )
+            require_ids(
+                path,
+                "readiness.qualification_500k_evidence_ids",
+                readiness["qualification_500k_evidence_ids"],
+                evidence_ids,
+            )
+            require_ids(
+                path,
+                "readiness.native_cost_event_ids",
+                readiness["native_cost_event_ids"],
+                cost_ids,
+            )
+        if record["record_mode"] == "prospective":
+            expected_cost = record["hypothesis"]["expected_native_cost_ref"]
+            validate_id(expected_cost, f"{path}:hypothesis.expected_native_cost_ref")
+            require_ids(
+                path,
+                "hypothesis.expected_native_cost_ref",
+                [expected_cost],
+                cost_ids,
+            )
+    for kind in ("costs", "roles"):
+        for path, record in records[kind]:
+            trajectory_id = record["trajectory_id"]
+            if trajectory_id not in trajectory_by_id:
+                raise ValueError(f"{path}:trajectory_id references missing ID: {trajectory_id}")
+            if record["action_id"] not in action_ids[trajectory_id]:
+                raise ValueError(
+                    f"{path}:action_id references missing action: "
+                    f"{trajectory_id}:{record['action_id']}"
+                )
+    for path, record in records["traces"]:
+        if record["trajectory_id"] not in trajectory_by_id:
+            raise ValueError(
+                f"{path}:trajectory_id references missing ID: {record['trajectory_id']}"
+            )
+        if record["reference_id"] not in evidence_ids:
+            raise ValueError(
+                f"{path}:reference_id references missing ID: {record['reference_id']}"
+            )
+    for path, record in records["ready"]:
+        trajectory_id = record["trajectory_id"]
+        if trajectory_id not in trajectory_by_id:
+            raise ValueError(
+                f"{path}:trajectory_id references missing ID: {trajectory_id}"
+            )
+        trajectory = trajectory_by_id[trajectory_id]
+        if trajectory["record_mode"] != "prospective":
+            raise ValueError(f"{path}:trajectory_id must reference a prospective trajectory")
+        if trajectory["owner"] != "server":
+            raise ValueError(f"{path}:trajectory_id must reference a server-owned trajectory")
+        if trajectory["decision"]["outcome"] != "READY_FOR_DESKTOP":
+            raise ValueError(f"{path}:trajectory decision is not READY_FOR_DESKTOP")
+        if trajectory["decision"].get("final") is not True:
+            raise ValueError(f"{path}:trajectory decision is not final")
+        if record["candidate_evidence_id"] not in evidence_ids:
+            raise ValueError(
+                f"{path}:candidate_evidence_id references missing ID: "
+                f"{record['candidate_evidence_id']}"
+            )
+        require_ids(path, "reference_ids", record["reference_ids"], evidence_ids)
+        require_ids(
+            path,
+            "qualification_100k_evidence_ids",
+            record["qualification_100k_evidence_ids"],
+            evidence_ids,
+        )
+        require_ids(
+            path,
+            "qualification_500k_evidence_ids",
+            record["qualification_500k_evidence_ids"],
+            evidence_ids,
+        )
+        require_ids(
+            path,
+            "native_cost_event_ids",
+            record["native_cost_event_ids"],
+            cost_ids,
+        )
+        readiness = trajectory.get("readiness")
+        if not isinstance(readiness, Mapping):
+            raise ValueError(f"{path}:trajectory has no readiness block")
+        exact_fields = {
+            "candidate_evidence_id": "candidate_evidence_id",
+            "candidate_contract_identity": "candidate_contract_identity",
+            "reference_contract_identity": "reference_contract_identity",
+            "source_config_identity": "source_config_identity",
+            "funnel_requires_500k": "funnel_requires_500k",
+        }
+        for package_field, readiness_field in exact_fields.items():
+            if record[package_field] != readiness.get(readiness_field):
+                raise ValueError(
+                    f"{path}:{package_field} does not match trajectory readiness"
+                )
+        list_fields = (
+            "qualification_100k_evidence_ids",
+            "qualification_500k_evidence_ids",
+            "role_history_refs",
+            "native_cost_event_ids",
+        )
+        for field in list_fields:
+            if sorted(record[field]) != sorted(readiness.get(field, [])):
+                raise ValueError(f"{path}:{field} does not match trajectory readiness")
+        if record["reference_ids"] != [readiness.get("compatible_reference_id")]:
+            raise ValueError(f"{path}:reference_ids do not match trajectory readiness")
+        if record["comparison_refs"] != [readiness.get("paired_comparison_ref")]:
+            raise ValueError(f"{path}:comparison_refs do not match trajectory readiness")
+        candidate = next(
+            value for _, value in records["evidence"]
+            if value["evidence_id"] == record["candidate_evidence_id"]
+        )
+        reference = next(
+            value for _, value in records["evidence"]
+            if value["evidence_id"] == record["reference_ids"][0]
+        )
+        if candidate.get("legacy_contract") != record["candidate_contract_identity"]:
+            raise ValueError(f"{path}:candidate contract identity mismatch")
+        if reference.get("legacy_contract") != record["reference_contract_identity"]:
+            raise ValueError(f"{path}:reference contract identity mismatch")
+        cost_by_id = {
+            value["cost_event_id"]: value for _, value in records["costs"]
+        }
+        if not any(
+            cost_by_id[cost_id]["measurement"][unit]["status"] == "measured"
+            for cost_id in record["native_cost_event_ids"]
+            for unit in ("device_hours", "cpu_hours")
+        ):
+            raise ValueError(f"{path}:native cost has no measured device or CPU hours")
+    return {"root": root, "discovered": discovered, "records": records}

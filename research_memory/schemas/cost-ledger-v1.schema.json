@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-cost-ledger-v1",
+  "type": "object",
+  "required": ["format", "event_count", "totals_by_hardware", "totals_by_category", "totals_by_trajectory", "infrastructure_event_ids", "retry_event_ids", "estimated_event_count", "measurement_missing_event_count", "not_applicable_event_count", "cross_hardware_total"],
+  "properties": {
+    "format": {"const": "molgap-rml-cost-ledger-v1"},
+    "event_count": {"type": "integer", "minimum": 0},
+    "totals_by_hardware": {"$ref": "#/$defs/totals"},
+    "totals_by_category": {"$ref": "#/$defs/totals"},
+    "totals_by_trajectory": {"$ref": "#/$defs/totals"},
+    "infrastructure_event_ids": {"type": "array", "items": {"type": "string"}},
+    "retry_event_ids": {"type": "array", "items": {"type": "string"}},
+    "estimated_event_count": {"type": "integer", "minimum": 0},
+    "measurement_missing_event_count": {"type": "integer", "minimum": 0},
+    "not_applicable_event_count": {"type": "integer", "minimum": 0},
+    "cross_hardware_total": {"type": "null"}
+  },
+  "$defs": {
+    "basis": {
+      "type": "object",
+      "required": ["known_total", "known_records"],
+      "properties": {
+        "known_total": {"type": ["number", "null"], "minimum": 0},
+        "known_records": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "bucket": {
+      "type": "object",
+      "required": ["measured", "estimated", "unknown_records", "not_applicable_records"],
+      "properties": {
+        "measured": {"$ref": "#/$defs/basis"},
+        "estimated": {"$ref": "#/$defs/basis"},
+        "unknown_records": {"type": "integer", "minimum": 0},
+        "not_applicable_records": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "units": {"type": "object", "additionalProperties": {"$ref": "#/$defs/bucket"}},
+    "totals": {"type": "object", "additionalProperties": {"$ref": "#/$defs/units"}}
+  },
+  "additionalProperties": false
+}

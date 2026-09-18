@@ -1,0 +1,52 @@
+{
+  "format": "molgap-rml-trajectory-index-v1",
+  "source_digest": "2ea4a3705c747748cf2f2c3671c546dd047186d1b3f1d7749b377b531bf9a6fb",
+  "trajectories": [
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_mose_hidden_bn_100k/decision.md",
+      "family_id": "k1-mose-structural-encoding",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-mose-replacement-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_mose_hidden_bn_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-mose-hidden-bn-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_mose_100k/decision.md",
+      "family_id": "k1-mose-structural-encoding",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_mose_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-mose-replacement-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_mose_residual_gate_100k/decision.md",
+      "family_id": "k1-mose-structural-encoding",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-mose-replacement-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_mose_residual_gate_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+    }
+  ]
+}

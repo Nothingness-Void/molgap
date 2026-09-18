@@ -1,0 +1,94 @@
+{
+  "edges": [
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/postmortem_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/submission_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_100k/results/cache_acceptance_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_100k/results/cache_submission.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/acceptance_v5.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v1_infrastructure_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v2_allocation_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v3_tf32_preflight_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v4_encoder_interface_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/submission_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "parent_trajectory"
+    }
+  ],
+  "format": "molgap-rml-trajectory-graph-v1",
+  "nodes": [
+    {
+      "id": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-replacement-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "trajectory"
+    }
+  ]
+}

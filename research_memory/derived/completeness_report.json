@@ -1,0 +1,68 @@
+{
+  "broken_required_pointers": [],
+  "cost_completeness": {
+    "trajectories_total": 3,
+    "with_complete_native_measurement": 0,
+    "with_cost_event": 0,
+    "with_incomplete_native_measurement": 0,
+    "without_cost_event": 3
+  },
+  "counts_by_severity": {
+    "INFO": 1,
+    "WARN": 4
+  },
+  "format": "molgap-rml-completeness-report-v1",
+  "issues": [
+    {
+      "code": "trace_unavailable_for_backtest",
+      "count": 3,
+      "items": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "severity": "INFO"
+    },
+    {
+      "code": "historical_partial_record",
+      "count": 3,
+      "items": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "missing_cost_event",
+      "count": 3,
+      "items": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "missing_explicit_role_identity",
+      "count": 3,
+      "items": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
+      "count": 3,
+      "items": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "severity": "WARN"
+    }
+  ],
+  "ready_prerequisites_missing": []
+}

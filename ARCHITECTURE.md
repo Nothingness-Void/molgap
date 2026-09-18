@@ -83,6 +83,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `cost_ledger.py` | Append-only hardware-native cost records without cross-unit conversion | Changing experiment cost accounting |
 | `runtime_profiling.py` | Stage timing for loader, transfer, compute, validation, archive, and allocation | Changing pre-contract performance diagnostics |
 | `screen_backtest.py` | Conservative same-contract trace gate for future low-cost screening ladders | Changing prospective early-stop calibration rules |
+| `v5_common.py` | Machine-neutral V5 evidence-envelope constants and fail-closed validation | Changing shared V5 evidence semantics used by RML, desktop, or server |
+| `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
 | `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
@@ -129,6 +131,7 @@ number ages; a role does not.
 | `production/` | What ships, in data-flow order | `production/README.md` |
 | `experiments/` | One directory per open or closed question | `experiments/README.md` |
 | `platforms/` | How a run reaches a given compute environment | `platforms/README.md` |
+| `research_memory/` | What evidence-linked trajectories, reuse, cost, and completeness gaps exist | `research_memory/README.md` |
 
 Each production stage keeps its own `scripts/` for argument parsing and output
 persistence; the reusable behavior stays in `src/molgap/`. Stage roots are

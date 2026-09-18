@@ -1,0 +1,57 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-mose-hidden-bn-100k-s42",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-mose-structural-encoding",
+  "question": "Does published-style hidden BatchNorm repair the MoSE replacement?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-mose-hidden-bn-100k-s42",
+    "observed_deficiency": "direct MoSE replacement regressed at high count magnitude",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the count representation rather than its scale is mismatched to K1"],
+    "changed_mechanism": "hidden BatchNorm inside the MoSE encoder",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "retain normalization as an isolated repair",
+    "decision_changed_if_negative": "close normalization repair",
+    "historical_unknowns": ["native device cost was not captured as an RML cost event"]
+  },
+  "state_at_start": {
+    "source_commit": "df0f6255f6c7912d9ac4791752c2f05b97d6c50b",
+    "contract_refs": ["experiments/pcqm_k1_mose_hidden_bn_100k/training_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TC-k1-mose-replacement-100k-s42"],
+    "prior_trajectory_ids": ["TC-k1-mose-replacement-100k-s42"],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1"],
+      "attempt_ids": ["gpu-v1"],
+      "source_commit": "df0f6255f6c7912d9ac4791752c2f05b97d6c50b",
+      "evidence_refs": [
+        "experiments/pcqm_k1_mose_hidden_bn_100k/results/submission_v1.json",
+        "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
+        "experiments/pcqm_k1_mose_hidden_bn_100k/results/postmortem_v1.json"
+      ],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_mose_hidden_bn_100k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["new evidence that isolates a different normalization mechanism"]
+  }
+}

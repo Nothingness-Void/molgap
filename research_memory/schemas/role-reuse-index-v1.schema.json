@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-role-reuse-index-v1",
+  "type": "object",
+  "required": ["format", "explicit_role_event_count", "identities", "reused_role_identities", "repeatedly_selected_role_identities", "coarse_historical_role_records", "ambiguous_historical_role_record_count", "protected_roles_reported_untouched", "full_training_membership_conflicts"],
+  "properties": {
+    "format": {"const": "molgap-rml-role-reuse-index-v1"},
+    "explicit_role_event_count": {"type": "integer", "minimum": 0},
+    "identities": {"type": "object"},
+    "reused_role_identities": {"type": "object"},
+    "repeatedly_selected_role_identities": {"type": "object"},
+    "coarse_historical_role_records": {"type": "array"},
+    "ambiguous_historical_role_record_count": {"type": "integer", "minimum": 0},
+    "protected_roles_reported_untouched": {"type": "object"},
+    "full_training_membership_conflicts": {"type": "array"}
+  },
+  "additionalProperties": false
+}

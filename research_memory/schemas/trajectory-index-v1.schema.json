@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-trajectory-index-v1",
+  "type": "object",
+  "required": ["format", "source_digest", "trajectories"],
+  "properties": {
+    "format": {"const": "molgap-rml-trajectory-index-v1"},
+    "source_digest": {"type": "string"},
+    "trajectories": {"type": "array"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-cost-event-v1",
+  "type": "object",
+  "required": ["schema", "cost_event_id", "trajectory_id", "action_id", "run_id", "attempt_id", "category", "platform", "hardware", "measurement", "evidence_ref"],
+  "properties": {
+    "schema": {"const": "molgap-cost-event-v1"},
+    "cost_event_id": {"type": "string", "minLength": 1},
+    "trajectory_id": {"type": "string", "minLength": 1},
+    "action_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "attempt_id": {"type": "string", "minLength": 1},
+    "category": {"enum": ["preflight", "cache_build", "training", "inference", "acceptance", "audit", "infrastructure_failure", "retry", "other"]},
+    "platform": {"type": "string", "minLength": 1},
+    "hardware": {"type": "string", "minLength": 1},
+    "measurement": {
+      "type": "object",
+      "required": ["device_hours", "cpu_hours", "wall_hours", "queue_hours"],
+      "additionalProperties": false,
+      "properties": {
+        "device_hours": {"$ref": "#/$defs/measurement"},
+        "cpu_hours": {"$ref": "#/$defs/measurement"},
+        "wall_hours": {"$ref": "#/$defs/measurement"},
+        "queue_hours": {"$ref": "#/$defs/measurement"}
+      }
+    },
+    "evidence_ref": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "measurement": {
+      "type": "object",
+      "required": ["value", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {"type": ["number", "null"], "minimum": 0},
+        "status": {"enum": ["measured", "estimated", "measurement_missing", "not_applicable"]}
+      }
+    }
+  },
+  "additionalProperties": false
+}

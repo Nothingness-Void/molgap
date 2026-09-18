@@ -1,0 +1,63 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-mose-residual-gate-100k-s42",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-mose-structural-encoding",
+  "question": "Can K1 retain RWSE16 while applying a node-selective MoSE residual?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-mose-residual-gate-100k-s42",
+    "observed_deficiency": "MoSE replacement helped some count regimes and hurt others",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the apparent gain may remain below training-run variability"],
+    "changed_mechanism": "zero-initialized node-selective MoSE residual over the preserved RWSE16 path",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
+    "related_closed_family_ids": ["k1-mose-direct-replacement", "k1-mose-hidden-normalization"],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "permit one separately frozen context-gate question",
+    "decision_changed_if_negative": "close MoSE fusion",
+    "historical_unknowns": ["native device cost was not captured as an RML cost event"]
+  },
+  "state_at_start": {
+    "source_commit": "7fccfc25de99fb9f50b9d4536e7d0ca39b9b2f05",
+    "contract_refs": ["experiments/pcqm_k1_mose_residual_gate_100k/training_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TC-k1-mose-replacement-100k-s42"],
+    "prior_trajectory_ids": [
+      "TC-k1-mose-replacement-100k-s42",
+      "TC-k1-mose-hidden-bn-100k-s42"
+    ],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1"],
+      "attempt_ids": ["gpu-v1"],
+      "source_commit": "7fccfc25de99fb9f50b9d4536e7d0ca39b9b2f05",
+      "evidence_refs": [
+        "experiments/pcqm_k1_mose_residual_gate_100k/results/submission_v1.json",
+        "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
+        "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json"
+      ],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
+      "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_mose_residual_gate_100k/decision.md",
+    "outcome": "POSITIVE_BELOW_GATE",
+    "next_allowed_actions": ["one separately frozen molecule-context gate screen"],
+    "reopen_conditions": ["a prospective repeatability calibration changes the materiality gate"]
+  }
+}
