@@ -27,6 +27,19 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "teacher": False,
     },
+    "neural_atom_k1_mose_hidden_bn": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "replace-rwse16-with-rooted-mose31-and-hidden-batchnorm",
+        "structural_encoding": "all-connected-2-through-5-node-homomorphisms-plus-c6",
+        "structural_channels": 31,
+        "input_transform": "log1p",
+        "structural_mlp": "linear192-batchnorm192-silu-linear192",
+        "raw_input_batchnorm": False,
+        "expected_parameters": 3_662_081,
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_pair_token": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -784,7 +797,7 @@ def make_encoder(mode: str):
     if mode == "neural_atom_k1_v4":
         return make_k1("neural_atom_k1")
 
-    if mode == "neural_atom_k1_mose":
+    if mode in {"neural_atom_k1_mose", "neural_atom_k1_mose_hidden_bn"}:
         import torch.nn as nn
 
         from .pcqm_mose import MOSE_DIM
@@ -792,11 +805,16 @@ def make_encoder(mode: str):
         model = make_k1("neural_atom_k1")
         hidden_channels = HIDDEN_CHANNELS
         model.rwse_dim = MOSE_DIM
-        model.rwse_encoder = nn.Sequential(
-            nn.Linear(MOSE_DIM, hidden_channels),
-            nn.SiLU(),
-            nn.Linear(hidden_channels, hidden_channels),
+        layers = [nn.Linear(MOSE_DIM, hidden_channels)]
+        if mode == "neural_atom_k1_mose_hidden_bn":
+            layers.append(nn.BatchNorm1d(hidden_channels))
+        layers.extend(
+            [
+                nn.SiLU(),
+                nn.Linear(hidden_channels, hidden_channels),
+            ]
         )
+        model.rwse_encoder = nn.Sequential(*layers)
         return model
 
     import torch.nn as nn
