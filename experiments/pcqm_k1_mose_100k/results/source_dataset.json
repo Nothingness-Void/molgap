@@ -4,8 +4,9 @@
   "dataset": "nothingnessvoid/molgap-pcqm-k1-mose-source",
   "status": "ready",
   "source_commit": "12c62e476e174e9f204977e218fbf85334958045",
-  "scientific_compute_launched": false,
-  "blocked_by_running_kernel": "nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b",
+  "scientific_compute_launched": true,
+  "launched_compute_role": "cpu_cache_only",
+  "gpu_candidate_blocked_by_running_kernel": "nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b",
   "official_validation_role_read": false,
   "test_dev_role_read": false,
   "test_challenge_role_read": false
