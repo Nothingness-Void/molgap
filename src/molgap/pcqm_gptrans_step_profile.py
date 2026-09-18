@@ -679,10 +679,11 @@ def run(
             "checkpoint_write_hash_seconds"
         ],
     }
-    projection["projected_epoch_seconds"] = sum(
-        value
-        for key, value in projection.items()
-        if key.endswith("_seconds")
+    projection["projected_epoch_seconds"] = (
+        projection["training_seconds_from_representative_throughput"]
+        + projection["projected_training_loader_seconds"]
+        + projection["projected_50k_evaluation_seconds"]
+        + projection["checkpoint_write_hash_seconds"]
     )
     summary = {
         "format": FORMAT,
