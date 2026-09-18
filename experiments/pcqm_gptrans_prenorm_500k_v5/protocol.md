@@ -36,6 +36,13 @@ repeat steps and at least 15% memory reserve. Training jobs are scheduler-bound
 to their own successful preflight. Checkpoints include model, EMA, optimizer,
 RNG, trace, next epoch, contract, source and runtime identities.
 
+A walltime continuation may reuse the already accepted runtime certificate
+when the checkpoint binds the same certificate and scientific source, the
+current runtime fingerprint matches exactly, and model/feature/optimizer code
+is unchanged. Such a continuation must not rerun the stochastic calibration,
+loosen its frozen `1e-7` tolerance, or rewrite completed scientific evidence;
+it records the separate execution-wrapper commit and archive identity.
+
 Acceptance is inference-free and requires complete aligned 50K prediction
 bundles, hashes, matching contracts, paired error analysis and deterministic
 bootstrap. Pair PreNorm qualifies only if its gain is at least `0.003 eV` and
