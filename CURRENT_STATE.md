@@ -50,10 +50,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 ## Execution State
 
 - The K1 topology-conditioned sparse-pair 100K screen is at its dual-platform
-  profile gate. Kaggle kernel
+  execution stage. Kaggle profile kernel
   `nothingnessvoid/molgap-k1-sparse-pair-profile-b6dd3b8` version 3 passed at
-  `1068.9733 graphs/s`; Kunshan job `122512473` is queued. Training is not
-  released until both identical-source profiles pass. Authority:
+  `1068.9733 graphs/s`. The user selected Kaggle before the Kunshan profile
+  completed, so job `122512473` was cancelled and training kernel
+  `nothingnessvoid/molgap-k1-sparse-pair-train-s42-fb35e8b` version 1 was
+  submitted. No scientific result exists yet. Authority:
   `experiments/pcqm_k1_sparse_pair_100k/STATUS.md`.
 - Kunshan V4 bootstrap passed source and graph checks. CPU setup `122210841`
   and dependent DCU gate `122210845` were pending in the 2026-09-16 snapshot;
