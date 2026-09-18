@@ -36,11 +36,11 @@ class MoSEContractTest(unittest.TestCase):
         gpu = json.loads((ROOT / "gpu_candidate" / "kernel-metadata.json").read_text())
         self.assertFalse(cpu["enable_gpu"])
         self.assertTrue(gpu["enable_gpu"])
-        self.assertEqual(gpu["machine_shape"], "NvidiaTeslaP100")
+        self.assertEqual(gpu["machine_shape"], "NvidiaTeslaT4")
         self.assertTrue(cpu["id"].startswith("nothingnessvoid/"))
         self.assertTrue(gpu["id"].startswith("nothingnessvoid/"))
 
-    def test_gpu_runtime_repairs_p100_before_import(self):
+    def test_gpu_runtime_repairs_accelerator_before_import(self):
         runtime = (ROOT / "gpu_candidate" / "run_candidate.py").read_text()
         self.assertIn("def pin_one_visible_gpu()", runtime)
         self.assertIn("def ensure_compatible_torch()", runtime)

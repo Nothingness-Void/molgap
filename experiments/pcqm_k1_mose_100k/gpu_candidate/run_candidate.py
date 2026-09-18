@@ -97,8 +97,8 @@ def main() -> None:
     import torch
 
     device_names = [torch.cuda.get_device_name(index) for index in range(torch.cuda.device_count())]
-    if not torch.cuda.is_available() or torch.cuda.device_count() != 1 or "P100" not in device_names[0]:
-        raise RuntimeError(f"K1-MoSE requires one compatible P100, found {device_names}")
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise RuntimeError(f"K1-MoSE requires one compatible CUDA accelerator, found {device_names}")
     if torch.backends.cuda.matmul.allow_tf32 or torch.backends.cudnn.allow_tf32:
         raise RuntimeError("TF32 must be disabled before training")
     from molgap.pcqm_k1_variants_runner import train_arm

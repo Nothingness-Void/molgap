@@ -32,5 +32,16 @@ The covered repair pins one assigned device before importing PyTorch, probes
 whether the bundled wheel supports that accelerator, and installs the pinned
 PyTorch 2.4.1 cu121 wheel only when required. It changes no data, model,
 initialization, seed, precision, batch, optimizer, schedule, exposure or gate.
-Kernel version 2 was submitted and entered `RUNNING`. No additional seed,
-protected role, 500K job or successor is authorized by this retry.
+Kernel version 2 was submitted but Kaggle allocated a Tesla T4 despite the P100
+request. The repaired compatibility probe passed; the remaining P100-name
+guard then stopped the process before model training. This is a second
+infrastructure-only outcome, recorded in
+`results/gpu_v2_allocation_failure.json`.
+
+The screening policy treats platform and accelerator as provenance when the
+scientific contract matches and the runtime issues an accepted deterministic
+calibration certificate. The next covered repair therefore requests T4,
+isolates one visible device and removes only the accelerator-name guard. It
+does not change data, model, initialization, seed, precision, batch, optimizer,
+schedule, exposure or gate. No additional seed, protected role, 500K job or
+successor is authorized.

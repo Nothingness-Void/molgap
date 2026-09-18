@@ -1,0 +1,17 @@
+{
+  "format": "molgap-pcqm-k1-mose-infrastructure-failure-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-s42",
+  "version": 2,
+  "remote_status": "ERROR",
+  "execution_stage": "accelerator-preflight",
+  "model_training_started": false,
+  "scientific_result": false,
+  "requested_accelerator": "NvidiaTeslaP100",
+  "observed_accelerator": "Tesla T4",
+  "error": "RuntimeError: K1-MoSE requires one compatible P100, found ['Tesla T4']",
+  "root_cause": "Kaggle allocated a T4 despite the P100 request, while the entry point treated accelerator model as a scientific-contract field.",
+  "covered_repair": "Request T4 explicitly, isolate one visible device, and require the normal deterministic V5 runtime calibration certificate.",
+  "scientific_contract_changed": false,
+  "preserved_log": "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v2/molgap-pcqm-k1-mose-s42.log",
+  "preserved_log_sha256": "8193e0d506d3b6f62eb1890cda1570f118ae5f3d4625c91b2bb9cb9a12f04ddd"
+}

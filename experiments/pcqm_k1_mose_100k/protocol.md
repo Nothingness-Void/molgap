@@ -44,7 +44,9 @@ changes.
 2. Local no-model acceptance verifies every part hash, source-index alignment,
    feature width, nonnegative counts and sealed-role flags.
 3. Only after cache acceptance and after Kaggle1 has no other GPU training job
-   may one P100 seed-42 candidate run.
+   may one isolated seed-42 candidate run. Accelerator identity is provenance,
+   not a scientific-contract field; the actual T4 runtime must issue an
+   accepted deterministic calibration certificate before training.
 4. Mechanical acceptance recomputes the development MAE and paired delta with
    the immutable K1-v4 payload without model inference.
 5. Promotion requires at least `0.003 eV` gain and a favorable paired interval.
@@ -56,4 +58,3 @@ changes.
 If cache generation is not tractable within one Kaggle CPU allocation, or if
 the 100K gain is below `0.003 eV`, close this route.  Do not rescue it with
 RWSE concatenation, motif subsets, hyperparameter tuning or extra seeds.
-
