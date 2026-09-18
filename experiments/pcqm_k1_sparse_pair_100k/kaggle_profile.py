@@ -29,7 +29,11 @@ def _fixed_dataset() -> tuple[Path, Path]:
 
 
 def _source_bundle() -> tuple[Path, str, str]:
-    archives = list(Path("/kaggle/input").rglob("source.tar.gz"))
+    archives = [
+        path
+        for name in ("source_bundle.bin", "source.tar.gz")
+        for path in Path("/kaggle/input").rglob(name)
+    ]
     if len(archives) != 1:
         raise RuntimeError(f"Expected one source bundle, found {archives}")
     archive = archives[0]
