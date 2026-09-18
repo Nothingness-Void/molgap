@@ -238,6 +238,9 @@ def run(
     source_archive_sha256: str,
     resume: Path | None = None,
     preflight_only: bool = False,
+    reuse_runtime_certificate: bool = False,
+    execution_source_commit: str | None = None,
+    execution_source_archive_sha256: str | None = None,
 ) -> dict:
     import torch
 
@@ -245,6 +248,19 @@ def run(
         raise ValueError(mode)
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
+    execution_source_commit = execution_source_commit or source_commit
+    execution_source_archive_sha256 = (
+        execution_source_archive_sha256 or source_archive_sha256
+    )
+    if (
+        len(execution_source_commit) != 40
+        or len(execution_source_archive_sha256) != 64
+    ):
+        raise ValueError("Execution source and archive identities are required")
+    if reuse_runtime_certificate and resume is None:
+        raise ValueError("Runtime-certificate reuse requires a resume checkpoint")
+    if reuse_runtime_certificate and preflight_only:
+        raise ValueError("A certified resume cannot be a preflight-only job")
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("Each V5 arm requires exactly one visible accelerator")
     output.mkdir(parents=True, exist_ok=True)
@@ -263,98 +279,146 @@ def run(
     atomic_json(output / "scientific_contract.json", contract)
     atomic_json(output / "data_manifest.json", manifest)
 
-    batch = next(iter(loader(roles["train"], 0))).to("cuda")
-    fixture_sha = _batch_sha256(batch)
-    calibrations = []
-    repeat_states = []
-    pair_check = _check_pair_prenorm() if mode == "pair_prenorm" else None
-    initial_sha = None
-    torch.cuda.reset_peak_memory_stats()
-    for _ in range(2):
-        configure_fp32_determinism(SEED)
-        model = make_model(mode).to("cuda").train()
-        initial_sha = _state_sha256(model)
-        optimizer = optimizer_for(model)
-        ema = ExponentialMovingAverage(model)
-        mean = torch.tensor(mean_value, device="cuda")
-        std = torch.tensor(std_value, device="cuda")
-        losses = [
-            float(optimizer_step(model, optimizer, ema, batch, mean, std))
-            for _ in range(3)
-        ]
-        calibrations.append(
-            {"initial": initial_sha, "losses": losses, "state": _state_sha256(model)}
+    if reuse_runtime_certificate:
+        checkpoint = torch.load(
+            resume / "last_checkpoint.pt", map_location="cpu", weights_only=False
         )
-        repeat_states.append(
+        if checkpoint["contract"] != contract or checkpoint["mode"] != mode:
+            raise RuntimeError("Certified resume scientific contract changed")
+        if checkpoint["source_commit"] != source_commit:
+            raise RuntimeError("Certified resume scientific source changed")
+        if checkpoint["source_archive_sha256"] != source_archive_sha256:
+            raise RuntimeError("Certified resume scientific archive changed")
+        certificate_path = resume / "runtime_certificate.json"
+        preflight_path = resume / "preflight.json"
+        if not certificate_path.is_file() or not preflight_path.is_file():
+            raise RuntimeError("Certified resume evidence is incomplete")
+        certificate = json.loads(certificate_path.read_text(encoding="utf-8"))
+        previous_preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+        certificate_id = canonical_fingerprint(certificate)
+        if checkpoint["runtime_certificate_id"] != certificate_id:
+            raise RuntimeError("Checkpoint runtime certificate identity changed")
+        if certificate.get("runtime_fingerprint") != runtime.get("runtime_fingerprint"):
+            raise RuntimeError("Certified resume runtime fingerprint changed")
+        validate_runtime_certificate(
+            certificate,
             {
-                name: value.detach().cpu().clone()
-                for name, value in model.state_dict().items()
-            }
+                "platform_id": "scnet-kunshan",
+                "accelerator": certificate["accelerator"],
+                "runtime_certificate_id": certificate_id,
+            },
         )
-        del model, optimizer, ema
-    max_name = ""
-    max_parameter_delta = 0.0
-    for name in repeat_states[0]:
-        left = repeat_states[0][name]
-        right = repeat_states[1][name]
-        if not left.is_floating_point():
-            continue
-        delta = float((left - right).abs().max())
-        if delta > max_parameter_delta:
-            max_name = name
-            max_parameter_delta = delta
-    loss_delta = max(
-        abs(left - right)
-        for left, right in zip(
-            calibrations[0]["losses"], calibrations[1]["losses"], strict=True
+        peak = int(float(previous_preflight["peak_reserved_mib"]) * 1024**2)
+        total = int(float(previous_preflight["total_memory_mib"]) * 1024**2)
+        initial_sha = previous_preflight["initial_state_sha256"]
+        atomic_json(output / "runtime_certificate.json", certificate)
+        atomic_json(
+            output / "preflight.json",
+            {
+                **previous_preflight,
+                "runtime_certificate_reused": True,
+                "runtime_certificate_source": str(certificate_path.resolve()),
+                "resume_checkpoint_sha256": sha256_file(
+                    resume / "last_checkpoint.pt"
+                ),
+                "execution_source_commit": execution_source_commit,
+                "execution_source_archive_sha256": execution_source_archive_sha256,
+            },
         )
-    )
-    calibration_repeat = {
-        "losses": [item["losses"] for item in calibrations],
-        "maximum_observed_loss_delta": loss_delta,
-        "maximum_allowed_loss_delta": MAX_REPEAT_LOSS_DELTA,
-        "state_sha256": [item["state"] for item in calibrations],
-        "maximum_observed_parameter_delta": max_parameter_delta,
-        "maximum_allowed_parameter_delta": MAX_REPEAT_PARAMETER_DELTA,
-        "maximum_parameter_name": max_name,
-        "bitwise_state_equal": calibrations[0]["state"] == calibrations[1]["state"],
-    }
-    if (
-        loss_delta > MAX_REPEAT_LOSS_DELTA
-        or max_parameter_delta > MAX_REPEAT_PARAMETER_DELTA
-    ):
-        atomic_json(output / "calibration_failure.json", calibration_repeat)
-        raise RuntimeError(
-            "Deterministic optimizer-step calibration exceeds the accepted "
-            f"GPTrans numerical tolerance: {calibration_repeat}"
+        del checkpoint
+    else:
+        batch = next(iter(loader(roles["train"], 0))).to("cuda")
+        fixture_sha = _batch_sha256(batch)
+        calibrations = []
+        repeat_states = []
+        pair_check = _check_pair_prenorm() if mode == "pair_prenorm" else None
+        initial_sha = None
+        torch.cuda.reset_peak_memory_stats()
+        for _ in range(2):
+            configure_fp32_determinism(SEED)
+            model = make_model(mode).to("cuda").train()
+            initial_sha = _state_sha256(model)
+            optimizer = optimizer_for(model)
+            ema = ExponentialMovingAverage(model)
+            mean = torch.tensor(mean_value, device="cuda")
+            std = torch.tensor(std_value, device="cuda")
+            losses = [
+                float(optimizer_step(model, optimizer, ema, batch, mean, std))
+                for _ in range(3)
+            ]
+            calibrations.append(
+                {"initial": initial_sha, "losses": losses, "state": _state_sha256(model)}
+            )
+            repeat_states.append(
+                {
+                    name: value.detach().cpu().clone()
+                    for name, value in model.state_dict().items()
+                }
+            )
+            del model, optimizer, ema
+        max_name = ""
+        max_parameter_delta = 0.0
+        for name in repeat_states[0]:
+            left = repeat_states[0][name]
+            right = repeat_states[1][name]
+            if not left.is_floating_point():
+                continue
+            delta = float((left - right).abs().max())
+            if delta > max_parameter_delta:
+                max_name = name
+                max_parameter_delta = delta
+        loss_delta = max(
+            abs(left - right)
+            for left, right in zip(
+                calibrations[0]["losses"], calibrations[1]["losses"], strict=True
+            )
         )
-    peak = int(torch.cuda.max_memory_reserved())
-    total = int(torch.cuda.get_device_properties(0).total_memory)
-    if peak > 0.85 * total:
-        raise RuntimeError("BS128 optimizer-inclusive memory reserve below 15%")
-    certificate, certificate_id = _runtime_certificate(
-        runtime,
-        settings,
-        fixture_sha,
-        canonical_fingerprint(
-            {"repeat_state_sha256": calibration_repeat["state_sha256"]}
-        ),
-    )
-    atomic_json(output / "runtime_certificate.json", certificate)
-    atomic_json(
-        output / "preflight.json",
-        {
-            "mode": mode,
-            "parameter_count": PARAMETERS,
-            "initial_state_sha256": initial_sha,
-            "pair_prenorm_check": pair_check,
-            "calibrations": calibrations,
-            "calibration_repeat": calibration_repeat,
-            "peak_reserved_mib": peak / 1024**2,
-            "total_memory_mib": total / 1024**2,
-            "memory_reserve_fraction": 1.0 - peak / total,
-        },
-    )
+        calibration_repeat = {
+            "losses": [item["losses"] for item in calibrations],
+            "maximum_observed_loss_delta": loss_delta,
+            "maximum_allowed_loss_delta": MAX_REPEAT_LOSS_DELTA,
+            "state_sha256": [item["state"] for item in calibrations],
+            "maximum_observed_parameter_delta": max_parameter_delta,
+            "maximum_allowed_parameter_delta": MAX_REPEAT_PARAMETER_DELTA,
+            "maximum_parameter_name": max_name,
+            "bitwise_state_equal": calibrations[0]["state"] == calibrations[1]["state"],
+        }
+        if (
+            loss_delta > MAX_REPEAT_LOSS_DELTA
+            or max_parameter_delta > MAX_REPEAT_PARAMETER_DELTA
+        ):
+            atomic_json(output / "calibration_failure.json", calibration_repeat)
+            raise RuntimeError(
+                "Deterministic optimizer-step calibration exceeds the accepted "
+                f"GPTrans numerical tolerance: {calibration_repeat}"
+            )
+        peak = int(torch.cuda.max_memory_reserved())
+        total = int(torch.cuda.get_device_properties(0).total_memory)
+        if peak > 0.85 * total:
+            raise RuntimeError("BS128 optimizer-inclusive memory reserve below 15%")
+        certificate, certificate_id = _runtime_certificate(
+            runtime,
+            settings,
+            fixture_sha,
+            canonical_fingerprint(
+                {"repeat_state_sha256": calibration_repeat["state_sha256"]}
+            ),
+        )
+        atomic_json(output / "runtime_certificate.json", certificate)
+        atomic_json(
+            output / "preflight.json",
+            {
+                "mode": mode,
+                "parameter_count": PARAMETERS,
+                "initial_state_sha256": initial_sha,
+                "pair_prenorm_check": pair_check,
+                "calibrations": calibrations,
+                "calibration_repeat": calibration_repeat,
+                "peak_reserved_mib": peak / 1024**2,
+                "total_memory_mib": total / 1024**2,
+                "memory_reserve_fraction": 1.0 - peak / total,
+            },
+        )
     if preflight_only:
         result = {
             "format": "molgap-gptrans-prenorm-500k-v5-preflight-v1",
@@ -372,7 +436,8 @@ def run(
         }
         atomic_json(output / "preflight_complete.json", result)
         return result
-    del batch
+    if not reuse_runtime_certificate:
+        del batch
     torch.cuda.empty_cache()
 
     configure_fp32_determinism(SEED)
@@ -483,6 +548,8 @@ def run(
                 "source_commit": source_commit,
                 "source_archive_sha256": source_archive_sha256,
                 "runtime_certificate_id": certificate_id,
+                "execution_source_commit": execution_source_commit,
+                "execution_source_archive_sha256": execution_source_archive_sha256,
                 "official_validation_role_read": False,
                 "test_dev_role_read": False,
                 "test_challenge_role_read": False,
@@ -507,6 +574,8 @@ def run(
         "parameter_count": PARAMETERS,
         "contract": contract,
         "runtime_certificate_id": certificate_id,
+        "execution_source_commit": execution_source_commit,
+        "execution_source_archive_sha256": execution_source_archive_sha256,
         "best_epoch": best_epoch,
         "development_gap_mae_eV": best,
         "epochs_completed": len(trace),

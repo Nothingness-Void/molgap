@@ -50,3 +50,13 @@ def test_resume_slurm_preserves_source_and_requires_atomic_checkpoint():
     assert 'test -f "${RESUME_ROOT}/best_model.pt"' in text
     assert '--source-commit "${SOURCE_COMMIT}"' in text
     assert '--resume "${RESUME_ROOT}"' in text
+    assert "--reuse-runtime-certificate" in text
+    assert "--execution-source-commit" in text
+
+
+def test_certified_resume_reuses_evidence_without_loosening_tolerance():
+    source = (REPO / "src/molgap/pcqm_gptrans_prenorm_500k.py").read_text()
+    assert "reuse_runtime_certificate" in source
+    assert "Checkpoint runtime certificate identity changed" in source
+    assert "Certified resume runtime fingerprint changed" in source
+    assert "MAX_REPEAT_PARAMETER_DELTA = 1.0e-7" in source

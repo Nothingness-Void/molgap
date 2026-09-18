@@ -13,6 +13,8 @@ set -euo pipefail
 : "${SOURCE_ARCHIVE_SHA256:?SOURCE_ARCHIVE_SHA256 is required}"
 : "${CAMPAIGN_ROOT:?CAMPAIGN_ROOT is required}"
 : "${RESUME_ROOT:?RESUME_ROOT must name an accepted atomic checkpoint directory}"
+: "${EXECUTION_SOURCE_COMMIT:?EXECUTION_SOURCE_COMMIT is required}"
+: "${EXECUTION_SOURCE_ARCHIVE_SHA256:?EXECUTION_SOURCE_ARCHIVE_SHA256 is required}"
 
 module purge
 module load compiler/dtk/23.10
@@ -39,4 +41,7 @@ test -f "${RESUME_ROOT}/best_predictions.pt"
   --mode "${MODE}" \
   --source-commit "${SOURCE_COMMIT}" \
   --source-archive-sha256 "${SOURCE_ARCHIVE_SHA256}" \
-  --resume "${RESUME_ROOT}"
+  --resume "${RESUME_ROOT}" \
+  --reuse-runtime-certificate \
+  --execution-source-commit "${EXECUTION_SOURCE_COMMIT}" \
+  --execution-source-archive-sha256 "${EXECUTION_SOURCE_ARCHIVE_SHA256}"

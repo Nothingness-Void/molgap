@@ -16,6 +16,9 @@ def main() -> None:
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--source-archive-sha256", required=True)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--reuse-runtime-certificate", action="store_true")
+    parser.add_argument("--execution-source-commit")
+    parser.add_argument("--execution-source-archive-sha256")
     parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
 
@@ -38,6 +41,9 @@ def main() -> None:
         source_archive_sha256=args.source_archive_sha256,
         resume=args.resume,
         preflight_only=args.preflight_only,
+        reuse_runtime_certificate=args.reuse_runtime_certificate,
+        execution_source_commit=args.execution_source_commit,
+        execution_source_archive_sha256=args.execution_source_archive_sha256,
     )
 
 
