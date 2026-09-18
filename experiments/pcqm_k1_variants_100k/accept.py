@@ -78,7 +78,20 @@ def _load_arm(
         or preflight.get("candidate_mechanism_trainable_after_two_steps") is not True
     ):
         raise RuntimeError(f"Architecture preflight changed: {mode}")
-    if initialization_policy != "nested-function":
+    if initialization_policy == "feature-replacement-shared-k1-state":
+        checks = preflight.get("mechanism_checks", {})
+        if (
+            mode != "neural_atom_k1_mose"
+            or preflight.get("initialization_policy") != initialization_policy
+            or preflight.get("exact_k1_function_at_initialization") is not False
+            or checks.get("rwse_replaced_not_concatenated") is not True
+            or checks.get("mose_input_shape", [None, None])[1] != 31
+            or checks.get("mose_input_finite") is not True
+            or checks.get("mose_input_nonnegative") is not True
+            or checks.get("candidate_output_finite") is not True
+        ):
+            raise RuntimeError("MoSE feature-replacement verification missing")
+    elif initialization_policy != "nested-function":
         from molgap.k1_edge_memory import MODES as EDGE_MODES
         from molgap.k1_edge_slot_interaction import MODES as INTERACTION_MODES
         from molgap.k1_edge_conditioned_slot import MODES as CONDITIONED_MODES
