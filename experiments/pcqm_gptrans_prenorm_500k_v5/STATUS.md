@@ -52,3 +52,20 @@ versioned atomic-resume wrapper at commit
 The scientific source, cache, model, optimizer, schedule, precision and batch
 remain the frozen retry identities above. The wrapper only supplies the
 already-supported `--resume` path and writes to a new attempt directory.
+
+Reference continuation `122518428` failed before checkpoint restore because it
+reran the stochastic calibration and observed a one-ULP parameter delta above
+the unchanged `1e-7` gate. Pair job `122518430` was still unallocated and was
+cancelled with zero runtime to avoid the same redundant gate. The diagnosis is
+`results/resume_infrastructure_failure_122518428.md`.
+
+The certified-resume repair reuses the original accepted runtime certificate
+only after verifying its ID, the current runtime fingerprint, frozen scientific
+source/archive and checkpoint contract. It does not loosen calibration. New
+execution source commit `7d7b3b046f2048bc841226d14acedbbfd194c422`, archive
+SHA-256 `a1d30b15363d85260d36a41503d38394b22ef949f81f56177aad106c0e3d615a`:
+
+| Arm | Certified continuation | Resume cursor | Initial state |
+|---|---:|---:|---|
+| reference | `122520066` | epoch 37 | pending for priority |
+| Pair PreNorm | `122520074` | epoch 39 | pending for priority |

@@ -195,9 +195,13 @@ tolerance; dependent jobs never allocated. The unchanged-contract repair is
 in preflight jobs `122432949`/`122432955` and training jobs
 `122432964`/`122432972`. Both training allocations ended only at the 16-hour
 wall with complete epoch checkpoints. Unchanged-contract continuation jobs
-`122518428`/`122518430` resume at epochs 37/39 respectively; they are pending
-for priority. The experiment does not duplicate the desktop full comparison
-and does not access protected roles. Authority:
+The first continuation redundantly reran stochastic calibration; reference job
+`122518428` failed by one FP32 ULP before restoring its checkpoint, and the
+still-unallocated Pair job `122518430` was cancelled at zero runtime. Certified
+continuations `122520066`/`122520074` now reuse the already accepted matching
+runtime certificate without loosening its gate and resume at epochs 37/39.
+They are pending for priority. The experiment does not duplicate the desktop
+full comparison and does not access protected roles. Authority:
 `experiments/pcqm_gptrans_prenorm_500k_v5/protocol.md` and its `STATUS.md`.
 
 The separate train-only GPTrans shortest-path profile completed. Exact cached
