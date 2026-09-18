@@ -1,0 +1,32 @@
+{
+  "format": "molgap-gptrans-step-profile-contract-v1",
+  "profiling_only": true,
+  "cache_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "role": "train-only",
+  "train_rows_available": 500000,
+  "development_role_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "model": "gptrans_t_12x256_pair32_reference",
+  "parameter_count": 5246817,
+  "seed": 42,
+  "precision": "fp32",
+  "physical_batch_per_device": 128,
+  "cohorts": ["representative", "graph_size_tail"],
+  "variants": [
+    "baseline",
+    "sparse_finite_checks",
+    "foreach_adamw",
+    "foreach_ema",
+    "combined"
+  ],
+  "warmup_steps": 2,
+  "measured_steps": 8,
+  "repeats": 3,
+  "finite_check_interval": 50,
+  "maximum_equivalence_delta": 1e-7,
+  "minimum_median_representative_speedup": 1.05,
+  "minimum_tail_speed_ratio": 0.98,
+  "scientific_contract_change_authorized": false
+}
