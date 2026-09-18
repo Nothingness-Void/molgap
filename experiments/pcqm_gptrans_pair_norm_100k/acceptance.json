@@ -1,0 +1,73 @@
+{
+  "format": "molgap-gptrans-pair-normalization-100k-v5-acceptance-v1",
+  "accepted": true,
+  "reference_development_mae_eV": 0.15662720430791377,
+  "reference_predictions_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "arms": {
+    "pair_update_norm": {
+      "accepted": true,
+      "variant": "pair_update_norm",
+      "parameters": 5246817,
+      "best_development_mae_eV": 0.15178420234143733,
+      "best_epoch": 59,
+      "gain_vs_reference_eV": 0.00484300196647644,
+      "paired_candidate_minus_reference": {
+        "delta": -0.00484300196647644,
+        "ci95": [
+          -0.005812819812893867,
+          -0.0038630952262878417
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 10000,
+        "seed": 42
+      },
+      "shortlist_gate": {
+        "gain_eV": 0.00484300196647644,
+        "required_gain_eV": 0.003,
+        "training_stochasticity_accounted": true,
+        "row_bootstrap_is_sufficient_alone": false,
+        "paired_row_bootstrap_upper_eV": -0.0038630952262878417,
+        "passed": true
+      },
+      "runtime_certificate_id": "0a127f00fb4851b41acc51e748f935d022cce5f13add7fa91f75ffbe3a830400",
+      "best_model_sha256": "e70c922d5ddd347551b1d378fc37e2105130a3f6d2bf4153344e8698dbfd82fa",
+      "development_predictions_sha256": "79ae6cdd9379ade6c66dcdd4a2aea17dcd4c8e1030b82a27bb440fcf65829571"
+    },
+    "pair_post_norm": {
+      "accepted": true,
+      "variant": "pair_post_norm",
+      "parameters": 5246817,
+      "best_development_mae_eV": 0.15861375642240047,
+      "best_epoch": 59,
+      "gain_vs_reference_eV": -0.0019865521144867004,
+      "paired_candidate_minus_reference": {
+        "delta": 0.0019865521144866944,
+        "ci95": [
+          0.0009896098613739015,
+          0.0029869583536386484
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 10000,
+        "seed": 42
+      },
+      "shortlist_gate": {
+        "gain_eV": -0.0019865521144867004,
+        "required_gain_eV": 0.003,
+        "training_stochasticity_accounted": true,
+        "row_bootstrap_is_sufficient_alone": false,
+        "paired_row_bootstrap_upper_eV": 0.0029869583536386484,
+        "passed": false
+      },
+      "runtime_certificate_id": "34c83a322c5f22a49d6f6fe9163569522fd78f253a48afef8c17311227533739",
+      "best_model_sha256": "9fec9f0d7966b3577234b3da1a672a5584399977e7dd92135398a20c4fbeac5a",
+      "development_predictions_sha256": "c33625170f32cb06ace8755d031bccfc86a752986f6679ee4f51800920e01f82"
+    }
+  },
+  "shortlisted": [
+    "pair_update_norm"
+  ],
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

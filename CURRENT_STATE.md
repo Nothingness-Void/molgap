@@ -84,6 +84,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   CPU, so TPU training is blocked pending an interactive allocation and
   PyTorch/XLA/PyG compatibility gate. Evidence is under
   `platforms/_records/kaggle/preflight/`.
+- The desktop-owned GPTrans pair-normalization screen completed on Kaggle3.
+  Parameter-free normalization of each new pair update scored 0.151784 eV on
+  the frozen 100K/50K seed-42 role and passed the 0.003 eV shortlist gate;
+  post-normalizing accumulated pair memory scored 0.158614 eV and was rejected.
+  This is mechanism evidence only, not scale or official-evaluation authority;
+  see `experiments/pcqm_gptrans_pair_norm_100k/decision.md`.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
