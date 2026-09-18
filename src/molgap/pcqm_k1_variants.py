@@ -790,7 +790,7 @@ def make_encoder(mode: str):
         from .pcqm_mose import MOSE_DIM
 
         model = make_k1("neural_atom_k1")
-        hidden_channels = model.node_emb.out_features
+        hidden_channels = HIDDEN_CHANNELS
         model.rwse_dim = MOSE_DIM
         model.rwse_encoder = nn.Sequential(
             nn.Linear(MOSE_DIM, hidden_channels),

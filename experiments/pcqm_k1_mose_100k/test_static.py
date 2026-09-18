@@ -49,6 +49,11 @@ class MoSEContractTest(unittest.TestCase):
         self.assertIn("torch.backends.cudnn.allow_tf32 = False", runtime)
         self.assertLess(runtime.index("pin_one_visible_gpu()\n    install_dependencies()"), runtime.index("import torch\n"))
 
+    def test_mose_width_uses_frozen_architecture_constant(self):
+        variants = (ROOT.parents[1] / "src" / "molgap" / "pcqm_k1_variants.py").read_text()
+        self.assertIn("hidden_channels = HIDDEN_CHANNELS", variants)
+        self.assertNotIn("model.node_emb.out_features", variants)
+
 
 if __name__ == "__main__":
     unittest.main()

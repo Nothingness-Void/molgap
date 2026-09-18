@@ -1,0 +1,15 @@
+{
+  "format": "molgap-pcqm-k1-mose-implementation-failure-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-s42",
+  "version": 4,
+  "remote_status": "ERROR",
+  "execution_stage": "runtime-certificate-model-construction",
+  "model_training_started": false,
+  "scientific_result": false,
+  "error": "AttributeError: 'AtomEncoder' object has no attribute 'out_features'",
+  "root_cause": "The MoSE adapter inferred the frozen 192-channel width from the OGB AtomEncoder interface, but AtomEncoder intentionally exposes no out_features attribute.",
+  "covered_repair": "Use the existing frozen HIDDEN_CHANNELS=192 architecture constant; no tensor shape, parameter count or scientific field changes.",
+  "scientific_contract_changed": false,
+  "preserved_log": "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v4/molgap-pcqm-k1-mose-s42.log",
+  "preserved_log_sha256": "ba93146b2cfa4e63fc63f2aa3d38f6cde0aef9171aa000a4102b30b55ae912f4"
+}

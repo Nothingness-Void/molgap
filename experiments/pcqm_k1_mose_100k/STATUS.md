@@ -50,6 +50,14 @@ without first setting both PyTorch backend flags to false. Evidence is
 
 The final covered infrastructure repair explicitly disables CUDA matmul and
 cuDNN TF32 before retaining the same assertion. No scientific-contract field
-changes. Kernel version 4 was submitted, remained `RUNNING` beyond the three
-previous preflight failure points, and is bound to the V5 monitor. No
-additional seed, protected role, 500K job or successor is authorized.
+changes. Kernel version 4 passed all three earlier infrastructure preflights,
+then exposed an implementation error while constructing the candidate for the
+runtime certificate: OGB `AtomEncoder` has no `out_features` attribute. Model
+training still did not start. Evidence is
+`results/gpu_v4_encoder_interface_failure.json`.
+
+The covered code repair uses the already frozen `HIDDEN_CHANNELS=192`
+architecture constant rather than introspecting `AtomEncoder`. It preserves
+the intended tensor shapes and parameter identity. The private source dataset
+must be repackaged from the repaired commit before any retry. No additional
+seed, protected role, 500K job or successor is authorized.

@@ -51,14 +51,13 @@ unchanged. The protocol is `experiments/pcqm_k1_mose_100k/protocol.md`. The
 150,000-row deterministic cache passed local no-model acceptance with sealed
 official roles and is published as immutable private dataset
 `nothingnessvoid/molgap-pcqm-k1-mose-cache-v1`. GPU versions 1--3 stopped
-before training on accelerator/precision preflight assumptions and have no
-scientific result. The logs established a compatible Tesla T4 and identified
-the final issue: the entry point asserted no-TF32 without explicitly disabling
-both backend flags. The final covered repair does so before V5 calibration;
-no model, data or optimization field changes. Kaggle1 kernel
-`nothingnessvoid/molgap-pcqm-k1-mose-s42` version 4 is running and passed the
-three earlier immediate failure points. Completion grants no automatic extra
-seed, 500K run or protected-role use.
+before training on accelerator/precision preflight assumptions. Version 4
+passed those checks and then exposed an `AtomEncoder` interface bug during
+runtime-certificate model construction; training still did not start, so none
+is a scientific result. The covered implementation repair uses the frozen
+192-channel architecture constant and requires a new immutable source package.
+No model shape or scientific field changes. Completion grants no automatic
+extra seed, 500K run or protected-role use.
 
 The separately authorized three-round K1 architecture sequence is complete.
 Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
