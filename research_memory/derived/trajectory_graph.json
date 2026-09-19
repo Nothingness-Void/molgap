@@ -71,6 +71,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-mose-context-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_context_gate_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-context-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_context_gate_100k/results/terminal_comparison_summary_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
       "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
       "type": "action_produced_evidence"
@@ -206,6 +216,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-mose-residual-gate-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-pair-token-100k-s42",
       "target": "TB-k1-pair-token-500k-s42",
       "type": "parent_trajectory"
@@ -250,6 +265,10 @@
     },
     {
       "id": "TC-k1-induced-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-context-gate-100k-s42",
       "type": "trajectory"
     },
     {

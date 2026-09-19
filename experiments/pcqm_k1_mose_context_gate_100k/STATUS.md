@@ -7,7 +7,9 @@ contract checks passed. The private source dataset
 `b154fd974db9885d91233771dc4aab127a914cb2b9aa53ca4c4e3d8ac48e5ccd`.
 
 The only authorized GPU screen,
-`nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42` version 1, was submitted
-on 2026-09-19 and entered `RUNNING`. No duplicate, retry, extra seed, 500K
-bridge, protected-role access or desktop handoff is authorized while it runs.
+`nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42` version 1, completed all
+40 epochs with a hash-complete durable payload. It regressed versus both
+immutable K1-v4 and the residual-gate predecessor. The route is closed without
+another seed, scale bridge, protected-role access or desktop handoff. See
+`decision.md`.
 

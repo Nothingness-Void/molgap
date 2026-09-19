@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "5de349e8ae735ff0b7f6ddf15a1acae1f427757eb8114deff1c9c76f02816f12",
+  "source_digest": "664cd471590c079c69a6812d46d3045470b5279f1a24213e09890dfec45b87a3",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -79,6 +79,22 @@
       "result_evidence_ids": [],
       "track": "C",
       "trajectory_id": "TC-k1-induced-pair-token-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_mose_context_gate_100k/decision.md",
+      "family_id": "k1-mose-structural-encoding",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_mose_context_gate_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
     },
     {
       "completeness_status": "partial",

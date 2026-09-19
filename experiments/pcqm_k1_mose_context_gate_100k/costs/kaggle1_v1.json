@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-mose-context-gate-100k-s42-training",
+  "trajectory_id": "TC-k1-mose-context-gate-100k-s42",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
+  "attempt_id": "gpu-v1",
+  "category": "training",
+  "platform": "kaggle1",
+  "hardware": "NVIDIA_TESLA_T4",
+  "measurement": {
+    "device_hours": {"value": 1.2532927404325, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 1.2532927404325, "status": "measured"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_mose_context_gate_100k/results/terminal_comparison_summary_v1.json"
+}

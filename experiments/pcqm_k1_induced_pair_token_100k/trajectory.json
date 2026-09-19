@@ -19,7 +19,7 @@
     "decision_changed_if_negative": "close bounded PairToken compression"
   },
   "state_at_start": {
-    "source_commit": "79f11ec0d14f781ddad8eaa75e947ad8267849e3",
+    "source_commit": "c7caff5e745ee00451f755b0b5cf6eda7eadf5e3",
     "source_config_identity": "sha256:52efb9c16421edf16299399521e06f5b2b9d26edf1934e05ebea673efe31eda3",
     "contract_refs": ["experiments/pcqm_k1_induced_pair_token_100k/training_contract.json"],
     "reference_ids": ["pcqm-k1-pair-token-100k-s42"],
@@ -35,7 +35,7 @@
       "type": "bounded_100k_screen",
       "run_ids": ["nothingnessvoid/molgap-pcqm-k1-induced-pair-s42:v1"],
       "attempt_ids": ["gpu-v1"],
-      "source_commit": "79f11ec0d14f781ddad8eaa75e947ad8267849e3",
+      "source_commit": "c7caff5e745ee00451f755b0b5cf6eda7eadf5e3",
       "evidence_refs": [
         "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json",
         "experiments/pcqm_k1_induced_pair_token_100k/trajectory.json"

@@ -30,10 +30,20 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 0,
+  "explicit_role_event_count": 1,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
-  "identities": {},
+  "identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
+      }
+    ]
+  },
   "protected_roles_reported_untouched": {
     "official_validation": [
       "pcqm-k1-pair-token-100k-s42"

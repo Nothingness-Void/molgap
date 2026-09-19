@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-k1-mose-context-terminal-comparison-v1",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42",
+  "version": 1,
+  "candidate_artifact_hashes_verified": 12,
+  "candidate_artifact_hash_mismatches": [],
+  "candidate_complete": true,
+  "candidate_development_gap_mae_eV": 0.14190074801445007,
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "candidate_minus_reference_eV": 0.000527113676071167,
+  "predecessor_development_gap_mae_eV": 0.13932763040065765,
+  "candidate_minus_predecessor_eV": 0.002573117275238037,
+  "candidate_minus_predecessor_bootstrap_95_eV": [
+    0.0017187960288524628,
+    0.0034602648198604575
+  ],
+  "paired_rows_with_predecessor": 50000,
+  "full_reference_payload_acceptance_rerun": "blocked_local_reference_prediction_bundle_missing",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
