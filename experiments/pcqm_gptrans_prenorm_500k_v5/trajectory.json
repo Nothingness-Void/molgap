@@ -9,7 +9,7 @@
   "hypothesis": {
     "hypothesis_id": "H-TB-gptrans-pair-prenorm-500k-s42",
     "observed_deficiency": "the Pair PreNorm mechanism was shortlisted only at 100K",
-    "supporting_evidence_ids": [],
+    "supporting_evidence_ids": ["pcqm-gptrans-t-500k-partial-reference-s42"],
     "alternative_explanations": ["the 100K gain may be scale-specific", "late convergence could reverse the observed ordering"],
     "changed_mechanism": "pre-normalized persistent pair-state flow at fixed 500K scale",
     "cheapest_falsifier": "one matched reference/candidate 500K trajectory with atomic checkpoints",
@@ -25,10 +25,10 @@
       "experiments/pcqm_gptrans_prenorm_500k_v5/training_contract.json",
       "experiments/pcqm_gptrans_prenorm_500k_v5/hypothesis_card.json"
     ],
-    "reference_ids": [],
+    "reference_ids": ["pcqm-gptrans-t-500k-partial-reference-s42"],
     "parent_trajectory_ids": [],
     "prior_trajectory_ids": [],
-    "prior_evidence_ids": [],
+    "prior_evidence_ids": ["pcqm-gptrans-t-500k-partial-reference-s42"],
     "role_snapshot_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"],
     "budget_snapshot_ref": null
   },
@@ -49,7 +49,7 @@
       "attempt_ids": ["reference-training", "candidate-training"],
       "source_commit": "dff104723222346e703cd98ef71c19884f46076c",
       "evidence_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TB-gptrans-pair-prenorm-500k-s42-training"]
     },
     {
       "action_id": "A003",
@@ -65,7 +65,7 @@
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["pcqm-gptrans-pair-prenorm-500k-partial-s42"],
     "evidence_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"]
   },
   "decision": {

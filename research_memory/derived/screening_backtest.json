@@ -1,22 +1,54 @@
 {
   "candidate_prefix_rule": null,
-  "confounding_warnings": [
-    "no_strictly_comparable_trace_pair"
+  "confounding_warnings": [],
+  "excluded_traces": [
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_exact_matched60_v4_reference_prediction_bundle",
+        "strict_paired_comparison_pending"
+      ],
+      "run_id": "122312462",
+      "trajectory_id": "TB-k1-pair-token-500k-s42"
+    }
   ],
-  "excluded_traces": [],
   "false_promote_count": null,
   "false_promote_rate": null,
   "false_stop_count": null,
   "false_stop_rate": null,
   "family_coverage": [],
   "format": "molgap-rml-screening-backtest-v1",
-  "included_comparable_groups": [],
-  "included_trajectory_ids": [],
+  "included_comparable_groups": [
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f\",\"optimizer_identity\":\"1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34\",\"scientific_contract\":\"pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7\",\"terminal_endpoint_identity\":\"31240-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-k1-v4-100k-reference-s42\"}",
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1",
+        "nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_mose",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4"
+      ],
+      "trajectory_ids": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42",
+        "TC-k1-pair-token-100k-s42",
+        "TC-k1-v4-100k-reference-s42"
+      ]
+    }
+  ],
+  "included_trajectory_ids": [
+    "TC-k1-mose-hidden-bn-100k-s42",
+    "TC-k1-mose-replacement-100k-s42",
+    "TC-k1-mose-residual-gate-100k-s42",
+    "TC-k1-pair-token-100k-s42",
+    "TC-k1-v4-100k-reference-s42"
+  ],
   "native_cost_added": null,
   "native_cost_saved": null,
   "policy_activated": false,
   "recommended_early_stop": null,
   "slow_starter_count": null,
-  "status": "insufficient_evidence",
-  "trace_count": 0
+  "status": "available",
+  "trace_count": 6
 }

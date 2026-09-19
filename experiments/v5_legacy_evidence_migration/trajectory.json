@@ -37,7 +37,7 @@
       "attempt_ids": ["audit-v1"],
       "source_commit": "4c2f2ac451eb16119a5bd8ebd136c8692a6c539b",
       "evidence_refs": ["experiments/v5_legacy_evidence_migration/inventory_summary.json"],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TS-v5-legacy-evidence-migration-audit"]
     },
     {
       "action_id": "A002",
@@ -50,7 +50,7 @@
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["v5-legacy-evidence-migration-2026-09-17"],
     "evidence_refs": [
       "experiments/v5_legacy_evidence_migration/inventory_summary.json",
       "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json"

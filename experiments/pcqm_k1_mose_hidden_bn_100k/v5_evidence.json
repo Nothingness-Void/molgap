@@ -1,0 +1,17 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-mose-hidden-bn-100k-s42",
+  "track": "C",
+  "scope": "fixed_100k_architecture_screen",
+  "legacy_contract": "molgap-pcqm-100k-v4-screen-s42-fp32-bs128-40epochs",
+  "outcome": {"execution_status": "complete", "artifact_status": "complete_local_verified", "comparison_status": "strict_paired_accepted", "scientific_status": "negative_under_contract", "transfer_status": "not_ready", "budget_decision": "closed", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json", "experiments/pcqm_k1_mose_hidden_bn_100k/decision.md"]},
+  "artifacts": [
+    {"name": "accepted_evidence", "locator": "repo://experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json", "sha256": "53c871466bccf31cbad8f6d6f7828d15448aa4586471a372fa4ccd602d6bdda1", "availability": "committed_metadata"},
+    {"name": "aligned_development_predictions", "locator": "external://local-platform-record/kaggle/pcqm_k1_mose_hidden_bn_seed42_v1/best_development_payload.pt", "sha256": "c9bb54c87c10f320dde2720ecb664918f4a9e3f73e0efa95ffccb40d796c836c", "availability": "local_record_verified"},
+    {"name": "optimizer_step_trace", "locator": "external://local-platform-record/kaggle/pcqm_k1_mose_hidden_bn_seed42_v1/trace.json", "sha256": "36656ceae491f88852af6cfaa2d25c1bfa063dcceb7e35b6334ed640fcf1dcfa", "availability": "local_record_verified"}
+  ],
+  "role_use": {"internal_development": "consumed", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed acceptance plus local payload and trace hashes", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

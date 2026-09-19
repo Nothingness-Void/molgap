@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c4d5edcaab399c7c71b9f6a6fc7d383ad4c924e19dc26d7741877d754729ce2a",
+  "source_digest": "1bd0708f6151fea519d0a7ff9acd4739546c1080629a6db2049860ecb3e7e7e8",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -12,7 +12,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_gptrans_prenorm_500k_v5/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-pair-prenorm-500k-partial-s42"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-pair-prenorm-500k-s42"
     },
@@ -28,7 +30,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_pair_token_500k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-pair-token-500k-s42"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-pair-token-500k-s42"
     },
@@ -44,7 +48,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_gptrans_shortest_path_profile_v5/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-shortest-path-profile-122484011"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-shortest-path-profile-v5"
     },
@@ -60,7 +66,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_gptrans_step_profile_v5/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-step-profile-122499114"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-step-profile-v5"
     },
@@ -76,7 +84,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_mose_hidden_bn_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-mose-hidden-bn-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-mose-hidden-bn-100k-s42"
     },
@@ -90,7 +100,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_mose_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-mose-replacement-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-mose-replacement-100k-s42"
     },
@@ -106,7 +118,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_mose_residual_gate_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-mose-residual-gate-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
     },
@@ -120,7 +134,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_pair_token_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-pair-token-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-token-100k-s42"
     },
@@ -136,9 +152,27 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_pair_token_batch_profile/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-pair-token-batch-profile-122388380"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-token-batch-profile"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_variants_100k/decision.md",
+      "family_id": "k1-v4-reference",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-v4-100k-reference-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-v4-100k-reference-s42"
     },
     {
       "completeness_status": "partial",
@@ -150,7 +184,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/v5_legacy_evidence_migration/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "v5-legacy-evidence-migration-2026-09-17"
+      ],
       "track": "shared",
       "trajectory_id": "TS-v5-legacy-evidence-migration"
     }

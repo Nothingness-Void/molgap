@@ -1,0 +1,47 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-v4-100k-reference-s42",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "historical",
+  "family_id": "k1-v4-reference",
+  "question": "Which immutable K1-v4 record anchors same-contract PCQM-100K comparisons?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-v4-100k-reference-s42",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "related_closed_family_ids": [],
+    "historical_unknowns": ["native device cost was not captured in the historical reference record"]
+  },
+  "state_at_start": {
+    "source_commit": "0006a689b74cf96e994892464830b79687ca60de",
+    "contract_refs": ["experiments/pcqm_k1_variants_100k/training_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/v5_legacy_evidence_migration/inventory_summary.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "historical_reference_artifact_verification",
+      "run_ids": ["kaseichou/molgap-pcqm-k1-v4-reference-s42:v2"],
+      "attempt_ids": ["reference-v2"],
+      "source_commit": "0006a689b74cf96e994892464830b79687ca60de",
+      "evidence_refs": ["experiments/pcqm_k1_variants_100k/decision.md", "experiments/v5_legacy_evidence_migration/inventory_summary.json"],
+      "cost_event_ids": ["cost-TC-k1-v4-100k-reference-s42"]
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "evidence_refs": ["experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_variants_100k/decision.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": ["reuse only for exact PCQM-100K v4 scientific-contract matches"],
+    "reopen_conditions": []
+  }
+}

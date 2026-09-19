@@ -9,7 +9,7 @@
   "hypothesis": {
     "hypothesis_id": "H-TC-k1-mose-residual-gate-100k-s42",
     "observed_deficiency": "MoSE replacement helped some count regimes and hurt others",
-    "supporting_evidence_ids": [],
+    "supporting_evidence_ids": ["pcqm-k1-mose-replacement-100k-s42"],
     "alternative_explanations": ["the apparent gain may remain below training-run variability"],
     "changed_mechanism": "zero-initialized node-selective MoSE residual over the preserved RWSE16 path",
     "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
@@ -22,13 +22,13 @@
   "state_at_start": {
     "source_commit": "7fccfc25de99fb9f50b9d4536e7d0ca39b9b2f05",
     "contract_refs": ["experiments/pcqm_k1_mose_residual_gate_100k/training_contract.json"],
-    "reference_ids": [],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42"],
     "parent_trajectory_ids": ["TC-k1-mose-replacement-100k-s42"],
     "prior_trajectory_ids": [
       "TC-k1-mose-replacement-100k-s42",
       "TC-k1-mose-hidden-bn-100k-s42"
     ],
-    "prior_evidence_ids": [],
+    "prior_evidence_ids": ["pcqm-k1-v4-100k-reference-s42", "pcqm-k1-mose-replacement-100k-s42", "pcqm-k1-mose-hidden-bn-100k-s42"],
     "role_snapshot_refs": ["experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json"],
     "budget_snapshot_ref": null
   },
@@ -44,11 +44,11 @@
         "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
         "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json"
       ],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TC-k1-mose-residual-gate-100k-s42-training"]
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["pcqm-k1-mose-residual-gate-100k-s42"],
     "evidence_refs": [
       "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
       "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json"

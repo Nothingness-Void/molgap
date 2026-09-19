@@ -1,0 +1,17 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-mose-residual-gate-100k-s42",
+  "track": "C",
+  "scope": "fixed_100k_architecture_screen",
+  "legacy_contract": "molgap-pcqm-100k-v4-screen-s42-fp32-bs128-40epochs",
+  "outcome": {"execution_status": "complete", "artifact_status": "complete_local_verified", "comparison_status": "strict_paired_accepted", "scientific_status": "positive_below_frozen_gate", "transfer_status": "not_ready", "budget_decision": "closed", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json", "experiments/pcqm_k1_mose_residual_gate_100k/decision.md"]},
+  "artifacts": [
+    {"name": "accepted_evidence", "locator": "repo://experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json", "sha256": "dcd11e85a6a1ac393b4d8e412f43a660874681d175e43e16ac811422c526a617", "availability": "committed_metadata"},
+    {"name": "aligned_development_predictions", "locator": "external://local-platform-record/kaggle/pcqm_k1_mose_residual_gate_seed42_v1/best_development_payload.pt", "sha256": "abf4e0e45729688dbae2237df49c5f8d4293a8d9294fed034adb27532969dc24", "availability": "local_record_verified"},
+    {"name": "optimizer_step_trace", "locator": "external://local-platform-record/kaggle/pcqm_k1_mose_residual_gate_seed42_v1/trace.json", "sha256": "cbe0a547d8c23033464cc728e733cb9c837ec25856277779c0998fcd2cb81f46", "availability": "local_record_verified"}
+  ],
+  "role_use": {"internal_development": "consumed", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed acceptance plus local payload and trace hashes", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

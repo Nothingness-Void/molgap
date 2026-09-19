@@ -3,5 +3,276 @@
   "human_reference_index": "models/REFERENCE_INDEX.md",
   "missing_reference_ids": [],
   "missing_reference_policy": "comparison_pending_no_automatic_rerun",
-  "references": []
+  "references": [
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "matched_curve_only_no_terminal_payload",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_500k_partial_training_curve",
+      "source_envelope": "experiments/pcqm_gptrans_prenorm_500k_v5/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-shortest-path-profile-122484011",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "train_only_runtime_profile",
+      "source_envelope": "experiments/pcqm_gptrans_shortest_path_profile_v5/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-step-profile-122499114",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "train_only_runtime_profile",
+      "source_envelope": "experiments/pcqm_gptrans_step_profile_v5/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "matched_curve_reference_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_500k_partial_reference_curve",
+      "source_envelope": "experiments/pcqm_gptrans_prenorm_500k_v5/reference/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_reusable_terminal_reference",
+      "used_by_trajectory_ids": [
+        "TB-gptrans-pair-prenorm-500k-s42"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "incompatible_with_strict_matched60_v4",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-500k-paired-v3-scalar-reference",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_500k_scalar_reference_only",
+      "source_envelope": "experiments/v5_legacy_evidence_migration/k1_500k_scalar_reference/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_reusable_for_paired_v5",
+      "used_by_trajectory_ids": [
+        "TB-k1-pair-token-500k-s42"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_paired_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-mose-hidden-bn-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_mose_hidden_bn_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_paired_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-mose-replacement-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_mose_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_paired_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-mose-residual-gate-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_mose_residual_gate_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_paired_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-token-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_architecture_screen_and_causal_audit",
+      "source_envelope": "experiments/pcqm_k1_pair_token_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "500k_failed_material_gate",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_paired_pending_missing_reference_bundle",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-token-500k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_500k_scale_transfer",
+      "source_envelope": "experiments/pcqm_k1_pair_token_500k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-token-batch-profile-122388380",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "train_only_runtime_profile",
+      "source_envelope": "experiments/pcqm_k1_pair_token_batch_profile/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_reference_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-v4-100k-reference-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_immutable_reference",
+      "source_envelope": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "reusable_same_contract_only",
+      "used_by_trajectory_ids": [
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42",
+        "TC-k1-pair-token-100k-s42"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "v5-legacy-evidence-migration-2026-09-17",
+      "role_use": {
+        "official_validation": "not_applicable",
+        "test_challenge": "not_applicable",
+        "test_dev": "not_applicable"
+      },
+      "scientific_scope": "records_only_legacy_inventory_and_sidecar_migration",
+      "source_envelope": "experiments/v5_legacy_evidence_migration/v5_evidence.json",
+      "track": "shared",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    }
+  ]
 }

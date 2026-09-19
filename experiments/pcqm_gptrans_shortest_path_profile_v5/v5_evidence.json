@@ -1,0 +1,13 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-shortest-path-profile-122484011",
+  "track": "C",
+  "scope": "train_only_runtime_profile",
+  "legacy_contract": "molgap-gptrans-shortest-path-profile-v5",
+  "outcome": {"execution_status": "complete", "artifact_status": "accepted_metadata", "comparison_status": "not_applicable", "scientific_status": "infrastructure_only", "transfer_status": "not_ready", "budget_decision": "profiling_only", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json", "experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md"]},
+  "artifacts": [{"name": "profiling_acceptance", "locator": "repo://experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json", "sha256": "babecf213f44c16260e3ea2d2ef6ffa532ca2247cc8cbc6b58a80cacdeb05ce5", "availability": "committed_metadata"}],
+  "role_use": {"official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed train-only profiling acceptance", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

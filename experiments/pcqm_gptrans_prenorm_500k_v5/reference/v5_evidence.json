@@ -1,0 +1,13 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-t-500k-partial-reference-s42",
+  "track": "B",
+  "scope": "matched_500k_partial_reference_curve",
+  "legacy_contract": "molgap-gptrans-prenorm-500k-v5",
+  "outcome": {"execution_status": "partial_checkpointed", "artifact_status": "partial_accepted", "comparison_status": "matched_curve_reference_only", "scientific_status": "inconclusive", "transfer_status": "not_reusable_terminal_reference", "budget_decision": "stop_for_cost", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json", "experiments/pcqm_gptrans_prenorm_500k_v5/decision.md"]},
+  "artifacts": [{"name": "partial_curve_stop_summary", "locator": "repo://experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json", "sha256": "59f7d0f795f3af3f763c25e50992ad4b1597cb1b91a1304842b783031488f43a", "availability": "committed_metadata"}],
+  "role_use": {"internal_development": "consumed", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed partial reference curve only", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

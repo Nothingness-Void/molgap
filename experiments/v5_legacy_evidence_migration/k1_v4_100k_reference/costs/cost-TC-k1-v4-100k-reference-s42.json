@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-v4-100k-reference-s42",
+  "trajectory_id": "TC-k1-v4-100k-reference-s42",
+  "action_id": "A001",
+  "run_id": "kaseichou/molgap-pcqm-k1-v4-reference-s42:v2",
+  "attempt_id": "reference-v2",
+  "category": "training",
+  "platform": "kaggle2",
+  "hardware": "Tesla_P100_PCIE_16GB",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": null, "status": "measurement_missing"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json"
+}

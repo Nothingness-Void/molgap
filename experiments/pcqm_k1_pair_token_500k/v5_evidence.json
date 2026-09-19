@@ -1,0 +1,17 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pair-token-500k-s42",
+  "track": "B",
+  "scope": "fixed_500k_scale_transfer",
+  "legacy_contract": "molgap-pcqm-500k-v4-matched60-s42-fp32-bs128",
+  "outcome": {"execution_status": "complete", "artifact_status": "complete_local_verified", "comparison_status": "strict_paired_pending_missing_reference_bundle", "scientific_status": "negative_under_absolute_material_gate", "transfer_status": "not_ready", "budget_decision": "stop_for_cost", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json", "experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md"]},
+  "artifacts": [
+    {"name": "terminal_acceptance", "locator": "repo://experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json", "sha256": "e7ad65f5cdea6ac3e1d868f27ba5a03d5daef4021617516b26e90af4b4ea8892", "availability": "committed_metadata"},
+    {"name": "candidate_development_predictions", "locator": "external://local-platform-record/scnet/k1_pair_token_500k_live_122312462/best_predictions.pt", "sha256": "35fdaa76f10e166ccb123b6005929a420f18b2678a286023d4aa62e48ec9ca01", "availability": "local_record_verified"},
+    {"name": "candidate_optimizer_step_trace", "locator": "external://local-platform-record/scnet/k1_pair_token_500k_live_122312462/trace.json", "sha256": "c0a1a6ed982de6fa3788c45109c0330a85f094bb1f291d649ede8bd5dc0fa493", "availability": "local_record_verified"}
+  ],
+  "role_use": {"internal_development": "consumed", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Candidate terminal artifacts verified; exact matched60-v4 reference prediction bundle remains absent", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

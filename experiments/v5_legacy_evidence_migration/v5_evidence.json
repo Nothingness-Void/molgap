@@ -1,0 +1,13 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "v5-legacy-evidence-migration-2026-09-17",
+  "track": "shared",
+  "scope": "records_only_legacy_inventory_and_sidecar_migration",
+  "legacy_contract": "molgap-v5-legacy-inventory-v1",
+  "outcome": {"execution_status": "complete", "artifact_status": "accepted_metadata", "comparison_status": "not_applicable", "scientific_status": "infrastructure_only", "transfer_status": "not_applicable", "budget_decision": "records_only", "full_handoff_status": "not_applicable"},
+  "authority": {"pointers": ["experiments/v5_legacy_evidence_migration/inventory_summary.json", "experiments/v5_legacy_evidence_migration/decision.md"]},
+  "artifacts": [{"name": "legacy_inventory", "locator": "repo://experiments/v5_legacy_evidence_migration/inventory_summary.json", "sha256": "579f838da0877f16136fdb8a8976f24d8c4462123f2d19b70b03d236a4369a70", "availability": "committed_metadata"}],
+  "role_use": {"official_validation": "not_applicable", "test_dev": "not_applicable", "test_challenge": "not_applicable"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed inventory only; no historical science reinterpreted", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

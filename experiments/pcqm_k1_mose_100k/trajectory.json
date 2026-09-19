@@ -9,7 +9,7 @@
   "hypothesis": {
     "hypothesis_id": "H-TC-k1-mose-replacement-100k-s42",
     "observed_deficiency": "K1-v4 may lack explicit rooted motif-count information.",
-    "supporting_evidence_ids": [],
+    "supporting_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
     "alternative_explanations": ["single-run training variation"],
     "changed_mechanism": "replace RWSE16 with rooted MoSE31 structural counts",
     "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
@@ -22,10 +22,10 @@
   "state_at_start": {
     "source_commit": "1948328a9ff450f34dcf950ecaffc453d6a2405b",
     "contract_refs": ["experiments/pcqm_k1_mose_100k/training_contract.json"],
-    "reference_ids": [],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42"],
     "parent_trajectory_ids": [],
     "prior_trajectory_ids": [],
-    "prior_evidence_ids": [],
+    "prior_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
     "role_snapshot_refs": ["experiments/pcqm_k1_mose_100k/results/acceptance_v5.json"],
     "budget_snapshot_ref": null
   },
@@ -61,11 +61,11 @@
         "experiments/pcqm_k1_mose_100k/results/gpu_v4_encoder_interface_failure.json",
         "experiments/pcqm_k1_mose_100k/results/acceptance_v5.json"
       ],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TC-k1-mose-replacement-100k-s42-training"]
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["pcqm-k1-mose-replacement-100k-s42"],
     "evidence_refs": ["experiments/pcqm_k1_mose_100k/results/acceptance_v5.json"]
   },
   "decision": {

@@ -25,7 +25,7 @@
     "reference_ids": [],
     "parent_trajectory_ids": ["TC-gptrans-shortest-path-profile-v5"],
     "prior_trajectory_ids": ["TB-gptrans-pair-prenorm-500k-s42", "TC-gptrans-shortest-path-profile-v5"],
-    "prior_evidence_ids": [],
+    "prior_evidence_ids": ["pcqm-gptrans-t-500k-partial-reference-s42"],
     "role_snapshot_refs": ["experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json"],
     "budget_snapshot_ref": null
   },
@@ -44,7 +44,7 @@
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["pcqm-gptrans-step-profile-122499114"],
     "evidence_refs": [
       "experiments/pcqm_gptrans_step_profile_v5/results/summary_122499114.json",
       "experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json"

@@ -1,0 +1,13 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pair-token-batch-profile-122388380",
+  "track": "C",
+  "scope": "train_only_runtime_profile",
+  "legacy_contract": "molgap-pair-token-batch-profile-v5",
+  "outcome": {"execution_status": "complete", "artifact_status": "accepted_metadata", "comparison_status": "not_applicable", "scientific_status": "infrastructure_only", "transfer_status": "not_ready", "budget_decision": "profiling_only", "full_handoff_status": "none"},
+  "authority": {"pointers": ["experiments/pcqm_k1_pair_token_batch_profile/results/v5_acceptance_122388380.json", "experiments/pcqm_k1_pair_token_batch_profile/results/decision_122388380.md"]},
+  "artifacts": [{"name": "profiling_acceptance", "locator": "repo://experiments/pcqm_k1_pair_token_batch_profile/results/v5_acceptance_122388380.json", "sha256": "21d5f3279c3a2697c9ebe0e7c716f8f1ffa59ed352d4f2b53d976a457bf73e84", "availability": "committed_metadata"}],
+  "role_use": {"official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"},
+  "migration": {"migrated_at": "2026-09-19", "verification_scope": "Committed train-only profiling acceptance", "training_executed": false, "inference_executed": false, "scientific_reinterpretation": false}
+}

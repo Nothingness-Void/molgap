@@ -1,0 +1,44 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-500k-paired-v3-scalar-reference",
+  "track": "B",
+  "scope": "historical_500k_scalar_reference_only",
+  "legacy_contract": "molgap-pcqm-k1-500k-paired-v3-partial-tail",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "scalar_metadata_available",
+    "comparison_status": "incompatible_with_strict_matched60_v4",
+    "scientific_status": "contextual_reference_only",
+    "transfer_status": "not_reusable_for_paired_v5",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "terminal_acceptance_with_scalar_reference",
+      "locator": "repo://experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json",
+      "sha256": "e7ad65f5cdea6ac3e1d868f27ba5a03d5daef4021617516b26e90af4b4ea8892",
+      "availability": "committed_metadata"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-19",
+    "verification_scope": "Scalar reference and explicit missing matched60-v4 bundle only",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
