@@ -23,6 +23,12 @@ The validated RML index contains 12 trajectories: one
   batch-48 allocation remained below its frozen gate and is not a reusable V5
   winner.
 
+The retained K1-v4 100K inventory is artifact-complete for model, checkpoint,
+prediction payload, runtime certificate and trace. Its V5 deficiency is
+packaging and explicit identity evidence, not missing training output. That
+deficiency must be repaired without repeating training before either route is
+released.
+
 ## Closed interpretations
 
 This portfolio does not reopen slot count, selector heads, dynamic queries,

@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-V5-GATE-CALIBRATION | Calibrate a prospective training-stochasticity gate from accepted same-contract repeats; do not reinterpret already observed candidates | Freeze a documented estimator and threshold before any later candidate screen |
+| P1 | B-V5-REFERENCE-RECOVERY | Reconstruct the reusable K1-v4 V5 bundle and target-transform identity from retained immutable artifacts without training; do not infer stochasticity from Kaggle account identity | Release validator accepts the repository-bound reference evidence, or candidate compute remains blocked |
 | P2 | C-V5-ROUTE-PORTFOLIO | After P1, use Kaggle2/Kaggle3 for isolated functional-group-token and node-adaptive PairToken-return questions; Kaggle1 remains desktop-only | Each route has frozen source/config, complete prospective RML/prelaunch evidence and one terminal decision |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
