@@ -21,6 +21,7 @@ from molgap.screen_policy import REFERENCE_MATCH_FIELDS, REFERENCE_PROVENANCE_FI
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+SYNTHETIC_TARGET_IDENTITY = "synthetic-target"
 
 
 def _binding() -> dict[str, object]:
@@ -84,6 +85,7 @@ def _synthetic_identity(
             "ema_update_frequency": None,
             "weight_semantics": "live",
             "evaluation_weight_source": "live",
+            "target_identity": SYNTHETIC_TARGET_IDENTITY,
             "target_transform_identity": "synthetic-target-transform",
             "target_transform_asset_sha256": transform_sha256,
         }
@@ -100,7 +102,7 @@ def _synthetic_full_admission_evidence(tmp_path: Path) -> dict[str, object]:
     transform = {
         "format": "molgap-target-transform-asset-v1",
         "asset_id": "synthetic-target-transform",
-        "target_identity": "synthetic-target",
+        "target_identity": SYNTHETIC_TARGET_IDENTITY,
         "mean": 0.0,
         "std": 1.0,
         "ddof": 0,
@@ -148,8 +150,17 @@ def _synthetic_full_admission_evidence(tmp_path: Path) -> dict[str, object]:
         "row_count": 10,
         "unique_source_idx": 10,
     }
-    _write_synthetic_json(
+    reference_bindings["prediction_manifest"] = _write_synthetic_json(
         root, f"{prefix}/reference_prediction_manifest.json", prediction_manifest
+    )
+    reference_bindings["target_manifest"] = _write_synthetic_json(
+        root,
+        f"{prefix}/reference_target_manifest.json",
+        {
+            "target_identity": SYNTHETIC_TARGET_IDENTITY,
+            "target_sha256": prediction_manifest["target_sha256"],
+            "row_count": prediction_manifest["row_count"],
+        },
     )
 
     bundle = {
