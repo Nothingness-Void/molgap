@@ -1,6 +1,34 @@
 {
-  "ambiguous_historical_role_record_count": 4,
+  "ambiguous_historical_role_record_count": 8,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "pcqm-k1-induced-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "reused_selection_role"
+    },
+    {
+      "evidence_id": "pcqm-k1-induced-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-induced-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-induced-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
     {
       "evidence_id": "pcqm-k1-pair-token-100k-s42",
       "role_identity": null,
@@ -30,11 +58,18 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1,
+  "explicit_role_event_count": 2,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-induced-pair-token-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-induced-pair-token-100k-s42"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
@@ -46,15 +81,52 @@
   },
   "protected_roles_reported_untouched": {
     "official_validation": [
+      "pcqm-k1-induced-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42"
     ],
     "test_challenge": [
+      "pcqm-k1-induced-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42"
     ],
     "test_dev": [
+      "pcqm-k1-induced-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42"
     ]
   },
-  "repeatedly_selected_role_identities": {},
-  "reused_role_identities": {}
+  "repeatedly_selected_role_identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-induced-pair-token-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-induced-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
+      }
+    ]
+  },
+  "reused_role_identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-induced-pair-token-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-induced-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
+      }
+    ]
+  }
 }

@@ -1,0 +1,51 @@
+{
+  "format": "molgap-pcqm-k1-induced-pair-token-candidate-acceptance-v1",
+  "candidate_mechanical_accepted": true,
+  "strict_paired_reference_comparison": "pending_reference_prediction_bundle",
+  "candidate": {
+    "mode": "neural_atom_k1_induced_pair_token",
+    "source_commit": "c7caff5e745ee00451f755b0b5cf6eda7eadf5e3",
+    "source_archive_sha256": "0afa4ab58370f988d245a93b07bdead75d8f0faec806de7e8b0871882a7bb8f2",
+    "parameters": 3681921,
+    "development_gap_mae_eV": 0.139944389462471,
+    "best_epoch": 39,
+    "epochs_completed": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "mean_epoch_seconds": 112.45790572640001,
+    "mean_graphs_per_second": 888.9370591980716,
+    "peak_reserved_mib": 582.0,
+    "total_memory_mib": 14911.6875
+  },
+  "comparison": {
+    "reference": "neural_atom_k1_v4",
+    "reference_development_gap_mae_eV": 0.1413736343383789,
+    "scalar_gain_vs_reference_eV": 0.001429244875907898,
+    "minimum_material_gain_eV": 0.003,
+    "material_gate_passed": false,
+    "pair_token_development_gap_mae_eV": 0.13833005726337433,
+    "regression_vs_pair_token_eV": 0.0016143321990966797,
+    "paired_bootstrap_computed": false,
+    "paired_bootstrap_not_required_for_failure": true
+  },
+  "artifact_sha256": {
+    "arm_record.json": "b180a77dcf00fc4eef52cd20c39d2cfa839cd2b50c0b11447a66265b5e04a40f",
+    "best_development_payload.pt": "18313a75b9cdf54ad757740ee20bcdc7297668b4ee1601450ab182d690948488",
+    "best_model.pt": "b9184c0cc1e55dc66d42430fab8149bdd29031a364774185118518500fc268e7",
+    "last_checkpoint.pt": "06674627697e1350f0d6bc824ad1ea7dd7fe7b0e4c8f0713a077a8cbdb8a940f",
+    "preflight.json": "e93ea25e7adacd410c516b4629c98536967f66cd5f75c3f4ec8ac35fda6efa3d",
+    "recovery_epoch_10.tar": "79fc08d70d5915b62e014e23971ebe5601ff67601c66927b7648a341afcebc12",
+    "recovery_epoch_20.tar": "b80a22530e0b111e58d162a03c5c5e3528c9ecbfe38e87ff73bb6008b0df41e7",
+    "recovery_epoch_30.tar": "7805198a33b7b17b430b522ea3a4ec9f9fcd45269c93d3e5ed54be6d0c94e8c1",
+    "recovery_epoch_40.tar": "49c4d3de29fbeee36fb713680a1f5b16f03adceb91ba3992cdb910cbc34c5a55",
+    "runtime_certificate.json": "20e057e75e7ef6ab2df8f2c1204e2fd745ef5c0b5d106e61cbece88967dd107d",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "8bc65d78695e06a7f1640abc7f7cdeeadf7c951937002debba6876a6c44d7f55"
+  },
+  "checkpoint_resume_fields_verified": true,
+  "mechanism_checks_verified": true,
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

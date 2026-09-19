@@ -40,17 +40,28 @@
         "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json",
         "experiments/pcqm_k1_induced_pair_token_100k/trajectory.json"
       ],
-      "cost_event_ids": ["cost-TC-k1-induced-pair-token-100k-s42-expected-training"]
+      "cost_event_ids": [
+        "cost-TC-k1-induced-pair-token-100k-s42-expected-training",
+        "cost-TC-k1-induced-pair-token-100k-s42-measured-training"
+      ]
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-k1-induced-pair-token-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_induced_pair_token_100k/v5_evidence.json",
+      "experiments/pcqm_k1_induced_pair_token_100k/results/candidate_acceptance_v1.json",
+      "experiments/pcqm_k1_induced_pair_token_100k/decision.md"
+    ]
   },
   "decision": {
-    "decision_ref": "experiments/pcqm_k1_induced_pair_token_100k/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["one fixed V5 100K seed-42 screen"],
-    "reopen_conditions": []
+    "decision_ref": "experiments/pcqm_k1_induced_pair_token_100k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "a materially distinct bounded-relation mechanism with new evidence"
+    ]
   }
 }

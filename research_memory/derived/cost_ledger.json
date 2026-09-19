@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 1,
-  "event_count": 8,
+  "event_count": 9,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 6,
+  "measurement_missing_event_count": 7,
   "not_applicable_event_count": 0,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -69,7 +69,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_TESLA_T4:device_hours": {
         "estimated": {
@@ -77,8 +77,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 1.2532927404325
+          "known_records": 2,
+          "known_total": 2.5184385812494448
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -93,7 +93,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_TESLA_T4:wall_hours": {
         "estimated": {
@@ -101,8 +101,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 1.2532927404325
+          "known_records": 2,
+          "known_total": 2.5184385812494448
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -169,7 +169,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "device_hours": {
         "estimated": {
@@ -177,8 +177,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 1.2532927404325
+          "known_records": 2,
+          "known_total": 2.5184385812494448
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -193,7 +193,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "wall_hours": {
         "estimated": {
@@ -201,8 +201,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 1.2532927404325
+          "known_records": 2,
+          "known_total": 2.5184385812494448
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -421,7 +421,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA_TESLA_T4:device_hours": {
         "estimated": {
@@ -429,8 +429,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 1.2651458408169445
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -445,7 +445,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA_TESLA_T4:wall_hours": {
         "estimated": {
@@ -453,8 +453,8 @@
           "known_total": 3.0
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 1.2651458408169445
         },
         "not_applicable_records": 0,
         "unknown_records": 0
