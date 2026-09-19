@@ -42,6 +42,7 @@ Track C.
 | Does the same GPTrans-T core transfer at 500K? | Yes; it beat matched ESGPS6-304 scratch and remains a scale candidate | `pcqm_gptrans_t_500k/` |
 | Can exact cached shortest paths reduce GPTrans-T runtime under V5? | No; isolated path work was cheap relative to end-to-end compute and strict equivalence failed | `pcqm_gptrans_shortest_path_profile_v5/` |
 | Can historical V4 evidence be represented under V5 without rewriting history? | Yes for evidence-complete runs through non-destructive sidecars; incomplete strict comparisons remain pending | `v5_legacy_evidence_migration/` |
+| Which evidence-supported routes should follow the first RML synthesis? | Stage-0 repeatability/reference calibration, then isolated functional-group-token and node-adaptive PairToken-return questions; no compute released before complete prospective RML/prelaunch evidence | `pcqm_v5_route_portfolio/` |
 | Which existing K1/GPTrans/EdgeState/PairToken comparisons are complete enough for strict V5 claims? | Zero-training audit: none is yet a prospective reusable strict bundle; permitted endpoint, prefix, contextual, and no-comparison scopes are recorded separately | `v5_comparison_readiness_audit/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
