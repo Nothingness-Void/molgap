@@ -1,0 +1,71 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-recurrent-pair-bridge-100k-s42",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-recurrent-pair-bridge",
+  "question": "Can GPTrans-supported recurrent pair flow add relational context to K1 without replacing K1's proven local or one-slot paths?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-recurrent-pair-bridge-100k-s42",
+    "observed_deficiency": "K1 lacks a persistent cross-node relation state, while one-shot PairToken lost materiality at 500K",
+    "supporting_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
+    "alternative_explanations": [
+      "GPTrans pair-flow gains may depend on its dense backbone and may not transfer to K1",
+      "the PairToken 100K gain may have been scale-specific"
+    ],
+    "changed_mechanism": "add a zero-initialized 32-channel recurrent ordered-pair bridge at K1 layers 3, 6 and 9",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen against the immutable K1 prediction reference",
+    "related_closed_family_ids": [
+      "k1-bounded-relation-token",
+      "k1-edge-slot-interaction",
+      "k1-global-allocation"
+    ],
+    "expected_native_cost_ref": "cost-TC-k1-recurrent-pair-bridge-100k-s42-expected-training",
+    "decision_changed_if_positive": "permit a separate 500K cost and transfer decision",
+    "decision_changed_if_negative": "close recurrent pair bridging in K1"
+  },
+  "state_at_start": {
+    "source_commit": "b1e4790f240c578671ad78210749a4970ba4780d",
+    "source_config_identity": "sha256:b6f763b0ce1e9ec18324d93fd7154b4a206f38b994be8f46bc05164dcf5195c4",
+    "contract_refs": [
+      "experiments/pcqm_k1_recurrent_pair_bridge_100k/training_contract.json"
+    ],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "reference_bundle_id": "pcqm-k1-v4-100k-reference-bundle-v1",
+    "parent_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42"
+    ],
+    "prior_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
+    "role_snapshot_refs": [
+      "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/role_history.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_recurrent_pair_bridge_100k/costs/expected_kaggle1_t4.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-recurrent-pair-s42:v1"],
+      "attempt_ids": ["gpu-v1"],
+      "source_commit": "b1e4790f240c578671ad78210749a4970ba4780d",
+      "evidence_refs": [
+        "experiments/pcqm_k1_recurrent_pair_bridge_100k/training_contract.json",
+        "experiments/pcqm_k1_recurrent_pair_bridge_100k/comparison_readiness_prelaunch.json"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-recurrent-pair-bridge-100k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_recurrent_pair_bridge_100k/protocol.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": ["one fixed V5 100K seed-42 screen"],
+    "reopen_conditions": []
+  }
+}

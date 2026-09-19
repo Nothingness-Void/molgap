@@ -1,3 +1,7 @@
+import ast
+import json
+from pathlib import Path
+
 import torch
 from torch_geometric.data import Batch, Data
 
@@ -9,6 +13,10 @@ from molgap.k1_recurrent_pair_bridge import (
     check_mechanism,
 )
 from molgap.pcqm_k1_variants import ARCHITECTURE_CONFIGS, make_encoder
+
+
+ROOT = Path(__file__).resolve().parents[1]
+EXPERIMENT = ROOT / "experiments/pcqm_k1_recurrent_pair_bridge_100k"
 
 
 def _batch():
@@ -95,3 +103,30 @@ def test_recurrent_pair_bridge_mechanism_and_gradient_are_live():
     assert bridge_gradients
     assert all(torch.isfinite(gradient).all() for gradient in bridge_gradients)
     assert sum(float(gradient.abs().sum()) for gradient in bridge_gradients) > 0
+
+
+def test_prospective_contract_and_remote_sources_are_frozen():
+    for path in (
+        ROOT / "src/molgap/k1_recurrent_pair_bridge.py",
+        EXPERIMENT / "package_source.py",
+        EXPERIMENT / "gpu_candidate/run_candidate.py",
+        EXPERIMENT / "accept_candidate.py",
+    ):
+        ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    contract = json.loads((EXPERIMENT / "training_contract.json").read_text())
+    prelaunch = json.loads(
+        (EXPERIMENT / "comparison_readiness_prelaunch.json").read_text()
+    )
+    metadata = json.loads(
+        (EXPERIMENT / "gpu_candidate/kernel-metadata.json").read_text()
+    )
+    assert contract["physical_batch_per_device"] == 128
+    assert contract["total_optimizer_steps"] == 31_240
+    assert contract["total_sample_presentations"] == 3_998_720
+    assert prelaunch["prelaunch_ready"] is True
+    assert prelaunch["planned_status"] == "PRELAUNCH_STRICT_PLANNED"
+    assert prelaunch["mismatched_fields"].keys() == {
+        "architecture_config_identity"
+    }
+    assert metadata["is_private"] is True
+    assert metadata["machine_shape"] == "NvidiaTeslaT4"

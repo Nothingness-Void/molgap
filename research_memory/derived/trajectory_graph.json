@@ -171,6 +171,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-recurrent-pair-bridge-100k-s42:A001",
+      "target": "experiments/pcqm_k1_recurrent_pair_bridge_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-recurrent-pair-bridge-100k-s42:A001",
+      "target": "experiments/pcqm_k1_recurrent_pair_bridge_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-v4-100k-reference-s42:A001",
       "target": "experiments/pcqm_k1_variants_100k/decision.md",
       "type": "action_produced_evidence"
@@ -226,6 +236,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-recurrent-pair-bridge-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
       "target": "TB-gptrans-pair-prenorm-500k-s42",
       "type": "prior_evidence"
@@ -278,6 +293,11 @@
     {
       "source": "pcqm-k1-pair-token-100k-s42",
       "target": "TB-k1-pair-token-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-recurrent-pair-bridge-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -348,6 +368,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-recurrent-pair-bridge-100k-s42",
       "type": "reference_used"
     }
   ],
@@ -447,6 +472,10 @@
     },
     {
       "id": "TC-k1-pair-token-batch-profile",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-recurrent-pair-bridge-100k-s42",
       "type": "trajectory"
     },
     {

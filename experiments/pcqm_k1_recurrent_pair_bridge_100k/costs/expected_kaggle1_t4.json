@@ -1,0 +1,23 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-recurrent-pair-bridge-100k-s42-expected-training",
+  "trajectory_id": "TC-k1-recurrent-pair-bridge-100k-s42",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-recurrent-pair-s42:v1",
+  "attempt_id": "gpu-v1",
+  "category": "training",
+  "platform": "kaggle1",
+  "hardware": "NVIDIA_TESLA_T4",
+  "measurement": {
+    "device_hours": {"value": 2.0, "status": "estimated"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 2.0, "status": "estimated"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "budget_ceiling": {
+    "device_hours": 3.0,
+    "wall_hours": 3.0
+  },
+  "estimate_basis": "K1 PairToken measured 1.265 T4-hours; this bridge performs three pair updates per forward pass",
+  "evidence_ref": "experiments/pcqm_k1_recurrent_pair_bridge_100k/protocol.md"
+}

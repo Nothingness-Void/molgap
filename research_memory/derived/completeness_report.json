@@ -1,26 +1,27 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 12,
+    "trajectories_total": 13,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 12,
-    "with_incomplete_native_measurement": 10,
+    "with_cost_event": 13,
+    "with_incomplete_native_measurement": 11,
     "without_cost_event": 0
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 4
+    "WARN": 5
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 5,
+      "count": 6,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
+        "TC-k1-recurrent-pair-bridge-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
@@ -46,7 +47,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 10,
+      "count": 11,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -56,6 +57,7 @@
         "TC-k1-mose-replacement-100k-s42",
         "TC-k1-mose-residual-gate-100k-s42",
         "TC-k1-pair-token-100k-s42",
+        "TC-k1-recurrent-pair-bridge-100k-s42",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -63,9 +65,18 @@
     },
     {
       "code": "missing_explicit_role_identity",
+      "count": 2,
+      "items": [
+        "TC-k1-recurrent-pair-bridge-100k-s42",
+        "TS-v5-legacy-evidence-migration"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
       "count": 1,
       "items": [
-        "TS-v5-legacy-evidence-migration"
+        "TC-k1-recurrent-pair-bridge-100k-s42"
       ],
       "severity": "WARN"
     },
