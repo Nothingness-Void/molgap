@@ -9,7 +9,8 @@ The immutable K1-v4 reference was `0.1413736343 eV`, a credible improvement of
 `0.0020460039 eV`. The paired candidate-minus-reference row-error interval was
 `[-0.0028973962, -0.0011806805] eV`, entirely favorable. The result therefore
 supports the separate MoSE residual mechanism, but it does not pass the frozen
-`0.003 eV` V5 material-gain gate.
+`0.003 eV` material-gain gate declared by this experiment. That value is an
+experiment-local prospective policy threshold, not a permanent V5 constant.
 
 Trajectory analysis found that the candidate improved the two hardest K1
 absolute-error quintiles by `0.01860` and `0.04563 eV`, while degrading the two

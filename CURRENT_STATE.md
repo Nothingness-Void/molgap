@@ -54,9 +54,11 @@ exactly K1 at initialization. Authority:
 
 The predecessor selective MoSE residual improved immutable K1-v4 by
 `0.0020460039 eV`, with an entirely favorable paired interval, but missed the
-frozen `0.003 eV` gate. It strongly improved K1-hard rows while damaging
-K1-easy rows, and its late trajectory was effectively saturated. It is
-retained as positive mechanism evidence but is not promoted. Authority:
+experiment-local, prospectively frozen `0.003 eV` gate. That value is not a
+permanent V5 threshold. The candidate strongly improved K1-hard rows while
+damaging K1-easy rows, and its late trajectory was effectively saturated. It
+is retained as positive mechanism evidence but is not promoted under that
+experiment's contract. Authority:
 `experiments/pcqm_k1_mose_residual_gate_100k/decision.md`.
 
 The prior K1-MoSE hidden-normalization screen completed and regressed versus
