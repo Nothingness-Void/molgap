@@ -14,7 +14,7 @@
     "changed_mechanism": "replace explicit atom pairs with four learned source and target inducing summaries",
     "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
     "related_closed_family_ids": ["k1-sparse-pair-spse"],
-    "expected_native_cost_ref": "estimated:kaggle1-t4-under-3-device-hours",
+    "expected_native_cost_ref": "experiments/pcqm_k1_induced_pair_token_100k/protocol.md",
     "decision_changed_if_positive": "permit one matched 500K scale bridge",
     "decision_changed_if_negative": "close bounded PairToken compression"
   },
@@ -27,7 +27,7 @@
     "prior_trajectory_ids": [],
     "prior_evidence_ids": ["pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token"],
     "role_snapshot_refs": ["experiments/pcqm_k1_pair_token_100k/results/causal_audit_decision.md"],
-    "budget_snapshot_ref": "user-authorized:kaggle1-100k-2026-09-19"
+    "budget_snapshot_ref": "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json"
   },
   "actions": [
     {
