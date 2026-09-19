@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 13,
+    "trajectories_total": 14,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 13,
-    "with_incomplete_native_measurement": 11,
+    "with_cost_event": 14,
+    "with_incomplete_native_measurement": 12,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,13 +15,14 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 6,
+      "count": 7,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-recurrent-pair-bridge-100k-s42",
+        "TC-k1-stateless-pair-bridge-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
@@ -47,7 +48,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 11,
+      "count": 12,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -58,6 +59,7 @@
         "TC-k1-mose-residual-gate-100k-s42",
         "TC-k1-pair-token-100k-s42",
         "TC-k1-recurrent-pair-bridge-100k-s42",
+        "TC-k1-stateless-pair-bridge-100k-s42",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -65,18 +67,20 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
+      "count": 3,
       "items": [
         "TC-k1-recurrent-pair-bridge-100k-s42",
+        "TC-k1-stateless-pair-bridge-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 1,
+      "count": 2,
       "items": [
-        "TC-k1-recurrent-pair-bridge-100k-s42"
+        "TC-k1-recurrent-pair-bridge-100k-s42",
+        "TC-k1-stateless-pair-bridge-100k-s42"
       ],
       "severity": "WARN"
     },

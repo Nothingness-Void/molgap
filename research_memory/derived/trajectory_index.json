@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "2c8b077c763693209b7c9bd20523b7aa9915cb15a402751cc589806a6773a3db",
+  "source_digest": "8b8b2c75af314d2a1f9bb3bb1f39e1e78813ee8050a6113195a4e16dcbb10e17",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -191,6 +191,22 @@
       "result_evidence_ids": [],
       "track": "C",
       "trajectory_id": "TC-k1-recurrent-pair-bridge-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_stateless_pair_bridge_100k/protocol.md",
+      "family_id": "k1-stateless-pair-bridge",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TC-k1-pair-token-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_stateless_pair_bridge_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-stateless-pair-bridge-100k-s42"
     },
     {
       "completeness_status": "partial",

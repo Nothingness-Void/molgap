@@ -1,7 +1,9 @@
 # Status
 
-State: `PRELAUNCH`
+State: `RUNNING`
 
-The implementation is frozen at `0efcdf7697befdff3989b7c781fba7ebe0d8c526`.
-Strict V5 comparison readiness, source packaging, and Kaggle submission remain
-pending.
+Kaggle1 kernel `nothingnessvoid/molgap-pcqm-k1-stateless-pair-s42` version 1
+was submitted from frozen source snapshot
+`75806adf7fe45fe4c42b51611cc9a0511424810f`. Its first authoritative status
+query returned `RUNNING`. Terminal acceptance and scientific interpretation
+remain pending.

@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 1,
-  "event_count": 14,
+  "estimated_event_count": 2,
+  "event_count": 15,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 12,
+  "measurement_missing_event_count": 13,
   "not_applicable_event_count": 1,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -117,12 +117,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA_TESLA_T4:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 2.0
+          "known_records": 2,
+          "known_total": 4.0
         },
         "measured": {
           "known_records": 0,
@@ -141,12 +141,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA_TESLA_T4:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 2.0
+          "known_records": 2,
+          "known_total": 4.0
         },
         "measured": {
           "known_records": 0,
@@ -361,12 +361,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 2.0
+          "known_records": 2,
+          "known_total": 4.0
         },
         "measured": {
           "known_records": 0,
@@ -385,12 +385,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 2.0
+          "known_records": 2,
+          "known_total": 4.0
         },
         "measured": {
           "known_records": 0,
@@ -1153,6 +1153,56 @@
       }
     },
     "TC-k1-recurrent-pair-bridge-100k-s42": {
+      "NVIDIA_TESLA_T4:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_TESLA_T4:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA_TESLA_T4:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_TESLA_T4:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-k1-stateless-pair-bridge-100k-s42": {
       "NVIDIA_TESLA_T4:cpu_hours": {
         "estimated": {
           "known_records": 0,
