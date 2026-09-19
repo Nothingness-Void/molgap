@@ -12,6 +12,8 @@
   },
   "arms": ["neural_atom_k1_recurrent_pair_bridge"],
   "reference": "neural_atom_k1_v4",
+  "immutable_source_commit": "e98d94a381f4a506e0a7a88a0fc224b91a82c70a",
+  "source_config_sha256": "0f2bb4c09e8187cd7f22f9c1bcaa079776b5cd8ef2cb922d02da205871f2e375",
   "seed": 42,
   "precision": "fp32",
   "tf32_enabled": false,
@@ -46,5 +48,17 @@
     "geometry_model_input": false
   },
   "minimum_gain_eV": 0.003,
-  "stochasticity_floor_eV": 0.003
+  "stochasticity_floor_eV": 0.003,
+  "durability": {
+    "atomic_checkpoint_each_epoch": true,
+    "rng_optimizer_scheduler_state": true,
+    "recovery_bundle_every_epochs": 10,
+    "resume_identity_fail_closed": true
+  },
+  "budget_ceiling": {
+    "platform": "kaggle1",
+    "hardware": "NVIDIA_TESLA_T4",
+    "device_hours": 3.0,
+    "wall_hours": 3.0
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "format": "molgap-reference-acceptance-qualification-v1",
+  "status": "accepted",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "historical_comparison_class": "STRICT_CAUSAL_UNDER_ORIGINAL_CONTRACT",
+  "prospective_reuse_status": "READY",
+  "requires_new_prospective_experiment": false,
+  "prediction_payload_sha256_verified": true,
+  "trace_sha256_verified": true,
+  "raw_model_checkpoint_required_for_prediction_reuse": false,
+  "qualification_basis": [
+    "experiments/pcqm_k1_variants_100k/decision.md",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_manifest.json"
+  ]
+}

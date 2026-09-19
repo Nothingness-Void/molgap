@@ -1,0 +1,19 @@
+{
+  "format": "molgap-frozen-reference-prediction-manifest-v1",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "model_id": "neural_atom_k1_v4",
+  "selected_epoch": 39,
+  "payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "prediction_sha256": "7a9fa76f67f0dae8bd1a0bca1b9486d5b5ad11081e26b94966290adc9f514b70",
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+  "row_count": 50000,
+  "unique_source_idx": 50000,
+  "source_idx_start": 100000,
+  "source_idx_stop": 150000,
+  "ordering_semantics": "ascending-source-idx-100000-through-149999",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "development_gap_mae_eV": 0.1413736343383789,
+  "availability": "local-payload-sha256-verified",
+  "canonical_evidence_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json"
+}

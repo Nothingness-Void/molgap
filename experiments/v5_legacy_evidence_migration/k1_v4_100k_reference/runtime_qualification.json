@@ -1,0 +1,13 @@
+{
+  "format": "molgap-historical-runtime-qualification-v1",
+  "status": "accepted-under-original-contract",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "runtime_scope": "single-visible-cuda-device-deterministic-fp32-bs128",
+  "accelerator_provenance": "Tesla_P100_PCIE_16GB",
+  "cross_accelerator_speed_claim": false,
+  "runtime_certificate_recovered": false,
+  "qualification_basis": [
+    "experiments/pcqm_k1_variants_100k/decision.md",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json"
+  ]
+}
