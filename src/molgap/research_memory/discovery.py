@@ -14,8 +14,10 @@ class DiscoveredRecords:
     roles: tuple[Path, ...]
     traces: tuple[Path, ...]
     ready: tuple[Path, ...]
+    comparison_prelaunch: tuple[Path, ...] = ()
     comparison_readiness: tuple[Path, ...] = ()
     reference_bundles: tuple[Path, ...] = ()
+    target_transform_assets: tuple[Path, ...] = ()
 
 
 def _find(root: Path, pattern: str) -> tuple[Path, ...]:
@@ -31,6 +33,8 @@ def discover_records(repo_root: str | Path) -> DiscoveredRecords:
         roles=_find(root, "experiments/**/roles/*.json"),
         traces=_find(root, "experiments/**/trace_manifest.json"),
         ready=_find(root, "experiments/**/handoff/READY_FOR_DESKTOP.json"),
+        comparison_prelaunch=_find(root, "experiments/**/comparison_readiness_prelaunch.json"),
         comparison_readiness=_find(root, "experiments/**/comparison_readiness.json"),
         reference_bundles=_find(root, "experiments/**/reference_bundle.json"),
+        target_transform_assets=_find(root, "experiments/**/target_transform.json"),
     )

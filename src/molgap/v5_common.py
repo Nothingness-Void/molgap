@@ -14,16 +14,32 @@ from typing import Any
 
 from .comparison_readiness import (
     COMPARISON_CLASSES,
+    COMPARISON_PRELAUNCH_FORMAT,
     COMPARISON_READINESS_FORMAT,
+    HISTORICAL_COMPARISON_CLASSES,
+    INTERVENTION_FIELDS_BY_PURPOSE,
+    PRELAUNCH_STRICT_STATUS,
+    PROSPECTIVE_REUSE_STATUSES,
     REFERENCE_BUNDLE_FORMAT,
+    ROLE_APPLICABILITY_STATES,
+    ROLE_EVENT_KINDS,
     STRICT_IDENTITY_FIELDS,
     TARGET_TRANSFORM_FORMAT,
+    TRACE_FIELD_DECLARATIONS,
+    assess_comparison_prelaunch,
     assess_comparison_readiness,
+    target_transform_asset_digest,
+    validate_comparison_prelaunch,
     validate_comparison_readiness,
+    validate_historical_comparison_metadata,
+    validate_observed_role_events,
     validate_reference_bundle,
+    validate_role_applicability_plan,
+    validate_runtime_qualification_plan,
     validate_server_comparison_prelaunch,
     validate_stochasticity,
     validate_target_transform_asset,
+    validate_trace_plan,
 )
 
 

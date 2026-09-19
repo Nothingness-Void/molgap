@@ -37,84 +37,40 @@ OUTCOME_FIELDS = (
 )
 READY_FOR_DESKTOP = "READY_FOR_DESKTOP"
 OLD_REFERENCE_POLICIES = frozenset({"molgap-screen-comparability-v3", "v3"})
-MANDATORY_ROLE_EVENT_KINDS = frozenset(
-    {
-        "training_membership",
-        "prediction_input",
-        "labels_read",
-        "metric_computed",
-        "selection_used",
-        "external_submission",
-    }
-)
-MANDATORY_TRACE_FIELD_DECLARATIONS = frozenset(
-    {
-        "optimizer_step",
-        "sample_presentations",
-        "epoch_or_pass",
-        "learning_rate",
-        "live_train_metric",
-        "live_dev_metric",
-        "ema_dev_metric",
-        "checkpoint_identity",
-    }
-)
-
-
 def validate_server_scientific_prelaunch(
     *,
-    comparison_readiness: Mapping[str, Any],
+    comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
-    planned_role_event_kinds: Sequence[str],
-    trace_field_declarations: Mapping[str, bool],
 ) -> dict[str, Any]:
-    """Release future server compute only after V5 evidence planning is explicit."""
+    """Release compute from the planned gate, never from post-run readiness."""
 
     gate = validate_server_comparison_prelaunch(
-        comparison_readiness, experiment_purpose=experiment_purpose
+        comparison_prelaunch, experiment_purpose=experiment_purpose
     )
-    role_kinds = set(planned_role_event_kinds)
-    missing_roles = sorted(MANDATORY_ROLE_EVENT_KINDS - role_kinds)
-    if missing_roles:
-        raise ValueError(f"future scientific run lacks mandatory role-event plans: {missing_roles}")
-    if set(trace_field_declarations) != MANDATORY_TRACE_FIELD_DECLARATIONS:
-        raise ValueError("future scientific run must declare availability of every trace field")
-    if any(not isinstance(value, bool) for value in trace_field_declarations.values()):
-        raise ValueError("trace field availability declarations must be boolean")
     return {
         **gate,
-        "mandatory_role_events_planned": True,
+        "role_applicability_declared": True,
         "trace_fields_declared": True,
+        "runtime_qualification_declared": True,
     }
 
 
 def write_server_comparison_prelaunch(
     path: Path,
     *,
-    comparison_readiness: Mapping[str, Any],
+    comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
-    planned_role_event_kinds: Sequence[str],
-    trace_field_declarations: Mapping[str, bool],
 ) -> str:
     """Atomically persist the mandatory prelaunch gate after validation."""
 
     path = Path(path)
     if path.name != "comparison_readiness_prelaunch.json":
         raise ValueError("server prelaunch record must be comparison_readiness_prelaunch.json")
-    gate = validate_server_scientific_prelaunch(
-        comparison_readiness=comparison_readiness,
+    validate_server_scientific_prelaunch(
+        comparison_prelaunch=comparison_prelaunch,
         experiment_purpose=experiment_purpose,
-        planned_role_event_kinds=planned_role_event_kinds,
-        trace_field_declarations=trace_field_declarations,
     )
-    record = {
-        "format": "molgap-server-comparison-prelaunch-v1",
-        "comparison_readiness": dict(comparison_readiness),
-        "experiment_purpose": experiment_purpose,
-        "planned_role_event_kinds": sorted(set(planned_role_event_kinds)),
-        "trace_field_declarations": dict(sorted(trace_field_declarations.items())),
-        "gate": gate,
-    }
+    record = dict(comparison_prelaunch)
     payload = json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary: Optional[Path] = None

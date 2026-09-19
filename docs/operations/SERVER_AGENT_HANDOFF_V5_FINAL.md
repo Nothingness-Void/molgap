@@ -600,3 +600,50 @@ When an implementation agent discovers tension with V5:
 5. keep the proposal inactive until explicit user authorization.
 
 No agent may self-declare V6.
+
+## S20. Comparability implementation correction
+
+This correction is additive and does not change the server ceiling, Server A/B
+roles, desktop independence, protected-role rules, `READY_FOR_DESKTOP`
+topology, or any historical scientific decision.
+
+Server release uses two stages:
+
+```text
+comparison_readiness_prelaunch.json
+  -> PRELAUNCH_STRICT_PLANNED
+  -> training may be released
+
+completed run + actual artifacts
+  -> comparison_readiness.json
+  -> STRICT_CAUSAL only if observed evidence is complete
+```
+
+Prelaunch validates the reusable reference bundle; frozen candidate source,
+config, source commit/archive and planned identity; one purpose-scoped
+intervention group reflected in that planned identity; explicit role
+applicability; trace declarations; and runtime qualification plan. It
+must not demand future candidate predictions, checkpoint, terminal trace,
+completed role events, bootstrap or row-alignment artifact.
+
+Role plans declare every event kind as `applicable` or `not_applicable`.
+Post-run evidence requires events only for applicable kinds and rejects events
+invented for not-applicable kinds. An ordinary architecture screen may and
+normally will mark `external_submission` as `not_applicable`.
+
+`declared_intervention_fields` is not a general exception list. Architecture
+and mechanism comparisons may vary only their declared architecture/config
+mechanism; mechanism comparisons name `mechanism_id`. Optimizer, EMA and
+schedule comparisons have separate allowed field groups. One strict experiment
+has one `intervention_group_id`; unrelated scientific mismatches remain
+confounders.
+
+Historical validity and prospective reuse are separate. Preserve claims valid
+under an original contract, while independently classifying future reference
+reuse as `READY`, `INCOMPLETE_RECOVERABLE`, `NOT_COMPATIBLE`, or `UNAVAILABLE`.
+Do not make historical runs claim a portable target-transform asset that did
+not exist when they ran.
+
+Future reusable references consume a discovered and validated
+`experiments/**/target_transform.json`. Its canonical digest, target identity
+and bundle identity must agree before prospective strict reuse.

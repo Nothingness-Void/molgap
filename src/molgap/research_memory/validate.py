@@ -9,8 +9,10 @@ from typing import Any
 from urllib.parse import urlparse
 
 from molgap.v5_common import (
+    validate_comparison_prelaunch,
     validate_comparison_readiness,
     validate_reference_bundle,
+    validate_target_transform_asset,
     validate_v5_evidence_envelope,
 )
 
@@ -96,8 +98,10 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         "roles": [],
         "traces": [],
         "ready": [],
+        "comparison_prelaunch": [],
         "comparison_readiness": [],
         "reference_bundles": [],
+        "target_transform_assets": [],
     }
     ids: dict[str, dict[str, Path]] = {
         "evidence_id": {},
@@ -107,6 +111,7 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         "role_event_id": {},
         "package_id": {},
         "reference_bundle_id": {},
+        "target_transform_asset_id": {},
     }
 
     def unique(kind: str, value: str, path: Path) -> None:
@@ -163,9 +168,16 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             ],
         )
         records["ready"].append((path, record))
+    for path in discovered.comparison_prelaunch:
+        record = validate_comparison_prelaunch(load_json(path))
+        records["comparison_prelaunch"].append((path, record))
     for path in discovered.comparison_readiness:
         record = validate_comparison_readiness(load_json(path))
         records["comparison_readiness"].append((path, record))
+    for path in discovered.target_transform_assets:
+        record = validate_target_transform_asset(load_json(path))
+        unique("target_transform_asset_id", record["asset_id"], path)
+        records["target_transform_assets"].append((path, record))
     for path in discovered.reference_bundles:
         record = validate_reference_bundle(load_json(path))
         unique("reference_bundle_id", record["reference_bundle_id"], path)
@@ -186,6 +198,25 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         )
         records["reference_bundles"].append((path, record))
 
+    target_transform_by_path = {
+        path.resolve(): record for path, record in records["target_transform_assets"]
+    }
+    for path, record in records["reference_bundles"]:
+        transform_path = resolve_repo_pointer(root, record["target_transform_asset_ref"])
+        if transform_path is None or transform_path not in target_transform_by_path:
+            raise ValueError(
+                f"{path}:target_transform_asset_ref must point to a discovered "
+                "experiments/**/target_transform.json record"
+            )
+        transform = target_transform_by_path[transform_path]
+        identity = record["comparison_identity"]
+        if identity["target_transform_identity"] != transform["asset_id"]:
+            raise ValueError(f"{path}:target-transform identity does not match asset_id")
+        if identity["target_transform_asset_sha256"] != transform["asset_sha256"]:
+            raise ValueError(f"{path}:target-transform SHA does not match validated asset")
+        if identity["target_identity"] != transform["target_identity"]:
+            raise ValueError(f"{path}:target identity does not match transform asset")
+
     trajectory_by_id = {
         record["trajectory_id"]: record for _, record in records["trajectories"]
     }
@@ -203,6 +234,16 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
     reference_bundle_ids = {
         record["reference_bundle_id"] for _, record in records["reference_bundles"]
     }
+    for path, record in records["comparison_prelaunch"]:
+        reference_bundle_id = record.get("reference_bundle_id")
+        if (
+            reference_bundle_id is not None
+            and reference_bundle_id not in reference_bundle_ids
+        ):
+            raise ValueError(
+                f"{path}:reference_bundle_id references missing ID: "
+                f"{reference_bundle_id}"
+            )
     for path, record in records["trajectories"]:
         missing_parents = sorted(
             set(record["state_at_start"]["parent_trajectory_ids"]) - set(trajectory_by_id)

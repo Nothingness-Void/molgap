@@ -559,12 +559,23 @@ training:
   unmatched conditions. It supplies context only.
 - `NO_COMPARISON`: no comparator is available.
 
-`comparison_readiness.json` is fail-closed. Missing fields are unknown, never
-matched. `strict_ready=true` requires `STRICT_CAUSAL`, no blockers, complete
-artifacts, aligned predictions, accepted runtime certificates, explicit role
-history, and a complete terminal trace. Architecture or mechanism differences
-must be listed in `declared_intervention_fields`; all undeclared differences are
-confounders.
+Comparability has two deliberately separate records. Training-time
+`comparison_readiness_prelaunch.json` describes planned comparability and may
+reach `PRELAUNCH_STRICT_PLANNED`; it never requires candidate predictions,
+checkpoints, terminal traces, completed role events, bootstrap output, or an
+observed row-alignment artifact. Post-run `comparison_readiness.json` describes
+observed evidence. Only the post-run record may reach `STRICT_CAUSAL`, after
+actual predictions, rows, target, checkpoint, trace, role events, runtime
+certificate, exposure, weight source, endpoint and paired analysis pass.
+`PRELAUNCH_STRICT_PLANNED` and `STRICT_CAUSAL` are not interchangeable.
+
+Both records are fail-closed: missing fields are unknown, never matched.
+Prelaunch requires a validated reusable reference bundle, frozen candidate
+source/config and source commit/archive identity, a complete planned scientific
+identity, one declared logical intervention group that is reflected in the
+planned identity difference, role/trace plans and a runtime-qualification plan. Post-run
+`strict_ready=true` additionally requires no blockers and complete observed
+artifacts.
 
 The explicit identity includes benchmark, dataset, role, row membership/order,
 features, target, seed, precision, TF32 and determinism, physical batch,
@@ -594,12 +605,34 @@ Future prospective trajectories carry `comparison_class`,
 Historical trajectories remain `retrospective_partial`; absent optimizer, EMA,
 role, or artifact facts are not reconstructed by inference.
 
-Every future scientific run emits role events for training membership,
-prediction input, label reads, metric computation, selection, and external
-submission as applicable. Every future training trace explicitly records which
+The intervention declaration is purpose-scoped rather than an arbitrary list.
+An architecture or mechanism comparison may vary only the declared
+architecture/config mechanism; a mechanism comparison also names its
+`mechanism_id`. Optimizer, EMA and schedule comparisons may vary only their
+respective fields. Every strict experiment has one `intervention_group_id`.
+Listing unrelated mismatches as interventions cannot bypass the strict gate.
+
+Every future scientific run declares each role-event kind as `applicable` or
+`not_applicable`: training membership, prediction input, label reads, metric
+computation, selection and external submission. Post-run acceptance requires
+events only for applicable kinds; a not-applicable kind must not receive a
+fabricated event. Every future training trace explicitly records which
 of optimizer step, sample presentations, epoch/pass, learning rate, live train
 metric, live dev metric, EMA dev metric, and checkpoint identity are present;
 unavailable fields remain unavailable.
+
+Historical scientific validity and prospective reusable-reference readiness
+are independent dimensions. A matched experiment can remain
+`STRICT_CAUSAL_UNDER_ORIGINAL_CONTRACT` while its prospective reuse status is
+`INCOMPLETE_RECOVERABLE`, `NOT_COMPATIBLE`, or `UNAVAILABLE`. Missing modern
+role sidecars or a portable transform asset never retroactively invalidates an
+original contract, and historical runs must not claim they consumed an asset
+created later.
+
+Portable target transforms are canonical `experiments/**/target_transform.json`
+records. Repository validation checks their schema, canonical asset digest,
+identity and target hashes. A reference bundle must point to a discovered
+validated transform, and its explicit transform identity and SHA must match.
 
 Row-bootstrap uncertainty and training stochasticity are distinct evidence.
 Only same-contract repeated runs can measure training stochasticity. A paired

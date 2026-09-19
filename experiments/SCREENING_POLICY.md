@@ -49,8 +49,12 @@ retroactively rewritten.
 
 V5 comparison claims additionally pass
 `molgap.comparison_readiness.validate_server_comparison_prelaunch`. This
-additive completeness gate makes weight/EMA semantics, target-transform asset,
-role history, trace, and aligned prediction artifacts explicit. It does not
+planned gate freezes the candidate identity and one purpose-scoped
+intervention against a reusable reference before compute. It declares role,
+trace, and runtime-qualification plans but does not require future candidate
+predictions, checkpoints, completed events, or terminal artifacts. Those are
+checked separately after execution by observed `comparison_readiness.json`;
+only that post-run record may grant `STRICT_CAUSAL`. The additive gate does not
 change a historical v3/v4 contract or authorize baseline reruns.
 
 Fixed PCQM identities and publication evidence are indexed under
