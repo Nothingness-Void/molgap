@@ -1,0 +1,19 @@
+{
+  "format": "molgap-remote-submission-v1",
+  "submitted_at_utc": "2026-09-19T20:10:25.7235286Z",
+  "owner": "server",
+  "platform": "kaggle2",
+  "kernel": "kaseichou/molgap-k1-functional-group-sidecar-v1",
+  "version": 1,
+  "job_kind": "cpu_only_immutable_sidecar_build_and_acceptance",
+  "source_dataset": "kaseichou/molgap-k1-functional-group-token-source",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "source_commit": "69103b5466bc0051275153a0eda081f22f940f42",
+  "source_archive_sha256": "f370252fd4814d962b2f784f51525330b844dc37783c6505f4b22331b0f75b6b",
+  "initial_status": "RUNNING",
+  "gpu_requested": false,
+  "model_training_authorized": false,
+  "model_inference_authorized": false,
+  "protected_roles_authorized": false,
+  "successor_gate": "download-and-independently-accept-sidecar-before-freezing-GPU-prelaunch"
+}
