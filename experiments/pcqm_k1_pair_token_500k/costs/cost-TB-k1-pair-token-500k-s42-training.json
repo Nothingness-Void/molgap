@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-k1-pair-token-500k-s42-training",
+  "trajectory_id": "TB-k1-pair-token-500k-s42",
+  "action_id": "A002",
+  "run_id": "122312462",
+  "attempt_id": "accepted-training",
+  "category": "training",
+  "platform": "scnet-kunshan",
+  "hardware": "SCNET_DCU_KUNSHAN_CARD1_16GB",
+  "measurement": {
+    "device_hours": {"value": 15.1575, "status": "measured"},
+    "cpu_hours": {"value": 121.26, "status": "measured"},
+    "wall_hours": {"value": 15.1575, "status": "measured"},
+    "queue_hours": {"value": 0.019444444444444445, "status": "measured"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json"
+}

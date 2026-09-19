@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-pair-token-100k-s42-audit",
+  "trajectory_id": "TC-k1-pair-token-100k-s42",
+  "action_id": "A002",
+  "run_id": "122305552",
+  "attempt_id": "accepted-retry",
+  "category": "audit",
+  "platform": "scnet-kunshan",
+  "hardware": "SCNET_DCU_KUNSHAN_CARD1_16GB",
+  "measurement": {
+    "device_hours": {"value": 0.08805555555555555, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.08805555555555555, "status": "measured"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_decision.md"
+}

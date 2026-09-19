@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-gptrans-shortest-path-profile-v5",
+  "trajectory_id": "TC-gptrans-shortest-path-profile-v5",
+  "action_id": "A001",
+  "run_id": "122484011",
+  "attempt_id": "profile-v1",
+  "category": "audit",
+  "platform": "scnet-kunshan",
+  "hardware": "SCNET_DCU_KUNSHAN_CARD1_16GB",
+  "measurement": {
+    "device_hours": {"value": 0.07027777777777777, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.07027777777777777, "status": "measured"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md"
+}

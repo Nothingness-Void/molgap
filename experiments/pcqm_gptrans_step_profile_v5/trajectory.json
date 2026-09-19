@@ -1,0 +1,59 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-gptrans-step-profile-v5",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "gptrans-runtime-profiling",
+  "question": "Which synchronized optimizer-step stages dominate GPTrans-T runtime, and is any exact execution optimization releasable?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-gptrans-step-profile-v5",
+    "observed_deficiency": "shortest-path caching did not materially change end-to-end throughput",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["optimizer, EMA, finite checks, or data transfer may still dominate"],
+    "changed_mechanism": "stage-resolved train-only profiling plus isolated execution variants",
+    "cheapest_falsifier": "one representative and graph-size-tail synchronized step profile",
+    "related_closed_family_ids": ["gptrans-shortest-path-cache"],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "authorize only a strictly equivalent implementation follow-up",
+    "decision_changed_if_negative": "direct future work to learned propagation operators or architecture",
+    "historical_unknowns": ["CPU allocation cost was not preserved separately"]
+  },
+  "state_at_start": {
+    "source_commit": "420729ce1f2af25a7211a29b485cc29be0d5434f",
+    "contract_refs": ["experiments/pcqm_gptrans_step_profile_v5/profiling_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TC-gptrans-shortest-path-profile-v5"],
+    "prior_trajectory_ids": ["TB-gptrans-pair-prenorm-500k-s42", "TC-gptrans-shortest-path-profile-v5"],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "train_only_full_step_profile",
+      "run_ids": ["122499114"],
+      "attempt_ids": ["profile-v1"],
+      "source_commit": "420729ce1f2af25a7211a29b485cc29be0d5434f",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_step_profile_v5/results/summary_122499114.json",
+        "experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json"
+      ],
+      "cost_event_ids": ["cost-TC-gptrans-step-profile-v5"]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_step_profile_v5/results/summary_122499114.json",
+      "experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_step_profile_v5/results/decision_122499114.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["operator-level learned-core optimization with prospectively frozen equivalence and throughput gates"]
+  }
+}

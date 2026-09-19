@@ -1,0 +1,77 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-pair-prenorm-500k-s42",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "server",
+  "family_id": "gptrans-pair-prenorm",
+  "question": "Does the 100K Pair PreNorm signal transfer to the frozen 500K GPTrans-T contract?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-pair-prenorm-500k-s42",
+    "observed_deficiency": "the Pair PreNorm mechanism was shortlisted only at 100K",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the 100K gain may be scale-specific", "late convergence could reverse the observed ordering"],
+    "changed_mechanism": "pre-normalized persistent pair-state flow at fixed 500K scale",
+    "cheapest_falsifier": "one matched reference/candidate 500K trajectory with atomic checkpoints",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "qualify only the next declared scale gate",
+    "decision_changed_if_negative": "close Pair PreNorm scale transfer",
+    "historical_unknowns": ["terminal aligned prediction bundles were not produced", "complete native cost across preflights and continuations was not recovered"]
+  },
+  "state_at_start": {
+    "source_commit": "dff104723222346e703cd98ef71c19884f46076c",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_prenorm_500k_v5/training_contract.json",
+      "experiments/pcqm_gptrans_prenorm_500k_v5/hypothesis_card.json"
+    ],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "matched_preflight_with_infrastructure_repair",
+      "run_ids": ["122425237", "122425241", "122432949", "122432955"],
+      "attempt_ids": ["reference-v1", "candidate-v1", "reference-retry", "candidate-retry"],
+      "source_commit": "dff104723222346e703cd98ef71c19884f46076c",
+      "evidence_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/infrastructure_failure_2026-09-18.md"],
+      "cost_event_ids": []
+    },
+    {
+      "action_id": "A002",
+      "type": "matched_500k_partial_training",
+      "run_ids": ["122432964", "122432972"],
+      "attempt_ids": ["reference-training", "candidate-training"],
+      "source_commit": "dff104723222346e703cd98ef71c19884f46076c",
+      "evidence_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"],
+      "cost_event_ids": []
+    },
+    {
+      "action_id": "A003",
+      "type": "atomic_resume_infrastructure_repair",
+      "run_ids": ["122518428", "122518430", "122520066", "122520074"],
+      "attempt_ids": ["reference-resume-v1", "candidate-cancelled-v1", "reference-certified-resume", "candidate-certified-resume"],
+      "source_commit": "7d7b3b046f2048bc841226d14acedbbfd194c422",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_prenorm_500k_v5/results/resume_infrastructure_failure_122518428.md",
+        "experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"
+      ],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_prenorm_500k_v5/decision.md",
+    "outcome": "STOP_FOR_COST",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["new evidence must support the required reversal before any continuation cost is authorized"]
+  }
+}

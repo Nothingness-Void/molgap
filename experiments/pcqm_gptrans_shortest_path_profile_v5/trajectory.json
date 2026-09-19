@@ -1,0 +1,59 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-gptrans-shortest-path-profile-v5",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "gptrans-runtime-profiling",
+  "question": "Can exact cached shortest paths materially accelerate GPTrans-T without trajectory drift?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-gptrans-shortest-path-profile-v5",
+    "observed_deficiency": "GPTrans-T epochs were substantially slower than K1",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["dense learned forward and backward work may dominate instead of path construction"],
+    "changed_mechanism": "replace online shortest-path reconstruction with exact cached distances in a train-only profile",
+    "cheapest_falsifier": "one representative and graph-size-tail microprofile",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "authorize an implementation-only follow-up",
+    "decision_changed_if_negative": "close cached shortest paths",
+    "historical_unknowns": ["CPU allocation cost was not preserved separately"]
+  },
+  "state_at_start": {
+    "source_commit": "46aa38baca934eae38b8b948de428d909f9b932f",
+    "contract_refs": ["experiments/pcqm_gptrans_shortest_path_profile_v5/profiling_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TB-gptrans-pair-prenorm-500k-s42"],
+    "prior_trajectory_ids": ["TB-gptrans-pair-prenorm-500k-s42"],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "train_only_shortest_path_profile",
+      "run_ids": ["122484011"],
+      "attempt_ids": ["profile-v1"],
+      "source_commit": "46aa38baca934eae38b8b948de428d909f9b932f",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
+        "experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json"
+      ],
+      "cost_event_ids": ["cost-TC-gptrans-shortest-path-profile-v5"]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
+      "experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": ["profile complete learned forward and backward stages"],
+    "reopen_conditions": ["a new path implementation must exceed the frozen end-to-end gate and preserve strict trajectory equivalence"]
+  }
+}

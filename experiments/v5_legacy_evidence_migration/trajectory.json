@@ -1,0 +1,65 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TS-v5-legacy-evidence-migration",
+  "record_mode": "retrospective_partial",
+  "track": "shared",
+  "owner": "shared",
+  "family_id": "v5-evidence-migration",
+  "question": "Can retained V4 evidence be represented under V5 without rewriting history?",
+  "hypothesis": {
+    "hypothesis_id": "H-TS-v5-legacy-evidence-migration",
+    "observed_deficiency": "historical V4 runs predated the seven-dimension V5 outcome model",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["some legacy records may lack the evidence required for strict V5 comparison"],
+    "changed_mechanism": "non-destructive V5 sidecars over immutable historical evidence",
+    "cheapest_falsifier": "local artifact inventory and one evidence-complete migration",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "permit evidence-complete historical sidecars while preserving original contracts",
+    "decision_changed_if_negative": "keep historical V4 evidence outside V5 state indexing",
+    "historical_unknowns": ["local audit wall time and CPU cost were not recorded"]
+  },
+  "state_at_start": {
+    "source_commit": "4c2f2ac451eb16119a5bd8ebd136c8692a6c539b",
+    "contract_refs": ["experiments/v5_legacy_evidence_migration/README.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/v5_legacy_evidence_migration/inventory_summary.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "local_v4_artifact_inventory",
+      "run_ids": ["local-v5-inventory-2026-09-17"],
+      "attempt_ids": ["audit-v1"],
+      "source_commit": "4c2f2ac451eb16119a5bd8ebd136c8692a6c539b",
+      "evidence_refs": ["experiments/v5_legacy_evidence_migration/inventory_summary.json"],
+      "cost_event_ids": []
+    },
+    {
+      "action_id": "A002",
+      "type": "non_destructive_v5_sidecar_migration",
+      "run_ids": ["pairtoken-100k-v5-sidecar"],
+      "attempt_ids": ["migration-v1"],
+      "source_commit": "4c2f2ac451eb16119a5bd8ebd136c8692a6c539b",
+      "evidence_refs": ["experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json"],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/v5_legacy_evidence_migration/decision.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": ["add non-destructive sidecars only when required evidence is recoverable"],
+    "reopen_conditions": ["new retained artifacts change a previously pending strict comparison"]
+  }
+}

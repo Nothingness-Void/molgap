@@ -1,0 +1,68 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-k1-pair-token-500k-s42",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "server",
+  "family_id": "k1-pair-token",
+  "question": "Does the PairToken 100K mechanism gain transfer materially to matched-V4 500K?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-k1-pair-token-500k-s42",
+    "observed_deficiency": "the 100K PairToken gain was only marginally above its material gate",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the 100K gain may be scale-specific or training-run variation"],
+    "changed_mechanism": "unchanged PairToken architecture at the fixed 500K scale contract",
+    "cheapest_falsifier": "one matched-V4 500K seed-42 bridge",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "qualify only the declared next scale gate",
+    "decision_changed_if_negative": "close PairToken scale transfer",
+    "historical_unknowns": ["the exact aligned K1 matched60-v4 reference prediction bundle was unavailable"]
+  },
+  "state_at_start": {
+    "source_commit": "9a56b65ab373e8f52af3911ce57bd5ec5d09963b",
+    "contract_refs": ["experiments/pcqm_k1_pair_token_500k/training_contract.json"],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": ["experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "optimizer_inclusive_preflight_with_repair",
+      "run_ids": ["122310888", "122311513"],
+      "attempt_ids": ["runtime-failure", "accepted-preflight"],
+      "source_commit": "9a56b65ab373e8f52af3911ce57bd5ec5d09963b",
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_500k/results/preflight_runtime_failure_122310888.md",
+        "experiments/pcqm_k1_pair_token_500k/results/preflight_122311513.md"
+      ],
+      "cost_event_ids": []
+    },
+    {
+      "action_id": "A002",
+      "type": "matched_v4_500k_training_with_adapter_repair",
+      "run_ids": ["122312155", "122312462"],
+      "attempt_ids": ["adapter-failure", "accepted-training"],
+      "source_commit": "9a56b65ab373e8f52af3911ce57bd5ec5d09963b",
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_500k/results/training_adapter_failure_122312155.md",
+        "experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json"
+      ],
+      "cost_event_ids": ["cost-TB-k1-pair-token-500k-s42-training"]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": ["experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["recovery of the exact matched60-v4 reference bundle cannot override the failed absolute material gate"]
+  }
+}
