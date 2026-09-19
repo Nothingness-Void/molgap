@@ -54,6 +54,20 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "teacher": False,
     },
+    "neural_atom_k1_rwse_mose_context_gate": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "retain-rwse16-and-use-molecule-context-gated-mose31-residual",
+        "rwse_channels": 16,
+        "mose_channels": 31,
+        "mose_transform": "log1p",
+        "mose_residual_mlp": "linear31x64-silu-linear64x192-zero-output",
+        "gate": "graph-mean-and-second-moment-h192-mose31-linear446x32-silu-linear32x1-sigmoid",
+        "expected_parameters": 3_687_682,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_pair_token": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -831,8 +845,13 @@ def make_encoder(mode: str):
         model.rwse_encoder = nn.Sequential(*layers)
         return model
 
-    if mode == "neural_atom_k1_rwse_mose_residual_gate":
+    if mode in {
+        "neural_atom_k1_rwse_mose_residual_gate",
+        "neural_atom_k1_rwse_mose_context_gate",
+    }:
+        import torch
         import torch.nn as nn
+        from torch_geometric.nn import global_mean_pool
 
         class K1RWSEMoSEResidualGate(nn.Module):
             def __init__(self):
@@ -844,12 +863,25 @@ def make_encoder(mode: str):
                     nn.SiLU(),
                     nn.Linear(64, HIDDEN_CHANNELS),
                 )
-                self.mose_gate = nn.Sequential(
-                    nn.Linear(1, 16),
-                    nn.SiLU(),
-                    nn.Linear(16, 1),
-                    nn.Sigmoid(),
+                self.gate_scope = (
+                    "molecule-context"
+                    if mode == "neural_atom_k1_rwse_mose_context_gate"
+                    else "node-mose-mean"
                 )
+                if self.gate_scope == "molecule-context":
+                    self.mose_gate = nn.Sequential(
+                        nn.Linear(2 * HIDDEN_CHANNELS + 2 * 31, 32),
+                        nn.SiLU(),
+                        nn.Linear(32, 1),
+                        nn.Sigmoid(),
+                    )
+                else:
+                    self.mose_gate = nn.Sequential(
+                        nn.Linear(1, 16),
+                        nn.SiLU(),
+                        nn.Linear(16, 1),
+                        nn.Sigmoid(),
+                    )
                 nn.init.zeros_(self.mose_residual[-1].weight)
                 nn.init.zeros_(self.mose_residual[-1].bias)
 
@@ -869,7 +901,19 @@ def make_encoder(mode: str):
                 mose = random_walk_pe[:, 16:].float()
                 h = self.base._embed_nodes(x)
                 h = h + self.base.rwse_encoder(rwse)
-                gate = self.mose_gate(mose.mean(dim=-1, keepdim=True))
+                if self.gate_scope == "molecule-context":
+                    context = torch.cat(
+                        (
+                            global_mean_pool(h, batch),
+                            global_mean_pool(h.square(), batch),
+                            global_mean_pool(mose, batch),
+                            global_mean_pool(mose.square(), batch),
+                        ),
+                        dim=-1,
+                    )
+                    gate = self.mose_gate(context)[batch]
+                else:
+                    gate = self.mose_gate(mose.mean(dim=-1, keepdim=True))
                 h = h + gate * self.mose_residual(mose)
                 edge_state = self.base._embed_edges(edge_attr)
                 for layer, (edge_update, block) in enumerate(

@@ -99,7 +99,10 @@ MOSE_REPLACEMENT_MODES = (
     "neural_atom_k1_mose",
     "neural_atom_k1_mose_hidden_bn",
 )
-MOSE_DUAL_MODES = ("neural_atom_k1_rwse_mose_residual_gate",)
+MOSE_DUAL_MODES = (
+    "neural_atom_k1_rwse_mose_residual_gate",
+    "neural_atom_k1_rwse_mose_context_gate",
+)
 MOSE_MODES = MOSE_REPLACEMENT_MODES + MOSE_DUAL_MODES
 TARGET_FINGERPRINT = _hash_mapping(
     {"name": "pcqm4mv2-homo-lumo-gap", "column": "gap", "unit": "eV"}
@@ -536,6 +539,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
                 torch.count_nonzero(model.mose_residual[-1].weight).item() == 0
                 and torch.count_nonzero(model.mose_residual[-1].bias).item() == 0
             ),
+            "gate_scope": model.gate_scope,
             "exact_k1_output": exact_nested_initialization,
             "candidate_output_finite": bool(torch.isfinite(candidate_prediction).all()),
         }
@@ -546,6 +550,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             "mose_input_finite": True,
             "mose_input_nonnegative": True,
             "zero_initialized_residual_output": True,
+            "gate_scope": (
+                "molecule-context"
+                if mode == "neural_atom_k1_rwse_mose_context_gate"
+                else "node-mose-mean"
+            ),
             "exact_k1_output": True,
             "candidate_output_finite": True,
         }:
