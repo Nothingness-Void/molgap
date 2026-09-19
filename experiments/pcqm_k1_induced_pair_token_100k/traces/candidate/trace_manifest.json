@@ -1,0 +1,54 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TC-k1-induced-pair-token-100k-s42",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-induced-pair-s42:v1/neural_atom_k1_induced_pair_token",
+  "contract_ref": "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json",
+  "model_identity": "neural_atom_k1_induced_pair_token:sha256:52efb9c16421edf16299399521e06f5b2b9d26edf1934e05ebea673efe31eda3",
+  "reference_id": "pcqm-k1-pair-token-100k-s42",
+  "comparison_role": "candidate",
+  "x_axis": "optimizer_steps",
+  "presentation_semantics_ref": "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json",
+  "weight_semantics": "live training weights; no EMA semantics are recorded by the accepted trace",
+  "metric_semantics": "normalized training MAE and internal-development direct Gap MAE in eV",
+  "evaluation_role_identity": "internal_development_100000_150000",
+  "selection_semantics": "minimum internal-development Gap MAE across 40 frozen epochs",
+  "trace_artifact_ref": "kaggle://kernels/nothingnessvoid/molgap-pcqm-k1-induced-pair-s42/versions/1/pcqm_k1_induced_pair_token_100k/neural_atom_k1_induced_pair_token/trace.json#sha256=8bc65d78695e06a7f1640abc7f7cdeeadf7c951937002debba6876a6c44d7f55",
+  "terminal_evidence_ref": "experiments/pcqm_k1_induced_pair_token_100k/results/candidate_acceptance_v1.json",
+  "comparability_identity": {
+    "scientific_contract": "MOLGAP-COMMON-V5-FINAL/molgap-pcqm-k1-induced-pair-token-contract-v1",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:sha256:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_split_identity": "train[0:100000]-development[100000:150000]-drop_last",
+    "architecture_identity": "neural_atom_k1_induced_pair_token:3681921-parameters:source-c7caff5e745ee00451f755b0b5cf6eda7eadf5e3",
+    "optimizer_identity": "AdamW:lr=0.0004:weight_decay=0.00001:gradient_clip=1.0",
+    "lr_schedule_identity": "CosineAnnealingLR:eta_min=0.000001:40-epochs",
+    "target_transform_identity": "direct-gap-eV:training-normalization-recorded-by-runtime-artifact",
+    "precision_identity": "fp32:tf32-disabled:deterministic-algorithms",
+    "ema_semantics": "not_recorded",
+    "evaluation_role_identity": "internal_development_100000_150000",
+    "selection_role_identity": "internal_development_100000_150000",
+    "x_axis_semantics": "optimizer_steps",
+    "terminal_endpoint_identity": "epoch39:optimizer_steps31240:sample_presentations3998720",
+    "matched_architecture_required": true
+  },
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "matched K1 and PairToken reference traces are not registered under the same trace contract",
+      "EMA semantics are not recorded in the accepted candidate trace"
+    ]
+  },
+  "trace_fields": {
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "checkpoint_identity": false
+  }
+}

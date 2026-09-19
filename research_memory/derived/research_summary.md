@@ -36,10 +36,10 @@
 ## Screening Backtest
 - Status: insufficient_evidence
 - Eligible traces: 0
-- Excluded traces: 0
+- Excluded traces: 1
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 12
+- [INFO] trace_unavailable_for_backtest: 11
 - [WARN] historical_partial_record: 11
 - [WARN] incomplete_native_cost_measurement: 5
 - [WARN] missing_cost_event: 5

@@ -3,7 +3,17 @@
   "confounding_warnings": [
     "no_strictly_comparable_trace_pair"
   ],
-  "excluded_traces": [],
+  "excluded_traces": [
+    {
+      "reasons": [
+        "EMA semantics are not recorded in the accepted candidate trace",
+        "canonical_trace_marked_ineligible",
+        "matched K1 and PairToken reference traces are not registered under the same trace contract"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-k1-induced-pair-s42:v1/neural_atom_k1_induced_pair_token",
+      "trajectory_id": "TC-k1-induced-pair-token-100k-s42"
+    }
+  ],
   "false_promote_count": null,
   "false_promote_rate": null,
   "false_stop_count": null,
@@ -18,5 +28,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "insufficient_evidence",
-  "trace_count": 0
+  "trace_count": 1
 }
