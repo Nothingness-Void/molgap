@@ -94,6 +94,27 @@
     },
     {
       "artifact_availability": [
+        "committed_acceptance",
+        "committed_decision"
+      ],
+      "comparison_status": "matched_internal_development_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-t-500k-bridge",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_500k_bridge_architecture_screen",
+      "source_envelope": "experiments/pcqm_gptrans_t_500k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_v4_reference",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_remote_verified"
       ],
       "comparison_status": "complete",
@@ -110,6 +131,49 @@
       "source_envelope": "experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "archive_commit_pointer",
+        "committed_launch_record"
+      ],
+      "comparison_status": "historical_negative_decision_archived",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-recurrent-graph-state-100k-seed42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_recurrent_graph_state_screen",
+      "source_envelope": "experiments/pcqm_gap_architecture/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "closed_no_promotion",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_acceptance",
+        "committed_contract",
+        "committed_metadata"
+      ],
+      "comparison_status": "fixed_official_validation_fusion_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-route-b-four-encoder-specialist",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_track_b_official_validation_specialist",
+      "source_envelope": "experiments/pcqm_route_b/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "task_routed_only",
       "used_by_trajectory_ids": []
     }
   ]

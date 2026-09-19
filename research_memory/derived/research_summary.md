@@ -1,13 +1,14 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 5
+- Validated V5 evidence: 8
 - Evidence without trajectory: 0
 
 ## Trajectories
-- CLOSED: 2
+- CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 2
+- NO_TRAIN: 1
 - POSITIVE_UNDER_CONTRACT: 3
 
 ## Transfer
@@ -17,7 +18,7 @@
 
 ## Roles
 - Explicit role events: 0
-- Coarse historical role records: 22
+- Coarse historical role records: 34
 - Repeatedly selected role identities: 0
 
 ## Cost
@@ -26,7 +27,7 @@
 - IMS_GPU_UNSPECIFIED queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED wall_hours: measured=12.135869 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Measurement-missing cost events: 1
-- Cost-event coverage: 1/8 trajectories; incomplete native measurement=1
+- Cost-event coverage: 1/10 trajectories; incomplete native measurement=1
 
 ## Screening Backtest
 - Status: insufficient_evidence
@@ -34,9 +35,9 @@
 - Excluded traces: 0
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 8
-- [WARN] historical_partial_record: 8
+- [INFO] trace_unavailable_for_backtest: 10
+- [WARN] historical_partial_record: 10
 - [WARN] incomplete_native_cost_measurement: 1
-- [WARN] missing_cost_event: 7
-- [WARN] missing_explicit_role_identity: 8
-- [WARN] trajectory_without_v5_evidence: 3
+- [WARN] missing_cost_event: 9
+- [WARN] missing_explicit_role_identity: 10
+- [WARN] trajectory_without_v5_evidence: 2

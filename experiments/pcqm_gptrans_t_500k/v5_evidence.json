@@ -1,0 +1,51 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-t-500k-bridge",
+  "track": "B",
+  "scope": "historical_500k_bridge_architecture_screen",
+  "legacy_contract": "molgap-pcqm-gptrans-t-core-500k-terminal-acceptance-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "committed_acceptance_metadata_verified",
+    "comparison_status": "matched_internal_development_complete",
+    "scientific_status": "positive_bridge_result",
+    "transfer_status": "not_v4_reference",
+    "budget_decision": "closed_context_only",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_t_500k/protocol.md",
+      "experiments/pcqm_gptrans_t_500k/results/acceptance.json",
+      "experiments/pcqm_gptrans_t_500k/results/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "gptrans_t_500k_acceptance",
+      "locator": "repo://experiments/pcqm_gptrans_t_500k/results/acceptance.json",
+      "sha256": "62fedf82c2597b039cdc7dd732b7af768f3f3a385c2c4b735aea8b7c43bd7a82",
+      "availability": "committed_acceptance"
+    },
+    {
+      "name": "gptrans_t_500k_decision",
+      "locator": "repo://experiments/pcqm_gptrans_t_500k/results/decision.md",
+      "sha256": "1335166a4bb32ead5667a9f6fa88aaeb621bcf85eea39ff7cfb6b0b2e2a70d1b",
+      "availability": "committed_decision"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-19",
+    "verification_scope": "pointer-only migration of frozen protocol, terminal acceptance, and decision",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

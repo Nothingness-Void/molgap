@@ -291,15 +291,28 @@ def test_edge_state_gpu_cost_preserves_unknown_cpu_accounting():
 def test_real_cost_completeness_separates_absent_and_incomplete_events():
     payloads = compile_research_memory(REPO_ROOT)
     report = json.loads(payloads["completeness_report.json"])
+    trajectories = json.loads(payloads["trajectory_index.json"])["trajectories"]
+    assert {record["trajectory_id"] for record in trajectories} == {
+        "TB-edgestate-rich-full-v1",
+        "TB-geometry-transfer-500k-context",
+        "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-gptrans-t-500k-bridge",
+        "TB-k1-gptrans-full-fusion-r3",
+        "TB-k1-residual-reconciliation",
+        "TB-matched-500k-v4-three-arm",
+        "TB-recurrent-graph-state-100k-seed42",
+        "TB-route-b-four-encoder-specialist",
+    }
     assert report["cost_completeness"] == {
-        "trajectories_total": 8,
+        "trajectories_total": 10,
         "with_cost_event": 1,
-        "without_cost_event": 7,
+        "without_cost_event": 9,
         "with_complete_native_measurement": 0,
         "with_incomplete_native_measurement": 1,
     }
     issues = {item["code"]: item["count"] for item in report["issues"]}
-    assert issues["missing_cost_event"] == 7
+    assert issues["missing_cost_event"] == 9
     assert issues["incomplete_native_cost_measurement"] == 1
     assert "missing_native_cost" not in issues
 

@@ -1,0 +1,58 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-route-b-four-encoder-specialist",
+  "track": "B",
+  "scope": "historical_track_b_official_validation_specialist",
+  "legacy_contract": "pcqm_route_b_precision_1m",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "committed_metrics_and_hashes_verified",
+    "comparison_status": "fixed_official_validation_fusion_complete",
+    "scientific_status": "accepted_gap_specialist",
+    "transfer_status": "task_routed_only",
+    "budget_decision": "closed_no_registry_change",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_route_b/results/run_plan.json",
+      "experiments/pcqm_route_b/results/graph_acceptance.json",
+      "experiments/pcqm_route_b/results/official_valid_5k_fusion/metrics.json",
+      "experiments/pcqm_route_b/results/official_valid_5k_fusion/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "official_validation_fusion_metrics",
+      "locator": "repo://experiments/pcqm_route_b/results/official_valid_5k_fusion/metrics.json",
+      "sha256": "e231ed1eef22058374b339706c9a93a070beb7106ea304c8fcb7d0feb0b44ee7",
+      "availability": "committed_metadata"
+    },
+    {
+      "name": "accepted_graph_manifest",
+      "locator": "repo://experiments/pcqm_route_b/results/graph_acceptance.json",
+      "sha256": "6b481dea8124eca2980d16f1345b7b06c69a193bd6f691ee4b5ab55dc45a5338",
+      "availability": "committed_acceptance"
+    },
+    {
+      "name": "route_b_run_plan",
+      "locator": "repo://experiments/pcqm_route_b/results/run_plan.json",
+      "sha256": "4a467ad084a905c431b9b0daea30eb68ae3dac9bab468b76e6c6b8423352a2ec",
+      "availability": "committed_contract"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "consumed",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-19",
+    "verification_scope": "pointer-only migration of frozen run plan, graph acceptance, official-validation metrics, and decision",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

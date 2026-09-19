@@ -21,6 +21,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-t-500k-bridge:A001",
+      "target": "experiments/pcqm_gptrans_t_500k/results/acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-t-500k-bridge:A001",
+      "target": "experiments/pcqm_gptrans_t_500k/results/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-gptrans-full-fusion-r3:A001",
       "target": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
       "type": "action_produced_evidence"
@@ -51,8 +61,18 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-k1-residual-reconciliation",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-k1-residual-reconciliation",
       "type": "prior_evidence"
     },
     {
@@ -85,7 +105,19 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-t-500k-bridge",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-gptrans-full-fusion-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-recurrent-graph-state-100k-seed42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-route-b-four-encoder-specialist",
       "type": "evidence"
     },
     {
@@ -105,7 +137,15 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-gptrans-t-500k-bridge",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-residual-reconciliation",
       "type": "trajectory"
     },
     {

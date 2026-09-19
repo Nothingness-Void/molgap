@@ -20,6 +20,11 @@ from .screen_policy import (
     REFERENCE_SCREEN_POLICY,
     validate_reference_screen_contract,
 )
+from .evidence_pointers import (
+    REFERENCE_BUNDLE_POINTER_FIELDS,
+    resolve_repo_pointer,
+)
+from .research_memory.validate import validate_repository_records
 from .v5_common import (
     OUTCOME_FIELDS,
     V5_CONTRACT_ID,
@@ -36,6 +41,15 @@ TERMINAL_REMOTE_STATES = frozenset({"complete", "failed", "cancelled"})
 PROTECTED_EVALUATION_ROLES = frozenset(
     {"official_validation", "test_dev", "test_challenge"}
 )
+
+# Full admission has a narrower scope than general comparison classification.
+# MATCHED_PREFIX remains useful for convergence/futility decisions, but never
+# constitutes positive full-scale promotion evidence on its own.
+_FULL_ADMISSION_CLASSES_BY_GOAL = {
+    "causal_architecture": frozenset({"STRICT_CAUSAL"}),
+    "delivered_model": frozenset({"STRICT_CAUSAL", "PAIRED_ENDPOINT"}),
+    "convergence": frozenset(),
+}
 
 _DURABILITY_FIELDS = (
     "remote_job_id",
@@ -426,6 +440,130 @@ def decide_role_use(
     }
 
 
+def _resolve_desktop_evidence_record(
+    root: Path, pointer: str | Path, expected_name: str
+) -> Path:
+    """Resolve one repository-backed evidence record for Desktop admission."""
+
+    path = resolve_repo_pointer(root, str(pointer))
+    if path is None:
+        raise ValueError(f"Desktop admission requires a local {expected_name}")
+    relative = path.relative_to(root)
+    if (
+        path.name != expected_name
+        or not relative.parts
+        or relative.parts[0] != "experiments"
+    ):
+        raise ValueError(
+            f"Desktop admission requires experiments/**/{expected_name}: {pointer}"
+        )
+    return path
+
+
+def _comparison_goal_allows_full_admission(
+    comparison_goal: str, comparison_class: str
+) -> bool:
+    """Apply V5's goal-specific promotion boundary to validated evidence."""
+
+    allowed_classes = _FULL_ADMISSION_CLASSES_BY_GOAL.get(comparison_goal)
+    if allowed_classes is None:
+        raise ValueError(f"unsupported Desktop comparison goal: {comparison_goal}")
+    return comparison_class in allowed_classes
+
+
+def validate_desktop_comparison_evidence(
+    *,
+    repo_root: str | Path,
+    comparison_readiness_ref: str | Path,
+    reference_bundle_ref: str | Path,
+    comparison_goal: str = "causal_architecture",
+) -> dict[str, Any]:
+    """Validate the repository-backed V5 evidence required for full admission.
+
+    Summary booleans are intentionally not accepted here.  The shared
+    post-run validator verifies observed role/trace/artifact evidence, while
+    this Desktop adapter binds it to the actual reference bundle and its
+    portable target-transform asset.
+    """
+
+    root = Path(repo_root).resolve()
+    readiness_path = _resolve_desktop_evidence_record(
+        root, comparison_readiness_ref, "comparison_readiness.json"
+    )
+    records = validate_repository_records(root)["records"]
+    readiness = next(
+        (
+            record
+            for path, record in records["comparison_readiness"]
+            if path.resolve() == readiness_path
+        ),
+        None,
+    )
+    if readiness is None:
+        raise ValueError("comparison readiness record was not discovered by RML")
+    comparison_class = readiness["comparison_class"]
+    if not _comparison_goal_allows_full_admission(
+        comparison_goal, comparison_class
+    ):
+        raise ValueError(
+            "Desktop full admission comparison class is incompatible with goal: "
+            f"{comparison_goal}/{comparison_class}"
+        )
+
+    bundle_path = _resolve_desktop_evidence_record(
+        root, reference_bundle_ref, "reference_bundle.json"
+    )
+    bundle = next(
+        (
+            record
+            for path, record in records["reference_bundles"]
+            if path.resolve() == bundle_path
+        ),
+        None,
+    )
+    if bundle is None:
+        raise ValueError("reference bundle was not discovered by RML")
+
+    for field in REFERENCE_BUNDLE_POINTER_FIELDS:
+        if resolve_repo_pointer(root, bundle[field]) is None:
+            raise ValueError(
+                f"reference bundle field is not repository-local: {field}"
+            )
+
+    return {
+        "valid": True,
+        "comparison_readiness_path": str(readiness_path),
+        "reference_bundle_path": str(bundle_path),
+        "comparison_goal": comparison_goal,
+        "comparison_class": comparison_class,
+        "reference_id": bundle["reference_id"],
+        "reference_bundle_id": bundle["reference_bundle_id"],
+        "reference_bundle_sha256": readiness["reference_bundle_sha256"],
+    }
+
+
+def _blocked_full_scale_admission(
+    reason: str, *, details: str | None = None
+) -> dict[str, Any]:
+    result = {
+        **_outcome(
+            execution_status="qualified_screen_only",
+            artifact_status="pending",
+            comparison_status="pending",
+            scientific_status="not_evaluated",
+            transfer_status="not_qualified",
+            budget_decision="hold",
+            full_handoff_status="blocked",
+        ),
+        "allowed": False,
+        "automatic_full": False,
+        "reason": reason,
+    }
+    if details:
+        result["details"] = details
+    return result
+
+
 def admit_full_scale(
     *,
     candidate_100k: Mapping[str, Any],
@@ -433,28 +571,35 @@ def admit_full_scale(
     reference: Mapping[str, Any],
     paired_comparison: Mapping[str, Any],
     explicit_desktop_authorization: bool = False,
+    repo_root: str | Path | None = None,
+    comparison_readiness_ref: str | Path | None = None,
+    reference_bundle_ref: str | Path | None = None,
+    comparison_goal: str = "causal_architecture",
 ) -> dict[str, Any]:
-    """Require qualified 500K evidence and explicit desktop authority."""
+    """Require verified V5 comparison evidence and explicit desktop authority.
+
+    ``reference`` and ``paired_comparison`` remain in the signature for API
+    compatibility, but their legacy summary flags are not admission authority.
+    """
+    if repo_root is None or comparison_readiness_ref is None or reference_bundle_ref is None:
+        return _blocked_full_scale_admission("comparison_evidence_not_bound")
+    try:
+        validate_desktop_comparison_evidence(
+            repo_root=repo_root,
+            comparison_readiness_ref=comparison_readiness_ref,
+            reference_bundle_ref=reference_bundle_ref,
+            comparison_goal=comparison_goal,
+        )
+    except (KeyError, OSError, TypeError, ValueError) as exc:
+        return _blocked_full_scale_admission(
+            "comparison_evidence_invalid", details=str(exc)
+        )
+
     checks = (
         (candidate_100k.get("qualified") is True, "100k_not_qualified"),
         (candidate_500k.get("complete") is True, "500k_incomplete"),
         (candidate_500k.get("qualified") is True, "500k_not_qualified"),
-        (reference.get("complete") is True, "reference_incomplete"),
-        (paired_comparison.get("complete") is True, "paired_comparison_incomplete"),
         (candidate_500k.get("identity_frozen") is True, "candidate_identity_not_frozen"),
-        (reference.get("immutable") is True, "reference_not_immutable"),
-        (
-            paired_comparison.get("artifacts_aligned") is True,
-            "comparison_artifacts_not_aligned",
-        ),
-        (
-            paired_comparison.get("strict_comparison_passed") is True,
-            "strict_comparison_not_passed",
-        ),
-        (
-            paired_comparison.get("statistical_limitations_recorded") is True,
-            "statistical_limitations_missing",
-        ),
         (
             candidate_500k.get("target_hardware_cost_recorded") is True,
             "target_hardware_cost_missing",
@@ -474,20 +619,7 @@ def admit_full_scale(
     )
     for passed, reason in checks:
         if not passed:
-            return {
-                **_outcome(
-                    execution_status="qualified_screen_only",
-                    artifact_status="pending",
-                    comparison_status="pending",
-                    scientific_status="not_evaluated",
-                    transfer_status="not_qualified",
-                    budget_decision="hold",
-                    full_handoff_status="blocked",
-                ),
-                "allowed": False,
-                "automatic_full": False,
-                "reason": reason,
-            }
+            return _blocked_full_scale_admission(reason)
     if not explicit_desktop_authorization:
         return {
             **_outcome(

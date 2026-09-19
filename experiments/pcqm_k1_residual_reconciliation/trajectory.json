@@ -1,0 +1,63 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-k1-residual-reconciliation",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "k1-existing-prediction-attribution",
+  "question": "Does recovery of exact K1 500K predictions change the two-model residual attribution?",
+  "hypothesis": {
+    "hypothesis_id": "H-k1-residual-reconciliation",
+    "observed_deficiency": "Earlier module attribution excluded K1 because its accepted prediction asset was unavailable",
+    "supporting_evidence_ids": [
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ],
+    "alternative_explanations": [
+      "Complementarity is not predictable from coarse molecular features"
+    ],
+    "changed_mechanism": "No model change; restore the exact K1 arm to existing-prediction analysis",
+    "cheapest_falsifier": "Local CPU hash-gated aligned residual analysis",
+    "related_closed_family_ids": [
+      "k1-gptrans-fusion"
+    ],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "Identify a module diagnostic, not authorize training",
+    "decision_changed_if_negative": "Do not reopen coarse structure routing",
+    "historical_unknowns": [
+      "Protocol and initial record preceded analysis, but prospective cost schema was incomplete; retained as retrospective_partial rather than claiming prospective compliance."
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "8314180",
+    "contract_refs": [
+      "experiments/pcqm_k1_residual_reconciliation/protocol.md"
+    ],
+    "reference_ids": [],
+    "parent_trajectory_ids": [
+      "TB-matched-500k-v4-three-arm"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_residual_reconciliation/protocol.md"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_residual_reconciliation/protocol.md",
+    "source_config_identity": "Existing frozen matched60-v4 predictions; analyzer 8421d1d"
+  },
+  "actions": [],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_k1_residual_reconciliation/analysis.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_residual_reconciliation/decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [
+      "Recover matched PairToken and 100K per-row artifacts before scale attribution"
+    ],
+    "reopen_conditions": []
+  }
+}

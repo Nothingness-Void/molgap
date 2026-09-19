@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-t-500k-bridge",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "historical",
+  "family_id": "gptrans-t-500k-bridge",
+  "question": "Can the compact GPTrans-T propagation core beat the matched ESGPS6-304 scratch arm on the accepted 500K bridge?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-t-500k-bridge",
+    "observed_deficiency": "the historical matched bridge needed a compact propagation candidate before the later V4 comparison",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": ["the adapted core is not a byte-identical reproduction of the published system"],
+    "changed_mechanism": "compact node/all-pairs propagation core",
+    "cheapest_falsifier": "one fixed 500K/50K terminal acceptance comparison",
+    "related_closed_family_ids": [],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "retain the adapted core as a historical architecture reference",
+    "decision_changed_if_negative": "close the adapted propagation route",
+    "historical_unknowns": ["native cost is not normalized into an RML cost event", "the paper's offline multi-hop edge-sequence tensor was not available"]
+  },
+  "state_at_start": {
+    "source_commit": "0c0108e",
+    "contract_refs": ["experiments/pcqm_gptrans_t_500k/protocol.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": [],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "historical_500k_bridge_training_and_acceptance",
+      "run_ids": ["121693799"],
+      "attempt_ids": ["accepted-attempt"],
+      "source_commit": "0c0108e",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_t_500k/results/acceptance.json",
+        "experiments/pcqm_gptrans_t_500k/results/decision.md"
+      ],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-t-500k-bridge"],
+    "evidence_refs": ["experiments/pcqm_gptrans_t_500k/v5_evidence.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_t_500k/results/decision.md",
+    "outcome": "CLOSED",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["a newly authorized matched V4 contract with the same target-scale comparator"]
+  }
+}

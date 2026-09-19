@@ -1,0 +1,50 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-recurrent-graph-state-100k-seed42",
+  "track": "B",
+  "scope": "historical_100k_recurrent_graph_state_screen",
+  "legacy_contract": "pcqm-gap100k-recurrent-graph-state-launch-v1",
+  "outcome": {
+    "execution_status": "complete_archived_result",
+    "artifact_status": "launch_metadata_and_archive_pointer_preserved",
+    "comparison_status": "historical_negative_decision_archived",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "closed_no_promotion",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gap_architecture/recurrent_graph_state_seed42_protocol.md",
+      "experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
+      "experiments/pcqm_gap_architecture/STATUS.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "recurrent_launch_manifest",
+      "locator": "repo://experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
+      "sha256": "4b0beba7c662efddbf27dd09c4733ce1ae8a9065587ba6aee5e928986666ed80",
+      "availability": "committed_launch_record"
+    },
+    {
+      "name": "archived_terminal_decision",
+      "locator": "git://285e1dc/experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/decision.md",
+      "availability": "archive_commit_pointer"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-19",
+    "verification_scope": "pointer-only migration of local protocol/launch metadata and archived terminal decision pointer",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

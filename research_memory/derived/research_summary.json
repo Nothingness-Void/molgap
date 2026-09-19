@@ -6,11 +6,11 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 8,
+      "trajectories_total": 10,
       "with_complete_native_measurement": 0,
       "with_cost_event": 1,
       "with_incomplete_native_measurement": 1,
-      "without_cost_event": 7
+      "without_cost_event": 9
     },
     "totals_by_hardware": {
       "IMS_GPU_UNSPECIFIED": {
@@ -67,19 +67,19 @@
     "unknown_events": 1
   },
   "evidence": {
-    "validated": 5,
+    "validated": 8,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 8,
+      "count": 10,
       "severity": "INFO"
     },
     {
       "code": "historical_partial_record",
-      "count": 8,
+      "count": 10,
       "severity": "WARN"
     },
     {
@@ -89,32 +89,33 @@
     },
     {
       "code": "missing_cost_event",
-      "count": 7,
+      "count": 9,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 8,
+      "count": 10,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 3,
+      "count": 2,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 22,
+    "coarse_historical": 34,
     "explicit_events": 0,
     "repeatedly_selected": 0
   },
-  "source_digest": "5f453b055e6ba04531f2142a49a9fa8fc8e6114238b0e3012988b135bf3650d2",
+  "source_digest": "ac00a9d07fdfd55468d1797a5b712e4d464bc2cb30d6caa93191bc173b8ae086",
   "trajectories": {
-    "count": 8,
+    "count": 10,
     "outcomes": {
-      "CLOSED": 2,
+      "CLOSED": 3,
       "INCONCLUSIVE": 1,
       "NEGATIVE_UNDER_CONTRACT": 2,
+      "NO_TRAIN": 1,
       "POSITIVE_UNDER_CONTRACT": 3
     }
   },

@@ -25,6 +25,9 @@ remains authoritative for deployable model identity.
 - The geometry-transfer 500K result is preserved as incompatible nomination
   evidence at `experiments/pcqm_geometry_transfer_500k/v5_evidence.json`; format
   migration does not upgrade its scientific authority.
+- The historical Route B specialist, recurrent graph-state screen, and GPTrans-T
+  500K bridge now have pointer-only V5 envelopes. Their specialist, negative,
+  and pre-V4 context boundaries remain unchanged.
 - The matched 500K three-arm result remains indexed by its V4 authority. Its V5
   envelope stays pending until the accepted K1 artifacts have a second durable
   copy outside the desktop-only retrieval tree.
@@ -33,7 +36,7 @@ remains authoritative for deployable model identity.
 
 | Resource | V5 disposition | Required follow-up |
 |---|---|---|
-| `experiments/pcqm_gptrans_t_500k/` | Pre-V4 historical context; not a strict comparator | None; do not rerun without a new V5 contract |
+| `experiments/pcqm_gptrans_t_500k/` | Pre-V4 historical context; not a strict comparator; pointer-only V5 envelope retained | Do not rerun without a new V5 contract |
 | `experiments/pcqm_edge_state_full/results/` ten-epoch run | Superseded by the richer accepted full run | None; use the `rich_full` envelope |
 | `experiments/pcqm_gine_expert/results/continuation_v5_decision.md` | Superseded local specialist context | None; use the 1M frozen-BatchNorm envelope |
 | `production/03_train/routed_gps7_gps9_schnet_500k_v4/` | Compatibility record, not a new V5 scientific candidate | None; keep only the explicit loader assets |

@@ -29,3 +29,47 @@ RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no
 command submits training, accesses protected data, changes a scientific gate,
 or creates desktop/server live orchestration.
+
+## Research workflow
+
+Every new research question follows this order:
+
+1. Query the generated RML indexes for prior work, failures in the same family,
+   strict references, consumed roles, and native cost history.
+2. Follow the RML pointers to the authoritative experiment decision,
+   acceptance, contract, and artifact records.
+3. Decide whether the evidence leaves a genuinely new question. Do not rerun a
+   completed or already falsified experiment.
+4. Before executing a new route, create a `prospective` `trajectory.json` with
+   the hypothesis, cheapest falsifier, frozen state, references, roles, budget,
+   and decision-changing outcomes.
+5. Run only the required funnel stages: diagnostic, then 100K, then 500K when
+   required by the active contract.
+6. Preserve each result as canonical `v5_evidence.json`, `costs/*.json`,
+   `roles/*.json`, and `trace_manifest.json` records. Do not infer or invent
+   missing facts.
+7. Run `python -m molgap.research_memory rebuild` after canonical records are
+   complete, and treat the regenerated completeness report as the remaining-gap
+   authority.
+
+RML lookup is a decision prerequisite, not a substitute for reading the linked
+authoritative files. A trajectory must exist before its first experiment; the
+`retrospective_partial` mode is reserved for honest migration of historical
+evidence.
+
+## Migration coverage
+
+The current historical migration contains the Route B records that have a
+durable decision or terminal acceptance pointer. It includes full EdgeState,
+GPTrans-T 100K and 500K bridges, GINE specialist, K1/GPTrans-T fusion,
+geometry transfer, recurrent graph-state screen, and the legacy GPS/SchNet
+specialist route. These remain
+`retrospective_partial`: RML records what can be proven from existing files;
+it does not fill missing native cost, role-identity, learning-trace, or archive
+artifacts.
+
+The generated completeness report is the authority for those remaining gaps.
+The matched 500K three-arm record remains outside the evidence-envelope set
+until its V5-required second durable K1 artifact copy is preserved. Records
+with only exploratory logs and no durable decision/acceptance pointer remain
+outside this migration until such a pointer is preserved.
