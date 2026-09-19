@@ -35,6 +35,12 @@
       "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/budget_snapshot.json",
       "name": "budget_snapshot",
       "sha256": "baa5071acc313482a740b21584a67b894cb98a81951b9a250438c96dc8e41211"
+    },
+    {
+      "availability": "committed_remote_submission_metadata",
+      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json",
+      "name": "remote_submission_v2",
+      "sha256": "cf69e033f3455be59e8b85bc72b9c4255a52e5d0e83b072e70240fd623fa6a54"
     }
   ],
   "authority": {
@@ -44,7 +50,8 @@
       "experiments/pcqm_k1_pair_token_node_return_100k/source_config.json",
       "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness_prelaunch.json",
       "experiments/pcqm_k1_pair_token_node_return_100k/trajectory.json",
-      "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md"
+      "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
+      "experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json"
     ]
   },
   "contract": "MOLGAP-COMMON-V5-FINAL",
@@ -62,7 +69,7 @@
     "artifact_status": "prelaunch_complete_terminal_pending",
     "budget_decision": "one_candidate_authorized",
     "comparison_status": "prelaunch_strict_planned",
-    "execution_status": "infrastructure_failure_then_retry_planned",
+    "execution_status": "infrastructure_failure_then_retry_running",
     "full_handoff_status": "not_applicable",
     "scientific_status": "pending",
     "transfer_status": "not_evaluated"

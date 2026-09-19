@@ -45,12 +45,19 @@ contract.
 
 ## Discovery state
 
-No server-owned GPU screen is active. The retained K1-v4 100K artifacts now
-have a repository-bound V5 reference bundle and portable target-transform
-asset. Recovery verified the fixed cache, row/target identities, aligned 50K
-predictions, model/checkpoint hashes, runtime, roles, cost and trace without
-training or model inference. Training stochasticity remains unavailable.
-Authority:
+One server-owned GPU screen is active: Kaggle3 version 2 of the node-adaptive
+PairToken-return candidate. Its prospective RML and strict release prelaunch
+passed against the recovered K1-v4 V5 bundle; version 1 was an infrastructure-
+only cache-mount failure. Version 2 keeps the scientific contract unchanged and
+is bound to the existing Luna monitor. No scientific claim is permitted until
+the complete terminal RML package passes no-inference acceptance. Authority:
+`experiments/pcqm_k1_pair_token_node_return_100k/STATUS.md`.
+
+The retained K1-v4 100K artifacts have a repository-bound V5 reference bundle
+and portable target-transform asset. Recovery verified the fixed cache,
+row/target identities, aligned 50K predictions, model/checkpoint hashes,
+runtime, roles, cost and trace without training or model inference. Training
+stochasticity remains unavailable. Authority:
 `experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json`.
 
 The K1 molecule-context MoSE gate

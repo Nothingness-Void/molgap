@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-NODE-ADAPTIVE-PAIRTOKEN | Freeze and release one node-adaptive PairToken-return screen only after its complete prospective RML/prelaunch evidence passes against the recovered K1-v4 bundle; Kaggle1 remains desktop-only | One terminal paired decision with complete trace, roles, cost, runtime, artifacts and subgroup attribution |
+| P1 | C-V5-NODE-ADAPTIVE-PAIRTOKEN | Monitor the released Kaggle3 version-2 node-adaptive PairToken-return screen; do not alter its frozen contract or use Kaggle1 | One terminal paired decision with complete trace, roles, cost, runtime, artifacts and subgroup attribution |
 | P2 | C-V5-FUNCTIONAL-GROUP-TOKEN | Keep the chemistry-defined sparse hierarchy as reserve; release only after P1 attribution identifies missing representation rather than return allocation | Separate frozen source/config and complete prospective RML/prelaunch evidence, or remain unspent |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval

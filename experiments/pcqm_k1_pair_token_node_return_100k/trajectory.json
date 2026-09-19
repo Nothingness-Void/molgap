@@ -11,14 +11,15 @@
     },
     {
       "action_id": "A002",
-      "attempt_ids": ["candidate-v2-planned"],
+      "attempt_ids": ["candidate-v2"],
       "cost_event_ids": ["cost-TC-k1-pair-token-node-return-100k-s42-training"],
       "evidence_refs": [
         "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness_prelaunch.json",
         "experiments/pcqm_k1_pair_token_node_return_100k/source_config.json",
-        "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md"
+        "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
+        "experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json"
       ],
-      "run_ids": ["nvoid912/molgap-k1-node-adaptive-pairtoken-s42:v2-planned"],
+      "run_ids": ["nvoid912/molgap-k1-node-adaptive-pairtoken-s42:v2"],
       "source_commit": "1415aedae210c889bbe7fc9521c7c6d395ceceb1",
       "type": "unchanged_scientific_contract_infrastructure_retry"
     }
@@ -29,7 +30,7 @@
   "decision": {
     "decision_ref": "experiments/pcqm_k1_pair_token_node_return_100k/STATUS.md",
     "next_allowed_actions": [
-      "submit exactly one cache-mount repair retry"
+      "collect terminal v2 artifacts and run no-inference V5 acceptance"
     ],
     "outcome": "ACTIVE",
     "reopen_conditions": [
