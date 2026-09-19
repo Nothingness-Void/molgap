@@ -35,15 +35,15 @@
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Tesla_T4_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
-- Tesla_T4_16GB device_hours: measured=unknown (0 measured records), estimated=3.000000 (1 estimated record), measurement_missing=4, not_applicable=0
-- Tesla_T4_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
-- Tesla_T4_16GB wall_hours: measured=unknown (0 measured records), estimated=3.000000 (1 estimated record), measurement_missing=4, not_applicable=0
+- Tesla_T4_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla_T4_16GB device_hours: measured=0.007950 (1 measured record), estimated=3.000000 (1 estimated record), measurement_missing=4, not_applicable=0
+- Tesla_T4_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla_T4_16GB wall_hours: measured=0.007950 (1 measured record), estimated=3.000000 (1 estimated record), measurement_missing=4, not_applicable=0
 - not_applicable cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - not_applicable device_hours: not applicable (1 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (1 records); measurement_missing=0
 - not_applicable wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 12
+- Measurement-missing cost events: 13
 - Cost-event coverage: 13/13 trajectories; incomplete native measurement=11
 
 ## Screening Backtest

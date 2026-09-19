@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-pair-token-node-return-100k-s42-infra-v1",
+  "trajectory_id": "TC-k1-pair-token-node-return-100k-s42",
+  "action_id": "A001",
+  "run_id": "nvoid912/molgap-k1-node-adaptive-pairtoken-s42:v1",
+  "attempt_id": "candidate-v1-cache-not-mounted",
+  "category": "infrastructure_failure",
+  "platform": "kaggle3",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "device_hours": {"value": 0.00795, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.00795, "status": "measured"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md"
+}

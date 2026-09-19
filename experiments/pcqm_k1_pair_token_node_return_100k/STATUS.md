@@ -1,6 +1,7 @@
 # Status
 
-Source/config implementation is being frozen. No training is authorized until
-the prospective RML and release prelaunch records are generated from that
-commit and validated against the repository-bound K1-v4 reference bundle.
-
+The prospective RML and release prelaunch gate passed. Kaggle3 version 1 failed
+before cache loading because the Kaggle2-private fixed-dataset owner was named
+in kernel metadata; no training or protected-role access occurred. The
+Kaggle3-owned byte-identical fixed cache is available, so one infrastructure-
+only retry with the unchanged scientific contract is authorized.
