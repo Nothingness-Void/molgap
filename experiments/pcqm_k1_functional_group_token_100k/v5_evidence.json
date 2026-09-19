@@ -1,0 +1,83 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "name": "source_config",
+      "sha256": "5c02b5b97d07a4cc32a67a4d14b7694bc6444ea481c3cae8bfdc0fe164b460a6"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/training_contract.json",
+      "name": "training_contract",
+      "sha256": "f24a40a86721ef5f2f730d4b6ee8241131b6ea49ee3a3e746bd28708f79fb7ab"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/comparison_readiness_prelaunch.json",
+      "name": "comparison_readiness_prelaunch",
+      "sha256": "e28d50f34634fc81f2c671a0565ca4130eabc5f670896ab73180931ef968cfb8"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/role_plan.json",
+      "name": "role_plan",
+      "sha256": "a7aa5460d616894eb8f8a56239227ba8a213a8bdfc95f1aa97c34fd206e10215"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/trace_plan.json",
+      "name": "trace_plan",
+      "sha256": "002d22d8e5a07ee0c26709f59ee218503c4d04e4107b8b40b71b1efb1a5ce734"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/budget_snapshot.json",
+      "name": "budget_snapshot",
+      "sha256": "c1c57f62c290821d0bce26416e8ed09051bf2d1d360e548d725f9306afa2f1e5"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json",
+      "name": "sidecar_acceptance_summary",
+      "sha256": "72f0530af8a8afc37d6c641c912af7541fdd1fb59eac6879f200b642f80cfd41"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_functional_group_token_100k/protocol.md",
+      "experiments/pcqm_k1_functional_group_token_100k/training_contract.json",
+      "experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "experiments/pcqm_k1_functional_group_token_100k/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_functional_group_token_100k/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "one_candidate_authorized",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_architecture_screen",
+  "track": "C"
+}

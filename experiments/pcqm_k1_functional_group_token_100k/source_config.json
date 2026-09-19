@@ -1,0 +1,17 @@
+{
+  "architecture_config_identity": "cc2ae731a15326e43b1970ae5e312339bc5af385f162d5b43b31bce209c8b0c2",
+  "candidate_id": "neural_atom_k1_functional_group_token",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_functional_group_token.py",
+    "src/molgap/pcqm_functional_group_sidecar.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "sidecar_acceptance_ref": "experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json",
+  "sidecar_aggregate_sha256": "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b",
+  "single_changed_mechanism": "layer6-sparse-atom-functional-group-token-exchange",
+  "source_commit": "5d1769c7d614b6ee1b109d5a83fb278aacef91be",
+  "training_contract_ref": "experiments/pcqm_k1_functional_group_token_100k/training_contract.json",
+  "training_contract_sha256": "f24a40a86721ef5f2f730d4b6ee8241131b6ea49ee3a3e746bd28708f79fb7ab"
+}
