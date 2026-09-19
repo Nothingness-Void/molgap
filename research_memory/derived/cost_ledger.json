@@ -1,13 +1,416 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 0,
-  "event_count": 0,
+  "event_count": 6,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 0,
+  "measurement_missing_event_count": 4,
   "not_applicable_event_count": 0,
   "retry_event_ids": [],
-  "totals_by_category": {},
-  "totals_by_hardware": {},
-  "totals_by_trajectory": {}
+  "totals_by_category": {
+    "audit": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 1.6022222222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 4,
+          "known_total": 0.47055555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.013333333333333334
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 4,
+          "known_total": 0.47055555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "training": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 121.26
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 17.4875
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.019444444444444445
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 17.4875
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  },
+  "totals_by_hardware": {
+    "SCNET_DCU_KUNSHAN_CARD1_16GB": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 122.86222222222223
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 4
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 6,
+          "known_total": 17.958055555555557
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 0.03277777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 4
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 6,
+          "known_total": 17.958055555555557
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  },
+  "totals_by_trajectory": {
+    "TB-k1-pair-token-500k-s42": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 121.26
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 15.1575
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.019444444444444445
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 15.1575
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-shortest-path-profile-v5": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07027777777777777
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07027777777777777
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-step-profile-v5": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.11194444444444444
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.11194444444444444
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-k1-pair-token-100k-s42": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 2.4180555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 2.4180555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-k1-pair-token-batch-profile": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 1.6022222222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.20027777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.013333333333333334
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "SCNET_DCU_KUNSHAN_CARD1_16GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.20027777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    }
+  }
 }

@@ -29,3 +29,6 @@ RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no
 command submits training, accesses protected data, changes a scientific gate,
 or creates desktop/server live orchestration.
+
+The bounded server-side retrospective V5 conversion inventory is recorded in
+`v5_trajectory_conversion_audit.json`; it is coverage evidence, not live state.

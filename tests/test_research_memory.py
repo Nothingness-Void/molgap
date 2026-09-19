@@ -20,6 +20,22 @@ from molgap.research_memory.validate import validate_repository_records
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_v5_conversion_inventory_points_to_valid_trajectories():
+    audit = json.loads(
+        (REPO_ROOT / "research_memory/v5_trajectory_conversion_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert audit["included_trajectory_count"] == len(audit["included"])
+    for pointer in audit["included"]:
+        path = REPO_ROOT / pointer
+        assert path.is_file(), pointer
+        validate_trajectory(json.loads(path.read_text(encoding="utf-8")))
+
+    for excluded in audit["excluded_nonterminal"]:
+        assert not (REPO_ROOT / excluded["experiment"] / "trajectory.json").exists()
+
+
 def _cost_event(
     event_id: str,
     device_status: str,

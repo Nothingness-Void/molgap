@@ -1,6 +1,66 @@
 {
   "edges": [
     {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/infrastructure_failure_2026-09-18.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A002",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A003",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/resume_infrastructure_failure_122518428.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A003",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/preflight_122311513.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/preflight_runtime_failure_122310888.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/training_adapter_failure_122312155.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-step-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_step_profile_v5/results/summary_122499114.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-step-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
       "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
       "type": "action_produced_evidence"
@@ -66,6 +126,66 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/infrastructure_failure_122272523.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/retry_122275244.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_infrastructure_failure_122303028.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_retry_122305552.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-batch-profile:A001",
+      "target": "experiments/pcqm_k1_pair_token_batch_profile/results/v5_acceptance_122388380.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TS-v5-legacy-evidence-migration:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TS-v5-legacy-evidence-migration:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42",
+      "target": "TC-gptrans-shortest-path-profile-v5",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-batch-profile",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5",
+      "target": "TC-gptrans-step-profile-v5",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-mose-replacement-100k-s42",
       "target": "TC-k1-mose-hidden-bn-100k-s42",
       "type": "parent_trajectory"
@@ -74,10 +194,31 @@
       "source": "TC-k1-mose-replacement-100k-s42",
       "target": "TC-k1-mose-residual-gate-100k-s42",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TB-k1-pair-token-500k-s42",
+      "type": "parent_trajectory"
     }
   ],
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
+    {
+      "id": "TB-gptrans-pair-prenorm-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-pair-token-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-shortest-path-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-step-profile-v5",
+      "type": "trajectory"
+    },
     {
       "id": "TC-k1-mose-hidden-bn-100k-s42",
       "type": "trajectory"
@@ -88,6 +229,18 @@
     },
     {
       "id": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-batch-profile",
+      "type": "trajectory"
+    },
+    {
+      "id": "TS-v5-legacy-evidence-migration",
       "type": "trajectory"
     }
   ]

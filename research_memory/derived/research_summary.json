@@ -6,14 +6,65 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 3,
-      "with_complete_native_measurement": 0,
-      "with_cost_event": 0,
-      "with_incomplete_native_measurement": 0,
-      "without_cost_event": 3
+      "trajectories_total": 10,
+      "with_complete_native_measurement": 2,
+      "with_cost_event": 5,
+      "with_incomplete_native_measurement": 3,
+      "without_cost_event": 5
     },
-    "totals_by_hardware": {},
-    "unknown_events": 0
+    "totals_by_hardware": {
+      "SCNET_DCU_KUNSHAN_CARD1_16GB": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 2,
+            "known_total": 122.86222222222223
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 4
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 6,
+            "known_total": 17.958055555555557
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 2,
+            "known_total": 0.03277777777777778
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 4
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 6,
+            "known_total": 17.958055555555557
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      }
+    },
+    "unknown_events": 4
   },
   "evidence": {
     "validated": 0,
@@ -23,27 +74,32 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 3,
+      "count": 10,
       "severity": "INFO"
     },
     {
       "code": "historical_partial_record",
+      "count": 10,
+      "severity": "WARN"
+    },
+    {
+      "code": "incomplete_native_cost_measurement",
       "count": 3,
       "severity": "WARN"
     },
     {
       "code": "missing_cost_event",
-      "count": 3,
+      "count": 5,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 3,
+      "count": 10,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 3,
+      "count": 10,
       "severity": "WARN"
     }
   ],
@@ -52,12 +108,15 @@
     "explicit_events": 0,
     "repeatedly_selected": 0
   },
-  "source_digest": "2ea4a3705c747748cf2f2c3671c546dd047186d1b3f1d7749b377b531bf9a6fb",
+  "source_digest": "c4d5edcaab399c7c71b9f6a6fc7d383ad4c924e19dc26d7741877d754729ce2a",
   "trajectories": {
-    "count": 3,
+    "count": 10,
     "outcomes": {
-      "NEGATIVE_UNDER_CONTRACT": 2,
-      "POSITIVE_BELOW_GATE": 1
+      "INFRASTRUCTURE_ONLY": 4,
+      "NEGATIVE_UNDER_CONTRACT": 3,
+      "POSITIVE_BELOW_GATE": 1,
+      "POSITIVE_UNDER_CONTRACT": 1,
+      "STOP_FOR_COST": 1
     }
   },
   "transfer": {
