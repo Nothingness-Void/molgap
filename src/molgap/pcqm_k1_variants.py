@@ -80,6 +80,18 @@ ARCHITECTURE_CONFIGS = {
         "initialization_policy": "nested-function",
         "geometry": False,
     },
+    "neural_atom_k1_induced_pair_token": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "one-layer6-induced-pair-relation-token",
+        "target_layer": 6,
+        "pair_channels": 32,
+        "inducing_slots": 4,
+        "latent_ordered_pairs": 16,
+        "dense_atom_to_atom_attention": False,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -819,6 +831,10 @@ def make_encoder(mode: str):
     if mode in PAIR_TOKEN_MODES:
         from .k1_pair_token import make_encoder as make_pair_token
         return make_pair_token(mode)
+    from .k1_induced_pair_token import MODES as INDUCED_PAIR_TOKEN_MODES
+    if mode in INDUCED_PAIR_TOKEN_MODES:
+        from .k1_induced_pair_token import make_encoder as make_induced_pair_token
+        return make_induced_pair_token(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 
