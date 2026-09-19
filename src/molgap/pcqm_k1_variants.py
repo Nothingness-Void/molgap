@@ -93,6 +93,19 @@ ARCHITECTURE_CONFIGS = {
         "initialization_policy": "nested-function",
         "geometry": False,
     },
+    "neural_atom_k1_stateless_pair_bridge": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "stateless-pre-normalized-ordered-pair-bridge",
+        "pair_channels": 32,
+        "pair_state_update": "current-layer-only",
+        "pair_selection": "current-update-softmax-over-sources",
+        "pair_to_node": "current-normalized-update-to-target",
+        "dense_atom_to_atom_attention": False,
+        "added_parameters": 30_881,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -836,6 +849,10 @@ def make_encoder(mode: str):
     if mode in RECURRENT_PAIR_MODES:
         from .k1_recurrent_pair_bridge import make_encoder as make_recurrent_pair
         return make_recurrent_pair(mode)
+    from .k1_stateless_pair_bridge import MODES as STATELESS_PAIR_MODES
+    if mode in STATELESS_PAIR_MODES:
+        from .k1_stateless_pair_bridge import make_encoder as make_stateless_pair
+        return make_stateless_pair(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 
