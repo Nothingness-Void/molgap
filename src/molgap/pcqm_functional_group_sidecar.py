@@ -389,6 +389,12 @@ class _FunctionalGroupDataset:
     def __len__(self):
         return len(self.base)
 
+    @property
+    def _data(self):
+        # Runtime target statistics are read from the immutable packed parent;
+        # the sidecar never copies or rewrites targets.
+        return self.base._data
+
     def __getitem__(self, index):
         graph = self.base[index].clone()
         observed = int(graph.source_idx.view(-1)[0])
