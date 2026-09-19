@@ -45,11 +45,19 @@ contract.
 
 ## Discovery state
 
-One server-owned seed-42 V5 screen is released: K1 selective MoSE residual.
-It preserves K1-v4's RWSE16 path and adds a zero-initialized, node-gated MoSE31
-residual, making the candidate exactly K1 at initialization. The question is
-released by the accepted MoSE subgroup evidence and is governed by
-`experiments/pcqm_k1_mose_residual_gate_100k/protocol.md`.
+One server-owned seed-42 V5 screen is released: K1 molecule-context MoSE gate.
+It keeps the positive selective MoSE residual unchanged but replaces its
+MoSE-mean node gate with one molecule-level gate derived from mean and second
+moments of the K1 initial node state and MoSE31. The complete candidate remains
+exactly K1 at initialization. Authority:
+`experiments/pcqm_k1_mose_context_gate_100k/protocol.md`.
+
+The predecessor selective MoSE residual improved immutable K1-v4 by
+`0.0020460039 eV`, with an entirely favorable paired interval, but missed the
+frozen `0.003 eV` gate. It strongly improved K1-hard rows while damaging
+K1-easy rows, and its late trajectory was effectively saturated. It is
+retained as positive mechanism evidence but is not promoted. Authority:
+`experiments/pcqm_k1_mose_residual_gate_100k/decision.md`.
 
 The prior K1-MoSE hidden-normalization screen completed and regressed versus
 both K1-v4 and unnormalized MoSE. Its paired interval was entirely unfavorable,

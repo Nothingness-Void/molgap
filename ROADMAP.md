@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-MOSE-RESIDUAL-GATE | Run one V5 seed-42 screen retaining RWSE16 and adding an exact-nested node-gated MoSE31 residual | Accept artifacts and compare with immutable K1-v4; stop unless gain is at least 0.003 eV |
+| P1 | B-K1-MOSE-CONTEXT-GATE | Run one V5 seed-42 screen replacing only the positive predecessor's coarse node gate with a molecule-context gate | Accept artifacts and compare with immutable K1-v4 and predecessor; stop unless gain over K1 is at least 0.003 eV |
 | P2 | B-V5-GATE-CALIBRATION | Calibrate a prospective training-stochasticity gate from accepted same-contract repeats; do not reinterpret closed candidates | Freeze a documented estimator and threshold before any later candidate screen |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
