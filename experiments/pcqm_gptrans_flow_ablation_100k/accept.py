@@ -35,7 +35,7 @@ def accept(root, reference_root, submission_path, output):
     submission = read(submission_path)
     evidence = read(
         REPO_ROOT
-        / "experiments/pcqm_gptrans_flow_ablation_100k/v5_reference_evidence.json"
+        / "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json"
     )
     artifacts = {item["name"]: item for item in evidence["artifacts"]}
     require(

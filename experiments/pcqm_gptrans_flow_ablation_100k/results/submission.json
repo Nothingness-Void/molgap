@@ -1,0 +1,26 @@
+{
+  "observed_at_utc": "2026-09-19T12:48:08Z",
+  "kernel": "nothingnessvoid/molgap-gptrans-flow-ablation-s42",
+  "version": 1,
+  "observed_status": "RUNNING",
+  "source_dataset": "nothingnessvoid/molgap-gptrans-flow-ablation-source",
+  "source_dataset_version": 1,
+  "source_dataset_status": "ready",
+  "source_commit": "fc329e0948810e5649823ab64e834c9b5d36b47a",
+  "archive_sha256": "1a63442ed06e263974ff379ba605243609ecf67f3944c3380079eec506a25e02",
+  "variant_source_sha256": "a402261d4f556247bde2998635402b70a2e969de024685dbe8d5898f25dfb09b",
+  "initial_state_artifact_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "machine_shape": "NvidiaTeslaT4",
+  "candidates": [
+    "no_pair_to_node",
+    "no_pair_recurrence"
+  ],
+  "local_static_tests_passed": 5,
+  "local_model_identity_checks_passed": true,
+  "local_model_inference_executed": true,
+  "local_training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

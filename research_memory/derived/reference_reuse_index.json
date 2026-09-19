@@ -3,5 +3,28 @@
   "human_reference_index": "models/REFERENCE_INDEX.md",
   "missing_reference_ids": [],
   "missing_reference_policy": "comparison_pending_no_automatic_rerun",
-  "references": []
+  "references": [
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
+      "comparison_status": "reference_accepted_contextual_comparison_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_reference",
+      "source_envelope": "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "reusable_reference",
+      "used_by_trajectory_ids": [
+        "TC-gptrans-flow-ablation-100k-s42"
+      ]
+    }
+  ]
 }

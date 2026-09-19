@@ -6,13 +6,63 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 10,
+      "trajectories_total": 11,
       "with_complete_native_measurement": 2,
-      "with_cost_event": 5,
-      "with_incomplete_native_measurement": 3,
+      "with_cost_event": 6,
+      "with_incomplete_native_measurement": 4,
       "without_cost_event": 5
     },
     "totals_by_hardware": {
+      "NVIDIA_TESLA_T4_X2": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 20.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "SCNET_DCU_KUNSHAN_CARD1_16GB": {
         "cpu_hours": {
           "estimated": {
@@ -64,17 +114,17 @@
         }
       }
     },
-    "unknown_events": 4
+    "unknown_events": 5
   },
   "evidence": {
-    "validated": 0,
-    "without_trajectory": 0
+    "validated": 1,
+    "without_trajectory": 1
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 10,
+      "count": 11,
       "severity": "INFO"
     },
     {
@@ -84,7 +134,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 3,
+      "count": 4,
       "severity": "WARN"
     },
     {
@@ -94,24 +144,30 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 10,
+      "count": 11,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 10,
+      "count": 11,
+      "severity": "WARN"
+    },
+    {
+      "code": "v5_evidence_without_trajectory",
+      "count": 1,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 0,
+    "coarse_historical": 4,
     "explicit_events": 0,
     "repeatedly_selected": 0
   },
-  "source_digest": "c4d5edcaab399c7c71b9f6a6fc7d383ad4c924e19dc26d7741877d754729ce2a",
+  "source_digest": "326c6c942398e7194d2ebca64e09b6d6bf9fe7dfd7678ae75f000fe1a8987343",
   "trajectories": {
-    "count": 10,
+    "count": 11,
     "outcomes": {
+      "ACTIVE": 1,
       "INFRASTRUCTURE_ONLY": 4,
       "NEGATIVE_UNDER_CONTRACT": 3,
       "POSITIVE_BELOW_GATE": 1,

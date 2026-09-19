@@ -41,6 +41,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-shortest-path-profile-v5:A001",
       "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
       "type": "action_produced_evidence"
@@ -199,16 +209,34 @@
       "source": "TC-k1-pair-token-100k-s42",
       "target": "TB-k1-pair-token-500k-s42",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "reference_used"
     }
   ],
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
+    {
+      "id": "pcqm-gptrans-t-100k-v4-reference",
+      "type": "evidence"
+    },
     {
       "id": "TB-gptrans-pair-prenorm-500k-s42",
       "type": "trajectory"
     },
     {
       "id": "TB-k1-pair-token-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-flow-ablation-100k-s42",
       "type": "trajectory"
     },
     {
