@@ -3,7 +3,28 @@
   "confounding_warnings": [
     "no_strictly_comparable_trace_pair"
   ],
-  "excluded_traces": [],
+  "excluded_traces": [
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "the frozen reference trace is not registered as a canonical trace manifest in this trajectory",
+        "the stored per-epoch optimizer_steps and sample_presentations fields are increments rather than cumulative coordinates"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_recurrence",
+      "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "the frozen reference trace is not registered as a canonical trace manifest in this trajectory",
+        "the stored per-epoch optimizer_steps and sample_presentations fields are increments rather than cumulative coordinates"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_to_node",
+      "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
+    }
+  ],
   "false_promote_count": null,
   "false_promote_rate": null,
   "false_stop_count": null,
@@ -18,5 +39,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "insufficient_evidence",
-  "trace_count": 0
+  "trace_count": 2
 }

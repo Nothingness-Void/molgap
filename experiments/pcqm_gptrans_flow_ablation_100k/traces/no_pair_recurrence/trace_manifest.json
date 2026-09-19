@@ -1,0 +1,54 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TC-gptrans-flow-ablation-100k-s42",
+  "run_id": "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_recurrence",
+  "contract_ref": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+  "model_identity": "gptrans_t_core_12x256_pair32:no_pair_recurrence:sha256:04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+  "comparison_role": "candidate",
+  "x_axis": "epochs",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+  "weight_semantics": "EMA weights with decay 0.9999 for development evaluation and checkpoint selection",
+  "metric_semantics": "training and internal-development direct Gap MAE in eV",
+  "evaluation_role_identity": "internal_development_100000_150000",
+  "selection_semantics": "best internal-development EMA MAE across 60 frozen epochs",
+  "trace_artifact_ref": "kaggle://kernels/nothingnessvoid/molgap-gptrans-flow-ablation-s42/versions/1/gptrans_flow_ablation/no_pair_recurrence/training/trace.json#sha256=c8b024b4f9a143bf0fe767943a95aee5c2627bc279eda5b057c3c11a79b46c8d",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_flow_ablation_100k/results/acceptance_v1.json",
+  "comparability_identity": {
+    "scientific_contract": "MOLGAP-COMMON-V5-FINAL/molgap-pcqm-gptrans-flow-ablation-100k-v5",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:sha256:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_split_identity": "train[0:100000]-development[100000:150000]-drop_last",
+    "architecture_identity": "gptrans_t_core_12x256_pair32:no_pair_recurrence:5246817-parameters:source-fc329e0948810e5649823ab64e834c9b5d36b47a",
+    "optimizer_identity": "sha256:6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "lr_schedule_identity": "sha256:a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "target_transform_identity": "sha256:472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+    "precision_identity": "fp32:tf32-disabled:deterministic-algorithms",
+    "ema_semantics": "ema-decay-0.9999",
+    "evaluation_role_identity": "internal_development_100000_150000",
+    "selection_role_identity": "best-development-ema9999-60epochs",
+    "x_axis_semantics": "epochs",
+    "terminal_endpoint_identity": "epoch59:optimizer_steps46860:sample_presentations5998080",
+    "matched_architecture_required": true
+  },
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "the stored per-epoch optimizer_steps and sample_presentations fields are increments rather than cumulative coordinates",
+      "the frozen reference trace is not registered as a canonical trace manifest in this trajectory"
+    ]
+  },
+  "trace_fields": {
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": false,
+    "ema_dev_metric": true,
+    "checkpoint_identity": false
+  }
+}

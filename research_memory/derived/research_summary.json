@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 0,
-    "excluded": 0,
+    "excluded": 2,
     "status": "insufficient_evidence"
   },
   "cost": {
@@ -124,7 +124,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 11,
+      "count": 10,
       "severity": "INFO"
     },
     {
@@ -163,7 +163,7 @@
     "explicit_events": 1,
     "repeatedly_selected": 0
   },
-  "source_digest": "4ba7e811238d70229da282b18da944945c13dd1e7e434dd9f919807ef8e0eb95",
+  "source_digest": "b80a85fba98b3b083167a377b0e688f3d19bb0fef9760518830fdd6f5a66f84c",
   "trajectories": {
     "count": 11,
     "outcomes": {
