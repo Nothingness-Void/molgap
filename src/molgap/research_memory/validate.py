@@ -8,7 +8,11 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
-from molgap.v5_common import validate_v5_evidence_envelope
+from molgap.v5_common import (
+    validate_comparison_readiness,
+    validate_reference_bundle,
+    validate_v5_evidence_envelope,
+)
 
 from .discovery import DiscoveredRecords, discover_records
 from .schemas import (
@@ -76,6 +80,9 @@ def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
         role_refs = readiness.get("role_history_refs")
         if isinstance(role_refs, list):
             pointers.extend(role_refs)
+    comparison_readiness_ref = record.get("comparison_readiness_ref")
+    if isinstance(comparison_readiness_ref, str) and comparison_readiness_ref:
+        pointers.append(comparison_readiness_ref)
     return pointers
 
 
@@ -89,6 +96,8 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         "roles": [],
         "traces": [],
         "ready": [],
+        "comparison_readiness": [],
+        "reference_bundles": [],
     }
     ids: dict[str, dict[str, Path]] = {
         "evidence_id": {},
@@ -97,6 +106,7 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         "cost_event_id": {},
         "role_event_id": {},
         "package_id": {},
+        "reference_bundle_id": {},
     }
 
     def unique(kind: str, value: str, path: Path) -> None:
@@ -153,6 +163,28 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             ],
         )
         records["ready"].append((path, record))
+    for path in discovered.comparison_readiness:
+        record = validate_comparison_readiness(load_json(path))
+        records["comparison_readiness"].append((path, record))
+    for path in discovered.reference_bundles:
+        record = validate_reference_bundle(load_json(path))
+        unique("reference_bundle_id", record["reference_bundle_id"], path)
+        _validate_pointers(
+            root,
+            [
+                record["contract_ref"],
+                record["runtime_certificate_ref"],
+                record["row_manifest_ref"],
+                record["target_manifest_ref"],
+                record["trace_manifest_ref"],
+                record["role_history_ref"],
+                record["target_transform_asset_ref"],
+                record["cost_records_ref"],
+                record["acceptance_ref"],
+                record["decision_ref"],
+            ],
+        )
+        records["reference_bundles"].append((path, record))
 
     trajectory_by_id = {
         record["trajectory_id"]: record for _, record in records["trajectories"]
@@ -168,6 +200,9 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             raise ValueError(f"{path}:{field} contains missing IDs: {missing}")
 
     cost_ids = {record["cost_event_id"] for _, record in records["costs"]}
+    reference_bundle_ids = {
+        record["reference_bundle_id"] for _, record in records["reference_bundles"]
+    }
     for path, record in records["trajectories"]:
         missing_parents = sorted(
             set(record["state_at_start"]["parent_trajectory_ids"]) - set(trajectory_by_id)
@@ -245,6 +280,14 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
                 "readiness.native_cost_event_ids",
                 readiness["native_cost_event_ids"],
                 cost_ids,
+            )
+        comparison_ref = record.get("comparison_readiness_ref")
+        if isinstance(comparison_ref, str):
+            resolve_repo_pointer(root, comparison_ref)
+        reference_bundle_id = record.get("reference_bundle_id")
+        if reference_bundle_id is not None and reference_bundle_id not in reference_bundle_ids:
+            raise ValueError(
+                f"{path}:reference_bundle_id references missing ID: {reference_bundle_id}"
             )
         if record["record_mode"] == "prospective":
             expected_cost = record["hypothesis"]["expected_native_cost_ref"]

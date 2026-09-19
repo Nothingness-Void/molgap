@@ -27,7 +27,23 @@
       "type": "object",
       "required": ["optimizer_steps", "sample_presentations"]
     },
-    "backtest_eligibility": {"type": "object"}
+    "backtest_eligibility": {"type": "object"},
+    "checkpoint_identity": {"type": "string", "minLength": 1},
+    "trace_fields": {
+      "type": "object",
+      "properties": {
+        "optimizer_step": {"type": "boolean"},
+        "sample_presentations": {"type": "boolean"},
+        "epoch_or_pass": {"type": "boolean"},
+        "learning_rate": {"type": "boolean"},
+        "live_train_metric": {"type": "boolean"},
+        "live_dev_metric": {"type": "boolean"},
+        "ema_dev_metric": {"type": "boolean"},
+        "checkpoint_identity": {"type": "boolean"}
+      },
+      "required": ["optimizer_step", "sample_presentations", "epoch_or_pass", "learning_rate", "live_train_metric", "live_dev_metric", "ema_dev_metric", "checkpoint_identity"],
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }

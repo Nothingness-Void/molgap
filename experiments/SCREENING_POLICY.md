@@ -47,6 +47,12 @@ The v4 executable guard is
 v3 experiments continue to use `validate_paired_screen_contract`; they are not
 retroactively rewritten.
 
+V5 comparison claims additionally pass
+`molgap.comparison_readiness.validate_server_comparison_prelaunch`. This
+additive completeness gate makes weight/EMA semantics, target-transform asset,
+role history, trace, and aligned prediction artifacts explicit. It does not
+change a historical v3/v4 contract or authorize baseline reruns.
+
 Fixed PCQM identities and publication evidence are indexed under
 `platforms/_records/ims/pcqm_fixed_datasets_v1/` and
 `platforms/_records/kaggle/pcqm_fixed_datasets_v1/`; Kaggle2 mirror acceptance

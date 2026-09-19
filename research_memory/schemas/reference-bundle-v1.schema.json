@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-reference-bundle-v1",
+  "type": "object",
+  "required": [
+    "format", "reference_bundle_id", "reference_id", "contract_ref",
+    "architecture_config_identity", "source_commit_or_archive",
+    "checkpoint_identity", "runtime_certificate_ref", "prediction_manifest",
+    "row_manifest_ref", "target_manifest_ref", "trace_manifest_ref",
+    "role_history_ref", "target_transform_asset_ref", "cost_records_ref",
+    "acceptance_ref", "decision_ref", "comparison_identity", "stochasticity"
+  ],
+  "properties": {
+    "format": {"const": "molgap-reference-bundle-v1"},
+    "reference_bundle_id": {"type": "string", "minLength": 1},
+    "reference_id": {"type": "string", "minLength": 1},
+    "contract_ref": {"type": "string", "minLength": 1},
+    "architecture_config_identity": {"type": "string", "minLength": 1},
+    "source_commit_or_archive": {"type": "string", "minLength": 1},
+    "checkpoint_identity": {"type": "string", "minLength": 1},
+    "runtime_certificate_ref": {"type": "string", "minLength": 1},
+    "prediction_manifest": {"type": "object"},
+    "row_manifest_ref": {"type": "string", "minLength": 1},
+    "target_manifest_ref": {"type": "string", "minLength": 1},
+    "trace_manifest_ref": {"type": "string", "minLength": 1},
+    "role_history_ref": {"type": "string", "minLength": 1},
+    "target_transform_asset_ref": {"type": "string", "minLength": 1},
+    "cost_records_ref": {"type": "string", "minLength": 1},
+    "acceptance_ref": {"type": "string", "minLength": 1},
+    "decision_ref": {"type": "string", "minLength": 1},
+    "comparison_identity": {"type": "object"},
+    "stochasticity": {"type": "object"}
+  },
+  "additionalProperties": false
+}

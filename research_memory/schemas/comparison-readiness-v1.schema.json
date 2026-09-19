@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-comparison-readiness-v1",
+  "type": "object",
+  "required": [
+    "format", "candidate_id", "reference_id", "comparison_class",
+    "strict_ready", "strict_status", "declared_intervention_fields",
+    "matched_fields", "mismatched_fields", "missing_fields",
+    "missing_artifacts", "reference_prediction_status",
+    "row_alignment_status", "runtime_certificate_status", "role_status",
+    "trace_status", "stochasticity_status", "blocker_codes",
+    "decision_scope", "forbidden_claims", "recoverable_without_training",
+    "rerun_required_blockers"
+  ],
+  "properties": {
+    "format": {"const": "molgap-comparison-readiness-v1"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "reference_id": {"type": ["string", "null"]},
+    "comparison_class": {"enum": ["STRICT_CAUSAL", "PAIRED_ENDPOINT", "MATCHED_PREFIX", "CONTEXT_ONLY", "NO_COMPARISON"]},
+    "strict_ready": {"type": "boolean"},
+    "strict_status": {"type": "string", "minLength": 1},
+    "declared_intervention_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "matched_fields": {"type": "object"},
+    "mismatched_fields": {"type": "object"},
+    "missing_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "missing_artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "reference_prediction_status": {"type": "string", "minLength": 1},
+    "row_alignment_status": {"type": "string", "minLength": 1},
+    "runtime_certificate_status": {"type": "string", "minLength": 1},
+    "role_status": {"type": "string", "minLength": 1},
+    "trace_status": {"type": "string", "minLength": 1},
+    "stochasticity_status": {"type": "string", "minLength": 1},
+    "blocker_codes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "decision_scope": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "forbidden_claims": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "recoverable_without_training": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "rerun_required_blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "additionalProperties": false
+}

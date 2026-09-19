@@ -84,6 +84,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `runtime_profiling.py` | Stage timing for loader, transfer, compute, validation, archive, and allocation | Changing pre-contract performance diagnostics |
 | `screen_backtest.py` | Conservative same-contract trace gate for future low-cost screening ladders | Changing prospective early-stop calibration rules |
 | `v5_common.py` | Machine-neutral V5 evidence-envelope constants and fail-closed validation | Changing shared V5 evidence semantics used by RML, desktop, or server |
+| `comparison_readiness.py` | Machine-neutral V5 comparison classes, strict identity, reusable reference bundles, target-transform assets, stochasticity separation, and server prelaunch gate | Changing whether evidence supports causal, paired-endpoint, prefix-only, contextual, or no comparison claims |
 | `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules |
 | `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
 | `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |

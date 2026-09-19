@@ -537,3 +537,71 @@ Examples:
 A new model family, better early stopping, a different optimizer, or a new GPU platform is NOT by itself a reason for V6.
 
 Until explicit user authorization, V5 remains authoritative.
+
+## C26. Additive comparison-readiness amendment
+
+This section is a backward-compatible V5 amendment. It does not change machine
+ownership, the server ceiling, promotion topology, or protected-role authority.
+
+Every future scientific comparison declares one machine-readable class before
+training:
+
+- `STRICT_CAUSAL`: all explicit scientific identity fields and complete
+  candidate/reference evidence match except the predeclared intervention. Only
+  this class permits causal attribution to that intervention.
+- `PAIRED_ENDPOINT`: predictions and targets are aligned on the same evaluation
+  rows, but one or more training-recipe fields differ. Endpoint prediction,
+  paired bootstrap, and ensemble claims are allowed; mechanism causality is not.
+- `MATCHED_PREFIX`: terminal evidence is unavailable, but a common optimizer
+  step or sample-presentation prefix is strictly aligned. It supports trajectory
+  comparison, futility, and `STOP_FOR_COST`, not terminal superiority.
+- `CONTEXT_ONLY`: scalar or historical evidence, incomplete identity, or
+  unmatched conditions. It supplies context only.
+- `NO_COMPARISON`: no comparator is available.
+
+`comparison_readiness.json` is fail-closed. Missing fields are unknown, never
+matched. `strict_ready=true` requires `STRICT_CAUSAL`, no blockers, complete
+artifacts, aligned predictions, accepted runtime certificates, explicit role
+history, and a complete terminal trace. Architecture or mechanism differences
+must be listed in `declared_intervention_fields`; all undeclared differences are
+confounders.
+
+The explicit identity includes benchmark, dataset, role, row membership/order,
+features, target, seed, precision, TF32 and determinism, physical batch,
+accumulation, tail policy, optimizer and fused mode, schedule, loss, target
+transform asset, presentations, optimizer steps, endpoint selection,
+evaluation/selection roles, architecture/config, runtime-certificate scope,
+live/EMA weight semantics, EMA update semantics, and evaluation weight source.
+
+A reusable `reference_bundle.json` includes the contract, architecture/config,
+source, checkpoint, runtime certificate, aligned prediction/row/target
+manifests, trace, role history, target-transform asset, cost, acceptance, and
+decision. A scalar MAE is not a reusable bundle. Target transforms use one
+portable asset containing mean, standard deviation, variance convention,
+source-row hash, target hash, and asset hash; candidate and reference do not
+independently recompute it.
+
+Before future server architecture or mechanism training, the prelaunch gate
+must locate the comparator and bundle, compare every identity field, declare
+the intended difference, and emit `comparison_readiness_prelaunch.json`.
+Without `STRICT_CAUSAL`, the work is explicitly relabeled `diagnostic`,
+`transfer_study`, `delivery_experiment`, or `contextual_experiment`, or becomes
+`NO_TRAIN`. Missing reference evidence remains pending and never authorizes an
+automatic baseline rerun.
+
+Future prospective trajectories carry `comparison_class`,
+`comparison_readiness_ref`, `comparison_blockers`, and `reference_bundle_id`.
+Historical trajectories remain `retrospective_partial`; absent optimizer, EMA,
+role, or artifact facts are not reconstructed by inference.
+
+Every future scientific run emits role events for training membership,
+prediction input, label reads, metric computation, selection, and external
+submission as applicable. Every future training trace explicitly records which
+of optimizer step, sample presentations, epoch/pass, learning rate, live train
+metric, live dev metric, EMA dev metric, and checkpoint identity are present;
+unavailable fields remain unavailable.
+
+Row-bootstrap uncertainty and training stochasticity are distinct evidence.
+Only same-contract repeated runs can measure training stochasticity. A paired
+row bootstrap, or a policy threshold such as `0.003 eV`, cannot be relabeled as
+a measured training-stochasticity floor.
