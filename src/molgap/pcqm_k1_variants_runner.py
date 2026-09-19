@@ -474,8 +474,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as PAIR_TOKEN_PARAMETERS,
         check_mechanism as check_pair_token,
     )
+    from .k1_recurrent_pair_bridge import (
+        MODES as RECURRENT_PAIR_MODES,
+        PARAMETERS as RECURRENT_PAIR_PARAMETERS,
+        check_mechanism as check_recurrent_pair,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
-    recoverable_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
+    recoverable_modes = (
+        active_edge_modes
+        + EDGE_CONDITIONED_MODES
+        + GPSPP_LOCAL_MODES
+        + RECURRENT_PAIR_MODES
+    )
     import torch
 
     configure_fp32_determinism(SEED)
@@ -1080,6 +1090,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != PAIR_TOKEN_PARAMETERS[mode]
         ):
             raise RuntimeError("Pair-token parameter identity changed")
+    elif mode in RECURRENT_PAIR_MODES:
+        mechanism_checks = check_recurrent_pair(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != RECURRENT_PAIR_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Recurrent-pair parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1104,6 +1121,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.local_adapters.parameters())
     elif mode in PAIR_TOKEN_MODES:
         candidate_parameters = list(model.relation_token.parameters())
+    elif mode in RECURRENT_PAIR_MODES:
+        candidate_parameters = list(model.recurrent_pair_bridge.parameters())
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1273,12 +1292,14 @@ def train_arm(
     from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     from .k1_pair_token import MODES as PAIR_TOKEN_MODES
+    from .k1_recurrent_pair_bridge import MODES as RECURRENT_PAIR_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
         + EDGE_CONDITIONED_MODES
         + GPSPP_LOCAL_MODES
         + PAIR_TOKEN_MODES
+        + RECURRENT_PAIR_MODES
         + MOSE_MODES
     )
 
