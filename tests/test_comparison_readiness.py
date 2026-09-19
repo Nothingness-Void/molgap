@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 
 import pytest
 
@@ -13,6 +14,7 @@ from molgap.comparison_readiness import (
     assess_comparison_prelaunch,
     assess_comparison_readiness,
     reference_bundle_digest,
+    target_transform_asset_digest,
     validate_comparison_readiness,
     validate_reference_bundle,
     validate_stochasticity,
@@ -42,9 +44,27 @@ def _identity(architecture: str) -> dict:
             "ema_update_frequency": None,
             "weight_semantics": "live",
             "evaluation_weight_source": "live",
+            "target_transform_identity": "test-target-transform",
+            "target_transform_asset_sha256": _target_transform_asset()["asset_sha256"],
         }
     )
     return values
+
+
+def _target_transform_asset() -> dict:
+    asset = {
+        "format": "molgap-target-transform-asset-v1",
+        "asset_id": "test-target-transform",
+        "target_identity": "same-target_identity",
+        "mean": 0.0,
+        "std": 1.0,
+        "ddof": 0,
+        "variance_convention": "population",
+        "source_row_manifest_sha256": "4" * 64,
+        "target_sha256": "3" * 64,
+    }
+    asset["asset_sha256"] = target_transform_asset_digest(asset)
+    return asset
 
 
 def _side(architecture: str) -> dict:
@@ -112,11 +132,11 @@ def _reference_bundle() -> dict:
         "format": "molgap-reference-bundle-v1",
         "reference_bundle_id": "reference-bundle",
         "reference_id": "reference",
-        "contract_ref": "evidence/reference/contract.json",
+        "contract_ref": "experiments/reference/contract.json",
         "architecture_config_identity": "reference-arch",
         "source_commit_or_archive": "1" * 40,
         "checkpoint_identity": "checkpoint-reference",
-        "runtime_certificate_ref": "evidence/reference/runtime.json",
+        "runtime_certificate_ref": "experiments/reference/runtime.json",
         "prediction_manifest": {
             "prediction_sha256": "1" * 64,
             "source_idx_sha256": "2" * 64,
@@ -126,14 +146,14 @@ def _reference_bundle() -> dict:
             "row_count": 10,
             "unique_source_idx": 10,
         },
-        "row_manifest_ref": "evidence/reference/rows.json",
-        "target_manifest_ref": "evidence/reference/targets.json",
-        "trace_manifest_ref": "evidence/reference/trace.json",
-        "role_history_ref": "evidence/reference/roles.json",
-        "target_transform_asset_ref": "evidence/reference/target_transform.json",
-        "cost_records_ref": "evidence/reference/cost.json",
-        "acceptance_ref": "evidence/reference/acceptance.json",
-        "decision_ref": "evidence/reference/decision.md",
+        "row_manifest_ref": "experiments/reference/rows.json",
+        "target_manifest_ref": "experiments/reference/targets.json",
+        "trace_manifest_ref": "experiments/reference/trace.json",
+        "role_history_ref": "experiments/reference/roles.json",
+        "target_transform_asset_ref": "experiments/reference/target_transform.json",
+        "cost_records_ref": "experiments/reference/cost.json",
+        "acceptance_ref": "experiments/reference/acceptance.json",
+        "decision_ref": "experiments/reference/decision.md",
         "comparison_identity": _identity("reference-arch"),
         "stochasticity": {
             "row_bootstrap_uncertainty": {"status": "not_requested"},
@@ -147,6 +167,32 @@ def _reference_bundle() -> dict:
             },
         },
     }
+
+
+def _write_reference_bundle_tree(repo_root, bundle: dict):
+    evidence_root = repo_root / "experiments" / "reference"
+    evidence_root.mkdir(parents=True)
+    for pointer in (
+        bundle["contract_ref"],
+        bundle["runtime_certificate_ref"],
+        bundle["row_manifest_ref"],
+        bundle["target_manifest_ref"],
+        bundle["trace_manifest_ref"],
+        bundle["role_history_ref"],
+        bundle["cost_records_ref"],
+        bundle["acceptance_ref"],
+    ):
+        (repo_root / pointer).write_text("{}\n", encoding="utf-8")
+    (repo_root / bundle["decision_ref"]).write_text("decision\n", encoding="utf-8")
+    (repo_root / bundle["target_transform_asset_ref"]).write_text(
+        json.dumps(_target_transform_asset(), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    bundle_path = evidence_root / "reference_bundle.json"
+    bundle_path.write_text(
+        json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return bundle_path
 
 
 def _prelaunch(reference_bundle: dict | None = None) -> dict:
@@ -221,6 +267,7 @@ def test_ema_and_live_weights_are_not_strictly_equal():
             "evaluation_weight_source": "EMA",
         }
     )
+    candidate["trace_field_availability"]["ema_dev_metric"] = True
     result = _assess(candidate=candidate)
     assert result["comparison_class"] == "PAIRED_ENDPOINT"
     assert "weight_semantics" in result["mismatched_fields"]
@@ -340,11 +387,14 @@ def test_scalar_metric_cannot_validate_as_reference_bundle():
 
 def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tmp_path):
     bundle = _reference_bundle()
+    bundle_path = _write_reference_bundle_tree(tmp_path, bundle)
     prelaunch = _prelaunch(bundle)
     result = validate_server_scientific_prelaunch(
         comparison_prelaunch=prelaunch,
         experiment_purpose="architecture_comparison",
         reference_bundle=bundle,
+        repo_root=tmp_path,
+        reference_bundle_path=bundle_path,
     )
     assert result["gate"] == "PASS"
     digest = write_server_comparison_prelaunch(
@@ -352,6 +402,8 @@ def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tm
         comparison_prelaunch=prelaunch,
         experiment_purpose="architecture_comparison",
         reference_bundle=bundle,
+        repo_root=tmp_path,
+        reference_bundle_path=bundle_path,
     )
     assert len(digest) == 64
     assert (tmp_path / "comparison_readiness_prelaunch.json").is_file()
@@ -363,7 +415,50 @@ def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tm
             comparison_prelaunch=forged,
             experiment_purpose="architecture_comparison",
             reference_bundle=bundle,
+            repo_root=tmp_path,
+            reference_bundle_path=bundle_path,
         )
+
+    fabricated = _reference_bundle()
+    for field in (
+        "contract_ref",
+        "runtime_certificate_ref",
+        "row_manifest_ref",
+        "target_manifest_ref",
+        "trace_manifest_ref",
+        "role_history_ref",
+        "target_transform_asset_ref",
+        "cost_records_ref",
+        "acceptance_ref",
+        "decision_ref",
+    ):
+        fabricated[field] = fabricated[field].replace(
+            "experiments/reference/", "experiments/nonexistent/"
+        )
+    fabricated_path = tmp_path / "experiments" / "fabricated" / "reference_bundle.json"
+    fabricated_path.parent.mkdir(parents=True)
+    fabricated_path.write_text(
+        json.dumps(fabricated, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="required repository pointer is missing"):
+        validate_server_scientific_prelaunch(
+            comparison_prelaunch=_prelaunch(fabricated),
+            experiment_purpose="architecture_comparison",
+            reference_bundle=fabricated,
+            repo_root=tmp_path,
+            reference_bundle_path=fabricated_path,
+        )
+    fabricated_prelaunch_path = tmp_path / "fabricated" / "comparison_readiness_prelaunch.json"
+    with pytest.raises(ValueError, match="required repository pointer is missing"):
+        write_server_comparison_prelaunch(
+            fabricated_prelaunch_path,
+            comparison_prelaunch=_prelaunch(fabricated),
+            experiment_purpose="architecture_comparison",
+            reference_bundle=fabricated,
+            repo_root=tmp_path,
+            reference_bundle_path=fabricated_path,
+        )
+    assert not fabricated_prelaunch_path.exists()
 
 
 def test_causal_prelaunch_rejects_all_not_applicable_roles():

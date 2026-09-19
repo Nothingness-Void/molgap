@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from .comparison_readiness import validate_server_comparison_prelaunch
+from .evidence_pointers import validate_release_reference_bundle_evidence
 
 from .screen_policy import (
     REFERENCE_MATCH_FIELDS,
@@ -42,13 +43,23 @@ def validate_server_scientific_prelaunch(
     comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
     reference_bundle: Mapping[str, Any] | None,
+    repo_root: str | Path,
+    reference_bundle_path: str | Path,
 ) -> dict[str, Any]:
     """Release compute from the planned gate, never from post-run readiness."""
+
+    if reference_bundle is None:
+        raise ValueError("server scientific prelaunch requires a reference bundle")
+    validated_reference_bundle = validate_release_reference_bundle_evidence(
+        reference_bundle,
+        repo_root=repo_root,
+        reference_bundle_path=reference_bundle_path,
+    )
 
     gate = validate_server_comparison_prelaunch(
         comparison_prelaunch,
         experiment_purpose=experiment_purpose,
-        reference_bundle=reference_bundle,
+        reference_bundle=validated_reference_bundle,
     )
     return {
         **gate,
@@ -64,6 +75,8 @@ def write_server_comparison_prelaunch(
     comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
     reference_bundle: Mapping[str, Any] | None,
+    repo_root: str | Path,
+    reference_bundle_path: str | Path,
 ) -> str:
     """Atomically persist the mandatory prelaunch gate after validation."""
 
@@ -74,6 +87,8 @@ def write_server_comparison_prelaunch(
         comparison_prelaunch=comparison_prelaunch,
         experiment_purpose=experiment_purpose,
         reference_bundle=reference_bundle,
+        repo_root=repo_root,
+        reference_bundle_path=reference_bundle_path,
     )
     record = dict(comparison_prelaunch)
     payload = json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True) + "\n"

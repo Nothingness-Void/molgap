@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+
+from molgap.evidence_pointers import (
+    load_json_object as load_json,
+    resolve_repo_pointer,
+    verify_bound_artifact,
+)
 
 from molgap.v5_common import (
     reference_bundle_digest,
@@ -30,58 +33,11 @@ from .schemas import (
 )
 
 
-ALLOWED_REMOTE_SCHEMES = frozenset(
-    {"external", "git", "https", "http", "ims", "kaggle", "scnet"}
-)
-
-
-def load_json(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ValueError(f"JSON record must be an object: {path}")
-    return value
-
-
-def resolve_repo_pointer(repo_root: Path, pointer: str) -> Path | None:
-    parsed = urlparse(pointer)
-    if parsed.scheme in ALLOWED_REMOTE_SCHEMES:
-        return None
-    if parsed.scheme == "repo":
-        pointer = f"{parsed.netloc}{parsed.path}".lstrip("/")
-    elif parsed.scheme:
-        raise ValueError(f"unsupported pointer scheme: {pointer}")
-    path = (repo_root / pointer).resolve()
-    try:
-        path.relative_to(repo_root)
-    except ValueError as exc:
-        raise ValueError(f"repository pointer escapes root: {pointer}") from exc
-    if not path.is_file():
-        raise ValueError(f"required repository pointer is missing: {pointer}")
-    return path
-
-
 def _validate_pointers(root: Path, pointers: Iterable[str]) -> None:
     for pointer in pointers:
         if not isinstance(pointer, str) or not pointer.strip():
             raise ValueError("record pointer must be non-empty text")
         resolve_repo_pointer(root, pointer)
-
-
-def _verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
-    """Verify strict evidence through a repository-local immutable manifest."""
-
-    path = resolve_repo_pointer(root, pointer)
-    if path is None:
-        raise ValueError(
-            "strict observed evidence must bind a repository-local retrievable "
-            f"artifact or manifest: {pointer}"
-        )
-    actual = hashlib.sha256(path.read_bytes()).hexdigest()
-    if actual != expected_sha256:
-        raise ValueError(
-            f"bound artifact SHA mismatch for {pointer}: "
-            f"expected {expected_sha256}, found {actual}"
-        )
 
 
 def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
@@ -194,7 +150,7 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
     for path in discovered.comparison_readiness:
         record = validate_comparison_readiness(
             load_json(path),
-            evidence_verifier=lambda pointer, digest: _verify_bound_artifact(
+            evidence_verifier=lambda pointer, digest: verify_bound_artifact(
                 root, pointer, digest
             ),
         )
