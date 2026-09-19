@@ -663,3 +663,40 @@ strings.
 Future reusable references consume a discovered and validated
 `experiments/**/target_transform.json`. Its canonical digest, target identity
 and bundle identity must agree before prospective strict reuse.
+
+## S21. Prospective evidence-completeness gate
+
+Historical RML gaps do not authorize blanket retraining. Recover facts only
+from retained immutable artifacts, preserve unavailable facts as unavailable,
+and keep the historical claim at the evidence class it actually supports. A
+missing cost measurement, trace, role event, prediction bundle, or modern V5
+sidecar is not by itself a scientific reason to rerun a closed experiment. If
+an old result is later needed for a stronger prospective claim, first recover
+what is directly verifiable; otherwise either narrow the claim or open a newly
+authorized prospective run under the then-current contract.
+
+Every future server-owned training run must be evidence-complete by design.
+Before compute release, its prospective trajectory and protocol identify the
+question, owner, scientific contract, immutable source/config, actual reusable
+reference bundle, portable target-transform asset, declared intervention,
+role-applicability plan, trace plan, runtime qualification, budget ceiling,
+atomic checkpoint/resume plan, and expected native-cost units. The validated
+`comparison_readiness_prelaunch.json` is written before submission for causal
+comparison purposes; noncausal purposes retain their explicit noncausal
+classification and cannot acquire a `STRICT_CAUSAL` claim.
+
+During execution, durable outputs must preserve the applicable role events;
+optimizer step, sample presentations, epoch/pass, learning rate, live metrics,
+checkpoint identity and EMA metric when required by the declared trace plan;
+atomic checkpoints and resume cursor; and native queue, wall, CPU and device
+cost measurements or an explicit `not_applicable` declaration. Missing
+measurements are never replaced by an unmarked estimate.
+
+Before a terminal scientific decision, collection and acceptance must bind the
+source/config, checkpoint, prediction, source-index/row, target, runtime,
+trace, role, target-transform, cost, acceptance and decision artifacts through
+repository-local manifests and SHA-256 digests. The run then emits observed
+`comparison_readiness.json`, updates its trajectory result and decision, and
+passes RML validation, rebuild and frozen-output checks. A failed or partial
+run records the same evidence classes that actually exist; it must not invent
+terminal artifacts merely to satisfy this checklist.
