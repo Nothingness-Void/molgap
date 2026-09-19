@@ -45,7 +45,15 @@ contract.
 
 ## Discovery state
 
-No server-owned GPU screen is active. The K1 molecule-context MoSE gate
+No server-owned GPU screen is active. The retained K1-v4 100K artifacts now
+have a repository-bound V5 reference bundle and portable target-transform
+asset. Recovery verified the fixed cache, row/target identities, aligned 50K
+predictions, model/checkpoint hashes, runtime, roles, cost and trace without
+training or model inference. Training stochasticity remains unavailable.
+Authority:
+`experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json`.
+
+The K1 molecule-context MoSE gate
 completed and passed mechanical acceptance, but reached `0.1419007480 eV`
 versus immutable K1-v4 at `0.1413736343 eV` and the positive selective-MoSE
 predecessor at `0.1393276304 eV`. Its paired interval crossed zero and its best

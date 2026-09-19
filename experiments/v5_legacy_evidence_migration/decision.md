@@ -46,3 +46,15 @@ The first migrated result is the positive PairToken 100K comparison in
 `../pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json`. It accepts the
 strict V4 comparison evidence under the V5 state model but does not create a
 new experiment, independent holdout, scale result, or desktop handoff.
+
+## K1-v4 reference recovery
+
+The retained K1-v4 100K reference was subsequently recovered into a reusable
+repository-bound V5 bundle without training or model inference. The recovery
+verified the fixed-cache shard hashes and row order, recomputed the original
+100K sample target transform, bound the aligned 50K prediction payload, and
+verified the retained model, checkpoint, runtime certificate, role events,
+cost record and trace. The compact authority is
+`k1_v4_100k_reference/reference_bundle.json`; large tensors remain in ignored
+platform records. Training stochasticity remains explicitly unavailable and
+was not inferred from platform or account identity.

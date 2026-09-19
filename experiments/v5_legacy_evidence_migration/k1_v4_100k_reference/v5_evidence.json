@@ -18,7 +18,9 @@
     "pointers": [
       "experiments/pcqm_k1_variants_100k/training_contract.json",
       "experiments/pcqm_k1_variants_100k/decision.md",
-      "experiments/v5_legacy_evidence_migration/inventory_summary.json"
+      "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json",
+      "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_acceptance.json"
     ]
   },
   "artifacts": [
@@ -43,7 +45,7 @@
   },
   "migration": {
     "migrated_at": "2026-09-19",
-    "verification_scope": "Committed decision plus local payload and trace SHA256 verification",
+    "verification_scope": "Committed decision plus local payload, model, checkpoint, fixed-cache, target-transform, row, target, runtime, role, cost and trace verification",
     "training_executed": false,
     "inference_executed": false,
     "scientific_reinterpretation": false

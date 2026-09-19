@@ -14,8 +14,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-V5-REFERENCE-RECOVERY | Reconstruct the reusable K1-v4 V5 bundle and target-transform identity from retained immutable artifacts without training; do not infer stochasticity from Kaggle account identity | Release validator accepts the repository-bound reference evidence, or candidate compute remains blocked |
-| P2 | C-V5-ROUTE-PORTFOLIO | After P1, use Kaggle2/Kaggle3 for isolated functional-group-token and node-adaptive PairToken-return questions; Kaggle1 remains desktop-only | Each route has frozen source/config, complete prospective RML/prelaunch evidence and one terminal decision |
+| P1 | C-V5-NODE-ADAPTIVE-PAIRTOKEN | Freeze and release one node-adaptive PairToken-return screen only after its complete prospective RML/prelaunch evidence passes against the recovered K1-v4 bundle; Kaggle1 remains desktop-only | One terminal paired decision with complete trace, roles, cost, runtime, artifacts and subgroup attribution |
+| P2 | C-V5-FUNCTIONAL-GROUP-TOKEN | Keep the chemistry-defined sparse hierarchy as reserve; release only after P1 attribution identifies missing representation rather than return allocation | Separate frozen source/config and complete prospective RML/prelaunch evidence, or remain unspent |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
