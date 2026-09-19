@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-v5-comparison-audit-v2",
+  "type": "object",
+  "required": ["format", "audit_date", "training_executed", "inference_executed", "protected_role_accessed", "strict_ready_count", "entries", "summary", "authority"],
+  "properties": {
+    "format": {"const": "molgap-v5-comparison-audit-v2"},
+    "audit_date": {"type": "string", "minLength": 1},
+    "training_executed": {"const": false},
+    "inference_executed": {"const": false},
+    "protected_role_accessed": {"const": false},
+    "strict_ready_count": {"type": "integer", "minimum": 0},
+    "entries": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+    "summary": {"type": "object"},
+    "authority": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": [
+        "comparison_id", "candidate", "reference", "comparison_class",
+        "historical_comparison_class", "prospective_reuse_status",
+        "requires_new_prospective_experiment", "strict_ready",
+        "permitted_claims", "forbidden_claims",
+        "recoverable_without_training", "rerun_required"
+      ],
+      "properties": {
+        "comparison_id": {"type": "string", "minLength": 1},
+        "candidate": {"type": "string", "minLength": 1},
+        "reference": {"type": ["string", "null"]},
+        "comparison_class": {"enum": ["STRICT_CAUSAL", "PAIRED_ENDPOINT", "MATCHED_PREFIX", "CONTEXT_ONLY", "NO_COMPARISON"]},
+        "historical_comparison_class": {
+          "enum": [
+            "STRICT_CAUSAL_UNDER_ORIGINAL_CONTRACT",
+            "PAIRED_ENDPOINT_UNDER_ORIGINAL_CONTRACT",
+            "MATCHED_PREFIX_UNDER_ORIGINAL_CONTRACT",
+            "CONTEXT_ONLY_UNDER_ORIGINAL_EVIDENCE",
+            "NO_COMPARISON"
+          ]
+        },
+        "prospective_reuse_status": {
+          "enum": ["READY", "INCOMPLETE_RECOVERABLE", "NOT_COMPATIBLE", "UNAVAILABLE"]
+        },
+        "requires_new_prospective_experiment": {"type": "boolean"},
+        "strict_ready": {"type": "boolean"},
+        "permitted_claims": {"type": "array", "items": {"type": "string"}},
+        "forbidden_claims": {"type": "array", "items": {"type": "string"}},
+        "recoverable_without_training": {"type": "array", "items": {"type": "string"}},
+        "rerun_required": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -3,9 +3,11 @@
 Decision date: 2026-09-19
 
 No audited 500K comparison is a reusable prospective `STRICT_CAUSAL` reference
-under the additive completeness gate. This does not invalidate the original
-within-job decisions. It prevents stronger claims than their retained evidence
-supports.
+under the additive completeness gate. Historical comparison class and
+prospective reuse status are recorded independently: an experiment may remain
+strictly valid under its original contract while being incompatible or
+incomplete for a new V5 run. This prevents stronger future claims without
+rewriting original decisions.
 
 The K1 500K paired run remains valid `PAIRED_ENDPOINT` evidence. Its original
 paired-v3 decision remains preserved as history, but this additive audit does
@@ -23,9 +25,13 @@ incomplete. Its failed absolute material gate remains valid.
 
 GPTrans Pair PreNorm 500K is `MATCHED_PREFIX`: matched epochs 20–36 support the
 recorded `STOP_FOR_COST`, while terminal architecture superiority is
-unavailable. The 100K Pair PreNorm/“Pair Update Norm” result and the audited K1
-100K mechanism experiments retain paired endpoint evidence, but their old V4
-certificates are not silently promoted into complete V5 reusable bundles.
+unavailable. The server 100K result is strictly **Pair PreNorm** from
+`experiments/pcqm_gptrans_relation_flow/`: `0.1535023336 eV`, gain
+`0.0031248707 eV`. It is not the later desktop Pair Update Norm result, whose
+exact evidence has not been imported into server authority. Pair PreNorm and
+the audited K1 100K mechanisms retain their original endpoint evidence, but
+their old V4 certificates are not silently promoted into complete V5 reusable
+bundles.
 
 Most artifact blockers can be investigated without training by recovering
 retained predictions, manifests, traces and certificates. Recipe mismatches,
