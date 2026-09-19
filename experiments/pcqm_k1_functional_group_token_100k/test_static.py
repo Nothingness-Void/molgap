@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import torch
 from torch_geometric.data import Data
@@ -24,7 +25,13 @@ def test_contract_and_registry_match() -> None:
     assert config["added_parameters"] == ADDED_PARAMETERS == 42_112
     assert config["expected_parameters"] == PARAMETERS[MODE] == 3_700_929
     assert config["external_features"] is False
-    assert "PENDING_CPU_ACCEPTANCE" in (ROOT / "training_contract.json").read_text()
+    contract = json.loads((ROOT / "training_contract.json").read_text())
+    assert contract["functional_group_sidecar_aggregate_sha256"] == (
+        "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b"
+    )
+    assert contract["materiality_rule"]["rule"] == (
+        "max-of-prospectively-supported-components"
+    )
 
 
 def test_graph_rules_use_existing_ogb_tensors() -> None:

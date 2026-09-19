@@ -3,7 +3,8 @@
   "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
   "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
   "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
-  "functional_group_sidecar_aggregate_sha256": "PENDING_CPU_ACCEPTANCE",
+  "functional_group_sidecar_aggregate_sha256": "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b",
+  "functional_group_contract_sha256": "dde86838f2d8e42d6f8c477bd04278234d7cb02b7240a5395291ce10ae9cf2d8",
   "roles": {
     "train": [0, 100000],
     "development": [100000, 150000],
@@ -44,5 +45,12 @@
     "geometry_model_input": false,
     "external_features": false,
     "initialization_policy": "nested-function-zero-return"
+  },
+  "materiality_rule": {
+    "rule": "max-of-prospectively-supported-components",
+    "policy_floor_eV": 0.003,
+    "measured_training_stochasticity_eV": null,
+    "effective_gate_eV": 0.003,
+    "reason": "no matched independent-repeat stochasticity estimate is available"
   }
 }
