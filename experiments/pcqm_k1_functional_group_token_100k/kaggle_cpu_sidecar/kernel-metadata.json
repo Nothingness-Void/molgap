@@ -1,0 +1,17 @@
+{
+  "id": "kaseichou/molgap-k1-functional-group-sidecar-v1",
+  "title": "MolGap K1 Functional Group Sidecar V1",
+  "code_file": "run_sidecar.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "kaseichou/molgap-k1-functional-group-token-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

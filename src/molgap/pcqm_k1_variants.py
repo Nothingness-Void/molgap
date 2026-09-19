@@ -98,6 +98,21 @@ ARCHITECTURE_CONFIGS = {
         "initialization_policy": "nested-function",
         "geometry": False,
     },
+    "neural_atom_k1_functional_group_token": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "layer6-sparse-atom-functional-group-token-exchange",
+        "target_layer": 6,
+        "group_channels": 64,
+        "group_types": 12,
+        "group_source": "deterministic-local-rules-over-existing-ogb-x-and-edge-attr",
+        "return_allocation": "only-atoms-bearing-the-group-membership",
+        "added_parameters": 42_112,
+        "expected_parameters": 3_700_929,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -837,6 +852,10 @@ def make_encoder(mode: str):
     if mode in PAIR_TOKEN_MODES:
         from .k1_pair_token import make_encoder as make_pair_token
         return make_pair_token(mode)
+    from .k1_functional_group_token import MODES as FUNCTIONAL_GROUP_MODES
+    if mode in FUNCTIONAL_GROUP_MODES:
+        from .k1_functional_group_token import make_encoder as make_functional_group
+        return make_functional_group(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

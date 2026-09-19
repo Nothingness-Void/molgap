@@ -304,6 +304,15 @@ def _development_loader(graphs):
 
 
 def _forward(model, batch):
+    if getattr(model, "requires_functional_group_membership", False):
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+            batch.functional_group_y,
+        ).view(-1)
     return model(
         batch.x,
         batch.edge_index,
@@ -345,7 +354,10 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
 
 def _batch_sha256(batch) -> str:
     digest = hashlib.sha256()
-    for name in ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx"):
+    names = ["x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx"]
+    if hasattr(batch, "functional_group_y"):
+        names.append("functional_group_y")
+    for name in names:
         value = getattr(batch, name).detach().cpu().contiguous()
         digest.update(name.encode("ascii") + b"\0")
         digest.update(str(value.dtype).encode("ascii") + b"\0")
@@ -474,8 +486,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as PAIR_TOKEN_PARAMETERS,
         check_mechanism as check_pair_token,
     )
+    from .k1_functional_group_token import (
+        MODES as FUNCTIONAL_GROUP_MODES,
+        PARAMETERS as FUNCTIONAL_GROUP_PARAMETERS,
+        check_mechanism as check_functional_group,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
-    recoverable_modes = active_edge_modes + EDGE_CONDITIONED_MODES + GPSPP_LOCAL_MODES
+    recoverable_modes = (
+        active_edge_modes
+        + EDGE_CONDITIONED_MODES
+        + GPSPP_LOCAL_MODES
+        + FUNCTIONAL_GROUP_MODES
+    )
     import torch
 
     configure_fp32_determinism(SEED)
@@ -1080,6 +1102,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != PAIR_TOKEN_PARAMETERS[mode]
         ):
             raise RuntimeError("Pair-token parameter identity changed")
+    elif mode in FUNCTIONAL_GROUP_MODES:
+        mechanism_checks = check_functional_group(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != FUNCTIONAL_GROUP_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Functional-group-token parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1104,6 +1133,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.local_adapters.parameters())
     elif mode in PAIR_TOKEN_MODES:
         candidate_parameters = list(model.relation_token.parameters())
+    elif mode in FUNCTIONAL_GROUP_MODES:
+        candidate_parameters = list(model.functional_group_token.parameters())
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1273,12 +1304,14 @@ def train_arm(
     from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     from .k1_pair_token import MODES as PAIR_TOKEN_MODES
+    from .k1_functional_group_token import MODES as FUNCTIONAL_GROUP_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
         + EDGE_CONDITIONED_MODES
         + GPSPP_LOCAL_MODES
         + PAIR_TOKEN_MODES
+        + FUNCTIONAL_GROUP_MODES
         + MOSE_MODES
     )
 
@@ -1292,6 +1325,13 @@ def train_arm(
     configure_fp32_determinism(SEED)
     root, manifest = find_fixed_cache()
     roles = load_roles(root, manifest)
+    functional_group_manifest = None
+    if mode in FUNCTIONAL_GROUP_MODES:
+        from .pcqm_functional_group_sidecar import attach_functional_group_roles
+
+        roles, functional_group_manifest = attach_functional_group_roles(
+            roles, manifest
+        )
     mose_manifest = None
     if mode in MOSE_MODES:
         from .pcqm_mose import attach_mose_roles
@@ -1309,6 +1349,16 @@ def train_arm(
     )
     target_stats = runtime["target_stats"]
     preflight = _architecture_preflight(mode, roles, target_stats)
+    if functional_group_manifest is not None:
+        preflight["functional_group_sidecar"] = {
+            "aggregate_sha256": functional_group_manifest["aggregate_sha256"],
+            "contract_sha256": functional_group_manifest[
+                "functional_group_contract_sha256"
+            ],
+            "derived_only_from_existing_ogb_graph_features": True,
+            "gap_labels_read": False,
+            "protected_roles_read": False,
+        }
     atomic_json(output / "preflight.json", preflight)
     configure_fp32_determinism(SEED)
     model = make_encoder(mode).to("cuda")
@@ -1498,6 +1548,19 @@ def train_arm(
             "feature_transform_at_training": mose_manifest[
                 "feature_transform_at_training"
             ],
+        }
+    if functional_group_manifest is not None:
+        record["functional_group_sidecar"] = {
+            "format": functional_group_manifest["format"],
+            "aggregate_sha256": functional_group_manifest["aggregate_sha256"],
+            "functional_group_contract_sha256": functional_group_manifest[
+                "functional_group_contract_sha256"
+            ],
+            "fixed_geometry_aggregate_sha256": functional_group_manifest[
+                "fixed_geometry_aggregate_sha256"
+            ],
+            "gap_labels_read": False,
+            "protected_roles_read": False,
         }
     if mode == "neural_atom_k1_v4":
         record["contract"].update(
