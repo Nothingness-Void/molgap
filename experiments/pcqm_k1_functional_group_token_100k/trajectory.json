@@ -18,7 +18,7 @@
     {
       "action_id": "A002",
       "attempt_ids": [
-        "candidate-v1-planned"
+        "candidate-v1"
       ],
       "cost_event_ids": [
         "cost-TC-k1-functional-group-token-100k-s42-training"
@@ -28,10 +28,10 @@
         "experiments/pcqm_k1_functional_group_token_100k/source_config.json"
       ],
       "run_ids": [
-        "kaseichou/molgap-k1-functional-group-token-s42:v1-planned"
+        "kaseichou/molgap-k1-functional-group-token-s42:v1"
       ],
       "source_commit": "5d1769c7d614b6ee1b109d5a83fb278aacef91be",
-      "type": "planned_candidate_only_seed42_100k_screen"
+      "type": "submitted_candidate_only_seed42_100k_screen"
     }
   ],
   "comparison_blockers": [],
@@ -40,7 +40,7 @@
   "decision": {
     "decision_ref": "experiments/pcqm_k1_functional_group_token_100k/STATUS.md",
     "next_allowed_actions": [
-      "submit exactly one frozen candidate job after packaging checks"
+      "collect and validate terminal evidence from the exact bound job"
     ],
     "outcome": "ACTIVE",
     "reopen_conditions": [

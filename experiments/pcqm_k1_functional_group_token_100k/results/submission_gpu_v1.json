@@ -1,0 +1,22 @@
+{
+  "format": "molgap-remote-submission-v1",
+  "submitted_at_utc": "2026-09-19T20:49:17.4642178Z",
+  "owner": "server",
+  "platform": "kaggle2",
+  "kernel": "kaseichou/molgap-k1-functional-group-token-s42",
+  "version": 1,
+  "initial_status": "RUNNING",
+  "source_dataset": "kaseichou/molgap-k1-functional-group-token-source",
+  "source_commit": "5d1769c7d614b6ee1b109d5a83fb278aacef91be",
+  "source_archive_sha256": "ae4739fe39e0473cab95badc87d2cf567e2924870777ad036d60c0779c3de8a4",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "sidecar_dataset": "kaseichou/molgap-fg-incidence-42a40f",
+  "sidecar_aggregate_sha256": "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b",
+  "comparison_prelaunch": "PRELAUNCH_STRICT_PLANNED",
+  "comparison_blockers": [],
+  "single_candidate": true,
+  "successor_compute_pre_authorized": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
