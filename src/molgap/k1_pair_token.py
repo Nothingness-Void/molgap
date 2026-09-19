@@ -5,17 +5,21 @@ import math
 
 
 MODE = "neural_atom_k1_pair_token"
-MODES = (MODE,)
+NODE_RETURN_MODE = "neural_atom_k1_pair_token_node_return"
+MODES = (MODE, NODE_RETURN_MODE)
 HIDDEN_CHANNELS = 192
 PAIR_CHANNELS = 32
 TARGET_LAYER = 6
 ADDED_PARAMETERS = 22_848
-PARAMETERS = {MODE: 3_681_665}
+PARAMETERS = {
+    MODE: 3_681_665,
+    NODE_RETURN_MODE: 3_687_905,
+}
 
 
 class _PairTokenFactory:
     @staticmethod
-    def make():
+    def make(mode: str):
         import torch
         import torch.nn as nn
         import torch.nn.functional as functional
@@ -24,6 +28,7 @@ class _PairTokenFactory:
         class PairToken(nn.Module):
             def __init__(self):
                 super().__init__()
+                self.mode = mode
                 self.source = nn.Linear(HIDDEN_CHANNELS, PAIR_CHANNELS)
                 self.target = nn.Linear(HIDDEN_CHANNELS, PAIR_CHANNELS)
                 self.pair_norm = nn.LayerNorm(PAIR_CHANNELS)
@@ -39,6 +44,9 @@ class _PairTokenFactory:
                     PAIR_CHANNELS, HIDDEN_CHANNELS, bias=False
                 )
                 nn.init.zeros_(self.return_projection.weight)
+                if mode == NODE_RETURN_MODE:
+                    self.node_query = nn.Linear(HIDDEN_CHANNELS, PAIR_CHANNELS)
+                    self.return_norm = nn.LayerNorm(PAIR_CHANNELS)
 
             def compute_update(self, hidden, batch):
                 dense, valid = to_dense_batch(hidden, batch)
@@ -52,13 +60,19 @@ class _PairTokenFactory:
                 assignment = torch.softmax(logits.flatten(1), dim=-1).reshape_as(logits)
                 token = torch.einsum("bij,bijd->bd", assignment, pair)
                 token = self.token_norm(token + self.token_ffn(token))
-                graph_update = self.return_projection(token)
-                update = graph_update[batch]
+                if self.mode == NODE_RETURN_MODE:
+                    return_features = self.return_norm(
+                        functional.silu(self.node_query(hidden) + token[batch])
+                    )
+                else:
+                    return_features = token[batch]
+                update = self.return_projection(return_features)
                 return update, {
                     "assignment": assignment,
                     "pair_valid": pair_valid,
                     "valid": valid,
                     "token": token,
+                    "return_features": return_features,
                 }
 
             def forward(self, hidden, batch):
@@ -69,7 +83,7 @@ class _PairTokenFactory:
 
 
 def make_encoder(mode: str):
-    if mode != MODE:
+    if mode not in MODES:
         raise ValueError(mode)
 
     import torch.nn as nn
@@ -80,7 +94,7 @@ def make_encoder(mode: str):
         def __init__(self):
             super().__init__()
             self.base = make_k1("neural_atom_k1")
-            self.relation_token = _PairTokenFactory.make()
+            self.relation_token = _PairTokenFactory.make(mode)
 
         def forward(self, x, edge_index, edge_attr, batch, random_walk_pe):
             return self.base.head(
@@ -158,6 +172,13 @@ def check_mechanism(model, batch) -> dict:
             torch.count_nonzero(update).item() == 0
         ),
     }
+    if model.relation_token.mode == NODE_RETURN_MODE:
+        checks.update(
+            {
+                "return_allocation": "node-conditioned-current-state-plus-relation-token",
+                "generated_return_normalization": "per-node-across-pair-channels",
+            }
+        )
     required = {
         "valid_pair_count_exact",
         "assignment_mass_one",
