@@ -1,0 +1,57 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+  "track": "B",
+  "scope": "historical_100k_reference",
+  "legacy_contract": "molgap-pcqm-gptrans-t-100k-reference-contract-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "durable_remote_verified",
+    "comparison_status": "reference_accepted_contextual_comparison_only",
+    "scientific_status": "frozen_reference_closed_for_100k_promotion",
+    "transfer_status": "reusable_reference",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+      "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json",
+      "experiments/pcqm_gptrans_t_100k_v4/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "kaggle://kernels/kaseichou/molgap-pcqm-gptrans-t-v4-s42/versions/4/pcqm_gptrans_t_100k_v4/training/best_model.pt",
+      "sha256": "f4da386ae1e32f6953b645c0bdb8e208aaba1f1d7b8ebec132776bd63c22d6ab",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "aligned_development_predictions",
+      "locator": "kaggle://kernels/kaseichou/molgap-pcqm-gptrans-t-v4-s42/versions/4/pcqm_gptrans_t_100k_v4/training/development_predictions.pt",
+      "sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "frozen_reference",
+      "locator": "kaggle://kernels/kaseichou/molgap-pcqm-gptrans-t-v4-s42/versions/4/pcqm_gptrans_t_100k_v4/training/frozen_reference.json",
+      "sha256": "c523e000925ce3bfab35e01c3e8ca6e7ce27a7876d4cdf7c012d6ccd398436aa",
+      "availability": "durable_remote_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-17",
+    "verification_scope": "Kaggle kernel status, artifact retrieval, and accepted SHA256",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

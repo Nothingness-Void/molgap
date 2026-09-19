@@ -44,6 +44,12 @@ def run_checks(initial_state: Path, variant: str) -> dict:
     assert prediction.shape == (2, 1) and bool(torch.isfinite(prediction).all())
     prediction.square().mean().backward()
     assert all(p.grad is None or bool(torch.isfinite(p.grad).all()) for p in model.parameters())
+    mechanism = None
+    if variant in ("no_pair_to_node", "no_pair_recurrence"):
+        from .gptrans_flow_ablation import check_flow_mechanism
+
+        mechanism = check_flow_mechanism(variant)
     return {"accepted": True, "variant": variant, "parameters": parameters,
             "initial_state_matches_reference": True, "finite_backward": True,
-            "padding_and_offset_checks_passed": True, "synthetic_data_only": True}
+            "padding_and_offset_checks_passed": True, "synthetic_data_only": True,
+            "flow_mechanism_check": mechanism}

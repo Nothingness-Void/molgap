@@ -13,6 +13,7 @@ from pathlib import Path
 
 MODES = tuple(json.loads(os.environ.get("MOLGAP_SCREEN_MODES", '["memory_value", "memory_message"]')))
 ROOT = Path(os.environ.get("MOLGAP_SCREEN_ROOT", "/kaggle/working/gptrans_memory_readback"))
+PLATFORM_ID = os.environ.get("MOLGAP_PLATFORM_ID", "kaggle2-t4")
 MAX_WALL_SECONDS = 10 * 3600
 
 
@@ -65,7 +66,7 @@ def child(stage, variant, context):
     root = ROOT / variant
     for key in ("dataset_root", "manifest_path", "source_archive", "initial_state_path"):
         context[key] = Path(context[key])
-    common = {**context, "variant": variant, "platform_id": "kaggle2-t4"}
+    common = {**context, "variant": variant, "platform_id": PLATFORM_ID}
     import torch
     if torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
         raise RuntimeError("Each candidate must see exactly one T4")
