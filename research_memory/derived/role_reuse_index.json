@@ -321,7 +321,7 @@
       "role_identity": null,
       "role_name": "internal_development",
       "semantics": "coarse_historical",
-      "state": "untouched"
+      "state": "consumed"
     },
     {
       "evidence_id": "pcqm-k1-pair-token-node-return-100k-s42",
@@ -394,7 +394,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 19,
+  "explicit_role_event_count": 27,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -435,9 +435,58 @@
         "trajectory_id": "TC-k1-pair-token-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-prediction-input",
+        "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
       }
@@ -477,6 +526,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
       },
       {
         "access_kind": "training_membership",
@@ -628,9 +684,58 @@
         "trajectory_id": "TC-k1-pair-token-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-prediction-input",
+        "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
       }
@@ -690,9 +795,58 @@
         "trajectory_id": "TC-k1-pair-token-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-v4-100k-reference-s42-prediction-input",
+        "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
       }
@@ -732,6 +886,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-pair-token-node-return-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
       },
       {
         "access_kind": "training_membership",

@@ -45,13 +45,13 @@ contract.
 
 ## Discovery state
 
-One server-owned GPU screen is active: Kaggle3 version 2 of the node-adaptive
-PairToken-return candidate. Its prospective RML and strict release prelaunch
-passed against the recovered K1-v4 V5 bundle; version 1 was an infrastructure-
-only cache-mount failure. Version 2 keeps the scientific contract unchanged and
-is bound to the existing Luna monitor. No scientific claim is permitted until
-the complete terminal RML package passes no-inference acceptance. Authority:
-`experiments/pcqm_k1_pair_token_node_return_100k/STATUS.md`.
+No server-owned GPU screen is active. The node-adaptive PairToken-return screen
+completed with strict V5 evidence. It improved immutable K1-v4 by
+`0.0017446578 eV`, and its paired interval was entirely favorable, but it missed
+the prospectively frozen `0.003 eV` material gate. Return redistribution is
+therefore directionally useful but insufficient; extra seeds, scale-up and
+further return-only variants are closed. Authority:
+`experiments/pcqm_k1_pair_token_node_return_100k/decision.md`.
 
 The retained K1-v4 100K artifacts have a repository-bound V5 reference bundle
 and portable target-transform asset. Recovery verified the fixed cache,

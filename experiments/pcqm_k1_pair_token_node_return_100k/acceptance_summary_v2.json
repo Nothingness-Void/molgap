@@ -1,0 +1,37 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "d876cde8f2fb4bd337c7658d78dafeb04f404d246f3434343b89eba39f8cfe07",
+    "best_development_payload.pt": "9d1b8cfcc5a761610f7896de2f5be8066242744511e936dca69dac55414bd2ad",
+    "best_model.pt": "ceea899009f0f3536b45e541ec658afb195dc210e2663abe7899919dc4871592",
+    "last_checkpoint.pt": "ed210bf9b271da9f665ee4dbcac8c06ae267484f964091b952978097f6e56134",
+    "preflight.json": "90992508a399412a61835e054c0bd24fbdc355abb1722e9a072ddf47c8ebbba8",
+    "recovery_epoch_10.tar": "70f46263c2b75689f99816166d8ed1f5834df5aa0a6da15cbd9fd6c3ba453a72",
+    "recovery_epoch_20.tar": "03e7e29a7fcb4892e7bc6d67d0d18932207bb567f196a656de96960b521c5b07",
+    "recovery_epoch_30.tar": "ef0dd4d823c1f56315c194f00ba0020013e7dc720c0eb86289094fc7683cca95",
+    "recovery_epoch_40.tar": "ee7ea0c51defcb3e1096def736db29d0b66d2daa3db38d2ecff3ddc0066b4d8f",
+    "runtime_certificate.json": "7249a8c868a8e9b5073eb4c4b4a06051658dfd16befdbb139601f19b977bb5dd",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "11636c1dfc4edc5b64d29eb9b254745bc5cfaa28afde413d548f86696352e985"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "development_gap_mae_eV": 0.13962897658348083,
+    "mean_epoch_seconds": 110.17091347772498,
+    "mean_graphs_per_second": 907.3901345132455,
+    "optimizer_steps": 31240,
+    "parameter_count": 3687905,
+    "peak_allocated_mib": 538.86865234375,
+    "peak_reserved_mib": 576.0,
+    "sample_presentations": 3998720
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_pair_token_node_return_100k/paired_analysis.json",
+  "protected_roles_read": false,
+  "raw_acceptance_locator": "external://local-platform-record/kaggle/pcqm_k1_pair_token_node_return_100k_v2/acceptance_v2.json",
+  "raw_acceptance_sha256": "75dc3cfed6924fa7e483c6ed18f3eabf072035ea2f6983a9e4e2a45138c88423",
+  "source_archive_sha256": "a27381d527ce6c5f7c74cfa66631f689426d24bf1e6c87294bbf409c4b179943",
+  "source_commit": "1415aedae210c889bbe7fc9521c7c6d395ceceb1"
+}

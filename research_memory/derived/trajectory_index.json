@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "807ddf94547120bf60c3d43330156612d63c7305869665e249af4c0f60a6a0f4",
+  "source_digest": "e700c0ff00d885de36b864760bdfcba7617a485e7341f6ecdebbb07d82a22335",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -178,9 +178,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_pair_token_node_return_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_pair_token_node_return_100k/decision.md",
       "family_id": "k1-pair-token-node-return",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-pair-token-100k-s42"

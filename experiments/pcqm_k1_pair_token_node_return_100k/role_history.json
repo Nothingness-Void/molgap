@@ -1,0 +1,35 @@
+{
+  "events": [
+    {
+      "ref": "experiments/pcqm_k1_pair_token_node_return_100k/roles/training-membership.json",
+      "sha256": "3d64dbe8250702842b3f2584d7e317dda323c72e21928affe441a0a43ff63e8c"
+    },
+    {
+      "ref": "experiments/pcqm_k1_pair_token_node_return_100k/roles/prediction-input.json",
+      "sha256": "2cc6488e3635b5d082c62fb3ac11e234430cf879926f74352eb33ec447d51c8e"
+    },
+    {
+      "ref": "experiments/pcqm_k1_pair_token_node_return_100k/roles/labels-read.json",
+      "sha256": "fb7ff4c2449fedd00873ec18008efb3e1c9239806023ce68deb5dec1e67a2c4d"
+    },
+    {
+      "ref": "experiments/pcqm_k1_pair_token_node_return_100k/roles/metric-computed.json",
+      "sha256": "4f4aef3ea6169d8874569a2e30d6f5be65767f7f5093d47942503a0e39c4087a"
+    },
+    {
+      "ref": "experiments/pcqm_k1_pair_token_node_return_100k/roles/selection-used.json",
+      "sha256": "91de4f70850cddc3e87fccea816f10272b6a18e1662679531f874ee07d2b37bb"
+    }
+  ],
+  "format": "molgap-role-history-index-v1",
+  "protected_roles_read": false,
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+}

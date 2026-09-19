@@ -15,13 +15,12 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 6,
+      "count": 5,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
-        "TC-k1-pair-token-node-return-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
@@ -65,9 +64,8 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
+      "count": 1,
       "items": [
-        "TC-k1-pair-token-node-return-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"

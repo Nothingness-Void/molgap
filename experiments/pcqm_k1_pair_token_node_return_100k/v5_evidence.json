@@ -1,57 +1,30 @@
 {
   "artifacts": [
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/source_config.json",
-      "name": "source_config",
-      "sha256": "5ab9cd98b634ddbe16463d34768c4c5c649ed7d40d1b345e6d1ff554b12898c8"
-    },
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/training_contract.json",
-      "name": "training_contract",
-      "sha256": "c1b3637a5b957ec5c2c4c88c9f6c663849d880d5d3705af71534fb606d5a7220"
-    },
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness_prelaunch.json",
-      "name": "comparison_readiness_prelaunch",
-      "sha256": "ececff41f6ed5f02562b039bb6f63472203dee90076b7bf22209d6fb15f9a004"
-    },
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/role_plan.json",
-      "name": "role_plan",
-      "sha256": "693690ddfb557aa16caa3b67ec762ad644d70abfd6b8f168420334b308e83acc"
-    },
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/trace_plan.json",
-      "name": "trace_plan",
-      "sha256": "b6c2f5ad87bb96326deca5d3499f2b40d1b678bff1684c44b3dc7a87e0397e7e"
-    },
-    {
-      "availability": "committed_prelaunch_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/budget_snapshot.json",
-      "name": "budget_snapshot",
-      "sha256": "baa5071acc313482a740b21584a67b894cb98a81951b9a250438c96dc8e41211"
-    },
-    {
-      "availability": "committed_remote_submission_metadata",
-      "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json",
-      "name": "remote_submission_v2",
-      "sha256": "cf69e033f3455be59e8b85bc72b9c4255a52e5d0e83b072e70240fd623fa6a54"
-    }
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/acceptance_summary_v2.json", "name": "terminal_acceptance", "sha256": "ab2f653a6f0c076ffb920cdf9cce60214943809e50b6d4c96a738e3b0b9715f0"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/checkpoint_manifest.json", "name": "checkpoint_manifest", "sha256": "e390a86044f311529d91a763727536d7705698b063a9501a9ba9cb7641fdb2ac"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness.json", "name": "comparison_readiness", "sha256": "5509d5feebed6e136a5db223c115c3f7dab703f229b7a521e011290360e63ffb"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/paired_analysis.json", "name": "paired_analysis", "sha256": "acebdcd1f1409cde5e06ec0462e6094fec973c8e5815e7127426fd604bd94de3"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/prediction_manifest.json", "name": "prediction_manifest", "sha256": "9afad9af0874d3b1161835755778a77d101b60dc346c8d8d3c777365fa19e23a"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/role_history.json", "name": "role_history", "sha256": "01e0e153e2499936883dd4e3bd3ce9e866e78403de3ea45a49b917e43b011d5a"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/row_manifest.json", "name": "row_manifest", "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/runtime_certificate.json", "name": "runtime_certificate", "sha256": "68a8f7a4fde1257f22f9c3fa869b8b33566cb94d7b43b54516546489ef0908e2"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/target_manifest.json", "name": "target_manifest", "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"},
+    {"availability": "committed_metadata", "locator": "repo://experiments/pcqm_k1_pair_token_node_return_100k/trace_manifest.json", "name": "trace_manifest", "sha256": "33946ac9a937cb7bbf5dac093fb351c3ef8d742c34468e53eff4add6cab1bd70"},
+    {"availability": "local_record_verified", "locator": "external://local-platform-record/kaggle/pcqm_k1_pair_token_node_return_100k_v2/pcqm_k1_node_adaptive_pairtoken/neural_atom_k1_pair_token_node_return/best_development_payload.pt", "name": "aligned_development_predictions", "sha256": "9d1b8cfcc5a761610f7896de2f5be8066242744511e936dca69dac55414bd2ad"},
+    {"availability": "local_record_verified", "locator": "external://local-platform-record/kaggle/pcqm_k1_pair_token_node_return_100k_v2/pcqm_k1_node_adaptive_pairtoken/neural_atom_k1_pair_token_node_return/best_model.pt", "name": "best_model", "sha256": "ceea899009f0f3536b45e541ec658afb195dc210e2663abe7899919dc4871592"},
+    {"availability": "local_record_verified", "locator": "external://local-platform-record/kaggle/pcqm_k1_pair_token_node_return_100k_v2/pcqm_k1_node_adaptive_pairtoken/neural_atom_k1_pair_token_node_return/last_checkpoint.pt", "name": "last_checkpoint", "sha256": "ed210bf9b271da9f665ee4dbcac8c06ae267484f964091b952978097f6e56134"}
   ],
   "authority": {
     "pointers": [
       "experiments/pcqm_k1_pair_token_node_return_100k/protocol.md",
       "experiments/pcqm_k1_pair_token_node_return_100k/training_contract.json",
       "experiments/pcqm_k1_pair_token_node_return_100k/source_config.json",
-      "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness.json",
       "experiments/pcqm_k1_pair_token_node_return_100k/trajectory.json",
       "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
-      "experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json"
+      "experiments/pcqm_k1_pair_token_node_return_100k/acceptance_summary_v2.json",
+      "experiments/pcqm_k1_pair_token_node_return_100k/paired_analysis.json",
+      "experiments/pcqm_k1_pair_token_node_return_100k/decision.md"
     ]
   },
   "contract": "MOLGAP-COMMON-V5-FINAL",
@@ -63,19 +36,19 @@
     "migrated_at": "2026-09-20",
     "scientific_reinterpretation": false,
     "training_executed": false,
-    "verification_scope": "prospective prelaunch metadata plus terminal pretraining infrastructure failure; scientific execution remains pending"
+    "verification_scope": "prospective V5 execution with terminal no-inference acceptance, strict artifact bindings, roles, trace, cost and paired analysis"
   },
   "outcome": {
-    "artifact_status": "prelaunch_complete_terminal_pending",
-    "budget_decision": "one_candidate_authorized",
-    "comparison_status": "prelaunch_strict_planned",
-    "execution_status": "infrastructure_failure_then_retry_running",
-    "full_handoff_status": "not_applicable",
-    "scientific_status": "pending",
-    "transfer_status": "not_evaluated"
+    "artifact_status": "complete_local_verified",
+    "budget_decision": "closed",
+    "comparison_status": "strict_causal_complete",
+    "execution_status": "complete_after_infrastructure_retry",
+    "full_handoff_status": "none",
+    "scientific_status": "directional_positive_below_frozen_gate",
+    "transfer_status": "not_ready"
   },
   "role_use": {
-    "internal_development": "untouched",
+    "internal_development": "consumed",
     "official_validation": "untouched",
     "test_challenge": "untouched",
     "test_dev": "untouched"
