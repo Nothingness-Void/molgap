@@ -193,7 +193,7 @@ def main() -> None:
                 "k1-molecule-context-gate",
                 "k1-induced-pair-token",
             ],
-            "expected_native_cost_ref": rel("costs/expected_training.json"),
+            "expected_native_cost_ref": cost["cost_event_id"],
             "decision_changed_if_positive": "retain one seed-42 shortlist and require separate scale authority",
             "decision_changed_if_negative": "close node-adaptive PairToken return before another route",
             "historical_unknowns": [
@@ -306,4 +306,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

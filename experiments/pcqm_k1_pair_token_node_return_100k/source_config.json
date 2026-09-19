@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "4d95b059b460127e947861abfdf42cbb647d86629a0e0c849ecb90d054b3b533",
+  "candidate_id": "neural_atom_k1_pair_token_node_return",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_pair_token.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "node-adaptive-normalized-PairToken-return",
+  "source_commit": "1415aedae210c889bbe7fc9521c7c6d395ceceb1",
+  "training_contract_ref": "experiments/pcqm_k1_pair_token_node_return_100k/training_contract.json",
+  "training_contract_sha256": "c1b3637a5b957ec5c2c4c88c9f6c663849d880d5d3705af71534fb606d5a7220"
+}
