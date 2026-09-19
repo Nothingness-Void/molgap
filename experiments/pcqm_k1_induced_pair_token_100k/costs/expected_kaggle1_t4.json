@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-induced-pair-token-100k-s42-expected-training",
+  "trajectory_id": "TC-k1-induced-pair-token-100k-s42",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-induced-pair-s42:v1",
+  "attempt_id": "gpu-v1",
+  "category": "training",
+  "platform": "kaggle1",
+  "hardware": "NVIDIA_TESLA_T4",
+  "measurement": {
+    "device_hours": {"value": 3.0, "status": "estimated"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 3.0, "status": "estimated"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_induced_pair_token_100k/protocol.md"
+}

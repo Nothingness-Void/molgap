@@ -3,29 +3,29 @@
   "trajectory_id": "TC-k1-induced-pair-token-100k-s42",
   "record_mode": "prospective",
   "track": "C",
-  "owner": "desktop",
+  "owner": "server",
   "family_id": "k1-bounded-relation-token",
   "question": "Can bounded induced pairs retain PairToken's useful relation mechanism at lower cost?",
   "hypothesis": {
     "hypothesis_id": "H-TC-k1-induced-pair-token-100k-s42",
     "observed_deficiency": "all-pair PairToken passed 100K narrowly but was slow and its gain collapsed at 500K",
-    "supporting_evidence_ids": ["pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token"],
+    "supporting_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
     "alternative_explanations": ["the 100K PairToken gain may be scale-specific rather than cost-limited"],
     "changed_mechanism": "replace explicit atom pairs with four learned source and target inducing summaries",
     "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
     "related_closed_family_ids": ["k1-sparse-pair-spse"],
-    "expected_native_cost_ref": "experiments/pcqm_k1_induced_pair_token_100k/protocol.md",
+    "expected_native_cost_ref": "cost-TC-k1-induced-pair-token-100k-s42-expected-training",
     "decision_changed_if_positive": "permit one matched 500K scale bridge",
     "decision_changed_if_negative": "close bounded PairToken compression"
   },
   "state_at_start": {
-    "source_commit": "97a3cb7136d0be36be814da86b17d3d86a167c65",
-    "source_config_identity": "sha256:3b299e6896becdc5dbe3b4590e6fc0958b216175001a4f73427be7bac6955515",
+    "source_commit": "79f11ec0d14f781ddad8eaa75e947ad8267849e3",
+    "source_config_identity": "sha256:52efb9c16421edf16299399521e06f5b2b9d26edf1934e05ebea673efe31eda3",
     "contract_refs": ["experiments/pcqm_k1_induced_pair_token_100k/training_contract.json"],
-    "reference_ids": ["neural_atom_k1_v4"],
-    "parent_trajectory_ids": [],
-    "prior_trajectory_ids": [],
-    "prior_evidence_ids": ["pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token"],
+    "reference_ids": ["pcqm-k1-pair-token-100k-s42"],
+    "parent_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
     "role_snapshot_refs": ["experiments/pcqm_k1_pair_token_100k/results/causal_audit_decision.md"],
     "budget_snapshot_ref": "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json"
   },
@@ -35,12 +35,12 @@
       "type": "bounded_100k_screen",
       "run_ids": ["nothingnessvoid/molgap-pcqm-k1-induced-pair-s42:v1"],
       "attempt_ids": ["gpu-v1"],
-      "source_commit": "97a3cb7136d0be36be814da86b17d3d86a167c65",
+      "source_commit": "79f11ec0d14f781ddad8eaa75e947ad8267849e3",
       "evidence_refs": [
         "experiments/pcqm_k1_induced_pair_token_100k/training_contract.json",
         "experiments/pcqm_k1_induced_pair_token_100k/trajectory.json"
       ],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TC-k1-induced-pair-token-100k-s42-expected-training"]
     }
   ],
   "result": {
