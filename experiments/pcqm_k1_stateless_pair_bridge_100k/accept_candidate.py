@@ -13,7 +13,7 @@ from molgap.training_reproducibility import atomic_json, sha256_file
 
 MODE = "neural_atom_k1_stateless_pair_bridge"
 EXPECTED_PARAMETERS = 3_689_698
-EXPECTED_SOURCE_COMMIT = "SOURCE_COMMIT_TO_FREEZE"
+EXPECTED_SOURCE_COMMIT = "75806adf7fe45fe4c42b51611cc9a0511424810f"
 EXPECTED_REFERENCE_PAYLOAD_SHA256 = (
     "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91"
 )

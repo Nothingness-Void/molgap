@@ -26,7 +26,7 @@
     "decision_changed_if_negative": "close stateless multilayer pair bridging in K1"
   },
   "state_at_start": {
-    "source_commit": "0efcdf7697befdff3989b7c781fba7ebe0d8c526",
+    "source_commit": "75806adf7fe45fe4c42b51611cc9a0511424810f",
     "source_config_identity": "sha256:4756597365e557327fd9a12000aeec5a49a31be95662742dc64458d5042f3ba5",
     "contract_refs": [
       "experiments/pcqm_k1_stateless_pair_bridge_100k/training_contract.json"
@@ -47,7 +47,7 @@
       "type": "bounded_100k_screen",
       "run_ids": ["nothingnessvoid/molgap-pcqm-k1-stateless-pair-s42:v1"],
       "attempt_ids": ["gpu-v1"],
-      "source_commit": "0efcdf7697befdff3989b7c781fba7ebe0d8c526",
+      "source_commit": "75806adf7fe45fe4c42b51611cc9a0511424810f",
       "evidence_refs": [
         "experiments/pcqm_k1_stateless_pair_bridge_100k/training_contract.json",
         "experiments/pcqm_k1_stateless_pair_bridge_100k/comparison_readiness_prelaunch.json"
