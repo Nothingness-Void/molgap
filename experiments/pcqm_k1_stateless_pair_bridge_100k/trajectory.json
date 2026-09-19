@@ -1,0 +1,67 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-stateless-pair-bridge-100k-s42",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "desktop",
+  "family_id": "k1-stateless-pair-bridge",
+  "question": "Can repeated current-layer pair-to-node flow improve K1 without persistent pair memory?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-stateless-pair-bridge-100k-s42",
+    "observed_deficiency": "K1 lacks direct target-conditioned cross-node relation flow, while GPTrans evidence does not isolate recurrence from pair-to-node transfer",
+    "supporting_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
+    "alternative_explanations": [
+      "K1 may need recurrent pair memory rather than repeated stateless flow",
+      "GPTrans pair-flow gains may not transfer into K1"
+    ],
+    "changed_mechanism": "add a zero-initialized 32-channel stateless ordered-pair bridge at K1 layers 3, 6 and 9",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen against the immutable K1 prediction reference",
+    "related_closed_family_ids": [
+      "k1-bounded-relation-token",
+      "k1-edge-slot-interaction",
+      "k1-global-allocation"
+    ],
+    "expected_native_cost_ref": "cost-TC-k1-stateless-pair-bridge-100k-s42-expected-training",
+    "decision_changed_if_positive": "permit a separate 500K cost and transfer decision and compare stateless versus recurrent pair flow",
+    "decision_changed_if_negative": "close stateless multilayer pair bridging in K1"
+  },
+  "state_at_start": {
+    "source_commit": "0efcdf7697befdff3989b7c781fba7ebe0d8c526",
+    "source_config_identity": "sha256:4756597365e557327fd9a12000aeec5a49a31be95662742dc64458d5042f3ba5",
+    "contract_refs": [
+      "experiments/pcqm_k1_stateless_pair_bridge_100k/training_contract.json"
+    ],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "reference_bundle_id": "pcqm-k1-v4-100k-reference-bundle-v1",
+    "parent_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_trajectory_ids": ["TC-k1-pair-token-100k-s42"],
+    "prior_evidence_ids": ["pcqm-k1-pair-token-100k-s42"],
+    "role_snapshot_refs": [
+      "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/role_history.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_stateless_pair_bridge_100k/costs/expected_kaggle1_t4.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-stateless-pair-s42:v1"],
+      "attempt_ids": ["gpu-v1"],
+      "source_commit": "0efcdf7697befdff3989b7c781fba7ebe0d8c526",
+      "evidence_refs": [
+        "experiments/pcqm_k1_stateless_pair_bridge_100k/training_contract.json",
+        "experiments/pcqm_k1_stateless_pair_bridge_100k/comparison_readiness_prelaunch.json"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-stateless-pair-bridge-100k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_stateless_pair_bridge_100k/protocol.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": ["one fixed V5 100K seed-42 screen"],
+    "reopen_conditions": []
+  }
+}
