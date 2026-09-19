@@ -104,7 +104,7 @@
     },
     {
       "comparison_id": "k1-100k-mechanism-family",
-      "candidate": "PairToken / MoSE / MoSE-hidden-BN / MoSE-residual-gate",
+      "candidate": "PairToken / MoSE / MoSE-hidden-BN / MoSE-residual-gate / MoSE-context-gate",
       "reference": "k1_v4_100k",
       "comparison_class": "PAIRED_ENDPOINT",
       "strict_ready": false,
@@ -135,6 +135,7 @@
     "experiments/pcqm_k1_pair_token_100k/decision.md",
     "experiments/pcqm_k1_mose_100k/results/acceptance_v5.json",
     "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
-    "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json"
+    "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
+    "experiments/pcqm_k1_mose_context_gate_100k/results/acceptance_summary_v1.json"
   ]
 }

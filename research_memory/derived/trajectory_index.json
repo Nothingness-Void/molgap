@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "1bd0708f6151fea519d0a7ff9acd4739546c1080629a6db2049860ecb3e7e7e8",
+  "source_digest": "4efa2efbe38dc0143302a8b911200c178ada7ef3d8d93461005837e0150afc70",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -71,6 +71,24 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-step-profile-v5"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_mose_context_gate_100k/decision.md",
+      "family_id": "k1-mose-structural-encoding",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-mose-residual-gate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_mose_context_gate_100k/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-mose-context-gate-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
     },
     {
       "completeness_status": "partial",

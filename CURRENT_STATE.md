@@ -45,12 +45,14 @@ contract.
 
 ## Discovery state
 
-One server-owned seed-42 V5 screen is released: K1 molecule-context MoSE gate.
-It keeps the positive selective MoSE residual unchanged but replaces its
-MoSE-mean node gate with one molecule-level gate derived from mean and second
-moments of the K1 initial node state and MoSE31. The complete candidate remains
-exactly K1 at initialization. Authority:
-`experiments/pcqm_k1_mose_context_gate_100k/protocol.md`.
+No server-owned GPU screen is active. The K1 molecule-context MoSE gate
+completed and passed mechanical acceptance, but reached `0.1419007480 eV`
+versus immutable K1-v4 at `0.1413736343 eV` and the positive selective-MoSE
+predecessor at `0.1393276304 eV`. Its paired interval crossed zero and its best
+checkpoint occurred at epoch 39 of 40. The mechanism is therefore
+`NEGATIVE_UNDER_CONTRACT`; contextual MoSE gate refinement is closed without a
+retry, extra seed, scale bridge or successor. Authority:
+`experiments/pcqm_k1_mose_context_gate_100k/decision.md`.
 
 The predecessor selective MoSE residual improved immutable K1-v4 by
 `0.0020460039 eV`, with an entirely favorable paired interval, but missed the

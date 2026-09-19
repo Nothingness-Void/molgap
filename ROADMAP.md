@@ -14,13 +14,18 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | B-K1-MOSE-CONTEXT-GATE | Run one V5 seed-42 screen replacing only the positive predecessor's coarse node gate with a molecule-context gate | Accept artifacts and compare with immutable K1-v4 and predecessor; stop unless gain over K1 is at least 0.003 eV |
-| P2 | B-V5-GATE-CALIBRATION | After the active context-gate screen, calibrate a prospective training-stochasticity gate from accepted same-contract repeats; do not reinterpret already observed candidates | Freeze a documented estimator and threshold before any later candidate screen |
+| P1 | B-V5-GATE-CALIBRATION | Calibrate a prospective training-stochasticity gate from accepted same-contract repeats; do not reinterpret already observed candidates | Freeze a documented estimator and threshold before any later candidate screen |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
 The later gate-calibration task may govern new protocols only; it cannot
 retroactively promote MoSE or any other closed candidate.
+
+The molecule-context refinement completed mechanically but regressed versus
+both immutable K1-v4 and the positive selective-MoSE predecessor. Its paired
+interval crossed zero and the best checkpoint was epoch 39 of 40, so another
+seed, longer schedule or gate-width variant is not released. The terminal
+authority is `experiments/pcqm_k1_mose_context_gate_100k/decision.md`.
 
 The GPTrans-T/Pair-PreNorm 500K bridge stopped after checkpointed partial runs.
 Its late matched curve was consistently unfavorable and completion required

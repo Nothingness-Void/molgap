@@ -1,0 +1,71 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-mose-context-gate-100k-s42",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-mose-structural-encoding",
+  "question": "Can molecule-level context preserve the selective MoSE residual benefit while suppressing harmful corrections?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-mose-context-gate-100k-s42",
+    "observed_deficiency": "The selective MoSE predecessor improved hard K1 rows but degraded easy K1 rows",
+    "supporting_evidence_ids": ["pcqm-k1-mose-residual-gate-100k-s42"],
+    "alternative_explanations": ["the predecessor gain may be training-level variation rather than a stable gate signal"],
+    "changed_mechanism": "replace the predecessor node-local scalar gate with one molecule-context gate from K1 and MoSE moments",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen",
+    "related_closed_family_ids": ["k1-mose-direct-replacement", "k1-mose-hidden-normalization"],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "consider the context gate for a separately budgeted confirmation",
+    "decision_changed_if_negative": "close immediate MoSE gate refinement",
+    "historical_unknowns": ["native device-hours were not emitted as a standalone cost artifact"]
+  },
+  "state_at_start": {
+    "source_commit": "9b100b7c533a8d445328f36ad05ce97513f5ff04",
+    "contract_refs": ["experiments/pcqm_k1_mose_context_gate_100k/training_contract.json"],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42", "pcqm-k1-mose-residual-gate-100k-s42"],
+    "parent_trajectory_ids": ["TC-k1-mose-residual-gate-100k-s42"],
+    "prior_trajectory_ids": [
+      "TC-k1-mose-replacement-100k-s42",
+      "TC-k1-mose-hidden-bn-100k-s42",
+      "TC-k1-mose-residual-gate-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-mose-replacement-100k-s42",
+      "pcqm-k1-mose-hidden-bn-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ],
+    "role_snapshot_refs": ["experiments/pcqm_k1_mose_context_gate_100k/results/acceptance_summary_v1.json"],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "bounded_100k_screen",
+      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1"],
+      "attempt_ids": ["gpu-v1"],
+      "source_commit": "9b100b7c533a8d445328f36ad05ce97513f5ff04",
+      "evidence_refs": [
+        "experiments/pcqm_k1_mose_context_gate_100k/results/submission_v1.json",
+        "experiments/pcqm_k1_mose_context_gate_100k/results/acceptance_summary_v1.json"
+      ],
+      "cost_event_ids": ["cost-TC-k1-mose-context-gate-100k-s42-training"]
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-k1-mose-context-gate-100k-s42"],
+    "evidence_refs": ["experiments/pcqm_k1_mose_context_gate_100k/results/acceptance_summary_v1.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_mose_context_gate_100k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["a materially different structural-encoding mechanism with independent evidence, not another gate variant"]
+  },
+  "comparison_class": "PAIRED_ENDPOINT",
+  "comparison_readiness_ref": "experiments/v5_comparison_readiness_audit/results/comparison_audit.json",
+  "comparison_blockers": [
+    "no prospective reusable V5 reference bundle was frozen for the historical K1 reference"
+  ],
+  "reference_bundle_id": null
+}

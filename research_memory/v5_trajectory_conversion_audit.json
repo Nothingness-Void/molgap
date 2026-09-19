@@ -2,11 +2,12 @@
   "format": "molgap-rml-v5-trajectory-conversion-audit-v1",
   "audit_date": "2026-09-19",
   "scope": "completed local experiments with explicit V5 terminal decisions, V5 sidecars, or V5 profiling acceptance",
-  "included_trajectory_count": 10,
+  "included_trajectory_count": 11,
   "included": [
     "experiments/pcqm_k1_mose_100k/trajectory.json",
     "experiments/pcqm_k1_mose_hidden_bn_100k/trajectory.json",
     "experiments/pcqm_k1_mose_residual_gate_100k/trajectory.json",
+    "experiments/pcqm_k1_mose_context_gate_100k/trajectory.json",
     "experiments/pcqm_k1_pair_token_100k/trajectory.json",
     "experiments/pcqm_k1_pair_token_500k/trajectory.json",
     "experiments/pcqm_k1_pair_token_batch_profile/trajectory.json",
@@ -15,12 +16,7 @@
     "experiments/pcqm_gptrans_step_profile_v5/trajectory.json",
     "experiments/v5_legacy_evidence_migration/trajectory.json"
   ],
-  "excluded_nonterminal": [
-    {
-      "experiment": "experiments/pcqm_k1_mose_context_gate_100k",
-      "reason": "local authority records only RUNNING and contain no terminal decision"
-    }
-  ],
+  "excluded_nonterminal": [],
   "excluded_legacy": {
     "reason": "V4-only records remain under their original contracts and are not relabeled as V5 trajectories without a V5 sidecar",
     "inventory_ref": "experiments/v5_legacy_evidence_migration/inventory_summary.json",

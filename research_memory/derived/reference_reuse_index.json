@@ -111,6 +111,27 @@
         "committed_metadata",
         "local_record_verified"
       ],
+      "comparison_status": "paired_endpoint_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-mose-context-gate-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_mose_context_gate_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata",
+        "local_record_verified"
+      ],
       "comparison_status": "strict_paired_accepted",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -167,7 +188,9 @@
       "source_envelope": "experiments/pcqm_k1_mose_residual_gate_100k/v5_evidence.json",
       "track": "C",
       "transfer_status": "not_ready",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TC-k1-mose-context-gate-100k-s42"
+      ]
     },
     {
       "artifact_availability": [
@@ -249,6 +272,7 @@
       "track": "C",
       "transfer_status": "reusable_same_contract_only",
       "used_by_trajectory_ids": [
+        "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
         "TC-k1-mose-replacement-100k-s42",
         "TC-k1-mose-residual-gate-100k-s42",
