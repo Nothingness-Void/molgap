@@ -1,10 +1,11 @@
 # Operational status
 
-2026-09-19: Kaggle1 kernel
-`nothingnessvoid/molgap-gptrans-flow-ablation-s42` version 1 was submitted and
-returned `RUNNING` in the single post-submit snapshot. The private source
-dataset is `nothingnessvoid/molgap-gptrans-flow-ablation-source` version 1.
-Submission identity is frozen in `results/submission.json`.
+Kaggle1 kernel `nothingnessvoid/molgap-gptrans-flow-ablation-s42` version 1
+completed both 60-epoch arms. Frozen no-inference acceptance passed all source,
+data, runtime, checkpoint, prediction, alignment, and hash checks.
 
-No protected role has been read and no training result has been interpreted.
-Normal runtime is not polled from this coordinator task.
+Both deletions regressed against immutable GPTrans-T: `no_pair_to_node` reached
+`0.1592841231 eV` and `no_pair_recurrence` reached `0.1581743161 eV`, versus
+`0.1566272043 eV`. Both paired intervals were entirely unfavorable. The
+trajectory is closed as `NEGATIVE_UNDER_CONTRACT`; no scale-up or protected
+role was released. Authority: `decision.md` and `results/acceptance_v1.json`.

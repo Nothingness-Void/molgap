@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "326c6c942398e7194d2ebca64e09b6d6bf9fe7dfd7678ae75f000fe1a8987343",
+  "source_digest": "4ba7e811238d70229da282b18da944945c13dd1e7e434dd9f919807ef8e0eb95",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -34,15 +34,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_flow_ablation_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_flow_ablation_100k/decision.md",
       "family_id": "gptrans-propagation-flow",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-flow-ablation-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
     },

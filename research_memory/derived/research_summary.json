@@ -24,7 +24,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "device_hours": {
           "estimated": {
@@ -32,8 +32,8 @@
             "known_total": 20.0
           },
           "measured": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 5.836411416414444
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -48,7 +48,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "wall_hours": {
           "estimated": {
@@ -56,8 +56,8 @@
             "known_total": 10.0
           },
           "measured": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 2.918205708207222
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -114,10 +114,10 @@
         }
       }
     },
-    "unknown_events": 5
+    "unknown_events": 6
   },
   "evidence": {
-    "validated": 1,
+    "validated": 2,
     "without_trajectory": 1
   },
   "format": "molgap-rml-research-summary-v1",
@@ -144,12 +144,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 11,
+      "count": 10,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 10,
       "severity": "WARN"
     },
     {
@@ -159,17 +159,16 @@
     }
   ],
   "roles": {
-    "coarse_historical": 4,
-    "explicit_events": 0,
+    "coarse_historical": 8,
+    "explicit_events": 1,
     "repeatedly_selected": 0
   },
-  "source_digest": "326c6c942398e7194d2ebca64e09b6d6bf9fe7dfd7678ae75f000fe1a8987343",
+  "source_digest": "4ba7e811238d70229da282b18da944945c13dd1e7e434dd9f919807ef8e0eb95",
   "trajectories": {
     "count": 11,
     "outcomes": {
-      "ACTIVE": 1,
       "INFRASTRUCTURE_ONLY": 4,
-      "NEGATIVE_UNDER_CONTRACT": 3,
+      "NEGATIVE_UNDER_CONTRACT": 4,
       "POSITIVE_BELOW_GATE": 1,
       "POSITIVE_UNDER_CONTRACT": 1,
       "STOP_FOR_COST": 1

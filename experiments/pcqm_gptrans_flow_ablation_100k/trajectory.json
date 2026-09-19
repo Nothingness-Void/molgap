@@ -60,20 +60,27 @@
         "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json"
       ],
       "cost_event_ids": [
-        "cost-TC-gptrans-flow-ablation-100k-s42-expected-training"
+        "cost-TC-gptrans-flow-ablation-100k-s42-expected-training",
+        "cost-TC-gptrans-flow-ablation-100k-s42-measured-training"
       ]
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-gptrans-flow-ablation-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/results/acceptance_v1.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/decision.md"
+    ]
   },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_flow_ablation_100k/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "one fixed V5 100K seed-42 T4x2 screen"
-    ],
-    "reopen_conditions": []
+    "decision_ref": "experiments/pcqm_gptrans_flow_ablation_100k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "a distinct hypothesis that preserves both validated propagation paths"
+    ]
   }
 }

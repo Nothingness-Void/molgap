@@ -1,0 +1,133 @@
+{
+  "accepted": true,
+  "model_inference_executed": false,
+  "reference_best_model_availability": "durable_remote_verified",
+  "reference_best_model_sha256": "f4da386ae1e32f6953b645c0bdb8e208aaba1f1d7b8ebec132776bd63c22d6ab",
+  "arms": [
+    {
+      "variant": "no_pair_to_node",
+      "format": "molgap-pcqm-gptrans-t-100k-reference-acceptance-v4",
+      "accepted": true,
+      "best_development_mae_eV": 0.15928412307202816,
+      "best_epoch": 59,
+      "runtime_certificate_id": "85afcc72186b602bae1f3300c43328b4ced878ec9cdf9307df7bd5cf99718bdf",
+      "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "best_model_sha256": "085a0c5575255ea2239ccc7171f995ee0efa99fe203105fea00582236ce83683",
+      "development_predictions_sha256": "616702f298cb4bd502e8cfe7416e61370465a5f1db85adcdfaa8e2e58d27517a",
+      "frozen_reference_sha256": "3151c45b08ba92284d1d03e7822f321edc75d3ed728d6f3f652422a180773563",
+      "official_validation_role_read": false,
+      "test_dev_role_read": false,
+      "test_challenge_role_read": false,
+      "gain_eV": -0.0026569187641143797,
+      "bootstrap_upper95_eV": 0.0037241774102449417,
+      "mechanism_shortlist": false,
+      "comparison": {
+        "policy": "molgap-reference-comparability-v4",
+        "comparison_mode": "immutable-reference-no-baseline-rerun",
+        "scientific_contract_sha256": "062603c4793462d1db703704ad0b8472a21ea3e094efd5cee20ff8fade120195",
+        "shared": {
+          "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+          "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+          "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+          "feature_fingerprint": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+          "target_fingerprint": "pcqm4mv2-gap-eV-direct",
+          "seed": 42,
+          "precision": "fp32",
+          "optimizer_fingerprint": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+          "schedule_fingerprint": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+          "loss_fingerprint": "normalized-gap-l1",
+          "target_transform_fingerprint": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+          "selection_fingerprint": "best-development-ema9999-60epochs",
+          "role_access_fingerprint": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+          "sample_exposure": 5998080,
+          "tail_batch_policy": "drop_last"
+        },
+        "reference_run_id": "gptrans-t-100k-v4-seed42",
+        "candidate_run_id": "gptrans-t-100k-v4-no_pair_to_node-seed42",
+        "cross_platform": true,
+        "runtime_certificates": [
+          {
+            "certificate_id": "9576f1e562f6ffda8341ea3370621d7af104811c9d72e787a8aa3687b153e983",
+            "platform_id": "kaggle2-p100"
+          },
+          {
+            "certificate_id": "85afcc72186b602bae1f3300c43328b4ced878ec9cdf9307df7bd5cf99718bdf",
+            "platform_id": "kaggle1-t4"
+          }
+        ],
+        "resource": {
+          "physical_batch_per_device": 128,
+          "device_count_per_model": 1,
+          "gradient_accumulation_steps": 1,
+          "tail_batch_policy": "drop_last"
+        }
+      },
+      "parameters": 5246817
+    },
+    {
+      "variant": "no_pair_recurrence",
+      "format": "molgap-pcqm-gptrans-t-100k-reference-acceptance-v4",
+      "accepted": true,
+      "best_development_mae_eV": 0.1581743160623312,
+      "best_epoch": 59,
+      "runtime_certificate_id": "aebb15c36fda14ab02cf8c431d59f1e6ede48b64d22836667b13f4bf06146db4",
+      "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "best_model_sha256": "4da59af6361c75696d5b2ed8b4e4fc9b648448530f48d3b32ec3943f6c02e234",
+      "development_predictions_sha256": "3aaff6eba092fd36ccfcb65ac016bca891c71781d191a4216affb3b627068c2e",
+      "frozen_reference_sha256": "57ead7b8cbc0a902f50fdf92308b9ca4f5ad5cb58e30c0c23830ce3e98f8f101",
+      "official_validation_role_read": false,
+      "test_dev_role_read": false,
+      "test_challenge_role_read": false,
+      "gain_eV": -0.0015471117544174195,
+      "bootstrap_upper95_eV": 0.0025602374070882797,
+      "mechanism_shortlist": false,
+      "comparison": {
+        "policy": "molgap-reference-comparability-v4",
+        "comparison_mode": "immutable-reference-no-baseline-rerun",
+        "scientific_contract_sha256": "062603c4793462d1db703704ad0b8472a21ea3e094efd5cee20ff8fade120195",
+        "shared": {
+          "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+          "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+          "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+          "feature_fingerprint": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+          "target_fingerprint": "pcqm4mv2-gap-eV-direct",
+          "seed": 42,
+          "precision": "fp32",
+          "optimizer_fingerprint": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+          "schedule_fingerprint": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+          "loss_fingerprint": "normalized-gap-l1",
+          "target_transform_fingerprint": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+          "selection_fingerprint": "best-development-ema9999-60epochs",
+          "role_access_fingerprint": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+          "sample_exposure": 5998080,
+          "tail_batch_policy": "drop_last"
+        },
+        "reference_run_id": "gptrans-t-100k-v4-seed42",
+        "candidate_run_id": "gptrans-t-100k-v4-no_pair_recurrence-seed42",
+        "cross_platform": true,
+        "runtime_certificates": [
+          {
+            "certificate_id": "9576f1e562f6ffda8341ea3370621d7af104811c9d72e787a8aa3687b153e983",
+            "platform_id": "kaggle2-p100"
+          },
+          {
+            "certificate_id": "aebb15c36fda14ab02cf8c431d59f1e6ede48b64d22836667b13f4bf06146db4",
+            "platform_id": "kaggle1-t4"
+          }
+        ],
+        "resource": {
+          "physical_batch_per_device": 128,
+          "device_count_per_model": 1,
+          "gradient_accumulation_steps": 1,
+          "tail_batch_policy": "drop_last"
+        }
+      },
+      "parameters": 5246817
+    }
+  ],
+  "source_commit": "fc329e0948810e5649823ab64e834c9b5d36b47a",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "full_scale_authorized": false
+}
