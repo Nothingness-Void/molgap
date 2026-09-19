@@ -29,6 +29,17 @@ def main() -> None:
     ).strip()
     if status:
         raise RuntimeError("Commit source and protocol before packaging")
+    frozen = json.loads((REPO_ROOT / EXPERIMENT / "source_config.json").read_text())
+    commit = frozen["source_commit"]
+    changed_source = subprocess.check_output(
+        ["git", "diff", "--name-only", commit, "HEAD", "--", "src"],
+        cwd=REPO_ROOT,
+        text=True,
+    ).strip()
+    if changed_source:
+        raise RuntimeError(
+            "Tracked source changed after the frozen scientific source commit"
+        )
     output = args.output.resolve()
     if output.exists():
         raise FileExistsError(output)
@@ -55,9 +66,6 @@ def main() -> None:
             shutil.copyfile(source, expanded)
     shutil.copyfile(archive_path, output / "source_payload.bin")
     digest = hashlib.sha256((output / "source_payload.bin").read_bytes()).hexdigest()
-    commit = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True
-    ).strip()
     (output / "SOURCE_FILES.json").write_text(
         json.dumps({"files": inventory}, indent=2) + "\n", encoding="utf-8"
     )
@@ -81,4 +89,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
