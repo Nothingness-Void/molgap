@@ -16,7 +16,11 @@
     "actions": {"type": "array"},
     "result": {"type": "object"},
     "decision": {"type": "object"},
-    "readiness": {"type": "object"}
+    "readiness": {"type": "object"},
+    "comparison_class": {"enum": ["STRICT_CAUSAL", "PAIRED_ENDPOINT", "MATCHED_PREFIX", "CONTEXT_ONLY", "NO_COMPARISON"]},
+    "comparison_readiness_ref": {"type": "string", "minLength": 1},
+    "comparison_blockers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "reference_bundle_id": {"type": ["string", "null"]}
   },
   "additionalProperties": false
 }

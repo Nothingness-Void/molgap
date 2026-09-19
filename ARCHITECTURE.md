@@ -69,7 +69,10 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_k1_full_runner.py` | Frozen K1 full-role preflight, exact-step training, atomic resume, and self-contained bundle | Changing the audited K1 desktop handoff contract |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
 | `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
-| `v5_desktop.py` | Pure V5 desktop durability, reconciliation, ownership, role, evidence-envelope, and full-admission gates; delegates strict comparison to `screen_policy.py` | Changing local desktop workflow decisions or pointer-only evidence migration without adding live orchestration |
+| `v5_common.py` | Machine-neutral V5 evidence-envelope and comparability exports shared by Desktop, Server, and RML | Changing shared V5 evidence semantics |
+| `comparison_readiness.py` | Fail-closed prelaunch/post-run comparison classes, reference bundles, role/trace applicability, and artifact bindings | Changing V5 comparability rules |
+| `evidence_pointers.py` | Safe repository pointer resolution and immutable artifact SHA verification | Changing repository evidence binding safety |
+| `v5_desktop.py` | Pure V5 desktop durability, reconciliation, ownership, role, and full-admission gates; re-exports shared evidence validation and delegates Desktop promotion comparison to `screen_policy.py` | Changing local desktop workflow decisions or pointer-only evidence migration without adding live orchestration |
 | `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules |
 | `v4_runtime.py` | Legacy-compatible Torch loading/statistics/optimizer setup, source bundle validation, and bounded numerical-repeatability certificates | Changing shared V4 runtime compatibility behavior |
 | `v4_bundle.py` | Deterministic, allowlisted, commit-bound minimal source archives | Changing V4 source packaging or reproducibility |

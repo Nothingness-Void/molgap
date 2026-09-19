@@ -295,7 +295,13 @@ Server may initially implement reusable:
 - experiment ledger helpers;
 - evidence schemas.
 
-Desktop may import reviewed commits later.
+Desktop may import reviewed commits later. The shared V5 implementation is
+split by ownership: `v5_common.py` owns envelope and comparability exports,
+`comparison_readiness.py` owns machine-neutral prelaunch/post-run semantics,
+and `evidence_pointers.py` owns repository-local pointer and SHA verification.
+`v5_desktop.py` is the Desktop adapter and must not become the shared validator;
+Desktop must not import `server_control.py`, `server_acceptance.py`, or a Server
+release/orchestration helper.
 
 Import rules:
 - review exact diff;
@@ -403,4 +409,3 @@ If a V5 invariant appears wrong:
 - do not activate it without explicit user authorization.
 
 No desktop agent may self-declare V6.
-

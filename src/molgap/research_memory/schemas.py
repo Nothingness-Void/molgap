@@ -12,12 +12,16 @@ COST_SCHEMA = "molgap-cost-event-v1"
 ROLE_SCHEMA = "molgap-role-event-v1"
 TRACE_SCHEMA = "molgap-trace-manifest-v1"
 READY_SCHEMA = "molgap-ready-for-desktop-v1"
+COMPARISON_CLASSES = frozenset(
+    {"STRICT_CAUSAL", "PAIRED_ENDPOINT", "MATCHED_PREFIX", "CONTEXT_ONLY", "NO_COMPARISON"}
+)
 
 TRAJECTORY_OUTCOMES = frozenset(
     {
         "ACTIVE",
         "NO_TRAIN",
         "POSITIVE_UNDER_CONTRACT",
+        "POSITIVE_BELOW_GATE",
         "NEGATIVE_UNDER_CONTRACT",
         "INCONCLUSIVE",
         "STOP_FOR_COST",
@@ -201,6 +205,24 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
             for value in _texts(readiness, field, "trajectory.readiness"):
                 validate_id(value, f"trajectory.readiness.{field}")
 
+    comparison_fields = (
+        "comparison_class",
+        "comparison_readiness_ref",
+        "comparison_blockers",
+        "reference_bundle_id",
+    )
+    present_comparison_fields = [field for field in comparison_fields if field in record]
+    if present_comparison_fields and len(present_comparison_fields) != len(comparison_fields):
+        raise ValueError("trajectory comparison metadata must be complete when present")
+    if present_comparison_fields:
+        if record["comparison_class"] not in COMPARISON_CLASSES:
+            raise ValueError("invalid trajectory comparison_class")
+        _text(record, "comparison_readiness_ref", "trajectory")
+        _texts(record, "comparison_blockers", "trajectory")
+        reference_bundle_id = record["reference_bundle_id"]
+        if reference_bundle_id is not None:
+            validate_id(reference_bundle_id, "trajectory.reference_bundle_id")
+
     if record["record_mode"] == "prospective":
         prospective_text = (
             "observed_deficiency",
@@ -339,6 +361,24 @@ def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("optimizer-step trace requires optimizer_steps exposure")
     if record["x_axis"] == "presentations" and exposure["sample_presentations"] is None:
         raise ValueError("presentation trace requires sample_presentations exposure")
+    if "checkpoint_identity" in record:
+        _text(record, "checkpoint_identity", "trace manifest")
+    if "trace_fields" in record:
+        fields = _mapping(record["trace_fields"], "trace manifest.trace_fields")
+        expected = {
+            "optimizer_step",
+            "sample_presentations",
+            "epoch_or_pass",
+            "learning_rate",
+            "live_train_metric",
+            "live_dev_metric",
+            "ema_dev_metric",
+            "checkpoint_identity",
+        }
+        if set(fields) != expected or any(not isinstance(value, bool) for value in fields.values()):
+            raise ValueError(
+                "trace manifest.trace_fields must explicitly mark every future trace field"
+            )
     return dict(record)
 
 

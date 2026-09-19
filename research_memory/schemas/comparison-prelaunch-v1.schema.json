@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-comparison-prelaunch-v1",
+  "type": "object",
+  "required": [
+    "format", "candidate_id", "reference_id", "reference_bundle_id",
+    "reference_bundle_sha256",
+    "experiment_purpose", "intervention_group_id", "mechanism_id",
+    "planned_status", "prelaunch_ready", "declared_intervention_fields",
+    "matched_fields", "mismatched_fields", "missing_fields", "blocker_codes",
+    "candidate_source_config_status", "candidate_source_commit_or_archive",
+    "role_applicability_plan", "trace_plan",
+    "runtime_qualification_plan", "terminal_candidate_artifacts_required"
+  ],
+  "properties": {
+    "format": {"const": "molgap-comparison-prelaunch-v1"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "reference_id": {"type": ["string", "null"]},
+    "reference_bundle_id": {"type": ["string", "null"]},
+    "reference_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
+    "intervention_group_id": {"type": "string", "minLength": 1},
+    "mechanism_id": {"type": ["string", "null"]},
+    "planned_status": {"enum": ["PRELAUNCH_STRICT_PLANNED", "PRELAUNCH_NONCAUSAL_PLANNED", "PRELAUNCH_BLOCKED"]},
+    "prelaunch_ready": {"type": "boolean"},
+    "declared_intervention_fields": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "matched_fields": {"type": "object"},
+    "mismatched_fields": {"type": "object"},
+    "missing_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "blocker_codes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "candidate_source_config_status": {"type": "string", "minLength": 1},
+    "candidate_source_commit_or_archive": {"type": ["string", "null"], "minLength": 1},
+    "role_applicability_plan": {
+      "type": "object",
+      "required": ["training_membership", "prediction_input", "labels_read", "metric_computed", "selection_used", "external_submission"],
+      "properties": {
+        "training_membership": {"enum": ["applicable", "not_applicable"]},
+        "prediction_input": {"enum": ["applicable", "not_applicable"]},
+        "labels_read": {"enum": ["applicable", "not_applicable"]},
+        "metric_computed": {"enum": ["applicable", "not_applicable"]},
+        "selection_used": {"enum": ["applicable", "not_applicable"]},
+        "external_submission": {"enum": ["applicable", "not_applicable"]}
+      },
+      "additionalProperties": false
+    },
+    "trace_plan": {
+      "type": "object",
+      "required": ["optimizer_step", "sample_presentations", "epoch_or_pass", "learning_rate", "live_train_metric", "live_dev_metric", "ema_dev_metric", "checkpoint_identity"],
+      "properties": {
+        "optimizer_step": {"type": "boolean"},
+        "sample_presentations": {"type": "boolean"},
+        "epoch_or_pass": {"type": "boolean"},
+        "learning_rate": {"type": "boolean"},
+        "live_train_metric": {"type": "boolean"},
+        "live_dev_metric": {"type": "boolean"},
+        "ema_dev_metric": {"type": "boolean"},
+        "checkpoint_identity": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "runtime_qualification_plan": {
+      "type": "object",
+      "required": ["status", "runtime_certificate_required", "qualification_scope"],
+      "properties": {
+        "status": {"const": "declared"},
+        "runtime_certificate_required": {"const": true},
+        "qualification_scope": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "terminal_candidate_artifacts_required": {"const": false}
+  },
+  "additionalProperties": false
+}

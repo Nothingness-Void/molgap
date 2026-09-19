@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-comparison-readiness-v1",
+  "type": "object",
+  "required": [
+    "format", "candidate_id", "reference_id", "reference_bundle_id",
+    "reference_bundle_sha256", "comparison_class",
+    "strict_ready", "strict_status", "experiment_purpose",
+    "intervention_group_id", "mechanism_id", "declared_intervention_fields",
+    "matched_fields", "mismatched_fields", "missing_fields",
+    "missing_artifacts", "reference_prediction_status",
+    "row_alignment_status", "runtime_certificate_status", "role_status",
+    "trace_status", "stochasticity_status", "blocker_codes",
+    "candidate_role_applicability_plan", "candidate_observed_role_event_kinds",
+    "reference_role_applicability_plan", "reference_observed_role_event_kinds",
+    "candidate_trace_field_availability", "reference_trace_field_availability",
+    "candidate_artifact_bindings", "reference_artifact_bindings",
+    "decision_scope", "forbidden_claims", "recoverable_without_training",
+    "rerun_required_blockers"
+  ],
+  "properties": {
+    "format": {"const": "molgap-comparison-readiness-v1"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "reference_id": {"type": ["string", "null"]},
+    "reference_bundle_id": {"type": ["string", "null"]},
+    "reference_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "comparison_class": {"enum": ["STRICT_CAUSAL", "PAIRED_ENDPOINT", "MATCHED_PREFIX", "CONTEXT_ONLY", "NO_COMPARISON"]},
+    "strict_ready": {"type": "boolean"},
+    "strict_status": {"type": "string", "minLength": 1},
+    "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
+    "intervention_group_id": {"type": "string", "minLength": 1},
+    "mechanism_id": {"type": ["string", "null"]},
+    "declared_intervention_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "matched_fields": {"type": "object"},
+    "mismatched_fields": {"type": "object"},
+    "missing_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "missing_artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "reference_prediction_status": {"type": "string", "minLength": 1},
+    "row_alignment_status": {"type": "string", "minLength": 1},
+    "runtime_certificate_status": {"type": "string", "minLength": 1},
+    "role_status": {"type": "string", "minLength": 1},
+    "trace_status": {"type": "string", "minLength": 1},
+    "stochasticity_status": {"type": "string", "minLength": 1},
+    "candidate_role_applicability_plan": {"$ref": "#/$defs/nullableRolePlan"},
+    "candidate_observed_role_event_kinds": {"$ref": "#/$defs/nullableRoleEvents"},
+    "reference_role_applicability_plan": {"$ref": "#/$defs/nullableRolePlan"},
+    "reference_observed_role_event_kinds": {"$ref": "#/$defs/nullableRoleEvents"},
+    "candidate_trace_field_availability": {"$ref": "#/$defs/nullableTracePlan"},
+    "reference_trace_field_availability": {"$ref": "#/$defs/nullableTracePlan"},
+    "candidate_artifact_bindings": {"$ref": "#/$defs/nullableCandidateBindings"},
+    "reference_artifact_bindings": {"$ref": "#/$defs/nullableReferenceBindings"},
+    "blocker_codes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "decision_scope": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "forbidden_claims": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "recoverable_without_training": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "rerun_required_blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "nullableRolePlan": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["training_membership", "prediction_input", "labels_read", "metric_computed", "selection_used", "external_submission"],
+          "properties": {
+            "training_membership": {"enum": ["applicable", "not_applicable"]},
+            "prediction_input": {"enum": ["applicable", "not_applicable"]},
+            "labels_read": {"enum": ["applicable", "not_applicable"]},
+            "metric_computed": {"enum": ["applicable", "not_applicable"]},
+            "selection_used": {"enum": ["applicable", "not_applicable"]},
+            "external_submission": {"enum": ["applicable", "not_applicable"]}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "nullableRoleEvents": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      ]
+    },
+    "nullableTracePlan": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["optimizer_step", "sample_presentations", "epoch_or_pass", "learning_rate", "live_train_metric", "live_dev_metric", "ema_dev_metric", "checkpoint_identity"],
+          "properties": {
+            "optimizer_step": {"type": "boolean"},
+            "sample_presentations": {"type": "boolean"},
+            "epoch_or_pass": {"type": "boolean"},
+            "learning_rate": {"type": "boolean"},
+            "live_train_metric": {"type": "boolean"},
+            "live_dev_metric": {"type": "boolean"},
+            "ema_dev_metric": {"type": "boolean"},
+            "checkpoint_identity": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "binding": {
+      "type": "object",
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "nullableReferenceBindings": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["checkpoint", "runtime_certificate", "prediction_manifest", "row_manifest", "target_manifest", "trace_manifest", "role_history", "target_transform_asset", "cost_records", "acceptance", "decision", "source_config"],
+          "properties": {
+            "checkpoint": {"$ref": "#/$defs/binding"},
+            "runtime_certificate": {"$ref": "#/$defs/binding"},
+            "prediction_manifest": {"$ref": "#/$defs/binding"},
+            "row_manifest": {"$ref": "#/$defs/binding"},
+            "target_manifest": {"$ref": "#/$defs/binding"},
+            "trace_manifest": {"$ref": "#/$defs/binding"},
+            "role_history": {"$ref": "#/$defs/binding"},
+            "target_transform_asset": {"$ref": "#/$defs/binding"},
+            "cost_records": {"$ref": "#/$defs/binding"},
+            "acceptance": {"$ref": "#/$defs/binding"},
+            "decision": {"$ref": "#/$defs/binding"},
+            "source_config": {"$ref": "#/$defs/binding"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "nullableCandidateBindings": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["checkpoint", "runtime_certificate", "prediction_manifest", "row_manifest", "target_manifest", "trace_manifest", "role_history", "target_transform_asset", "cost_records", "acceptance", "decision", "source_config", "paired_analysis"],
+          "properties": {
+            "checkpoint": {"$ref": "#/$defs/binding"},
+            "runtime_certificate": {"$ref": "#/$defs/binding"},
+            "prediction_manifest": {"$ref": "#/$defs/binding"},
+            "row_manifest": {"$ref": "#/$defs/binding"},
+            "target_manifest": {"$ref": "#/$defs/binding"},
+            "trace_manifest": {"$ref": "#/$defs/binding"},
+            "role_history": {"$ref": "#/$defs/binding"},
+            "target_transform_asset": {"$ref": "#/$defs/binding"},
+            "cost_records": {"$ref": "#/$defs/binding"},
+            "acceptance": {"$ref": "#/$defs/binding"},
+            "decision": {"$ref": "#/$defs/binding"},
+            "source_config": {"$ref": "#/$defs/binding"},
+            "paired_analysis": {"$ref": "#/$defs/binding"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

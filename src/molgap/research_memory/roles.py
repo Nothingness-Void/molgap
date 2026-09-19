@@ -10,6 +10,7 @@ def build_role_reuse_index(
     role_events: list[dict[str, Any]], evidence: list[dict[str, Any]]
 ) -> dict[str, Any]:
     identities: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    explicitly_consumed_role_names: set[str] = set()
     for event in sorted(role_events, key=lambda item: item["role_event_id"]):
         identity = ":".join(
             (event["dataset_identity"], event["row_manifest_hash"], event["role_name"])
@@ -23,6 +24,7 @@ def build_role_reuse_index(
                 "semantics": "explicit",
             }
         )
+        explicitly_consumed_role_names.add(event["role_name"])
 
     coarse = []
     protected_untouched: dict[str, list[str]] = defaultdict(list)
@@ -36,7 +38,11 @@ def build_role_reuse_index(
                 "role_identity": None,
             }
             coarse.append(row)
-            if role in {"official_validation", "test_dev", "test_challenge"} and state == "untouched":
+            if (
+                role in {"official_validation", "test_dev", "test_challenge"}
+                and state == "untouched"
+                and role not in explicitly_consumed_role_names
+            ):
                 protected_untouched[role].append(envelope["evidence_id"])
 
     reused = {
@@ -60,5 +66,12 @@ def build_role_reuse_index(
         "protected_roles_reported_untouched": {
             key: sorted(value) for key, value in sorted(protected_untouched.items())
         },
-        "full_training_membership_conflicts": [],
+        "full_training_membership_conflicts": sorted(
+            role
+            for role in explicitly_consumed_role_names
+            if any(
+                row["role_name"] == role and row["state"] == "untouched"
+                for row in coarse
+            )
+        ),
     }
