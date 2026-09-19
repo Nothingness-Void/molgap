@@ -762,7 +762,8 @@ def assess_comparison_readiness(
     if not terminal_complete:
         blockers.append("TERMINAL_ENDPOINT_UNAVAILABLE")
 
-    strict_ready = not blockers
+    causal_purpose = experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE
+    strict_ready = causal_purpose and not blockers
     if strict_ready:
         comparison_class = "STRICT_CAUSAL"
         strict_status = "READY"
@@ -886,6 +887,8 @@ def validate_comparison_readiness(
     if record["strict_ready"]:
         if comparison_class != "STRICT_CAUSAL":
             raise ValueError("strict_ready requires STRICT_CAUSAL")
+        if record["experiment_purpose"] not in INTERVENTION_FIELDS_BY_PURPOSE:
+            raise ValueError("STRICT_CAUSAL requires a causal comparison purpose")
         if record["missing_fields"] or record["missing_artifacts"] or record["blocker_codes"]:
             raise ValueError("strict_ready cannot contain missing evidence or blockers")
         accounted = set(record["matched_fields"]) | set(record["mismatched_fields"])

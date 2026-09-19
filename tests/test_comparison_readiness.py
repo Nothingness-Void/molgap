@@ -220,12 +220,15 @@ def _prelaunch(reference_bundle: dict | None = None) -> dict:
 
 
 def _assess(candidate: dict | None = None, reference: dict | None = None, **kwargs) -> dict:
+    declared_intervention_fields = kwargs.pop(
+        "declared_intervention_fields", ["architecture_config_identity"]
+    )
     return assess_comparison_readiness(
         candidate_id="candidate",
         candidate=candidate or _side("candidate-arch"),
         reference_id="reference",
         reference=reference or _reference_side(),
-        declared_intervention_fields=["architecture_config_identity"],
+        declared_intervention_fields=declared_intervention_fields,
         **kwargs,
     )
 
@@ -237,6 +240,69 @@ def test_all_fields_and_complete_artifacts_are_strict_causal():
     validate_comparison_readiness(
         result, evidence_verifier=lambda _pointer, _digest: None
     )
+
+
+@pytest.mark.parametrize(
+    "experiment_purpose",
+    (
+        "diagnostic",
+        "transfer_study",
+        "delivery_experiment",
+        "contextual_experiment",
+        "NO_TRAIN",
+    ),
+)
+def test_noncausal_purpose_with_complete_endpoint_evidence_is_not_strict(
+    experiment_purpose,
+):
+    candidate = _side("reference-arch")
+    reference = _reference_side()
+    for side in (candidate, reference):
+        side["role_applicability_plan"] = {
+            kind: "not_applicable" for kind in side["role_applicability_plan"]
+        }
+        side["observed_role_event_kinds"] = []
+        side["trace_field_availability"] = {
+            field: False for field in side["trace_field_availability"]
+        }
+    result = _assess(
+        candidate=candidate,
+        reference=reference,
+        declared_intervention_fields=[],
+        experiment_purpose=experiment_purpose,
+        intervention_group_id="noncausal-endpoint",
+    )
+    assert result["strict_ready"] is False
+    assert result["comparison_class"] == "PAIRED_ENDPOINT"
+    assert result["blocker_codes"] == []
+    validate_comparison_readiness(result)
+
+
+def test_validator_rejects_forged_noncausal_strict_record():
+    candidate = _side("reference-arch")
+    reference = _reference_side()
+    for side in (candidate, reference):
+        side["role_applicability_plan"] = {
+            kind: "not_applicable" for kind in side["role_applicability_plan"]
+        }
+        side["observed_role_event_kinds"] = []
+        side["trace_field_availability"] = {
+            field: False for field in side["trace_field_availability"]
+        }
+    forged = _assess(
+        candidate=candidate,
+        reference=reference,
+        declared_intervention_fields=[],
+        experiment_purpose="diagnostic",
+        intervention_group_id="noncausal-endpoint",
+    )
+    forged["comparison_class"] = "STRICT_CAUSAL"
+    forged["strict_ready"] = True
+    forged["strict_status"] = "READY"
+    with pytest.raises(ValueError, match="causal comparison purpose"):
+        validate_comparison_readiness(
+            forged, evidence_verifier=lambda _pointer, _digest: None
+        )
 
 
 @pytest.mark.parametrize(
