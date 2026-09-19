@@ -56,6 +56,10 @@ predictions, checkpoints, completed events, or terminal artifacts. Those are
 checked separately after execution by observed `comparison_readiness.json`;
 only that post-run record may grant `STRICT_CAUSAL`. The additive gate does not
 change a historical v3/v4 contract or authorize baseline reruns.
+Server release recomputes the plan against the actual reference bundle. A
+strict post-run record also requires repository-resolved, SHA-verified artifact
+bindings and detailed role/trace observations; summary status strings cannot
+independently authorize a claim.
 
 Fixed PCQM identities and publication evidence are indexed under
 `platforms/_records/ims/pcqm_fixed_datasets_v1/` and

@@ -41,11 +41,14 @@ def validate_server_scientific_prelaunch(
     *,
     comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
+    reference_bundle: Mapping[str, Any] | None,
 ) -> dict[str, Any]:
     """Release compute from the planned gate, never from post-run readiness."""
 
     gate = validate_server_comparison_prelaunch(
-        comparison_prelaunch, experiment_purpose=experiment_purpose
+        comparison_prelaunch,
+        experiment_purpose=experiment_purpose,
+        reference_bundle=reference_bundle,
     )
     return {
         **gate,
@@ -60,6 +63,7 @@ def write_server_comparison_prelaunch(
     *,
     comparison_prelaunch: Mapping[str, Any],
     experiment_purpose: str,
+    reference_bundle: Mapping[str, Any] | None,
 ) -> str:
     """Atomically persist the mandatory prelaunch gate after validation."""
 
@@ -69,6 +73,7 @@ def write_server_comparison_prelaunch(
     validate_server_scientific_prelaunch(
         comparison_prelaunch=comparison_prelaunch,
         experiment_purpose=experiment_purpose,
+        reference_bundle=reference_bundle,
     )
     record = dict(comparison_prelaunch)
     payload = json.dumps(record, indent=2, sort_keys=True, ensure_ascii=True) + "\n"

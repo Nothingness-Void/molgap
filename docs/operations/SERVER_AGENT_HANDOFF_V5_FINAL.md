@@ -626,10 +626,20 @@ applicability; trace declarations; and runtime qualification plan. It
 must not demand future candidate predictions, checkpoint, terminal trace,
 completed role events, bootstrap or row-alignment artifact.
 
+The release call receives the actual reusable reference bundle and recomputes
+the prelaunch record against it. An asserted bundle ID or asserted
+`matched_fields` map cannot release compute, and later repository validation is
+not a substitute for this release-time binding.
+
 Role plans declare every event kind as `applicable` or `not_applicable`.
 Post-run evidence requires events only for applicable kinds and rejects events
 invented for not-applicable kinds. An ordinary architecture screen may and
 normally will mark `external_submission` as `not_applicable`.
+Every causal training comparison must mark training membership, prediction
+input, label read, metric computation and selection as `applicable`. Its
+minimum trace includes optimizer step, sample presentations, epoch/pass,
+learning rate, live train/dev metrics and checkpoint identity; EMA development
+metrics are additionally required when EMA is enabled.
 
 `declared_intervention_fields` is not a general exception list. Architecture
 and mechanism comparisons may vary only their declared architecture/config
@@ -643,6 +653,12 @@ under an original contract, while independently classifying future reference
 reuse as `READY`, `INCOMPLETE_RECOVERABLE`, `NOT_COMPATIBLE`, or `UNAVAILABLE`.
 Do not make historical runs claim a portable target-transform asset that did
 not exist when they ran.
+
+Post-run strict readiness binds both arms to immutable repository-local
+artifact or manifest pointers with SHA-256. Repository validation resolves and
+hashes every strict binding. Role and trace completeness are recomputed from
+their detailed plans and observations rather than trusted from summary status
+strings.
 
 Future reusable references consume a discovered and validated
 `experiments/**/target_transform.json`. Its canonical digest, target identity

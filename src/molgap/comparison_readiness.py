@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 from collections.abc import Mapping, Sequence
-from typing import Any
+from typing import Any, Callable
 
 
 COMPARISON_READINESS_FORMAT = "molgap-comparison-readiness-v1"
@@ -91,11 +91,18 @@ REQUIRED_REFERENCE_ARTIFACTS = frozenset(
         "trace_manifest",
         "role_history",
         "target_transform_asset",
+        "cost_records",
         "acceptance",
         "decision",
     }
 )
 REQUIRED_CANDIDATE_ONLY_ARTIFACTS = frozenset({"paired_analysis"})
+REQUIRED_OBSERVED_BINDINGS = REQUIRED_REFERENCE_ARTIFACTS | frozenset(
+    {"source_config"}
+)
+REQUIRED_CANDIDATE_OBSERVED_BINDINGS = (
+    REQUIRED_OBSERVED_BINDINGS | REQUIRED_CANDIDATE_ONLY_ARTIFACTS
+)
 
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _COMPLETE = frozenset({"complete", "accepted", "available"})
@@ -111,6 +118,15 @@ ROLE_EVENT_KINDS = frozenset(
     }
 )
 ROLE_APPLICABILITY_STATES = frozenset({"applicable", "not_applicable"})
+CAUSAL_REQUIRED_ROLE_KINDS = frozenset(
+    {
+        "training_membership",
+        "prediction_input",
+        "labels_read",
+        "metric_computed",
+        "selection_used",
+    }
+)
 TRACE_FIELD_DECLARATIONS = frozenset(
     {
         "optimizer_step",
@@ -120,6 +136,17 @@ TRACE_FIELD_DECLARATIONS = frozenset(
         "live_train_metric",
         "live_dev_metric",
         "ema_dev_metric",
+        "checkpoint_identity",
+    }
+)
+CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
+    {
+        "optimizer_step",
+        "sample_presentations",
+        "epoch_or_pass",
+        "learning_rate",
+        "live_train_metric",
+        "live_dev_metric",
         "checkpoint_identity",
     }
 )
@@ -211,7 +238,9 @@ def _validate_intervention_scope(
     return declared
 
 
-def validate_role_applicability_plan(value: Any) -> dict[str, str]:
+def validate_role_applicability_plan(
+    value: Any, *, experiment_purpose: str | None = None
+) -> dict[str, str]:
     plan = _mapping(value, "role applicability plan")
     if set(plan) != set(ROLE_EVENT_KINDS):
         raise ValueError("role applicability plan must explicitly declare every role kind")
@@ -222,15 +251,31 @@ def validate_role_applicability_plan(value: Any) -> dict[str, str]:
     }
     if invalid:
         raise ValueError(f"invalid role applicability states: {invalid}")
+    if experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE:
+        missing_required = sorted(
+            kind
+            for kind in CAUSAL_REQUIRED_ROLE_KINDS
+            if plan[kind] != "applicable"
+        )
+        if missing_required:
+            raise ValueError(
+                "causal comparison requires applicable role kinds: "
+                f"{missing_required}"
+            )
     return {kind: str(plan[kind]) for kind in sorted(plan)}
 
 
 def validate_observed_role_events(
-    role_applicability_plan: Mapping[str, Any], observed_event_kinds: Sequence[str]
+    role_applicability_plan: Mapping[str, Any],
+    observed_event_kinds: Sequence[str],
+    *,
+    experiment_purpose: str | None = None,
 ) -> dict[str, Any]:
     """Require events only for applicable roles and forbid fabricated ones."""
 
-    plan = validate_role_applicability_plan(role_applicability_plan)
+    plan = validate_role_applicability_plan(
+        role_applicability_plan, experiment_purpose=experiment_purpose
+    )
     observed = _texts(observed_event_kinds, "observed role event kinds")
     if len(observed) != len(set(observed)):
         raise ValueError("observed role event kinds must be unique")
@@ -252,13 +297,54 @@ def validate_observed_role_events(
     }
 
 
-def validate_trace_plan(value: Any) -> dict[str, bool]:
+def validate_trace_plan(
+    value: Any,
+    *,
+    experiment_purpose: str | None = None,
+    ema_enabled: bool | None = None,
+) -> dict[str, bool]:
     plan = _mapping(value, "trace plan")
     if set(plan) != set(TRACE_FIELD_DECLARATIONS):
         raise ValueError("trace plan must explicitly declare every trace field")
     if any(not isinstance(item, bool) for item in plan.values()):
         raise ValueError("trace plan declarations must be boolean")
+    if experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE:
+        required = set(CAUSAL_REQUIRED_TRACE_FIELDS)
+        if ema_enabled is True:
+            required.add("ema_dev_metric")
+        missing_required = sorted(field for field in required if plan[field] is not True)
+        if missing_required:
+            raise ValueError(
+                "causal comparison requires trace fields: "
+                f"{missing_required}"
+            )
     return {field: bool(plan[field]) for field in sorted(plan)}
+
+
+def validate_artifact_bindings(
+    value: Any, *, required: frozenset[str], label: str
+) -> dict[str, dict[str, str]]:
+    """Validate immutable post-run artifact references and their digests."""
+
+    bindings = _mapping(value, label)
+    if set(bindings) != set(required):
+        missing = sorted(set(required) - set(bindings))
+        extra = sorted(set(bindings) - set(required))
+        raise ValueError(f"{label} binding keys differ; missing={missing}, extra={extra}")
+    validated: dict[str, dict[str, str]] = {}
+    refs: list[str] = []
+    for artifact in sorted(required):
+        binding = _mapping(bindings[artifact], f"{label}.{artifact}")
+        if set(binding) != {"ref", "sha256"}:
+            raise ValueError(f"{label}.{artifact} must contain exactly ref and sha256")
+        validated[artifact] = {
+            "ref": _text(binding.get("ref"), f"{label}.{artifact}.ref"),
+            "sha256": _sha(binding.get("sha256"), f"{label}.{artifact}.sha256"),
+        }
+        refs.append(validated[artifact]["ref"])
+    if len(refs) != len(set(refs)):
+        raise ValueError(f"{label} must use one distinct reference per artifact")
+    return validated
 
 
 def validate_runtime_qualification_plan(value: Any) -> dict[str, Any]:
@@ -290,6 +376,15 @@ def target_transform_asset_digest(record: Mapping[str, Any]) -> str:
     payload = {key: value for key, value in record.items() if key != "asset_sha256"}
     encoded = json.dumps(
         payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def reference_bundle_digest(record: Mapping[str, Any]) -> str:
+    """Hash canonical bundle content so an ID cannot stand in for the bundle."""
+
+    encoded = json.dumps(
+        dict(record), sort_keys=True, separators=(",", ":"), ensure_ascii=True
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
@@ -407,14 +502,49 @@ def _artifact_state(side: Mapping[str, Any]) -> tuple[set[str], list[str]]:
     return complete, missing
 
 
-def _observed_role_status(side: Mapping[str, Any]) -> str:
+def _observed_role_status(
+    side: Mapping[str, Any], *, experiment_purpose: str
+) -> str:
     plan = side.get("role_applicability_plan")
     observed = side.get("observed_role_event_kinds")
-    if plan is None and observed is None:
-        return str(side.get("role_status", "unknown"))
     if plan is None or observed is None:
         return "incomplete"
-    return validate_observed_role_events(plan, observed)["status"]
+    return validate_observed_role_events(
+        plan, observed, experiment_purpose=experiment_purpose
+    )["status"]
+
+
+def _observed_trace_status(
+    side: Mapping[str, Any],
+    *,
+    experiment_purpose: str,
+    identity: Mapping[str, Any],
+) -> str:
+    availability = side.get("trace_field_availability")
+    if availability is None:
+        return "incomplete"
+    validate_trace_plan(
+        availability,
+        experiment_purpose=experiment_purpose,
+        ema_enabled=identity.get("ema_enabled"),
+    )
+    return "complete" if side.get("trace_status") == "complete" else "incomplete"
+
+
+def _identity_from_comparison_maps(
+    record: Mapping[str, Any], *, side: str, label: str
+) -> dict[str, Any]:
+    identity: dict[str, Any] = {}
+    for field, value in record["matched_fields"].items():
+        identity[field] = value
+    for field, values in record["mismatched_fields"].items():
+        values = _mapping(values, f"{label}.mismatched_fields.{field}")
+        if side not in values:
+            raise ValueError(
+                f"{label} mismatch {field} lacks {side} identity"
+            )
+        identity[field] = values[side]
+    return identity
 
 
 def assess_comparison_readiness(
@@ -449,6 +579,8 @@ def assess_comparison_readiness(
         "format": COMPARISON_READINESS_FORMAT,
         "candidate_id": candidate_id,
         "reference_id": reference_id,
+        "reference_bundle_id": None,
+        "reference_bundle_sha256": None,
         "strict_ready": False,
         "strict_status": "PENDING",
         "experiment_purpose": experiment_purpose,
@@ -465,6 +597,18 @@ def assess_comparison_readiness(
         "role_status": str(candidate.get("role_status", "unknown")),
         "trace_status": str(candidate.get("trace_status", "unknown")),
         "stochasticity_status": str(candidate.get("stochasticity_status", "unknown")),
+        "candidate_role_applicability_plan": candidate.get("role_applicability_plan"),
+        "candidate_observed_role_event_kinds": candidate.get(
+            "observed_role_event_kinds"
+        ),
+        "reference_role_applicability_plan": None,
+        "reference_observed_role_event_kinds": None,
+        "candidate_trace_field_availability": candidate.get(
+            "trace_field_availability"
+        ),
+        "reference_trace_field_availability": None,
+        "candidate_artifact_bindings": candidate.get("artifact_bindings"),
+        "reference_artifact_bindings": None,
         "blocker_codes": [],
         "decision_scope": [],
         "forbidden_claims": [],
@@ -484,6 +628,22 @@ def assess_comparison_readiness(
         return base
 
     reference = _mapping(reference, "reference")
+    base.update(
+        {
+            "reference_role_applicability_plan": reference.get(
+                "role_applicability_plan"
+            ),
+            "reference_observed_role_event_kinds": reference.get(
+                "observed_role_event_kinds"
+            ),
+            "reference_trace_field_availability": reference.get(
+                "trace_field_availability"
+            ),
+            "reference_artifact_bindings": reference.get("artifact_bindings"),
+            "reference_bundle_id": reference.get("reference_bundle_id"),
+            "reference_bundle_sha256": reference.get("reference_bundle_sha256"),
+        }
+    )
     candidate_identity = candidate.get("comparison_identity", {})
     reference_identity = reference.get("comparison_identity", {})
     if not isinstance(candidate_identity, Mapping):
@@ -537,15 +697,46 @@ def assess_comparison_readiness(
     )
     role_status = (
         "complete"
-        if _observed_role_status(candidate) == "complete"
-        and _observed_role_status(reference) == "complete"
+        if _observed_role_status(
+            candidate, experiment_purpose=experiment_purpose
+        )
+        == "complete"
+        and _observed_role_status(
+            reference, experiment_purpose=experiment_purpose
+        )
+        == "complete"
         else "incomplete"
     )
     trace_status = (
         "complete"
-        if candidate.get("trace_status") == "complete" and reference.get("trace_status") == "complete"
+        if _observed_trace_status(
+            candidate,
+            experiment_purpose=experiment_purpose,
+            identity=candidate_identity,
+        )
+        == "complete"
+        and _observed_trace_status(
+            reference,
+            experiment_purpose=experiment_purpose,
+            identity=reference_identity,
+        )
+        == "complete"
         else "incomplete"
     )
+    bindings_status = "complete"
+    try:
+        validate_artifact_bindings(
+            candidate.get("artifact_bindings"),
+            required=REQUIRED_CANDIDATE_OBSERVED_BINDINGS,
+            label="candidate artifact bindings",
+        )
+        validate_artifact_bindings(
+            reference.get("artifact_bindings"),
+            required=REQUIRED_OBSERVED_BINDINGS,
+            label="reference artifact bindings",
+        )
+    except ValueError:
+        bindings_status = "incomplete"
     blockers: list[str] = []
     if missing_fields:
         blockers.append("MISSING_IDENTITY_FIELDS")
@@ -566,6 +757,8 @@ def assess_comparison_readiness(
         blockers.append("ROLE_HISTORY_INCOMPLETE")
     if trace_status != "complete":
         blockers.append("TRACE_INCOMPLETE")
+    if bindings_status != "complete":
+        blockers.append("OBSERVED_ARTIFACT_BINDINGS_INCOMPLETE")
     if not terminal_complete:
         blockers.append("TERMINAL_ENDPOINT_UNAVAILABLE")
 
@@ -605,6 +798,7 @@ def assess_comparison_readiness(
         "RUNTIME_CERTIFICATE_INCOMPLETE",
         "ROLE_HISTORY_INCOMPLETE",
         "TRACE_INCOMPLETE",
+        "OBSERVED_ARTIFACT_BINDINGS_INCOMPLETE",
     }
     for blocker in blockers:
         if blocker in recoverable_codes:
@@ -642,7 +836,11 @@ def assess_comparison_readiness(
     return base
 
 
-def validate_comparison_readiness(record: Mapping[str, Any]) -> dict[str, Any]:
+def validate_comparison_readiness(
+    record: Mapping[str, Any],
+    *,
+    evidence_verifier: Callable[[str, str], None] | None = None,
+) -> dict[str, Any]:
     """Validate observed post-run readiness and its fail-closed invariant."""
 
     record = _mapping(record, "comparison readiness")
@@ -723,6 +921,56 @@ def validate_comparison_readiness(record: Mapping[str, Any]) -> dict[str, Any]:
             raise ValueError(f"strict_ready status is incomplete: {bad_statuses}")
         if record.get("reference_id") is None:
             raise ValueError("strict_ready requires a reference_id")
+        _text(record.get("reference_bundle_id"), "comparison readiness.reference_bundle_id")
+        _sha(
+            record.get("reference_bundle_sha256"),
+            "comparison readiness.reference_bundle_sha256",
+        )
+        candidate_roles = validate_observed_role_events(
+            record.get("candidate_role_applicability_plan"),
+            record.get("candidate_observed_role_event_kinds"),
+            experiment_purpose=record["experiment_purpose"],
+        )
+        reference_roles = validate_observed_role_events(
+            record.get("reference_role_applicability_plan"),
+            record.get("reference_observed_role_event_kinds"),
+            experiment_purpose=record["experiment_purpose"],
+        )
+        if candidate_roles["status"] != "complete" or reference_roles["status"] != "complete":
+            raise ValueError("strict_ready requires complete applicable role events")
+        candidate_identity = _identity_from_comparison_maps(
+            record, side="candidate", label="comparison readiness"
+        )
+        reference_identity = _identity_from_comparison_maps(
+            record, side="reference", label="comparison readiness"
+        )
+        validate_trace_plan(
+            record.get("candidate_trace_field_availability"),
+            experiment_purpose=record["experiment_purpose"],
+            ema_enabled=candidate_identity.get("ema_enabled"),
+        )
+        validate_trace_plan(
+            record.get("reference_trace_field_availability"),
+            experiment_purpose=record["experiment_purpose"],
+            ema_enabled=reference_identity.get("ema_enabled"),
+        )
+        candidate_bindings = validate_artifact_bindings(
+            record.get("candidate_artifact_bindings"),
+            required=REQUIRED_CANDIDATE_OBSERVED_BINDINGS,
+            label="candidate artifact bindings",
+        )
+        reference_bindings = validate_artifact_bindings(
+            record.get("reference_artifact_bindings"),
+            required=REQUIRED_OBSERVED_BINDINGS,
+            label="reference artifact bindings",
+        )
+        if evidence_verifier is None:
+            raise ValueError(
+                "strict observed readiness requires an artifact evidence verifier"
+            )
+        for bindings in (candidate_bindings, reference_bindings):
+            for binding in bindings.values():
+                evidence_verifier(binding["ref"], binding["sha256"])
     elif comparison_class == "STRICT_CAUSAL":
         raise ValueError("STRICT_CAUSAL must be strict_ready")
     return dict(record)
@@ -753,13 +1001,18 @@ def assess_comparison_prelaunch(
         declared_intervention_fields=declared_intervention_fields,
         require_nonempty=experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE,
     )
-    roles = validate_role_applicability_plan(role_applicability_plan)
-    trace = validate_trace_plan(trace_plan)
-    runtime = validate_runtime_qualification_plan(runtime_qualification_plan)
-
     candidate_identity = candidate_plan.get("comparison_identity", {})
     if not isinstance(candidate_identity, Mapping):
         candidate_identity = {}
+    roles = validate_role_applicability_plan(
+        role_applicability_plan, experiment_purpose=experiment_purpose
+    )
+    trace = validate_trace_plan(
+        trace_plan,
+        experiment_purpose=experiment_purpose,
+        ema_enabled=candidate_identity.get("ema_enabled"),
+    )
+    runtime = validate_runtime_qualification_plan(runtime_qualification_plan)
     source_status = str(candidate_plan.get("source_config_status", "unknown"))
     source_identity = candidate_plan.get("source_commit_or_archive")
 
@@ -776,6 +1029,7 @@ def assess_comparison_prelaunch(
 
     reference_identity: Mapping[str, Any] = {}
     reference_bundle_id: str | None = None
+    reference_bundle_sha256: str | None = None
     causal = experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE
     if reference_bundle is None or reference_id is None:
         if causal:
@@ -785,6 +1039,7 @@ def assess_comparison_prelaunch(
         if validated_reference["reference_id"] != reference_id:
             raise ValueError("reference bundle identity does not match reference_id")
         reference_bundle_id = validated_reference["reference_bundle_id"]
+        reference_bundle_sha256 = reference_bundle_digest(validated_reference)
         reference_identity = validated_reference["comparison_identity"]
 
     matched: dict[str, Any] = {}
@@ -822,6 +1077,7 @@ def assess_comparison_prelaunch(
         "candidate_id": candidate_id,
         "reference_id": reference_id,
         "reference_bundle_id": reference_bundle_id,
+        "reference_bundle_sha256": reference_bundle_sha256,
         "experiment_purpose": experiment_purpose,
         "intervention_group_id": intervention_group_id,
         "mechanism_id": mechanism_id,
@@ -852,6 +1108,11 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
         _text(record.get("reference_id"), "comparison prelaunch.reference_id")
     if record.get("reference_bundle_id") is not None:
         _text(record.get("reference_bundle_id"), "comparison prelaunch.reference_bundle_id")
+    if record.get("reference_bundle_sha256") is not None:
+        _sha(
+            record.get("reference_bundle_sha256"),
+            "comparison prelaunch.reference_bundle_sha256",
+        )
     if not isinstance(record.get("prelaunch_ready"), bool):
         raise ValueError("comparison prelaunch.prelaunch_ready must be boolean")
     if record.get("terminal_candidate_artifacts_required") is not False:
@@ -867,8 +1128,18 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
         _mapping(record.get(field), f"comparison prelaunch.{field}")
     for field in ("missing_fields", "blocker_codes"):
         _texts(record.get(field), f"comparison prelaunch.{field}")
-    validate_role_applicability_plan(record.get("role_applicability_plan"))
-    validate_trace_plan(record.get("trace_plan"))
+    planned_identity = _identity_from_comparison_maps(
+        record, side="candidate", label="comparison prelaunch"
+    )
+    validate_role_applicability_plan(
+        record.get("role_applicability_plan"),
+        experiment_purpose=record.get("experiment_purpose"),
+    )
+    validate_trace_plan(
+        record.get("trace_plan"),
+        experiment_purpose=record.get("experiment_purpose"),
+        ema_enabled=planned_identity.get("ema_enabled"),
+    )
     validate_runtime_qualification_plan(record.get("runtime_qualification_plan"))
     _text(record.get("candidate_source_config_status"), "candidate source/config status")
     source_identity = record.get("candidate_source_commit_or_archive")
@@ -889,6 +1160,7 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
         if causal and (
             record.get("reference_id") is None
             or record.get("reference_bundle_id") is None
+            or record.get("reference_bundle_sha256") is None
         ):
             raise ValueError("prelaunch_ready requires a reusable reference bundle")
         if causal:
@@ -910,9 +1182,12 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def validate_server_comparison_prelaunch(
-    prelaunch: Mapping[str, Any], *, experiment_purpose: str
+    prelaunch: Mapping[str, Any],
+    *,
+    experiment_purpose: str,
+    reference_bundle: Mapping[str, Any] | None,
 ) -> dict[str, Any]:
-    """Hard gate server compute using planned, not terminal, comparability."""
+    """Hard gate compute by recomputing the plan against the supplied bundle."""
 
     validated = validate_comparison_prelaunch(prelaunch)
     purpose = _text(experiment_purpose, "experiment purpose")
@@ -920,6 +1195,39 @@ def validate_server_comparison_prelaunch(
         raise ValueError("prelaunch experiment purpose does not match release request")
     if not validated["prelaunch_ready"]:
         raise ValueError("server training is blocked until planned comparability is complete")
+    actual_reference = (
+        validate_reference_bundle(reference_bundle)
+        if reference_bundle is not None
+        else None
+    )
+    if purpose in INTERVENTION_FIELDS_BY_PURPOSE and actual_reference is None:
+        raise ValueError("causal server release requires the actual reference bundle")
+    expected = assess_comparison_prelaunch(
+        candidate_id=validated["candidate_id"],
+        candidate_plan={
+            "comparison_identity": _identity_from_comparison_maps(
+                validated, side="candidate", label="comparison prelaunch"
+            ),
+            "source_config_status": validated["candidate_source_config_status"],
+            "source_commit_or_archive": validated[
+                "candidate_source_commit_or_archive"
+            ],
+        },
+        reference_id=(actual_reference or {}).get("reference_id"),
+        reference_bundle=actual_reference,
+        experiment_purpose=purpose,
+        intervention_group_id=validated["intervention_group_id"],
+        declared_intervention_fields=validated["declared_intervention_fields"],
+        role_applicability_plan=validated["role_applicability_plan"],
+        trace_plan=validated["trace_plan"],
+        runtime_qualification_plan=validated["runtime_qualification_plan"],
+        mechanism_id=validated["mechanism_id"],
+    )
+    if expected != dict(validated):
+        raise ValueError(
+            "prelaunch record does not match the supplied reference bundle and "
+            "recomputed candidate plan"
+        )
     return {
         "gate": "PASS",
         "experiment_purpose": purpose,

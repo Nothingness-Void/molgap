@@ -4,6 +4,7 @@
   "type": "object",
   "required": [
     "format", "candidate_id", "reference_id", "reference_bundle_id",
+    "reference_bundle_sha256",
     "experiment_purpose", "intervention_group_id", "mechanism_id",
     "planned_status", "prelaunch_ready", "declared_intervention_fields",
     "matched_fields", "mismatched_fields", "missing_fields", "blocker_codes",
@@ -16,6 +17,7 @@
     "candidate_id": {"type": "string", "minLength": 1},
     "reference_id": {"type": ["string", "null"]},
     "reference_bundle_id": {"type": ["string", "null"]},
+    "reference_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
     "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
     "intervention_group_id": {"type": "string", "minLength": 1},
     "mechanism_id": {"type": ["string", "null"]},

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections.abc import Iterable, Mapping
 from pathlib import Path
@@ -9,9 +10,11 @@ from typing import Any
 from urllib.parse import urlparse
 
 from molgap.v5_common import (
+    reference_bundle_digest,
     validate_comparison_prelaunch,
     validate_comparison_readiness,
     validate_reference_bundle,
+    validate_server_comparison_prelaunch,
     validate_target_transform_asset,
     validate_v5_evidence_envelope,
 )
@@ -62,6 +65,23 @@ def _validate_pointers(root: Path, pointers: Iterable[str]) -> None:
         if not isinstance(pointer, str) or not pointer.strip():
             raise ValueError("record pointer must be non-empty text")
         resolve_repo_pointer(root, pointer)
+
+
+def _verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
+    """Verify strict evidence through a repository-local immutable manifest."""
+
+    path = resolve_repo_pointer(root, pointer)
+    if path is None:
+        raise ValueError(
+            "strict observed evidence must bind a repository-local retrievable "
+            f"artifact or manifest: {pointer}"
+        )
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != expected_sha256:
+        raise ValueError(
+            f"bound artifact SHA mismatch for {pointer}: "
+            f"expected {expected_sha256}, found {actual}"
+        )
 
 
 def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
@@ -172,7 +192,12 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         record = validate_comparison_prelaunch(load_json(path))
         records["comparison_prelaunch"].append((path, record))
     for path in discovered.comparison_readiness:
-        record = validate_comparison_readiness(load_json(path))
+        record = validate_comparison_readiness(
+            load_json(path),
+            evidence_verifier=lambda pointer, digest: _verify_bound_artifact(
+                root, pointer, digest
+            ),
+        )
         records["comparison_readiness"].append((path, record))
     for path in discovered.target_transform_assets:
         record = validate_target_transform_asset(load_json(path))
@@ -231,9 +256,11 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             raise ValueError(f"{path}:{field} contains missing IDs: {missing}")
 
     cost_ids = {record["cost_event_id"] for _, record in records["costs"]}
-    reference_bundle_ids = {
-        record["reference_bundle_id"] for _, record in records["reference_bundles"]
+    reference_bundles_by_id = {
+        record["reference_bundle_id"]: record
+        for _, record in records["reference_bundles"]
     }
+    reference_bundle_ids = set(reference_bundles_by_id)
     for path, record in records["comparison_prelaunch"]:
         reference_bundle_id = record.get("reference_bundle_id")
         if (
@@ -244,6 +271,47 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
                 f"{path}:reference_bundle_id references missing ID: "
                 f"{reference_bundle_id}"
             )
+        validate_server_comparison_prelaunch(
+            record,
+            experiment_purpose=record["experiment_purpose"],
+            reference_bundle=(
+                reference_bundles_by_id[reference_bundle_id]
+                if reference_bundle_id is not None
+                else None
+            ),
+        )
+    for path, record in records["comparison_readiness"]:
+        if not record["strict_ready"]:
+            continue
+        reference_bundle_id = record.get("reference_bundle_id")
+        if reference_bundle_id not in reference_bundles_by_id:
+            raise ValueError(
+                f"{path}:strict readiness references missing bundle ID: "
+                f"{reference_bundle_id}"
+            )
+        actual_bundle = reference_bundles_by_id[reference_bundle_id]
+        if record.get("reference_id") != actual_bundle["reference_id"]:
+            raise ValueError(f"{path}:strict readiness reference identity differs from bundle")
+        if record.get("reference_bundle_sha256") != reference_bundle_digest(actual_bundle):
+            raise ValueError(f"{path}:strict readiness reference bundle SHA differs")
+        bundle_binding_refs = {
+            "runtime_certificate": "runtime_certificate_ref",
+            "row_manifest": "row_manifest_ref",
+            "target_manifest": "target_manifest_ref",
+            "trace_manifest": "trace_manifest_ref",
+            "role_history": "role_history_ref",
+            "target_transform_asset": "target_transform_asset_ref",
+            "cost_records": "cost_records_ref",
+            "acceptance": "acceptance_ref",
+            "decision": "decision_ref",
+        }
+        for artifact, bundle_field in bundle_binding_refs.items():
+            if record["reference_artifact_bindings"][artifact]["ref"] != actual_bundle[
+                bundle_field
+            ]:
+                raise ValueError(
+                    f"{path}:strict readiness {artifact} binding differs from bundle"
+                )
     for path, record in records["trajectories"]:
         missing_parents = sorted(
             set(record["state_at_start"]["parent_trajectory_ids"]) - set(trajectory_by_id)

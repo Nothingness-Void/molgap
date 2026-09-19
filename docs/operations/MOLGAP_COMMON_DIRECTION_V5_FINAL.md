@@ -577,6 +577,15 @@ planned identity difference, role/trace plans and a runtime-qualification plan. 
 `strict_ready=true` additionally requires no blockers and complete observed
 artifacts.
 
+The server release helper receives the actual reference-bundle object and
+recomputes the planned comparison; an asserted bundle ID or asserted
+`matched_fields` map is never sufficient. For a causal training comparison,
+training membership, prediction input, label read, metric computation and
+selection roles are necessarily `applicable`; only roles such as external
+submission may be `not_applicable`. Its trace plan must retain optimizer step,
+sample presentations, epoch/pass, learning rate, live train/dev metrics and
+checkpoint identity, plus EMA development metrics when EMA is enabled.
+
 The explicit identity includes benchmark, dataset, role, row membership/order,
 features, target, seed, precision, TF32 and determinism, physical batch,
 accumulation, tail policy, optimizer and fused mode, schedule, loss, target
@@ -620,6 +629,12 @@ fabricated event. Every future training trace explicitly records which
 of optimizer step, sample presentations, epoch/pass, learning rate, live train
 metric, live dev metric, EMA dev metric, and checkpoint identity are present;
 unavailable fields remain unavailable.
+
+Observed strict readiness carries candidate and reference artifact bindings,
+each with a repository-local manifest pointer and SHA-256. The standalone
+record validator cannot grant strict readiness without an evidence verifier;
+repository validation resolves every pointer and hashes its bytes. Aggregate
+status strings alone never establish observed evidence.
 
 Historical scientific validity and prospective reusable-reference readiness
 are independent dimensions. A matched experiment can remain
