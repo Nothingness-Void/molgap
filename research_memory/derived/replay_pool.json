@@ -14,6 +14,13 @@
     },
     {
       "reasons": [
+        "no_canonical_candidate_reference_pair"
+      ],
+      "run_id": "kaseichou/molgap-k1-functional-group-token-s42:v1",
+      "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+    },
+    {
+      "reasons": [
         "canonical_trace_not_locally_retained"
       ],
       "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
@@ -63,5 +70,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "a1ad1fc0eb67e2450ea273a61b9b9495b5aa888a3829efd58ac12b8ac17648bc"
+  "source_digest": "a8055e25523ee49291cb7a569a9acfc62ffb1b5282ff7126e63dc884de19b85a"
 }

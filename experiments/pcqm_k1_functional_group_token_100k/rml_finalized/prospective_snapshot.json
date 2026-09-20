@@ -1,0 +1,119 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "sidecar-v1"
+      ],
+      "cost_event_ids": [],
+      "evidence_refs": [
+        "experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json"
+      ],
+      "run_ids": [
+        "kaseichou/molgap-k1-functional-group-sidecar-v1:v1"
+      ],
+      "source_commit": "69103b5466bc0051275153a0eda081f22f940f42",
+      "type": "cpu_only_sidecar_build_and_no_model_acceptance"
+    },
+    {
+      "action_id": "A002",
+      "attempt_ids": [
+        "candidate-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-functional-group-token-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_functional_group_token_100k/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_functional_group_token_100k/source_config.json"
+      ],
+      "run_ids": [
+        "kaseichou/molgap-k1-functional-group-token-s42:v1"
+      ],
+      "source_commit": "5d1769c7d614b6ee1b109d5a83fb278aacef91be",
+      "type": "submitted_candidate_only_seed42_100k_screen"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_k1_functional_group_token_100k/comparison_readiness_prelaunch.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_functional_group_token_100k/STATUS.md",
+    "next_allowed_actions": [
+      "collect and validate terminal evidence from the exact bound job"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal attribution must precede any successor"
+    ]
+  },
+  "family_id": "k1-functional-group-token",
+  "hypothesis": {
+    "alternative_explanations": [
+      "existing OGB atom/bond states already encode the same roles",
+      "the 12 role classes may merge chemically distinct instances"
+    ],
+    "changed_mechanism": "one sparse layer6 atom-to-functional-group-token-to-member-atom exchange",
+    "cheapest_falsifier": "one seed42 fixed PCQM100K candidate-only screen against the reusable K1 reference",
+    "decision_changed_if_negative": "close chemistry-role token hierarchy before another route",
+    "decision_changed_if_positive": "retain one seed42 shortlist; scale requires separate authority",
+    "expected_native_cost_ref": "cost-TC-k1-functional-group-token-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and is not inferred from account identity"
+    ],
+    "hypothesis_id": "H-TC-k1-functional-group-token-100k-s42",
+    "observed_deficiency": "Return-allocation changes were favorable but sub-material; K1 lacks an explicit intermediate chemical hierarchy.",
+    "related_closed_family_ids": [
+      "k1-pair-token-node-return",
+      "k1-global-motif-counts",
+      "k1-ring-and-path-caches",
+      "k1-geometry-branches"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-node-return-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does sparse chemistry-role token exchange add useful relation content to K1?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-functional-group-token-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_functional_group_token_100k/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_functional_group_token_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_functional_group_token_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-pair-token-node-return-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-node-return-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42",
+      "TC-k1-pair-token-node-return-100k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_functional_group_token_100k/role_plan.json"
+    ],
+    "source_commit": "5d1769c7d614b6ee1b109d5a83fb278aacef91be",
+    "source_config_identity": "cc2ae731a15326e43b1970ae5e312339bc5af385f162d5b43b31bce209c8b0c2"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+}

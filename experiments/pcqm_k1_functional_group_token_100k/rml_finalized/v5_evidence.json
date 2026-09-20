@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_functional_group_token_100k/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "6ca945e37908dcfb3dfd578d49448579eb20f4042864cdd30ca9dd98a4cbb695"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_functional_group_token_100k/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "efd37049901ff677c463685d350f967d370a3d521cfbbbdfad41577313865697"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_functional_group_token_100k/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "a7cbc3cbc386c06ec884b2b8691e2c6eadf20b72ab2b64d0ac94ede94df40493"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_functional_group_token_100k/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "9196fbc1d6685c9c26932ba6a7d7d24fae7e4d49dc76f58e14bef237b386c057"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_functional_group_token_100k/protocol.md",
+      "experiments/pcqm_k1_functional_group_token_100k/training_contract.json",
+      "experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "experiments/pcqm_k1_functional_group_token_100k/decision.md",
+      "experiments/pcqm_k1_functional_group_token_100k/trajectory.json",
+      "experiments/pcqm_k1_functional_group_token_100k/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

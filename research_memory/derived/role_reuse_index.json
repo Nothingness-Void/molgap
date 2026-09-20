@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 60,
+  "ambiguous_historical_role_record_count": 61,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -130,9 +130,16 @@
     {
       "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
       "role_identity": null,
-      "role_name": "internal_development",
+      "role_name": "internal_development_100000_150000",
       "semantics": "coarse_historical",
-      "state": "untouched"
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
     },
     {
       "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
@@ -422,11 +429,39 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 27,
+  "explicit_role_event_count": 32,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
@@ -520,6 +555,13 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
       {
         "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-train",
@@ -680,6 +722,34 @@
   "repeatedly_selected_role_identities": {
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
         "selection_used": true,
@@ -791,6 +861,34 @@
   "reused_role_identities": {
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-development",
         "selection_used": true,
@@ -883,6 +981,13 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-functional-group-token-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+      },
       {
         "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-mose-context-gate-100k-s42-train",

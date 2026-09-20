@@ -1,0 +1,43 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-1026601b43681e84c912bd3a8e02e3a6a3a8383467034fc651aea8d1f6acc9aa",
+  "finalized_at": "2026-09-20T19:00:00+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_functional_group_token_100k/decision.md": "56e53f6e52915ebda648fb4ae762496e4b4ce065e6ec57d9475d43efddb546f5",
+    "experiments/pcqm_k1_functional_group_token_100k/protocol.md": "056a4d404ab7f6e674bbf9fa9fdd9007e3e43f26b501f47934a87aa7fadd130d",
+    "experiments/pcqm_k1_functional_group_token_100k/results/acceptance_summary.json": "6ca945e37908dcfb3dfd578d49448579eb20f4042864cdd30ca9dd98a4cbb695",
+    "experiments/pcqm_k1_functional_group_token_100k/results/canonical_trace.json": "9196fbc1d6685c9c26932ba6a7d7d24fae7e4d49dc76f58e14bef237b386c057",
+    "experiments/pcqm_k1_functional_group_token_100k/results/comparison_readiness.json": "a7cbc3cbc386c06ec884b2b8691e2c6eadf20b72ab2b64d0ac94ede94df40493",
+    "experiments/pcqm_k1_functional_group_token_100k/results/paired_analysis.json": "efd37049901ff677c463685d350f967d370a3d521cfbbbdfad41577313865697",
+    "experiments/pcqm_k1_functional_group_token_100k/results/terminal_acceptance.json": "9fd5e443b8ce0251ba6b495642557593e29db4e6dd6d46ee88cfb709df42d357",
+    "experiments/pcqm_k1_functional_group_token_100k/source_config.json": "5c02b5b97d07a4cc32a67a4d14b7694bc6444ea481c3cae8bfdc0fe164b460a6",
+    "experiments/pcqm_k1_functional_group_token_100k/training_contract.json": "f24a40a86721ef5f2f730d4b6ee8241131b6ea49ee3a3e746bd28708f79fb7ab",
+    "experiments/pcqm_k1_functional_group_token_100k/trajectory.json": "d30e4cb58a884e557ab1b7d40763a98cdc43cb27661a51547cb675d2f22e1a4c"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-functional-group-token-100k-s42-training.json": "f9be0268a78e80281326c38cf52549becff74a1910bfd7eaf54f5870fec0b3e1",
+    "prospective_snapshot.json": "d30e4cb58a884e557ab1b7d40763a98cdc43cb27661a51547cb675d2f22e1a4c",
+    "roles/role-TC-k1-functional-group-token-100k-s42-labels-read.json": "49f3af871776c443b92bcdcd364291d2a7f1ee22dfdfa40a172990500a18de2d",
+    "roles/role-TC-k1-functional-group-token-100k-s42-metric-computed.json": "67fca38c152e168e0e9b8d52351e2de864951579ea1ecbfe1501741b6c61f3cd",
+    "roles/role-TC-k1-functional-group-token-100k-s42-prediction-input.json": "542ab9a64d2c74e726598cadcfa875b07a3f7a8edfbf8de15d2f0689dbde3573",
+    "roles/role-TC-k1-functional-group-token-100k-s42-selection-used.json": "6eb68a813f45f312c3f78fed390c6f71953a42481a46c57b92f59369b789c965",
+    "roles/role-TC-k1-functional-group-token-100k-s42-training-membership.json": "dbc4cf992267f8d7a90c44b7622cfc42da74a6275ec45ea1923b8f7c5ebe94d9",
+    "terminal_input.json": "10ed7b34cb9b53f3cb59365845197fdceb3d394b1db5815ad7224ede581e9043",
+    "trace.json": "9196fbc1d6685c9c26932ba6a7d7d24fae7e4d49dc76f58e14bef237b386c057",
+    "trace_manifest.json": "162c407ef7776d7c55138044074f39d6b73b4830a19a712c07c070906c59d04f",
+    "trajectory.json": "5a611c2264b268acc1ffb25f7a662c6e9723059607a21fb3f01273f46fbc9d39",
+    "v5_evidence.json": "2953177136e9c4b0884e322c55eb01c966ff7a8a93a17e3ed0d3abc0da2642fc"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-functional-group-token-100k-s42-training.json": "experiments/pcqm_k1_functional_group_token_100k/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_functional_group_token_100k/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_functional_group_token_100k/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "1026601b43681e84c912bd3a8e02e3a6a3a8383467034fc651aea8d1f6acc9aa",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+}

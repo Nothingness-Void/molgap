@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "17dc1ee7f0d5d0b11ecc8f7c48c7d31cf24ca278a5b0a05c8d76bb9198af9c1d",
+  "source_digest": "315462a45d5c05eb8f29a6f61bbce314a7b3669acabf5705f3105e812dc8d9b6",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -74,16 +74,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_functional_group_token_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_functional_group_token_100k/decision.md",
       "family_id": "k1-functional-group-token",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-pair-token-node-return-100k-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_functional_group_token_100k/trajectory.json",
+      "record_path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-functional-group-token-100k-s42"
       ],
