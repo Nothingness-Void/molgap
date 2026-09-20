@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 52,
+  "ambiguous_historical_role_record_count": 56,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -317,6 +317,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-stateless-pair-bridge-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-stateless-pair-bridge-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-stateless-pair-bridge-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-stateless-pair-bridge-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-v4-100k-reference-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -366,7 +394,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 19,
+  "explicit_role_event_count": 20,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -405,6 +433,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-stateless-pair-bridge-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-stateless-pair-bridge-100k-s42"
       },
       {
         "access_kind": "selection_used",
@@ -526,6 +561,7 @@
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
+      "pcqm-k1-stateless-pair-bridge-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_challenge": [
@@ -541,6 +577,7 @@
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
+      "pcqm-k1-stateless-pair-bridge-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_dev": [
@@ -556,6 +593,7 @@
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
+      "pcqm-k1-stateless-pair-bridge-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ]
   },
@@ -595,6 +633,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-stateless-pair-bridge-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-stateless-pair-bridge-100k-s42"
       },
       {
         "access_kind": "selection_used",
@@ -657,6 +702,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-stateless-pair-bridge-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-stateless-pair-bridge-100k-s42"
       },
       {
         "access_kind": "selection_used",

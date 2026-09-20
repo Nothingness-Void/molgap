@@ -1,0 +1,21 @@
+{
+  "format": "molgap-pcqm-k1-stateless-pair-acceptance-v1",
+  "accepted": true,
+  "model_inference_executed": false,
+  "candidate_id": "neural_atom_k1_stateless_pair_bridge",
+  "source_commit": "75806adf7fe45fe4c42b51611cc9a0511424810f",
+  "reference_payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "candidate_payload_sha256": "f1a4444337de7e3ebac7d826efd5598141cc725d842665e6a8056541646a62f9",
+  "reference_mae_eV": 0.1413736343383789,
+  "candidate_mae_eV": 0.14112696051597595,
+  "gain_eV": 0.0002466738224029541,
+  "candidate_minus_reference_bootstrap_95_eV": [
+    -0.001115228178501129,
+    0.0006292390899658197
+  ],
+  "minimum_gain_eV": 0.003,
+  "selected_candidate": null,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

@@ -1,0 +1,57 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-stateless-pair-bridge-100k-s42",
+  "track": "C",
+  "scope": "fixed_100k_architecture_screen",
+  "legacy_contract": "molgap-pcqm-100k-v4-screen-s42-fp32-bs128-40epochs",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "complete_local_verified",
+    "comparison_status": "strict_paired_accepted",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready",
+    "budget_decision": "closed",
+    "full_handoff_status": "none"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_stateless_pair_bridge_100k/results/candidate_acceptance_v1.json",
+      "experiments/pcqm_k1_stateless_pair_bridge_100k/results/recurrent_vs_stateless.json",
+      "experiments/pcqm_k1_stateless_pair_bridge_100k/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_evidence",
+      "locator": "repo://experiments/pcqm_k1_stateless_pair_bridge_100k/results/candidate_acceptance_v1.json",
+      "sha256": "ebabe7a3c8779af14a3a9259749a206a8bbe8d841e47eb0ef12836e235ff95a1",
+      "availability": "committed_metadata"
+    },
+    {
+      "name": "aligned_development_predictions",
+      "locator": "external://local-platform-record/kaggle/training/pcqm_k1_stateless_pair_s42_v1/best_development_payload.pt",
+      "sha256": "f1a4444337de7e3ebac7d826efd5598141cc725d842665e6a8056541646a62f9",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "optimizer_step_trace",
+      "locator": "external://local-platform-record/kaggle/training/pcqm_k1_stateless_pair_s42_v1/trace.json",
+      "sha256": "e72b3c94f44dcd7620d0633a9b37504a7cc4ab80023e6acd006d3c17e661f3b7",
+      "availability": "local_record_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-20",
+    "verification_scope": "Terminal result wrapped after no-inference acceptance with verified local artifact hashes",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

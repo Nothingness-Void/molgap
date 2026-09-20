@@ -15,14 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 7,
+      "count": 6,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-recurrent-pair-bridge-100k-s42",
-        "TC-k1-stateless-pair-bridge-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
@@ -67,20 +66,18 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 3,
+      "count": 2,
       "items": [
         "TC-k1-recurrent-pair-bridge-100k-s42",
-        "TC-k1-stateless-pair-bridge-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 1,
       "items": [
-        "TC-k1-recurrent-pair-bridge-100k-s42",
-        "TC-k1-stateless-pair-bridge-100k-s42"
+        "TC-k1-recurrent-pair-bridge-100k-s42"
       ],
       "severity": "WARN"
     },

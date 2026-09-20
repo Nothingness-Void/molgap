@@ -1,0 +1,17 @@
+{
+  "format": "molgap-k1-pair-bridge-paired-comparison-v1",
+  "row_count": 50000,
+  "source_idx_aligned": true,
+  "target_bitwise_equal": true,
+  "recurrent_mae_eV": 0.14166533946990967,
+  "stateless_mae_eV": 0.14112696051597595,
+  "stateless_minus_recurrent_eV": -0.0005383858224377036,
+  "stateless_minus_recurrent_bootstrap_95_eV": [
+    -0.0013944669277407228,
+    0.00035510910165612584
+  ],
+  "stateless_lower_error_fraction": 0.4967,
+  "equal_error_fraction": 0.0,
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 42
+}
