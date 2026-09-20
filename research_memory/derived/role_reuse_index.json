@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 34,
+  "ambiguous_historical_role_record_count": 46,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-edgestate-rich-full-submission",
@@ -184,6 +184,62 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-matched-500k-v4-three-arm",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-matched-500k-v4-three-arm",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-matched-500k-v4-three-arm",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-matched-500k-v4-three-arm",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-recurrent-graph-state-100k-seed42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -234,22 +290,111 @@
     },
     {
       "evidence_id": "pcqm-route-b-four-encoder-specialist",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-attribution-no-train",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-attribution-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-attribution-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-attribution-no-train",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 0,
+  "explicit_role_event_count": 7,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
-  "identities": {},
+  "identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-t-100k-v4-reference-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-t-100k-v4-reference-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-residual-reconciliation-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-residual-reconciliation-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-residual-reconciliation-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-matched-500k-v4-three-arm-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-matched-500k-v4-three-arm"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:official_train_prefix_0_500000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-matched-500k-v4-three-arm-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-matched-500k-v4-three-arm"
+      }
+    ]
+  },
   "protected_roles_reported_untouched": {
     "official_validation": [
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
-      "pcqm-recurrent-graph-state-100k-seed42"
+      "pcqm-k1-residual-reconciliation",
+      "pcqm-matched-500k-v4-three-arm",
+      "pcqm-recurrent-graph-state-100k-seed42",
+      "pcqm-scale-transfer-attribution-no-train"
     ],
     "test_challenge": [
       "pcqm-geometry-transfer-500k-contextual",
@@ -257,8 +402,11 @@
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-residual-reconciliation",
+      "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
-      "pcqm-route-b-four-encoder-specialist"
+      "pcqm-route-b-four-encoder-specialist",
+      "pcqm-scale-transfer-attribution-no-train"
     ],
     "test_dev": [
       "pcqm-geometry-transfer-500k-contextual",
@@ -266,10 +414,44 @@
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-residual-reconciliation",
+      "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
-      "pcqm-route-b-four-encoder-specialist"
+      "pcqm-route-b-four-encoder-specialist",
+      "pcqm-scale-transfer-attribution-no-train"
     ]
   },
   "repeatedly_selected_role_identities": {},
-  "reused_role_identities": {}
+  "reused_role_identities": {
+    "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-residual-reconciliation-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-residual-reconciliation-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-residual-reconciliation-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-residual-reconciliation"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-matched-500k-v4-three-arm-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-matched-500k-v4-three-arm"
+      }
+    ]
+  }
 }

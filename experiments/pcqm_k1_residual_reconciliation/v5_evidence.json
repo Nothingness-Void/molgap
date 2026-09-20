@@ -1,0 +1,45 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-residual-reconciliation",
+  "track": "B",
+  "scope": "existing_prediction_residual_attribution",
+  "legacy_contract": "molgap-pcqm-500k-module-attribution-v1",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "committed_analysis_and_input_hashes_verified",
+    "comparison_status": "exploratory_residual_attribution_complete",
+    "scientific_status": "closed_without_router_or_model_release",
+    "transfer_status": "not_applicable",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_residual_reconciliation/protocol.md",
+      "experiments/pcqm_k1_residual_reconciliation/analysis.json",
+      "experiments/pcqm_k1_residual_reconciliation/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "aligned_residual_attribution",
+      "locator": "repo://experiments/pcqm_k1_residual_reconciliation/analysis.json",
+      "sha256": "3256028ca58385e9c6d9cedb3c9dd035a703e1c636c3c047567c33b5f7e1ea10",
+      "availability": "committed_metadata_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-21",
+    "verification_scope": "Committed analyzer output, frozen K1/GPTrans-T/EdgeState prediction hashes, and exact 50000-row source-index and target alignment",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

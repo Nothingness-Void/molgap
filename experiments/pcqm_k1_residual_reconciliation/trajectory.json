@@ -45,10 +45,32 @@
     "budget_snapshot_ref": "experiments/pcqm_k1_residual_reconciliation/protocol.md",
     "source_config_identity": "Existing frozen matched60-v4 predictions; analyzer 8421d1d"
   },
-  "actions": [],
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "local_existing_prediction_residual_audit",
+      "run_ids": [
+        "local-k1-residual-reconciliation-20260919"
+      ],
+      "attempt_ids": [
+        "accepted-local-audit"
+      ],
+      "source_commit": "8421d1d",
+      "evidence_refs": [
+        "experiments/pcqm_k1_residual_reconciliation/analysis.json",
+        "experiments/pcqm_k1_residual_reconciliation/decision.md"
+      ],
+      "cost_event_ids": [
+        "cost-TB-k1-residual-reconciliation-audit"
+      ]
+    }
+  ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": [
+      "pcqm-k1-residual-reconciliation"
+    ],
     "evidence_refs": [
+      "experiments/pcqm_k1_residual_reconciliation/v5_evidence.json",
       "experiments/pcqm_k1_residual_reconciliation/analysis.json"
     ]
   },

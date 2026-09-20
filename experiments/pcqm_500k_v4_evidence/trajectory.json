@@ -40,13 +40,16 @@
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": ["experiments/pcqm_500k_v4_evidence/final_decision.md"]
+    "evidence_ids": ["pcqm-matched-500k-v4-three-arm"],
+    "evidence_refs": [
+      "experiments/pcqm_500k_v4_evidence/v5_evidence.json",
+      "experiments/pcqm_500k_v4_evidence/final_decision.md"
+    ]
   },
   "decision": {
     "decision_ref": "experiments/pcqm_500k_v4_evidence/final_decision.md",
     "outcome": "POSITIVE_UNDER_CONTRACT",
     "next_allowed_actions": [],
-    "reopen_conditions": ["second durable K1 artifact copy enables a V5 envelope"]
+    "reopen_conditions": []
   }
 }

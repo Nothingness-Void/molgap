@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 8
+- Validated V5 evidence: 11
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -17,8 +17,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 0
-- Coarse historical role records: 34
+- Explicit role events: 7
+- Coarse historical role records: 46
 - Repeatedly selected role identities: 0
 
 ## Cost
@@ -26,12 +26,16 @@
 - IMS_GPU_UNSPECIFIED device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED wall_hours: measured=12.135869 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- LOCAL_CPU_UNSPECIFIED cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
+- LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
+- LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (1 records); measurement_missing=0
 - not_applicable device_hours: not applicable (1 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (1 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (1 records); measurement_missing=0
-- Measurement-missing cost events: 1
-- Cost-event coverage: 2/11 trajectories; incomplete native measurement=2
+- Measurement-missing cost events: 2
+- Cost-event coverage: 3/11 trajectories; incomplete native measurement=3
 
 ## Screening Backtest
 - Status: insufficient_evidence
@@ -41,7 +45,6 @@
 ## Memory Gaps
 - [INFO] trace_unavailable_for_backtest: 11
 - [WARN] historical_partial_record: 10
-- [WARN] incomplete_native_cost_measurement: 2
-- [WARN] missing_cost_event: 9
-- [WARN] missing_explicit_role_identity: 11
-- [WARN] trajectory_without_v5_evidence: 3
+- [WARN] incomplete_native_cost_measurement: 3
+- [WARN] missing_cost_event: 8
+- [WARN] missing_explicit_role_identity: 8

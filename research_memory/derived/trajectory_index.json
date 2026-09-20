@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "977f75a22eefccc03dd18f5fa1c40c152902d20e03b0fb94bb5b42e99edf0045",
+  "source_digest": "599a9cf5116e1ef3de4eb289364de96b23be5a7070faf03693c703f0efafac5c",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -112,7 +112,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_k1_residual_reconciliation/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-residual-reconciliation"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-residual-reconciliation"
     },
@@ -128,7 +130,9 @@
       "ready_package_ids": [],
       "record_mode": "retrospective_partial",
       "record_path": "experiments/pcqm_500k_v4_evidence/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm"
+      ],
       "track": "B",
       "trajectory_id": "TB-matched-500k-v4-three-arm"
     },
@@ -146,7 +150,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_scale_transfer_attribution/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-scale-transfer-attribution-no-train"
+      ],
       "track": "B",
       "trajectory_id": "TB-pcqm-scale-transfer-attribution"
     },

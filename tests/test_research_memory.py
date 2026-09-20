@@ -307,15 +307,40 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
     }
     assert report["cost_completeness"] == {
         "trajectories_total": 11,
-        "with_cost_event": 2,
-        "without_cost_event": 9,
+        "with_cost_event": 3,
+        "without_cost_event": 8,
         "with_complete_native_measurement": 0,
-        "with_incomplete_native_measurement": 2,
+        "with_incomplete_native_measurement": 3,
     }
     issues = {item["code"]: item["count"] for item in report["issues"]}
-    assert issues["missing_cost_event"] == 9
-    assert issues["incomplete_native_cost_measurement"] == 2
+    assert issues["missing_cost_event"] == 8
+    assert issues["incomplete_native_cost_measurement"] == 3
     assert "missing_native_cost" not in issues
+
+
+def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
+    payloads = compile_research_memory(REPO_ROOT)
+    report = json.loads(payloads["completeness_report.json"])
+    summary = json.loads(payloads["research_summary.json"])
+    trajectories = {
+        record["trajectory_id"]: record
+        for record in json.loads(payloads["trajectory_index.json"])["trajectories"]
+    }
+
+    assert summary["evidence"]["validated"] == 11
+    assert summary["roles"]["explicit_events"] == 7
+    assert "trajectory_without_v5_evidence" not in {
+        item["code"] for item in report["issues"]
+    }
+    assert trajectories["TB-matched-500k-v4-three-arm"]["result_evidence_ids"] == [
+        "pcqm-matched-500k-v4-three-arm"
+    ]
+    assert trajectories["TB-k1-residual-reconciliation"]["result_evidence_ids"] == [
+        "pcqm-k1-residual-reconciliation"
+    ]
+    assert trajectories["TB-pcqm-scale-transfer-attribution"]["result_evidence_ids"] == [
+        "pcqm-scale-transfer-attribution-no-train"
+    ]
 
 
 def test_empty_numeric_basis_serializes_as_null():

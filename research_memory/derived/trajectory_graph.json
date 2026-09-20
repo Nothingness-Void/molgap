@@ -36,6 +36,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-residual-reconciliation:A001",
+      "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-residual-reconciliation:A001",
+      "target": "experiments/pcqm_k1_residual_reconciliation/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm:A001",
       "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
       "type": "action_produced_evidence"
@@ -158,11 +168,23 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-residual-reconciliation",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-matched-500k-v4-three-arm",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-recurrent-graph-state-100k-seed42",
       "type": "evidence"
     },
     {
       "id": "pcqm-route-b-four-encoder-specialist",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-scale-transfer-attribution-no-train",
       "type": "evidence"
     },
     {

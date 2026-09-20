@@ -1,0 +1,53 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-matched-500k-v4-three-arm",
+  "track": "B",
+  "scope": "historical_matched_500k_architecture_comparison",
+  "legacy_contract": "pcqm-fixed500k-dev50k-matched60-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "committed_metadata_and_prediction_hashes_verified",
+    "comparison_status": "paired_three_arm_comparison_complete",
+    "scientific_status": "positive_nomination_under_contract",
+    "transfer_status": "nomination_only_not_full_scale_promotion",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_500k_v4_evidence/protocol.md",
+      "experiments/pcqm_500k_v4_evidence/final_comparison.json",
+      "experiments/pcqm_500k_v4_evidence/final_decision.md",
+      "experiments/pcqm_k1_residual_reconciliation/analysis.json",
+      "experiments/pcqm_k1_residual_reconciliation/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "paired_three_arm_comparison",
+      "locator": "repo://experiments/pcqm_500k_v4_evidence/final_comparison.json",
+      "sha256": "f0a6708c3bb16ad5c1019d2ca73fd83e5dddc70afe2b09507a1f0006b27435a9",
+      "availability": "committed_metadata_verified"
+    },
+    {
+      "name": "recovered_prediction_identity_audit",
+      "locator": "repo://experiments/pcqm_k1_residual_reconciliation/analysis.json",
+      "sha256": "3256028ca58385e9c6d9cedb3c9dd035a703e1c636c3c047567c33b5f7e1ea10",
+      "availability": "committed_metadata_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-21",
+    "verification_scope": "Committed matched comparison, frozen prediction hashes, 50000-row source-index and target alignment, and the recovered second K1 prediction copy",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

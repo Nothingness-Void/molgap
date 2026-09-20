@@ -138,6 +138,46 @@
     },
     {
       "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "exploratory_residual_attribution_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-residual-reconciliation",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "existing_prediction_residual_attribution",
+      "source_envelope": "experiments/pcqm_k1_residual_reconciliation/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "paired_three_arm_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-matched-500k-v4-three-arm",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_matched_500k_architecture_comparison",
+      "source_envelope": "experiments/pcqm_500k_v4_evidence/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "nomination_only_not_full_scale_promotion",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "archive_commit_pointer",
         "committed_launch_record"
       ],
@@ -177,6 +217,26 @@
       "source_envelope": "experiments/pcqm_route_b/v5_evidence.json",
       "track": "B",
       "transfer_status": "task_routed_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "two_direct_transfer_cases_synthesized",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-scale-transfer-attribution-no-train",
+      "role_use": {
+        "internal_development": "not_applicable",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "existing_evidence_scale_transfer_attribution",
+      "source_envelope": "experiments/pcqm_scale_transfer_attribution/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "no_candidate_promotion",
       "used_by_trajectory_ids": []
     }
   ]

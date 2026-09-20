@@ -1,14 +1,62 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 0,
-  "event_count": 2,
+  "event_count": 3,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 1,
-  "not_applicable_event_count": 1,
+  "measurement_missing_event_count": 2,
+  "not_applicable_event_count": 2,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
+      "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "LOCAL_CPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "not_applicable:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -160,6 +208,56 @@
         "unknown_records": 0
       }
     },
+    "LOCAL_CPU_UNSPECIFIED": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "not_applicable": {
       "cpu_hours": {
         "estimated": {
@@ -257,6 +355,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 12.13586895375228
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-residual-reconciliation": {
+      "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "LOCAL_CPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.007305555555555556
         },
         "not_applicable_records": 0,
         "unknown_records": 0

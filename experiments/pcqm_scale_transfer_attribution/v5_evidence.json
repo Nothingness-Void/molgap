@@ -1,0 +1,45 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-scale-transfer-attribution-no-train",
+  "track": "B",
+  "scope": "existing_evidence_scale_transfer_attribution",
+  "legacy_contract": "molgap-pcqm-scale-transfer-attribution-v1",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "committed_analysis_verified",
+    "comparison_status": "two_direct_transfer_cases_synthesized",
+    "scientific_status": "funnel_repair_decision_complete",
+    "transfer_status": "no_candidate_promotion",
+    "budget_decision": "no_compute_authorized",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_scale_transfer_attribution/protocol.md",
+      "experiments/pcqm_scale_transfer_attribution/analysis.json",
+      "experiments/pcqm_scale_transfer_attribution/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "scale_transfer_attribution",
+      "locator": "repo://experiments/pcqm_scale_transfer_attribution/analysis.json",
+      "sha256": "5179da2522149cb3f4398332a34703f64878eb69b9178229598ec7db22ddfa66",
+      "availability": "committed_metadata_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "not_applicable",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-21",
+    "verification_scope": "Committed no-training attribution, source revisions, strict-case table, confounders, and protocol-repair decision",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

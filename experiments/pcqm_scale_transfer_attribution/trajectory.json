@@ -78,8 +78,11 @@
     }
   ],
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": [
+      "pcqm-scale-transfer-attribution-no-train"
+    ],
     "evidence_refs": [
+      "experiments/pcqm_scale_transfer_attribution/v5_evidence.json",
       "experiments/pcqm_scale_transfer_attribution/analysis.json",
       "experiments/pcqm_scale_transfer_attribution/decision.md"
     ]
