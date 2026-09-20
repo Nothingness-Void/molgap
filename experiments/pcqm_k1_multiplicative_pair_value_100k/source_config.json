@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "1ff4599d1e49daa1da51b0011cd0844826d28c20c617544857591bd9b4fd23c8",
+  "candidate_id": "neural_atom_k1_multiplicative_pair_value",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_multiplicative_pair_value.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "decoupled-low-rank-multiplicative-pair-value",
+  "source_commit": "5af3f2c41c2efa95d04bf33eadb9495d282c56f9",
+  "training_contract_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json",
+  "training_contract_sha256": "34c8799ace35c6f5a2196472a1abc1cb8b22fc4956bcaf211fc76e2106a66641"
+}

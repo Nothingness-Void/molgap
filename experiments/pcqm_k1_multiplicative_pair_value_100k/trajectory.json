@@ -1,0 +1,101 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "candidate-v1-planned"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-multiplicative-pair-value-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json"
+      ],
+      "run_ids": [
+        "nvoid912/molgap-k1-multiplicative-pairvalue-s42:v1-planned"
+      ],
+      "source_commit": "5af3f2c41c2efa95d04bf33eadb9495d282c56f9",
+      "type": "planned_candidate_only_seed42_100k_screen"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/STATUS.md",
+    "next_allowed_actions": [
+      "submit exactly one frozen candidate job after packaging checks"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal attribution must precede any successor"
+    ]
+  },
+  "family_id": "k1-multiplicative-pair-value",
+  "hypothesis": {
+    "alternative_explanations": [
+      "the 100K PairToken win may be training-run variation",
+      "the accepted additive value may already be sufficient and multiplication may overfit"
+    ],
+    "changed_mechanism": "a disjoint ordered low-rank Hadamard pair value under the unchanged additive learned-query selector",
+    "cheapest_falsifier": "one seed-42 fixed PCQM-100K candidate-only screen against the reusable K1 reference and retained PairToken endpoint",
+    "decision_changed_if_negative": "close PairToken value enrichment and mark K1 micro-architecture search saturated",
+    "decision_changed_if_positive": "retain one seed-42 shortlist and require separate scale authority",
+    "expected_native_cost_ref": "cost-TC-k1-multiplicative-pair-value-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and is not inferred from account identity"
+    ],
+    "hypothesis_id": "H-TC-k1-multiplicative-pair-value-100k-s42",
+    "observed_deficiency": "PairToken selection is causal, but its selector and value share one additive pair representation that cannot directly encode feature conjunctions.",
+    "related_closed_family_ids": [
+      "k1-uniform-global-return",
+      "k1-inverse-global-return",
+      "k1-molecule-context-gate",
+      "k1-induced-pair-token"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does a separate multiplicative pair value improve the accepted PairToken selector?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-multiplicative-pair-value-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/role_plan.json"
+    ],
+    "source_commit": "5af3f2c41c2efa95d04bf33eadb9495d282c56f9",
+    "source_config_identity": "1ff4599d1e49daa1da51b0011cd0844826d28c20c617544857591bd9b4fd23c8"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-multiplicative-pair-value-100k-s42"
+}

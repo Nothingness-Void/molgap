@@ -1,0 +1,77 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json",
+      "name": "source_config",
+      "sha256": "bda0127ceb48c9785f2be0bfd00a4034b59a684c9e9416aba368c797d19bbe28"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json",
+      "name": "training_contract",
+      "sha256": "34c8799ace35c6f5a2196472a1abc1cb8b22fc4956bcaf211fc76e2106a66641"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+      "name": "comparison_readiness_prelaunch",
+      "sha256": "3dd42833493f152cf9a170ac08fda91d6789a5d24617141091c10d9bcbc19b63"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/role_plan.json",
+      "name": "role_plan",
+      "sha256": "693690ddfb557aa16caa3b67ec762ad644d70abfd6b8f168420334b308e83acc"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/trace_plan.json",
+      "name": "trace_plan",
+      "sha256": "b6c2f5ad87bb96326deca5d3499f2b40d1b678bff1684c44b3dc7a87e0397e7e"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_multiplicative_pair_value_100k/budget_snapshot.json",
+      "name": "budget_snapshot",
+      "sha256": "499a35613330129d50296c78912b7aae47c06a3bdd62d1dd03b860ba577ae816"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/protocol.md",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-multiplicative-pair-value-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "one_candidate_authorized",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_architecture_screen",
+  "track": "C"
+}
