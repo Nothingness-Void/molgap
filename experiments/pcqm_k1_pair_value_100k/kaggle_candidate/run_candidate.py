@@ -1,4 +1,4 @@
-"""Kaggle3 entry point for the K1 PairToken value screen."""
+"""Kaggle1 entry point for the K1 PairToken value screen."""
 from __future__ import annotations
 
 import hashlib

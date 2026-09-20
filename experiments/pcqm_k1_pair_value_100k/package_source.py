@@ -21,7 +21,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
-        "--dataset-id", default="nothingnessvoid/molgap-pcqm-k1-pair-value-source"
+        "--dataset-id", default="nothingnessvoid/molgap-pcqm-k1-pair-value-source-v2"
     )
     args = parser.parse_args()
     config = json.loads((ROOT / "source_config.json").read_text(encoding="utf-8"))

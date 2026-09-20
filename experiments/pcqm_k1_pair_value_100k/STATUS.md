@@ -1,13 +1,13 @@
 # Status
 
 Prospective trajectory frozen. Kaggle1 kernel
-`nothingnessvoid/molgap-pcqm-k1-pair-value-s42` version 1 is running. The
+`nothingnessvoid/molgap-pcqm-k1-pair-value-s42` version 2 is running. Its
 immutable source dataset is
-`nothingnessvoid/molgap-pcqm-k1-pair-value-source`.
+`nothingnessvoid/molgap-pcqm-k1-pair-value-source-v2`.
 
-Version 1 was submitted through the Kaggle1 default access-token identity even
-though its entry script emits the stale logical label `kaggle3`. This label does
-not change model, data, seed, precision, optimizer, schedule, row order, or
-sample exposure. Terminal acceptance must preserve the discrepancy and bind the
-actual Kaggle1 kernel identity plus runtime fingerprint; it must not silently
-rewrite the raw artifact. No successor is authorized while version 1 runs.
+Version 1 failed before scientific training because the selective source
+snapshot omitted the `molgap.pcqm_wedge.WedgeData` type required to unpickle
+the fixed cache. Version 2 adds only that serialization dependency and corrects
+the logical platform label. Model, data, seed, precision, optimizer, schedule,
+row order, and sample exposure are unchanged. No successor is authorized while
+version 2 runs.

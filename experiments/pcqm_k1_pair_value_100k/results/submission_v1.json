@@ -9,7 +9,14 @@
   "fixed_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
   "source_commit": "c299beb9710920c911360e91d992e1cd71e04205",
   "source_archive_sha256": "072207984d8dff14a0ed71c00480a7ca5893b9b8074ffded1cdf63f597a30f4f",
-  "state_at_record": "RUNNING",
+  "state_at_record": "ERROR",
+  "terminal_failure": {
+    "classification": "infrastructure_source_closure",
+    "exception": "ModuleNotFoundError: No module named 'molgap.pcqm_wedge'",
+    "scientific_training_started": false,
+    "terminal_log_path": "platforms/_records/kaggle/training/k1_pair_value_s42_v1/molgap-pcqm-k1-pair-value-s42.log",
+    "terminal_log_sha256": "6cebe6285cb0cc6ad4e155f4c5b7ae9354023938b6a84e5b32fb63afb7e974ae"
+  },
   "runtime_label_discrepancy": {
     "entry_script_label": "kaggle3",
     "actual_account_platform": "kaggle1",

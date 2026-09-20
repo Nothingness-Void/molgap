@@ -22,7 +22,7 @@ def main() -> None:
     if not (source_root / "src/molgap/k1_pair_token.py").is_file():
         raise FileNotFoundError("Immutable PairToken source is incomplete")
     os.environ["MOLGAP_FIXED_CACHE_ROOT"] = str(args.cache_root.resolve())
-    os.environ["MOLGAP_PLATFORM_ID"] = os.environ.get("MOLGAP_PLATFORM_ID", "kaggle3")
+    os.environ["MOLGAP_PLATFORM_ID"] = os.environ.get("MOLGAP_PLATFORM_ID", "kaggle1")
     sys.path.insert(0, str(source_root / "src"))
 
     import torch
@@ -41,4 +41,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
