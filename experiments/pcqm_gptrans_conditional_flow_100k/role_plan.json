@@ -1,0 +1,9 @@
+{
+  "format": "molgap-role-plan-v1",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42",
+  "training_role": "fixed_official_train_prefix_100k",
+  "selection_role": "fixed_internal_development_50k_reused",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden"
+}

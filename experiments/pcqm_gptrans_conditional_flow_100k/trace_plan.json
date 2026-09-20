@@ -1,0 +1,8 @@
+{
+  "format": "molgap-trace-plan-v1",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42",
+  "x_axes": ["optimizer_step", "sample_presentations"],
+  "terminal_endpoint": {"optimizer_step": 46860, "sample_presentations": 5998080},
+  "checkpoint_epochs": [9, 19, 29, 39, 49, 59],
+  "early_stop_policy": "none_frozen_60_epochs"
+}

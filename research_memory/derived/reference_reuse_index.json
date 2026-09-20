@@ -74,6 +74,26 @@
       "artifact_availability": [
         "durable_remote_verified"
       ],
+      "comparison_status": "paired_development_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_propagation_path_ablation",
+      "source_envelope": "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
       "comparison_status": "reference_accepted_contextual_comparison_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -90,7 +110,9 @@
       "transfer_status": "reusable_reference",
       "used_by_trajectory_ids": [
         "TB-matched-500k-v4-three-arm",
-        "TB-pcqm-scale-transfer-attribution"
+        "TB-pcqm-scale-transfer-attribution",
+        "TC-gptrans-conditional-flow-100k-s42",
+        "TC-gptrans-flow-ablation-100k-s42"
       ]
     },
     {

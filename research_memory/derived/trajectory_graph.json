@@ -66,6 +66,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-conditional-flow-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-conditional-flow-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
@@ -96,6 +116,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-flow-ablation-100k-s42",
+      "target": "TC-gptrans-conditional-flow-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-flow-ablation-100k-s42",
+      "target": "TC-gptrans-conditional-flow-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "prior_evidence"
@@ -103,6 +133,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-conditional-flow-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -136,6 +176,16 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-conditional-flow-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
       "type": "reference_used"
@@ -153,6 +203,10 @@
     },
     {
       "id": "pcqm-gine-1m-local-specialist-v7",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-flow-ablation-100k-s42",
       "type": "evidence"
     },
     {
@@ -229,6 +283,14 @@
     },
     {
       "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-conditional-flow-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-flow-ablation-100k-s42",
       "type": "trajectory"
     }
   ]

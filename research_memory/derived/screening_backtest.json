@@ -1,22 +1,60 @@
 {
   "candidate_prefix_rule": null,
-  "confounding_warnings": [
-    "no_strictly_comparable_trace_pair"
+  "confounding_warnings": [],
+  "excluded_traces": [
+    {
+      "reasons": [
+        "CONTEXT_ONLY",
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_observed_step_and_sample_axes",
+        "missing_optimizer_step_and_presentation_exposure",
+        "no_matched_reference_recovered"
+      ],
+      "run_id": "local-scaleup-1m-v7-frozen-bn",
+      "trajectory_id": "TB-gine-1m-gap-specialist-v7"
+    },
+    {
+      "reasons": [
+        "CONTEXT_ONLY",
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_observed_step_and_sample_axes",
+        "missing_optimizer_step_and_presentation_exposure",
+        "no_matched_reference_recovered"
+      ],
+      "run_id": "121693799",
+      "trajectory_id": "TB-gptrans-t-500k-bridge"
+    }
   ],
-  "excluded_traces": [],
   "false_promote_count": null,
   "false_promote_rate": null,
   "false_stop_count": null,
   "false_stop_rate": null,
   "family_coverage": [],
   "format": "molgap-rml-screening-backtest-v1",
-  "included_comparable_groups": [],
-  "included_trajectory_ids": [],
+  "included_comparable_groups": [
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-t-100k-v4-reference\"}",
+      "run_ids": [
+        "kaggle2-gptrans-t-100k-v4-seed42",
+        "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_to_node"
+      ],
+      "trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference",
+        "TC-gptrans-flow-ablation-100k-s42"
+      ]
+    }
+  ],
+  "included_trajectory_ids": [
+    "TB-gptrans-t-100k-v4-reference",
+    "TC-gptrans-flow-ablation-100k-s42"
+  ],
   "native_cost_added": null,
   "native_cost_saved": null,
   "policy_activated": false,
   "recommended_early_stop": null,
   "slow_starter_count": null,
-  "status": "insufficient_evidence",
-  "trace_count": 0
+  "status": "available",
+  "trace_count": 4
 }

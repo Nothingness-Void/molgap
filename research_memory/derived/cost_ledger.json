@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 0,
-  "event_count": 3,
+  "estimated_event_count": 1,
+  "event_count": 4,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 2,
+  "measurement_missing_event_count": 3,
   "not_applicable_event_count": 2,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -154,6 +154,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      },
+      "NVIDIA_T4_X2_ISOLATED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_T4_X2_ISOLATED:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 7.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA_T4_X2_ISOLATED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_T4_X2_ISOLATED:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 3.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     }
   },
@@ -253,6 +301,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "NVIDIA_T4_X2_ISOLATED": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 7.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 3.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -457,6 +555,56 @@
           "known_total": null
         },
         "not_applicable_records": 1,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-conditional-flow-100k-s42": {
+      "NVIDIA_T4_X2_ISOLATED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_T4_X2_ISOLATED:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 7.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA_T4_X2_ISOLATED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_T4_X2_ISOLATED:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 3.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
         "unknown_records": 0
       }
     }

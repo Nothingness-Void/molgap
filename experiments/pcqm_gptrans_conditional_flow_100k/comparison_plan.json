@@ -1,0 +1,32 @@
+{
+  "format": "molgap-comparison-plan-v1",
+  "status": "prospective_frozen",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42",
+  "comparison_class": "STRICT_CAUSAL",
+  "reference_evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+  "reference_bundle_id": null,
+  "reference_predictions_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+  "reference_contract_sha256": "c523e000925ce3bfab35e01c3e8ca6e7ce27a7876d4cdf7c012d6ccd398436aa",
+  "matched_contract_fields": [
+    "dataset",
+    "row_order",
+    "features_except_declared_intervention",
+    "target",
+    "seed",
+    "precision",
+    "optimizer",
+    "schedule",
+    "loss",
+    "selection",
+    "sample_exposure",
+    "role_access"
+  ],
+  "declared_intervention_fields": ["architecture_config_identity"],
+  "terminal_requirements": [
+    "runtime_certificate",
+    "finite_aligned_predictions",
+    "artifact_hashes",
+    "paired_bootstrap"
+  ],
+  "blockers": []
+}

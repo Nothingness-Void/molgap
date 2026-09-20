@@ -16,6 +16,7 @@ dated evidence. Fetch before comparing a remote snapshot.
 | Branch | Reason retained / evidence entry |
 |---|---|
 | codex/exp/gptrans-full-convergence | Active repaired GPTrans-T/K1 convergence and terminal acceptance chain |
+| codex/exp/gptrans-conditional-flow-100k | Prospective desktop T4x2 screen of conditional GPTrans relation allocation |
 | codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
 | codex/scnet-distance-angle-triangle-500k | Submitted experiment without a terminal decision at its branch tip |
 
