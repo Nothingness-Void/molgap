@@ -35,6 +35,7 @@ from .v4_runtime import (
     model_state_sha256,
     normalized_source_sha256,
     sample_std_compat,
+    state_dict_sha256,
     torch_load_compat,
     validate_standard_source_bundle,
 )
@@ -56,6 +57,10 @@ GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
 LOADER_WORKERS = 4
 EXPECTED_PARAMETERS = 5_246_817
+CONDITIONAL_PARAMETERS = {
+    "conditional_pair_readback": 5_250_285,
+    "conditional_pair_recurrence": 5_259_489,
+}
 EXPECTED_INITIAL_MODEL_SHA256 = (
     "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6"
 )
@@ -256,7 +261,9 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     from .gptrans import OGBGPTransTiny
-    if variant in ("memory_value", "memory_message"):
+    if variant in CONDITIONAL_PARAMETERS:
+        from .gptrans_conditional_flow import apply_conditional_flow as apply_variant
+    elif variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
     else:
         from .gptrans_variants import apply_variant
@@ -310,7 +317,10 @@ def run_v4_spec(*, mode: str, run_spec: dict, runtime_certificate: dict | None):
     if mismatches:
         raise RuntimeError(f"GPTrans V4 frozen scientific contract changed: {mismatches}")
     if run_spec["model_config"] != _model_config():
-        raise RuntimeError("This frozen GPTrans reference adapter does not accept architecture variants")
+        raise RuntimeError("GPTrans conditional-flow variants must preserve the core model config")
+    variant = run_spec.get("variant", "reference")
+    if variant != "reference" and variant not in CONDITIONAL_PARAMETERS:
+        raise RuntimeError(f"Unsupported GPTrans conditional-flow variant: {variant}")
 
     options = run_spec["runner_parameters"]
     required = (
@@ -377,15 +387,42 @@ def _batch_sha256(batch) -> str:
     return digest.hexdigest()
 
 
-def _verify_model_identity(model) -> tuple[int, str]:
+def _variant_source_path(variant: str) -> Path:
+    if variant in CONDITIONAL_PARAMETERS:
+        return Path(__file__).with_name("gptrans_conditional_flow.py")
+    if variant in ("memory_value", "memory_message"):
+        return Path(__file__).with_name("gptrans_memory.py")
+    return Path(__file__).with_name("gptrans_variants.py")
+
+
+def _verify_model_identity(model, variant: str = "reference") -> tuple[int, str]:
+    import torch
+
     architecture_path = Path(__file__).with_name("gptrans.py")
     architecture_sha256 = _source_sha256(architecture_path)
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())
-    if parameters != EXPECTED_PARAMETERS:
+    expected_parameters = CONDITIONAL_PARAMETERS.get(variant, EXPECTED_PARAMETERS)
+    if parameters != expected_parameters:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
-    initial_sha256 = _state_sha256(model)
+    state = model.state_dict()
+    if variant in CONDITIONAL_PARAMETERS:
+        conditional = {
+            name: value
+            for name, value in state.items()
+            if ".conditional_" in name
+        }
+        if not conditional or any(bool(torch.count_nonzero(value)) for value in conditional.values()):
+            raise RuntimeError("Conditional gates must be present and exactly zero initialized")
+        state = {
+            name: value
+            for name, value in state.items()
+            if ".conditional_" not in name
+        }
+        initial_sha256 = state_dict_sha256(state)
+    else:
+        initial_sha256 = _state_sha256(model)
     if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
         raise RuntimeError(
             "Frozen GPTrans-T seed-42 initialization changed: "
@@ -456,7 +493,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
-    _verify_model_identity(model)
+    _verify_model_identity(model, variant)
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -727,8 +764,8 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "parameters": CONDITIONAL_PARAMETERS.get(variant, EXPECTED_PARAMETERS),
+        "variant_source_sha256": _source_sha256(_variant_source_path(variant)),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -1021,7 +1058,7 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": CONDITIONAL_PARAMETERS.get(variant, EXPECTED_PARAMETERS),
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "checkpoint_sha256": sha256_file(checkpoint_path),
         "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
