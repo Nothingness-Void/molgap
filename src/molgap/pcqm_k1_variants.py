@@ -130,6 +130,22 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "external_features": False,
     },
+    "neural_atom_k1_multiplicative_pair_value": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "decouple-layer6-pair-selection-from-multiplicative-pair-value",
+        "target_layer": 6,
+        "pair_channels": 32,
+        "relation_tokens": 1,
+        "pair_selection": "accepted-additive-learned-query",
+        "pair_value": "separate-ordered-low-rank-hadamard-product",
+        "dense_atom_to_atom_attention": False,
+        "added_parameters": 35_264,
+        "expected_parameters": 3_694_081,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -877,6 +893,10 @@ def make_encoder(mode: str):
     if mode in CHEM_TYPED_PAIR_MODES:
         from .k1_chem_typed_pair_token import make_encoder as make_chem_typed_pair
         return make_chem_typed_pair(mode)
+    from .k1_multiplicative_pair_value import MODES as MULTIPLICATIVE_PAIR_MODES
+    if mode in MULTIPLICATIVE_PAIR_MODES:
+        from .k1_multiplicative_pair_value import make_encoder as make_multiplicative_pair
+        return make_multiplicative_pair(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

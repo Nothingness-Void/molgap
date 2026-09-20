@@ -496,6 +496,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as CHEM_TYPED_PAIR_PARAMETERS,
         check_mechanism as check_chem_typed_pair,
     )
+    from .k1_multiplicative_pair_value import (
+        MODES as MULTIPLICATIVE_PAIR_MODES,
+        PARAMETERS as MULTIPLICATIVE_PAIR_PARAMETERS,
+        check_mechanism as check_multiplicative_pair,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -503,6 +508,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + GPSPP_LOCAL_MODES
         + FUNCTIONAL_GROUP_MODES
         + CHEM_TYPED_PAIR_MODES
+        + MULTIPLICATIVE_PAIR_MODES
     )
     import torch
 
@@ -1122,6 +1128,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != CHEM_TYPED_PAIR_PARAMETERS[mode]
         ):
             raise RuntimeError("Chem-typed pair-token parameter identity changed")
+    elif mode in MULTIPLICATIVE_PAIR_MODES:
+        mechanism_checks = check_multiplicative_pair(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != MULTIPLICATIVE_PAIR_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Multiplicative pair-value parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1149,6 +1162,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     elif mode in FUNCTIONAL_GROUP_MODES:
         candidate_parameters = list(model.functional_group_token.parameters())
     elif mode in CHEM_TYPED_PAIR_MODES:
+        candidate_parameters = list(model.relation_token.parameters())
+    elif mode in MULTIPLICATIVE_PAIR_MODES:
         candidate_parameters = list(model.relation_token.parameters())
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
@@ -1321,6 +1336,7 @@ def train_arm(
     from .k1_pair_token import MODES as PAIR_TOKEN_MODES
     from .k1_functional_group_token import MODES as FUNCTIONAL_GROUP_MODES
     from .k1_chem_typed_pair_token import MODES as CHEM_TYPED_PAIR_MODES
+    from .k1_multiplicative_pair_value import MODES as MULTIPLICATIVE_PAIR_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1329,6 +1345,7 @@ def train_arm(
         + PAIR_TOKEN_MODES
         + FUNCTIONAL_GROUP_MODES
         + CHEM_TYPED_PAIR_MODES
+        + MULTIPLICATIVE_PAIR_MODES
         + MOSE_MODES
     )
 
