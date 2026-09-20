@@ -130,6 +130,10 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             ],
         )
         records["traces"].append((path, record))
+        if "trace_artifact_sha256" in record:
+            from .trace import load_canonical_trace, validate_manifest_trace
+            verify_bound_artifact(root, record["trace_artifact_ref"], record["trace_artifact_sha256"])
+            validate_manifest_trace(record, load_canonical_trace(resolve_repo_pointer(root, record["trace_artifact_ref"])))
     for path in discovered.ready:
         record = validate_ready_package(load_json(path))
         unique("package_id", record["package_id"], path)

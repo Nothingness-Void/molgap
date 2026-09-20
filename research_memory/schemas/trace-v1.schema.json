@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-trace-v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "molgap-trace-v1"
+    },
+    "trajectory_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metric_semantics": {
+      "type": "object",
+      "properties": {
+        "live_train_metric": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "molgap-metric-semantics-v1",
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role_identity": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "weights": {
+                  "enum": [
+                    "live",
+                    "ema"
+                  ]
+                },
+                "direction": {
+                  "enum": [
+                    "minimize",
+                    "maximize"
+                  ]
+                }
+              },
+              "required": [
+                "metric",
+                "unit",
+                "target",
+                "role_identity",
+                "weights",
+                "direction"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "live_dev_metric": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "molgap-metric-semantics-v1",
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role_identity": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "weights": {
+                  "enum": [
+                    "live",
+                    "ema"
+                  ]
+                },
+                "direction": {
+                  "enum": [
+                    "minimize",
+                    "maximize"
+                  ]
+                }
+              },
+              "required": [
+                "metric",
+                "unit",
+                "target",
+                "role_identity",
+                "weights",
+                "direction"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "ema_dev_metric": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "molgap-metric-semantics-v1",
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role_identity": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "weights": {
+                  "enum": [
+                    "live",
+                    "ema"
+                  ]
+                },
+                "direction": {
+                  "enum": [
+                    "minimize",
+                    "maximize"
+                  ]
+                }
+              },
+              "required": [
+                "metric",
+                "unit",
+                "target",
+                "role_identity",
+                "weights",
+                "direction"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "live_train_metric",
+        "live_dev_metric",
+        "ema_dev_metric"
+      ],
+      "additionalProperties": false
+    },
+    "device_time_semantics": {
+      "enum": [
+        "sum_over_devices",
+        null
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "molgap-trace-observation-v1",
+        "type": "object",
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "event": {
+            "enum": [
+              "observation",
+              "checkpoint",
+              "resume",
+              "terminal"
+            ]
+          },
+          "optimizer_step": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "sample_presentations": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "epoch_or_pass": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "learning_rate": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "live_train_metric": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "live_dev_metric": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "ema_dev_metric": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "wall_time_seconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "cumulative_wall_time_seconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "device_time_seconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "cumulative_device_time_seconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "checkpoint_identity": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          }
+        },
+        "required": [
+          "sequence",
+          "event",
+          "optimizer_step",
+          "sample_presentations",
+          "epoch_or_pass",
+          "learning_rate",
+          "live_train_metric",
+          "live_dev_metric",
+          "ema_dev_metric",
+          "wall_time_seconds",
+          "cumulative_wall_time_seconds",
+          "device_time_seconds",
+          "cumulative_device_time_seconds",
+          "checkpoint_identity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "trajectory_id",
+    "run_id",
+    "metric_semantics",
+    "observations"
+  ],
+  "additionalProperties": false
+}

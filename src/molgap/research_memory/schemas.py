@@ -120,6 +120,9 @@ def _measurement(value: Any, label: str) -> dict[str, Any]:
 
 def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
     record = _mapping(record, "trajectory")
+    if "decision_state" in record:
+        from .plan import validate_decision_state
+        validate_decision_state(record["decision_state"])
     if record.get("schema") != TRAJECTORY_SCHEMA:
         raise ValueError("unsupported trajectory schema")
     _id(record, "trajectory_id", "trajectory")
@@ -301,6 +304,8 @@ def validate_role_event(record: Mapping[str, Any]) -> dict[str, Any]:
 
 def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
     record = _mapping(record, "trace manifest")
+    if "trace_artifact_sha256" in record and not SHA256_PATTERN.fullmatch(str(record["trace_artifact_sha256"])):
+        raise ValueError("invalid canonical trace artifact SHA256")
     if record.get("schema") != TRACE_SCHEMA:
         raise ValueError("unsupported trace-manifest schema")
     _id(record, "trajectory_id", "trace manifest")

@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-policy-v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "molgap-policy-v1"
+    },
+    "policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_type": {
+      "enum": [
+        "screening",
+        "early_stop",
+        "scale_up",
+        "research_action"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "candidate",
+        "approved",
+        "retired"
+      ]
+    },
+    "comparability_selector": {
+      "type": "object",
+      "required": [
+        "scientific_contract"
+      ],
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "observation_point": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "molgap-prefix-rule-v1",
+          "type": "object",
+          "properties": {
+            "axis": {
+              "enum": [
+                "optimizer_step",
+                "sample_presentations"
+              ]
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "selection": {
+              "const": "exact"
+            }
+          },
+          "required": [
+            "axis",
+            "value",
+            "selection"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "promotion_rule": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "molgap-policy-rule-v1",
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operator": {
+              "enum": [
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "eq"
+              ]
+            },
+            "threshold": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "field",
+            "operator",
+            "threshold",
+            "action"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "early_stop_rule": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "molgap-policy-rule-v1",
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operator": {
+              "enum": [
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "eq"
+              ]
+            },
+            "threshold": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "field",
+            "operator",
+            "threshold",
+            "action"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "action_rule": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "molgap-policy-rule-v1",
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operator": {
+              "enum": [
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "eq"
+              ]
+            },
+            "threshold": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "field",
+            "operator",
+            "threshold",
+            "action"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "borderline_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_observable_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "metric_semantics": {
+      "type": "object"
+    },
+    "cost_model": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "molgap-replay-cost-model-v1",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "measured_only"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "assumptions"
+      ],
+      "additionalProperties": false
+    },
+    "created_from_source_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "approval": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "policy_id",
+    "version",
+    "policy_type",
+    "status",
+    "comparability_selector",
+    "observation_point",
+    "promotion_rule",
+    "early_stop_rule",
+    "borderline_action",
+    "required_observable_fields",
+    "cost_model",
+    "created_from_source_digest",
+    "approval"
+  ],
+  "additionalProperties": false
+}

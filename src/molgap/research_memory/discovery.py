@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from pathlib import Path
 
 
@@ -26,7 +26,7 @@ def _find(root: Path, pattern: str) -> tuple[Path, ...]:
 
 def discover_records(repo_root: str | Path) -> DiscoveredRecords:
     root = Path(repo_root).resolve()
-    return DiscoveredRecords(
+    discovered = DiscoveredRecords(
         evidence=_find(root, "experiments/**/v5_evidence.json"),
         trajectories=_find(root, "experiments/**/trajectory.json"),
         costs=_find(root, "experiments/**/costs/*.json"),
@@ -38,3 +38,15 @@ def discover_records(repo_root: str | Path) -> DiscoveredRecords:
         reference_bundles=_find(root, "experiments/**/reference_bundle.json"),
         target_transform_assets=_find(root, "experiments/**/target_transform.json"),
     )
+    from .finalize import verified_receipt
+
+    paths = {field.name: set(getattr(discovered, field.name)) for field in fields(discovered)}
+    for directory in sorted((root / "experiments").glob("**/rml_finalized")):
+        receipt = verified_receipt(directory)
+        for published, original in receipt["replacements"].items():
+            old = (root / original).resolve()
+            old.relative_to(directory.parent.resolve())
+            for candidates in paths.values():
+                if directory / published in candidates:
+                    candidates.discard(old)
+    return DiscoveredRecords(**{name: tuple(sorted(values)) for name, values in paths.items()})

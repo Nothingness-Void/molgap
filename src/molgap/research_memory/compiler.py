@@ -10,6 +10,9 @@ from pathlib import Path
 from typing import Any
 
 from .backtest import build_screening_backtest
+from .backtest import build_policy_backtests
+from .policy import load_policy_registry
+from .replay import build_replay_pool
 from .cost import build_cost_ledger
 from .derived import validate_derived_outputs
 from .references import build_reference_reuse_index
@@ -26,6 +29,8 @@ DERIVED_FILENAMES = (
     "reference_reuse_index.json",
     "ready_for_desktop_index.json",
     "screening_backtest.json",
+    "replay_pool.json",
+    "policy_backtest.json",
     "completeness_report.json",
     "research_summary.json",
     "research_summary.md",
@@ -161,6 +166,8 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         "blocked": [],
     }
     backtest = build_screening_backtest(traces)
+    replay_pool = build_replay_pool(root, records)
+    policy_backtest = build_policy_backtests(load_policy_registry(root), replay_pool)
 
     trajectory_evidence_ids = {
         evidence_id
@@ -291,6 +298,8 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         "reference_reuse_index.json": reference_index,
         "ready_for_desktop_index.json": ready_index,
         "screening_backtest.json": backtest,
+        "replay_pool.json": replay_pool,
+        "policy_backtest.json": policy_backtest,
         "completeness_report.json": completeness,
         "research_summary.json": summary,
     }

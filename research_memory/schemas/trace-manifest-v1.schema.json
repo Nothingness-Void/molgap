@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["schema", "trajectory_id", "run_id", "contract_ref", "model_identity", "reference_id", "comparison_role", "x_axis", "presentation_semantics_ref", "weight_semantics", "metric_semantics", "evaluation_role_identity", "selection_semantics", "trace_artifact_ref", "terminal_evidence_ref", "comparability_identity", "exposure", "backtest_eligibility"],
   "properties": {
+    "trace_artifact_sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
     "schema": {"const": "molgap-trace-manifest-v1"},
     "trajectory_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},

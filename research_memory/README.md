@@ -25,6 +25,12 @@ python -m molgap.research_memory doctor
 python -m molgap.research_memory check --frozen
 python -m molgap.research_memory package-ready --trajectory <trajectory-id>
 python -m molgap.research_memory backtest-screening
+python -m molgap.research_memory plan --spec plan.json --output experiments/<new-question>
+python -m molgap.research_memory finalize --trajectory experiments/<question> --terminal <retained-directory> --trace <trace.json>
+python -m molgap.research_memory recover-trace --source <retained.csv> --spec recovery.json --output <new-trace.json>
+python -m molgap.research_memory replay-pool
+python -m molgap.research_memory backtest-policy --policy-id <id> --policy-version <version>
+python -m molgap.research_memory terminal-pipeline --trajectory experiments/<question> --terminal <retained-directory> --trace <trace.json>
 ```
 
 RML is pointer-only. Repository pointers are root-confined; supported remote
@@ -39,3 +45,10 @@ The additive V5 comparison schemas are
 `schemas/reference-bundle-v1.schema.json`, and
 `schemas/target-transform-asset-v1.schema.json`. Historical records remain
 partial unless their retained artifacts establish each field directly.
+
+The additive implementation contracts, input shapes, transaction layout and
+replay metric definitions are in [LIFECYCLE.md](LIFECYCLE.md). Policy versions
+live in [policies/](policies/README.md). `backtest-screening` retains its existing
+grouping output; `backtest-policy` supplies evaluated policy reports. Rebuild
+also writes `replay_pool.json` and `policy_backtest.json`. Historical external
+traces without a retained canonical artifact and hash remain explicit exclusions.
