@@ -1,0 +1,303 @@
+{
+  "excerpts": [
+    {
+      "line": 384,
+      "text": "    return model, optimizer, scheduler, ema"
+    },
+    {
+      "line": 385,
+      "text": ""
+    },
+    {
+      "line": 386,
+      "text": ""
+    },
+    {
+      "line": 387,
+      "text": "def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool):"
+    },
+    {
+      "line": 388,
+      "text": "    import torch"
+    },
+    {
+      "line": 389,
+      "text": "    import torch.nn.functional as functional"
+    },
+    {
+      "line": 390,
+      "text": ""
+    },
+    {
+      "line": 391,
+      "text": "    optimizer.zero_grad(set_to_none=True)"
+    },
+    {
+      "line": 392,
+      "text": "    prediction = _forward(model, batch)"
+    },
+    {
+      "line": 393,
+      "text": "    target = (batch.y.view(-1).float() - mean) / std"
+    },
+    {
+      "line": 394,
+      "text": "    loss = functional.l1_loss(prediction, target)"
+    },
+    {
+      "line": 398,
+      "text": "    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)"
+    },
+    {
+      "line": 399,
+      "text": "    if check_finite and not bool(torch.isfinite(gradient_norm)):"
+    },
+    {
+      "line": 400,
+      "text": "        raise RuntimeError(\"Gradient norm became non-finite\")"
+    },
+    {
+      "line": 401,
+      "text": "    optimizer.step()"
+    },
+    {
+      "line": 402,
+      "text": "    ema.update(model)"
+    },
+    {
+      "line": 403,
+      "text": "    return loss.detach()"
+    },
+    {
+      "line": 404,
+      "text": ""
+    },
+    {
+      "line": 405,
+      "text": ""
+    },
+    {
+      "line": 406,
+      "text": "def _evaluate(model, ema, graphs, mean, std) -> dict:"
+    },
+    {
+      "line": 407,
+      "text": "    import torch"
+    },
+    {
+      "line": 408,
+      "text": ""
+    },
+    {
+      "line": 409,
+      "text": "    live_state = {name: value.detach().clone() for name, value in model.state_dict().items()}"
+    },
+    {
+      "line": 410,
+      "text": "    model.load_state_dict(ema.state_dict(), strict=True)"
+    },
+    {
+      "line": 411,
+      "text": "    model.eval()"
+    },
+    {
+      "line": 412,
+      "text": "    predictions = []"
+    },
+    {
+      "line": 413,
+      "text": "    targets = []"
+    },
+    {
+      "line": 414,
+      "text": "    source_indices = []"
+    },
+    {
+      "line": 415,
+      "text": "    with torch.no_grad():"
+    },
+    {
+      "line": 416,
+      "text": "        for batch in _development_loader(graphs):"
+    },
+    {
+      "line": 417,
+      "text": "            batch = batch.to(\"cuda\", non_blocking=True)"
+    },
+    {
+      "line": 791,
+      "text": "        ema.load_state_dict(checkpoint[\"ema\"])"
+    },
+    {
+      "line": 792,
+      "text": "        restore_rng_state(checkpoint[\"rng_state\"])"
+    },
+    {
+      "line": 793,
+      "text": "        start_epoch = int(checkpoint[\"epoch\"]) + 1"
+    },
+    {
+      "line": 794,
+      "text": "        trace = list(checkpoint[\"trace\"])"
+    },
+    {
+      "line": 795,
+      "text": "        best = float(checkpoint[\"best_development_mae_eV\"])"
+    },
+    {
+      "line": 796,
+      "text": "        best_epoch = int(checkpoint[\"best_epoch\"])"
+    },
+    {
+      "line": 797,
+      "text": ""
+    },
+    {
+      "line": 798,
+      "text": "    for epoch in range(start_epoch, EPOCHS):"
+    },
+    {
+      "line": 799,
+      "text": "        learning_rate = scheduler.step(epoch)"
+    },
+    {
+      "line": 800,
+      "text": "        model.train()"
+    },
+    {
+      "line": 801,
+      "text": "        train_loss_sum = torch.zeros((), device=\"cuda\")"
+    },
+    {
+      "line": 802,
+      "text": "        train_count = 0"
+    },
+    {
+      "line": 803,
+      "text": "        epoch_started = time.perf_counter()"
+    },
+    {
+      "line": 804,
+      "text": "        for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):"
+    },
+    {
+      "line": 805,
+      "text": "            if int(batch.num_graphs) != PHYSICAL_BATCH:"
+    },
+    {
+      "line": 806,
+      "text": "                raise RuntimeError(\"Optimizer received a non-128 batch\")"
+    },
+    {
+      "line": 807,
+      "text": "            batch = batch.to(\"cuda\", non_blocking=True)"
+    },
+    {
+      "line": 808,
+      "text": "            global_step = epoch * BATCHES_PER_EPOCH + batch_index + 1"
+    },
+    {
+      "line": 809,
+      "text": "            loss = _optimizer_step("
+    },
+    {
+      "line": 810,
+      "text": "                model,"
+    },
+    {
+      "line": 811,
+      "text": "                optimizer,"
+    },
+    {
+      "line": 816,
+      "text": "                check_finite=global_step % FINITE_CHECK_EVERY_STEPS == 0,"
+    },
+    {
+      "line": 817,
+      "text": "            )"
+    },
+    {
+      "line": 818,
+      "text": "            train_loss_sum.add_(loss * int(batch.num_graphs))"
+    },
+    {
+      "line": 819,
+      "text": "            train_count += int(batch.num_graphs)"
+    },
+    {
+      "line": 820,
+      "text": "        if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:"
+    },
+    {
+      "line": 821,
+      "text": "            raise RuntimeError(\"Epoch sample exposure changed\")"
+    },
+    {
+      "line": 822,
+      "text": "        development = _evaluate(model, ema, development_graphs, mean, std)"
+    },
+    {
+      "line": 823,
+      "text": "        improved = development[\"mae_eV\"] < best"
+    },
+    {
+      "line": 824,
+      "text": "        if improved:"
+    },
+    {
+      "line": 825,
+      "text": "            best = development[\"mae_eV\"]"
+    },
+    {
+      "line": 826,
+      "text": "            best_epoch = epoch"
+    },
+    {
+      "line": 867,
+      "text": "            \"best_development_mae_eV\": best,"
+    },
+    {
+      "line": 868,
+      "text": "            \"best_epoch\": best_epoch,"
+    },
+    {
+      "line": 869,
+      "text": "            \"learning_rate\": learning_rate,"
+    },
+    {
+      "line": 870,
+      "text": "            \"optimizer_steps\": BATCHES_PER_EPOCH,"
+    },
+    {
+      "line": 871,
+      "text": "            \"sample_presentations\": train_count,"
+    },
+    {
+      "line": 872,
+      "text": "            \"elapsed_seconds\": time.perf_counter() - epoch_started,"
+    },
+    {
+      "line": 873,
+      "text": "        }"
+    },
+    {
+      "line": 874,
+      "text": "        trace.append(row)"
+    },
+    {
+      "line": 875,
+      "text": "        atomic_json(output / \"trace.json\", {\"format\": RUN_FORMAT, \"rows\": trace})"
+    },
+    {
+      "line": 876,
+      "text": "        _save_checkpoint("
+    },
+    {
+      "line": 877,
+      "text": "            checkpoint_path,"
+    }
+  ],
+  "source_commit": "814d10466d98a583117a20d65329ff9f27836203",
+  "source_path": "src/molgap/pcqm_gptrans_v4.py",
+  "source_sha256": "ec182eae9db1fe63d6c4224bcb0dc89a5d48104d4ebf1016bea6a4343e9cbb40"
+}

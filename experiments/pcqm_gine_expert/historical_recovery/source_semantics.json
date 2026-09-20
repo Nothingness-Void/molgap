@@ -1,0 +1,215 @@
+{
+  "excerpts": [
+    {
+      "line": 848,
+      "text": "            stale_epochs += 1"
+    },
+    {
+      "line": 849,
+      "text": "        row = {"
+    },
+    {
+      "line": 850,
+      "text": "            \"epoch\": epoch,"
+    },
+    {
+      "line": 851,
+      "text": "            \"train_mae_eV\": f\"{train_mae:.9f}\","
+    },
+    {
+      "line": 852,
+      "text": "            \"dev_mae_eV\": f\"{dev_mae:.9f}\","
+    },
+    {
+      "line": 853,
+      "text": "            \"best_dev_mae_eV\": f\"{best_mae:.9f}\","
+    },
+    {
+      "line": 854,
+      "text": "            \"learning_rate\": f\"{optimizer.param_groups[0]['lr']:.9g}\","
+    },
+    {
+      "line": 855,
+      "text": "            \"elapsed_seconds\": f\"{time.perf_counter() - started:.3f}\","
+    },
+    {
+      "line": 856,
+      "text": "        }"
+    },
+    {
+      "line": 857,
+      "text": "        history.append(row)"
+    },
+    {
+      "line": 858,
+      "text": "        atomic_csv(log_path, history)"
+    },
+    {
+      "line": 859,
+      "text": "        atomic_torch("
+    },
+    {
+      "line": 860,
+      "text": "            last_path,"
+    },
+    {
+      "line": 861,
+      "text": "            {"
+    },
+    {
+      "line": 862,
+      "text": "                \"model\": model.state_dict(),"
+    },
+    {
+      "line": 1011,
+      "text": "        raise RuntimeError(\"expanded PCQM graph cache is empty\")"
+    },
+    {
+      "line": 1012,
+      "text": "    split_counts = scan_packed_split_counts(cache_dir)"
+    },
+    {
+      "line": 1013,
+      "text": "    baseline_dev, _ = _evaluate_packed_split("
+    },
+    {
+      "line": 1014,
+      "text": "        model, cache_dir, \"dev\", device, batch_size * 2"
+    },
+    {
+      "line": 1015,
+      "text": "    )"
+    },
+    {
+      "line": 1016,
+      "text": "    best_mae = baseline_dev"
+    },
+    {
+      "line": 1017,
+      "text": "    best_epoch = -1"
+    },
+    {
+      "line": 1018,
+      "text": "    stale_epochs = 0"
+    },
+    {
+      "line": 1019,
+      "text": "    history = []"
+    },
+    {
+      "line": 1020,
+      "text": "    atomic_torch("
+    },
+    {
+      "line": 1021,
+      "text": "        best_path,"
+    },
+    {
+      "line": 1082,
+      "text": "                train_count += int(target.numel())"
+    },
+    {
+      "line": 1083,
+      "text": "            del loader, dataset"
+    },
+    {
+      "line": 1084,
+      "text": "        dev_mae, _ = _evaluate_packed_split("
+    },
+    {
+      "line": 1085,
+      "text": "            model, cache_dir, \"dev\", device, batch_size * 2"
+    },
+    {
+      "line": 1086,
+      "text": "        )"
+    },
+    {
+      "line": 1087,
+      "text": "        scheduler.step(dev_mae)"
+    },
+    {
+      "line": 1088,
+      "text": "        improved = dev_mae < best_mae"
+    },
+    {
+      "line": 1089,
+      "text": "        if improved:"
+    },
+    {
+      "line": 1090,
+      "text": "            best_mae = dev_mae"
+    },
+    {
+      "line": 1091,
+      "text": "            best_epoch = epoch"
+    },
+    {
+      "line": 1092,
+      "text": "            stale_epochs = 0"
+    },
+    {
+      "line": 1105,
+      "text": "            stale_epochs += 1"
+    },
+    {
+      "line": 1106,
+      "text": "        row = {"
+    },
+    {
+      "line": 1107,
+      "text": "            \"epoch\": epoch,"
+    },
+    {
+      "line": 1108,
+      "text": "            \"train_mae_eV\": f\"{train_error / train_count:.9f}\","
+    },
+    {
+      "line": 1109,
+      "text": "            \"dev_mae_eV\": f\"{dev_mae:.9f}\","
+    },
+    {
+      "line": 1110,
+      "text": "            \"best_dev_mae_eV\": f\"{best_mae:.9f}\","
+    },
+    {
+      "line": 1111,
+      "text": "            \"learning_rate\": f\"{optimizer.param_groups[0]['lr']:.9g}\","
+    },
+    {
+      "line": 1112,
+      "text": "            \"elapsed_seconds\": f\"{time.perf_counter() - started:.3f}\","
+    },
+    {
+      "line": 1113,
+      "text": "        }"
+    },
+    {
+      "line": 1114,
+      "text": "        history.append(row)"
+    },
+    {
+      "line": 1115,
+      "text": "        atomic_csv(log_path, history)"
+    },
+    {
+      "line": 1116,
+      "text": "        atomic_torch("
+    },
+    {
+      "line": 1117,
+      "text": "            last_path,"
+    },
+    {
+      "line": 1118,
+      "text": "            {"
+    },
+    {
+      "line": 1119,
+      "text": "                \"model\": model.state_dict(),"
+    }
+  ],
+  "source_commit": "de05855a45507c7330e6d3225731732ac6bff140",
+  "source_path": "src/molgap/pcqm_expert.py",
+  "source_sha256": "742a84ba3957200cf2c94427dbfb948847fb84626a65ed666643bc337c109bd9"
+}

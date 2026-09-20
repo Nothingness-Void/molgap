@@ -1,0 +1,70 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+  "track": "C",
+  "scope": "fixed_100k_gptrans_propagation_path_ablation",
+  "legacy_contract": "molgap-pcqm-gptrans-flow-ablation-100k-v5",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready",
+    "budget_decision": "closed",
+    "full_handoff_status": "none"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/results/acceptance_v1.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "no_pair_to_node_best_model",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-gptrans-flow-ablation-s42/versions/1/gptrans_flow_ablation/no_pair_to_node/training/best_model.pt",
+      "sha256": "085a0c5575255ea2239ccc7171f995ee0efa99fe203105fea00582236ce83683",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "no_pair_to_node_predictions",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-gptrans-flow-ablation-s42/versions/1/gptrans_flow_ablation/no_pair_to_node/training/development_predictions.pt",
+      "sha256": "616702f298cb4bd502e8cfe7416e61370465a5f1db85adcdfaa8e2e58d27517a",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "no_pair_recurrence_best_model",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-gptrans-flow-ablation-s42/versions/1/gptrans_flow_ablation/no_pair_recurrence/training/best_model.pt",
+      "sha256": "4da59af6361c75696d5b2ed8b4e4fc9b648448530f48d3b32ec3943f6c02e234",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "no_pair_recurrence_predictions",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-gptrans-flow-ablation-s42/versions/1/gptrans_flow_ablation/no_pair_recurrence/training/development_predictions.pt",
+      "sha256": "3aaff6eba092fd36ccfcb65ac016bca891c71781d191a4216affb3b627068c2e",
+      "availability": "durable_remote_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.15662720430791377,
+    "no_pair_to_node_development_gap_mae_eV": 0.15928412307202816,
+    "no_pair_to_node_regression_eV": 0.0026569187641143797,
+    "no_pair_recurrence_development_gap_mae_eV": 0.1581743160623312,
+    "no_pair_recurrence_regression_eV": 0.0015471117544174195
+  },
+  "migration": {
+    "migrated_at": "2026-09-20",
+    "verification_scope": "terminal Kaggle state, complete downloaded artifacts, frozen no-inference acceptance, and paired row-bootstrap comparison",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

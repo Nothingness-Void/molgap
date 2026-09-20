@@ -1,0 +1,87 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "gpu-v1"
+      ],
+      "cost_event_ids": [],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+        "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1"
+      ],
+      "source_commit": "fc329e0948810e5649823ab64e834c9b5d36b47a",
+      "type": "bounded_100k_screen"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_flow_ablation_100k/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a distinct hypothesis that preserves both validated propagation paths"
+    ]
+  },
+  "family_id": "gptrans-propagation-flow",
+  "hypothesis": {
+    "alternative_explanations": [
+      "the deficit may arise from scale or optimization rather than either propagation path"
+    ],
+    "changed_mechanism": "independently remove direct pair-to-node readback or recurrent pair-state accumulation while preserving all parameters",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 T4x2 screen",
+    "decision_changed_if_negative": "close direct propagation-path deletion and seek a distinct capacity or optimization hypothesis",
+    "decision_changed_if_positive": "retain exactly one propagation mechanism for a separately authorized scale decision",
+    "expected_native_cost_ref": null,
+    "historical_unknowns": [
+      "Selected-arm native cost is not separately observed; job-wide cost is not allocated to this arm.",
+      "Original prospective record is retained with its source commit; this Desktop import grants no prospective authority."
+    ],
+    "hypothesis_id": "H-TC-gptrans-flow-ablation-100k-s42",
+    "observed_deficiency": "GPTrans-T is competitive at 500K but materially weak on the fixed 100K reference contract",
+    "related_closed_family_ids": [
+      "gptrans-relation-flow",
+      "gptrans-memory-readback"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ]
+  },
+  "owner": "server",
+  "question": "Does direct pair-to-node readback or cross-layer pair recurrence limit GPTrans-T sample efficiency?",
+  "record_mode": "retrospective_partial",
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-flow-ablation-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/results/acceptance_v1.json",
+      "experiments/pcqm_gptrans_flow_ablation_100k/decision.md"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json"
+    ],
+    "source_commit": "fc329e0948810e5649823ab64e834c9b5d36b47a",
+    "source_config_identity": "sha256:0073db8e152a38d46b6352523e943bf84c2c8e9914285518fbf1a6189a463d42"
+  },
+  "track": "C",
+  "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
+}

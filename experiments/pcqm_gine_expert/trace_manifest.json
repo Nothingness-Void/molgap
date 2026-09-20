@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "CONTEXT_ONLY",
+      "missing_observed_step_and_sample_axes",
+      "no_matched_reference_recovered"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "gine-v7-frozen-bn",
+    "dataset_identity": "pcqm4mv2-local-expanded-1m-v7",
+    "ema_semantics": "live",
+    "evaluation_role_identity": "gine_v7_scaffold_dev_82240",
+    "lr_schedule_identity": "unknown_retrospective",
+    "matched_architecture_required": true,
+    "optimizer_identity": "unknown_retrospective",
+    "precision_identity": "unknown_retrospective",
+    "row_split_identity": "unknown_retrospective",
+    "scientific_contract": "gine_1m_v7_context_only",
+    "selection_role_identity": "best-scaffold-dev-mae",
+    "target_transform_identity": "unknown_retrospective",
+    "terminal_endpoint_identity": "retained-v7-log:step-and-sample-exposure-unknown",
+    "x_axis_semantics": "epochs"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/input_contract.json",
+  "evaluation_role_identity": "gine_v7_scaffold_dev_82240",
+  "exposure": {
+    "optimizer_steps": null,
+    "sample_presentations": null
+  },
+  "metric_semantics": "Gap MAE in eV; live training and explicitly bound development weights",
+  "model_identity": "gine-v7-frozen-bn",
+  "presentation_semantics_ref": "experiments/pcqm_gine_expert/historical_recovery/migration.json",
+  "reference_id": "pcqm-gine-1m-local-specialist-v7",
+  "run_id": "local-scaleup-1m-v7-frozen-bn",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-scaffold-dev-mae",
+  "terminal_evidence_ref": "experiments/pcqm_gine_expert/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_gine_expert/historical_recovery/canonical_trace.json",
+  "trace_artifact_sha256": "ae48bd2b49ab29771dd6d0e89979a7fdc59dacd5fd6d333a797821fa3497228b",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "trajectory_id": "TB-gine-1m-gap-specialist-v7",
+  "weight_semantics": "live",
+  "x_axis": "epochs"
+}

@@ -1,0 +1,54 @@
+{
+  "authority_bindings": [
+    {
+      "retained_ref": "experiments/pcqm_gine_expert/historical_recovery/completion_source.json",
+      "sha256": "ac09ee201737488b328396f0319d374f9ae01ff9639f4a760484ce794c1e6da5",
+      "source": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/completion_manifest.json"
+    },
+    {
+      "retained_ref": "experiments/pcqm_gine_expert/historical_recovery/metrics_source.json",
+      "sha256": "335910386a5cf060a172f38632e19a1ab6b19d3defa7c560759b33aa87889a6e",
+      "source": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/metrics.json"
+    }
+  ],
+  "canonical_trace_ref": "experiments/pcqm_gine_expert/historical_recovery/canonical_trace.json",
+  "canonical_trace_sha256": "ae48bd2b49ab29771dd6d0e89979a7fdc59dacd5fd6d333a797821fa3497228b",
+  "capability": "historical_partial",
+  "device_time_from_wall_time": false,
+  "format": "molgap-historical-trace-recovery-v1",
+  "new_role_access": false,
+  "notes": [
+    "Sequence is serialization order, not a measured axis.",
+    "Epoch labels retain their original zero-based values.",
+    "No checkpoint identity is inferred from best_epoch or improved.",
+    "Wall intervals exclude unrecorded gaps; no cumulative wall or device time is invented."
+  ],
+  "observed_fields": [
+    "epoch_or_pass",
+    "learning_rate",
+    "live_dev_metric",
+    "live_train_metric",
+    "wall_time_seconds"
+  ],
+  "record_mode": "retrospective_partial",
+  "recovered_fields": [],
+  "run_id": "local-scaleup-1m-v7-frozen-bn",
+  "scientific_reinterpretation": false,
+  "source": {
+    "retained_ref": "experiments/pcqm_gine_expert/historical_recovery/source_trace.csv",
+    "sha256": "7263fb25e8888e1884fabc702c53b1edc9d6d0bd01ad84e5c86f50b84f6e3a43",
+    "source": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_train_log.csv"
+  },
+  "terminal_evidence_ref": "experiments/pcqm_gine_expert/v5_evidence.json",
+  "terminal_evidence_sha256": "f317bd67f828690d02fa6a3dbe8daf6af691efcf0558524606fad06c8707c50c",
+  "trajectory_id": "TB-gine-1m-gap-specialist-v7",
+  "unknown_fields": [
+    "checkpoint_identity",
+    "cumulative_device_time_seconds",
+    "cumulative_wall_time_seconds",
+    "device_time_seconds",
+    "ema_dev_metric",
+    "optimizer_step",
+    "sample_presentations"
+  ]
+}

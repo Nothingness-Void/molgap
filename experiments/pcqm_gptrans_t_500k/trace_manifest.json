@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "CONTEXT_ONLY",
+      "missing_observed_step_and_sample_axes",
+      "no_matched_reference_recovered"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "gptrans-t-core-12x256-pair32",
+    "dataset_identity": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+    "ema_semantics": "ema-decay-0.9999",
+    "evaluation_role_identity": "internal_development_500000_549999",
+    "lr_schedule_identity": "unknown_retrospective",
+    "matched_architecture_required": true,
+    "optimizer_identity": "unknown_retrospective",
+    "precision_identity": "unknown_retrospective",
+    "row_split_identity": "train[0:500000]-development[500000:550000]",
+    "scientific_contract": "historical_gptrans_500k_context_only",
+    "selection_role_identity": "best-development-ema",
+    "target_transform_identity": "unknown_retrospective",
+    "terminal_endpoint_identity": "60-recorded-epochs:step-and-sample-exposure-unknown",
+    "x_axis_semantics": "epochs"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_gptrans_t_500k/protocol.md",
+  "evaluation_role_identity": "internal_development_500000_549999",
+  "exposure": {
+    "optimizer_steps": null,
+    "sample_presentations": null
+  },
+  "metric_semantics": "Gap MAE in eV; live training and explicitly bound development weights",
+  "model_identity": "gptrans-t-core-12x256-pair32",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/migration.json",
+  "reference_id": "pcqm-gptrans-t-500k-bridge",
+  "run_id": "121693799",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-ema",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_t_500k/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/canonical_trace.json",
+  "trace_artifact_sha256": "4e4c2b316b8893924fa5e3e0388ce9155153c20ea46fba8e627c51f4b318e8a2",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "trajectory_id": "TB-gptrans-t-500k-bridge",
+  "weight_semantics": "ema-decay-0.9999",
+  "x_axis": "epochs"
+}

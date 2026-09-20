@@ -1,0 +1,33 @@
+{
+  "import_record_mode": "retrospective_partial",
+  "imported_files": [
+    "training_contract.json",
+    "results/acceptance_v1.json",
+    "decision.md",
+    "v5_evidence.json"
+  ],
+  "no_new_role_or_cost_events": true,
+  "original_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "original_owner": "server",
+  "original_record_mode": "prospective",
+  "replay_label_limitation": "The historical V5 scientific_status is lowercase negative_under_contract. Existing replay label mapping uses uppercase literals. Evidence is preserved; no policy score is promised.",
+  "shared_scientific_fields": {
+    "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+    "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+    "feature_fingerprint": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+    "loss_fingerprint": "normalized-gap-l1",
+    "optimizer_fingerprint": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "precision": "fp32",
+    "role_access_fingerprint": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+    "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "sample_exposure": 5998080,
+    "schedule_fingerprint": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "seed": 42,
+    "selection_fingerprint": "best-development-ema9999-60epochs",
+    "tail_batch_policy": "drop_last",
+    "target_fingerprint": "pcqm4mv2-gap-eV-direct",
+    "target_transform_fingerprint": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285"
+  },
+  "source_commit": "76c8fd3ed713774cc155477e925fbce97b1418cb",
+  "source_trajectory_sha256": "bb1726ea1338242230e5d866eb02f92f86f8f9349eb5ded35951b7d36281d6e0"
+}

@@ -1,0 +1,113 @@
+{
+  "acceptance_status": "NOT_RUN",
+  "cost_role_policy": "No new events; no allocation of aggregate two-arm job cost to selected arm; no wall-to-device conversion.",
+  "excluded_candidate": {
+    "name": "pcqm_k1_induced_pair_token",
+    "reason": "different K1 optimizer/schedule/selection/exposure contract"
+  },
+  "format": "molgap-historical-recovery-batch1-v1",
+  "gine_source_identity_limit": "Retained package implementation documents metric meaning; exact original GINE source commit is unknown. No exposure or precision is inferred.",
+  "intended_comparable_pair": [
+    "TB-gptrans-t-100k-v4-reference",
+    "TC-gptrans-flow-ablation-100k-s42"
+  ],
+  "rebuild_status": "NOT_RUN",
+  "sources": [
+    {
+      "observed": [
+        "ema_dev_metric",
+        "epoch_or_pass",
+        "learning_rate",
+        "live_train_metric",
+        "wall_time_seconds"
+      ],
+      "recovered": [
+        "optimizer_step",
+        "sample_presentations"
+      ],
+      "retained_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/source_trace.json",
+      "sha256": "68b884995ab9ef0f7f919dbd3fdac45de989a73440a7825c56ee5fb837edeede",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_reference_s42/pcqm_gptrans_t_100k_v4/training/trace.json",
+      "trajectory_id": "TB-gptrans-t-100k-v4-reference",
+      "unknown": [
+        "checkpoint_identity",
+        "cumulative_device_time_seconds",
+        "cumulative_wall_time_seconds",
+        "device_time_seconds",
+        "live_dev_metric"
+      ]
+    },
+    {
+      "observed": [
+        "ema_dev_metric",
+        "epoch_or_pass",
+        "learning_rate",
+        "live_train_metric",
+        "wall_time_seconds"
+      ],
+      "recovered": [
+        "optimizer_step",
+        "sample_presentations"
+      ],
+      "retained_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/source_trace.json",
+      "sha256": "4a845ce19c53942fd9ef559d68be64ed1ec0ff5fb9e4c8a17e5a180536eda5d3",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_flow_ablation_s42_v1/gptrans_flow_ablation/no_pair_to_node/training/trace.json",
+      "trajectory_id": "TC-gptrans-flow-ablation-100k-s42",
+      "unknown": [
+        "checkpoint_identity",
+        "cumulative_device_time_seconds",
+        "cumulative_wall_time_seconds",
+        "device_time_seconds",
+        "live_dev_metric"
+      ]
+    },
+    {
+      "observed": [
+        "ema_dev_metric",
+        "epoch_or_pass",
+        "learning_rate",
+        "live_train_metric",
+        "wall_time_seconds"
+      ],
+      "recovered": [],
+      "retained_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/source_trace.json",
+      "sha256": "ef26d6ab4899dac6f4bd1c58c051a73d425fac52fdc6bcbffbabd59acc6f0d48",
+      "source": "platforms/_records/scnet/pcqm_gptrans_t_core_500k_0c0108e/completion_manifest.json",
+      "trajectory_id": "TB-gptrans-t-500k-bridge",
+      "unknown": [
+        "checkpoint_identity",
+        "cumulative_device_time_seconds",
+        "cumulative_wall_time_seconds",
+        "device_time_seconds",
+        "live_dev_metric",
+        "optimizer_step",
+        "sample_presentations"
+      ]
+    },
+    {
+      "observed": [
+        "epoch_or_pass",
+        "learning_rate",
+        "live_dev_metric",
+        "live_train_metric",
+        "wall_time_seconds"
+      ],
+      "recovered": [],
+      "retained_ref": "experiments/pcqm_gine_expert/historical_recovery/source_trace.csv",
+      "sha256": "7263fb25e8888e1884fabc702c53b1edc9d6d0bd01ad84e5c86f50b84f6e3a43",
+      "source": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_train_log.csv",
+      "trajectory_id": "TB-gine-1m-gap-specialist-v7",
+      "unknown": [
+        "checkpoint_identity",
+        "cumulative_device_time_seconds",
+        "cumulative_wall_time_seconds",
+        "device_time_seconds",
+        "ema_dev_metric",
+        "optimizer_step",
+        "sample_presentations"
+      ]
+    }
+  ],
+  "starting_head": "de05855a45507c7330e6d3225731732ac6bff140",
+  "tests": "NOT_RUN"
+}

@@ -1,0 +1,131 @@
+{
+  "excerpts": [
+    {
+      "line": 156,
+      "text": "        self.state = {name: value.clone() for name, value in state.items()}"
+    },
+    {
+      "line": 157,
+      "text": ""
+    },
+    {
+      "line": 158,
+      "text": ""
+    },
+    {
+      "line": 159,
+      "text": "def _evaluate(model, ema, cache_root, manifest, config, mean, std, device):"
+    },
+    {
+      "line": 160,
+      "text": "    import torch"
+    },
+    {
+      "line": 161,
+      "text": ""
+    },
+    {
+      "line": 162,
+      "text": "    live_state = {"
+    },
+    {
+      "line": 163,
+      "text": "        name: value.detach().clone()"
+    },
+    {
+      "line": 164,
+      "text": "        for name, value in model.state_dict().items()"
+    },
+    {
+      "line": 165,
+      "text": "    }"
+    },
+    {
+      "line": 166,
+      "text": "    model.load_state_dict(ema.state_dict(), strict=True)"
+    },
+    {
+      "line": 167,
+      "text": "    model.eval()"
+    },
+    {
+      "line": 168,
+      "text": "    absolute_error = 0.0"
+    },
+    {
+      "line": 169,
+      "text": "    count = 0"
+    },
+    {
+      "line": 170,
+      "text": "    prediction_parts = []"
+    },
+    {
+      "line": 171,
+      "text": "    target_parts = []"
+    },
+    {
+      "line": 172,
+      "text": "    source_idx_parts = []"
+    },
+    {
+      "line": 173,
+      "text": "    with torch.no_grad():"
+    },
+    {
+      "line": 396,
+      "text": "            )"
+    },
+    {
+      "line": 397,
+      "text": "        row = {"
+    },
+    {
+      "line": 398,
+      "text": "            \"epoch\": epoch,"
+    },
+    {
+      "line": 399,
+      "text": "            \"train_mae_eV\": absolute_error / count,"
+    },
+    {
+      "line": 400,
+      "text": "            \"development_mae_eV\": development[\"mae_eV\"],"
+    },
+    {
+      "line": 401,
+      "text": "            \"elapsed_s\": elapsed,"
+    },
+    {
+      "line": 402,
+      "text": "            \"graphs_per_s\": TRAIN_ROWS / elapsed,"
+    },
+    {
+      "line": 403,
+      "text": "            \"learning_rate\": learning_rate,"
+    },
+    {
+      "line": 404,
+      "text": "            \"peak_memory_bytes\": int(torch.cuda.max_memory_allocated(device)),"
+    },
+    {
+      "line": 405,
+      "text": "            \"improved\": improved,"
+    },
+    {
+      "line": 406,
+      "text": "        }"
+    },
+    {
+      "line": 407,
+      "text": "        trace.append(row)"
+    },
+    {
+      "line": 408,
+      "text": "        atomic_json(output / \"trace.json\", {\"epochs\": trace})"
+    }
+  ],
+  "source_commit": "0c0108e",
+  "source_path": "src/molgap/pcqm_gptrans_scale.py",
+  "source_sha256": "2a7aae732d10e2afd99cb02369fd6bdfd4a706065e849929dacbb8fd4324e404"
+}

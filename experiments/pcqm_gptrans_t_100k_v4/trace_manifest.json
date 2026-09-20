@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "dataset_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+    "ema_semantics": "ema-decay-0.9999",
+    "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+    "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "matched_architecture_required": false,
+    "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+    "row_split_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1",
+    "selection_role_identity": "best-development-ema9999-60epochs",
+    "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+    "terminal_endpoint_identity": "optimizer_steps46860:sample_presentations5998080",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+  "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "metric_semantics": "Gap MAE in eV; live training and explicitly bound development weights",
+  "model_identity": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/migration.json",
+  "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+  "run_id": "kaggle2-gptrans-t-100k-v4-seed42",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-ema9999-60epochs",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/canonical_trace.json",
+  "trace_artifact_sha256": "f5f9cd5b365d6a8cada664d8440907d17ccbf68632ba1b6f46fbf32acc23b02d",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-gptrans-t-100k-v4-reference",
+  "weight_semantics": "ema-decay-0.9999",
+  "x_axis": "optimizer_steps"
+}

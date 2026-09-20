@@ -1,0 +1,60 @@
+{
+  "authority_bindings": [
+    {
+      "retained_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/completion_source.json",
+      "sha256": "4fc1bde50a83f04754cb6338f832bcdeb08f6e6e6ef7cfc5f78aaf33b77a927f",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_reference_s42/pcqm_gptrans_t_100k_v4/training/completion_manifest.json"
+    },
+    {
+      "retained_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/frozen_reference_source.json",
+      "sha256": "c523e000925ce3bfab35e01c3e8ca6e7ce27a7876d4cdf7c012d6ccd398436aa",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_reference_s42/pcqm_gptrans_t_100k_v4/training/frozen_reference.json"
+    },
+    {
+      "retained_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/acceptance_source.json",
+      "sha256": "6dc36dd8e4307ec938d347aacaf7c8b75b5323f31a1a65dd35177f77bd9752f8",
+      "source": "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json"
+    }
+  ],
+  "canonical_trace_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/canonical_trace.json",
+  "canonical_trace_sha256": "f5f9cd5b365d6a8cada664d8440907d17ccbf68632ba1b6f46fbf32acc23b02d",
+  "capability": "historical_partial",
+  "device_time_from_wall_time": false,
+  "format": "molgap-historical-trace-recovery-v1",
+  "new_role_access": false,
+  "notes": [
+    "Sequence is serialization order, not a measured axis.",
+    "Epoch labels retain their original zero-based values.",
+    "No checkpoint identity is inferred from best_epoch or improved.",
+    "Wall intervals exclude unrecorded gaps; no cumulative wall or device time is invented."
+  ],
+  "observed_fields": [
+    "ema_dev_metric",
+    "epoch_or_pass",
+    "learning_rate",
+    "live_train_metric",
+    "wall_time_seconds"
+  ],
+  "record_mode": "retrospective_partial",
+  "recovered_fields": [
+    "optimizer_step",
+    "sample_presentations"
+  ],
+  "run_id": "kaggle2-gptrans-t-100k-v4-seed42",
+  "scientific_reinterpretation": false,
+  "source": {
+    "retained_ref": "experiments/pcqm_gptrans_t_100k_v4/historical_recovery/source_trace.json",
+    "sha256": "68b884995ab9ef0f7f919dbd3fdac45de989a73440a7825c56ee5fb837edeede",
+    "source": "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_reference_s42/pcqm_gptrans_t_100k_v4/training/trace.json"
+  },
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_t_100k_v4/v5_evidence.json",
+  "terminal_evidence_sha256": "c2435c93a6690ae77f2f1b4a7cda99ca31b896454434f0d42e0fe15508630f7b",
+  "trajectory_id": "TB-gptrans-t-100k-v4-reference",
+  "unknown_fields": [
+    "checkpoint_identity",
+    "cumulative_device_time_seconds",
+    "cumulative_wall_time_seconds",
+    "device_time_seconds",
+    "live_dev_metric"
+  ]
+}

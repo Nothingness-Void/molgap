@@ -1,0 +1,49 @@
+{
+  "authority_bindings": [
+    {
+      "retained_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/acceptance_source.json",
+      "sha256": "62fedf82c2597b039cdc7dd732b7af768f3f3a385c2c4b735aea8b7c43bd7a82",
+      "source": "experiments/pcqm_gptrans_t_500k/results/acceptance.json"
+    }
+  ],
+  "canonical_trace_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/canonical_trace.json",
+  "canonical_trace_sha256": "4e4c2b316b8893924fa5e3e0388ce9155153c20ea46fba8e627c51f4b318e8a2",
+  "capability": "historical_partial",
+  "device_time_from_wall_time": false,
+  "format": "molgap-historical-trace-recovery-v1",
+  "new_role_access": false,
+  "notes": [
+    "Sequence is serialization order, not a measured axis.",
+    "Epoch labels retain their original zero-based values.",
+    "No checkpoint identity is inferred from best_epoch or improved.",
+    "Wall intervals exclude unrecorded gaps; no cumulative wall or device time is invented."
+  ],
+  "observed_fields": [
+    "ema_dev_metric",
+    "epoch_or_pass",
+    "learning_rate",
+    "live_train_metric",
+    "wall_time_seconds"
+  ],
+  "record_mode": "retrospective_partial",
+  "recovered_fields": [],
+  "run_id": "121693799",
+  "scientific_reinterpretation": false,
+  "source": {
+    "retained_ref": "experiments/pcqm_gptrans_t_500k/historical_recovery/source_trace.json",
+    "sha256": "ef26d6ab4899dac6f4bd1c58c051a73d425fac52fdc6bcbffbabd59acc6f0d48",
+    "source": "platforms/_records/scnet/pcqm_gptrans_t_core_500k_0c0108e/completion_manifest.json"
+  },
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_t_500k/v5_evidence.json",
+  "terminal_evidence_sha256": "47ef5e02ce82614abd2498e389098a5dfcc81e4d0b1b29abf05f74664fd7b6b4",
+  "trajectory_id": "TB-gptrans-t-500k-bridge",
+  "unknown_fields": [
+    "checkpoint_identity",
+    "cumulative_device_time_seconds",
+    "cumulative_wall_time_seconds",
+    "device_time_seconds",
+    "live_dev_metric",
+    "optimizer_step",
+    "sample_presentations"
+  ]
+}

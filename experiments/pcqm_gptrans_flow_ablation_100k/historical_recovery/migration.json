@@ -1,0 +1,60 @@
+{
+  "authority_bindings": [
+    {
+      "retained_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/completion_source.json",
+      "sha256": "232b7494958050bb2702f6ac78e2eb86bef1980fe4d49e1a8331432e0adde174",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_flow_ablation_s42_v1/gptrans_flow_ablation/no_pair_to_node/training/completion_manifest.json"
+    },
+    {
+      "retained_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/frozen_reference_source.json",
+      "sha256": "3151c45b08ba92284d1d03e7822f321edc75d3ed728d6f3f652422a180773563",
+      "source": "platforms/_records/kaggle/training/pcqm_gptrans_flow_ablation_s42_v1/gptrans_flow_ablation/no_pair_to_node/training/frozen_reference.json"
+    },
+    {
+      "retained_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/acceptance_source.json",
+      "sha256": "110a5af1e97c97ee1ab9e2e0cc637d2c8fd4df4d28155c6cdcb5916e47af2e63",
+      "source": "experiments/pcqm_gptrans_flow_ablation_100k/results/acceptance_v1.json"
+    }
+  ],
+  "canonical_trace_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/canonical_trace.json",
+  "canonical_trace_sha256": "66823b261162be7a3d5bfbdd38254cacefc820795b4f32337ed7219825d53909",
+  "capability": "historical_partial",
+  "device_time_from_wall_time": false,
+  "format": "molgap-historical-trace-recovery-v1",
+  "new_role_access": false,
+  "notes": [
+    "Sequence is serialization order, not a measured axis.",
+    "Epoch labels retain their original zero-based values.",
+    "No checkpoint identity is inferred from best_epoch or improved.",
+    "Wall intervals exclude unrecorded gaps; no cumulative wall or device time is invented."
+  ],
+  "observed_fields": [
+    "ema_dev_metric",
+    "epoch_or_pass",
+    "learning_rate",
+    "live_train_metric",
+    "wall_time_seconds"
+  ],
+  "record_mode": "retrospective_partial",
+  "recovered_fields": [
+    "optimizer_step",
+    "sample_presentations"
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_to_node",
+  "scientific_reinterpretation": false,
+  "source": {
+    "retained_ref": "experiments/pcqm_gptrans_flow_ablation_100k/historical_recovery/source_trace.json",
+    "sha256": "4a845ce19c53942fd9ef559d68be64ed1ec0ff5fb9e4c8a17e5a180536eda5d3",
+    "source": "platforms/_records/kaggle/training/pcqm_gptrans_flow_ablation_s42_v1/gptrans_flow_ablation/no_pair_to_node/training/trace.json"
+  },
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
+  "terminal_evidence_sha256": "7fe1a7ea0bdcc03ee46251a9bf34885601f64c2f3333d5fe006836d18f226f60",
+  "trajectory_id": "TC-gptrans-flow-ablation-100k-s42",
+  "unknown_fields": [
+    "checkpoint_identity",
+    "cumulative_device_time_seconds",
+    "cumulative_wall_time_seconds",
+    "device_time_seconds",
+    "live_dev_metric"
+  ]
+}
