@@ -16,6 +16,8 @@ EXPECTED_FORMATS = {
     "reference_reuse_index.json": "molgap-rml-reference-reuse-index-v1",
     "ready_for_desktop_index.json": "molgap-rml-ready-for-desktop-index-v1",
     "screening_backtest.json": "molgap-rml-screening-backtest-v1",
+    "replay_pool.json": "molgap-rml-replay-pool-v1",
+    "policy_backtest.json": "molgap-rml-policy-backtest-v1",
     "completeness_report.json": "molgap-rml-completeness-report-v1",
     "research_summary.json": "molgap-rml-research-summary-v1",
 }
@@ -131,6 +133,16 @@ def validate_derived_outputs(outputs: Mapping[str, Any]) -> None:
         value = _object(outputs[name], name)
         if value.get("format") != expected_format:
             raise ValueError(f"derived {name} has wrong format")
+    pool = outputs["replay_pool.json"]
+    for key in ("entries", "action_entries", "exclusions"):
+        _array(pool.get(key), f"replay pool {key}")
+    backtests = outputs["policy_backtest.json"]
+    if backtests.get("policy_activated") is not False:
+        raise ValueError("backtest must not activate a policy")
+    for report in _array(backtests.get("reports"), "policy reports"):
+        if report.get("policy_activated") is not False:
+            raise ValueError("replay must not activate a policy")
+        _keys(report, {"policy_id", "policy_version", "decisions", "exclusions", "unknown_cost_count"}, "policy report")
 
     trajectory_index = outputs["trajectory_index.json"]
     _exact_keys(

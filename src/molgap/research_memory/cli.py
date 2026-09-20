@@ -12,6 +12,7 @@ from .backtest import build_screening_backtest
 from .compiler import compile_research_memory, frozen_differences, rebuild_research_memory
 from .ready import build_ready_package
 from .validate import validate_repository_records
+from .paths import repo_local_path
 
 
 def _root(value: str | None) -> Path:
@@ -32,8 +33,43 @@ def main(argv: list[str] | None = None) -> None:
     ready = commands.add_parser("package-ready")
     ready.add_argument("--trajectory", required=True)
     commands.add_parser("backtest-screening")
+    planner = commands.add_parser("plan")
+    planner.add_argument("--spec", required=True)
+    planner.add_argument("--output", required=True)
+    for name in ("finalize", "terminal-pipeline"):
+        command = commands.add_parser(name)
+        command.add_argument("--trajectory", required=True)
+        command.add_argument("--terminal", required=True)
+        command.add_argument("--trace")
+    recovery = commands.add_parser("recover-trace")
+    recovery.add_argument("--source", action="append", required=True)
+    recovery.add_argument("--spec", required=True)
+    recovery.add_argument("--output", required=True)
+    commands.add_parser("replay-pool")
+    policy = commands.add_parser("backtest-policy")
+    policy.add_argument("--policy-id")
+    policy.add_argument("--policy-version")
     args = parser.parse_args(argv)
     root = _root(args.repo_root)
+
+    if args.command in {"plan", "finalize", "recover-trace", "terminal-pipeline"}:
+        from molgap.evidence_pointers import load_json_object
+        if args.command == "plan":
+            from .plan import plan
+            result = plan(root, load_json_object(repo_local_path(root, args.spec)), args.output)
+        elif args.command == "recover-trace":
+            from .recovery import recover_trace
+            result = recover_trace(args.source, load_json_object(repo_local_path(root, args.spec)), args.output, repo_root=root)
+        elif args.command == "finalize":
+            from .finalize import finalize
+            result = finalize(root, args.trajectory, args.terminal, args.trace)
+        else:
+            from .pipeline import finalize_rebuild_backtest
+            result = finalize_rebuild_backtest(root, args.trajectory, args.terminal, args.trace)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        if args.command == "terminal-pipeline" and result.get("pipeline_status") != "COMPLETE":
+            raise SystemExit(1)
+        return
 
     if args.command == "validate":
         validated = validate_repository_records(root)
@@ -68,6 +104,25 @@ def main(argv: list[str] | None = None) -> None:
         return
     validated = validate_repository_records(root)
     records = validated["records"]
+    if args.command in {"replay-pool", "backtest-policy"}:
+        from .replay import build_replay_pool
+        pool = build_replay_pool(root, records)
+        if args.command == "replay-pool":
+            result = pool
+        else:
+            from .policy import load_policy_registry
+            from .backtest import build_policy_backtests
+            policies = load_policy_registry(root)
+            if args.policy_version and not args.policy_id:
+                raise ValueError("--policy-version requires --policy-id")
+            if args.policy_id:
+                policies = [p for p in policies if p["policy_id"] == args.policy_id and
+                            (not args.policy_version or p["version"] == args.policy_version)]
+                if not policies:
+                    raise ValueError("unknown policy/version")
+            result = build_policy_backtests(policies, pool)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return
     if args.command == "backtest-screening":
         result = build_screening_backtest([record for _, record in records["traces"]])
         print(json.dumps(result, indent=2, sort_keys=True))

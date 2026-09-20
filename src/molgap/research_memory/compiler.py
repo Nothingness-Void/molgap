@@ -10,12 +10,16 @@ from pathlib import Path
 from typing import Any
 
 from .backtest import build_screening_backtest
+from .backtest import build_policy_backtests
+from .policy import load_policy_registry
+from .replay import build_replay_pool
 from .cost import build_cost_ledger
 from .derived import validate_derived_outputs
 from .references import build_reference_reuse_index
 from .roles import build_role_reuse_index
 from .summary import render_summary_markdown
 from .validate import validate_repository_records
+from .paths import repo_local_path
 
 
 DERIVED_FILENAMES = (
@@ -26,6 +30,8 @@ DERIVED_FILENAMES = (
     "reference_reuse_index.json",
     "ready_for_desktop_index.json",
     "screening_backtest.json",
+    "replay_pool.json",
+    "policy_backtest.json",
     "completeness_report.json",
     "research_summary.json",
     "research_summary.md",
@@ -161,6 +167,8 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         "blocked": [],
     }
     backtest = build_screening_backtest(traces)
+    replay_pool = build_replay_pool(root, records)
+    policy_backtest = build_policy_backtests(load_policy_registry(root), replay_pool)
 
     trajectory_evidence_ids = {
         evidence_id
@@ -291,6 +299,8 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         "reference_reuse_index.json": reference_index,
         "ready_for_desktop_index.json": ready_index,
         "screening_backtest.json": backtest,
+        "replay_pool.json": replay_pool,
+        "policy_backtest.json": policy_backtest,
         "completeness_report.json": completeness,
         "research_summary.json": summary,
     }
@@ -307,10 +317,10 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
     payloads = compile_research_memory(root)
-    output_root = root / "research_memory" / "derived"
+    output_root = repo_local_path(root, "research_memory/derived")
     output_root.mkdir(parents=True, exist_ok=True)
     for name, payload in sorted(payloads.items()):
-        target = output_root / name
+        target = repo_local_path(root, output_root / name)
         with tempfile.NamedTemporaryFile(dir=output_root, delete=False) as handle:
             temporary = Path(handle.name)
             handle.write(payload)

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-replay-pool-v1",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "molgap-rml-replay-pool-v1"
+    },
+    "source_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "action_entries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "comparable_group_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "format",
+    "source_digest",
+    "entries",
+    "action_entries",
+    "exclusions",
+    "comparable_group_count"
+  ],
+  "additionalProperties": false
+}

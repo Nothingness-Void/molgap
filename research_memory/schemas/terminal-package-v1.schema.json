@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-terminal-package-v1",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "molgap-rml-terminal-package-v1"
+    },
+    "trajectory_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "finalized_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_hashes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "decision": {
+      "type": "object"
+    },
+    "costs": {
+      "type": "array",
+      "items": {
+        "$ref": "cost-event-v1.schema.json"
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "$ref": "role-event-v1.schema.json"
+      }
+    },
+    "role_use": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "trace_manifest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "trace-manifest-v1.schema.json"
+        }
+      ]
+    },
+    "action_replay": {
+      "type": "object"
+    },
+    "comparison_readiness_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "format",
+    "trajectory_id",
+    "run_id",
+    "action_id",
+    "finalized_at",
+    "acceptance_ref",
+    "artifact_hashes",
+    "evidence",
+    "decision",
+    "costs",
+    "roles"
+  ],
+  "additionalProperties": false
+}

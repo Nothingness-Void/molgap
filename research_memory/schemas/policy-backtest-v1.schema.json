@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-rml-policy-backtest-v1",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "molgap-rml-policy-backtest-v1"
+    },
+    "source_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "policy_activated": {
+      "const": false
+    }
+  },
+  "required": [
+    "format",
+    "source_digest",
+    "reports",
+    "policy_activated"
+  ],
+  "additionalProperties": false
+}

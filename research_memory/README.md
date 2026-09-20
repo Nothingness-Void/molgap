@@ -57,6 +57,11 @@ authoritative files. A trajectory must exist before its first experiment; the
 `retrospective_partial` mode is reserved for honest migration of historical
 evidence.
 
+The [lifecycle implementation contract](LIFECYCLE.md) documents `plan`, canonical
+trace recording/recovery, `finalize`, `terminal-pipeline`, `replay-pool`, and
+`backtest-policy`, including Desktop authority and the Luna validation handoff.
+Explicit versioned rules belong in the [policy registry](policies/README.md).
+
 ## Migration coverage
 
 The current historical migration contains the Route B records that have a

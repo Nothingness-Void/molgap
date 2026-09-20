@@ -4,6 +4,8 @@
   "type": "object",
   "required": ["schema", "trajectory_id", "record_mode", "track", "owner", "family_id", "question", "hypothesis", "state_at_start", "actions", "result", "decision"],
   "properties": {
+    "decision_state": {"$ref": "decision-state-v1.schema.json"},
+    "action_replay": {"type": "object", "required": ["inputs_ref", "inputs_sha256", "truth_ref", "truth_sha256"], "properties": {"inputs_ref": {"type": "string"}, "inputs_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "truth_ref": {"type": "string"}, "truth_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false},
     "schema": {"const": "molgap-trajectory-v1"},
     "trajectory_id": {"type": "string", "minLength": 1},
     "record_mode": {"enum": ["prospective", "retrospective_partial"]},
