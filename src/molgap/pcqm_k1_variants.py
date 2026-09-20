@@ -113,6 +113,23 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "external_features": False,
     },
+    "neural_atom_k1_chem_typed_pair_token": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "chemistry-role-conditioned-selection-for-layer6-pair-token",
+        "target_layer": 6,
+        "pair_channels": 32,
+        "role_channels": 16,
+        "group_types": 12,
+        "group_source": "deterministic-local-rules-over-existing-ogb-x-and-edge-attr",
+        "role_effect": "zero-initialized-additive-pair-selection-logit-bias",
+        "relation_tokens": 1,
+        "added_parameters": 23_600,
+        "expected_parameters": 3_682_417,
+        "initialization_policy": "nested-function-and-original-pair-selection",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -856,6 +873,10 @@ def make_encoder(mode: str):
     if mode in FUNCTIONAL_GROUP_MODES:
         from .k1_functional_group_token import make_encoder as make_functional_group
         return make_functional_group(mode)
+    from .k1_chem_typed_pair_token import MODES as CHEM_TYPED_PAIR_MODES
+    if mode in CHEM_TYPED_PAIR_MODES:
+        from .k1_chem_typed_pair_token import make_encoder as make_chem_typed_pair
+        return make_chem_typed_pair(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

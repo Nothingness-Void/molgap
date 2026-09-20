@@ -491,12 +491,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as FUNCTIONAL_GROUP_PARAMETERS,
         check_mechanism as check_functional_group,
     )
+    from .k1_chem_typed_pair_token import (
+        MODES as CHEM_TYPED_PAIR_MODES,
+        PARAMETERS as CHEM_TYPED_PAIR_PARAMETERS,
+        check_mechanism as check_chem_typed_pair,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
         + EDGE_CONDITIONED_MODES
         + GPSPP_LOCAL_MODES
         + FUNCTIONAL_GROUP_MODES
+        + CHEM_TYPED_PAIR_MODES
     )
     import torch
 
@@ -1109,6 +1115,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != FUNCTIONAL_GROUP_PARAMETERS[mode]
         ):
             raise RuntimeError("Functional-group-token parameter identity changed")
+    elif mode in CHEM_TYPED_PAIR_MODES:
+        mechanism_checks = check_chem_typed_pair(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != CHEM_TYPED_PAIR_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Chem-typed pair-token parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1135,6 +1148,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.relation_token.parameters())
     elif mode in FUNCTIONAL_GROUP_MODES:
         candidate_parameters = list(model.functional_group_token.parameters())
+    elif mode in CHEM_TYPED_PAIR_MODES:
+        candidate_parameters = list(model.relation_token.parameters())
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1305,6 +1320,7 @@ def train_arm(
     from .k1_gpspp_local import MODES as GPSPP_LOCAL_MODES
     from .k1_pair_token import MODES as PAIR_TOKEN_MODES
     from .k1_functional_group_token import MODES as FUNCTIONAL_GROUP_MODES
+    from .k1_chem_typed_pair_token import MODES as CHEM_TYPED_PAIR_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1312,6 +1328,7 @@ def train_arm(
         + GPSPP_LOCAL_MODES
         + PAIR_TOKEN_MODES
         + FUNCTIONAL_GROUP_MODES
+        + CHEM_TYPED_PAIR_MODES
         + MOSE_MODES
     )
 
@@ -1326,7 +1343,7 @@ def train_arm(
     root, manifest = find_fixed_cache()
     roles = load_roles(root, manifest)
     functional_group_manifest = None
-    if mode in FUNCTIONAL_GROUP_MODES:
+    if mode in FUNCTIONAL_GROUP_MODES + CHEM_TYPED_PAIR_MODES:
         from .pcqm_functional_group_sidecar import attach_functional_group_roles
 
         roles, functional_group_manifest = attach_functional_group_roles(

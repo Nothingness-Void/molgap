@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-k1-chem-typed-pair-token-s42",
+  "title": "MolGap K1 Chemistry Typed PairToken S42",
+  "code_file": "run_candidate.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-k1-chem-typed-pair-token-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+    "kaseichou/molgap-fg-incidence-42a40f"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

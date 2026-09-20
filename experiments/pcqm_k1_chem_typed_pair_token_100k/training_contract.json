@@ -1,0 +1,64 @@
+{
+  "format": "molgap-pcqm-k1-chem-typed-pair-token-contract-v1",
+  "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "functional_group_sidecar_aggregate_sha256": "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b",
+  "functional_group_contract_sha256": "dde86838f2d8e42d6f8c477bd04278234d7cb02b7240a5395291ce10ae9cf2d8",
+  "roles": {
+    "train": [0, 100000],
+    "development": [100000, 150000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "arm": "neural_atom_k1_chem_typed_pair_token",
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "epochs": 40,
+  "optimizer_steps_per_epoch": 781,
+  "sample_presentations_per_epoch": 99968,
+  "total_optimizer_steps": 31240,
+  "total_sample_presentations": 3998720,
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.0004,
+    "weight_decay": 0.00001,
+    "gradient_clip": 1.0,
+    "fused": false
+  },
+  "schedule": {"name": "CosineAnnealingLR", "eta_min": 0.000001},
+  "architecture": {
+    "backbone": "neural_atom_k1_v4",
+    "parameters": 3682417,
+    "added_vs_k1": 23600,
+    "added_vs_pair_token": 752,
+    "target_layer": 6,
+    "pair_channels": 32,
+    "role_channels": 16,
+    "group_types": 12,
+    "group_source": "existing-ogb-x-edge-index-edge-attr-only",
+    "role_effect": "zero-initialized-additive-pair-selection-logit-bias",
+    "relation_tokens": 1,
+    "geometry_model_input": false,
+    "external_features": false,
+    "initialization_policy": "nested-k1-and-unchanged-initial-pair-selection"
+  },
+  "materiality_rule": {
+    "rule": "max-of-prospectively-supported-components",
+    "policy_floor_eV": 0.003,
+    "measured_training_stochasticity_eV": null,
+    "effective_gate_eV": 0.003,
+    "reason": "no matched independent-repeat stochasticity estimate is available"
+  },
+  "supporting_control": {
+    "model": "neural_atom_k1_pair_token",
+    "development_gap_mae_eV": 0.1383300447,
+    "require_candidate_point_estimate_not_worse": true
+  }
+}
