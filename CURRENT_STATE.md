@@ -45,7 +45,14 @@ contract.
 
 ## Discovery state
 
-No server-owned GPU screen is active. The chemistry-conditioned PairToken
+One server-owned GPU screen is active: Kaggle3
+`nvoid912/molgap-k1-multiplicative-pairvalue-s42` version 1 tests a disjoint
+low-rank multiplicative relation value under the accepted PairToken selector.
+It is a seed-42, candidate-only, fixed PCQM-100K V5 screen; K1-v4 is reused as
+the canonical reference and no protected role is authorized. Authority:
+`experiments/pcqm_k1_multiplicative_pair_value_100k/protocol.md`.
+
+The chemistry-conditioned PairToken
 completed under the fixed V5 PCQM-100K/50K, FP32, BS128 contract and passed
 no-inference terminal acceptance. It reached `0.1385749578 eV`, improving K1 by
 `0.0027986765 eV` with a favorable paired interval, but missed the frozen

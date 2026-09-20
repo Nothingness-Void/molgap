@@ -14,8 +14,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-PAIR-VALUE-ANALYSIS | Use the completed PairToken, standalone chemistry-role, and chemistry-conditioned-selection trajectories to decide whether any relation-value intervention remains identifiable; do not submit another selector variant | One falsifiable value-side hypothesis with a distinct mechanism and stop rule, or an explicit decision that K1 micro-architecture search is saturated |
-| P2 | C-V5-REFERENCE-TRACE-RECOVERY | Recover the already retained K1-v4 trace into a locally hash-bound canonical reference without training or inference | Replay admits otherwise complete strict candidate/reference worlds, or records an irreducible artifact gap |
+| P1 | C-V5-MULTIPLICATIVE-PAIR-VALUE | Monitor and terminally ingest the single active Kaggle3 value-side candidate; do not submit another selector, return, or chemistry variant | V5 terminal decision compares it with canonical K1 and retained PairToken, then either shortlists the distinct value mechanism or closes K1 micro-architecture search |
+| P2 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains two candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
