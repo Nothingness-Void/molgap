@@ -1,0 +1,85 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-pcqm-scale-transfer-attribution",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "pcqm-scale-transfer-attribution",
+  "question": "Why do positive 100K PCQM architecture screens usually fail to retain a material gain at 500K?",
+  "hypothesis": {
+    "hypothesis_id": "H-pcqm-scale-transfer-attribution",
+    "observed_deficiency": "The known strict 100K winners PairToken and GPTrans Pair PreNorm did not retain their promotion-sized gains at 500K.",
+    "supporting_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42",
+      "pcqm-gptrans-pair-prenorm-500k-partial-s42",
+      "pcqm-matched-500k-v4"
+    ],
+    "alternative_explanations": [
+      "single-seed fixed-role selection bias",
+      "low-data inductive-bias gains becoming redundant with more data",
+      "different development cohorts across scales",
+      "optimizer-step, exposure, EMA, or convergence mismatch",
+      "historical feature-contract drift"
+    ],
+    "changed_mechanism": "No model change; evidence-only decomposition of scale-transfer failures.",
+    "cheapest_falsifier": "Read accepted decisions and machine summaries, then classify strict transfer evidence separately from contextual scale evidence.",
+    "related_closed_family_ids": [
+      "k1-pair-token",
+      "gptrans-pair-prenorm",
+      "pcqm-edge-state-full"
+    ],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "Replace one-shot 100K promotion with a convergence- and transfer-aware gate before another 500K run.",
+    "decision_changed_if_negative": "Keep the present funnel and attribute failures only case by case.",
+    "historical_unknowns": [
+      "Training stochasticity is not measured by row bootstrap.",
+      "The exact matched PairToken reference prediction bundle is unavailable.",
+      "The GPTrans Pair PreNorm 500K run is partial but has a prospectively accepted cost-stop trajectory."
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "397a04f1ed549369f96d19a575029e3065331b62",
+    "contract_refs": [
+      "experiments/pcqm_scale_transfer_attribution/protocol.md"
+    ],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-500k-paired-v3-scalar-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42",
+      "TB-k1-pair-token-500k-s42",
+      "TB-gptrans-pair-prenorm-500k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42",
+      "pcqm-gptrans-pair-prenorm-500k-partial-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_scale_transfer_attribution/protocol.md"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_scale_transfer_attribution/protocol.md",
+    "source_config_identity": "desktop 397a04f; server 8f0f779"
+  },
+  "actions": [],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_scale_transfer_attribution/decision.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "Complete no-training evidence attribution."
+    ],
+    "reopen_conditions": []
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_blockers": [
+    "Scale transitions use different development cohorts.",
+    "Only two strict 100K-to-500K mechanism attempts exist."
+  ],
+  "reference_bundle_id": null
+}
