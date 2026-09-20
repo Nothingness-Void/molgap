@@ -51,6 +51,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-structural-lite-slot-100k-s42:A001",
+      "target": "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
@@ -73,6 +78,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-residual-reconciliation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TC-k1-structural-lite-slot-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -158,6 +168,10 @@
     },
     {
       "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-structural-lite-slot-100k-s42",
       "type": "trajectory"
     }
   ]

@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 10,
+    "trajectories_total": 11,
     "with_complete_native_measurement": 0,
-    "with_cost_event": 1,
-    "with_incomplete_native_measurement": 1,
+    "with_cost_event": 2,
+    "with_incomplete_native_measurement": 2,
     "without_cost_event": 9
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 10,
+      "count": 11,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -26,7 +26,8 @@
         "TB-k1-residual-reconciliation",
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
-        "TB-route-b-four-encoder-specialist"
+        "TB-route-b-four-encoder-specialist",
+        "TC-k1-structural-lite-slot-100k-s42"
       ],
       "severity": "INFO"
     },
@@ -49,9 +50,10 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 1,
+      "count": 2,
       "items": [
-        "TB-edgestate-rich-full-v1"
+        "TB-edgestate-rich-full-v1",
+        "TC-k1-structural-lite-slot-100k-s42"
       ],
       "severity": "WARN"
     },
@@ -73,7 +75,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 10,
+      "count": 11,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -84,16 +86,18 @@
         "TB-k1-residual-reconciliation",
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
-        "TB-route-b-four-encoder-specialist"
+        "TB-route-b-four-encoder-specialist",
+        "TC-k1-structural-lite-slot-100k-s42"
       ],
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 3,
       "items": [
         "TB-k1-residual-reconciliation",
-        "TB-matched-500k-v4-three-arm"
+        "TB-matched-500k-v4-three-arm",
+        "TC-k1-structural-lite-slot-100k-s42"
       ],
       "severity": "WARN"
     }

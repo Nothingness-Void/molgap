@@ -1,0 +1,81 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-structural-lite-slot-100k-s42",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "desktop",
+  "family_id": "k1-structural-lite-slot",
+  "question": "Can the selective MoSE residual and the simplified one-slot exchange compose into a material K1 improvement?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-structural-lite-slot-100k-s42",
+    "observed_deficiency": "K1 retains topology-extreme errors; selective MoSE and slot simplification each improved the aligned development role but remained below the material gate alone.",
+    "supporting_evidence_ids": [
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ],
+    "alternative_explanations": [
+      "the two directional gains may be non-additive",
+      "the apparent gains may reflect cross-runtime optimization-trajectory diversity rather than the changed mechanisms"
+    ],
+    "changed_mechanism": "add a zero-initialized selective MoSE residual while deleting length-one slot self-attention and using uniform normalized slot return",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 screen against the immutable aligned K1 prediction reference",
+    "related_closed_family_ids": [
+      "k1-mose-structural-encoding",
+      "k1-global-allocation",
+      "k1-bounded-relation-token",
+      "k1-edge-slot-interaction"
+    ],
+    "expected_native_cost_ref": "cost-TC-k1-structural-lite-slot-100k-s42-expected-training",
+    "decision_changed_if_positive": "permit one separately authorized 500K transfer and native-cost decision",
+    "decision_changed_if_negative": "close structural-residual plus slot-simplification composition without another seed or scale-up"
+  },
+  "state_at_start": {
+    "source_commit": "397a04f1ed549369f96d19a575029e3065331b62",
+    "source_config_identity": "prospective-mechanism-spec-k1-structural-lite-slot-v1",
+    "contract_refs": [
+      "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md"
+    ],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-gptrans-full-fusion-r3"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_structural_lite_slot_100k/costs/expected_training.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "planned_bounded_100k_screen",
+      "run_ids": [],
+      "attempt_ids": [],
+      "source_commit": "397a04f1ed549369f96d19a575029e3065331b62",
+      "evidence_refs": [
+        "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-structural-lite-slot-100k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_structural_lite_slot_100k/STATUS.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "implement and locally audit the exact candidate",
+      "submit one seed-42 V5 100K screen only after preflight acceptance"
+    ],
+    "reopen_conditions": []
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_k1_structural_lite_slot_100k/STATUS.md",
+  "comparison_blockers": [
+    "the immutable K1-v4 reference bundle and MoSE residual canonical evidence must be imported from their owning branches before implementation release"
+  ],
+  "reference_bundle_id": null
+}
