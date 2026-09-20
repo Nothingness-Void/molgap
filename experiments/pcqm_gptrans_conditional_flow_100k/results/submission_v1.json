@@ -1,6 +1,6 @@
 {
   "format": "molgap-gptrans-conditional-flow-submission-v1",
-  "status": "RUNNING",
+  "status": "ERROR",
   "kernel": "nothingnessvoid/molgap-gptrans-conditional-flow-s42",
   "version": 1,
   "platform": "kaggle1",
@@ -14,5 +14,7 @@
   "source_archive_sha256": "12f1f892483f1ce446dc144c2a2ea879d190b67ed8a1a4e22649a52a911384a9",
   "fixed_data": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
   "scientific_result_available": false,
+  "failure_stage": "preflight",
+  "failure_reason": "ModuleNotFoundError: No module named 'molgap.pcqm_wedge' while unpickling fixed graph shards",
   "official_roles_read": false
 }
