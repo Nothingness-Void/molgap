@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 61,
+  "ambiguous_historical_role_record_count": 65,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -122,6 +122,34 @@
     },
     {
       "evidence_id": "pcqm-k1-500k-paired-v3-scalar-reference",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -673,6 +701,7 @@
       "pcqm-gptrans-step-profile-122499114",
       "pcqm-gptrans-t-500k-partial-reference-s42",
       "pcqm-k1-500k-paired-v3-scalar-reference",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",
@@ -690,6 +719,7 @@
       "pcqm-gptrans-step-profile-122499114",
       "pcqm-gptrans-t-500k-partial-reference-s42",
       "pcqm-k1-500k-paired-v3-scalar-reference",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",
@@ -707,6 +737,7 @@
       "pcqm-gptrans-step-profile-122499114",
       "pcqm-gptrans-t-500k-partial-reference-s42",
       "pcqm-k1-500k-paired-v3-scalar-reference",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",

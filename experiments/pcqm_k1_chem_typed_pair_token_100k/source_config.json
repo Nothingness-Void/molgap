@@ -1,0 +1,17 @@
+{
+  "architecture_config_identity": "75e30fd9a4e1f08a78392a71cbfcc84b314d26889f4a86f8f54f72af0bb7b925",
+  "candidate_id": "neural_atom_k1_chem_typed_pair_token",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_chem_typed_pair_token.py",
+    "src/molgap/pcqm_functional_group_sidecar.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "sidecar_acceptance_ref": "experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json",
+  "sidecar_aggregate_sha256": "42a40fa186871d2b3c42b67965af85d3372b79c332694eb6b086ca782583f82b",
+  "single_changed_mechanism": "chemistry-role-conditioned-pair-selection-logits",
+  "source_commit": "3d292eb2d571fb55ac137071e084020cb0263a05",
+  "training_contract_ref": "experiments/pcqm_k1_chem_typed_pair_token_100k/training_contract.json",
+  "training_contract_sha256": "90072d4ce5e067b352cf307771e1d788857e7aeb827ab234c7bab99e4be4bf3e"
+}

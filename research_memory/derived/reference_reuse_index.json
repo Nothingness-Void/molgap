@@ -108,6 +108,26 @@
     },
     {
       "artifact_availability": [
+        "committed_prelaunch_metadata"
+      ],
+      "comparison_status": "prelaunch_strict_planned",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_chem_typed_pair_token_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "repository_retained"
       ],
       "comparison_status": "strict_causal",
@@ -314,6 +334,7 @@
       "track": "C",
       "transfer_status": "reusable_same_contract_only",
       "used_by_trajectory_ids": [
+        "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",

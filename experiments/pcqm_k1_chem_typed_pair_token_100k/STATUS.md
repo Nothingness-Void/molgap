@@ -1,5 +1,6 @@
 # Status
 
-The implementation and fixed V5 screen contract are being frozen. No remote
-job is authorized until static tests, source identity, comparison prelaunch,
-and Kaggle input bindings pass fail-closed checks.
+The implementation is frozen at source commit
+`3d292eb2d571fb55ac137071e084020cb0263a05`. Static identity tests pass and the
+V5 comparison prelaunch is `PRELAUNCH_STRICT_PLANNED` with no blocker. Packaging
+and exact Kaggle input binding remain before the single authorized seed-42 job.
