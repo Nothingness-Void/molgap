@@ -1,4 +1,4 @@
-# K1 module analysis and selected breakthrough question
+# K1 module analysis and no-train decision
 
 ## Evidence boundary
 
@@ -41,9 +41,9 @@ Consequently, this trajectory does not authorize an ensemble, a learned
 router, or a multi-pass production model. Architecture merit must come from a
 single candidate trained under the frozen comparison contract.
 
-## Selected question
+## Evaluated question
 
-The highest-probability bounded candidate is `K1 StructuralLite Slot`:
+The evaluated candidate was `K1 StructuralLite Slot`:
 
 1. preserve the complete K1 local and persistent-edge backbone;
 2. preserve RWSE16;
@@ -57,17 +57,24 @@ The estimated parameter count is about 3,623,474: 3,608,897 for the combined
 slot simplification plus 14,577 for the MoSE residual. The exact count remains
 a mandatory preflight assertion, not an accepted fact until implementation.
 
-This candidate is preferred over another pair module because every tested pair
+It is more plausible than another pair module because every tested pair
 compression, recurrence, and sparse-relative route has already failed its
-gate. It is preferred over a new selector because selector and scalar-gating
-families are also closed. Published work independently supports motif
-structural encodings and keeping structural/positional information distinct;
-that literature is motivation, not project evidence.
+gate. Published work independently supports motif structural encodings and
+keeping structural/positional information distinct; that literature is
+motivation, not project evidence.
 
-## Stop rule
+After this prospective question was written, the latest server-owned RML and
+roadmap were reconciled. They establish two controlling facts: the current
+funnel permits one material mechanism per experiment and explicitly forbids
+chaining closed sub-threshold gains; a distinct single-mechanism K1
+functional-group-token trajectory is already active. StructuralLite combines
+two sub-threshold changes and therefore is not released under the current
+contract. It terminates as `NO_TRAIN` rather than consuming another 100K run.
 
-Run at most one fixed seed-42 PCQM-100K V5 screen. Promotion requires at least
-0.003 eV gain over the immutable aligned K1 reference and an entirely favorable
-paired interval. A miss closes the composition without another seed, wider
-MoSE branch, alternate gate, 500K bridge, or full-scale run.
+## Recorded counterfactual stop rule
 
+Had a future explicit contract amendment released the composition, it would
+have required one fixed seed-42 PCQM-100K V5 screen, at least 0.003 eV gain
+over immutable K1, and an entirely favorable paired interval. No such amendment
+exists. The active functional-group-token result must be reconciled before any
+later K1 question is proposed.

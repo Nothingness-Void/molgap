@@ -1,13 +1,63 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 1,
+  "estimated_event_count": 0,
   "event_count": 2,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
   "measurement_missing_event_count": 2,
-  "not_applicable_event_count": 0,
+  "not_applicable_event_count": 1,
   "retry_event_ids": [],
   "totals_by_category": {
+    "audit": {
+      "not-applicable:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "not-applicable:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "not-applicable:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "not-applicable:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
     "training": {
       "IMS_GPU_UNSPECIFIED:cpu_hours": {
         "estimated": {
@@ -53,54 +103,6 @@
         "measured": {
           "known_records": 1,
           "known_total": 12.13586895375228
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
-      },
-      "single-accelerator-unassigned:cpu_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "single-accelerator-unassigned:device_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
-      },
-      "single-accelerator-unassigned:queue_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "single-accelerator-unassigned:wall_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -158,7 +160,7 @@
         "unknown_records": 0
       }
     },
-    "single-accelerator-unassigned": {
+    "not-applicable": {
       "cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -173,14 +175,14 @@
       },
       "device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
+          "known_records": 0,
+          "known_total": null
         },
         "measured": {
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 0,
+        "not_applicable_records": 1,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -192,20 +194,20 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 0,
-        "unknown_records": 1
+        "not_applicable_records": 1,
+        "unknown_records": 0
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
+          "known_records": 0,
+          "known_total": null
         },
         "measured": {
           "known_records": 0,
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     }
   },
@@ -261,7 +263,7 @@
       }
     },
     "TC-k1-structural-lite-slot-100k-s42": {
-      "single-accelerator-unassigned:cpu_hours": {
+      "not-applicable:cpu_hours": {
         "estimated": {
           "known_records": 0,
           "known_total": null
@@ -273,19 +275,31 @@
         "not_applicable_records": 0,
         "unknown_records": 1
       },
-      "single-accelerator-unassigned:device_hours": {
+      "not-applicable:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
+          "known_records": 0,
+          "known_total": null
         },
         "measured": {
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 0,
+        "not_applicable_records": 1,
         "unknown_records": 0
       },
-      "single-accelerator-unassigned:queue_hours": {
+      "not-applicable:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "not-applicable:wall_hours": {
         "estimated": {
           "known_records": 0,
           "known_total": null
@@ -296,18 +310,6 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
-      },
-      "single-accelerator-unassigned:wall_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 1.7
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
       }
     }
   }

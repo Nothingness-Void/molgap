@@ -5,11 +5,10 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 2
-- NO_TRAIN: 1
+- NO_TRAIN: 2
 - POSITIVE_UNDER_CONTRACT: 3
 
 ## Transfer
@@ -27,10 +26,10 @@
 - IMS_GPU_UNSPECIFIED device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED wall_hours: measured=12.135869 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- single-accelerator-unassigned cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- single-accelerator-unassigned device_hours: measured=unknown (0 measured records), estimated=1.700000 (1 estimated record), measurement_missing=0, not_applicable=0
-- single-accelerator-unassigned queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- single-accelerator-unassigned wall_hours: measured=unknown (0 measured records), estimated=1.700000 (1 estimated record), measurement_missing=0, not_applicable=0
+- not-applicable cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- not-applicable device_hours: not applicable (1 records); measurement_missing=0
+- not-applicable queue_hours: not applicable (1 records); measurement_missing=0
+- not-applicable wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Measurement-missing cost events: 2
 - Cost-event coverage: 2/11 trajectories; incomplete native measurement=2
 

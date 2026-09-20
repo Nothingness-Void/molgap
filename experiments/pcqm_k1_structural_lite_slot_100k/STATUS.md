@@ -1,12 +1,13 @@
 # Status
 
-Prospective analysis is complete. No implementation, local training, remote
-submission, official-role access, or protected-role access has occurred.
+Terminal state: `NO_TRAIN`.
 
-The immutable K1-v4 reference bundle and canonical MoSE residual evidence still
-live on their owning branches. They must be imported with explicit provenance
-before implementation release. Until then, this trajectory is context-only.
+No implementation, local training, remote submission, official-role access, or
+protected-role access occurred.
 
-After that evidence integration, the only allowed next action is local
-implementation and static/preflight audit of the candidate in `protocol.md`.
-Remote training remains unreleased until that audit is accepted.
+Cross-branch reconciliation found that the proposal chains two already
+sub-threshold mechanisms, while the current funnel requires one material
+mechanism per experiment and a distinct functional-group-token trajectory is
+already active. The proposal is retained as a rejected planning record. It may
+be reconsidered only after an explicit contract amendment and new evidence
+that changes the single-mechanism decision.

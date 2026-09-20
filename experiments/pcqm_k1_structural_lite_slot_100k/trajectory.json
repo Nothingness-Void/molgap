@@ -24,7 +24,7 @@
       "k1-bounded-relation-token",
       "k1-edge-slot-interaction"
     ],
-    "expected_native_cost_ref": "cost-TC-k1-structural-lite-slot-100k-s42-expected-training",
+    "expected_native_cost_ref": "cost-TC-k1-structural-lite-slot-100k-s42-analysis",
     "decision_changed_if_positive": "permit one separately authorized 500K transfer and native-cost decision",
     "decision_changed_if_negative": "close structural-residual plus slot-simplification composition without another seed or scale-up"
   },
@@ -42,20 +42,20 @@
     "role_snapshot_refs": [
       "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md"
     ],
-    "budget_snapshot_ref": "experiments/pcqm_k1_structural_lite_slot_100k/costs/expected_training.json"
+    "budget_snapshot_ref": "experiments/pcqm_k1_structural_lite_slot_100k/STATUS.md"
   },
   "actions": [
     {
       "action_id": "A001",
-      "type": "planned_bounded_100k_screen",
+      "type": "evidence_reconciliation_no_train",
       "run_ids": [],
       "attempt_ids": [],
       "source_commit": "397a04f1ed549369f96d19a575029e3065331b62",
       "evidence_refs": [
-        "experiments/pcqm_k1_structural_lite_slot_100k/protocol.md"
+        "experiments/pcqm_k1_structural_lite_slot_100k/analysis.md"
       ],
       "cost_event_ids": [
-        "cost-TC-k1-structural-lite-slot-100k-s42-expected-training"
+        "cost-TC-k1-structural-lite-slot-100k-s42-analysis"
       ]
     }
   ],
@@ -65,17 +65,16 @@
   },
   "decision": {
     "decision_ref": "experiments/pcqm_k1_structural_lite_slot_100k/STATUS.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "implement and locally audit the exact candidate",
-      "submit one seed-42 V5 100K screen only after preflight acceptance"
-    ],
-    "reopen_conditions": []
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "an explicit contract amendment permits chained sub-threshold mechanisms and new evidence changes the single-mechanism decision"
+    ]
   },
   "comparison_class": "CONTEXT_ONLY",
   "comparison_readiness_ref": "experiments/pcqm_k1_structural_lite_slot_100k/STATUS.md",
   "comparison_blockers": [
-    "the immutable K1-v4 reference bundle and MoSE residual canonical evidence must be imported from their owning branches before implementation release"
+    "the proposal is not released because it chains two sub-threshold mechanisms under a single-mechanism funnel"
   ],
   "reference_bundle_id": null
 }
