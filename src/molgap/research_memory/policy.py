@@ -8,6 +8,7 @@ from typing import Any
 
 from molgap.evidence_pointers import load_json_object
 from .schemas import SHA256_PATTERN, validate_id
+from .paths import repo_local_path
 
 POLICY_TYPES = {"screening", "early_stop", "scale_up", "research_action"}
 ACTIONS = {"screening": {"PROMOTE", "STOP", "DEFER"},
@@ -106,7 +107,8 @@ def validate_policy(policy: dict[str, Any]) -> dict[str, Any]:
 def load_policy_registry(repo_root: str | Path) -> list[dict[str, Any]]:
     policies = []
     seen = set()
-    for path in sorted((Path(repo_root) / "research_memory" / "policies").glob("*.json")):
+    for path in sorted(repo_local_path(repo_root, "research_memory/policies").glob("*.json")):
+        path = repo_local_path(repo_root, path)
         policy = validate_policy(load_json_object(path))
         key = policy["policy_id"], policy["version"]
         if key in seen:

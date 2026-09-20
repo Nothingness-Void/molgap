@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 13,
+      "trajectories_total": 14,
       "with_complete_native_measurement": 2,
-      "with_cost_event": 13,
-      "with_incomplete_native_measurement": 11,
+      "with_cost_event": 14,
+      "with_incomplete_native_measurement": 12,
       "without_cost_event": 0
     },
     "totals_by_hardware": {
@@ -174,12 +174,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 7
         },
         "device_hours": {
           "estimated": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 3.0
           },
           "measured": {
             "known_records": 2,
@@ -198,12 +198,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 7
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 3.0
           },
           "measured": {
             "known_records": 1,
@@ -264,17 +264,17 @@
         }
       }
     },
-    "unknown_events": 13
+    "unknown_events": 14
   },
   "evidence": {
-    "validated": 15,
+    "validated": 16,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 5,
+      "count": 6,
       "severity": "INFO"
     },
     {
@@ -284,12 +284,12 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 11,
+      "count": 12,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 1,
+      "count": 2,
       "severity": "WARN"
     },
     {
@@ -299,14 +299,15 @@
     }
   ],
   "roles": {
-    "coarse_historical": 56,
+    "coarse_historical": 60,
     "explicit_events": 27,
     "repeatedly_selected": 2
   },
-  "source_digest": "e700c0ff00d885de36b864760bdfcba7617a485e7341f6ecdebbb07d82a22335",
+  "source_digest": "17dc1ee7f0d5d0b11ecc8f7c48c7d31cf24ca278a5b0a05c8d76bb9198af9c1d",
   "trajectories": {
-    "count": 13,
+    "count": 14,
     "outcomes": {
+      "ACTIVE": 1,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 4,
       "POSITIVE_BELOW_GATE": 2,

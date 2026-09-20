@@ -8,9 +8,8 @@ from typing import Any
 
 from molgap.evidence_pointers import (
     load_json_object as load_json,
-    resolve_repo_pointer,
-    verify_bound_artifact,
 )
+from .paths import resolve_repo_pointer, verify_bound_artifact
 
 from molgap.v5_common import (
     reference_bundle_digest,

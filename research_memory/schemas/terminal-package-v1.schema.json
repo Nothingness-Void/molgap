@@ -52,6 +52,10 @@
         "$ref": "role-event-v1.schema.json"
       }
     },
+    "role_use": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
     "trace_manifest": {
       "anyOf": [
         {

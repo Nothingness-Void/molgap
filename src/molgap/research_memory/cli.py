@@ -12,6 +12,7 @@ from .backtest import build_screening_backtest
 from .compiler import compile_research_memory, frozen_differences, rebuild_research_memory
 from .ready import build_ready_package
 from .validate import validate_repository_records
+from .paths import repo_local_path
 
 
 def _root(value: str | None) -> Path:
@@ -55,10 +56,10 @@ def main(argv: list[str] | None = None) -> None:
         from molgap.evidence_pointers import load_json_object
         if args.command == "plan":
             from .plan import plan
-            result = plan(root, load_json_object(root / args.spec), args.output)
+            result = plan(root, load_json_object(repo_local_path(root, args.spec)), args.output)
         elif args.command == "recover-trace":
             from .recovery import recover_trace
-            result = recover_trace([root / p for p in args.source], load_json_object(root / args.spec), root / args.output)
+            result = recover_trace(args.source, load_json_object(repo_local_path(root, args.spec)), args.output, repo_root=root)
         elif args.command == "finalize":
             from .finalize import finalize
             result = finalize(root, args.trajectory, args.terminal, args.trace)

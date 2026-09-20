@@ -1,0 +1,67 @@
+{
+  "action_entries": [],
+  "comparable_group_count": 0,
+  "entries": [],
+  "exclusions": [
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_exact_matched60_v4_reference_prediction_bundle",
+        "strict_paired_comparison_pending"
+      ],
+      "run_id": "122312462",
+      "trajectory_id": "TB-k1-pair-token-500k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
+      "trajectory_id": "TC-k1-mose-context-gate-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1",
+      "trajectory_id": "TC-k1-mose-hidden-bn-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_mose",
+      "trajectory_id": "TC-k1-mose-replacement-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1",
+      "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token",
+      "trajectory_id": "TC-k1-pair-token-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_not_locally_retained"
+      ],
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token_node_return",
+      "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+      "trajectory_id": "TC-k1-v4-100k-reference-s42"
+    }
+  ],
+  "format": "molgap-rml-replay-pool-v1",
+  "source_digest": "a1ad1fc0eb67e2450ea273a61b9b9495b5aa888a3829efd58ac12b8ac17648bc"
+}

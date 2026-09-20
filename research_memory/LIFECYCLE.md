@@ -5,6 +5,11 @@ metadata and retained artifacts, never dispatch work or load a model. The
 existing V5 validators and strict comparability grouping remain authoritative.
 No policy or historical backfill is installed by this implementation.
 
+Filesystem arguments and locally resolved pointers are confined to the selected
+repository root by `paths.py`; explicit `..` traversal and symlink escapes are
+rejected before access. Remote metadata URIs remain pointers, not filesystem
+paths. The recovery API accepts `repo_root=` (default: the configured repository).
+
 ## Canonical trace and recovery
 
 `trace.py` exports `canonicalize_trace`, `validate_canonical_trace`,
@@ -21,6 +26,10 @@ unit, target, role_identity, weights (`live`/`ema`), and direction semantics.
 Device timing, when present, declares `device_time_semantics=sum_over_devices`;
 cumulative counters cover the whole run, including resumes. Nothing is derived
 from epochs, batch size, learning-rate schedules or terminal scores.
+Unknown top-level/observation fields, repeated non-null optimizer/sample axes,
+and reused checkpoint identities are rejected by the shared validator and
+recorder. There may be at most one terminal event, and it must be last; an
+unfinished or partial trace may have none.
 
 Constructing a recorder begins or reopens a run with exact identity/semantics.
 `append_observation`, `checkpoint_event`, `resume_event`, and `terminal_event`
@@ -86,6 +95,9 @@ measurement_missing event with unknown hardware/platform/attempt. Missing role
 input creates no observed role event. An eligible canonical trace also requires
 hash-bound `comparison_readiness_ref` passing the existing strict V5 validator;
 the supplied v1 trace_manifest keeps its contract and reference identities.
+Evidence, terminal-package and acceptance `role_use` claims are checked against
+source-verified role events: consumed/read/used requires matching observed access,
+and untouched/not_applicable conflicts with any observed access for that role.
 
 The transaction stages under ignored `research_memory/.staging/`, validates
 record shapes, cross-links, trace and publication hashes, then renames one
@@ -114,6 +126,10 @@ reference removes that replay world. Partial traces remain labeled partial;
 unavailable or incompatible traces receive explicit exclusions. Scale/research
 entries instead use the separately frozen action inputs and truth; these cannot
 serve as canonical training-prefix entries.
+Every trace reference must belong to its trajectory's frozen reference IDs.
+Retrospective partial trajectories remain `historical_partial` even when their
+retained trace reaches terminal exposure; coverage does not grant prospective
+authority.
 
 Screen/early-stop policies observe the first record at an exact optimizer-step
 or sample-presentation cutoff. Missing cutoffs or observables produce action=null,
@@ -138,7 +154,10 @@ historical positive-below-gate labels unscored rather than reinterpreting them.
 - Savings for STOP use measured cumulative device-time differences to the
   observed terminal endpoint. Continuing the completed run saves/adds zero only
   when native cost is known. Scale/research costs need explicit measured action
-  costs. Missing costs are null, never zero; unknown_cost_count counts evaluated
+  costs. Measured, estimated, measurement_missing and not_applicable records
+  remain distinct in the pool. Only an entirely measured native cost has a
+  numeric total; missing/not_applicable never becomes zero or contributes to
+  saved/added totals. unknown_cost_count counts evaluated
   decisions with incomplete cost. Net hours = saved minus added.
 - Costs aggregate only within one hardware unit; any missing measurement makes
   that total null. Mixed hardware has separate buckets and no scalar total.

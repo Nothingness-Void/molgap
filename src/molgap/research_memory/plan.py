@@ -11,7 +11,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from molgap.evidence_pointers import load_json_object, resolve_repo_pointer
+from molgap.evidence_pointers import load_json_object
+from .paths import repo_local_path, resolve_repo_pointer
 from .discovery import discover_records
 from .schemas import validate_cost_event, validate_trajectory
 from .trace import atomic_write, file_digest, json_bytes, sync_directory
@@ -39,7 +40,7 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path) -> dic
     from .policy import load_policy_registry
 
     root = Path(repo_root).resolve()
-    destination = (root / output).resolve()
+    destination = repo_local_path(root, output)
     destination.relative_to(root / "experiments")
     if destination.exists():
         raise ValueError("plan output must be a new experiment directory")
@@ -129,7 +130,7 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path) -> dic
     required_costs.update(c for a in trajectory["actions"] for c in a["cost_event_ids"])
     if not required_costs <= cost_ids:
         raise ValueError("plan spec must supply its referenced prospective cost events")
-    staging_root = root / "research_memory" / ".staging"
+    staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix="plan-", dir=staging_root))
     try:

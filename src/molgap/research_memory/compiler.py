@@ -19,6 +19,7 @@ from .references import build_reference_reuse_index
 from .roles import build_role_reuse_index
 from .summary import render_summary_markdown
 from .validate import validate_repository_records
+from .paths import repo_local_path
 
 
 DERIVED_FILENAMES = (
@@ -316,10 +317,10 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
     payloads = compile_research_memory(root)
-    output_root = root / "research_memory" / "derived"
+    output_root = repo_local_path(root, "research_memory/derived")
     output_root.mkdir(parents=True, exist_ok=True)
     for name, payload in sorted(payloads.items()):
-        target = output_root / name
+        target = repo_local_path(root, output_root / name)
         with tempfile.NamedTemporaryFile(dir=output_root, delete=False) as handle:
             temporary = Path(handle.name)
             handle.write(payload)

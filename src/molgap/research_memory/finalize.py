@@ -17,7 +17,9 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from molgap.evidence_pointers import load_json_object, resolve_repo_pointer, verify_bound_artifact
+from molgap.evidence_pointers import load_json_object
+from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
+from .roles import validate_observed_role_truth
 from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
 from .trace import atomic_write, file_digest, json_bytes, load_canonical_trace, sync_directory, validate_manifest_trace
@@ -40,7 +42,7 @@ def _bindings(root: Path, bindings: dict[str, str]) -> None:
 
 
 def verified_receipt(directory: Path) -> dict[str, Any]:
-    receipt = load_json_object(directory / "finalization.json")
+    receipt = load_json_object(repo_local_path(directory, "finalization.json"))
     if receipt.get("format") != "molgap-rml-finalization-v1":
         raise ValueError("unsupported finalization receipt")
     actual_files = {p.relative_to(directory).as_posix() for p in directory.rglob("*") if p.is_file()}
@@ -49,8 +51,7 @@ def verified_receipt(directory: Path) -> dict[str, Any]:
     if not set(receipt["replacements"]) <= set(receipt["published_hashes"]):
         raise ValueError("replacement is not a published record")
     for relative, digest in receipt["published_hashes"].items():
-        path = (directory / relative).resolve()
-        path.relative_to(directory.resolve())
+        path = repo_local_path(directory, relative)
         if file_digest(path) != digest:
             raise ValueError(f"finalized package changed: {relative}")
     if not {"trajectory.json", "v5_evidence.json", "prospective_snapshot.json", "terminal_input.json"} <= set(receipt["published_hashes"]):
@@ -135,10 +136,9 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
 def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path,
              trace: str | Path | None = None) -> dict[str, Any]:
     root = Path(repo_root).resolve()
-    trajectory_path = Path(trajectory)
-    trajectory_path = (root / trajectory_path).resolve()
+    trajectory_path = repo_local_path(root, trajectory)
     if trajectory_path.is_dir():
-        trajectory_path /= "trajectory.json"
+        trajectory_path = repo_local_path(root, trajectory_path / "trajectory.json")
     trajectory_path.relative_to(root / "experiments")
     if "rml_finalized" in trajectory_path.relative_to(root).parts:
         raise ValueError("pass the original prospective trajectory, not its finalized overlay")
@@ -146,9 +146,9 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     frozen = validate_trajectory(json.loads(frozen_bytes))
     if frozen["record_mode"] != "prospective" or frozen["owner"] != "server":
         raise ValueError("finalize requires a server-owned prospective trajectory")
-    source = (root / terminal).resolve()
+    source = repo_local_path(root, terminal)
     if source.is_dir():
-        source /= "terminal.json"
+        source = repo_local_path(root, source / "terminal.json")
     package = load_json_object(source)
     if package.get("format") != "molgap-rml-terminal-package-v1":
         raise ValueError("unsupported terminal package")
@@ -158,7 +158,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         raise ValueError("explicit terminal finalization timestamp required")
     trace_bytes = None
     if trace is not None:
-        trace_path = (root / trace).resolve()
+        trace_path = repo_local_path(root, trace)
         canonical = load_canonical_trace(trace_path)
         trace_bytes = trace_path.read_bytes()
         if (canonical["trajectory_id"], canonical["run_id"]) != (
@@ -171,7 +171,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         "terminal": package,
         "trace_sha256": hashlib.sha256(trace_bytes).hexdigest() if trace_bytes is not None else None,
     })).hexdigest()
-    destination = trajectory_path.parent / "rml_finalized"
+    destination = repo_local_path(root, trajectory_path.parent / "rml_finalized")
     if destination.exists():
         receipt = verified_receipt(destination)
         if receipt["source_artifact_digest"] != digest:
@@ -239,7 +239,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     files = {"v5_evidence.json": json_bytes(evidence),
              "prospective_snapshot.json": frozen_bytes, "terminal_input.json": json_bytes(package)}
     replacements = {"trajectory.json": trajectory_path.relative_to(root).as_posix()}
-    original_evidence = trajectory_path.parent / "v5_evidence.json"
+    original_evidence = repo_local_path(root, trajectory_path.parent / "v5_evidence.json")
     if original_evidence.is_file():
         if load_json_object(original_evidence)["evidence_id"] != evidence["evidence_id"]:
             raise ValueError("existing evidence has a different identity")
@@ -265,13 +265,18 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             if relative in files:
                 raise ValueError("duplicate terminal event")
             files[relative] = json_bytes(event)
-            for old in (trajectory_path.parent / kind).glob("*.json"):
+            for old in repo_local_path(root, trajectory_path.parent / kind).glob("*.json"):
+                old = repo_local_path(root, old)
                 if load_json_object(old).get(id_field) == event[id_field]:
                     replacements[relative] = old.relative_to(root).as_posix()
             if kind == "costs":
                 for action in updated["actions"]:
                     if action["action_id"] == action_id:
                         action["cost_event_ids"] = sorted(set(action["cost_event_ids"]) | {event[id_field]})
+    validate_observed_role_truth(
+        [evidence.get("role_use", {}), package.get("role_use", {}), acceptance.get("role_use", {})],
+        package.get("roles", []),
+    )
     if not package.get("costs"):
         missing_cost = {
             "schema": "molgap-cost-event-v1", "cost_event_id": "cost-finalize-" + digest[:24],
@@ -303,7 +308,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         validate_manifest_trace(manifest, canonical)
         files["trace.json"] = trace_bytes
         files["trace_manifest.json"] = json_bytes(manifest)
-        old = trajectory_path.parent / "trace_manifest.json"
+        old = repo_local_path(root, trajectory_path.parent / "trace_manifest.json")
         if old.exists():
             replacements["trace_manifest.json"] = old.relative_to(root).as_posix()
     elif package.get("trace_manifest") is not None:
@@ -322,7 +327,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         "role_status": "observed_records" if package.get("roles") else "unavailable",
     }
     # Staging lives outside discovery's experiments glob and on the same volume.
-    staging_root = root / "research_memory" / ".staging"
+    staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix="finalize-", dir=staging_root))
     try:

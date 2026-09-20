@@ -6,6 +6,44 @@ from collections import defaultdict
 from typing import Any
 
 
+def validate_observed_role_truth(
+    declarations: list[dict[str, str]], role_events: list[dict[str, Any]],
+) -> None:
+    """Check new terminal claims against source-verified events, never role plans."""
+    from .schemas import ROLE_ACCESS_KINDS, validate_role_event
+
+    observed: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for event in role_events:
+        validate_role_event(event)
+        if event["access_kind"] == "selection_used" and not event["selection_used"]:
+            raise ValueError("observed selection event contradicts selection_used=false")
+        observed[event["role_name"]].append(event)
+    requirements = {
+        "consumed": ROLE_ACCESS_KINDS,
+        "read": {"prediction_input", "labels_read"},
+        "used": {"training_membership", "metric_computed", "selection_used", "external_submission"},
+        **{kind: {kind} for kind in ROLE_ACCESS_KINDS},
+    }
+    for declaration in declarations:
+        if not isinstance(declaration, dict):
+            raise ValueError("role_use must be an explicit role-to-state mapping")
+        for role, state in declaration.items():
+            if not isinstance(role, str) or not role or not isinstance(state, str):
+                raise ValueError("invalid terminal role declaration")
+            events = observed.get(role, [])
+            if state in {"untouched", "not_applicable"}:
+                if events:
+                    raise ValueError(f"role declared {state} but observed access exists: {role}")
+            elif state in requirements:
+                matched = any(event["access_kind"] in requirements[state] or
+                              (state in {"used", "selection_used"} and event["selection_used"])
+                              for event in events)
+                if not matched:
+                    raise ValueError(f"role declared {state} without matching observed event: {role}")
+            elif state not in {"unknown", "unavailable"}:
+                raise ValueError(f"unsupported terminal role declaration: {role}={state}")
+
+
 def build_role_reuse_index(
     role_events: list[dict[str, Any]], evidence: list[dict[str, Any]]
 ) -> dict[str, Any]:

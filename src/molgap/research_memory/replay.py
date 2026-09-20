@@ -6,7 +6,8 @@ import hashlib
 from pathlib import Path
 from typing import Any
 
-from molgap.evidence_pointers import load_json_object, resolve_repo_pointer, verify_bound_artifact
+from molgap.evidence_pointers import load_json_object
+from .paths import resolve_repo_pointer, verify_bound_artifact
 from .backtest import _comparison_key, build_screening_backtest
 from .trace import load_canonical_trace, json_bytes, trace_digest
 
@@ -35,6 +36,11 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
     for manifest in sorted(manifests, key=lambda m: (m["trajectory_id"], m["run_id"])):
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
+        trajectory = trajectories[manifest["trajectory_id"]]
+        if manifest["reference_id"] not in trajectory["state_at_start"]["reference_ids"]:
+            excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
+                             "reasons": ["reference_not_frozen_in_trajectory"]})
+            continue
         if identities[identity] > 1:
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["ambiguous_duplicate_replay_run_identity"]})
@@ -58,7 +64,6 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
                 raise ValueError("canonical trace digest mismatch")
             if (canonical["trajectory_id"], canonical["run_id"]) != identity:
                 raise ValueError("canonical trace identity mismatch")
-        trajectory = trajectories[manifest["trajectory_id"]]
         evidence_path = resolve_repo_pointer(root, manifest["terminal_evidence_ref"])
         evidence = evidence_by_path.get(evidence_path)
         if evidence is None or evidence["evidence_id"] not in trajectory["result"]["evidence_ids"]:
@@ -80,8 +85,8 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
             raise ValueError("trace exceeds manifest terminal exposure")
         costs = [c for _, c in records["costs"] if c["trajectory_id"] == identity[0] and c["run_id"] == identity[1]]
         hardware = sorted({c["hardware"] for c in costs})
-        measurement_complete = bool(costs) and all(c["measurement"]["device_hours"]["status"] in {"measured", "not_applicable"} for c in costs)
-        native_cost = sum(c["measurement"]["device_hours"]["value"] or 0 for c in costs) if measurement_complete and len(hardware) == 1 else None
+        measurement_complete = bool(costs) and all(c["measurement"]["device_hours"]["status"] == "measured" for c in costs)
+        native_cost = sum(c["measurement"]["device_hours"]["value"] for c in costs) if measurement_complete and len(hardware) == 1 else None
         eligible.append({
             "trajectory_id": identity[0], "run_id": identity[1], "family_id": trajectory["family_id"],
             "comparability_key": key, "comparability_identity": manifest["comparability_identity"],
@@ -91,12 +96,17 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
             "terminal_endpoint": expected, "terminal_outcome": trajectory["decision"]["outcome"],
             "terminal_label": _terminal_label(trajectory, evidence),
             "native_cost": {"device_hours": native_cost, "hardware": hardware,
+                            "measurements": [{"cost_event_id": c["cost_event_id"],
+                                              **c["measurement"]["device_hours"]}
+                                             for c in sorted(costs, key=lambda c: c["cost_event_id"])],
                             "event_ids": sorted(c["cost_event_id"] for c in costs)},
             "policy_version_at_execution": {k: trajectory.get("decision_state", {}).get(k)
                                             for k in ("policy_id", "policy_version")},
             "decision_state": trajectory.get("decision_state"),
             "evidence_ids": [evidence["evidence_id"]], "exclusion_reasons": [],
-            "capability": "complete" if observations[-1][axis] == expected else "partial",
+            "record_mode": trajectory["record_mode"],
+            "capability": ("historical_partial" if trajectory["record_mode"] == "retrospective_partial"
+                           else "complete" if observations[-1][axis] == expected else "partial"),
             "trace_sha256": manifest["trace_artifact_sha256"],
             "terminal_evidence_sha256": hashlib.sha256(json_bytes(evidence)).hexdigest(),
             "action_replay": _action_replay(root, trajectory),

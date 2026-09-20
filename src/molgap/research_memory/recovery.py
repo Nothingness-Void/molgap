@@ -9,15 +9,21 @@ from pathlib import Path
 from typing import Any
 
 from .trace import FIELDS, NUMBERS, atomic_write, canonicalize_trace, file_digest, json_bytes
+from .paths import repo_local_path
 
 
-def recover_trace(sources: list[str | Path], spec: dict[str, Any], output: str | Path) -> dict[str, Any]:
+def recover_trace(sources: list[str | Path], spec: dict[str, Any], output: str | Path,
+                  *, repo_root: str | Path | None = None) -> dict[str, Any]:
+    if repo_root is None:
+        from molgap.constants import REPO_ROOT
+        repo_root = REPO_ROOT
+    target = repo_local_path(repo_root, output)
+    sources = [repo_local_path(repo_root, source) for source in sources]
     mapping = spec["field_mapping"]
     if not isinstance(mapping, dict) or set(mapping) - set(FIELDS):
         raise ValueError("recovery mapping uses unknown canonical fields")
     if any(not isinstance(value, str) or not value for value in mapping.values()):
         raise ValueError("source columns must be explicit names")
-    target = Path(output)
     if target.exists():
         raise ValueError("recovery never overwrites a retained artifact")
     result = {"trajectory_id": spec["trajectory_id"], "run_id": spec["run_id"],

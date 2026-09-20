@@ -9,14 +9,15 @@ from typing import Any
 from .compiler import rebuild_research_memory
 from .finalize import finalize
 from .validate import validate_repository_records
+from .paths import repo_local_path
 
 
 def finalize_rebuild_backtest(repo_root: str | Path, trajectory: str | Path,
                              terminal: str | Path, trace: str | Path | None = None) -> dict[str, Any]:
     root = Path(repo_root).resolve()
-    derived = root / "research_memory" / "derived"
-    previous_pool = _prior(derived / "replay_pool.json", {"entries": []})
-    previous_reports = _prior(derived / "policy_backtest.json", {"reports": []})
+    derived = repo_local_path(root, "research_memory/derived")
+    previous_pool = _prior(repo_local_path(root, derived / "replay_pool.json"), {"entries": []})
+    previous_reports = _prior(repo_local_path(root, derived / "policy_backtest.json"), {"reports": []})
     result = finalize(root, trajectory, terminal, trace)
     handoff = {"trajectory_id": result["trajectory_id"], "finalization_status": result["status"],
                "finalization_id": result["finalization_id"], "outcome": result["outcome"],

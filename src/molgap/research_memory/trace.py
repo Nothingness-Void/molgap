@@ -61,6 +61,11 @@ def sync_directory(path: Path) -> None:
 
 
 def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(record, dict) or set(record) - {
+        "schema", "trajectory_id", "run_id", "metric_semantics",
+        "device_time_semantics", "observations", "provenance",
+    }:
+        raise ValueError("unknown canonical trace top-level fields")
     if record.get("schema") != TRACE_FORMAT:
         raise ValueError("unsupported canonical trace schema")
     for field in ("trajectory_id", "run_id"):
@@ -86,10 +91,17 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(rows, list):
         raise ValueError("observations must be ordered array")
     last: dict[str, float] = {}
+    checkpoints: set[str] = set()
+    terminal_count = 0
     terminal = False
     for index, row in enumerate(rows):
         if not isinstance(row, dict) or isinstance(row.get("sequence"), bool) or not isinstance(row.get("sequence"), int) or row.get("sequence") != index:
             raise ValueError("observation sequence must be contiguous and ordered")
+        if set(row) != {*FIELDS, "sequence", "event"}:
+            raise ValueError("unknown or missing canonical observation fields")
+        terminal_count += row.get("event") == "terminal"
+        if terminal_count > 1:
+            raise ValueError("duplicate terminal event")
         if terminal or row.get("event") not in {"observation", "checkpoint", "resume", "terminal"}:
             raise ValueError("invalid event or observation after terminal")
         terminal = row["event"] == "terminal"
@@ -109,6 +121,8 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
                          "cumulative_device_time_seconds"}:
                 if value < last.get(field, 0):
                     raise ValueError(f"non-monotonic {field}")
+                if field in {"optimizer_step", "sample_presentations"} and value == last.get(field):
+                    raise ValueError(f"duplicate x-axis observation: {field}")
                 last[field] = value
             if field in METRICS and semantics[field] is None:
                 raise ValueError(f"observed metric without semantics: {field}")
@@ -117,6 +131,10 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
         checkpoint = row["checkpoint_identity"]
         if checkpoint is not None and (not isinstance(checkpoint, str) or not checkpoint.strip()):
             raise ValueError("invalid checkpoint identity")
+        if checkpoint is not None:
+            if checkpoint in checkpoints:
+                raise ValueError("duplicate checkpoint identity")
+            checkpoints.add(checkpoint)
         if row["event"] in {"checkpoint", "resume"} and checkpoint is None:
             raise ValueError("checkpoint/resume requires observed checkpoint identity")
     return record

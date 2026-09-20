@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, fields
 from pathlib import Path
+from .paths import repo_local_path
 
 
 @dataclass(frozen=True)
@@ -21,7 +22,8 @@ class DiscoveredRecords:
 
 
 def _find(root: Path, pattern: str) -> tuple[Path, ...]:
-    return tuple(sorted(path for path in root.glob(pattern) if path.is_file()))
+    paths = (repo_local_path(root, path) for path in root.glob(pattern))
+    return tuple(sorted(path for path in paths if path.is_file()))
 
 
 def discover_records(repo_root: str | Path) -> DiscoveredRecords:
@@ -42,9 +44,10 @@ def discover_records(repo_root: str | Path) -> DiscoveredRecords:
 
     paths = {field.name: set(getattr(discovered, field.name)) for field in fields(discovered)}
     for directory in sorted((root / "experiments").glob("**/rml_finalized")):
+        directory = repo_local_path(root, directory)
         receipt = verified_receipt(directory)
         for published, original in receipt["replacements"].items():
-            old = (root / original).resolve()
+            old = repo_local_path(root, original)
             old.relative_to(directory.parent.resolve())
             for candidates in paths.values():
                 if directory / published in candidates:
