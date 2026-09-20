@@ -15,6 +15,7 @@ class ContractTests(unittest.TestCase):
     def test_python_syntax(self):
         for path in (
             REPO_ROOT / "src/molgap/k1_pair_token.py",
+            REPO_ROOT / "src/molgap/pcqm_wedge.py",
             REPO_ROOT / "src/molgap/pcqm_k1_variants.py",
             REPO_ROOT / "src/molgap/pcqm_k1_variants_runner.py",
             ROOT / "run_candidate.py",
@@ -43,6 +44,10 @@ class ContractTests(unittest.TestCase):
             self.assertIn(token, source)
         self.assertNotIn("edge_distance", source)
         self.assertNotIn("shortest_path", source)
+
+    def test_fixed_cache_pickle_dependency_is_packaged(self):
+        source = (REPO_ROOT / "src/molgap/pcqm_wedge.py").read_text()
+        self.assertIn("class WedgeData(Data):", source)
 
     def test_prospective_rml(self):
         trajectory = json.loads((ROOT / "trajectory.json").read_text())
