@@ -38,6 +38,19 @@ CONTRACT_RUN_ID = "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_functional_group_
 MODE = "neural_atom_k1_functional_group_token"
 DATASET_ID = "pcqm4mv2-ogb-fixed-100k-v1"
 MANIFEST_SHA = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+ACTION_ID = "A002"
+EVIDENCE_ID = "pcqm-k1-functional-group-token-100k-s42"
+LOCAL_RECORD_URI = (
+    "external://local-platform-record/kaggle/pcqm_k1_functional_group_token_s42_v1/"
+    "pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token"
+)
+DECISION_OUTCOME = "POSITIVE_BELOW_GATE"
+NEXT_ALLOWED_ACTIONS = ["design one distinct chemistry-conditioned relation-content hypothesis"]
+REOPEN_CONDITIONS = [
+    "a new candidate must alter relation content rather than add a parallel group-token branch"
+]
+SCIENTIFIC_STATUS = "positive_below_gate"
+FINALIZED_AT = "2026-09-20T19:00:00+09:00"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -79,7 +92,7 @@ def role_events() -> list[dict[str, Any]]:
             "schema": "molgap-role-event-v1",
             "role_event_id": f"role-{TRAJECTORY_ID}-{suffix}",
             "trajectory_id": TRAJECTORY_ID,
-            "action_id": "A002",
+            "action_id": ACTION_ID,
             "run_id": RUN_ID,
             "dataset_identity": DATASET_ID,
             "row_manifest_hash": MANIFEST_SHA,
@@ -142,8 +155,7 @@ def make_trace(raw: dict[str, Any], checkpoint_sha: str) -> dict[str, Any]:
             "observations": rows,
             "provenance": {
                 "source_refs": [
-                    "external://local-platform-record/kaggle/pcqm_k1_functional_group_token_s42_v1/"
-                    "pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token/trace.json"
+                    f"{LOCAL_RECORD_URI}/trace.json"
                 ],
                 "recovery": "deterministic-field-map-plus-observed-cumulative-epoch-seconds",
             },
@@ -172,8 +184,7 @@ def main() -> None:
 
     prediction_manifest = {
         "format": "molgap-aligned-prediction-manifest-v1",
-        "artifact_locator": "external://local-platform-record/kaggle/pcqm_k1_functional_group_token_s42_v1/"
-        "pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token/best_development_payload.pt",
+        "artifact_locator": f"{LOCAL_RECORD_URI}/best_development_payload.pt",
         "artifact_sha256": file_digest(payload_path),
         "development_gap_mae_eV": record["training"]["development_gap_mae_eV"],
         "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
@@ -201,8 +212,7 @@ def main() -> None:
                 name: digest for name, digest in completion["artifact_sha256"].items()
                 if name.startswith("recovery_epoch_")
             },
-            "external_root": "external://local-platform-record/kaggle/pcqm_k1_functional_group_token_s42_v1/"
-            "pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token",
+            "external_root": LOCAL_RECORD_URI,
         },
     )
     paired = {
@@ -288,7 +298,7 @@ def main() -> None:
         "schema": "molgap-cost-event-v1",
         "cost_event_id": f"cost-{TRAJECTORY_ID}-training",
         "trajectory_id": TRAJECTORY_ID,
-        "action_id": "A002",
+        "action_id": ACTION_ID,
         "run_id": RUN_ID,
         "attempt_id": "candidate-v1",
         "category": "training",
@@ -403,9 +413,9 @@ def main() -> None:
 
     decision = {
         "decision_ref": rel("decision.md"),
-        "outcome": "POSITIVE_BELOW_GATE",
-        "next_allowed_actions": ["design one distinct chemistry-conditioned relation-content hypothesis"],
-        "reopen_conditions": ["a new candidate must alter relation content rather than add a parallel group-token branch"],
+        "outcome": DECISION_OUTCOME,
+        "next_allowed_actions": NEXT_ALLOWED_ACTIONS,
+        "reopen_conditions": REOPEN_CONDITIONS,
         "final": True,
     }
     role_use = {
@@ -417,13 +427,13 @@ def main() -> None:
     }
     outcome = {
         "execution_status": "complete", "artifact_status": "accepted",
-        "comparison_status": "strict_causal", "scientific_status": "positive_below_gate",
+        "comparison_status": "strict_causal", "scientific_status": SCIENTIFIC_STATUS,
         "transfer_status": "not_ready", "budget_decision": "stop_under_contract",
         "full_handoff_status": "not_authorized",
     }
     evidence = {
         "format": "molgap-v5-evidence-envelope-v1",
-        "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+        "evidence_id": EVIDENCE_ID,
         "track": "C", "scope": "terminal_fixed_100k_architecture_screen",
         "contract": "MOLGAP-COMMON-V5-FINAL", "legacy_contract": "none-prospective-v5",
         "outcome": outcome, "role_use": role_use,
@@ -464,8 +474,8 @@ def main() -> None:
     bound_paths.add(rel("results/comparison_readiness.json"))
     terminal = {
         "format": "molgap-rml-terminal-package-v1",
-        "trajectory_id": TRAJECTORY_ID, "run_id": RUN_ID, "action_id": "A002",
-        "finalized_at": "2026-09-20T19:00:00+09:00",
+        "trajectory_id": TRAJECTORY_ID, "run_id": RUN_ID, "action_id": ACTION_ID,
+        "finalized_at": FINALIZED_AT,
         "acceptance_ref": rel("results/terminal_acceptance.json"),
         "artifact_hashes": {path: file_digest(REPO_ROOT / path) for path in sorted(bound_paths)},
         "evidence": evidence, "decision": decision, "costs": [cost], "roles": roles,
