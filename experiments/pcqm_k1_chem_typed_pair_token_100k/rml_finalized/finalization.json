@@ -1,0 +1,43 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-57b357853d7de66be7b33d2094a3995148c5688338855c718e6384a9827f732f",
+  "finalized_at": "2026-09-20T20:44:22.1596800+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/decision.md": "20eb93e1e5a5dda11b9c16e8a4abbd6a872c8655ccdadfd57eb9f943c2d0a43f",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/protocol.md": "819334e6fe4ebd744f8b2fc1b57f6b360caad9de42fa8ea293bb71b7dd06b0b3",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/results/acceptance_summary.json": "2d187486b2c926a0ab16f3ba516fa4351e09e984ed60020e5027ac1699a8ae20",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/results/canonical_trace.json": "23b2767fc634795d4532e10e7a80bc3a4e8520861b954f12d7ecf3dac54b2fc4",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/results/comparison_readiness.json": "85d4cd85cea2dbf15a1330186c0a9f9e29baa930a586907daa8ef1c84bbbf5b7",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/results/paired_analysis.json": "70f5c9b9f24cf7bae8768efabc8b9dcbcedc7d24965e2cd9b279ebbff3365241",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/results/terminal_acceptance.json": "dbd9a79cbfcb3fd46b992489f68b78e977ecde278360eeccada7be66c11a08f3",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/source_config.json": "c543f55111a0fa650356d5f323b4333a7177c31fb97e184572ea12fc37452f48",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/training_contract.json": "90072d4ce5e067b352cf307771e1d788857e7aeb827ab234c7bab99e4be4bf3e",
+    "experiments/pcqm_k1_chem_typed_pair_token_100k/trajectory.json": "6a7e3181da4dbb44db64fd26cdb5e466ee42b72f6059ffb0d9b085ff7141a6b4"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-chem-typed-pair-token-100k-s42-training.json": "7f96da91184bcd65aa526aff919585d9a6b1d12e88fc09b9786c2fda50b904ff",
+    "prospective_snapshot.json": "6a7e3181da4dbb44db64fd26cdb5e466ee42b72f6059ffb0d9b085ff7141a6b4",
+    "roles/role-TC-k1-chem-typed-pair-token-100k-s42-labels-read.json": "767d555e9fdca737d1e9c87517d161705cbd0aa950319d0d3c5f556b107d3430",
+    "roles/role-TC-k1-chem-typed-pair-token-100k-s42-metric-computed.json": "2dca01b56c9f87812bf92ef651a53c0e08b3f880f4a73cc29b55a7e8f68b3b28",
+    "roles/role-TC-k1-chem-typed-pair-token-100k-s42-prediction-input.json": "9eef786fa2610f781eb89edb34988ea7100cb2fbece900440de3622b3790e483",
+    "roles/role-TC-k1-chem-typed-pair-token-100k-s42-selection-used.json": "ba7a3398f7eb13186af236ed1dd5d6396f70850600c51f7b36c0b8c1e8ce6fd1",
+    "roles/role-TC-k1-chem-typed-pair-token-100k-s42-training-membership.json": "9a50268af5f63a0bcf0e6edef570a0634dc480db1f655bd51f8ef8ccb00bb262",
+    "terminal_input.json": "735579ee13c8d0f103d8d31e39414a9343148fc00ef73996447d4910557549c3",
+    "trace.json": "23b2767fc634795d4532e10e7a80bc3a4e8520861b954f12d7ecf3dac54b2fc4",
+    "trace_manifest.json": "98f58df96429f89962b2670931d301b69d0ee5d55ab5f8c0256d893fe252add0",
+    "trajectory.json": "52d046723767b461b37a210da0030749c4d9fe3f40258c12b669561fcb9de284",
+    "v5_evidence.json": "21154f272c2bd8fc5660cc0f1d50bdab161136e12fe74d234102baa2a60940f7"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-chem-typed-pair-token-100k-s42-training.json": "experiments/pcqm_k1_chem_typed_pair_token_100k/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_chem_typed_pair_token_100k/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_chem_typed_pair_token_100k/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "57b357853d7de66be7b33d2094a3995148c5688338855c718e6384a9827f732f",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-chem-typed-pair-token-100k-s42"
+}

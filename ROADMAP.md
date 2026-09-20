@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-CHEM-TYPED-PAIR-TOKEN | Await the single Kaggle2 seed-42 candidate; do not duplicate, add a seed, or release scale work | Terminal artifacts pass no-inference acceptance and generic RML ingestion, followed by one written attribution decision |
+| P1 | C-V5-PAIR-VALUE-ANALYSIS | Use the completed PairToken, standalone chemistry-role, and chemistry-conditioned-selection trajectories to decide whether any relation-value intervention remains identifiable; do not submit another selector variant | One falsifiable value-side hypothesis with a distinct mechanism and stop rule, or an explicit decision that K1 micro-architecture search is saturated |
 | P2 | C-V5-REFERENCE-TRACE-RECOVERY | Recover the already retained K1-v4 trace into a locally hash-bound canonical reference without training or inference | Replay admits otherwise complete strict candidate/reference worlds, or records an irreducible artifact gap |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval

@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_typed_pair_token_100k/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "2d187486b2c926a0ab16f3ba516fa4351e09e984ed60020e5027ac1699a8ae20"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_typed_pair_token_100k/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "70f5c9b9f24cf7bae8768efabc8b9dcbcedc7d24965e2cd9b279ebbff3365241"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_typed_pair_token_100k/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "85d4cd85cea2dbf15a1330186c0a9f9e29baa930a586907daa8ef1c84bbbf5b7"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_typed_pair_token_100k/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "23b2767fc634795d4532e10e7a80bc3a4e8520861b954f12d7ecf3dac54b2fc4"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/protocol.md",
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/training_contract.json",
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/source_config.json",
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/decision.md",
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/trajectory.json",
+      "experiments/pcqm_k1_chem_typed_pair_token_100k/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

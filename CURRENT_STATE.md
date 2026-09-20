@@ -45,13 +45,15 @@ contract.
 
 ## Discovery state
 
-One server-owned GPU screen is active: the seed-42 chemistry-conditioned
-PairToken runs on Kaggle2 under the fixed V5 PCQM-100K/50K, FP32, BS128
-contract. It keeps the accepted PairToken value and return path and adds only a
-zero-initialized chemistry-role bias to ordered-pair selection. The job is
-`kaseichou/molgap-k1-chemistry-typed-pairtoken-s42:v1`; no successor or duplicate
-is authorized before terminal RML ingestion. Authority:
-`experiments/pcqm_k1_chem_typed_pair_token_100k/`.
+No server-owned GPU screen is active. The chemistry-conditioned PairToken
+completed under the fixed V5 PCQM-100K/50K, FP32, BS128 contract and passed
+no-inference terminal acceptance. It reached `0.1385749578 eV`, improving K1 by
+`0.0027986765 eV` with a favorable paired interval, but missed the frozen
+`0.003 eV` gate. It was also `0.0002449146 eV` worse than original PairToken;
+that paired interval crossed zero. Chemistry-conditioned selection is closed,
+and original PairToken remains the strongest retained 100K relation-content
+mechanism. Authority:
+`experiments/pcqm_k1_chem_typed_pair_token_100k/decision.md`.
 
 The standalone functional-group token screen completed at `0.1398314089 eV`
 versus K1-v4 at `0.1413736343 eV`. Its favorable `0.0015422255 eV` gain missed

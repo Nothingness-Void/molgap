@@ -1,6 +1,6 @@
 {
   "backtest": {
-    "eligible": 8,
+    "eligible": 9,
     "excluded": 1,
     "status": "available"
   },
@@ -178,12 +178,12 @@
         },
         "device_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 3.0
+            "known_records": 0,
+            "known_total": null
           },
           "measured": {
-            "known_records": 3,
-            "known_total": 2.4575565095805554
+            "known_records": 4,
+            "known_total": 3.7224962898880563
           },
           "not_applicable_records": 0,
           "unknown_records": 4
@@ -202,15 +202,15 @@
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 3.0
+            "known_records": 0,
+            "known_total": null
           },
           "measured": {
             "known_records": 1,
             "known_total": 0.00795
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 7
         }
       },
       "not_applicable": {
@@ -274,7 +274,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 6,
+      "count": 5,
       "severity": "INFO"
     },
     {
@@ -289,7 +289,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
+      "count": 1,
       "severity": "WARN"
     },
     {
@@ -299,18 +299,17 @@
     }
   ],
   "roles": {
-    "coarse_historical": 65,
-    "explicit_events": 32,
+    "coarse_historical": 66,
+    "explicit_events": 37,
     "repeatedly_selected": 2
   },
-  "source_digest": "37213d2fdad8e1e79c5554fcd93d68585068ebe4567282c17e93fe18bf978806",
+  "source_digest": "6180838ce7ece38ca3e50b29c91fe22214d7104e8de3793575b1427444b0e5c2",
   "trajectories": {
     "count": 15,
     "outcomes": {
-      "ACTIVE": 1,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 4,
-      "POSITIVE_BELOW_GATE": 3,
+      "POSITIVE_BELOW_GATE": 4,
       "POSITIVE_UNDER_CONTRACT": 1,
       "STOP_FOR_COST": 1
     }

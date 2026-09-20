@@ -1,0 +1,18 @@
+{
+  "accelerator": "Tesla T4",
+  "calibration_checks_passed": true,
+  "calibration_fixture_sha256": "45dedc5199fcda2ea9b7ad344cd7c2b18e413473a68c54d2851421806bb359e9",
+  "calibration_model_id": "neural_atom_k1_chem_typed_pair_token",
+  "calibration_output_sha256": "1512415678674f45322e6faf91a32cf921c9959c8fd35bc0c8d6714c43ba55bf",
+  "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+  "deterministic_algorithms": true,
+  "format": "molgap-runtime-certificate-v1",
+  "physical_batch_per_device": 128,
+  "platform_id": "kaggle2",
+  "precision": "fp32",
+  "runtime_fingerprint": "915cda181bb6b77b968bd3f216c75b3906d261b0bf16254fc9b4479f191fc10b",
+  "software_fingerprint": "01a422b3553be49b84623a1b965dcba1f5a269a081152e05f5fb0b8bc90c3b98",
+  "status": "accepted",
+  "tail_batch_policy": "drop_last",
+  "tf32_enabled": false
+}

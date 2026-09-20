@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "37213d2fdad8e1e79c5554fcd93d68585068ebe4567282c17e93fe18bf978806",
+  "source_digest": "6180838ce7ece38ca3e50b29c91fe22214d7104e8de3793575b1427444b0e5c2",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -74,16 +74,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_chem_typed_pair_token_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_chem_typed_pair_token_100k/decision.md",
       "family_id": "k1-chem-typed-pair-token",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-functional-group-token-100k-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_chem_typed_pair_token_100k/trajectory.json",
+      "record_path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-chem-typed-pair-token-100k-s42"
       ],
