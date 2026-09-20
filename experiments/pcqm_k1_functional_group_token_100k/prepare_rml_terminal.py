@@ -51,6 +51,8 @@ REOPEN_CONDITIONS = [
 ]
 SCIENTIFIC_STATUS = "positive_below_gate"
 FINALIZED_AT = "2026-09-20T19:00:00+09:00"
+PLATFORM = "kaggle2"
+HARDWARE = "Tesla_T4_16GB"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -302,8 +304,8 @@ def main() -> None:
         "run_id": RUN_ID,
         "attempt_id": "candidate-v1",
         "category": "training",
-        "platform": "kaggle2",
-        "hardware": "Tesla_T4_16GB",
+        "platform": PLATFORM,
+        "hardware": HARDWARE,
         "measurement": {
             "device_hours": {"value": elapsed / 3600.0, "status": "measured"},
             "cpu_hours": {"value": None, "status": "measurement_missing"},
