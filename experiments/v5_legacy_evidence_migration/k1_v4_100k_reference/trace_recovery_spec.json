@@ -1,0 +1,34 @@
+{
+  "device_time_semantics": null,
+  "field_mapping": {
+    "epoch_or_pass": "epoch",
+    "learning_rate": "learning_rate",
+    "live_dev_metric": "development_gap_mae_eV",
+    "live_train_metric": "train_normalized_mae",
+    "optimizer_step": "optimizer_steps",
+    "sample_presentations": "sample_presentations",
+    "wall_time_seconds": "seconds"
+  },
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "mean_absolute_error",
+      "role_identity": "internal_development_100000_150000",
+      "target": "gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "mean_absolute_error",
+      "role_identity": "official_train_prefix_0_100000",
+      "target": "gap",
+      "unit": "normalized_target_units",
+      "weights": "live"
+    }
+  },
+  "rows_key": "epochs",
+  "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+  "trajectory_id": "TC-k1-v4-100k-reference-s42"
+}

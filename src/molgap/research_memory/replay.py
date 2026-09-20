@@ -7,9 +7,10 @@ from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
-from .paths import resolve_repo_pointer, verify_bound_artifact
+from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .backtest import _comparison_key, build_screening_backtest
-from .trace import load_canonical_trace, json_bytes, trace_digest
+from .trace import load_canonical_trace, json_bytes, trace_digest, validate_manifest_trace
+from .schemas import validate_trace_manifest
 
 
 def _terminal_label(trajectory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any] | None:
@@ -23,10 +24,62 @@ def _terminal_label(trajectory: dict[str, Any], evidence: dict[str, Any]) -> dic
     return None
 
 
+def _reference_binding_is_valid(
+    manifest: dict[str, Any], trajectory: dict[str, Any]
+) -> bool:
+    """Bind candidates prospectively and references to their own accepted identity.
+
+    A candidate must name the reference in its state-at-start snapshot.  A
+    canonical reference trajectory cannot prospectively reference itself; its
+    equivalent immutable binding is the accepted evidence identity frozen in
+    its terminal result.  Keeping these cases separate prevents this historical
+    recovery rule from weakening the candidate release gate.
+    """
+    if manifest["comparison_role"] == "candidate":
+        return manifest["reference_id"] in trajectory["state_at_start"]["reference_ids"]
+    if manifest["comparison_role"] == "reference":
+        return manifest["reference_id"] in trajectory["result"]["evidence_ids"]
+    return False
+
+
+def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, Any]) -> dict[str, Any]:
+    """Use a hash-bound migration sidecar without rewriting accepted V5 bytes."""
+    binding_path = repo_local_path(root, path.parent / "trace_migration.json")
+    if manifest["comparison_role"] != "reference" or not binding_path.is_file():
+        return manifest
+    binding = load_json_object(binding_path)
+    if binding.get("format") != "molgap-rml-reference-trace-migration-v1":
+        raise ValueError("unsupported reference trace migration")
+    if resolve_repo_pointer(root, binding["original_manifest_ref"]) != path.resolve():
+        raise ValueError("migration does not bind its original manifest")
+    verify_bound_artifact(root, binding["original_manifest_ref"], binding["original_manifest_sha256"])
+    verify_bound_artifact(root, binding["canonical_manifest_ref"], binding["canonical_manifest_sha256"])
+    migrated = validate_trace_manifest(load_json_object(resolve_repo_pointer(root, binding["canonical_manifest_ref"])))
+    mutable = {"trace_artifact_ref", "trace_artifact_sha256", "trace_fields"}
+    if {k: v for k, v in manifest.items() if k not in mutable} != {
+        k: v for k, v in migrated.items() if k not in mutable
+    }:
+        raise ValueError("canonical migration changed frozen reference semantics")
+    evidence = load_json_object(resolve_repo_pointer(root, manifest["terminal_evidence_ref"]))
+    if evidence["evidence_id"] != manifest["reference_id"] or not any(
+        a["locator"] == binding["source_trace_ref"] == manifest["trace_artifact_ref"]
+        and a.get("sha256") == binding["source_trace_sha256"] for a in evidence["artifacts"]
+    ):
+        raise ValueError("migration source is not bound by frozen reference evidence")
+    verify_bound_artifact(root, migrated["trace_artifact_ref"], migrated["trace_artifact_sha256"])
+    canonical = load_canonical_trace(resolve_repo_pointer(root, migrated["trace_artifact_ref"]))
+    validate_manifest_trace(migrated, canonical)
+    if not any(p.get("source") == binding["source_trace_ref"] and
+               p.get("sha256") == binding["source_trace_sha256"]
+               for p in canonical.get("provenance", [])):
+        raise ValueError("canonical trace lost its original source provenance")
+    return migrated
+
+
 def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
     trajectories = {t["trajectory_id"]: t for _, t in records["trajectories"]}
     evidence_by_path = {p.resolve(): e for p, e in records["evidence"]}
-    manifests = [m for _, m in records["traces"]]
+    manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
     grouping = build_screening_backtest(manifests)
     keys = {g["comparability_key"] for g in grouping["included_comparable_groups"]}
     excluded = list(grouping["excluded_traces"])
@@ -37,7 +90,7 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
         trajectory = trajectories[manifest["trajectory_id"]]
-        if manifest["reference_id"] not in trajectory["state_at_start"]["reference_ids"]:
+        if not _reference_binding_is_valid(manifest, trajectory):
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["reference_not_frozen_in_trajectory"]})
             continue
@@ -68,6 +121,13 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         evidence = evidence_by_path.get(evidence_path)
         if evidence is None or evidence["evidence_id"] not in trajectory["result"]["evidence_ids"]:
             reasons.append("terminal_evidence_not_bound_to_trajectory")
+        if manifest["comparison_role"] == "reference" and (
+            evidence is None or evidence["evidence_id"] != manifest["reference_id"]
+            or evidence_path not in {
+                resolve_repo_pointer(root, ref) for ref in trajectory["result"]["evidence_refs"]
+            }
+        ):
+            reasons.append("reference_terminal_evidence_identity_mismatch")
         if trajectory["decision"]["outcome"] == "ACTIVE":
             reasons.append("trajectory_not_terminal")
         if reasons:
