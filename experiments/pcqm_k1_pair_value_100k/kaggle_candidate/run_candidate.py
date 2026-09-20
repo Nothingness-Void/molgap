@@ -52,7 +52,7 @@ def verify_source(root: Path) -> tuple[str, str]:
 
 
 def main() -> None:
-    os.environ["MOLGAP_PLATFORM_ID"] = "kaggle3"
+    os.environ["MOLGAP_PLATFORM_ID"] = "kaggle1"
     pin_one_visible_gpu()
     install_dependencies()
     root = source_root()
@@ -77,4 +77,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
