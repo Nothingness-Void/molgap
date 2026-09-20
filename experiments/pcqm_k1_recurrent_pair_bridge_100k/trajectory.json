@@ -57,15 +57,24 @@
         "experiments/pcqm_k1_recurrent_pair_bridge_100k/comparison_readiness_prelaunch.json"
       ],
       "cost_event_ids": [
-        "cost-TC-k1-recurrent-pair-bridge-100k-s42-expected-training"
+        "cost-TC-k1-recurrent-pair-bridge-100k-s42-expected-training",
+        "cost-TC-k1-recurrent-pair-bridge-100k-s42-measured-training"
       ]
     }
   ],
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": ["pcqm-k1-recurrent-pair-bridge-100k-s42"],
+    "evidence_refs": [
+      "experiments/pcqm_k1_recurrent_pair_bridge_100k/results/candidate_acceptance_v1.json",
+      "experiments/pcqm_k1_recurrent_pair_bridge_100k/v5_evidence.json"
+    ]
+  },
   "decision": {
-    "decision_ref": "experiments/pcqm_k1_recurrent_pair_bridge_100k/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["one fixed V5 100K seed-42 screen"],
-    "reopen_conditions": []
+    "decision_ref": "experiments/pcqm_k1_recurrent_pair_bridge_100k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "a materially different relation mechanism with independent evidence, not another recurrent bridge width, seed, or schedule"
+    ]
   }
 }

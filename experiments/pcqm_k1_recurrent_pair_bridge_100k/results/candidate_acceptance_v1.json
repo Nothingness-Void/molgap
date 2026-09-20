@@ -1,0 +1,21 @@
+{
+  "format": "molgap-pcqm-k1-recurrent-pair-acceptance-v1",
+  "accepted": true,
+  "model_inference_executed": false,
+  "candidate_id": "neural_atom_k1_recurrent_pair_bridge",
+  "source_commit": "b1e4790f240c578671ad78210749a4970ba4780d",
+  "reference_payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "candidate_payload_sha256": "fe837bb41d9d63018dafb962339503b39170060b62b92dde5cddc16d15efdcaf",
+  "reference_mae_eV": 0.1413736343383789,
+  "candidate_mae_eV": 0.14166533946990967,
+  "gain_eV": -0.0002917051315307617,
+  "candidate_minus_reference_bootstrap_95_eV": [
+    -0.0006022757778763771,
+    0.0011791790755987161
+  ],
+  "minimum_gain_eV": 0.003,
+  "selected_candidate": null,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

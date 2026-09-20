@@ -1,6 +1,6 @@
 {
   "backtest": {
-    "eligible": 6,
+    "eligible": 7,
     "excluded": 1,
     "status": "available"
   },
@@ -224,7 +224,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 5
         },
         "device_hours": {
           "estimated": {
@@ -232,8 +232,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 1.4508747538
           },
           "not_applicable_records": 0,
           "unknown_records": 4
@@ -248,7 +248,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 5
         },
         "wall_hours": {
           "estimated": {
@@ -256,8 +256,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 1,
+            "known_total": 1.4508747538
           },
           "not_applicable_records": 0,
           "unknown_records": 4
@@ -314,17 +314,17 @@
         }
       }
     },
-    "unknown_events": 12
+    "unknown_events": 13
   },
   "evidence": {
-    "validated": 14,
+    "validated": 15,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 6,
+      "count": 5,
       "severity": "INFO"
     },
     {
@@ -339,11 +339,6 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
-      "severity": "WARN"
-    },
-    {
-      "code": "trajectory_without_v5_evidence",
       "count": 1,
       "severity": "WARN"
     },
@@ -354,17 +349,16 @@
     }
   ],
   "roles": {
-    "coarse_historical": 52,
-    "explicit_events": 19,
+    "coarse_historical": 56,
+    "explicit_events": 20,
     "repeatedly_selected": 2
   },
-  "source_digest": "2c8b077c763693209b7c9bd20523b7aa9915cb15a402751cc589806a6773a3db",
+  "source_digest": "fdbe8b9e4b948e014f7ca267a96a4a2d8eb2f814a444fd29bae58b28f4c00a0e",
   "trajectories": {
     "count": 13,
     "outcomes": {
-      "ACTIVE": 1,
       "INFRASTRUCTURE_ONLY": 5,
-      "NEGATIVE_UNDER_CONTRACT": 4,
+      "NEGATIVE_UNDER_CONTRACT": 5,
       "POSITIVE_BELOW_GATE": 1,
       "POSITIVE_UNDER_CONTRACT": 1,
       "STOP_FOR_COST": 1
