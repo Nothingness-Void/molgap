@@ -2,15 +2,18 @@
   "actions": [
     {
       "action_id": "A001",
-      "attempt_ids": ["t4x2-v1"],
+      "attempt_ids": ["t4x2-v1", "t4x2-v2"],
       "cost_event_ids": ["cost-TC-gptrans-conditional-flow-100k-s42-training"],
       "evidence_refs": [
         "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
         "experiments/pcqm_gptrans_conditional_flow_100k/protocol.md"
       ],
-      "run_ids": ["nothingnessvoid/molgap-gptrans-conditional-flow-s42:v1"],
-      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
-      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
+      "run_ids": [
+        "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v1",
+        "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2"
+      ],
+      "source_commit": "d6ca0625be909388de9b2fce44b7db104379859e",
+      "source_commit": "d6ca0625be909388de9b2fce44b7db104379859e",
       "type": "planned_dual_candidate_seed42_100k_screen"
     }
   ],
