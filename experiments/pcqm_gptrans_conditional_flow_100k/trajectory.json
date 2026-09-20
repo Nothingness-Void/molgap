@@ -2,14 +2,15 @@
   "actions": [
     {
       "action_id": "A001",
-      "attempt_ids": ["t4x2-v1-planned"],
+      "attempt_ids": ["t4x2-v1"],
       "cost_event_ids": ["cost-TC-gptrans-conditional-flow-100k-s42-training"],
       "evidence_refs": [
         "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
         "experiments/pcqm_gptrans_conditional_flow_100k/protocol.md"
       ],
-      "run_ids": ["nothingnessvoid/molgap-gptrans-conditional-flow-s42:v1-planned"],
-      "source_commit": "10e1c725b220cadab9f49dcd8c5a56874dfc17b0",
+      "run_ids": ["nothingnessvoid/molgap-gptrans-conditional-flow-s42:v1"],
+      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
+      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
       "type": "planned_dual_candidate_seed42_100k_screen"
     }
   ],
@@ -19,10 +20,10 @@
   "reference_bundle_id": null,
   "decision": {
     "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/STATUS.md",
-    "next_allowed_actions": [
-      "complete immutable source packaging and remote checks",
-      "submit exactly one isolated T4x2 job if both arm preflights pass"
-    ],
+      "next_allowed_actions": [
+        "wait for the submitted Kaggle1 kernel to reach a terminal state",
+        "preserve raw output before no-inference acceptance"
+      ],
     "outcome": "ACTIVE",
     "reopen_conditions": ["terminal attribution must precede any successor"]
   },
@@ -68,8 +69,8 @@
     "prior_trajectory_ids": ["TC-gptrans-flow-ablation-100k-s42"],
     "reference_ids": ["pcqm-gptrans-t-100k-v4-reference"],
     "role_snapshot_refs": ["experiments/pcqm_gptrans_conditional_flow_100k/role_plan.json"],
-    "source_commit": "10e1c725b220cadab9f49dcd8c5a56874dfc17b0",
-    "source_config_identity": "prospective-pending-source-freeze"
+      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
+      "source_config_identity": "source-archive-12f1f892483f1ce446dc144c2a2ea879d190b67ed8a1a4e22649a52a911384a9"
   },
   "track": "C",
   "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"

@@ -1,0 +1,18 @@
+{
+  "format": "molgap-gptrans-conditional-flow-submission-v1",
+  "status": "RUNNING",
+  "kernel": "nothingnessvoid/molgap-gptrans-conditional-flow-s42",
+  "version": 1,
+  "platform": "kaggle1",
+  "machine_shape": "NvidiaTeslaT4",
+  "arms": [
+    "conditional_pair_readback",
+    "conditional_pair_recurrence"
+  ],
+  "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
+  "source_dataset": "nothingnessvoid/molgap-gptrans-conditional-flow-source",
+  "source_archive_sha256": "12f1f892483f1ce446dc144c2a2ea879d190b67ed8a1a4e22649a52a911384a9",
+  "fixed_data": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "scientific_result_available": false,
+  "official_roles_read": false
+}
