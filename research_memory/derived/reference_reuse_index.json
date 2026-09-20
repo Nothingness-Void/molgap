@@ -89,7 +89,8 @@
       "track": "B",
       "transfer_status": "reusable_reference",
       "used_by_trajectory_ids": [
-        "TB-matched-500k-v4-three-arm"
+        "TB-matched-500k-v4-three-arm",
+        "TB-pcqm-scale-transfer-attribution"
       ]
     },
     {
@@ -111,7 +112,9 @@
       "source_envelope": "experiments/pcqm_gptrans_t_500k/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_v4_reference",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-scale-transfer-attribution"
+      ]
     },
     {
       "artifact_availability": [

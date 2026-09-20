@@ -1,0 +1,158 @@
+{
+  "format": "molgap-pcqm-scale-transfer-attribution-v1",
+  "analysis_date": "2026-09-20",
+  "execution": {
+    "training_executed": false,
+    "model_inference_executed": false,
+    "remote_job_submitted": false,
+    "new_evaluation_role_read": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "source_revisions": {
+    "desktop": "397a04f1ed549369f96d19a575029e3065331b62",
+    "server": "8f0f779c628c16cee4d4ae296ecfc9ab45c75bc4"
+  },
+  "strict_100k_to_500k_cases": [
+    {
+      "mechanism": "K1 PairToken",
+      "status": "complete_500k_scalar_material_gate",
+      "gain_100k_eV": 0.0030435771,
+      "gain_500k_eV": 0.0005561373,
+      "gain_retained_fraction": 0.1827248930,
+      "gain_lost_fraction": 0.8172751070,
+      "gain_drop_eV": 0.0024874398,
+      "margin_above_100k_gate_eV": 0.0000435771,
+      "best_100k_epoch_zero_based": 39,
+      "total_100k_epochs": 40,
+      "best_500k_epoch_zero_based": 48,
+      "total_500k_epochs": 60,
+      "strict_500k_paired_bundle_available": false,
+      "decision": "NEGATIVE_UNDER_CONTRACT",
+      "evidence": [
+        "origin/molgap-server@8f0f779:experiments/pcqm_k1_pair_token_100k/decision.md",
+        "origin/molgap-server@8f0f779:experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md"
+      ]
+    },
+    {
+      "mechanism": "GPTrans Pair PreNorm",
+      "status": "partial_500k_matched_curve_cost_stop",
+      "gain_100k_eV": 0.0031248707,
+      "mean_gain_500k_epochs_20_36_eV": -0.0012765996,
+      "gain_500k_epoch_36_eV": -0.0014580414,
+      "change_from_100k_to_500k_mean_eV": -0.0044014703,
+      "margin_above_100k_gate_eV": 0.0001248707,
+      "best_100k_epoch_zero_based": 59,
+      "total_100k_epochs": 60,
+      "matched_500k_epochs_observed": 37,
+      "candidate_better_500k_epochs": 4,
+      "decision": "STOP_FOR_COST_INCONCLUSIVE_TERMINAL",
+      "evidence": [
+        "origin/molgap-server@8f0f779:experiments/pcqm_gptrans_relation_flow/decision.md",
+        "origin/molgap-server@8f0f779:experiments/pcqm_gptrans_prenorm_500k_v5/decision.md",
+        "origin/molgap-server@8f0f779:experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json"
+      ]
+    }
+  ],
+  "strict_case_summary": {
+    "known_direct_cases": 2,
+    "retained_material_gain_at_500k": 0,
+    "complete_terminal_500k_cases": 1,
+    "partial_cost_stopped_500k_cases": 1,
+    "interpretation_limit": "Two cases establish a local funnel failure, not a universal architecture scaling law."
+  },
+  "cross_scale_confounders": [
+    {
+      "factor": "selection_margin",
+      "strength": "high",
+      "evidence": "Both 100K winners cleared the 0.003 eV gate by less than 0.000125 eV after repeated fixed-role architecture search."
+    },
+    {
+      "factor": "terminal_horizon_selection",
+      "strength": "high",
+      "evidence": "PairToken selected epoch 39/40 and Pair PreNorm selected epoch 59/60, so neither 100K gain was observed after a stable post-best tail."
+    },
+    {
+      "factor": "different_development_cohorts",
+      "strength": "high",
+      "evidence": "100K uses source rows 100000-150000; 500K uses rows 500000-550000. The gain change therefore mixes scale and evaluation-cohort effects."
+    },
+    {
+      "factor": "different_optimizer_time_and_exposure",
+      "strength": "high",
+      "evidence": "The K1 PairToken contracts use 31,240 steps and 3,998,720 presentations at 100K versus 234,360 steps and 29,998,080 presentations at 500K."
+    },
+    {
+      "factor": "unmeasured_training_stochasticity",
+      "strength": "high",
+      "evidence": "Row-paired bootstrap measures row uncertainty, not seed-to-seed training variation; both promoted gains are seed42 only."
+    },
+    {
+      "factor": "low_data_inductive_bias_redundancy",
+      "strength": "medium",
+      "evidence": "PairToken retained only 18.3% of its gain when the K1 reference received more data and optimization. This is consistent with, but does not prove, the base model learning overlapping relation information."
+    }
+  ],
+  "contextual_noncausal_scale_evidence": [
+    {
+      "transition": "matched_500k_to_full_official_validation",
+      "observation": "K1 and GPTrans-T beat EdgeState at matched 500K, but their fixed 20M-presentation full runs were worse than the converged EdgeState checkpoint.",
+      "confounder": "EdgeState selected epoch 30 after roughly 101.36M full-train presentations, about 5.07 times the K1/GPTrans budget; evaluation roles and recipes also differ.",
+      "disposition": "Do not classify this as a proven architecture rank reversal until convergence chains terminate."
+    },
+    {
+      "transition": "historical_100k_to_initial_full_edgestate",
+      "observation": "The historical EdgeState 100K gain did not transfer to its initial full run.",
+      "confounder": "The full run used a lossy atom/bond feature contract with proven radical/closed-shell input collisions and an underconverged schedule; restoring complete OGB categories reduced official-validation MAE from 0.189450 to 0.102063 eV.",
+      "disposition": "This was contract drift, not evidence that EdgeState inherently fails to scale."
+    }
+  ],
+  "rejected_explanations": [
+    "parameter count alone",
+    "a single coarse molecule class that can be routed reliably",
+    "row-bootstrap uncertainty as a substitute for training-seed uncertainty",
+    "the statement that all 100K positive mechanisms fail at scale"
+  ],
+  "protocol_repairs": [
+    {
+      "priority": 0,
+      "action": "Recover the existing PairToken 500K trace and exact K1 matched-prefix/reference payload before new training.",
+      "reason": "The current RML backtest excludes the only complete direct transfer because its exact reference bundle is missing."
+    },
+    {
+      "priority": 1,
+      "action": "Add a frozen transfer-confirmation role shared by 100K and 500K screens, disjoint from both training prefixes.",
+      "reason": "Current scale comparisons change both training size and development cohort."
+    },
+    {
+      "priority": 2,
+      "action": "Require convergence-tail evidence and record gains at fixed optimizer-step/sample-presentation checkpoints, not only independently selected best epochs.",
+      "reason": "Both promoted 100K gains occurred at the final available epoch."
+    },
+    {
+      "priority": 3,
+      "action": "For borderline 100K gains, run one reusable second-seed reference/candidate confirmation before a 500K bridge.",
+      "reason": "Both winners exceeded the gate by much less than an independently measured training-variance estimate, which is currently unavailable."
+    },
+    {
+      "priority": 4,
+      "action": "Stage 500K candidates at frozen presentation checkpoints and continue only after a positive matched-prefix comparison.",
+      "reason": "This distinguishes transient optimization-speed gains from retained asymptotic gains while capping accelerator cost."
+    }
+  ],
+  "literature": [
+    {
+      "title": "On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation",
+      "url": "https://www.jmlr.org/papers/v11/cawley10a.html",
+      "relevance": "Repeated optimization of a noisy finite-sample selection criterion can create selection bias comparable to algorithm differences."
+    },
+    {
+      "title": "Deep Learning Scaling is Predictable, Empirically",
+      "url": "https://arxiv.org/abs/1712.00409",
+      "relevance": "Learning-curve shape and data scale must be measured rather than assuming a fixed small-scale rank transfers."
+    }
+  ],
+  "next_compute_authorized": false
+}
+

@@ -10,10 +10,9 @@
     "hypothesis_id": "H-pcqm-scale-transfer-attribution",
     "observed_deficiency": "The known strict 100K winners PairToken and GPTrans Pair PreNorm did not retain their promotion-sized gains at 500K.",
     "supporting_evidence_ids": [
-      "pcqm-k1-pair-token-100k-s42",
-      "pcqm-k1-pair-token-500k-s42",
-      "pcqm-gptrans-pair-prenorm-500k-partial-s42",
-      "pcqm-matched-500k-v4"
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-t-500k-bridge",
+      "pcqm-k1-gptrans-full-fusion-r3"
     ],
     "alternative_explanations": [
       "single-seed fixed-role selection bias",
@@ -29,7 +28,7 @@
       "gptrans-pair-prenorm",
       "pcqm-edge-state-full"
     ],
-    "expected_native_cost_ref": null,
+    "expected_native_cost_ref": "cost-TB-pcqm-scale-transfer-attribution-audit",
     "decision_changed_if_positive": "Replace one-shot 100K promotion with a convergence- and transfer-aware gate before another 500K run.",
     "decision_changed_if_negative": "Keep the present funnel and attribute failures only case by case.",
     "historical_unknowns": [
@@ -44,18 +43,18 @@
       "experiments/pcqm_scale_transfer_attribution/protocol.md"
     ],
     "reference_ids": [
-      "pcqm-k1-v4-100k-reference-s42",
-      "pcqm-k1-500k-paired-v3-scalar-reference"
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-t-500k-bridge"
     ],
     "parent_trajectory_ids": [
-      "TC-k1-pair-token-100k-s42",
-      "TB-k1-pair-token-500k-s42",
-      "TB-gptrans-pair-prenorm-500k-s42"
+      "TB-matched-500k-v4-three-arm",
+      "TB-gptrans-t-100k-v4-reference",
+      "TB-gptrans-t-500k-bridge"
     ],
     "prior_evidence_ids": [
-      "pcqm-k1-pair-token-100k-s42",
-      "pcqm-k1-pair-token-500k-s42",
-      "pcqm-gptrans-pair-prenorm-500k-partial-s42"
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-t-500k-bridge",
+      "pcqm-k1-gptrans-full-fusion-r3"
     ],
     "role_snapshot_refs": [
       "experiments/pcqm_scale_transfer_attribution/protocol.md"
@@ -63,20 +62,39 @@
     "budget_snapshot_ref": "experiments/pcqm_scale_transfer_attribution/protocol.md",
     "source_config_identity": "desktop 397a04f; server 8f0f779"
   },
-  "actions": [],
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [],
+      "cost_event_ids": [
+        "cost-TB-pcqm-scale-transfer-attribution-audit"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_scale_transfer_attribution/analysis.json"
+      ],
+      "run_ids": [],
+      "source_commit": "a1b1e1d0e6840de341a6420d062e77a9b04df83b",
+      "type": "no_training_existing_evidence_attribution"
+    }
+  ],
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_scale_transfer_attribution/analysis.json",
+      "experiments/pcqm_scale_transfer_attribution/decision.md"
+    ]
   },
   "decision": {
     "decision_ref": "experiments/pcqm_scale_transfer_attribution/decision.md",
-    "outcome": "ACTIVE",
+    "outcome": "NO_TRAIN",
     "next_allowed_actions": [
-      "Complete no-training evidence attribution."
+      "Recover existing PairToken 500K and K1 reference trace artifacts for RML backtesting.",
+      "Accept and attribute the active Functional-Group Token 100K task before any new model release."
     ],
     "reopen_conditions": []
   },
   "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_scale_transfer_attribution/analysis.json",
   "comparison_blockers": [
     "Scale transitions use different development cohorts.",
     "Only two strict 100K-to-500K mechanism attempts exist."

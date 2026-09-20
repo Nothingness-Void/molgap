@@ -8,7 +8,7 @@
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 2
-- NO_TRAIN: 1
+- NO_TRAIN: 2
 - POSITIVE_UNDER_CONTRACT: 3
 
 ## Transfer
@@ -26,8 +26,12 @@
 - IMS_GPU_UNSPECIFIED device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED wall_hours: measured=12.135869 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- not_applicable cpu_hours: not applicable (1 records); measurement_missing=0
+- not_applicable device_hours: not applicable (1 records); measurement_missing=0
+- not_applicable queue_hours: not applicable (1 records); measurement_missing=0
+- not_applicable wall_hours: not applicable (1 records); measurement_missing=0
 - Measurement-missing cost events: 1
-- Cost-event coverage: 1/10 trajectories; incomplete native measurement=1
+- Cost-event coverage: 2/11 trajectories; incomplete native measurement=2
 
 ## Screening Backtest
 - Status: insufficient_evidence
@@ -35,9 +39,9 @@
 - Excluded traces: 0
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 10
+- [INFO] trace_unavailable_for_backtest: 11
 - [WARN] historical_partial_record: 10
-- [WARN] incomplete_native_cost_measurement: 1
+- [WARN] incomplete_native_cost_measurement: 2
 - [WARN] missing_cost_event: 9
-- [WARN] missing_explicit_role_identity: 10
-- [WARN] trajectory_without_v5_evidence: 2
+- [WARN] missing_explicit_role_identity: 11
+- [WARN] trajectory_without_v5_evidence: 3

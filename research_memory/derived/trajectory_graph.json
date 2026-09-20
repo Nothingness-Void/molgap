@@ -41,6 +41,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-scale-transfer-attribution:A001",
+      "target": "experiments/pcqm_scale_transfer_attribution/analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-recurrent-graph-state-100k-seed42:A001",
       "target": "experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
       "type": "action_produced_evidence"
@@ -56,6 +61,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-500k-bridge",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-k1-gptrans-full-fusion-r3",
       "type": "parent_trajectory"
@@ -66,13 +81,33 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-bridge",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-residual-reconciliation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-pcqm-scale-transfer-attribution",
       "type": "prior_evidence"
     },
     {
@@ -83,6 +118,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-bridge",
+      "target": "TB-pcqm-scale-transfer-attribution",
       "type": "reference_used"
     }
   ],
@@ -150,6 +195,10 @@
     },
     {
       "id": "TB-matched-500k-v4-three-arm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-scale-transfer-attribution",
       "type": "trajectory"
     },
     {

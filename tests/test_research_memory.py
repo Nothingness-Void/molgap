@@ -301,19 +301,20 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-residual-reconciliation",
         "TB-matched-500k-v4-three-arm",
+        "TB-pcqm-scale-transfer-attribution",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
     }
     assert report["cost_completeness"] == {
-        "trajectories_total": 10,
-        "with_cost_event": 1,
+        "trajectories_total": 11,
+        "with_cost_event": 2,
         "without_cost_event": 9,
         "with_complete_native_measurement": 0,
-        "with_incomplete_native_measurement": 1,
+        "with_incomplete_native_measurement": 2,
     }
     issues = {item["code"]: item["count"] for item in report["issues"]}
     assert issues["missing_cost_event"] == 9
-    assert issues["incomplete_native_cost_measurement"] == 1
+    assert issues["incomplete_native_cost_measurement"] == 2
     assert "missing_native_cost" not in issues
 
 
