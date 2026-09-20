@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-MULTIPLICATIVE-PAIR-VALUE | Monitor and terminally ingest the single active Kaggle3 value-side candidate; do not submit another selector, return, or chemistry variant | V5 terminal decision compares it with canonical K1 and retained PairToken, then either shortlists the distinct value mechanism or closes K1 micro-architecture search |
+| P1 | C-V5-MULTIPLICATIVE-PAIR-VALUE | Completed: terminally ingested as `NEGATIVE_UNDER_CONTRACT` | Preserve the closure of PairToken selector/value micro-variants; any successor must be a distinct information-flow family |
 | P2 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains two candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval

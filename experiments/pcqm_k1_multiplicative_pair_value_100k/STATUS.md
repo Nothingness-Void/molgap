@@ -1,7 +1,8 @@
 # Status
 
-The V5 prelaunch gate passed as `PRELAUNCH_STRICT_PLANNED`. Kaggle3 kernel
-`nvoid912/molgap-k1-multiplicative-pairvalue-s42` version 1 was submitted on
-2026-09-21 and entered `RUNNING`. It is the only server-owned GPU screen in
-this chain. Terminal interpretation, any successor and any protected-role use
-remain pending.
+Kaggle3 kernel `nvoid912/molgap-k1-multiplicative-pairvalue-s42:v1`
+completed all 40 epochs and passed no-inference artifact acceptance. Its
+development MAE was `0.1424374580 eV`, worse than both frozen K1-v4 and the
+original PairToken. The route is closed as `NEGATIVE_UNDER_CONTRACT`; no retry,
+extra seed, scale bridge, protected-role read or full handoff is authorized.
+Terminal RML ingestion owns the durable final state.

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "37f9b70566cecc1113599035a82085bb778c334e794a1aee16b2f6fdd891853d",
+  "source_digest": "601813f6bf55bfe2ff884921bee61f18a41088fa43409ca9755bce14f912765b",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -180,16 +180,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md",
       "family_id": "k1-multiplicative-pair-value",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-pair-token-100k-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_multiplicative_pair_value_100k/trajectory.json",
+      "record_path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-multiplicative-pair-value-100k-s42"
       ],

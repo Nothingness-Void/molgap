@@ -1,0 +1,49 @@
+{
+  "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+  "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "development_source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "format": "molgap-row-manifest-v1",
+  "official_validation_role_read": false,
+  "ordering_semantics": "source_idx ascending within each fixed role",
+  "roles": {
+    "development": {
+      "rows": 50000,
+      "source_idx_start": 100000,
+      "source_idx_stop": 150000
+    },
+    "train": {
+      "rows": 100000,
+      "source_idx_start": 0,
+      "source_idx_stop": 100000
+    }
+  },
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "train_source_idx_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+  "verified_shards": [
+    {
+      "file": "train/train_shard_0000.pt",
+      "role": "train",
+      "rows": 50000,
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+      "source_idx_max": 49999,
+      "source_idx_min": 0
+    },
+    {
+      "file": "train/train_shard_0001.pt",
+      "role": "train",
+      "rows": 50000,
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+      "source_idx_max": 99999,
+      "source_idx_min": 50000
+    },
+    {
+      "file": "train/train_shard_0002.pt",
+      "role": "development",
+      "rows": 50000,
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+      "source_idx_max": 149999,
+      "source_idx_min": 100000
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "candidate-v1",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-multiplicative-pair-value-100k-s42-training",
+  "evidence_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/terminal_acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.4541925261261104
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "nvoid912/molgap-k1-multiplicative-pairvalue-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-multiplicative-pair-value-100k-s42"
+}

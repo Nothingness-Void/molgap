@@ -20,16 +20,15 @@
     }
   ],
   "comparison_blockers": [],
-  "comparison_class": "NO_COMPARISON",
-  "comparison_readiness_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/comparison_readiness.json",
   "decision": {
-    "decision_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/STATUS.md",
-    "next_allowed_actions": [
-      "submit exactly one frozen candidate job after packaging checks"
-    ],
-    "outcome": "ACTIVE",
+    "decision_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
     "reopen_conditions": [
-      "terminal attribution must precede any successor"
+      "a future candidate must leave PairToken value/selector micro-variants and test a distinct information-flow family"
     ]
   },
   "family_id": "k1-multiplicative-pair-value",
@@ -68,7 +67,7 @@
       "pcqm-k1-multiplicative-pair-value-100k-s42"
     ],
     "evidence_refs": [
-      "experiments/pcqm_k1_multiplicative_pair_value_100k/v5_evidence.json"
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/v5_evidence.json"
     ]
   },
   "schema": "molgap-trajectory-v1",

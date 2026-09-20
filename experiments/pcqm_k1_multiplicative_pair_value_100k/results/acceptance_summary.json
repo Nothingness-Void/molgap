@@ -1,0 +1,40 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "d0b3c82684381c549a4d141037650dc5d1a394e47a02a66ff1d66e700f1ce9a9",
+    "best_development_payload.pt": "daaa8fa1710202cf579f9a5f5db2b8122bdb952429ac1b0377a183eafe6b258b",
+    "best_model.pt": "b823eea26b9adbb25f7b2a794b2024cff447084bca6c59745e96d833badc2a6a",
+    "last_checkpoint.pt": "efbebb7023656cba612b4567109145c78a97dfbd2d6be8c0904c0df9a45d31d7",
+    "preflight.json": "77bf2814c40be5950bcce04f543969eeb773df0ea35a07b00c13a1cdbad9c231",
+    "recovery_epoch_10.tar": "e1ade5bc23bc9fe4164efd63d5c50ed1e5870f1397f1c9fcd34a10efa9a56300",
+    "recovery_epoch_20.tar": "abc0b9381c745ba249cbd47f99cbfb7516974d63928ffffaa2d08fec22e2d094",
+    "recovery_epoch_30.tar": "b32c69178816d70a889eddba6fd2c68df2bcbbd02badf4c231c898787f968fbc",
+    "recovery_epoch_40.tar": "9c7e64412e86c4d4adf6030e02506c894090a293f9b97aa016bb5b10cff0c72c",
+    "runtime_certificate.json": "474eadfc0e5ead40dd11330fe6eed31869fa0f40342c5239d2afaf33e4e340ef",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "3fc35695d24c6a638412859b36868d5bba3259741bcda83dc5cd5603d34f9eef"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "best_model_sha256": "b823eea26b9adbb25f7b2a794b2024cff447084bca6c59745e96d833badc2a6a",
+    "checkpoint_sha256": "efbebb7023656cba612b4567109145c78a97dfbd2d6be8c0904c0df9a45d31d7",
+    "development_gap_mae_eV": 0.14243745803833008,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 130.87732735134995,
+    "mean_graphs_per_second": 763.8297787945229,
+    "optimizer_steps": 31240,
+    "parameter_count": 3694081,
+    "payload_sha256": "daaa8fa1710202cf579f9a5f5db2b8122bdb952429ac1b0377a183eafe6b258b",
+    "peak_allocated_mib": 567.91015625,
+    "peak_reserved_mib": 598.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "6e4d9f133ac67820c10df84ae9f9f9719f345dc99b8e7a4bc1d4a9a0d060311a",
+  "source_commit": "5af3f2c41c2efa95d04bf33eadb9495d282c56f9"
+}

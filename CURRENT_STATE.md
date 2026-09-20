@@ -45,12 +45,13 @@ contract.
 
 ## Discovery state
 
-One server-owned GPU screen is active: Kaggle3
-`nvoid912/molgap-k1-multiplicative-pairvalue-s42` version 1 tests a disjoint
-low-rank multiplicative relation value under the accepted PairToken selector.
-It is a seed-42, candidate-only, fixed PCQM-100K V5 screen; K1-v4 is reused as
-the canonical reference and no protected role is authorized. Authority:
-`experiments/pcqm_k1_multiplicative_pair_value_100k/protocol.md`.
+The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
+FP32, BS128 contract and passed no-inference terminal acceptance. It reached
+`0.1424374580 eV`, which was `0.0010638237 eV` worse than K1-v4 and
+`0.0041074143 eV` worse than original PairToken; both paired intervals were
+unfavorable. PairToken selector/value micro-architecture enrichment is closed.
+Authority:
+`experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md`.
 
 The chemistry-conditioned PairToken
 completed under the fixed V5 PCQM-100K/50K, FP32, BS128 contract and passed

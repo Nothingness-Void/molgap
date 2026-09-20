@@ -1,0 +1,43 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8bc8dabb57607391672f18bc92dec2d7d73d86fbdeabdfd151fe9b75c030c217",
+  "finalized_at": "2026-09-21T03:03:00+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md": "7ba3a69dd54a4828e95489f5493b754125740512a67743c7b8f56ba21a9d45c8",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/protocol.md": "1b5bfdb2219a8e40f67de561ad27b9fd483bada2b8f543a7c321f796372e1da6",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/results/acceptance_summary.json": "fac9bae1819c6c33c8196b75cf21cad282d57bbd98a5d4f203b2ff2954ca19ac",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/results/canonical_trace.json": "971ba5cade1e0fb5c8803dcc8caf7744f5cd1b0aae62359ea003ea38bbad3963",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/results/comparison_readiness.json": "874146280b6ecf96e13a95e43bdf188e4aa94472e93165c7984d583a28f5830e",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/results/paired_analysis.json": "643ac968c3148c05be46a41c6df2cdd9038fb047498c434ee26ab27e195380a9",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/results/terminal_acceptance.json": "6e4866a44805577ebe5d81d662efcfda6a789b417b57a3fd48cf7c104339a4cc",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json": "bda0127ceb48c9785f2be0bfd00a4034b59a684c9e9416aba368c797d19bbe28",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json": "34c8799ace35c6f5a2196472a1abc1cb8b22fc4956bcaf211fc76e2106a66641",
+    "experiments/pcqm_k1_multiplicative_pair_value_100k/trajectory.json": "52a85f3235134f27b20841b95768c129701442b9f93bda00d1a843c004081c40"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-multiplicative-pair-value-100k-s42-training.json": "bb59b611102423ca01aec694ef32876e683cecd230f993c0631444cab8da1196",
+    "prospective_snapshot.json": "52a85f3235134f27b20841b95768c129701442b9f93bda00d1a843c004081c40",
+    "roles/role-TC-k1-multiplicative-pair-value-100k-s42-labels-read.json": "71a3bb91d0b0e0ac3e79f425a6eb30e94a94254a5fc5758341e2ec660ee62fe8",
+    "roles/role-TC-k1-multiplicative-pair-value-100k-s42-metric-computed.json": "99cbdfa28c2c69740da99a331f8f63649480e957f0707c429fee0da3a6a393bf",
+    "roles/role-TC-k1-multiplicative-pair-value-100k-s42-prediction-input.json": "09d8a51d4b5b1dc655235865a32b911dbf08327bc6a8a1113b627ef434b1cd5f",
+    "roles/role-TC-k1-multiplicative-pair-value-100k-s42-selection-used.json": "ef080b4a75eebd99a16b0f3a36feb08f964395064b37583bd7004829f25d4e87",
+    "roles/role-TC-k1-multiplicative-pair-value-100k-s42-training-membership.json": "3a51354a7f2a120abc4df208661317fe093e4279152746ea31ac954654cd078a",
+    "terminal_input.json": "a04271a0805b2bdc018b9e0e018c40748dea364e367bbed54041ca7ad6edf005",
+    "trace.json": "971ba5cade1e0fb5c8803dcc8caf7744f5cd1b0aae62359ea003ea38bbad3963",
+    "trace_manifest.json": "b7d019b2846d3ee78d0c895893eb3b858372a74b0ef5211cc72a1188817275f6",
+    "trajectory.json": "70620537d4f0b34dbc8f4cdc5ec6a0e90bcebc8c709cb0989efa5b76dcb42af4",
+    "v5_evidence.json": "562ee2763213c591311113bf008a46926299bf018fdbfbf8a0530c26c130a7fe"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-multiplicative-pair-value-100k-s42-training.json": "experiments/pcqm_k1_multiplicative_pair_value_100k/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_multiplicative_pair_value_100k/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_multiplicative_pair_value_100k/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "8bc8dabb57607391672f18bc92dec2d7d73d86fbdeabdfd151fe9b75c030c217",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-multiplicative-pair-value-100k-s42"
+}

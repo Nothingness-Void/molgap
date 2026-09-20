@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "fac9bae1819c6c33c8196b75cf21cad282d57bbd98a5d4f203b2ff2954ca19ac"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "643ac968c3148c05be46a41c6df2cdd9038fb047498c434ee26ab27e195380a9"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "874146280b6ecf96e13a95e43bdf188e4aa94472e93165c7984d583a28f5830e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_multiplicative_pair_value_100k/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "971ba5cade1e0fb5c8803dcc8caf7744f5cd1b0aae62359ea003ea38bbad3963"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/protocol.md",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/training_contract.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/trajectory.json",
+      "experiments/pcqm_k1_multiplicative_pair_value_100k/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-multiplicative-pair-value-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "negative",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}
