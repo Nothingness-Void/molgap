@@ -45,7 +45,23 @@ contract.
 
 ## Discovery state
 
-No server-owned GPU screen is active. The node-adaptive PairToken-return screen
+One server-owned GPU screen is active: the seed-42 chemistry-conditioned
+PairToken runs on Kaggle2 under the fixed V5 PCQM-100K/50K, FP32, BS128
+contract. It keeps the accepted PairToken value and return path and adds only a
+zero-initialized chemistry-role bias to ordered-pair selection. The job is
+`kaseichou/molgap-k1-chemistry-typed-pairtoken-s42:v1`; no successor or duplicate
+is authorized before terminal RML ingestion. Authority:
+`experiments/pcqm_k1_chem_typed_pair_token_100k/`.
+
+The standalone functional-group token screen completed at `0.1398314089 eV`
+versus K1-v4 at `0.1413736343 eV`. Its favorable `0.0015422255 eV` gain missed
+the prospectively frozen `0.003 eV` gate, so the standalone route is closed.
+Its terminal evidence was ingested through the generic RML pipeline; replay
+excludes it only because the historical K1 reference trace is not yet locally
+canonicalized, not because candidate evidence is incomplete. Authority:
+`experiments/pcqm_k1_functional_group_token_100k/decision.md`.
+
+The node-adaptive PairToken-return screen
 completed with strict V5 evidence. It improved immutable K1-v4 by
 `0.0017446578 eV`, and its paired interval was entirely favorable, but it missed
 the prospectively frozen `0.003 eV` material gate. Return redistribution is

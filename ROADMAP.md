@@ -14,8 +14,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-RELATION-CONTENT-ANALYSIS | Use the completed node-return result and the existing PairToken/flow ablations to choose one genuinely new relation-content hypothesis; no return-only variant | One evidence-backed hypothesis with cheapest falsifier, explicit stop rule, and prospective RML plan |
-| P2 | C-V5-FUNCTIONAL-GROUP-TOKEN | Keep the chemistry-defined sparse hierarchy as the leading reserve; release only if P1 confirms that its information gain is distinct from closed motif/global-statistic surrogates | Separate frozen source/config and complete prospective RML/prelaunch evidence, or remain unspent |
+| P1 | C-V5-CHEM-TYPED-PAIR-TOKEN | Await the single Kaggle2 seed-42 candidate; do not duplicate, add a seed, or release scale work | Terminal artifacts pass no-inference acceptance and generic RML ingestion, followed by one written attribution decision |
+| P2 | C-V5-REFERENCE-TRACE-RECOVERY | Recover the already retained K1-v4 trace into a locally hash-bound canonical reference without training or inference | Replay admits otherwise complete strict candidate/reference worlds, or records an irreducible artifact gap |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.

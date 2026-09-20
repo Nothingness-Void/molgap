@@ -164,7 +164,7 @@ def main() -> None:
         "cost_event_id": f"cost-{TRAJECTORY_ID}-training",
         "trajectory_id": TRAJECTORY_ID,
         "action_id": "A001",
-        "run_id": "kaseichou/molgap-k1-chem-typed-pair-token-s42:v1-planned",
+        "run_id": "kaseichou/molgap-k1-chemistry-typed-pairtoken-s42:v1",
         "attempt_id": "candidate-v1-planned",
         "category": "training",
         "platform": "kaggle2",
