@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 1
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 2
@@ -30,12 +31,16 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA_T4_SINGLE_VISIBLE cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA_T4_SINGLE_VISIBLE device_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA_T4_SINGLE_VISIBLE queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA_T4_SINGLE_VISIBLE wall_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (1 records); measurement_missing=0
 - not_applicable device_hours: not applicable (1 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (1 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (1 records); measurement_missing=0
-- Measurement-missing cost events: 2
-- Cost-event coverage: 3/11 trajectories; incomplete native measurement=3
+- Measurement-missing cost events: 3
+- Cost-event coverage: 4/12 trajectories; incomplete native measurement=4
 
 ## Screening Backtest
 - Status: insufficient_evidence
@@ -43,8 +48,9 @@
 - Excluded traces: 0
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 11
+- [INFO] trace_unavailable_for_backtest: 12
 - [WARN] historical_partial_record: 10
-- [WARN] incomplete_native_cost_measurement: 3
+- [WARN] incomplete_native_cost_measurement: 4
 - [WARN] missing_cost_event: 8
-- [WARN] missing_explicit_role_identity: 8
+- [WARN] missing_explicit_role_identity: 9
+- [WARN] trajectory_without_v5_evidence: 1

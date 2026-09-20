@@ -66,6 +66,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_value_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_value_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
@@ -96,6 +106,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-scale-transfer-attribution",
+      "target": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "prior_evidence"
@@ -118,6 +133,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-scale-transfer-attribution-no-train",
+      "target": "TC-k1-pair-value-decoupled-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -229,6 +249,10 @@
     },
     {
       "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-value-decoupled-100k-s42",
       "type": "trajectory"
     }
   ]
