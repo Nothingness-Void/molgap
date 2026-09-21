@@ -97,6 +97,11 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   Authority: `experiments/pcqm_gptrans_noisy_nodes_500k/decision.md`.
 - GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) is currently
   executing on `pcqm4mv2-ogb-fixed-500k-scnet-v1` under frozen falsifier `< 0.103868 eV`.
+- GPTrans Dual-Stream Attentive Readout (DSAR) 100K Dual-Arm Screen on Kaggle 1 (`nothingnessvoid`)
+  is currently executing on `pcqm4mv2-ogb-fixed-100k-v1` under dual NvidiaTeslaT4:
+  - Arm A (`dsar_pair_norm` on GPU 0): Trajectory `TB-gptrans-dsar-pair-norm-100k-s42`, falsifier `< 0.153627 eV`.
+  - Arm B (`dsar_noisy_pair_norm` on GPU 1): Trajectory `TB-gptrans-dsar-noisy-pair-norm-100k-s42`, falsifier `< 0.153627 eV`.
+  Pre-flight replay-ready verification passed for both arms; expected duration ~1.4 wall hours (~2.8 device hours).
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
  independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote
