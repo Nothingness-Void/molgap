@@ -19,7 +19,9 @@
       "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
       "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
       "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
-      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json"
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json"
     ]
   },
   "artifacts": [
@@ -27,6 +29,18 @@
       "name": "raw_artifact_manifest",
       "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
       "sha256": "cbcac8b4e4c2786f8d0bd2e7fea30d63b8b00504bd4b10dba6c74256687d34bd",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "retained_artifact_manifest",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+      "sha256": "4887ded3f86998aad06e140f2948876bd1cce3c6eed56f93e3fb3b3c9ee0948c",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "retention_receipt",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json",
+      "sha256": "84b4b2707a3aacfa39bdbe0564c397ceac62503faa31f54b490e81ac6248a888",
       "availability": "durable_local_verified"
     },
     {
@@ -58,6 +72,18 @@
       "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/job_summary.json",
       "sha256": "6f992e7dd99c3dbda330456bc31a5ebedbf5ded14d94ff52c0d5ab7f06c2d47e",
       "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_readback_trace",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/trace.json",
+      "sha256": "280db24dd02845a713073613d3ba3a41935d618bd58e1fb5ea6c4ada3b79868c",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_recurrence_trace",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/trace.json",
+      "sha256": "e2d1799479b8bd1f999cbedb41f106d5079a7feddfe90fcdeac2f0387ef2ae2d",
+      "availability": "durable_local_verified"
     }
   ],
   "role_use": {
@@ -77,7 +103,7 @@
   },
   "migration": {
     "migrated_at": "2026-09-21",
-    "verification_scope": "terminal Kaggle state, complete local raw-artifact archive, frozen no-inference acceptance, and paired development comparison",
+    "verification_scope": "terminal Kaggle state, pre-retention inventory, compact retained artifact archive and receipt, frozen no-inference acceptance, and paired development comparison",
     "training_executed": false,
     "inference_executed": false,
     "scientific_reinterpretation": false

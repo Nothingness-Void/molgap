@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "t4x2-v2",
+  "category": "training",
+  "cost_event_id": "cost-TC-gptrans-conditional-flow-100k-s42-training-observed-v2",
+  "evidence_ref": "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_observed_events_v2.json",
+  "hardware": "NVIDIA_T4_X2_ISOLATED",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 6.303842
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 3.151921
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+}

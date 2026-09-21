@@ -1,0 +1,30 @@
+{
+  "format": "molgap-rml-acceptance-adapter-v1",
+  "evidence_id": "pcqm-gptrans-conditional-flow-100k-s42",
+  "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready",
+    "budget_decision": "closed",
+    "full_handoff_status": "none"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a distinct causal mechanism must be justified by new RML evidence"
+    ]
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "source_acceptance_ref": "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
+  "source_acceptance_sha256": "7b6d81f6b6c8015b6ca626fdfefe997dd68708c0c7520655e958f9ca1bff7021"
+}

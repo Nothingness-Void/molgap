@@ -17,7 +17,7 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 7
+- Explicit role events: 8
 - Coarse historical role records: 54
 - Repeatedly selected role identities: 0
 
@@ -51,4 +51,4 @@
 - [WARN] historical_partial_record: 11
 - [WARN] incomplete_native_cost_measurement: 4
 - [WARN] missing_cost_event: 9
-- [WARN] missing_explicit_role_identity: 10
+- [WARN] missing_explicit_role_identity: 9

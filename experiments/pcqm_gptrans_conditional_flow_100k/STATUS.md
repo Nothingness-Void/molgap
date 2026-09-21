@@ -18,6 +18,15 @@ GPTrans reference. The trajectory is closed as `NEGATIVE_UNDER_CONTRACT`; see
 `results/acceptance_v2.json` and `decision.md`. No full-scale release is
 authorized.
 
+The terminal archive has completed compact retention. The original 216-file,
+1.230 GB payload is bound by `artifact_manifest.json`; the retained 26-file,
+44.0 MB payload is bound by `retained_artifact_manifest.json` and
+`retention_receipt.json`. The retained payload includes both best models,
+aligned predictions, complete training traces, completion manifests, runtime
+preflights, logs, and the job summary. The terminal state is atomically
+published under `rml_finalized/` and must pass RML validate/rebuild/frozen
+checks before this status may be called complete.
+
 Do not submit a successor while this attempt is running. On completion or
 failure, preserve raw output first, then run the frozen no-inference acceptance
 against the GPTrans reference before making a scientific decision.

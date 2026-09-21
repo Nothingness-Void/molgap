@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "9281f541d4839cc1271f78de306122c8147a2353c6c916f9a424612f851c24c7",
+  "source_digest": "a9eb675b7f0b68ed23a2ff3d4ad9c1713c2fc79b0ee306a09be7b4ad2c2dbca5",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -190,7 +190,7 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
       "family_id": "gptrans-conditional-relation-flow",
       "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
@@ -199,7 +199,7 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_conditional_flow_100k/trajectory.json",
+      "record_path": "experiments/pcqm_gptrans_conditional_flow_100k/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-gptrans-conditional-flow-100k-s42"
       ],

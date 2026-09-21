@@ -380,10 +380,19 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 7,
+  "explicit_role_event_count": 8,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
+    "ogb-lsc-pcqm4mv2-gap-internal-100k-v4:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-conditional-flow-100k-s42-internal-development-v2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",

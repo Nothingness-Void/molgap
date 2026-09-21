@@ -1,0 +1,197 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_acceptance_v2.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_conditional_flow_100k/decision.md": "5ada32122cf877e638989fc9ea931ea97cb15765f0339d60aad24acb88e20b34",
+    "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json": "7b6d81f6b6c8015b6ca626fdfefe997dd68708c0c7520655e958f9ca1bff7021",
+    "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_acceptance_v2.json": "cfec5711d9b1ee972815fbaa96a83f42e6470939209f30301d3921d95e0e7117",
+    "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_observed_events_v2.json": "e7981f330d787368e66c768cff9894d8220c84a8697d65726563753e43d3b2fd",
+    "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json": "52722a7897f04b2cc5eff82109935af0d1fb7239b1377a7051d4fd6ccbc72e8b",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json": "cbcac8b4e4c2786f8d0bd2e7fea30d63b8b00504bd4b10dba6c74256687d34bd",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/best_model.pt": "1d0a903508b56adf63659ab5984a6fbe68e232223ce125a389b544c2488254b9",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/development_predictions.pt": "08c5d8ff3a171b780388776b47cc78419eef421ee856c9ea1339aa4e6f186c49",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/trace.json": "280db24dd02845a713073613d3ba3a41935d618bd58e1fb5ea6c4ada3b79868c",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/best_model.pt": "76ee494d95f4a4feb283d824f493f87f777c10f754766d48af612012be56693b",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/development_predictions.pt": "11caef0036077be9b0bd409f5334ca53e2efd615871976dfe45af2de59bfbffb",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/trace.json": "e2d1799479b8bd1f999cbedb41f106d5079a7feddfe90fcdeac2f0387ef2ae2d",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/job_summary.json": "6f992e7dd99c3dbda330456bc31a5ebedbf5ded14d94ff52c0d5ab7f06c2d47e",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json": "4887ded3f86998aad06e140f2948876bd1cce3c6eed56f93e3fb3b3c9ee0948c",
+    "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json": "84b4b2707a3aacfa39bdbe0564c397ceac62503faa31f54b490e81ac6248a888"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "t4x2-v2",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-conditional-flow-100k-s42-training-observed-v2",
+      "evidence_ref": "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_observed_events_v2.json",
+      "hardware": "NVIDIA_T4_X2_ISOLATED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 6.303842
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.151921
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a distinct causal mechanism must be justified by new RML evidence"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+        "name": "raw_artifact_manifest",
+        "sha256": "cbcac8b4e4c2786f8d0bd2e7fea30d63b8b00504bd4b10dba6c74256687d34bd"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+        "name": "retained_artifact_manifest",
+        "sha256": "4887ded3f86998aad06e140f2948876bd1cce3c6eed56f93e3fb3b3c9ee0948c"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json",
+        "name": "retention_receipt",
+        "sha256": "84b4b2707a3aacfa39bdbe0564c397ceac62503faa31f54b490e81ac6248a888"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/best_model.pt",
+        "name": "conditional_pair_readback_best_model",
+        "sha256": "1d0a903508b56adf63659ab5984a6fbe68e232223ce125a389b544c2488254b9"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/development_predictions.pt",
+        "name": "conditional_pair_readback_predictions",
+        "sha256": "08c5d8ff3a171b780388776b47cc78419eef421ee856c9ea1339aa4e6f186c49"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/best_model.pt",
+        "name": "conditional_pair_recurrence_best_model",
+        "sha256": "76ee494d95f4a4feb283d824f493f87f777c10f754766d48af612012be56693b"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/development_predictions.pt",
+        "name": "conditional_pair_recurrence_predictions",
+        "sha256": "11caef0036077be9b0bd409f5334ca53e2efd615871976dfe45af2de59bfbffb"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/job_summary.json",
+        "name": "v2_job_summary",
+        "sha256": "6f992e7dd99c3dbda330456bc31a5ebedbf5ded14d94ff52c0d5ab7f06c2d47e"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/trace.json",
+        "name": "conditional_pair_readback_trace",
+        "sha256": "280db24dd02845a713073613d3ba3a41935d618bd58e1fb5ea6c4ada3b79868c"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/trace.json",
+        "name": "conditional_pair_recurrence_trace",
+        "sha256": "e2d1799479b8bd1f999cbedb41f106d5079a7feddfe90fcdeac2f0387ef2ae2d"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
+        "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
+        "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+        "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+        "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+        "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-conditional-flow-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "molgap-pcqm-gptrans-conditional-flow-100k-v5",
+    "metrics": {
+      "bootstrap_upper95_delta_readback_eV": 0.005268241401195526,
+      "bootstrap_upper95_delta_recurrence_eV": 0.004282526487350463,
+      "conditional_pair_readback_delta_eV": 0.00430864098072052,
+      "conditional_pair_readback_development_gap_mae_eV": 0.1609358452886343,
+      "conditional_pair_recurrence_delta_eV": 0.003250550780296326,
+      "conditional_pair_recurrence_development_gap_mae_eV": 0.15987775508821012,
+      "reference_development_gap_mae_eV": 0.15662720430791377
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-21",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "terminal Kaggle state, pre-retention inventory, compact retained artifact archive and receipt, frozen no-inference acceptance, and paired development comparison"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "closed",
+      "comparison_status": "paired_development_comparison_complete",
+      "execution_status": "complete",
+      "full_handoff_status": "none",
+      "scientific_status": "negative_under_contract",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "fixed_100k_gptrans_conditional_flow_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-21T14:49:17.2383915+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_conditional_flow_100k/results/rml_observed_events_v2.json",
+      "role_event_id": "role-TC-gptrans-conditional-flow-100k-s42-internal-development-v2",
+      "role_name": "internal_development",
+      "row_manifest_hash": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+}

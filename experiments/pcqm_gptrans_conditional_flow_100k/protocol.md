@@ -65,3 +65,12 @@ paired candidate-minus-reference bootstrap upper 95% bound below zero. A pass
 creates only a seed-42 mechanism shortlist. It does not authorize another seed,
 500K, full training, or protected-role access. If both fail, conditional
 GPTrans allocation closes under this contract.
+
+## Terminal completion gate
+
+The experiment is not complete merely because acceptance and RML validation
+pass. Terminal completion additionally requires a hash-bound pre-retention
+inventory, retention pruning, a post-retention manifest and receipt, an RML
+terminal package, atomic `rml finalize`, and a successful validate/rebuild/
+`check --frozen` cycle. Every canonical artifact pointer must resolve after
+retention cleanup.
