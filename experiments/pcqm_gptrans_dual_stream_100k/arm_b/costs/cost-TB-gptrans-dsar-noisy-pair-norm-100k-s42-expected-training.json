@@ -1,0 +1,30 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-dsar-noisy-pair-norm-100k-s42-expected-training",
+  "trajectory_id": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-dsar-noisy-pair-norm-s42",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "platform": "kaggle",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "device_hours": {
+      "value": 1.4,
+      "status": "estimated"
+    },
+    "cpu_hours": {
+      "value": null,
+      "status": "not_applicable"
+    },
+    "wall_hours": {
+      "value": 1.4,
+      "status": "estimated"
+    },
+    "queue_hours": {
+      "value": null,
+      "status": "not_applicable"
+    }
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json"
+}

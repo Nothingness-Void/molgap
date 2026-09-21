@@ -1,0 +1,80 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Does Dual-Stream Attentive Readout (DSAR) combined with Noisy Nodes auxiliary regularization and Pair Update LayerNorm surpass the project record (0.147245 eV) and baseline (0.156627 eV) under the frozen 100K contract?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+    "observed_deficiency": "Standard GPTrans-T discards all 7,680 dimensions of real atomic representations produced across 12 layers, relying solely on a single 256-dim virtual node. DSAR adaptively pools real atomic features alongside the virtual token, while Noisy Nodes prevents representation collapse on atom representations.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-scale-transfer-diagnostic-evidence"
+    ],
+    "alternative_explanations": [
+      "Auxiliary noisy nodes training interferes with attentive pooling weights",
+      "Over-regularization prevents optimal attentive pooling convergence"
+    ],
+    "changed_mechanism": "Joint combination of Noisy Nodes auxiliary denoising loss (alpha=0.1, std=0.15), Pair Update LayerNorm, and Dual-Stream Attentive Readout (544-dim head)",
+    "cheapest_falsifier": "60-epoch 100K/50K run failing to achieve 0.003 eV gain over the 0.156627 eV baseline (threshold < 0.153627 eV)",
+    "related_closed_family_ids": [
+      "TC-gptrans-flow-ablation-100k-s42",
+      "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-dsar-noisy-pair-norm-100k-s42-expected-training",
+    "decision_changed_if_positive": "nominate DSAR + Noisy Nodes + Pair Norm as champion architecture for 500K scale-up",
+    "decision_changed_if_negative": "isolate DSAR without auxiliary noise",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "1e6c18b917c005bf3c7ff22d42382314fc3e1823",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json",
+    "source_config_identity": "desktop-gptrans-dsar-noisy-pair-norm-100k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-gptrans-dsar-noisy-pair-norm-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "1e6c18b917c005bf3c7ff22d42382314fc3e1823",
+      "evidence_refs": [],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/protocol.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "remote_screen_training"
+    ],
+    "reopen_conditions": []
+  }
+}

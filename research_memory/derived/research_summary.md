@@ -5,7 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
+- ACTIVE: 3
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 5
@@ -32,16 +32,16 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 cpu_hours: not applicable (7 records); measurement_missing=0
-- Tesla_T4 device_hours: measured=12.738500 (3 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 queue_hours: not applicable (7 records); measurement_missing=0
-- Tesla_T4 wall_hours: measured=13.340200 (3 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 cpu_hours: not applicable (9 records); measurement_missing=0
+- Tesla_T4 device_hours: measured=12.738500 (3 measured records), estimated=28.800000 (6 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 queue_hours: not applicable (9 records); measurement_missing=0
+- Tesla_T4 wall_hours: measured=13.340200 (3 measured records), estimated=28.800000 (6 estimated records), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (2 records); measurement_missing=0
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
 - Measurement-missing cost events: 2
-- Cost-event coverage: 8/19 trajectories; incomplete native measurement=5
+- Cost-event coverage: 10/21 trajectories; incomplete native measurement=7
 
 ## Screening Backtest
 - Status: available
@@ -49,9 +49,9 @@
 - Excluded traces: 3
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 12
+- [INFO] trace_unavailable_for_backtest: 14
 - [WARN] historical_partial_record: 13
-- [WARN] incomplete_native_cost_measurement: 5
+- [WARN] incomplete_native_cost_measurement: 7
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 13
-- [WARN] trajectory_without_v5_evidence: 3
+- [WARN] missing_explicit_role_identity: 15
+- [WARN] trajectory_without_v5_evidence: 5

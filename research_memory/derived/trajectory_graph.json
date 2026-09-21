@@ -127,6 +127,16 @@
     },
     {
       "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "parent_trajectory"
     },
@@ -207,12 +217,32 @@
     },
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsar-pair-norm-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -278,6 +308,16 @@
     {
       "source": "pcqm-edgestate-rich-full-submission",
       "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsar-pair-norm-100k-s42",
       "type": "reference_used"
     },
     {
@@ -407,6 +447,14 @@
     },
     {
       "id": "TB-gine-1m-gap-specialist-v7",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-dsar-pair-norm-100k-s42",
       "type": "trajectory"
     },
     {

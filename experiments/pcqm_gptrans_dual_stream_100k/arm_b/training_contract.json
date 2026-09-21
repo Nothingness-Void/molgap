@@ -1,0 +1,18 @@
+{
+  "scientific_contract": "pcqm-fixed100k-dev50k-matched60-v4",
+  "dataset_identity": "8e36fa78d531206f69f21f1589d97f26fc1e7ad178553ec4a6ec7b25ad7a4030",
+  "row_split_identity": "train[0:100000]-development[100000:150000]",
+  "architecture_identity": "gptrans-dual-stream-attentive-noisy-nodes-5375961",
+  "model_identity": "gptrans-dual-stream-attentive-noisy-nodes-5375961",
+  "optimizer_identity": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+  "lr_schedule_identity": "cosine60-epoch0-4e-4-epoch59-1e-6",
+  "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+  "ema_semantics": "none",
+  "target_transform_identity": "8488e7b9937016db3ebfb7c6d66e700cf1d3a54774ce9e4ee64082269c3a37dc",
+  "evaluation_role_identity": "internal_development_100000_149999",
+  "selection_role_identity": "best-development-raw-model-60epochs",
+  "terminal_endpoint_identity": "optimizer_steps46860:sample_presentations5998080",
+  "loss_fingerprint": "normalized-gap-l1-plus-noisy-nodes-ce-alpha0.1",
+  "matched_architecture_required": false,
+  "x_axis_semantics": "optimizer_steps"
+}
