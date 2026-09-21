@@ -1,0 +1,25 @@
+{
+  "format": "molgap-kaggle-dual-arm-launch-v1",
+  "submitted_at": "2026-09-22T01:30:01+09:00",
+  "platform": "kaggle",
+  "account": "nothingnessvoid",
+  "requested_kernel_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42",
+  "authoritative_kernel_id": "nothingnessvoid/molgap-gptrans-feature-denoising-s42",
+  "kernel_version": 1,
+  "startup_status": "RUNNING",
+  "accelerator_request": "NvidiaTeslaT4",
+  "expected_visible_devices": 2,
+  "logical_run_ids": {
+    "full_atom": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+    "full_atom_bond": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond"
+  },
+  "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+  "experiment_commit": "7268b0944b45df36229b73f88124ac803d369cf5",
+  "source_archive_sha256": "3978ca8bf267ee5b7ae329723cfdc5d2e5057668c6658c3ee398489f40396edc",
+  "run_py_sha256": "1020aa4946ae0a10bd78f9419c03d4547dc17a05e117c54e779461778c749611",
+  "metadata_sha256": "ea0f93da934851a82e05dfdbe10f6c0a6f92a78011e982be926dd38f82a9903b",
+  "data_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "reference_model_sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+  "terminal_acceptance_pending": true,
+  "replay_ready": false
+}
