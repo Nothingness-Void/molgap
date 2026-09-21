@@ -36,11 +36,16 @@ def main(argv: list[str] | None = None) -> None:
     planner = commands.add_parser("plan")
     planner.add_argument("--spec", required=True)
     planner.add_argument("--output", required=True)
-    for name in ("finalize", "terminal-pipeline"):
-        command = commands.add_parser(name)
-        command.add_argument("--trajectory", required=True)
-        command.add_argument("--terminal", required=True)
-        command.add_argument("--trace")
+    finalize_cmd = commands.add_parser("finalize")
+    finalize_cmd.add_argument("--trajectory", required=True)
+    finalize_cmd.add_argument("--terminal", required=True)
+    finalize_cmd.add_argument("--trace")
+    terminal_cmd = commands.add_parser("terminal-pipeline")
+    terminal_cmd.add_argument("--trajectory", required=True)
+    terminal_cmd.add_argument("--terminal", required=True)
+    terminal_cmd.add_argument("--trace")
+    terminal_cmd.add_argument("--trace-source")
+    terminal_cmd.add_argument("--arm")
     recovery = commands.add_parser("recover-trace")
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
@@ -64,8 +69,15 @@ def main(argv: list[str] | None = None) -> None:
             from .finalize import finalize
             result = finalize(root, args.trajectory, args.terminal, args.trace)
         else:
-            from .pipeline import finalize_rebuild_backtest
-            result = finalize_rebuild_backtest(root, args.trajectory, args.terminal, args.trace)
+            from .terminal_wiring import close_terminal_arm
+            result = close_terminal_arm(
+                repo_root=root,
+                trajectory=args.trajectory,
+                terminal=args.terminal,
+                trace=args.trace,
+                arm_identifier=args.arm,
+                trace_source=args.trace_source,
+            )
         print(json.dumps(result, indent=2, sort_keys=True))
         if args.command == "terminal-pipeline" and result.get("pipeline_status") != "COMPLETE":
             raise SystemExit(1)
