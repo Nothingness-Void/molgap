@@ -261,6 +261,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-spd-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_spd_pair_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-spd-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-v4-100k-reference-s42:A001",
       "target": "experiments/pcqm_k1_variants_100k/decision.md",
       "type": "action_produced_evidence"
@@ -328,6 +338,11 @@
     {
       "source": "TC-k1-pair-token-100k-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -426,6 +441,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-pair-token-500k-s42",
       "target": "TC-k1-pair-token-batch-profile",
       "type": "prior_evidence"
@@ -433,6 +453,11 @@
     {
       "source": "pcqm-k1-pair-token-node-return-100k-s42",
       "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-sparse-triplet-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -483,6 +508,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -548,6 +578,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
       "type": "reference_used"
     }
   ],
@@ -622,6 +657,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-spd-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-v4-100k-reference-s42",
       "type": "evidence"
     },
@@ -687,6 +726,10 @@
     },
     {
       "id": "TC-k1-sparse-triplet-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-spd-pair-token-100k-s42",
       "type": "trajectory"
     },
     {

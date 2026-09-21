@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 17,
+    "trajectories_total": 18,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 17,
-    "with_incomplete_native_measurement": 15,
+    "with_cost_event": 18,
+    "with_incomplete_native_measurement": 16,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -46,7 +46,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 15,
+      "count": 16,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -61,6 +61,7 @@
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
+        "TC-k1-spd-pair-token-100k-s42",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],

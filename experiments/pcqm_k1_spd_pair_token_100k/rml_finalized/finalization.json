@@ -1,0 +1,43 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-31ec32ef74764193ac593dfc70ed218140c0042101f390e5cb35a19f98503ef9",
+  "finalized_at": "2026-09-22T00:45:12+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_spd_pair_token_100k/decision.md": "1d0982169cb7c400738e4c6854e225da6aae940d6d5a9e32fe87ef2a33fa895f",
+    "experiments/pcqm_k1_spd_pair_token_100k/protocol.md": "0302d39c4e0f45efca0c066633243fc64bc3a07c2962af7371d760b49977760d",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/acceptance_summary.json": "bab0043643b083831ff39835a4dd2ee4d9afe9663853a250a380b8a260833812",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/canonical_trace.json": "ed557f53f5bf84c167aa2fb8011892659139956dc4dc07b0da7b01bbb047d728",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/comparison_readiness.json": "598af68cdeddb7ec7da29b5319a3b72397fe2c452bb1c2ed02e6468be2ebe9b9",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/paired_analysis.json": "de4298821989f3ea504d5834e1d2f7740d47e553f6f72bf2cc2c4fc8e5370680",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json": "73296a2f3a1dc220a45b5d364d15af42dbef04c2b7a9d996bfc851d76477d21a",
+    "experiments/pcqm_k1_spd_pair_token_100k/source_config.json": "720827ba6d4b4a2f91bfe42b41c149f44a4dcd0cff7e604601a6f105cf4a53b8",
+    "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json": "a3436f117c8c0f4076fcd355cb9f64d290a163fdeaae66e15abfd870754024e7",
+    "experiments/pcqm_k1_spd_pair_token_100k/trajectory.json": "1fa6f24e25724ea8da608867907ab966d00c32b48c0fd39331fb2d60e9f29135"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-spd-pair-token-100k-s42-training.json": "af04da193c1bf43763cf49e089415cf93092fad291f1395a8fa2e0ee225418a1",
+    "prospective_snapshot.json": "1fa6f24e25724ea8da608867907ab966d00c32b48c0fd39331fb2d60e9f29135",
+    "roles/role-TC-k1-spd-pair-token-100k-s42-labels-read.json": "4364a2a5e1755299e603e57d6be5cfc7988e44c5c76acd5c4a0fd5f74e9d573a",
+    "roles/role-TC-k1-spd-pair-token-100k-s42-metric-computed.json": "5fd06bd93dfbee69785d8c342af3b60f692ef1ee188608eb688d2245589b7609",
+    "roles/role-TC-k1-spd-pair-token-100k-s42-prediction-input.json": "0866f45111bd477141ae389a0c3fbfdcf9a0b4a02a29b5e1443b897e041555eb",
+    "roles/role-TC-k1-spd-pair-token-100k-s42-selection-used.json": "04e883a4f96b0a624329b23f572dbaaa14e1015526d9e21f2dc86eaf73c7aea3",
+    "roles/role-TC-k1-spd-pair-token-100k-s42-training-membership.json": "411e5d000d75897845ccf53db7af05c66069a23097504b94bdf744123a1afda4",
+    "terminal_input.json": "d8cd022e2d3538e372f047fdc055ae2ea8837b3ce8ad8d373d13bc63c4c19bee",
+    "trace.json": "ed557f53f5bf84c167aa2fb8011892659139956dc4dc07b0da7b01bbb047d728",
+    "trace_manifest.json": "1bc0ddba7a36fb3a5b4178a148a4ead6fd26d9cd72dd63d1de08408ba930079b",
+    "trajectory.json": "ec066a64e3769700328ded42c677147cc8549a450b65b870ea17f0e4f87740fd",
+    "v5_evidence.json": "b0a62dc66b9ed3cc0c2d94577d671bf2272b5d975096eeb50f3c9603fdaad3ff"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-spd-pair-token-100k-s42-training.json": "experiments/pcqm_k1_spd_pair_token_100k/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_spd_pair_token_100k/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_spd_pair_token_100k/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "31ec32ef74764193ac593dfc70ed218140c0042101f390e5cb35a19f98503ef9",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+}

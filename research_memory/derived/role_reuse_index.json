@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 76,
+  "ambiguous_historical_role_record_count": 81,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -485,6 +485,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-v4-100k-reference-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -534,7 +569,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 47,
+  "explicit_role_event_count": 52,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -715,6 +750,34 @@
         "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
@@ -816,6 +879,13 @@
       },
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-train",
         "selection_used": false,
         "semantics": "explicit",
@@ -895,6 +965,7 @@
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_challenge": [
@@ -915,6 +986,7 @@
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_dev": [
@@ -935,6 +1007,7 @@
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ]
   },
@@ -1114,6 +1187,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
       },
       {
         "access_kind": "selection_used",
@@ -1339,6 +1440,34 @@
         "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
@@ -1437,6 +1566,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
       },
       {
         "access_kind": "training_membership",

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "9a5cb18549f5b6558ca0a14bafd45ef36eb1b09383ba885e90c1baef214d112c",
+  "source_digest": "e77c99ed1c55f271cc90995abfe6d93b6605286765b914f6ddbfef01acc132ce",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -265,6 +265,24 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_spd_pair_token_100k/decision.md",
+      "family_id": "k1-spd-pair-token",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-pair-token-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-spd-pair-token-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
     },
     {
       "completeness_status": "partial",

@@ -29,6 +29,7 @@
         "nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1",
         "nvoid912/molgap-k1-multiplicative-pairvalue-s42:v1",
         "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+        "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
         "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_mose",
         "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token",
         "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token_node_return",
@@ -45,6 +46,7 @@
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
+        "TC-k1-spd-pair-token-100k-s42",
         "TC-k1-v4-100k-reference-s42"
       ]
     }
@@ -60,6 +62,7 @@
     "TC-k1-pair-token-100k-s42",
     "TC-k1-pair-token-node-return-100k-s42",
     "TC-k1-sparse-triplet-100k-s42",
+    "TC-k1-spd-pair-token-100k-s42",
     "TC-k1-v4-100k-reference-s42"
   ],
   "native_cost_added": null,
@@ -68,5 +71,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 12
+  "trace_count": 13
 }

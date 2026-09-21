@@ -55,12 +55,22 @@ failure rather than a missing-topology win. It is now a fourth complete
 candidate in the RML replay pool. Authority:
 `experiments/pcqm_k1_sparse_triplet_100k/decision.md`.
 
-Round 2 is released as a narrower Graphormer-SPD question: retain the accepted
-layer-6 PairToken value and return path, and add only a small shortest-path
-bucket bias to pair-selection logits. It must not aggregate path values,
-restore dense atom attention, or add another persistent state. This separates
-the useful hypothesis—chemical distance may guide selection—from the closed
-uniform and learned path-message mechanisms.
+Round 2, Graphormer-SPD conditioning of the accepted layer-6 PairToken, is
+closed. It reached `0.1397010982 eV`, a favorable but sub-threshold
+`0.0016725361 eV` gain over K1, while regressing `0.0013710489 eV` against the
+original PairToken with an entirely unfavorable paired interval. The learned
+distance biases were non-trivial, so the result closes globally shared
+shortest-path conditioning rather than an inactive implementation. It is the
+fifth complete candidate in the RML replay pool. Authority:
+`experiments/pcqm_k1_spd_pair_token_100k/decision.md`.
+
+The final authorized round is released as a distinct TGT-style question:
+retain original PairToken, but add one zero-initialized, non-persistent
+directed bond-to-bond triplet adapter at layer 6. It must use only real-bond
+EdgeState and topology-defined non-backtracking wedges, return only to bond
+state, and create no persistent triplet state or geometry input. This tests
+whether one bounded higher-order local interaction can preserve the hard-row
+signal seen in Round 1 without its full-depth overfit.
 
 The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
 FP32, BS128 contract and passed no-inference terminal acceptance. It reached

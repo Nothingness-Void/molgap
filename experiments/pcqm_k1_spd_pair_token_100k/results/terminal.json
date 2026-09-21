@@ -1,0 +1,258 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_spd_pair_token_100k/decision.md": "1d0982169cb7c400738e4c6854e225da6aae940d6d5a9e32fe87ef2a33fa895f",
+    "experiments/pcqm_k1_spd_pair_token_100k/protocol.md": "0302d39c4e0f45efca0c066633243fc64bc3a07c2962af7371d760b49977760d",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/acceptance_summary.json": "bab0043643b083831ff39835a4dd2ee4d9afe9663853a250a380b8a260833812",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/canonical_trace.json": "ed557f53f5bf84c167aa2fb8011892659139956dc4dc07b0da7b01bbb047d728",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/comparison_readiness.json": "598af68cdeddb7ec7da29b5319a3b72397fe2c452bb1c2ed02e6468be2ebe9b9",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/paired_analysis.json": "de4298821989f3ea504d5834e1d2f7740d47e553f6f72bf2cc2c4fc8e5370680",
+    "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json": "73296a2f3a1dc220a45b5d364d15af42dbef04c2b7a9d996bfc851d76477d21a",
+    "experiments/pcqm_k1_spd_pair_token_100k/source_config.json": "720827ba6d4b4a2f91bfe42b41c149f44a4dcd0cff7e604601a6f105cf4a53b8",
+    "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json": "a3436f117c8c0f4076fcd355cb9f64d290a163fdeaae66e15abfd870754024e7",
+    "experiments/pcqm_k1_spd_pair_token_100k/trajectory.json": "1fa6f24e25724ea8da608867907ab966d00c32b48c0fd39331fb2d60e9f29135"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "candidate-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-spd-pair-token-100k-s42-training",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.3721255697980557
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_spd_pair_token_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "release at most one final distinct allocation candidate after evidence audit"
+    ],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": [
+      "do not retry shortest-path buckets, cutoffs, widths, or seeds; a successor must change allocation semantics"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_spd_pair_token_100k/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "bab0043643b083831ff39835a4dd2ee4d9afe9663853a250a380b8a260833812"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_spd_pair_token_100k/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "de4298821989f3ea504d5834e1d2f7740d47e553f6f72bf2cc2c4fc8e5370680"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_spd_pair_token_100k/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "598af68cdeddb7ec7da29b5319a3b72397fe2c452bb1c2ed02e6468be2ebe9b9"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_spd_pair_token_100k/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "ed557f53f5bf84c167aa2fb8011892659139956dc4dc07b0da7b01bbb047d728"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_spd_pair_token_100k/protocol.md",
+        "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+        "experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+        "experiments/pcqm_k1_spd_pair_token_100k/decision.md",
+        "experiments/pcqm_k1_spd_pair_token_100k/trajectory.json",
+        "experiments/pcqm_k1_spd_pair_token_100k/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-20",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "positive_below_gate",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-22T00:45:12+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-spd-pair-token-100k-s42-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    }
+  ],
+  "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "16da65620d5dae638021d4c62d3d0afb7a30da2d2e67c0bcefcabfdbde2103bc",
+    "comparability_identity": {
+      "architecture_identity": "7403841d2ec6942a04d06baf6b4da65dfeab736500549cb1c8ec928620c9dfe9",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "7403841d2ec6942a04d06baf6b4da65dfeab736500549cb1c8ec928620c9dfe9",
+    "presentation_semantics_ref": "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_spd_pair_token_100k/results/canonical_trace.json",
+    "trace_artifact_sha256": "ed557f53f5bf84c167aa2fb8011892659139956dc4dc07b0da7b01bbb047d728",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-spd-pair-token-100k-s42",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+}
