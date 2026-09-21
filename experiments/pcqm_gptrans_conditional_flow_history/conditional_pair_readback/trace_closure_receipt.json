@@ -1,0 +1,22 @@
+{
+  "arm": "conditional_pair_readback",
+  "canonical_trace_ref": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/canonical_trace.json",
+  "canonical_trace_sha256": "74e0247c3813525f514b4f283172187812afe783ae3d472a756aea0af80655dd",
+  "format": "molgap-rml-retrospective-trace-closure-v1",
+  "independent_finalization": false,
+  "joint_finalization_id": "finalize-8118a4add0079e69115ed723fb28cb3123872988d2c9853fe01e3fb772c35667",
+  "joint_trajectory_id": "TC-gptrans-conditional-flow-100k-s42",
+  "raw_trace_ref": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/trace.json",
+  "raw_trace_sha256": "280db24dd02845a713073613d3ba3a41935d618bd58e1fb5ea6c4ada3b79868c",
+  "record_mode": "retrospective_partial",
+  "replay_blockers": [
+    "retrospective_arm_view_not_independently_frozen",
+    "per_epoch_step_and_sample_counts_not_cumulative_axes"
+  ],
+  "replay_ready": false,
+  "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "trace_manifest_ref": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/trace_manifest.json",
+  "trace_manifest_sha256": "e6603e4a899af939dcc5e425d12e881cf67d287b8a6e391f8d8038bb71f31d06",
+  "trace_status": "available",
+  "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+}

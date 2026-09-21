@@ -2087,8 +2087,44 @@
       ],
       "run_id": "121693799",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_optimizer_step_and_presentation_exposure",
+        "per_epoch_step_and_sample_counts_not_cumulative_axes",
+        "retrospective_arm_view_not_independently_frozen"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_optimizer_step_and_presentation_exposure",
+        "per_epoch_step_and_sample_counts_not_cumulative_axes",
+        "retrospective_arm_view_not_independently_frozen"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "87d6843a9fd1fd67a830c4cf0fc0f68fa3200e6463ce1be8be7982177c3ee3b7"
+  "source_digest": "896b10c9b647549f41f5094d6fdcb7f6e33afc36b3208bb360967b97f10b309c"
 }

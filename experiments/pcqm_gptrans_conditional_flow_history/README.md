@@ -53,10 +53,17 @@ Both arm outcomes are the negative result explicitly recorded in the retained
 joint acceptance and decision, not a newly calculated scientific conclusion.
 No joint cost or role events are copied or split, and no absent event implies
 zero cost or untouched roles. These views have no prospective authority,
-decision-state snapshot, readiness package, or new finalization. No replay
-manifest is registered by this history-only import; automatic replay admission
-is not claimed, and the derived corpus remains untouched.
+decision-state snapshot, readiness package, or new independent finalization.
 
-Tests, RML acceptance/rebuild, training, inference, remote jobs and protected-role
-access were not run. Luna owns validation. Snapshot byte preservation is explicit
-in `.gitattributes`; original records are never rewritten by the generator.
+The follow-up adapter `experiments/_scripts/close_conditional_flow_traces.py`
+uses the fail-closed multi-arm terminal resolver to bind each canonical trace
+to the matching raw trace artifact and SHA256 from the joint evidence. Each arm
+publishes a discovered `trace_manifest.json` and a retrospective closure
+receipt with `trace_status=available`. The manifests remain explicitly
+ineligible for policy backtesting or replay admission because the arm-level
+prospective states were not independently frozen and the retained step/sample
+fields are per-epoch increments rather than cumulative axes.
+
+Training, inference, remote jobs and protected-role access are not part of this
+repair. Snapshot byte preservation is explicit in `.gitattributes`; original
+joint records are never rewritten by either adapter.

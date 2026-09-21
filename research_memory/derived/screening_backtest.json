@@ -25,6 +25,28 @@
       ],
       "run_id": "121693799",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_optimizer_step_and_presentation_exposure",
+        "per_epoch_step_and_sample_counts_not_cumulative_axes",
+        "retrospective_arm_view_not_independently_frozen"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_optimizer_step_and_presentation_exposure",
+        "per_epoch_step_and_sample_counts_not_cumulative_axes",
+        "retrospective_arm_view_not_independently_frozen"
+      ],
+      "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
     }
   ],
   "false_promote_count": null,
@@ -56,5 +78,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 4
+  "trace_count": 6
 }

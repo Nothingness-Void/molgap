@@ -1,15 +1,15 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 13,
+    "trajectories_total": 15,
     "with_complete_native_measurement": 0,
     "with_cost_event": 4,
     "with_incomplete_native_measurement": 4,
-    "without_cost_event": 9
+    "without_cost_event": 11
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 4
+    "WARN": 5
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
@@ -31,7 +31,7 @@
     },
     {
       "code": "historical_partial_record",
-      "count": 11,
+      "count": 13,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -43,7 +43,9 @@
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
-        "TC-gptrans-flow-ablation-100k-s42"
+        "TC-gptrans-flow-ablation-100k-s42",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
       "severity": "WARN"
     },
@@ -60,7 +62,7 @@
     },
     {
       "code": "missing_cost_event",
-      "count": 9,
+      "count": 11,
       "items": [
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
@@ -70,13 +72,15 @@
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
-        "TC-gptrans-flow-ablation-100k-s42"
+        "TC-gptrans-flow-ablation-100k-s42",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 9,
+      "count": 11,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -86,7 +90,18 @@
         "TB-pcqm-scale-transfer-attribution",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
-        "TC-gptrans-flow-ablation-100k-s42"
+        "TC-gptrans-flow-ablation-100k-s42",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
+      "count": 2,
+      "items": [
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
       "severity": "WARN"
     }

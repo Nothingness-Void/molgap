@@ -1,16 +1,16 @@
 {
   "backtest": {
     "eligible": 2,
-    "excluded": 2,
+    "excluded": 4,
     "status": "available"
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 13,
+      "trajectories_total": 15,
       "with_complete_native_measurement": 0,
       "with_cost_event": 4,
       "with_incomplete_native_measurement": 4,
-      "without_cost_event": 9
+      "without_cost_event": 11
     },
     "totals_by_hardware": {
       "IMS_GPU_UNSPECIFIED": {
@@ -229,7 +229,7 @@
     },
     {
       "code": "historical_partial_record",
-      "count": 11,
+      "count": 13,
       "severity": "WARN"
     },
     {
@@ -239,12 +239,17 @@
     },
     {
       "code": "missing_cost_event",
-      "count": 9,
+      "count": 11,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 9,
+      "count": 11,
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
+      "count": 2,
       "severity": "WARN"
     }
   ],
@@ -253,13 +258,13 @@
     "explicit_events": 8,
     "repeatedly_selected": 0
   },
-  "source_digest": "a9eb675b7f0b68ed23a2ff3d4ad9c1713c2fc79b0ee306a09be7b4ad2c2dbca5",
+  "source_digest": "cc951c92b5a17831b5e155837f9d98c77295c4a3574325b7d880837e5a35a07c",
   "trajectories": {
-    "count": 13,
+    "count": 15,
     "outcomes": {
       "CLOSED": 3,
       "INCONCLUSIVE": 1,
-      "NEGATIVE_UNDER_CONTRACT": 4,
+      "NEGATIVE_UNDER_CONTRACT": 6,
       "NO_TRAIN": 2,
       "POSITIVE_UNDER_CONTRACT": 3
     }

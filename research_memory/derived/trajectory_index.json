@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "a9eb675b7f0b68ed23a2ff3d4ad9c1713c2fc79b0ee306a09be7b4ad2c2dbca5",
+  "source_digest": "cc951c92b5a17831b5e155837f9d98c77295c4a3574325b7d880837e5a35a07c",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -221,6 +221,34 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md",
+      "family_id": "gptrans-conditional-relation-flow",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md",
+      "family_id": "gptrans-conditional-relation-flow",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_recurrence/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
     }
   ]
 }

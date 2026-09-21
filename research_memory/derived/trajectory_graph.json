@@ -86,6 +86,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_recurrence/provenance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
@@ -295,6 +315,14 @@
     },
     {
       "id": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+      "type": "trajectory"
+    },
+    {
+      "id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
       "type": "trajectory"
     }
   ]

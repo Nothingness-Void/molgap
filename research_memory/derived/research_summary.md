@@ -7,7 +7,7 @@
 ## Trajectories
 - CLOSED: 3
 - INCONCLUSIVE: 1
-- NEGATIVE_UNDER_CONTRACT: 4
+- NEGATIVE_UNDER_CONTRACT: 6
 - NO_TRAIN: 2
 - POSITIVE_UNDER_CONTRACT: 3
 
@@ -39,16 +39,17 @@
 - not_applicable queue_hours: not applicable (1 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (1 records); measurement_missing=0
 - Measurement-missing cost events: 4
-- Cost-event coverage: 4/13 trajectories; incomplete native measurement=4
+- Cost-event coverage: 4/15 trajectories; incomplete native measurement=4
 
 ## Screening Backtest
 - Status: available
 - Eligible traces: 2
-- Excluded traces: 2
+- Excluded traces: 4
 
 ## Memory Gaps
 - [INFO] trace_unavailable_for_backtest: 9
-- [WARN] historical_partial_record: 11
+- [WARN] historical_partial_record: 13
 - [WARN] incomplete_native_cost_measurement: 4
-- [WARN] missing_cost_event: 9
-- [WARN] missing_explicit_role_identity: 9
+- [WARN] missing_cost_event: 11
+- [WARN] missing_explicit_role_identity: 11
+- [WARN] trajectory_without_v5_evidence: 2

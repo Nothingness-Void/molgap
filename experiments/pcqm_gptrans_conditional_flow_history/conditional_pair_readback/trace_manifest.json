@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "retrospective_arm_view_not_independently_frozen",
+      "per_epoch_step_and_sample_counts_not_cumulative_axes"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "gptrans_t_core_12x256_pair32:conditional_pair_readback:params_5250285",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "ema",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "fp32",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-pcqm-gptrans-conditional-flow-100k-v5",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_60",
+    "x_axis_semantics": "epochs"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_training_contract.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": null,
+    "sample_presentations": null
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "gptrans_t_core_12x256_pair32:conditional_pair_readback:params_5250285",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_training_contract.json",
+  "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+  "run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_evidence_snapshot.json",
+  "trace_artifact_ref": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/canonical_trace.json",
+  "trace_artifact_sha256": "74e0247c3813525f514b4f283172187812afe783ae3d472a756aea0af80655dd",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "trajectory_id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "epochs"
+}
