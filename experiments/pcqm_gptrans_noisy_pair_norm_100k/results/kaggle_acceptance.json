@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pcqm-gptrans-noisy-pair-norm-acceptance-v1",
+  "accepted": true,
+  "best_development_mae_eV": 0.14724504947662354,
+  "best_epoch": 59,
+  "reference_development_mae_eV": 0.15662720430791377,
+  "single_mechanism_development_mae_eV": 0.151784,
+  "gain_over_reference_eV": 0.00938215483129023,
+  "gain_over_single_mechanism_eV": 0.00453895052337646,
+  "material_threshold_eV": 0.003,
+  "decision_under_contract": "POSITIVE_UNDER_CONTRACT",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "best_model_sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+  "trace_sha256": "9bcad05ce2e04c2293d1c1e2300eed3a86ceea6257fe50af6d424f96b86b5d92",
+  "completion_manifest_sha256": "b0b3c29fef04a8413983fc3446f9f650eecad662b0c6649de07f2205686e5024",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

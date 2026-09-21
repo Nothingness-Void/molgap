@@ -35,6 +35,17 @@ def test_exposure_excludes_every_tail_batch():
     assert 500000 - contract['steps_per_epoch'] * 128 == 32
 
 
+def test_joint_regularization_arm_has_truthful_frozen_contract():
+    from molgap.pcqm_500k_v4_evidence import PARAMETERS
+
+    contract = scientific_contract("gptrans_noisy_pair_norm")
+    assert PARAMETERS["gptrans_noisy_pair_norm"] == 5_277_400
+    assert contract["loss_fingerprint"] == (
+        "normalized-gap-l1-plus-noisy-nodes-ce-alpha0.1"
+    )
+    assert contract["sample_exposure"] == 29_998_080
+
+
 def test_schedule_survives_stage_boundaries():
     whole = [schedule(epoch) for epoch in range(60)]
     staged = [schedule(epoch) for start in range(0, 60, 4) for epoch in range(start, start+4)]

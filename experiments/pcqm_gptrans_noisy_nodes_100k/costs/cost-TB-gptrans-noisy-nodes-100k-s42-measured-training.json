@@ -1,0 +1,30 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-noisy-nodes-100k-s42-measured-training",
+  "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42",
+  "action_id": "A001",
+  "run_id": "kaseichou/molgap-pcqm-gptrans-noisy-nodes-s42",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "platform": "kaggle",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "device_hours": {
+      "value": 1.7625,
+      "status": "measured"
+    },
+    "cpu_hours": {
+      "value": null,
+      "status": "not_applicable"
+    },
+    "wall_hours": {
+      "value": 2.054,
+      "status": "measured"
+    },
+    "queue_hours": {
+      "value": null,
+      "status": "not_applicable"
+    }
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json"
+}

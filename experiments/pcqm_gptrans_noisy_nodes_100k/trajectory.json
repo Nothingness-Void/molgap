@@ -1,0 +1,84 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Can auxiliary Noisy Nodes denoising regularization prevent representation collapse and improve 100K development MAE over the frozen GPTrans-T baseline?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-noisy-nodes-100k-s42",
+    "observed_deficiency": "Representation collapse and over-smoothing over extended training steps on PCQM4Mv2 (attribution evidence in pcqm_scale_transfer_attribution).",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "alternative_explanations": [
+      "optimization stagnation without capacity deficiency",
+      "learning rate schedule miscalibration"
+    ],
+    "changed_mechanism": "auxiliary node embedding Gaussian perturbation (std=0.15) with final-layer linear atomic number reconstruction loss (alpha=0.1)",
+    "cheapest_falsifier": "60-epoch 100K/50K V4 run failing to achieve 0.003 eV material gain over the 0.156627 eV baseline (threshold < 0.1536 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-noisy-nodes-100k-s42-expected-training",
+    "decision_changed_if_positive": "advance Noisy Nodes to 500K scale-transfer test",
+    "decision_changed_if_negative": "close Noisy Nodes route at 100K",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "10e1c725b220cadab9f49dcd8c5a56874dfc17b0",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_noisy_nodes_100k/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-t-100k-v4-reference"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_t_100k_v4/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_noisy_nodes_100k/training_contract.json",
+    "source_config_identity": "desktop-gptrans-noisy-nodes-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "kaseichou/molgap-pcqm-gptrans-noisy-nodes-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "10e1c725b220cadab9f49dcd8c5a56874dfc17b0",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-noisy-nodes-100k-s42-measured-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_noisy_nodes_100k/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [
+      "advance_to_500k_scale_transfer"
+    ],
+    "reopen_conditions": []
+  }
+}
