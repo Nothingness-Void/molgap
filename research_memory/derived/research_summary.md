@@ -5,7 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 2
+- ACTIVE: 4
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 5
@@ -31,16 +31,16 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 cpu_hours: not applicable (6 records); measurement_missing=0
-- Tesla_T4 device_hours: measured=3.490500 (2 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 queue_hours: not applicable (6 records); measurement_missing=0
-- Tesla_T4 wall_hours: measured=4.092200 (2 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 cpu_hours: not applicable (8 records); measurement_missing=0
+- Tesla_T4 device_hours: measured=3.490500 (2 measured records), estimated=32.000000 (6 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=6
+- Tesla_T4 wall_hours: measured=4.092200 (2 measured records), estimated=32.000000 (6 estimated records), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (2 records); measurement_missing=0
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- Measurement-missing cost events: 2
-- Cost-event coverage: 8/19 trajectories; incomplete native measurement=6
+- Measurement-missing cost events: 4
+- Cost-event coverage: 10/21 trajectories; incomplete native measurement=8
 
 ## Screening Backtest
 - Status: available
@@ -48,9 +48,9 @@
 - Excluded traces: 2
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 13
+- [INFO] trace_unavailable_for_backtest: 15
 - [WARN] historical_partial_record: 13
-- [WARN] incomplete_native_cost_measurement: 6
+- [WARN] incomplete_native_cost_measurement: 8
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 14
-- [WARN] trajectory_without_v5_evidence: 4
+- [WARN] missing_explicit_role_identity: 16
+- [WARN] trajectory_without_v5_evidence: 6

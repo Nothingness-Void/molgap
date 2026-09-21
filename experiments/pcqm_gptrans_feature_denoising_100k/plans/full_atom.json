@@ -1,0 +1,138 @@
+{
+  "trajectory": {
+    "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "gptrans-feature-denoising",
+    "question": "Does reconstructing all nine OGB atom categories improve the accepted GPTrans Noisy Nodes plus Pair Update Norm comparator?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "observed_deficiency": "Atomic-number-only denoising may discard charge, hybridization, chirality, aromaticity, and hydrogen-count identity during deep propagation.",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "alternative_explanations": [
+        "the accepted gain may already saturate useful node-level regularization",
+        "uniform weighting across categorical atom tasks may add optimization noise"
+      ],
+      "changed_mechanism": "replace atomic-number-only denoising with mean cross entropy over all nine OGB atom categories while retaining node noise and Pair Update Norm",
+      "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 arm failing to improve the accepted comparator by at least 0.003 eV with favorable paired bootstrap",
+      "related_closed_family_ids": [
+        "gptrans-conditional-relation-flow",
+        "gptrans-propagation-flow"
+      ],
+      "expected_native_cost_ref": "cost-TB-gptrans-feature-denoise-full-atom-100k-s42-expected-training",
+      "decision_changed_if_positive": "retain full-atom denoising as one candidate for a separate scale-transfer decision",
+      "decision_changed_if_negative": "close expanded atom-feature denoising without another seed",
+      "historical_unknowns": [
+        "training stochasticity is unavailable and row bootstrap does not estimate it"
+      ]
+    },
+    "state_at_start": {
+      "contract_refs": [
+        "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+        "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TB-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TB-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_feature_denoising_100k/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_feature_denoising_100k/budget_snapshot.json",
+      "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+      "source_config_identity": "gptrans-feature-denoising-ae15157547c09e5e"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "remote_screen_training",
+        "run_ids": [
+          "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom"
+        ],
+        "attempt_ids": [
+          "t4x2-v1"
+        ],
+        "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+          "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md"
+        ],
+        "cost_event_ids": [
+          "cost-TB-gptrans-feature-denoise-full-atom-100k-s42-expected-training"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_feature_denoising_100k/STATUS.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "run the authorized fixed 100K arm",
+        "perform terminal no-inference acceptance and independent RML finalization"
+      ],
+      "reopen_conditions": [
+        "terminal attribution must precede any successor"
+      ]
+    },
+    "comparison_class": "STRICT_CAUSAL",
+    "comparison_readiness_ref": "experiments/pcqm_gptrans_feature_denoising_100k/comparison_plan.json",
+    "comparison_blockers": [],
+    "reference_bundle_id": null
+  },
+  "decision_state": {
+    "available_actions": [
+      "run_full_atom_100k",
+      "no_train"
+    ],
+    "chosen_action": "run_full_atom_100k",
+    "policy_id": "desktop-explicit-bounded-100k-research",
+    "policy_version": "v1",
+    "state_timestamp": "2026-09-22T01:14:32+09:00"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-gptrans-feature-denoise-full-atom-100k-s42-expected-training",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "action_id": "A001",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+      "attempt_id": "t4x2-v1",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "device_hours": {
+          "value": 3.0,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "wall_hours": {
+          "value": 3.0,
+          "status": "estimated"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      },
+      "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json"
+    }
+  ]
+}

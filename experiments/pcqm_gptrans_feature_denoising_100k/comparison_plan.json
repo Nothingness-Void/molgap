@@ -1,0 +1,36 @@
+{
+  "format": "molgap-comparison-plan-v1",
+  "status": "prospective_frozen",
+  "comparison_class": "STRICT_CAUSAL",
+  "reference_evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+  "reference_bundle_id": null,
+  "reference_model_sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+  "reference_contract_sha256": "c385bbcbc76258d11b05c8bd0cfa8cb6ad4545f1cd816fb984a192fa35eed10f",
+  "matched_contract_fields": [
+    "dataset",
+    "row_order",
+    "features_except_declared_auxiliary_targets",
+    "target",
+    "seed",
+    "precision",
+    "optimizer",
+    "schedule",
+    "selection",
+    "sample_exposure",
+    "role_access"
+  ],
+  "declared_intervention_fields": [
+    "auxiliary_reconstruction_scope",
+    "architecture_parameter_count"
+  ],
+  "terminal_requirements": [
+    "runtime_certificate",
+    "finite_aligned_predictions",
+    "reference_prediction_reproduction",
+    "artifact_hashes",
+    "paired_bootstrap",
+    "retention_receipt",
+    "independent_arm_terminal_pipeline"
+  ],
+  "blockers": []
+}

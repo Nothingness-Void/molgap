@@ -128,7 +128,10 @@
       "source_envelope": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
       "track": "B",
       "transfer_status": "qualified_for_500k",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-gptrans-feature-denoise-full-atom-100k-s42",
+        "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      ]
     },
     {
       "artifact_availability": [

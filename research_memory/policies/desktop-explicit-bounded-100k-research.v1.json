@@ -1,0 +1,37 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "desktop-explicit-bounded-100k-research",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "approved",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "action_rule": {
+    "field": "explicit_user_authorization",
+    "operator": "eq",
+    "threshold": true,
+    "action": "RUN_BOUNDED_100K"
+  },
+  "borderline_action": "NO_TRAIN",
+  "required_observable_fields": [
+    "explicit_user_authorization"
+  ],
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": [
+      "No successor cost is inferred from a bounded screen.",
+      "Only observed native hardware cost may be recorded after completion."
+    ]
+  },
+  "created_from_source_digest": "25657ef5395e9917b69773e5abe8ce21046dac18243a36877ace6fdd2e48962c",
+  "approval": {
+    "approved_by": "user",
+    "approved_at": "2026-09-22T01:14:32+09:00",
+    "authority_ref": "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md",
+    "scope": "this explicitly authorized bounded dual-arm 100K research action only"
+  }
+}

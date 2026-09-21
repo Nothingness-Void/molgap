@@ -1,0 +1,68 @@
+{
+  "format": "molgap-pcqm-gptrans-feature-denoising-100k-v5",
+  "common_contract": "MOLGAP-COMMON-V5-FINAL",
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "reference_evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+  "reference_development_gap_mae_eV": 0.14724504947662354,
+  "reference_model_sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+  "candidates": [
+    "full_atom",
+    "full_atom_bond"
+  ],
+  "candidate_parameters": {
+    "full_atom": 5291535,
+    "full_atom_bond": 5291964
+  },
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+  "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "train_role": "official_train_prefix_0_100000",
+  "development_role": "internal_development_100000_150000",
+  "target": "Gap",
+  "metric": "MAE",
+  "unit": "eV",
+  "direction": "minimize",
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "device_count_per_arm": 1,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "epochs": 60,
+  "optimizer_steps_per_epoch": 781,
+  "total_optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "optimizer": "AdamW-lr0.0002-weight_decay0.01-fused_false-foreach_false",
+  "lr_schedule": "five_epoch_linear_warmup_then_cosine_to_0.000002",
+  "target_transform": "official_train_prefix_sample_mean_std_normalization",
+  "selection_fingerprint": "best-development-ema9999-60epochs",
+  "minimum_material_gain_eV": 0.003,
+  "paired_bootstrap_required": true,
+  "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "metric_semantics": {
+    "live_train_metric": {
+      "metric": "normalized_gap_mae",
+      "unit": "normalized_target_unit",
+      "target": "Gap",
+      "role_identity": "official_train_prefix_0_100000",
+      "weights": "live",
+      "direction": "minimize"
+    },
+    "live_dev_metric": null,
+    "ema_dev_metric": {
+      "metric": "MAE",
+      "unit": "eV",
+      "target": "Gap",
+      "role_identity": "internal_development_100000_150000",
+      "weights": "ema",
+      "direction": "minimize"
+    }
+  }
+}
