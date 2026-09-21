@@ -179,6 +179,23 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "external_features": False,
     },
+    "neural_atom_k1_pair_token_oneshot_triplet": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "layer6-one-shot-directed-edge-triplet-plus-accepted-pairtoken",
+        "target_layer": 6,
+        "triplet_channels": 32,
+        "triplet_interaction": "incoming-real-bond-to-outgoing-real-bond",
+        "persistent_triplet_state": False,
+        "direct_node_return": False,
+        "parent_mechanism": "neural_atom_k1_pair_token",
+        "added_parameters": 35_936,
+        "expected_parameters": 3_694_753,
+        "dense_atom_attention": False,
+        "initialization_policy": "nested-function-zero-triplet-and-pairtoken-returns",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -938,6 +955,10 @@ def make_encoder(mode: str):
     if mode in SPD_PAIR_TOKEN_MODES:
         from .k1_spd_pair_token import make_encoder as make_spd_pair_token
         return make_spd_pair_token(mode)
+    from .k1_oneshot_triplet_pair_token import MODES as ONESHOT_TRIPLET_MODES
+    if mode in ONESHOT_TRIPLET_MODES:
+        from .k1_oneshot_triplet_pair_token import make_encoder as make_oneshot_triplet
+        return make_oneshot_triplet(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

@@ -526,6 +526,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as SPD_PAIR_TOKEN_PARAMETERS,
         check_mechanism as check_spd_pair_token,
     )
+    from .k1_oneshot_triplet_pair_token import (
+        MODES as ONESHOT_TRIPLET_MODES,
+        PARAMETERS as ONESHOT_TRIPLET_PARAMETERS,
+        check_mechanism as check_oneshot_triplet,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -536,6 +541,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + MULTIPLICATIVE_PAIR_MODES
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
+        + ONESHOT_TRIPLET_MODES
     )
     import torch
 
@@ -1176,6 +1182,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != SPD_PAIR_TOKEN_PARAMETERS[mode]
         ):
             raise RuntimeError("SPD PairToken parameter identity changed")
+    elif mode in ONESHOT_TRIPLET_MODES:
+        mechanism_checks = check_oneshot_triplet(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != ONESHOT_TRIPLET_PARAMETERS[mode]
+        ):
+            raise RuntimeError("One-shot triplet PairToken parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1215,6 +1228,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         )
     elif mode in SPD_PAIR_TOKEN_MODES:
         candidate_parameters = list(model.relation_token.parameters())
+    elif mode in ONESHOT_TRIPLET_MODES:
+        candidate_parameters = (
+            list(model.triplet_adapter.parameters())
+            + list(model.relation_token.parameters())
+        )
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1389,6 +1407,7 @@ def train_arm(
     from .k1_multiplicative_pair_value import MODES as MULTIPLICATIVE_PAIR_MODES
     from .k1_sparse_triplet import MODES as SPARSE_TRIPLET_MODES
     from .k1_spd_pair_token import MODES as SPD_PAIR_TOKEN_MODES
+    from .k1_oneshot_triplet_pair_token import MODES as ONESHOT_TRIPLET_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1400,6 +1419,7 @@ def train_arm(
         + MULTIPLICATIVE_PAIR_MODES
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
+        + ONESHOT_TRIPLET_MODES
         + MOSE_MODES
     )
 
@@ -1415,7 +1435,7 @@ def train_arm(
     roles = load_roles(
         root,
         manifest,
-        retain_wedge_topology=mode in SPARSE_TRIPLET_MODES,
+        retain_wedge_topology=mode in SPARSE_TRIPLET_MODES + ONESHOT_TRIPLET_MODES,
     )
     functional_group_manifest = None
     if mode in FUNCTIONAL_GROUP_MODES + CHEM_TYPED_PAIR_MODES:
