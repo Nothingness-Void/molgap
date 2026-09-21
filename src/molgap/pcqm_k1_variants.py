@@ -80,6 +80,23 @@ ARCHITECTURE_CONFIGS = {
         "initialization_policy": "nested-function",
         "geometry": False,
     },
+    "neural_atom_k1_pair_token_mose": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "accepted-layer6-pairtoken-plus-zero-return-mose31-node-view",
+        "target_layer": 6,
+        "pair_channels": 32,
+        "rwse_channels": 16,
+        "mose_channels": 31,
+        "mose_residual_mlp": "linear31x64-silu-linear64x192-zero-output",
+        "parent_mechanism": "neural_atom_k1_pair_token",
+        "added_parameters_vs_parent": 14_528,
+        "expected_parameters": 3_696_193,
+        "initialization_policy": "exact-pairtoken-function-zero-mose-return",
+        "prediction_fusion": False,
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_pair_token_node_return": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -959,6 +976,10 @@ def make_encoder(mode: str):
     if mode in ONESHOT_TRIPLET_MODES:
         from .k1_oneshot_triplet_pair_token import make_encoder as make_oneshot_triplet
         return make_oneshot_triplet(mode)
+    from .k1_pair_token_mose import MODES as PAIR_TOKEN_MOSE_MODES
+    if mode in PAIR_TOKEN_MOSE_MODES:
+        from .k1_pair_token_mose import make_encoder as make_pair_token_mose
+        return make_pair_token_mose(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 

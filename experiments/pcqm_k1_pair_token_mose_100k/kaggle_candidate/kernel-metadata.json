@@ -1,0 +1,19 @@
+{
+  "id": "nvoid912/molgap-k1-pairtoken-mose-s42",
+  "title": "MolGap K1 PairToken MoSE S42",
+  "code_file": "run_candidate.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nvoid912/molgap-k1-pairtoken-mose-source",
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+    "nvoid912/molgap-pcqm-k1-mose-cache-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

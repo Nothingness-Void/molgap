@@ -99,10 +99,12 @@ MOSE_REPLACEMENT_MODES = (
     "neural_atom_k1_mose",
     "neural_atom_k1_mose_hidden_bn",
 )
-MOSE_DUAL_MODES = (
+MOSE_GATED_DUAL_MODES = (
     "neural_atom_k1_rwse_mose_residual_gate",
     "neural_atom_k1_rwse_mose_context_gate",
 )
+MOSE_PAIR_TOKEN_MODES = ("neural_atom_k1_pair_token_mose",)
+MOSE_DUAL_MODES = MOSE_GATED_DUAL_MODES + MOSE_PAIR_TOKEN_MODES
 MOSE_MODES = MOSE_REPLACEMENT_MODES + MOSE_DUAL_MODES
 TARGET_FINGERPRINT = _hash_mapping(
     {"name": "pcqm4mv2-homo-lumo-gap", "column": "gap", "unit": "eV"}
@@ -531,6 +533,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as ONESHOT_TRIPLET_PARAMETERS,
         check_mechanism as check_oneshot_triplet,
     )
+    from .k1_pair_token_mose import (
+        MODES as PAIR_TOKEN_MOSE_MODES,
+        PARAMETERS as PAIR_TOKEN_MOSE_PARAMETERS,
+        check_mechanism as check_pair_token_mose,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -542,6 +549,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
+        + PAIR_TOKEN_MOSE_MODES
     )
     import torch
 
@@ -579,7 +587,32 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         }
         if mechanism_checks != expected_checks:
             raise RuntimeError(f"MoSE feature invariant failed: {mechanism_checks}")
-    elif mode in MOSE_DUAL_MODES:
+    elif mode in PAIR_TOKEN_MOSE_MODES:
+        with torch.no_grad():
+            baseline_prediction = baseline(
+                batch.x,
+                batch.edge_index,
+                batch.edge_attr,
+                batch.batch,
+                batch.random_walk_pe[:, :16],
+            ).view(-1)
+            candidate_prediction = _forward(model, batch)
+        exact_nested_initialization = bool(
+            torch.equal(baseline_prediction, candidate_prediction)
+        )
+        mechanism_checks = check_pair_token_mose(model, batch)
+        mechanism_checks["exact_k1_output"] = exact_nested_initialization
+        if (
+            mechanism_checks.get("combined_input_shape")
+            != [int(batch.num_nodes), 47]
+            or exact_nested_initialization is not True
+            or sum(parameter.numel() for parameter in model.parameters())
+            != PAIR_TOKEN_MOSE_PARAMETERS[mode]
+        ):
+            raise RuntimeError(
+                f"PairToken+MoSE preflight identity failed: {mechanism_checks}"
+            )
+    elif mode in MOSE_GATED_DUAL_MODES:
         with torch.no_grad():
             baseline_prediction = baseline(
                 batch.x,
@@ -1233,6 +1266,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             list(model.triplet_adapter.parameters())
             + list(model.relation_token.parameters())
         )
+    elif mode in PAIR_TOKEN_MOSE_MODES:
+        candidate_parameters = (
+            list(model.mose_residual.parameters())
+            + list(model.relation_token.parameters())
+        )
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1285,7 +1323,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     )
     if not candidate_trainable:
         raise RuntimeError(f"Candidate-only mechanism has no finite gradient: {mode}")
-    if mode in MOSE_DUAL_MODES:
+    if mode in MOSE_GATED_DUAL_MODES:
         residual_trainable = any(
             parameter.grad is not None
             and bool(torch.isfinite(parameter.grad).all())
@@ -1302,6 +1340,29 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         mechanism_checks["gate_trainable_after_two_steps"] = gate_trainable
         if not residual_trainable or not gate_trainable:
             raise RuntimeError("Selective MoSE residual or gate has no finite gradient")
+    if mode in PAIR_TOKEN_MOSE_MODES:
+        mose_residual_trainable = any(
+            parameter.grad is not None
+            and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.mose_residual.parameters()
+        )
+        pair_token_trainable = any(
+            parameter.grad is not None
+            and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.relation_token.parameters()
+        )
+        mechanism_checks["mose_residual_trainable_after_two_steps"] = (
+            mose_residual_trainable
+        )
+        mechanism_checks["pair_token_trainable_after_two_steps"] = (
+            pair_token_trainable
+        )
+        if not mose_residual_trainable or not pair_token_trainable:
+            raise RuntimeError(
+                "PairToken or MoSE residual has no finite gradient after two steps"
+            )
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     if (
         mode in MOSE_MODES

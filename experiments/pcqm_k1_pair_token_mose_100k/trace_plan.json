@@ -1,0 +1,14 @@
+{
+  "format": "molgap-v5-trace-plan-v1",
+  "optimizer_step": true,
+  "sample_presentations": true,
+  "epoch_or_pass": true,
+  "learning_rate": true,
+  "live_train_metric": true,
+  "live_dev_metric": true,
+  "ema_dev_metric": false,
+  "checkpoint_identity": true,
+  "atomic_checkpoint_every_epochs": 1,
+  "retrievable_recovery_chunk_every_epochs": 10
+}
+
