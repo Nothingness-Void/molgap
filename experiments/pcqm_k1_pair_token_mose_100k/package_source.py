@@ -19,7 +19,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
-        "--dataset-id", default="nvoid912/molgap-k1-pairtoken-mose-source"
+        "--dataset-id", default="kaseichou/molgap-k1-pairtoken-mose-source"
     )
     args = parser.parse_args()
     status = subprocess.check_output(

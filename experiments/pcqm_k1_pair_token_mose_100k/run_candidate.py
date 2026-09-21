@@ -26,7 +26,7 @@ def main() -> None:
         raise FileNotFoundError("Accepted fixed cache is incomplete")
     os.environ["MOLGAP_FIXED_CACHE_ROOT"] = str(cache_root)
     os.environ["MOLGAP_PLATFORM_ID"] = os.environ.get(
-        "MOLGAP_PLATFORM_ID", "kaggle3"
+        "MOLGAP_PLATFORM_ID", "kaggle2"
     )
     sys.path.insert(0, str(source_root / "src"))
 

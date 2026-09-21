@@ -84,6 +84,6 @@ def test_mechanism_invariants():
 
 def test_kaggle3_binding():
     metadata = json.loads((ROOT / "kaggle_candidate/kernel-metadata.json").read_text())
-    assert metadata["id"] == "nvoid912/molgap-k1-pairtoken-mose-s42"
+    assert metadata["id"] == "kaseichou/molgap-k1-pairtoken-mose-s42"
     assert metadata["machine_shape"] == "NvidiaTeslaT4"
-    assert "nvoid912/molgap-pcqm-k1-mose-cache-v1" in metadata["dataset_sources"]
+    assert "kaseichou/molgap-pcqm-k1-mose-cache-v1" in metadata["dataset_sources"]

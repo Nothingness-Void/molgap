@@ -151,10 +151,10 @@ def main() -> None:
         "cost_event_id": "cost-TC-k1-pair-token-mose-100k-s42-training",
         "trajectory_id": TRAJECTORY_ID,
         "action_id": "A001",
-        "run_id": "nvoid912/molgap-k1-pairtoken-mose-s42:v1-planned",
+        "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1-planned",
         "attempt_id": "candidate-v1-planned",
         "category": "training",
-        "platform": "kaggle3",
+        "platform": "kaggle2",
         "hardware": "Tesla_T4_16GB",
         "measurement": {
             "device_hours": {"value": 3.0, "status": "estimated"},
@@ -224,7 +224,7 @@ def main() -> None:
             {
                 "action_id": "A001",
                 "type": "planned_candidate_only_seed42_100k_screen",
-                "run_ids": ["nvoid912/molgap-k1-pairtoken-mose-s42:v1-planned"],
+                "run_ids": ["kaseichou/molgap-k1-pairtoken-mose-s42:v1-planned"],
                 "attempt_ids": ["candidate-v1-planned"],
                 "source_commit": source_commit,
                 "evidence_refs": [

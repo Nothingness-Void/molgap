@@ -56,7 +56,7 @@ def main() -> None:
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("Exactly one visible CUDA accelerator is required")
     print(json.dumps({"device": torch.cuda.get_device_name(0)}), flush=True)
-    os.environ["MOLGAP_PLATFORM_ID"] = "kaggle3"
+    os.environ["MOLGAP_PLATFORM_ID"] = "kaggle2"
     from molgap.pcqm_k1_variants_runner import train_arm
 
     train_arm(
