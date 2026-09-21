@@ -65,6 +65,10 @@ NOISE_STD = 0.15
 AUXILIARY_WEIGHT = 0.10
 CHECKPOINT_FORMAT = "molgap-gptrans-feature-denoising-checkpoint-v1"
 RUN_FORMAT = "molgap-gptrans-feature-denoising-result-v1"
+REFERENCE_MODEL_SHA256 = (
+    "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092"
+)
+REFERENCE_DEVELOPMENT_MAE_EV = 0.14724504947662354
 
 
 def _scientific_fields(arm: str) -> dict:
@@ -609,11 +613,84 @@ def run_training(
     return completion
 
 
+def run_reference_evaluation(
+    *,
+    dataset_root: Path,
+    manifest_path: Path,
+    reference_model_path: Path,
+    output: Path,
+    source_commit: str,
+) -> dict:
+    """Materialize row-aligned predictions from the accepted strict comparator."""
+    configure_fp32_determinism(SEED)
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise RuntimeError("Reference evaluation requires one visible CUDA device")
+    if sha256_file(reference_model_path) != REFERENCE_MODEL_SHA256:
+        raise RuntimeError("Accepted reference checkpoint hash changed")
+    assets = validate_fixed_assets(dataset_root, manifest_path, verify_content=True)
+    train_graphs, train_shards = _load_datasets(assets.train_paths)
+    development_graphs, _ = _load_datasets(assets.development_paths)
+    if len(train_graphs) != TRAIN_ROWS or len(development_graphs) != DEVELOPMENT_ROWS:
+        raise RuntimeError("Reference role count changed")
+    mean_value, std_value = _target_stats(train_shards)
+    mean = torch.tensor(mean_value, device="cuda")
+    std = torch.tensor(std_value, device="cuda")
+
+    model = make_noisy_nodes_pair_norm_model().to("cuda")
+    accepted_state = torch_load_compat(
+        reference_model_path, map_location="cuda", weights_only=False
+    )
+    if not isinstance(accepted_state, dict):
+        raise RuntimeError("Accepted reference checkpoint is not a state dictionary")
+    model.load_state_dict(accepted_state, strict=True)
+    ema = ExponentialMovingAverage(model)
+    ema.load_state_dict(accepted_state)
+    development = _evaluate(model, ema, development_graphs, mean, std)
+    observed = float(development["mae_eV"])
+    if abs(observed - REFERENCE_DEVELOPMENT_MAE_EV) > 1e-8:
+        raise RuntimeError(
+            "Accepted reference development MAE changed: "
+            f"{observed} != {REFERENCE_DEVELOPMENT_MAE_EV}"
+        )
+
+    output.mkdir(parents=True, exist_ok=True)
+    predictions_path = output / "development_predictions.pt"
+    atomic_torch_save(
+        predictions_path,
+        {
+            "prediction_eV": development["prediction_eV"],
+            "target_eV": development["target_eV"],
+            "source_idx": development["source_idx"],
+            "reference_evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+            "reference_model_sha256": REFERENCE_MODEL_SHA256,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+            "test_challenge_role_read": False,
+        },
+    )
+    completion = {
+        "format": "molgap-gptrans-feature-denoising-reference-eval-v1",
+        "complete": True,
+        "reference_evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+        "reference_model_sha256": REFERENCE_MODEL_SHA256,
+        "development_predictions_sha256": sha256_file(predictions_path),
+        "development_mae_eV": observed,
+        "rows": DEVELOPMENT_ROWS,
+        "manifest_sha256": MANIFEST_SHA256,
+        "source_commit": source_commit,
+        "official_validation_role_read": False,
+        "test_dev_role_read": False,
+        "test_challenge_role_read": False,
+    }
+    atomic_json(output / "completion_manifest.json", completion)
+    return completion
+
+
 def main() -> None:
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arm", choices=ARMS, required=True)
+    parser.add_argument("--arm", choices=ARMS)
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--manifest-path", type=Path, required=True)
     parser.add_argument("--source-archive", type=Path, required=True)
@@ -621,7 +698,20 @@ def main() -> None:
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--platform-id", default="kaggle1-t4x2")
+    parser.add_argument("--reference-model", type=Path)
     args = parser.parse_args()
+    if args.reference_model is not None:
+        result = run_reference_evaluation(
+            dataset_root=args.dataset_root,
+            manifest_path=args.manifest_path,
+            reference_model_path=args.reference_model,
+            output=args.output,
+            source_commit=args.source_commit,
+        )
+        print(json.dumps(result, indent=2), flush=True)
+        return
+    if args.arm is None:
+        parser.error("--arm is required unless --reference-model is supplied")
     run_preflight(
         arm=args.arm,
         dataset_root=args.dataset_root,

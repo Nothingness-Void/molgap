@@ -3,6 +3,8 @@ from molgap.gptrans_feature_denoising import (
     ATOM_FEATURE_DIMS,
     BOND_FEATURE_DIMS,
     EXPECTED_PARAMETERS,
+    REFERENCE_DEVELOPMENT_MAE_EV,
+    REFERENCE_MODEL_SHA256,
     _scientific_fields,
 )
 
@@ -35,3 +37,10 @@ def test_bond_arm_changes_only_denoising_scope():
     atom_bond = _scientific_fields("full_atom_bond")
     changed = {key for key in atom if atom[key] != atom_bond[key]}
     assert changed == {"model_id", "loss_fingerprint"}
+
+
+def test_strict_reference_identity_is_frozen():
+    assert REFERENCE_MODEL_SHA256 == (
+        "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092"
+    )
+    assert REFERENCE_DEVELOPMENT_MAE_EV == 0.14724504947662354
