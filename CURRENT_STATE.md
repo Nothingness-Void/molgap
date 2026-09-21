@@ -45,15 +45,22 @@ contract.
 
 ## Discovery state
 
-The first round of a newly authorized, at-most-three-round K1 sequence is
-frozen prospectively under `experiments/pcqm_k1_sparse_triplet_100k/`. It adds
-one 16-channel persistent state for every complete directed non-backtracking
-real-bond triplet at all nine local layers, with zero-initialized returns to
-EdgeState and the center node. It is pure 2D and exactly K1 at initialization.
-This round was selected because the earlier pure-2D sparse-wedge mechanism was
-directionally positive in three seeds, whereas shortest-path mechanisms were
-weak or negative. No SPD or second successor is released until this round has
-a terminal RML decision.
+Round 1 of the newly authorized, at-most-three-round K1 sequence is closed.
+The pure-2D sparse-triplet candidate was exactly K1 at initialization and
+completed the fixed V5 screen, but reached `0.1424927413 eV`, worse than K1 by
+`0.0011191070 eV`; its paired interval was entirely unfavorable. It fit the
+training role more strongly and helped the hardest K1-error quintiles while
+damaging easier rows, so full-depth triplet state is an allocation/overfit
+failure rather than a missing-topology win. It is now a fourth complete
+candidate in the RML replay pool. Authority:
+`experiments/pcqm_k1_sparse_triplet_100k/decision.md`.
+
+Round 2 is released as a narrower Graphormer-SPD question: retain the accepted
+layer-6 PairToken value and return path, and add only a small shortest-path
+bucket bias to pair-selection logits. It must not aggregate path values,
+restore dense atom attention, or add another persistent state. This separates
+the useful hypothesis—chemical distance may guide selection—from the closed
+uniform and learned path-message mechanisms.
 
 The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
 FP32, BS128 contract and passed no-inference terminal acceptance. It reached

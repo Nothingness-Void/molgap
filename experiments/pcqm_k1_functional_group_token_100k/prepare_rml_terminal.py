@@ -32,6 +32,7 @@ REFERENCE_REL = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference"
 RECORD_ROOT = REPO_ROOT / "platforms/_records/kaggle/training/pcqm_k1_functional_group_token_s42_v1"
 CANDIDATE_ROOT = RECORD_ROOT / "pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token"
 RAW_ACCEPTANCE = RESULTS / "raw_acceptance.json"
+SOURCE_ACCEPTANCE_REL = "results/raw_acceptance.json"
 TRAJECTORY_ID = "TC-k1-functional-group-token-100k-s42"
 RUN_ID = "kaseichou/molgap-k1-functional-group-token-s42:v1"
 CONTRACT_RUN_ID = "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_functional_group_token"
@@ -464,7 +465,7 @@ def main() -> None:
         "evidence_id": evidence["evidence_id"], "run_id": RUN_ID,
         "outcome": outcome, "trajectory_decision": decision, "role_use": role_use,
         "costs": [cost], "roles": roles,
-        "source_acceptance_ref": rel("results/raw_acceptance.json"),
+        "source_acceptance_ref": rel(SOURCE_ACCEPTANCE_REL),
         "source_acceptance_sha256": file_digest(RAW_ACCEPTANCE),
     }
     write(RESULTS / "terminal_acceptance.json", terminal_acceptance)

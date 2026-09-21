@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "b3febf7225b60640f49e00e4489c2ac4299b0f47689a07d1e335681e497cb8c3"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "10123c558a0d76d1ca1a568e88fcc67f0dddeaf922f9f4c9f7c2170fbbdea1be"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "65cbc205c5cca6e1755e6497733d0c577e532fba904ad3175014b1d069543b25"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_sparse_triplet_100k/protocol.md",
+      "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json",
+      "experiments/pcqm_k1_sparse_triplet_100k/source_config.json",
+      "experiments/pcqm_k1_sparse_triplet_100k/decision.md",
+      "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json",
+      "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-20",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "negative",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

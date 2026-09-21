@@ -1,0 +1,256 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_sparse_triplet_100k/decision.md": "a5330b9dbc27cd1d9e67e465c6be39feb3cd0bf90ca483e17f8c6abb681a1d75",
+    "experiments/pcqm_k1_sparse_triplet_100k/protocol.md": "c8d57921a6cd9e50385d4bdb7fe627fd986b9313dec7d5a388d0f451e9ccfdce",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/acceptance_summary.json": "b3febf7225b60640f49e00e4489c2ac4299b0f47689a07d1e335681e497cb8c3",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/canonical_trace.json": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json": "65cbc205c5cca6e1755e6497733d0c577e532fba904ad3175014b1d069543b25",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/paired_analysis.json": "10123c558a0d76d1ca1a568e88fcc67f0dddeaf922f9f4c9f7c2170fbbdea1be",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json": "d4a3e25f524f42d54939cc0e9ab580a8db96b6d6bcbb365ffbba002207a659bc",
+    "experiments/pcqm_k1_sparse_triplet_100k/source_config.json": "18bfbc87609dc112556c2b487fc5546a4f837feb0896ff25f771e532b1dcd0c2",
+    "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json": "5a611632726cabadf340f5757d137776f489694aedec83a1bbce792f724bd74d",
+    "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json": "a755ae5911da743a70da4b5ed10ae8c3013c8853a27a05a47e34a71181ada480"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "candidate-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-sparse-triplet-100k-s42-training",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.7559011768280544
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_sparse_triplet_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a successor must avoid persistent full-depth triplet state and be released under a new prospective trajectory"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "b3febf7225b60640f49e00e4489c2ac4299b0f47689a07d1e335681e497cb8c3"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "10123c558a0d76d1ca1a568e88fcc67f0dddeaf922f9f4c9f7c2170fbbdea1be"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "65cbc205c5cca6e1755e6497733d0c577e532fba904ad3175014b1d069543b25"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_sparse_triplet_100k/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_sparse_triplet_100k/protocol.md",
+        "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json",
+        "experiments/pcqm_k1_sparse_triplet_100k/source_config.json",
+        "experiments/pcqm_k1_sparse_triplet_100k/decision.md",
+        "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json",
+        "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-20",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "negative",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-21T14:15:00+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+    }
+  ],
+  "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "f878b60475e69d35ebf2430b7142b5ca41c76c308ddbcddfbcd6f5bc012fe883",
+    "comparability_identity": {
+      "architecture_identity": "7dec6916119d796e26355dea9860256b169399eb3c73b3788a4d91c4ed4f8051",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "7dec6916119d796e26355dea9860256b169399eb3c73b3788a4d91c4ed4f8051",
+    "presentation_semantics_ref": "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/canonical_trace.json",
+    "trace_artifact_sha256": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-sparse-triplet-100k-s42",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+}

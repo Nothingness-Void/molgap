@@ -1,0 +1,102 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "candidate-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-sparse-triplet-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_sparse_triplet_100k/source_config.json"
+      ],
+      "run_ids": [
+        "nvoid912/molgap-k1-sparse-triplet-s42:v1"
+      ],
+      "source_commit": "2fef556713f70e2d7208879cab544e137329cbee",
+      "type": "planned_candidate_only_seed42_100k_screen"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_sparse_triplet_100k/STATUS.md",
+    "next_allowed_actions": [
+      "submit exactly one frozen candidate job after packaging checks"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal attribution must precede any successor"
+    ]
+  },
+  "family_id": "k1-sparse-triplet",
+  "hypothesis": {
+    "alternative_explanations": [
+      "the prior sparse-wedge improvement may be specific to its GPS-heavy parent",
+      "persistent triplet updates may add optimization cost without information beyond K1 EdgeState"
+    ],
+    "changed_mechanism": "a 16-channel persistent state on every complete directed non-backtracking bond triplet, returned to real-bond EdgeState and the center node",
+    "cheapest_falsifier": "one seed-42 fixed PCQM-100K candidate-only screen against the reusable K1 reference",
+    "decision_changed_if_negative": "close this K1 sparse-triplet transplant and re-analyze whether Graphormer SPD offers a distinct falsifier",
+    "decision_changed_if_positive": "retain sparse triplet state as a seed-42 shortlist and require separate scale authority",
+    "expected_native_cost_ref": "cost-TC-k1-sparse-triplet-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and is not inferred from account identity"
+    ],
+    "hypothesis_id": "H-TC-k1-sparse-triplet-100k-s42",
+    "observed_deficiency": "K1 has persistent real-bond state but no persistent state for adjacent bond-pair interactions; the earlier pure-2D sparse-wedge mechanism improved its paired comparator in three seeds.",
+    "related_closed_family_ids": [
+      "k1-uniform-global-return",
+      "k1-inverse-global-return",
+      "k1-molecule-context-gate",
+      "k1-induced-pair-token",
+      "shortest-path-attention"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-multiplicative-pair-value-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does persistent topology-only triplet state improve the frozen K1 reference?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-sparse-triplet-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_sparse_triplet_100k/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_sparse_triplet_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-v4-100k-reference-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-multiplicative-pair-value-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-multiplicative-pair-value-100k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_sparse_triplet_100k/role_plan.json"
+    ],
+    "source_commit": "2fef556713f70e2d7208879cab544e137329cbee",
+    "source_config_identity": "7dec6916119d796e26355dea9860256b169399eb3c73b3788a4d91c4ed4f8051"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+}

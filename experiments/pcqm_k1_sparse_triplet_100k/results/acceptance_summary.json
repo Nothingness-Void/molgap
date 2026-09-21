@@ -1,0 +1,40 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "2fd6521e4f026fdc29326192b388f9ee85bf5740233b0d85e4217603598da331",
+    "best_development_payload.pt": "dd68d22741f2e90bb7697b5f8e8011fe94a72e05871a67bf527f09609a4f7db2",
+    "best_model.pt": "07f732dc57b3f67b85eab0b7092f631bb89bb0684e97eeb9a9ca27c19a118a27",
+    "last_checkpoint.pt": "f878b60475e69d35ebf2430b7142b5ca41c76c308ddbcddfbcd6f5bc012fe883",
+    "preflight.json": "a3d087ca0d7a55c61a4fd0a8d60fe74db987e29d291643f314ada7a98a72cc25",
+    "recovery_epoch_10.tar": "ec39cac696aedd9951b6421ecad3ecc7d146105fe7f053381dfee11cbabc77b0",
+    "recovery_epoch_20.tar": "8cb9ca729860cead86c1c7a2b013140fcad2103effd2692966b68af0b31b74a2",
+    "recovery_epoch_30.tar": "31f49e57144b91788fb1788848e14b35e678cfdd2bb9ef8e0692326c691eda1f",
+    "recovery_epoch_40.tar": "e0d72cc1fade7503572262307b62828fb87ae199b8093631721d6a0cf273bdb3",
+    "runtime_certificate.json": "a246d6cc9a81e6e46f1eb9874804b79004e35aac4d5becad155c7546390408f5",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "29d8e0c53bd1dd0e6ce62401e5382a4aaab730f35fb26100635b645cb3396ee0"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "best_model_sha256": "07f732dc57b3f67b85eab0b7092f631bb89bb0684e97eeb9a9ca27c19a118a27",
+    "checkpoint_sha256": "f878b60475e69d35ebf2430b7142b5ca41c76c308ddbcddfbcd6f5bc012fe883",
+    "development_gap_mae_eV": 0.14249274134635925,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 158.0311059145249,
+    "mean_graphs_per_second": 632.5843220642283,
+    "optimizer_steps": 31240,
+    "parameter_count": 3766001,
+    "payload_sha256": "dd68d22741f2e90bb7697b5f8e8011fe94a72e05871a67bf527f09609a4f7db2",
+    "peak_allocated_mib": 749.88916015625,
+    "peak_reserved_mib": 802.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_sparse_triplet_100k/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "e7bb3338ea6c5b41fe5d085290c90810a6307e4a3846d38e2b59333a867a230d",
+  "source_commit": "2fef556713f70e2d7208879cab544e137329cbee"
+}

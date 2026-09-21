@@ -1,0 +1,43 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-87eefe201a715382f9bedc01e218e1f427504f19d7a911b2a84864f50b06f39a",
+  "finalized_at": "2026-09-21T14:15:00+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_sparse_triplet_100k/decision.md": "a5330b9dbc27cd1d9e67e465c6be39feb3cd0bf90ca483e17f8c6abb681a1d75",
+    "experiments/pcqm_k1_sparse_triplet_100k/protocol.md": "c8d57921a6cd9e50385d4bdb7fe627fd986b9313dec7d5a388d0f451e9ccfdce",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/acceptance_summary.json": "b3febf7225b60640f49e00e4489c2ac4299b0f47689a07d1e335681e497cb8c3",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/canonical_trace.json": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/comparison_readiness.json": "65cbc205c5cca6e1755e6497733d0c577e532fba904ad3175014b1d069543b25",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/paired_analysis.json": "10123c558a0d76d1ca1a568e88fcc67f0dddeaf922f9f4c9f7c2170fbbdea1be",
+    "experiments/pcqm_k1_sparse_triplet_100k/results/terminal_acceptance.json": "d4a3e25f524f42d54939cc0e9ab580a8db96b6d6bcbb365ffbba002207a659bc",
+    "experiments/pcqm_k1_sparse_triplet_100k/source_config.json": "18bfbc87609dc112556c2b487fc5546a4f837feb0896ff25f771e532b1dcd0c2",
+    "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json": "5a611632726cabadf340f5757d137776f489694aedec83a1bbce792f724bd74d",
+    "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json": "a755ae5911da743a70da4b5ed10ae8c3013c8853a27a05a47e34a71181ada480"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-sparse-triplet-100k-s42-training.json": "adc7d649e976a1cba7985ec11a91bdac5e50e57dd07cf1e5d0f8e8c09e2962e4",
+    "prospective_snapshot.json": "a755ae5911da743a70da4b5ed10ae8c3013c8853a27a05a47e34a71181ada480",
+    "roles/role-TC-k1-sparse-triplet-100k-s42-labels-read.json": "f7c0c5db73be2cf8c6c8636287a4dabc16e8553e11705d8c5dd8850f86f2c8fb",
+    "roles/role-TC-k1-sparse-triplet-100k-s42-metric-computed.json": "2eeb54a05467b59b9079af8a6381c2e7abe3e125a5c8f3c88fb2e5f10cbfcbe1",
+    "roles/role-TC-k1-sparse-triplet-100k-s42-prediction-input.json": "eea2b4be3acfffbb065c27a14a10251645faa0b8155724258882fe9f97690439",
+    "roles/role-TC-k1-sparse-triplet-100k-s42-selection-used.json": "221f58e9f4cbf185c028d83bd06635a40f9f1b0e5ce73456d2c15a44e93e0d70",
+    "roles/role-TC-k1-sparse-triplet-100k-s42-training-membership.json": "40153df1dd494ac0bfb94c449c27d1210fb4f61d3ffd5ad3e6044767d72e32ec",
+    "terminal_input.json": "5027e554315cfdc42de7f5500ba6395ecb84ba84c77b5c4e5bb3bcd52c77cf81",
+    "trace.json": "04efc20d9a75c9782f3f5005fc45b848e34f68687651165b942eff019e250e8f",
+    "trace_manifest.json": "e003bb6c26a6f1891dd6a6eb6886de2a0916019b02b70857970d8c011d0ce706",
+    "trajectory.json": "860f660228b669fb4bf6af78a7a9e5080026ddcaf2999c78395efd1ca48a3ff8",
+    "v5_evidence.json": "cdfc017e3ec6a28cbb820e394ae47ad66b2774b2fb700f73ca95c1d486f037c9"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-sparse-triplet-100k-s42-training.json": "experiments/pcqm_k1_sparse_triplet_100k/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_sparse_triplet_100k/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "87eefe201a715382f9bedc01e218e1f427504f19d7a911b2a84864f50b06f39a",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-sparse-triplet-100k-s42"
+}

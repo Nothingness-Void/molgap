@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "4902f6a14ca534bc903fc8f5465e8b797d3e7fd17c287cd38fc8929e50720211",
+  "source_digest": "9a5cb18549f5b6558ca0a14bafd45ef36eb1b09383ba885e90c1baef214d112c",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -250,16 +250,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_sparse_triplet_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_sparse_triplet_100k/decision.md",
       "family_id": "k1-sparse-triplet",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_sparse_triplet_100k/trajectory.json",
+      "record_path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-sparse-triplet-100k-s42"
       ],
