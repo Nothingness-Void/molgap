@@ -14,7 +14,7 @@ from molgap.constants import REPO_ROOT
 from molgap.v4_bundle import build_v4_source_bundle
 
 
-SOURCE_COMMIT = "ae15157547c09e5e08db40a19f7442bfecd122dd"
+SOURCE_COMMIT = "c1a3060b45dde870d8fd2ee1398d910d000f7921"
 KERNEL_SLUG = "molgap-pcqm-gptrans-feature-denoise-s42"
 DATASET_REF = "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
 REFERENCE_REF = "nothingnessvoid/molgap-gptrans-noisy-pair-norm-reference-s42-v1"
