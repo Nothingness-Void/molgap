@@ -170,7 +170,7 @@ class GPTransNoisyNodes(OGBGPTransTiny):
         )
         for block in self.blocks:
             node, pair = block(node, pair, key_padding_mask)
-        graph_state = torch.cat((node[:, 0], pair[:, :, 0, 0]), dim=-1)
+        graph_state = self._pool_graph_state(node, pair, node_mask)
         prediction = self.readout(graph_state)
 
         if not return_aux_loss or not self.training or self.loss_weight <= 0.0:

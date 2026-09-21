@@ -145,6 +145,7 @@ class OGBGPTransTiny(nn.Module):
         drop_path: float = 0.1,
         layer_scale: float = 1.0,
         n_targets: int = 1,
+        readout_mode: str = "virtual",
     ) -> None:
         super().__init__()
         from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
@@ -156,6 +157,10 @@ class OGBGPTransTiny(nn.Module):
         self.node_channels = int(node_channels)
         self.pair_channels = int(pair_channels)
         self.shortest_path_cap = int(shortest_path_cap)
+        self.readout_mode = str(readout_mode)
+        if self.readout_mode not in {"virtual", "dual_stream_mean", "dual_stream_attentive"}:
+            raise ValueError(f"Unknown readout_mode: {self.readout_mode}")
+
         self.atom_encoder = AtomEncoder(node_channels)
         self.bond_encoder = BondEncoder(pair_channels)
         self.in_degree_encoder = nn.Embedding(512, node_channels)
@@ -177,8 +182,20 @@ class OGBGPTransTiny(nn.Module):
             )
             for index in range(num_layers)
         )
+        if self.readout_mode == "dual_stream_attentive":
+            self.pool_gate = nn.Sequential(
+                nn.Linear(node_channels, node_channels // 2),
+                nn.LeakyReLU(0.2),
+                nn.Linear(node_channels // 2, 1),
+            )
+
+        readout_in_dim = (
+            2 * node_channels + pair_channels
+            if self.readout_mode.startswith("dual_stream")
+            else node_channels + pair_channels
+        )
         self.readout = nn.Sequential(
-            nn.Linear(node_channels + pair_channels, node_channels),
+            nn.Linear(readout_in_dim, node_channels),
             nn.LayerNorm(node_channels),
             nn.GELU(),
             nn.Linear(node_channels, n_targets),
@@ -275,6 +292,30 @@ class OGBGPTransTiny(nn.Module):
         key_padding_mask = ~full_node_mask[:, None, None, :]
         return node, full_pair, key_padding_mask
 
+    def _pool_graph_state(
+        self,
+        node: torch.Tensor,
+        pair: torch.Tensor,
+        node_mask: torch.Tensor,
+    ) -> torch.Tensor:
+        virtual_token = node[:, 0]
+        virtual_pair = pair[:, :, 0, 0]
+        if self.readout_mode == "dual_stream_attentive":
+            atom_nodes = node[:, 1:]
+            scores = self.pool_gate(atom_nodes).squeeze(-1)
+            scores = scores.masked_fill(~node_mask, float("-inf"))
+            weights = torch.softmax(scores, dim=-1)
+            weights = torch.nan_to_num(weights, nan=0.0)
+            atom_pool = (weights.unsqueeze(-1) * atom_nodes).sum(dim=1)
+            return torch.cat((virtual_token, atom_pool, virtual_pair), dim=-1)
+        elif self.readout_mode == "dual_stream_mean":
+            atom_nodes = node[:, 1:]
+            mask = node_mask.unsqueeze(-1)
+            atom_pool = (atom_nodes * mask).sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
+            return torch.cat((virtual_token, atom_pool, virtual_pair), dim=-1)
+        else:
+            return torch.cat((virtual_token, virtual_pair), dim=-1)
+
     def forward(
         self,
         x: torch.Tensor,
@@ -289,5 +330,6 @@ class OGBGPTransTiny(nn.Module):
         )
         for block in self.blocks:
             node, pair = block(node, pair, key_padding_mask)
-        graph_state = torch.cat((node[:, 0], pair[:, :, 0, 0]), dim=-1)
+        node_mask = (~key_padding_mask.squeeze(1).squeeze(1))[:, 1:]
+        graph_state = self._pool_graph_state(node, pair, node_mask)
         return self.readout(graph_state)
