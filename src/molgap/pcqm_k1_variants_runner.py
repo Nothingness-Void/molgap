@@ -156,7 +156,7 @@ ROW_ORDER_FINGERPRINT = (
 
 class _PackedGraphDatasetFactory:
     @staticmethod
-    def load(path: Path):
+    def load(path: Path, *, retain_wedge_topology: bool = False):
         import torch
         from torch_geometric.data import InMemoryDataset
 
@@ -169,6 +169,8 @@ class _PackedGraphDatasetFactory:
 
         payload = PackedGraphDataset(path)
         for field in FORBIDDEN_MODEL_FIELDS:
+            if field == "wedge_edge_ids" and retain_wedge_topology:
+                continue
             if field in payload._data:
                 del payload._data[field]
                 payload.slices.pop(field, None)
@@ -229,7 +231,7 @@ def find_fixed_cache() -> tuple[Path, dict]:
     return root, manifest
 
 
-def load_roles(root: Path, manifest: dict):
+def load_roles(root: Path, manifest: dict, *, retain_wedge_topology: bool = False):
     import torch
     from torch.utils.data import ConcatDataset
 
@@ -240,7 +242,9 @@ def load_roles(root: Path, manifest: dict):
         path = root / item["file"]
         if sha256_file(path) != item["sha256"]:
             raise RuntimeError(f"Fixed shard changed: {item['file']}")
-        payload = _PackedGraphDatasetFactory.load(path)
+        payload = _PackedGraphDatasetFactory.load(
+            path, retain_wedge_topology=retain_wedge_topology
+        )
         if len(payload) != item["rows"]:
             raise RuntimeError(f"Fixed shard row count changed: {item['file']}")
         role = item["role"]
@@ -304,6 +308,15 @@ def _development_loader(graphs):
 
 
 def _forward(model, batch):
+    if getattr(model, "requires_wedge_topology", False):
+        return model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            batch.random_walk_pe,
+            batch.wedge_edge_ids,
+        ).view(-1)
     if getattr(model, "requires_functional_group_membership", False):
         return model(
             batch.x,
@@ -357,6 +370,8 @@ def _batch_sha256(batch) -> str:
     names = ["x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx"]
     if hasattr(batch, "functional_group_y"):
         names.append("functional_group_y")
+    if hasattr(batch, "wedge_edge_ids"):
+        names.append("wedge_edge_ids")
     for name in names:
         value = getattr(batch, name).detach().cpu().contiguous()
         digest.update(name.encode("ascii") + b"\0")
@@ -501,6 +516,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as MULTIPLICATIVE_PAIR_PARAMETERS,
         check_mechanism as check_multiplicative_pair,
     )
+    from .k1_sparse_triplet import (
+        MODES as SPARSE_TRIPLET_MODES,
+        PARAMETERS as SPARSE_TRIPLET_PARAMETERS,
+        check_mechanism as check_sparse_triplet,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -509,6 +529,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + FUNCTIONAL_GROUP_MODES
         + CHEM_TYPED_PAIR_MODES
         + MULTIPLICATIVE_PAIR_MODES
+        + SPARSE_TRIPLET_MODES
     )
     import torch
 
@@ -1135,6 +1156,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != MULTIPLICATIVE_PAIR_PARAMETERS[mode]
         ):
             raise RuntimeError("Multiplicative pair-value parameter identity changed")
+    elif mode in SPARSE_TRIPLET_MODES:
+        mechanism_checks = check_sparse_triplet(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != SPARSE_TRIPLET_PARAMETERS[mode]
+        ):
+            raise RuntimeError("Sparse-triplet parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1165,6 +1193,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.relation_token.parameters())
     elif mode in MULTIPLICATIVE_PAIR_MODES:
         candidate_parameters = list(model.relation_token.parameters())
+    elif mode in SPARSE_TRIPLET_MODES:
+        candidate_parameters = (
+            list(model.triplet_initial.parameters())
+            + list(model.triplet_updates.parameters())
+            + list(model.triplet_to_edge.parameters())
+            + list(model.triplet_to_node.parameters())
+        )
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1337,6 +1372,7 @@ def train_arm(
     from .k1_functional_group_token import MODES as FUNCTIONAL_GROUP_MODES
     from .k1_chem_typed_pair_token import MODES as CHEM_TYPED_PAIR_MODES
     from .k1_multiplicative_pair_value import MODES as MULTIPLICATIVE_PAIR_MODES
+    from .k1_sparse_triplet import MODES as SPARSE_TRIPLET_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1346,6 +1382,7 @@ def train_arm(
         + FUNCTIONAL_GROUP_MODES
         + CHEM_TYPED_PAIR_MODES
         + MULTIPLICATIVE_PAIR_MODES
+        + SPARSE_TRIPLET_MODES
         + MOSE_MODES
     )
 
@@ -1358,7 +1395,11 @@ def train_arm(
         raise RuntimeError("Frozen row order implementation changed")
     configure_fp32_determinism(SEED)
     root, manifest = find_fixed_cache()
-    roles = load_roles(root, manifest)
+    roles = load_roles(
+        root,
+        manifest,
+        retain_wedge_topology=mode in SPARSE_TRIPLET_MODES,
+    )
     functional_group_manifest = None
     if mode in FUNCTIONAL_GROUP_MODES + CHEM_TYPED_PAIR_MODES:
         from .pcqm_functional_group_sidecar import attach_functional_group_roles

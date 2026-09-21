@@ -146,6 +146,21 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "external_features": False,
     },
+    "neural_atom_k1_sparse_triplet": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "persistent-sparse-directed-non-backtracking-triplet-state",
+        "triplet_channels": 16,
+        "triplet_layers": 9,
+        "triplet_source": "deterministic-topology-wedges-derived-from-real-bond-edge-index",
+        "return_paths": ["triplet-to-real-bond-edge-state", "triplet-to-center-node"],
+        "added_parameters": 107_184,
+        "expected_parameters": 3_766_001,
+        "dense_atom_attention": False,
+        "initialization_policy": "nested-function-zero-node-and-edge-return",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -897,6 +912,10 @@ def make_encoder(mode: str):
     if mode in MULTIPLICATIVE_PAIR_MODES:
         from .k1_multiplicative_pair_value import make_encoder as make_multiplicative_pair
         return make_multiplicative_pair(mode)
+    from .k1_sparse_triplet import MODES as SPARSE_TRIPLET_MODES
+    if mode in SPARSE_TRIPLET_MODES:
+        from .k1_sparse_triplet import make_encoder as make_sparse_triplet
+        return make_sparse_triplet(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 
