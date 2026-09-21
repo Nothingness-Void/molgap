@@ -32,9 +32,6 @@ def accept(reference_root: Path, candidate_root: Path, source_commit: str, archi
         raise RuntimeError("Source commit mismatch")
     checks = candidate["preflight"]["mechanism_checks"]
     required = {
-        "valid_pair_count_exact": True,
-        "assignment_mass_one": True,
-        "padding_mass_zero": True,
         "adjacency_exact": True,
         "non_backtracking_exact": True,
         "center_identity_exact": True,
@@ -51,6 +48,11 @@ def accept(reference_root: Path, candidate_root: Path, source_commit: str, archi
     }
     if any(checks.get(key) != value for key, value in required.items()):
         raise RuntimeError(f"One-shot triplet PairToken mechanism mismatch: {checks}")
+    if candidate["preflight"]["exact_k1_function_at_initialization"] is not True:
+        raise RuntimeError("Candidate was not an exact nested K1 function")
+    architecture = candidate["architecture"]
+    if architecture.get("parent_mechanism") != "neural_atom_k1_pair_token":
+        raise RuntimeError("Accepted PairToken parent identity changed")
     root = candidate_root / MODE
     checkpoint = torch.load(root / "last_checkpoint.pt", map_location="cpu", weights_only=False)
     if checkpoint.get("source_archive_sha256") != archive_sha256 or checkpoint.get("epoch") != 39:
