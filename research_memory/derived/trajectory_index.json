@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "1cf464ac54917f4128407030715cebd7cef7c61cc969003df9331af3e5906a60",
+  "source_digest": "17e97a57f79d0d009753bdd50a5336eacd00279f2d59cd870ed74e1a86195d02",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -250,9 +250,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_pair_token_mose_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_pair_token_mose_100k/decision.md",
       "family_id": "k1-pair-token-mose-composition",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-pair-token-100k-s42"

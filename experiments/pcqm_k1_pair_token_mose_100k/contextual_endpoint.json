@@ -1,0 +1,55 @@
+{
+  "format": "molgap-k1-pair-token-mose-contextual-endpoint-v1",
+  "mechanical_artifacts_accepted": true,
+  "strict_reference_screen_accepted": false,
+  "comparison_class": "PAIRED_ENDPOINT",
+  "strict_causal_claim_allowed": false,
+  "blocker_codes": [
+    "SCIENTIFIC_CONTRACT_MISMATCH"
+  ],
+  "reason": "MoSE31 added a feature intervention that the frozen architecture-only prelaunch did not declare.",
+  "mismatched_fields": {
+    "feature_fingerprint": {
+      "reference": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+      "candidate": "670fd5b3704b68407c6f57f3dc9a420c578f677cfd04ae7651a58eb2e9ef719b"
+    }
+  },
+  "frozen_prelaunch_feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+  "observed_candidate_feature_identity": "670fd5b3704b68407c6f57f3dc9a420c578f677cfd04ae7651a58eb2e9ef719b",
+  "development_rows": 50000,
+  "development_role_reused_for_selection": true,
+  "reference_mae_eV": 0.1413736343383789,
+  "pair_token_parent_mae_eV": 0.13833005726337433,
+  "candidate_mae_eV": 0.13865570724010468,
+  "candidate_vs_reference": {
+    "candidate_minus_reference_mae_eV": -0.002717937295436859,
+    "paired_row_bootstrap_95_eV": [
+      -0.0035821411992907524,
+      -0.0018442117203474049
+    ],
+    "paired_upper_eV": -0.0018442117203474049
+  },
+  "candidate_vs_pair_token_parent": {
+    "candidate_minus_reference_mae_eV": 0.0003256593370437622,
+    "paired_row_bootstrap_95_eV": [
+      -0.000525096916437149,
+      0.0011654410195350647
+    ],
+    "paired_upper_eV": 0.0011654410195350647
+  },
+  "candidate_parameters": 3696193,
+  "best_epoch": 39,
+  "optimizer_steps": 31240,
+  "sample_presentations": 3998720,
+  "mean_graphs_per_second": 893.9702063016532,
+  "peak_reserved_mib": 622.0,
+  "source_commit": "246d89c94fa65752b2f54633630346e1c67effd7",
+  "source_archive_sha256": "6a5fd81792c71d9986ef6ee5937c74542e6c3e5ac74a12bd8a6bc4e8c72a671b",
+  "payload_sha256": "8f68115e995cb542f6908d30a4e09adf085c7c40ccf3a295dceb5222625730aa",
+  "checkpoint_sha256": "a33788a4722b05fa121cb292533fa4b8028b7a87e9c4cd385e0a9f6405155674",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "promotion_gate_evaluated": false
+}

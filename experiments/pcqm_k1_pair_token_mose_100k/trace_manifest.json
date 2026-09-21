@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TC-k1-pair-token-mose-100k-s42",
+  "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1",
+  "contract_ref": "experiments/pcqm_k1_pair_token_mose_100k/training_contract.json",
+  "model_identity": "e90c4c79f5e71f971df53c6b83f2b29f8278dda0424c985c8944d6d892b038c9",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "comparison_role": "candidate",
+  "x_axis": "optimizer_steps",
+  "presentation_semantics_ref": "experiments/pcqm_k1_pair_token_mose_100k/training_contract.json",
+  "weight_semantics": "raw_model_no_ema",
+  "metric_semantics": "internal_development_direct_gap_mae_eV",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "trace_artifact_ref": "experiments/pcqm_k1_pair_token_mose_100k/canonical_trace.json",
+  "trace_artifact_sha256": "e9661ecfa1e3b6d1648df5a795ce0fed1d5bd6912102aea45e45deca52b80901",
+  "terminal_evidence_ref": "experiments/pcqm_k1_pair_token_mose_100k/contextual_endpoint.json",
+  "comparability_identity": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-rwse16-mose31",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "architecture_identity": "e90c4c79f5e71f971df53c6b83f2b29f8278dda0424c985c8944d6d892b038c9",
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "x_axis_semantics": "optimizer_steps",
+    "terminal_endpoint_identity": "31240-optimizer-steps",
+    "matched_architecture_required": false
+  },
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "checkpoint_identity": "a33788a4722b05fa121cb292533fa4b8028b7a87e9c4cd385e0a9f6405155674",
+  "trace_fields": {
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "checkpoint_identity": true
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "undeclared_feature_identity_mismatch"
+    ]
+  }
+}

@@ -10,6 +10,14 @@
       ],
       "run_id": "122312462",
       "trajectory_id": "TB-k1-pair-token-500k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "undeclared_feature_identity_mismatch"
+      ],
+      "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1",
+      "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
     }
   ],
   "false_promote_count": null,
@@ -74,5 +82,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 14
+  "trace_count": 15
 }

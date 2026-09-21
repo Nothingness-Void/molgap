@@ -5080,6 +5080,14 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "undeclared_feature_identity_mismatch"
+      ],
+      "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1",
+      "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
+    },
+    {
+      "reasons": [
         "canonical_trace_not_locally_retained"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token_node_return",
@@ -5087,5 +5095,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "dee01ead679a2f6044ac3be08ee7d96644890cdf36ea2602dd1eafab91058b56"
+  "source_digest": "e27a2cd2042c26cb92c9c8c89a47f5c7b02fc4c3fa6ac1faa64f3f1a5a685c15"
 }

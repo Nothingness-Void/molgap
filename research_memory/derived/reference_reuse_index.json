@@ -339,22 +339,24 @@
     },
     {
       "artifact_availability": [
-        "committed_prelaunch_metadata"
+        "committed_prelaunch_metadata",
+        "repository_retained"
       ],
-      "comparison_status": "prelaunch_strict_planned",
+      "comparison_status": "paired_endpoint_not_strict",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
       "reference_id": "pcqm-k1-pair-token-mose-100k-s42",
       "role_use": {
-        "internal_development": "untouched",
+        "internal_development_100000_150000": "used",
+        "official_train_prefix_0_100000": "used",
         "official_validation": "untouched",
         "test_challenge": "untouched",
         "test_dev": "untouched"
       },
-      "scientific_scope": "prospective_fixed_100k_architecture_screen",
+      "scientific_scope": "terminal_fixed_100k_contextual_endpoint",
       "source_envelope": "experiments/pcqm_k1_pair_token_mose_100k/v5_evidence.json",
       "track": "C",
-      "transfer_status": "not_evaluated",
+      "transfer_status": "not_ready",
       "used_by_trajectory_ids": []
     },
     {

@@ -35,6 +35,30 @@
       "locator": "repo://experiments/pcqm_k1_pair_token_mose_100k/budget_snapshot.json",
       "name": "budget_snapshot",
       "sha256": "514c18a11371ccbfb0ef57c16cb1b45061fa2af254396ed22750e43701190a46"
+    },
+    {
+      "name": "decision",
+      "locator": "repo://experiments/pcqm_k1_pair_token_mose_100k/decision.md",
+      "sha256": "a38fb0746843217146e048a9a10211198fde5446c8222d4ec2e159b3ddb1fcf1",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "contextual_endpoint",
+      "locator": "repo://experiments/pcqm_k1_pair_token_mose_100k/contextual_endpoint.json",
+      "sha256": "b58ddc0b58f5b3ff47a6392b72f57f90f935d813eb72f0681e6bbaf5b1bb84f5",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "canonical_trace",
+      "locator": "repo://experiments/pcqm_k1_pair_token_mose_100k/canonical_trace.json",
+      "sha256": "e9661ecfa1e3b6d1648df5a795ce0fed1d5bd6912102aea45e45deca52b80901",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "trace_manifest",
+      "locator": "repo://experiments/pcqm_k1_pair_token_mose_100k/trace_manifest.json",
+      "sha256": "97e9f740e77b12d603101ae4db68975601f26695e78deb2461d185ffc7e68385",
+      "availability": "repository_retained"
     }
   ],
   "authority": {
@@ -43,7 +67,10 @@
       "experiments/pcqm_k1_pair_token_mose_100k/training_contract.json",
       "experiments/pcqm_k1_pair_token_mose_100k/source_config.json",
       "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
-      "experiments/pcqm_k1_pair_token_mose_100k/trajectory.json"
+      "experiments/pcqm_k1_pair_token_mose_100k/trajectory.json",
+      "experiments/pcqm_k1_pair_token_mose_100k/decision.md",
+      "experiments/pcqm_k1_pair_token_mose_100k/contextual_endpoint.json",
+      "experiments/pcqm_k1_pair_token_mose_100k/trace_manifest.json"
     ]
   },
   "contract": "MOLGAP-COMMON-V5-FINAL",
@@ -55,23 +82,24 @@
     "migrated_at": "2026-09-21",
     "scientific_reinterpretation": false,
     "training_executed": false,
-    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+    "verification_scope": "terminal saved-artifact hashes, aligned development predictions, observed trace/cost/roles; no local model inference"
   },
   "outcome": {
-    "artifact_status": "prelaunch_complete_terminal_pending",
-    "budget_decision": "one_candidate_authorized",
-    "comparison_status": "prelaunch_strict_planned",
-    "execution_status": "planned",
-    "full_handoff_status": "not_applicable",
-    "scientific_status": "pending",
-    "transfer_status": "not_evaluated"
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_endpoint_not_strict",
+    "scientific_status": "not_promoted_contract_mismatch",
+    "transfer_status": "not_ready",
+    "budget_decision": "stop_under_contract",
+    "full_handoff_status": "not_authorized"
   },
   "role_use": {
-    "internal_development": "untouched",
+    "official_train_prefix_0_100000": "used",
+    "internal_development_100000_150000": "used",
     "official_validation": "untouched",
-    "test_challenge": "untouched",
-    "test_dev": "untouched"
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
   },
-  "scope": "prospective_fixed_100k_architecture_screen",
+  "scope": "terminal_fixed_100k_contextual_endpoint",
   "track": "C"
 }

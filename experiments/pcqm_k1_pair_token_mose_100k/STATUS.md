@@ -1,10 +1,10 @@
 # Status
 
-Prospective V5/RML prelaunch passed. One Kaggle2 kernel,
-`kaseichou/molgap-k1-pairtoken-mose-s42:v1`, was submitted and observed
-`RUNNING` at 2026-09-22 03:26 JST. The Kaggle3 API credential returned 403
-before submission, so the same frozen scientific source/contract ran on the
-authorized Kaggle2 account. A 30-minute Luna heartbeat monitors this exact
-kernel and hands terminal evidence to the server controller once. No result
-is claimed yet. Official validation, test-dev, and challenge roles remain
-sealed. Submission provenance: `submission_v1.json`.
+Kaggle2 kernel `kaseichou/molgap-k1-pairtoken-mose-s42:v1` completed all
+40 epochs. Candidate artifacts passed saved-hash checks but the frozen strict
+screen validator rejected an undeclared RWSE16-versus-RWSE16+MoSE31 feature
+fingerprint mismatch. Aligned endpoint analysis is retained as
+`PAIRED_ENDPOINT`, not `STRICT_CAUSAL`; the candidate did not beat its
+PairToken parent or clear the predeclared K1 material gain. The extra
+authorized round is closed with no automatic successor. Authority:
+`decision.md`. Submission provenance: `submission_v1.json`.

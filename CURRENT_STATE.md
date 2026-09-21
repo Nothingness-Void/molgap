@@ -45,16 +45,13 @@ contract.
 
 ## Discovery state
 
-One extra user-authorized overnight round is running on Kaggle2 under V5:
-the accepted layer-6 PairToken plus a zero-return MoSE31 node structural view.
-Saved-prediction diagnostics showed useful but incomplete PairToken/MoSE error
-complementarity; the trained candidate remains one encoder and one direct-Gap
-head, not prediction fusion. The immutable K1 reference and retained PairToken
-parent own the two decision comparisons. No extra seed, scale bridge, protected
-role, or successor is pre-authorized. A 30-minute Luna monitor is bound to the
-single version-1 kernel and will hand terminal evidence back to the server
-controller. Authority:
-`experiments/pcqm_k1_pair_token_mose_100k/STATUS.md`.
+The extra PairToken+MoSE31 seed-42 round is complete and closed. Saved-artifact
+analysis found an undeclared feature-identity change in its frozen prelaunch:
+the candidate consumes RWSE16+MoSE31, while the architecture-only strict plan
+copied K1's RWSE16 identity. Its aligned development endpoint is retained as
+`PAIRED_ENDPOINT`, not a strict causal comparison or replay-ready win; no seed,
+scale bridge, protected role, or successor follows. Authority:
+`experiments/pcqm_k1_pair_token_mose_100k/decision.md`.
 
 Round 1 of the newly authorized, at-most-three-round K1 sequence is closed.
 The pure-2D sparse-triplet candidate was exactly K1 at initialization and
