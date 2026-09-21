@@ -3,15 +3,26 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 import torch
 from torch_geometric.data import Batch, Data
 
 from molgap.k1_pair_token import MODE as PAIR_TOKEN_MODE, make_encoder as make_pair_token
 from molgap.k1_pair_token_mose import MODE, PARAMETERS, check_mechanism, make_encoder
 from molgap.pcqm_k1_variants import ARCHITECTURE_CONFIGS, make_encoder as make_variant
+from molgap.pcqm_k1_variants_runner import MOSE_RWSE_FEATURE_FINGERPRINT
+from freeze_release import require_declared_feature_identity
 
 
 ROOT = Path(__file__).resolve().parent
+
+
+def test_architecture_only_release_rejects_feature_identity_mismatch():
+    reference = json.loads((ROOT / "comparison_readiness_prelaunch.json").read_text())
+    frozen = reference["matched_fields"]["feature_identity"]
+    assert frozen != MOSE_RWSE_FEATURE_FINGERPRINT
+    with pytest.raises(RuntimeError, match="strict release is prohibited"):
+        require_declared_feature_identity({"feature_identity": frozen})
 
 
 def _batch():

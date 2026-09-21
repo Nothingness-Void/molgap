@@ -11,6 +11,7 @@ from typing import Any
 from molgap.comparison_readiness import assess_comparison_prelaunch
 from molgap.constants import REPO_ROOT
 from molgap.pcqm_k1_variants import ARCHITECTURE_CONFIGS
+from molgap.pcqm_k1_variants_runner import MOSE_RWSE_FEATURE_FINGERPRINT
 from molgap.screen_policy import canonical_fingerprint
 from molgap.server_acceptance import write_server_comparison_prelaunch
 
@@ -49,6 +50,17 @@ def rel(name: str) -> str:
     return f"{ROOT_REL}/{name}"
 
 
+def require_declared_feature_identity(reference_identity: dict[str, Any]) -> None:
+    # This candidate consumes MoSE31 in addition to RWSE16; an architecture-only
+    # intervention cannot reuse the reference's feature identity.
+    if reference_identity.get("feature_identity") != MOSE_RWSE_FEATURE_FINGERPRINT:
+        raise RuntimeError(
+            "Feature identity differs from frozen reference; architecture-only "
+            "strict release is prohibited. Use a prospective feature-intervention "
+            "contract instead."
+        )
+
+
 def main() -> None:
     dirty = subprocess.check_output(
         ["git", "status", "--porcelain", "--", "src", ROOT_REL],
@@ -62,6 +74,7 @@ def main() -> None:
     ).strip()
     reference_path = REPO_ROOT / REFERENCE_REL
     reference = load_json(reference_path)
+    require_declared_feature_identity(reference["comparison_identity"])
     architecture_identity = canonical_fingerprint(ARCHITECTURE_CONFIGS[MODE])
     source_config = {
         "format": "molgap-frozen-source-config-v1",
