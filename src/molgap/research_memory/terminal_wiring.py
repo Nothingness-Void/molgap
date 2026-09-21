@@ -151,9 +151,102 @@ def inspect_trace_retention_evidence(
 
     # Multiple trace artifacts present without arm identifier
     raise ValueError(
-        f"FAIL CLOSED: ambiguous trace retention evidence: {len(trace_artifacts)} traces declared "
-        f"but no arm_identifier provided to disambiguate: "
+        f"FAIL CLOSED: ambiguous multi-arm evidence ({len(trace_artifacts)} traces declared); "
+        f"explicit arm_identifier is required: "
         f"{[a.get('locator') for a in trace_artifacts]}"
+    )
+
+
+def resolve_metric_semantics(
+    repo_root: str | Path,
+    trajectory_obj: Mapping[str, Any],
+    terminal_obj: Mapping[str, Any],
+    raw_data: Mapping[str, Any],
+    recovery_spec: Mapping[str, Any] | None = None,
+    has_ema_metric: bool = False,
+) -> dict[str, Any]:
+    """Resolve authoritative metric semantics without guessing scientific defaults.
+
+    Sources checked in order:
+    1. explicit recovery_spec["metric_semantics"]
+    2. raw_data["metric_semantics"]
+    3. terminal_obj.get("evidence", {}).get("metric_semantics")
+    4. contract["metric_semantics"] from trajectory["state_at_start"]["contract_refs"]
+    5. contract target/metric declarations (contract["target"], contract["metric"], contract["unit"])
+    """
+    root = Path(repo_root).resolve()
+
+    # 1. recovery_spec
+    if recovery_spec and isinstance(recovery_spec, Mapping) and recovery_spec.get("metric_semantics"):
+        ms = recovery_spec["metric_semantics"]
+        if isinstance(ms, Mapping) and ms.get("live_train_metric"):
+            return dict(ms)
+
+    # 2. raw_data
+    if isinstance(raw_data, Mapping) and raw_data.get("metric_semantics"):
+        ms = raw_data["metric_semantics"]
+        if isinstance(ms, Mapping) and ms.get("live_train_metric"):
+            return dict(ms)
+
+    # 3. evidence
+    ev = terminal_obj.get("evidence", {}) if isinstance(terminal_obj, Mapping) else {}
+    if isinstance(ev, Mapping) and ev.get("metric_semantics"):
+        ms = ev["metric_semantics"]
+        if isinstance(ms, Mapping) and ms.get("live_train_metric"):
+            return dict(ms)
+
+    # 4 & 5. contract
+    state = trajectory_obj.get("state_at_start", {}) if isinstance(trajectory_obj, Mapping) else {}
+    contract_refs = state.get("contract_refs", [])
+    contract_obj: dict[str, Any] = {}
+    if contract_refs:
+        c_path = repo_local_path(root, contract_refs[0])
+        if c_path.is_file():
+            try:
+                contract_obj = load_json_object(c_path)
+            except Exception:
+                contract_obj = {}
+
+    if contract_obj.get("metric_semantics"):
+        ms = contract_obj["metric_semantics"]
+        if isinstance(ms, Mapping) and ms.get("live_train_metric"):
+            return dict(ms)
+
+    # Check explicit contract metric declarations
+    target = contract_obj.get("target")
+    metric = contract_obj.get("metric")
+    unit = contract_obj.get("unit")
+    if target and metric and unit:
+        direction = contract_obj.get("direction", "minimize")
+        train_role = contract_obj.get("train_role", "internal_train")
+        dev_role = contract_obj.get("development_role", "internal_development")
+        return {
+            "live_train_metric": {
+                "metric": str(metric),
+                "unit": str(unit),
+                "target": str(target),
+                "role_identity": str(train_role),
+                "weights": "live",
+                "direction": str(direction),
+            },
+            "live_dev_metric": None,
+            "ema_dev_metric": {
+                "metric": str(metric),
+                "unit": str(unit),
+                "target": str(target),
+                "role_identity": str(dev_role),
+                "weights": "ema",
+                "direction": str(direction),
+            }
+            if has_ema_metric
+            else None,
+        }
+
+    # Authoritative determination failed
+    raise ValueError(
+        "FAIL CLOSED: cannot determine authoritative metric semantics for raw trace "
+        "(missing metric/unit/target in recovery_spec, raw trace, evidence, or contract). "
+        "Please provide an explicit recovery_spec or authoritative contract metric semantics."
     )
 
 
@@ -190,20 +283,6 @@ def resolve_trace_for_terminal_arm(
     run_id = term_data["run_id"]
     evidence = term_data.get("evidence", {})
 
-    # Auto-derive arm identifier if not explicitly supplied
-    if not arm_identifier:
-        # Check if trajectory_id contains a distinguishing arm name
-        parts = trajectory_id.replace("_", "-").split("-")
-        for i in range(len(parts)):
-            candidate_arm = "-".join(parts[i:])
-            try:
-                found, art = inspect_trace_retention_evidence(evidence, candidate_arm)
-                if found:
-                    arm_identifier = candidate_arm
-                    break
-            except ValueError:
-                pass
-
     trace_declared, declared_artifact = inspect_trace_retention_evidence(
         evidence, arm_identifier=arm_identifier
     )
@@ -230,6 +309,60 @@ def resolve_trace_for_terminal_arm(
                 f"FAIL CLOSED: canonical trace run_id mismatch: "
                 f"trace has '{trace_record.get('run_id')}', but arm terminal run_id is '{run_id}'"
             )
+
+        # Enforce provenance and digest binding to retention evidence
+        if declared_artifact is not None:
+            decl_loc = str(declared_artifact.get("locator", "")).replace("\\", "/")
+            decl_sha = str(declared_artifact.get("sha256", ""))
+            c_rel_posix = c_path.relative_to(root).as_posix()
+
+            # Situation A: declared artifact IS the canonical trace itself
+            is_declared_itself = (c_rel_posix == decl_loc) or (
+                decl_loc.endswith(".json") and c_path.name == Path(decl_loc).name
+            )
+
+            actual_digest = file_digest(c_path)
+
+            if is_declared_itself:
+                if decl_sha and actual_digest != decl_sha:
+                    raise ValueError(
+                        f"FAIL CLOSED: explicit canonical trace digest mismatch with retention evidence: "
+                        f"expected {decl_sha}, got {actual_digest}"
+                    )
+            else:
+                # Situation B: declared artifact is raw trace (or another artifact).
+                # The passed canonical trace must prove in its provenance that it binds to declared_artifact!
+                provenance_list = trace_record.get("provenance", [])
+                if not isinstance(provenance_list, Sequence) or isinstance(
+                    provenance_list, (str, bytes)
+                ):
+                    raise ValueError(
+                        f"FAIL CLOSED: explicit canonical trace missing valid provenance array "
+                        f"to bind against declared trace artifact '{decl_loc}'"
+                    )
+
+                matched_provenance = False
+                for prov in provenance_list:
+                    if not isinstance(prov, Mapping):
+                        continue
+                    p_src = str(prov.get("source", "")).replace("\\", "/")
+                    p_sha = str(prov.get("sha256", ""))
+                    src_matches = (
+                        (p_src == decl_loc)
+                        or p_src.endswith(decl_loc)
+                        or decl_loc.endswith(p_src)
+                    )
+                    sha_matches = (not decl_sha) or (p_sha.lower() == decl_sha.lower())
+                    if src_matches and sha_matches:
+                        matched_provenance = True
+                        break
+
+                if not matched_provenance:
+                    raise ValueError(
+                        f"FAIL CLOSED: explicit canonical trace provenance does not bind to declared trace artifact "
+                        f"'{decl_loc}' with SHA256 '{decl_sha}'"
+                    )
+
         return True, c_path
 
     # Step 2: Resolve raw trace source
@@ -286,8 +419,12 @@ def resolve_trace_for_terminal_arm(
             root, source_path.parent / f"canonical_trace_{trajectory_id}.json"
         )
 
-    if recovery_spec is not None:
-        recover_trace([source_path], recovery_spec, output_path, repo_root=root)
+    if recovery_spec is not None and "field_mapping" in recovery_spec:
+        full_spec = dict(recovery_spec)
+        full_spec.setdefault("trajectory_id", trajectory_id)
+        full_spec.setdefault("run_id", run_id)
+        full_spec.setdefault("rows_key", "rows")
+        recover_trace([source_path], full_spec, output_path, repo_root=root)
     else:
         # Standard observation extractor for raw training trace JSON
         raw_data = json.loads(source_path.read_text(encoding="utf-8"))
@@ -317,31 +454,22 @@ def resolve_trace_for_terminal_arm(
             }
             observations.append(obs)
 
+        has_ema = any(o.get("ema_dev_metric") is not None for o in observations)
+
+        metric_semantics = resolve_metric_semantics(
+            repo_root=root,
+            trajectory_obj=traj_data,
+            terminal_obj=term_data,
+            raw_data=raw_data if isinstance(raw_data, dict) else {},
+            recovery_spec=recovery_spec,
+            has_ema_metric=has_ema,
+        )
+
         trace_record = canonicalize_trace(
             {
                 "trajectory_id": trajectory_id,
                 "run_id": run_id,
-                "metric_semantics": {
-                    "live_train_metric": {
-                        "metric": "MAE",
-                        "unit": "eV",
-                        "target": "Gap",
-                        "role_identity": "internal_train",
-                        "weights": "live",
-                        "direction": "minimize",
-                    },
-                    "live_dev_metric": None,
-                    "ema_dev_metric": {
-                        "metric": "MAE",
-                        "unit": "eV",
-                        "target": "Gap",
-                        "role_identity": "internal_development",
-                        "weights": "ema",
-                        "direction": "minimize",
-                    }
-                    if any(o.get("ema_dev_metric") is not None for o in observations)
-                    else None,
-                },
+                "metric_semantics": metric_semantics,
                 "observations": observations,
                 "provenance": [
                     {
@@ -396,13 +524,10 @@ def build_default_trace_manifest(
             except Exception:
                 contract_obj = {}
 
-    evidence = terminal.get("evidence", {})
-
     # Derive identities strictly from authoritative sources without guessing
     dataset_identity = (
         contract_obj.get("data_role_fingerprint")
         or contract_obj.get("dataset_identity")
-        or evidence.get("scope")
         or "unspecified_in_contract"
     )
     row_split_identity = (
@@ -413,9 +538,7 @@ def build_default_trace_manifest(
     model_identity = (
         contract_obj.get("model_id")
         or contract_obj.get("model_identity")
-        or state.get("source_config_identity")
-        or trajectory.get("hypothesis", {}).get("changed_mechanism")
-        or traj_id
+        or "unspecified_in_contract"
     )
     scientific_contract = (
         contract_obj.get("benchmark_id")

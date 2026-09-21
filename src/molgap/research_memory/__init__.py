@@ -13,6 +13,7 @@ from .terminal_wiring import (
     close_terminal_multi_arm,
     inspect_trace_retention_evidence,
     is_trace_artifact,
+    resolve_metric_semantics,
     resolve_trace_for_terminal_arm,
 )
 
@@ -34,5 +35,6 @@ __all__ = [
     "close_terminal_multi_arm",
     "inspect_trace_retention_evidence",
     "is_trace_artifact",
+    "resolve_metric_semantics",
     "resolve_trace_for_terminal_arm",
 ]

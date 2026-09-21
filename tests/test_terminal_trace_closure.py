@@ -203,7 +203,17 @@ def create_candidate_arm(
 
     contract_path = exp_dir / "contract.json"
     contract_bytes = (
-        json.dumps({"schema": "contract-v1", "name": f"contract-{exp_name}"}) + "\n"
+        json.dumps(
+            {
+                "schema": "contract-v1",
+                "name": f"contract-{exp_name}",
+                "target": "Gap",
+                "metric": "MAE",
+                "unit": "eV",
+                "direction": "minimize",
+            }
+        )
+        + "\n"
     ).encode()
     contract_path.write_bytes(contract_bytes)
 
@@ -888,4 +898,478 @@ def test_build_default_trace_manifest_derives_from_contract_without_guessing(tmp
     assert comp["precision_identity"] == "bf16"
     assert comp["optimizer_identity"] == "adamw_custom"
     assert manifest["backtest_eligibility"]["eligible"] is False
+
+
+# =========================================================================
+# Test J: Hardening Point 1 - Explicit canonical trace bypass prevention
+# =========================================================================
+def test_explicit_canonical_without_provenance_binding_fails_closed(tmp_path):
+    """Declared raw trace in evidence + explicit canonical without provenance -> FAIL CLOSED."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_prov_fail",
+        "TB-prov-fail",
+        "run-pf-1",
+        "ev-pf-1",
+        include_trace_artifact=True,
+    )
+    unbound_canonical = arm["exp_dir"] / "unbound_canonical.json"
+    trace_rec = canonicalize_trace(
+        {
+            "trajectory_id": "TB-prov-fail",
+            "run_id": "run-pf-1",
+            "metric_semantics": {
+                "live_train_metric": {
+                    "metric": "MAE",
+                    "unit": "eV",
+                    "target": "Gap",
+                    "role_identity": "internal_train",
+                    "weights": "live",
+                    "direction": "minimize",
+                },
+                "live_dev_metric": None,
+                "ema_dev_metric": None,
+            },
+            "observations": [
+                {"sequence": 0, "event": "observation", "optimizer_step": 1, "live_train_metric": 0.5}
+            ],
+            "provenance": [
+                {
+                    "source": "some/other/path/raw.json",
+                    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                }
+            ],
+        }
+    )
+    unbound_canonical.write_bytes(json_bytes(trace_rec))
+
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: explicit canonical trace provenance does not bind to declared trace artifact",
+    ):
+        close_terminal_arm(
+            repo_root=tmp_path,
+            trajectory=arm["traj_path"],
+            terminal=arm["terminal_path"],
+            trace=unbound_canonical,
+        )
+
+
+def test_explicit_canonical_with_valid_provenance_binding_succeeds(tmp_path):
+    """Declared raw trace in evidence + explicit canonical with matching provenance -> PASS."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_prov_pass",
+        "TB-prov-pass",
+        "run-pp-1",
+        "ev-pp-1",
+        include_trace_artifact=True,
+    )
+    raw_rel = arm["trace_file_path"].relative_to(tmp_path).as_posix()
+    raw_sha = file_digest(arm["trace_file_path"])
+
+    bound_canonical = arm["exp_dir"] / "bound_canonical.json"
+    trace_rec = canonicalize_trace(
+        {
+            "trajectory_id": "TB-prov-pass",
+            "run_id": "run-pp-1",
+            "metric_semantics": {
+                "live_train_metric": {
+                    "metric": "MAE",
+                    "unit": "eV",
+                    "target": "Gap",
+                    "role_identity": "internal_train",
+                    "weights": "live",
+                    "direction": "minimize",
+                },
+                "live_dev_metric": None,
+                "ema_dev_metric": None,
+            },
+            "observations": [
+                {"sequence": 0, "event": "observation", "optimizer_step": 1, "live_train_metric": 0.5}
+            ],
+            "provenance": [
+                {
+                    "source": raw_rel,
+                    "sha256": raw_sha,
+                }
+            ],
+        }
+    )
+    bound_canonical.write_bytes(json_bytes(trace_rec))
+
+    result = close_terminal_arm(
+        repo_root=tmp_path,
+        trajectory=arm["traj_path"],
+        terminal=arm["terminal_path"],
+        trace=bound_canonical,
+    )
+    assert result["pipeline_status"] == "COMPLETE"
+    receipt = verified_receipt(arm["exp_dir"] / "rml_finalized")
+    assert receipt["trace_status"] == "available"
+
+
+def test_explicit_canonical_declared_itself_matching_digest_succeeds(tmp_path):
+    """Declared artifact in evidence is canonical trace + matching digest -> PASS."""
+    setup_mock_repo(tmp_path)
+    exp_dir = tmp_path / "experiments/exp_canon_self"
+    exp_dir.mkdir(parents=True, exist_ok=True)
+    canonical_file = exp_dir / "canonical_trace.json"
+    trace_rec = canonicalize_trace(
+        {
+            "trajectory_id": "TB-canon-self",
+            "run_id": "run-cs-1",
+            "metric_semantics": {
+                "live_train_metric": {
+                    "metric": "MAE",
+                    "unit": "eV",
+                    "target": "Gap",
+                    "role_identity": "internal_train",
+                    "weights": "live",
+                    "direction": "minimize",
+                },
+                "live_dev_metric": None,
+                "ema_dev_metric": None,
+            },
+            "observations": [
+                {"sequence": 0, "event": "observation", "optimizer_step": 1, "live_train_metric": 0.5}
+            ],
+        }
+    )
+    canonical_bytes = json_bytes(trace_rec)
+    canonical_file.write_bytes(canonical_bytes)
+    sha = sha256_bytes(canonical_bytes)
+
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_canon_self",
+        "TB-canon-self",
+        "run-cs-1",
+        "ev-cs-1",
+        include_trace_artifact=True,
+        trace_artifact_name="training_trace",
+        trace_relative_path="canonical_trace.json",
+        create_trace_file=False,
+    )
+    term_data = load_json_object(arm["terminal_path"])
+    for a in term_data["evidence"]["artifacts"]:
+        if a["name"] == "training_trace":
+            a["sha256"] = sha
+    term_data["artifact_hashes"]["experiments/exp_canon_self/canonical_trace.json"] = sha
+    arm["terminal_path"].write_bytes(json_bytes(term_data))
+
+    result = close_terminal_arm(
+        repo_root=tmp_path,
+        trajectory=arm["traj_path"],
+        terminal=arm["terminal_path"],
+        trace=canonical_file,
+    )
+    assert result["pipeline_status"] == "COMPLETE"
+    receipt = verified_receipt(exp_dir / "rml_finalized")
+    assert receipt["trace_status"] == "available"
+
+
+def test_explicit_canonical_declared_itself_mismatched_digest_fails_closed(tmp_path):
+    """Declared artifact in evidence is canonical trace + mismatched digest -> FAIL CLOSED."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_canon_mismatch",
+        "TB-canon-mismatch",
+        "run-cm-1",
+        "ev-cm-1",
+        include_trace_artifact=True,
+        trace_artifact_name="training_trace",
+        trace_relative_path="canonical_trace.json",
+        create_trace_file=False,
+    )
+    canonical_file = arm["exp_dir"] / "canonical_trace.json"
+    trace_rec = canonicalize_trace(
+        {
+            "trajectory_id": "TB-canon-mismatch",
+            "run_id": "run-cm-1",
+            "metric_semantics": {
+                "live_train_metric": {
+                    "metric": "MAE",
+                    "unit": "eV",
+                    "target": "Gap",
+                    "role_identity": "internal_train",
+                    "weights": "live",
+                    "direction": "minimize",
+                },
+                "live_dev_metric": None,
+                "ema_dev_metric": None,
+            },
+            "observations": [
+                {"sequence": 0, "event": "observation", "optimizer_step": 1, "live_train_metric": 0.5}
+            ],
+        }
+    )
+    canonical_file.write_bytes(json_bytes(trace_rec))
+
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: explicit canonical trace digest mismatch with retention evidence",
+    ):
+        close_terminal_arm(
+            repo_root=tmp_path,
+            trajectory=arm["traj_path"],
+            terminal=arm["terminal_path"],
+            trace=canonical_file,
+        )
+
+
+# =========================================================================
+# Test K: Hardening Point 2 - Scientific metric semantics & default manifest identity
+# =========================================================================
+def test_raw_trace_without_metric_semantics_fails_closed(tmp_path):
+    """Raw trace without authoritative metric semantics anywhere -> FAIL CLOSED."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_no_semantics",
+        "TB-no-semantics",
+        "run-ns-1",
+        "ev-ns-1",
+        include_trace_artifact=True,
+    )
+    contract_path = arm["exp_dir"] / "contract.json"
+    contract_path.write_bytes(b'{"schema": "contract-v1", "name": "c-no-sem"}\n')
+
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: cannot determine authoritative metric semantics for raw trace",
+    ):
+        close_terminal_arm(
+            repo_root=tmp_path,
+            trajectory=arm["traj_path"],
+            terminal=arm["terminal_path"],
+            trace=None,
+        )
+
+
+def test_raw_trace_with_contract_metric_semantics_succeeds(tmp_path):
+    """Contract specifies metric semantics -> PASS and correctly propagated."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_contract_sem",
+        "TB-contract-sem",
+        "run-cs-1",
+        "ev-cs-1",
+        include_trace_artifact=True,
+    )
+    contract_path = arm["exp_dir"] / "contract.json"
+    c_bytes = (
+        json.dumps(
+            {
+                "schema": "contract-v1",
+                "metric_semantics": {
+                    "live_train_metric": {
+                        "metric": "MSE",
+                        "unit": "eV^2",
+                        "target": "HOMO",
+                        "role_identity": "train_role_x",
+                        "weights": "live",
+                        "direction": "minimize",
+                    },
+                    "live_dev_metric": None,
+                    "ema_dev_metric": {
+                        "metric": "MSE",
+                        "unit": "eV^2",
+                        "target": "HOMO",
+                        "role_identity": "dev_role_x",
+                        "weights": "ema",
+                        "direction": "minimize",
+                    },
+                },
+            }
+        ).encode()
+        + b"\n"
+    )
+    contract_path.write_bytes(c_bytes)
+    term_data = load_json_object(arm["terminal_path"])
+    term_data["artifact_hashes"]["experiments/exp_contract_sem/contract.json"] = sha256_bytes(c_bytes)
+    arm["terminal_path"].write_bytes(json_bytes(term_data))
+
+    result = close_terminal_arm(
+        repo_root=tmp_path,
+        trajectory=arm["traj_path"],
+        terminal=arm["terminal_path"],
+        trace=None,
+    )
+    assert result["pipeline_status"] == "COMPLETE"
+    finalized_trace = load_canonical_trace(arm["exp_dir"] / "rml_finalized/trace.json")
+    assert (
+        finalized_trace["metric_semantics"]["live_train_metric"]["metric"] == "MSE"
+    )
+    assert (
+        finalized_trace["metric_semantics"]["live_train_metric"]["target"] == "HOMO"
+    )
+
+
+def test_raw_trace_with_recovery_spec_succeeds(tmp_path):
+    """Raw trace with explicit recovery_spec metric semantics -> PASS."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_rec_spec",
+        "TB-rec-spec",
+        "run-rs-1",
+        "ev-rs-1",
+        include_trace_artifact=True,
+    )
+    contract_path = arm["exp_dir"] / "contract.json"
+    c_bytes = b'{"schema": "contract-v1", "name": "c-no-sem"}\n'
+    contract_path.write_bytes(c_bytes)
+    term_data = load_json_object(arm["terminal_path"])
+    term_data["artifact_hashes"]["experiments/exp_rec_spec/contract.json"] = sha256_bytes(c_bytes)
+    arm["terminal_path"].write_bytes(json_bytes(term_data))
+
+    rec_spec = {
+        "metric_semantics": {
+            "live_train_metric": {
+                "metric": "MAE",
+                "unit": "eV",
+                "target": "LUMO",
+                "role_identity": "train_lumo",
+                "weights": "live",
+                "direction": "minimize",
+            },
+            "live_dev_metric": None,
+            "ema_dev_metric": {
+                "metric": "MAE",
+                "unit": "eV",
+                "target": "LUMO",
+                "role_identity": "dev_lumo",
+                "weights": "ema",
+                "direction": "minimize",
+            },
+        }
+    }
+
+    result = close_terminal_arm(
+        repo_root=tmp_path,
+        trajectory=arm["traj_path"],
+        terminal=arm["terminal_path"],
+        trace=None,
+        recovery_spec=rec_spec,
+    )
+    assert result["pipeline_status"] == "COMPLETE"
+    finalized_trace = load_canonical_trace(arm["exp_dir"] / "rml_finalized/trace.json")
+    assert (
+        finalized_trace["metric_semantics"]["live_train_metric"]["target"] == "LUMO"
+    )
+
+
+def test_build_default_trace_manifest_unspecified_when_missing_contract(tmp_path):
+    """When contract lacks identities, manifest fields are 'unspecified_in_contract' without guessing."""
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(
+        tmp_path,
+        "exp_manifest_unspecified",
+        "TB-manifest-unspecified",
+        "run-mu-1",
+        "ev-mu-1",
+        include_trace_artifact=True,
+    )
+    contract_file = tmp_path / "experiments/exp_manifest_unspecified/contract.json"
+    contract_file.write_text("{}", encoding="utf-8")
+
+    traj_obj = json.loads(arm["traj_path"].read_text(encoding="utf-8"))
+    term_obj = json.loads(arm["terminal_path"].read_text(encoding="utf-8"))
+    trace_rec = {
+        "trajectory_id": "TB-manifest-unspecified",
+        "run_id": "run-mu-1",
+        "observations": [
+            {"optimizer_step": 10, "live_train_metric": 0.5}
+        ],
+    }
+
+    manifest = build_default_trace_manifest(tmp_path, traj_obj, term_obj, trace_rec)
+    comp = manifest["comparability_identity"]
+    assert comp["dataset_identity"] == "unspecified_in_contract"
+    assert comp["row_split_identity"] == "unspecified_in_contract"
+    assert comp["architecture_identity"] == "unspecified_in_contract"
+    assert comp["precision_identity"] == "unspecified_in_contract"
+    assert comp["optimizer_identity"] == "unspecified_in_contract"
+
+
+# =========================================================================
+# Test L: Hardening Point 3 - Multi-arm binding without string-guessing
+# =========================================================================
+def test_single_trace_auto_resolves_without_arm_identifier():
+    """Single declared trace artifact resolves automatically when arm_identifier is None."""
+    ev = {
+        "artifacts": [
+            {"name": "training_trace", "locator": "path/to/trace.json", "sha256": "abc"}
+        ]
+    }
+    decl, art = inspect_trace_retention_evidence(ev, arm_identifier=None)
+    assert decl is True
+    assert art["locator"] == "path/to/trace.json"
+
+
+def test_multi_trace_without_arm_identifier_fails_closed():
+    """Multi-trace evidence without arm_identifier -> FAIL CLOSED (no string guessing)."""
+    ev = {
+        "artifacts": [
+            {"name": "readback_trace", "locator": "path/arm1/trace.json", "sha256": "abc"},
+            {"name": "recurrence_trace", "locator": "path/arm2/trace.json", "sha256": "def"},
+        ]
+    }
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: ambiguous multi-arm evidence \\(2 traces declared\\); explicit arm_identifier is required",
+    ):
+        inspect_trace_retention_evidence(ev, arm_identifier=None)
+
+
+def test_multi_trace_with_explicit_arm_identifier_succeeds():
+    """Multi-trace evidence with explicit arm_identifier selects the matching arm trace."""
+    ev = {
+        "artifacts": [
+            {"name": "readback_trace", "locator": "path/readback/trace.json", "sha256": "abc"},
+            {"name": "recurrence_trace", "locator": "path/recurrence/trace.json", "sha256": "def"},
+        ]
+    }
+    decl, art = inspect_trace_retention_evidence(ev, arm_identifier="readback")
+    assert decl is True
+    assert art["name"] == "readback_trace"
+
+    decl2, art2 = inspect_trace_retention_evidence(ev, arm_identifier="recurrence")
+    assert decl2 is True
+    assert art2["name"] == "recurrence_trace"
+
+
+def test_multi_trace_with_unknown_arm_identifier_fails_closed():
+    """Multi-trace evidence with unknown arm_identifier -> FAIL CLOSED."""
+    ev = {
+        "artifacts": [
+            {"name": "readback_trace", "locator": "path/readback/trace.json", "sha256": "abc"},
+            {"name": "recurrence_trace", "locator": "path/recurrence/trace.json", "sha256": "def"},
+        ]
+    }
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: retention evidence declares 2 traces, but none matched arm identifier",
+    ):
+        inspect_trace_retention_evidence(ev, arm_identifier="nonexistent")
+
+
+def test_multi_trace_with_ambiguous_arm_identifier_fails_closed():
+    """Multi-trace evidence with ambiguous arm_identifier matching multiple -> FAIL CLOSED."""
+    ev = {
+        "artifacts": [
+            {"name": "arm_variant_1_trace", "locator": "path/arm1/trace.json", "sha256": "abc"},
+            {"name": "arm_variant_2_trace", "locator": "path/arm2/trace.json", "sha256": "def"},
+        ]
+    }
+    with pytest.raises(
+        ValueError,
+        match="FAIL CLOSED: ambiguous trace retention evidence for arm",
+    ):
+        inspect_trace_retention_evidence(ev, arm_identifier="arm_variant")
 
