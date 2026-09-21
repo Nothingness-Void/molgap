@@ -9,6 +9,31 @@ from molgap.gptrans_feature_denoising import (
 )
 
 
+def test_fixed_shard_loader_accepts_pyg_inmemory_payload(tmp_path):
+    import torch
+    from torch_geometric.data import Data, InMemoryDataset
+
+    from molgap.pcqm_gptrans_v4 import _load_datasets
+
+    graphs = [
+        Data(
+            x=torch.tensor([[1], [2]], dtype=torch.long),
+            edge_index=torch.tensor([[0], [1]], dtype=torch.long),
+            edge_attr=torch.zeros((1, 3), dtype=torch.long),
+            y=torch.tensor([0.1]),
+        )
+        for _ in range(2)
+    ]
+    data, slices = InMemoryDataset.collate(graphs)
+    shard = tmp_path / "graphs.pt"
+    torch.save((data, slices), shard)
+
+    dataset, shards = _load_datasets((shard,))
+    assert len(dataset) == 2
+    assert len(shards) == 1
+    assert shards[0][0].x.shape == (2, 1)
+
+
 def test_feature_denoising_parameter_budgets_are_frozen():
     assert ARMS == ("full_atom", "full_atom_bond")
     assert ATOM_FEATURE_DIMS == (119, 5, 12, 12, 10, 6, 6, 2, 2)

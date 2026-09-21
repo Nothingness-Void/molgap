@@ -278,8 +278,20 @@ def run_preflight(
         raise RuntimeError("Feature-denoising preflight requires one visible CUDA device")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
     assets = validate_fixed_assets(dataset_root, manifest_path, verify_content=True)
-    first_shard = torch_load_compat(assets.train_paths[0], map_location="cpu", weights_only=False)
-    batch = next(iter(DataLoader(first_shard[:PHYSICAL_BATCH], batch_size=PHYSICAL_BATCH)))
+    # Fixed PCQM shards are PyG InMemoryDataset ``(data, slices)`` payloads,
+    # not lists of Data objects.  Reuse the same unpacking path as training so
+    # preflight exercises the real serialized graph format.
+    _, packed_shards = _load_datasets(assets.train_paths)
+    batch = next(
+        iter(
+            DataLoader(
+                packed_shards[0],
+                batch_size=PHYSICAL_BATCH,
+                shuffle=False,
+                num_workers=0,
+            )
+        )
+    )
     batch = batch.to("cuda")
 
     torch.manual_seed(SEED)
