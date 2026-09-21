@@ -1,0 +1,79 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": ["t4x2-v1", "t4x2-v2"],
+      "cost_event_ids": ["cost-TC-gptrans-conditional-flow-100k-s42-training"],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
+        "experiments/pcqm_gptrans_conditional_flow_100k/protocol.md"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v1",
+        "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2"
+      ],
+      "source_commit": "d6ca0625be909388de9b2fce44b7db104379859e",
+      "type": "planned_dual_candidate_seed42_100k_screen"
+    }
+  ],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_conditional_flow_100k/comparison_plan.json",
+  "comparison_blockers": [],
+  "reference_bundle_id": null,
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_conditional_flow_100k/STATUS.md",
+      "next_allowed_actions": [
+        "wait for the submitted Kaggle1 kernel to reach a terminal state",
+        "preserve raw output before no-inference acceptance"
+      ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": ["terminal attribution must precede any successor"]
+  },
+  "family_id": "gptrans-conditional-relation-flow",
+  "hypothesis": {
+    "alternative_explanations": [
+      "GPTrans 100K weakness may be caused by optimization or scale rather than uniform relation allocation",
+      "zero-initialized gates may remain redundant with the frozen propagation stack"
+    ],
+    "changed_mechanism": "independently condition pair-to-node readback or recurrent pair accumulation while preserving both validated paths",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 T4x2 screen with one isolated arm per T4",
+    "decision_changed_if_negative": "close conditional GPTrans flow allocation without another seed or scale bridge",
+    "decision_changed_if_positive": "retain at most one seed-42 mechanism shortlist for a separate budget decision",
+    "expected_native_cost_ref": "cost-TC-gptrans-conditional-flow-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and is not inferred from row bootstrap"
+    ],
+    "hypothesis_id": "H-TC-gptrans-conditional-flow-100k-s42",
+    "observed_deficiency": "both GPTrans propagation paths are necessary, but their unconditional contribution may inject relation messages where they are not useful",
+    "related_closed_family_ids": [
+      "gptrans-propagation-flow",
+      "gptrans-relation-flow",
+      "gptrans-memory-readback"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-flow-ablation-100k-s42"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can conditional allocation improve GPTrans while preserving both necessary node/pair propagation paths?",
+  "record_mode": "prospective",
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_conditional_flow_100k/budget_snapshot.json",
+    "contract_refs": ["experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json"],
+    "parent_trajectory_ids": ["TC-gptrans-flow-ablation-100k-s42"],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-flow-ablation-100k-s42"
+    ],
+    "prior_trajectory_ids": ["TC-gptrans-flow-ablation-100k-s42"],
+    "reference_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_conditional_flow_100k/role_plan.json"],
+      "source_commit": "60a8c0799e08d186ca7f30d3f1293eb9a75fad7f",
+      "source_config_identity": "source-archive-12f1f892483f1ce446dc144c2a2ea879d190b67ed8a1a4e22649a52a911384a9"
+  },
+  "track": "C",
+  "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
+}

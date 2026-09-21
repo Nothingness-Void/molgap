@@ -1,0 +1,61 @@
+{
+  "arm": "conditional_pair_recurrence",
+  "axis_recovery": "epoch copied; per-epoch step/sample increments retained only in raw source, not relabeled as cumulative axes",
+  "independent_experiment": false,
+  "independent_finalization": false,
+  "joint_bindings": {
+    "joint_acceptance.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_acceptance.json",
+      "sha256": "7b6d81f6b6c8015b6ca626fdfefe997dd68708c0c7520655e958f9ca1bff7021",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json"
+    },
+    "joint_decision.md": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md",
+      "sha256": "5ada32122cf877e638989fc9ea931ea97cb15765f0339d60aad24acb88e20b34",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/decision.md"
+    },
+    "joint_evidence_snapshot.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_evidence_snapshot.json",
+      "sha256": "cf14436a69b753878c2038bc500e6516e3779566edfae143c094d20ee8b25d21",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/rml_finalized/v5_evidence.json"
+    },
+    "joint_finalization_receipt.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
+      "sha256": "f81f75e8dcd199b670e888a23fd92b0e2694644b866048b20a2e33e77341eca1",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/rml_finalized/finalization.json"
+    },
+    "joint_prospective_snapshot.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_prospective_snapshot.json",
+      "sha256": "c92fb1bdfdc1eb3c5fb155f9c574eab68773bfa7c6c2f687bf9632a804f22e8b",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/rml_finalized/prospective_snapshot.json"
+    },
+    "joint_terminal_trajectory.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_terminal_trajectory.json",
+      "sha256": "4c96927d22a348f5aa1e5f5fc2f0ff8bff2ddcef09b65ea815ff77eb55c3e11d",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/rml_finalized/trajectory.json"
+    },
+    "joint_training_contract.json": {
+      "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_training_contract.json",
+      "sha256": "52722a7897f04b2cc5eff82109935af0d1fb7239b1377a7051d4fd6ccbc72e8b",
+      "source_commit": "ea6240e18028663893587fbfa29cdb8090db9ccb",
+      "source_path": "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json"
+    }
+  },
+  "joint_evidence_id": "pcqm-gptrans-conditional-flow-100k-s42",
+  "joint_finalization_id": "finalize-8118a4add0079e69115ed723fb28cb3123872988d2c9853fe01e3fb772c35667",
+  "joint_run_id": "nothingnessvoid/molgap-gptrans-conditional-flow-s42:v2",
+  "joint_trajectory_id": "TC-gptrans-conditional-flow-100k-s42",
+  "prospective_authority": false,
+  "record_mode": "retrospective_partial",
+  "relationship": "derived_from_joint_run",
+  "retained_ref": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_recurrence/raw_trace.json",
+  "run_identity_semantics": "original joint run ID; arm distinguished by historical trajectory ID and arm field",
+  "sha256": "e2d1799479b8bd1f999cbedb41f106d5079a7feddfe90fcdeac2f0387ef2ae2d",
+  "source": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/trace.json"
+}
