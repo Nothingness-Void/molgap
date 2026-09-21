@@ -91,6 +91,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `platforms/_records/kaggle/preflight/`.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
+- GPTrans Noisy Nodes 500K on Kaggle 2 completed 60 epochs (`0.105056 eV`,
+  +0.003812 eV over GPTrans core baseline, trailing K1 by 0.2 meV) and passed
+  mechanical and scientific acceptance as `POSITIVE_BELOW_GATE` under `< 0.103868 eV`.
+  Authority: `experiments/pcqm_gptrans_noisy_nodes_500k/decision.md`.
+- GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) is currently
+  executing on `pcqm4mv2-ogb-fixed-500k-scnet-v1` under frozen falsifier `< 0.103868 eV`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
  independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote
