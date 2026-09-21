@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "candidate-v1-planned",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-spd-pair-token-100k-s42-training",
+  "evidence_ref": "experiments/pcqm_k1_spd_pair_token_100k/v5_evidence.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 3.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.0
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "nvoid912/molgap-k1-spd-pairtoken-s42:v1-planned",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+}

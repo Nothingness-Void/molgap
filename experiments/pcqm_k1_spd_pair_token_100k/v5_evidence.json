@@ -1,0 +1,77 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+      "name": "source_config",
+      "sha256": "720827ba6d4b4a2f91bfe42b41c149f44a4dcd0cff7e604601a6f105cf4a53b8"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+      "name": "training_contract",
+      "sha256": "a3436f117c8c0f4076fcd355cb9f64d290a163fdeaae66e15abfd870754024e7"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/comparison_readiness_prelaunch.json",
+      "name": "comparison_readiness_prelaunch",
+      "sha256": "734e08b042f5bed752555e1aee053677bd611e622781d8afac483a232dc53c79"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/role_plan.json",
+      "name": "role_plan",
+      "sha256": "693690ddfb557aa16caa3b67ec762ad644d70abfd6b8f168420334b308e83acc"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/trace_plan.json",
+      "name": "trace_plan",
+      "sha256": "b6c2f5ad87bb96326deca5d3499f2b40d1b678bff1684c44b3dc7a87e0397e7e"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_spd_pair_token_100k/budget_snapshot.json",
+      "name": "budget_snapshot",
+      "sha256": "8493248a8ed99a8dc9839bdefbb16a6a68edb393e5c56cfedf91ec45b08aef30"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_spd_pair_token_100k/protocol.md",
+      "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+      "experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+      "experiments/pcqm_k1_spd_pair_token_100k/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_spd_pair_token_100k/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-21",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "one_candidate_authorized",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_architecture_screen",
+  "track": "C"
+}

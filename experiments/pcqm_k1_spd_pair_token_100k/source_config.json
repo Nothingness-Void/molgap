@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "7403841d2ec6942a04d06baf6b4da65dfeab736500549cb1c8ec928620c9dfe9",
+  "candidate_id": "neural_atom_k1_spd_pair_token",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_spd_pair_token.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "graphormer-spd-scalar-bias-on-pairtoken-selection",
+  "source_commit": "58c5d681b871855d5f27bddf980140fe0cccfb52",
+  "training_contract_ref": "experiments/pcqm_k1_spd_pair_token_100k/training_contract.json",
+  "training_contract_sha256": "a3436f117c8c0f4076fcd355cb9f64d290a163fdeaae66e15abfd870754024e7"
+}
