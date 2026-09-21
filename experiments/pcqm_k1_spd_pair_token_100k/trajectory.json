@@ -3,7 +3,7 @@
     {
       "action_id": "A001",
       "attempt_ids": [
-        "candidate-v1-planned"
+        "candidate-v1"
       ],
       "cost_event_ids": [
         "cost-TC-k1-spd-pair-token-100k-s42-training"
@@ -13,7 +13,7 @@
         "experiments/pcqm_k1_spd_pair_token_100k/source_config.json"
       ],
       "run_ids": [
-        "nvoid912/molgap-k1-spd-pairtoken-s42:v1-planned"
+        "nvoid912/molgap-k1-spd-pairtoken-s42:v1"
       ],
       "source_commit": "58c5d681b871855d5f27bddf980140fe0cccfb52",
       "type": "planned_candidate_only_seed42_100k_screen"

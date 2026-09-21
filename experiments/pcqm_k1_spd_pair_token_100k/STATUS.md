@@ -1,6 +1,6 @@
 # Status
 
-The prospective V5 release is frozen at source commit
-`58c5d681b871855d5f27bddf980140fe0cccfb52`. Static mechanism, contract,
-comparison-readiness, and RML checks passed. Exactly one candidate-only Kaggle3
-submission is authorized; no remote result is claimed yet.
+Kaggle3 kernel `nvoid912/molgap-k1-spd-pairtoken-s42:v1` was submitted under
+the frozen prospective release and observed `RUNNING`. No terminal scientific
+result is claimed here. Terminal acceptance and RML ingestion must precede any
+successor.
