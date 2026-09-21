@@ -3,7 +3,10 @@
     {
       "action_id": "A001",
       "attempt_ids": ["t4x2-v1", "t4x2-v2"],
-      "cost_event_ids": ["cost-TC-gptrans-conditional-flow-100k-s42-training"],
+      "cost_event_ids": [
+        "cost-TC-gptrans-conditional-flow-100k-s42-training",
+        "cost-TC-gptrans-conditional-flow-100k-s42-training-observed-v2"
+      ],
       "evidence_refs": [
         "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
         "experiments/pcqm_gptrans_conditional_flow_100k/protocol.md"
@@ -60,7 +63,7 @@
   "question": "Can conditional allocation improve GPTrans while preserving both necessary node/pair propagation paths?",
   "record_mode": "prospective",
   "result": {
-    "evidence_ids": [],
+    "evidence_ids": ["pcqm-gptrans-conditional-flow-100k-s42"],
     "evidence_refs": [
       "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
       "experiments/pcqm_gptrans_conditional_flow_100k/decision.md"

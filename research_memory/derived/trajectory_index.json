@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7a499ec0d9de125c5a29b9e8e6742bdb47a6cf12d275e80af3b22f221d910484",
+  "source_digest": "9281f541d4839cc1271f78de306122c8147a2353c6c916f9a424612f851c24c7",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -200,7 +200,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_conditional_flow_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-conditional-flow-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-conditional-flow-100k-s42"
     },

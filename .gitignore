@@ -181,3 +181,7 @@ tmp/
 
 # Unpublished RML transactions are not canonical evidence.
 research_memory/.staging/
+
+# Canonical remote raw payloads are retained locally and bound by manifests;
+# large checkpoints and downloaded source trees are not repository objects.
+platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/

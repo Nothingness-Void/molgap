@@ -9,7 +9,7 @@
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 5
+    "WARN": 4
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
@@ -88,14 +88,6 @@
         "TB-route-b-four-encoder-specialist",
         "TC-gptrans-conditional-flow-100k-s42",
         "TC-gptrans-flow-ablation-100k-s42"
-      ],
-      "severity": "WARN"
-    },
-    {
-      "code": "trajectory_without_v5_evidence",
-      "count": 1,
-      "items": [
-        "TC-gptrans-conditional-flow-100k-s42"
       ],
       "severity": "WARN"
     }

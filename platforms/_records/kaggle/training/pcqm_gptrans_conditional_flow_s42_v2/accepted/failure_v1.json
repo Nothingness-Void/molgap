@@ -1,0 +1,14 @@
+{
+  "kernel": "nothingnessvoid/molgap-gptrans-conditional-flow-s42",
+  "version": 1,
+  "state": "ERROR",
+  "failure_stage": "preflight",
+  "arms": [
+    "conditional_pair_readback",
+    "conditional_pair_recurrence"
+  ],
+  "exact_error": "ModuleNotFoundError: No module named 'molgap.pcqm_wedge'",
+  "scientific_result": false,
+  "training_started": false,
+  "raw_output": "results/raw/kaggle_gptrans_conditional_flow_s42_v1"
+}

@@ -1,0 +1,85 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-conditional-flow-100k-s42",
+  "track": "C",
+  "scope": "fixed_100k_gptrans_conditional_flow_screen",
+  "legacy_contract": "molgap-pcqm-gptrans-conditional-flow-100k-v5",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready",
+    "budget_decision": "closed",
+    "full_handoff_status": "none"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
+      "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
+      "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "raw_artifact_manifest",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+      "sha256": "cbcac8b4e4c2786f8d0bd2e7fea30d63b8b00504bd4b10dba6c74256687d34bd",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_readback_best_model",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/best_model.pt",
+      "sha256": "1d0a903508b56adf63659ab5984a6fbe68e232223ce125a389b544c2488254b9",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_readback_predictions",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/development_predictions.pt",
+      "sha256": "08c5d8ff3a171b780388776b47cc78419eef421ee856c9ea1339aa4e6f186c49",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_recurrence_best_model",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/best_model.pt",
+      "sha256": "76ee494d95f4a4feb283d824f493f87f777c10f754766d48af612012be56693b",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "conditional_pair_recurrence_predictions",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/development_predictions.pt",
+      "sha256": "11caef0036077be9b0bd409f5334ca53e2efd615871976dfe45af2de59bfbffb",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "v2_job_summary",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/job_summary.json",
+      "sha256": "6f992e7dd99c3dbda330456bc31a5ebedbf5ded14d94ff52c0d5ab7f06c2d47e",
+      "availability": "durable_local_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.15662720430791377,
+    "conditional_pair_readback_development_gap_mae_eV": 0.1609358452886343,
+    "conditional_pair_readback_delta_eV": 0.00430864098072052,
+    "conditional_pair_recurrence_development_gap_mae_eV": 0.15987775508821012,
+    "conditional_pair_recurrence_delta_eV": 0.003250550780296326,
+    "bootstrap_upper95_delta_readback_eV": 0.005268241401195526,
+    "bootstrap_upper95_delta_recurrence_eV": 0.004282526487350463
+  },
+  "migration": {
+    "migrated_at": "2026-09-21",
+    "verification_scope": "terminal Kaggle state, complete local raw-artifact archive, frozen no-inference acceptance, and paired development comparison",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
