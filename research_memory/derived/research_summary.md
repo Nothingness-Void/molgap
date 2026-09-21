@@ -5,10 +5,9 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
 - CLOSED: 3
 - INCONCLUSIVE: 1
-- NEGATIVE_UNDER_CONTRACT: 3
+- NEGATIVE_UNDER_CONTRACT: 4
 - NO_TRAIN: 2
 - POSITIVE_UNDER_CONTRACT: 3
 

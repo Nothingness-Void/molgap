@@ -27,8 +27,8 @@
         "wait for the submitted Kaggle1 kernel to reach a terminal state",
         "preserve raw output before no-inference acceptance"
       ],
-    "outcome": "ACTIVE",
-    "reopen_conditions": ["terminal attribution must precede any successor"]
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": ["a distinct causal mechanism must be justified by new RML evidence"]
   },
   "family_id": "gptrans-conditional-relation-flow",
   "hypothesis": {
@@ -59,7 +59,14 @@
   "owner": "desktop",
   "question": "Can conditional allocation improve GPTrans while preserving both necessary node/pair propagation paths?",
   "record_mode": "prospective",
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
+      "experiments/pcqm_gptrans_conditional_flow_100k/decision.md"
+    ],
+    "outcome": "NEGATIVE_UNDER_CONTRACT"
+  },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {
     "budget_snapshot_ref": "experiments/pcqm_gptrans_conditional_flow_100k/budget_snapshot.json",

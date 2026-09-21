@@ -9,9 +9,14 @@ The first source package failed before training because the fixed graph cache
 requires the historical `molgap.pcqm_wedge` deserialization module. It is
 preserved as a raw failed attempt and will not be reused. The corrected source
 dataset is `nothingnessvoid/molgap-gptrans-conditional-flow-source-v2`.
-Kernel v1 failed in both preflights before training. Kernel v2 uses the new
-source dataset and the same frozen scientific contract; it is currently
-RUNNING after startup.
+Kernel v1 failed in both preflights before training because the source package
+omitted `molgap.pcqm_wedge`. Kernel v2 used the corrected source dataset and
+completed both 60-epoch arms under the same frozen scientific contract.
+
+Mechanical acceptance passed, but both candidates regressed against the frozen
+GPTrans reference. The trajectory is closed as `NEGATIVE_UNDER_CONTRACT`; see
+`results/acceptance_v2.json` and `decision.md`. No full-scale release is
+authorized.
 
 Do not submit a successor while this attempt is running. On completion or
 failure, preserve raw output first, then run the frozen no-inference acceptance
