@@ -251,6 +251,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-sparse-triplet-100k-s42:A001",
+      "target": "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-sparse-triplet-100k-s42:A001",
+      "target": "experiments/pcqm_k1_sparse_triplet_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-v4-100k-reference-s42:A001",
       "target": "experiments/pcqm_k1_variants_100k/decision.md",
       "type": "action_produced_evidence"
@@ -326,6 +336,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
       "target": "TB-gptrans-pair-prenorm-500k-s42",
       "type": "prior_evidence"
@@ -378,6 +393,11 @@
     {
       "source": "pcqm-k1-mose-residual-gate-100k-s42",
       "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -461,6 +481,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
       "target": "TB-gptrans-pair-prenorm-500k-s42",
       "type": "reference_used"
@@ -518,6 +543,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
       "type": "reference_used"
     }
   ],
@@ -588,6 +618,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-sparse-triplet-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-v4-100k-reference-s42",
       "type": "evidence"
     },
@@ -649,6 +683,10 @@
     },
     {
       "id": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-sparse-triplet-100k-s42",
       "type": "trajectory"
     },
     {

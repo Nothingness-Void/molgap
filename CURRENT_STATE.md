@@ -45,6 +45,16 @@ contract.
 
 ## Discovery state
 
+The first round of a newly authorized, at-most-three-round K1 sequence is
+frozen prospectively under `experiments/pcqm_k1_sparse_triplet_100k/`. It adds
+one 16-channel persistent state for every complete directed non-backtracking
+real-bond triplet at all nine local layers, with zero-initialized returns to
+EdgeState and the center node. It is pure 2D and exactly K1 at initialization.
+This round was selected because the earlier pure-2D sparse-wedge mechanism was
+directionally positive in three seeds, whereas shortest-path mechanisms were
+weak or negative. No SPD or second successor is released until this round has
+a terminal RML decision.
+
 The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
 FP32, BS128 contract and passed no-inference terminal acceptance. It reached
 `0.1424374580 eV`, which was `0.0010638237 eV` worse than K1-v4 and

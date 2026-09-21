@@ -295,7 +295,7 @@ def main() -> None:
             "test_challenge": "untouched",
         },
         "migration": {
-            "migrated_at": "2026-09-20",
+            "migrated_at": "2026-09-21",
             "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed",
             "training_executed": False,
             "inference_executed": False,

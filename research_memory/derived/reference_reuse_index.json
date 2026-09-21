@@ -339,6 +339,26 @@
     },
     {
       "artifact_availability": [
+        "committed_prelaunch_metadata"
+      ],
+      "comparison_status": "prelaunch_strict_planned",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-sparse-triplet-100k-s42",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_sparse_triplet_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "local_record_verified"
       ],
       "comparison_status": "strict_reference_accepted",
@@ -364,7 +384,8 @@
         "TC-k1-mose-residual-gate-100k-s42",
         "TC-k1-multiplicative-pair-value-100k-s42",
         "TC-k1-pair-token-100k-s42",
-        "TC-k1-pair-token-node-return-100k-s42"
+        "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-sparse-triplet-100k-s42"
       ]
     },
     {

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 71,
+  "ambiguous_historical_role_record_count": 75,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -450,6 +450,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-v4-100k-reference-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -824,6 +852,7 @@
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
+      "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_challenge": [
@@ -843,6 +872,7 @@
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
+      "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_dev": [
@@ -862,6 +892,7 @@
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
       "pcqm-k1-pair-token-node-return-100k-s42",
+      "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ]
   },

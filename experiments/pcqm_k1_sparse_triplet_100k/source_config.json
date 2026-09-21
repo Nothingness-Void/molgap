@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "7dec6916119d796e26355dea9860256b169399eb3c73b3788a4d91c4ed4f8051",
+  "candidate_id": "neural_atom_k1_sparse_triplet",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_sparse_triplet.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "persistent-sparse-topological-triplet-state",
+  "source_commit": "2fef556713f70e2d7208879cab544e137329cbee",
+  "training_contract_ref": "experiments/pcqm_k1_sparse_triplet_100k/training_contract.json",
+  "training_contract_sha256": "5a611632726cabadf340f5757d137776f489694aedec83a1bbce792f724bd74d"
+}

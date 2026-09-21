@@ -14,8 +14,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-V5-MULTIPLICATIVE-PAIR-VALUE | Completed: terminally ingested as `NEGATIVE_UNDER_CONTRACT` | Preserve the closure of PairToken selector/value micro-variants; any successor must be a distinct information-flow family |
-| P2 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains two candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
+| P1 | C-K1-SPARSE-TRIPLET | Run one frozen seed-42 topology-only sparse-triplet K1 screen | Terminal artifact acceptance, RML ingestion, and written attribution; do not release round 2 before this |
+| P2 | C-K1-GRAPHORMER-SPD | Conditional only: reconsider K1 slot/relationship-flow SPD after P1 terminal analysis | A new prospective protocol must prove it is distinct from closed shortest-path mechanisms |
+| P3 | C-K1-TRIPLET-FOLLOWUP | Conditional only: use P1 evidence to decide whether any triplet successor remains | No automatic stacking, geometry, extra seed, or scale bridge |
+| P4 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
