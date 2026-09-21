@@ -521,6 +521,11 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as SPARSE_TRIPLET_PARAMETERS,
         check_mechanism as check_sparse_triplet,
     )
+    from .k1_spd_pair_token import (
+        MODES as SPD_PAIR_TOKEN_MODES,
+        PARAMETERS as SPD_PAIR_TOKEN_PARAMETERS,
+        check_mechanism as check_spd_pair_token,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -530,6 +535,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + CHEM_TYPED_PAIR_MODES
         + MULTIPLICATIVE_PAIR_MODES
         + SPARSE_TRIPLET_MODES
+        + SPD_PAIR_TOKEN_MODES
     )
     import torch
 
@@ -1163,6 +1169,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != SPARSE_TRIPLET_PARAMETERS[mode]
         ):
             raise RuntimeError("Sparse-triplet parameter identity changed")
+    elif mode in SPD_PAIR_TOKEN_MODES:
+        mechanism_checks = check_spd_pair_token(model, batch)
+        if (
+            sum(parameter.numel() for parameter in model.parameters())
+            != SPD_PAIR_TOKEN_PARAMETERS[mode]
+        ):
+            raise RuntimeError("SPD PairToken parameter identity changed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1200,6 +1213,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             + list(model.triplet_to_edge.parameters())
             + list(model.triplet_to_node.parameters())
         )
+    elif mode in SPD_PAIR_TOKEN_MODES:
+        candidate_parameters = list(model.relation_token.parameters())
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
             candidate_parameters = list(model.rwse_encoder.parameters())
@@ -1373,6 +1388,7 @@ def train_arm(
     from .k1_chem_typed_pair_token import MODES as CHEM_TYPED_PAIR_MODES
     from .k1_multiplicative_pair_value import MODES as MULTIPLICATIVE_PAIR_MODES
     from .k1_sparse_triplet import MODES as SPARSE_TRIPLET_MODES
+    from .k1_spd_pair_token import MODES as SPD_PAIR_TOKEN_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1383,6 +1399,7 @@ def train_arm(
         + CHEM_TYPED_PAIR_MODES
         + MULTIPLICATIVE_PAIR_MODES
         + SPARSE_TRIPLET_MODES
+        + SPD_PAIR_TOKEN_MODES
         + MOSE_MODES
     )
 

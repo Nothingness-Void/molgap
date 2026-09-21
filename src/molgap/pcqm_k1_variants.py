@@ -161,6 +161,24 @@ ARCHITECTURE_CONFIGS = {
         "geometry": False,
         "external_features": False,
     },
+    "neural_atom_k1_spd_pair_token": {
+        "backbone": "neural_atom_k1_v4",
+        "exchange_layers": list(MIXER_LAYERS),
+        "change": "graphormer-shortest-path-bias-on-accepted-pairtoken-selection",
+        "target_layer": 6,
+        "pair_channels": 32,
+        "distance_buckets": 7,
+        "maximum_exact_distance": 5,
+        "pair_value": "accepted-additive-pairtoken-value-unchanged",
+        "path_value_aggregation": False,
+        "persistent_path_state": False,
+        "added_parameters": 22_855,
+        "expected_parameters": 3_681_672,
+        "dense_atom_attention": False,
+        "initialization_policy": "nested-function-zero-spd-bias-and-return",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_gpspp_sender": {
         "backbone": "neural_atom_k1",
         "exchange_layers": list(MIXER_LAYERS),
@@ -916,6 +934,10 @@ def make_encoder(mode: str):
     if mode in SPARSE_TRIPLET_MODES:
         from .k1_sparse_triplet import make_encoder as make_sparse_triplet
         return make_sparse_triplet(mode)
+    from .k1_spd_pair_token import MODES as SPD_PAIR_TOKEN_MODES
+    if mode in SPD_PAIR_TOKEN_MODES:
+        from .k1_spd_pair_token import make_encoder as make_spd_pair_token
+        return make_spd_pair_token(mode)
 
     from .qm9_neural_atom import make_encoder as make_k1
 
