@@ -33,6 +33,17 @@ def main(argv: list[str] | None = None) -> None:
     ready = commands.add_parser("package-ready")
     ready.add_argument("--trajectory", required=True)
     commands.add_parser("backtest-screening")
+    native_freeze = commands.add_parser("native-freeze")
+    native_freeze.add_argument("--spec", required=True)
+    native_freeze.add_argument("--receipt", required=True)
+    native_guard = commands.add_parser("native-launch-guard")
+    native_guard.add_argument("--receipt", required=True)
+    native_guard.add_argument("--source-commit", required=True)
+    native_guard.add_argument("--output", required=True)
+    for name in ("native-close", "terminal-closure"):
+        close_cmd = commands.add_parser(name)
+        close_cmd.add_argument("--receipt", required=True)
+        close_cmd.add_argument("--launch", required=True)
     planner = commands.add_parser("plan")
     planner.add_argument("--spec", required=True)
     planner.add_argument("--output", required=True)
@@ -52,6 +63,22 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     root = _root(args.repo_root)
 
+    if args.command.startswith("native-") or args.command == "terminal-closure":
+        from .native import freeze_native_bundle, guard_native_launch, close_native_bundle, _put
+        if args.command == "native-freeze":
+            result = freeze_native_bundle(root, args.spec, args.receipt)
+        elif args.command == "native-launch-guard":
+            result = guard_native_launch(root, args.receipt, args.source_commit)
+            _put(root, args.output, result)
+        else:
+            result = close_native_bundle(root, args.receipt, args.launch)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        if args.command in {"native-close", "terminal-closure"} and any(
+            c.get("pipeline", {}).get("pipeline_status") != "COMPLETE"
+            or c.get("closure_complete") is not True for c in result["candidates"]
+        ):
+            raise SystemExit(1)
+        return
     if args.command in {"plan", "finalize", "recover-trace", "terminal-pipeline"}:
         from molgap.evidence_pointers import load_json_object
         if args.command == "plan":

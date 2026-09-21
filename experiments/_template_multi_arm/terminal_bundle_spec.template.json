@@ -1,0 +1,214 @@
+{
+  "format": "molgap-native-terminal-bundle-v1",
+  "comment": "Template multi-arm specification. Duplicate and customize arms as needed.",
+  "arms": [
+    {
+      "arm": "arm_a",
+      "trajectory_id": "TB-template-arm-a-100k-s42",
+      "run_id": "kaseichou/molgap-template-arm-a-s42",
+      "action_id": "A001",
+      "evidence_id": "pcqm-template-arm-a-100k-s42",
+      "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+      "reference_bundle_ref": "experiments/v5_legacy_evidence_migration/gptrans_t_100k_reference/reference_bundle.json",
+      "reference_side_ref": "experiments/v5_legacy_evidence_migration/gptrans_t_100k_reference/reference_side.json",
+      "trajectory_ref": "experiments/_template_multi_arm/arm_a/trajectory.json",
+      "contract_ref": "experiments/_template_multi_arm/training_contract.json",
+      "output_dir": "experiments/_template_multi_arm/arm_a/closure",
+      "raw_trace_ref": "experiments/_template_multi_arm/arm_a/raw_trace.json",
+      "acceptance_ref": "experiments/_template_multi_arm/arm_a/acceptance.json",
+      "track": "B",
+      "scope": "terminal_fixed_100k_architecture_screen",
+      "candidate_artifact_paths": {
+        "checkpoint": "experiments/_template_multi_arm/arm_a/best_model.pt",
+        "prediction_manifest": "experiments/_template_multi_arm/arm_a/prediction_manifest.json",
+        "runtime_certificate": "experiments/_template_multi_arm/arm_a/runtime_certificate.json",
+        "row_manifest": "experiments/_template_multi_arm/arm_a/row_manifest.json",
+        "target_manifest": "experiments/_template_multi_arm/arm_a/target_manifest.json",
+        "paired_analysis": "experiments/_template_multi_arm/arm_a/paired_analysis.json",
+        "acceptance": "experiments/_template_multi_arm/arm_a/acceptance.json",
+        "decision": "experiments/_template_multi_arm/arm_a/decision.md"
+      },
+      "trace": {
+        "rows_key": "epochs",
+        "field_mapping": {
+          "optimizer_step": "optimizer_steps",
+          "sample_presentations": "sample_presentations",
+          "epoch_or_pass": "epoch",
+          "learning_rate": "learning_rate",
+          "live_train_metric": "train_loss",
+          "live_dev_metric": "development_gap_mae_eV",
+          "wall_time_seconds": "epoch_seconds",
+          "cumulative_wall_time_seconds": "cumulative_seconds"
+        },
+        "axis_semantics": {
+          "optimizer_step": "observed_cumulative",
+          "sample_presentations": "observed_cumulative"
+        },
+        "metric_semantics": {
+          "live_train_metric": {
+            "metric": "mean_absolute_error",
+            "unit": "normalized_target_units",
+            "target": "gap",
+            "role_identity": "official_train_prefix_0_100000",
+            "weights": "live",
+            "direction": "minimize"
+          },
+          "live_dev_metric": {
+            "metric": "mean_absolute_error",
+            "unit": "eV",
+            "target": "gap",
+            "role_identity": "internal_development_100000_150000",
+            "weights": "live",
+            "direction": "minimize"
+          },
+          "ema_dev_metric": null
+        },
+        "device_time_semantics": null,
+        "semantics_ref": "experiments/_template_multi_arm/training_contract.json"
+      },
+      "trace_manifest": {
+        "presentation_semantics_ref": "experiments/_template_multi_arm/training_contract.json",
+        "weight_semantics": "raw_model_no_ema",
+        "metric_semantics": "internal_development_gap_mae_eV",
+        "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+        "selection_semantics": "best_internal_development_mae_over_60_epochs",
+        "x_axis": "optimizer_steps",
+        "exposure": {
+          "optimizer_steps": 46860,
+          "sample_presentations": 5998080
+        },
+        "comparability_identity": {
+          "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1",
+          "dataset_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+          "row_split_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+          "architecture_identity": "template_arm_a_architecture_hash",
+          "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+          "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+          "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+          "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+          "ema_semantics": "none",
+          "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+          "selection_role_identity": "best-development-60epochs",
+          "matched_architecture_required": false,
+          "x_axis_semantics": "optimizer_steps",
+          "terminal_endpoint_identity": "optimizer_steps46860:sample_presentations5998080"
+        },
+        "backtest_eligibility": {
+          "eligible": true,
+          "exclusion_reasons": []
+        }
+      },
+      "comparison": {
+        "declared_intervention_fields": [
+          "architecture_config_identity"
+        ],
+        "experiment_purpose": "architecture_screen",
+        "intervention_group_id": "architecture"
+      }
+    },
+    {
+      "arm": "arm_b",
+      "trajectory_id": "TB-template-arm-b-100k-s42",
+      "run_id": "kaseichou/molgap-template-arm-b-s42",
+      "action_id": "A001",
+      "evidence_id": "pcqm-template-arm-b-100k-s42",
+      "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+      "reference_bundle_ref": "experiments/v5_legacy_evidence_migration/gptrans_t_100k_reference/reference_bundle.json",
+      "reference_side_ref": "experiments/v5_legacy_evidence_migration/gptrans_t_100k_reference/reference_side.json",
+      "trajectory_ref": "experiments/_template_multi_arm/arm_b/trajectory.json",
+      "contract_ref": "experiments/_template_multi_arm/training_contract.json",
+      "output_dir": "experiments/_template_multi_arm/arm_b/closure",
+      "raw_trace_ref": "experiments/_template_multi_arm/arm_b/raw_trace.json",
+      "acceptance_ref": "experiments/_template_multi_arm/arm_b/acceptance.json",
+      "track": "B",
+      "scope": "terminal_fixed_100k_architecture_screen",
+      "candidate_artifact_paths": {
+        "checkpoint": "experiments/_template_multi_arm/arm_b/best_model.pt",
+        "prediction_manifest": "experiments/_template_multi_arm/arm_b/prediction_manifest.json",
+        "runtime_certificate": "experiments/_template_multi_arm/arm_b/runtime_certificate.json",
+        "row_manifest": "experiments/_template_multi_arm/arm_b/row_manifest.json",
+        "target_manifest": "experiments/_template_multi_arm/arm_b/target_manifest.json",
+        "paired_analysis": "experiments/_template_multi_arm/arm_b/paired_analysis.json",
+        "acceptance": "experiments/_template_multi_arm/arm_b/acceptance.json",
+        "decision": "experiments/_template_multi_arm/arm_b/decision.md"
+      },
+      "trace": {
+        "rows_key": "epochs",
+        "field_mapping": {
+          "optimizer_step": "optimizer_steps",
+          "sample_presentations": "sample_presentations",
+          "epoch_or_pass": "epoch",
+          "learning_rate": "learning_rate",
+          "live_train_metric": "train_loss",
+          "live_dev_metric": "development_gap_mae_eV",
+          "wall_time_seconds": "epoch_seconds",
+          "cumulative_wall_time_seconds": "cumulative_seconds"
+        },
+        "axis_semantics": {
+          "optimizer_step": "observed_cumulative",
+          "sample_presentations": "observed_cumulative"
+        },
+        "metric_semantics": {
+          "live_train_metric": {
+            "metric": "mean_absolute_error",
+            "unit": "normalized_target_units",
+            "target": "gap",
+            "role_identity": "official_train_prefix_0_100000",
+            "weights": "live",
+            "direction": "minimize"
+          },
+          "live_dev_metric": {
+            "metric": "mean_absolute_error",
+            "unit": "eV",
+            "target": "gap",
+            "role_identity": "internal_development_100000_150000",
+            "weights": "live",
+            "direction": "minimize"
+          },
+          "ema_dev_metric": null
+        },
+        "device_time_semantics": null,
+        "semantics_ref": "experiments/_template_multi_arm/training_contract.json"
+      },
+      "trace_manifest": {
+        "presentation_semantics_ref": "experiments/_template_multi_arm/training_contract.json",
+        "weight_semantics": "raw_model_no_ema",
+        "metric_semantics": "internal_development_gap_mae_eV",
+        "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+        "selection_semantics": "best_internal_development_mae_over_60_epochs",
+        "x_axis": "optimizer_steps",
+        "exposure": {
+          "optimizer_steps": 46860,
+          "sample_presentations": 5998080
+        },
+        "comparability_identity": {
+          "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1",
+          "dataset_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+          "row_split_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+          "architecture_identity": "template_arm_b_architecture_hash",
+          "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+          "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+          "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+          "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+          "ema_semantics": "none",
+          "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+          "selection_role_identity": "best-development-60epochs",
+          "matched_architecture_required": false,
+          "x_axis_semantics": "optimizer_steps",
+          "terminal_endpoint_identity": "optimizer_steps46860:sample_presentations5998080"
+        },
+        "backtest_eligibility": {
+          "eligible": true,
+          "exclusion_reasons": []
+        }
+      },
+      "comparison": {
+        "declared_intervention_fields": [
+          "architecture_config_identity"
+        ],
+        "experiment_purpose": "architecture_screen",
+        "intervention_group_id": "architecture"
+      }
+    }
+  ]
+}

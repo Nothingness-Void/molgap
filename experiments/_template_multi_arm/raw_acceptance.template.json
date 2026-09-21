@@ -1,0 +1,119 @@
+{
+  "format": "molgap-native-acceptance-template-v1",
+  "comment": "Template for arm raw acceptance record generated after training before closure.",
+  "accepted": true,
+  "model_inference_executed": false,
+  "trajectory_id": "TB-template-arm-a-100k-s42",
+  "run_id": "kaseichou/molgap-template-arm-a-s42",
+  "action_id": "A001",
+  "evidence_id": "pcqm-template-arm-a-100k-s42",
+  "finalized_at": "2026-09-21T15:30:00+09:00",
+  "artifact_hashes": {
+    "experiments/_template_multi_arm/arm_a/raw_trace.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/best_model.pt": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/prediction_manifest.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/runtime_certificate.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/row_manifest.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/target_manifest.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/paired_analysis.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/acceptance.json": "placeholder_sha256",
+    "experiments/_template_multi_arm/arm_a/decision.md": "placeholder_sha256"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-template-arm-a-100k-s42-measured-training",
+      "trajectory_id": "TB-template-arm-a-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-template-arm-a-s42",
+      "attempt_id": "attempt-001",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "device_hours": {
+          "value": 1.7625,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "wall_hours": {
+          "value": 2.054,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      },
+      "evidence_ref": "experiments/_template_multi_arm/arm_a/acceptance.json"
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-template-arm-a-100k-s42-train",
+      "trajectory_id": "TB-template-arm-a-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-template-arm-a-s42",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/_template_multi_arm/arm_a/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-template-arm-a-100k-s42-dev",
+      "trajectory_id": "TB-template-arm-a-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-template-arm-a-s42",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "internal_development_100000_150000",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/_template_multi_arm/arm_a/acceptance.json"
+    }
+  ],
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "strict_causal",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready",
+    "budget_decision": "stop_under_contract",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/_template_multi_arm/arm_a/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [
+      "advance_to_500k_scale_transfer"
+    ],
+    "reopen_conditions": [],
+    "final": true
+  },
+  "candidate_side": {
+    "comparison_identity": {},
+    "artifacts": {},
+    "artifact_bindings": {},
+    "prediction_status": "complete",
+    "row_alignment_status": "aligned",
+    "runtime_certificate_status": "accepted",
+    "role_status": "complete",
+    "trace_status": "complete",
+    "stochasticity_status": "row_bootstrap_measured_training_floor_policy",
+    "terminal_complete": true
+  }
+}

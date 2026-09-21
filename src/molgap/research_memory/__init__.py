@@ -7,6 +7,7 @@ from .finalize import finalize
 from .plan import plan
 from .recovery import recover_trace
 from .pipeline import finalize_rebuild_backtest
+from .native import freeze_native_bundle, guard_native_launch, close_native_bundle
 
 __all__ = [
     "compile_research_memory",
@@ -21,4 +22,7 @@ __all__ = [
     "plan",
     "recover_trace",
     "finalize_rebuild_backtest",
+    "freeze_native_bundle",
+    "guard_native_launch",
+    "close_native_bundle",
 ]
