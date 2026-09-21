@@ -3,7 +3,7 @@
     {
       "action_id": "A001",
       "attempt_ids": [
-        "candidate-v1-planned"
+        "candidate-v1"
       ],
       "cost_event_ids": [
         "cost-TC-k1-sparse-triplet-100k-s42-training"
@@ -13,7 +13,7 @@
         "experiments/pcqm_k1_sparse_triplet_100k/source_config.json"
       ],
       "run_ids": [
-        "nvoid912/molgap-k1-sparse-triplet-s42:v1-planned"
+        "nvoid912/molgap-k1-sparse-triplet-s42:v1"
       ],
       "source_commit": "2fef556713f70e2d7208879cab544e137329cbee",
       "type": "planned_candidate_only_seed42_100k_screen"
