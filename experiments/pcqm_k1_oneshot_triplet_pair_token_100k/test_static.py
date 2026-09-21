@@ -91,5 +91,5 @@ def test_mechanism_invariants():
 
 def test_kaggle3_binding():
     metadata = json.loads((ROOT / "kaggle_candidate/kernel-metadata.json").read_text())
-    assert metadata["id"] == "nvoid912/molgap-k1-oneshot-triplet-s42"
+    assert metadata["id"] == "nvoid912/molgap-k1-one-shot-triplet-pairtoken-s42"
     assert metadata["machine_shape"] == "NvidiaTeslaT4"
