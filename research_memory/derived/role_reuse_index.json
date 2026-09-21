@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 81,
+  "ambiguous_historical_role_record_count": 85,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -339,6 +339,34 @@
     },
     {
       "evidence_id": "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -960,6 +988,7 @@
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
@@ -981,6 +1010,7 @@
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",
@@ -1002,6 +1032,7 @@
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
       "pcqm-k1-pair-token-500k-s42",
       "pcqm-k1-pair-token-batch-profile-122388380",

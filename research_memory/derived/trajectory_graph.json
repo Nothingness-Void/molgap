@@ -171,6 +171,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-oneshot-triplet-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-oneshot-triplet-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-pair-token-100k-s42:A001",
       "target": "experiments/pcqm_k1_pair_token_100k/results/infrastructure_failure_122272523.md",
       "type": "action_produced_evidence"
@@ -337,6 +347,11 @@
     },
     {
       "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
       "type": "parent_trajectory"
     },
@@ -437,6 +452,11 @@
     },
     {
       "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
       "type": "prior_evidence"
     },
@@ -457,7 +477,17 @@
     },
     {
       "source": "pcqm-k1-sparse-triplet-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-sparse-triplet-100k-s42",
       "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-spd-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -493,6 +523,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -567,6 +602,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-100k-s42",
       "type": "reference_used"
     },
@@ -634,6 +674,10 @@
     },
     {
       "id": "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "type": "evidence"
     },
     {
@@ -710,6 +754,10 @@
     },
     {
       "id": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-oneshot-triplet-pair-token-100k-s42",
       "type": "trajectory"
     },
     {

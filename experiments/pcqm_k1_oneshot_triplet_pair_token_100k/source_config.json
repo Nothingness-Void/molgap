@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "dbbd017eabaf0807a1ce39bb1e2f81820c02575448c6d95e8a75285c5bd3b416",
+  "candidate_id": "neural_atom_k1_pair_token_oneshot_triplet",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_oneshot_triplet_pair_token.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "layer6-one-shot-directed-bond-triplet-before-accepted-pairtoken",
+  "source_commit": "f43687f3bc48d8c3452dc29e685158644064bac6",
+  "training_contract_ref": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/training_contract.json",
+  "training_contract_sha256": "3298f9ee429d841e7e2643d879fa8a917f00a4279d6963859e9dffebe2728438"
+}

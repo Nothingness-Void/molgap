@@ -1,0 +1,83 @@
+{
+  "blocker_codes": [],
+  "candidate_id": "neural_atom_k1_pair_token_oneshot_triplet",
+  "candidate_source_commit_or_archive": "f43687f3bc48d8c3452dc29e685158644064bac6",
+  "candidate_source_config_status": "frozen",
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "format": "molgap-comparison-prelaunch-v1",
+  "intervention_group_id": "architecture",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+    "checkpoint_selection_identity": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+    "data_role_identity": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": null,
+    "ema_enabled": false,
+    "ema_update_frequency": null,
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "evaluation_weight_source": "live",
+    "feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+    "optimizer_fused": false,
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "optimizer_mode": "adamw-single-parameter-group",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_order_identity": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "runtime_certificate_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "sample_presentations": 3998720,
+    "schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "seed": 42,
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+    "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "dbbd017eabaf0807a1ce39bb1e2f81820c02575448c6d95e8a75285c5bd3b416",
+      "reference": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d"
+    }
+  },
+  "missing_fields": [],
+  "planned_status": "PRELAUNCH_STRICT_PLANNED",
+  "prelaunch_ready": true,
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "reference_bundle_sha256": "9a22f065aca00686da58be5d992eff5c7d6ce33096353db2ace587087ea0c287",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "runtime_qualification_plan": {
+    "qualification_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "runtime_certificate_required": true,
+    "status": "declared"
+  },
+  "terminal_candidate_artifacts_required": false,
+  "trace_plan": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  }
+}
