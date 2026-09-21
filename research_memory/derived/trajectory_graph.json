@@ -16,6 +16,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-noisy-nodes-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference:A001",
       "target": "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json",
       "type": "action_produced_evidence"
@@ -56,6 +66,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-scale-transfer-diagnostic:A001",
+      "target": "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-recurrent-graph-state-100k-seed42:A001",
       "target": "experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
       "type": "action_produced_evidence"
@@ -64,6 +79,66 @@
       "source": "TB-route-b-four-encoder-specialist:A001",
       "target": "experiments/pcqm_route_b/results/run_plan.json",
       "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_flow_ablation_100k/trajectory.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_recurrence/provenance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
+      "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-noisy-nodes-100k-s42",
+      "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-nodes-100k-s42",
+      "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-nodes-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "parent_trajectory"
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
@@ -82,6 +157,11 @@
     },
     {
       "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-k1-gptrans-full-fusion-r3",
       "type": "parent_trajectory"
     },
@@ -96,6 +176,51 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-scale-transfer-attribution",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-scale-transfer-diagnostic",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-nodes-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "prior_evidence"
@@ -103,6 +228,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-bridge",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "prior_evidence"
     },
     {
@@ -118,6 +253,21 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-scale-transfer-attribution-no-train",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-scale-transfer-diagnostic-evidence",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "prior_evidence"
     },
     {
@@ -127,6 +277,16 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-nodes-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "reference_used"
     },
@@ -136,8 +296,33 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-bridge",
+      "target": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-bridge",
+      "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "reference_used"
     }
   ],
@@ -153,6 +338,18 @@
     },
     {
       "id": "pcqm-gine-1m-local-specialist-v7",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "type": "evidence"
     },
     {
@@ -188,6 +385,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-scale-transfer-diagnostic-evidence",
+      "type": "evidence"
+    },
+    {
       "id": "TB-edgestate-rich-full-v1",
       "type": "trajectory"
     },
@@ -197,6 +398,22 @@
     },
     {
       "id": "TB-gine-1m-gap-specialist-v7",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-noisy-nodes-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "trajectory"
     },
     {
@@ -224,11 +441,27 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-recurrent-graph-state-100k-seed42",
       "type": "trajectory"
     },
     {
       "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+      "type": "trajectory"
+    },
+    {
+      "id": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
       "type": "trajectory"
     }
   ]

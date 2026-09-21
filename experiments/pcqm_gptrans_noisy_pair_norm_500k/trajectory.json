@@ -1,0 +1,82 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Does the joint Noisy Nodes + Pair Update Norm architecture maintain its 100K material gain (+0.009382 eV) upon 500K scale-transfer to surpass the GPTrans-T 500K baseline (0.106868 eV) and K1 500K baseline (0.104860 eV) by at least 0.003 eV?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-noisy-pair-norm-500k-s42",
+    "observed_deficiency": "Prior unregularized 100K winners lost gain across the 7.5x optimizer step horizon due to representation over-smoothing. The joint architecture combines node denoising (alpha=0.1, noise_std=0.15) and relation LayerNorm updates, clearing the STQS scale-transfer gate with a score of 100.0.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-gptrans-t-500k-bridge"
+    ],
+    "alternative_explanations": [
+      "500K data abundance saturates the representation and renders denoising regularization redundant",
+      "gradient conflict between relation LayerNorm updates and node denoising loss at larger batch steps"
+    ],
+    "changed_mechanism": "joint node embedding Gaussian perturbation (std=0.15, alpha=0.10) with LayerNorm normalized pair updates scaled to 500K training",
+    "cheapest_falsifier": "60-epoch 500K/50K run failing to achieve 0.003 eV gain over the 0.106868 eV baseline (threshold < 0.103868 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42",
+      "pcqm-scale-transfer-attribution"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-noisy-pair-norm-500k-s42-expected-training",
+    "decision_changed_if_positive": "nominate joint GPTrans Noisy Nodes + Pair Update Norm as the primary PCQM architecture for full-scale advancement",
+    "decision_changed_if_negative": "close joint scale-transfer at 500K",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "a6873bee3023da40431d6d23745cae606804a51e",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-500k-bridge"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-noisy-pair-norm-100k-s42",
+      "TB-pcqm-scale-transfer-diagnostic"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-gptrans-t-500k-bridge"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/training_contract.json",
+    "source_config_identity": "desktop-gptrans-noisy-pair-norm-500k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "nvoid912/molgap-pcqm-gptrans-noisy-pair-norm-500k-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "a6873bee3023da40431d6d23745cae606804a51e",
+      "evidence_refs": [],
+      "cost_event_ids": []
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/protocol.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "remote_screen_training"
+    ],
+    "reopen_conditions": []
+  }
+}

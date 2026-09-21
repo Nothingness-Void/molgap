@@ -74,6 +74,66 @@
       "artifact_availability": [
         "durable_remote_verified"
       ],
+      "comparison_status": "paired_development_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_propagation_path_ablation",
+      "source_envelope": "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
+      "comparison_status": "paired_development_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_noisy_nodes_regularization",
+      "source_envelope": "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "qualified_for_500k",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
+      "comparison_status": "paired_development_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_noisy_pair_norm_regularization",
+      "source_envelope": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "qualified_for_500k",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_remote_verified"
+      ],
       "comparison_status": "reference_accepted_contextual_comparison_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -89,8 +149,12 @@
       "track": "B",
       "transfer_status": "reusable_reference",
       "used_by_trajectory_ids": [
+        "TB-gptrans-noisy-nodes-100k-s42",
+        "TB-gptrans-noisy-pair-norm-100k-s42",
         "TB-matched-500k-v4-three-arm",
-        "TB-pcqm-scale-transfer-attribution"
+        "TB-pcqm-scale-transfer-attribution",
+        "TB-pcqm-scale-transfer-diagnostic",
+        "TC-gptrans-flow-ablation-100k-s42"
       ]
     },
     {
@@ -113,7 +177,9 @@
       "track": "B",
       "transfer_status": "not_v4_reference",
       "used_by_trajectory_ids": [
-        "TB-pcqm-scale-transfer-attribution"
+        "TB-gptrans-noisy-pair-norm-500k-s42",
+        "TB-pcqm-scale-transfer-attribution",
+        "TB-pcqm-scale-transfer-diagnostic"
       ]
     },
     {
@@ -174,7 +240,9 @@
       "source_envelope": "experiments/pcqm_500k_v4_evidence/v5_evidence.json",
       "track": "B",
       "transfer_status": "nomination_only_not_full_scale_promotion",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-gptrans-noisy-nodes-500k-s42"
+      ]
     },
     {
       "artifact_availability": [
@@ -237,6 +305,26 @@
       "source_envelope": "experiments/pcqm_scale_transfer_attribution/v5_evidence.json",
       "track": "B",
       "transfer_status": "no_candidate_promotion",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-scale-transfer-diagnostic-evidence",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "cross_scale_transfer_diagnostic_attribution",
+      "source_envelope": "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "qualified_for_500k",
       "used_by_trajectory_ids": []
     }
   ]

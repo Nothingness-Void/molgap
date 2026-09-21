@@ -296,25 +296,33 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-noisy-nodes-100k-s42",
+        "TB-gptrans-noisy-nodes-500k-s42",
+        "TB-gptrans-noisy-pair-norm-100k-s42",
+        "TB-gptrans-noisy-pair-norm-500k-s42",
         "TB-gptrans-t-100k-v4-reference",
         "TB-gptrans-t-500k-bridge",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-residual-reconciliation",
         "TB-matched-500k-v4-three-arm",
         "TB-pcqm-scale-transfer-attribution",
+        "TB-pcqm-scale-transfer-diagnostic",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
+        "TC-gptrans-flow-ablation-100k-s42",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
     assert report["cost_completeness"] == {
-        "trajectories_total": 11,
-        "with_cost_event": 3,
-        "without_cost_event": 8,
-        "with_complete_native_measurement": 0,
-        "with_incomplete_native_measurement": 3,
+        "trajectories_total": 19,
+        "with_cost_event": 8,
+        "without_cost_event": 11,
+        "with_complete_native_measurement": 2,
+        "with_incomplete_native_measurement": 6,
     }
     issues = {item["code"]: item["count"] for item in report["issues"]}
-    assert issues["missing_cost_event"] == 8
-    assert issues["incomplete_native_cost_measurement"] == 3
+    assert issues["missing_cost_event"] == 11
+    assert issues["incomplete_native_cost_measurement"] == 6
     assert "missing_native_cost" not in issues
 
 
@@ -327,10 +335,17 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         for record in json.loads(payloads["trajectory_index.json"])["trajectories"]
     }
 
-    assert summary["evidence"]["validated"] == 11
-    assert summary["roles"]["explicit_events"] == 7
-    assert "trajectory_without_v5_evidence" not in {
-        item["code"] for item in report["issues"]
+    assert summary["evidence"]["validated"] == 15
+    assert summary["roles"]["explicit_events"] == 11
+    no_evidence_trajectories = next(
+        (item["items"] for item in report["issues"] if item["code"] == "trajectory_without_v5_evidence"),
+        [],
+    )
+    assert set(no_evidence_trajectories) == {
+        "TB-gptrans-noisy-nodes-500k-s42",
+        "TB-gptrans-noisy-pair-norm-500k-s42",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+        "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
     assert trajectories["TB-matched-500k-v4-three-arm"]["result_evidence_ids"] == [
         "pcqm-matched-500k-v4-three-arm"

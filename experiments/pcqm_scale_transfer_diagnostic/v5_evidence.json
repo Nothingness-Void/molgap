@@ -1,0 +1,52 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-scale-transfer-diagnostic-evidence",
+  "track": "B",
+  "scope": "cross_scale_transfer_diagnostic_attribution",
+  "legacy_contract": "molgap-pcqm-scale-transfer-diagnostic-contract-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "context_only",
+    "scientific_status": "positive_under_contract",
+    "transfer_status": "qualified_for_500k",
+    "budget_decision": "closed_positive",
+    "full_handoff_status": "candidate_500k"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_scale_transfer_diagnostic/protocol.md",
+      "experiments/pcqm_scale_transfer_diagnostic/results/analysis.json",
+      "experiments/pcqm_scale_transfer_diagnostic/decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "analysis",
+      "locator": "experiments/pcqm_scale_transfer_diagnostic/results/analysis.json",
+      "sha256": "c04561db93d299518d13105ebbdcef12ff44b793ea006a2c6cf4b295227f4f3f",
+      "availability": "repository_retained"
+    }
+  ],
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "historical_unregularized_decay_rate": 0.817,
+    "critical_100k_gain_unregularized_eV": 0.016393,
+    "stqs_noisy_nodes": 61.04,
+    "stqs_noisy_pair_norm": 100.0,
+    "projected_500k_gain_noisy_pair_norm_eV": 0.007849
+  },
+  "migration": {
+    "migrated_at": "2026-09-22",
+    "verification_scope": "zero-training zero-inference evidence diagnostic on repository replay traces",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

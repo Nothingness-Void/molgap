@@ -1,0 +1,90 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-pcqm-scale-transfer-diagnostic",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "pcqm-scale-transfer-diagnostic",
+  "question": "Can cross-scale sample exposure mapping, empirical margin retention frontiers, and anti-collapse regularization metrics prospectively predict whether a 100K PCQM architecture winner retains material gain (>0.003 eV) at 500K scale?",
+  "hypothesis": {
+    "hypothesis_id": "H-pcqm-scale-transfer-diagnostic",
+    "observed_deficiency": "Prior unregularized 100K winners (PairToken, Pair PreNorm) failed at 500K due to marginal 100K selection excess (+0.00004 to +0.00012 eV) and over-smoothing across a 7.5x longer step horizon.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-scale-transfer-attribution-no-train"
+    ],
+    "alternative_explanations": [
+      "data scale fundamentally alters molecular feature importance",
+      "stochastic training noise exceeds 0.003 eV at both scales"
+    ],
+    "changed_mechanism": "evidence-based quantitative cross-scale exposure alignment and Scale-Transfer Qualification Score (STQS) computation",
+    "cheapest_falsifier": "evaluating STQS on historical negative transfers and candidate winners without training compute",
+    "related_closed_family_ids": [
+      "pcqm-scale-transfer-attribution"
+    ],
+    "expected_native_cost_ref": "cost-TB-pcqm-scale-transfer-diagnostic-audit",
+    "decision_changed_if_positive": "establish STQS >= 60 as mandatory pre-500K scale-up gate and authorize candidate scale-up",
+    "decision_changed_if_negative": "retain unguided empirical screening",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "c9a32ac4b8f09e59e9dfc79084d0c9a5a51ce768",
+    "contract_refs": [
+      "experiments/pcqm_scale_transfer_diagnostic/protocol.md"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-t-500k-bridge"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-scale-transfer-attribution",
+      "TB-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-scale-transfer-attribution-no-train"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_scale_transfer_diagnostic/protocol.md"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_scale_transfer_diagnostic/protocol.md",
+    "source_config_identity": "desktop-scale-transfer-diagnostic-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "no_training_existing_evidence_attribution",
+      "run_ids": [
+        "local-scale-transfer-diagnostic"
+      ],
+      "attempt_ids": [
+        "analysis-001"
+      ],
+      "source_commit": "c9a32ac4b8f09e59e9dfc79084d0c9a5a51ce768",
+      "evidence_refs": [
+        "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-scale-transfer-diagnostic-audit"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [
+      "pcqm-scale-transfer-diagnostic-evidence"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_scale_transfer_diagnostic/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [
+      "advance_qualified_candidates_to_500k"
+    ],
+    "reopen_conditions": []
+  }
+}

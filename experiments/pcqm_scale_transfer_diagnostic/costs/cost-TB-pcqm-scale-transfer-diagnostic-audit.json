@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-pcqm-scale-transfer-diagnostic-audit",
+  "trajectory_id": "TB-pcqm-scale-transfer-diagnostic",
+  "action_id": "A001",
+  "run_id": "local-scale-transfer-diagnostic",
+  "attempt_id": "analysis-001",
+  "category": "audit",
+  "platform": "local",
+  "hardware": "not_applicable",
+  "measurement": {
+    "device_hours": {"value": null, "status": "not_applicable"},
+    "cpu_hours": {"value": null, "status": "not_applicable"},
+    "wall_hours": {"value": null, "status": "not_applicable"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json"
+}
