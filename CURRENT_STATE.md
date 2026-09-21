@@ -45,14 +45,16 @@ contract.
 
 ## Discovery state
 
-One extra user-authorized overnight round is released prospectively under V5:
+One extra user-authorized overnight round is running on Kaggle2 under V5:
 the accepted layer-6 PairToken plus a zero-return MoSE31 node structural view.
 Saved-prediction diagnostics showed useful but incomplete PairToken/MoSE error
 complementarity; the trained candidate remains one encoder and one direct-Gap
 head, not prediction fusion. The immutable K1 reference and retained PairToken
 parent own the two decision comparisons. No extra seed, scale bridge, protected
-role, or successor is pre-authorized. Authority:
-`experiments/pcqm_k1_pair_token_mose_100k/protocol.md`.
+role, or successor is pre-authorized. A 30-minute Luna monitor is bound to the
+single version-1 kernel and will hand terminal evidence back to the server
+controller. Authority:
+`experiments/pcqm_k1_pair_token_mose_100k/STATUS.md`.
 
 Round 1 of the newly authorized, at-most-three-round K1 sequence is closed.
 The pure-2D sparse-triplet candidate was exactly K1 at initialization and

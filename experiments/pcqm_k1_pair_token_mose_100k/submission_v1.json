@@ -1,0 +1,20 @@
+{
+  "format": "molgap-kaggle-submission-v1",
+  "submitted_at": null,
+  "submission_time_note": "Exact CLI submission timestamp was not captured; the kernel was observed RUNNING at observed_at.",
+  "observed_at": "2026-09-22T03:26:08+09:00",
+  "platform": "kaggle2",
+  "account": "kaseichou",
+  "kernel": "kaseichou/molgap-k1-pairtoken-mose-s42",
+  "version": 1,
+  "observed_status": "RUNNING",
+  "source_dataset": "kaseichou/molgap-k1-pairtoken-mose-source",
+  "mose_dataset": "kaseichou/molgap-pcqm-k1-mose-cache-v1",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "source_commit": "246d89c94fa65752b2f54633630346e1c67effd7",
+  "source_archive_sha256": "6a5fd81792c71d9986ef6ee5937c74542e6c3e5ac74a12bd8a6bc4e8c72a671b",
+  "trajectory_id": "TC-k1-pair-token-mose-100k-s42",
+  "comparison_prelaunch_status": "PRELAUNCH_STRICT_PLANNED",
+  "scientific_contract_changed_after_release": false,
+  "execution_note": "Kaggle3 API credential returned 403 before submission; the unchanged scientific source and contract were submitted once through Kaggle2."
+}
