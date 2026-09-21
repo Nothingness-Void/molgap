@@ -56,3 +56,48 @@ def test_dual_stream_with_noisy_nodes_and_pair_norm():
     model.eval()
     pred_eval = model(x, edge_index, edge_attr, batch)
     assert pred_eval.shape == (2, 1)
+
+
+def test_dual_stream_optimizer_step_both_arms():
+    from torch_geometric.data import Data, Batch
+    from molgap.noisy_nodes import _optimizer_step_noisy_nodes
+    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
+
+    g1 = Data(
+        x=torch.zeros((4, 9), dtype=torch.long),
+        edge_index=torch.tensor([[0, 1, 2, 3], [1, 2, 3, 0]], dtype=torch.long),
+        edge_attr=torch.zeros((4, 3), dtype=torch.long),
+        y=torch.tensor([4.5], dtype=torch.float),
+    )
+    g2 = Data(
+        x=torch.zeros((4, 9), dtype=torch.long),
+        edge_index=torch.tensor([[0, 1, 2, 3], [1, 2, 3, 0]], dtype=torch.long),
+        edge_attr=torch.zeros((4, 3), dtype=torch.long),
+        y=torch.tensor([5.2], dtype=torch.float),
+    )
+    batch = Batch.from_data_list([g1, g2])
+    mean = torch.tensor(5.0)
+    std = torch.tensor(1.0)
+
+    # Arm A: GPTrans Baseline + Pair Norm + DSAR (no noisy nodes)
+    model_a = OGBGPTransTiny(num_layers=2, readout_mode="dual_stream_attentive")
+    model_a = apply_variant(model_a, "pair_update_norm")
+    opt_a = torch.optim.AdamW(model_a.parameters(), lr=1e-3)
+    ema_a = ExponentialMovingAverage(model_a)
+    gap_loss_a, aux_a = _optimizer_step_noisy_nodes(
+        model_a, opt_a, ema_a, batch, mean, std, check_finite=True
+    )
+    assert gap_loss_a > 0.0
+    assert aux_a == 0.0
+
+    # Arm B: GPTrans Noisy Nodes + Pair Norm + DSAR
+    model_b = GPTransNoisyNodes(num_layers=2, readout_mode="dual_stream_attentive", noise_std=0.15, loss_weight=0.1)
+    model_b = apply_variant(model_b, "pair_update_norm")
+    opt_b = torch.optim.AdamW(model_b.parameters(), lr=1e-3)
+    ema_b = ExponentialMovingAverage(model_b)
+    gap_loss_b, aux_b = _optimizer_step_noisy_nodes(
+        model_b, opt_b, ema_b, batch, mean, std, check_finite=True
+    )
+    assert gap_loss_b > 0.0
+    assert aux_b > 0.0
+

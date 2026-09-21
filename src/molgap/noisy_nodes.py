@@ -191,6 +191,7 @@ def _make_noisy_nodes_model(
     initial_state_path: Path | None = None,
     noise_std: float = 0.15,
     loss_weight: float = 0.1,
+    readout_mode: str = "virtual",
 ) -> GPTransNoisyNodes:
     model = GPTransNoisyNodes(
         node_channels=256,
@@ -202,6 +203,7 @@ def _make_noisy_nodes_model(
         drop_path=0.1,
         layer_scale=1.0,
         n_targets=1,
+        readout_mode=readout_mode,
         noise_std=noise_std,
         loss_weight=loss_weight,
     )
@@ -220,18 +222,20 @@ def make_noisy_nodes_pair_norm_model(
     initial_state_path: Path | None = None,
     noise_std: float = 0.15,
     loss_weight: float = 0.1,
+    readout_mode: str = "virtual",
 ) -> GPTransNoisyNodes:
     model = _make_noisy_nodes_model(
         initial_state_path=initial_state_path,
         noise_std=noise_std,
         loss_weight=loss_weight,
+        readout_mode=readout_mode,
     )
     from .gptrans_variants import apply_variant
     return apply_variant(model, "pair_update_norm")
 
 
 def _optimizer_step_noisy_nodes(
-    model: GPTransNoisyNodes,
+    model: nn.Module,
     optimizer,
     ema,
     batch,
@@ -241,17 +245,31 @@ def _optimizer_step_noisy_nodes(
     check_finite: bool,
 ) -> tuple[float, float]:
     optimizer.zero_grad(set_to_none=True)
-    prediction, aux_loss = model(
-        batch.x,
-        batch.edge_index,
-        batch.edge_attr,
-        batch.batch,
-        return_aux_loss=True,
-    )
-    target = (batch.y.view(-1).float() - mean) / std
-    gap_loss = F.l1_loss(prediction.view(-1), target)
-    total_loss = gap_loss + model.loss_weight * aux_loss
-    if check_finite and (not bool(torch.isfinite(gap_loss)) or not bool(torch.isfinite(aux_loss))):
+    if hasattr(model, "loss_weight") and getattr(model, "loss_weight", 0.0) > 0.0:
+        prediction, aux_loss = model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+            return_aux_loss=True,
+        )
+        aux_val = float(aux_loss.item())
+        target = (batch.y.view(-1).float() - mean) / std
+        gap_loss = F.l1_loss(prediction.view(-1), target)
+        total_loss = gap_loss + model.loss_weight * aux_loss
+    else:
+        prediction = model(
+            batch.x,
+            batch.edge_index,
+            batch.edge_attr,
+            batch.batch,
+        )
+        aux_val = 0.0
+        target = (batch.y.view(-1).float() - mean) / std
+        gap_loss = F.l1_loss(prediction.view(-1), target)
+        total_loss = gap_loss
+
+    if check_finite and (not bool(torch.isfinite(gap_loss)) or not bool(torch.isfinite(total_loss))):
         raise RuntimeError("Training loss became non-finite")
     total_loss.backward()
     gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
@@ -259,7 +277,7 @@ def _optimizer_step_noisy_nodes(
         raise RuntimeError("Gradient norm became non-finite")
     optimizer.step()
     ema.update(model)
-    return float(gap_loss.item()), float(aux_loss.item())
+    return float(gap_loss.item()), aux_val
 
 
 def run_training_noisy_nodes(
@@ -276,6 +294,7 @@ def run_training_noisy_nodes(
     noise_std: float = 0.15,
     loss_weight: float = 0.1,
     pair_update_norm: bool = False,
+    readout_mode: str = "virtual",
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     if not torch.cuda.is_available():
@@ -308,14 +327,39 @@ def run_training_noisy_nodes(
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
 
-    if pair_update_norm:
-        model = make_noisy_nodes_pair_norm_model(
-            initial_state_path, noise_std=noise_std, loss_weight=loss_weight
-        ).to("cuda")
+    if loss_weight > 0.0 or noise_std > 0.0:
+        if pair_update_norm:
+            model = make_noisy_nodes_pair_norm_model(
+                initial_state_path,
+                noise_std=noise_std,
+                loss_weight=loss_weight,
+                readout_mode=readout_mode,
+            ).to("cuda")
+        else:
+            model = _make_noisy_nodes_model(
+                initial_state_path,
+                noise_std=noise_std,
+                loss_weight=loss_weight,
+                readout_mode=readout_mode,
+            ).to("cuda")
     else:
-        model = _make_noisy_nodes_model(
-            initial_state_path, noise_std=noise_std, loss_weight=loss_weight
+        from .gptrans import OGBGPTransTiny
+        model = OGBGPTransTiny(
+            node_channels=256,
+            pair_channels=32,
+            num_layers=12,
+            num_heads=8,
+            shortest_path_cap=20,
+            dropout=0.1,
+            drop_path=0.1,
+            layer_scale=1.0,
+            n_targets=1,
+            readout_mode=readout_mode,
         ).to("cuda")
+        if pair_update_norm:
+            from .gptrans_variants import apply_variant
+            model = apply_variant(model, "pair_update_norm")
+
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -329,6 +373,7 @@ def run_training_noisy_nodes(
     trace: list[dict] = []
     best = float("inf")
     best_epoch = -1
+    steps_per_epoch = TRAIN_ROWS // PHYSICAL_BATCH
 
     for epoch in range(EPOCHS):
         model.train()
@@ -358,6 +403,8 @@ def run_training_noisy_nodes(
 
         trace_row = {
             "epoch": epoch,
+            "optimizer_step": (epoch + 1) * steps_per_epoch,
+            "sample_presentations": (epoch + 1) * TRAIN_ROWS,
             "train_normalized_gap_mae": float(np.mean(gap_losses)),
             "train_aux_ce_loss": float(np.mean(aux_losses)),
             "development_gap_mae_eV": dev_mae,
@@ -384,13 +431,25 @@ def run_training_noisy_nodes(
             flush=True,
         )
 
+    runtime_certificate = {
+        "format": "molgap-runtime-certificate-v1",
+        "status": "completed",
+        "total_seconds": sum(r["epoch_seconds"] for r in trace),
+        "total_optimizer_steps": EPOCHS * steps_per_epoch,
+        "sample_presentations": EPOCHS * TRAIN_ROWS,
+        "best_development_gap_mae_eV": best,
+        "best_epoch": best_epoch,
+    }
+    atomic_json(output / "runtime_certificate.json", runtime_certificate)
+
     completion = {
         "format": "molgap-pcqm-gptrans-noisy-nodes-result-v1",
         "complete": True,
         "best_development_gap_mae_eV": best,
         "best_epoch": best_epoch,
         "epochs_completed": EPOCHS,
-        "total_optimizer_steps": EPOCHS * (TRAIN_ROWS // PHYSICAL_BATCH),
+        "total_optimizer_steps": EPOCHS * steps_per_epoch,
+        "sample_presentations": EPOCHS * TRAIN_ROWS,
         "trace": trace,
         "parameters": sum(p.numel() for p in model.parameters()),
         "platform_id": platform_id,
@@ -404,7 +463,7 @@ def run_training_noisy_nodes(
 
 def main() -> None:
     import argparse
-    parser = argparse.ArgumentParser(description="GPTrans Noisy Nodes training")
+    parser = argparse.ArgumentParser(description="GPTrans training")
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--manifest-path", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -412,6 +471,11 @@ def main() -> None:
     parser.add_argument("--noise-std", type=float, default=0.15)
     parser.add_argument("--loss-weight", type=float, default=0.1)
     parser.add_argument("--pair-update-norm", action="store_true")
+    parser.add_argument(
+        "--readout-mode",
+        default="virtual",
+        choices=["virtual", "dual_stream_mean", "dual_stream_attentive"],
+    )
     args = parser.parse_args()
     res = run_training_noisy_nodes(
         dataset_root=args.dataset_root,
@@ -421,6 +485,7 @@ def main() -> None:
         noise_std=args.noise_std,
         loss_weight=args.loss_weight,
         pair_update_norm=args.pair_update_norm,
+        readout_mode=args.readout_mode,
     )
     print(json.dumps(res, indent=2))
 
