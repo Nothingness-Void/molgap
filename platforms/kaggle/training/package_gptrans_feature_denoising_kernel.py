@@ -14,8 +14,8 @@ from molgap.constants import REPO_ROOT
 from molgap.v4_bundle import build_v4_source_bundle
 
 
-SOURCE_COMMIT = "c1a3060b45dde870d8fd2ee1398d910d000f7921"
-KERNEL_SLUG = "molgap-pcqm-gptrans-feature-denoise-s42"
+SOURCE_COMMIT = "fa564238e33c70bd377edf4d64f3182238a3ee49"
+KERNEL_SLUG = "molgap-gptrans-feature-denoising-s42"
 DATASET_REF = "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
 REFERENCE_REF = "nothingnessvoid/molgap-gptrans-noisy-pair-norm-reference-s42-v1"
 MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
