@@ -60,20 +60,26 @@
         "attempt-001"
       ],
       "source_commit": "c9a32ac4b8f09e59e9dfc79084d0c9a5a51ce768",
-      "evidence_refs": [],
-      "cost_event_ids": []
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_noisy_nodes_500k/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-noisy-nodes-500k-s42-measured-training"
+      ]
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-500k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_noisy_nodes_500k/v5_evidence.json"
+    ]
   },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_noisy_nodes_500k/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "remote_scale_transfer_training"
-    ],
+    "decision_ref": "experiments/pcqm_gptrans_noisy_nodes_500k/decision.md",
+    "outcome": "POSITIVE_BELOW_GATE",
+    "next_allowed_actions": [],
     "reopen_conditions": []
   }
 }

@@ -1,0 +1,75 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-noisy-nodes-500k-s42",
+  "track": "B",
+  "scope": "fixed_500k_gptrans_noisy_nodes_scale_transfer",
+  "legacy_contract": "molgap-pcqm-fixed500k-dev50k-matched60-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "qualified_with_diminished_retention",
+    "budget_decision": "closed_negative",
+    "full_handoff_status": "unqualified_alone"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_noisy_nodes_500k/training_contract.json",
+      "experiments/pcqm_gptrans_noisy_nodes_500k/protocol.md",
+      "experiments/pcqm_gptrans_noisy_nodes_500k/decision.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/stage_manifest.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_model.pt",
+      "sha256": "022f883e1f3e2e2dd5f2fb52ed4e8120f276f6bf3d45135087cee05089f8084f",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "trace",
+      "locator": "experiments/pcqm_gptrans_noisy_nodes_500k/results/canonical_trace.json",
+      "sha256": "b3f48ff12c8021f0474eb27373475713623453e5a61717a3bd17336a3f877a27",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "stage_manifest",
+      "locator": "experiments/pcqm_gptrans_noisy_nodes_500k/results/stage_manifest.json",
+      "sha256": "1f09de57363dcbcc2c35688ac93966f11d3f0fce40a521d3e2cb051aab799f57",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "best_predictions",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_predictions.pt",
+      "sha256": "931af40416a9c2f86df4dd8c36f5726f2e9af357ec60ffe9b4a4ea13c22ec0e6",
+      "availability": "durable_local_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.108868,
+    "observed_development_gap_mae_eV": 0.10505615174770355,
+    "material_gain_eV": 0.003811848252296454,
+    "falsifier_threshold_eV": 0.103868,
+    "falsifier_satisfied": false,
+    "best_epoch": 54
+  },
+  "notes": {
+    "contract_metadata_errata": "In the remote runner, scientific_contract.json recorded loss_fingerprint as 'normalized-gap-l1' due to legacy script omission. Verified via source payload SHA256 (f1cda89e...) that backward gradient computation accurately evaluated gap_loss + 0.1 * noisy_nodes_ce_aux_loss. Scientifically valid as 500K Noisy Nodes single-mechanism ablation."
+  },
+  "migration": {
+    "migrated_at": "2026-09-22",
+    "verification_scope": "terminal Kaggle execution, SHA256 verified artifacts, and paired comparison against pcqm-matched-500k-v4-three-arm",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

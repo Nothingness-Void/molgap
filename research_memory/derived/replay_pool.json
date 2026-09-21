@@ -4164,6 +4164,13 @@
     },
     {
       "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
+      "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -4176,5 +4183,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "8e9fb089dce9c2a0ac0615325ff39f16f352c098a21207f078f15af84cb5c32b"
+  "source_digest": "c3db7328ddfd815cd8b0d3679a0a126c4522b514cab042e2f4a0376bf992253f"
 }

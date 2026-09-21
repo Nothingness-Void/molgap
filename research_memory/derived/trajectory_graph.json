@@ -21,6 +21,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-noisy-nodes-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_noisy_nodes_500k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-noisy-pair-norm-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
       "type": "action_produced_evidence"
@@ -346,6 +351,10 @@
     },
     {
       "id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-noisy-nodes-500k-s42",
       "type": "evidence"
     },
     {

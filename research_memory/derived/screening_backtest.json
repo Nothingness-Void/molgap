@@ -16,6 +16,13 @@
     },
     {
       "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
+      "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -62,5 +69,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 6
+  "trace_count": 7
 }

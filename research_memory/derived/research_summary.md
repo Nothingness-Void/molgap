@@ -1,15 +1,16 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 15
+- Validated V5 evidence: 16
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 2
+- ACTIVE: 1
 - CLOSED: 3
 - INCONCLUSIVE: 1
 - NEGATIVE_UNDER_CONTRACT: 5
 - NO_TRAIN: 2
+- POSITIVE_BELOW_GATE: 1
 - POSITIVE_UNDER_CONTRACT: 6
 
 ## Transfer
@@ -18,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 11
-- Coarse historical role records: 62
+- Explicit role events: 13
+- Coarse historical role records: 66
 - Repeatedly selected role identities: 1
 
 ## Cost
@@ -31,26 +32,26 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 cpu_hours: not applicable (6 records); measurement_missing=0
-- Tesla_T4 device_hours: measured=3.490500 (2 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
-- Tesla_T4 queue_hours: not applicable (6 records); measurement_missing=0
-- Tesla_T4 wall_hours: measured=4.092200 (2 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 cpu_hours: not applicable (7 records); measurement_missing=0
+- Tesla_T4 device_hours: measured=12.738500 (3 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 queue_hours: not applicable (7 records); measurement_missing=0
+- Tesla_T4 wall_hours: measured=13.340200 (3 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (2 records); measurement_missing=0
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
 - Measurement-missing cost events: 2
-- Cost-event coverage: 8/19 trajectories; incomplete native measurement=6
+- Cost-event coverage: 8/19 trajectories; incomplete native measurement=5
 
 ## Screening Backtest
 - Status: available
 - Eligible traces: 4
-- Excluded traces: 2
+- Excluded traces: 3
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 13
+- [INFO] trace_unavailable_for_backtest: 12
 - [WARN] historical_partial_record: 13
-- [WARN] incomplete_native_cost_measurement: 6
+- [WARN] incomplete_native_cost_measurement: 5
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 14
-- [WARN] trajectory_without_v5_evidence: 4
+- [WARN] missing_explicit_role_identity: 13
+- [WARN] trajectory_without_v5_evidence: 3
