@@ -1,0 +1,49 @@
+{
+  "format": "molgap-gptrans-conditional-flow-acceptance-v1",
+  "accepted": true,
+  "mechanical_acceptance": true,
+  "scientific_decision": "NEGATIVE_UNDER_CONTRACT",
+  "kernel": "nothingnessvoid/molgap-gptrans-conditional-flow-s42",
+  "version": 2,
+  "reference": {
+    "development_mae_eV": 0.15662720430791377,
+    "predictions_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+    "source_idx_and_targets_paired": true,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "arms": [
+    {
+      "variant": "conditional_pair_readback",
+      "parameters": 5250285,
+      "development_mae_eV": 0.1609358452886343,
+      "gain_vs_reference_eV": -0.00430864098072052,
+      "bootstrap_upper95_delta_eV": 0.005268241401195526,
+      "best_epoch": 59,
+      "epochs": 60,
+      "optimizer_steps": 46860,
+      "checks_passed": true,
+      "source_idx_and_targets_paired": true,
+      "best_model_sha256": "1d0a903508b56adf63659ab5984a6fbe68e232223ce125a389b544c2488254b9",
+      "predictions_sha256": "08c5d8ff3a171b780388776b47cc78419eef421ee856c9ea1339aa4e6f186c49"
+    },
+    {
+      "variant": "conditional_pair_recurrence",
+      "parameters": 5259489,
+      "development_mae_eV": 0.15987775508821012,
+      "gain_vs_reference_eV": -0.003250550780296326,
+      "bootstrap_upper95_delta_eV": 0.004282526487350463,
+      "best_epoch": 59,
+      "epochs": 60,
+      "optimizer_steps": 46860,
+      "checks_passed": true,
+      "source_idx_and_targets_paired": true,
+      "best_model_sha256": "76ee494d95f4a4feb283d824f493f87f777c10f754766d48af612012be56693b",
+      "predictions_sha256": "11caef0036077be9b0bd409f5334ca53e2efd615871976dfe45af2de59bfbffb"
+    }
+  ],
+  "threshold_eV": 0.003,
+  "full_scale_authorized": false,
+  "raw_output": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw"
+}

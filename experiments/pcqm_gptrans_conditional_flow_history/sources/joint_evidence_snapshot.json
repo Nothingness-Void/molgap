@@ -1,0 +1,111 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+      "name": "raw_artifact_manifest",
+      "sha256": "cbcac8b4e4c2786f8d0bd2e7fea30d63b8b00504bd4b10dba6c74256687d34bd"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+      "name": "retained_artifact_manifest",
+      "sha256": "4887ded3f86998aad06e140f2948876bd1cce3c6eed56f93e3fb3b3c9ee0948c"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json",
+      "name": "retention_receipt",
+      "sha256": "84b4b2707a3aacfa39bdbe0564c397ceac62503faa31f54b490e81ac6248a888"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/best_model.pt",
+      "name": "conditional_pair_readback_best_model",
+      "sha256": "1d0a903508b56adf63659ab5984a6fbe68e232223ce125a389b544c2488254b9"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/development_predictions.pt",
+      "name": "conditional_pair_readback_predictions",
+      "sha256": "08c5d8ff3a171b780388776b47cc78419eef421ee856c9ea1339aa4e6f186c49"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/best_model.pt",
+      "name": "conditional_pair_recurrence_best_model",
+      "sha256": "76ee494d95f4a4feb283d824f493f87f777c10f754766d48af612012be56693b"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/development_predictions.pt",
+      "name": "conditional_pair_recurrence_predictions",
+      "sha256": "11caef0036077be9b0bd409f5334ca53e2efd615871976dfe45af2de59bfbffb"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/job_summary.json",
+      "name": "v2_job_summary",
+      "sha256": "6f992e7dd99c3dbda330456bc31a5ebedbf5ded14d94ff52c0d5ab7f06c2d47e"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_readback/training/trace.json",
+      "name": "conditional_pair_readback_trace",
+      "sha256": "280db24dd02845a713073613d3ba3a41935d618bd58e1fb5ea6c4ada3b79868c"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/raw/gptrans_conditional_flow/conditional_pair_recurrence/training/trace.json",
+      "name": "conditional_pair_recurrence_trace",
+      "sha256": "e2d1799479b8bd1f999cbedb41f106d5079a7feddfe90fcdeac2f0387ef2ae2d"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_conditional_flow_100k/training_contract.json",
+      "experiments/pcqm_gptrans_conditional_flow_100k/results/acceptance_v2.json",
+      "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/artifact_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retained_artifact_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_conditional_flow_s42_v2/retention_receipt.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-conditional-flow-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-gptrans-conditional-flow-100k-v5",
+  "metrics": {
+    "bootstrap_upper95_delta_readback_eV": 0.005268241401195526,
+    "bootstrap_upper95_delta_recurrence_eV": 0.004282526487350463,
+    "conditional_pair_readback_delta_eV": 0.00430864098072052,
+    "conditional_pair_readback_development_gap_mae_eV": 0.1609358452886343,
+    "conditional_pair_recurrence_delta_eV": 0.003250550780296326,
+    "conditional_pair_recurrence_development_gap_mae_eV": 0.15987775508821012,
+    "reference_development_gap_mae_eV": 0.15662720430791377
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-21",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "terminal Kaggle state, pre-retention inventory, compact retained artifact archive and receipt, frozen no-inference acceptance, and paired development comparison"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "closed",
+    "comparison_status": "paired_development_comparison_complete",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "fixed_100k_gptrans_conditional_flow_screen",
+  "track": "C"
+}
