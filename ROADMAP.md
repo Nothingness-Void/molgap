@@ -16,7 +16,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
 | P1 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
 | P2 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
-| P3 | C-K1-ONESHOT-TRIPLET | Final authorized round: original PairToken plus one layer-6 non-persistent real-bond triplet adapter | Terminal artifact acceptance and RML attribution; no persistent triplet state, geometry, extra seed, or automatic scale bridge |
+| P3 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
 | P4 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval

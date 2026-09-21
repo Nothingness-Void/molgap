@@ -1,11 +1,12 @@
 # Status
 
-Kaggle3 kernel `nvoid912/molgap-k1-one-shot-triplet-pairtoken-s42:v1` was
-submitted from the frozen V5 release and observed `RUNNING`. The source
-commit is `f43687f3bc48d8c3452dc29e685158644064bac6`; the immutable source archive
-SHA-256 is
-`1d14cb353aea3fddb15a0da694140aaaca7ac73aa810f088b8f39c26293a1eef`.
+Kaggle3 kernel `nvoid912/molgap-k1-one-shot-triplet-pairtoken-s42:v1`
+completed and passed corrected saved-artifact acceptance without model
+inference. It reached `0.1387662739 eV`, a favorable but sub-threshold
+`0.0026073605 eV` gain over K1, and was `0.0004362366 eV` worse than original
+PairToken with a paired interval crossing zero.
 
-No terminal scientific result is claimed. Terminal artifact acceptance and
-RML attribution must complete before closure; this is the final authorized
-round, so no automatic successor is released.
+The V5/RML terminal pipeline is complete and replay-ready. The outcome is
+`POSITIVE_BELOW_GATE`; no extra seed, scale bridge, protected role, or
+automatic successor is authorized. The bounded three-round sequence is
+closed. Authority: `decision.md`.

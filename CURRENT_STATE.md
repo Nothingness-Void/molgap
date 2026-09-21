@@ -64,13 +64,16 @@ shortest-path conditioning rather than an inactive implementation. It is the
 fifth complete candidate in the RML replay pool. Authority:
 `experiments/pcqm_k1_spd_pair_token_100k/decision.md`.
 
-The final authorized round is released as a distinct TGT-style question:
-retain original PairToken, but add one zero-initialized, non-persistent
-directed bond-to-bond triplet adapter at layer 6. It must use only real-bond
-EdgeState and topology-defined non-backtracking wedges, return only to bond
-state, and create no persistent triplet state or geometry input. This tests
-whether one bounded higher-order local interaction can preserve the hard-row
-signal seen in Round 1 without its full-depth overfit.
+The final authorized round is closed. A zero-initialized, non-persistent
+directed bond-to-bond triplet adapter at layer 6 beside original PairToken
+reached `0.1387662739 eV`, improving K1 by `0.0026073605 eV` with a favorable
+paired interval but missing the frozen `0.003 eV` gate. It was
+`0.0004362366 eV` worse than original PairToken and that parent interval
+crossed zero. The candidate again helped hard K1-error rows while damaging
+easy rows. It is replay-ready but not promoted; original PairToken remains the
+retained K1 relation mechanism. The three-round sparse-triplet/SPD/one-shot
+sequence is exhausted. Authority:
+`experiments/pcqm_k1_oneshot_triplet_pair_token_100k/decision.md`.
 
 The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
 FP32, BS128 contract and passed no-inference terminal acceptance. It reached
