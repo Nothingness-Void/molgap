@@ -355,10 +355,11 @@ def run_training_noisy_nodes(
             layer_scale=1.0,
             n_targets=1,
             readout_mode=readout_mode,
-        ).to("cuda")
+        )
         if pair_update_norm:
             from .gptrans_variants import apply_variant
             model = apply_variant(model, "pair_update_norm")
+        model = model.to("cuda")
 
     optimizer = make_adamw_compat(
         model.parameters(),
