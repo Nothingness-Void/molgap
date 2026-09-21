@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "23ee705702c461d1c0aa2feb2b972b6b31abc5550dd6f6f59fe9be5dd69634ea",
+  "source_digest": "3748521c3c8616fa3c22a442315e19442d95c785c7135002e6d5d0b0e7857203",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -247,6 +247,24 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-token-batch-profile"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_pair_token_mose_100k/STATUS.md",
+      "family_id": "k1-pair-token-mose-composition",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-pair-token-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_pair_token_mose_100k/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-pair-token-mose-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
     },
     {
       "completeness_status": "complete",

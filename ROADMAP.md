@@ -14,10 +14,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
-| P2 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
-| P3 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
-| P4 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
+| P1 | C-K1-PAIRTOKEN-MOSE | Run the one extra authorized seed-42 V5 screen: accepted PairToken plus zero-return MoSE31 node view | Terminal no-inference acceptance and paired attribution versus immutable K1 and retained PairToken; no automatic successor |
+| P2 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
+| P3 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
+| P4 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
+| P5 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.

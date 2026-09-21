@@ -216,6 +216,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-pair-token-node-return-100k-s42:A001",
       "target": "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
       "type": "action_produced_evidence"
@@ -352,6 +362,11 @@
     },
     {
       "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
       "type": "parent_trajectory"
     },
@@ -421,6 +436,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-mose-residual-gate-100k-s42",
       "target": "TC-k1-mose-context-gate-100k-s42",
       "type": "prior_evidence"
@@ -453,6 +473,11 @@
     {
       "source": "pcqm-k1-pair-token-100k-s42",
       "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -537,6 +562,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
       "type": "prior_evidence"
     },
@@ -608,6 +638,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
       "type": "reference_used"
     },
     {
@@ -693,6 +728,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-pair-token-mose-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-pair-token-node-return-100k-s42",
       "type": "evidence"
     },
@@ -766,6 +805,10 @@
     },
     {
       "id": "TC-k1-pair-token-batch-profile",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-mose-100k-s42",
       "type": "trajectory"
     },
     {

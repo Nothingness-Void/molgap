@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "e90c4c79f5e71f971df53c6b83f2b29f8278dda0424c985c8944d6d892b038c9",
+  "candidate_id": "neural_atom_k1_pair_token_mose",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_pair_token_mose.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "zero-return-mose31-node-view-before-unchanged-accepted-pairtoken",
+  "source_commit": "246d89c94fa65752b2f54633630346e1c67effd7",
+  "training_contract_ref": "experiments/pcqm_k1_pair_token_mose_100k/training_contract.json",
+  "training_contract_sha256": "9c9d835e1655e0d1009f95d38fb33d13fd74b1d89d733c195277063bd3f3a11b"
+}

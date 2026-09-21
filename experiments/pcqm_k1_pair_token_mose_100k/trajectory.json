@@ -1,0 +1,105 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "candidate-v1-planned"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-pair-token-mose-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_pair_token_mose_100k/source_config.json"
+      ],
+      "run_ids": [
+        "nvoid912/molgap-k1-pairtoken-mose-s42:v1-planned"
+      ],
+      "source_commit": "246d89c94fa65752b2f54633630346e1c67effd7",
+      "type": "planned_candidate_only_seed42_100k_screen"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_pair_token_mose_100k/STATUS.md",
+    "next_allowed_actions": [
+      "submit exactly one frozen candidate job after packaging checks"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal attribution must precede any successor"
+    ]
+  },
+  "family_id": "k1-pair-token-mose-composition",
+  "hypothesis": {
+    "alternative_explanations": [
+      "the diagnostic prediction average may exploit error cancellation that a single shared encoder cannot learn",
+      "MoSE31 may be redundant once RWSE16 and PairToken are jointly optimized"
+    ],
+    "changed_mechanism": "one zero-return MoSE31 node residual before the unchanged K1 blocks and accepted layer-6 PairToken",
+    "cheapest_falsifier": "one seed-42 fixed PCQM-100K candidate-only screen against reusable K1 and retained PairToken endpoints",
+    "decision_changed_if_negative": "close single-encoder PairToken plus MoSE composition and retain the accepted PairToken parent",
+    "decision_changed_if_positive": "retain PairToken plus MoSE as a seed-42 shortlist candidate and require separate scale authority",
+    "expected_native_cost_ref": "cost-TC-k1-pair-token-mose-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and is not inferred from account identity"
+    ],
+    "hypothesis_id": "H-TC-k1-pair-token-mose-100k-s42",
+    "observed_deficiency": "PairToken passed the materiality gate while MoSE was sub-threshold but improved nearly half the development rows; their retained predictions show complementary residual structure.",
+    "related_closed_family_ids": [
+      "k1-uniform-global-return",
+      "k1-inverse-global-return",
+      "k1-molecule-context-gate",
+      "k1-induced-pair-token",
+      "full-depth-sparse-triplet-state",
+      "k1-spd-pair-token"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-mose-replacement-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Can one encoder combine the accepted PairToken with complementary MoSE31 node structure better than either view alone?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-pair-token-mose-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_pair_token_mose_100k/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_pair_token_mose_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_pair_token_mose_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-mose-replacement-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-mose-replacement-100k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_pair_token_mose_100k/role_plan.json"
+    ],
+    "source_commit": "246d89c94fa65752b2f54633630346e1c67effd7",
+    "source_config_identity": "e90c4c79f5e71f971df53c6b83f2b29f8278dda0424c985c8944d6d892b038c9"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
+}
