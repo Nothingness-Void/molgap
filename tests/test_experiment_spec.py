@@ -219,3 +219,44 @@ def test_duplicate_json_keys_fail_closed(payload):
     text = json.dumps(payload)
     with pytest.raises(ValueError, match="Duplicate JSON field"):
         ExperimentSpec.from_json('{"experiment_id":"hidden",' + text[1:])
+
+
+def test_k1_addon_roundtrip_and_identity(payload):
+    baseline = ExperimentSpec(payload)
+    candidate = copy.deepcopy(payload["arms"][1])
+    candidate.update(
+        arm_id="k1-candidate", scientific_role="candidate",
+        addons=[addon("k1_pair_value")], addon_semantics="ordered",
+    )
+    payload["arms"].append(candidate)
+    spec = ExperimentSpec(payload)
+    assert spec.identity != baseline.identity
+    assert ExperimentSpec.from_json(spec.to_json()) == spec
+    assert spec.to_dict()["arms"][1]["addons"] == []
+    assert spec.to_dict()["arms"][2]["addons"] == [addon("k1_pair_value")]
+    candidate["addons"][0]["source_sha256"] = "c" * 64
+    assert ExperimentSpec(payload).identity != spec.identity
+
+
+@pytest.mark.parametrize("family,names", [
+    ("gptrans_t", ["k1_pair_value"]),
+    ("neural_atom_k1", ["pair_prenorm"]),
+    ("neural_atom_k1", ["centered_logits"]),
+    ("neural_atom_k1", ["k1_pair_value", "k1_pair_value"]),
+    ("neural_atom_k1", ["k1_pair_value", "pair_prenorm"]),
+])
+def test_k1_addon_family_exclusivity(payload, family, names):
+    selected = arm(family)
+    selected.update(addons=[addon(name) for name in names], addon_semantics="ordered")
+    payload["arms"] = [selected]
+    with pytest.raises(ValueError, match="Incompatible"):
+        ExperimentSpec(payload)
+
+
+@pytest.mark.parametrize("config", [{"width": 32}, {"replay_ready": True}, [], None, ""])
+def test_k1_addon_requires_empty_object_config(payload, config):
+    extension = addon("k1_pair_value")
+    extension["config"] = config
+    payload["arms"][1].update(addons=[extension], addon_semantics="ordered")
+    with pytest.raises(ValueError, match="addon.config"):
+        ExperimentSpec(payload)
