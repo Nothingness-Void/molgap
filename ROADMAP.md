@@ -14,11 +14,12 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-K1-PAIRTOKEN-MOSE | Completed: terminal artifacts retained, but undeclared feature identity prevents strict comparison | Keep contextual endpoint and release-gate repair; no retry, seed, scale bridge, or automatic successor |
-| P2 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
-| P3 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
-| P4 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
-| P5 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
+| P1 | C-PAIRTOKEN-SCALE-ATTRIBUTION | Run one K1 matched60-v4 500K reference, then at most two frozen-artifact diagnostics | Separate missing-reference, scale-transfer, and mechanism-loss explanations without a new architecture search |
+| P2 | C-K1-PAIRTOKEN-MOSE | Completed: terminal artifacts retained, but undeclared feature identity prevents strict comparison | Keep contextual endpoint and release-gate repair; no retry, seed, scale bridge, or automatic successor |
+| P3 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
+| P4 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
+| P5 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
+| P6 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.

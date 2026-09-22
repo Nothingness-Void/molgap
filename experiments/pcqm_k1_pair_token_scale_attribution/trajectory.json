@@ -1,0 +1,90 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-pair-token-scale-attribution",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-pair-token-scale-attribution",
+  "question": "Why did PairToken's 100K material gain shrink at 500K?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-pair-token-scale-attribution",
+    "observed_deficiency": "The accepted PairToken 500K endpoint lacks an exact matched60-v4 K1 prediction bundle, so data-scale transfer and reference mismatch are confounded.",
+    "supporting_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42"
+    ],
+    "alternative_explanations": [
+      "K1 learns the same relation signal from more unique molecules",
+      "PairToken remains active but helps only a shrinking error subgroup",
+      "the scalar historical K1 comparator misstates the aligned matched60 effect"
+    ],
+    "changed_mechanism": "none; recover the exact matched reference before frozen-model diagnostics",
+    "cheapest_falsifier": "one matched60-v4 K1 500K reference followed by no-training paired analysis",
+    "related_closed_family_ids": [
+      "k1-pair-token-hard-sparsity",
+      "k1-graphormer-spd-pair-token",
+      "k1-chemistry-typed-pair-token"
+    ],
+    "expected_native_cost_ref": "experiments/pcqm_k1_pair_token_scale_attribution/budget_snapshot.json",
+    "decision_changed_if_positive": "attribute the shrinkage using aligned rows and one frozen checkpoint audit",
+    "decision_changed_if_negative": "close PairToken scale attribution without another architecture",
+    "historical_unknowns": [
+      "the existing PairToken 500K result has only a scalar K1 comparator"
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
+    "source_config_identity": "24f6b88bb55bd8a29ef0d791abce48b2472599e0aafa00f823afd078ca01fe15",
+    "contract_refs": [
+      "experiments/pcqm_k1_pair_token_scale_attribution/training_contract.json"
+    ],
+    "reference_ids": [],
+    "parent_trajectory_ids": ["TB-k1-pair-token-500k-s42"],
+    "prior_trajectory_ids": [
+      "TC-k1-pair-token-100k-s42",
+      "TB-k1-pair-token-500k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_pair_token_scale_attribution/role_plan.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_pair_token_scale_attribution/budget_snapshot.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "planned_matched60_v4_k1_500k_reference_recovery",
+      "run_ids": [],
+      "attempt_ids": ["preflight-planned", "training-planned"],
+      "source_commit": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json"
+      ],
+      "cost_event_ids": ["cost-TC-k1-matched60-reference-500k-s42"]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "submit one preflight-only reference job",
+      "after accepted preflight submit one formal reference job"
+    ],
+    "reopen_conditions": [
+      "Round 2 requires terminal Round 1 acceptance",
+      "Round 3 requires written Round 2 attribution"
+    ]
+  },
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
+  "comparison_blockers": [],
+  "reference_bundle_id": null
+}

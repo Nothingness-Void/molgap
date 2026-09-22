@@ -1,0 +1,43 @@
+{
+  "format": "molgap-comparison-prelaunch-v1",
+  "candidate_id": "neural_atom_k1_matched60_reference",
+  "reference_id": null,
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "experiment_purpose": "delivery_experiment",
+  "intervention_group_id": "reference-recovery",
+  "mechanism_id": null,
+  "planned_status": "PRELAUNCH_NONCAUSAL_PLANNED",
+  "prelaunch_ready": true,
+  "declared_intervention_fields": [],
+  "matched_fields": {},
+  "mismatched_fields": {},
+  "missing_fields": [],
+  "blocker_codes": [],
+  "candidate_source_config_status": "frozen",
+  "candidate_source_commit_or_archive": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
+  "role_applicability_plan": {
+    "training_membership": "applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "external_submission": "not_applicable"
+  },
+  "trace_plan": {
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "checkpoint_identity": true
+  },
+  "runtime_qualification_plan": {
+    "qualification_scope": "scnet-kunshan-single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "runtime_certificate_required": true,
+    "status": "declared"
+  },
+  "terminal_candidate_artifacts_required": false
+}

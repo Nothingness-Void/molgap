@@ -302,6 +302,15 @@ including on K1-hard molecules. This was `NO_TRAIN` evidence, not a new model
 candidate or replay-pool entry. No sparse successor was released. Authority:
 `experiments/pcqm_k1_pair_selection_diagnostic/decision.md`.
 
+The user explicitly reopened one bounded three-round scale-attribution sequence.
+Round 1 prepares the missing K1 matched60-v4 500K reference under the exact
+PairToken contract.  It is reference recovery, not a new architecture claim.
+Only after terminal acceptance may Round 2 perform aligned residual analysis;
+only after that attribution may Round 3 perform frozen-checkpoint PairToken
+interventions.  The sequence cannot release a seed, architecture successor,
+full run, or protected-role access.  Authority:
+`experiments/pcqm_k1_pair_token_scale_attribution/protocol.md`.
+
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact
 sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
