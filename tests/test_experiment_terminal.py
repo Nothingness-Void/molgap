@@ -1,5 +1,6 @@
 """Synthetic descriptor binding tests; no models, protected roles or remote work."""
 import copy
+import hashlib
 import json
 from unittest.mock import Mock
 
@@ -16,6 +17,37 @@ from test_experiment_spec import payload
 from test_terminal_trace_closure import create_candidate_arm
 
 
+def fact(value=None, reason="Not retained by synthetic fixture"):
+    return {"value": value, "missing_reason": reason if value is None else None}
+
+
+def observations(spec, arm):
+    declaration = spec.to_dict()
+    return {
+        "identity": {
+            "experiment_id": declaration["experiment_id"], "logical_run_id": declaration["logical_run_id"],
+            "arm_id": arm["arm_id"], "spec_identity": spec.identity,
+            "attempt_id": fact("att-1"),
+            "platform": {"name": declaration["platform"]["name"], "run_reference": fact()},
+            "family": fact(copy.deepcopy(arm["family"])),
+            "recipe_identity": fact(canonical_fingerprint(arm["training"]["recipe"])),
+            "source_commit": fact("1" * 40), "source_package_sha256": fact(),
+            "data_identity": fact(canonical_fingerprint(arm["data"])),
+            "split_identity": fact(canonical_fingerprint({"split": arm["data"]["split"], "roles": arm["data"]["roles"]})),
+            "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
+            "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
+        },
+        "terminal": {"status": fact(), "exit_reason": fact()},
+        "artifacts": {name: {"status": "missing", "locator": None, "sha256": None,
+                             "missing_reason": "Not bound in synthetic descriptor"}
+                      for name in ("metrics", "predictions", "checkpoint", "trace")},
+        "progress": {name: fact() for name in ("epoch", "step", "samples")},
+        "costs": [{"metric": "device_time", "unit": None, "value": None,
+                   "status": "measurement_missing", "reason": "No measurement retained"}],
+        "missing_evidence": ["Synthetic fixture has no runtime observation receipt"],
+    }
+
+
 @pytest.fixture
 def case(tmp_path, payload):
     spec = ExperimentSpec(payload)
@@ -29,6 +61,7 @@ def case(tmp_path, payload):
             "trajectory_id": trajectory_id, "run_id": run_id,
             "trajectory": f"experiments/{folder}/trajectory.json",
             "terminal": f"experiments/{folder}/terminal.json",
+            "observed": observations(spec, arm),
         })
     return spec, {
         "schema_version": TERMINAL_PROTOCOL, "spec_identity": spec.identity,
@@ -282,6 +315,274 @@ def test_existing_retained_trace_guard_still_fails_closed(tmp_path, case):
     raw.unlink()
     descriptor = TerminalDescriptor(*case)
     translate_terminal_descriptor(tmp_path, case[0], descriptor)
-    with pytest.raises(ValueError, match="FAIL CLOSED"):
+    with pytest.raises(FileNotFoundError, match="FAIL CLOSED: declared retained trace file missing"):
         execute_terminal_descriptor(tmp_path, case[0], descriptor)
     assert not list(tmp_path.rglob("rml_finalized"))
+
+
+@pytest.mark.parametrize("path", [
+    (), ("identity",), ("identity", "family"), ("identity", "family", "value"),
+    ("identity", "platform"), ("identity", "platform", "run_reference"),
+    ("terminal",), ("terminal", "status"), ("artifacts",), ("artifacts", "metrics"),
+    ("progress",), ("progress", "step"), ("costs", 0),
+])
+@pytest.mark.parametrize("change", ["extra", "missing"])
+def test_observed_nested_exact_fields(case, path, change):
+    spec, data = case
+    value = data["arms"][0]["observed"]
+    for field in path:
+        value = value[field]
+    if change == "extra":
+        value["ready"] = True
+    else:
+        value.pop(next(iter(value)))
+    with pytest.raises(ValueError):
+        TerminalDescriptor(spec, data)
+
+
+@pytest.mark.parametrize("field", ["experiment_id", "logical_run_id", "arm_id", "spec_identity"])
+def test_per_arm_binding_mismatch(case, field):
+    case[1]["arms"][0]["observed"]["identity"][field] = "wrong"
+    with pytest.raises(ValueError, match="identity mismatch"):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("field", [
+    "family", "recipe_identity", "data_identity", "split_identity", "feature_identity", "target", "initialization_identity",
+])
+@pytest.mark.parametrize("value", ["wrong", "A" * 64, True, {"name": "gptrans_t", "version": "2"}])
+def test_observed_spec_identity_mismatch(case, field, value):
+    case[1]["arms"][0]["observed"]["identity"][field] = fact(value)
+    with pytest.raises(ValueError, match="identity mismatch"):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("field,value", [
+    ("attempt_id", "../attempt"), ("source_commit", "ABCDEF"),
+    ("source_commit", "A" * 40), ("source_commit", "1" * 39),
+    ("source_package_sha256", "A" * 64), ("source_package_sha256", "1" * 63),
+])
+def test_observed_identity_syntax(case, field, value):
+    case[1]["arms"][0]["observed"]["identity"][field] = fact(value)
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("field,value", [("attempt_id", "other"), ("source_commit", "2" * 40)])
+def test_observed_action_identity_mismatch(tmp_path, case, field, value):
+    case[1]["arms"][0]["observed"]["identity"][field] = fact(value)
+    with pytest.raises(ValueError, match="identity mismatch with frozen action"):
+        translate(tmp_path, case)
+
+
+def test_observed_physical_platform_binding(case):
+    case[1]["arms"][0]["observed"]["identity"]["platform"]["name"] = "ims"
+    with pytest.raises(ValueError, match="identity mismatch"):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("value", [fact(None, ""), fact(None, None), {"value": 1, "missing_reason": "Unknown"}])
+def test_unknown_requires_reason_and_known_forbids_reason(case, value):
+    case[1]["arms"][0]["observed"]["progress"]["step"] = value
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+def test_unknown_identity_and_terminal_remain_unknown(tmp_path, case):
+    observed = case[1]["arms"][0]["observed"]
+    for name in ("attempt_id", "family", "recipe_identity", "source_commit", "source_package_sha256",
+                 "data_identity", "split_identity", "feature_identity", "target", "initialization_identity"):
+        observed["identity"][name] = fact()
+    descriptor = TerminalDescriptor(*case)
+    assert descriptor.to_dict()["arms"][0]["observed"] == observed
+    result = translate_terminal_descriptor(tmp_path, case[0], descriptor)
+    assert set(result[0]) == {"arm_identifier", "trajectory", "terminal"}
+    assert descriptor.to_dict()["arms"][0]["observed"]["terminal"]["status"]["value"] is None
+
+
+@pytest.mark.parametrize("status", ["complete", "failed", "cancelled", "interrupted"])
+def test_explicit_terminal_observations_preserved(case, status):
+    observed = case[1]["arms"][0]["observed"]
+    observed["terminal"] = {"status": fact(status), "exit_reason": fact("Observed scheduler exit")}
+    assert TerminalDescriptor(*case).to_dict()["arms"][0]["observed"]["terminal"] == observed["terminal"]
+
+
+@pytest.mark.parametrize("status", ["ready", "running", "unknown", True, 0])
+def test_invalid_terminal_status(case, status):
+    case[1]["arms"][0]["observed"]["terminal"]["status"] = fact(status)
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+def available_artifact(tmp_path, case, name):
+    locator = "experiments/descriptor_0/observed_" + name + ".bin"
+    content = b"synthetic artifact bytes"
+    (tmp_path / locator).write_bytes(content)
+    artifact = {"status": "available", "locator": locator,
+                "sha256": hashlib.sha256(content).hexdigest(), "missing_reason": None}
+    case[1]["arms"][0]["observed"]["artifacts"][name] = artifact
+    return artifact
+
+
+@pytest.mark.parametrize("name", ["metrics", "predictions", "checkpoint", "trace"])
+def test_available_artifact_bytes_bound_read_only(tmp_path, case, name):
+    artifact = available_artifact(tmp_path, case, name)
+    before = (tmp_path / artifact["locator"]).read_bytes()
+    translate(tmp_path, case)
+    assert (tmp_path / artifact["locator"]).read_bytes() == before
+    (tmp_path / artifact["locator"]).write_bytes(b"tampered")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        translate(tmp_path, case)
+
+
+@pytest.mark.parametrize("change", ["missing_file", "uppercase", "short_sha", "null_sha", "reason", "null_locator"])
+def test_invalid_available_artifact(tmp_path, case, change):
+    artifact = available_artifact(tmp_path, case, "metrics")
+    if change == "missing_file":
+        (tmp_path / artifact["locator"]).unlink()
+    elif change == "uppercase":
+        artifact["sha256"] = "A" * 64
+    elif change == "short_sha":
+        artifact["sha256"] = "a" * 63
+    elif change == "null_sha":
+        artifact["sha256"] = None
+    elif change == "reason":
+        artifact["missing_reason"] = "Contradiction"
+    else:
+        artifact["locator"] = None
+    with pytest.raises(ValueError):
+        translate(tmp_path, case)
+
+
+def test_explicit_missing_artifacts_not_required(tmp_path, case):
+    artifact = case[1]["arms"][0]["observed"]["artifacts"]["checkpoint"]
+    artifact["locator"] = "experiments/not_retained.pt"
+    translate(tmp_path, case)
+    assert not (tmp_path / artifact["locator"]).exists()
+
+
+@pytest.mark.parametrize("field,value", [("status", "ready"), ("sha256", "a" * 64), ("missing_reason", None)])
+def test_invalid_missing_artifact(case, field, value):
+    case[1]["arms"][0]["observed"]["artifacts"]["metrics"][field] = value
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("locator", ["../escape", "C:/escape", "https://host/file", "a\\b", "a/../b"])
+def test_artifact_locator_boundary(case, locator):
+    case[1]["arms"][0]["observed"]["artifacts"]["trace"]["locator"] = locator
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+def test_output_cannot_overwrite_observed_artifact(tmp_path, case):
+    artifact = available_artifact(tmp_path, case, "metrics")
+    case[1]["arms"][0]["canonical_trace_output"] = artifact["locator"]
+    with pytest.raises(ValueError, match="aliases an input"):
+        translate(tmp_path, case)
+
+
+@pytest.mark.parametrize("value", [-1, True, 1.5, "2", float("nan"), float("inf")])
+@pytest.mark.parametrize("field", ["epoch", "step", "samples"])
+def test_progress_rejects_non_integer_observations(case, field, value):
+    case[1]["arms"][0]["observed"]["progress"][field] = fact(value)
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("status", ["measured", "estimated", "measurement_missing"])
+def test_native_cost_and_zero_progress_preserved(case, status):
+    observed = case[1]["arms"][0]["observed"]
+    observed["progress"]["step"] = fact(0)
+    cost = {"metric": "device_time", "unit": "DCU-hours", "status": status,
+            "value": None if status == "measurement_missing" else 0,
+            "reason": None if status == "measured" else "Explicit measurement absence or estimate basis"}
+    observed["costs"] = [cost]
+    restored = TerminalDescriptor(*case).to_dict()["arms"][0]["observed"]
+    assert restored["costs"] == [cost]
+    assert restored["progress"]["step"] == fact(0)
+    assert restored["progress"]["epoch"]["value"] is None
+
+
+@pytest.mark.parametrize("field,value", [
+    ("value", 0), ("value", False), ("reason", None), ("reason", ""), ("status", "unknown"),
+])
+def test_missing_cost_cannot_be_guessed(case, field, value):
+    case[1]["arms"][0]["observed"]["costs"][0][field] = value
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("status", ["measured", "estimated"])
+@pytest.mark.parametrize("value", [None, -1, True, "1", float("nan"), float("inf")])
+def test_cost_numeric_validation(case, status, value):
+    case[1]["arms"][0]["observed"]["costs"] = [{
+        "metric": "device_time", "unit": "GPU-seconds", "status": status,
+        "value": value, "reason": None if status == "measured" else "Observed rate estimate",
+    }]
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("change", ["empty", "duplicate", "unknown_unit", "estimate_without_basis"])
+def test_cost_evidence_required(case, change):
+    costs = case[1]["arms"][0]["observed"]["costs"]
+    if change == "empty":
+        costs.clear()
+    elif change == "duplicate":
+        costs.append(copy.deepcopy(costs[0]))
+    else:
+        costs[0].update(status="estimated", value=1, unit="seconds", reason="Estimate basis")
+        costs[0]["unit" if change == "unknown_unit" else "reason"] = None
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+@pytest.mark.parametrize("value", [None, "missing", [None], [""], [{}]])
+def test_missing_evidence_reasons_are_explicit(case, value):
+    case[1]["arms"][0]["observed"]["missing_evidence"] = value
+    with pytest.raises(ValueError):
+        TerminalDescriptor(*case)
+
+
+def test_observed_metadata_cannot_be_swapped_between_arms(case):
+    arms = case[1]["arms"]
+    arms[0]["observed"], arms[1]["observed"] = arms[1]["observed"], arms[0]["observed"]
+    with pytest.raises(ValueError, match="identity mismatch"):
+        TerminalDescriptor(*case)
+
+
+def test_observation_duplicate_json_key_rejected(case):
+    encoded = json.dumps(case[1]).replace('"epoch":', '"epoch": null, "epoch":', 1)
+    with pytest.raises(ValueError, match="Duplicate JSON field"):
+        TerminalDescriptor.from_json(case[0], encoded)
+
+
+@pytest.mark.parametrize("status", ["available", "missing"])
+def test_observed_artifact_symlink_escape_rejected(tmp_path, case, status):
+    outside = tmp_path.parent / (tmp_path.name + "_artifact.bin")
+    outside.write_bytes(b"outside")
+    link = tmp_path / "linked_artifact.bin"
+    try:
+        link.symlink_to(outside)
+    except OSError:
+        pytest.skip("symlinks unavailable on this host")
+    case[1]["arms"][0]["observed"]["artifacts"]["metrics"] = {
+        "status": status, "locator": "linked_artifact.bin",
+        "sha256": hashlib.sha256(b"outside").hexdigest() if status == "available" else None,
+        "missing_reason": None if status == "available" else "Not retained",
+    }
+    with pytest.raises(ValueError, match="escapes repository"):
+        translate(tmp_path, case)
+
+
+def test_complete_does_not_supply_unknown_exit_or_progress(tmp_path, case):
+    observed = case[1]["arms"][0]["observed"]
+    observed["terminal"]["status"] = fact("complete")
+    descriptor = TerminalDescriptor(*case)
+    translate_terminal_descriptor(tmp_path, case[0], descriptor)
+    restored = descriptor.to_dict()["arms"][0]["observed"]
+    assert restored == observed
+    assert restored["terminal"]["exit_reason"]["value"] is None
+    assert restored["progress"]["step"]["value"] is None
+    assert restored["costs"][0]["status"] == "measurement_missing"

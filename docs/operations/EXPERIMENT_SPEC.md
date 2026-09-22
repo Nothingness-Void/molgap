@@ -77,7 +77,86 @@ not accepted.
 | Object | Required fields | Optional fields |
 |---|---|---|
 | Descriptor | `schema_version`, `spec_identity`, `experiment_id`, `logical_run_id`, `arms` | None |
-| Each arm | `arm_id`, `arm_identity`, `trajectory_id`, `run_id`, `trajectory`, `terminal` | `trace`, `trace_source`, `canonical_trace_output`, `recovery_spec` |
+| Each arm | `arm_id`, `arm_identity`, `trajectory_id`, `run_id`, `trajectory`, `terminal`, `observed` | `trace`, `trace_source`, `canonical_trace_output`, `recovery_spec` |
+
+The required `observed` object carries terminal facts independently of the RML
+path bindings. It is descriptor metadata, not a second terminal package.
+Every object below has exactly the listed fields; no readiness/replay boolean
+or extensible execution hook is supported.
+
+| Object | Exact fields |
+|---|---|
+| `observed` | `identity`, `terminal`, `artifacts`, `progress`, `costs`, `missing_evidence` |
+| `identity` | `experiment_id`, `logical_run_id`, `arm_id`, `spec_identity`, `attempt_id`, `platform`, `family`, `recipe_identity`, `source_commit`, `source_package_sha256`, `data_identity`, `split_identity`, `feature_identity`, `target`, `initialization_identity` |
+| `identity.platform` | `name`, `run_reference` |
+| `terminal` | `status`, `exit_reason` |
+| `artifacts` | `metrics`, `predictions`, `checkpoint`, `trace` |
+| Each artifact | `status`, `locator`, `sha256`, `missing_reason` |
+| `progress` | `epoch`, `step`, `samples` |
+| Each entry in nonempty `costs` array | `metric`, `unit`, `value`, `status`, `reason` |
+| Each observation fact | `value`, `missing_reason` |
+
+The four identity bindings (`experiment_id`, `logical_run_id`, `arm_id`,
+`spec_identity`) and platform `name` are mandatory plain values matching the
+spec. All remaining identity fields, including platform `run_reference`, use
+observation facts. Both terminal fields and each progress field also use facts.
+A known observation is `{"value": <observed value>, "missing_reason": null}`;
+an unknown observation is `{"value": null, "missing_reason": "specific reason"}`.
+Reasons must be nonempty trimmed strings. Unknown facts are never populated
+from the prospective spec or RML terminal package. A controller must obtain
+observations from retained evidence before supplying known values.
+
+Known identity facts must match these declaration bindings:
+
+| Fact | Expected value |
+|---|---|
+| `family` | Exact arm `family` object (`name`, `version`) |
+| `recipe_identity` | `canonical_fingerprint(arm["training"]["recipe"])` |
+| `data_identity` | `canonical_fingerprint(arm["data"])` |
+| `split_identity` | `canonical_fingerprint({"split": arm["data"]["split"], "roles": arm["data"]["roles"]})` |
+| `feature_identity` | Arm `data.feature_sha256` |
+| `target` | Arm `data.target` |
+| `initialization_identity` | `canonical_fingerprint(arm["initialization"])` |
+
+Known attempt IDs use the spec's safe-identifier syntax. Source commits must be
+full lowercase 40- or 64-character hexadecimal IDs; source package identities
+are lowercase SHA-256. Translation checks known attempts and commits against
+the frozen trajectory action. The spec has no source package binding, so its
+digest is syntax-checked only. Physical run references are explicit opaque
+trimmed strings (for example a scheduler job reference), never derived from
+logical-run IDs. They are not dereferenced or authenticated by this adapter.
+
+Terminal status is `complete`, `failed`, `cancelled`, or `interrupted`, or a
+null fact with a reason. `exit_reason` records the actual observed exit reason
+as text, or remains explicitly unknown. Status does not imply acceptance or
+readiness, and does not fill in an unknown exit reason. Progress values are
+nonnegative integers or null facts; missing epochs/steps/samples are not zero.
+
+Available artifacts use `status: "available"`, a repository-relative POSIX
+`locator`, lowercase `sha256`, and null `missing_reason`. Translation verifies
+their bytes with the existing artifact verifier. Missing artifacts use
+`status: "missing"`, null `sha256`, and a nonempty `missing_reason`; `locator`
+may be null or a known repository-relative path and need not exist. All known
+locators obey the same traversal/symlink boundary as RML paths. Artifacts are
+never downloaded or loaded as models. The trace artifact may bind raw or
+canonical bytes; the optional RML trace paths retain their existing meanings.
+An explicit missing artifact does not waive existing RML retained-evidence
+requirements. Canonical trace outputs cannot overwrite artifact locators.
+
+Cost `metric` is a unique safe identifier within the arm. `unit` records the
+native unit without conversion (for example `DCU-hours` or `GPU-seconds`).
+`measured` costs require a finite nonnegative numeric value, a nonempty unit,
+and null `reason`. `estimated` costs require the same value/unit plus a nonempty
+`reason` describing the estimate basis. `measurement_missing` requires null
+`value` and a nonempty reason; the unit may also be null when unknown. Booleans
+are not numeric measurements. Use an explicit missing entry when no cost was
+retained; do not substitute zero or guess a value. This validator cannot prove
+the truth of a reported measurement or estimate.
+
+`missing_evidence` is a required array of nonempty textual reasons for other
+evidence gaps; it may be empty. Field-specific absence reasons remain required
+even when a broader gap is listed here. These observations remain in the
+immutable descriptor and are not injected into or used to rewrite RML schemas.
 
 `schema_version` must equal `TERMINAL_PROTOCOL`. `spec_identity` is exactly
 `spec.identity`; experiment and logical-run IDs must match the spec. Every spec
@@ -96,7 +175,7 @@ Optional paths are omitted when unknown (not null or placeholder text).
 
 `translate_terminal_descriptor(repo_root, spec, descriptor)` returns the exact
 arm sequence accepted by `close_terminal_multi_arm`, in descriptor order.
-`arm_id` becomes `arm_identifier`; identity-only fields are removed. Explicit
+`arm_id` becomes `arm_identifier`; identity and observed metadata are removed. Explicit
 path strings are retained, except `recovery_spec`: its path stays in the
 descriptor while its strict JSON object is loaded into the closure input,
 as required by the existing API. Nothing missing is filled in.
@@ -109,8 +188,9 @@ existing trace validator; each non-null definition has exactly `metric`,
 `unit`, `target`, `role_identity`, `weights`, `direction`. Unknown metric
 semantics remain null. No parser/import/callable configuration is supported.
 
-Translation uses existing trajectory/trace schema validators, checks terminal
-format and trajectory/run/action cross-links, and rejects shared finalization
+Translation uses existing trajectory/trace schema validators, verifies available
+artifact hashes, checks terminal format and trajectory/run/action cross-links,
+and rejects shared finalization
 directories and output/input collisions. It does not recover traces, discover
 missing evidence, verify scientific acceptance, finalize records, rebuild RML,
 run models, alter the production registry or grant READY/replay authority.
@@ -134,7 +214,9 @@ from molgap.experiment_terminal import TerminalDescriptor, translate_terminal_de
 from molgap.screen_policy import canonical_fingerprint
 
 # bindings maps every spec arm_id to explicit trajectory_id, run_id,
-# trajectory and terminal, plus any of the four optional path fields.
+# trajectory, terminal, and the complete observed object described above,
+# plus any of the four optional path fields. Observations come from evidence;
+# copying prospective identities alone does not establish an observed fact.
 declaration = spec.to_dict()
 payload = {
     "schema_version": TERMINAL_PROTOCOL,

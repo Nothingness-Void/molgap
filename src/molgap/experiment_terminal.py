@@ -1,11 +1,13 @@
 """Versioned descriptor translation into existing RML closure inputs.
 
-Validation reads metadata only. Execution is an explicit, separate delegation to
-terminal_wiring; this module owns neither evidence acceptance nor finalization.
+Validation reads metadata and bound artifact bytes only. Execution delegates
+explicitly to terminal_wiring; this module owns neither acceptance nor finalization.
 """
 from __future__ import annotations
 
 import json
+import math
+import re
 from dataclasses import dataclass
 from pathlib import Path, PureWindowsPath
 from typing import Any
@@ -15,13 +17,13 @@ from .experiment_spec import (
     _text, _unique_object,
 )
 from .screen_policy import canonical_fingerprint
-from .research_memory.paths import repo_local_path
+from .research_memory.paths import repo_local_path, verify_bound_artifact
 from .research_memory.schemas import validate_id, validate_trajectory
 from .research_memory.trace import FIELDS, validate_canonical_trace
 
 
 _TOP = frozenset({"schema_version", "spec_identity", "experiment_id", "logical_run_id", "arms"})
-_ARM = frozenset({"arm_id", "arm_identity", "trajectory_id", "run_id", "trajectory", "terminal"})
+_ARM = frozenset({"arm_id", "arm_identity", "trajectory_id", "run_id", "trajectory", "terminal", "observed"})
 _OPTIONAL = frozenset({"trace", "trace_source", "canonical_trace_output", "recovery_spec"})
 
 
@@ -41,6 +43,128 @@ def _path(value: Any) -> None:
                 or any(ord(c) < 32 or c in '<>"|?*' for c in part)
                 or PureWindowsPath(part).is_reserved()):
             raise ValueError("invalid descriptor path or path traversal")
+
+
+def _fact(value: Any, label: str, validator) -> None:
+    """Unknown observations have a reason, never a fabricated default."""
+    _fields(value, frozenset({"value", "missing_reason"}), frozenset(), label)
+    if value["value"] is None:
+        _text(value["missing_reason"], label + ".missing_reason")
+    else:
+        if value["missing_reason"] is not None:
+            raise ValueError(f"{label}: observed value cannot have missing_reason")
+        validator(value["value"], label)
+
+
+def _matches(value: Any, expected: Any, label: str) -> None:
+    if _canonical(value) != _canonical(expected):
+        raise ValueError(f"{label}: identity mismatch")
+
+
+def _commit(value: Any, label: str) -> None:
+    if type(value) is not str or not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", value):
+        raise ValueError(f"{label}: expected lowercase full source commit")
+
+
+def _progress(value: Any, label: str) -> None:
+    if type(value) is not int or value < 0:
+        raise ValueError(f"{label}: expected nonnegative integer")
+
+
+def _status(value: Any, label: str) -> None:
+    if type(value) is not str or value not in {"complete", "failed", "cancelled", "interrupted"}:
+        raise ValueError(f"{label}: unsupported terminal status")
+
+
+def _observed(arm: dict, expected: dict, declaration: dict, spec_identity: str) -> None:
+    observed = arm["observed"]
+    _fields(observed, frozenset({"identity", "terminal", "artifacts", "progress", "costs", "missing_evidence"}),
+            frozenset(), "observed")
+    identity = observed["identity"]
+    bindings = {
+        "experiment_id": declaration["experiment_id"], "logical_run_id": declaration["logical_run_id"],
+        "arm_id": arm["arm_id"], "spec_identity": spec_identity,
+    }
+    references = {
+        "family": expected["family"],
+        "recipe_identity": canonical_fingerprint(expected["training"]["recipe"]),
+        "data_identity": canonical_fingerprint(expected["data"]),
+        "split_identity": canonical_fingerprint({"split": expected["data"]["split"], "roles": expected["data"]["roles"]}),
+        "feature_identity": expected["data"]["feature_sha256"], "target": expected["data"]["target"],
+        "initialization_identity": canonical_fingerprint(expected["initialization"]),
+    }
+    _fields(identity, frozenset(bindings.keys() | references.keys() | {
+        "attempt_id", "platform", "source_commit", "source_package_sha256",
+    }), frozenset(), "observed.identity")
+    for field, value in bindings.items():
+        _matches(identity[field], value, "observed.identity." + field)
+    for field, value in references.items():
+        _fact(identity[field], "observed.identity." + field,
+              lambda observed_value, label, expected_value=value: _matches(observed_value, expected_value, label))
+    for field, validator in (("attempt_id", _identifier), ("source_commit", _commit), ("source_package_sha256", _digest)):
+        _fact(identity[field], "observed.identity." + field, validator)
+    platform = identity["platform"]
+    _fields(platform, frozenset({"name", "run_reference"}), frozenset(), "observed.identity.platform")
+    _matches(platform["name"], declaration["platform"]["name"], "observed.identity.platform.name")
+    _fact(platform["run_reference"], "observed.identity.platform.run_reference", _text)
+    terminal = observed["terminal"]
+    _fields(terminal, frozenset({"status", "exit_reason"}), frozenset(), "observed.terminal")
+    _fact(terminal["status"], "observed.terminal.status", _status)
+    _fact(terminal["exit_reason"], "observed.terminal.exit_reason", _text)
+    artifacts = observed["artifacts"]
+    _fields(artifacts, frozenset({"metrics", "predictions", "checkpoint", "trace"}), frozenset(), "observed.artifacts")
+    for name, artifact in artifacts.items():
+        label = "observed.artifacts." + name
+        _fields(artifact, frozenset({"status", "locator", "sha256", "missing_reason"}), frozenset(), label)
+        if artifact["locator"] is not None:
+            _path(artifact["locator"])
+        if artifact["status"] == "available":
+            _path(artifact["locator"])
+            _digest(artifact["sha256"], label + ".sha256")
+            if artifact["missing_reason"] is not None:
+                raise ValueError(f"{label}: available artifact cannot have missing_reason")
+        elif artifact["status"] == "missing":
+            if artifact["sha256"] is not None:
+                raise ValueError(f"{label}: missing artifact must have null sha256")
+            _text(artifact["missing_reason"], label + ".missing_reason")
+        else:
+            raise ValueError(f"{label}: unsupported artifact status")
+    progress = observed["progress"]
+    _fields(progress, frozenset({"epoch", "step", "samples"}), frozenset(), "observed.progress")
+    for field, value in progress.items():
+        _fact(value, "observed.progress." + field, _progress)
+    costs = observed["costs"]
+    if type(costs) is not list or not costs:
+        raise ValueError("observed.costs: expected nonempty array; declare missing measurements")
+    seen = set()
+    for cost in costs:
+        _fields(cost, frozenset({"metric", "unit", "value", "status", "reason"}), frozenset(), "observed.cost")
+        _identifier(cost["metric"], "observed.cost.metric")
+        if cost["metric"] in seen:
+            raise ValueError("duplicate cost metric")
+        seen.add(cost["metric"])
+        if cost["unit"] is not None:
+            _text(cost["unit"], "observed.cost.unit")
+        if cost["status"] == "measurement_missing":
+            if cost["value"] is not None:
+                raise ValueError("missing cost measurement must have null value")
+            _text(cost["reason"], "observed.cost.reason")
+        elif cost["status"] in ("measured", "estimated"):
+            _text(cost["unit"], "observed.cost.unit")
+            value = cost["value"]
+            if type(value) not in (int, float) or value < 0 or (type(value) is float and not math.isfinite(value)):
+                raise ValueError("cost value must be finite and nonnegative")
+            if cost["status"] == "estimated":
+                _text(cost["reason"], "observed.cost.estimate_basis")
+            elif cost["reason"] is not None:
+                raise ValueError("measured cost must have null reason")
+        else:
+            raise ValueError("unsupported cost status")
+    reasons = observed["missing_evidence"]
+    if type(reasons) is not list:
+        raise ValueError("missing_evidence must be an array of reasons")
+    for reason in reasons:
+        _text(reason, "missing_evidence reason")
 
 
 def _validate(spec: ExperimentSpec, payload: dict) -> dict:
@@ -73,6 +197,7 @@ def _validate(spec: ExperimentSpec, payload: dict) -> dict:
         _digest(arm["arm_identity"], "arm_identity")
         if arm["arm_identity"] != canonical_fingerprint(expected[key]):
             raise ValueError("descriptor arm identity mismatch")
+        _observed(arm, expected[key], declaration, spec.identity)
         for field in ("trajectory_id", "run_id"):
             validate_id(arm[field], field)
         if arm["trajectory_id"] in trajectories:
@@ -189,6 +314,15 @@ def translate_terminal_descriptor(
             raise ValueError("trajectories share an RML finalization directory")
         destinations.add(destination)
         resolved.append(paths)
+        for artifact in arm["observed"]["artifacts"].values():
+            # Even a known locator for missing evidence must stay inside the repo.
+            if artifact["locator"] is not None:
+                artifact_path = repo_local_path(root, artifact["locator"])
+                inputs.add(artifact_path)
+            if artifact["status"] == "available":
+                if not artifact_path.is_file():
+                    raise ValueError(f"missing available artifact: {artifact['locator']}")
+                verify_bound_artifact(root, artifact["locator"], artifact["sha256"])
     if outputs & inputs:
         raise ValueError("canonical trace output aliases an input")
 
@@ -207,6 +341,15 @@ def translate_terminal_descriptor(
         if not any(action["action_id"] == terminal.get("action_id") and arm["run_id"] in action["run_ids"]
                    for action in trajectory["actions"]):
             raise ValueError("terminal run/action was not frozen in trajectory")
+        action = next(action for action in trajectory["actions"]
+                      if action["action_id"] == terminal["action_id"] and arm["run_id"] in action["run_ids"])
+        identity = arm["observed"]["identity"]
+        attempt = identity["attempt_id"]["value"]
+        if attempt is not None and attempt not in action["attempt_ids"]:
+            raise ValueError("observed attempt identity mismatch with frozen action")
+        commit = identity["source_commit"]["value"]
+        if commit is not None and commit != action["source_commit"]:
+            raise ValueError("observed source commit identity mismatch with frozen action")
         if "trace" in paths:
             trace = validate_canonical_trace(_read(paths["trace"]))
             if any(trace[field] != arm[field] for field in ("trajectory_id", "run_id")):
