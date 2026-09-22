@@ -6,12 +6,14 @@ import math
 import os
 import shutil
 import time
+import hashlib
 from pathlib import Path
 
 from .pcqm_gptrans_v4 import _batch_sha256, _forward, _state_sha256
 from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
 from .pcqm_k1_scale_runner import _targets, find_cache, load_roles
 from .screen_policy import canonical_fingerprint, validate_runtime_certificate
+from .comparison_readiness import target_transform_asset_digest
 from .training_reproducibility import (
     atomic_json,
     atomic_torch_save,
@@ -35,6 +37,15 @@ EPOCHS = 60
 SAMPLE_PRESENTATIONS = ROWS_PER_EPOCH * EPOCHS
 REFERENCE_MAE_EV = 0.10485986978054046
 MINIMUM_GAIN_EV = 0.003
+
+
+def _tensor_sha256(value) -> str:
+    tensor = value.detach().cpu().contiguous()
+    digest = hashlib.sha256()
+    digest.update(str(tensor.dtype).encode("utf-8"))
+    digest.update(str(tuple(tensor.shape)).encode("utf-8"))
+    digest.update(tensor.numpy().tobytes())
+    return digest.hexdigest()
 
 
 def learning_rate(epoch: int) -> float:
@@ -236,6 +247,20 @@ def run(
     targets = _targets(roles["train"]).double()
     mean_value = float(targets.mean())
     std_value = float(targets.std(unbiased=True).clamp_min(1e-6))
+    transform_asset = {
+        "format": "molgap-target-transform-asset-v1",
+        "asset_id": "pcqm-fixed500k-gap-train-transform-v1",
+        "target_identity": "pcqm4mv2-gap-eV",
+        "mean": mean_value,
+        "std": std_value,
+        "ddof": 1,
+        "variance_convention": "torch-std-unbiased",
+        "source_row_manifest_sha256": FIXED_500K_MANIFEST_SHA256,
+        "target_sha256": _tensor_sha256(targets),
+    }
+    transform_asset["asset_sha256"] = target_transform_asset_digest(
+        transform_asset
+    )
     contract = scientific_contract(mode=mode, parameters=expected_parameters)
     contract["target_transform_fingerprint"] = canonical_fingerprint(
         {"mean": mean_value, "std": std_value}
@@ -243,6 +268,7 @@ def run(
     atomic_json(output / "runtime.json", runtime)
     atomic_json(output / "scientific_contract.json", contract)
     atomic_json(output / "data_manifest.json", manifest)
+    atomic_json(output / "target_transform.json", transform_asset)
 
     batch = next(iter(loader(roles["train"], 0))).to("cuda")
     fixture_sha = _batch_sha256(batch)
