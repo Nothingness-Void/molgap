@@ -36,9 +36,10 @@ def attention_metrics(assignment, valid, edge_index, node_batch):
     counts = valid.sum(1).long()
     pairs = counts.square()
     flat = assignment.flatten(1)
-    sorted_mass = flat.sort(dim=1, descending=True).values.cumsum(dim=1)
+    sorted_mass = flat.sort(dim=1, descending=True).values
     k = torch.ceil(pairs.float() * 0.20).long().clamp_min(1)
-    top20 = sorted_mass.gather(1, (k - 1).unsqueeze(1)).squeeze(1)
+    ranks = torch.arange(flat.shape[1], device=flat.device).unsqueeze(0)
+    top20 = (sorted_mass * (ranks < k.unsqueeze(1))).sum(dim=1)
     positive = assignment.clamp_min(torch.finfo(assignment.dtype).tiny)
     entropy = -(assignment * positive.log()).sum((1, 2))
     effective = entropy.exp() / pairs.float()
