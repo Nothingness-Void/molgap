@@ -113,6 +113,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `TB-gptrans-dsar-noisy-pair-norm-500k-s42` (5,375,961 parameters), preflight triple-checked, and actively RUNNING
   on Kaggle 3 (`nvoid912/molgap-pcqm-gptrans-dsar-noisy-pair-norm-500k-s42`, Nvidia Tesla T4).
   Authority: `experiments/pcqm_gptrans_dsar_500k/protocol.md`.
+- GPTrans Dual-Stream Mean Readout (DSMR) 100K Dual-Arm Screen: Disentangling all-atom structural coverage
+  from dynamic attention weighting. Prospectively registered under `TB-gptrans-dsmr-pair-norm-100k-s42`
+  (Arm A, 5,312,353 parameters) and `TB-gptrans-dsmr-noisy-pair-norm-100k-s42` (Arm B, 5,342,936 parameters),
+  preflight triple-checked, and actively RUNNING on Kaggle 1
+  (`nothingnessvoid/molgap-pcqm-gptrans-dual-stream-mean-s42`, Dual Tesla T4).
+  Authority: `experiments/pcqm_gptrans_dual_stream_mean_100k/protocol.md`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
   independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote
