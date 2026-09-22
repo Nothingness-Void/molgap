@@ -1,0 +1,81 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-dsmr-pair-norm-100k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Does parameter-free Dual-Stream Mean Readout (DSMR) combined with Pair Update LayerNorm achieve the +10.4 meV gain observed with attentive pooling, or does effective dual-stream readout strictly require learned attention weighting?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-dsmr-pair-norm-100k-s42",
+    "observed_deficiency": "The 100K DSAR result (+10.44 meV over baseline) conflated structural all-atom access with learned query-key attention gating. We do not know whether the virtual bottleneck is solved simply by averaging real atomic representations or whether dynamic chemical weighting across conjugated centers is indispensable.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-dsar-pair-norm-100k-s42"
+    ],
+    "alternative_explanations": [
+      "Uniform mean pooling over real atoms dilutes localized orbital density with solvent/peripheral atom noise",
+      "Dynamic attention weights in DSAR were doing non-trivial selection of frontier orbital contributors"
+    ],
+    "changed_mechanism": "Parameter-free Dual-Stream Mean Readout combining [CLS] virtual token, virtual self-loop pair, and masked mean atom pooling over all non-padding nodes with Pair Update LayerNorm into a 544-dim readout head (5,312,353 parameters)",
+    "cheapest_falsifier": "60-epoch 100K/50K run failing to achieve 0.003 eV gain over the 0.156627 eV baseline (threshold < 0.153627 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42",
+      "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-dsmr-pair-norm-100k-s42-expected-training",
+    "decision_changed_if_positive": "adopt parameter-free Dual-Stream Mean Readout if it matches attentive readout, eliminating 33,025 gating parameters and reducing overfitting risk",
+    "decision_changed_if_negative": "confirm that dynamic attention weighting is structurally required for dual-stream pooling and reject uniform mean pooling",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "97fe3468b25bda5825312d1aaef3d5ff5666a8f4",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_a/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-dsar-pair-norm-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-dsar-pair-norm-100k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_a/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_a/training_contract.json",
+    "source_config_identity": "desktop-gptrans-dsmr-pair-norm-100k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-gptrans-dual-stream-mean-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "97fe3468b25bda5825312d1aaef3d5ff5666a8f4",
+      "evidence_refs": [],
+      "cost_event_ids": [
+        "cost-TB-gptrans-dsmr-pair-norm-100k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_a/decision.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "A001"
+    ],
+    "reopen_conditions": []
+  }
+}

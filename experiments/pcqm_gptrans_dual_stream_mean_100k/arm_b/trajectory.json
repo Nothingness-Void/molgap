@@ -1,0 +1,81 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Does parameter-free Dual-Stream Mean Readout (DSMR) combined with Noisy Nodes auxiliary denoising and Pair Update LayerNorm achieve or exceed the attentive counterpart (0.146138 eV), clarifying whether denoising interacts specifically with attention weights or with pooled representations in general?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+    "observed_deficiency": "The 100K DSAR + Noisy Nodes screen reached 0.146138 eV (+10.49 meV over baseline). We need to determine if auxiliary atomic denoising regularizes atom representations sufficiently such that uniform mean pooling achieves comparable fidelity to attention-weighted pooling, or if attention gating remains essential.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-dsar-noisy-pair-norm-100k-s42"
+    ],
+    "alternative_explanations": [
+      "Noisy Nodes denoising primarily benefits localized atomic representations which still require attention weighting to be selectively integrated into the readout",
+      "Mean pooling of denoised representations dilutes clean features with noisy atom averages"
+    ],
+    "changed_mechanism": "Parameter-free Dual-Stream Mean Readout combining [CLS] virtual token, virtual self-loop pair, and masked mean atom pooling over all non-padding nodes with Noisy Nodes auxiliary denoising (alpha=0.1, sigma=0.15) and Pair Update LayerNorm (5,342,936 parameters)",
+    "cheapest_falsifier": "60-epoch 100K/50K run failing to achieve 0.003 eV gain over the 0.156627 eV baseline (threshold < 0.153627 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42",
+      "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-dsmr-noisy-pair-norm-100k-s42-expected-training",
+    "decision_changed_if_positive": "adopt parameter-free Dual-Stream Mean Readout + Noisy Nodes as regularized architecture, bypassing 33K attention parameters",
+    "decision_changed_if_negative": "confirm that attention gating is necessary even under atomic representation regularization",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "97fe3468b25bda5825312d1aaef3d5ff5666a8f4",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_b/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-dsar-noisy-pair-norm-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-dsar-noisy-pair-norm-100k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_b/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_b/training_contract.json",
+    "source_config_identity": "desktop-gptrans-dsmr-noisy-pair-norm-100k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-gptrans-dual-stream-mean-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "97fe3468b25bda5825312d1aaef3d5ff5666a8f4",
+      "evidence_refs": [],
+      "cost_event_ids": [
+        "cost-TB-gptrans-dsmr-noisy-pair-norm-100k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_dual_stream_mean_100k/arm_b/decision.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "A001"
+    ],
+    "reopen_conditions": []
+  }
+}

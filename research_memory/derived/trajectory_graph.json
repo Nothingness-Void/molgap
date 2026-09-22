@@ -136,6 +136,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsmr-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-noisy-nodes-100k-s42",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "parent_trajectory"
@@ -231,6 +241,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-dsar-pair-norm-100k-s42",
+      "target": "TB-gptrans-dsmr-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-noisy-nodes-100k-s42",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "prior_evidence"
@@ -273,6 +293,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsmr-pair-norm-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -353,6 +383,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-dsmr-pair-norm-100k-s42",
       "type": "reference_used"
     },
     {
@@ -511,6 +551,14 @@
     },
     {
       "id": "TB-gptrans-dsar-pair-norm-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-dsmr-noisy-pair-norm-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-dsmr-pair-norm-100k-s42",
       "type": "trajectory"
     },
     {
