@@ -57,12 +57,14 @@
     {
       "action_id": "A001",
       "type": "planned_matched60_v4_k1_500k_reference_recovery",
-      "run_ids": [],
-      "attempt_ids": ["preflight-planned", "training-planned"],
+      "run_ids": ["122742924"],
+      "attempt_ids": ["preflight-accepted", "training-planned"],
       "source_commit": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
       "evidence_refs": [
         "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
-        "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json"
+        "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/preflight_122742924.md",
+        "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json"
       ],
       "cost_event_ids": ["cost-TC-k1-matched60-reference-500k-s42"]
     }
