@@ -53,10 +53,15 @@ class AddonContract:
     source_module: str
 
 
-# apply_variant replaces the same attention module; stacking is not supported.
+# Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
-    (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants")
-    for name in ("pair_prenorm", "centered_logits")
+    **{
+        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants")
+        for name in ("pair_prenorm", "centered_logits")
+    },
+    ("k1_pair_value", "1"): AddonContract(
+        "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
+    ),
 })
 
 
