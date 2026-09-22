@@ -296,6 +296,12 @@ bundle was unavailable, and the route was closed as
 `experiments/pcqm_k1_pair_token_100k/decision.md` and
 `experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md`.
 
+A frozen PairToken assignment audit rejected hard dynamic top-pair sparsity:
+the largest 20% of ordered pairs carried only 42.9% median assignment mass,
+including on K1-hard molecules. This was `NO_TRAIN` evidence, not a new model
+candidate or replay-pool entry. No sparse successor was released. Authority:
+`experiments/pcqm_k1_pair_selection_diagnostic/decision.md`.
+
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact
 sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a

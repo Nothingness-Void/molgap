@@ -40,6 +40,8 @@ The PairToken causal audit and 500K scale bridge are complete. The 500K point
 gain was below the material gate, so no efficient approximation, another seed,
 full training, protected role, or desktop handoff was released. The associated
 batch profiler did not authorize a departure from BS128.
+The separately frozen selection diagnostic rejected hard top-pair truncation;
+preserve its decision without submitting a sparse PairToken variant.
 
 The K1 causal audit is complete. Round 2 rejected both attenuation and
 amplification of layer 6, so the conditional scalar-repair Round 3 is not
