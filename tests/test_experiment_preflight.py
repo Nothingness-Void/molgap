@@ -189,7 +189,8 @@ def test_host_origin_pollution_rejected(tmp_path):
         pf._PackageOnly(tmp_path).find_spec("molgap")
 
 
-def test_unpacked_origin_in_fresh_interpreter_rejects_fake_real_manifest(tmp_path, manifest, monkeypatch):
+@pytest.mark.parametrize("mode", [pf.LOADER_MODE, pf.MODEL_MODE])
+def test_unpacked_origin_in_fresh_interpreter_rejects_fake_real_manifest(tmp_path, manifest, monkeypatch, mode):
     root = tmp_path / "source"
     root.mkdir()
     archive_dir = tmp_path / "archive"
@@ -212,12 +213,13 @@ def test_unpacked_origin_in_fresh_interpreter_rejects_fake_real_manifest(tmp_pat
     (data / "fixed.json").write_bytes(b"synthetic, not real")
     stage = tmp_path / "worker"
     stage.mkdir()
-    result = pf._launch(root, data, manifest[0]["arms"][0], 30, stage)
+    result = pf._launch(root, data, manifest[0]["arms"][0], 30, stage, mode=mode)
     assert result["status"] == "LOADER_FAILED"
     assert result["shard_verified"] is False
     assert result["loader_batch_built"] is False
     assert result["import_origins"]["molgap.pcqm_gptrans_v4"] == "src/molgap/pcqm_gptrans_v4.py"
     assert "frozen real PCQM" in result["error"]["message"]
+    assert not any(result[key] for key in pf.MODEL_CHECKS)
 
 
 def test_worker_missing_frozen_loader_is_unsupported(tmp_path, manifest):
@@ -231,6 +233,23 @@ def test_worker_missing_frozen_loader_is_unsupported(tmp_path, manifest):
     result = pf._launch(root, tmp_path / "missing-data", manifest[0]["arms"][0], 30, stage)
     assert result["status"] == "UNSUPPORTED_FAMILY_PREFLIGHT"
     assert result["loader_batch_built"] is False
+
+
+def test_smoke_dependency_failure_is_structured(tmp_path, manifest):
+    root = tmp_path / "source"
+    module = root / "src/molgap"
+    module.mkdir(parents=True)
+    (module / "__init__.py").write_text("", encoding="ascii")
+    (module / "pcqm_gptrans_v4.py").write_text(
+        'raise ModuleNotFoundError("required frozen dependency unavailable")\n', encoding="ascii")
+    stage = tmp_path / "worker"
+    stage.mkdir()
+    result = pf._launch(root, tmp_path / "data", manifest[0]["arms"][0],
+                        30, stage, mode=pf.MODEL_MODE)
+    assert result["status"] == "LOADER_FAILED"
+    assert result["error"]["type"] == "ModuleNotFoundError"
+    assert result["device"] is None
+    assert not any(result[key] for key in pf.MODEL_CHECKS)
 
 
 def test_existing_output_rejected(package, payload, tmp_path):
@@ -262,7 +281,10 @@ def test_canonical_reports_no_authority(package, payload, tmp_path):
                 for item in value:
                     check(item)
         check(json.loads(raw))
-    assert json.loads((tmp_path / "output/preflight.json").read_bytes()) == result
+    assert json.loads((tmp_path / "output/preflight_summary.json").read_bytes()) == result
+    assert not (tmp_path / "output/preflight.json").exists()
+    for arm in result["arms"]:
+        assert json.loads((tmp_path / "output/arms" / arm["arm_id"] / "preflight.json").read_bytes()) == arm
     assert not list((tmp_path / "output").rglob(".preflight-*"))
 
 
@@ -291,7 +313,8 @@ def real_inputs():
     return inputs, spec
 
 
-def test_real_dual_arm_independent_success_failure(real_inputs, tmp_path):
+@pytest.mark.parametrize("mode", [pf.LOADER_MODE, pf.MODEL_MODE])
+def test_real_dual_arm_independent_success_failure(real_inputs, tmp_path, mode):
     inputs, spec = real_inputs
     arms = spec.to_dict()["arms"]
     assert len(arms) == 2 and all(a["family"]["name"] == "gptrans_t" for a in arms)
@@ -306,12 +329,131 @@ def test_real_dual_arm_independent_success_failure(real_inputs, tmp_path):
         spec, inputs["package_dir"], tmp_path / "output",
         expected_package_identity=inputs["expected_package_identity"],
         shard_manifest=manifest_path, shard_root=inputs["shard_root"],
-        expected_shard_manifest_sha256=pf._file_sha(manifest_path), timeout_seconds=600)
+        expected_shard_manifest_sha256=pf._file_sha(manifest_path), timeout_seconds=600, mode=mode)
     first, second = result["arms"]
-    assert first["status"] == "LOADER_VERIFIED_ONLY"
+    assert first["status"] == ("LOADER_VERIFIED_ONLY" if mode == pf.LOADER_MODE else "MODEL_SMOKE_VERIFIED_ONLY")
     assert first["shard_verified"] and first["loader_batch_built"]
     assert second["status"] == "MISSING_REAL_SHARD"
     assert not second["shard_verified"] and not second["loader_batch_built"]
     assert result["status"] == "MIXED_NONPASS"
+    assert all(second[key] is False for key in pf.MODEL_CHECKS)
+    assert all(first[key] is (mode == pf.MODEL_MODE) for key in pf.MODEL_CHECKS)
+
+
+def test_default_never_dispatches_model(package, payload, tmp_path, monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("default must never dispatch model smoke")
+    monkeypatch.setattr(pf, "_model_smoke", forbidden)
+    result = run(package, payload, tmp_path)
+    assert result["mode"] == pf.LOADER_MODE
     for arm in result["arms"]:
-        assert all(arm[key] is False for key in pf.CHECKS[3:])
+        assert not arm["initial_state_checked"]
+        assert arm["initial_state_sha256"] is None
+        assert arm["normalized_gap_l1"] is None
+        assert not any(arm[key] for key in pf.MODEL_CHECKS)
+
+
+def test_explicit_smoke_missing_real_is_blocked(package, payload, tmp_path):
+    result = run(package, payload, tmp_path, mode=pf.MODEL_MODE)
+    assert result["mode"] == pf.MODEL_MODE
+    assert result["status"] == "MIXED_NONPASS"
+    assert [a["status"] for a in result["arms"]] == [
+        "MISSING_REAL_SHARD", "UNSUPPORTED_FAMILY_PREFLIGHT"]
+    assert all(not any(a[k] for k in pf.MODEL_CHECKS) for a in result["arms"])
+
+
+def test_unknown_mode_rejected_before_output(package, payload, tmp_path):
+    with pytest.raises(ValueError, match="mode/version"):
+        run(package, payload, tmp_path, mode="model-smoke-v99")
+    assert not (tmp_path / "output").exists()
+
+
+def test_smoke_dispatch_is_fixed(payload):
+    arm = copy.deepcopy(payload["arms"][0])
+    arm["initialization"]["kind"] = "random"
+    arm["addons"] = []
+    assert pf._smoke_variant(arm) == "reference"
+    arm["addons"] = [{"name": "centered_logits", "version": "1"}]
+    assert pf._smoke_variant(arm) == "centered_logits"
+    arm["addons"][0]["name"] = "arbitrary.module"
+    with pytest.raises(ValueError, match="dispatch"):
+        pf._smoke_variant(arm)
+    arm["initialization"]["kind"] = "frozen_state"
+    with pytest.raises(ValueError, match="random initialization"):
+        pf._smoke_variant(arm)
+
+
+@pytest.mark.parametrize("failure", ["model", "optimizer", "scheduler", "rng", "write", "restore"])
+def test_checkpoint_mismatch_or_failure_raises(tmp_path, failure):
+    # Isolated serialization rejection test; never a real/model success claim.
+    from types import SimpleNamespace
+
+    class State:
+        def __init__(self, value):
+            self.value = value
+        def state_dict(self):
+            return copy.deepcopy(self.value)
+        def load_state_dict(self, value, **kwargs):
+            self.value = copy.deepcopy(value)
+            if failure == "restore":
+                self.value["broken"] = True
+
+    model, optimizer, scheduler = State({"weight": 1}), State({"step": 1}), State({"epoch": 0})
+    saved = {}
+    def save(path, value):
+        if failure == "write":
+            raise OSError("diagnostic write failed")
+        saved.update(copy.deepcopy(value))
+    def load(*args, **kwargs):
+        if failure in {"model", "optimizer", "scheduler", "rng"}:
+            saved[failure]["corrupted"] = True
+        return saved
+    runtime = SimpleNamespace(
+        atomic_torch_save=save, torch_load_compat=load,
+        capture_rng_state=lambda **kwargs: {"python": (1, 2)},
+        restore_rng_state=lambda *args, **kwargs: None)
+    with pytest.raises((ValueError, OSError), match="checkpoint|write"):
+        pf._diagnostic_roundtrip(runtime, model, optimizer, scheduler,
+                                tmp_path / "diagnostic.pt", None)
+
+
+def test_real_scheduler_step_api():
+    from types import SimpleNamespace
+    from molgap.pcqm_gptrans_v4 import FrozenEpochScheduler
+    optimizer = SimpleNamespace(param_groups=[{"lr": -1}])
+    scheduler = FrozenEpochScheduler(optimizer)
+    rate = scheduler.step(0)
+    assert scheduler.state_dict() == {"epoch": 0}
+    assert optimizer.param_groups[0]["lr"] == rate == scheduler.learning_rate(0)
+    assert not hasattr(scheduler, "set_epoch")
+
+
+def test_exact_state_rejects_tensor_rng_changes():
+    import numpy as np
+    import torch
+    value = {"torch": torch.tensor([1, 2], dtype=torch.uint8),
+             "numpy": ("MT19937", np.array([1, 2], dtype=np.uint32))}
+    altered = copy.deepcopy(value)
+    altered["torch"][0] = 3
+    assert not pf._exact_state(value, altered)
+    altered = copy.deepcopy(value)
+    altered["numpy"][1][0] = 3
+    assert not pf._exact_state(value, altered)
+
+
+def test_initial_hash_mismatch_blocks_before_forward(payload, tmp_path):
+    from types import SimpleNamespace
+    arm = copy.deepcopy(payload["arms"][0])
+    arm["initialization"].update(kind="random", state_sha256="1" * 64)
+    arm["addons"] = []
+    model = SimpleNamespace(to=lambda device: model)
+    runtime = SimpleNamespace(
+        configure_fp32_determinism=lambda seed: None,
+        _make_model=lambda **kwargs: model,
+        model_state_sha256=lambda model: "0" * 64)
+    result = {key: False for key in (*pf.MODEL_CHECKS, "initial_state_checked")}
+    with pytest.raises(ValueError, match="initial state hash mismatch"):
+        pf._model_smoke(runtime, arm, None, None, tmp_path / "diagnostic.pt", None, result)
+    assert result["initial_state_sha256"] == "0" * 64
+    assert not result["initial_state_checked"]
+    assert not any(result[key] for key in pf.MODEL_CHECKS)
