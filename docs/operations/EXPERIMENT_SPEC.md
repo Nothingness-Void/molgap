@@ -36,9 +36,11 @@ arm count, GPU visibility, processes, and declared device count, including
 dual-arm isolation. This schema implements no runner and grants no proof of
 real dual-GPU execution or runtime acceptance.
 
-Only the two parameter-free `gptrans_variants.py` addons are registered:
+The two parameter-free `gptrans_variants.py` addons are registered:
 `pair_prenorm` and `centered_logits`. Both require empty config and a source
 digest; they are mutually exclusive attention replacements and GPTrans-only.
+K1 additionally registers `k1_pair_value/1` with empty config; its model-only
+mapping and migration boundary are in [K1_ADAPTER.md](K1_ADAPTER.md).
 Other addons and arbitrary addon configuration are rejected. New combinations
 need explicit registry/code review and a contract version change.
 
