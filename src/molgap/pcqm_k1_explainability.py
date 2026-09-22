@@ -78,7 +78,14 @@ def _load_development_descriptors(cache_root: Path) -> tuple[np.ndarray, np.ndar
     shard_path = cache_root / shard["file"]
     if sha256_file(shard_path) != shard["sha256"]:
         raise RuntimeError("Development shard changed")
-    data, slices = torch.load(shard_path, map_location="cpu")
+    # The accepted local shard contains the repository-owned WedgeData class,
+    # not a weights-only tensor mapping.  PyTorch 2.6 changed torch.load's
+    # default, so keep the trusted, SHA-verified cache behavior explicit.
+    data, slices = torch.load(
+        shard_path,
+        map_location="cpu",
+        weights_only=False,
+    )
 
     source_idx = data.source_idx.view(-1).long().numpy()
     target = data.y.view(-1).float().numpy()
