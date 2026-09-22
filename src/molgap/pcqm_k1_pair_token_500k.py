@@ -45,8 +45,10 @@ def learning_rate(epoch: int) -> float:
     ) / 2.0
 
 
-def scientific_contract() -> dict:
-    return {
+def scientific_contract(
+    *, mode: str = MODE, parameters: int = PARAMETERS
+) -> dict:
+    contract = {
         "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
         "data_role_fingerprint": FIXED_500K_MANIFEST_SHA256,
         "row_order_fingerprint": "global-randperm-seed42-plus-epoch-drop-last32",
@@ -70,15 +72,25 @@ def scientific_contract() -> dict:
         "epochs": EPOCHS,
         "steps_per_epoch": STEPS_PER_EPOCH,
     }
+    if mode != MODE or parameters != PARAMETERS:
+        contract.update({"model_mode": mode, "parameter_count": parameters})
+    return contract
 
 
-def make_model():
-    from .k1_pair_token import make_encoder
+def make_model(*, mode: str = MODE, expected_parameters: int = PARAMETERS):
+    if mode == MODE:
+        from .k1_pair_token import make_encoder
+    elif mode == "neural_atom_k1":
+        from .qm9_neural_atom import make_encoder
+    else:
+        raise ValueError(f"Unsupported matched60 model mode: {mode}")
 
-    model = make_encoder(MODE)
+    model = make_encoder(mode)
     parameters = sum(parameter.numel() for parameter in model.parameters())
-    if parameters != PARAMETERS:
-        raise RuntimeError(f"PairToken parameter count changed: {parameters}")
+    if parameters != expected_parameters:
+        raise RuntimeError(
+            f"{mode} parameter count changed: {parameters} != {expected_parameters}"
+        )
     return model
 
 
@@ -199,15 +211,23 @@ def run(
     source_archive_sha256: str,
     resume: Path | None = None,
     preflight_only: bool = False,
+    mode: str = MODE,
+    expected_parameters: int = PARAMETERS,
+    reference_mae_eV: float | None = REFERENCE_MAE_EV,
 ) -> dict:
     import torch
 
-    from .k1_pair_token import check_mechanism
+    if mode == MODE:
+        from .k1_pair_token import check_mechanism
+    elif mode == "neural_atom_k1":
+        check_mechanism = None
+    else:
+        raise ValueError(f"Unsupported matched60 model mode: {mode}")
 
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
-        raise RuntimeError("PairToken 500K requires exactly one visible accelerator")
+        raise RuntimeError("Matched60 500K requires exactly one visible accelerator")
     output.mkdir(parents=True, exist_ok=True)
     settings = configure_fp32_determinism(SEED)
     runtime = build_runtime_manifest(settings)
@@ -216,7 +236,7 @@ def run(
     targets = _targets(roles["train"]).double()
     mean_value = float(targets.mean())
     std_value = float(targets.std(unbiased=True).clamp_min(1e-6))
-    contract = scientific_contract()
+    contract = scientific_contract(mode=mode, parameters=expected_parameters)
     contract["target_transform_fingerprint"] = canonical_fingerprint(
         {"mean": mean_value, "std": std_value}
     )
@@ -232,9 +252,13 @@ def run(
     torch.cuda.reset_peak_memory_stats()
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model = make_model().to("cuda").train()
+        model = make_model(
+            mode=mode, expected_parameters=expected_parameters
+        ).to("cuda").train()
         initial_sha = _state_sha256(model)
-        preflight_mechanism = check_mechanism(model, batch)
+        preflight_mechanism = (
+            check_mechanism(model, batch) if check_mechanism is not None else None
+        )
         optimizer = optimizer_for(model)
         mean = torch.tensor(mean_value, device="cuda")
         std = torch.tensor(std_value, device="cuda")
@@ -259,7 +283,7 @@ def run(
     atomic_json(
         output / "preflight.json",
         {
-            "parameter_count": PARAMETERS,
+            "parameter_count": expected_parameters,
             "initial_state_sha256": initial_sha,
             "mechanism": preflight_mechanism,
             "calibrations": calibrations,
@@ -270,10 +294,14 @@ def run(
     )
     if preflight_only:
         result = {
-            "format": "molgap-k1-pair-token-500k-preflight-v1",
+            "format": (
+                "molgap-k1-pair-token-500k-preflight-v1"
+                if mode == MODE
+                else "molgap-k1-matched60-500k-preflight-v1"
+            ),
             "complete": True,
             "training_started": False,
-            "parameter_count": PARAMETERS,
+            "parameter_count": expected_parameters,
             "contract": contract,
             "runtime_certificate_id": certificate_id,
             "source_commit": source_commit,
@@ -288,7 +316,9 @@ def run(
     torch.cuda.empty_cache()
 
     configure_fp32_determinism(SEED)
-    model = make_model().to("cuda")
+    model = make_model(
+        mode=mode, expected_parameters=expected_parameters
+    ).to("cuda")
     optimizer = optimizer_for(model)
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
@@ -297,7 +327,7 @@ def run(
         checkpoint = torch.load(
             resume / "last_checkpoint.pt", map_location="cpu", weights_only=False
         )
-        if checkpoint["contract"] != contract or checkpoint["mode"] != MODE:
+        if checkpoint["contract"] != contract or checkpoint["mode"] != mode:
             raise RuntimeError("Resume scientific contract changed")
         if checkpoint["source_commit"] != source_commit:
             raise RuntimeError("Resume source commit changed")
@@ -317,7 +347,7 @@ def run(
             {"model": model.state_dict(), "state_sha256": initial_sha},
         )
     print(
-        f"PREFLIGHT PASS {MODE} parameters={PARAMETERS} "
+        f"PREFLIGHT PASS {mode} parameters={expected_parameters} "
         f"resume_epoch={start_epoch} peak={peak}",
         flush=True,
     )
@@ -336,7 +366,7 @@ def run(
             count += BATCH_SIZE
             if (batch_index + 1) % 500 == 0:
                 print(
-                    f"{MODE} ep={epoch} batch={batch_index + 1}/{STEPS_PER_EPOCH}",
+                    f"{mode} ep={epoch} batch={batch_index + 1}/{STEPS_PER_EPOCH}",
                     flush=True,
                 )
         if count != ROWS_PER_EPOCH:
@@ -348,7 +378,7 @@ def run(
             atomic_torch_save(
                 output / "best_model.pt",
                 {
-                    "mode": MODE,
+                    "mode": mode,
                     "model": model.state_dict(),
                     "mean": mean_value,
                     "std": std_value,
@@ -374,8 +404,12 @@ def run(
         atomic_torch_save(
             output / "last_checkpoint.pt",
             {
-                "format": "molgap-k1-pair-token-500k-checkpoint-v1",
-                "mode": MODE,
+                "format": (
+                    "molgap-k1-pair-token-500k-checkpoint-v1"
+                    if mode == MODE
+                    else "molgap-k1-matched60-500k-checkpoint-v1"
+                ),
+                "mode": mode,
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
                 "rng": capture_rng_state(),
@@ -397,27 +431,33 @@ def run(
             {"status": "RUNNING", "next_epoch": epoch + 1, "best": best},
         )
         print(
-            f"{MODE} ep{epoch:02d} dev={mae:.8f} "
+            f"{mode} ep{epoch:02d} dev={mae:.8f} "
             f"best={best:.8f}@{best_epoch} {row['seconds']:.1f}s",
             flush=True,
         )
 
-    gain = REFERENCE_MAE_EV - best
+    gain = None if reference_mae_eV is None else reference_mae_eV - best
     result = {
-        "format": "molgap-k1-pair-token-500k-result-v1",
+        "format": (
+            "molgap-k1-pair-token-500k-result-v1"
+            if mode == MODE
+            else "molgap-k1-matched60-500k-result-v1"
+        ),
         "complete": True,
-        "mode": MODE,
+        "mode": mode,
         "source_commit": source_commit,
         "source_archive_sha256": source_archive_sha256,
-        "parameter_count": PARAMETERS,
+        "parameter_count": expected_parameters,
         "contract": contract,
         "runtime_certificate_id": certificate_id,
         "best_epoch": best_epoch,
         "development_gap_mae_eV": best,
-        "frozen_k1_reference_mae_eV": REFERENCE_MAE_EV,
+        "frozen_k1_reference_mae_eV": reference_mae_eV,
         "gain_over_k1_eV": gain,
         "minimum_gain_eV": MINIMUM_GAIN_EV,
-        "material_gate_passed": gain >= MINIMUM_GAIN_EV,
+        "material_gate_passed": (
+            None if gain is None else gain >= MINIMUM_GAIN_EV
+        ),
         "epochs_completed": len(trace),
         "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
         "sample_presentations": SAMPLE_PRESENTATIONS,
