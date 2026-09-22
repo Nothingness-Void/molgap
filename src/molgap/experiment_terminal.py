@@ -1,0 +1,228 @@
+"""Versioned descriptor translation into existing RML closure inputs.
+
+Validation reads metadata only. Execution is an explicit, separate delegation to
+terminal_wiring; this module owns neither evidence acceptance nor finalization.
+"""
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass
+from pathlib import Path, PureWindowsPath
+from typing import Any
+
+from .experiment_spec import (
+    ExperimentSpec, TERMINAL_PROTOCOL, _canonical, _digest, _identifier,
+    _text, _unique_object,
+)
+from .screen_policy import canonical_fingerprint
+from .research_memory.paths import repo_local_path
+from .research_memory.schemas import validate_id, validate_trajectory
+from .research_memory.trace import FIELDS, validate_canonical_trace
+
+
+_TOP = frozenset({"schema_version", "spec_identity", "experiment_id", "logical_run_id", "arms"})
+_ARM = frozenset({"arm_id", "arm_identity", "trajectory_id", "run_id", "trajectory", "terminal"})
+_OPTIONAL = frozenset({"trace", "trace_source", "canonical_trace_output", "recovery_spec"})
+
+
+def _fields(value: Any, required: frozenset, optional: frozenset, label: str) -> None:
+    if type(value) is not dict or not required <= value.keys() or value.keys() - required - optional:
+        raise ValueError(f"{label}: missing or unknown fields")
+
+
+def _path(value: Any) -> None:
+    _text(value, "descriptor path")
+    # Portable repository-relative spelling avoids host-dependent drive/ADS and
+    # separator interpretation; repo_local_path additionally checks symlinks.
+    if "\\" in value or ":" in value or value.startswith("/"):
+        raise ValueError("descriptor paths must be repository-relative POSIX paths")
+    for part in value.split("/"):
+        if (part in {"", ".", ".."} or part.endswith((" ", "."))
+                or any(ord(c) < 32 or c in '<>"|?*' for c in part)
+                or PureWindowsPath(part).is_reserved()):
+            raise ValueError("invalid descriptor path or path traversal")
+
+
+def _validate(spec: ExperimentSpec, payload: dict) -> dict:
+    if type(spec) is not ExperimentSpec:
+        raise ValueError("a validated ExperimentSpec is required")
+    _fields(payload, _TOP, frozenset(), "descriptor")
+    if payload["schema_version"] != TERMINAL_PROTOCOL:
+        raise ValueError("unsupported terminal descriptor protocol")
+    declaration = spec.to_dict()
+    _digest(payload["spec_identity"], "spec_identity")
+    if payload["spec_identity"] != spec.identity:
+        raise ValueError("descriptor spec identity mismatch")
+    for field in ("experiment_id", "logical_run_id"):
+        if payload[field] != declaration[field]:
+            raise ValueError(f"descriptor {field} mismatch")
+    arms = payload["arms"]
+    if type(arms) is not list or not arms:
+        raise ValueError("descriptor arms must be a nonempty array")
+    expected = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    seen: set[str] = set()
+    trajectories: set[str] = set()
+    inputs: set[str] = set()
+    for arm in arms:
+        _fields(arm, _ARM, _OPTIONAL, "descriptor arm")
+        _identifier(arm["arm_id"], "arm_id")
+        key = arm["arm_id"]
+        if key not in expected or key in seen:
+            raise ValueError("unknown or duplicate descriptor arm")
+        seen.add(key)
+        _digest(arm["arm_identity"], "arm_identity")
+        if arm["arm_identity"] != canonical_fingerprint(expected[key]):
+            raise ValueError("descriptor arm identity mismatch")
+        for field in ("trajectory_id", "run_id"):
+            validate_id(arm[field], field)
+        if arm["trajectory_id"] in trajectories:
+            raise ValueError("duplicate trajectory identity; expected 1:1 mapping")
+        trajectories.add(arm["trajectory_id"])
+        for field in ("trajectory", "terminal", *sorted(_OPTIONAL & arm.keys())):
+            _path(arm[field])
+        for field in ("trajectory", "terminal"):
+            if arm[field] in inputs:
+                raise ValueError("duplicate trajectory/terminal path; expected 1:1 mapping")
+            inputs.add(arm[field])
+    if seen != expected.keys():
+        raise ValueError("missing descriptor arms")
+    return payload
+
+
+@dataclass(frozen=True, init=False)
+class TerminalDescriptor:
+    """Immutable declaration snapshot; construction does not read or write files."""
+
+    _canonical_json: str
+
+    def __init__(self, spec: ExperimentSpec, payload: dict):
+        object.__setattr__(self, "_canonical_json", _canonical(_validate(spec, payload)))
+
+    @classmethod
+    def from_json(cls, spec: ExperimentSpec, text: str) -> TerminalDescriptor:
+        return cls(spec, json.loads(text, object_pairs_hook=_unique_object))
+
+    def to_json(self) -> str:
+        return self._canonical_json
+
+    def to_dict(self) -> dict:
+        return json.loads(self._canonical_json)
+
+
+def _read(path: Path) -> dict:
+    value = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_object)
+    if type(value) is not dict:
+        raise ValueError(f"metadata must be a JSON object: {path}")
+    # Reject non-standard NaN/Infinity even in fields owned by downstream RML.
+    _canonical(value)
+    return value
+
+
+def _recovery(value: dict, arm: dict) -> dict:
+    _fields(value, frozenset({"metric_semantics"}), frozenset({
+        "trajectory_id", "run_id", "rows_key", "field_mapping", "device_time_semantics",
+    }), "recovery_spec")
+    for field in ("trajectory_id", "run_id"):
+        if field in value and value[field] != arm[field]:
+            raise ValueError(f"recovery {field} mismatch")
+    if "rows_key" in value:
+        _text(value["rows_key"], "recovery rows_key")
+    if "field_mapping" in value:
+        mapping = value["field_mapping"]
+        if type(mapping) is not dict or mapping.keys() - set(FIELDS):
+            raise ValueError("recovery mapping uses unknown canonical fields")
+        for column in mapping.values():
+            _text(column, "recovery source column")
+    semantics = value["metric_semantics"]
+    if type(semantics) is dict:
+        for definition in semantics.values():
+            if definition is not None:
+                _fields(definition, frozenset({
+                    "metric", "unit", "target", "role_identity", "weights", "direction",
+                }), frozenset(), "recovery metric semantics")
+    if value.get("device_time_semantics") not in (None, "sum_over_devices"):
+        raise ValueError("unsupported recovery device time semantics")
+    # Reuse the trace validator for semantics without recovering observations or
+    # supplying this temporary validation envelope as evidence to the closure.
+    validate_canonical_trace({
+        "schema": "molgap-trace-v1", "trajectory_id": arm["trajectory_id"],
+        "run_id": arm["run_id"], "metric_semantics": semantics, "observations": [],
+    })
+    return value
+
+
+def translate_terminal_descriptor(
+    repo_root: str | Path, spec: ExperimentSpec, descriptor: TerminalDescriptor,
+) -> list[dict[str, Any]]:
+    """Read-only binding checks; return exactly the close_terminal_multi_arm arms.
+
+    The descriptor keeps recovery_spec's path; the closure API requires its parsed
+    object. All other explicit paths retain their original spelling. Omitted
+    optional fields stay omitted. This is not a terminal acceptance dry run.
+    """
+    if type(descriptor) is not TerminalDescriptor:
+        raise ValueError("a validated TerminalDescriptor is required")
+    payload = _validate(spec, descriptor.to_dict())
+    root = Path(repo_root).resolve()
+    resolved = []
+    inputs: set[Path] = set()
+    destinations: set[Path] = set()
+    outputs: set[Path] = set()
+    # Resolve every declared path before opening metadata, including outputs that
+    # do not yet exist; aliases must not collapse independent RML transactions.
+    for arm in payload["arms"]:
+        paths = {field: repo_local_path(root, arm[field])
+                 for field in ("trajectory", "terminal", *sorted(_OPTIONAL & arm.keys()))}
+        for field, path in paths.items():
+            if field == "canonical_trace_output":
+                if path in outputs:
+                    raise ValueError("duplicate canonical trace output")
+                outputs.add(path)
+            else:
+                if not path.is_file():
+                    raise ValueError(f"missing descriptor input file: {arm[field]}")
+                if field in {"trajectory", "terminal"} and path in inputs:
+                    raise ValueError("aliased trajectory/terminal mapping")
+                inputs.add(path)
+        destination = repo_local_path(root, paths["trajectory"].parent / "rml_finalized")
+        if destination in destinations:
+            raise ValueError("trajectories share an RML finalization directory")
+        destinations.add(destination)
+        resolved.append(paths)
+    if outputs & inputs:
+        raise ValueError("canonical trace output aliases an input")
+
+    translated = []
+    for arm, paths in zip(payload["arms"], resolved):
+        trajectory = validate_trajectory(_read(paths["trajectory"]))
+        terminal = _read(paths["terminal"])
+        if trajectory["record_mode"] != "prospective" or trajectory["owner"] not in {"desktop", "server"}:
+            raise ValueError("closure requires a desktop/server prospective trajectory")
+        if terminal.get("format") != "molgap-rml-terminal-package-v1":
+            raise ValueError("unsupported existing RML terminal package")
+        if trajectory["trajectory_id"] != arm["trajectory_id"] or terminal.get("trajectory_id") != arm["trajectory_id"]:
+            raise ValueError("trajectory/terminal identity mismatch")
+        if terminal.get("run_id") != arm["run_id"]:
+            raise ValueError("terminal run identity mismatch")
+        if not any(action["action_id"] == terminal.get("action_id") and arm["run_id"] in action["run_ids"]
+                   for action in trajectory["actions"]):
+            raise ValueError("terminal run/action was not frozen in trajectory")
+        if "trace" in paths:
+            trace = validate_canonical_trace(_read(paths["trace"]))
+            if any(trace[field] != arm[field] for field in ("trajectory_id", "run_id")):
+                raise ValueError("trace identity mismatch")
+        item = {"arm_identifier": arm["arm_id"], "trajectory": arm["trajectory"], "terminal": arm["terminal"]}
+        item.update({field: arm[field] for field in sorted(_OPTIONAL & arm.keys())})
+        if "recovery_spec" in paths:
+            item["recovery_spec"] = _recovery(_read(paths["recovery_spec"]), arm)
+        translated.append(item)
+    return translated
+
+
+def execute_terminal_descriptor(
+    repo_root: str | Path, spec: ExperimentSpec, descriptor: TerminalDescriptor,
+) -> list[dict[str, Any]]:
+    """Explicitly run the existing fail-closed closure, including its side effects."""
+    from .research_memory.terminal_wiring import close_terminal_multi_arm
+
+    return close_terminal_multi_arm(repo_root, translate_terminal_descriptor(repo_root, spec, descriptor))
