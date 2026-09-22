@@ -303,7 +303,8 @@ candidate or replay-pool entry. No sparse successor was released. Authority:
 `experiments/pcqm_k1_pair_selection_diagnostic/decision.md`.
 
 The user explicitly reopened one bounded three-round scale-attribution sequence.
-Round 1 prepares the missing K1 matched60-v4 500K reference under the exact
+Round-1 preflight `122742924` passed, and the single formal job `122743291`
+is training the missing K1 matched60-v4 500K reference under the exact
 PairToken contract.  It is reference recovery, not a new architecture claim.
 Only after terminal acceptance may Round 2 perform aligned residual analysis;
 only after that attribution may Round 3 perform frozen-checkpoint PairToken
