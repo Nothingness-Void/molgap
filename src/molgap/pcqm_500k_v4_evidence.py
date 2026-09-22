@@ -25,6 +25,7 @@ PARAMETERS = {
     "edge_sparse_global_369": 3_879_425,
     "gptrans_noisy_nodes": 5_277_400,
     "gptrans_noisy_pair_norm": 5_277_400,
+    "gptrans_dsar_noisy_pair_norm": 5_375_961,
 }
 EPOCHS = 60
 BS = 128
@@ -38,7 +39,7 @@ def schedule(epoch):
 def scientific_contract(arm="gptrans"):
     loss_fingerprint = (
         "normalized-gap-l1-plus-noisy-nodes-ce-alpha0.1"
-        if arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}
+        if arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm", "gptrans_dsar_noisy_pair_norm"}
         else "normalized-gap-l1"
     )
     return {
@@ -72,6 +73,13 @@ def make_model(arm):
             if arm == "gptrans_noisy_pair_norm"
             else GPTransNoisyNodes(noise_std=0.15, loss_weight=0.1)
         )
+    elif arm == "gptrans_dsar_noisy_pair_norm":
+        from .noisy_nodes import GPTransNoisyNodes
+        from .gptrans_variants import apply_variant
+        model = GPTransNoisyNodes(
+            readout_mode="dual_stream_attentive", noise_std=0.15, loss_weight=0.1
+        )
+        model = apply_variant(model, "pair_update_norm")
     elif arm in {"edge_local_only", "edge_sparse_global_369"}:
         from .pcqm_500k_v4_ablation import make_ablation_encoder
         model = make_ablation_encoder(arm)

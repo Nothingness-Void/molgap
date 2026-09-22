@@ -95,13 +95,17 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   +0.003812 eV over GPTrans core baseline, trailing K1 by 0.2 meV) and passed
   mechanical and scientific acceptance as `POSITIVE_BELOW_GATE` under `< 0.103868 eV`.
   Authority: `experiments/pcqm_gptrans_noisy_nodes_500k/decision.md`.
-- GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) is currently
-  executing on `pcqm4mv2-ogb-fixed-500k-scnet-v1` under frozen falsifier `< 0.103868 eV`.
+- GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) completed 60 epochs
+  (`0.104812 eV`, surpassing K1 baseline `0.104860 eV` and +4.06 meV over GPTrans baseline) and passed
+  mechanical and scientific acceptance as `POSITIVE_BELOW_GATE` under `< 0.103868 eV`.
+  Authority: `experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md`.
 - GPTrans Dual-Stream Attentive Readout (DSAR) 100K Dual-Arm Screen on Kaggle 1 (`nothingnessvoid`)
-  is currently executing on `pcqm4mv2-ogb-fixed-100k-v1` under dual NvidiaTeslaT4:
-  - Arm A (`dsar_pair_norm` on GPU 0): Trajectory `TB-gptrans-dsar-pair-norm-100k-s42`, falsifier `< 0.153627 eV`.
-  - Arm B (`dsar_noisy_pair_norm` on GPU 1): Trajectory `TB-gptrans-dsar-noisy-pair-norm-100k-s42`, falsifier `< 0.153627 eV`.
-  Pre-flight replay-ready verification passed for both arms; expected duration ~1.4 wall hours (~2.8 device hours).
+  completed and passed mechanical and scientific acceptance as `POSITIVE_UNDER_CONTRACT`, setting
+  all-time project records and being admitted to the RML Replay Pool:
+  - Arm A (`dsar_pair_norm`): Best Dev MAE `0.146192 eV` (+10.44 meV over baseline, +1.05 meV over previous record).
+    Authority: `experiments/pcqm_gptrans_dual_stream_100k/arm_a/decision.md`.
+  - Arm B (`dsar_noisy_pair_norm`): Best Dev MAE `0.146138 eV` (+10.49 meV over baseline, +1.11 meV over previous record;
+    all-time MolGap 100K record). Authority: `experiments/pcqm_gptrans_dual_stream_100k/arm_b/decision.md`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
  independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote

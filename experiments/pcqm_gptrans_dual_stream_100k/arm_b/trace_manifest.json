@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+  "reference_id": "pcqm-gptrans-t-100k-v4-reference",
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/v5_evidence.json",
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-dsar-noisy-pair-norm-s42",
+  "model_identity": "gptrans-dual-stream-attentive-noisy-nodes-5375961",
+  "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+  "selection_semantics": "best-development-ema9999-60epochs",
+  "weight_semantics": "ema-decay-0.9999",
+  "metric_semantics": "Gap MAE in eV; live training and explicitly bound development weights",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/training_contract.json",
+  "trace_artifact_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_b/results/canonical_trace.json",
+  "trace_artifact_sha256": "69fdae5da36642c14813137971d4b5d0e1226c75b17ca41f8f991e321fb280d1",
+  "x_axis": "optimizer_steps",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 6000000
+  },
+  "comparability_identity": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1",
+    "dataset_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+    "row_split_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "architecture_identity": "gptrans-dual-stream-attentive-noisy-nodes-5375961",
+    "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+    "ema_semantics": "ema-decay-0.9999",
+    "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+    "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+    "selection_role_identity": "best-development-ema9999-60epochs",
+    "terminal_endpoint_identity": "optimizer_steps46860:sample_presentations5998080",
+    "matched_architecture_required": false,
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "trace_fields": {
+    "epoch_or_pass": true,
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "live_train_metric": true,
+    "live_dev_metric": false,
+    "ema_dev_metric": true,
+    "learning_rate": false,
+    "checkpoint_identity": false
+  }
+}

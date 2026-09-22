@@ -1,0 +1,82 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-dsar-noisy-pair-norm-500k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "server",
+  "family_id": "gptrans-t",
+  "question": "Can Dual-Stream Attentive Readout (DSAR) combined with auxiliary Noisy Nodes and Pair Update LayerNorm achieve material advantage (< 0.103868 eV) on 500K scale?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-dsar-noisy-pair-norm-500k-s42",
+    "observed_deficiency": "Single 256-dim virtual token readout bottleneck forces 20-30 real atoms (7,680-dim representation) through one vector, saturating capacity at 500K and leading joint regularization to miss the 5.0 meV falsifier by 0.94 meV (0.104812 eV vs 0.103868 eV).",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "alternative_explanations": [
+      "500K data abundance saturates the attentive readout mechanism",
+      "gradient interference between attentive pooling and auxiliary denoising head"
+    ],
+    "changed_mechanism": "dual-stream attentive readout (544-dim dual-stream attentive pooling over atom features and virtual token) combined with auxiliary Noisy Nodes atom denoising (std=0.15, alpha=0.10) and LayerNorm-normalized pair updates on 500K",
+    "cheapest_falsifier": "60-epoch 500K/50K run failing to achieve 0.003 eV material gain over the 0.106868 eV GPTrans-T baseline (falsifier threshold < 0.103868 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42",
+      "pcqm-scale-transfer-attribution"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-dsar-noisy-pair-norm-500k-s42-expected-training",
+    "decision_changed_if_positive": "nominate GPTrans DSAR + Noisy Nodes + Pair Update LayerNorm as the primary architecture candidate for full-scale PubChemQC advancement",
+    "decision_changed_if_negative": "close DSAR scale-transfer at 500K",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "37e711a1f92340a78eb7d70c8660e6d7c2334fb9",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_dsar_500k/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "TB-gptrans-noisy-pair-norm-500k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-dsar-noisy-pair-norm-100k-s42",
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_dsar_500k/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_dsar_500k/training_contract.json",
+    "source_config_identity": "server-gptrans-dsar-noisy-pair-norm-500k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "500k_scale_transfer_training",
+      "run_ids": [
+        "nvoid912/molgap-pcqm-gptrans-dsar-noisy-pair-norm-500k-s42"
+      ],
+      "attempt_ids": [
+        "kaggle3-t4-500k-s42-v1"
+      ],
+      "source_commit": "37e711a1f92340a78eb7d70c8660e6d7c2334fb9",
+      "evidence_refs": [],
+      "cost_event_ids": [
+        "cost-TB-gptrans-dsar-noisy-pair-norm-500k-s42-expected-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_dsar_500k/decision.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "A001"
+    ],
+    "reopen_conditions": []
+  }
+}

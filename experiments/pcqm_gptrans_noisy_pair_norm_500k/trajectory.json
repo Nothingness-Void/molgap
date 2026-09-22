@@ -12,7 +12,7 @@
     "supporting_evidence_ids": [
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-scale-transfer-diagnostic-evidence",
-      "pcqm-gptrans-t-500k-bridge"
+      "pcqm-matched-500k-v4-three-arm"
     ],
     "alternative_explanations": [
       "500K data abundance saturates the representation and renders denoising regularization redundant",
@@ -35,7 +35,7 @@
       "experiments/pcqm_gptrans_noisy_pair_norm_500k/training_contract.json"
     ],
     "reference_ids": [
-      "pcqm-gptrans-t-500k-bridge"
+      "pcqm-matched-500k-v4-three-arm"
     ],
     "parent_trajectory_ids": [
       "TB-gptrans-noisy-pair-norm-100k-s42",
@@ -55,7 +55,7 @@
   "actions": [
     {
       "action_id": "A001",
-      "type": "remote_screen_training",
+      "type": "remote_scale_transfer_training",
       "run_ids": [
         "nvoid912/molgap-pcqm-gptrans-noisy-pair-norm-500k-s42"
       ],
@@ -63,20 +63,26 @@
         "attempt-001"
       ],
       "source_commit": "58cc5fe5f914ad62798a7627b85b276e3afac4d1",
-      "evidence_refs": [],
-      "cost_event_ids": []
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_noisy_pair_norm_500k/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-noisy-pair-norm-500k-s42-measured-training"
+      ]
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-500k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/v5_evidence.json"
+    ]
   },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "remote_screen_training"
-    ],
+    "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md",
+    "outcome": "POSITIVE_BELOW_GATE",
+    "next_allowed_actions": [],
     "reopen_conditions": []
   }
 }

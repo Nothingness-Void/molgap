@@ -1,0 +1,73 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+  "track": "B",
+  "scope": "fixed_500k_gptrans_noisy_pair_norm_scale_transfer",
+  "legacy_contract": "molgap-pcqm-fixed500k-dev50k-matched60-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "qualified_with_diminished_retention",
+    "budget_decision": "closed_negative",
+    "full_handoff_status": "unqualified_alone"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/training_contract.json",
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/protocol.md",
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/stage_manifest.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_model.pt",
+      "sha256": "112153e648928b10784d34b2f01d3f4de097ef51a35e3a9a536ef46bb08c2c72",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "trace",
+      "locator": "experiments/pcqm_gptrans_noisy_pair_norm_500k/results/canonical_trace.json",
+      "sha256": "044457ceec7b2a06266654ee0fb0a20a73ffcc37134c4fa895a7feb6c4b0f855",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "stage_manifest",
+      "locator": "experiments/pcqm_gptrans_noisy_pair_norm_500k/results/stage_manifest.json",
+      "sha256": "2145b08653dbce3eca7b5a824733b0ed081495eba9fda0a876f719829ae1cc44",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "best_predictions",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_predictions.pt",
+      "sha256": "e699964532abf4edfe461c7247943649fc9159e9b91afcb870c54e264b67768e",
+      "availability": "durable_local_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.108868,
+    "single_mechanism_development_gap_mae_eV": 0.104860,
+    "observed_development_gap_mae_eV": 0.10481178015470505,
+    "material_gain_eV": 0.004056219845294954,
+    "falsifier_threshold_eV": 0.103868,
+    "falsifier_satisfied": false,
+    "best_epoch": 56
+  },
+  "migration": {
+    "migrated_at": "2026-09-22",
+    "verification_scope": "terminal Kaggle execution, SHA256 verified artifacts, and paired comparison against pcqm-matched-500k-v4-three-arm",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

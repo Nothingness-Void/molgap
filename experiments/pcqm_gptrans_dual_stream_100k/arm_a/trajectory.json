@@ -30,7 +30,7 @@
     "historical_unknowns": []
   },
   "state_at_start": {
-    "source_commit": "7317d15c515162e54c957d26be313afebaf62f6a",
+    "source_commit": "dd2003d8c5965178a2a4c71c7add4bb0a2263198",
     "contract_refs": [
       "experiments/pcqm_gptrans_dual_stream_100k/arm_a/training_contract.json"
     ],
@@ -60,21 +60,27 @@
       "attempt_ids": [
         "attempt-001"
       ],
-      "source_commit": "7317d15c515162e54c957d26be313afebaf62f6a",
-      "evidence_refs": [],
-      "cost_event_ids": []
+      "source_commit": "dd2003d8c5965178a2a4c71c7add4bb0a2263198",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_dual_stream_100k/arm_a/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-dsar-pair-norm-100k-s42-measured-training"
+      ]
     }
   ],
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-gptrans-dsar-pair-norm-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_dual_stream_100k/arm_a/v5_evidence.json"
+    ]
   },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_a/protocol.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "remote_screen_training"
-    ],
+    "decision_ref": "experiments/pcqm_gptrans_dual_stream_100k/arm_a/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
     "reopen_conditions": []
   }
 }

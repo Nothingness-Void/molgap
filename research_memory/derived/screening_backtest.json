@@ -16,13 +16,6 @@
     },
     {
       "reasons": [
-        "no_compatible_candidate_reference_trace_pair"
-      ],
-      "run_id": "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
-      "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
-    },
-    {
-      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -42,14 +35,31 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development_500000_549999\",\"lr_schedule_identity\":\"cosine60-epoch0-4e-4-epoch59-1e-6\",\"optimizer_identity\":\"adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"train[0:500000]-development[500000:550000]\",\"scientific_contract\":\"pcqm-fixed500k-dev50k-matched60-v4\",\"selection_role_identity\":\"best-development-raw-model-60epochs\",\"target_transform_identity\":\"45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834\",\"terminal_endpoint_identity\":\"optimizer_steps234360:sample_presentations29998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-matched-500k-v4-three-arm\"}",
+      "run_ids": [
+        "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
+        "matched-500k-v4-stage5",
+        "nvoid912/molgap-pcqm-gptrans-noisy-pair-norm-500k-s42"
+      ],
+      "trajectory_ids": [
+        "TB-gptrans-noisy-nodes-500k-s42",
+        "TB-gptrans-noisy-pair-norm-500k-s42",
+        "TB-matched-500k-v4-three-arm"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-t-100k-v4-reference\"}",
       "run_ids": [
         "kaggle2-gptrans-t-100k-v4-seed42",
         "kaseichou/molgap-pcqm-gptrans-noisy-nodes-s42",
         "nothingnessvoid/molgap-gptrans-flow-ablation-s42:v1/no_pair_to_node",
+        "nothingnessvoid/molgap-pcqm-gptrans-dsar-noisy-pair-norm-s42",
+        "nothingnessvoid/molgap-pcqm-gptrans-dsar-pair-norm-s42",
         "nothingnessvoid/molgap-pcqm-gptrans-noisy-pair-norm-s42"
       ],
       "trajectory_ids": [
+        "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+        "TB-gptrans-dsar-pair-norm-100k-s42",
         "TB-gptrans-noisy-nodes-100k-s42",
         "TB-gptrans-noisy-pair-norm-100k-s42",
         "TB-gptrans-t-100k-v4-reference",
@@ -58,9 +68,14 @@
     }
   ],
   "included_trajectory_ids": [
+    "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+    "TB-gptrans-dsar-pair-norm-100k-s42",
     "TB-gptrans-noisy-nodes-100k-s42",
+    "TB-gptrans-noisy-nodes-500k-s42",
     "TB-gptrans-noisy-pair-norm-100k-s42",
+    "TB-gptrans-noisy-pair-norm-500k-s42",
     "TB-gptrans-t-100k-v4-reference",
+    "TB-matched-500k-v4-three-arm",
     "TC-gptrans-flow-ablation-100k-s42"
   ],
   "native_cost_added": null,
@@ -69,5 +84,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 7
+  "trace_count": 11
 }
