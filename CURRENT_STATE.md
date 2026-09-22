@@ -106,8 +106,15 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
     Authority: `experiments/pcqm_gptrans_dual_stream_100k/arm_a/decision.md`.
   - Arm B (`dsar_noisy_pair_norm`): Best Dev MAE `0.146138 eV` (+10.49 meV over baseline, +1.11 meV over previous record;
     all-time MolGap 100K record). Authority: `experiments/pcqm_gptrans_dual_stream_100k/arm_b/decision.md`.
+- 500K Replay Pool Activation: Stage 5 GPTrans-T 500K baseline trace (`matched-500k-v4-stage5`, `0.106868 eV`)
+  was officially registered as a canonical reference trace (`TB-matched-500k-v4-three-arm`, `pcqm-matched-500k-v4-three-arm`),
+  bringing 500K candidate-reference pairs into `replay_pool.json` (now 9 entries total, including both 500K candidates and reference).
+- GPTrans DSAR + Noisy Nodes + Pair Update Norm 500K Scale-Transfer: Prospectively registered under
+  `TB-gptrans-dsar-noisy-pair-norm-500k-s42` (5,375,961 parameters), preflight triple-checked, and actively RUNNING
+  on Kaggle 3 (`nvoid912/molgap-pcqm-gptrans-dsar-noisy-pair-norm-500k-s42`, Nvidia Tesla T4).
+  Authority: `experiments/pcqm_gptrans_dsar_500k/protocol.md`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
- independently retrievable outputs before launch.
+  independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote
   work remains durable and desktop-owned while offline; no default desktop
   heartbeat, server fallback, or cross-machine takeover is part of live work.
