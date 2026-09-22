@@ -297,6 +297,7 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-dsar-noisy-pair-norm-100k-s42",
+        "TB-gptrans-dsar-noisy-pair-norm-500k-s42",
         "TB-gptrans-dsar-pair-norm-100k-s42",
         "TB-gptrans-noisy-nodes-100k-s42",
         "TB-gptrans-noisy-nodes-500k-s42",
@@ -316,15 +317,15 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
     assert report["cost_completeness"] == {
-        "trajectories_total": 21,
-        "with_cost_event": 10,
+        "trajectories_total": 22,
+        "with_cost_event": 11,
         "without_cost_event": 11,
         "with_complete_native_measurement": 6,
-        "with_incomplete_native_measurement": 4,
+        "with_incomplete_native_measurement": 5,
     }
     issues = {item["code"]: item["count"] for item in report["issues"]}
     assert issues["missing_cost_event"] == 11
-    assert issues["incomplete_native_cost_measurement"] == 4
+    assert issues["incomplete_native_cost_measurement"] == 5
     assert "missing_native_cost" not in issues
 
 
@@ -344,6 +345,7 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         [],
     )
     assert set(no_evidence_trajectories) == {
+        "TB-gptrans-dsar-noisy-pair-norm-500k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
