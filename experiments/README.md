@@ -26,6 +26,7 @@ Track C.
 | Which leaderboard-inspired architecture is feasible from scratch under 12 hours, and why did prior 2D+3D fusion fail? | Persistent EdgeState Structural GPS passed the three-seed 100K gate and is the sole repaired-2M scale-up candidate; the full-scale run has not started | `resource_bounded_architecture/` |
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |
 | Is frozen K1 PairToken attention concentrated enough for top-pair sparsity? | No; completed no-training diagnostic closed the hard-truncation premise | `pcqm_k1_pair_selection_diagnostic/` |
+| Do completed PCQM models contain input-identifiable specialist regions worth a learned Router? | Oracle headroom is large, but structure/disagreement identifiability failed; Phase D is not authorized | `pcqm_molecular_router_audit/` |
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Discovery history retained; closed routes are indexed, and K1 is the sole desktop handoff | `pcqm_gap_architecture/` |

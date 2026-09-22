@@ -1,0 +1,529 @@
+{
+  "format": "molgap-pcqm-specialist-asset-audit-v1",
+  "complete": true,
+  "cache_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "expected_cache_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "source_csv_sha256": "98be96ed2ba2869b6e9c07de35e4acf2fedad4ef4bdeec8dc98e99a3fecb93b1",
+  "source_idx_sha256": "715728a447c589dd95a5fb2658cbe671999a7639aca943c4e9ca25ba1de7bb9f",
+  "target_sha256": "fcba05e7a36f2c9448d3e857745a135de570fae9b9233451ab0b27711847b943",
+  "rows": 50000,
+  "source_idx_min": 100000,
+  "source_idx_max": 149999,
+  "model_count": 39,
+  "primary_pool_count": 33,
+  "contextual_pool_count": 6,
+  "discovery": {
+    "candidate_files_scanned": 59,
+    "unique_aligned_predictions": 39,
+    "rejected": {}
+  },
+  "models": [
+    {
+      "model_id": "centered_logits",
+      "pool_class": "contextual_gptrans_contract",
+      "prediction_sha256": "8ef8cce0253ffb69ab7ba0af2474dc7eb4d035a465cfcb6ab8583db3a85273a8",
+      "payload_sha256": "4d5f47440d492fabc309889de5610deb84dec356f2c561df9cb653975557bd31",
+      "canonical_path": "platforms/_records/kaggle/training/gptrans_relation_flow_s42_v1/gptrans_relation_flow/centered_logits/training/development_predictions.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/gptrans_relation_flow_s42_v1/gptrans_relation_flow/centered_logits/training/development_predictions.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.15821391727387904
+    },
+    {
+      "model_id": "k1_sparse_pair_training",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "d561e4dfb1ea351b338f30eee86361acae8b233669131c6e9747cdc56b72b898",
+      "payload_sha256": "6ab5ae1a0b2eb574bd3849108473c739273c3f6187c0d7423b63b1103141b6bc",
+      "canonical_path": "platforms/_records/kaggle/training/k1_sparse_pair_train_s42_fb35e8b/k1_sparse_pair_training/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_sparse_pair_train_s42_fb35e8b/k1_sparse_pair_training/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14110968424737452
+    },
+    {
+      "model_id": "memory_message",
+      "pool_class": "contextual_gptrans_contract",
+      "prediction_sha256": "8e760e9bb2ed6c53b6f2c555a5fe5ea4675c7f6d0c9c134b208b5376e7835e7b",
+      "payload_sha256": "cf14ca1a4482246de9c2072f32ec28b75f7be6376c334a99dd8b0eb661396577",
+      "canonical_path": "platforms/_records/kaggle/training/gptrans_memory_readback_s42_v1/gptrans_memory_readback/memory_message/training/development_predictions.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/gptrans_memory_readback_s42_v1/gptrans_memory_readback/memory_message/training/development_predictions.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.15822110423505306
+    },
+    {
+      "model_id": "memory_value",
+      "pool_class": "contextual_gptrans_contract",
+      "prediction_sha256": "ff7bd1d7525a251cd5eddd1165889c0943a0023af1a0d13505f62cb265aa4235",
+      "payload_sha256": "22b3a9f74413172e7b964b42d9927db7bf1a72522c2c00569cbf94f8734b46d5",
+      "canonical_path": "platforms/_records/kaggle/training/gptrans_memory_readback_s42_v1/gptrans_memory_readback/memory_value/training/development_predictions.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/gptrans_memory_readback_s42_v1/gptrans_memory_readback/memory_value/training/development_predictions.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.15787046183526515
+    },
+    {
+      "model_id": "neural_atom_k1_chem_typed_pair_token",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "62ec75a1c8731fef19c7393ca1c7bf2d75051ab9173fc60d04d05606af7bf737",
+      "payload_sha256": "75aba7080011255d9d4171247656fd813bd794225b631a50035de93d6d5bd95c",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_chem_typed_pair_token_s42_v1/pcqm_k1_chem_typed_pair_token/neural_atom_k1_chem_typed_pair_token/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_chem_typed_pair_token_s42_v1/pcqm_k1_chem_typed_pair_token/neural_atom_k1_chem_typed_pair_token/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1385749593013525
+    },
+    {
+      "model_id": "neural_atom_k1_collapsed_mha",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "d7fb9ea8b3c46d05507b6630965168cbf241bbef53dd1d5a5b1af69b23071324",
+      "payload_sha256": "76b50c0986f0b7ddaba2af5d8b261f38b23a0c93f9399b35900ee8468cc50307",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_slot_processor_s42_v1/pcqm_k1_slot_processor/neural_atom_k1_collapsed_mha/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_slot_processor_s42_v1/pcqm_k1_slot_processor/neural_atom_k1_collapsed_mha/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_collapsed_mha.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14085515493810177
+    },
+    {
+      "model_id": "neural_atom_k1_dynamic_query",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "11107b0b257102e7a050da9c3723516be01de83238e776f58de1ca2a108f2593",
+      "payload_sha256": "338c923951e8ae6144d9a3c505a279730dc790428703fc89cfce50bbdec6bfe4",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_dynamic_query_s42_v1/pcqm_k1_dynamic_query/neural_atom_k1_dynamic_query/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_dynamic_query_s42_v1/pcqm_k1_dynamic_query/neural_atom_k1_dynamic_query/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_dynamic_query.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14235817252099514
+    },
+    {
+      "model_id": "neural_atom_k1_edge_conditioned_slot",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "28a477b78a003fcfbc0e061fc2d90ebc92c17f67a769b29c8dbc5516f9f4ff51",
+      "payload_sha256": "c96db60527b98fc605322b248dadbe80f4c33d858caa904040eda7673105210f",
+      "canonical_path": "platforms/_records/kaggle/training/k1_edge_conditioned_slot_s42_v3/pcqm_k1_edge_conditioned_slot/neural_atom_k1_edge_conditioned_slot/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_edge_conditioned_slot_s42_v3/pcqm_k1_edge_conditioned_slot/neural_atom_k1_edge_conditioned_slot/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_edge_conditioned_slot.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14108295508801938
+    },
+    {
+      "model_id": "neural_atom_k1_edge_context_no_slot_attention",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "2947e611756b99f8cdb2160a1ea03cc1aaa09f9cf61049eba5d09dc38a27da4e",
+      "payload_sha256": "5d18529a368d0d4c84704868fe6d57bb09ba881d54185ffdf9edab4cd2333e24",
+      "canonical_path": "platforms/_records/kaggle/training/k1_edge_slot_interaction_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_no_slot_attention/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_edge_slot_interaction_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_no_slot_attention/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_edge_context_no_slot_attention.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1416543258279562
+    },
+    {
+      "model_id": "neural_atom_k1_edge_context_read_norm",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "9cf42138791113b9daeeb841390cce7756ac5139dadc202f861bd8ccf143cbb1",
+      "payload_sha256": "bdca8cf2a68edb156a7535368951ec0b57d41a281cf06868685a223d3055b3c6",
+      "canonical_path": "platforms/_records/kaggle/training/k1_edge_memory_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_read_norm/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_edge_memory_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_read_norm/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_edge_context_read_norm.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14048333811700345
+    },
+    {
+      "model_id": "neural_atom_k1_edge_context_uniform_return",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "df6fa44a7d0ac30b8abf49c610fa929511f3f275286cfde3138625d92b5a1cb6",
+      "payload_sha256": "39d6af22ac2a4d90c853ba1c34f5a979e7a6efe98b42bdecdfbacfea684cb7cb",
+      "canonical_path": "platforms/_records/kaggle/training/k1_edge_slot_interaction_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_uniform_return/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_edge_slot_interaction_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_context_uniform_return/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_edge_context_uniform_return.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13959993986546992
+    },
+    {
+      "model_id": "neural_atom_k1_edge_read_norm",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "46929a2bb65fe2daf4e886172c74b60df3282e9662c3a765949e2e4336093d2a",
+      "payload_sha256": "0c775ff9df995caf59c37c4fee8b791649c229d1d2d416f8f2551fb2da26fefe",
+      "canonical_path": "platforms/_records/kaggle/training/k1_edge_memory_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_read_norm/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_edge_memory_s42_v1/pcqm_k1_edge_memory/neural_atom_k1_edge_read_norm/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_edge_read_norm.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1417749535268545
+    },
+    {
+      "model_id": "neural_atom_k1_functional_group_token",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "ac5d3a6f50983c6cefd51650873ac2023afd5e712b945839547388a5c60a9cce",
+      "payload_sha256": "7fc420e31a53cbc71a6d8901a796d78ff3ee4e8ea0b72f0d143c64ac42f3e44c",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_functional_group_token_s42_v1/pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_functional_group_token_s42_v1/pcqm_k1_functional_group_token/neural_atom_k1_functional_group_token/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13983141676843167
+    },
+    {
+      "model_id": "neural_atom_k1_g",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "89e3df760620a40c86841584f12932081485509959af6c27e56153c3c3af20f9",
+      "payload_sha256": "dd2fa4dd6348bb76b2520eaa44e754da0f9568dbae8645c15c0a1a36dc0ea540",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_v4_candidates_s42_v2/pcqm_k1_v4_candidates/neural_atom_k1_g/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_v4_candidates_s42_v2/pcqm_k1_v4_candidates/neural_atom_k1_g/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_g.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1452639518159628
+    },
+    {
+      "model_id": "neural_atom_k1_gpspp_bidirectional",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "012e9b68f38abf084fde6c601b4e682bbcd14f7c24ab52b6919e1100a380f531",
+      "payload_sha256": "bb7a8d7c59d9f21fd8237305c7fd5d76074e8b7954f227a20dbf85440174329d",
+      "canonical_path": "platforms/_records/kaggle/training/k1_gpspp_local_s42_v3/pcqm_k1_gpspp_local/neural_atom_k1_gpspp_bidirectional/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_gpspp_local_s42_v3/pcqm_k1_gpspp_local/neural_atom_k1_gpspp_bidirectional/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_gpspp_bidirectional.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14157917448461055
+    },
+    {
+      "model_id": "neural_atom_k1_gpspp_sender",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "aadb73ae5abf0f0d20157213f3b77aea50ecb40ebadd62ab18a5691de1f32b4d",
+      "payload_sha256": "5c8f5fbdb52e57e964fe557a04ef1350e7641367d787f9ee155adee0be381466",
+      "canonical_path": "platforms/_records/kaggle/training/k1_gpspp_local_s42_v3/pcqm_k1_gpspp_local/neural_atom_k1_gpspp_sender/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/k1_gpspp_local_s42_v3/pcqm_k1_gpspp_local/neural_atom_k1_gpspp_sender/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_gpspp_sender.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14296678972661495
+    },
+    {
+      "model_id": "neural_atom_k1_h4",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "9550f985534d9c8504420345e0bfaa92167d6cb706b1df923a7fc66d149174b3",
+      "payload_sha256": "6a8e2db4646785ef5c5a28712a5d56e86dcbdd49b8a9bc8febf0cc90be020153",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_multiview_pool_s42_v1/pcqm_k1_multiview_pool/neural_atom_k1_h4/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_multiview_pool_s42_v1/pcqm_k1_multiview_pool/neural_atom_k1_h4/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_h4.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.143228543843627
+    },
+    {
+      "model_id": "neural_atom_k1_inverse_return",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "4de4d827d2bf3116788f526268fe03cce1e716878b1ad987a0235cef14df740b",
+      "payload_sha256": "36885f69689f7fc2f0affb6449ecfbdc14b0b1ecc0f7122b170d951280866803",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_return_allocation_s42_v1/pcqm_k1_return_allocation/neural_atom_k1_inverse_return/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_return_allocation_s42_v1/pcqm_k1_return_allocation/neural_atom_k1_inverse_return/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_inverse_return.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14200413139283657
+    },
+    {
+      "model_id": "neural_atom_k1_mose",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "250a1527e58d38710a1b8f02a831734de83677cf39edd738b675616d977b1ead",
+      "payload_sha256": "ea1af9ea7d445e2bd5b17f43a617117c839653ac46bb30475891b579a0084474",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v5/pcqm_k1_mose_100k/neural_atom_k1_mose/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_mose_seed42_v5/pcqm_k1_mose_100k/neural_atom_k1_mose/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14025451810777187
+    },
+    {
+      "model_id": "neural_atom_k1_mose_hidden_bn",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "eeab1074f0aa086773a9adb338be2a1475d844871d22e72cbd8274e5f81f977e",
+      "payload_sha256": "c9bb54c87c10f320dde2720ecb664918f4a9e3f73e0efa95ffccb40d796c836c",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_mose_hidden_bn_seed42_v1/pcqm_k1_mose_hidden_bn_100k/neural_atom_k1_mose_hidden_bn/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_mose_hidden_bn_seed42_v1/pcqm_k1_mose_hidden_bn_100k/neural_atom_k1_mose_hidden_bn/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14264645165860654
+    },
+    {
+      "model_id": "neural_atom_k1_multiplicative_pair_value",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "fc7c47a2dc009464aca75bd3f585d2de65d8087b6397b1938799090cdbfbffc7",
+      "payload_sha256": "daaa8fa1710202cf579f9a5f5db2b8122bdb952429ac1b0377a183eafe6b258b",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_multiplicative_pairvalue_s42_v1/pcqm_k1_multiplicative_pairvalue/neural_atom_k1_multiplicative_pair_value/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_multiplicative_pairvalue_s42_v1/pcqm_k1_multiplicative_pairvalue/neural_atom_k1_multiplicative_pair_value/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14243745906293392
+    },
+    {
+      "model_id": "neural_atom_k1_no_attention_uniform_return",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "d93f457a43423c7e6f54acc7a9f56f66822f8b885e468f61a65e4c4afb91760c",
+      "payload_sha256": "574f440de65818de81725746f4591f98d75819429e46e6e9fccf376ba4bc6396",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_combined_s42_v3/pcqm_k1_combined_simplification/neural_atom_k1_no_attention_uniform_return/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_combined_s42_v3/pcqm_k1_combined_simplification/neural_atom_k1_no_attention_uniform_return/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_no_attention_uniform_return.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13921122228085994
+    },
+    {
+      "model_id": "neural_atom_k1_no_slot_attention",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "ff5cbac7b9d6ba3e67948378c52c3634c5a8a91fbeace1f6af8794d335b854d3",
+      "payload_sha256": "7308cae016f8e2cdac8bc4b9537a1f3feb11e4f331a7670de31a462c29584386",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_slot_processor_s42_v1/pcqm_k1_slot_processor/neural_atom_k1_no_slot_attention/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_slot_processor_s42_v1/pcqm_k1_slot_processor/neural_atom_k1_no_slot_attention/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_no_slot_attention.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13961093489587306
+    },
+    {
+      "model_id": "neural_atom_k1_pair_token",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "b49554283442030ce2da2471622102e45540c7f0c4187d159996324d5e573bcc",
+      "payload_sha256": "b67be3f9ba0c67ca0eb1cf7dffa00ad535e9f04f5f8371aadad1e6a2711e0331",
+      "canonical_path": "platforms/_records/scnet/k1_pair_token_job_122275244/attempts/122275244/output/neural_atom_k1_pair_token/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/scnet/k1_pair_token_job_122275244/attempts/122275244/output/neural_atom_k1_pair_token/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13833004471719265
+    },
+    {
+      "model_id": "neural_atom_k1_pair_token_mose",
+      "pool_class": "contextual_feature_identity_mismatch",
+      "prediction_sha256": "e7829372a13855f133bf3c854074717df0798c68b1003408d25e13d1d61f65cb",
+      "payload_sha256": "8f68115e995cb542f6908d30a4e09adf085c7c40ccf3a295dceb5222625730aa",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_pair_token_mose_s42_v1/pcqm_k1_pair_token_mose/neural_atom_k1_pair_token_mose/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_pair_token_mose_s42_v1/pcqm_k1_pair_token_mose/neural_atom_k1_pair_token_mose/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1386557040542364
+    },
+    {
+      "model_id": "neural_atom_k1_pair_token_node_return",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "d2ac995308e9b99728315ed62eed1cea69f90cd8d0ad6db3fdf647ccd2784f79",
+      "payload_sha256": "9d1b8cfcc5a761610f7896de2f5be8066242744511e936dca69dac55414bd2ad",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_pair_token_node_return_100k_v2/pcqm_k1_node_adaptive_pairtoken/neural_atom_k1_pair_token_node_return/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_pair_token_node_return_100k_v2/pcqm_k1_node_adaptive_pairtoken/neural_atom_k1_pair_token_node_return/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13962897387444972
+    },
+    {
+      "model_id": "neural_atom_k1_pair_token_oneshot_triplet",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "500d5b76a1ff240f85fe5655cff62584fe864203f7e9b80edad5c3b7eb7acc7e",
+      "payload_sha256": "7f8c5d5c250d91560d082afe246fc16bf88d7b277c698ad1dcb4d3c8fe2b9350",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_oneshot_triplet_pair_token_s42_v1/pcqm_k1_oneshot_triplet_pair_token/neural_atom_k1_pair_token_oneshot_triplet/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_oneshot_triplet_pair_token_s42_v1/pcqm_k1_oneshot_triplet_pair_token/neural_atom_k1_pair_token_oneshot_triplet/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1387662813037634
+    },
+    {
+      "model_id": "neural_atom_k1_r",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "01ffe6c751fd29e89f5a1557596bd9e35d22353e61bb7c26e8de496a6cf0287d",
+      "payload_sha256": "2db043b24b347def58425ff89edd6730b2018eae0958012afd3f3957ea2e62a9",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_v4_candidates_s42_v2/pcqm_k1_v4_candidates/neural_atom_k1_r/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_v4_candidates_s42_v2/pcqm_k1_v4_candidates/neural_atom_k1_r/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_r.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14152100222051145
+    },
+    {
+      "model_id": "neural_atom_k1_repset_readout",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "a5b816874b1c5c164a9d370089f0a4f9f3ddf46faa15a0457fc0d1434594d2f9",
+      "payload_sha256": "eee0e7f3de1c107f190d16244795af38dc512c2b37ab4c4e167627be7abca96c",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_readout_selector_s42_v1/pcqm_k1_readout_selector/neural_atom_k1_repset_readout/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_readout_selector_s42_v1/pcqm_k1_readout_selector/neural_atom_k1_repset_readout/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_repset_readout.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14210806772172452
+    },
+    {
+      "model_id": "neural_atom_k1_rwse_mose_context_gate",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "eccb1d2db793a2d27cd91b4f10e3e1cbf0b3ad9edd7eda96dc94a48e2f74e6e6",
+      "payload_sha256": "9eadeadcb2a61f16bb86951ab7eaaf83c7153d938ed6d9fd2b4b6e23abc6843f",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_mose_context_gate_seed42_v1/pcqm_k1_mose_context_gate_100k/neural_atom_k1_rwse_mose_context_gate/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_mose_context_gate_seed42_v1/pcqm_k1_mose_context_gate_100k/neural_atom_k1_rwse_mose_context_gate/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1419007521098852
+    },
+    {
+      "model_id": "neural_atom_k1_rwse_mose_residual_gate",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "18062b66a2c15a6901e75dae59797929f0ba130033f7db56c524c252513a48a0",
+      "payload_sha256": "abf4e0e45729688dbae2237df49c5f8d4293a8d9294fed034adb27532969dc24",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_mose_residual_gate_seed42_v1/pcqm_k1_mose_residual_gate_100k/neural_atom_k1_rwse_mose_residual_gate/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_mose_residual_gate_seed42_v1/pcqm_k1_mose_residual_gate_100k/neural_atom_k1_rwse_mose_residual_gate/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1393276348346472
+    },
+    {
+      "model_id": "neural_atom_k1_sparse_triplet",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "acca80c7ee12d40790ee9e6f2dd12ece65e4ffee13245934d17792a67aeb093f",
+      "payload_sha256": "dd68d22741f2e90bb7697b5f8e8011fe94a72e05871a67bf527f09609a4f7db2",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_sparse_triplet_seed42_v1/pcqm_k1_sparse_triplet/neural_atom_k1_sparse_triplet/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_sparse_triplet_seed42_v1/pcqm_k1_sparse_triplet/neural_atom_k1_sparse_triplet/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14249275653779506
+    },
+    {
+      "model_id": "neural_atom_k1_spd_pair_token",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "7bc5a7d9df49cab4b2f1dcea3448e0ca87eae5fa89d386507c541a04b86cfe9a",
+      "payload_sha256": "3c2d4f19ccc4a5b7f5f52d265c36b3caddd68388844f0c16005dba62fd559933",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_spd_pair_token_s42_v1/pcqm_k1_spd_pair_token/neural_atom_k1_spd_pair_token/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_spd_pair_token_s42_v1/pcqm_k1_spd_pair_token/neural_atom_k1_spd_pair_token/best_development_payload.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1397010936206579
+    },
+    {
+      "model_id": "neural_atom_k1_tied_selector",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "6b5fe20db7d0e63fea84f60db2cdda19a55483ddd7d12171a52fa25a4d1bb76b",
+      "payload_sha256": "7bec9893ae2723107623738da5836ef8e7a0c6e1ccfecb9db57e19df3ba71b3a",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_readout_selector_s42_v1/pcqm_k1_readout_selector/neural_atom_k1_tied_selector/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_readout_selector_s42_v1/pcqm_k1_readout_selector/neural_atom_k1_tied_selector/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_tied_selector.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1418427457898855
+    },
+    {
+      "model_id": "neural_atom_k1_uniform_return",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "cb79d977932efce048afcc30779516d519f31fea58738a4762f20fa43a583dd2",
+      "payload_sha256": "412af1b5646e4665c167adde76cb06148b83c509f656d0b1de02aa209b168a9f",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_return_allocation_s42_v1/pcqm_k1_return_allocation/neural_atom_k1_uniform_return/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_return_allocation_s42_v1/pcqm_k1_return_allocation/neural_atom_k1_uniform_return/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_uniform_return.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.13954734666764737
+    },
+    {
+      "model_id": "neural_atom_k1_v4",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "7a9fa76f67f0dae8bd1a0bca1b9486d5b5ad11081e26b94966290adc9f514b70",
+      "payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k1_v4.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14137364135205746
+    },
+    {
+      "model_id": "neural_atom_k4_cluster",
+      "pool_class": "primary_k1_v4_lineage",
+      "prediction_sha256": "bef896b42cf73280e4b0824a012702718267a059573d404ec7e27cc2b7acf9ba",
+      "payload_sha256": "5e7fd836d9dda085767282d2fa19ebac705cb7b52ab7410c83c5dbf439202fa2",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_k1_paper_allocation_s42_v1/pcqm_k1_paper_allocation/neural_atom_k4_cluster/best_development_payload.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_k1_paper_allocation_s42_v1/pcqm_k1_paper_allocation/neural_atom_k4_cluster/best_development_payload.pt",
+        "platforms/_records/scnet/k1_explainability_payloads_v1/neural_atom_k4_cluster.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.14345298935830594
+    },
+    {
+      "model_id": "pair_prenorm",
+      "pool_class": "contextual_gptrans_contract",
+      "prediction_sha256": "90f532026e122a782198d734f553e99c03cb0e9aadde73beb8f313d603a49c40",
+      "payload_sha256": "339ec0dccfc95087bef22a7191de1836d8a18120f9f4121f87072071cc916c67",
+      "canonical_path": "platforms/_records/kaggle/training/gptrans_relation_flow_s42_v1/gptrans_relation_flow/pair_prenorm/training/development_predictions.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/gptrans_relation_flow_s42_v1/gptrans_relation_flow/pair_prenorm/training/development_predictions.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.1535023336213827
+    },
+    {
+      "model_id": "pcqm_gptrans_t_100k_v4",
+      "pool_class": "contextual_gptrans_contract",
+      "prediction_sha256": "209600a20090c8d9d85c27e1d073539ea1123f7247c9ed6b98c8c68c1c6b45c2",
+      "payload_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+      "canonical_path": "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/development_predictions.pt",
+      "alias_paths": [
+        "platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/development_predictions.pt"
+      ],
+      "aligned_rows": 50000,
+      "mae_eV": 0.15662720430791377
+    }
+  ],
+  "role_and_leakage": {
+    "analysis_role": "official-train-derived-development",
+    "role_reused_for_prior_model_selection": true,
+    "unbiased_final_evaluation": false,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false,
+    "label_aware_oracle": true,
+    "router_training_executed": false,
+    "model_training_executed": false,
+    "model_inference_executed": false
+  },
+  "matrix_artifact": {
+    "path": "platforms/_records/local/pcqm_molecular_router_audit/aligned_prediction_matrix.pt",
+    "sha256": "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb",
+    "rows": 50000,
+    "models": 39
+  }
+}

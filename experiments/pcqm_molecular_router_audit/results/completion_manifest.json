@@ -1,0 +1,23 @@
+{
+  "format": "molgap-pcqm-specialist-audit-completion-v1",
+  "complete": true,
+  "decision": {
+    "format": "molgap-pcqm-specialist-audit-decision-v1",
+    "verdict": "NO_GO_STRUCTURE_NOT_LEARNABLE",
+    "asset_gate_pass": true,
+    "oracle_capacity_gate_pass": true,
+    "structure_gate_pass": false,
+    "phase_d_authorized_by_this_run": false,
+    "new_training_authorized": false,
+    "reason": "Oracle headroom is large, but no top specialist passed the frozen inference-visible scalar plus stable Morgan-cluster structure gate.",
+    "scope_note": "Phase A-C only. A future Router baseline requires a separate frozen protocol even when all feasibility gates pass."
+  },
+  "artifacts": {
+    "asset_audit.json": "fc002adbeb0427d631844b2b12947ad9e67efcbfd0c5e5033e48a5bac08197c2",
+    "decision.json": "fef70fbe232fdc3a59157f1ec5118e1f5d75022a39d487116c5da48c45375c66",
+    "oracle_report.json": "3a044953235ebc31ddccba835ee5f2e2d463c2e750cace742875ef4b4bf4f237",
+    "pairwise_oracle.csv": "632ec2174d674bba13116874877cf857181f291bb27d2fb66f6ba23c54322cfa",
+    "primary_greedy_curve.csv": "9b22b0b08c0d07a75a27d13a0c06220fc29f71c8c0738b9fe9bdb7deb0215e64",
+    "structure_report.json": "65ab492aabfc23108427376837404f814744a52e050f4ab01e2c397316af867d"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "format": "molgap-pcqm-specialist-audit-decision-v1",
+  "verdict": "NO_GO_STRUCTURE_NOT_LEARNABLE",
+  "asset_gate_pass": true,
+  "oracle_capacity_gate_pass": true,
+  "structure_gate_pass": false,
+  "phase_d_authorized_by_this_run": false,
+  "new_training_authorized": false,
+  "reason": "Oracle headroom is large, but no top specialist passed the frozen inference-visible scalar plus stable Morgan-cluster structure gate.",
+  "scope_note": "Phase A-C only. A future Router baseline requires a separate frozen protocol even when all feasibility gates pass."
+}
