@@ -16,7 +16,7 @@ from molgap.training_reproducibility import sha256_file
 ARM = "gptrans_pair_update_norm"
 
 
-def accept(root: Path) -> dict:
+def accept(root: Path, *, replay_ready_only: bool = False) -> dict:
     root = root.resolve()
     manifest = json.loads((root / "stage_manifest.json").read_text())
     if manifest["arm"] != ARM or manifest["parameters"] != PARAMETERS[ARM]:
@@ -44,12 +44,17 @@ def accept(root: Path) -> dict:
         "trace.json",
         "runtime_certificate.json",
         "calibration.json",
+        "data_manifest.json",
+        "scientific_contract.json",
+        "runtime.json",
     }
-    if status == "FUTILITY_STOPPED":
+    if status in {"COMPLETE", "FUTILITY_STOPPED"}:
         required.add("futility_decisions.json")
     if not required.issubset(manifest["artifacts"]):
         raise ValueError("Required durable artifacts are missing")
-    for name, checksum in manifest["artifacts"].items():
+    names = required if replay_ready_only else manifest["artifacts"]
+    for name in names:
+        checksum = manifest["artifacts"][name]
         path = (root / name).resolve()
         path.relative_to(root)
         if sha256_file(path) != checksum:
@@ -68,6 +73,12 @@ def accept(root: Path) -> dict:
     trace = json.loads((root / "trace.json").read_text())["epochs"]
     if [row["epoch"] for row in trace] != list(range(next_epoch)):
         raise ValueError("Training trace is incomplete or reordered")
+    if status == "COMPLETE":
+        gates = json.loads((root / "futility_decisions.json").read_bytes())["decisions"]
+        if [gate["completed_epochs"] for gate in gates] != [30, 40]:
+            raise ValueError("The two frozen futility decisions are missing")
+        if any(gate["futility_stopped"] for gate in gates):
+            raise ValueError("A futility-stopped run cannot be complete")
     certificate = json.loads((root / "runtime_certificate.json").read_text())
     validate_runtime_certificate(
         certificate,
@@ -85,12 +96,15 @@ def accept(root: Path) -> dict:
         "best_epoch": manifest["best_epoch"],
         "contract_fingerprint": canonical_fingerprint(manifest["contract"]),
         "manifest_sha256": sha256_file(root / "stage_manifest.json"),
+        "artifact_scope": "replay_ready" if replay_ready_only else "all_manifest_artifacts",
+        "artifacts_verified": len(names),
     }
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("root", type=Path)
+    parser.add_argument("--replay-ready-only", action="store_true")
     arguments = parser.parse_args()
-    print(json.dumps(accept(arguments.root), indent=2))
+    print(json.dumps(accept(arguments.root, replay_ready_only=arguments.replay_ready_only), indent=2))
 
