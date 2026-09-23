@@ -1,0 +1,104 @@
+{
+  "format": "molgap-scnet-distance-angle-500k-reconciliation-v1",
+  "jobs": {
+    "ogb_distance_angle_triangle_edge_state_gps9": "121738985",
+    "ogb_edge_state_structural_gps9": "121738978",
+    "preflight": "121738961"
+  },
+  "reconciled_at": "2026-09-23",
+  "remote_local_sha256_equal": true,
+  "remote_project_ref": "experiments/pcqm_distance_angle_500k/remote_launch.json",
+  "selected_artifacts": {
+    "input/cache/acceptance.json": {
+      "bytes": 700,
+      "sha256": "f95e7155560283f506097294303bfe7556ec0b06c31fa5ceedfda676ac3b119a"
+    },
+    "input/cache/manifest.json": {
+      "bytes": 3884,
+      "sha256": "89d992702b703e812b9acdae7ba96460e0227843229aca978ab86239375cc73f"
+    },
+    "output/ogb_distance_angle_triangle_edge_state_gps9/completion_manifest.json": {
+      "bytes": 21265,
+      "sha256": "c64d60cd3dcb4a19dab62237cccba20602bee615fd14a451e03a5b88ca394fc6"
+    },
+    "output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_best.pt": {
+      "bytes": 19810391,
+      "sha256": "f2e3150deec0093b10b8bf1f8374752de72775dca91156024af9ab7b7b27ae39"
+    },
+    "output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_development.pt": {
+      "bytes": 801538,
+      "sha256": "8dd42e95819448b7544d502addd3ac7162ddfa62942a77205ffee0cb3428f2c1"
+    },
+    "output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_last.pt": {
+      "bytes": 59379928,
+      "sha256": "b577921e8479825d65ab690ae7b60547c62c6dc9fb022bed705918dcd3e64607"
+    },
+    "output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_trace.json": {
+      "bytes": 18617,
+      "sha256": "0bc036fa93066892b24c8fe067e8efece19bd55b9a8b8039961ae2664d39bf68"
+    },
+    "output/ogb_edge_state_structural_gps9/completion_manifest.json": {
+      "bytes": 21211,
+      "sha256": "50e9c399e26c1dc1af138915b08969b8f2a94dff7d2f33f9098a54e77daaa638"
+    },
+    "output/ogb_edge_state_structural_gps9/direct_gap_best.pt": {
+      "bytes": 19267551,
+      "sha256": "0b80c295933429ab77b62752879751a89a78988f8e00d9944bdd02188e22250a"
+    },
+    "output/ogb_edge_state_structural_gps9/direct_gap_development.pt": {
+      "bytes": 801538,
+      "sha256": "9822150944b49b8329c0edecc2b7253412fa93c27cef5f69dfa0feda0ffeff0f"
+    },
+    "output/ogb_edge_state_structural_gps9/direct_gap_last.pt": {
+      "bytes": 57727498,
+      "sha256": "13cee1ee3c73b6543c13725fa1ae503d5af9fbb570323f873bdc4b4497e4e5a3"
+    },
+    "output/ogb_edge_state_structural_gps9/direct_gap_trace.json": {
+      "bytes": 18589,
+      "sha256": "969452135d38e2126ea8c4061343d6e9d79e09e7923991f4562e5bde271ab486"
+    },
+    "output/paired_acceptance.json": {
+      "bytes": 3885,
+      "sha256": "b6b012012eb3aa057da5c584f10bffdec19d122f74f56dca8bac63e2c71d5206"
+    },
+    "output/preflight/preflight.json": {
+      "bytes": 1730,
+      "sha256": "570ac1a5692137d8a8811e9ffc16e14421ecbd648187cb87a0b6800462f2dd7a"
+    }
+  },
+  "source_checks": {
+    "experiments/pcqm_distance_angle_500k/protocol.md": {
+      "equal": false,
+      "git_source_sha256": "b3c0e3bde6c31e9f87e8a939cf4d12e205666e1297b14a915acbefd2b4483dd8",
+      "raw_equal_to_git": false,
+      "remote_bytes": 2394,
+      "remote_line_endings_normalized_equal_to_git": true,
+      "remote_sha256": "b0c0e5847d959a88486e12e1044f1eda1dd2045a33c49ae810b8505a0c8d0a3e"
+    },
+    "platforms/scnet/pcqm_distance_angle_500k_kunshan.slurm": {
+      "equal": true,
+      "git_source_sha256": "582c45996271dfa0963aea124d6ab193b1efdefbe553331074a824d376eb6e53",
+      "raw_equal_to_git": true,
+      "remote_bytes": 1404,
+      "remote_line_endings_normalized_equal_to_git": true,
+      "remote_sha256": "582c45996271dfa0963aea124d6ab193b1efdefbe553331074a824d376eb6e53"
+    },
+    "platforms/scnet/run_pcqm_distance_angle_500k.py": {
+      "equal": false,
+      "git_source_sha256": "e78e9ccd0f68279e79d86cc17354fa5d17769d331efac1cc38809094e767ac92",
+      "raw_equal_to_git": false,
+      "remote_bytes": 2823,
+      "remote_line_endings_normalized_equal_to_git": true,
+      "remote_sha256": "eaa3ca6da6b716f29dcc20797ffe355e33e8479f38a035b73c87d8a68e046dda"
+    },
+    "src/molgap/pcqm_distance_angle_scale.py": {
+      "equal": false,
+      "git_source_sha256": "4cc948be15939c51eb2a42d1bc25f070908a47dd4ddc03b71e33c5ffb5c9d4cc",
+      "raw_equal_to_git": false,
+      "remote_bytes": 39901,
+      "remote_line_endings_normalized_equal_to_git": true,
+      "remote_sha256": "7ae1d0d08f3d07389f79b8abaa89cd4eaafe66bd9bd5e5d3a872c2737c56482c"
+    }
+  },
+  "source_commit": "c2302c7d433dfec73d293cdbd71ee46aa9e4cae5"
+}

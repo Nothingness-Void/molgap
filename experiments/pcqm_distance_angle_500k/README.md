@@ -5,8 +5,10 @@ bottom-fusion gain survives a matched 500K scale bridge.
 
 - Frozen protocol: [`protocol.md`](protocol.md)
 - Remote launch identity: `remote_launch.json` after submission
-- Terminal evidence and the decision are added only after both paired arms
-  complete and pass mechanical acceptance.
+- Terminal decision: `decision.md`.
+- Reproducible no-inference audit: `accept_terminal.py` and
+  `results/terminal_replay_20260923.json`.
+- Remote hash, scheduler, and paired comparison receipts are under `results/`.
 
 This experiment does not authorize official validation/test-dev access or a
 full-data run.
