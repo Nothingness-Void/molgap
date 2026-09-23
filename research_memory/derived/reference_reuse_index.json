@@ -127,7 +127,7 @@
       "scientific_scope": "fixed_500k_gptrans_noisy_nodes_scale_transfer",
       "source_envelope": "experiments/pcqm_gptrans_noisy_nodes_500k/v5_evidence.json",
       "track": "B",
-      "transfer_status": "qualified_with_diminished_retention",
+      "transfer_status": "not_qualified_scale_transfer",
       "used_by_trajectory_ids": []
     },
     {
@@ -148,6 +148,26 @@
       "source_envelope": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
       "track": "B",
       "transfer_status": "qualified_for_500k",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "paired_development_comparison_complete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_500k_gptrans_noisy_pair_norm_scale_transfer",
+      "source_envelope": "experiments/pcqm_gptrans_noisy_pair_norm_500k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified_scale_transfer",
       "used_by_trajectory_ids": []
     },
     {
@@ -197,7 +217,6 @@
       "track": "B",
       "transfer_status": "not_v4_reference",
       "used_by_trajectory_ids": [
-        "TB-gptrans-noisy-pair-norm-500k-s42",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic"
       ]
@@ -261,7 +280,8 @@
       "track": "B",
       "transfer_status": "nomination_only_not_full_scale_promotion",
       "used_by_trajectory_ids": [
-        "TB-gptrans-noisy-nodes-500k-s42"
+        "TB-gptrans-noisy-nodes-500k-s42",
+        "TB-gptrans-noisy-pair-norm-500k-s42"
       ]
     },
     {

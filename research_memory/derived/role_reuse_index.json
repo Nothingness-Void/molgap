@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 66,
+  "ambiguous_historical_role_record_count": 70,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-edgestate-rich-full-submission",
@@ -206,6 +206,34 @@
     },
     {
       "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -464,7 +492,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 13,
+  "explicit_role_event_count": 15,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -521,6 +549,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
@@ -530,6 +565,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
@@ -579,6 +621,7 @@
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-residual-reconciliation",
@@ -594,6 +637,7 @@
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
@@ -611,6 +655,7 @@
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
@@ -644,6 +689,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
       }
     ]
   },
@@ -692,6 +753,38 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [

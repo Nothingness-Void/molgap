@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "1d78071f0000e5b33ac342b22d18b174b969823cd2c62dd6a2cd0f51ae46469f",
+  "source_digest": "7bc1ea73a4f96147bfbea4c403bba86010f3f14bbdf8fca98c1600db8bd765b7",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -72,7 +72,7 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_noisy_nodes_500k/decision.md",
       "family_id": "gptrans-t",
-      "outcome": "POSITIVE_BELOW_GATE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-noisy-nodes-100k-s42",
@@ -108,9 +108,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md",
       "family_id": "gptrans-t",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-noisy-pair-norm-100k-s42",
@@ -119,7 +119,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_noisy_pair_norm_500k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-noisy-pair-norm-500k-s42"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
     },
