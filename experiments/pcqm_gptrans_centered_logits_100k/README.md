@@ -11,3 +11,7 @@ execution identity. `experiment_spec.json` and `prospective/`
 bind the shared local experiment core and RML plan. Kaggle packaging and the
 single-arm entry script remain thin adapters around the existing GPTrans V4
 trainer.
+
+The Kaggle3 version-1 push and observed platform state are recorded under
+`launch/`. Training, terminal acceptance, and the scientific decision remain
+pending until durable outputs can be reconciled.
