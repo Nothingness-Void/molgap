@@ -1,0 +1,22 @@
+{
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260923,
+  "candidate_mae_eV": 0.10572750276565551,
+  "candidate_manifest_sha256": "3f7805665bafbbca16100909110942cf5867ace8d91df0e002523d796686ea31",
+  "candidate_predictions_sha256": "731d67452b31bed74909023031eb9bbc122e8b0e022ff6e2c35bd3599d7113f4",
+  "format": "molgap-pair-norm-500k-paired-comparison-v1",
+  "nominated_under_frozen_point_gate": false,
+  "nomination_floor_eV": 0.003,
+  "protected_roles": "untouched",
+  "reference_mae_eV": 0.10686752763271332,
+  "reference_manifest_sha256": "7cf5243d0a5a34818f8a86801347be9dffb6fd6b81a66df34958c9582a79c536",
+  "reference_minus_candidate_mae_eV": 0.0011400248670578002,
+  "reference_predictions_sha256": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf",
+  "row_paired_bootstrap_95pct_eV": [
+    0.0006059959156513214,
+    0.0016689352185726162
+  ],
+  "rows": 50000,
+  "source_idx_and_target_alignment": true,
+  "uncertainty_scope": "development rows only; does not measure training stochasticity"
+}

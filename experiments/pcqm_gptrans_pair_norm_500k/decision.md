@@ -25,10 +25,20 @@
 2. **Threshold Falsifier Determination**:
    The score `0.105728 eV` did not clear the pre-registered `3.0 meV` material promotion threshold (`< 0.103868 eV`). Under the strict fail-closed contract, this outcome is `NEGATIVE_UNDER_CONTRACT`; its numerical improvement remains useful single-variable attribution evidence.
 
-3. **Disentangling Joint Regularization**:
-   Comparing the isolated Pair Norm gain (`+1.140 meV`) with isolated Noisy Nodes (`+1.812 meV`) and their joint combination (`+2.056 meV`) reveals sub-additive diminishing returns ($1.812 + 1.140 = 2.952 > 2.056\text{ meV}$), confirming that both regularizers partially address representation collapse/co-adaptation during extended 500K training.
+3. **Comparison with the joint screen**:
+   The isolated Pair Norm gain (`+1.140 meV`), isolated Noisy Nodes gain (`+1.812 meV`), and joint gain (`+2.056 meV`) are sub-additive as point estimates. These three runs do not identify the underlying mechanism or quantify training-seed variation.
+
+The candidate and frozen GPTrans reference predictions have identical 50,000
+development source indices and targets. The row-paired reference-minus-candidate
+MAE is `+0.00114002 eV`; a post-hoc 10,000-replicate row bootstrap gives
+`[+0.00060600, +0.00166894] eV`. This interval describes development-row
+uncertainty, not training stochasticity. The comparison is reproducible from
+`analyze_pair.py` and `results/paired_comparison.json`.
 
 ## 3. Provenance & Compliance
 
 - Full 60-epoch trace (234,360 optimizer steps, 29,998,080 sample presentations) validated and ingested into RML canonical trace index.
-- All artifact hashes verified locally against downloaded Kaggle execution outputs.
+- The corrected `accept.py` verified every stage-manifest artifact hash and the
+  realized train-only target-transform fingerprint. Its earlier symbolic-versus-
+  realized contract comparison rejected this valid artifact before hash checks.
+  The correction did not change training, artifacts, or the frozen decision gate.
