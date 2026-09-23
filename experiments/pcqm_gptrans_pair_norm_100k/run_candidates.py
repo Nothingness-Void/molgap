@@ -101,7 +101,8 @@ def worker(mode: str, root: Path) -> None:
 
 def main() -> None:
     mode = os.environ.get("MOLGAP_VARIANT")
-    root = Path(os.environ["MOLGAP_SOURCE_ROOT"]) if mode else source_root()
+    root = (Path(os.environ["MOLGAP_SOURCE_ROOT"])
+            if "MOLGAP_SOURCE_ROOT" in os.environ else source_root())
     if mode:
         if mode not in MODES:
             raise RuntimeError(f"Unauthorized mode: {mode}")
