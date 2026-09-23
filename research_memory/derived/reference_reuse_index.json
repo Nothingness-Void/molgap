@@ -316,7 +316,9 @@
       "source_envelope": "experiments/pcqm_k1_pair_token_500k/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_ready",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TC-k1-pairtoken-combination-transfer"
+      ]
     },
     {
       "artifact_availability": [
@@ -378,6 +380,26 @@
       "source_envelope": "experiments/pcqm_k1_pair_token_node_return_100k/v5_evidence.json",
       "track": "C",
       "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "ignored_local_verified",
+        "repository"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "three-rule saved-prediction audit on already-used 100K and 500K development roles",
+      "source_envelope": "experiments/pcqm_specialist_combination_transfer/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "EXPLORATORY_FIXED_EQUAL_ONLY",
       "used_by_trajectory_ids": []
     },
     {
@@ -452,6 +474,7 @@
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-mose-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-pairtoken-combination-transfer",
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42"
       ]

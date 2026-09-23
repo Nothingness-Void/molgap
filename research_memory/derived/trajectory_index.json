@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "17e97a57f79d0d009753bdd50a5336eacd00279f2d59cd870ed74e1a86195d02",
+  "source_digest": "8ae5efa963710a590e0bfbd7ad74a3e05497a983a9e7bb81eb4102be498c5079",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -286,6 +286,40 @@
     },
     {
       "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md",
+      "family_id": "k1-pair-token-scale-attribution",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TB-k1-pair-token-500k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_pair_token_scale_attribution/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-pair-token-scale-attribution"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_specialist_combination_transfer/decision.md",
+      "family_id": "k1-pairtoken-combination",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TB-k1-pair-token-500k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_specialist_combination_transfer/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-pairtoken-combination-transfer-20260923"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-pairtoken-combination-transfer"
+    },
+    {
+      "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_sparse_triplet_100k/decision.md",
       "family_id": "k1-sparse-triplet",
       "outcome": "NEGATIVE_UNDER_CONTRACT",
@@ -319,6 +353,20 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md",
+      "family_id": "k1-precision-execution-diagnostic",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
     },
     {
       "completeness_status": "partial",

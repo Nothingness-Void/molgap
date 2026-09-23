@@ -281,6 +281,76 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/preflight_122742924.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round1_terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A002",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A002",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_residual_analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_submission.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/results/acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-sparse-triplet-100k-s42:A001",
       "target": "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -298,6 +368,26 @@
     {
       "source": "TC-k1-spd-pair-token-100k-s42:A001",
       "target": "experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/submission.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
       "type": "action_produced_evidence"
     },
     {
@@ -328,6 +418,16 @@
     {
       "source": "TB-k1-pair-token-500k-s42",
       "target": "TC-k1-pair-token-batch-profile",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
       "type": "parent_trajectory"
     },
     {
@@ -497,12 +597,32 @@
     },
     {
       "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
       "target": "TC-k1-spd-pair-token-100k-s42",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-k1-pair-token-500k-s42",
       "target": "TC-k1-pair-token-batch-profile",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
       "type": "prior_evidence"
     },
     {
@@ -582,12 +702,22 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-sparse-triplet-100k-s42",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-tf32-a100-paired-s42",
       "type": "prior_evidence"
     },
     {
@@ -603,6 +733,11 @@
     {
       "source": "pcqm-k1-mose-residual-gate-100k-s42",
       "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
       "type": "reference_used"
     },
     {
@@ -658,6 +793,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
       "type": "reference_used"
     },
     {
@@ -746,6 +886,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-sparse-triplet-100k-s42",
       "type": "evidence"
     },
@@ -826,11 +970,23 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-k1-pair-token-scale-attribution",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pairtoken-combination-transfer",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-k1-sparse-triplet-100k-s42",
       "type": "trajectory"
     },
     {
       "id": "TC-k1-spd-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-tf32-a100-paired-s42",
       "type": "trajectory"
     },
     {

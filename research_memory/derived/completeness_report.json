@@ -1,33 +1,36 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 20,
+    "trajectories_total": 23,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 20,
-    "with_incomplete_native_measurement": 18,
+    "with_cost_event": 23,
+    "with_incomplete_native_measurement": 21,
     "without_cost_event": 0
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 4
+    "WARN": 5
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 5,
+      "count": 8,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
+        "TC-k1-pair-token-scale-attribution",
+        "TC-k1-pairtoken-combination-transfer",
+        "TC-k1-tf32-a100-paired-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
     },
     {
       "code": "historical_partial_record",
-      "count": 12,
+      "count": 13,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TB-k1-pair-token-500k-s42",
@@ -39,6 +42,7 @@
         "TC-k1-mose-residual-gate-100k-s42",
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-batch-profile",
+        "TC-k1-pairtoken-combination-transfer",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -46,7 +50,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 18,
+      "count": 21,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -62,8 +66,11 @@
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-mose-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-pair-token-scale-attribution",
+        "TC-k1-pairtoken-combination-transfer",
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42",
+        "TC-k1-tf32-a100-paired-s42",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -71,9 +78,19 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 1,
+      "count": 2,
       "items": [
+        "TC-k1-tf32-a100-paired-s42",
         "TS-v5-legacy-evidence-migration"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "trajectory_without_v5_evidence",
+      "count": 2,
+      "items": [
+        "TC-k1-pair-token-scale-attribution",
+        "TC-k1-tf32-a100-paired-s42"
       ],
       "severity": "WARN"
     },
