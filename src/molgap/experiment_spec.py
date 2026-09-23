@@ -9,12 +9,14 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from pathlib import PureWindowsPath
 from types import MappingProxyType
 
 from .screen_policy import canonical_fingerprint
 
 
 SCHEMA_VERSION = "molgap-experiment-spec-v1"
+SCHEMA_VERSION_V2 = "molgap-experiment-spec-v2"
 TERMINAL_PROTOCOL = "molgap-experiment-terminal-descriptor-v1"
 
 
@@ -110,6 +112,24 @@ def _list(value, path: str, *, nonempty: bool = True) -> None:
         raise ValueError(f"{path}: expected {'nonempty ' if nonempty else ''}array")
 
 
+def _repo_path(value, path: str, *, output: bool = False) -> None:
+    _text(value, path)
+    if ("\\" in value or ":" in value or value.startswith("/")
+            or PureWindowsPath(value).drive or PureWindowsPath(value).root):
+        raise ValueError(f"{path}: expected repository-relative POSIX path")
+    parts = value.split("/")
+    for part in parts:
+        if (part in {"", ".", ".."} or part.endswith((" ", "."))
+                or any(ord(char) < 32 or char in '<>"|?*' for char in part)
+                or PureWindowsPath(part).is_reserved()):
+            raise ValueError(f"{path}: unsafe path component")
+    if output:
+        if len(parts) < 2 or parts[0] != "experiments":
+            raise ValueError(f"{path}: output must be below experiments/")
+    elif not value.endswith(".json"):
+        raise ValueError(f"{path}: expected JSON plan input")
+
+
 def _arm(arm: dict) -> None:
     _object(arm, "arm_id scientific_role family base initialization data training addons addon_semantics", "arm")
     _identifier(arm["arm_id"], "arm.arm_id")
@@ -175,7 +195,7 @@ def _arm(arm: dict) -> None:
 def validate_experiment_spec(payload: dict) -> dict:
     """Return a detached strict JSON declaration; never certify runtime/evidence."""
     spec = _object(payload, "schema_version experiment_id logical_run_id arms platform prospective evidence terminal_protocol", "spec")
-    _choice(spec["schema_version"], (SCHEMA_VERSION,), "schema_version")
+    _choice(spec["schema_version"], (SCHEMA_VERSION, SCHEMA_VERSION_V2), "schema_version")
     _identifier(spec["experiment_id"], "experiment_id")
     _identifier(spec["logical_run_id"], "logical_run_id")
     _choice(spec["terminal_protocol"], (TERMINAL_PROTOCOL,), "terminal_protocol")
@@ -195,11 +215,35 @@ def validate_experiment_spec(payload: dict) -> dict:
     for field in ("atomic_checkpoints", "retrievable_chunks"):
         if platform[field] is not True:
             raise ValueError("Durability requirements cannot be disabled")
-    prospective = _object(spec["prospective"], "trajectory_id hypothesis cheapest_falsifier stop_rule budget_sha256", "prospective")
-    _identifier(prospective["trajectory_id"], "prospective.trajectory_id")
-    for field in ("hypothesis", "cheapest_falsifier", "stop_rule"):
-        _text(prospective[field], "prospective." + field)
-    _digest(prospective["budget_sha256"], "prospective.budget_sha256")
+    if spec["schema_version"] == SCHEMA_VERSION:
+        prospective = _object(spec["prospective"], "trajectory_id hypothesis cheapest_falsifier stop_rule budget_sha256", "prospective")
+        _identifier(prospective["trajectory_id"], "prospective.trajectory_id")
+        for field in ("hypothesis", "cheapest_falsifier", "stop_rule"):
+            _text(prospective[field], "prospective." + field)
+        _digest(prospective["budget_sha256"], "prospective.budget_sha256")
+    else:
+        prospective = _object(spec["prospective"], "arms", "prospective")
+        _list(prospective["arms"], "prospective.arms")
+        mapped_ids = []
+        trajectory_ids = set()
+        outputs = set()
+        for entry in prospective["arms"]:
+            _object(entry, "arm_id trajectory_id plan_spec_ref plan_spec_sha256 output", "prospective.arm")
+            for field in ("arm_id", "trajectory_id"):
+                _identifier(entry[field], "prospective.arm." + field)
+            _digest(entry["plan_spec_sha256"], "prospective.arm.plan_spec_sha256")
+            _repo_path(entry["plan_spec_ref"], "prospective.arm.plan_spec_ref")
+            _repo_path(entry["output"], "prospective.arm.output", output=True)
+            mapped_ids.append(entry["arm_id"])
+            if entry["trajectory_id"] in trajectory_ids:
+                raise ValueError("Duplicate prospective trajectory_id")
+            trajectory_ids.add(entry["trajectory_id"])
+            output_key = entry["output"].casefold()
+            if output_key in outputs:
+                raise ValueError("Duplicate prospective output")
+            outputs.add(output_key)
+        if len(mapped_ids) != len(set(mapped_ids)) or set(mapped_ids) != set(ids):
+            raise ValueError("Prospective arm mapping must match spec arms exactly once")
     evidence = _object(spec["evidence"], "policy required_artifacts", "evidence")
     _reference(evidence["policy"], "evidence.policy", name="molgap-v5")
     _list(evidence["required_artifacts"], "evidence.required_artifacts")
