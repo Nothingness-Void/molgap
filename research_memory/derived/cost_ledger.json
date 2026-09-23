@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 7,
-  "event_count": 20,
+  "event_count": 24,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 10,
+  "measurement_missing_event_count": 14,
   "not_applicable_event_count": 13,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -53,6 +53,54 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Z100SM DCU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Z100SM DCU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Z100SM DCU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Z100SM DCU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -106,6 +154,56 @@
         "unknown_records": 0
       }
     },
+    "preflight": {
+      "Hygon DCU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Hygon DCU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.06277777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Hygon DCU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Hygon DCU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.06277777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "training": {
       "A100:cpu_hours": {
         "estimated": {
@@ -154,6 +252,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 2
+      },
+      "Hygon DCU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "Hygon DCU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 30.91138888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Hygon DCU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "Hygon DCU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 2,
+          "known_total": 30.91138888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       },
       "IMS_GPU_UNSPECIFIED:cpu_hours": {
         "estimated": {
@@ -398,6 +544,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 2
+      }
+    },
+    "Hygon DCU": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 30.97416666666667
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 30.97416666666667
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "IMS_GPU_UNSPECIFIED": {
@@ -650,6 +846,56 @@
         "unknown_records": 1
       }
     },
+    "Z100SM DCU": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "not_applicable": {
       "cpu_hours": {
         "estimated": {
@@ -702,6 +948,56 @@
     }
   },
   "totals_by_trajectory": {
+    "TB-distance-angle-triangle-500k-20260911": {
+      "Hygon DCU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "Hygon DCU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 30.97416666666667
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Hygon DCU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "Hygon DCU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 30.97416666666667
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "TB-edgestate-rich-full-v1": {
       "IMS_GPU_UNSPECIFIED:cpu_hours": {
         "estimated": {
@@ -1395,6 +1691,56 @@
           "known_total": null
         },
         "not_applicable_records": 1,
+        "unknown_records": 0
+      }
+    },
+    "TB-xian-determinism-audit-20260915": {
+      "Z100SM DCU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Z100SM DCU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Z100SM DCU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Z100SM DCU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
         "unknown_records": 0
       }
     },

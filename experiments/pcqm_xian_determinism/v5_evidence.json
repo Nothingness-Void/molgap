@@ -1,0 +1,70 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "experiments/pcqm_xian_determinism/results/initial_probe/model-replay/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "f4605e0856b1b5f381f7981383732b45528b3b8415d053e048ab481347ad8ea1"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "experiments/pcqm_xian_determinism/results/initial_probe/model-replay/first.json",
+      "name": "first.json",
+      "sha256": "1e8d0141e1f32a5fc8072c4bae12ada8dc96bc81dae970a511245e275809942b"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "experiments/pcqm_xian_determinism/results/initial_probe/model-replay/second.json",
+      "name": "second.json",
+      "sha256": "602d13e67c21b19f0c17b7c58851edecf214f8bd13d3b2bb4f11f99bc191ce26"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_xian_determinism/results/initial_probe/terminal_replay_20260923.json",
+      "name": "terminal_replay",
+      "sha256": "0b4281024496b61564619db7f947e393a88310cd1ba35675f9862e1de3ce1d58"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_xian_determinism/protocol.md",
+      "experiments/pcqm_xian_determinism/results/initial_probe/terminal_replay_20260923.json",
+      "experiments/pcqm_xian_determinism/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-xian-determinism-audit-20260915",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-xian-model-determinism-acceptance-v1",
+  "metrics": {
+    "cross_process_gradients_equal": false,
+    "cross_process_initial_model_equal": true,
+    "cross_process_predictions_equal": true,
+    "gradient_fingerprints_different": 269,
+    "gradient_fingerprints_total": 454
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retrospective exact remote SHA256 and local JSON recomputation; no model execution"
+  },
+  "outcome": {
+    "artifact_status": "remote_sha256_and_local_replay_verified",
+    "budget_decision": "no_short_training_retest",
+    "comparison_status": "cross_process_gradient_identity_failed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_qualified",
+    "scientific_status": "negative_under_frozen_determinism_gate",
+    "transfer_status": "blocked"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "synthetic_inputs": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "synthetic_xian_card2_full_model_determinism_audit",
+  "track": "B"
+}

@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 24,
+    "trajectories_total": 26,
     "with_complete_native_measurement": 4,
-    "with_cost_event": 13,
-    "with_incomplete_native_measurement": 9,
+    "with_cost_event": 15,
+    "with_incomplete_native_measurement": 11,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,8 +15,9 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 13,
+      "count": 15,
       "items": [
+        "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gptrans-full-convergence-20260919",
@@ -27,6 +28,7 @@
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
+        "TB-xian-determinism-audit-20260915",
         "TC-k1-pair-value-decoupled-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
@@ -35,8 +37,9 @@
     },
     {
       "code": "historical_partial_record",
-      "count": 15,
+      "count": 17,
       "items": [
+        "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
@@ -49,6 +52,7 @@
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
+        "TB-xian-determinism-audit-20260915",
         "TC-gptrans-flow-ablation-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
@@ -57,8 +61,9 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 9,
+      "count": 11,
       "items": [
+        "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-gptrans-feature-denoise-full-atom-100k-s42",
         "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
@@ -67,6 +72,7 @@
         "TB-k1-residual-reconciliation",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
+        "TB-xian-determinism-audit-20260915",
         "TC-k1-pair-value-decoupled-100k-s42"
       ],
       "severity": "WARN"
@@ -91,7 +97,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 12,
+      "count": 13,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -102,6 +108,7 @@
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
+        "TB-xian-determinism-audit-20260915",
         "TC-gptrans-flow-ablation-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"

@@ -6,6 +6,27 @@
   "references": [
     {
       "artifact_availability": [
+        "durable_local_verified",
+        "durable_remote_and_local_verified"
+      ],
+      "comparison_status": "paired_endpoint_under_frozen_legacy_contract",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-distance-angle-triangle-500k-20260911",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_scnet_distance_angle_triangle_500k_internal_development",
+      "source_envelope": "experiments/pcqm_distance_angle_500k/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_v5_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_ims_verified",
         "local_external_verified"
       ],
@@ -475,6 +496,27 @@
       "source_envelope": "experiments/pcqm_scale_transfer_diagnostic/v5_evidence.json",
       "track": "B",
       "transfer_status": "qualified_for_500k",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified",
+        "durable_remote_and_local_verified"
+      ],
+      "comparison_status": "cross_process_gradient_identity_failed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-xian-determinism-audit-20260915",
+      "role_use": {
+        "official_validation": "untouched",
+        "synthetic_inputs": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "synthetic_xian_card2_full_model_determinism_audit",
+      "source_envelope": "experiments/pcqm_xian_determinism/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "blocked",
       "used_by_trajectory_ids": []
     }
   ]

@@ -1,6 +1,36 @@
 {
   "edges": [
     {
+      "source": "TB-distance-angle-triangle-500k-20260911:A000",
+      "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-distance-angle-triangle-500k-20260911:A000",
+      "target": "experiments/pcqm_distance_angle_500k/results/terminal_replay_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-distance-angle-triangle-500k-20260911:A001",
+      "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-distance-angle-triangle-500k-20260911:A001",
+      "target": "experiments/pcqm_distance_angle_500k/results/terminal_replay_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-distance-angle-triangle-500k-20260911:A002",
+      "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-distance-angle-triangle-500k-20260911:A002",
+      "target": "experiments/pcqm_distance_angle_500k/results/terminal_replay_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-edgestate-rich-full-v1:A001",
       "target": "experiments/pcqm_edge_state_full/results/rich_full/acceptance.json",
       "type": "action_produced_evidence"
@@ -118,6 +148,11 @@
     {
       "source": "TB-route-b-four-encoder-specialist:A001",
       "target": "experiments/pcqm_route_b/results/run_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-xian-determinism-audit-20260915:A001",
+      "target": "experiments/pcqm_xian_determinism/results/initial_probe/terminal_replay_20260923.json",
       "type": "action_produced_evidence"
     },
     {
@@ -464,6 +499,10 @@
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
     {
+      "id": "pcqm-distance-angle-triangle-500k-20260911",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-edgestate-rich-full-submission",
       "type": "evidence"
     },
@@ -552,6 +591,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-xian-determinism-audit-20260915",
+      "type": "evidence"
+    },
+    {
+      "id": "TB-distance-angle-triangle-500k-20260911",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-edgestate-rich-full-v1",
       "type": "trajectory"
     },
@@ -629,6 +676,10 @@
     },
     {
       "id": "TB-route-b-four-encoder-specialist",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-xian-determinism-audit-20260915",
       "type": "trajectory"
     },
     {

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "single-20260915",
+  "category": "audit",
+  "cost_event_id": "cost-TB-xian-determinism-audit-20260915-audit",
+  "evidence_ref": "experiments/pcqm_xian_determinism/results/initial_probe/scheduler_20260923.json",
+  "hardware": "Z100SM DCU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.07388888888888889
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.07388888888888889
+    }
+  },
+  "platform": "SCNet Xi'an",
+  "run_id": "67440607",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-xian-determinism-audit-20260915"
+}

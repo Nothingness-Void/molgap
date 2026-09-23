@@ -1,6 +1,34 @@
 {
-  "ambiguous_historical_role_record_count": 92,
+  "ambiguous_historical_role_record_count": 100,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
     {
       "evidence_id": "pcqm-edgestate-rich-full-submission",
       "role_identity": null,
@@ -644,9 +672,37 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-xian-determinism-audit-20260915",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-xian-determinism-audit-20260915",
+      "role_identity": null,
+      "role_name": "synthetic_inputs",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-xian-determinism-audit-20260915",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-xian-determinism-audit-20260915",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 30,
+  "explicit_role_event_count": 36,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -697,6 +753,52 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed500k_train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      }
+    ],
+    "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
       }
     ],
     "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_50k": [
@@ -890,6 +992,7 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
@@ -910,9 +1013,11 @@
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",
-      "pcqm-scale-transfer-diagnostic-evidence"
+      "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
@@ -933,7 +1038,8 @@
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",
-      "pcqm-scale-transfer-diagnostic-evidence"
+      "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-xian-determinism-audit-20260915"
     ]
   },
   "repeatedly_selected_role_identities": {
@@ -965,6 +1071,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [

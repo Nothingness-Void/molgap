@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-15",
+  "job_id": "67440607",
+  "partition": "xahdtest",
+  "observed_state": "RUNNING",
+  "observed_node": "c06r2n07",
+  "time_limit_minutes": 20,
+  "device_count": 1,
+  "batch_size": 128,
+  "processes_sequential": 2,
+  "replays_per_process": 3,
+  "precision": "fp32",
+  "audit_source_sha256": "d138426cef00027c2e72605ce3c7348966fe63d19e448cbc316ebc4bb6afec1f",
+  "model_source_sha256": "8c059653b3888cbc9610610cc6cc0135522cf4ee3979dcebbe3c45c8ace981ec",
+  "remote_result_directory_basename": "xian-probe-20260915",
+  "purpose": "Recheck full-model forward/backward repeatability after conflicting historical passes and failures; not a V4 model ranking or training acceptance.",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
+

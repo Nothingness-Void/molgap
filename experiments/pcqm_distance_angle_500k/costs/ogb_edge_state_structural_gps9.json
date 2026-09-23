@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "single-20260911",
+  "category": "training",
+  "cost_event_id": "cost-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9",
+  "evidence_ref": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
+  "hardware": "Hygon DCU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 14.270277777777778
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 14.270277777777778
+    }
+  },
+  "platform": "SCNet Kunshan",
+  "run_id": "121738978",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+}

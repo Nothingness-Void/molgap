@@ -360,6 +360,8 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
     assert trajectories["TC-k1-pair-value-decoupled-100k-s42"]["outcome"] == "INCONCLUSIVE"
     assert trajectories["TB-gptrans-feature-denoise-full-atom-100k-s42"]["outcome"] == "INCONCLUSIVE"
     assert trajectories["TB-gptrans-feature-denoise-full-atom-bond-100k-s42"]["outcome"] == "INCONCLUSIVE"
+    assert trajectories["TB-distance-angle-triangle-500k-20260911"]["outcome"] == "POSITIVE_UNDER_CONTRACT"
+    assert trajectories["TB-xian-determinism-audit-20260915"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"
 
 
 def test_empty_numeric_basis_serializes_as_null():

@@ -1,0 +1,20 @@
+{
+  "artifact_status": "verified",
+  "audited_at": "2026-09-23",
+  "checks": {
+    "complete_three_replays": true,
+    "cross_process_gradient_failure": true,
+    "cross_process_initial_and_prediction": true,
+    "protected_roles": true,
+    "remote_sha256_sums": true,
+    "same_frozen_contract": true,
+    "scheduler": true,
+    "within_process_identity": true
+  },
+  "differing_gradient_parameter_count": 269,
+  "format": "molgap-xian-determinism-terminal-replay-v1",
+  "full_model_replay_gate": "failed_cross_process_gradients",
+  "model_inference_executed_locally": false,
+  "protected_roles": "untouched",
+  "short_training_retest_authorized": false
+}

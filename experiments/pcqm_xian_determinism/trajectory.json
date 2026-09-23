@@ -1,0 +1,74 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "single-20260915"
+      ],
+      "cost_event_ids": [
+        "cost-TB-xian-determinism-audit-20260915-audit"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_xian_determinism/results/initial_probe/terminal_replay_20260923.json"
+      ],
+      "run_ids": [
+        "67440607"
+      ],
+      "source_commit": "unknown_retrospective",
+      "type": "synthetic_full_model_cross_process_replay"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_xian_determinism/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "new runtime or bounded diagnostic contract"
+    ]
+  },
+  "family_id": "xian-determinism-audit",
+  "hypothesis": {
+    "alternative_explanations": [
+      "operator-level acceptance may not transfer to full-model backward passes"
+    ],
+    "changed_mechanism": "bounded synthetic full-model replay with fixed inputs and strict settings",
+    "cheapest_falsifier": "cross-process exact gradient fingerprint comparison",
+    "decision_changed_if_negative": "keep Xi'an scientific ranking blocked",
+    "decision_changed_if_positive": "allow separately gated short training retest",
+    "expected_native_cost_ref": null,
+    "historical_unknowns": [
+      "no prospective RML trajectory was frozen before the probe"
+    ],
+    "hypothesis_id": "H-TB-xian-determinism-audit-20260915",
+    "observed_deficiency": "historical identical runs and model replay had diverging gradients",
+    "related_closed_family_ids": [],
+    "supporting_evidence_ids": []
+  },
+  "owner": "desktop",
+  "question": "Does the Xi'an Card2 runtime reproduce full-model gradients across independent processes?",
+  "record_mode": "retrospective_partial",
+  "result": {
+    "evidence_ids": [
+      "pcqm-xian-determinism-audit-20260915"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_xian_determinism/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": null,
+    "contract_refs": [
+      "experiments/pcqm_xian_determinism/protocol.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_xian_determinism/protocol.md"
+    ],
+    "source_commit": "unknown_retrospective"
+  },
+  "track": "B",
+  "trajectory_id": "TB-xian-determinism-audit-20260915"
+}

@@ -1,0 +1,27 @@
+{
+  "format": "molgap-pcqm-edgestate304-500k-acceptance-v1",
+  "accepted": true,
+  "checks": {
+    "format": true,
+    "complete": true,
+    "feature_schema": true,
+    "node_feature_dim": true,
+    "edge_feature_dim": true,
+    "rwse_dim": true,
+    "train_rows": true,
+    "development_rows": true,
+    "official_validation_sealed": true,
+    "test_dev_sealed": true,
+    "shard_count": true,
+    "all_shards": true,
+    "role_counts": true,
+    "aggregate": true
+  },
+  "aggregate_sha256": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+  "counts": {
+    "train": 500000,
+    "development": 50000
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

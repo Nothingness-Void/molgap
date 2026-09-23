@@ -15,8 +15,6 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 | Branch | Reason retained / evidence entry |
 |---|---|
-| codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
-| codex/scnet-distance-angle-triangle-500k | Submitted experiment without a terminal decision at its branch tip |
 | codex/exp/gptrans-pair-norm-500k | Submitted Kaggle3 PairNorm bridge; terminal artifacts are not locally available |
 
 Inspect these named branches only when working on their question. Their old
@@ -27,6 +25,9 @@ The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
 Its experiment evidence is integrated into `molgap-desktop`; retain the branch
 ref for source provenance until its commits are durably reachable from an owner
 or archive branch.
+The distance-angle and Xi'an audit branches reached terminal decisions at
+`86a4489` and `3fc1d80`. Their evidence is integrated into `molgap-desktop`;
+retain the branch refs under the same provenance rule.
 
 ## Cleanup evidence
 
@@ -51,8 +52,8 @@ desktop checkout is a detached snapshot; use the primary checkout for new work.
 
 The completed matched-500K V4, geometry-transfer, and IMS V4 infrastructure
 branches were integrated or preserved in `archive` before their local and
-remote branch refs were removed. The GPTrans V4 and Xi'an worktrees were
-committed and pushed, but remain active until their terminal questions close.
+remote branch refs were removed. The Xi'an audit and distance-angle branches
+have terminal decisions recorded above; their refs remain for provenance.
 No remote scheduler was queried and no compute workload was changed by this audit.
 
 The completed GPTrans-T 100K V4 branch was integrated into `molgap-desktop` by
