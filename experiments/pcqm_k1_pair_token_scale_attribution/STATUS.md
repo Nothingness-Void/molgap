@@ -7,9 +7,10 @@ regression against this exact K1 reference. Its dated authority is
 `results/round2_decision.md`; its numerical source is
 `results/round2_residual_analysis.json`.
 
-The predeclared Round-3 gate is met. The one frozen-checkpoint PairToken
-inference job is SCNet `122843454` (submitted 2026-09-23). It must reproduce
-the accepted baseline prediction payload and retain chunk hashes. The existing
-Luna monitor is bound to that exact ID; it may not retry, train, read protected
-roles, or authorize a successor or full run. Submission provenance is in
-`results/round3_submission.md`.
+Round 3 SCNet job `122843454` completed with exit code zero. All ten
+prediction chunks passed independent no-inference acceptance, and the accepted
+baseline was reproduced. The relation branch remained active, yet the exact
+500K PairToken-versus-K1 comparison was unfavorable. This bounded attribution
+is closed; no seed, architecture successor, full run, or protected-role access
+is released. Scientific authority is `results/round3_decision.md`; scheduler,
+role, cost, and artifact hashes are in `results/round3_terminal.json`.
