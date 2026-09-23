@@ -1,0 +1,19 @@
+{
+  "id": "nvoid912/molgap-gptrans-pair-update-500k-profile-v1",
+  "title": "MolGap GPTrans Pair Update 500K Profile V1",
+  "code_file": "run_profile.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nvoid912/molgap-gptrans-pair-norm-v5-source-v2",
+    "nvoid912/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
+

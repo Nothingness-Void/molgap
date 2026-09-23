@@ -1,0 +1,26 @@
+{
+  "format": "molgap-gptrans-pair-normalization-100k-v5-contract-v1",
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "reference_model": "gptrans_t_core_12x256_pair32/reference",
+  "candidates": ["pair_update_norm", "pair_post_norm"],
+  "parameter_count_per_arm": 5246817,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "roles": {
+    "train": [0, 100000],
+    "development": [100000, 150000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "physical_batch_per_device": 128,
+  "device_count_per_arm": 1,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "epochs": 60,
+  "optimizer_steps_per_arm": 46860,
+  "sample_presentations_per_arm": 5998080,
+  "minimum_gain_eV": 0.003
+}

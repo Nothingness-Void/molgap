@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-gptrans-t-100k-reference-v4",
+  "variant": "pair_post_norm",
+  "parameters": 5246817,
+  "variant_source_sha256": "b6b8cc3dadc7c12cc6d8d62c26a349c50284a815dc741d4f1625bbd5e4796c6d",
+  "checkpoint_sha256": "c744ba8e31672823c4cc6ed9c2924ee31de17bc617fba3fa601911bda793a712",
+  "checkpoint_chunks": {
+    "checkpoint_epoch_09.pt": "b5519ba1beacf836715a5b3b4ea517582e91b4f9116e06fbff380168fa7c1e7d",
+    "checkpoint_epoch_19.pt": "91dead3992d25841e938cfb0c5712c260f0b6356737b77effb1337b49d51268f",
+    "checkpoint_epoch_29.pt": "b3c8d0a4e5b994ec5f851f9b8c17457c7db4e27b7c8c93f25f275587a07c1d16",
+    "checkpoint_epoch_39.pt": "924b579235898ecb4948f393c5b0a507b90256493b62354e6dcabfd29999430a",
+    "checkpoint_epoch_49.pt": "c8639ec6f326cd8e90081e8ae1639382bc5d35deca629dcf46c9897234efbbc4",
+    "checkpoint_epoch_59.pt": "c744ba8e31672823c4cc6ed9c2924ee31de17bc617fba3fa601911bda793a712"
+  },
+  "complete": true,
+  "epochs": 60,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "best_development_mae_eV": 0.15861375629901886,
+  "best_epoch": 59,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "runtime_certificate_id": "34c83a322c5f22a49d6f6fe9163569522fd78f253a48afef8c17311227533739",
+  "runtime_calibration_fingerprint": "c4e3cc606c1e65d6ec80868f8e4c988c9dd1681334344af9317ac96dce0dc226",
+  "source_archive_sha256": "8b034350a7188cccc3c9b112625d874af910bc8034ea6591f1607f8e85d47ccf",
+  "source_commit": "5f8d27e52d73dca782fad19cde63896e590e8245",
+  "best_model_sha256": "9fec9f0d7966b3577234b3da1a672a5584399977e7dd92135398a20c4fbeac5a",
+  "development_predictions_sha256": "c33625170f32cb06ace8755d031bccfc86a752986f6679ee4f51800920e01f82",
+  "frozen_reference_sha256": "5fe89b6eda1eb50aa59cf97947dd3b05928d5a47677dfd71ceedd5a5c078b83c",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

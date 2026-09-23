@@ -1,0 +1,17 @@
+{
+  "format": "molgap-kaggle-launch-v1",
+  "kernel": "nvoid912/molgap-gptrans-pair-norm-v5-s42",
+  "kernel_version": 2,
+  "platform": "kaggle3-t4x2",
+  "source_dataset": "nvoid912/molgap-gptrans-pair-norm-v5-source-v2",
+  "graph_dataset": "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+  "source_commit": "5f8d27e52d73dca782fad19cde63896e590e8245",
+  "source_archive_sha256": "8b034350a7188cccc3c9b112625d874af910bc8034ea6591f1607f8e85d47ccf",
+  "initial_state_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "variants": [
+    "pair_update_norm",
+    "pair_post_norm"
+  ],
+  "startup_status": "running",
+  "submitted_at": "2026-09-18T04:09:59+09:00"
+}
