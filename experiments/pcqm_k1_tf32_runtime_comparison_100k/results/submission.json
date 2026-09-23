@@ -1,0 +1,18 @@
+{
+  "format": "molgap-ims-k1-tf32-submission-v1",
+  "submitted_at_utc": "2026-09-23T16:51:24Z",
+  "job_id": "1573113.ccpbs1",
+  "monitor_automation_id": "molgap-ims-k1-tf32-a100-monitor",
+  "initial_scheduler_state": "Queue (gpu)",
+  "preflight_job_id": "1573042.ccpbs1",
+  "preflight_marker": "runtime_ok 2.7.1+cu126 2.6.1",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-tf32-paired-v1",
+  "source_commit": "c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
+  "source_archive_sha256": "37f6554fba777f9617a60422e86cbf0475346bc4b40b78f2a4b17ec3370a5df2",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "paired_arms": ["fp32", "tf32_matmul"],
+  "gpu_training_started": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

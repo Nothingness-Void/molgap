@@ -43,6 +43,11 @@ desktop-owned; server must not launch a duplicate or interfere. Official-role
 use and any final submission remain governed by that experiment's frozen
 contract.
 
+Server-owned IMS job `1573113.ccpbs1` is queued for the separate K1-v4
+FP32/TF32 A100 execution diagnostic; see
+`experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md`. It does not
+modify or take custody of the desktop full run.
+
 ## Discovery state
 
 The extra PairToken+MoSE31 seed-42 round is complete and closed. Saved-artifact
