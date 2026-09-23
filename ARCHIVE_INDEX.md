@@ -41,6 +41,26 @@ The exact metrics, hashes, logs, and acceptance payloads belong to the decision
 paths above. Large checkpoints and transient working outputs remain in their
 platform record locations rather than being copied into Git.
 
+## Closed source tips preserved on 2026-09-23
+
+The archive merge retains these nine complete source histories as parents without
+activating their old root documents or implementations in the archive tree.
+Retrieve a record with `git show <tip>:<path>`; its own decision remains the
+authority for metrics and contract. Their temporary branch names are not live
+work queues.
+
+| Source branch | Tip | Historical disposition | Owning record |
+|---|---|---|---|
+| `codex/exp/gptrans-conditional-flow-100k` | `575a30af` | Negative; terminal RML retained | `experiments/pcqm_gptrans_conditional_flow_100k/decision.md` |
+| `codex/exp/gptrans-flow-ablation-100k` | `76c8fd3e` | Negative propagation ablation | `experiments/pcqm_gptrans_flow_ablation_100k/decision.md` |
+| `codex/exp/k1-induced-pair-100k` | `c587be48` | Negative induced-pair screen | `experiments/pcqm_k1_induced_pair_token_100k/decision.md` |
+| `codex/exp/k1-mose-lite-slot-100k` | `bd303f72` | Closed without training | `experiments/pcqm_k1_structural_lite_slot_100k/analysis.md` |
+| `codex/exp/k1-recurrent-pair-bridge-100k` | `fc131155` | Negative recurrent bridge | `experiments/pcqm_k1_recurrent_pair_bridge_100k/decision.md` |
+| `codex/exp/k1-sparse-pair-spse-100k` | `60a77731` | Negative sparse-pair screen | `experiments/pcqm_k1_sparse_pair_100k/decision.md` |
+| `codex/exp/k1-stateless-pair-bridge-100k` | `e56f7c6f` | Negative stateless bridge | `experiments/pcqm_k1_stateless_pair_bridge_100k/decision.md` |
+| `codex/exp/pcqm-500k-module-attribution` | `8421d1d8` | Completed diagnostic; proposed screens resolved separately | `experiments/pcqm_500k_module_attribution/decision.md` |
+| `codex/fix/ims-convergence-runtime` | `e777ebcb` | Historical execution repair; terminal full-run authority remains desktop-owned | `experiments/pcqm_gptrans_full_convergence/results/resource_repair_20260918.md` |
+
 ## Desktop migration boundary
 
 The desktop migration was prepared from commit `638c9f9` on 2026-09-17. The
