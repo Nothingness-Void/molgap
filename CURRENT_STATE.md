@@ -307,10 +307,11 @@ terminal-accepted. Round 2 aligned all 50,000 fixed 500K development rows:
 PairToken is `0.0006985342 eV` worse than the exact matched60-v4 K1 reference
 (paired 95% row-bootstrap candidate-minus-reference interval
 `[0.0001388103, 0.0012531244] eV`). The positive 100K gain did not retain.
-The predeclared Round-3 frozen-checkpoint intervention is released, inference
-only; no architecture successor, seed, full run, or protected-role access is
-authorized. Authority:
-`experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md`.
+The single predeclared Round-3 frozen-checkpoint inference audit is SCNet
+job `122843454` (running at the last observation). Its existing Luna monitor
+hands terminal evidence back to this server controller. No architecture
+successor, seed, full run, or protected-role access is authorized. Authority:
+`experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md`.
 
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact

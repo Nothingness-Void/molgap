@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
-| P1 | C-PAIRTOKEN-SCALE-ATTRIBUTION | Round 1/2 accepted; run exactly one frozen-checkpoint Round-3 inference audit | Determine whether relation updates remain active despite the aligned 500K regression; no new training or protected role |
+| P1 | C-PAIRTOKEN-SCALE-ATTRIBUTION | Round 1/2 accepted; monitor sole Round-3 inference job `122843454` and accept its chunks | Determine whether relation updates remain active despite the aligned 500K regression; no new training or protected role |
 | P2 | C-K1-PAIRTOKEN-MOSE | Completed: terminal artifacts retained, but undeclared feature identity prevents strict comparison | Keep contextual endpoint and release-gate repair; no retry, seed, scale bridge, or automatic successor |
 | P3 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |
 | P4 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |

@@ -80,6 +80,17 @@
         "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md"
       ],
       "cost_event_ids": []
+    },
+    {
+      "action_id": "A003",
+      "type": "submitted_frozen_checkpoint_pair_token_intervention",
+      "run_ids": ["122843454"],
+      "attempt_ids": ["submitted"],
+      "source_commit": "5b94a8600bd512e78d882f4a785e7dc85a01dcc8",
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_submission.md"
+      ],
+      "cost_event_ids": []
     }
   ],
   "result": {
@@ -90,7 +101,7 @@
     "decision_ref": "experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md",
     "outcome": "ACTIVE",
     "next_allowed_actions": [
-      "run one frozen-checkpoint PairToken intervention on accepted 500K development rows"
+      "accept the sole frozen-checkpoint inference job 122843454 and close attribution"
     ],
     "reopen_conditions": [
       "Round 3 must reproduce the accepted best prediction payload",
