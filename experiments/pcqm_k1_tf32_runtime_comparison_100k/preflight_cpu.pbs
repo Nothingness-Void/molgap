@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -q H
+#PBS -l select=1:ncpus=2:mpiprocs=1:ompthreads=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+
+set -euo pipefail
+BOUNDARY=/lustre/home/users/sm2/chou
+RUN_ROOT="$BOUNDARY/molgap-k1-tf32-paired-v1"
+SOURCE="$RUN_ROOT/source"
+VENDOR="$BOUNDARY/molgap-pcqm-route-b"
+CACHE="$BOUNDARY/pcqm4mv2-kaggle1-exports-v3/ogb-train-100k"
+OGB_ARCHIVE="$BOUNDARY/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip"
+PYTHON="$BOUNDARY/molgap/.venv/bin/python"
+
+test "$(realpath "$RUN_ROOT")" = "$RUN_ROOT"
+test "$(realpath "$SOURCE")" = "$SOURCE"
+test "$(realpath "$CACHE")" = "$CACHE"
+test "$(sha256sum "$CACHE/manifest.json" | cut -d' ' -f1)" = \
+  1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d
+export PYTHONPATH="$VENDOR/code/platforms/ims/pcqm_route_b/shims:$VENDOR/vendor-cu126-torch271:$OGB_ARCHIVE:$SOURCE/src"
+export MOLGAP_FIXED_CACHE_ROOT="$CACHE"
+export MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
+"$PYTHON" -c 'import torch, torch_geometric, ogb; from molgap.pcqm_k1_variants_runner import find_fixed_cache; root, manifest = find_fixed_cache(); print("runtime_ok", torch.__version__, torch_geometric.__version__, root, manifest["identity"]["train_rows"], flush=True)' \
+  2>&1 | tee -a "$RUN_ROOT/logs/preflight.log"
