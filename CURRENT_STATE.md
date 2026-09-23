@@ -68,12 +68,13 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - Xi'an full-model replay job `67440607` matched predictions but differed in
   269 cross-process gradient tensors. The audit is closed negative; Xi'an V4
   ranking remains gated. Authority: `experiments/pcqm_xian_determinism/decision.md`.
-- The desktop-owned Kaggle3 PairNorm 500K bridge has no verified terminal
-  state: the available `nvoid912` API credential receives HTTP 403. Treat the
-  job as `UNKNOWN` until its owner account or durable artifacts can be queried;
-  do not resubmit from the stale launch snapshot. This is separate from the
-  accepted Noisy Nodes + Pair Update Norm 500K experiment recorded below.
-  Routing: `BRANCHES.md`.
+- The standalone desktop Kaggle3 Pair Update Norm 500K bridge completed 60
+  epochs. Its 50K-row paired internal-development result is `0.105728 eV`
+  versus GPTrans-T `0.106868 eV`; the `0.001140 eV` gain misses the frozen
+  `0.003 eV` promotion floor. It is closed `NEGATIVE_UNDER_CONTRACT` after
+  replay-ready artifact acceptance and RML indexing. This is separate from
+  the Noisy Nodes + Pair Update Norm joint experiment recorded below.
+  Authority: `experiments/pcqm_gptrans_pair_norm_500k/decision.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated

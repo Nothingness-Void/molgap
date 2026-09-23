@@ -91,6 +91,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-pair-norm-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_norm_500k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference:A001",
       "target": "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json",
       "type": "action_produced_evidence"
@@ -252,6 +257,11 @@
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-norm-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
     },
@@ -353,6 +363,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-norm-500k-s42",
       "type": "prior_evidence"
     },
     {
@@ -494,6 +509,11 @@
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "reference_used"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-pair-norm-500k-s42",
+      "type": "reference_used"
     }
   ],
   "format": "molgap-rml-trajectory-graph-v1",
@@ -544,6 +564,10 @@
     },
     {
       "id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-pair-norm-500k-s42",
       "type": "evidence"
     },
     {
@@ -636,6 +660,10 @@
     },
     {
       "id": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-pair-norm-500k-s42",
       "type": "trajectory"
     },
     {

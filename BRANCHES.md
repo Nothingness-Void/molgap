@@ -13,19 +13,21 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 ## Active temporary branches
 
-| Branch | Reason retained / evidence entry |
-|---|---|
-| codex/exp/gptrans-pair-norm-500k | Submitted Kaggle3 PairNorm bridge; terminal artifacts are not locally available |
+No desktop temporary experiment branch has an unresolved terminal job in this
+snapshot. `codex/exp/gptrans-pair-norm-500k` closed at `0460ba6` and its
+selected evidence is integrated into `molgap-desktop`. Retain its branch ref
+for source provenance until its commits are durably reachable from an owner or
+archive branch.
 
-Inspect these named branches only when working on their question. Their old
-root documents do not override the integration branch. Do not wholesale merge
+Inspect retained branches only when working on their question. Their old root
+documents do not override the integration branch. Do not wholesale merge
 server discovery history to obtain one desktop implementation.
 
 The separate Noisy Nodes + Pair Update Norm 500K experiment was landed in RML
 at `507ced7` and merged into `molgap-desktop` at `5e3c1ed`. The later tip of
 `codex/exp/gptrans-noisy-pair-norm-500k` contains server DSAR/DSMR work; that
-tip was not merged and does not add desktop acceptance tasks. The submitted
-PairNorm bridge in the active table is a different experiment.
+tip was not merged and does not add desktop acceptance tasks. The standalone
+PairNorm bridge closed above is a different experiment.
 
 The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
 Its experiment evidence is integrated into `molgap-desktop`; retain the branch

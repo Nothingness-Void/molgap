@@ -16,11 +16,13 @@ from .screen_policy import canonical_fingerprint, validate_runtime_certificate
 from .pcqm_k1_scale_runner import find_cache, load_roles, _targets
 from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
 from .pcqm_gptrans_v4 import _state_sha256, _batch_sha256, _forward
+from .futility_gate import MatchedPrefixGate, evaluate_matched_prefix_futility
 
 PARAMETERS = {
     "full_gps": 4_771_073,
     "neural_atom_k1": 3_658_817,
     "gptrans": 5_246_817,
+    "gptrans_pair_update_norm": 5_246_817,
     "edge_local_only": 3_433_601,
     "edge_sparse_global_369": 3_879_425,
     "gptrans_noisy_nodes": 5_277_400,
@@ -29,6 +31,15 @@ PARAMETERS = {
 EPOCHS = 60
 BS = 128
 STEPS = 500000 // BS
+
+# This screen's prefix gates were frozen against the accepted GPTrans trace.
+GPTRANS_REFERENCE_TRACE_SHA256 = (
+    "22cb2bea6ee531402b951334fb791f091ec64c68b3e6f539fe1c9851dcdce1d4"
+)
+PAIR_UPDATE_NORM_FUTILITY_GATES = (
+    MatchedPrefixGate(30, 0.112521231174469, 0.006),
+    MatchedPrefixGate(40, 0.10822822153568268, 0.003),
+)
 
 
 def schedule(epoch):
@@ -41,7 +52,7 @@ def scientific_contract(arm="gptrans"):
         if arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}
         else "normalized-gap-l1"
     )
-    return {
+    contract = {
         "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
         "data_role_fingerprint": FIXED_500K_MANIFEST_SHA256,
         "row_order_fingerprint": "global-randperm-seed42-plus-epoch-drop-last32",
@@ -59,12 +70,27 @@ def scientific_contract(arm="gptrans"):
         "device_count": 1, "gradient_accumulation_steps": 1,
         "epochs": EPOCHS, "steps_per_epoch": STEPS,
     }
+    if arm == "gptrans_pair_update_norm":
+        contract.update({
+            "selection_fingerprint": "best-development-raw-model-up-to60-matched-prefix-futility-v1",
+            "futility_reference_trace_sha256": GPTRANS_REFERENCE_TRACE_SHA256,
+            "futility_gates": [
+                {
+                    "completed_epochs": gate.completed_epochs,
+                    "reference_best_mae_eV": gate.reference_best_mae_eV,
+                    "maximum_deficit_eV": gate.maximum_deficit_eV,
+                }
+                for gate in PAIR_UPDATE_NORM_FUTILITY_GATES
+            ],
+        })
+    return contract
 
 
 def make_model(arm):
-    if arm == "gptrans":
+    if arm in {"gptrans", "gptrans_pair_update_norm"}:
         from .pcqm_gptrans_v4 import _make_model
-        model = _make_model()
+        variant = "pair_update_norm" if arm == "gptrans_pair_update_norm" else "reference"
+        model = _make_model(variant=variant)
     elif arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}:
         from .noisy_nodes import GPTransNoisyNodes, make_noisy_nodes_pair_norm_model
         model = (
@@ -246,6 +272,15 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         atomic_torch_save(output / "initial_state.pt", {"model": model.state_dict(), "state_sha256": initial_sha})
     print(f"PREFLIGHT PASS {arm} parameters={PARAMETERS[arm]} resume_epoch={start_epoch} peak={peak}", flush=True)
     stage_start = time.monotonic()
+    futility_decisions = []
+    if resume is not None and (resume / "futility_decisions.json").is_file():
+        prior_futility = json.loads((resume / "futility_decisions.json").read_text(encoding="utf-8"))
+        if prior_futility.get("arm") != arm:
+            raise RuntimeError("Resume futility record belongs to another arm")
+        futility_decisions = list(prior_futility.get("decisions", []))
+        if output.resolve() != resume.resolve():
+            shutil.copy2(resume / "futility_decisions.json", output / "futility_decisions.json")
+    futility_stopped = False
     for epoch in range(start_epoch, min(EPOCHS, start_epoch + stage_epochs)):
         started = time.monotonic()
         for group in optimizer.param_groups:
@@ -292,11 +327,37 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
             "official_validation_role_read": False, "test_dev_role_read": False,
             "test_challenge_role_read": False})
         print(f"{arm} ep{epoch:02d} dev={mae:.8f} best={best:.8f}@{best_epoch} {trace[-1]['seconds']:.1f}s", flush=True)
+        if arm == "gptrans_pair_update_norm":
+            decision = evaluate_matched_prefix_futility(
+                completed_epochs=epoch + 1,
+                candidate_best_mae_eV=best,
+                gates=PAIR_UPDATE_NORM_FUTILITY_GATES,
+            )
+            if decision is not None:
+                decision["reference_trace_sha256"] = GPTRANS_REFERENCE_TRACE_SHA256
+                futility_decisions.append(decision)
+                atomic_json(output / "futility_decisions.json", {
+                    "format": "molgap-matched-prefix-futility-v1",
+                    "arm": arm,
+                    "decisions": futility_decisions,
+                })
+                if decision["futility_stopped"]:
+                    futility_stopped = True
+                    print(
+                        "FUTILITY STOP "
+                        f"epoch={epoch + 1} deficit={decision['candidate_minus_reference_eV']:.8f} "
+                        f"threshold={decision['maximum_deficit_eV']:.8f}",
+                        flush=True,
+                    )
+                    break
         # End at an epoch boundary well before Kaggle's session limit.
         if (max_stage_seconds is not None and
                 time.monotonic() - stage_start + 1.5 * trace[-1]["seconds"] > max_stage_seconds):
             break
-    status = "COMPLETE" if trace[-1]["epoch"] + 1 == EPOCHS else "STAGE_COMPLETE"
+    if futility_stopped:
+        status = "FUTILITY_STOPPED"
+    else:
+        status = "COMPLETE" if trace[-1]["epoch"] + 1 == EPOCHS else "STAGE_COMPLETE"
     artifacts = {p.name: sha256_file(p) for p in output.iterdir() if p.is_file() and p.name != "stage_manifest.json"}
     atomic_json(output / "stage_manifest.json", {"status": status, "arm": arm,
         "next_epoch": trace[-1]["epoch"]+1, "best_development_mae_eV": best, "best_epoch": best_epoch,

@@ -1,0 +1,14 @@
+{
+  "format": "molgap-kaggle-training-launch-v1",
+  "kernel": "nvoid912/molgap-gptrans-pair-update-norm-500k-v1",
+  "kernel_version": 1,
+  "platform": "kaggle3-t4x2",
+  "source_commit": "f35490af0749592c0bc69e025fd0e8788555be83",
+  "source_dataset": "nvoid912/molgap-gptrans-pair-norm-500k-source-6074d6243c",
+  "source_sha256": "6074d6243c0a39b46e467cb622c2acde4f3ddd26b0a3d368d01799d42af7ef4c",
+  "graph_dataset": "nvoid912/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "submitted_at": "2026-09-18T17:10:00+09:00",
+  "observed_status": "RUNNING",
+  "maximum_epochs": 60,
+  "futility_gate_epochs": [30, 40]
+}

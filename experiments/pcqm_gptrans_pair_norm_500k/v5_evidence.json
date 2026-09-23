@@ -1,0 +1,79 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-pair-norm-500k-s42",
+  "track": "B",
+  "scope": "fixed_500k_gptrans_pair_norm_scale_transfer",
+  "legacy_contract": "molgap-pcqm-fixed500k-dev50k-matched60-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_qualified_scale_transfer",
+    "budget_decision": "closed_negative",
+    "full_handoff_status": "unqualified_alone"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json",
+      "experiments/pcqm_gptrans_pair_norm_500k/protocol.md",
+      "experiments/pcqm_gptrans_pair_norm_500k/decision.md",
+      "experiments/pcqm_gptrans_pair_norm_500k/results/paired_comparison.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/stage_manifest.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_model.pt",
+      "sha256": "d46b0bbb9709a5933396a262a1e42323fc45b23e92c7121ffb66468f099529a5",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "trace",
+      "locator": "experiments/pcqm_gptrans_pair_norm_500k/results/canonical_trace.json",
+      "sha256": "da466aa4bbff3347171d8af432a4b87f8bacb553e4999f5fd854135811f986a1",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "stage_manifest",
+      "locator": "experiments/pcqm_gptrans_pair_norm_500k/results/stage_manifest.json",
+      "sha256": "3f7805665bafbbca16100909110942cf5867ace8d91df0e002523d796686ea31",
+      "availability": "durable_local_verified"
+    },
+    {
+      "name": "best_predictions",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_predictions.pt",
+      "sha256": "731d67452b31bed74909023031eb9bbc122e8b0e022ff6e2c35bd3599d7113f4",
+      "availability": "durable_local_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.10686752763271332,
+    "k1_reference_development_gap_mae_eV": 0.10485986978054046,
+    "observed_development_gap_mae_eV": 0.10572750866413116,
+    "material_gain_eV": 0.00114001896858216,
+    "paired_reference_minus_candidate_mae_eV": 0.0011400248670578002,
+    "row_paired_bootstrap_95pct_eV": [0.0006059959156513214, 0.0016689352185726162],
+    "falsifier_threshold_eV": 0.103868,
+    "falsifier_satisfied": false,
+    "best_epoch": 56
+  },
+  "notes": {
+    "disposition": "Isolated parameter-free Pair Update LayerNorm achieves 0.105728 eV (+1.140 meV over baseline). Falls short of the 3.0 meV promotion threshold, terminating as negative under contract."
+  },
+  "migration": {
+    "migrated_at": "2026-09-23",
+    "verification_scope": "terminal Kaggle execution, SHA256 verified artifacts, and paired comparison against pcqm-matched-500k-v4-three-arm",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

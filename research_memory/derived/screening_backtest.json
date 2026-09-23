@@ -55,11 +55,13 @@
       "run_ids": [
         "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
         "matched-500k-v4-stage5",
+        "nvoid912/molgap-gptrans-pair-update-norm-500k-v1",
         "nvoid912/molgap-pcqm-gptrans-noisy-pair-norm-500k-s42"
       ],
       "trajectory_ids": [
         "TB-gptrans-noisy-nodes-500k-s42",
         "TB-gptrans-noisy-pair-norm-500k-s42",
+        "TB-gptrans-pair-norm-500k-s42",
         "TB-matched-500k-v4-three-arm"
       ]
     },
@@ -84,6 +86,7 @@
     "TB-gptrans-noisy-nodes-500k-s42",
     "TB-gptrans-noisy-pair-norm-100k-s42",
     "TB-gptrans-noisy-pair-norm-500k-s42",
+    "TB-gptrans-pair-norm-500k-s42",
     "TB-gptrans-t-100k-v4-reference",
     "TB-matched-500k-v4-three-arm",
     "TC-gptrans-flow-ablation-100k-s42"
@@ -94,5 +97,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 11
+  "trace_count": 12
 }

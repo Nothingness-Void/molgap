@@ -1,0 +1,34 @@
+{
+  "trajectory_id": "TB-gptrans-pair-norm-500k-s42",
+  "run_id": "nvoid912/molgap-gptrans-pair-update-norm-500k-v1",
+  "rows_key": "epochs",
+  "device_time_semantics": null,
+  "metric_semantics": {
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "internal_train_500k",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "internal_development_500000_549999",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "ema_dev_metric": null
+  },
+  "field_mapping": {
+    "epoch_or_pass": "epoch",
+    "live_train_metric": "train_mae_eV",
+    "live_dev_metric": "development_mae_eV",
+    "learning_rate": "lr",
+    "wall_time_seconds": "seconds",
+    "optimizer_step": "global_step",
+    "sample_presentations": "sample_presentations"
+  }
+}

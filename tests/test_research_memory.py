@@ -346,6 +346,14 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
     }
     assert trajectories["TB-gptrans-noisy-pair-norm-500k-s42"]["completeness_status"] == "complete"
     assert trajectories["TB-gptrans-noisy-pair-norm-500k-s42"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"
+    assert trajectories["TB-gptrans-pair-norm-500k-s42"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"
+    pair_norm_replay = [
+        entry for entry in json.loads(payloads["replay_pool.json"])["entries"]
+        if entry["trajectory_id"] == "TB-gptrans-pair-norm-500k-s42"
+    ]
+    assert len(pair_norm_replay) == 1
+    assert pair_norm_replay[0]["capability"] == "complete"
+    assert pair_norm_replay[0]["exclusion_reasons"] == []
     assert trajectories["TB-matched-500k-v4-three-arm"]["result_evidence_ids"] == [
         "pcqm-matched-500k-v4-three-arm"
     ]
