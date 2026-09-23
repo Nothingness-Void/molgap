@@ -61,6 +61,10 @@ fusion after an immutable graph cache passes acceptance.
 
 ## Molecular Research Server (IMS/RCCS)
 
+For the repeatable desktop workflow, read the installed
+`ims-molgap-workloads` skill and the owning `platforms/ims/` adapter. The
+access boundary below and the owning experiment remain authoritative.
+
 The canonical accelerator name for this platform is **NVIDIA A100**. Use
 `A100` in plans, workload placement, status summaries, and resource ledgers.
 Runtime certificates and historical evidence may retain the exact device string
