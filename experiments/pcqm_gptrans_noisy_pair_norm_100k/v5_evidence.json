@@ -1,0 +1,68 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+  "track": "B",
+  "scope": "fixed_100k_gptrans_noisy_pair_norm_regularization",
+  "legacy_contract": "molgap-pcqm-gptrans-noisy-pair-norm-100k-contract-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_development_comparison_complete",
+    "scientific_status": "positive_under_contract",
+    "transfer_status": "qualified_for_500k",
+    "budget_decision": "closed_positive",
+    "full_handoff_status": "candidate_500k"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/training_contract.json",
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/results/kaggle_acceptance.json",
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/decision.md",
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/results/completion_manifest.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "accepted_best_model",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-pcqm-gptrans-noisy-pair-norm-s42/pcqm_gptrans_noisy_pair_norm_100k/best_model.pt",
+      "sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "trace",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-pcqm-gptrans-noisy-pair-norm-s42/pcqm_gptrans_noisy_pair_norm_100k/trace.json",
+      "sha256": "9bcad05ce2e04c2293d1c1e2300eed3a86ceea6257fe50af6d424f96b86b5d92",
+      "availability": "durable_remote_verified"
+    },
+    {
+      "name": "completion_manifest",
+      "locator": "kaggle://kernels/nothingnessvoid/molgap-pcqm-gptrans-noisy-pair-norm-s42/pcqm_gptrans_noisy_pair_norm_100k/completion_manifest.json",
+      "sha256": "b0b3c29fef04a8413983fc3446f9f650eecad662b0c6649de07f2205686e5024",
+      "availability": "durable_remote_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "reference_development_gap_mae_eV": 0.15662720430791377,
+    "single_mechanism_development_gap_mae_eV": 0.151784,
+    "observed_development_gap_mae_eV": 0.14724504947662354,
+    "material_gain_eV": 0.00938215483129023,
+    "gain_over_single_mechanism_eV": 0.00453895052337646,
+    "falsifier_threshold_eV": 0.148784,
+    "falsifier_satisfied": true,
+    "best_epoch": 59
+  },
+  "migration": {
+    "migrated_at": "2026-09-21",
+    "verification_scope": "terminal Kaggle execution, SHA256 verified artifacts, and paired comparison against pcqm-gptrans-t-100k-v4-reference",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

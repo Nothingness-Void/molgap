@@ -1,0 +1,87 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Do auxiliary Noisy Nodes denoising regularization and Relation Update Normalization combine constructively on GPTrans-T to outperform both isolated mechanisms and the baseline comparator?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-noisy-pair-norm-100k-s42",
+    "observed_deficiency": "The GPTrans-T baseline (0.156627 eV) suffers from representation over-smoothing and pair residual variance growth. Noisy Nodes (+0.004840 eV) and Pair Update Norm (+0.004843 eV) operate on orthogonal channels.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "alternative_explanations": [
+      "regularization interference where node perturbation disrupts pair relation normalization",
+      "saturation where one mechanism already captures all accessible residual signal"
+    ],
+    "changed_mechanism": "orthogonal combination of node embedding Gaussian perturbation (std=0.15, alpha=0.10) with LayerNorm normalized pair updates across all 12 blocks",
+    "cheapest_falsifier": "60-epoch 100K/50K run failing to outperform the single-mechanism comparator (0.151784 eV) with statistically favorable bootstrap interval",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-noisy-pair-norm-100k-s42-expected-training",
+    "decision_changed_if_positive": "nominate the joint Noisy Nodes + Pair Update Norm architecture as the new primary GPTrans-T configuration for full-scale advancement",
+    "decision_changed_if_negative": "close the joint regularization route and retain isolated single mechanisms",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "c9a32ac4b8f09e59e9dfc79084d0c9a5a51ce768",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-noisy-nodes-100k-s42",
+      "TB-gptrans-t-100k-v4-reference"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_noisy_pair_norm_100k/training_contract.json",
+    "source_config_identity": "desktop-gptrans-noisy-pair-norm-100k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_screen_training",
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-gptrans-noisy-pair-norm-s42"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "c9a32ac4b8f09e59e9dfc79084d0c9a5a51ce768",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-noisy-pair-norm-100k-s42-measured-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_noisy_pair_norm_100k/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [
+      "advance_to_500k_scale_transfer"
+    ],
+    "reopen_conditions": []
+  }
+}

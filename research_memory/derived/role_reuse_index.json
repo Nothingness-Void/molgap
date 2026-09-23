@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 46,
+  "ambiguous_historical_role_record_count": 70,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-edgestate-rich-full-submission",
@@ -94,6 +94,146 @@
     },
     {
       "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-500k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-500k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-500k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-nodes-500k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -322,13 +462,55 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-diagnostic-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-diagnostic-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-diagnostic-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-diagnostic-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 7,
+  "explicit_role_event_count": 15,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-t-100k-v4-reference-development",
@@ -340,10 +522,56 @@
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-100k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-100k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TB-gptrans-t-100k-v4-reference-train",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
@@ -389,16 +617,27 @@
   "protected_roles_reported_untouched": {
     "official_validation": [
       "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-nodes-500k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-residual-reconciliation",
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
-      "pcqm-scale-transfer-attribution-no-train"
+      "pcqm-scale-transfer-attribution-no-train",
+      "pcqm-scale-transfer-diagnostic-evidence"
     ],
     "test_challenge": [
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-nodes-500k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
@@ -406,11 +645,17 @@
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
-      "pcqm-scale-transfer-attribution-no-train"
+      "pcqm-scale-transfer-attribution-no-train",
+      "pcqm-scale-transfer-diagnostic-evidence"
     ],
     "test_dev": [
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-nodes-500k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-gptrans-full-fusion-r3",
@@ -418,11 +663,130 @@
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
-      "pcqm-scale-transfer-attribution-no-train"
+      "pcqm-scale-transfer-attribution-no-train",
+      "pcqm-scale-transfer-diagnostic-evidence"
     ]
   },
-  "repeatedly_selected_role_identities": {},
+  "repeatedly_selected_role_identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-t-100k-v4-reference-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
+      }
+    ]
+  },
   "reused_role_identities": {
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-100k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-t-100k-v4-reference-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-100k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-100k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-t-100k-v4-reference-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-nodes-500k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-noisy-pair-norm-500k-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-noisy-pair-norm-500k-s42"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
       {
         "access_kind": "labels_read",

@@ -1,0 +1,110 @@
+{
+  "analysis_date": "2026-09-22",
+  "exposure_mapping": {
+    "equivalent_500k_epochs_for_100k_end": 11.996,
+    "equivalent_500k_step_for_100k_end": 46860,
+    "total_presentations_100k_60ep": 5998080,
+    "total_presentations_500k_60ep": 29998080,
+    "total_steps_100k_60ep": 46860,
+    "total_steps_500k_60ep": 234360
+  },
+  "format": "molgap-scale-transfer-diagnostic-result-v1",
+  "mechanisms_evaluated": [
+    {
+      "mechanism_name": "K1 PairToken",
+      "projection": {
+        "critical_100k_gain_regularized_eV": 0.016393442622950817,
+        "critical_100k_gain_unregularized_eV": 0.016393442622950817,
+        "delta_100k_eV": 0.003044,
+        "effective_decay_rate": 0.817,
+        "is_qualified_for_500k": false,
+        "margin_above_100k_gate_eV": 4.399999999999977e-05,
+        "margin_buffer_over_critical_regularized_eV": -0.013349442622950817,
+        "projected_500k_gain_regularized_eV": 0.0005570520000000002,
+        "projected_500k_gain_unregularized_eV": 0.0005570520000000002,
+        "unregularized_decay_rate": 0.817
+      },
+      "recommendation": "DISQUALIFIED_HIGH_DECAY_RISK",
+      "score_components": {
+        "margin_score": 20.26,
+        "node_anti_collapse_score": 0.0,
+        "pair_normalization_score": 0.0,
+        "tail_stability_score": 0.0
+      },
+      "stqs_total_score": 20.26
+    },
+    {
+      "mechanism_name": "GPTrans Pair PreNorm",
+      "projection": {
+        "critical_100k_gain_regularized_eV": 0.016393442622950817,
+        "critical_100k_gain_unregularized_eV": 0.016393442622950817,
+        "delta_100k_eV": 0.003125,
+        "effective_decay_rate": 0.817,
+        "is_qualified_for_500k": false,
+        "margin_above_100k_gate_eV": 0.0001250000000000001,
+        "margin_buffer_over_critical_regularized_eV": -0.013268442622950818,
+        "projected_500k_gain_regularized_eV": 0.0005718750000000002,
+        "projected_500k_gain_unregularized_eV": 0.0005718750000000002,
+        "unregularized_decay_rate": 0.817
+      },
+      "recommendation": "DISQUALIFIED_HIGH_DECAY_RISK",
+      "score_components": {
+        "margin_score": 20.75,
+        "node_anti_collapse_score": 0.0,
+        "pair_normalization_score": 0.0,
+        "tail_stability_score": 0.0
+      },
+      "stqs_total_score": 20.75
+    },
+    {
+      "mechanism_name": "GPTrans Noisy Nodes",
+      "projection": {
+        "critical_100k_gain_regularized_eV": 0.005448106782892945,
+        "critical_100k_gain_unregularized_eV": 0.016393442622950817,
+        "delta_100k_eV": 0.00484,
+        "effective_decay_rate": 0.44935,
+        "is_qualified_for_500k": false,
+        "margin_above_100k_gate_eV": 0.0018399999999999996,
+        "margin_buffer_over_critical_regularized_eV": -0.0006081067828929455,
+        "projected_500k_gain_regularized_eV": 0.0026651459999999997,
+        "projected_500k_gain_unregularized_eV": 0.0008857200000000002,
+        "unregularized_decay_rate": 0.817
+      },
+      "recommendation": "QUALIFIED_FOR_500K",
+      "score_components": {
+        "margin_score": 31.04,
+        "node_anti_collapse_score": 25.0,
+        "pair_normalization_score": 0.0,
+        "tail_stability_score": 5.0
+      },
+      "stqs_total_score": 61.04
+    },
+    {
+      "mechanism_name": "GPTrans Noisy Nodes + Pair Update Norm",
+      "projection": {
+        "critical_100k_gain_regularized_eV": 0.0035859431030360986,
+        "critical_100k_gain_unregularized_eV": 0.016393442622950817,
+        "delta_100k_eV": 0.009382,
+        "effective_decay_rate": 0.16339999999999996,
+        "is_qualified_for_500k": true,
+        "margin_above_100k_gate_eV": 0.006382,
+        "margin_buffer_over_critical_regularized_eV": 0.0057960568969639015,
+        "projected_500k_gain_regularized_eV": 0.0078489812,
+        "projected_500k_gain_unregularized_eV": 0.0017169060000000005,
+        "unregularized_decay_rate": 0.817
+      },
+      "recommendation": "QUALIFIED_FOR_500K",
+      "score_components": {
+        "margin_score": 50.0,
+        "node_anti_collapse_score": 25.0,
+        "pair_normalization_score": 20.0,
+        "tail_stability_score": 5.0
+      },
+      "stqs_total_score": 100.0
+    }
+  ],
+  "screening_rule": {
+    "highly_qualified_threshold": 80.0,
+    "minimum_stqs_for_500k_authorization": 60.0
+  }
+}

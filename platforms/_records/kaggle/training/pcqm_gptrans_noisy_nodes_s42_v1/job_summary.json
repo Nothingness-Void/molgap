@@ -1,0 +1,13 @@
+{
+  "kernel": "kaseichou/molgap-pcqm-gptrans-noisy-nodes-s42",
+  "status": "complete",
+  "accelerator": "NvidiaTeslaT4",
+  "dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "best_development_mae_eV": 0.15178757905960083,
+  "best_epoch": 59,
+  "reference_development_mae_eV": 0.15662720430791377,
+  "gain_over_reference_eV": 0.00483962524831294,
+  "device_hours": 1.7625,
+  "wall_hours": 2.054,
+  "determination": "POSITIVE_UNDER_CONTRACT"
+}

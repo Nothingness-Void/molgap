@@ -23,6 +23,8 @@ PARAMETERS = {
     "gptrans": 5_246_817,
     "edge_local_only": 3_433_601,
     "edge_sparse_global_369": 3_879_425,
+    "gptrans_noisy_nodes": 5_277_400,
+    "gptrans_noisy_pair_norm": 5_277_400,
 }
 EPOCHS = 60
 BS = 128
@@ -33,7 +35,12 @@ def schedule(epoch):
     return 1e-6 + (4e-4 - 1e-6) * (1 + math.cos(math.pi * epoch / (EPOCHS - 1))) / 2
 
 
-def scientific_contract():
+def scientific_contract(arm="gptrans"):
+    loss_fingerprint = (
+        "normalized-gap-l1-plus-noisy-nodes-ce-alpha0.1"
+        if arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}
+        else "normalized-gap-l1"
+    )
     return {
         "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
         "data_role_fingerprint": FIXED_500K_MANIFEST_SHA256,
@@ -43,7 +50,7 @@ def scientific_contract():
         "seed": 42, "precision": "fp32",
         "optimizer_fingerprint": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
         "schedule_fingerprint": "cosine60-epoch0-4e-4-epoch59-1e-6",
-        "loss_fingerprint": "normalized-gap-l1",
+        "loss_fingerprint": loss_fingerprint,
         "target_transform_fingerprint": "all500k-train-only-mean-unbiased-std",
         "selection_fingerprint": "best-development-raw-model-60epochs",
         "role_access_fingerprint": "official-train-derived-train-and-internal-development-only",
@@ -58,6 +65,13 @@ def make_model(arm):
     if arm == "gptrans":
         from .pcqm_gptrans_v4 import _make_model
         model = _make_model()
+    elif arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}:
+        from .noisy_nodes import GPTransNoisyNodes, make_noisy_nodes_pair_norm_model
+        model = (
+            make_noisy_nodes_pair_norm_model(noise_std=0.15, loss_weight=0.1)
+            if arm == "gptrans_noisy_pair_norm"
+            else GPTransNoisyNodes(noise_std=0.15, loss_weight=0.1)
+        )
     elif arm in {"edge_local_only", "edge_sparse_global_369"}:
         from .pcqm_500k_v4_ablation import make_ablation_encoder
         model = make_ablation_encoder(arm)
@@ -93,8 +107,15 @@ def step(model, optimizer, batch, mean, std):
     if batch.num_graphs != BS:
         raise RuntimeError("Non-128 optimizer batch")
     optimizer.zero_grad(set_to_none=True)
-    prediction = _forward(model, batch)
-    loss = torch.nn.functional.l1_loss(prediction, (batch.y.view(-1) - mean) / std)
+    if hasattr(model, "loss_weight") and model.training and model.loss_weight > 0.0:
+        prediction, aux_loss = model(
+            batch.x, batch.edge_index, batch.edge_attr, batch.batch, return_aux_loss=True
+        )
+        gap_loss = torch.nn.functional.l1_loss(prediction.view(-1), (batch.y.view(-1) - mean) / std)
+        loss = gap_loss + model.loss_weight * aux_loss
+    else:
+        prediction = _forward(model, batch)
+        loss = torch.nn.functional.l1_loss(prediction.view(-1), (batch.y.view(-1) - mean) / std)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=True)
     optimizer.step()
@@ -134,7 +155,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
     roles = load_roles(root, manifest)
     target = _targets(roles["train"]).double()
     mean, std = float(target.mean()), float(target.std(unbiased=True).clamp_min(1e-6))
-    contract = scientific_contract()
+    contract = scientific_contract(arm)
     contract["target_transform_fingerprint"] = canonical_fingerprint({"mean": mean, "std": std})
     atomic_json(output / "runtime.json", runtime)
     atomic_json(output / "scientific_contract.json", contract)

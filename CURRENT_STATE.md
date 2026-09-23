@@ -72,10 +72,15 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/`.
 - The one-time K1/GPTrans-T official-validation calibration role is consumed.
   Test-dev/challenge remain sealed.
-- GPTrans/K1 convergence repairs are isolated on
-  `codex/exp/gptrans-full-convergence`. GPU jobs `1516700`/`1516701` and their
-  dependent acceptance jobs were queued in the last snapshot; neither model is
-  proven converged until terminal acceptance.
+- GPTrans/K1 convergence training remains incomplete. The 2026-09-16 attempts
+  saved paused checkpoints and reported walltime plus cgroup memory warnings;
+  dependent acceptance failed because completion manifests were absent.
+  On 2026-09-19, K1 `1548227` and GPTrans-T `1548270` were resubmitted from
+  those checkpoints with bounded PyG object caching, 16 CPU slots, one A100
+  each, and 120-hour limits. Acceptance is conditional on completion. The
+  frozen six-pass/patience-three stopping rule remains unchanged; neither model
+  is proven converged. Deployment and prior-state evidence:
+  `platforms/_records/ims/convergence_resume_20260919/README.md`.
 - Accepted PCQM scale identities are held on IMS and mirrored to the accepted
   Kaggle account datasets for the 100K/500K roles.
 - Kaggle3 account `nvoid912` now has accepted private, byte-identical 100K and
@@ -86,6 +91,16 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `platforms/_records/kaggle/preflight/`.
 - IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
   is under `experiments/pcqm_edge_state_full/`.
+- GPTrans Noisy Nodes 500K on Kaggle 2 completed 60 epochs (`0.105056 eV`,
+  +0.001812 eV over the frozen `0.106868 eV` GPTrans reference, trailing K1 by
+  0.196 meV). Mechanical acceptance passed, but the scientific outcome is
+  `NEGATIVE_UNDER_CONTRACT` under the frozen `< 0.103868 eV` gate.
+  Authority: `experiments/pcqm_gptrans_noisy_nodes_500k/decision.md`.
+- GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) completed
+  60 epochs (`0.104812 eV`, 0.048 meV below K1 and +2.056 meV over the frozen
+  GPTrans reference). Mechanical acceptance passed, but the scientific outcome
+  is `NEGATIVE_UNDER_CONTRACT` under the frozen `< 0.103868 eV` gate.
+  Authority: `experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md`.
 - Every new remote run needs a frozen input contract, atomic checkpoints, and
  independently retrievable outputs before launch.
 - Desktop operations follow the installed V5 topology: desktop-owned remote

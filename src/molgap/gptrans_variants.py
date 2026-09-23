@@ -4,10 +4,15 @@ from __future__ import annotations
 import torch
 import torch.nn.functional as F
 
-from .gptrans import GraphPropagationAttention
+from .gptrans import GPTransBlock, GraphPropagationAttention
 
 
-MODES = ("pair_prenorm", "centered_logits")
+MODES = (
+    "pair_prenorm",
+    "centered_logits",
+    "pair_update_norm",
+    "pair_post_norm",
+)
 
 
 def normalize_pair(pair):
@@ -52,6 +57,28 @@ class RelationFlowAttention(GraphPropagationAttention):
         return self.output_dropout(self.output(node_update)), pair_update
 
 
+class PairStateNormalizationBlock(GPTransBlock):
+    """Move parameter-free pair normalization to one residual boundary."""
+
+    def __init__(self, *args, variant: str, **kwargs):
+        super().__init__(*args, **kwargs)
+        if variant not in {"pair_update_norm", "pair_post_norm"}:
+            raise ValueError(variant)
+        self.variant = variant
+
+    def forward(self, node, pair, key_padding_mask):
+        node_update, pair_update = self.attention(
+            self.node_norm1(node), pair, key_padding_mask
+        )
+        if self.variant == "pair_update_norm":
+            pair = pair + normalize_pair(pair_update)
+        else:
+            pair = normalize_pair(pair + pair_update)
+        node = node + self.drop_path(self.attention_scale * node_update)
+        node = node + self.drop_path(self.ffn_scale * self.ffn(self.node_norm2(node)))
+        return node, pair
+
+
 def apply_variant(model, variant: str):
     if variant == "reference":
         return model
@@ -59,7 +86,20 @@ def apply_variant(model, variant: str):
         raise ValueError(variant)
     # Extra module construction must not perturb the reference's training RNG.
     with torch.random.fork_rng(devices=[]):
-        for block in model.blocks:
+        for index, block in enumerate(model.blocks):
+            if variant in {"pair_update_norm", "pair_post_norm"}:
+                replacement = PairStateNormalizationBlock(
+                    256,
+                    32,
+                    8,
+                    block.attention.attention_dropout.p,
+                    block.drop_path.probability,
+                    float(block.attention_scale.detach()[0]),
+                    variant=variant,
+                )
+                replacement.load_state_dict(block.state_dict(), strict=True)
+                model.blocks[index] = replacement
+                continue
             original = block.attention
             replacement = RelationFlowAttention(256, 32, 8, 0.1, variant=variant)
             replacement.load_state_dict(original.state_dict(), strict=True)
