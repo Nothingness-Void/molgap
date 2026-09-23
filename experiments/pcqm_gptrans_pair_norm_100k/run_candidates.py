@@ -1,4 +1,4 @@
-"""Kaggle T4x2 entry point for the frozen pair-normalization screen."""
+"""Kaggle T4x2 entry point for two frozen GPTrans V4 screen profiles."""
 from __future__ import annotations
 
 import os
@@ -7,7 +7,14 @@ import sys
 from pathlib import Path
 
 
-MODES = ("pair_update_norm", "pair_post_norm")
+PROFILES = {
+    "pair-norm-kaggle3-v1": (("pair_update_norm", "pair_post_norm"), "kaggle3-t4x2"),
+    "reference-centered-logits-kaggle1-v1": (("reference", "centered_logits"), "kaggle1-t4x2"),
+}
+PROFILE = os.environ.get("MOLGAP_PAIR_PROFILE", "pair-norm-kaggle3-v1")
+if PROFILE not in PROFILES:
+    raise RuntimeError(f"Unauthorized pair profile: {PROFILE}")
+MODES, PLATFORM_ID = PROFILES[PROFILE]
 
 
 def find_one(pattern: str) -> Path:
@@ -37,12 +44,13 @@ def install_dependencies() -> None:
     )
 
 
-def launch(mode: str, device: int, root: Path):
+def launch(mode: str, device: int, root: Path, phase: str):
     environment = os.environ.copy()
     environment["CUDA_VISIBLE_DEVICES"] = str(device)
     environment["MOLGAP_VARIANT"] = mode
     environment["MOLGAP_OUTPUT"] = str(Path("/kaggle/working") / mode)
     environment["MOLGAP_SOURCE_ROOT"] = str(root)
+    environment["MOLGAP_PHASE"] = phase
     return subprocess.Popen([sys.executable, __file__], env=environment)
 
 
@@ -59,19 +67,24 @@ def worker(mode: str, root: Path) -> None:
     output = Path(os.environ["MOLGAP_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     preflight_path = output / "preflight.json"
-    result = run_preflight(
-        dataset_root=dataset_root,
-        manifest_path=dataset_manifest,
-        source_archive=source_archive,
-        source_archive_sha256=source_sha,
-        source_commit=source_commit,
-        output=output,
-        platform_id="kaggle3-t4x2",
-        initial_state_path=initial_state,
-        variant=mode,
-    )
-    if result.get("accepted") is not True:
-        raise RuntimeError(f"Preflight rejected {mode}: {result}")
+    phase = os.environ["MOLGAP_PHASE"]
+    if phase == "preflight":
+        result = run_preflight(
+            dataset_root=dataset_root,
+            manifest_path=dataset_manifest,
+            source_archive=source_archive,
+            source_archive_sha256=source_sha,
+            source_commit=source_commit,
+            output=output,
+            platform_id=PLATFORM_ID,
+            initial_state_path=initial_state,
+            variant=mode,
+        )
+        if result.get("accepted") is not True:
+            raise RuntimeError(f"Preflight rejected {mode}: {result}")
+        return
+    if phase != "train":
+        raise RuntimeError(f"Unauthorized pair phase: {phase}")
     run_training(
         dataset_root=dataset_root,
         manifest_path=dataset_manifest,
@@ -80,7 +93,7 @@ def worker(mode: str, root: Path) -> None:
         source_archive_sha256=source_sha,
         source_commit=source_commit,
         output=output,
-        platform_id="kaggle3-t4x2",
+        platform_id=PLATFORM_ID,
         initial_state_path=initial_state,
         variant=mode,
     )
@@ -102,10 +115,12 @@ def main() -> None:
     if len(names) != 2 or any("T4" not in name for name in names):
         raise RuntimeError(f"Expected Kaggle T4x2, found {names}")
     print(f"GPU allocation: {names}", flush=True)
-    processes = [launch(mode_name, device, root) for device, mode_name in enumerate(MODES)]
-    codes = [process.wait() for process in processes]
-    if codes != [0, 0]:
-        raise RuntimeError(f"Candidate workers failed: {codes}")
+    for phase in ("preflight", "train"):
+        processes = [launch(mode_name, device, root, phase)
+                     for device, mode_name in enumerate(MODES)]
+        codes = [process.wait() for process in processes]
+        if codes != [0, 0]:
+            raise RuntimeError(f"Pair {phase} workers failed: {codes}")
 
 
 if __name__ == "__main__":

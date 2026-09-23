@@ -30,6 +30,8 @@ def main() -> None:
     parser.add_argument("--expected-package-identity", required=True)
     parser.add_argument("--initial-state", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--dataset-id", default=SOURCE_DATASET)
+    parser.add_argument("--title", default="MolGap GPTrans centered logits 100K frozen source")
     args = parser.parse_args()
     package = args.package.resolve()
     manifest = verify_experiment_source_package(package, args.repo_root.resolve())
@@ -62,15 +64,15 @@ def main() -> None:
     shutil.copyfile(package / "source.tar.gz", output / "source_payload.bin")
     shutil.copyfile(args.initial_state, output / "initial_state.pt")
     (output / "dataset-metadata.json").write_text(json.dumps({
-        "title": "MolGap GPTrans centered logits 100K frozen source",
-        "id": SOURCE_DATASET,
+        "title": args.title,
+        "id": args.dataset_id,
         "licenses": [{"name": "other"}],
         "isPrivate": True,
     }, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"package_identity": manifest["package_identity"],
                       "source_commit": manifest["source_commit"],
                       "source_archive_sha256": manifest["archive_sha256"],
-                      "dataset": SOURCE_DATASET}, sort_keys=True))
+                      "dataset": args.dataset_id}, sort_keys=True))
 
 
 if __name__ == "__main__":
