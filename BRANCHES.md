@@ -14,10 +14,11 @@ dated evidence. Fetch before comparing a remote snapshot.
 ## Active temporary branches
 
 No desktop temporary experiment branch has an unresolved terminal job in this
-snapshot. The standalone PairNorm 500K branch closed at `0460ba6`; its selected
-evidence is integrated into `molgap-desktop`. Its source history and the two
-preceding PairNorm branch tips are preserved by archive merge `234f511`, and
-their temporary refs were retired.
+snapshot. The PairNorm 100K shortlist and training-only 500K profile source
+history was Git-merged into `molgap-desktop` at `43db4a9d`. The later standalone
+PairNorm 500K experiment closed negative at `0460ba6`; its source history is
+preserved by archive merge `234f511`. Its selected canonical evidence remains
+indexed on `molgap-desktop`. The temporary refs were retired.
 
 Inspect retained branches only when working on their question. Their old root
 documents do not override the integration branch. Do not wholesale merge
@@ -30,11 +31,11 @@ tip was not merged and does not add desktop acceptance tasks. The standalone
 PairNorm bridge closed above is a different experiment.
 
 The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
-Its experiment evidence is integrated into `molgap-desktop`. The distance-angle
-and Xi'an audit branches reached terminal decisions at `86a4489` and `3fc1d80`.
-Their selected evidence is integrated into `molgap-desktop`. These desktop
-source histories are preserved by archive merge `234f511`; their temporary
-refs were retired.
+Its source tip `30872aa` was Git-merged into `molgap-desktop` at `91bccb87`;
+the desktop IMS resource-repair tip `e777ebc` was merged at `430e4dc6`. The
+positive distance-angle tip `86a4489` was Git-merged at `63876d32`. The
+negative Xi'an audit tip `3fc1d80` remains in `archive`; its accepted evidence
+is indexed on `molgap-desktop`. These temporary refs were retired.
 
 ## Cleanup evidence
 
@@ -48,7 +49,14 @@ GPTrans-T/K1 convergence, feature-denoising, PairValue, Xi'an audit, and
 distance-angle source tips without changing the archive tree. The PairNorm
 profile and 100K normalization tips are ancestors of its 500K tip. Their eight
 local and remote temporary refs were retired only after remote archive
-reachability was verified. No server branch was integrated into desktop.
+reachability was verified. The positive/operational desktop tips listed above
+were later Git-merged into `molgap-desktop`; the negative and inconclusive
+500K, feature-denoising, PairValue, and Xi'an tips remain archived.
+Archive merge `b0177970` also preserves the terminal desktop conditional-flow,
+K1 structural-lite no-train, K1 sparse-pair, and 500K module-attribution tips.
+Their four refs, plus the merged IMS resource-repair ref, were retired after
+remote ancestry checks. Server-based research refs and the mixed, dirty
+Noisy Nodes + PairNorm checkout were not merged into desktop or cleaned here.
 Working directories and untracked payloads were retained when branch refs were
 removed. Detached old worktrees are historical snapshots, not work entrypoints.
 Completed historical ESGPS6-304 (03f5253) and GPTrans-T 500K (c86970d) histories
@@ -65,8 +73,8 @@ status before using the primary local checkout; it may contain unrelated work.
 
 The completed matched-500K V4, geometry-transfer, and IMS V4 infrastructure
 branches were integrated or preserved in `archive` before their local and
-remote branch refs were removed. The Xi'an audit and distance-angle branch tips
-are now reachable through archive merge `234f511`.
+remote branch refs were removed. Xi'an remains archived; the distance-angle
+tip is also an ancestor of `molgap-desktop` through merge `63876d32`.
 No remote scheduler was queried and no compute workload was changed by this audit.
 
 The completed GPTrans-T 100K V4 branch was integrated into `molgap-desktop` by
