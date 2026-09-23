@@ -13,6 +13,8 @@ The module is a new unified local entry point, not a complete migration. Existin
 scripts remain available as family/platform-specific entry points and are not
 deleted or redirected. No package-level export or installation entry point is
 required for `python -m molgap.experiment_cli` in an installed checkout.
+For new family/platform work, start with the short [addon guide](EXPERIMENT_ADDON_GUIDE.md);
+this CLI remains a shared local core, not a trainer or submitter.
 
 ## Input and Output Contract
 
@@ -46,12 +48,14 @@ Replace the variables with independently verified identities and authorized
 local paths. They are not an instruction to run an experiment or access a role.
 
 ```powershell
-$spec = 'D:\local-inputs\experiment_spec.json'
+$spec = 'D:\local-inputs\experiment_spec_v2.json'
 $package = 'D:\local-work\source-package'
 $packageIdentity = '<independently-pinned-package-sha256>'
 $shardRoot = 'D:\local-inputs\real-shard'
 $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
+.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
+.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root D:\w\cli
 .\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root D:\w\cli --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
 .\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
 .\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
@@ -61,6 +65,11 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
 - `validate-spec` returns the canonical declaration and its identity. This is
   structural validation, not verification of declared source/data/state bytes.
+- `plan-prospective` is available only for Spec v2. It publishes one canonical
+  RML trajectory per arm from frozen per-arm plan inputs, then rebuilds derived
+  indexes. A nonzero partial result can retain published trajectories; reconcile
+  them before retrying. It is not a submission or training authorization. See
+  the [planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
 - `package` calls `build_experiment_source_package` with exactly the supplied
   allowlist. Repeat `--allowlist` or provide multiple names. No dependency
   discovery or automatic file additions occur. The short list above illustrates
@@ -108,19 +117,18 @@ No credentials, monitoring daemon, remote APIs, GPU canary, official role access
 training launch or production promotion is provided. Local CLI success cannot
 release any of those operations.
 
-## Deferred Verification
+## Local Verification
 
-This implementation was delivered untested. Luna can run the following later,
-using the worktree's configured project virtual environment. If that environment
-is absent, stop and provision it separately rather than using system Python.
-CLI tests mock construction/preflight workers; local package fixtures use only
-temporary local Git repositories. They do not submit remotely or train models.
+Use the configured project virtual environment with this checkout's `src` on
+`PYTHONPATH`, not system Python. CLI tests mock construction/preflight workers;
+local package fixtures use temporary local Git repositories. They do not submit
+remotely or train models.
 
 ```powershell
 Set-Location D:\w\cli
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py -q
+$env:PYTHONPATH = (Resolve-Path src).Path
+.\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
 .\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
 ```
 
-These are suggested follow-up commands, not claims that tests passed or that
-formal training is authorized.
+These local tests do not confer formal training authorization.
