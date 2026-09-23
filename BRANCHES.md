@@ -14,10 +14,10 @@ dated evidence. Fetch before comparing a remote snapshot.
 ## Active temporary branches
 
 No desktop temporary experiment branch has an unresolved terminal job in this
-snapshot. `codex/exp/gptrans-pair-norm-500k` closed at `0460ba6` and its
-selected evidence is integrated into `molgap-desktop`. Retain its branch ref
-for source provenance until its commits are durably reachable from an owner or
-archive branch.
+snapshot. The standalone PairNorm 500K branch closed at `0460ba6`; its selected
+evidence is integrated into `molgap-desktop`. Its source history and the two
+preceding PairNorm branch tips are preserved by archive merge `234f511`, and
+their temporary refs were retired.
 
 Inspect retained branches only when working on their question. Their old root
 documents do not override the integration branch. Do not wholesale merge
@@ -30,12 +30,11 @@ tip was not merged and does not add desktop acceptance tasks. The standalone
 PairNorm bridge closed above is a different experiment.
 
 The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
-Its experiment evidence is integrated into `molgap-desktop`; retain the branch
-ref for source provenance until its commits are durably reachable from an owner
-or archive branch.
-The distance-angle and Xi'an audit branches reached terminal decisions at
-`86a4489` and `3fc1d80`. Their evidence is integrated into `molgap-desktop`;
-retain the branch refs under the same provenance rule.
+Its experiment evidence is integrated into `molgap-desktop`. The distance-angle
+and Xi'an audit branches reached terminal decisions at `86a4489` and `3fc1d80`.
+Their selected evidence is integrated into `molgap-desktop`. These desktop
+source histories are preserved by archive merge `234f511`; their temporary
+refs were retired.
 
 ## Cleanup evidence
 
@@ -44,6 +43,12 @@ CURRENT_STATE.md and ROADMAP.md. Superseded scratch-control, submission-backup
 and EdgeState304 tips were preserved as archive merge parents (b2f65e0); that
 merge intentionally retained the archive tree rather than activating their
 code. Earlier retired tips were already reachable from origin/archive.
+Archive merge `234f511` similarly preserves the closed desktop PairNorm,
+GPTrans-T/K1 convergence, feature-denoising, PairValue, Xi'an audit, and
+distance-angle source tips without changing the archive tree. The PairNorm
+profile and 100K normalization tips are ancestors of its 500K tip. Their eight
+local and remote temporary refs were retired only after remote archive
+reachability was verified. No server branch was integrated into desktop.
 Working directories and untracked payloads were retained when branch refs were
 removed. Detached old worktrees are historical snapshots, not work entrypoints.
 Completed historical ESGPS6-304 (03f5253) and GPTrans-T 500K (c86970d) histories
@@ -55,13 +60,13 @@ The old local master tip 36a8156 was already reachable from remote desktop.
 The local master ref was aligned to origin/master after verifying that
 preservation; no submission-process history was promoted to delivery.
 
-The primary local checkout D:/文档/molgap now uses molgap-desktop. The previous
-desktop checkout is a detached snapshot; use the primary checkout for new work.
+Use a clean `molgap-desktop` worktree for desktop integration. Check branch and
+status before using the primary local checkout; it may contain unrelated work.
 
 The completed matched-500K V4, geometry-transfer, and IMS V4 infrastructure
 branches were integrated or preserved in `archive` before their local and
-remote branch refs were removed. The Xi'an audit and distance-angle branches
-have terminal decisions recorded above; their refs remain for provenance.
+remote branch refs were removed. The Xi'an audit and distance-angle branch tips
+are now reachable through archive merge `234f511`.
 No remote scheduler was queried and no compute workload was changed by this audit.
 
 The completed GPTrans-T 100K V4 branch was integrated into `molgap-desktop` by
