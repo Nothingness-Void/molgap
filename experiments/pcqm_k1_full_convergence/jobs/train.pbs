@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -N k1-converge
 #PBS -q H
-#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
-#PBS -l walltime=12:00:00
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=4:jobtype=gpu:ngpus=1
+#PBS -l walltime=72:00:00
 #PBS -o /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1/logs/train.out
 #PBS -e /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1/logs/train.err
 set -euo pipefail
@@ -24,4 +24,4 @@ if [[ -f "$ROOT/output/last_checkpoint.pt" ]]; then RESUME=(--resume); fi
   --valid-graph-root "$VALID" --source-root "$BASE/outputs/k1/full" \
   --source-evaluation "$BASE/outputs/fusion_study/metrics.json" \
   --preflight "$ROOT/preflight/preflight.json" --output "$ROOT/output" \
-  --max-wall-seconds 42000 "${RESUME[@]}"
+  --max-wall-seconds 252000 "${RESUME[@]}"

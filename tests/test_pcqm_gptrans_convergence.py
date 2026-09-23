@@ -36,3 +36,8 @@ def test_all_pbs_jobs_mount_the_frozen_ogb_archive():
         assert "OGB_ARCHIVE=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip" in text
         assert "$OGB_ARCHIVE:$ROOT/code/src" in text
         assert "MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33" in text
+    train = (root / "train.pbs").read_text(encoding="utf-8")
+    assert "ncpus=16:mpiprocs=1:ompthreads=4:jobtype=gpu:ngpus=1" in train
+    assert "walltime=72:00:00" in train
+    assert "--max-wall-seconds 252000" in train
+    assert "acceptance deferred" in (root / "accept.pbs").read_text(encoding="utf-8")

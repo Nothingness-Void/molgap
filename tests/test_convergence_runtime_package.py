@@ -23,7 +23,8 @@ def test_packaged_fusion_contract_is_present_and_hash_bound(tmp_path, monkeypatc
 
     monkeypatch.setattr(module, "ROOT", StagedRoot())
     module.main()
-    with tarfile.open(tmp_path / "platforms/_records/ims/convergence_repair_r4/runtime.tar.gz") as archive:
+    record = tmp_path / "platforms/_records/ims/convergence_repair_r5"
+    with tarfile.open(record / "runtime.tar.gz") as archive:
         inventory = json.load(archive.extractfile("code/runtime_files.json"))
         name = "experiments/pcqm_k1_gptrans_full_fusion/fusion_contract.json"
         data = archive.extractfile("code/" + name).read()
@@ -31,3 +32,14 @@ def test_packaged_fusion_contract_is_present_and_hash_bound(tmp_path, monkeypatc
         assert json.loads(data) == json.loads((root / name).read_text())
         for name, expected in inventory.items():
             assert hashlib.sha256(archive.extractfile("code/" + name).read()).hexdigest() == expected
+
+    parents = json.loads((record / "resume_parents.json").read_text())
+    assert parents["k1"]["parent_root"].endswith("k1_convergence_20260916_r3")
+    assert parents["gptrans"]["parent_root"].endswith("gptrans_convergence_20260916_r4")
+    for family in ("k1", "gptrans"):
+        train = (record / f"{family}_train.pbs").read_text()
+        accept = (record / f"{family}_accept.pbs").read_text()
+        assert "ncpus=16:mpiprocs=1:ompthreads=4:jobtype=gpu:ngpus=1" in train
+        assert "walltime=72:00:00" in train
+        assert "--max-wall-seconds 252000" in train
+        assert "acceptance deferred" in accept
