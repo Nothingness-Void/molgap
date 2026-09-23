@@ -1,0 +1,31 @@
+{
+  "arms": [
+    {
+      "arm": "full_atom",
+      "input_bindings_checked": 17,
+      "mismatches": [
+        {
+          "local_sha256": "8b5008366dab1fd49557623981b17b021cc62b3efbfced3b733884632da51450",
+          "path": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+          "receipt_sha256": "4852d825e03ee762186c5d28f0d3c99275b3a1f0391c2960d727f76b1785b216"
+        }
+      ]
+    },
+    {
+      "arm": "full_atom_bond",
+      "input_bindings_checked": 17,
+      "mismatches": [
+        {
+          "local_sha256": "8b5008366dab1fd49557623981b17b021cc62b3efbfced3b733884632da51450",
+          "path": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+          "receipt_sha256": "4852d825e03ee762186c5d28f0d3c99275b3a1f0391c2960d727f76b1785b216"
+        }
+      ]
+    }
+  ],
+  "audited_at": "2026-09-23",
+  "finding": "Published finalization receipts bind a decision.md hash that differs from the retained decision.md; all other retained input bindings match. The historical decision bytes were not recovered, so the immutable receipts were not rewritten.",
+  "format": "molgap-feature-denoising-replay-integrity-audit-v1",
+  "status": "strict_replay_blocked",
+  "trace_comparison_eligibility": "excluded_by_frozen_contract_optimizer_and_source_mismatch"
+}
