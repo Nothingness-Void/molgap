@@ -1,0 +1,29 @@
+{
+  "format": "molgap-gptrans-feature-denoising-terminal-discrepancy-v1",
+  "kernel_id": "nothingnessvoid/molgap-gptrans-feature-denoising-s42",
+  "kernel_version": 2,
+  "scheduler_state": "COMPLETE",
+  "source_commit_in_prospective_contract": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+  "source_commit_in_completed_run": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+  "optimizer": {
+    "frozen_learning_rate": 0.0002,
+    "observed_max_learning_rate": 0.001,
+    "frozen_weight_decay": 0.01,
+    "observed_weight_decay": 0.05,
+    "frozen_final_learning_rate": 0.000002,
+    "observed_final_learning_rate": 0.000001
+  },
+  "last_checkpoint_source_commit_field": "absent",
+  "completion_manifest_source_commit_field": "present_and_matches_v2_launch",
+  "strict_contract_status": "not_accepted",
+  "scientific_observation": "both arms worse than the aligned internal-development reference",
+  "rml_trajectory_outcome": "INCONCLUSIVE",
+  "strict_replay_eligible": false,
+  "no_retraining_for_bookkeeping": true,
+  "authority": {
+    "contract": "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+    "launch": "experiments/pcqm_gptrans_feature_denoising_100k/launch.json",
+    "mechanical_acceptance": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/mechanical_acceptance.json",
+    "paired_comparison": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/paired_comparison.json"
+  }
+}

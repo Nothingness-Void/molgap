@@ -1,0 +1,136 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "752e3a1192744616c9790d243c95da221177ad101cbba0d695d9cf0cdb5770f2"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/best_model_bundle.pt",
+      "name": "best_model_bundle.pt",
+      "sha256": "82d3231f00b55d8650cbaf36b188c7e1bc0ff149ca6d912961e50d306d93b447"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "2e68c46deb518cfaf7c9582fd22e82259ec1424bb2a9611238701ab996d8f6c6"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/contract.json",
+      "name": "contract.json",
+      "sha256": "b9d43fdcf07f0f8d026127a52d42ce4175629d4040c103d3c7bfc6d4891eeb5d"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "690480f3af150b42b773924d7439a244e3e8fcbdff14ae18d2b1e272ff20fb88"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/resume_source_20260919.pt",
+      "name": "resume_source_20260919.pt",
+      "sha256": "a686c6e1d12666a4dca6dac1b0472175863228a0fb0ae7b663bb465fbd90abb6"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/runtime_manifest.json",
+      "name": "runtime_manifest.json",
+      "sha256": "25a6912a4a8458ab1f9f4ce3e331bf38229db18e857fa6df6c84b2d9297739c5"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/trace.json",
+      "name": "trace.json",
+      "sha256": "d7847007dc9418e17c73a68e2767d81984dd7aef8865ac7ab83257d9a84f4cc3"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_01.pt",
+      "name": "valid_predictions_pass_01.pt",
+      "sha256": "76e0f7fc20eba2304ac4ccd302ac00589e55e3c659a96d3eabb25f5fe116958a"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_02.pt",
+      "name": "valid_predictions_pass_02.pt",
+      "sha256": "676ccf54e38a665384fed29a46e1f0ee3484872470d94bdec73a425c7f87f818"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_03.pt",
+      "name": "valid_predictions_pass_03.pt",
+      "sha256": "92a61210118a8a60df3dcfd79129e1e8a8b2b406e50c5a81e6fef78dee699fd2"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_04.pt",
+      "name": "valid_predictions_pass_04.pt",
+      "sha256": "7459864229765244b50c27f992ffdd225b89f046c918ada60f1f121087c2a428"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_05.pt",
+      "name": "valid_predictions_pass_05.pt",
+      "sha256": "4bfbfd388cf187c26b4199e5372f4d20fdea074c5880331919821275ff0f32f7"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_06.pt",
+      "name": "valid_predictions_pass_06.pt",
+      "sha256": "c3ebfd3489608183799aa9dbd8d77c2864fc89901bc76aecd38e42e8ab98c1b5"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_full_convergence/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "23f6facaa76cfd039a6a03a5865714cda2194c84e435eea050f6e69d0e5f0337"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_full_convergence/protocol.md",
+      "experiments/pcqm_gptrans_full_convergence/results/terminal_reconciliation_20260923.json",
+      "experiments/pcqm_gptrans_full_convergence/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-gptrans-convergence-result-v1",
+  "metrics": {
+    "continuation_steps": 158370,
+    "delta_vs_source_eV": -0.0052211375926691644,
+    "selected_official_valid_gap_mae_eV": 0.1037911756121818,
+    "source_official_valid_gap_mae_eV": 0.10901231320485097,
+    "stop_reason": "budget"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retrospective terminal IMS continuation with remote/local SHA256 equality and locally rerun no-inference acceptance"
+  },
+  "outcome": {
+    "artifact_status": "local_no_inference_acceptance_and_remote_local_hash_match",
+    "budget_decision": "bounded_continuation_complete",
+    "comparison_status": "within_model_source_vs_continuation_only",
+    "execution_status": "complete",
+    "full_handoff_status": "separate_decision_required",
+    "scientific_status": "budget_stop_improved_not_proven_converged",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "official_train": "consumed",
+    "official_validation": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "historical_full_gptrans_convergence_continuation",
+  "track": "B"
+}

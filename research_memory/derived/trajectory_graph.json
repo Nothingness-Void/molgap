@@ -16,6 +16,31 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-feature-denoise-full-atom-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-feature-denoise-full-atom-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-full-convergence-20260919:A001",
+      "target": "experiments/pcqm_gptrans_full_convergence/results/terminal_reconciliation_20260923.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-noisy-nodes-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json",
       "type": "action_produced_evidence"
@@ -48,6 +73,11 @@
     {
       "source": "TB-gptrans-t-500k-bridge:A001",
       "target": "experiments/pcqm_gptrans_t_500k/results/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-full-convergence-20260919:A001",
+      "target": "experiments/pcqm_k1_full_convergence/results/terminal_reconciliation_20260923.json",
       "type": "action_produced_evidence"
     },
     {
@@ -101,6 +131,31 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_value_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_value_100k/training_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/results/acceptance_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/results/submission_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
       "type": "action_produced_evidence"
@@ -128,6 +183,16 @@
     {
       "source": "TB-gptrans-noisy-nodes-100k-s42",
       "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -166,6 +231,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-gptrans-full-fusion-r3",
+      "target": "TB-gptrans-full-convergence-20260919",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-gptrans-full-fusion-r3",
+      "target": "TB-k1-full-convergence-20260919",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "parent_trajectory"
@@ -191,6 +266,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-scale-transfer-attribution",
+      "target": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-diagnostic",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "parent_trajectory"
@@ -208,6 +288,16 @@
     {
       "source": "pcqm-gptrans-noisy-nodes-100k-s42",
       "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -253,6 +343,16 @@
     {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-gptrans-full-convergence-20260919",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-k1-full-convergence-20260919",
       "type": "prior_evidence"
     },
     {
@@ -276,6 +376,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-scale-transfer-attribution-no-train",
+      "target": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-diagnostic-evidence",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "prior_evidence"
@@ -283,6 +388,16 @@
     {
       "source": "pcqm-edgestate-rich-full-submission",
       "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
       "type": "reference_used"
     },
     {
@@ -323,6 +438,16 @@
     {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-gptrans-full-convergence-20260919",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-k1-full-convergence-20260919",
       "type": "reference_used"
     },
     {
@@ -351,7 +476,19 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-full-convergence-20260919",
       "type": "evidence"
     },
     {
@@ -379,7 +516,15 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-full-convergence-20260919",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-gptrans-full-fusion-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "type": "evidence"
     },
     {
@@ -419,6 +564,18 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-gptrans-noisy-nodes-100k-s42",
       "type": "trajectory"
     },
@@ -440,6 +597,10 @@
     },
     {
       "id": "TB-gptrans-t-500k-bridge",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-full-convergence-20260919",
       "type": "trajectory"
     },
     {
@@ -472,6 +633,10 @@
     },
     {
       "id": "TC-gptrans-flow-ablation-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-value-decoupled-100k-s42",
       "type": "trajectory"
     },
     {

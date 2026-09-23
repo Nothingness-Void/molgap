@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b1222ad23350c01e6f3689c370e8d3e0db5fb82d47515f4365a561dbf00b1900",
+  "source_digest": "16ae40f7cd198f3942313185c0a3eaf73a4a865f8e8696c6d1cd47ef59476839",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -49,6 +49,60 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gine-1m-gap-specialist-v7"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+      "family_id": "gptrans-feature-denoising",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-feature-denoising-full_atom-100k-s42"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+      "family_id": "gptrans-feature-denoising",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-noisy-pair-norm-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gptrans_full_convergence/decision.md",
+      "family_id": "gptrans-full-convergence",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-gptrans-full-fusion-r3"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gptrans_full_convergence/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-full-convergence-20260919"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-full-convergence-20260919"
     },
     {
       "completeness_status": "complete",
@@ -156,6 +210,24 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_full_convergence/decision.md",
+      "family_id": "k1-full-convergence",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-gptrans-full-fusion-r3"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_full_convergence/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-full-convergence-20260919"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-full-convergence-20260919"
     },
     {
       "completeness_status": "partial",
@@ -297,6 +369,24 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-flow-ablation-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_pair_value_100k/decision.md",
+      "family_id": "k1-pair-value-decoupling",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-pcqm-scale-transfer-attribution"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_pair_value_100k/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-pair-value-decoupled-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
     },
     {
       "completeness_status": "partial",

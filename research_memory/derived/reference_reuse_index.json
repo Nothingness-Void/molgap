@@ -72,6 +72,48 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "paired_endpoint_only_not_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_feature_denoising_full_atom",
+      "source_envelope": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "paired_endpoint_only_not_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_gptrans_feature_denoising_full_atom_bond",
+      "source_envelope": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_remote_verified"
       ],
       "comparison_status": "paired_development_comparison_complete",
@@ -88,6 +130,27 @@
       "source_envelope": "experiments/pcqm_gptrans_flow_ablation_100k/v5_evidence.json",
       "track": "C",
       "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified",
+        "durable_remote_and_local_verified"
+      ],
+      "comparison_status": "within_model_source_vs_continuation_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_use": {
+        "official_train": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_full_gptrans_convergence_continuation",
+      "source_envelope": "experiments/pcqm_gptrans_full_convergence/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
       "used_by_trajectory_ids": []
     },
     {
@@ -148,7 +211,10 @@
       "source_envelope": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
       "track": "B",
       "transfer_status": "qualified_for_500k",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-gptrans-feature-denoise-full-atom-100k-s42",
+        "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      ]
     },
     {
       "artifact_availability": [
@@ -223,6 +289,27 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified",
+        "durable_remote_and_local_verified"
+      ],
+      "comparison_status": "within_model_source_vs_continuation_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-full-convergence-20260919",
+      "role_use": {
+        "official_train": "consumed",
+        "official_validation": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_full_k1_convergence_continuation",
+      "source_envelope": "experiments/pcqm_k1_full_convergence/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_remote_verified"
       ],
       "comparison_status": "complete",
@@ -238,6 +325,29 @@
       "scientific_scope": "historical_full_training_and_fusion",
       "source_envelope": "experiments/pcqm_k1_gptrans_full_fusion/v5_evidence.json",
       "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": [
+        "TB-gptrans-full-convergence-20260919",
+        "TB-k1-full-convergence-20260919"
+      ]
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "point_comparison_only_paired_interval_unavailable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "K1 PairToken value-decoupling fixed100k internal-development screen",
+      "source_envelope": "experiments/pcqm_k1_pair_value_100k/v5_evidence.json",
+      "track": "C",
       "transfer_status": "not_qualified",
       "used_by_trajectory_ids": []
     },

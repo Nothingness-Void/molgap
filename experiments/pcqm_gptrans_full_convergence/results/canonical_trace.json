@@ -1,0 +1,127 @@
+{
+  "metric_semantics": {
+    "ema_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "official_validation_consumed_for_convergence",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "eV",
+      "weights": "ema"
+    },
+    "live_dev_metric": null,
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "official_train_full",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "normalized",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.10822651657275918,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": 9.336825748732972e-05,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09749389129257774,
+      "optimizer_step": 26395,
+      "sample_presentations": 3378560,
+      "sequence": 0,
+      "wall_time_seconds": 765.8600288741291
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.10702895498168777,
+      "epoch_or_pass": 2,
+      "event": "observation",
+      "learning_rate": 7.525e-05,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09661712424223069,
+      "optimizer_step": 52790,
+      "sample_presentations": 6757120,
+      "sequence": 1,
+      "wall_time_seconds": 2915.153055432951
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.10571875585009721,
+      "epoch_or_pass": 3,
+      "event": "observation",
+      "learning_rate": 5.05e-05,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09504904471102098,
+      "optimizer_step": 79185,
+      "sample_presentations": 10135680,
+      "sequence": 2,
+      "wall_time_seconds": 3698.3749777108897
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.10472632881024245,
+      "epoch_or_pass": 4,
+      "event": "observation",
+      "learning_rate": 2.5750000000000013e-05,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09308992096009998,
+      "optimizer_step": 105580,
+      "sample_presentations": 13514240,
+      "sequence": 3,
+      "wall_time_seconds": 2950.3831951040775
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.10405553029439202,
+      "epoch_or_pass": 5,
+      "event": "observation",
+      "learning_rate": 7.631742512670284e-06,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09172517808832031,
+      "optimizer_step": 131975,
+      "sample_presentations": 16892800,
+      "sequence": 4,
+      "wall_time_seconds": 3101.0464667570777
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.1037911756121818,
+      "epoch_or_pass": 6,
+      "event": "observation",
+      "learning_rate": 1e-06,
+      "live_dev_metric": null,
+      "live_train_metric": 0.09073047889063114,
+      "optimizer_step": 158370,
+      "sample_presentations": 20271360,
+      "sequence": 5,
+      "wall_time_seconds": 3147.7287631439976
+    }
+  ],
+  "provenance": {
+    "axis_origin": "relative_to_accepted_source_checkpoint",
+    "source_ref": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/trace.json",
+    "source_sha256": "d7847007dc9418e17c73a68e2767d81984dd7aef8865ac7ab83257d9a84f4cc3"
+  },
+  "run_id": "1548270.ccpbs1",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TB-gptrans-full-convergence-20260919"
+}

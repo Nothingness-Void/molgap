@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "resume-20260919",
+  "category": "training",
+  "cost_event_id": "cost-TB-gptrans-full-convergence-20260919-training-missing",
+  "evidence_ref": "experiments/pcqm_gptrans_full_convergence/results/terminal_reconciliation_20260923.json",
+  "hardware": "A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "IMS",
+  "run_id": "1548270.ccpbs1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-full-convergence-20260919"
+}

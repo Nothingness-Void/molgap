@@ -1,0 +1,79 @@
+{
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "official_validation_consumed_for_convergence",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "official_train_full",
+      "target": "PCQM4Mv2 Gap",
+      "unit": "normalized",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": 9.336825748732972e-05,
+      "live_dev_metric": 0.11042576880205074,
+      "live_train_metric": 0.08913101363712206,
+      "optimizer_step": 26395,
+      "sample_presentations": 3378560,
+      "sequence": 0,
+      "wall_time_seconds": 982.2124117909698
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 2,
+      "event": "observation",
+      "learning_rate": 7.525e-05,
+      "live_dev_metric": 0.11008455009007893,
+      "live_train_metric": 0.08777684538083041,
+      "optimizer_step": 52790,
+      "sample_presentations": 6757120,
+      "sequence": 1,
+      "wall_time_seconds": 3563.219137949054
+    },
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 3,
+      "event": "observation",
+      "learning_rate": 5.05e-05,
+      "live_dev_metric": 0.10804081530288623,
+      "live_train_metric": 0.08583375900266839,
+      "optimizer_step": 79185,
+      "sample_presentations": 10135680,
+      "sequence": 2,
+      "wall_time_seconds": 3077.080881124013
+    }
+  ],
+  "provenance": {
+    "axis_origin": "relative_to_accepted_source_checkpoint",
+    "source_ref": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/trace.json",
+    "source_sha256": "07c267355ca3dabeee8ed395992fa14eed5016399504756a20d5d6f36ade18fb"
+  },
+  "run_id": "1548227.ccpbs1",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TB-k1-full-convergence-20260919"
+}

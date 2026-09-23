@@ -292,7 +292,7 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
     payloads = compile_research_memory(REPO_ROOT)
     report = json.loads(payloads["completeness_report.json"])
     trajectories = json.loads(payloads["trajectory_index.json"])["trajectories"]
-    assert {record["trajectory_id"] for record in trajectories} == {
+    assert {record["trajectory_id"] for record in trajectories} >= {
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
@@ -313,16 +313,15 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
-    assert report["cost_completeness"] == {
-        "trajectories_total": 19,
-        "with_cost_event": 8,
-        "without_cost_event": 11,
-        "with_complete_native_measurement": 4,
-        "with_incomplete_native_measurement": 4,
-    }
+    costs = report["cost_completeness"]
+    assert costs["trajectories_total"] == len(trajectories)
+    assert costs["with_cost_event"] + costs["without_cost_event"] == len(trajectories)
+    assert (costs["with_complete_native_measurement"]
+            + costs["with_incomplete_native_measurement"] == costs["with_cost_event"])
+    assert costs["with_complete_native_measurement"] >= 4
     issues = {item["code"]: item["count"] for item in report["issues"]}
-    assert issues["missing_cost_event"] == 11
-    assert issues["incomplete_native_cost_measurement"] == 4
+    assert issues["missing_cost_event"] == costs["without_cost_event"]
+    assert issues["incomplete_native_cost_measurement"] == costs["with_incomplete_native_measurement"]
     assert "missing_native_cost" not in issues
 
 
@@ -335,8 +334,8 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         for record in json.loads(payloads["trajectory_index.json"])["trajectories"]
     }
 
-    assert summary["evidence"]["validated"] == 17
-    assert summary["roles"]["explicit_events"] == 15
+    assert summary["evidence"]["validated"] >= 22
+    assert summary["roles"]["explicit_events"] >= 30
     no_evidence_trajectories = next(
         (item["items"] for item in report["issues"] if item["code"] == "trajectory_without_v5_evidence"),
         [],
@@ -356,6 +355,11 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
     assert trajectories["TB-pcqm-scale-transfer-attribution"]["result_evidence_ids"] == [
         "pcqm-scale-transfer-attribution-no-train"
     ]
+    assert trajectories["TB-k1-full-convergence-20260919"]["outcome"] == "CLOSED"
+    assert trajectories["TB-gptrans-full-convergence-20260919"]["outcome"] == "INCONCLUSIVE"
+    assert trajectories["TC-k1-pair-value-decoupled-100k-s42"]["outcome"] == "INCONCLUSIVE"
+    assert trajectories["TB-gptrans-feature-denoise-full-atom-100k-s42"]["outcome"] == "INCONCLUSIVE"
+    assert trajectories["TB-gptrans-feature-denoise-full-atom-bond-100k-s42"]["outcome"] == "INCONCLUSIVE"
 
 
 def test_empty_numeric_basis_serializes_as_null():

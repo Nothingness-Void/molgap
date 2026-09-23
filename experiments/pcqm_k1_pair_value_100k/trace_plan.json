@@ -1,0 +1,10 @@
+{
+  "format": "molgap-trace-plan-v1",
+  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v1",
+  "x_axis": ["optimizer_step", "sample_presentations"],
+  "observables": ["epoch", "train_metric", "development_metric", "learning_rate", "wall_seconds"],
+  "weight_semantics": "raw_model_no_ema",
+  "terminal_trace_required": true
+}
+

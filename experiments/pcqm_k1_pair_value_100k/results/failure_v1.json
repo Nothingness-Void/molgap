@@ -1,0 +1,17 @@
+{
+  "format": "molgap-remote-failure-record-v1",
+  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42",
+  "kernel": "nothingnessvoid/molgap-pcqm-k1-pair-value-s42",
+  "version": 1,
+  "state": "ERROR",
+  "classification": "infrastructure_source_closure",
+  "exception": "ModuleNotFoundError: No module named 'molgap.pcqm_wedge'",
+  "scientific_training_started": false,
+  "terminal_log_path": "platforms/_records/kaggle/training/k1_pair_value_s42_v1/molgap-pcqm-k1-pair-value-s42.log",
+  "terminal_log_sha256": "6cebe6285cb0cc6ad4e155f4c5b7ae9354023938b6a84e5b32fb63afb7e974ae",
+  "repair": {
+    "source_commit": "50a6db549ad2cc47d976b31e82366381f541af82",
+    "added_pickle_dependency": "src/molgap/pcqm_wedge.py",
+    "scientific_contract_changed": false
+  }
+}

@@ -7286,6 +7286,22 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen_contract_optimizer_and_source_mismatch"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen_contract_optimizer_and_source_mismatch"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -7298,5 +7314,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "ec2b877957a184aea48c06e198b3227e03d56f4e1d88f7c32cb669291fff5d04"
+  "source_digest": "54e10fa7872b98d05c80e58239fe1be213e04bcf4038afcd80cadfa54fdd82a5"
 }

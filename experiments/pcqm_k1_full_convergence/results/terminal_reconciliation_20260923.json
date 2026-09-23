@@ -1,0 +1,70 @@
+{
+  "file_hashes": {
+    "acceptance.json": {
+      "bytes": 1379,
+      "sha256": "119dbcf34fdae2a2ffab04077b484138c110a9210158321f0be4107b3c2b4b18"
+    },
+    "completion_manifest.json": {
+      "bytes": 1322,
+      "sha256": "2e683d611937e7cc2094315f272bbb1f24e5056740dd48a358b042c6dc2fda92"
+    },
+    "contract.json": {
+      "bytes": 1489,
+      "sha256": "f2bab8f4030466dd1c31987ac06f9be7efff2276a0002ab960ea379eff6fdc27"
+    },
+    "last_checkpoint.pt": {
+      "bytes": 44364883,
+      "sha256": "daf2a5ed7ae0d0c1c8ec9c5a7f670bd27396144487ea5f6991b47e388ad2ff1c"
+    },
+    "resume_source_20260919.pt": {
+      "bytes": 44363987,
+      "sha256": "a8a4c02868d419b21e0ae9a5d280c303c8fb5a60829c30249d976b63db1900db"
+    },
+    "run_summary.json": {
+      "bytes": 1322,
+      "sha256": "2e683d611937e7cc2094315f272bbb1f24e5056740dd48a358b042c6dc2fda92"
+    },
+    "runtime_manifest.json": {
+      "bytes": 3388,
+      "sha256": "25a6912a4a8458ab1f9f4ce3e331bf38229db18e857fa6df6c84b2d9297739c5"
+    },
+    "trace.json": {
+      "bytes": 1664,
+      "sha256": "07c267355ca3dabeee8ed395992fa14eed5016399504756a20d5d6f36ade18fb"
+    },
+    "valid_predictions_pass_01.pt": {
+      "bytes": 1179111,
+      "sha256": "11379da70550397275d95070200d8ed85ceb28729d06874d609158bed2ad1bf4"
+    },
+    "valid_predictions_pass_02.pt": {
+      "bytes": 1179111,
+      "sha256": "2bf39b9ed607243a386017d9a33c1973af5dcdb691a3bd645e3d295742b3b6dd"
+    },
+    "valid_predictions_pass_03.pt": {
+      "bytes": 1179111,
+      "sha256": "aa9c09d461d788e094382fd2f30d2b86f16b0de0e0befdd31c699cbee1779cff"
+    }
+  },
+  "format": "molgap-ims-convergence-terminal-reconciliation-v1",
+  "job_id": "1548227.ccpbs1",
+  "local_artifact_root": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1",
+  "local_no_inference_acceptance_passed": true,
+  "model": "k1",
+  "remote_local_sha256_equal": true,
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260916_r3",
+  "retrieved_at": "2026-09-23",
+  "terminal": {
+    "additional_sample_presentations": 10135680,
+    "best_evaluation_index": 0,
+    "best_official_valid_mae_eV": 0.10667223528212925,
+    "complete": true,
+    "continuation_step": 79185,
+    "official_validation_role_read": true,
+    "source_official_valid_mae_eV": 0.10667223528212925,
+    "stale_evaluations": 3,
+    "status": "complete",
+    "stop_reason": "patience",
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false
+  }
+}

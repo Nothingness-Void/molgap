@@ -1,0 +1,22 @@
+{
+  "source_commit": "c9c0126",
+  "archive_sha256": "b9ee9473ace2cdbc856791cdfcad85317ee5763ebabedd6f9b13febeebb956d5",
+  "runtime_files": 127,
+  "local_tests": "13 passed",
+  "remote_archive_hash": "passed",
+  "remote_per_file_hashes_both_roots": "passed",
+  "remote_both_actual_entrypoint_imports": "passed",
+  "gpu_resume_roundtrip": "pending scheduler execution",
+  "gptrans": {
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260915_r3",
+    "preflight_and_training_job": "1516700.ccpbs1",
+    "acceptance_job": "1516703.ccpbs1"
+  },
+  "k1": {
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r2",
+    "preflight_and_training_job": "1516701.ccpbs1",
+    "acceptance_job": "1516704.ccpbs1"
+  },
+  "preserves_accepted_source_checkpoint_and_scientific_contract": true,
+  "disposable_gpu_probe_steps_advance_training_cursor": false
+}

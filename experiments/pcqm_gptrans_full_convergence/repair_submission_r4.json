@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-16",
+  "archive_sha256": "f1b708cbcf98cd91ba91664deb90a0643dac3f4ba9f47aed648247b40fa3451f",
+  "runtime_files": 130,
+  "local_tests_passed": 7,
+  "remote_archive_and_per_file_hashes": "passed_both",
+  "actual_graph_fusion_contract_validation": "passed_both",
+  "actual_entrypoint_imports": "passed_both",
+  "gpu_preflight_verified": false,
+  "source_global_step": 156250,
+  "scientific_contract_changed": false,
+  "gptrans": {
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260916_r4",
+    "preflight_and_training_job": "1524399.ccpbs1",
+    "acceptance_job": "1524401.ccpbs1",
+    "acceptance_dependency": "afterok:1524399.ccpbs1"
+  },
+  "k1": {
+    "root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260916_r3",
+    "preflight_and_training_job": "1524398.ccpbs1",
+    "acceptance_job": "1524402.ccpbs1",
+    "acceptance_dependency": "afterok:1524398.ccpbs1"
+  },
+  "monitor_thread": "01a03de4-fbb3-76c1-ab0c-25721edecdc0",
+  "coordinator_thread": "019ef861-8611-7790-a091-a887effa7813"
+}

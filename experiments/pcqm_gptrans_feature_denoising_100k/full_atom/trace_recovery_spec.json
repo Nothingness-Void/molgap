@@ -1,0 +1,33 @@
+{
+  "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42",
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+  "rows_key": "rows",
+  "field_mapping": {
+    "epoch_or_pass": "epoch",
+    "optimizer_step": "optimizer_step",
+    "sample_presentations": "sample_presentations",
+    "learning_rate": "learning_rate",
+    "live_train_metric": "train_normalized_gap_mae",
+    "ema_dev_metric": "development_mae_eV",
+    "wall_time_seconds": "elapsed_seconds"
+  },
+  "metric_semantics": {
+    "live_train_metric": {
+      "metric": "normalized_gap_mae",
+      "unit": "normalized_target_unit",
+      "target": "Gap",
+      "role_identity": "official_train_prefix_0_100000",
+      "weights": "live",
+      "direction": "minimize"
+    },
+    "live_dev_metric": null,
+    "ema_dev_metric": {
+      "metric": "MAE",
+      "unit": "eV",
+      "target": "Gap",
+      "role_identity": "internal_development_100000_150000",
+      "weights": "ema",
+      "direction": "minimize"
+    }
+  }
+}

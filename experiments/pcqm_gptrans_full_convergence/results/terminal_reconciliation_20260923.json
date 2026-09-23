@@ -1,0 +1,86 @@
+{
+  "file_hashes": {
+    "acceptance.json": {
+      "bytes": 1463,
+      "sha256": "752e3a1192744616c9790d243c95da221177ad101cbba0d695d9cf0cdb5770f2"
+    },
+    "best_model_bundle.pt": {
+      "bytes": 21077951,
+      "sha256": "82d3231f00b55d8650cbaf36b188c7e1bc0ff149ca6d912961e50d306d93b447"
+    },
+    "completion_manifest.json": {
+      "bytes": 1406,
+      "sha256": "2e68c46deb518cfaf7c9582fd22e82259ec1424bb2a9611238701ab996d8f6c6"
+    },
+    "contract.json": {
+      "bytes": 1465,
+      "sha256": "b9d43fdcf07f0f8d026127a52d42ce4175629d4040c103d3c7bfc6d4891eeb5d"
+    },
+    "last_checkpoint.pt": {
+      "bytes": 84384740,
+      "sha256": "690480f3af150b42b773924d7439a244e3e8fcbdff14ae18d2b1e272ff20fb88"
+    },
+    "resume_source_20260919.pt": {
+      "bytes": 84383268,
+      "sha256": "a686c6e1d12666a4dca6dac1b0472175863228a0fb0ae7b663bb465fbd90abb6"
+    },
+    "run_summary.json": {
+      "bytes": 1406,
+      "sha256": "2e68c46deb518cfaf7c9582fd22e82259ec1424bb2a9611238701ab996d8f6c6"
+    },
+    "runtime_manifest.json": {
+      "bytes": 3388,
+      "sha256": "25a6912a4a8458ab1f9f4ce3e331bf38229db18e857fa6df6c84b2d9297739c5"
+    },
+    "trace.json": {
+      "bytes": 3313,
+      "sha256": "d7847007dc9418e17c73a68e2767d81984dd7aef8865ac7ab83257d9a84f4cc3"
+    },
+    "valid_predictions_pass_01.pt": {
+      "bytes": 1179111,
+      "sha256": "76e0f7fc20eba2304ac4ccd302ac00589e55e3c659a96d3eabb25f5fe116958a"
+    },
+    "valid_predictions_pass_02.pt": {
+      "bytes": 1179111,
+      "sha256": "676ccf54e38a665384fed29a46e1f0ee3484872470d94bdec73a425c7f87f818"
+    },
+    "valid_predictions_pass_03.pt": {
+      "bytes": 1179111,
+      "sha256": "92a61210118a8a60df3dcfd79129e1e8a8b2b406e50c5a81e6fef78dee699fd2"
+    },
+    "valid_predictions_pass_04.pt": {
+      "bytes": 1179111,
+      "sha256": "7459864229765244b50c27f992ffdd225b89f046c918ada60f1f121087c2a428"
+    },
+    "valid_predictions_pass_05.pt": {
+      "bytes": 1179111,
+      "sha256": "4bfbfd388cf187c26b4199e5372f4d20fdea074c5880331919821275ff0f32f7"
+    },
+    "valid_predictions_pass_06.pt": {
+      "bytes": 1179111,
+      "sha256": "c3ebfd3489608183799aa9dbd8d77c2864fc89901bc76aecd38e42e8ab98c1b5"
+    }
+  },
+  "format": "molgap-ims-convergence-terminal-reconciliation-v1",
+  "job_id": "1548270.ccpbs1",
+  "local_artifact_root": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans",
+  "local_no_inference_acceptance_passed": true,
+  "model": "gptrans",
+  "remote_local_sha256_equal": true,
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260916_r4",
+  "retrieved_at": "2026-09-23",
+  "terminal": {
+    "additional_sample_presentations": 20271360,
+    "best_evaluation_index": 6,
+    "best_official_valid_mae_eV": 0.1037911756121818,
+    "complete": true,
+    "continuation_step": 158370,
+    "official_validation_role_read": true,
+    "source_official_valid_mae_eV": 0.10901231320485097,
+    "stale_evaluations": 0,
+    "status": "complete",
+    "stop_reason": "budget",
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false
+  }
+}

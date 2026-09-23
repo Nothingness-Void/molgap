@@ -26,6 +26,10 @@ Track C.
 | Did the adapted GPTrans-T propagation core pass its historical 500K bridge? | Yes as pre-V4 context; it is not a reusable V4 reference | `pcqm_gptrans_t_500k/` |
 | What contract defined the historical EdgeState304 500K comparator? | Frozen pre-V4 comparator protocol retained for provenance | `pcqm_edgestate304_500k/` |
 | What is the status of the official-train K1/GPTrans-T full pair and fusion? | Integrated training/acceptance code; follow its dated recovery and evaluation evidence | `pcqm_k1_gptrans_full_fusion/` |
+| Did full K1 continuation improve the selected model? | No; patience stop retained the source checkpoint | `pcqm_k1_full_convergence/` |
+| Did full GPTrans-T continuation improve the selected model? | Yes on the consumed official-validation role; budget stop does not prove convergence | `pcqm_gptrans_full_convergence/` |
+| Does decoupling PairToken relation values improve K1 at fixed 100K? | Point gates failed and strict replay gaps remain; route closed | `pcqm_k1_pair_value_100k/` |
+| Does expanded feature denoising improve GPTrans-T at fixed 100K? | No observed gain; frozen source/optimizer mismatch excludes strict replay | `pcqm_gptrans_feature_denoising_100k/` |
 | Can EdgeState Structural GPS transfer under a strict official PCQM4Mv2 protocol? | Full official-only baseline submitted; public reproduction passed a clean-clone audit and OGB review is pending | `pcqm_edge_state_full/` |
 | Did the early full repaired-2M PairGPS2D attempt establish a model? | No; the run was stopped and superseded by the matched validation-only protocol | `pubchemqc_pair_gps_2d/` |
 | Do GPTrans-T and Neural-Atom K1 with distance-angle geometry yield a useful 500K blend? | Positive OOF nomination evidence; V4 comparability gate not met, so no scale-up is authorized without a matched bridge | `pcqm_geometry_transfer_500k/` |

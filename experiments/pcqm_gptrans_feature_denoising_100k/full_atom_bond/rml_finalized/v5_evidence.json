@@ -1,0 +1,106 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/best_model.pt",
+      "name": "best_model",
+      "sha256": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/trace.json",
+      "name": "training_trace",
+      "sha256": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "7dc036a72be7a9caf8e0f4af83894604d7fdb28eff5b0c303c16ae22199b73e6"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/preflight.json",
+      "name": "runtime_preflight",
+      "sha256": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/runtime/source.tar.gz",
+      "name": "source_archive",
+      "sha256": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/paired_comparison.json",
+      "name": "paired_comparison",
+      "sha256": "f5040ab23c5cc8ba5225464881c655c77e1f0a72785163ca1b0df79de3b94f24"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/retention_receipt.json",
+      "name": "retention_receipt",
+      "sha256": "ac2802e0604aeb2fb6d1ec03269ba16c3183aea17b5cdaad9029a96f393e1d54"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/launch.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/terminal_discrepancy.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+      "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/acceptance.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/observed_metadata.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/comparison_readiness.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/mechanical_acceptance.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/retained_artifact_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/retention_receipt.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-gptrans-feature-denoising-100k-v5",
+  "metrics": {
+    "best_epoch": 59,
+    "candidate_minus_reference_eV": 0.0021360450506210326,
+    "observed_development_gap_mae_eV": 0.149381096624732,
+    "paired_ci95_eV": [
+      0.001257784205198288,
+      0.0030213369257450105
+    ],
+    "reference_development_gap_mae_eV": 0.147245051574111,
+    "source_commit_observed": "fa564238e33c70bd377edf4d64f3182238a3ee49"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-22",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "terminal no-inference mechanical audit, paired development comparison, retained SHA256 artifacts and documented contract discrepancy"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_contract_discrepant",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "paired_endpoint_only_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "inconclusive_under_frozen_contract_observed_worse",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "fixed_100k_gptrans_feature_denoising_full_atom_bond",
+  "track": "B"
+}

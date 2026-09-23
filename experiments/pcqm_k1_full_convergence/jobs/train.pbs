@@ -1,0 +1,27 @@
+#!/bin/bash
+#PBS -N k1-converge
+#PBS -q H
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1
+#PBS -l walltime=12:00:00
+#PBS -o /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1/logs/train.out
+#PBS -e /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1/logs/train.err
+set -euo pipefail
+ROOT=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/k1_convergence_20260915_r1
+BASE=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/recovery_20260914_r3
+DATA=/lustre/home/users/sm2/chou/pcqm4mv2-fixed-v1
+VALID=/lustre/home/users/sm2/chou/molgap-pcqm-edge-state-full/rich_full/graphs
+VENDOR=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+OGB_ARCHIVE=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+export PYTHONPATH="$VENDOR/code/platforms/ims/pcqm_route_b/shims:$VENDOR/vendor-cu126-torch271:$OGB_ARCHIVE:$ROOT/code/src"
+export MOLGAP_OGB_SOURCE_SHA256=a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 PYTHONUNBUFFERED=1
+cd "$ROOT"
+RESUME=()
+if [[ -f "$ROOT/output/last_checkpoint.pt" ]]; then RESUME=(--resume); fi
+"$PYTHON" "$ROOT/code/experiments/pcqm_k1_full_convergence/run.py" train \
+  --dataset-root "$DATA" --manifest "$DATA/subsets/ogb-train-full/manifest.json" \
+  --valid-graph-root "$VALID" --source-root "$BASE/outputs/k1/full" \
+  --source-evaluation "$BASE/outputs/fusion_study/metrics.json" \
+  --preflight "$ROOT/preflight/preflight.json" --output "$ROOT/output" \
+  --max-wall-seconds 42000 "${RESUME[@]}"

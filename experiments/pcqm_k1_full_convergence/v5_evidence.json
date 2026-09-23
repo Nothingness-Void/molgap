@@ -1,0 +1,112 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "119dbcf34fdae2a2ffab04077b484138c110a9210158321f0be4107b3c2b4b18"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "2e683d611937e7cc2094315f272bbb1f24e5056740dd48a358b042c6dc2fda92"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/contract.json",
+      "name": "contract.json",
+      "sha256": "f2bab8f4030466dd1c31987ac06f9be7efff2276a0002ab960ea379eff6fdc27"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "daf2a5ed7ae0d0c1c8ec9c5a7f670bd27396144487ea5f6991b47e388ad2ff1c"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/resume_source_20260919.pt",
+      "name": "resume_source_20260919.pt",
+      "sha256": "a8a4c02868d419b21e0ae9a5d280c303c8fb5a60829c30249d976b63db1900db"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/runtime_manifest.json",
+      "name": "runtime_manifest.json",
+      "sha256": "25a6912a4a8458ab1f9f4ce3e331bf38229db18e857fa6df6c84b2d9297739c5"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/trace.json",
+      "name": "trace.json",
+      "sha256": "07c267355ca3dabeee8ed395992fa14eed5016399504756a20d5d6f36ade18fb"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_01.pt",
+      "name": "valid_predictions_pass_01.pt",
+      "sha256": "11379da70550397275d95070200d8ed85ceb28729d06874d609158bed2ad1bf4"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_02.pt",
+      "name": "valid_predictions_pass_02.pt",
+      "sha256": "2bf39b9ed607243a386017d9a33c1973af5dcdb691a3bd645e3d295742b3b6dd"
+    },
+    {
+      "availability": "durable_remote_and_local_verified",
+      "locator": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_03.pt",
+      "name": "valid_predictions_pass_03.pt",
+      "sha256": "aa9c09d461d788e094382fd2f30d2b86f16b0de0e0befdd31c699cbee1779cff"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_full_convergence/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "cef5940fbe9d64387215153d3c997fc5d9066e90f8a1e150a9957b044a59951e"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_full_convergence/protocol.md",
+      "experiments/pcqm_k1_full_convergence/results/terminal_reconciliation_20260923.json",
+      "experiments/pcqm_k1_full_convergence/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-full-convergence-20260919",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-k1-convergence-result-v1",
+  "metrics": {
+    "continuation_steps": 79185,
+    "delta_vs_source_eV": 0.0,
+    "selected_official_valid_gap_mae_eV": 0.10667223528212925,
+    "source_official_valid_gap_mae_eV": 0.10667223528212925,
+    "stop_reason": "patience"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retrospective terminal IMS continuation with remote/local SHA256 equality and locally rerun no-inference acceptance"
+  },
+  "outcome": {
+    "artifact_status": "local_no_inference_acceptance_and_remote_local_hash_match",
+    "budget_decision": "bounded_continuation_complete",
+    "comparison_status": "within_model_source_vs_continuation_only",
+    "execution_status": "complete",
+    "full_handoff_status": "closed_no_change",
+    "scientific_status": "patience_stop_no_gain",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "official_train": "consumed",
+    "official_validation": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "historical_full_k1_convergence_continuation",
+  "track": "B"
+}

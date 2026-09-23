@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "t4x2-v2",
+  "category": "training",
+  "cost_event_id": "cost-full_atom-t4-v2-observed-training",
+  "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/terminal_inputs/observed_metadata.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 3.157609595321109
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 3.157609595321109
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+}

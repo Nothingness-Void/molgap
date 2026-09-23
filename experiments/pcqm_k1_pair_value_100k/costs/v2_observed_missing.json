@@ -1,0 +1,30 @@
+{
+  "action_id": "A002",
+  "attempt_id": "candidate-v2-complete",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-pair-value-decoupled-100k-s42-v2-observed-missing",
+  "evidence_ref": "experiments/pcqm_k1_pair_value_100k/results/acceptance_v2.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+}

@@ -1,0 +1,37 @@
+{
+  "action_rule": {
+    "action": "RUN_BOUNDED_100K",
+    "field": "explicit_user_authorization",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": "2026-09-22T01:14:32+09:00",
+    "approved_by": "user",
+    "authority_ref": "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md",
+    "scope": "this explicitly authorized bounded dual-arm 100K research action only"
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "cost_model": {
+    "assumptions": [
+      "No successor cost is inferred from a bounded screen.",
+      "Only observed native hardware cost may be recorded after completion."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "25657ef5395e9917b69773e5abe8ce21046dac18243a36877ace6fdd2e48962c",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "desktop-explicit-bounded-100k-research",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "explicit_user_authorization"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "approved",
+  "version": "v1"
+}

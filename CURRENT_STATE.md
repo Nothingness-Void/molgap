@@ -72,15 +72,16 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/`.
 - The one-time K1/GPTrans-T official-validation calibration role is consumed.
   Test-dev/challenge remain sealed.
-- GPTrans/K1 convergence training remains incomplete. The 2026-09-16 attempts
-  saved paused checkpoints and reported walltime plus cgroup memory warnings;
-  dependent acceptance failed because completion manifests were absent.
-  On 2026-09-19, K1 `1548227` and GPTrans-T `1548270` were resubmitted from
-  those checkpoints with bounded PyG object caching, 16 CPU slots, one A100
-  each, and 120-hour limits. Acceptance is conditional on completion. The
-  frozen six-pass/patience-three stopping rule remains unchanged; neither model
-  is proven converged. Deployment and prior-state evidence:
-  `platforms/_records/ims/convergence_resume_20260919/README.md`.
+- The 2026-09-19 IMS K1 and GPTrans-T continuation jobs completed and passed
+  local no-inference terminal acceptance. K1 stopped on patience after 79,185
+  additional steps; its selected score remains `0.106672 eV` with no gain.
+  GPTrans-T stopped at the frozen six-pass budget after 158,370 additional
+  steps; its selected EMA score is `0.103791 eV`, improving its source by
+  `0.005221 eV`. Zero stale evaluations mean GPTrans-T has no demonstrated
+  convergence plateau. Official validation was consumed for selection;
+  test-dev/challenge remain sealed. Authorities:
+  `experiments/pcqm_k1_full_convergence/decision.md` and
+  `experiments/pcqm_gptrans_full_convergence/decision.md`.
 - Accepted PCQM scale identities are held on IMS and mirrored to the accepted
   Kaggle account datasets for the 100K/500K roles.
 - Kaggle3 account `nvoid912` now has accepted private, byte-identical 100K and

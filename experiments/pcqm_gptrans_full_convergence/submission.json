@@ -1,0 +1,58 @@
+{
+  "format": "molgap-pcqm-gptrans-full-convergence-submission-v1",
+  "submitted_at": "2026-09-14T17:24:10+09:00",
+  "authorization": "User authorized continuation of accepted full GPTrans-T training to a bounded validation convergence stop on 2026-09-14.",
+  "source_branch": "codex/exp/gptrans-full-convergence",
+  "source_commit": "a521102",
+  "source_archive_sha256": "99525fecc39b6c30bd20e4ed2db75543d7e2558954e8c32ec2e62aba964ba42c",
+  "contract_sha256": "d37bd16d64e704aa7cb9cec229c5a64b85e59ecc39f551bfd1f5bcd9a15b69e0",
+  "remote_root": "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/gptrans_convergence_20260914_r1",
+  "source": {
+    "checkpoint_sha256": "249a855908e8b27d20a67580a3772691aee446ed47b7711bc45e84f99308127b",
+    "model_bundle_sha256": "0bc1c464f2e3cd64eb0926ae90e4f4f8c8094ce3a044405e3050f42518f1fb9e",
+    "official_valid_acceptance_sha256": "09b1cf6679011e708d4b02f04b6a3202d4345f46312fc5a255301a705faee95a",
+    "global_step": 156250,
+    "official_valid_gap_mae_eV": 0.10901231320485097
+  },
+  "jobs": {
+    "preflight": {
+      "id": "1507991.ccpbs1",
+      "state_at_record": "Queue"
+    },
+    "convergence_training": {
+      "id": "1507994.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1507991.ccpbs1"
+    },
+    "acceptance": {
+      "id": "1507996.ccpbs1",
+      "state_at_record": "Hold",
+      "dependency": "afterok:1507994.ccpbs1"
+    }
+  },
+  "cancelled_submission": {
+    "id": "1507995.ccpbs1",
+    "reason": "The initial acceptance submission referenced an unreturned predicted training job id. It was dependency-held, cancelled before execution, and replaced by 1507996 using the actual returned training id."
+  },
+  "verification": {
+    "local_tests": "14 passed",
+    "git_diff_check": "passed",
+    "remote_archive_sha256": "passed",
+    "remote_bash_syntax": "passed",
+    "remote_python_import": "passed",
+    "cuda_forward_backward": "deferred to job 1507991"
+  },
+  "monitor": {
+    "automation_id": "molgap-full-k1-monitor",
+    "target_thread": "01a03de4-fbb3-76c1-ab0c-25721edecdc0",
+    "interval_minutes": 30,
+    "running_policy": "silent",
+    "terminal_handoff_thread": "019ef861-8611-7790-a091-a887effa7813"
+  },
+  "role_boundary": {
+    "official_validation_role_read": true,
+    "official_validation_use": "fixed convergence selection only",
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  }
+}

@@ -16,6 +16,22 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen_contract_optimizer_and_source_mismatch"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen_contract_optimizer_and_source_mismatch"
+      ],
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -78,5 +94,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 9
+  "trace_count": 11
 }

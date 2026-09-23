@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-pair-value-decoupled-100k-s42-training",
+  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v2",
+  "attempt_id": "candidate-v2-running",
+  "category": "training",
+  "platform": "kaggle1",
+  "hardware": "NVIDIA_T4_SINGLE_VISIBLE",
+  "measurement": {
+    "device_hours": {"value": 2.6, "status": "estimated"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 2.6, "status": "estimated"},
+    "queue_hours": {"value": null, "status": "measurement_missing"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_pair_value_100k/results/submission_v2.json"
+}

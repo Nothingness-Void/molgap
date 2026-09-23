@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 70,
+  "ambiguous_historical_role_record_count": 92,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-edgestate-rich-full-submission",
@@ -100,6 +100,76 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -122,6 +192,34 @@
     },
     {
       "evidence_id": "pcqm-gptrans-flow-ablation-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-convergence-20260919",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -290,6 +388,34 @@
     },
     {
       "evidence_id": "pcqm-gptrans-t-500k-bridge",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-full-convergence-20260919",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -318,6 +444,34 @@
     },
     {
       "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -492,10 +646,130 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 15,
+  "explicit_role_event_count": 30,
   "format": "molgap-rml-role-reuse-index-v1",
-  "full_training_membership_conflicts": [],
+  "full_training_membership_conflicts": [
+    "internal_development",
+    "official_validation"
+  ],
   "identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom_bond-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom_bond-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:official_train_prefix": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-full_atom-train-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-full_atom_bond-train-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_50k": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-pair-value-100k-s42-development_metric-v2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-pair-value-100k-s42-development_selection-v2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+      }
+    ],
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_train_100k": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-pair-value-100k-s42-train-v2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+      }
+    ],
+    "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
+    "pcqm4mv2-fixed-v1:be18a9964754c8428b5c62433136bd0bafb6c75016811c79e223aec30f3dbe98:official_train_full": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",
@@ -615,32 +889,22 @@
     ]
   },
   "protected_roles_reported_untouched": {
-    "official_validation": [
-      "pcqm-geometry-transfer-500k-contextual",
-      "pcqm-gptrans-flow-ablation-100k-s42",
-      "pcqm-gptrans-noisy-nodes-100k-s42",
-      "pcqm-gptrans-noisy-nodes-500k-s42",
-      "pcqm-gptrans-noisy-pair-norm-100k-s42",
-      "pcqm-gptrans-noisy-pair-norm-500k-s42",
-      "pcqm-gptrans-t-100k-v4-reference",
-      "pcqm-gptrans-t-500k-bridge",
-      "pcqm-k1-residual-reconciliation",
-      "pcqm-matched-500k-v4-three-arm",
-      "pcqm-recurrent-graph-state-100k-seed42",
-      "pcqm-scale-transfer-attribution-no-train",
-      "pcqm-scale-transfer-diagnostic-evidence"
-    ],
     "test_challenge": [
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-full-convergence-20260919",
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-residual-reconciliation",
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
@@ -651,14 +915,19 @@
     "test_dev": [
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
+      "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-full-convergence-20260919",
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-residual-reconciliation",
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
@@ -668,6 +937,66 @@
     ]
   },
   "repeatedly_selected_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom_bond-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom_bond-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",
@@ -709,6 +1038,98 @@
     ]
   },
   "reused_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-full_atom_bond-dev-metric-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-full_atom_bond-dev-select-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:official_train_prefix": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-full_atom-train-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-full_atom_bond-train-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-validation_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
+    "pcqm4mv2-fixed-v1:be18a9964754c8428b5c62433136bd0bafb6c75016811c79e223aec30f3dbe98:official_train_full": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-full-convergence-20260919-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-full-convergence-20260919"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-full-convergence-20260919-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",

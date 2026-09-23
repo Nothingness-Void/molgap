@@ -15,13 +15,18 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 | Branch | Reason retained / evidence entry |
 |---|---|
-| codex/exp/gptrans-full-convergence | Active repaired GPTrans-T/K1 convergence and terminal acceptance chain |
 | codex/exp/xian-determinism-audit | Bounded Xi'an determinism and same-allocation repeatability follow-up |
 | codex/scnet-distance-angle-triangle-500k | Submitted experiment without a terminal decision at its branch tip |
+| codex/exp/gptrans-pair-norm-500k | Submitted Kaggle3 PairNorm bridge; terminal artifacts are not locally available |
 
 Inspect these named branches only when working on their question. Their old
 root documents do not override the integration branch. Do not wholesale merge
 server discovery history to obtain one desktop implementation.
+
+The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
+Its experiment evidence is integrated into `molgap-desktop`; retain the branch
+ref for source provenance until its commits are durably reachable from an owner
+or archive branch.
 
 ## Cleanup evidence
 

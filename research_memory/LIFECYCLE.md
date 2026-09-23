@@ -173,6 +173,18 @@ finalization and is retryable. It never messages a controller, approves a policy
 or launches a successor. Derived files are individually atomically replaced and
 deterministically reproducible; they are not the canonical transaction boundary.
 
+For an already completed remote run, use the existing acceptance adapter,
+`recover-trace`, `close_terminal_multi_arm`/`terminal-pipeline`, `validate`,
+`rebuild`, and `check --frozen`. Retain only the hash-bound decision artifacts
+required by those commands (including the selected checkpoint, aligned
+predictions, trace, manifests, source identity and acceptance metadata). Do not
+download every epoch checkpoint/prediction or write a one-off terminal adapter
+when these entry points already cover the run. Reconcile the frozen contract
+against observed source, optimizer, schedule and role identity before assigning
+strict comparison status. A contract mismatch remains visible as a terminal
+anomaly; a valid trace alone does not grant strict replay eligibility. Never
+rewrite a frozen contract or discard physical results to make the record pass.
+
 ## Desktop integration and authority
 
 The lifecycle infrastructure is selectively ported from `molgap-server` commit
