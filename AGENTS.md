@@ -31,6 +31,12 @@ copying facts into multiple documents.
    artifact records.
 9. Only the specific code files required by the task.
 
+For a desktop-owned multi-arm experiment, read
+`docs/operations/EXPERIMENT_CLI.md` and
+`docs/operations/EXPERIMENT_ADDON_GUIDE.md` before creating a runner, source
+package, or prospective record. The CLI owns local identity and evidence flow;
+the owning experiment and platform adapter own training and submission.
+
 Do not read every historical document to discover the current project state.
 Start from the routing documents above and follow their pointers.
 

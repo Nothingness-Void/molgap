@@ -72,17 +72,26 @@ alone and record why two arms were not feasible.
 
 1. Follow `AGENTS.md`, `BRANCHES.md`, `CURRENT_STATE.md`, and the owning
    experiment contract. Query RML before opening a new research question.
-2. Build and `validate-spec` a Spec v2 with exactly one arm-to-trajectory
-   mapping per independent arm. Supply the frozen, SHA-pinned RML plan inputs;
-   do not invent missing evidence.
-3. Run `plan-prospective`, then package the explicit source set. A nonzero
-   planning result may retain published trajectories: reconcile them before
-   retrying. Use only a preflight mode supported by that family, or implement a
-   scoped addon diagnostic without relabeling it as shared-core acceptance.
-4. Implement the authorized trainer/platform addon and its tests. Follow
+2. Identify the existing family trainer and platform submitter before writing
+   an addon. Inspect the platform input mounts, staged source shape, kernel
+   entry point, and metadata limits with read-only or local static checks.
+   Finish the executable bootstrap and source allowlist, then freeze the source
+   commit. This inspection is not a diagnostic or training experiment.
+3. Build and `validate-spec` a Spec v2 with exactly one arm-to-trajectory
+   mapping per independent arm. Supply frozen, SHA-pinned RML plan inputs
+   bound to the executable source commit; do not invent missing evidence.
+4. Run `plan-prospective` before any new diagnostic or training experiment,
+   then package the explicit source set and run the supported preflight. A
+   nonzero planning result may retain published trajectories: reconcile them
+   before retrying. If executable source changes before submission, reconcile
+   the superseded plan and plan again against the new commit; never hand-edit
+   canonical RML records. Use only a preflight mode supported by that family,
+   or implement a scoped addon diagnostic without relabeling it as shared-core
+   acceptance.
+5. Use the owning trainer/platform addon and its tests. Follow
    `platforms/README.md`, `platforms/REMOTE_HANDOFF.md`, and the specific
    platform instructions before touching remote resources.
-5. Submit only under the owning experiment's explicit resource/role authority.
+6. Submit only under the owning experiment's explicit resource/role authority.
    Reconcile the authoritative platform state and durable artifacts before
    creating terminal evidence or considering a retry.
 

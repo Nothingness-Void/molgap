@@ -100,6 +100,34 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
   replay or scientific authority; all existing contract gates remain in force.
   Validation/translation alone is not an acceptance dry run.
 
+## Desktop Kaggle GPTrans Paired Route
+
+For a desktop-owned GPTrans two-arm screen, use the owning experiment's contract
+and the [addon handoff sequence](EXPERIMENT_ADDON_GUIDE.md). The submitted
+Kaggle1 paired example is under
+`experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/`: its `run_pair.py`
+bootstraps the frozen source and delegates training to the existing
+`experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py` profile. The shared
+model implementation is `src/molgap/pcqm_gptrans_v4.py`. Actual Kaggle
+submission uses `platforms/kaggle/push_kernel_with_accelerator.py`, outside
+this CLI. `launch-receipt` records a local observation; it does not push a
+kernel.
+
+Before freezing the source commit or publishing prospective trajectories,
+verify the Kaggle dataset metadata and the files the kernel will actually
+see. In the paired example, the staged source directory could not be relied
+on as a mounted directory: `-r skip` omitted it and `-r zip` mounted an
+archive. The frozen entry point therefore opens the explicitly mounted
+`source_payload.bin`. Check slug/title length and archive bootstrap locally
+before publication. Changing that entry point after `plan-prospective` changes
+source identity and requires reconciling the old unsubmitted plan and
+planning again from the new commit.
+
+After a real remote completion, use the existing per-arm acceptance and RML
+pipeline. A two-arm launch yields two replay-ready entries only when each arm
+independently satisfies its V5 artifact, role, cost, trace, and replay gates.
+The paired launch receipt and a queue state do not establish either result.
+
 ## Structural Examples and Limitations
 
 `examples/gptrans_t_v1.json` declares a GPTrans-T baseline arm.
@@ -111,7 +139,8 @@ READY evidence or replay-ready specs. The prospective fields are declarations,
 not canonical trajectory records. No experiment directory, trajectory or
 evidence package is created for either example.
 
-Real platform adapters/submission remain unimplemented (`SUBMIT_UNIMPLEMENTED`).
+Platform submission is unimplemented within this shared CLI
+(`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
 K1 real-shard loader/model preflight remains unsupported by the existing core.
 No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
 training launch or production promotion is provided. Local CLI success cannot
