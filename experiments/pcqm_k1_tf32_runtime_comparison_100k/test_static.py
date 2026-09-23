@@ -47,3 +47,28 @@ def test_incomplete_comparison_fails_closed(tmp_path: Path) -> None:
     (tmp_path / "comparison.json").write_text(json.dumps({"complete": False}))
     with pytest.raises(RuntimeError, match="incomplete"):
         accept(tmp_path)
+
+
+def test_canonical_trace_records_observed_checkpoint(tmp_path: Path) -> None:
+    from molgap.pcqm_k1_tf32_comparison import _canonical_recorder, _record_epoch, _write_role_history
+    from molgap.research_memory.trace import load_canonical_trace
+
+    checkpoint = tmp_path / "last_checkpoint.pt"
+    checkpoint.write_bytes(b"test-only checkpoint identity")
+    row = {
+        "epoch": 0,
+        "optimizer_steps": STEPS_PER_EPOCH,
+        "sample_presentations": BATCH_SIZE * STEPS_PER_EPOCH,
+        "train_normalized_mae": 0.2,
+        "development_gap_mae_eV": 0.3,
+        "learning_rate": 4e-4,
+        "training_seconds": 1.0,
+        "validation_seconds": 0.5,
+    }
+    recorder = _canonical_recorder(tmp_path / "canonical_trace.json", "fp32")
+    _record_epoch(recorder, row, checkpoint, [row])
+    _write_role_history(tmp_path, "fp32", 0)
+    trace = load_canonical_trace(tmp_path / "canonical_trace.json")
+    assert trace["observations"][0]["checkpoint_identity"]
+    assert trace["observations"][0]["sample_presentations"] == 99_968
+    assert json.loads((tmp_path / "role_history.json").read_text())["last_observed_epoch"] == 0

@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 import tarfile
 import time
@@ -43,6 +44,7 @@ from .training_reproducibility import (
     restore_rng_state,
     sha256_file,
 )
+from .research_memory.trace import RMLTraceRecorder
 
 
 FORMAT = "molgap-k1-tf32-paired-runtime-v1"
@@ -50,6 +52,75 @@ MODEL_MODE = "neural_atom_k1_v4"
 PARAMETERS = 3_658_817
 AUTHORIZED_ROOT = Path("/lustre/home/users/sm2/chou")
 ARMS = ("fp32", "tf32_matmul")
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _canonical_recorder(path: Path, arm: str) -> RMLTraceRecorder:
+    return RMLTraceRecorder(
+        path,
+        trajectory_id=f"TC-k1-tf32-a100-{arm}-s42",
+        run_id=f"ims-k1-tf32-paired-v1:{arm}",
+        metric_semantics={
+            "live_train_metric": {
+                "metric": "mean_absolute_error",
+                "unit": "normalized_target_units",
+                "target": "gap",
+                "role_identity": "official_train_prefix_0_100000",
+                "weights": "live",
+                "direction": "minimize",
+            },
+            "live_dev_metric": {
+                "metric": "mean_absolute_error",
+                "unit": "eV",
+                "target": "gap",
+                "role_identity": "internal_development_100000_150000",
+                "weights": "live",
+                "direction": "minimize",
+            },
+            "ema_dev_metric": None,
+        },
+    )
+
+
+def _record_epoch(recorder: RMLTraceRecorder, row: dict, checkpoint: Path, trace: list[dict]) -> None:
+    elapsed = float(row["training_seconds"]) + float(row["validation_seconds"])
+    recorder.checkpoint_event(
+        sha256_file(checkpoint),
+        optimizer_step=int(row["optimizer_steps"]),
+        sample_presentations=int(row["sample_presentations"]),
+        epoch_or_pass=float(row["epoch"]),
+        learning_rate=float(row["learning_rate"]),
+        live_train_metric=float(row["train_normalized_mae"]),
+        live_dev_metric=float(row["development_gap_mae_eV"]),
+        wall_time_seconds=elapsed,
+        cumulative_wall_time_seconds=sum(
+            float(item["training_seconds"]) + float(item["validation_seconds"])
+            for item in trace
+        ),
+    )
+
+
+def _write_role_history(output: Path, arm: str, epoch: int) -> None:
+    atomic_json(
+        output / "role_history.json",
+        {
+            "format": "molgap-k1-tf32-observed-role-history-v1",
+            "arm": arm,
+            "last_observed_epoch": epoch,
+            "training_membership": {"role": "official_train_prefix_0_100000", "rows": TRAIN_ROWS},
+            "training_labels_read": True,
+            "development_prediction_and_labels_read": {
+                "role": "internal_development_100000_150000", "rows": DEVELOPMENT_ROWS
+            },
+            "development_metric_computed_and_selection_used": True,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+            "test_challenge_role_read": False,
+        },
+    )
 
 
 def _inside_authorized_root(path: Path) -> Path:
@@ -155,8 +226,16 @@ def _calibrate(arm: str, roles, mean_value: float, std_value: float, output: Pat
         "precision": determinism,
         "calibration_checks_passed": True,
     }
-    atomic_json(output / "runtime_manifest.json", runtime)
-    atomic_json(output / "runtime_certificate.json", certificate)
+    for name, value in (
+        ("runtime_manifest.json", runtime),
+        ("runtime_certificate.json", certificate),
+    ):
+        path = output / name
+        if path.exists():
+            if json.loads(path.read_text(encoding="utf-8")) != value:
+                raise RuntimeError(f"Existing {arm} runtime evidence changed: {name}")
+        else:
+            atomic_json(path, value)
     return certificate
 
 
@@ -188,6 +267,7 @@ def _train_arm(
     output = root / arm
     output.mkdir(parents=True, exist_ok=True)
     metrics_path = output / "metrics.json"
+    start_path = output / "run_start.json"
     if metrics_path.exists():
         if not resume:
             raise FileExistsError(f"Existing terminal arm requires explicit resume: {arm}")
@@ -205,6 +285,8 @@ def _train_arm(
                 raise RuntimeError(f"Completed artifact changed: {name}")
         return metrics
 
+    if not start_path.exists():
+        atomic_json(start_path, {"arm": arm, "started_at_utc": _utc_now()})
     certificate = _calibrate(arm, roles, *target_stats, output)
     _configure_arm(arm)
     model = make_encoder(MODEL_MODE).to("cuda")
@@ -217,6 +299,7 @@ def _train_arm(
     mean = torch.tensor(target_stats[0], device="cuda")
     std = torch.tensor(target_stats[1], device="cuda")
     development_loader = _development_loader(roles["development"])
+    canonical = _canonical_recorder(output / "canonical_trace.json", arm)
     trace: list[dict] = []
     best, best_epoch = math.inf, -1
     start_epoch = 0
@@ -248,6 +331,17 @@ def _train_arm(
         for name, digest in checkpoint["best_artifact_sha256"].items():
             if sha256_file(output / name) != digest:
                 raise RuntimeError(f"Resume best artifact changed: {name}")
+        observed = [
+            item for item in canonical.record["observations"]
+            if item["event"] == "checkpoint"
+        ]
+        if len(observed) == start_epoch - 1:
+            _record_epoch(canonical, trace[-1], checkpoint_path, trace)
+        elif len(observed) != start_epoch:
+            raise RuntimeError("Canonical trace and checkpoint cursor disagree")
+        if start_epoch:
+            atomic_json(output / "trace.json", {"epochs": trace})
+            _write_role_history(output, arm, start_epoch - 1)
         iter(development_loader)
         restore_rng_state(checkpoint["rng_state"])
 
@@ -338,6 +432,8 @@ def _train_arm(
             },
         )
         atomic_json(output / "trace.json", {"epochs": trace})
+        _record_epoch(canonical, row, checkpoint_path, trace)
+        _write_role_history(output, arm, epoch)
         if (epoch + 1) % 10 == 0:
             _bundle_recovery(output, epoch)
         print(
@@ -345,9 +441,15 @@ def _train_arm(
             f"dev={development_mae:.6f}eV train_s={training_seconds:.1f} ",
             flush=True,
         )
+    if not canonical.record["observations"] or canonical.record["observations"][-1]["event"] != "terminal":
+        canonical.terminal_event()
     artifacts = {
         name: sha256_file(output / name)
-        for name in ("best_model.pt", "best_development_payload.pt", "last_checkpoint.pt", "trace.json", "runtime_certificate.json")
+        for name in (
+            "best_model.pt", "best_development_payload.pt", "last_checkpoint.pt",
+            "trace.json", "canonical_trace.json", "role_history.json",
+            "runtime_certificate.json", "runtime_manifest.json", "run_start.json",
+        )
     }
     metrics = {
         "format": FORMAT,
@@ -377,6 +479,8 @@ def _train_arm(
         ),
         "peak_allocated_bytes": torch.cuda.max_memory_allocated(),
         "peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+        "started_at_utc": json.loads(start_path.read_text(encoding="utf-8"))["started_at_utc"],
+        "ended_at_utc": _utc_now(),
         "artifact_sha256": artifacts,
         "official_validation_role_read": False,
         "test_dev_role_read": False,
