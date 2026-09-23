@@ -61,7 +61,7 @@ def _utc_now() -> str:
 def _canonical_recorder(path: Path, arm: str) -> RMLTraceRecorder:
     return RMLTraceRecorder(
         path,
-        trajectory_id=f"TC-k1-tf32-a100-{arm}-s42",
+        trajectory_id="TC-k1-tf32-a100-paired-s42",
         run_id=f"ims-k1-tf32-paired-v1:{arm}",
         metric_semantics={
             "live_train_metric": {
