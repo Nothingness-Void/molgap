@@ -21,6 +21,12 @@ Inspect these named branches only when working on their question. Their old
 root documents do not override the integration branch. Do not wholesale merge
 server discovery history to obtain one desktop implementation.
 
+The separate Noisy Nodes + Pair Update Norm 500K experiment was landed in RML
+at `507ced7` and merged into `molgap-desktop` at `5e3c1ed`. The later tip of
+`codex/exp/gptrans-noisy-pair-norm-500k` contains server DSAR/DSMR work; that
+tip was not merged and does not add desktop acceptance tasks. The submitted
+PairNorm bridge in the active table is a different experiment.
+
 The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
 Its experiment evidence is integrated into `molgap-desktop`; retain the branch
 ref for source provenance until its commits are durably reachable from an owner
