@@ -1,4 +1,4 @@
-# Accepted result hashes and RML outputs must preserve bytes across checkouts.
-experiments/**/results/*.json -text
+# Scientific evidence and RML outputs must preserve bytes across checkouts.
+experiments/**/*.json -text
 platforms/_records/kaggle/training/**/stage_manifest.json -text
 research_memory/derived/** -text
