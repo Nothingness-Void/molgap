@@ -40,8 +40,12 @@ established by this diagnostic, and the official role remained unread.
 Native device/wall time was `0.137778 h`, queue time `0.006389 h`; peak
 allocated accelerator memory was `98,529,792` bytes. CPU-hours were not
 assigned from the allocation alone. The associated RML trajectory records the
-terminal result, but the repository-wide RML validator is blocked by this
-experiment's historical noncausal prelaunch record: the current recomputation
-marks its original candidate identity incomplete. This record is not rewritten
-to fabricate a valid past release; no replay-ready claim is made for this
-no-training attribution.
+terminal result. A 2026-09-24 validation correction preserved the original
+noncausal prelaunch unchanged: a delivery experiment without a comparator does
+not claim matched candidate identity, so its missing strict-comparison fields
+cannot block noncausal record validation. The trajectory's planned native-cost
+reference now names the already-recorded Round-1 cost event rather than the
+separate budget-snapshot path. Repository-wide RML validation passes after
+these corrections, but this attribution still has `NO_COMPARISON`, no V5
+terminal evidence envelope, and no replay-ready or strict-causal claim. The
+server compute-release helper still requires an actual reference bundle.

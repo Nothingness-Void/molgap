@@ -17,6 +17,7 @@ from molgap.comparison_readiness import (
     target_transform_asset_digest,
     validate_comparison_readiness,
     validate_reference_bundle,
+    validate_server_comparison_prelaunch,
     validate_stochasticity,
 )
 from molgap.research_memory.roles import build_role_reuse_index
@@ -525,6 +526,73 @@ def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tm
             reference_bundle_path=fabricated_path,
         )
     assert not fabricated_prelaunch_path.exists()
+
+
+def test_noncausal_prelaunch_does_not_claim_missing_comparison_identity():
+    prelaunch = assess_comparison_prelaunch(
+        candidate_id="reference-recovery",
+        candidate_plan={
+            "source_config_status": "frozen",
+            "source_commit_or_archive": "2" * 40,
+        },
+        reference_id=None,
+        reference_bundle=None,
+        experiment_purpose="delivery_experiment",
+        intervention_group_id="reference-recovery",
+        declared_intervention_fields=[],
+        role_applicability_plan=_side("candidate-arch")["role_applicability_plan"],
+        trace_plan=_side("candidate-arch")["trace_field_availability"],
+        runtime_qualification_plan={
+            "status": "declared",
+            "runtime_certificate_required": True,
+            "qualification_scope": "candidate runtime tuple",
+        },
+    )
+    assert prelaunch["planned_status"] == "PRELAUNCH_NONCAUSAL_PLANNED"
+    assert prelaunch["prelaunch_ready"] is True
+    assert prelaunch["matched_fields"] == {}
+    assert prelaunch["missing_fields"] == []
+    assert validate_server_comparison_prelaunch(
+        prelaunch, experiment_purpose="delivery_experiment", reference_bundle=None
+    )["gate"] == "PASS"
+    with pytest.raises(ValueError, match="requires a reference bundle"):
+        validate_server_scientific_prelaunch(
+            comparison_prelaunch=prelaunch,
+            experiment_purpose="delivery_experiment",
+            reference_bundle=None,
+            repo_root=".",
+            reference_bundle_path="missing-reference-bundle.json",
+        )
+
+
+def test_causal_prelaunch_still_blocks_missing_candidate_identity():
+    prelaunch = assess_comparison_prelaunch(
+        candidate_id="candidate",
+        candidate_plan={
+            "source_config_status": "frozen",
+            "source_commit_or_archive": "2" * 40,
+        },
+        reference_id="reference",
+        reference_bundle=_reference_bundle(),
+        experiment_purpose="architecture_comparison",
+        intervention_group_id="architecture",
+        declared_intervention_fields=["architecture_config_identity"],
+        role_applicability_plan=_side("candidate-arch")["role_applicability_plan"],
+        trace_plan=_side("candidate-arch")["trace_field_availability"],
+        runtime_qualification_plan={
+            "status": "declared",
+            "runtime_certificate_required": True,
+            "qualification_scope": "candidate runtime tuple",
+        },
+    )
+    assert prelaunch["planned_status"] == "PRELAUNCH_BLOCKED"
+    assert "PLANNED_IDENTITY_INCOMPLETE" in prelaunch["blocker_codes"]
+    with pytest.raises(ValueError, match="blocked"):
+        validate_server_comparison_prelaunch(
+            prelaunch,
+            experiment_purpose="architecture_comparison",
+            reference_bundle=_reference_bundle(),
+        )
 
 
 def test_causal_prelaunch_rejects_all_not_applicable_roles():

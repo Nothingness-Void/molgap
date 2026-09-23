@@ -1020,10 +1020,12 @@ def assess_comparison_prelaunch(
     source_identity = candidate_plan.get("source_commit_or_archive")
 
     blockers: list[str] = []
+    causal = experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE
+    # A noncausal plan makes no matched-identity claim against a comparator.
     missing_fields = [
         f"candidate.{field}"
         for field in STRICT_IDENTITY_FIELDS
-        if field not in candidate_identity
+        if causal and field not in candidate_identity
     ]
     if source_status != "frozen" or not isinstance(source_identity, str) or not source_identity:
         blockers.append("CANDIDATE_SOURCE_CONFIG_NOT_FROZEN")
@@ -1033,7 +1035,6 @@ def assess_comparison_prelaunch(
     reference_identity: Mapping[str, Any] = {}
     reference_bundle_id: str | None = None
     reference_bundle_sha256: str | None = None
-    causal = experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE
     if reference_bundle is None or reference_id is None:
         if causal:
             blockers.append("REFERENCE_BUNDLE_UNAVAILABLE")

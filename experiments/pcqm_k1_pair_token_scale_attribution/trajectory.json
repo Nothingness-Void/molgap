@@ -25,7 +25,7 @@
       "k1-graphormer-spd-pair-token",
       "k1-chemistry-typed-pair-token"
     ],
-    "expected_native_cost_ref": "experiments/pcqm_k1_pair_token_scale_attribution/budget_snapshot.json",
+    "expected_native_cost_ref": "cost-TC-k1-matched60-reference-500k-s42",
     "decision_changed_if_positive": "attribute the shrinkage using aligned rows and one frozen checkpoint audit",
     "decision_changed_if_negative": "close PairToken scale attribution without another architecture",
     "historical_unknowns": [
