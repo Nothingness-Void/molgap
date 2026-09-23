@@ -39,8 +39,8 @@ trained on different membership/exposure even though each same-scale pair is
 row-aligned.  The result is a transfer diagnostic, not a strict causal or
 official leaderboard claim.
 
-All three rounds used saved predictions.  The local audit took
-`8.5221463` wall seconds, trained no model and ran no encoder inference.
+All three rounds used saved predictions.  The accepted local audit took
+`5.2207364` wall seconds, trained no model and ran no encoder inference.
 Deployment would require two encoders; measured inference cost and an unused
 evaluation role are absent.  The fixed equal hypothesis can be considered in
 a separately frozen confirmation, while learned routing from these signals

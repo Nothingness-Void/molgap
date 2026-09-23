@@ -33,7 +33,7 @@ def _sha256(path: Path) -> str:
 def _atomic_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    temporary.write_bytes((json.dumps(payload, indent=2, allow_nan=False) + "\n").encode("utf-8"))
     os.replace(temporary, path)
 
 
