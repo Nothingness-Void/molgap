@@ -131,7 +131,15 @@ class ExponentialMovingAverage:
     def load_state_dict(self, state) -> None:
         if state.keys() != self.state.keys():
             raise RuntimeError("EMA state keys changed")
-        self.state = {name: value.clone() for name, value in state.items()}
+        for name, value in state.items():
+            target = self.state[name]
+            if value.shape != target.shape or value.dtype != target.dtype:
+                raise RuntimeError(f"EMA state shape/dtype changed: {name}")
+        # Preserve the live model's placement when loading CPU checkpoints.
+        self.state = {
+            name: value.detach().to(device=self.state[name].device).clone()
+            for name, value in state.items()
+        }
 
     def state_dict(self):
         return self.state
