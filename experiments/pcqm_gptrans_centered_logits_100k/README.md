@@ -13,5 +13,6 @@ single-arm entry script remain thin adapters around the existing GPTrans V4
 trainer.
 
 The Kaggle3 version-1 push and observed platform state are recorded under
-`launch/`. Training, terminal acceptance, and the scientific decision remain
-pending until durable outputs can be reconciled.
+`launch/`. The user cancelled that single-arm attempt. `decision.md` records
+the resulting inconclusive scientific outcome; no completed training result
+or candidate metric was accepted.

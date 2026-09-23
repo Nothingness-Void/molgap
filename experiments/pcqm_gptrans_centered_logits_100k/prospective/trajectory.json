@@ -8,7 +8,9 @@
       "cost_event_ids": [
         "cost-TB-gptrans-centered-logits-100k-s42-expected-training"
       ],
-      "evidence_refs": [],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_centered_logits_100k/launch/cancellation_observation.json"
+      ],
       "run_ids": [
         "nvoid912/molgap-gptrans-centered-logits-100k-s42-v1"
       ],
@@ -17,12 +19,14 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_centered_logits_100k/launch_decision.md",
+    "decision_ref": "experiments/pcqm_gptrans_centered_logits_100k/decision.md",
     "next_allowed_actions": [
-      "one_100k_attempt_after_preflight"
+      "reassess_under_new_prospective_contract"
     ],
-    "outcome": "ACTIVE",
-    "reopen_conditions": []
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "An independently justified new contract with resource and arm-isolation review"
+    ]
   },
   "decision_state": {
     "active_reference_ids": [
@@ -192,7 +196,9 @@
   "record_mode": "prospective",
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_centered_logits_100k/launch/cancellation_observation.json"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {

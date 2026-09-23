@@ -76,10 +76,10 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   the Noisy Nodes + Pair Update Norm joint experiment recorded below.
   Authority: `experiments/pcqm_gptrans_pair_norm_500k/decision.md`.
 - Desktop GPTrans `centered_logits` seed-42 100K was submitted to Kaggle3 as
-  `nvoid912/molgap-gptrans-centered-logits-100k-s42-v1` version 1. Kaggle
-  reported `RUNNING` at the launch observation; terminal acceptance and the
-  scientific decision are pending. Launch authority and receipt are under
-  `experiments/pcqm_gptrans_centered_logits_100k/`.
+  `nvoid912/molgap-gptrans-centered-logits-100k-s42-v1` version 1. The user
+  cancelled it; Kaggle reported `CANCEL_ACKNOWLEDGED` and no listed output
+  files. No candidate metric was accepted, so its outcome is `INCONCLUSIVE`.
+  Authority: `experiments/pcqm_gptrans_centered_logits_100k/decision.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated

@@ -17,3 +17,7 @@ No runtime certificate, training metric, hardware cost, or scientific
 acceptance is asserted here. Reconcile the same version against durable
 Kaggle outputs before any retry or successor action. Retrieve only artifacts
 required for replay-ready terminal acceptance.
+
+The later user cancellation and Kaggle `CANCEL_ACKNOWLEDGED` observation are
+recorded in `cancellation_observation.json`. The version-1 launch receipt is a
+historical submission fact; the scientific disposition is in `../decision.md`.

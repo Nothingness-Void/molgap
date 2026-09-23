@@ -341,9 +341,12 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         [],
     )
     assert set(no_evidence_trajectories) == {
+        "TB-gptrans-centered-logits-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
+    assert trajectories["TB-gptrans-centered-logits-100k-s42"]["outcome"] == "INCONCLUSIVE"
+    assert trajectories["TB-gptrans-centered-logits-100k-s42"]["result_evidence_ids"] == []
     assert trajectories["TB-gptrans-noisy-pair-norm-500k-s42"]["completeness_status"] == "complete"
     assert trajectories["TB-gptrans-noisy-pair-norm-500k-s42"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"
     assert trajectories["TB-gptrans-pair-norm-500k-s42"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"

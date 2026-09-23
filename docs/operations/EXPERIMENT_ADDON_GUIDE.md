@@ -47,6 +47,27 @@ strings, callbacks and runtime plugin discovery are deliberately unsupported.
 The addon owns execution and platform behavior, while the shared core retains
 canonical identity, path confinement, immutable packaging and evidence rules.
 
+## Desktop arm packing
+
+For desktop-owned accelerator submissions, plan two independent arms in one
+physical job when both have an approved decision-relevant question and the
+platform allocation makes the combined run fit its time and memory limits.
+Prefer concurrent isolation on two assigned GPUs; on one GPU, use sequential
+arms only when the combined frozen runtime and checkpoint plan fit the job
+limit. Record the actual GPU assignment and native cost for each arm. Keep
+separate prospective trajectories, arm identities, initialization, checkpoints,
+traces, role-use, and terminal decisions even when they share one input dataset
+and launch receipt. A failure in one arm must not silently supply evidence for
+the other.
+
+Check RML and the owning contracts before choosing the second arm. A frozen,
+accepted reference is reused for comparison unless a new contract makes its
+retraining scientifically necessary. Accelerator utilization alone does not
+authorize a duplicate experiment, a second seed, a changed scientific recipe,
+or protected-role access. If only one arm is justified or the combined run
+cannot be made durable within the platform limit, submit the justified arm
+alone and record why two arms were not feasible.
+
 ## Minimal Handoff Sequence
 
 1. Follow `AGENTS.md`, `BRANCHES.md`, `CURRENT_STATE.md`, and the owning

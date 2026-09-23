@@ -14,7 +14,6 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
-| P1 | B-CENTERED-LOGITS-100K | Reconcile the submitted Kaggle3 version-1 run and accept its terminal evidence | Verify durable outputs, V4 runtime certificate, exposure, roles, cost, paired comparison, and frozen 100K gate; make one terminal decision | `experiments/pcqm_gptrans_centered_logits_100k/` |
 | P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 

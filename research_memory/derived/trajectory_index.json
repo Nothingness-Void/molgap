@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b1eada061032205985b2ee8419128d618566227d78413914c57dbdbd7b5d44bf",
+  "source_digest": "f0b37fbcfe150568d08f15ab296acce2e8a23b57ffbab7342402c2e72519336f",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -68,9 +68,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_centered_logits_100k/launch_decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_centered_logits_100k/decision.md",
       "family_id": "gptrans-t-centered-logits",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference"
