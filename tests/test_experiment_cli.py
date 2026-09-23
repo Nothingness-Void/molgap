@@ -8,7 +8,7 @@ import pytest
 
 from molgap import experiment_cli as cli
 from molgap.experiment_launch import canonical_json
-from molgap.experiment_spec import ExperimentSpec
+from molgap.experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2
 from test_experiment_spec import payload
 from test_experiment_terminal import case
 from test_experiment_package import package, repo
@@ -35,7 +35,8 @@ def invoke(capsys, args, expected=0):
 
 
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
-                                     "run-diagnostic", "launch-receipt", "terminal"])
+                                     "run-diagnostic", "launch-receipt", "terminal",
+                                     "plan-prospective"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
         cli.main(([command] if command else []) + ["--help"])
@@ -104,6 +105,119 @@ def test_package_passthrough(capsys, monkeypatch, spec_file, tmp_path):
                     "--allowlist", "src/b.py"])
     build.assert_called_once_with(ExperimentSpec.from_json(spec_file.read_text()), tmp_path,
                                   ["src/a.py", "README.md", "src/b.py"], tmp_path / "pkg")
+
+
+@pytest.fixture
+def v2_spec_file(tmp_path, payload):
+    payload["schema_version"] = SCHEMA_VERSION_V2
+    payload["prospective"] = {"arms": [
+        {"arm_id": arm["arm_id"], "trajectory_id": f"trajectory-{index}",
+         "plan_spec_ref": f"experiments/plan-inputs/arm-{index}.json",
+         "plan_spec_sha256": SHA, "output": f"experiments/synthetic/arm-{index}"}
+        for index, arm in enumerate(payload["arms"])
+    ]}
+    spec = ExperimentSpec(payload)
+    path = tmp_path / "spec-v2.json"
+    path.write_bytes(spec.to_json().encode())
+    return path, spec
+
+
+@pytest.mark.parametrize("status,code", [
+    ("PROSPECTIVE_PLANNED_AND_RML_REBUILT", 0),
+    ("PARTIAL_PROSPECTIVE_PLAN_REQUIRES_RECONCILIATION", 1),
+])
+def test_plan_prospective_passthrough(capsys, monkeypatch, tmp_path, v2_spec_file,
+                                      status, code):
+    path, spec = v2_spec_file
+    planning = Mock(return_value=({"status": status}, code))
+    monkeypatch.setattr(cli, "plan_prospective", planning)
+
+    result = invoke(capsys, ["plan-prospective", "--spec", path,
+                             "--repo-root", tmp_path], code)
+
+    assert result["status"] == status
+    planning.assert_called_once_with(spec, tmp_path)
+
+
+def test_plan_prospective_keeps_library_output_off_stdout(
+        capsys, monkeypatch, tmp_path, v2_spec_file):
+    path, _ = v2_spec_file
+
+    def noisy_plan(*_):
+        print("planning diagnostic")
+        return {"status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT"}, 0
+
+    monkeypatch.setattr(cli, "plan_prospective", noisy_plan)
+    assert cli.main(["plan-prospective", "--spec", str(path),
+                     "--repo-root", str(tmp_path)]) == 0
+    output = capsys.readouterr()
+    assert output.out == canonical_json({
+        "status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT",
+    }) + "\n"
+    assert output.err == "planning diagnostic\n"
+
+
+@pytest.mark.parametrize("mutation", ["newline", "duplicate", "unknown"])
+def test_plan_prospective_rejects_noncanonical_spec_before_dispatch(
+        capsys, monkeypatch, tmp_path, v2_spec_file, mutation):
+    path, _ = v2_spec_file
+    raw = path.read_text()
+    if mutation == "newline":
+        raw += "\n"
+    elif mutation == "duplicate":
+        raw = '{"arms":[],"arms":[],' + raw[1:]
+    else:
+        value = json.loads(raw)
+        value["submitter"] = "remote"
+        raw = canonical_json(value)
+    path.write_bytes(raw.encode())
+    planning = Mock()
+    monkeypatch.setattr(cli, "plan_prospective", planning)
+
+    assert invoke(capsys, ["plan-prospective", "--spec", path,
+                           "--repo-root", tmp_path], 2)["status"] == "ERROR"
+    planning.assert_not_called()
+
+
+@pytest.mark.parametrize("extra", [
+    ["--submit"], ["--remote"], ["--callback", "module:run"],
+    ["--repo-ro", "unused"],
+])
+def test_plan_prospective_rejects_execution_switches(
+        capsys, monkeypatch, tmp_path, v2_spec_file, extra):
+    path, _ = v2_spec_file
+    planning = Mock()
+    monkeypatch.setattr(cli, "plan_prospective", planning)
+
+    assert invoke(capsys, ["plan-prospective", "--spec", path,
+                           "--repo-root", tmp_path, *extra], 2)["status"] == "ERROR"
+    planning.assert_not_called()
+
+
+def test_v1_commands_remain_compatible_and_cannot_plan(
+        capsys, monkeypatch, spec_file, tmp_path):
+    from molgap import experiment_prospective as prospective
+
+    spec = ExperimentSpec.from_json(spec_file.read_text())
+    assert invoke(capsys, ["validate-spec", "--spec", spec_file]) == {
+        "spec_identity": spec.identity, "spec": spec.to_dict(),
+    }
+    build = Mock(return_value={"package_identity": SHA})
+    monkeypatch.setattr(cli, "build_experiment_source_package", build)
+    assert invoke(capsys, ["package", "--spec", spec_file, "--repo-root", tmp_path,
+                           "--output", tmp_path / "pkg", "--allowlist", "src/a.py"]) == {
+        "package_identity": SHA,
+    }
+    build.assert_called_once_with(spec, tmp_path, ["src/a.py"], tmp_path / "pkg")
+
+    planner = Mock()
+    monkeypatch.setattr(prospective, "plan_many", planner)
+    result = invoke(capsys, ["plan-prospective", "--spec", spec_file,
+                             "--repo-root", tmp_path], 2)
+    assert result["error"] == {
+        "type": "ValueError", "message": "plan-prospective requires molgap-experiment-spec-v2",
+    }
+    planner.assert_not_called()
 
 
 def test_package_rejects_escape_in_core(capsys, spec_file, repo, tmp_path):
@@ -305,4 +419,4 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal"}
+                             "launch-receipt", "terminal", "plan-prospective"}
