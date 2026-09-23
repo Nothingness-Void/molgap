@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
+
+import torch
 
 from molgap.pcqm_500k_v4_evidence import PARAMETERS, scientific_contract
 from molgap.screen_policy import canonical_fingerprint, validate_runtime_certificate
@@ -18,8 +21,6 @@ def accept(root: Path) -> dict:
     manifest = json.loads((root / "stage_manifest.json").read_text())
     if manifest["arm"] != ARM or manifest["parameters"] != PARAMETERS[ARM]:
         raise ValueError("Candidate model identity changed")
-    if manifest["contract"] != scientific_contract(ARM):
-        raise ValueError("Candidate scientific contract changed")
     status = manifest["status"]
     next_epoch = manifest["next_epoch"]
     if status == "COMPLETE" and next_epoch != 60:
@@ -53,6 +54,17 @@ def accept(root: Path) -> dict:
         path.relative_to(root)
         if sha256_file(path) != checksum:
             raise ValueError(f"Artifact hash mismatch: {name}")
+    # Training binds the frozen transform rule to the measured train-only mean/std.
+    best_model = torch.load(root / "best_model.pt", map_location="cpu", weights_only=True)
+    mean, std = best_model["mean"], best_model["std"]
+    if not (math.isfinite(mean) and math.isfinite(std) and std > 0):
+        raise ValueError("Invalid train-only target transform")
+    realized_contract = scientific_contract(ARM)
+    realized_contract["target_transform_fingerprint"] = canonical_fingerprint(
+        {"mean": mean, "std": std}
+    )
+    if manifest["contract"] != realized_contract or best_model["contract"] != realized_contract:
+        raise ValueError("Candidate scientific contract changed")
     trace = json.loads((root / "trace.json").read_text())["epochs"]
     if [row["epoch"] for row in trace] != list(range(next_epoch)):
         raise ValueError("Training trace is incomplete or reordered")
