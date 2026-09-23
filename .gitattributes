@@ -1,1 +1,4 @@
-experiments/pcqm_k1_full_convergence/jobs/*.pbs text eol=lf
+# Scientific evidence and RML outputs must preserve bytes across checkouts.
+experiments/**/*.json -text
+platforms/_records/kaggle/training/**/stage_manifest.json -text
+research_memory/derived/** -text
