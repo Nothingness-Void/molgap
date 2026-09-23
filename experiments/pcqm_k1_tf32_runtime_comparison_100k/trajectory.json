@@ -20,8 +20,8 @@
     "historical_unknowns": []
   },
   "state_at_start": {
-    "source_commit": "577b0eece148ef64e788be521c73af89b796ac5b",
-    "source_config_identity": "71e3ec82bcc8bf3b758be6b40438fe726b8ab22750a3274a32b860d4f71bd8b0",
+    "source_commit": "c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
+    "source_config_identity": "d3c9f2e46766903b2934d06d002861e7a681669fb30668c81b72feb56c09ebef",
     "contract_refs": ["experiments/pcqm_k1_tf32_runtime_comparison_100k/protocol.md"],
     "reference_ids": [],
     "parent_trajectory_ids": [],
@@ -36,7 +36,7 @@
       "type": "paired_precision_diagnostic_100k_seed42",
       "run_ids": ["ims-k1-tf32-paired-v1:fp32", "ims-k1-tf32-paired-v1:tf32_matmul"],
       "attempt_ids": ["pbs-v1-planned"],
-      "source_commit": "577b0eece148ef64e788be521c73af89b796ac5b",
+      "source_commit": "c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
       "evidence_refs": [
         "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
         "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
