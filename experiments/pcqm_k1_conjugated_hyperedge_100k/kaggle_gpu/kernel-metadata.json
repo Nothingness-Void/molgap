@@ -1,0 +1,19 @@
+{
+  "id": "kaseichou/molgap-k1-conjugated-dual-s42",
+  "title": "MolGap K1 Conjugated Dual S42",
+  "code_file": "run_dual.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-k1-conjugated-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+    "kaseichou/molgap-k1-conjugated-sidecar-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

@@ -310,6 +310,12 @@ def _development_loader(graphs):
 
 
 def _forward(model, batch):
+    if getattr(model, "requires_conjugated_components", False):
+        return model(
+            batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+            batch.random_walk_pe, batch.conjugated_component_id,
+            batch.conjugated_component_count,
+        ).view(-1)
     if getattr(model, "requires_wedge_topology", False):
         return model(
             batch.x,
@@ -482,6 +488,9 @@ def _base_state(model):
 
 
 def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
+    from .k1_conjugated_hyperedge import (
+        MODES as CONJUGATED_MODES, check_mechanism as check_conjugated,
+    )
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES, PARAMETERS, check_mechanism
     from .k1_edge_slot_interaction import (
         MODES as EDGE_SLOT_MODES,
@@ -541,6 +550,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
+        + CONJUGATED_MODES
         + EDGE_CONDITIONED_MODES
         + GPSPP_LOCAL_MODES
         + FUNCTIONAL_GROUP_MODES
@@ -670,6 +680,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         raise RuntimeError(f"Candidate is not functionally nested in K1: {mode}")
     if mode not in MOSE_MODES:
         mechanism_checks = {}
+    if mode in CONJUGATED_MODES:
+        mechanism_checks = check_conjugated(model, batch)
     if mode == "neural_atom_k4_cluster":
         mixer = model.base.neural_atom_mixers[str(MIXER_LAYERS[0])]
         probe = torch.linspace(
@@ -1242,6 +1254,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.base.edge_updates.parameters())
     elif mode in EDGE_CONDITIONED_MODES:
         candidate_parameters = list(model.edge_conditioned_keys.parameters())
+    elif mode in CONJUGATED_MODES:
+        candidate_parameters = (
+            list(model.atom_projection.parameters())
+            + list(model.update_gate.parameters())
+            + list(model.update_value.parameters())
+            + list(model.return_projection.parameters())
+        )
     elif mode in GPSPP_LOCAL_MODES:
         candidate_parameters = list(model.local_adapters.parameters())
     elif mode in PAIR_TOKEN_MODES:
@@ -1458,6 +1477,7 @@ def train_arm(
     import torch
     import torch.nn.functional as functional
     from .training_reproducibility import capture_rng_state, restore_rng_state
+    from .k1_conjugated_hyperedge import MODES as CONJUGATED_MODES
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
     from .k1_edge_slot_interaction import MODES as EDGE_SLOT_MODES
     from .k1_edge_conditioned_slot import MODES as EDGE_CONDITIONED_MODES
@@ -1472,6 +1492,7 @@ def train_arm(
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
+        + CONJUGATED_MODES
         + EDGE_CONDITIONED_MODES
         + GPSPP_LOCAL_MODES
         + PAIR_TOKEN_MODES
@@ -1498,6 +1519,12 @@ def train_arm(
         manifest,
         retain_wedge_topology=mode in SPARSE_TRIPLET_MODES + ONESHOT_TRIPLET_MODES,
     )
+    conjugated_manifest = None
+    if mode in CONJUGATED_MODES:
+        from .k1_conjugated_sidecar import attach_sidecar
+        roles, conjugated_manifest = attach_sidecar(
+            roles, expected_source_commit=source_commit,
+        )
     functional_group_manifest = None
     if mode in FUNCTIONAL_GROUP_MODES + CHEM_TYPED_PAIR_MODES:
         from .pcqm_functional_group_sidecar import attach_functional_group_roles
@@ -1529,6 +1556,13 @@ def train_arm(
                 "functional_group_contract_sha256"
             ],
             "derived_only_from_existing_ogb_graph_features": True,
+            "gap_labels_read": False,
+            "protected_roles_read": False,
+        }
+    if conjugated_manifest is not None:
+        preflight["conjugated_sidecar"] = {
+            "aggregate_sha256": conjugated_manifest["aggregate_sha256"],
+            "derived_only_from_ogb_graph_features": True,
             "gap_labels_read": False,
             "protected_roles_read": False,
         }
@@ -1734,6 +1768,12 @@ def train_arm(
             ],
             "gap_labels_read": False,
             "protected_roles_read": False,
+        }
+    if conjugated_manifest is not None:
+        record["conjugated_sidecar"] = {
+            "format": conjugated_manifest["format"],
+            "aggregate_sha256": conjugated_manifest["aggregate_sha256"],
+            "source_commit": conjugated_manifest["source_commit"],
         }
     if mode == "neural_atom_k1_v4":
         record["contract"].update(

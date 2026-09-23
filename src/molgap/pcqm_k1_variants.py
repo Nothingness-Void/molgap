@@ -16,6 +16,28 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_conjugated_oneshot": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "conjugated-component-hyperedge-exchange-layer6",
+        "component_channels": 32,
+        "exchange_layers": list(MIXER_LAYERS),
+        "component_layers": [6],
+        "derived_from_ogb_features_only": True,
+        "initialization_policy": "exact-nested-k1-zero-return",
+        "geometry": False,
+        "external_features": False,
+    },
+    "neural_atom_k1_conjugated_persistent": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "persistent-conjugated-component-hyperedge-state",
+        "component_channels": 32,
+        "exchange_layers": list(MIXER_LAYERS),
+        "component_layers": [3, 6, 9],
+        "derived_from_ogb_features_only": True,
+        "initialization_policy": "exact-nested-k1-zero-return",
+        "geometry": False,
+        "external_features": False,
+    },
     "neural_atom_k1_mose": {
         "backbone": "neural_atom_k1_v4",
         "exchange_layers": list(MIXER_LAYERS),
@@ -931,6 +953,11 @@ def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
+
+    from .k1_conjugated_hyperedge import MODES as CONJUGATED_MODES
+    if mode in CONJUGATED_MODES:
+        from .k1_conjugated_hyperedge import make_encoder as make_conjugated
+        return make_conjugated(mode)
 
     from .k1_edge_memory import MODES as EDGE_MEMORY_MODES
     if mode in EDGE_MEMORY_MODES:
