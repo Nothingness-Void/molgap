@@ -50,8 +50,13 @@ def main() -> None:
         checks[name] = bool(passed)
 
     check("complete", completion.get("complete") is True and arm.get("complete") is True)
-    for name, expected in completion["artifact_sha256"].items():
-        check(f"sha256:{name}", sha256(RAW / name) == expected)
+    required_artifacts = (
+        "arm_record.json", "best_development_payload.pt", "best_model.pt",
+        "last_checkpoint.pt", "preflight.json", "runtime_certificate.json",
+        "runtime_manifest.json", "trace.json",
+    )
+    for name in required_artifacts:
+        check(f"sha256:{name}", sha256(RAW / name) == completion["artifact_sha256"][name])
     check("source_archive_sha256", sha256(SOURCE) == submission["source_archive_sha256"])
     check("source_commit", arm["source_commit"] == source_config["source_commit"] == submission["source_commit"])
     check("source_archive_bound", arm["contract"]["source_archive_sha256"] == submission["source_archive_sha256"])
@@ -127,7 +132,9 @@ def main() -> None:
         "point_gate_passed": k1_ref - recomputed_mae >= contract["materiality_rule"]["gain_vs_k1_eV"] and pair_ref - recomputed_mae >= contract["materiality_rule"]["gain_vs_original_pair_token_eV"],
         "paired_interval_status": "unavailable_reference_predictions",
         "protected_role_status": "untouched",
-        "artifact_sha256": {name: sha256(RAW / name) for name in ("completion_manifest.json", "arm_record.json", "best_development_payload.pt", "best_model.pt", "last_checkpoint.pt", "trace.json", "runtime_certificate.json", "preflight.json")},
+        "artifact_sha256": {name: sha256(RAW / name) for name in ("completion_manifest.json", *required_artifacts)},
+        "replay_ready_files": ["completion_manifest.json", *required_artifacts, "source.tar.gz"],
+        "excluded_redundant_outputs": ["recovery_epoch_10.tar", "recovery_epoch_20.tar", "recovery_epoch_30.tar", "recovery_epoch_40.tar"],
         "source_archive_sha256": sha256(SOURCE),
     }
     out = EXPERIMENT / "results/acceptance_v2.json"

@@ -7,6 +7,7 @@
     "last_checkpoint.pt": "54ca81b6f855a5bd816819f1349ae11db0510833ac596ef672eec3d9d55462ba",
     "preflight.json": "08a0364dc7046c234748c658d2b91a6fc5de4758d33d7f0ffc4eb9f231b3ca18",
     "runtime_certificate.json": "2fdc83eee9d99513dc1c0d9c4d5a33083b8054f1e5b3b2ccaad49fdcf0f70459",
+    "runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
     "trace.json": "3c40eff8ffeaaca94846298c0b9aeb41ce7ef552adefd6f2c02a5581ea937dd9"
   },
   "artifact_status": "verified",
@@ -41,10 +42,6 @@
     "sha256:best_model.pt": true,
     "sha256:last_checkpoint.pt": true,
     "sha256:preflight.json": true,
-    "sha256:recovery_epoch_10.tar": true,
-    "sha256:recovery_epoch_20.tar": true,
-    "sha256:recovery_epoch_30.tar": true,
-    "sha256:recovery_epoch_40.tar": true,
     "sha256:runtime_certificate.json": true,
     "sha256:runtime_manifest.json": true,
     "sha256:trace.json": true,
@@ -55,6 +52,12 @@
     "trace_axes": true,
     "trace_finite": true
   },
+  "excluded_redundant_outputs": [
+    "recovery_epoch_10.tar",
+    "recovery_epoch_20.tar",
+    "recovery_epoch_30.tar",
+    "recovery_epoch_40.tar"
+  ],
   "format": "molgap-k1-pair-value-terminal-acceptance-v1",
   "gain_vs_k1_eV": 0.0024109517816369996,
   "gain_vs_pair_token_eV": -0.0006326252183629921,
@@ -71,6 +74,18 @@
     "frozen trajectory has no reference_ids",
     "no locally accepted aligned K1-v4 prediction payload",
     "deterministic checkpoint resume was not independently replayed"
+  ],
+  "replay_ready_files": [
+    "completion_manifest.json",
+    "arm_record.json",
+    "best_development_payload.pt",
+    "best_model.pt",
+    "last_checkpoint.pt",
+    "preflight.json",
+    "runtime_certificate.json",
+    "runtime_manifest.json",
+    "trace.json",
+    "source.tar.gz"
   ],
   "run_id": "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v2",
   "source_archive_sha256": "9389a37bdaf11b1e81da1ea30578b28a7f908fbda66daf469234dacbfcd81353",
