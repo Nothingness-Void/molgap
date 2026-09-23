@@ -163,6 +163,56 @@
           "unknown_records": 0
         }
       },
+      "Tesla_T4": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        }
+      },
       "not_applicable": {
         "cpu_hours": {
           "estimated": {
@@ -214,10 +264,10 @@
         }
       }
     },
-    "unknown_events": 3
+    "unknown_events": 4
   },
   "evidence": {
-    "validated": 11,
+    "validated": 12,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -244,27 +294,21 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 9,
-      "severity": "WARN"
-    },
-    {
-      "code": "trajectory_without_v5_evidence",
-      "count": 1,
+      "count": 8,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 46,
-    "explicit_events": 7,
+    "coarse_historical": 50,
+    "explicit_events": 10,
     "repeatedly_selected": 0
   },
-  "source_digest": "6cecbd232c9a46bc8ff2b4cfa9556da9a17df7ee88fcdbde04ecb5ee77a6bb87",
+  "source_digest": "79e0c5b9c9fe35a112b6d1b482dc4417a39cb704cf6a0d1db96c3f0eab9a3ff3",
   "trajectories": {
     "count": 12,
     "outcomes": {
-      "ACTIVE": 1,
       "CLOSED": 3,
-      "INCONCLUSIVE": 1,
+      "INCONCLUSIVE": 2,
       "NEGATIVE_UNDER_CONTRACT": 2,
       "NO_TRAIN": 2,
       "POSITIVE_UNDER_CONTRACT": 3

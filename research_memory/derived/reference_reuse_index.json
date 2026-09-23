@@ -138,6 +138,26 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "point_comparison_only_paired_interval_unavailable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "K1 PairToken value-decoupling fixed100k internal-development screen",
+      "source_envelope": "experiments/pcqm_k1_pair_value_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata_verified"
       ],
       "comparison_status": "exploratory_residual_attribution_complete",

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6cecbd232c9a46bc8ff2b4cfa9556da9a17df7ee88fcdbde04ecb5ee77a6bb87",
+  "source_digest": "79e0c5b9c9fe35a112b6d1b482dc4417a39cb704cf6a0d1db96c3f0eab9a3ff3",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -190,9 +190,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_pair_value_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_pair_value_100k/decision.md",
       "family_id": "k1-pair-value-decoupling",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-pcqm-scale-transfer-attribution"
@@ -200,7 +200,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_k1_pair_value_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-pair-value-decoupled-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
     }

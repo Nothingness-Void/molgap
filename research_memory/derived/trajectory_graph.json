@@ -76,6 +76,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/results/acceptance_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/results/submission_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-value-decoupled-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_value_100k/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-matched-500k-v4-three-arm",
       "type": "parent_trajectory"
@@ -185,6 +200,10 @@
     },
     {
       "id": "pcqm-k1-gptrans-full-fusion-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "type": "evidence"
     },
     {

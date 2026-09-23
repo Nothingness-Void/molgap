@@ -1,0 +1,109 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "1c4a4ed3631d8b500c13272c9b5a57b8bde0687be2e27da0ba77baf3e7555f99"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/arm_record.json",
+      "name": "arm_record.json",
+      "sha256": "0ad3052a56df69b9f8f95773f7698becd6042aa76937738911223e9a5b4531fb"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_development_payload.pt",
+      "name": "best_development_payload.pt",
+      "sha256": "043f7ccc510fba608c3650a57468a952072c874ca97ac40187060ea5537e3634"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_model.pt",
+      "name": "best_model.pt",
+      "sha256": "0ee39941962e140b8bb86377eccdae636763362e6629c7f6665d8488b35b3152"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "54ca81b6f855a5bd816819f1349ae11db0510833ac596ef672eec3d9d55462ba"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/trace.json",
+      "name": "trace.json",
+      "sha256": "3c40eff8ffeaaca94846298c0b9aeb41ce7ef552adefd6f2c02a5581ea937dd9"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/runtime_certificate.json",
+      "name": "runtime_certificate.json",
+      "sha256": "2fdc83eee9d99513dc1c0d9c4d5a33083b8054f1e5b3b2ccaad49fdcf0f70459"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/preflight.json",
+      "name": "preflight.json",
+      "sha256": "08a0364dc7046c234748c658d2b91a6fc5de4758d33d7f0ffc4eb9f231b3ca18"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_pair_value_100k/results/canonical_trace_v2.json",
+      "name": "canonical_trace",
+      "sha256": "24fc5ca91865abc23f19b3dbf6d87a00365e98c83c82f42e1ddcb2f96be4a0e4"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/staging/pair_value_source_50a6db5_v2/source.tar.gz",
+      "name": "source_archive",
+      "sha256": "9389a37bdaf11b1e81da1ea30578b28a7f908fbda66daf469234dacbfcd81353"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_pair_value_100k/training_contract.json",
+      "experiments/pcqm_k1_pair_value_100k/results/submission_v2.json",
+      "experiments/pcqm_k1_pair_value_100k/results/acceptance_v2.json",
+      "experiments/pcqm_k1_pair_value_100k/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-k1-pair-value-contract-v1",
+  "metrics": {
+    "development_gap_mae_eV": 0.138962682518363,
+    "gain_vs_k1_eV": 0.0024109517816369996,
+    "gain_vs_pair_token_eV": -0.0006326252183629921,
+    "k1_reference_gap_mae_eV": 0.1413736343,
+    "pair_token_reference_gap_mae_eV": 0.1383300573,
+    "paired_interval": null,
+    "point_gate_passed": false
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained Kaggle v2 source, checkpoint, trace, prediction alignment, arithmetic and role flags; no inference or resume replay"
+  },
+  "outcome": {
+    "artifact_status": "hash_and_arithmetic_verified_resume_replay_unverified",
+    "budget_decision": "closed_no_successor",
+    "comparison_status": "point_comparison_only_paired_interval_unavailable",
+    "execution_status": "complete",
+    "full_handoff_status": "not_qualified",
+    "scientific_status": "inconclusive_strict_contract_point_gate_failed",
+    "transfer_status": "not_qualified"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "K1 PairToken value-decoupling fixed100k internal-development screen",
+  "track": "C"
+}

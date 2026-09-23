@@ -9,7 +9,7 @@
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 5
+    "WARN": 4
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
@@ -77,7 +77,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 9,
+      "count": 8,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -86,16 +86,7 @@
         "TB-k1-gptrans-full-fusion-r3",
         "TB-pcqm-scale-transfer-attribution",
         "TB-recurrent-graph-state-100k-seed42",
-        "TB-route-b-four-encoder-specialist",
-        "TC-k1-pair-value-decoupled-100k-s42"
-      ],
-      "severity": "WARN"
-    },
-    {
-      "code": "trajectory_without_v5_evidence",
-      "count": 1,
-      "items": [
-        "TC-k1-pair-value-decoupled-100k-s42"
+        "TB-route-b-four-encoder-specialist"
       ],
       "severity": "WARN"
     }

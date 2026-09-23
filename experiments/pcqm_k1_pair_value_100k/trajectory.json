@@ -1,15 +1,54 @@
 {
-  "schema": "molgap-trajectory-v1",
-  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42",
-  "record_mode": "prospective",
-  "track": "C",
-  "owner": "desktop",
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "candidate-v1-planned"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-pair-value-decoupled-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_value_100k/training_contract.json",
+        "experiments/pcqm_k1_pair_value_100k/source_config.json"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v1"
+      ],
+      "source_commit": "c299beb9710920c911360e91d992e1cd71e04205",
+      "type": "candidate_only_seed42_100k_screen"
+    },
+    {
+      "action_id": "A002",
+      "attempt_ids": [
+        "candidate-v2-complete"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-pair-value-decoupled-100k-s42-v2-observed-missing"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_value_100k/results/submission_v2.json",
+        "experiments/pcqm_k1_pair_value_100k/results/acceptance_v2.json",
+        "experiments/pcqm_k1_pair_value_100k/v5_evidence.json"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v2"
+      ],
+      "source_commit": "50a6db549ad2cc47d976b31e82366381f541af82",
+      "type": "source_serialization_repair_and_terminal_training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_pair_value_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "only a new independent contract with an accepted frozen reference and a new decision-relevant question; no bookkeeping rerun"
+    ]
+  },
   "family_id": "k1-pair-value-decoupling",
-  "question": "Can PairToken select relations with its proven normalized keys while transmitting an independently learned value encoding?",
   "hypothesis": {
-    "hypothesis_id": "H-TC-k1-pair-value-decoupled-100k-s42",
-    "observed_deficiency": "Original PairToken barely cleared the 100K gate and retained little gain at 500K; selector-only and return-only variants did not improve it.",
-    "supporting_evidence_ids": ["pcqm-scale-transfer-attribution-no-train"],
     "alternative_explanations": [
       "the original shared key/value representation is already optimal",
       "the PairToken gain is too close to the material gate to support another micro-variant",
@@ -17,6 +56,15 @@
     ],
     "changed_mechanism": "identity-initialized independent relation-value projection inside the otherwise unchanged PairToken bottleneck",
     "cheapest_falsifier": "one fixed seed42 PCQM-100K candidate-only V5 screen",
+    "decision_changed_if_negative": "close PairToken key/value decoupling and treat K1 relation micro-architecture search as saturated",
+    "decision_changed_if_positive": "retain one 100K value-side mechanism shortlist; require a separate scale decision",
+    "expected_native_cost_ref": "cost-TC-k1-pair-value-decoupled-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable",
+      "the original PairToken aligned prediction payload is not locally canonicalized on desktop"
+    ],
+    "hypothesis_id": "H-TC-k1-pair-value-decoupled-100k-s42",
+    "observed_deficiency": "Original PairToken barely cleared the 100K gate and retained little gain at 500K; selector-only and return-only variants did not improve it.",
     "related_closed_family_ids": [
       "k1-chem-typed-pair-token",
       "k1-pair-token-node-return",
@@ -26,44 +74,43 @@
       "sparse-relative-value-graphstate",
       "gptrans-memory-readback"
     ],
-    "expected_native_cost_ref": "cost-TC-k1-pair-value-decoupled-100k-s42-training",
-    "decision_changed_if_positive": "retain one 100K value-side mechanism shortlist; require a separate scale decision",
-    "decision_changed_if_negative": "close PairToken key/value decoupling and treat K1 relation micro-architecture search as saturated",
-    "historical_unknowns": [
-      "training stochasticity is unavailable",
-      "the original PairToken aligned prediction payload is not locally canonicalized on desktop"
+    "supporting_evidence_ids": [
+      "pcqm-scale-transfer-attribution-no-train"
     ]
   },
-  "state_at_start": {
-    "source_commit": "c299beb9710920c911360e91d992e1cd71e04205",
-    "source_config_identity": "369b83a7bfde5cba50fb0644e37e505414dd720c3cfd56094fb4a8da874a2d37",
-    "contract_refs": ["experiments/pcqm_k1_pair_value_100k/training_contract.json"],
-    "reference_ids": [],
-    "parent_trajectory_ids": ["TB-pcqm-scale-transfer-attribution"],
-    "prior_trajectory_ids": ["TB-pcqm-scale-transfer-attribution"],
-    "prior_evidence_ids": ["pcqm-scale-transfer-attribution-no-train"],
-    "role_snapshot_refs": ["experiments/pcqm_k1_pair_value_100k/role_plan.json"],
-    "budget_snapshot_ref": "experiments/pcqm_k1_pair_value_100k/budget_snapshot.json"
+  "owner": "desktop",
+  "question": "Can PairToken select relations with its proven normalized keys while transmitting an independently learned value encoding?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-pair-value-decoupled-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_pair_value_100k/v5_evidence.json"
+    ]
   },
-  "actions": [
-    {
-      "action_id": "A001",
-      "type": "candidate_only_seed42_100k_screen",
-      "run_ids": ["nothingnessvoid/molgap-pcqm-k1-pair-value-s42:v1"],
-      "attempt_ids": ["candidate-v1-planned"],
-      "source_commit": "c299beb9710920c911360e91d992e1cd71e04205",
-      "evidence_refs": [
-        "experiments/pcqm_k1_pair_value_100k/training_contract.json",
-        "experiments/pcqm_k1_pair_value_100k/source_config.json"
-      ],
-      "cost_event_ids": ["cost-TC-k1-pair-value-decoupled-100k-s42-training"]
-    }
-  ],
-  "result": {"evidence_ids": [], "evidence_refs": []},
-  "decision": {
-    "decision_ref": "experiments/pcqm_k1_pair_value_100k/STATUS.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["package immutable source and run one bounded remote preflight/training job"],
-    "reopen_conditions": ["terminal attribution must precede any successor"]
-  }
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_pair_value_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_pair_value_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-scale-transfer-attribution"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-scale-transfer-attribution-no-train"
+    ],
+    "prior_trajectory_ids": [
+      "TB-pcqm-scale-transfer-attribution"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_pair_value_100k/role_plan.json"
+    ],
+    "source_commit": "c299beb9710920c911360e91d992e1cd71e04205",
+    "source_config_identity": "369b83a7bfde5cba50fb0644e37e505414dd720c3cfd56094fb4a8da874a2d37"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
 }
