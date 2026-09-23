@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "8ae5efa963710a590e0bfbd7ad74a3e05497a983a9e7bb81eb4102be498c5079",
+  "source_digest": "4e04e9a82e6d3608a060b670abd705b58c7895f51fc4fd83ce9a98c5d458165e",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -89,6 +89,42 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-chem-typed-pair-token-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md",
+      "family_id": "k1-conjugated-hyperedge",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-conjugated-oneshot-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-conjugated-oneshot-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md",
+      "family_id": "k1-conjugated-hyperedge",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-conjugated-persistent-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
     },
     {
       "completeness_status": "complete",
