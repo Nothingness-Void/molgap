@@ -1,0 +1,22 @@
+{
+  "arm_ids": [
+    "reference",
+    "centered-logits"
+  ],
+  "arm_smoke_statuses": {
+    "centered-logits": "MODEL_SMOKE_VERIFIED_ONLY",
+    "reference": "MODEL_SMOKE_VERIFIED_ONLY"
+  },
+  "format": "molgap-kaggle-paired-release-gate-v1",
+  "graph_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initial_state_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "kernel": "nothingnessvoid/molgap-gptrans-centered-logits-paired-100k-s42-v1",
+  "package_identity": "5200d034f26e1cc5d58f0d04a8fc9256ee2f8dc90d549de424f76dd4b6e223ba",
+  "shard_manifest_sha256": "9f54465122c67c1ab10a894c669ca1626f451a74b651b89204bafe49bc65b4d8",
+  "source_archive_sha256": "cff3588a3d83098a432bfcaf61f258a523cb7f12cc5cb83018be2f1930511802",
+  "source_commit": "aafac7b633ea1a992aeae580f469d021f0c1e9c7",
+  "source_dataset": "nothingnessvoid/molgap-gptrans-centered-pair-100k-source-v1",
+  "spec_identity": "557b6d57f23f0caf4d55234d7596e6171a167431280ff4063fce0af8d6081c7d",
+  "status": "LOCAL_PREFLIGHT_PASSED"
+}

@@ -257,6 +257,11 @@
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-nodes-100k-s42",
       "type": "parent_trajectory"
     },
@@ -268,6 +273,11 @@
     {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-pair-norm-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -371,8 +381,23 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-reference-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -388,6 +413,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-pair-norm-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -477,12 +507,22 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-nodes-100k-s42",
       "type": "reference_used"
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "reference_used"
     },
     {
@@ -664,6 +704,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-gptrans-feature-denoise-full-atom-100k-s42",
       "type": "trajectory"
     },
@@ -693,6 +737,10 @@
     },
     {
       "id": "TB-gptrans-pair-norm-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "trajectory"
     },
     {

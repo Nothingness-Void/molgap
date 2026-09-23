@@ -7,5 +7,7 @@ its disposition is in `../pcqm_gptrans_centered_logits_100k/decision.md`.
 
 `protocol.md` owns the comparison gate. `launch_decision.md` owns this one
 paired submission. `training_contract.json`, `experiment_spec.json`, and the
-per-arm prospective trajectories freeze the identities. `run_pair.py` is the
-thin Kaggle orchestration wrapper around the existing V4 trainer.
+per-arm prospective trajectories freeze the identities. `run_pair.py` unpacks
+the frozen source archive and selects a fixed profile of the existing GPTrans
+T4x2 runner. `STATUS.md` tracks the submitted job; `release_gate.json` and
+`launch/` retain the local preflight and Kaggle submission observations.
