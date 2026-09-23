@@ -23,6 +23,7 @@ Track C.
 | What happened in the legacy PCQM-100K Kaggle architecture screen? | Closed; recurrent graph-state missed the frozen EdgeState comparator and is archived at commit `285e1dc`; it is not the current Kunshan line | `pcqm_gap_architecture/` |
 | What is the fixed-contract GPTrans-T PCQM reference? | Kaggle2 seed-42 100K/50K V4 run mechanically accepted at 0.156627 eV; frozen for reuse but closed for 100K promotion | `pcqm_gptrans_t_100k_v4/` |
 | Did GPTrans pair-update normalization pass its 100K mechanism screen? | Yes at the frozen 100K/50K shortlist gate; the later 500K transfer closed negative | `pcqm_gptrans_pair_norm_100k/` |
+| Does centering GPTrans node-to-pair logits improve the fixed 100K screen? | Prospective desktop single-variable screen; one Kaggle attempt is gated by real-shard and runtime preflight | `pcqm_gptrans_centered_logits_100k/` |
 | What did the GPTrans PairNorm 500K runtime profile measure? | Bounded Kaggle3 T4 training-only throughput; no development or official role was read | `pcqm_gptrans_pair_norm_500k_profile/` |
 | Which architecture wins the matched PCQM 500K V4 comparison, and is global attention useful? | K1 and GPTrans-T beat EdgeState; K1 leads but not materially, while matched local ablation rejects dense and sparse global attention | `pcqm_500k_v4_evidence/` |
 | Does standalone GPTrans Pair Update Norm meet the matched 500K promotion gate? | No; 0.105728 eV on paired development rows is below the 0.003 eV gain floor; closed negative | `pcqm_gptrans_pair_norm_500k/` |

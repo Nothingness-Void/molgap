@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 1
 - CLOSED: 4
 - INCONCLUSIVE: 5
 - NEGATIVE_UNDER_CONTRACT: 9
@@ -42,6 +43,10 @@
 - NVIDIA_T4_SINGLE_VISIBLE device_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE wall_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NvidiaTeslaP100_requested cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NvidiaTeslaP100_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NvidiaTeslaP100_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NvidiaTeslaP100_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4 device_hours: measured=6.397737 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -58,8 +63,8 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- Measurement-missing cost events: 14
-- Cost-event coverage: 16/27 trajectories; incomplete native measurement=11
+- Measurement-missing cost events: 15
+- Cost-event coverage: 17/28 trajectories; incomplete native measurement=12
 
 ## Screening Backtest
 - Status: available
@@ -67,9 +72,9 @@
 - Excluded traces: 4
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 15
+- [INFO] trace_unavailable_for_backtest: 16
 - [WARN] historical_partial_record: 17
-- [WARN] incomplete_native_cost_measurement: 11
+- [WARN] incomplete_native_cost_measurement: 12
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 13
-- [WARN] trajectory_without_v5_evidence: 2
+- [WARN] missing_explicit_role_identity: 14
+- [WARN] trajectory_without_v5_evidence: 3

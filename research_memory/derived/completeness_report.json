@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 27,
+    "trajectories_total": 28,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 16,
-    "with_incomplete_native_measurement": 11,
+    "with_cost_event": 17,
+    "with_incomplete_native_measurement": 12,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,11 +15,12 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 15,
+      "count": 16,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
+        "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-full-convergence-20260919",
         "TB-k1-full-convergence-20260919",
         "TB-k1-gptrans-full-fusion-r3",
@@ -61,10 +62,11 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 11,
+      "count": 12,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
+        "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-feature-denoise-full-atom-100k-s42",
         "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
         "TB-gptrans-full-convergence-20260919",
@@ -97,11 +99,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 13,
+      "count": 14,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-t-500k-bridge",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-pcqm-scale-transfer-attribution",
@@ -117,8 +120,9 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 3,
       "items": [
+        "TB-gptrans-centered-logits-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
