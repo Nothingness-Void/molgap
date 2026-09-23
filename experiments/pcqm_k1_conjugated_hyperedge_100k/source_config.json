@@ -1,0 +1,21 @@
+{
+  "architecture_config_identities": {
+    "neural_atom_k1_conjugated_oneshot": "89249adaa538eef2bbcc266b514459e9d13bb3e0cd456726e120391a6039069b",
+    "neural_atom_k1_conjugated_persistent": "76f3a6c11e8de86948e9294c8ac112ea43413d51ccf7d91540fb6fba76c6fd47"
+  },
+  "candidate_ids": [
+    "neural_atom_k1_conjugated_oneshot",
+    "neural_atom_k1_conjugated_persistent"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_conjugated_hyperedge.py",
+    "src/molgap/k1_conjugated_sidecar.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "single_changed_mechanism": "conjugated-component-hyperedge-exchange",
+  "source_commit": "b2340edd93bff46172959bdc2f9771da51fad3d6",
+  "training_contract_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+  "training_contract_sha256": "613e2faa615639909e821bbf578f4800542b2ccae179c783c34e16da6346bf97"
+}

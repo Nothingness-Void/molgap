@@ -1,0 +1,77 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "name": "source-config",
+      "sha256": "df0e4a92f468c511facc3a9f1a54e5f0b7ab3dcb23cc6aa40ec158e6bd7645f2"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+      "name": "training-contract",
+      "sha256": "613e2faa615639909e821bbf578f4800542b2ccae179c783c34e16da6346bf97"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/comparison_readiness_prelaunch.json",
+      "name": "comparison-prelaunch",
+      "sha256": "91cec77bd9b3e01d94f28d0825a64dcb3efa337062f349fc7083bf476059f402"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/role_plan.json",
+      "name": "role-plan",
+      "sha256": "318e15ab2d3513224e95380b2e3bf13d61824d5d4c75a718be2ceae9b05b9730"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/trace_plan.json",
+      "name": "trace-plan",
+      "sha256": "62d5ee29f8b43a409d16d2abcbf50c1ce767d766f5d14ff18827e9fdbfc0b148"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_conjugated_hyperedge_100k/budget_snapshot.json",
+      "name": "budget-snapshot",
+      "sha256": "88d1ff4226adcf7f2f9cb2025b8af46bc7416e17f6229d411fac2e309bde3165"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/protocol.md",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-conjugated-persistent-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "two_independent_arms_one_job_authorized",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_architecture_screen",
+  "track": "C"
+}
