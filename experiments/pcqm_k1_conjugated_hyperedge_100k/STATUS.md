@@ -19,3 +19,19 @@ record. No 500K/full or protected-role operation is released by this screen.
   distinct from the CPU notebook ID because Kaggle reserves notebook slugs.
 - The downloaded output and the published dataset are preparation artifacts;
   neither is a GPU result or a terminal scientific decision.
+
+## GPU submission receipt — 2026-09-23 UTC
+
+- Kaggle2 GPU kernel: `kaseichou/molgap-k1-conjugated-dual-s42` v1,
+  submitted once; initial scheduler status `RUNNING` at 18:16 UTC. Startup
+  logs had not yet exposed the two T4 workers or first epoch at this check.
+- Input datasets: frozen source `kaseichou/molgap-k1-conjugated-source` v1,
+  fixed graph asset `kaseichou/pcqm4mv2-ogb-fixed-100k-v1` v1, and accepted
+  sidecar `kaseichou/molgap-k1-conjugated-cache-fixed100k` v1.
+- Two arms use independent T4 workers with seed 42, FP32/no TF32, physical
+  batch 128 each and atomic per-epoch checkpoints. No reference retraining,
+  protected-role read, 500K/full submission, or result claim was made.
+- Existing Luna task B monitors only this kernel via heartbeat
+  `molgap-k1-conjugated-dual-kaggle2-monitor` every 30 minutes; healthy runs
+  are silent, terminal outcomes are handed to the server controller. The
+  separate IMS monitor remains bound to its own job.

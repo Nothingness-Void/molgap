@@ -50,6 +50,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+Kaggle2 is running the server-owned K1 conjugated-component hyperedge
+100K dual-arm seed-42 screen (`kaseichou/molgap-k1-conjugated-dual-s42` v1).
+Its 150K-row CPU sidecar passed independent no-inference acceptance and was
+published as a fixed private dataset. This is a new mechanism test, not a
+result or a 500K/full release. Authority and run receipt:
+`experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md`.
+
 The extra PairToken+MoSE31 seed-42 round is complete and closed. Saved-artifact
 analysis found an undeclared feature-identity change in its frozen prelaunch:
 the candidate consumes RWSE16+MoSE31, while the architecture-only strict plan
