@@ -1,0 +1,79 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-pairtoken-combination-transfer",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-pairtoken-combination",
+  "question": "Does K1/PairToken residual complementarity transfer as a usable fixed or simple prediction rule?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-pairtoken-combination-transfer",
+    "observed_deficiency": "The label Oracle had large headroom but no reliable structural specialist selector on 100K.",
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42"
+    ],
+    "alternative_explanations": [
+      "residual variance cancellation is more stable than molecular routing",
+      "the 100K fitted mixture weight will not transfer to 500K",
+      "the two development roles have already selected model checkpoints"
+    ],
+    "changed_mechanism": "saved-prediction combination only; no encoder change",
+    "cheapest_falsifier": "three frozen saved-prediction rules using exactly aligned 100K and 500K endpoints",
+    "related_closed_family_ids": ["molecular-router-on-current-100k-pool"],
+    "expected_native_cost_ref": null,
+    "decision_changed_if_positive": "retain fixed averaging only as a separately confirmable hypothesis",
+    "decision_changed_if_negative": "close K1/PairToken prediction combination from available roles",
+    "historical_unknowns": [
+      "100K and 500K development roles had already selected checkpoints",
+      "no independent-role estimate or measured ensemble inference cost",
+      "trajectory compiled after execution although the rule protocol was committed first"
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "51a2cf9efd0163ed06db929144222f763519bc1b",
+    "contract_refs": ["experiments/pcqm_specialist_combination_transfer/protocol.md"],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42", "pcqm-k1-pair-token-500k-s42"],
+    "parent_trajectory_ids": ["TB-k1-pair-token-500k-s42"],
+    "prior_trajectory_ids": ["TC-k1-pair-token-100k-s42", "TB-k1-pair-token-500k-s42"],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1-pair-token-100k-s42",
+      "pcqm-k1-pair-token-500k-s42"
+    ],
+    "role_snapshot_refs": ["experiments/pcqm_specialist_combination_transfer/role_plan.json"],
+    "budget_snapshot_ref": "experiments/pcqm_specialist_combination_transfer/budget_snapshot.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "three_frozen_saved_prediction_combination_rules",
+      "run_ids": ["local-saved-prediction-transfer-20260923"],
+      "attempt_ids": ["accepted"],
+      "source_commit": "51a2cf9efd0163ed06db929144222f763519bc1b",
+      "evidence_refs": [
+        "experiments/pcqm_specialist_combination_transfer/protocol.md",
+        "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+        "experiments/pcqm_specialist_combination_transfer/results/acceptance.json"
+      ],
+      "cost_event_ids": ["cost-TC-k1-pairtoken-combination-transfer-measured"]
+    }
+  ],
+  "result": {
+    "evidence_ids": ["pcqm-k1-pairtoken-combination-transfer-20260923"],
+    "evidence_refs": [
+      "experiments/pcqm_specialist_combination_transfer/v5_evidence.json",
+      "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+      "experiments/pcqm_specialist_combination_transfer/results/acceptance.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_specialist_combination_transfer/decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "a separately frozen independent-role confirmation of fixed averaging with measured inference cost"
+    ]
+  }
+}

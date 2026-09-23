@@ -1,0 +1,20 @@
+{
+  "fitting_role": {
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+    "source_idx_range": [100000, 150000],
+    "prediction_input": "applicable",
+    "labels_read": "applicable",
+    "selection_used": "applicable"
+  },
+  "transfer_role": {
+    "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+    "source_idx_range": [500000, 550000],
+    "prediction_input": "applicable",
+    "metric_computed": "applicable",
+    "selection_used": "applicable",
+    "checkpoint_selection_already_consumed_role": true
+  },
+  "official_validation": "not_applicable",
+  "test_dev": "not_applicable",
+  "test_challenge": "not_applicable"
+}

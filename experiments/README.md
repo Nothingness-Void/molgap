@@ -27,6 +27,7 @@ Track C.
 | Does the accepted architecture transfer to real molecules? | Two-SchNet precision fusion accepted at 100K scale | `pubchemqc100k_architecture/` |
 | Is frozen K1 PairToken attention concentrated enough for top-pair sparsity? | No; completed no-training diagnostic closed the hard-truncation premise | `pcqm_k1_pair_selection_diagnostic/` |
 | Do completed PCQM models contain input-identifiable specialist regions worth a learned Router? | Oracle headroom is large, but structure/disagreement identifiability failed; Phase D is not authorized | `pcqm_molecular_router_audit/` |
+| Does K1/PairToken complementarity transfer as a usable fixed or simple prediction rule? | Fixed equal averaging passed a reused-role exploratory gate; fitted weights and disagreement bins added no value | `pcqm_specialist_combination_transfer/` |
 | Can pure-2D PairGPS2D beat the fixed GPS7 plus GPS9 equal comparator? | It passed the matched validation-only stage; the test role remained sealed and no long run was authorized | `pubchemqc100k_architecture/` |
 | What is the PCQM-only Gap ceiling of that architecture? | Track B complete; the four-encoder bounded fusion passed its fixed official-validation gate | `pcqm_route_b/` |
 | Which bounded architecture should serve the official PCQM4Mv2 Gap leaderboard? | Discovery history retained; closed routes are indexed, and K1 is the sole desktop handoff | `pcqm_gap_architecture/` |

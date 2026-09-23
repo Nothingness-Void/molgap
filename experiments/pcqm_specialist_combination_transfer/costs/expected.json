@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-pairtoken-combination-transfer-expected",
+  "trajectory_id": "TC-k1-pairtoken-combination-transfer",
+  "action_id": "A001",
+  "run_id": "local-saved-prediction-transfer-20260923",
+  "attempt_id": "protocol-frozen",
+  "category": "audit",
+  "platform": "local-server",
+  "hardware": "local-cpu",
+  "measurement": {
+    "device_hours": {"value": null, "status": "not_applicable"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.25, "status": "estimated"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_specialist_combination_transfer/protocol.md"
+}

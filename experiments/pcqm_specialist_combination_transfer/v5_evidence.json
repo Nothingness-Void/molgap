@@ -1,0 +1,63 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pairtoken-combination-transfer-20260923",
+  "track": "C",
+  "scope": "three-rule saved-prediction audit on already-used 100K and 500K development roles",
+  "legacy_contract": "V4-100K K1/PairToken endpoints and matched60-v4-500K K1/PairToken endpoints",
+  "outcome": {
+    "execution_status": "COMPLETE",
+    "artifact_status": "VERIFIED",
+    "comparison_status": "PAIRED_ENDPOINT",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "EXPLORATORY_FIXED_EQUAL_ONLY",
+    "budget_decision": "STOP_AFTER_THREE_ROUNDS",
+    "full_handoff_status": "NONE"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_specialist_combination_transfer/protocol.md",
+      "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+      "experiments/pcqm_specialist_combination_transfer/results/acceptance.json",
+      "experiments/pcqm_specialist_combination_transfer/decision.md"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "artifacts": [
+    {
+      "name": "100k_aligned_prediction_matrix",
+      "locator": "platforms/_records/local/pcqm_molecular_router_audit/aligned_prediction_matrix.pt",
+      "availability": "ignored_local_verified",
+      "sha256": "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb"
+    },
+    {
+      "name": "500k_matched_k1_predictions",
+      "locator": "platforms/_records/scnet/k1_matched60_reference_122743291/output/neural_atom_k1/best_predictions.pt",
+      "availability": "ignored_local_verified",
+      "sha256": "e43728a30a74a19e9e969cef3e94f3c0f9718a1c606bfa5306bd9b3c87ca8d31"
+    },
+    {
+      "name": "500k_matched_pairtoken_predictions",
+      "locator": "platforms/_records/scnet/training/pcqm_k1_pair_token_500k_122312462/best_predictions.pt",
+      "availability": "ignored_local_verified",
+      "sha256": "35fdaa76f10e166ccb123b6005929a420f18b2678a286023d4aa62e48ec9ca01"
+    },
+    {
+      "name": "three_round_transfer",
+      "locator": "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+      "availability": "repository",
+      "sha256": "06df1b03a60900f4995b75e893e259360c52ef5e3bba62c1489c7402e5c72d97"
+    }
+  ],
+  "migration": {
+    "migrated_at": "2026-09-23",
+    "verification_scope": "native saved-prediction no-training evidence wrapper",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
