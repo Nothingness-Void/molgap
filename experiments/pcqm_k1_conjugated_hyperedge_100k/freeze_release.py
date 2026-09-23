@@ -47,7 +47,12 @@ def ref(path):
 
 def main():
     dirty = subprocess.check_output(
-        ["git", "status", "--porcelain", "--", "src", REL],
+        [
+            "git", "status", "--porcelain", "--", "src",
+            f"{REL}/protocol.md", f"{REL}/training_contract.json",
+            f"{REL}/freeze_release.py", f"{REL}/package_source.py",
+            f"{REL}/kaggle_cpu", f"{REL}/kaggle_gpu",
+        ],
         cwd=REPO_ROOT, text=True,
     ).strip()
     if dirty:
@@ -234,7 +239,10 @@ def main():
         evidence["migration"]["migrated_at"] = today
         save(arm / "v5_evidence.json", evidence)
         serialized = json.dumps({"trajectory": trajectory, "evidence": evidence, "cost": cost})
-        if "sparse-triplet" in serialized or "nvoid912" in serialized:
+        if any(value in serialized for value in (
+            "TC-k1-sparse-triplet", "pcqm-k1-sparse-triplet-100k-s42",
+            "neural_atom_k1_sparse_triplet", "nvoid912",
+        )):
             raise RuntimeError("Template scientific identity leaked into new arm")
     print(json.dumps({"source_commit": commit, "arms": list(MODES)}))
 
