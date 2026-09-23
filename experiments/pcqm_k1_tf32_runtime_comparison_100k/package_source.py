@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 import tarfile
 
@@ -17,13 +18,20 @@ EXPERIMENT = "experiments/pcqm_k1_tf32_runtime_comparison_100k"
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-commit", required=True)
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
         raise FileExistsError(output)
-    commit = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True
-    ).strip()
+    commit = args.source_commit
+    if re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+        raise ValueError("Source commit must be a full Git SHA-1")
+    subprocess.run(["git", "cat-file", "-e", f"{commit}^{{commit}}"], cwd=REPO_ROOT, check=True)
+    subprocess.run(
+        ["git", "diff", "--exit-code", commit, "HEAD", "--", "src", f"{EXPERIMENT}/run.py"],
+        cwd=REPO_ROOT,
+        check=True,
+    )
     status = subprocess.check_output(
         ["git", "status", "--porcelain", "--", "src", EXPERIMENT],
         cwd=REPO_ROOT,
@@ -53,10 +61,10 @@ def main() -> None:
                 {"path": member.name, "sha256": hashlib.sha256(stream.read()).hexdigest()}
             )
     digest = hashlib.sha256(archive_path.read_bytes()).hexdigest()
-    (output / "SOURCE_COMMIT.txt").write_text(commit + "\n", encoding="utf-8")
-    (output / "SOURCE_ARCHIVE_SHA256.txt").write_text(digest + "\n", encoding="utf-8")
-    (output / "SOURCE_FILES.json").write_text(
-        json.dumps({"files": inventory}, indent=2) + "\n", encoding="utf-8"
+    (output / "SOURCE_COMMIT.txt").write_bytes((commit + "\n").encode("ascii"))
+    (output / "SOURCE_ARCHIVE_SHA256.txt").write_bytes((digest + "\n").encode("ascii"))
+    (output / "SOURCE_FILES.json").write_bytes(
+        (json.dumps({"files": inventory}, indent=2) + "\n").encode("utf-8")
     )
     print(json.dumps({"source_commit": commit, "source_archive_sha256": digest, "files": len(inventory)}))
 
