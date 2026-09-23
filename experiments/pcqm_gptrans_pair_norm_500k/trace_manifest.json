@@ -1,0 +1,52 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TB-gptrans-pair-norm-500k-s42",
+  "reference_id": "pcqm-matched-500k-v4-three-arm",
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_pair_norm_500k/v5_evidence.json",
+  "run_id": "nvoid912/molgap-gptrans-pair-update-norm-500k-v1",
+  "model_identity": "gptrans_pair_update_norm",
+  "evaluation_role_identity": "internal_development_500000_549999",
+  "selection_semantics": "best-development-raw-model-60epochs",
+  "weight_semantics": "live",
+  "metric_semantics": "Gap MAE in eV; live development on 500000-549999",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json",
+  "trace_artifact_ref": "experiments/pcqm_gptrans_pair_norm_500k/results/canonical_trace.json",
+  "trace_artifact_sha256": "da466aa4bbff3347171d8af432a4b87f8bacb553e4999f5fd854135811f986a1",
+  "x_axis": "optimizer_steps",
+  "exposure": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080
+  },
+  "comparability_identity": {
+    "scientific_contract": "pcqm-fixed500k-dev50k-matched60-v4",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "row_split_identity": "train[0:500000]-development[500000:550000]",
+    "architecture_identity": "gptrans_pair_update_norm",
+    "optimizer_identity": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+    "lr_schedule_identity": "cosine60-epoch0-4e-4-epoch59-1e-6",
+    "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+    "ema_semantics": "none",
+    "target_transform_identity": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+    "evaluation_role_identity": "internal_development_500000_549999",
+    "selection_role_identity": "best-development-raw-model-60epochs",
+    "terminal_endpoint_identity": "optimizer_steps234360:sample_presentations29998080",
+    "matched_architecture_required": false,
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "trace_fields": {
+    "epoch_or_pass": true,
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "learning_rate": true,
+    "checkpoint_identity": false
+  }
+}

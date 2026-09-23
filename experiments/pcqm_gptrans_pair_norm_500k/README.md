@@ -9,3 +9,6 @@ The frozen protocol is in `protocol.md`. `backtest.json` records the evidence
 used to calibrate the two matched-prefix futility gates. Runtime-only profiling
 is retained separately under `../pcqm_gptrans_pair_norm_500k_profile/`.
 
+- Terminal decision: `decision.md`
+
+

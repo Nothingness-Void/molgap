@@ -1,0 +1,82 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-pair-norm-500k-s42",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-t",
+  "question": "Does parameter-free LayerNorm on GPTrans pair updates maintain its 100K gain (+0.004843 eV) upon 500K scale-transfer to surpass the GPTrans-T 500K baseline (0.106868 eV) by at least 0.003 eV?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-gptrans-pair-norm-500k-s42",
+    "observed_deficiency": "During extended training on PCQM4Mv2, newly accumulated pair updates experience unbounded magnitude growth that causes representation collapse. Normalizing each new pair update with LayerNorm stabilizes relational updates across 60 epochs.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "alternative_explanations": [
+      "500K sample diversity natively bounds relational update variance, rendering update normalization ineffective"
+    ],
+    "changed_mechanism": "LayerNorm normalization applied to each newly computed pair update tensor before residual accumulation",
+    "cheapest_falsifier": "60-epoch 500K/50K run failing to achieve 0.003 eV gain over the 0.106868 eV baseline (threshold < 0.103868 eV)",
+    "related_closed_family_ids": [
+      "TB-gptrans-flow-ablation-100k-s42"
+    ],
+    "expected_native_cost_ref": "cost-TB-gptrans-pair-norm-500k-s42-measured-training",
+    "decision_changed_if_positive": "nominate GPTrans Pair Update Norm as a required scale-transfer mechanism",
+    "decision_changed_if_negative": "close standalone Pair Update Norm scale-transfer at 500K",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "34477c9dc656727bd9e50769084dbd4892447231",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json"
+    ],
+    "reference_ids": [
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-t-100k-v4-reference"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_pair_norm_500k/training_contract.json",
+    "source_config_identity": "desktop-gptrans-pair-norm-500k-v1"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "remote_scale_transfer_training",
+      "run_ids": [
+        "nvoid912/molgap-gptrans-pair-update-norm-500k-v1"
+      ],
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "source_commit": "34477c9dc656727bd9e50769084dbd4892447231",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_pair_norm_500k/v5_evidence.json"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-pair-norm-500k-s42-measured-training"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-pair-norm-500k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_pair_norm_500k/v5_evidence.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_pair_norm_500k/decision.md",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  }
+}
