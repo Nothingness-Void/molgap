@@ -61,6 +61,25 @@ work queues.
 | `codex/exp/pcqm-500k-module-attribution` | `8421d1d8` | Completed diagnostic; proposed screens resolved separately | `experiments/pcqm_500k_module_attribution/decision.md` |
 | `codex/fix/ims-convergence-runtime` | `e777ebcb` | Historical execution repair; terminal full-run authority remains desktop-owned | `experiments/pcqm_gptrans_full_convergence/results/resource_repair_20260918.md` |
 
+## Desktop terminal source tips preserved by `234f511`
+
+These source tips are reachable from `archive` through merge `234f511`. Their
+canonical decisions remain the authority; the archive merge did not activate
+their old code or root documents. Selected evidence is also indexed on
+`molgap-desktop`.
+
+| Source tip | Historical disposition | Decision |
+|---|---|---|
+| `0460ba6` (PairNorm 500K) | `NEGATIVE_UNDER_CONTRACT`; the earlier 100K shortlist is a separate decision | `experiments/pcqm_gptrans_pair_norm_500k/decision.md` |
+| `818cf7e` (feature denoising) | `INCONCLUSIVE` under source/finalization binding gaps | `experiments/pcqm_gptrans_feature_denoising_100k/decision.md` |
+| `2519f4e` (PairValue) | `INCONCLUSIVE` under the strict replay/reference contract | `experiments/pcqm_k1_pair_value_100k/decision.md` |
+| `3fc1d80` (Xi'an determinism) | `NEGATIVE_UNDER_CONTRACT` after cross-process gradient replay | `experiments/pcqm_xian_determinism/decision.md` |
+
+The desktop-owned full convergence, Kunshan distance-angle, and PairNorm
+100K/profile source histories also remain reachable through this archive
+merge; their subsequent Git integrations into `molgap-desktop` own their live
+code and records.
+
 ## Desktop migration boundary
 
 The desktop migration was prepared from commit `638c9f9` on 2026-09-17. The
@@ -118,8 +137,8 @@ Use the desktop `models/REFERENCE_INDEX.md` and each experiment's
 
 ## Retention policy
 
-- Keep original remote experiment branches until their history is no longer
-  needed; this archive does not delete them.
+- Retire a temporary branch only after its tip is durably reachable from its
+  owner branch or `archive`, and any active worktree changes are preserved.
 - Do not start new training from this branch. New work belongs to
   `molgap-server` or `molgap-desktop` and must have a roadmap entry.
 - A closed experiment is archived once its decision is final and its compact
