@@ -1,0 +1,82 @@
+{
+  "completion_ref": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/completion_manifest.json",
+  "completion_sha256": "7dc036a72be7a9caf8e0f4af83894604d7fdb28eff5b0c303c16ae22199b73e6",
+  "cost_scope": "sum of 60 measured training/evaluation epoch wall intervals; excludes setup and queue",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "t4x2-v2",
+      "category": "training",
+      "cost_event_id": "cost-full_atom_bond-t4-v2-observed-training",
+      "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/observed_metadata.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.240127580589445
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.240127580589445
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    }
+  ],
+  "format": "molgap-gptrans-feature-denoising-observed-source-v1",
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-full_atom_bond-train-s42",
+      "role_name": "official_train_prefix",
+      "row_manifest_hash": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-full_atom_bond-dev-metric-s42",
+      "role_name": "internal_development",
+      "row_manifest_hash": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-full_atom_bond-dev-select-s42",
+      "role_name": "internal_development",
+      "row_manifest_hash": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+  "training_trace_ref": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/trace.json",
+  "training_trace_sha256": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef"
+}

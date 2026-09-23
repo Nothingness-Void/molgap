@@ -1,0 +1,67 @@
+{
+  "blocker_codes": [
+    "FROZEN_OPTIMIZER_MISMATCH",
+    "SOURCE_COMMIT_MISMATCH"
+  ],
+  "candidate_artifact_bindings": null,
+  "candidate_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+  "candidate_observed_role_event_kinds": null,
+  "candidate_role_applicability_plan": null,
+  "candidate_trace_field_availability": null,
+  "comparison_class": "PAIRED_ENDPOINT",
+  "decision_scope": [
+    "observed paired internal-development endpoint only"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "strict causal comparison",
+    "promotion under frozen contract"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "expanded-feature-denoising",
+  "matched_fields": {
+    "dataset_identity": "fixed-100k-train-50k-development",
+    "row_order_identity": "aligned-50000-development-rows"
+  },
+  "mechanism_id": "expanded-feature-denoising",
+  "mismatched_fields": {
+    "optimizer_identity": {
+      "frozen": "AdamW-lr0.0002-weight_decay0.01",
+      "observed": "AdamW-lr0.001-weight_decay0.05"
+    },
+    "schedule_identity": {
+      "frozen_endpoint": 2e-06,
+      "observed_endpoint": 1e-06
+    },
+    "source_commit": {
+      "executed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "prospective": "ae15157547c09e5e08db40a19f7442bfecd122dd"
+    }
+  },
+  "missing_artifacts": [
+    "standalone_runtime_certificate"
+  ],
+  "missing_fields": [],
+  "recoverable_without_training": [
+    "retain actual source and contract erratum"
+  ],
+  "reference_artifact_bindings": null,
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "reference_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+  "reference_observed_role_event_kinds": null,
+  "reference_prediction_status": "aligned_existing_prediction",
+  "reference_role_applicability_plan": null,
+  "reference_trace_field_availability": null,
+  "rerun_required_blockers": [],
+  "role_status": "candidate_observed_reference_history_incomplete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "preflight_only",
+  "stochasticity_status": "single_seed_row_bootstrap_only",
+  "strict_ready": false,
+  "strict_status": "BLOCKED_FROZEN_CONTRACT_MISMATCH",
+  "trace_status": "complete"
+}

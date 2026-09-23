@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-ae05e461b1ad80697066861cbd697a13e73b77171045a8ed82d71fe3bba7bccf",
+  "finalized_at": "2026-09-22T04:19:00.515711+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_feature_denoising_100k/decision.md": "4852d825e03ee762186c5d28f0d3c99275b3a1f0391c2960d727f76b1785b216",
+    "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/terminal_inputs/acceptance.json": "93dc91abe13f28992b509e58c6a8d6fa403a520d090ff4c4c118d9904e4b2e92",
+    "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/terminal_inputs/comparison_readiness.json": "ae6c4390ccd9748f37858ee051f5918b928ea999ab6d3fdfc34732e73dba6226",
+    "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/terminal_inputs/observed_metadata.json": "57221928d16a56f40d7a029fa8d3d3dbfb9b589ef9c62115c6ac3a5db39573fc",
+    "experiments/pcqm_gptrans_feature_denoising_100k/launch.json": "a7afc4ab09d64050dd7565a7e2c5ed92369414a7c3203d2c017b831a4dcc5138",
+    "experiments/pcqm_gptrans_feature_denoising_100k/terminal_discrepancy.json": "9fe733cfd7c5946cb442a0eac483ed6af64b2d6ed7dc36129dfdbc8d25cc9056",
+    "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json": "7c305804dd780bf00c3f8c06ca9dcfd8ab8334b38a3ff72239873ea175b5ebcc",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/mechanical_acceptance.json": "d73c2d652dcf70a6b8c9f19dbf9abd51b67a8cebbc79de4a675624d9913faa4c",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/paired_comparison.json": "f5040ab23c5cc8ba5225464881c655c77e1f0a72785163ca1b0df79de3b94f24",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/best_model.pt": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/completion_manifest.json": "3d8a5ac2589b97256fe487d67c6296927cf5f06480b6facd5f272e69a3f98258",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/development_predictions.pt": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/preflight.json": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/trace.json": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/runtime/source.tar.gz": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/retained_artifact_manifest.json": "d16d88a55f458e5db92c6ce6d962f991408117b8c5922c3237235b05ca69baa4",
+    "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/retention_receipt.json": "ac2802e0604aeb2fb6d1ec03269ba16c3183aea17b5cdaad9029a96f393e1d54"
+  },
+  "outcome": "INCONCLUSIVE",
+  "published_hashes": {
+    "costs/cost-full_atom-t4-v2-observed-training.json": "ee26ec9f90e93022e380cac42f2b678f9e3bfcb1ad1fe895fb18ece8d995411b",
+    "prospective_snapshot.json": "89ca4f67b72a88a39ac2d06f2ff247bc7712d5f3eb2ac088f083fe0229b5d5f4",
+    "roles/role-full_atom-dev-metric-s42.json": "ca2728808b97efc19289c6e56609ad6fe70b0dd25bfc7f8aa880c96f16b9d7f2",
+    "roles/role-full_atom-dev-select-s42.json": "11e906c29ade2a6450fb0d5c09f3ea6da3da3aa34c44daded3ffbf010728a9d1",
+    "roles/role-full_atom-train-s42.json": "941a79fdf05757fda530b6b52725dd60fd5838fc5415b72d17c35c4db781c2cb",
+    "terminal_input.json": "970995ba7d2d787a5fd41a798bfaa8e6fc5f60ec9c0f435a177994e014e865dc",
+    "trace.json": "3851830089727fe5e0eb97e376924137945b737f5ef25ef938ec12ac2b18fa75",
+    "trace_manifest.json": "0c9bbb73c8b272f104c3136a9244d99eb02ceb3b2d353a9d19275a7720a6e6df",
+    "trajectory.json": "7328b4c095e274896e7422e131099f57054c44eeee1d47ba07134bd8298c4363",
+    "v5_evidence.json": "1ff0a9395de13e7d6893ce2e6c9258b6e92f07f83176adcf9101b8d5f9931feb"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "ae05e461b1ad80697066861cbd697a13e73b77171045a8ed82d71fe3bba7bccf",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+}

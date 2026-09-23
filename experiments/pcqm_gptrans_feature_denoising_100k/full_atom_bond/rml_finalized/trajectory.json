@@ -1,0 +1,201 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "t4x2-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-feature-denoise-full-atom-bond-100k-s42-expected-training",
+        "cost-full_atom_bond-t4-v2-observed-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+        "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond"
+      ],
+      "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+      "type": "remote_screen_training"
+    }
+  ],
+  "comparison_blockers": [
+    "FROZEN_OPTIMIZER_MISMATCH",
+    "SOURCE_COMMIT_MISMATCH"
+  ],
+  "comparison_class": "PAIRED_ENDPOINT",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/terminal_inputs/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "a new prospectively frozen decision-relevant question"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "available_actions": [
+      "run_full_atom_bond_100k",
+      "no_train"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_feature_denoising_100k/budget_snapshot.json",
+    "chosen_action": "run_full_atom_bond_100k",
+    "known_evidence_ids": [
+      "pcqm-edgestate-rich-full-submission",
+      "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-flow-ablation-100k-s42",
+      "pcqm-gptrans-noisy-nodes-100k-s42",
+      "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-t-500k-bridge",
+      "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-residual-reconciliation",
+      "pcqm-matched-500k-v4-three-arm",
+      "pcqm-recurrent-graph-state-100k-seed42",
+      "pcqm-route-b-four-encoder-specialist",
+      "pcqm-scale-transfer-attribution-no-train",
+      "pcqm-scale-transfer-diagnostic-evidence"
+    ],
+    "known_trajectory_ids": [
+      "TB-edgestate-rich-full-v1",
+      "TB-geometry-transfer-500k-context",
+      "TB-gine-1m-gap-specialist-v7",
+      "TB-gptrans-feature-denoise-full-atom-100k-s42",
+      "TB-gptrans-noisy-nodes-100k-s42",
+      "TB-gptrans-noisy-nodes-500k-s42",
+      "TB-gptrans-noisy-pair-norm-100k-s42",
+      "TB-gptrans-noisy-pair-norm-500k-s42",
+      "TB-gptrans-t-100k-v4-reference",
+      "TB-gptrans-t-500k-bridge",
+      "TB-k1-gptrans-full-fusion-r3",
+      "TB-k1-residual-reconciliation",
+      "TB-matched-500k-v4-three-arm",
+      "TB-pcqm-scale-transfer-attribution",
+      "TB-pcqm-scale-transfer-diagnostic",
+      "TB-recurrent-graph-state-100k-seed42",
+      "TB-route-b-four-encoder-specialist",
+      "TC-gptrans-flow-ablation-100k-s42",
+      "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
+      "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
+    ],
+    "policy_id": "desktop-explicit-bounded-100k-research",
+    "policy_sha256": "67453c8ba7835375b11f0afb261cfd91239ee7b78d5d54292c482314391c34ec",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_feature_denoising_100k/role_plan.json"
+    ],
+    "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+    "source_hashes": {
+      "experiments/pcqm_gptrans_feature_denoising_100k/STATUS.md": "14597024931726a3e68773fab8977d74446b4c095f88774c7fe76dcd4fc16107",
+      "experiments/pcqm_gptrans_feature_denoising_100k/budget_snapshot.json": "7b270a37dfe313a8b2027288055fdcdb0e4e2f82b9762d381e9888cf4957ddbd",
+      "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md": "25657ef5395e9917b69773e5abe8ce21046dac18243a36877ace6fdd2e48962c",
+      "experiments/pcqm_gptrans_feature_denoising_100k/role_plan.json": "080ac66fa1781bf2ceac8018eb6acb5eaa3cd7a30fbead102e7793e16f292623",
+      "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json": "7c305804dd780bf00c3f8c06ca9dcfd8ab8334b38a3ff72239873ea175b5ebcc",
+      "experiments\\pcqm_500k_v4_evidence\\trajectory.json": "090a3074c1706e21c232fa8d060effffa406ed335c7b0fde5e8530f4d16406cf",
+      "experiments\\pcqm_500k_v4_evidence\\v5_evidence.json": "f3f35623c3a2708fd6e06ce9a83e9431a6b0200869d98b7de67ecf980d71a673",
+      "experiments\\pcqm_edge_state_full\\trajectory.json": "4eb4c7c4ba977b32055f5ed0f835aab99a6f0ae7ecf4d156df06f5902cc0e64e",
+      "experiments\\pcqm_edge_state_full\\v5_evidence.json": "92905e3c4fd26a66160c390a6a12a4f8ca195e1dd5d8a29e6679a4c835468792",
+      "experiments\\pcqm_gap_architecture\\trajectory.json": "0dec1d5823541a017d367a5bfcb10cf1958f7c16ce512e55071a102eb8a59c99",
+      "experiments\\pcqm_gap_architecture\\v5_evidence.json": "d93e5380e14a6be6ffcd694214898db85a20e625972a5401fcd3c9951a703e96",
+      "experiments\\pcqm_geometry_transfer_500k\\trajectory.json": "3b02946e3b57203663d40f5f5a1c1ba823841716323bcec3614abaf5244a6916",
+      "experiments\\pcqm_geometry_transfer_500k\\v5_evidence.json": "26448a967962372bf018932e268cc00d415b2f6f19473fe6ac31ddc54c1df6cd",
+      "experiments\\pcqm_gine_expert\\trajectory.json": "19bc9cb580a95ab3b86d9c47ce099e07e9761a6c4ffc1432f063c97c3baef93f",
+      "experiments\\pcqm_gine_expert\\v5_evidence.json": "3a9c3dd4377c1fb323d62c72d963c2fc15630c4a5fc4f50e959789a1fee43f93",
+      "experiments\\pcqm_gptrans_conditional_flow_history\\conditional_pair_readback\\trajectory.json": "bb8bce0f4dadffbd4f7978e52fb2260c5156a1f0c28e5e0fe2c8a38dae03a576",
+      "experiments\\pcqm_gptrans_conditional_flow_history\\conditional_pair_recurrence\\trajectory.json": "13ba771867f2474d16e1202b4aa92c724a27224d96bd4dfbaed111d9cbd87e96",
+      "experiments\\pcqm_gptrans_feature_denoising_100k\\full_atom\\trajectory.json": "89ca4f67b72a88a39ac2d06f2ff247bc7712d5f3eb2ac088f083fe0229b5d5f4",
+      "experiments\\pcqm_gptrans_flow_ablation_100k\\trajectory.json": "bab84605d92e8a38b99d59345617cb8a1cbf0eb624c7ede53dc1240150b3f218",
+      "experiments\\pcqm_gptrans_flow_ablation_100k\\v5_evidence.json": "7fe1a7ea0bdcc03ee46251a9bf34885601f64c2f3333d5fe006836d18f226f60",
+      "experiments\\pcqm_gptrans_noisy_nodes_100k\\trajectory.json": "f30255ccaa29679470d8c5c02b71fd1d7228b8ec4827275acefd96ecc2fb2118",
+      "experiments\\pcqm_gptrans_noisy_nodes_100k\\v5_evidence.json": "18b605447e0f6db79a812afc9d3a63b33b0ae7ed1161c017c8c9a2d40caf93d4",
+      "experiments\\pcqm_gptrans_noisy_nodes_500k\\trajectory.json": "750728676c0ff1fca6ed5d35a54961738f0a21e0757e704a27c019a2709627c7",
+      "experiments\\pcqm_gptrans_noisy_pair_norm_100k\\trajectory.json": "700c86bfcaccbec6debb42b604dc96bc6c3ae2ac0620842d834e83655362e0e2",
+      "experiments\\pcqm_gptrans_noisy_pair_norm_100k\\v5_evidence.json": "fa921aa15b89486d2e58e09ccba6cb9bb5c8eac9924493d7316d27430e30bd4a",
+      "experiments\\pcqm_gptrans_noisy_pair_norm_500k\\trajectory.json": "b98686c2cdd4a2bcba651ce8a82eda4a2bfaef3e772d58372c6ac7c01a587228",
+      "experiments\\pcqm_gptrans_t_100k_v4\\trajectory.json": "8d5912978afb09a9419b038b88a4667a9de14caa32b9880ddb0b86516b1655ab",
+      "experiments\\pcqm_gptrans_t_100k_v4\\v5_evidence.json": "e42d1c61ec8da21a3f61e7d9e438d7c585c50d71c44cdf5f52cffdc713ea8d2a",
+      "experiments\\pcqm_gptrans_t_500k\\trajectory.json": "b8783bf5e4b4aec8662465b98e3aded1c11540414563473ad38ba49224ba4215",
+      "experiments\\pcqm_gptrans_t_500k\\v5_evidence.json": "921f01264bbfee82b0dc732ad8c3d360ab1bf00934161bc66f168a7e9d52e77b",
+      "experiments\\pcqm_k1_gptrans_full_fusion\\trajectory.json": "6b27fc0cc980f625637a1683b2b9513f77f8a2f0e069ab682ca8ea33c87ce2a9",
+      "experiments\\pcqm_k1_gptrans_full_fusion\\v5_evidence.json": "4d68512dc946e32e155a608f00e682ac4bc74951b9b00f08ff41b045d970ea6b",
+      "experiments\\pcqm_k1_residual_reconciliation\\trajectory.json": "afd1312e5fcdec21ad462f4539e2e0861acb4c974179c4492cbe1cf2af33e28a",
+      "experiments\\pcqm_k1_residual_reconciliation\\v5_evidence.json": "7a1870df0526a74e8666c37050a8b8a4032e4fcc5c63d38dd8d602c30a8ace98",
+      "experiments\\pcqm_route_b\\trajectory.json": "a7b06708c9e9a257184837e3fbd5ee15f41475b4087bcbcc1512ae96ec3b3418",
+      "experiments\\pcqm_route_b\\v5_evidence.json": "b1e913610c850ad92a2751cf967c1aaddb88133cbf8582680d102e6b6954cd62",
+      "experiments\\pcqm_scale_transfer_attribution\\trajectory.json": "0a00b82378f8136f7184c2ce0c18df177580ec83c370ad238f3d5fcc7a6598a5",
+      "experiments\\pcqm_scale_transfer_attribution\\v5_evidence.json": "72215708fb0eefa1b3663ac71fd8ee3ee19fe97346a814ad381dd1ecca0becff",
+      "experiments\\pcqm_scale_transfer_diagnostic\\trajectory.json": "bfc2838882c88175b07dbaeed760ab7e2ca0baf7585612c80376b3ca9176b617",
+      "experiments\\pcqm_scale_transfer_diagnostic\\v5_evidence.json": "051fca330eba0d35539f0f78bc37ca9b7cf95ece3a55098901e5488dfa8bc21d"
+    },
+    "state_timestamp": "2026-09-22T01:14:32+09:00"
+  },
+  "family_id": "gptrans-feature-denoising",
+  "hypothesis": {
+    "alternative_explanations": [
+      "bond reconstruction may duplicate information already encoded by pair updates",
+      "bond noise may destabilize the relation path despite fixed total auxiliary weight"
+    ],
+    "changed_mechanism": "full nine-category atom denoising plus three-category bond denoising from directed-edge pair states, with atom and bond CE averaged under fixed alpha 0.10",
+    "cheapest_falsifier": "one fixed V5 PCQM-100K seed-42 arm failing to improve the accepted comparator by at least 0.003 eV and failing to exceed the nested full-atom arm",
+    "decision_changed_if_negative": "close bond-feature denoising and use the nested atom-only result to decide whether the broader family remains open",
+    "decision_changed_if_positive": "retain full atom plus bond denoising as one candidate for a separate scale-transfer decision",
+    "expected_native_cost_ref": "cost-TB-gptrans-feature-denoise-full-atom-bond-100k-s42-expected-training",
+    "historical_unknowns": [
+      "training stochasticity is unavailable and row bootstrap does not estimate it"
+    ],
+    "hypothesis_id": "H-TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+    "observed_deficiency": "Node-only denoising does not directly preserve bond type, stereo, and conjugation identity in the persistent pair state.",
+    "related_closed_family_ids": [
+      "gptrans-conditional-relation-flow",
+      "gptrans-propagation-flow"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does adding all three OGB bond-category reconstruction tasks improve full-atom denoising in the accepted GPTrans topology?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_feature_denoising_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json",
+      "experiments/pcqm_gptrans_feature_denoising_100k/protocol.md"
+    ],
+    "parent_trajectory_ids": [
+      "TB-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TB-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-noisy-pair-norm-100k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_feature_denoising_100k/role_plan.json"
+    ],
+    "source_commit": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+    "source_config_identity": "gptrans-feature-denoising-ae15157547c09e5e"
+  },
+  "track": "B",
+  "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+}

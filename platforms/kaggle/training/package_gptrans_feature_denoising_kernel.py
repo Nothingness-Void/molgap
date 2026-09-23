@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import base64
 import hashlib
 import json
@@ -20,6 +21,63 @@ DATASET_REF = "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
 REFERENCE_REF = "nothingnessvoid/molgap-gptrans-noisy-pair-norm-reference-s42-v1"
 MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
 REFERENCE_MODEL_SHA256 = "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092"
+
+
+def _assert_frozen_contract() -> None:
+    contract_path = (
+        Path(REPO_ROOT)
+        / "experiments/pcqm_gptrans_feature_denoising_100k/training_contract.json"
+    )
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    source = subprocess.run(
+        ["git", "show", f"{SOURCE_COMMIT}:src/molgap/pcqm_gptrans_v4.py"],
+        cwd=REPO_ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    names = {
+        "EPOCHS", "WARMUP_EPOCHS", "LEARNING_RATE", "MIN_LEARNING_RATE",
+        "WEIGHT_DECAY", "PHYSICAL_BATCH", "TRAIN_ROWS",
+    }
+    constants = {}
+    for node in ast.parse(source).body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            target = node.targets[0]
+            if isinstance(target, ast.Name) and target.id in names:
+                try:
+                    constants[target.id] = ast.literal_eval(node.value)
+                except (ValueError, TypeError):
+                    pass
+    if names - constants.keys():
+        raise RuntimeError(f"Cannot verify frozen runtime constants: {sorted(names - constants.keys())}")
+    warmup_names = {4: "four", 5: "five"}
+    warmup = warmup_names.get(constants["WARMUP_EPOCHS"])
+    observed = {
+        "source_commit": SOURCE_COMMIT,
+        "epochs": constants["EPOCHS"],
+        "physical_batch_per_device": constants["PHYSICAL_BATCH"],
+        "optimizer_steps_per_epoch": constants["TRAIN_ROWS"] // constants["PHYSICAL_BATCH"],
+        "sample_presentations": (
+            constants["TRAIN_ROWS"] // constants["PHYSICAL_BATCH"]
+            * constants["PHYSICAL_BATCH"] * constants["EPOCHS"]
+        ),
+        "optimizer": (
+            f"AdamW-lr{constants['LEARNING_RATE']:.4f}"
+            f"-weight_decay{constants['WEIGHT_DECAY']:.2f}-fused_false-foreach_false"
+        ),
+        "lr_schedule": (
+            f"{warmup}_epoch_linear_warmup_then_cosine_to_"
+            f"{constants['MIN_LEARNING_RATE']:.6f}"
+        ),
+    }
+    mismatches = {
+        field: {"frozen": contract.get(field), "source": value}
+        for field, value in observed.items()
+        if contract.get(field) != value
+    }
+    if mismatches:
+        raise RuntimeError(f"Frozen contract differs from packaged source: {mismatches}")
 
 
 def _source_paths() -> list[str]:
@@ -69,6 +127,7 @@ def _clean_import_check(archive: Path) -> None:
 
 
 def build_package(output: Path, account: str) -> dict:
+    _assert_frozen_contract()
     output = output.resolve()
     if output.exists():
         shutil.rmtree(output)

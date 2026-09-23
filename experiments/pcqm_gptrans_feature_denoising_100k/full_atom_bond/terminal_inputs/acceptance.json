@@ -1,0 +1,34 @@
+{
+  "discrepancy_ref": "experiments/pcqm_gptrans_feature_denoising_100k/terminal_discrepancy.json",
+  "evidence_id": "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
+  "format": "molgap-gptrans-feature-denoising-terminal-acceptance-v1",
+  "mechanical_acceptance_ref": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/mechanical_acceptance.json",
+  "outcome": {
+    "artifact_status": "hash_verified_contract_discrepant",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "paired_endpoint_only_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "inconclusive_under_frozen_contract_observed_worse",
+    "transfer_status": "not_ready"
+  },
+  "paired_comparison_ref": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/paired_comparison.json",
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+  "status": "archival_only_not_strict_contract_acceptance",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "a new prospectively frozen decision-relevant question"
+    ]
+  }
+}
