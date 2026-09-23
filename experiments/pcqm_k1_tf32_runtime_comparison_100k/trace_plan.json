@@ -1,0 +1,21 @@
+{
+  "format": "molgap-v5-trace-plan-v1",
+  "trajectory_id": "TC-k1-tf32-a100-paired-s42",
+  "arms": ["fp32", "tf32_matmul"],
+  "required_observations": [
+    "optimizer_step",
+    "sample_presentations",
+    "epoch_or_pass",
+    "learning_rate",
+    "live_train_metric",
+    "live_dev_metric",
+    "wall_time_seconds",
+    "cumulative_wall_time_seconds",
+    "checkpoint_identity"
+  ],
+  "unavailable_not_estimated": ["ema_dev_metric", "device_time_seconds"],
+  "terminal_exposure_per_arm": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  }
+}

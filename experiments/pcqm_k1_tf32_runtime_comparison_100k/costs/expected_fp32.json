@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-tf32-a100-paired-s42-fp32",
+  "trajectory_id": "TC-k1-tf32-a100-paired-s42",
+  "action_id": "A001",
+  "run_id": "ims-k1-tf32-paired-v1:fp32",
+  "attempt_id": "pbs-v1-planned",
+  "category": "training",
+  "platform": "ims-a100",
+  "hardware": "NVIDIA_A100",
+  "evidence_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
+  "measurement": {
+    "device_hours": {"status": "estimated", "value": 5.0},
+    "wall_hours": {"status": "estimated", "value": 5.0},
+    "cpu_hours": {"status": "measurement_missing", "value": null},
+    "queue_hours": {"status": "measurement_missing", "value": null}
+  }
+}

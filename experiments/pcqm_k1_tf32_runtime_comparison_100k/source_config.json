@@ -1,0 +1,15 @@
+{
+  "format": "molgap-k1-tf32-prospective-source-config-v1",
+  "source_commit": "577b0eece148ef64e788be521c73af89b796ac5b",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "model_mode": "neural_atom_k1_v4",
+  "seed": 42,
+  "physical_batch": 128,
+  "epochs_per_arm": 40,
+  "arms": ["fp32", "tf32_matmul"],
+  "sole_intervention": "cuda_matmul_tf32_permission",
+  "torch_parameter_and_target_dtype": "float32",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

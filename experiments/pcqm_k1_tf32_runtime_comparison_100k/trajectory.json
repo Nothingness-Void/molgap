@@ -1,0 +1,58 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-tf32-a100-paired-s42",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-precision-execution-diagnostic",
+  "question": "Does A100 TF32 matmul accelerate unchanged K1-v4 without materially changing internal-development Gap MAE?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-tf32-a100-paired-s42",
+    "observed_deficiency": "strict FP32 may underuse A100 matrix throughput",
+    "supporting_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "alternative_explanations": ["PyG scatter or input loading may dominate runtime", "precision perturbation may change optimization"],
+    "changed_mechanism": "allow TF32 for CUDA FP32 matrix multiplication only",
+    "cheapest_falsifier": "one paired seed-42 A100 run with measured runtime and internal-development predictions",
+    "related_closed_family_ids": ["k1-pair-token-runtime"],
+    "expected_native_cost_ref": "cost-TC-k1-tf32-a100-paired-s42-fp32",
+    "decision_changed_if_positive": "consider separately reviewed precision contract; never auto-change full training",
+    "decision_changed_if_negative": "retain strict FP32 execution",
+    "historical_unknowns": []
+  },
+  "state_at_start": {
+    "source_commit": "577b0eece148ef64e788be521c73af89b796ac5b",
+    "source_config_identity": "71e3ec82bcc8bf3b758be6b40438fe726b8ab22750a3274a32b860d4f71bd8b0",
+    "contract_refs": ["experiments/pcqm_k1_tf32_runtime_comparison_100k/protocol.md"],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_trajectory_ids": ["TC-k1-v4-100k-reference-s42"],
+    "prior_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json"],
+    "budget_snapshot_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/budget_snapshot.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "paired_precision_diagnostic_100k_seed42",
+      "run_ids": ["ims-k1-tf32-paired-v1:fp32", "ims-k1-tf32-paired-v1:tf32_matmul"],
+      "attempt_ids": ["pbs-v1-planned"],
+      "source_commit": "577b0eece148ef64e788be521c73af89b796ac5b",
+      "evidence_refs": [
+        "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
+        "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
+        "experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-tf32-a100-paired-s42-fp32",
+        "cost-TC-k1-tf32-a100-paired-s42-tf32"
+      ]
+    }
+  ],
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": ["submit one bounded IMS A100 paired diagnostic after source and cache checks"],
+    "reopen_conditions": ["completed paired artifacts and independent no-inference acceptance"]
+  }
+}

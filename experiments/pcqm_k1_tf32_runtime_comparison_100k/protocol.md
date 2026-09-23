@@ -44,6 +44,11 @@ loss/metric finiteness, peak memory, and exact artifact hashes. This is a
 single-seed numerical/runtime comparison, not proof of accuracy equivalence.
 Only a prospective, separately reviewed precision contract could authorize
 any future use of TF32; **no automatic full-training change follows**.
+V5 classifies this as a noncausal runtime/precision diagnostic. Its two arms
+have different `precision_identity`, so the current RML strict screening replay
+pool must not merge them or claim a replay-ready causal model win. Both arms
+still receive prospective identity, canonical traces, role history, native-cost
+records, terminal artifacts, and a no-inference paired endpoint acceptance.
 
 Each arm atomically writes an epoch checkpoint, trace, best model, aligned
 50K prediction payload, and every-10-epoch recovery tar. Terminal acceptance
