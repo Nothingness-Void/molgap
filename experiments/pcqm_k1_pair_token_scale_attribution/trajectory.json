@@ -65,6 +65,7 @@
         "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json",
         "experiments/pcqm_k1_pair_token_scale_attribution/results/preflight_122742924.md",
         "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round1_terminal.json",
         "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md"
       ],
       "cost_event_ids": ["cost-TC-k1-matched60-reference-500k-s42"]
@@ -79,33 +80,37 @@
         "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_residual_analysis.json",
         "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md"
       ],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TC-k1-pairtoken-round2-local-audit"]
     },
     {
       "action_id": "A003",
       "type": "submitted_frozen_checkpoint_pair_token_intervention",
       "run_ids": ["122843454"],
-      "attempt_ids": ["submitted"],
+      "attempt_ids": ["terminal-accepted"],
       "source_commit": "5b94a8600bd512e78d882f4a785e7dc85a01dcc8",
       "evidence_refs": [
-        "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_submission.md"
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_submission.md",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_terminal.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md"
       ],
-      "cost_event_ids": []
+      "cost_event_ids": ["cost-TC-k1-pairtoken-round3-inference"]
     }
   ],
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_k1_pair_token_scale_attribution/results/round1_terminal.json",
+      "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_residual_analysis.json",
+      "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_terminal.json",
+      "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md"
+    ]
   },
   "decision": {
     "decision_ref": "experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": [
-      "accept the sole frozen-checkpoint inference job 122843454 and close attribution"
-    ],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
     "reopen_conditions": [
-      "Round 3 must reproduce the accepted best prediction payload",
-      "Round 3 cannot release a seed, full run, or architecture successor"
+      "a new independent protocol and compute decision would be needed to revisit scale transfer"
     ]
   },
   "comparison_class": "NO_COMPARISON",

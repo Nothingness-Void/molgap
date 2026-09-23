@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-pairtoken-round3-inference",
+  "trajectory_id": "TC-k1-pair-token-scale-attribution",
+  "action_id": "A003",
+  "run_id": "122843454",
+  "attempt_id": "terminal-accepted",
+  "category": "inference",
+  "platform": "scnet-kunshan",
+  "hardware": "SCNET_DCU_KUNSHAN_CARD1_16GB",
+  "measurement": {
+    "device_hours": {"value": 0.13777777777777778, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.13777777777777778, "status": "measured"},
+    "queue_hours": {"value": 0.006388888888888889, "status": "measured"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_terminal.json"
+}

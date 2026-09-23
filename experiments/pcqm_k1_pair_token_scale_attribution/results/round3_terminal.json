@@ -1,0 +1,50 @@
+{
+  "format": "molgap-pair-token-scale-attribution-round3-terminal-v1",
+  "job_id": "122843454",
+  "scheduler": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "submit": "2026-09-23T20:47:11",
+    "start": "2026-09-23T20:47:34",
+    "end": "2026-09-23T20:55:50",
+    "elapsed_seconds": 496,
+    "queue_seconds": 23,
+    "node": "e08r3n15",
+    "accelerators": 1,
+    "cpus_allocated": 8
+  },
+  "source_commit": "5b94a8600bd512e78d882f4a785e7dc85a01dcc8",
+  "source_archive_sha256": "f4596d341dc7caad888d76344027415b6c0b69b3a230f8cc385e048334049d49",
+  "fixed_500k_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "candidate_checkpoint_sha256": "cd428d17736b4c6af7595faac340e54f70b0506d6f8daa45405985c20e9ef105",
+  "candidate_payload_sha256": "35fdaa76f10e166ccb123b6005929a420f18b2678a286023d4aa62e48ec9ca01",
+  "selected_epoch": 48,
+  "development_rows": 50000,
+  "physical_batch": 128,
+  "training_executed": false,
+  "inference_executed": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "independent_no_inference_acceptance": true,
+  "baseline_mae_eV": 0.104303728203773,
+  "baseline_max_prediction_difference_eV": 9.5367431640625e-7,
+  "counterfactuals": {
+    "disabled": {"mae_eV": 0.25072189660072325, "gain_vs_baseline_eV": -0.14641816839694977},
+    "uniform_all_pairs": {"mae_eV": 0.12516717393398286, "gain_vs_baseline_eV": -0.02086344573020935},
+    "diagonal_only": {"mae_eV": 0.1534194941663742, "gain_vs_baseline_eV": -0.049115765962600706},
+    "off_diagonal_only": {"mae_eV": 0.10482091104984284, "gain_vs_baseline_eV": -0.0005171828460693359},
+    "no_pair_norm": {"mae_eV": 0.17789422865390778, "gain_vs_baseline_eV": -0.07359050045013428}
+  },
+  "peak_allocated_bytes": 98529792,
+  "core_inference_seconds": 238.911853559315,
+  "artifacts": {
+    "acceptance_sha256": "105a8ddda4200e0651fb4ad701a4ca654a5f6cee6fb5f3d8dc167b3e6b6506ff",
+    "causal_audit_sha256": "8a7def8df513cbfe3c090551cdf045ba02f207176b7e7b5ebcc9ea8d14870597",
+    "completion_manifest_sha256": "fae40ab842219714b8f322908c63075339a961495eca1c481e827c15674d9cd9",
+    "progress_sha256": "8d9e640084f2e3488e58daa577e7f270641bdfc5177159238bff2ef073a37d7c",
+    "stdout_sha256": "eb919700c762ea5cdeb6930a943262ce684af6c869667f0029c7021077ed6761",
+    "stderr_sha256": "266aa27aba358256c01b85c0f83d1017c98f65550f3ad357d0c5721a758e2592",
+    "retrieved_record": "platforms/_records/scnet/k1_pair_token_scale_audit_122843454"
+  }
+}

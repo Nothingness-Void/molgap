@@ -1,0 +1,33 @@
+{
+  "format": "molgap-k1-matched60-reference-round1-terminal-v1",
+  "run_id": "122743291",
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit_code": "0:0",
+  "submit": "2026-09-22T14:01:21",
+  "start": "2026-09-22T14:01:21",
+  "end": "2026-09-23T05:54:08",
+  "elapsed_seconds": 57167,
+  "source_commit": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
+  "source_archive_sha256": "76a3cb6cbc51c2a96e83aabe4120fdd2c6a1afb9ddb8aaf37e721aedebd202c9",
+  "fixed_500k_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "independent_no_inference_acceptance": true,
+  "development_gap_mae_eV": 0.10360519587993622,
+  "best_epoch": 48,
+  "epochs_completed": 60,
+  "optimizer_steps": 234360,
+  "sample_presentations": 29998080,
+  "parameters": 3658817,
+  "training_rows": 500000,
+  "internal_development_rows": 50000,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "artifacts": {
+    "local_acceptance_sha256": "a9ff623e563645791af0d6c97b3de23a52d9a4055ab451c086912f7121679508",
+    "trace_sha256": "7619a113539b5eecf2d936a2cae2cc9157cbe3ffffbea95d459384de128bb89c",
+    "completion_manifest_sha256": "81bed66c269d5a17957596dc103ae2c56ce2abad9d7b99a04c9fc20caad215a2",
+    "best_model_sha256": "7ab0deb5f8ae4073e5a5447b437e5d0d5d661d119ea292c8bc2734e272841262",
+    "prediction_payload_sha256": "e43728a30a74a19e9e969cef3e94f3c0f9718a1c606bfa5306bd9b3c87ca8d31",
+    "retrieved_record": "platforms/_records/scnet/k1_matched60_reference_122743291"
+  }
+}
