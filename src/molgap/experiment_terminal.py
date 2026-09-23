@@ -13,7 +13,7 @@ from pathlib import Path, PureWindowsPath
 from typing import Any
 
 from .experiment_spec import (
-    ExperimentSpec, TERMINAL_PROTOCOL, _canonical, _digest, _identifier,
+    ExperimentSpec, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL, _canonical, _digest, _identifier,
     _text, _unique_object,
 )
 from .screen_policy import canonical_fingerprint
@@ -184,6 +184,8 @@ def _validate(spec: ExperimentSpec, payload: dict) -> dict:
     if type(arms) is not list or not arms:
         raise ValueError("descriptor arms must be a nonempty array")
     expected = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    prospective = ({entry["arm_id"]: entry for entry in declaration["prospective"]["arms"]}
+                   if declaration["schema_version"] == SCHEMA_VERSION_V2 else None)
     seen: set[str] = set()
     trajectories: set[str] = set()
     inputs: set[str] = set()
@@ -200,6 +202,8 @@ def _validate(spec: ExperimentSpec, payload: dict) -> dict:
         _observed(arm, expected[key], declaration, spec.identity)
         for field in ("trajectory_id", "run_id"):
             validate_id(arm[field], field)
+        if prospective is not None and arm["trajectory_id"] != prospective[key]["trajectory_id"]:
+            raise ValueError("descriptor prospective trajectory identity mismatch")
         if arm["trajectory_id"] in trajectories:
             raise ValueError("duplicate trajectory identity; expected 1:1 mapping")
         trajectories.add(arm["trajectory_id"])
@@ -289,6 +293,9 @@ def translate_terminal_descriptor(
         raise ValueError("a validated TerminalDescriptor is required")
     payload = _validate(spec, descriptor.to_dict())
     root = Path(repo_root).resolve()
+    declaration = spec.to_dict()
+    expected = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    v2 = declaration["schema_version"] == SCHEMA_VERSION_V2
     resolved = []
     inputs: set[Path] = set()
     destinations: set[Path] = set()
@@ -336,6 +343,9 @@ def translate_terminal_descriptor(
             raise ValueError("unsupported existing RML terminal package")
         if trajectory["trajectory_id"] != arm["trajectory_id"] or terminal.get("trajectory_id") != arm["trajectory_id"]:
             raise ValueError("trajectory/terminal identity mismatch")
+        if (v2 and trajectory["state_at_start"]["source_config_identity"]
+                != canonical_fingerprint(expected[arm["arm_id"]])):
+            raise ValueError("prospective trajectory arm identity mismatch")
         if terminal.get("run_id") != arm["run_id"]:
             raise ValueError("terminal run identity mismatch")
         if not any(action["action_id"] == terminal.get("action_id") and arm["run_id"] in action["run_ids"]
