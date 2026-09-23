@@ -58,15 +58,28 @@
       "action_id": "A001",
       "type": "planned_matched60_v4_k1_500k_reference_recovery",
       "run_ids": ["122742924", "122743291"],
-      "attempt_ids": ["preflight-accepted", "training-submitted"],
+      "attempt_ids": ["preflight-accepted", "reference-accepted"],
       "source_commit": "e36463d9d95f5ec253f6e690d262b7ea7ebb3c33",
       "evidence_refs": [
         "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
         "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json",
         "experiments/pcqm_k1_pair_token_scale_attribution/results/preflight_122742924.md",
-        "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json"
+        "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md"
       ],
       "cost_event_ids": ["cost-TC-k1-matched60-reference-500k-s42"]
+    },
+    {
+      "action_id": "A002",
+      "type": "aligned_saved_prediction_residual_analysis",
+      "run_ids": ["round2-saved-prediction-analysis"],
+      "attempt_ids": ["terminal-accepted"],
+      "source_commit": "3fd8e61e17e564806872cac1dfca6c1a202bafbb",
+      "evidence_refs": [
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_residual_analysis.json",
+        "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md"
+      ],
+      "cost_event_ids": []
     }
   ],
   "result": {
@@ -77,12 +90,11 @@
     "decision_ref": "experiments/pcqm_k1_pair_token_scale_attribution/STATUS.md",
     "outcome": "ACTIVE",
     "next_allowed_actions": [
-      "submit one preflight-only reference job",
-      "after accepted preflight submit one formal reference job"
+      "run one frozen-checkpoint PairToken intervention on accepted 500K development rows"
     ],
     "reopen_conditions": [
-      "Round 2 requires terminal Round 1 acceptance",
-      "Round 3 requires written Round 2 attribution"
+      "Round 3 must reproduce the accepted best prediction payload",
+      "Round 3 cannot release a seed, full run, or architecture successor"
     ]
   },
   "comparison_class": "NO_COMPARISON",
