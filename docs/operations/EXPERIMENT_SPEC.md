@@ -1,4 +1,4 @@
-# Prospective experiment specification v1
+# Prospective experiment specification
 
 `molgap.experiment_spec.ExperimentSpec(payload)` is the Stage 1 entry point.
 `from_json`, `to_json`, `to_dict`, and `identity` provide strict loading,
@@ -6,9 +6,15 @@ canonical serialization, detached export, and the existing screen-policy
 SHA-256 fingerprint convention. The synthetic fixture in
 `tests/test_experiment_spec.py` is an exhaustive payload example.
 
-The schema is `molgap-experiment-spec-v1`. Its terminal protocol is
-`molgap-experiment-terminal-descriptor-v1`; the Stage 5 adapter described below
-translates this descriptor into existing RML terminal wiring inputs.
+The supported schemas are `molgap-experiment-spec-v1` and
+`molgap-experiment-spec-v2`. Both use the
+`molgap-experiment-terminal-descriptor-v1` terminal protocol; the Stage 5
+adapter described below translates this descriptor into existing RML terminal
+wiring inputs. This document owns their common arm, family, addon, and terminal
+invariants. V1 has an experiment-level `prospective` block; the v2-only
+per-arm `prospective` mapping and `plan-prospective` CLI are documented in
+[EXPERIMENT_PROSPECTIVE_PLANNING.md](EXPERIMENT_PROSPECTIVE_PLANNING.md).
+V2 does not relax family/addon validation or authorize training or submission.
 
 Each ordered arm binds its scientific role, family/version, base digest,
 initial state digest/seed, dataset/split/membership/row-order/usage digests,
@@ -23,7 +29,7 @@ importing model code or dispatching a callable supplied by an author.
 Family version `1` is an interface version, not a promoted model generation.
 GPTrans-T binds the `pcqm_gptrans_v4` recipe and K1 binds `pcqm_k1_full`.
 These names point to the existing package modules. No historical experiment
-identity is copied. V1 recipe overrides must be exactly `{}`: these frozen
+identity is copied. Recipe overrides must be exactly `{}`: these frozen
 recipes have no approved override range. Seed 42 is required.
 Future overrides need a reviewed recipe version with typed bounds.
 
@@ -164,8 +170,9 @@ arm must occur exactly once. `arm_identity` is
 `canonical_fingerprint(spec_arm)`, matching the runner's arm fingerprint.
 Trajectory IDs, trajectory files and terminal files must be unique. Per-arm RML
 run IDs are explicit and may differ from the experiment's logical-run ID.
-The spec's prospective trajectory is experiment-level context: the adapter does
-not invent per-arm trajectories or derive their IDs from that context.
+V1's prospective trajectory is experiment-level context; v2 binds trajectory
+IDs per arm. The adapter does not invent per-arm trajectories or derive their
+IDs from experiment-level context.
 
 All six path fields use explicit repository-relative POSIX file paths, resolved
 against the supplied `repo_root`. Absolute paths, URIs, backslashes, traversal,
