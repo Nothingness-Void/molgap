@@ -1,0 +1,51 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-k1-pair-token-frozen-cross-scale-20260924",
+  "record_mode": "prospective",
+  "track": "C",
+  "owner": "server",
+  "family_id": "k1-pair-token-frozen-cross-scale",
+  "question": "Does the 100K PairToken advantage survive on the disjoint 500K development distribution without changing the frozen 100K weights?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-k1-pair-token-frozen-cross-scale-20260924",
+    "observed_deficiency": "Matched 500K training erased PairToken's 100K gain, but no frozen 100K pair has been evaluated on the 500K development molecules.",
+    "supporting_evidence_ids": ["pcqm-k1-v4-100k-reference-s42", "pcqm-k1-pair-token-100k-s42", "pcqm-k1-pair-token-500k-s42"],
+    "alternative_explanations": ["The 500K development distribution alone removes the gain", "Additional training exposure changes the learned relation channel", "Runtime or model-source incompatibility prevents a valid cross-scale contrast"],
+    "changed_mechanism": "none; freeze both 100K weights and the 100K target transform",
+    "cheapest_falsifier": "Reproduce each 100K payload, then evaluate both frozen checkpoints on the same accepted 500K development rows",
+    "related_closed_family_ids": ["k1-pair-token-scale-attribution", "k1-graphormer-spd-pair-token"],
+    "expected_native_cost_ref": "cost-TC-k1-pair-token-frozen-cross-scale-20260924",
+    "decision_changed_if_positive": "Distinguish a distribution-level component from the additional 500K training component, without promoting a new model",
+    "decision_changed_if_negative": "Close the frozen cross-scale diagnostic as uninformative and preserve the accepted matched 500K result",
+    "historical_unknowns": ["Both development roles have been queried previously and are not independent tests"]
+  },
+  "state_at_start": {
+    "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+    "source_config_identity": "molgap-k1-cross-scale-frozen-v1",
+    "contract_refs": ["experiments/pcqm_k1_cross_scale_frozen/protocol.md"],
+    "reference_ids": ["pcqm-k1-v4-100k-reference-s42"],
+    "parent_trajectory_ids": ["TC-k1-pair-token-scale-attribution"],
+    "prior_trajectory_ids": ["TC-k1-pair-token-100k-s42", "TB-k1-pair-token-500k-s42"],
+    "prior_evidence_ids": ["pcqm-k1-v4-100k-reference-s42", "pcqm-k1-pair-token-100k-s42", "pcqm-k1-pair-token-500k-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_k1_cross_scale_frozen/role_plan.json"],
+    "budget_snapshot_ref": "experiments/pcqm_k1_cross_scale_frozen/budget_snapshot.json"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "planned_frozen_checkpoint_cross_scale_inference",
+      "run_ids": ["pending-kunshan-sbatch"],
+      "attempt_ids": ["pending-preflight-and-full"],
+      "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+      "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/protocol.md", "experiments/pcqm_k1_cross_scale_frozen/role_plan.json", "experiments/pcqm_k1_cross_scale_frozen/budget_snapshot.json"],
+      "cost_event_ids": ["cost-TC-k1-pair-token-frozen-cross-scale-20260924"]
+    }
+  ],
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_cross_scale_frozen/protocol.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": ["perform the bounded frozen inference only after accepted preflight"],
+    "reopen_conditions": ["a separate independent role would be required for a new generalization claim"]
+  }
+}

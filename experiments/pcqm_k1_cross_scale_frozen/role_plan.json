@@ -1,0 +1,14 @@
+{
+  "format": "molgap-k1-cross-scale-role-plan-v1",
+  "purpose": "NO_TRAIN frozen checkpoint inference diagnostic",
+  "roles": {
+    "100k_train": "not_read; frozen transform only",
+    "100k_development": "reproduction gate only",
+    "500k_train": "not_read",
+    "500k_development": "cross-scale diagnostic after gate",
+    "official_validation": "not_read",
+    "test_dev": "not_read",
+    "test_challenge": "not_read"
+  },
+  "forbidden_reverse_cell": "500k-trained model on 100k development; those rows are in 500k train"
+}

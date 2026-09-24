@@ -1,0 +1,9 @@
+{
+  "format": "molgap-k1-cross-scale-budget-v1",
+  "mode": "NO_TRAIN",
+  "preflight": "one allocated DCU, 100k development first batch, at most 20 minutes",
+  "full": "one allocated DCU, two frozen models and two development roles, at most 2 hours",
+  "automatic_retries": 0,
+  "new_training_jobs": 0,
+  "successor_jobs": 0
+}
