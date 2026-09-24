@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 114,
+  "ambiguous_historical_role_record_count": 120,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -283,6 +283,48 @@
     },
     {
       "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-reference-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-reference-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-memory-value-aborted-reference-no-train",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1158,6 +1200,8 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "pcqm-gptrans-memory-value-aborted-reference-no-train",
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
@@ -1186,6 +1230,8 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "pcqm-gptrans-memory-value-aborted-reference-no-train",
       "pcqm-gptrans-noisy-nodes-100k-s42",
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",

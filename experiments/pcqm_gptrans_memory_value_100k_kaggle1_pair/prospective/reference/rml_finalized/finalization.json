@@ -1,0 +1,26 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-f1deef9592952f9064ab177abb884b3a3827e340e54f2d041ad20d997d14151e",
+  "finalized_at": "2026-09-24T06:51:36.606601+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/reference/acceptance_no_train.json": "1bfa45ec1db43f1333480dad235e96af874d72952c44aa204bef86b84382f687",
+    "experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/reference/decision_no_train.md": "cc5b573ff167b7f7f460d06f00ef7dd22cbcf75267bc0434f6b233bde6296978"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/measurement_missing.json": "1047ecd15cd4ddb33a213c4c6f7c7030e09b00dd03b31a04253e773118611fee",
+    "prospective_snapshot.json": "19c1bf0cc8ad0f5ee4b22b67d516a8f09a8d42db09a90c4d2481845c4e27dd86",
+    "terminal_input.json": "63f5db49dc0d4a5202006fe7d551abcfdd1164ef0c9a63f92dbd3491b6f9cca3",
+    "trajectory.json": "f732f1a6506992378c61b1de5a5884a8a7e2272b9993cff829face1742840b5b",
+    "v5_evidence.json": "1f718515cf30b8f5d87f976af80bcfb46bee765b80e3532fbcdd457fca782b6e"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/reference/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "f1deef9592952f9064ab177abb884b3a3827e340e54f2d041ad20d997d14151e",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-memory-value-k1pair-reference-100k-s42"
+}

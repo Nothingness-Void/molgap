@@ -262,6 +262,16 @@
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-reference-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-nodes-100k-s42",
       "type": "parent_trajectory"
     },
@@ -402,6 +412,16 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-nodes-100k-s42",
       "type": "prior_evidence"
     },
@@ -508,6 +528,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-memory-value-k1pair-reference-100k-s42",
       "type": "reference_used"
     },
     {
@@ -620,6 +650,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-memory-value-aborted-reference-no-train",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-noisy-nodes-100k-s42",
       "type": "evidence"
     },
@@ -725,6 +763,14 @@
     },
     {
       "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-memory-value-k1pair-reference-100k-s42",
       "type": "trajectory"
     },
     {

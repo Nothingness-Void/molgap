@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_100K",
+    "field": "matched_pair_unrun",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "0695a3730f8819d1afc811b0e25e96debb5eff5d03912b39c99f78f4e1187f80",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-gptrans-memory-value-paired-100k-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "matched_pair_unrun"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

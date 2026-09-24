@@ -1,14 +1,14 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 27
+- Validated V5 evidence: 29
 - Evidence without trajectory: 0
 
 ## Trajectories
 - CLOSED: 5
 - INCONCLUSIVE: 6
 - NEGATIVE_UNDER_CONTRACT: 10
-- NO_TRAIN: 2
+- NO_TRAIN: 4
 - POSITIVE_UNDER_CONTRACT: 7
 
 ## Transfer
@@ -18,7 +18,7 @@
 
 ## Roles
 - Explicit role events: 44
-- Coarse historical role records: 114
+- Coarse historical role records: 120
 - Repeatedly selected role identities: 6
 
 ## Cost
@@ -46,10 +46,10 @@
 - NvidiaTeslaP100_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NvidiaTeslaP100_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NvidiaTeslaP100_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- NvidiaTeslaT4_requested cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
-- NvidiaTeslaT4_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
-- NvidiaTeslaT4_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
-- NvidiaTeslaT4_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NvidiaTeslaT4_requested cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- NvidiaTeslaT4_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- NvidiaTeslaT4_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- NvidiaTeslaT4_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - Tesla T4 device_hours: measured=11.813520 (4 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
@@ -66,8 +66,12 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- Measurement-missing cost events: 19
-- Cost-event coverage: 19/30 trajectories; incomplete native measurement=14
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Measurement-missing cost events: 23
+- Cost-event coverage: 21/32 trajectories; incomplete native measurement=16
 
 ## Screening Backtest
 - Status: available
@@ -75,9 +79,9 @@
 - Excluded traces: 6
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 16
+- [INFO] trace_unavailable_for_backtest: 18
 - [WARN] historical_partial_record: 17
-- [WARN] incomplete_native_cost_measurement: 14
+- [WARN] incomplete_native_cost_measurement: 16
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 14
+- [WARN] missing_explicit_role_identity: 16
 - [WARN] trajectory_without_v5_evidence: 3

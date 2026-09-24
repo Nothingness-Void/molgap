@@ -1,6 +1,6 @@
 # Persistent-pair readback 100K status
 
-Preparation is local. No Kaggle kernel submission is asserted by this file.
-`protocol.md`, `training_contract.json`, and the per-arm prospective records
-own the release identity. Update this file only from an authoritative platform
-observation.
+The planned reference-plus-candidate job was withdrawn before Kaggle submission.
+Both prospective trajectories were finalized as `NO_TRAIN`, with no GPU allocation
+or protected-role access. The accepted GPTrans-T V5 reference is reused by the
+separately planned two-candidate pair-memory experiment.

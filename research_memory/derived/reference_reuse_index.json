@@ -197,6 +197,44 @@
     },
     {
       "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-memory-value-aborted-candidate-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_no_train",
+      "source_envelope": "experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/memory-value/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-memory-value-aborted-reference-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_no_train",
+      "source_envelope": "experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_remote_verified"
       ],
       "comparison_status": "paired_development_comparison_complete",
@@ -340,6 +378,8 @@
       "used_by_trajectory_ids": [
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-centered-logits-k1pair-100k-s42",
+        "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
+        "TB-gptrans-memory-value-k1pair-reference-100k-s42",
         "TB-gptrans-noisy-nodes-100k-s42",
         "TB-gptrans-noisy-pair-norm-100k-s42",
         "TB-gptrans-reference-k1pair-100k-s42",

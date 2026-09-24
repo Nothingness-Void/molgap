@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 30,
+      "trajectories_total": 32,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 19,
-      "with_incomplete_native_measurement": 14,
+      "with_cost_event": 21,
+      "with_incomplete_native_measurement": 16,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -324,7 +324,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         },
         "device_hours": {
           "estimated": {
@@ -336,7 +336,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         },
         "queue_hours": {
           "estimated": {
@@ -348,7 +348,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         },
         "wall_hours": {
           "estimated": {
@@ -360,7 +360,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         }
       },
       "Tesla T4": {
@@ -562,19 +562,69 @@
           "not_applicable_records": 2,
           "unknown_records": 0
         }
+      },
+      "unknown": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        }
       }
     },
-    "unknown_events": 19
+    "unknown_events": 23
   },
   "evidence": {
-    "validated": 27,
+    "validated": 29,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 16,
+      "count": 18,
       "severity": "INFO"
     },
     {
@@ -584,7 +634,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 14,
+      "count": 16,
       "severity": "WARN"
     },
     {
@@ -594,7 +644,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 14,
+      "count": 16,
       "severity": "WARN"
     },
     {
@@ -604,18 +654,18 @@
     }
   ],
   "roles": {
-    "coarse_historical": 114,
+    "coarse_historical": 120,
     "explicit_events": 44,
     "repeatedly_selected": 6
   },
-  "source_digest": "0695a3730f8819d1afc811b0e25e96debb5eff5d03912b39c99f78f4e1187f80",
+  "source_digest": "fc86fb4357baf728abb73d20ef5d17ac8d3dd79340c0164cccb5db8c4efcdd5e",
   "trajectories": {
-    "count": 30,
+    "count": 32,
     "outcomes": {
       "CLOSED": 5,
       "INCONCLUSIVE": 6,
       "NEGATIVE_UNDER_CONTRACT": 10,
-      "NO_TRAIN": 2,
+      "NO_TRAIN": 4,
       "POSITIVE_UNDER_CONTRACT": 7
     }
   },
