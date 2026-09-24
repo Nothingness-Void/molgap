@@ -9,5 +9,7 @@ its disposition is in `../pcqm_gptrans_centered_logits_100k/decision.md`.
 paired submission. `training_contract.json`, `experiment_spec.json`, and the
 per-arm prospective trajectories freeze the identities. `run_pair.py` unpacks
 the frozen source archive and selects a fixed profile of the existing GPTrans
-T4x2 runner. `STATUS.md` tracks the submitted job; `release_gate.json` and
-`launch/` retain the local preflight and Kaggle submission observations.
+T4x2 runner. `decision.md` owns the terminal scientific result, and `STATUS.md`
+tracks the replay qualification blocker. `release_gate.json` and `launch/`
+retain the local preflight and Kaggle submission observations. The per-arm
+`prospective/*/rml_finalized/` records are the canonical terminal RML inputs.

@@ -98,6 +98,27 @@
       "comparison_status": "paired_endpoint_only_not_strict",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same-job-paired-100k-centered-logits",
+      "source_envelope": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "paired_endpoint_only_not_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "role_use": {
         "internal_development": "consumed",
@@ -275,6 +296,27 @@
       "source_envelope": "experiments/pcqm_gptrans_pair_norm_500k/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_qualified_scale_transfer",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "paired_endpoint_only_not_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same-job-paired-100k-reference",
+      "source_envelope": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
       "used_by_trajectory_ids": []
     },
     {

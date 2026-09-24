@@ -83,11 +83,17 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
 - The user-directed Kaggle1 replacement pairs GPTrans-T `reference` and
   `centered_logits` on one T4x2 kernel,
   `nothingnessvoid/molgap-gptrans-centered-logits-paired-100k-s42-v1`.
-  The submitter accepted it and Kaggle last reported `RUNNING`. Both arms have
-  separate prospective RML trajectories and passed local real-shard CPU model
-  smoke. Remote GPU preflight, training, terminal acceptance, and both
-  replay-ready RML entries remain pending. Authority:
-  `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/`.
+  Kaggle version 1 completed. Both arms passed separate mechanical and V5/RML
+  terminal acceptance after 60 epochs and 50K aligned development predictions.
+  The same-job GPTrans-T reference scored `0.156014488 eV`; centered logits
+  scored `0.155416209 eV`. The `0.000598279 eV` gain misses the frozen
+  `0.003 eV` gate, and its paired interval crosses zero. The candidate closed
+  `NEGATIVE_UNDER_CONTRACT`, with no scale release. RML frozen validation passes,
+  but the two new traces are excluded from replay because the prospective
+  historical reference binding cannot satisfy the strict causal replay entrance
+  for the same-job control. Authority:
+  `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md` and
+  `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated

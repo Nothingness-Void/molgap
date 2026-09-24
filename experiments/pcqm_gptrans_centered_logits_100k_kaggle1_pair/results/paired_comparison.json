@@ -1,0 +1,28 @@
+{
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 42,
+  "candidate_mae_eV": 0.15541620911061763,
+  "candidate_minus_reference_eV": -0.0005982789516449094,
+  "candidate_run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+  "format": "molgap-kaggle1-gptrans-centered-paired-comparison-v1",
+  "paired_row_bootstrap": {
+    "ci95": [
+      -0.0016655688993930816,
+      0.00046157600283622637
+    ],
+    "delta": -0.0005982789516448975,
+    "n_bootstrap": 10000,
+    "probability_better": 0.8619,
+    "seed": 42
+  },
+  "reference_mae_eV": 0.15601448806226254,
+  "reference_run_id": "kaggle1-gptrans-reference-k1pair-100k-s42-v1",
+  "scope": "same-job aligned development rows; no training-seed variance estimate",
+  "shortlist_gate": {
+    "gain_eV": 0.0005982789516449094,
+    "paired_row_bootstrap_upper_eV": 0.00046157600283622637,
+    "passed": false,
+    "required_gain_eV": 0.003,
+    "training_seed_variance_measured": false
+  }
+}

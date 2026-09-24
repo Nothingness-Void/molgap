@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 104,
+  "ambiguous_historical_role_record_count": 114,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -128,6 +128,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -388,6 +423,41 @@
     },
     {
       "evidence_id": "pcqm-gptrans-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-reference-k1pair-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -730,7 +800,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 38,
+  "explicit_role_event_count": 44,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -781,6 +851,52 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-centered-logits-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-centered-logits-train-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-reference-train-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed500k_train": [
@@ -1037,6 +1153,7 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -1046,6 +1163,7 @@
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-pair-norm-500k-s42",
+      "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-full-convergence-20260919",
@@ -1063,6 +1181,7 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -1072,6 +1191,7 @@
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-pair-norm-500k-s42",
+      "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
       "pcqm-k1-full-convergence-20260919",
@@ -1115,6 +1235,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-centered-logits-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [
@@ -1269,6 +1419,52 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-centered-logits-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-k1pair-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-centered-logits-train-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-reference-train-k1pair-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [

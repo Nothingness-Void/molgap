@@ -17,6 +17,14 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "strict_replay_reference_binding_unavailable_under_frozen_prospective"
+      ],
+      "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+      "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "frozen_contract_optimizer_and_source_mismatch"
       ],
       "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
@@ -29,6 +37,14 @@
       ],
       "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
       "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "strict_replay_reference_binding_unavailable_under_frozen_prospective"
+      ],
+      "run_id": "kaggle1-gptrans-reference-k1pair-100k-s42-v1",
+      "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
     },
     {
       "reasons": [
@@ -97,5 +113,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 12
+  "trace_count": 14
 }

@@ -15,15 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 18,
+      "count": 16,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-centered-logits-k1pair-100k-s42",
         "TB-gptrans-full-convergence-20260919",
-        "TB-gptrans-reference-k1pair-100k-s42",
         "TB-k1-full-convergence-20260919",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-residual-reconciliation",
@@ -103,14 +101,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 16,
+      "count": 14,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-centered-logits-k1pair-100k-s42",
-        "TB-gptrans-reference-k1pair-100k-s42",
         "TB-gptrans-t-500k-bridge",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-pcqm-scale-transfer-attribution",
@@ -126,11 +122,9 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 5,
+      "count": 3,
       "items": [
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-centered-logits-k1pair-100k-s42",
-        "TB-gptrans-reference-k1pair-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

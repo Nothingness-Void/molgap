@@ -1,0 +1,45 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-4fbfed460437db19deddb85d71a894860c771dd61830524d50135ec54323f409",
+  "finalized_at": "2026-09-24T04:13:26.571957+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md": "20f1b414b44b6a2ca9bf2506519d00296191bbab008faf033a9ead12853e7096",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/reference/terminal_inputs/acceptance.json": "80f6b417d76cf0e8e2de26a986858c7cdb2fe4ed6472e99ebb3bc15a24eeb96b",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/reference/terminal_inputs/observed_metadata.json": "4836612373aa7aed5a35ce3997760c22c410e4b566914ff0ba4a683955a81823",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/protocol.md": "b8e35f4625463cbdd678d1e47d88768d87f4af255bfbc58c02a63e6d5443ecc8",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/release_gate.json": "2a8a4ef1837ce37bc29207f833b379af619ca1f9f061ffeefcd5603087b79bc7",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/paired_comparison.json": "9717f0a99a7f599acfc5834e33e50a296660644eb8ad23af669abffbc4dd8196",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/reference/mechanical_acceptance.json": "b5c78be54b6207fd14aefe7020ab5d1abd0ba8b85b5f71bf107c7e15d1fba639",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/terminal_observation.json": "57fd0ea32e64d0f9ad4b22572868cb43cdf5410d8621811a4e02e6adf2d25d49",
+    "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/training_contract.json": "6d0386e4351fc80294d8e13facd84154c5f336dee97f25c73ccc3f90270c5c53",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/best_model.pt": "a06f1f163dc6fd7ebae45eec6bfcff75cf05da4ae077344a93926b7d498d0565",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/completion_manifest.json": "2d362f4685961e71ebff04e4ab6bfa0086cc19098a733b6167a22cc1e422440e",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/development_predictions.pt": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/frozen_reference.json": "13cd28ba5db0020902579eebf4bfb0e6e48215acf8987364cc07bf7d72a5bdfc",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/last_checkpoint.pt": "27b61495030b4e35dcbb28b44489892d85fff52768b81514ed51f7b7356bfee4",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/preflight.json": "5a96cf15bfa8b541e180620adfbc12414e75a940a9d6311970c1e2785bdecbd8",
+    "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/trace.json": "4aa70aca4c56a31fe76d33cc3a887e903a468e10a8699820ed5a58df09b39706"
+  },
+  "outcome": "CLOSED",
+  "published_hashes": {
+    "costs/cost-reference-k1pair-100k-s42-measured-training.json": "05f70c17ac836d11c16b1dc03e08d9f4a156d706c2bd3bad9a2d65d14b362e47",
+    "prospective_snapshot.json": "4b45d0b8ceba8cf6c2d4a101b1e23b8a69feb4577c4a9f8ddf8d988f87c70968",
+    "roles/role-reference-dev-metric-k1pair-100k-s42.json": "f94367900baee9bb4f2644d50a5ea49c712015d12122d4f0e7e51e25ef3c83ca",
+    "roles/role-reference-dev-select-k1pair-100k-s42.json": "190e34e8de09bf46f402ed6a53735fc6e55bc45deeb682b915489ce2fadf2f5a",
+    "roles/role-reference-train-k1pair-100k-s42.json": "65aaa175885e4aa796eb68e1ec208abebd3e26bcbe349c254c42308fbf155833",
+    "terminal_input.json": "602f3de8fe0c3f64983916a409b9b3dac395cd36463951a1c35aed51daf56c57",
+    "trace.json": "d91bde2d4a65507e4ea3b3e21ece046941400a4e33a24a92e2592a1af5341b99",
+    "trace_manifest.json": "3a7a6d705a879118eaf2c59acd023774f623811ca95431c33a32f59470a8e612",
+    "trajectory.json": "e7e0c5a7b219f76ee7b887afa2f2949bb8866d67e3f077c0c50cb2cc56e55218",
+    "v5_evidence.json": "2746a4a6ea213364232767a8e1f0932b6fbda6e1155372c2d67c8ae562790059"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/reference/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "4fbfed460437db19deddb85d71a894860c771dd61830524d50135ec54323f409",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+}

@@ -1,0 +1,22 @@
+{
+  "accepted": true,
+  "arm_id": "reference",
+  "artifact_hashes": {
+    "best_model.pt": "a06f1f163dc6fd7ebae45eec6bfcff75cf05da4ae077344a93926b7d498d0565",
+    "completion_manifest.json": "2d362f4685961e71ebff04e4ab6bfa0086cc19098a733b6167a22cc1e422440e",
+    "development_predictions.pt": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff",
+    "frozen_reference.json": "13cd28ba5db0020902579eebf4bfb0e6e48215acf8987364cc07bf7d72a5bdfc",
+    "last_checkpoint.pt": "27b61495030b4e35dcbb28b44489892d85fff52768b81514ed51f7b7356bfee4",
+    "preflight.json": "5a96cf15bfa8b541e180620adfbc12414e75a940a9d6311970c1e2785bdecbd8",
+    "trace.json": "4aa70aca4c56a31fe76d33cc3a887e903a468e10a8699820ed5a58df09b39706"
+  },
+  "best_development_mae_eV": 0.15601448806226254,
+  "best_epoch": 59,
+  "canonical_trace_sha256": "d91bde2d4a65507e4ea3b3e21ece046941400a4e33a24a92e2592a1af5341b99",
+  "format": "molgap-kaggle1-paired-mechanical-acceptance-v1",
+  "optimizer_steps": 46860,
+  "run_id": "kaggle1-gptrans-reference-k1pair-100k-s42-v1",
+  "runtime_certificate_id": "261e00142c414aba9e0ea23d3b3cb575cf32f404c8aedfc8e246899a3d8aa36a",
+  "sample_presentations": 5998080,
+  "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+}

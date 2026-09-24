@@ -1,0 +1,82 @@
+{
+  "completion_ref": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/completion_manifest.json",
+  "completion_sha256": "c6a862b2d3714c32a2dda46811170f0b8380a0427481c40cf229b8e9176e2bc6",
+  "cost_scope": "sum of 60 observed per-epoch single-T4 training/evaluation wall intervals; excludes setup and queue",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "training",
+      "cost_event_id": "cost-centered-logits-k1pair-100k-s42-measured-training",
+      "evidence_ref": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/observed_metadata.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.7088725148852753
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.7088725148852753
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+    }
+  ],
+  "format": "molgap-kaggle1-paired-observed-source-v1",
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-centered-logits-train-k1pair-100k-s42",
+      "role_name": "official_train_prefix",
+      "row_manifest_hash": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+      "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/observed_metadata.json",
+      "role_event_id": "role-centered-logits-dev-select-k1pair-100k-s42",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+    }
+  ],
+  "run_id": "kaggle1-gptrans-centered-logits-k1pair-100k-s42-v1",
+  "training_trace_ref": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/trace.json",
+  "training_trace_sha256": "245f4feece1d92900c6cc75e991e536e93edfd0ede9dbcc5e3475c442deb8d17"
+}

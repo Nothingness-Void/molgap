@@ -1,0 +1,107 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/best_model.pt",
+      "name": "best_model",
+      "sha256": "189221e2b0d4c5a4db075452fb6ef4c3eed68f41ab1153b06da9c8453d0eed9b"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "de1ab0c56181e157184222d676441541bc6dda1f01262a319537d9e38a299f71"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/last_checkpoint.pt",
+      "name": "resumable_checkpoint",
+      "sha256": "effcddcc25b25f667c42a617007f38d35d2e9f31b96205ce8485b787397eb8f9"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/trace.json",
+      "name": "training_trace",
+      "sha256": "245f4feece1d92900c6cc75e991e536e93edfd0ede9dbcc5e3475c442deb8d17"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "c6a862b2d3714c32a2dda46811170f0b8380a0427481c40cf229b8e9176e2bc6"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/preflight.json",
+      "name": "runtime_preflight",
+      "sha256": "ba8aaf04d96007d431167af471503bafe77375d8d58f8c15cdf48fbf75bc4781"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/frozen_reference.json",
+      "name": "frozen_reference",
+      "sha256": "f2f77140e571252a76ec611b26e49f429cb75f3caa10e7efbc15786c6eb67fce"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/centered_logits/mechanical_acceptance.json",
+      "name": "mechanical_acceptance",
+      "sha256": "fbcaca7c2caf7dfe3a2345c4370ecf825936b2a49e170ed764ce6bb6c8e2d1a7"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/paired_comparison.json",
+      "name": "paired_comparison",
+      "sha256": "9717f0a99a7f599acfc5834e33e50a296660644eb8ad23af669abffbc4dd8196"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/protocol.md",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/training_contract.json",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/release_gate.json",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/acceptance.json",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/centered-logits/terminal_inputs/observed_metadata.json",
+      "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/terminal_observation.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-centered-logits-100k-kaggle1-pair-contract-v1",
+  "metrics": {
+    "best_epoch": 59,
+    "candidate_minus_reference_eV": -0.0005982789516449094,
+    "observed_development_gap_mae_eV": 0.15541620911061763,
+    "paired_ci95_eV": [
+      -0.0016655688993930816,
+      0.00046157600283622637
+    ]
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24T04:13:26.700249+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-inference hash/exposure/role/runtime and paired row audit"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "paired_endpoint_only_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "same-job-paired-100k-centered-logits",
+  "track": "B"
+}
