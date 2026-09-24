@@ -91,6 +91,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-degree-balance-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-degree-balance-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-functional-group-token-100k-s42:A001",
       "target": "experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json",
       "type": "action_produced_evidence"
@@ -411,6 +421,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-rwse-refresh-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-rwse-refresh-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-sparse-triplet-100k-s42:A001",
       "target": "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -448,6 +468,16 @@
     {
       "source": "TC-k1-tf32-a100-paired-s42:A001",
       "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-topology-portability-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-topology-portability-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -493,6 +523,11 @@
     {
       "source": "TC-gptrans-shortest-path-profile-v5",
       "target": "TC-gptrans-step-profile-v5",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-degree-balance-100k-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
       "type": "parent_trajectory"
     },
     {
@@ -556,6 +591,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-rwse-refresh-100k-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-conjugated-oneshot-100k-s42",
       "type": "parent_trajectory"
@@ -563,6 +603,16 @@
     {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -747,6 +797,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-functional-group-token-100k-s42",
       "type": "prior_evidence"
     },
@@ -807,6 +862,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-sparse-triplet-100k-s42",
       "type": "prior_evidence"
     },
@@ -818,6 +878,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-tf32-a100-paired-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
       "type": "prior_evidence"
     },
     {
@@ -857,6 +922,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-functional-group-token-100k-s42",
       "type": "reference_used"
     },
@@ -917,12 +987,22 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-sparse-triplet-100k-s42",
       "type": "reference_used"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
       "type": "reference_used"
     }
   ],
@@ -958,6 +1038,10 @@
     },
     {
       "id": "pcqm-k1-conjugated-persistent-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-degree-balance-100k-s42",
       "type": "evidence"
     },
     {
@@ -1017,11 +1101,19 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-rwse-refresh-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-sparse-triplet-100k-s42",
       "type": "evidence"
     },
     {
       "id": "pcqm-k1-spd-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-topology-portability-post100k-audit-s42",
       "type": "evidence"
     },
     {
@@ -1058,6 +1150,10 @@
     },
     {
       "id": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-degree-balance-100k-s42",
       "type": "trajectory"
     },
     {
@@ -1117,6 +1213,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-k1-rwse-refresh-100k-s42",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-k1-sparse-triplet-100k-s42",
       "type": "trajectory"
     },
@@ -1126,6 +1226,10 @@
     },
     {
       "id": "TC-k1-tf32-a100-paired-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-topology-portability-post100k-audit-s42",
       "type": "trajectory"
     },
     {

@@ -171,6 +171,26 @@
     },
     {
       "artifact_availability": [
+        "committed_prelaunch_metadata"
+      ],
+      "comparison_status": "prelaunch_strict_planned",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-degree-balance-100k-s42",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "repository_retained"
       ],
       "comparison_status": "strict_causal",
@@ -468,6 +488,26 @@
     },
     {
       "artifact_availability": [
+        "committed_prelaunch_metadata"
+      ],
+      "comparison_status": "prelaunch_strict_planned",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "repository_retained"
       ],
       "comparison_status": "strict_causal",
@@ -510,6 +550,26 @@
     },
     {
       "artifact_availability": [
+        "committed_prelaunch_metadata"
+      ],
+      "comparison_status": "prelaunch_strict_planned",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_fixed_500k_post100k_no_train_audit",
+      "source_envelope": "experiments/pcqm_k1_portability_dual_100k/audit/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "local_record_verified"
       ],
       "comparison_status": "strict_reference_accepted",
@@ -530,6 +590,7 @@
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
+        "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
@@ -542,8 +603,10 @@
         "TC-k1-pair-token-mose-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-pairtoken-combination-transfer",
+        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
-        "TC-k1-spd-pair-token-100k-s42"
+        "TC-k1-spd-pair-token-100k-s42",
+        "TC-k1-topology-portability-post100k-audit-s42"
       ]
     },
     {

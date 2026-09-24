@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 26,
+    "trajectories_total": 29,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 26,
-    "with_incomplete_native_measurement": 24,
+    "with_cost_event": 29,
+    "with_incomplete_native_measurement": 27,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,16 +15,19 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 9,
+      "count": 12,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
+        "TC-k1-degree-balance-100k-s42",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-scale-attribution",
         "TC-k1-pairtoken-combination-transfer",
+        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
+        "TC-k1-topology-portability-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "INFO"
@@ -51,7 +54,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 24,
+      "count": 27,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -59,6 +62,7 @@
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
+        "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
@@ -72,9 +76,11 @@
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-pair-token-scale-attribution",
         "TC-k1-pairtoken-combination-transfer",
+        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
+        "TC-k1-topology-portability-post100k-audit-s42",
         "TC-k1-v4-100k-reference-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -82,9 +88,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
+      "count": 5,
       "items": [
+        "TC-k1-degree-balance-100k-s42",
+        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
+        "TC-k1-topology-portability-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"

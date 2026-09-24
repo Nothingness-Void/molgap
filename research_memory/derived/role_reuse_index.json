@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 109,
+  "ambiguous_historical_role_record_count": 121,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -227,6 +227,34 @@
     },
     {
       "evidence_id": "pcqm-k1-conjugated-persistent-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-degree-balance-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -646,6 +674,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-sparse-triplet-100k-s42",
       "role_identity": null,
       "role_name": "internal_development_100000_150000",
@@ -710,6 +766,34 @@
     },
     {
       "evidence_id": "pcqm-k1-spd-pair-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1498,6 +1582,7 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",
@@ -1512,8 +1597,10 @@
       "pcqm-k1-pair-token-mose-100k-s42",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_challenge": [
@@ -1525,6 +1612,7 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",
@@ -1539,8 +1627,10 @@
       "pcqm-k1-pair-token-mose-100k-s42",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ],
     "test_dev": [
@@ -1552,6 +1642,7 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-mose-context-gate-100k-s42",
       "pcqm-k1-mose-hidden-bn-100k-s42",
@@ -1566,8 +1657,10 @@
       "pcqm-k1-pair-token-mose-100k-s42",
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
       "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-v4-100k-reference-s42"
     ]
   },
