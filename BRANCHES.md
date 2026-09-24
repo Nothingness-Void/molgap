@@ -15,10 +15,10 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 The 2026-09-24 local branch audit found one retained desktop temporary ref:
 `codex/fix/rml-500k-reference` at `b78b978d`. It contains prospective DSAR/DSMR
-work and its checkout has uncommitted experiment/evidence files. The committed
-tip is also at `origin/codex/fix/rml-500k-reference`; reconcile its evidence
-before integrating it into `molgap-desktop`. This routing statement does not
-assert a remote job's current state.
+work and its checkout is clean. The committed tip is also at
+`origin/codex/fix/rml-500k-reference`; reconcile its evidence before
+integrating it into `molgap-desktop`. This routing statement does not assert a
+remote job's current state.
 
 The superseded shared experiment-infrastructure tips were patch-equivalent to
 the desktop implementation. Archive merge `bbd98fb3` preserves their original
