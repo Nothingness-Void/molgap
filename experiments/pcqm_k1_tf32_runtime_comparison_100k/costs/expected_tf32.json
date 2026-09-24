@@ -4,14 +4,14 @@
   "trajectory_id": "TC-k1-tf32-a100-paired-s42",
   "action_id": "A001",
   "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
-  "attempt_id": "pbs-v1-planned",
+  "attempt_id": "1573113.ccpbs1",
   "category": "training",
   "platform": "ims-a100",
   "hardware": "NVIDIA_A100",
-  "evidence_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
+  "evidence_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json",
   "measurement": {
-    "device_hours": {"status": "estimated", "value": 5.0},
-    "wall_hours": {"status": "estimated", "value": 5.0},
+    "device_hours": {"status": "measured", "value": 1.184501935},
+    "wall_hours": {"status": "measured", "value": 1.184501935},
     "cpu_hours": {"status": "measurement_missing", "value": null},
     "queue_hours": {"status": "measurement_missing", "value": null}
   }

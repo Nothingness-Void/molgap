@@ -7972,8 +7972,40 @@
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token_node_return",
       "trajectory_id": "TC-k1-pair-token-node-return-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:fp32",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:fp32",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "58e144663798896006d8e69d9ed6adf15753643333cfb33ac7c300d8b55d7cc1"
+  "source_digest": "25a9b2731684f7a9f3c58c0dd03e0f410b9de3ada4cdae453b435bbb0b0543bc"
 }

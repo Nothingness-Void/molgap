@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 17,
-    "excluded": 2,
+    "excluded": 4,
     "status": "available"
   },
   "cost": {
@@ -28,12 +28,12 @@
         },
         "device_hours": {
           "estimated": {
-            "known_records": 2,
-            "known_total": 10.0
-          },
-          "measured": {
             "known_records": 0,
             "known_total": null
+          },
+          "measured": {
+            "known_records": 2,
+            "known_total": 2.3657384191666666
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -52,12 +52,12 @@
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 2,
-            "known_total": 10.0
-          },
-          "measured": {
             "known_records": 0,
             "known_total": null
+          },
+          "measured": {
+            "known_records": 2,
+            "known_total": 2.3657384191666666
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -467,14 +467,14 @@
     "unknown_events": 35
   },
   "evidence": {
-    "validated": 29,
+    "validated": 30,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 10,
+      "count": 9,
       "severity": "INFO"
     },
     {
@@ -489,12 +489,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 2,
+      "count": 1,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 1,
       "severity": "WARN"
     },
     {
@@ -504,16 +504,15 @@
     }
   ],
   "roles": {
-    "coarse_historical": 124,
-    "explicit_events": 116,
+    "coarse_historical": 129,
+    "explicit_events": 126,
     "repeatedly_selected": 3
   },
-  "source_digest": "593fc484686c38581488f37486c68102a7f373868311e8324d67bfbe5d0b69b1",
+  "source_digest": "f052bae72310b1f8f2cdd447236336ecec470fd3b811d507d3b0a39431ce9fc2",
   "trajectories": {
     "count": 29,
     "outcomes": {
-      "ACTIVE": 1,
-      "CLOSED": 1,
+      "CLOSED": 2,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 8,
       "NO_TRAIN": 3,

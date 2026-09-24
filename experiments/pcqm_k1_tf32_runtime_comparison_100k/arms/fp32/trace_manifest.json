@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TC-k1-tf32-a100-paired-s42",
+  "run_id": "ims-k1-tf32-paired-v1:fp32",
+  "contract_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/protocol.md",
+  "model_identity": "neural_atom_k1_v4-3658817-parameters@c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "comparison_role": "candidate",
+  "x_axis": "optimizer_steps",
+  "presentation_semantics_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/protocol.md",
+  "weight_semantics": "raw_model_no_ema",
+  "metric_semantics": "internal_development_direct_gap_mae_eV",
+  "evaluation_role_identity": "internal_development_100000_150000",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "trace_artifact_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/fp32/canonical_trace.json",
+  "trace_artifact_sha256": "463412b316f2fc9b1efb9bad055c21e6c0b375ee01eefa94e8a20af83b038a49",
+  "terminal_evidence_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/v5_evidence.json",
+  "comparability_identity": {
+    "scientific_contract": "molgap-k1-v4-fixed-100k-a100-precision-execution-diagnostic-s42",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_split_identity": "official-train-prefix-0-100000_internal-development-100000-150000",
+    "architecture_identity": "neural_atom_k1_v4-3658817-parameters@c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
+    "optimizer_identity": "adamw-lr4e-4-wd1e-5-gradient-clip1-physical-bs128-drop-last",
+    "lr_schedule_identity": "epochwise-cosine-40-epochs-final-lr1e-6",
+    "target_transform_identity": "train-role-mean-and-sample-std-normalized-l1-direct-gap",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development_100000_150000",
+    "selection_role_identity": "internal_development_100000_150000",
+    "x_axis_semantics": "optimizer_steps",
+    "terminal_endpoint_identity": "31240-optimizer-steps",
+    "matched_architecture_required": true,
+    "precision_identity": "strict-fp32-no-tf32-deterministic-bs128"
+  },
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "trace_fields": {
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "checkpoint_identity": true
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "noncausal_precision_execution_diagnostic",
+      "no_prospectively_frozen_strict_reference_bundle"
+    ]
+  }
+}

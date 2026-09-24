@@ -35,13 +35,14 @@
       "action_id": "A001",
       "type": "paired_precision_diagnostic_100k_seed42",
       "run_ids": ["ims-k1-tf32-paired-v1:fp32", "ims-k1-tf32-paired-v1:tf32_matmul"],
-      "attempt_ids": ["pbs-v1-planned"],
+      "attempt_ids": ["1573113.ccpbs1"],
       "source_commit": "c3e4704ce86aadbd7e4b7ddd91b5b9c54cbf6d9c",
       "evidence_refs": [
         "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
         "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
         "experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json",
-        "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/submission.json"
+        "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/submission.json",
+        "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json"
       ],
       "cost_event_ids": [
         "cost-TC-k1-tf32-a100-paired-s42-fp32",
@@ -49,11 +50,18 @@
       ]
     }
   ],
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": ["pcqm-k1-tf32-a100-paired-s42"],
+    "evidence_refs": [
+      "experiments/pcqm_k1_tf32_runtime_comparison_100k/v5_evidence.json",
+      "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json"
+    ]
+  },
   "decision": {
-    "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["submit one bounded IMS A100 paired diagnostic after source and cache checks"],
-    "reopen_conditions": ["completed paired artifacts and independent no-inference acceptance"]
+    "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md",
+    "outcome": "CLOSED",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["new user authority for a separately scoped profiling diagnostic"],
+    "final": true
   }
 }

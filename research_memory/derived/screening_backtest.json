@@ -18,6 +18,24 @@
       ],
       "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1",
       "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:fp32",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
     }
   ],
   "false_promote_count": null,
@@ -94,5 +112,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 19
+  "trace_count": 21
 }

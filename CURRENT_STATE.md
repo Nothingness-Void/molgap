@@ -43,9 +43,10 @@ desktop-owned; server must not launch a duplicate or interfere. Official-role
 use and any final submission remain governed by that experiment's frozen
 contract.
 
-Server-owned IMS job `1573113.ccpbs1` is queued for the separate K1-v4
-FP32/TF32 A100 execution diagnostic; see
-`experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md`. It does not
+The separate server-owned K1-v4 A100 FP32/TF32 execution diagnostic is closed.
+Both arms completed and passed no-inference acceptance; TF32 did not improve
+training throughput, so strict FP32 remains unchanged. Authority:
+`experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md`. This did not
 modify or take custody of the desktop full run.
 
 ## Discovery state

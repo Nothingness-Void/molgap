@@ -1,0 +1,13 @@
+{
+  "schema": "molgap-role-event-v1",
+  "role_event_id": "role-TC-k1-tf32-a100-paired-s42-tf32_matmul-metric-computed",
+  "trajectory_id": "TC-k1-tf32-a100-paired-s42",
+  "action_id": "A001",
+  "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
+  "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+  "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "role_name": "internal_development_100000_150000",
+  "access_kind": "metric_computed",
+  "selection_used": false,
+  "evidence_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json"
+}

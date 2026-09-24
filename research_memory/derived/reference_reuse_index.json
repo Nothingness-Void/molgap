@@ -552,6 +552,28 @@
     },
     {
       "artifact_availability": [
+        "local_record_verified",
+        "repository_retained"
+      ],
+      "comparison_status": "paired_endpoint_noncausal_precision_identity_mismatch",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-tf32-a100-paired-s42",
+      "role_use": {
+        "internal_development_100000_150000": "consumed",
+        "official_train_prefix_0_100000": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "fixed_100k_a100_paired_precision_execution_diagnostic",
+      "source_envelope": "experiments/pcqm_k1_tf32_runtime_comparison_100k/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "repository_retained"
       ],
       "comparison_status": "paired_endpoint_diagnostic",

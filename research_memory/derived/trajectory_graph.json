@@ -457,6 +457,11 @@
     },
     {
       "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
       "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json",
       "type": "action_produced_evidence"
     },
@@ -1110,6 +1115,10 @@
     },
     {
       "id": "pcqm-k1-spd-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-tf32-a100-paired-s42",
       "type": "evidence"
     },
     {

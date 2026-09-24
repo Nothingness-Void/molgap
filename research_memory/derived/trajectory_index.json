@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "593fc484686c38581488f37486c68102a7f373868311e8324d67bfbe5d0b69b1",
+  "source_digest": "f052bae72310b1f8f2cdd447236336ecec470fd3b811d507d3b0a39431ce9fc2",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -446,15 +446,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md",
       "family_id": "k1-precision-execution-diagnostic",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-k1-tf32-a100-paired-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-tf32-a100-paired-s42"
     },

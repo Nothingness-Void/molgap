@@ -1,0 +1,76 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-tf32-a100-paired-s42",
+  "track": "C",
+  "scope": "fixed_100k_a100_paired_precision_execution_diagnostic",
+  "legacy_contract": "molgap-pcqm-100k-v4-screen-s42-bs128-40epochs-with-declared-precision-intervention",
+  "outcome": {
+    "execution_status": "complete_from_terminal_artifacts_scheduler_exit_unverified",
+    "artifact_status": "independently_accepted_no_model_inference",
+    "comparison_status": "paired_endpoint_noncausal_precision_identity_mismatch",
+    "scientific_status": "no_observed_tf32_training_throughput_gain",
+    "transfer_status": "not_ready",
+    "budget_decision": "close_precision_diagnostic",
+    "full_handoff_status": "not_authorized"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md",
+      "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json",
+      "experiments/pcqm_k1_tf32_runtime_comparison_100k/protocol.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "terminal_summary",
+      "locator": "repo://experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json",
+      "sha256": "26ced4716e267803c26fe9289eda6b6379e7fce959ef6cf49cf0322a5b8f7d72",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "decision",
+      "locator": "repo://experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md",
+      "sha256": "483a1220394746f3bcf8c278f9506a5ac95bca92f5e726db0ff9ca726ffa7245",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "no_inference_acceptance",
+      "locator": "external://local-platform-record/ims/k1_tf32_paired_100k_v1/retrieved/acceptance.json",
+      "sha256": "eb8093321ac378b350d8ade07abce7eafd48061946ce7d218decd130d132efab",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "paired_comparison",
+      "locator": "external://local-platform-record/ims/k1_tf32_paired_100k_v1/retrieved/output/comparison.json",
+      "sha256": "7ab608ad536d61f675ce56b7ef8154df4e31c7ce642212714a6f540348982e30",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "fp32_canonical_trace",
+      "locator": "repo://experiments/pcqm_k1_tf32_runtime_comparison_100k/results/fp32/canonical_trace.json",
+      "sha256": "463412b316f2fc9b1efb9bad055c21e6c0b375ee01eefa94e8a20af83b038a49",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "tf32_canonical_trace",
+      "locator": "repo://experiments/pcqm_k1_tf32_runtime_comparison_100k/results/tf32_matmul/canonical_trace.json",
+      "sha256": "1a1d407bf096847e75fa86d14da691efc038cbec803a4c29786202a16fb50a9e",
+      "availability": "repository_retained"
+    }
+  ],
+  "role_use": {
+    "official_train_prefix_0_100000": "consumed",
+    "internal_development_100000_150000": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-25",
+    "verification_scope": "two terminal arms, aligned saved predictions and targets, complete traces, exact artifact hashes, observed role histories and per-arm elapsed cost; no model inference",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
