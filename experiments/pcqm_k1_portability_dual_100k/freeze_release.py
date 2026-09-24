@@ -257,10 +257,11 @@ def main():
         "trajectory_id": audit_tid,
         "family_id": "k1-topology-portability-no-train-audit",
         "question": "Does a frozen 100K advantage survive on disjoint fixed500K internal development molecules?",
-        "comparison_class": "NO_COMPARISON",
         "reference_bundle_id": bundle["reference_bundle_id"],
     })
     audit_trajectory.pop("comparison_readiness_ref", None)
+    audit_trajectory.pop("comparison_class", None)
+    audit_trajectory.pop("comparison_blockers", None)
     audit_trajectory["hypothesis"].update({
         "hypothesis_id": f"H-{audit_tid}",
         "observed_deficiency": "Original PairToken lost most of its selected 100K advantage on disjoint fixed500K development rows before retraining; a prospectively gated frozen audit is needed for future 100K screens.",
