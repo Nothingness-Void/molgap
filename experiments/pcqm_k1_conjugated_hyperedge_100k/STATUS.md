@@ -35,3 +35,25 @@ record. No 500K/full or protected-role operation is released by this screen.
   `molgap-k1-conjugated-dual-kaggle2-monitor` every 30 minutes; healthy runs
   are silent, terminal outcomes are handed to the server controller. The
   separate IMS monitor remains bound to its own job.
+
+## Terminal receipt — 2026-09-24 JST
+
+- Kernel v1 ended `COMPLETE`; both T4 workers trained the full frozen 40
+  epochs and exited 0. No second GPU submission or model inference occurred.
+- Independent no-inference acceptance passed source/archive/sidecar identities,
+  50,000 aligned internal-development targets and predictions, runtime
+  contracts, all completion-manifest artifacts and final checkpoints. Official
+  validation/test-dev/test-challenge remained untouched.
+- The frozen K1-v4 reference was 0.1413736343 eV. One-shot reached
+  0.1415904909 eV (epoch 37), a 0.0002168566 eV regression. Persistent
+  reached 0.1401050985 eV (epoch 39), a 0.0012685359 eV gain whose paired
+  row interval was favorable but below this screen's 0.003 eV gate. Neither
+  arm was promoted. See the distinct arm-local `decision.md` files.
+- Both arms finalized separately as `STRICT_CAUSAL` with complete replay
+  capability and measured T4 training device time; RML validate and frozen
+  derived check passed. The replay pool now has nine entries in one comparable
+  group, including the historical-partial K1 reference.
+- Saved-prediction component attribution is exploratory on the repeatedly
+  used internal-development role. In particular, persistent communication
+  regressed on molecules with multiple conjugated components; it did not
+  justify a matched 500K release.

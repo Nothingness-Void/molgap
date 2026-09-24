@@ -20,7 +20,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | P4 | C-K1-GRAPHORMER-SPD | Completed: favorable versus K1 but below gate and strictly worse than original PairToken | Preserve terminal RML closure; no bucket, cutoff, width, or seed retry |
 | P5 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
 | P6 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
-| P7 | C-K1-CONJUGATED-HYPEREDGE | Prospectively freeze a CPU-derived conjugated-component sidecar, then screen one-shot versus persistent K1 hyperedge exchange in one Kaggle2 T4x2 job | Sidecar accepted before GPU release; two independent seed-42 terminal decisions against immutable K1, with 500K transfer separately gated |
+| P7 | C-K1-CONJUGATED-HYPEREDGE | Completed: accepted CPU sidecar and paired Kaggle2 T4x2 seed-42 screen; one-shot negative, persistent positive below gate | Preserve both strict replay-ready terminal records; no scale or seed release |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.
