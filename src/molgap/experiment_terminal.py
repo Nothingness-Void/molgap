@@ -295,8 +295,10 @@ def translate_terminal_descriptor(
     root = Path(repo_root).resolve()
     declaration = spec.to_dict()
     expected = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    from .research_memory.paired import pair_binding, validate_pair_observation
     v2 = declaration["schema_version"] == SCHEMA_VERSION_V2
     resolved = []
+    paired_observations = []
     inputs: set[Path] = set()
     destinations: set[Path] = set()
     outputs: set[Path] = set()
@@ -346,6 +348,37 @@ def translate_terminal_descriptor(
         if (v2 and trajectory["state_at_start"]["source_config_identity"]
                 != canonical_fingerprint(expected[arm["arm_id"]])):
             raise ValueError("prospective trajectory arm identity mismatch")
+        paired = pair_binding(trajectory)
+        if paired is not None:
+            same_run = declaration["prospective"].get("same_run_replay") if v2 else None
+            if (same_run is None or paired["reference_arm_id"] != same_run["reference_arm_id"]
+                    or (arm["arm_id"] != same_run["reference_arm_id"]
+                        and arm["arm_id"] not in same_run["candidate_arm_ids"])):
+                raise ValueError("same-run replay was not declared by the frozen ExperimentSpec")
+            prospective = {entry["arm_id"]: entry for entry in declaration["prospective"]["arms"]}
+            reference = prospective[paired["reference_arm_id"]]
+            if (paired["spec_identity"], paired["logical_run_id"], paired["arm_id"],
+                    paired["comparison_role"], paired["reference_trajectory_id"], paired["reference_trajectory_ref"]) != (
+                    spec.identity, declaration["logical_run_id"], arm["arm_id"],
+                    expected[arm["arm_id"]]["scientific_role"], reference["trajectory_id"],
+                    reference["output"] + "/trajectory.json"):
+                raise ValueError("same-run replay binding differs from frozen ExperimentSpec")
+            manifest = terminal.get("trace_manifest")
+            if isinstance(manifest, dict) and manifest.get("backtest_eligibility", {}).get("eligible") is True:
+                observed = arm["observed"]["identity"]
+                observation = validate_pair_observation(terminal.get("same_run_observation"))
+                expected_observation = {
+                    "schema": observation["schema"], "spec_identity": spec.identity,
+                    "logical_run_id": declaration["logical_run_id"],
+                    "platform_name": observed["platform"]["name"],
+                    "platform_run_reference": observed["platform"]["run_reference"]["value"],
+                    "attempt_id": observed["attempt_id"]["value"],
+                    "source_commit": observed["source_commit"]["value"],
+                    "source_package_sha256": observed["source_package_sha256"]["value"],
+                }
+                if observation != expected_observation:
+                    raise ValueError("same-run terminal observation differs from descriptor evidence")
+                paired_observations.append(observation)
         if terminal.get("run_id") != arm["run_id"]:
             raise ValueError("terminal run identity mismatch")
         if not any(action["action_id"] == terminal.get("action_id") and arm["run_id"] in action["run_ids"]
@@ -369,6 +402,8 @@ def translate_terminal_descriptor(
         if "recovery_spec" in paths:
             item["recovery_spec"] = _recovery(_read(paths["recovery_spec"]), arm)
         translated.append(item)
+    if paired_observations and any(row != paired_observations[0] for row in paired_observations[1:]):
+        raise ValueError("same-run arms have inconsistent observed platform jobs")
     return translated
 
 
@@ -378,4 +413,14 @@ def execute_terminal_descriptor(
     """Explicitly run the existing fail-closed closure, including its side effects."""
     from .research_memory.terminal_wiring import close_terminal_multi_arm
 
-    return close_terminal_multi_arm(repo_root, translate_terminal_descriptor(repo_root, spec, descriptor))
+    translated = translate_terminal_descriptor(repo_root, spec, descriptor)
+    from .research_memory.paired import pair_binding
+
+    if not any(pair_binding(validate_trajectory(_read(repo_local_path(Path(repo_root).resolve(), arm["trajectory"]))))
+               is not None for arm in translated):
+        return close_terminal_multi_arm(repo_root, translated)
+    roles = {arm["arm_id"]: arm["scientific_role"] for arm in spec.to_dict()["arms"]}
+    ordered = sorted(translated, key=lambda item: 0 if roles[item["arm_identifier"]] == "reference" else 1)
+    results = close_terminal_multi_arm(repo_root, ordered)
+    by_arm = {arm["arm_identifier"]: result for arm, result in zip(ordered, results)}
+    return [by_arm[arm["arm_identifier"]] for arm in translated]

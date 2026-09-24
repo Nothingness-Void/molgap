@@ -222,7 +222,9 @@ def validate_experiment_spec(payload: dict) -> dict:
             _text(prospective[field], "prospective." + field)
         _digest(prospective["budget_sha256"], "prospective.budget_sha256")
     else:
-        prospective = _object(spec["prospective"], "arms", "prospective")
+        prospective = spec["prospective"]
+        if type(prospective) is not dict or set(prospective) not in ({"arms"}, {"arms", "same_run_replay"}):
+            raise ValueError("prospective: expected arms and optional same_run_replay")
         _list(prospective["arms"], "prospective.arms")
         mapped_ids = []
         trajectory_ids = set()
@@ -244,6 +246,19 @@ def validate_experiment_spec(payload: dict) -> dict:
             outputs.add(output_key)
         if len(mapped_ids) != len(set(mapped_ids)) or set(mapped_ids) != set(ids):
             raise ValueError("Prospective arm mapping must match spec arms exactly once")
+        if "same_run_replay" in prospective:
+            paired = _object(prospective["same_run_replay"], "reference_arm_id candidate_arm_ids", "prospective.same_run_replay")
+            _identifier(paired["reference_arm_id"], "prospective.same_run_replay.reference_arm_id")
+            _list(paired["candidate_arm_ids"], "prospective.same_run_replay.candidate_arm_ids")
+            for candidate_id in paired["candidate_arm_ids"]:
+                _identifier(candidate_id, "prospective.same_run_replay.candidate_arm_ids")
+            if len(set(paired["candidate_arm_ids"])) != len(paired["candidate_arm_ids"]):
+                raise ValueError("Duplicate same-run candidate arm")
+            roles = {arm["arm_id"]: arm["scientific_role"] for arm in spec["arms"]}
+            if roles.get(paired["reference_arm_id"]) != "reference" or any(
+                roles.get(candidate_id) != "candidate" for candidate_id in paired["candidate_arm_ids"]
+            ):
+                raise ValueError("same-run replay arms must declare reference and candidate roles")
     evidence = _object(spec["evidence"], "policy required_artifacts", "evidence")
     _reference(evidence["policy"], "evidence.policy", name="molgap-v5")
     _list(evidence["required_artifacts"], "evidence.required_artifacts")

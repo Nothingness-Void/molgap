@@ -10,6 +10,7 @@ from molgap.evidence_pointers import (
     load_json_object as load_json,
 )
 from .paths import resolve_repo_pointer, verify_bound_artifact
+from .paired import pair_binding, reference_trajectory
 from molgap.v5_common import (
     reference_bundle_digest,
     validate_comparison_prelaunch,
@@ -40,6 +41,9 @@ def _validate_pointers(root: Path, pointers: Iterable[str]) -> None:
 def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
     state = record["state_at_start"]
     pointers = [*state["contract_refs"], *state["role_snapshot_refs"]]
+    paired = pair_binding(record)
+    if paired is not None:
+        pointers.append(paired["reference_trajectory_ref"])
     budget_ref = state.get("budget_snapshot_ref")
     if isinstance(budget_ref, str) and budget_ref:
         pointers.append(budget_ref)
@@ -264,6 +268,8 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
                     f"{path}:strict readiness {artifact} binding differs from bundle"
                 )
     for path, record in records["trajectories"]:
+        if pair_binding(record) is not None:
+            reference_trajectory(root, record)
         reference_bundle_id = record.get("reference_bundle_id")
         if (
             reference_bundle_id is not None

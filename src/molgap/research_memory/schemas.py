@@ -157,6 +157,14 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
         if "prior_trajectory_ids" in state
         else []
     )
+    if "same_run_replay" in state:
+        from .paired import validate_pair_binding
+
+        binding = validate_pair_binding(state["same_run_replay"])
+        if record["record_mode"] != "prospective":
+            raise ValueError("same-run replay requires a prospective trajectory")
+        if binding["comparison_role"] == "reference" and binding["reference_trajectory_id"] != record["trajectory_id"]:
+            raise ValueError("same-run reference trajectory identity mismatch")
 
     action_ids: set[str] = set()
     for action in _sequence(record.get("actions"), "trajectory.actions"):

@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from molgap.research_memory.discovery import DiscoveredRecords
+from molgap.research_memory.paired import PAIR_SCHEMA
 
 
 plan_module = import_module("molgap.research_memory.plan")
@@ -207,6 +208,54 @@ def test_batch_shares_frozen_snapshot_and_preserves_input_order(planning_root):
     assert result["batch"]["policy_sha256"] == first_state["policy_sha256"]
     assert records[0]["trajectory_id"] != records[1]["trajectory_id"]
     assert records[0]["hypothesis"]["hypothesis_id"] != records[1]["hypothesis"]["hypothesis_id"]
+
+
+def _paired_items():
+    reference, candidate = _item("a"), _item("b")
+    common = {
+        "schema": PAIR_SCHEMA,
+        "spec_identity": "a" * 64,
+        "logical_run_id": "one-job",
+        "reference_arm_id": "a",
+        "reference_trajectory_id": "T-a",
+        "reference_trajectory_ref": "experiments/arm-a/trajectory.json",
+    }
+    for item, role, arm_id in ((reference, "reference", "a"), (candidate, "candidate", "b")):
+        item["spec"]["trajectory"]["state_at_start"]["same_run_replay"] = {
+            **common, "comparison_role": role, "arm_id": arm_id,
+        }
+    return reference, candidate
+
+
+def test_same_run_pair_is_frozen_in_one_batch(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    with pytest.raises(ValueError, match="one frozen multi-arm batch"):
+        plan_module.plan(root, reference["spec"], reference["output"])
+    result = plan_module.plan_many(root, [reference, candidate])
+    assert result["status"] == "PLANNED"
+    records = [json.loads((root / item["path"] / "trajectory.json").read_text()) for item in result["results"]]
+    assert records[0]["state_at_start"]["same_run_replay"]["comparison_role"] == "reference"
+    assert records[1]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] == "T-a"
+    assert records[0]["decision_state"]["known_evidence_ids"] == records[1]["decision_state"]["known_evidence_ids"] == ["E-existing"]
+
+
+def test_same_run_pair_rejects_unbound_peer_before_publication(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    candidate["spec"]["trajectory"]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] = "T-other"
+    with pytest.raises(ValueError, match="does not bind the batch reference"):
+        plan_module.plan_many(root, [reference, candidate])
+    assert not (root / "experiments/arm-a").exists()
+
+
+def test_same_run_pair_rejects_different_source_commits(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    candidate["spec"]["trajectory"]["state_at_start"]["source_commit"] = "2" * 40
+    with pytest.raises(ValueError, match="one source commit"):
+        plan_module.plan_many(root, [reference, candidate])
+    assert not (root / "experiments/arm-a").exists()
 
 
 @pytest.mark.parametrize("second_output", [

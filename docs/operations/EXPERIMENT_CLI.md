@@ -127,6 +127,17 @@ After a real remote completion, use the existing per-arm acceptance and RML
 pipeline. A two-arm launch yields two replay-ready entries only when each arm
 independently satisfies its V5 artifact, role, cost, trace, and replay gates.
 The paired launch receipt and a queue state do not establish either result.
+For a newly planned pair with explicit `prospective.same_run_replay`, `plan-prospective`
+freezes the peer binding in both trajectories. Terminal execution verifies that
+the observed arms belong to one platform run and closes the reference first.
+Each replay-eligible terminal package must retain `same_run_observation`
+(Spec/logical run, platform run/attempt, source commit/package), matching the
+terminal descriptor and the other arm's accepted terminal input.
+Supply explicit calibrated trace manifests: the reference names its own accepted
+evidence ID and the candidate names that same ID. The candidate also needs a
+strict V5 comparison-readiness record and its verified reference bundle after
+the control arm has been accepted. The synthesized default manifest remains
+replay-ineligible. Older terminal records are not upgraded by this workflow.
 
 ## Structural Examples and Limitations
 

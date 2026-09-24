@@ -6,11 +6,12 @@ from unittest.mock import Mock
 
 import pytest
 
-from molgap.experiment_spec import ExperimentSpec, TERMINAL_PROTOCOL
+from molgap.experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
 from molgap.experiment_terminal import (
     TerminalDescriptor, execute_terminal_descriptor, translate_terminal_descriptor,
 )
 from molgap.research_memory import terminal_wiring
+from molgap.research_memory.paired import PAIR_OBSERVATION_SCHEMA, PAIR_SCHEMA
 from molgap.research_memory.trace import canonicalize_trace
 from molgap.screen_policy import canonical_fingerprint
 from test_experiment_spec import payload
@@ -87,6 +88,68 @@ def test_valid_translation_is_exact_and_keeps_descriptor_order(tmp_path, case):
         {"arm_identifier": arm["arm_id"], "trajectory": arm["trajectory"], "terminal": arm["terminal"]}
         for arm in case[1]["arms"]
     ]
+
+
+def test_same_run_terminal_closes_reference_first_and_preserves_result_order(tmp_path, case, monkeypatch):
+    declaration = case[0].to_dict()
+    declaration["schema_version"] = SCHEMA_VERSION_V2
+    declaration["arms"][1]["scientific_role"] = "candidate"
+    data = copy.deepcopy(case[1])
+    declaration["prospective"] = {"arms": [
+        {"arm_id": arm["arm_id"], "trajectory_id": arm["trajectory_id"],
+         "plan_spec_ref": f"inputs/{arm['arm_id']}.json", "plan_spec_sha256": "a" * 64,
+         "output": f"experiments/descriptor_{index}"}
+        for index, arm in enumerate(data["arms"])
+    ], "same_run_replay": {
+        "reference_arm_id": data["arms"][0]["arm_id"],
+        "candidate_arm_ids": [data["arms"][1]["arm_id"]],
+    }}
+    spec = ExperimentSpec(declaration)
+    data["spec_identity"] = spec.identity
+    reference = data["arms"][0]
+    for arm in data["arms"]:
+        expected = next(value for value in declaration["arms"] if value["arm_id"] == arm["arm_id"])
+        arm["arm_identity"] = canonical_fingerprint(expected)
+        identity = arm["observed"]["identity"]
+        identity["spec_identity"] = spec.identity
+        identity["platform"]["run_reference"] = fact("one-platform-job")
+        identity["source_package_sha256"] = fact("f" * 64)
+        path = tmp_path / arm["trajectory"]
+        def freeze(record):
+            record["state_at_start"]["source_config_identity"] = canonical_fingerprint(expected)
+            record["state_at_start"]["same_run_replay"] = {
+                "schema": PAIR_SCHEMA, "spec_identity": spec.identity,
+                "logical_run_id": declaration["logical_run_id"], "arm_id": arm["arm_id"],
+                "comparison_role": expected["scientific_role"],
+                "reference_arm_id": reference["arm_id"],
+                "reference_trajectory_id": reference["trajectory_id"],
+                "reference_trajectory_ref": reference["trajectory"],
+            }
+        rewrite(path, freeze)
+        terminal_path = tmp_path / arm["terminal"]
+        def observe(record):
+            record["trace_manifest"] = {"backtest_eligibility": {"eligible": True}}
+            record["same_run_observation"] = {
+                "schema": PAIR_OBSERVATION_SCHEMA,
+                "spec_identity": spec.identity,
+                "logical_run_id": declaration["logical_run_id"],
+                "platform_name": declaration["platform"]["name"],
+                "platform_run_reference": "one-platform-job",
+                "attempt_id": "att-1",
+                "source_commit": "1" * 40,
+                "source_package_sha256": "f" * 64,
+            }
+        rewrite(terminal_path, observe)
+    data["arms"].reverse()
+    data["arms"][0]["observed"]["identity"]["platform"]["run_reference"] = fact("another-job")
+    with pytest.raises(ValueError, match="same-run terminal observation differs from descriptor evidence"):
+        translate_terminal_descriptor(tmp_path, spec, TerminalDescriptor(spec, data))
+    data["arms"][0]["observed"]["identity"]["platform"]["run_reference"] = fact("one-platform-job")
+    close = Mock(return_value=[{"arm": "reference"}, {"arm": "candidate"}])
+    monkeypatch.setattr(terminal_wiring, "close_terminal_multi_arm", close)
+    result = execute_terminal_descriptor(tmp_path, spec, TerminalDescriptor(spec, data))
+    assert [arm["arm_identifier"] for arm in close.call_args.args[1]] == [reference["arm_id"], data["arms"][0]["arm_id"]]
+    assert result == [{"arm": "candidate"}, {"arm": "reference"}]
 
 
 def test_canonical_roundtrip_and_detachment(case):

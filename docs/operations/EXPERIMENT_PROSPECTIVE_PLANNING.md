@@ -1,7 +1,8 @@
 # Unified Experiment Prospective Planning
 
 `molgap-experiment-spec-v2` replaces the v1 experiment-level `prospective`
-block with exactly `{"arms": [...]}`. Each declared arm has one binding with
+block with `{"arms": [...]}` and an optional `same_run_replay` declaration.
+Each declared arm has one binding with
 exactly `arm_id`, `trajectory_id`, `plan_spec_ref`, `plan_spec_sha256`, and
 `output`. The arm IDs must match the spec arms one-to-one. V1 remains readable
 for its existing diagnostic, package, preflight, and terminal paths, but cannot
@@ -34,6 +35,15 @@ indexes. Success means only that prospective planning and rebuild finished. It
 does not submit a job, authorize training, create evidence, use an evaluation
 role, or create READY_FOR_DESKTOP.
 
+When the Spec explicitly declares
+`"same_run_replay":{"reference_arm_id":"...","candidate_arm_ids":["..."]}`,
+the planner also freezes a `same_run_replay` binding in those prospective
+trajectories. It binds the Spec identity, logical run, arm roles, and reference
+trajectory path before submission. The input plan files must not supply or
+override this binding. The listed arms must have matching `scientific_role`
+declarations and must be published in the same planning batch. Other arms remain
+independent.
+
 If `plan_many()` stops after publishing some arms, the nonzero result lists
 `completed_records` and requires reconciliation; it neither deletes them nor
 rebuilds RML. A rebuild failure also returns nonzero while retaining all
@@ -45,3 +55,19 @@ For v2 terminal translation, each descriptor arm's trajectory ID must equal
 its prospective mapping, and the retained prospective trajectory must still
 carry the mapped full-arm fingerprint in `state_at_start.source_config_identity`.
 V1 terminal translation is unchanged.
+
+For a same-run replay pair, terminal translation also checks the frozen Spec
+binding and one observed platform run, attempt, source commit, and source
+package identity. Each replay-eligible arm's terminal package must carry
+`same_run_observation` with schema `molgap-same-run-observation-v1` and the
+Spec identity, logical run ID, platform name/run reference, attempt ID, source
+commit, and source package SHA-256. These values must match the descriptor's
+observations; the reference and candidates must match each other. Direct RML
+closure also checks the retained observation before admitting an eligible
+trace. Execution closes the reference before its candidates. A
+reference trace may bind its own accepted V5 evidence ID; an eligible candidate
+trace must bind that exact accepted reference ID and carry strict V5 comparison
+readiness. Both require explicit, calibrated trace manifests. The closure
+default remains ineligible. An ineligible or incomplete arm may still have a
+valid terminal result without a replay-pool entry. Existing frozen trajectories
+without the new binding retain their original qualification state.

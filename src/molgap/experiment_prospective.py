@@ -11,6 +11,7 @@ from .experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, _canonical, _uni
 from .research_memory.compiler import rebuild_research_memory
 from .research_memory.paths import repo_local_path
 from .research_memory.plan import PlanBatchError, plan_many
+from .research_memory.paired import PAIR_SCHEMA
 from .screen_policy import canonical_fingerprint
 
 
@@ -49,6 +50,32 @@ def plan_prospective(spec: ExperimentSpec, repo_root: Path) -> tuple[dict, int]:
         if output.exists():
             raise ValueError(f"prospective output already exists: {binding['output']}")
         plans.append({"spec": plan_spec, "output": binding["output"]})
+
+    same_run = declaration["prospective"].get("same_run_replay")
+    if same_run is not None:
+        by_arm = {entry["arm_id"]: entry for entry in bindings}
+        reference = by_arm[same_run["reference_arm_id"]]
+        reference_ref = reference["output"] + "/trajectory.json"
+        for entry, item in zip(bindings, plans):
+            if entry["arm_id"] == reference["arm_id"]:
+                role = "reference"
+            elif entry["arm_id"] in same_run["candidate_arm_ids"]:
+                role = "candidate"
+            else:
+                continue
+            state = item["spec"]["trajectory"]["state_at_start"]
+            if "same_run_replay" in state:
+                raise ValueError("plan input cannot override the spec-derived same-run replay binding")
+            state["same_run_replay"] = {
+                "schema": PAIR_SCHEMA,
+                "spec_identity": spec.identity,
+                "logical_run_id": declaration["logical_run_id"],
+                "arm_id": entry["arm_id"],
+                "comparison_role": role,
+                "reference_arm_id": reference["arm_id"],
+                "reference_trajectory_id": reference["trajectory_id"],
+                "reference_trajectory_ref": reference_ref,
+            }
 
     try:
         result = plan_many(repo_root, plans)

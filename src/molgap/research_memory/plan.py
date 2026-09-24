@@ -15,6 +15,7 @@ from typing import Any
 from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer
 from .discovery import DiscoveredRecords, discover_records
+from .paired import pair_binding
 from .schemas import validate_cost_event, validate_id, validate_trajectory
 from .trace import atomic_write, file_digest, json_bytes, sync_directory
 
@@ -90,6 +91,8 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     if destination.exists():
         raise ValueError("plan output must be a new experiment directory")
     trajectory = _prepare_trajectory(spec)
+    if pair_binding(trajectory) is not None and _snapshot is None:
+        raise ValueError("same-run replay must be planned in one frozen multi-arm batch")
     # Ownership is scientific provenance, never inferred from the compute host.
     if trajectory.get("owner") not in {"desktop", "server"} or trajectory["record_mode"] != "prospective":
         raise ValueError("plan requires an explicit desktop/server owner and prospective mode")
@@ -235,6 +238,30 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, A
         destinations.add(destination)
         spec = copy.deepcopy(item["spec"])
         prepared.append((spec, destination.relative_to(root), _prepare_trajectory(spec)))
+
+    paired = [(trajectory, output, pair_binding(trajectory)) for _, output, trajectory in prepared]
+    paired = [(trajectory, output, binding) for trajectory, output, binding in paired if binding is not None]
+    if paired:
+        groups: dict[tuple[str, str], list[tuple[dict[str, Any], Path, dict[str, str]]]] = {}
+        for trajectory, output, binding in paired:
+            groups.setdefault((binding["spec_identity"], binding["logical_run_id"]), []).append((trajectory, output, binding))
+        for group in groups.values():
+            references = [row for row in group if row[2]["comparison_role"] == "reference"]
+            if len(references) != 1 or len(group) < 2:
+                raise ValueError("same-run replay batch requires one reference and at least one candidate")
+            if len({binding["arm_id"] for _, _, binding in group}) != len(group):
+                raise ValueError("same-run replay batch repeats an arm identity")
+            reference, reference_output, ref_binding = references[0]
+            expected_ref = (reference_output / "trajectory.json").as_posix()
+            if ref_binding["reference_trajectory_ref"] != expected_ref:
+                raise ValueError("same-run reference path differs from batch output")
+            for trajectory, _, binding in group:
+                if (binding["reference_trajectory_id"], binding["reference_trajectory_ref"], binding["reference_arm_id"]) != (
+                    reference["trajectory_id"], expected_ref, ref_binding["arm_id"]
+                ):
+                    raise ValueError("same-run candidate does not bind the batch reference")
+                if trajectory["state_at_start"]["source_commit"] != reference["state_at_start"]["source_commit"]:
+                    raise ValueError("same-run arms must freeze one source commit")
 
     discovered = discover_records(root)
     existing_trajectories = [load_json_object(p) for p in discovered.trajectories]

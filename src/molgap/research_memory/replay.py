@@ -11,6 +11,7 @@ from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .backtest import _comparison_key, build_screening_backtest
 from .trace import load_canonical_trace, json_bytes, trace_digest, validate_manifest_trace
 from .schemas import validate_trace_manifest
+from .paired import accepted_reference_evidence, pair_binding
 
 
 def _terminal_label(trajectory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any] | None:
@@ -25,7 +26,7 @@ def _terminal_label(trajectory: dict[str, Any], evidence: dict[str, Any]) -> dic
 
 
 def _reference_binding_is_valid(
-    manifest: dict[str, Any], trajectory: dict[str, Any]
+    root: Path, manifest: dict[str, Any], trajectory: dict[str, Any]
 ) -> bool:
     """Bind candidates prospectively and references to their own accepted identity.
 
@@ -35,6 +36,11 @@ def _reference_binding_is_valid(
     its terminal result.  Keeping these cases separate prevents this historical
     recovery rule from weakening the candidate release gate.
     """
+    paired = pair_binding(trajectory)
+    if paired is not None and manifest["backtest_eligibility"]["eligible"]:
+        if manifest["comparison_role"] != paired["comparison_role"]:
+            return False
+        return manifest["reference_id"] == accepted_reference_evidence(root, trajectory)[0]
     if manifest["comparison_role"] == "candidate":
         return manifest["reference_id"] in trajectory["state_at_start"]["reference_ids"]
     if manifest["comparison_role"] == "reference":
@@ -90,7 +96,7 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
         trajectory = trajectories[manifest["trajectory_id"]]
-        if not _reference_binding_is_valid(manifest, trajectory):
+        if not _reference_binding_is_valid(root, manifest, trajectory):
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["reference_not_frozen_in_trajectory"]})
             continue

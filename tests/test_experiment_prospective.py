@@ -40,6 +40,28 @@ def test_v2_roundtrip_and_v1_compatibility(v2_payload, payload):
     assert ExperimentSpec(payload).to_dict()["prospective"] == payload["prospective"]
 
 
+def test_same_run_replay_requires_explicit_role_bound_declaration(v2_payload):
+    reference_id = v2_payload["arms"][0]["arm_id"]
+    candidate_id = v2_payload["arms"][1]["arm_id"]
+    v2_payload["arms"][1]["scientific_role"] = "candidate"
+    v2_payload["prospective"]["same_run_replay"] = {
+        "reference_arm_id": reference_id, "candidate_arm_ids": [candidate_id],
+    }
+    assert ExperimentSpec(v2_payload).to_dict()["prospective"]["same_run_replay"]["reference_arm_id"] == reference_id
+    bad = copy.deepcopy(v2_payload)
+    bad["prospective"]["same_run_replay"]["candidate_arm_ids"] = []
+    with pytest.raises(ValueError, match="expected nonempty array"):
+        ExperimentSpec(bad)
+    bad = copy.deepcopy(v2_payload)
+    bad["prospective"]["same_run_replay"]["candidate_arm_ids"] = [reference_id]
+    with pytest.raises(ValueError, match="reference and candidate roles"):
+        ExperimentSpec(bad)
+    bad = copy.deepcopy(v2_payload)
+    bad["prospective"]["same_run_replay"]["candidate_arm_ids"] = [candidate_id, candidate_id]
+    with pytest.raises(ValueError, match="Duplicate same-run candidate arm"):
+        ExperimentSpec(bad)
+
+
 @pytest.mark.parametrize("change", [
     "missing", "extra", "duplicate_arm", "duplicate_trajectory", "duplicate_output",
     "unknown_field", "missing_field", "bad_digest", "absolute_ref", "drive_ref",
@@ -190,6 +212,38 @@ def test_cli_calls_one_batch_then_rebuilds(capsys, monkeypatch, planning_case):
         item["output"] for item in spec.to_dict()["prospective"]["arms"]
     ]
     rebuild.assert_called_once_with(root)
+
+
+def test_reference_candidate_spec_freezes_same_run_pair(monkeypatch, planning_case):
+    root, _, original = planning_case
+    declaration = original.to_dict()
+    candidate = declaration["arms"][1]
+    candidate["scientific_role"] = "candidate"
+    declaration["prospective"]["same_run_replay"] = {
+        "reference_arm_id": declaration["arms"][0]["arm_id"],
+        "candidate_arm_ids": [candidate["arm_id"]],
+    }
+    binding = declaration["prospective"]["arms"][1]
+    path = root / binding["plan_spec_ref"]
+    plan_input = json.loads(path.read_text())
+    plan_input["trajectory"]["state_at_start"]["source_config_identity"] = canonical_fingerprint(candidate)
+    raw = json.dumps(plan_input, sort_keys=True, separators=(",", ":")).encode()
+    path.write_bytes(raw)
+    binding["plan_spec_sha256"] = hashlib.sha256(raw).hexdigest()
+    spec = ExperimentSpec(declaration)
+    planner = Mock(return_value=_planned(spec))
+    monkeypatch.setattr(prospective, "plan_many", planner)
+    monkeypatch.setattr(prospective, "rebuild_research_memory", Mock(return_value={}))
+    result, code = prospective.plan_prospective(spec, root)
+    assert code == 0 and result["rml_rebuilt"]
+    plans = planner.call_args.args[1]
+    reference_pair = plans[0]["spec"]["trajectory"]["state_at_start"]["same_run_replay"]
+    candidate_pair = plans[1]["spec"]["trajectory"]["state_at_start"]["same_run_replay"]
+    assert reference_pair["comparison_role"] == "reference"
+    assert candidate_pair["comparison_role"] == "candidate"
+    assert candidate_pair["spec_identity"] == spec.identity
+    assert candidate_pair["reference_trajectory_id"] == reference_pair["reference_trajectory_id"]
+    assert candidate_pair["reference_trajectory_ref"] == "experiments/planned-gptrans_t/trajectory.json"
 
 
 def test_cli_partial_batch_does_not_rebuild(capsys, monkeypatch, planning_case):
