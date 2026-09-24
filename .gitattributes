@@ -5,3 +5,20 @@ experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/canonical_trace_ma
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace.json text eol=lf
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_recovery_spec.json text eol=lf
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_migration.json text eol=lf
+
+# Preserve the exact prelaunch and terminal evidence bytes for this experiment.
+experiments/pcqm_k1_portability_dual_100k/** text eol=lf
+experiments/pcqm_k1_portability_dual_100k/arms/*/costs/expected_training.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/arms/*/trajectory.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/arms/*/v5_evidence.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/audit/costs/expected_inference.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/audit/v5_evidence.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/budget_snapshot.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/role_plan.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/source_config.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/trace_plan.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/arms/*/rml_finalized/prospective_snapshot.json text eol=crlf
+experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/prospective_snapshot.json text eol=crlf
+research_memory/derived/* text eol=lf

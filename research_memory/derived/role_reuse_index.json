@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 121,
+  "ambiguous_historical_role_record_count": 124,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -235,9 +235,16 @@
     {
       "evidence_id": "pcqm-k1-degree-balance-100k-s42",
       "role_identity": null,
-      "role_name": "internal_development",
+      "role_name": "internal_development_100000_150000",
       "semantics": "coarse_historical",
-      "state": "untouched"
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
     },
     {
       "evidence_id": "pcqm-k1-degree-balance-100k-s42",
@@ -676,9 +683,16 @@
     {
       "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
       "role_identity": null,
-      "role_name": "internal_development",
+      "role_name": "internal_development_100000_150000",
       "semantics": "coarse_historical",
-      "state": "untouched"
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
     },
     {
       "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
@@ -774,9 +788,16 @@
     {
       "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
       "role_identity": null,
-      "role_name": "internal_development",
+      "role_name": "internal_development_100000_150000",
       "semantics": "coarse_historical",
-      "state": "untouched"
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "used"
     },
     {
       "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
@@ -849,7 +870,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 100,
+  "explicit_role_event_count": 116,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -1090,6 +1111,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -1293,6 +1342,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -1348,6 +1425,27 @@
         "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
@@ -1397,6 +1495,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
       },
       {
         "access_kind": "training_membership",
@@ -1470,6 +1575,13 @@
       },
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-training-membership",
         "selection_used": false,
         "semantics": "explicit",
@@ -1532,6 +1644,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pairtoken-combination-transfer"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:official_train_prefix_0_500000": [
@@ -1817,6 +1950,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -2020,6 +2181,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -2073,6 +2262,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
       },
       {
         "access_kind": "selection_used",
@@ -2145,6 +2355,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pairtoken-combination-transfer"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
       }
     ]
   },
@@ -2236,6 +2467,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-functional-group-token-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -2439,6 +2698,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -2494,6 +2781,27 @@
         "trajectory_id": "TC-k1-spd-pair-token-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-development",
         "selection_used": true,
@@ -2543,6 +2851,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-degree-balance-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-degree-balance-100k-s42"
       },
       {
         "access_kind": "training_membership",
@@ -2616,6 +2931,13 @@
       },
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-rwse-refresh-100k-s42-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-sparse-triplet-100k-s42-training-membership",
         "selection_used": false,
         "semantics": "explicit",
@@ -2678,6 +3000,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pairtoken-combination-transfer"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:official_train_prefix_0_500000": [

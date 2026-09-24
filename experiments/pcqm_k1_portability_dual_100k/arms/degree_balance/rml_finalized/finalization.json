@@ -1,0 +1,45 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-2a14cc3bcd3ddefbde4d375771ac9154a235275ae81a4c2f5d622246b8f295b2",
+  "finalized_at": "2026-09-25T05:30:58+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md": "6ff3f5adcc823f0f4b5de7e32dc22ec6960ce8872ee75b58a673431da4aaa161",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/acceptance_summary.json": "d72ed4665d44711e2fa839713a2d7aad5021ffdb5b625e4e0a2adcdfdc390ebb",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/canonical_trace.json": "f8b9edbe2efefab7e8137a00f1b52bfd217077622b60c11ffb73a86ed66a7c76",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/comparison_readiness.json": "a9a6c9c19138765c4e2d63b4d4491a17127aaa56c97fdd36e1c138f2e28c66aa",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/paired_analysis.json": "b5232553078561144b736e0a20a7056a88464bcd51ddd935bf3d51d1889cdb33",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json": "683a77127de7b25ceaf129971e5f72ce713a63de85424050fdfc2ad1c8f34ba2",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json": "2152c482cfce902f9b86ee976bba171e9289883b0f19c605571649f8e7c999c7",
+    "experiments/pcqm_k1_portability_dual_100k/protocol.md": "c6751883e5cc18ddf089950ee1a301d6440318b3c5c5ad21f4230a9715a05999",
+    "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1",
+    "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214",
+    "experiments/pcqm_k1_portability_dual_100k/source_config.json": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf",
+    "experiments/pcqm_k1_portability_dual_100k/training_contract.json": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-degree-balance-100k-s42-training.json": "c357d502e280942042641b03b823d199b1d03d6b9cd1cc644b0b986c0b15cc23",
+    "prospective_snapshot.json": "2152c482cfce902f9b86ee976bba171e9289883b0f19c605571649f8e7c999c7",
+    "roles/role-TC-k1-degree-balance-100k-s42-labels-read.json": "09eb57b9c3f64cc69061c97ecfc720f444702eaed4e5548dab16a556f93f7cf7",
+    "roles/role-TC-k1-degree-balance-100k-s42-metric-computed.json": "d6ba4118a8849004703bff0a1ae3fa763dccecfa9946dd9bf4d3e463005e8cca",
+    "roles/role-TC-k1-degree-balance-100k-s42-prediction-input.json": "6a9c663052c21f5f7f1dd47e9769dc70c6ad301916df13bfa8e2569b08256063",
+    "roles/role-TC-k1-degree-balance-100k-s42-selection-used.json": "3b6628afd9cb66463aa4d777447b9d199bc82fa2d4609eb77891561cd84399cf",
+    "roles/role-TC-k1-degree-balance-100k-s42-training-membership.json": "6452bc7fceb36b8ebd96af4efe8d854225e2e9c8e46aade6cf9d5d64194db918",
+    "terminal_input.json": "45aa2fcd1ca65a2300eaaf4629608cd3aa429d244fb39fb167ba2cd6ac97957a",
+    "trace.json": "f8b9edbe2efefab7e8137a00f1b52bfd217077622b60c11ffb73a86ed66a7c76",
+    "trace_manifest.json": "0304fc67f56aea80324826b126ff7af9200f8878ae987509320b78342b1f8cdf",
+    "trajectory.json": "0500b3c225c1b3a3ca73603102761332aedcb2ffe2b8d046a302690cbaced8fa",
+    "v5_evidence.json": "da8589c3bf74d9edac6a9d71de64680ce804d107c24099df0b5d088b381d9b91"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-degree-balance-100k-s42-training.json": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "2a14cc3bcd3ddefbde4d375771ac9154a235275ae81a4c2f5d622246b8f295b2",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-degree-balance-100k-s42"
+}

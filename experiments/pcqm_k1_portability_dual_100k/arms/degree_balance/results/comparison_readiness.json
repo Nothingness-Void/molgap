@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/acceptance_summary.json",
+      "sha256": "d72ed4665d44711e2fa839713a2d7aad5021ffdb5b625e4e0a2adcdfdc390ebb"
+    },
+    "checkpoint": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/checkpoint_manifest.json",
+      "sha256": "197727833ff158a3afa465f16ac231984478774f54395b203a29f1e2c4e64fb4"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/cost_records.json",
+      "sha256": "43004189953e36c50cf87384b63416571e247a760d33f4b9a89ffdf2c6f203ee"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md",
+      "sha256": "6ff3f5adcc823f0f4b5de7e32dc22ec6960ce8872ee75b58a673431da4aaa161"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/paired_analysis.json",
+      "sha256": "b5232553078561144b736e0a20a7056a88464bcd51ddd935bf3d51d1889cdb33"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/prediction_manifest.json",
+      "sha256": "0372cf7c05079e42de2e5dda2fb20dfbdd5dbe269325bcae84cfe25f4fea419b"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/role_history.json",
+      "sha256": "28449f38caf882f0c65da93273b58fdb4ab926dda4bc9901d8a19404f9df4c83"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/row_manifest.json",
+      "sha256": "82be67fdace9a40df0a8c7302d0b9c231065f8d4a64c4007f245e99e11e4036f"
+    },
+    "runtime_certificate": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/runtime_certificate.json",
+      "sha256": "c15a8be0f95e7835a73711be690dad95014c8340d862da7d8fb6642a36c051f1"
+    },
+    "source_config": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "sha256": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/target_manifest.json",
+      "sha256": "75019f020f454488966deea1feaa7f88eb5352d65e3f4e8646677274fb97c3d9"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_transform.json",
+      "sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/trace_manifest_terminal.json",
+      "sha256": "96a4ca264d4f61b24de2f41579e69ec225494a2af44725bd1a6756a90de78a20"
+    }
+  },
+  "candidate_id": "neural_atom_k1_degree_balance",
+  "candidate_observed_role_event_kinds": [
+    "training_membership",
+    "prediction_input",
+    "labels_read",
+    "metric_computed",
+    "selection_used"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "architecture",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+    "checkpoint_selection_identity": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+    "data_role_identity": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": null,
+    "ema_enabled": false,
+    "ema_update_frequency": null,
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "evaluation_weight_source": "live",
+    "feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+    "optimizer_fused": false,
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "optimizer_mode": "adamw-single-parameter-group",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_order_identity": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "runtime_certificate_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "sample_presentations": 3998720,
+    "schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "seed": 42,
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+    "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "798afabf5cead2fb95da9d00f586ee3a3469fa151beb9cd3886a28f6650a9dad",
+      "reference": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_acceptance.json",
+      "sha256": "0694bf6b65b383241f229e7ee9122df62adc94d9f8fd12a446b4016dc2127f3f"
+    },
+    "checkpoint": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/checkpoint_manifest.json",
+      "sha256": "7c5ac1f128ae82d4c0aab65c0f9182717f2d52f65ca62c3e8102ecf289d6e42c"
+    },
+    "cost_records": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/cost_records.json",
+      "sha256": "8bb4ef56068e773e3669003fa3b4733f8799f4f0083a98090e8fbb6b997e7bd6"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_variants_100k/decision.md",
+      "sha256": "a5e0b220c3f18ee78859949673bf24a96c6f24a96ccf03c2823e2391e790e0e4"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/prediction_manifest.json",
+      "sha256": "b7ca926bea06272147af664d9c1fd20186ecc30ffabdd6038518972cacccf69b"
+    },
+    "role_history": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/role_history.json",
+      "sha256": "9528d122a8089c3dd42e39b30643ceaac2b24186cfafbfd59f94e70ce49d82d0"
+    },
+    "row_manifest": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+      "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+    },
+    "runtime_certificate": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/runtime_certificate.json",
+      "sha256": "9367bf460fc0011d616ed1a1b7893d89265990b7efd0afd1dd46140bc12e80d0"
+    },
+    "source_config": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/source_config_binding.json",
+      "sha256": "716654371a9ebcbf1553f73e3083ed6b19a98b4cd893dcee523271c15ada1338"
+    },
+    "target_manifest": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+      "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_transform.json",
+      "sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3"
+    },
+    "trace_manifest": {
+      "ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_manifest.json",
+      "sha256": "1446269714005e075bd4c9ebca2bf32090ada928b88de52ac31aea7693b61d30"
+    }
+  },
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "reference_bundle_sha256": "9a22f065aca00686da58be5d992eff5c7d6ce33096353db2ace587087ea0c287",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "reference_observed_role_event_kinds": [
+    "training_membership",
+    "prediction_input",
+    "labels_read",
+    "metric_computed",
+    "selection_used"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "row_bootstrap_measured_training_floor_policy",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

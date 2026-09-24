@@ -1,0 +1,79 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "8b6288ad5bf1663df25b129eef39851452fe6f5004eadd7bf05794314249c5a2"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "6d98f636c0af529dc4c3f42cd3b1d04ae044ddaa41499a78f01a76b3e71296d1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "e9693e1cb185ea1b4166877fb02ee09d0aa45724b00b172f5932ad85e3213d8b"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "1e191d7fbd8ec68732287ddf15aba7497c9c14847b8614dc98537b5ae859ee13"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json",
+      "name": "submission_receipt",
+      "sha256": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json",
+      "name": "frozen_portability_analysis",
+      "sha256": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+      "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/decision.md",
+      "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/trajectory.json",
+      "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-rwse-refresh-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-25",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

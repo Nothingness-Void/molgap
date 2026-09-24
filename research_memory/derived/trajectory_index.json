@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "f3a1bc25e0c52e1e0faaaa3fda419c00b9497468a8425c998171413ded7d8fa4",
+  "source_digest": "593fc484686c38581488f37486c68102a7f373868311e8324d67bfbe5d0b69b1",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -128,16 +128,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md",
       "family_id": "k1-topology-portability",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json",
+      "record_path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-degree-balance-100k-s42"
       ],
@@ -392,16 +392,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/decision.md",
       "family_id": "k1-topology-portability",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/trajectory.json",
+      "record_path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-rwse-refresh-100k-s42"
       ],
@@ -460,9 +460,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_portability_dual_100k/audit/decision.md",
       "family_id": "k1-topology-portability-no-train-audit",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-rwse-refresh-100k-s42",
@@ -470,7 +470,7 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json",
+      "record_path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-topology-portability-post100k-audit-s42"
       ],

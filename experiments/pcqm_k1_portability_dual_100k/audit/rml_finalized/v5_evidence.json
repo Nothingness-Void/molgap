@@ -1,0 +1,79 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "37776d65623ee732e576ad50b0bbc65f67688283c5eb358072fd5352be6c48e1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/audit_terminal.json",
+      "name": "audit_terminal",
+      "sha256": "f44807d69ccf38de718bbdce2ed13d0622304554ebc613a3deb5aba4c6fd5fc1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json",
+      "name": "portability_analysis",
+      "sha256": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json",
+      "name": "submission_receipt",
+      "sha256": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/role_history.json",
+      "name": "role_history",
+      "sha256": "6f22599f92203721c99f76a6485ed9571ed8ca448270a83876e194619a49bee1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/cost_records.json",
+      "name": "cost_records",
+      "sha256": "d739e6cfc0cbdcea609595a48addc57edd089c3a5dc13dad1e0fe929bd00b35f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+      "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+      "experiments/pcqm_k1_portability_dual_100k/audit/decision.md",
+      "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-25",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "remote frozen-checkpoint inference; local no-inference acceptance and terminal binding"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "paired_endpoint_diagnostic",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "no_train_negative_transfer",
+    "transfer_status": "frozen_portability_regressed"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed500k_internal_development_no_train_portability_audit",
+  "track": "C"
+}

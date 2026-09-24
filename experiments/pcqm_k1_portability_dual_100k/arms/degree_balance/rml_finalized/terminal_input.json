@@ -1,0 +1,272 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md": "6ff3f5adcc823f0f4b5de7e32dc22ec6960ce8872ee75b58a673431da4aaa161",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/acceptance_summary.json": "d72ed4665d44711e2fa839713a2d7aad5021ffdb5b625e4e0a2adcdfdc390ebb",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/canonical_trace.json": "f8b9edbe2efefab7e8137a00f1b52bfd217077622b60c11ffb73a86ed66a7c76",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/comparison_readiness.json": "a9a6c9c19138765c4e2d63b4d4491a17127aaa56c97fdd36e1c138f2e28c66aa",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/paired_analysis.json": "b5232553078561144b736e0a20a7056a88464bcd51ddd935bf3d51d1889cdb33",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json": "683a77127de7b25ceaf129971e5f72ce713a63de85424050fdfc2ad1c8f34ba2",
+    "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json": "2152c482cfce902f9b86ee976bba171e9289883b0f19c605571649f8e7c999c7",
+    "experiments/pcqm_k1_portability_dual_100k/protocol.md": "c6751883e5cc18ddf089950ee1a301d6440318b3c5c5ad21f4230a9715a05999",
+    "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1",
+    "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214",
+    "experiments/pcqm_k1_portability_dual_100k/source_config.json": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf",
+    "experiments/pcqm_k1_portability_dual_100k/training_contract.json": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "candidate-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-degree-balance-100k-s42-training",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.7684141725036107
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "close this exact arm without scale or protected-role release"
+    ],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": [
+      "a distinct mechanism requires a new prospective contract and budget"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "d72ed4665d44711e2fa839713a2d7aad5021ffdb5b625e4e0a2adcdfdc390ebb"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "b5232553078561144b736e0a20a7056a88464bcd51ddd935bf3d51d1889cdb33"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "a9a6c9c19138765c4e2d63b4d4491a17127aaa56c97fdd36e1c138f2e28c66aa"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "f8b9edbe2efefab7e8137a00f1b52bfd217077622b60c11ffb73a86ed66a7c76"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json",
+        "name": "submission_receipt",
+        "sha256": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json",
+        "name": "frozen_portability_analysis",
+        "sha256": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+        "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+        "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+        "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md",
+        "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json",
+        "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-25",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "positive_below_gate",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-25T05:30:58+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-degree-balance-100k-s42-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-degree-balance-100k-s42-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-degree-balance-100k-s42-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-degree-balance-100k-s42-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-degree-balance-100k-s42-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-degree-balance-100k-s42"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "b026b42b9549defe21c0b9cba45c0a75009f1c0a8ba5f4d50265fb6a8967c184",
+    "comparability_identity": {
+      "architecture_identity": "798afabf5cead2fb95da9d00f586ee3a3469fa151beb9cd3886a28f6650a9dad",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "798afabf5cead2fb95da9d00f586ee3a3469fa151beb9cd3886a28f6650a9dad",
+    "presentation_semantics_ref": "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/results/canonical_trace.json",
+    "trace_artifact_sha256": "f8b9edbe2efefab7e8137a00f1b52bfd217077622b60c11ffb73a86ed66a7c76",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-degree-balance-100k-s42",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-degree-balance-100k-s42"
+}

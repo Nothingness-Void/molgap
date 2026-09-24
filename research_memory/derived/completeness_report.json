@@ -15,17 +15,15 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 12,
+      "count": 10,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
-        "TC-k1-degree-balance-100k-s42",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-scale-attribution",
         "TC-k1-pairtoken-combination-transfer",
-        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
         "TC-k1-topology-portability-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
@@ -88,12 +86,9 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 5,
+      "count": 2,
       "items": [
-        "TC-k1-degree-balance-100k-s42",
-        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
-        "TC-k1-topology-portability-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"

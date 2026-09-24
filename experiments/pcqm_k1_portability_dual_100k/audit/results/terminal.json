@@ -1,0 +1,230 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_portability_dual_100k/audit/decision.md": "c57e7c49713158af8bd52c2b3432ce84bd7b12cae0b2a09368c7ae687c2b9b7a",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/acceptance_summary.json": "37776d65623ee732e576ad50b0bbc65f67688283c5eb358072fd5352be6c48e1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/audit_terminal.json": "f44807d69ccf38de718bbdce2ed13d0622304554ebc613a3deb5aba4c6fd5fc1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/cost_records.json": "d739e6cfc0cbdcea609595a48addc57edd089c3a5dc13dad1e0fe929bd00b35f",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/role_history.json": "6f22599f92203721c99f76a6485ed9571ed8ca448270a83876e194619a49bee1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json": "c18b66b6ae97b31f388ad83bb9d67b3f3e21c614af8adbcab30373f4d80d1026",
+    "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json": "014f5a33ed5e02ad3f6b099b5a19916b0bc3d6481aa5db9160946a67c14e73da",
+    "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json": "fa3bc8ffca99f34a2984a7ecd1136adf22249a7e095a61aa4e571520e12fed85",
+    "experiments/pcqm_k1_portability_dual_100k/protocol.md": "c6751883e5cc18ddf089950ee1a301d6440318b3c5c5ad21f4230a9715a05999",
+    "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1",
+    "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214",
+    "experiments/pcqm_k1_portability_dual_100k/source_config.json": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf",
+    "experiments/pcqm_k1_portability_dual_100k/training_contract.json": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "post100k-audit-v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-k1-topology-portability-post100k-audit-s42-inference",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.031131039790277808
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_portability_dual_100k/audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "a new independent-role or training question needs a new prospective authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "37776d65623ee732e576ad50b0bbc65f67688283c5eb358072fd5352be6c48e1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/audit_terminal.json",
+        "name": "audit_terminal",
+        "sha256": "f44807d69ccf38de718bbdce2ed13d0622304554ebc613a3deb5aba4c6fd5fc1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json",
+        "name": "portability_analysis",
+        "sha256": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json",
+        "name": "submission_receipt",
+        "sha256": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/role_history.json",
+        "name": "role_history",
+        "sha256": "6f22599f92203721c99f76a6485ed9571ed8ca448270a83876e194619a49bee1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_portability_dual_100k/audit/results/cost_records.json",
+        "name": "cost_records",
+        "sha256": "d739e6cfc0cbdcea609595a48addc57edd089c3a5dc13dad1e0fe929bd00b35f"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+        "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+        "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+        "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+        "experiments/pcqm_k1_portability_dual_100k/audit/decision.md",
+        "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-25",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "remote frozen-checkpoint inference; local no-inference acceptance and terminal binding"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "paired_endpoint_diagnostic",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "no_train_negative_transfer",
+      "transfer_status": "frozen_portability_regressed"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "internal_development_500000_550000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed500k_internal_development_no_train_portability_audit",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-25T05:30:58+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+  "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+}

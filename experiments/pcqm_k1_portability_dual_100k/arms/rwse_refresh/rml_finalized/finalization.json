@@ -1,0 +1,45 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-6f21add915ba0f0b1ed31176e8687d43a08b0f377bef25ac372a19457c325b9e",
+  "finalized_at": "2026-09-25T05:30:58+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/decision.md": "78da4a11c6f5f2119309a7d8d6fdb6e133ca6660b5a9a95737e22b52fa16e55a",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/acceptance_summary.json": "8b6288ad5bf1663df25b129eef39851452fe6f5004eadd7bf05794314249c5a2",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/canonical_trace.json": "1e191d7fbd8ec68732287ddf15aba7497c9c14847b8614dc98537b5ae859ee13",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/comparison_readiness.json": "e9693e1cb185ea1b4166877fb02ee09d0aa45724b00b172f5932ad85e3213d8b",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/paired_analysis.json": "6d98f636c0af529dc4c3f42cd3b1d04ae044ddaa41499a78f01a76b3e71296d1",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/results/terminal_acceptance.json": "c09ba1d874e924bee64a1131012084caa45d8823ca985009f7d63c56da5e1e88",
+    "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/trajectory.json": "b8eca7c2538ad4e2983bf388b64bbd41cbd6b70eac422ac458bc203772b0d671",
+    "experiments/pcqm_k1_portability_dual_100k/protocol.md": "c6751883e5cc18ddf089950ee1a301d6440318b3c5c5ad21f4230a9715a05999",
+    "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1",
+    "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214",
+    "experiments/pcqm_k1_portability_dual_100k/source_config.json": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf",
+    "experiments/pcqm_k1_portability_dual_100k/training_contract.json": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-rwse-refresh-100k-s42-training.json": "708135adc2e48cd5264df943558b8db1afa34eec16151b2f045f9cf4a4124489",
+    "prospective_snapshot.json": "b8eca7c2538ad4e2983bf388b64bbd41cbd6b70eac422ac458bc203772b0d671",
+    "roles/role-TC-k1-rwse-refresh-100k-s42-labels-read.json": "a8cdfb004f96b4003de3e43e268c4cea6e7bf6a41e3d7f2f3aaa75f4b946d9b6",
+    "roles/role-TC-k1-rwse-refresh-100k-s42-metric-computed.json": "3bc3e181ff8ed168fdcdfa2acb0eff40e47e72e712a80230efb603fba11f03ea",
+    "roles/role-TC-k1-rwse-refresh-100k-s42-prediction-input.json": "05833586b770506f91be18312969c906e56c2c48a5b5f9dccfd1ccc12afa20d9",
+    "roles/role-TC-k1-rwse-refresh-100k-s42-selection-used.json": "96145570b48adb58009865222c8f824685790d4099fa6777b372ce882d6a7800",
+    "roles/role-TC-k1-rwse-refresh-100k-s42-training-membership.json": "93abc2013ab1e3cb8bf666d06f0efa701a910508f7636d7ed755cf196514e51c",
+    "terminal_input.json": "2d92eac6473615f402deef83479e1f609b1dbba7281a3a634ca5034eaef82abf",
+    "trace.json": "1e191d7fbd8ec68732287ddf15aba7497c9c14847b8614dc98537b5ae859ee13",
+    "trace_manifest.json": "3e14108f5cfc283b0fd5082648527d1648cabcb501324402feeb2a03f90b04c4",
+    "trajectory.json": "e9448b3076908f975eb98cc0305e0e8fc6a1f33fdfd02cb8c3076328eed3d43b",
+    "v5_evidence.json": "cf8fd52265dfa14b2ce7ea976218aa5b5480638ab9679414a4e2771f4bca5d71"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-rwse-refresh-100k-s42-training.json": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "6f21add915ba0f0b1ed31176e8687d43a08b0f377bef25ac372a19457c325b9e",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-rwse-refresh-100k-s42"
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "post100k-audit-v1",
+  "category": "audit",
+  "cost_event_id": "cost-TC-k1-topology-portability-post100k-audit-s42-inference",
+  "evidence_ref": "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.031131039790277808
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+}

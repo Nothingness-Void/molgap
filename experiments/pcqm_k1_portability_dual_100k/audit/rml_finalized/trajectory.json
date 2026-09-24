@@ -1,0 +1,90 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "dual-v1-post100k-audit-planned"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-topology-portability-post100k-audit-s42-inference"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+        "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json"
+      ],
+      "run_ids": [
+        "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned"
+      ],
+      "source_commit": "e58d0ccfa89f33e7eee57712a0c19deb97ea62d1",
+      "type": "conditional_no_train_post100k_frozen_audit"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_portability_dual_100k/audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "a new independent-role or training question needs a new prospective authority"
+    ]
+  },
+  "family_id": "k1-topology-portability-no-train-audit",
+  "hypothesis": {
+    "alternative_explanations": [
+      "100K and 500K development distributions differ",
+      "original 100K development was repeatedly reused"
+    ],
+    "changed_mechanism": "NO_TRAIN frozen checkpoint portability measurement only",
+    "cheapest_falsifier": "reproduce original 50K predictions; then infer fixed500K development indices500000-549999 once",
+    "decision_changed_if_negative": "close the nonportable 100K advantage without retraining",
+    "decision_changed_if_positive": "retain portability evidence, not a full-scale training release",
+    "expected_native_cost_ref": "cost-TC-k1-topology-portability-post100k-audit-s42-inference",
+    "historical_unknowns": [
+      "500K outcome unknown before frozen role read"
+    ],
+    "hypothesis_id": "H-TC-k1-topology-portability-post100k-audit-s42",
+    "observed_deficiency": "Original PairToken lost most of its selected 100K advantage on disjoint fixed500K development rows before retraining; a prospectively gated frozen audit is needed for future 100K screens.",
+    "related_closed_family_ids": [
+      "k1-pair-token-scale-bridge"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does a frozen 100K advantage survive on disjoint fixed500K internal development molecules?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-topology-portability-post100k-audit-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_portability_dual_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_portability_dual_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-rwse-refresh-100k-s42",
+      "TC-k1-degree-balance-100k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json"
+    ],
+    "source_commit": "e58d0ccfa89f33e7eee57712a0c19deb97ea62d1",
+    "source_config_identity": "687021804af0f7ee7fcc26676328e402e834fc556671f107707af666edee5428"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+}

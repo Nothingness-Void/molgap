@@ -5,12 +5,12 @@
 - Evidence without trajectory: 2
 
 ## Trajectories
-- ACTIVE: 4
+- ACTIVE: 1
 - CLOSED: 1
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 8
-- NO_TRAIN: 2
-- POSITIVE_BELOW_GATE: 7
+- NO_TRAIN: 3
+- POSITIVE_BELOW_GATE: 9
 - POSITIVE_UNDER_CONTRACT: 1
 - STOP_FOR_COST: 1
 
@@ -20,8 +20,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 100
-- Coarse historical role records: 121
+- Explicit role events: 116
+- Coarse historical role records: 124
 - Repeatedly selected role identities: 3
 
 ## Cost
@@ -42,9 +42,9 @@
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_T4_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=18, not_applicable=0
-- Tesla_T4_16GB device_hours: measured=15.003080 (11 measured records), estimated=7.000000 (3 estimated records), measurement_missing=4, not_applicable=0
+- Tesla_T4_16GB device_hours: measured=18.498556 (13 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
 - Tesla_T4_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=18, not_applicable=0
-- Tesla_T4_16GB wall_hours: measured=0.007950 (1 measured record), estimated=7.000000 (3 estimated records), measurement_missing=14, not_applicable=0
+- Tesla_T4_16GB wall_hours: measured=0.039081 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
 - local-cpu cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - local-cpu device_hours: not applicable (2 records); measurement_missing=0
 - local-cpu queue_hours: not applicable (2 records); measurement_missing=0
@@ -66,13 +66,13 @@
 
 ## Screening Backtest
 - Status: available
-- Eligible traces: 15
+- Eligible traces: 17
 - Excluded traces: 2
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 12
+- [INFO] trace_unavailable_for_backtest: 10
 - [WARN] historical_partial_record: 13
 - [WARN] incomplete_native_cost_measurement: 27
-- [WARN] missing_explicit_role_identity: 5
+- [WARN] missing_explicit_role_identity: 2
 - [WARN] trajectory_without_v5_evidence: 2
 - [WARN] v5_evidence_without_trajectory: 2

@@ -1,0 +1,45 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-9293abd07386c8304cad538d82240b706729946ee9b29b884cde0be01db8539d",
+  "finalized_at": "2026-09-25T05:30:58+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_portability_dual_100k/audit/decision.md": "c57e7c49713158af8bd52c2b3432ce84bd7b12cae0b2a09368c7ae687c2b9b7a",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/acceptance_summary.json": "37776d65623ee732e576ad50b0bbc65f67688283c5eb358072fd5352be6c48e1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/audit_terminal.json": "f44807d69ccf38de718bbdce2ed13d0622304554ebc613a3deb5aba4c6fd5fc1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/cost_records.json": "d739e6cfc0cbdcea609595a48addc57edd089c3a5dc13dad1e0fe929bd00b35f",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/role_history.json": "6f22599f92203721c99f76a6485ed9571ed8ca448270a83876e194619a49bee1",
+    "experiments/pcqm_k1_portability_dual_100k/audit/results/terminal_acceptance.json": "c18b66b6ae97b31f388ad83bb9d67b3f3e21c614af8adbcab30373f4d80d1026",
+    "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json": "014f5a33ed5e02ad3f6b099b5a19916b0bc3d6481aa5db9160946a67c14e73da",
+    "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json": "fa3bc8ffca99f34a2984a7ecd1136adf22249a7e095a61aa4e571520e12fed85",
+    "experiments/pcqm_k1_portability_dual_100k/protocol.md": "c6751883e5cc18ddf089950ee1a301d6440318b3c5c5ad21f4230a9715a05999",
+    "experiments/pcqm_k1_portability_dual_100k/results/portability_analysis.json": "3a96ba2610e6c76c1e9a8ea266f65028d90e0c59573cca2fd3766a33806bbae1",
+    "experiments/pcqm_k1_portability_dual_100k/results/submission_receipt.json": "eebb8f759a59673a53323f15640e5a03d8f40320f2de74d3d861e1bd568f1214",
+    "experiments/pcqm_k1_portability_dual_100k/source_config.json": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf",
+    "experiments/pcqm_k1_portability_dual_100k/training_contract.json": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-k1-topology-portability-post100k-audit-s42-inference.json": "75c763ccccb13a1877d4475356c67810c59bc12ed31b741e0d78f7c6a6418725",
+    "prospective_snapshot.json": "fa3bc8ffca99f34a2984a7ecd1136adf22249a7e095a61aa4e571520e12fed85",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read.json": "fc8e8d087e9157399c1a61bedf1ee5137b6b8bc94ddbbcc9d2fb18a1963f3a99",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed.json": "52c51bb1771b3cc420377ea3c91939e8cbeac15dcd288a560ffd4ba2c0cdbeaf",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input.json": "1f67bb6d0178d3355731a22e5b7c925beaa0d7d16442b6ec42523f703058b5e3",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read.json": "57387d078131a37a5169c8559790b9a4a5a37d9afd1720546090634753db3471",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed.json": "0da89d9a6f9fe3102bb6a082c1b6d5e18581904d3daa2251c35cc564e8b6f8db",
+    "roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input.json": "1bfa2dd5cb33f281d4b4ff10b9c3451f66ff9abd84b472d10f8d716735369e59",
+    "terminal_input.json": "304e5afa3a0d206df57fa63ac20f7b1b62860672b0f75ec7838a6de40a472b06",
+    "trajectory.json": "8f91bac2579a7b87486fdc67649a549b285d4eada8895822f6152f97a9f323cf",
+    "v5_evidence.json": "995a7f9f3a517dea9f9b4231b466ce05b62059c17e68431c5bd29c6f399e871d"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-topology-portability-post100k-audit-s42-inference.json": "experiments/pcqm_k1_portability_dual_100k/audit/costs/expected_inference.json",
+    "trajectory.json": "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_portability_dual_100k/audit/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "9293abd07386c8304cad538d82240b706729946ee9b29b884cde0be01db8539d",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-topology-portability-post100k-audit-s42"
+}

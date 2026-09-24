@@ -1,6 +1,6 @@
 {
   "backtest": {
-    "eligible": 15,
+    "eligible": 17,
     "excluded": 2,
     "status": "available"
   },
@@ -228,15 +228,15 @@
         },
         "device_hours": {
           "estimated": {
-            "known_records": 3,
-            "known_total": 7.0
+            "known_records": 0,
+            "known_total": null
           },
           "measured": {
-            "known_records": 11,
-            "known_total": 15.003080008236665
+            "known_records": 13,
+            "known_total": 18.498555817798884
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 5
         },
         "queue_hours": {
           "estimated": {
@@ -252,15 +252,15 @@
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 3,
-            "known_total": 7.0
+            "known_records": 0,
+            "known_total": null
           },
           "measured": {
-            "known_records": 1,
-            "known_total": 0.00795
+            "known_records": 2,
+            "known_total": 0.039081039790277806
           },
           "not_applicable_records": 0,
-          "unknown_records": 14
+          "unknown_records": 16
         }
       },
       "local-cpu": {
@@ -474,7 +474,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 12,
+      "count": 10,
       "severity": "INFO"
     },
     {
@@ -489,7 +489,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 5,
+      "count": 2,
       "severity": "WARN"
     },
     {
@@ -504,20 +504,20 @@
     }
   ],
   "roles": {
-    "coarse_historical": 121,
-    "explicit_events": 100,
+    "coarse_historical": 124,
+    "explicit_events": 116,
     "repeatedly_selected": 3
   },
-  "source_digest": "f3a1bc25e0c52e1e0faaaa3fda419c00b9497468a8425c998171413ded7d8fa4",
+  "source_digest": "593fc484686c38581488f37486c68102a7f373868311e8324d67bfbe5d0b69b1",
   "trajectories": {
     "count": 29,
     "outcomes": {
-      "ACTIVE": 4,
+      "ACTIVE": 1,
       "CLOSED": 1,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 8,
-      "NO_TRAIN": 2,
-      "POSITIVE_BELOW_GATE": 7,
+      "NO_TRAIN": 3,
+      "POSITIVE_BELOW_GATE": 9,
       "POSITIVE_UNDER_CONTRACT": 1,
       "STOP_FOR_COST": 1
     }

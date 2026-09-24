@@ -1,0 +1,19 @@
+{
+  "format": "molgap-k1-topology-portability-submission-receipt-v1",
+  "platform": "kaggle1",
+  "owner": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-k1-topology-portability-dual-s42",
+  "kernel_version": 1,
+  "scheduler_terminal_status": "COMPLETE",
+  "prospective_run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+  "observed_remote_run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1",
+  "arms": ["neural_atom_k1_rwse_refresh", "neural_atom_k1_degree_balance"],
+  "source_commit": "e58d0ccfa89f33e7eee57712a0c19deb97ea62d1",
+  "source_archive_sha256": "31145d13f5e780e299343e491ae2db6a486c918db754c7170bcd0f20b7566f2d",
+  "fixed_100k_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "fixed_500k_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

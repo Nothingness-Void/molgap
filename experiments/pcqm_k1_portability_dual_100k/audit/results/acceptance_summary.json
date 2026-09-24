@@ -1,0 +1,18 @@
+{
+  "accepted": true,
+  "audit_terminal_sha256": "a02a2ab432dfee5cefbe232da6aa7e93c4937936b7bbd91a4c15178fc7f031a4",
+  "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+  "format": "molgap-k1-portability-audit-terminal-acceptance-v1",
+  "mae_eV": {
+    "neural_atom_k1_degree_balance": 0.14342398941516876,
+    "neural_atom_k1_rwse_refresh": 0.1423768699169159,
+    "neural_atom_k1_v4": 0.1412533074617386
+  },
+  "model_inference_executed_during_acceptance": false,
+  "model_inference_executed_in_remote_job": true,
+  "protected_roles_read": false,
+  "role_source": "fixed100k-development-100000-150000 and fixed500k-development-500000-550000",
+  "run_id": "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+  "source_acceptance_sha256": "304652a130bb70984a264eae0fc15003b5b10e0aecc18bb27be063e9f5235c9f",
+  "training_executed_in_remote_audit_stage": false
+}

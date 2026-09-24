@@ -1,0 +1,18 @@
+{
+  "candidate_development_gap_mae_eV": 0.1403668373823166,
+  "candidate_id": "neural_atom_k1_rwse_refresh",
+  "format": "molgap-paired-analysis-v1",
+  "gain_eV": 0.001006796956062317,
+  "material_gate_passed": false,
+  "paired_error_delta_bootstrap_95_eV": [
+    -0.0019053296382427214,
+    -0.00010234499788284323
+  ],
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "required_gain_eV": 0.003,
+  "row_bootstrap_direction_favorable": true,
+  "row_bootstrap_is_sufficient_alone": false,
+  "rows": 50000,
+  "training_stochasticity_accounted": true
+}

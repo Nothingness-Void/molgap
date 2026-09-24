@@ -34,6 +34,8 @@
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-functional-group-token-s42:v1",
+        "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+        "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
         "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
         "nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1",
         "nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1",
@@ -50,6 +52,7 @@
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
+        "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
@@ -59,6 +62,7 @@
         "TC-k1-oneshot-triplet-pair-token-100k-s42",
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42",
         "TC-k1-v4-100k-reference-s42"
@@ -69,6 +73,7 @@
     "TC-k1-chem-typed-pair-token-100k-s42",
     "TC-k1-conjugated-oneshot-100k-s42",
     "TC-k1-conjugated-persistent-100k-s42",
+    "TC-k1-degree-balance-100k-s42",
     "TC-k1-functional-group-token-100k-s42",
     "TC-k1-mose-context-gate-100k-s42",
     "TC-k1-mose-hidden-bn-100k-s42",
@@ -78,6 +83,7 @@
     "TC-k1-oneshot-triplet-pair-token-100k-s42",
     "TC-k1-pair-token-100k-s42",
     "TC-k1-pair-token-node-return-100k-s42",
+    "TC-k1-rwse-refresh-100k-s42",
     "TC-k1-sparse-triplet-100k-s42",
     "TC-k1-spd-pair-token-100k-s42",
     "TC-k1-v4-100k-reference-s42"
@@ -88,5 +94,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 17
+  "trace_count": 19
 }
