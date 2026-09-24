@@ -11,7 +11,36 @@ dated evidence. Fetch before comparing a remote snapshot.
 | molgap-server | Independent server discovery; read its own CURRENT_STATE.md |
 | archive | Inactive/rejected histories; never infer live state here |
 
-## Active temporary branches
+## New desktop experiment lifecycle
+
+Start each new desktop-owned research question from the verified current
+`molgap-desktop` tip in a dedicated `codex/exp/<question>` branch and separate
+worktree. Check the local/remote desktop relationship and working-tree state
+before choosing that base. Do not use a retained experiment branch, `archive`,
+or `molgap-server` as the base for a new desktop question.
+Select the question from desktop routing, RML, and the linked canonical evidence
+before inspecting implementation on another branch. A retained branch is read
+only when its own question or an explicit integration task requires it.
+
+Do the prospective plan, implementation, submission, remote reconciliation,
+training acceptance, scientific decision, and terminal RML update on the
+experiment branch. Keep retries and seeds for the same question there. Do not
+merge a live experiment merely because its kernel was submitted or finished.
+
+After a reviewed terminal decision:
+
+| Decision | Git destination |
+|---|---|
+| Positive and adopted | Merge the experiment branch into `molgap-desktop`; rebuild and check desktop RML. |
+| Negative under its contract | Merge the complete experiment history into `archive`. Bring only the accepted canonical decision/evidence needed for desktop RML discovery into `molgap-desktop`; do not merge rejected implementation. Rebuild and check desktop RML. |
+| Pending, incomplete, or terminal without an adoption/archive decision | Keep the experiment branch until its routing decision is recorded. |
+
+Verify the experiment tip is durably reachable from the destination before
+deleting its temporary ref. An archive preservation merge may retain ancestry
+without changing the archive tree; it does not turn an old branch into a live
+work entry point. Promotion from `molgap-desktop` to `master` is separate.
+
+## Retained branch awaiting reconciliation
 
 The 2026-09-24 local branch audit found one retained desktop temporary ref:
 `codex/fix/rml-500k-reference` at `b78b978d`. It contains prospective DSAR/DSMR

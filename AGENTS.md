@@ -303,11 +303,23 @@ A Kaggle, SCNet, IMS, Colab, or other remote job is desktop-owned or
 server-owned according to its recorded experiment/source/protocol/branch
 decision.
 
-Work on the owning long-lived branch when safe.
+For every new desktop-owned experiment, start a dedicated `codex/exp/` branch
+from the verified current `molgap-desktop` tip in a separate worktree. Keep
+implementation, remote submission, training reconciliation,
+acceptance, the scientific decision, and terminal RML records on that branch
+until the experiment is closed. A seed, retry, or infrastructure attempt within
+the same question stays on that experiment branch.
 
-Use a temporary `codex/` branch when concurrency, isolation, or review requires
-it. Do not create a branch merely for an individual seed, retry, or
-infrastructure attempt.
+After terminal acceptance, merge a positive result into `molgap-desktop` only
+when the scientific decision adopts it. Merge a negative result's complete
+experiment history into `archive`. Keep the accepted negative decision and
+canonical evidence discoverable through the desktop RML without merging rejected
+implementation into `molgap-desktop`. Rebuild and check RML after any required
+evidence-only integration. An active or unresolved experiment is not routed to
+either destination merely because a remote attempt ended.
+
+For other work, use the owning long-lived branch when safe. Use a temporary
+`codex/` branch when concurrency, isolation, or review requires it.
 
 Integrate reviewed reusable work into the owning long-lived branch with explicit
 provenance. Do not wholesale merge an unrelated branch merely to obtain one

@@ -71,7 +71,11 @@ alone and record why two arms were not feasible.
 ## Minimal Handoff Sequence
 
 1. Follow `AGENTS.md`, `BRANCHES.md`, `CURRENT_STATE.md`, and the owning
-   experiment contract. Query RML before opening a new research question.
+   experiment contract. Query RML before opening a new research question. For
+   a desktop-owned new experiment, create its dedicated branch and worktree from
+   the verified current `molgap-desktop` tip before changing source or publishing
+   prospective records. Complete training reconciliation, acceptance, decision,
+   and terminal RML on that branch; route the closed result by `BRANCHES.md`.
 2. Identify the existing family trainer and platform submitter before writing
    an addon. Inspect the platform input mounts, staged source shape, kernel
    entry point, and metadata limits with read-only or local static checks.
