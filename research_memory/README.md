@@ -21,6 +21,7 @@ python -m molgap.research_memory rebuild
 python -m molgap.research_memory status
 python -m molgap.research_memory doctor
 python -m molgap.research_memory check --frozen
+python -m molgap.research_memory check --frozen --portable
 python -m molgap.research_memory package-ready --trajectory <trajectory-id>
 python -m molgap.research_memory backtest-screening
 ```
@@ -29,6 +30,15 @@ RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no
 command submits training, accesses protected data, changes a scientific gate,
 or creates desktop/server live orchestration.
+
+Before handoff, use `check --frozen --portable`. The portable check verifies
+that every discovered canonical RML input, its direct local record/authority
+references, replay trace-migration sidecar, RML runtime module, policy/schema,
+and generated index is present in Git HEAD and unchanged in the working tree.
+It also verifies that artifacts marked locally retained actually exist. This is
+a scoped reproducibility check, not a requirement that unrelated worktree files
+be clean; it does not recursively traverse arbitrary launch/debug metadata or
+hash large retained artifacts.
 
 ## Research workflow
 
@@ -67,14 +77,15 @@ Explicit versioned rules belong in the [policy registry](policies/README.md).
 The current historical migration contains the Route B records that have a
 durable decision or terminal acceptance pointer. It includes full EdgeState,
 GPTrans-T 100K and 500K bridges, GINE specialist, K1/GPTrans-T fusion,
-geometry transfer, recurrent graph-state screen, and the legacy GPS/SchNet
-specialist route. These remain
+geometry transfer, recurrent graph-state screen, matched 500K V4 three-arm
+comparison, and the legacy GPS/SchNet specialist route. These remain
 `retrospective_partial`: RML records what can be proven from existing files;
 it does not fill missing native cost, role-identity, learning-trace, or archive
 artifacts.
 
 The generated completeness report is the authority for those remaining gaps.
-The matched 500K three-arm record remains outside the evidence-envelope set
-until its V5-required second durable K1 artifact copy is preserved. Records
-with only exploratory logs and no durable decision/acceptance pointer remain
-outside this migration until such a pointer is preserved.
+The matched 500K V4 comparison now has a validated V5 envelope; its migration
+record documents the recovered second K1 prediction copy. This is a historical
+nomination, not READY_FOR_DESKTOP or full-scale promotion. Records with only
+exploratory logs and no durable decision/acceptance pointer remain outside this
+migration until such a pointer is preserved.

@@ -13,6 +13,10 @@ from .compiler import compile_research_memory, frozen_differences, rebuild_resea
 from .ready import build_ready_package
 from .validate import validate_repository_records
 from .paths import repo_local_path
+from .portability import (
+    committed_head_differences,
+    missing_locally_claimed_artifacts,
+)
 
 
 def _root(value: str | None) -> Path:
@@ -30,6 +34,7 @@ def main(argv: list[str] | None = None) -> None:
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
     check.add_argument("--frozen", action="store_true", required=True)
+    check.add_argument("--portable", action="store_true")
     ready = commands.add_parser("package-ready")
     ready.add_argument("--trajectory", required=True)
     commands.add_parser("backtest-screening")
@@ -95,7 +100,39 @@ def main(argv: list[str] | None = None) -> None:
         differences = frozen_differences(root)
         if differences:
             raise SystemExit("stale derived outputs: " + ", ".join(differences))
-        print("RML derived outputs are frozen and current")
+        if args.portable:
+            records = validate_repository_records(root)["records"]
+            try:
+                head_differences = committed_head_differences(root, records)
+                missing_artifacts = missing_locally_claimed_artifacts(root, records)
+            except ValueError as exc:
+                raise SystemExit(str(exc)) from exc
+            failures = []
+            if missing_artifacts:
+                failures.append(
+                    "V5 evidence claims missing local artifacts:\n  "
+                    + "\n  ".join(missing_artifacts)
+                )
+            missing_from_head = head_differences["missing_from_head"]
+            if missing_from_head:
+                failures.append(
+                    "RML portable inputs are absent from Git HEAD:\n  "
+                    + "\n  ".join(missing_from_head)
+                )
+            changed_from_head = head_differences["changed_from_head"]
+            if changed_from_head:
+                failures.append(
+                    "RML portable inputs, runtime, or derived outputs differ from Git HEAD:\n  "
+                    + "\n  ".join(changed_from_head)
+                )
+            if failures:
+                raise SystemExit("\n".join(failures))
+            print(
+                "RML derived outputs are frozen and current; "
+                "committed evidence closure, runtime, derived outputs, and local artifact claims are complete"
+            )
+        else:
+            print("RML derived outputs are frozen and current")
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"

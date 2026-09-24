@@ -1,0 +1,1223 @@
+{
+  "anomalies": [
+    "runtime.runner_sha256_artifact",
+    "repository.training_contract.source_commit",
+    "repository.full_atom.trajectory_action_source_commit",
+    "repository.full_atom_bond.trajectory_action_source_commit",
+    "full_atom.last_checkpoint.source_commit",
+    "full_atom.checkpoint.optimizer.weight_decay",
+    "full_atom.trace.max_learning_rate_matches_contract",
+    "full_atom.trace.final_learning_rate_matches_contract",
+    "full_atom_bond.last_checkpoint.source_commit",
+    "full_atom_bond.checkpoint.optimizer.weight_decay",
+    "full_atom_bond.trace.max_learning_rate_matches_contract",
+    "full_atom_bond.trace.final_learning_rate_matches_contract",
+    "full_atom.terminal_input_present",
+    "full_atom_bond.terminal_input_present",
+    "rml.close_terminal_multi_arm",
+    "rml.validate_rebuild_check_frozen"
+  ],
+  "anomaly_count": 16,
+  "canonical_trace_recovery": {
+    "full_atom": {
+      "observations": 60,
+      "path": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\canonical_trace\\full_atom.json",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+      "sha256": "3851830089727fe5e0eb97e376924137945b737f5ef25ef938ec12ac2b18fa75",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+    },
+    "full_atom_bond": {
+      "observations": 60,
+      "path": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\canonical_trace\\full_atom_bond.json",
+      "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+      "sha256": "cf814a5f300f3f8493a52d978f71b3cf277c9c8bc2c83b7d413049dfa9e06caa",
+      "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+    }
+  },
+  "checks": {
+    "full_atom.best_checkpoint.declared_parameter_count": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.best_checkpoint.parameter_count": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.best_checkpoint.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom.best_checkpoint.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom.canonical_trace.recovered_and_valid": {
+      "expected": "identity-matched 60 observations",
+      "observed": {
+        "observations": 60,
+        "path": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\canonical_trace\\full_atom.json",
+        "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom",
+        "sha256": "3851830089727fe5e0eb97e376924137945b737f5ef25ef938ec12ac2b18fa75",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-100k-s42"
+      },
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.optimizer.foreach": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.optimizer.fused": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.optimizer.weight_decay": {
+      "expected": 0.01,
+      "note": "Observed checkpoint optimizer param_group.",
+      "observed": 0.05,
+      "status": "FAIL"
+    },
+    "full_atom.checkpoint.scientific_fields.benchmark_id": {
+      "expected": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+      "observed": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.deterministic_algorithms": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.device_count": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.epochs": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.gradient_accumulation_steps": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.physical_batch_per_device": {
+      "expected": 128,
+      "observed": 128,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.precision": {
+      "expected": "fp32",
+      "observed": "fp32",
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.seed": {
+      "expected": 42,
+      "observed": 42,
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.tail_batch_policy": {
+      "expected": "drop_last",
+      "observed": "drop_last",
+      "status": "PASS"
+    },
+    "full_atom.checkpoint.scientific_fields.tf32_enabled": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom.completion.arm": {
+      "expected": "full_atom",
+      "observed": "full_atom",
+      "status": "PASS"
+    },
+    "full_atom.completion.complete": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.completion.epochs": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom.completion.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom.completion.optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom.completion.parameters": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.completion.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom.completion.sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "full_atom.completion.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom.completion.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom.last_checkpoint.ema_parameter_count": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.last_checkpoint.parameter_count": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.last_checkpoint.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom.last_checkpoint.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "FAIL"
+    },
+    "full_atom.manifest_artifact.best_model.pt": {
+      "expected": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+      "observed": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+      "status": "PASS"
+    },
+    "full_atom.manifest_artifact.development_predictions.pt": {
+      "expected": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+      "observed": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+      "status": "PASS"
+    },
+    "full_atom.manifest_artifact.last_checkpoint.pt": {
+      "expected": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+      "observed": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+      "status": "PASS"
+    },
+    "full_atom.manifest_artifact.preflight.json": {
+      "expected": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+      "observed": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+      "status": "PASS"
+    },
+    "full_atom.manifest_artifact.trace.json": {
+      "expected": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+      "observed": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+      "status": "PASS"
+    },
+    "full_atom.payload.prediction_eV.dtype": {
+      "expected": "torch.float32",
+      "observed": "torch.float32",
+      "status": "PASS"
+    },
+    "full_atom.payload.prediction_eV.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.payload.prediction_eV.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom.payload.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom.payload.source_idx.dtype": {
+      "expected": "torch.int64",
+      "observed": "torch.int64",
+      "status": "PASS"
+    },
+    "full_atom.payload.source_idx.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.payload.source_idx.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom.payload.source_idx_aligned": {
+      "expected": true,
+      "observed": "exact_equal",
+      "status": "PASS"
+    },
+    "full_atom.payload.target_aligned": {
+      "expected": true,
+      "observed": "exact_equal",
+      "status": "PASS"
+    },
+    "full_atom.payload.target_eV.dtype": {
+      "expected": "torch.float32",
+      "observed": "torch.float32",
+      "status": "PASS"
+    },
+    "full_atom.payload.target_eV.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.payload.target_eV.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom.preflight.accelerator": {
+      "expected": "Tesla T4",
+      "observed": "Tesla T4",
+      "status": "PASS"
+    },
+    "full_atom.preflight.accepted": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom.preflight.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom.preflight.parameters": {
+      "expected": 5291535,
+      "observed": 5291535,
+      "status": "PASS"
+    },
+    "full_atom.preflight.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom.preflight.safety_flags": {
+      "expected": "all true",
+      "observed": {
+        "evaluation_output_bitwise_equal": true,
+        "finite_auxiliary_backward": true,
+        "real_graph_shard_deserialized": true
+      },
+      "status": "PASS"
+    },
+    "full_atom.preflight.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom.preflight.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom.preflight.visible_device_count": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom.terminal_input_present": {
+      "expected": "terminal package/evidence",
+      "note": "No terminal package/evidence exists; trajectory remains prospective ACTIVE.",
+      "observed": {
+        "result_evidence_ids": [],
+        "trajectory_decision_outcome": "ACTIVE"
+      },
+      "status": "FAIL"
+    },
+    "full_atom.trace.epoch_sequence": {
+      "expected": "0..59",
+      "observed": [
+        0,
+        1,
+        2,
+        "...",
+        57,
+        58,
+        59
+      ],
+      "status": "PASS"
+    },
+    "full_atom.trace.final_learning_rate_matches_contract": {
+      "expected": 2e-06,
+      "note": "Mechanical comparison to frozen schedule endpoint.",
+      "observed": 1e-06,
+      "status": "FAIL"
+    },
+    "full_atom.trace.max_learning_rate_matches_contract": {
+      "expected": 0.0002,
+      "note": "Mechanical comparison to frozen optimizer identity.",
+      "observed": 0.001,
+      "status": "FAIL"
+    },
+    "full_atom.trace.required_fields_finite": {
+      "expected": {
+        "finite": true,
+        "missing": []
+      },
+      "observed": {
+        "finite": true,
+        "missing": []
+      },
+      "status": "PASS"
+    },
+    "full_atom.trace.row_count": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom.trace.terminal_mae_matches_manifest": {
+      "expected": 0.15068286657333374,
+      "observed": 0.15068286657333374,
+      "status": "PASS"
+    },
+    "full_atom.trace.terminal_optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom.trace.terminal_sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "full_atom_bond.best_checkpoint.declared_parameter_count": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.best_checkpoint.parameter_count": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.best_checkpoint.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom_bond.best_checkpoint.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom_bond.canonical_trace.recovered_and_valid": {
+      "expected": "identity-matched 60 observations",
+      "observed": {
+        "observations": 60,
+        "path": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\canonical_trace\\full_atom_bond.json",
+        "run_id": "nothingnessvoid/molgap-pcqm-gptrans-feature-denoise-s42#full_atom_bond",
+        "sha256": "cf814a5f300f3f8493a52d978f71b3cf277c9c8bc2c83b7d413049dfa9e06caa",
+        "trajectory_id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.optimizer.foreach": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.optimizer.fused": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.optimizer.weight_decay": {
+      "expected": 0.01,
+      "note": "Observed checkpoint optimizer param_group.",
+      "observed": 0.05,
+      "status": "FAIL"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.benchmark_id": {
+      "expected": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+      "observed": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.deterministic_algorithms": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.device_count": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.epochs": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.gradient_accumulation_steps": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.physical_batch_per_device": {
+      "expected": 128,
+      "observed": 128,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.precision": {
+      "expected": "fp32",
+      "observed": "fp32",
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.seed": {
+      "expected": 42,
+      "observed": 42,
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.tail_batch_policy": {
+      "expected": "drop_last",
+      "observed": "drop_last",
+      "status": "PASS"
+    },
+    "full_atom_bond.checkpoint.scientific_fields.tf32_enabled": {
+      "expected": false,
+      "observed": false,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.arm": {
+      "expected": "full_atom_bond",
+      "observed": "full_atom_bond",
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.complete": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.epochs": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.parameters": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom_bond.completion.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom_bond.last_checkpoint.ema_parameter_count": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.last_checkpoint.parameter_count": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.last_checkpoint.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom_bond.last_checkpoint.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "FAIL"
+    },
+    "full_atom_bond.manifest_artifact.best_model.pt": {
+      "expected": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69",
+      "observed": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69",
+      "status": "PASS"
+    },
+    "full_atom_bond.manifest_artifact.development_predictions.pt": {
+      "expected": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da",
+      "observed": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da",
+      "status": "PASS"
+    },
+    "full_atom_bond.manifest_artifact.last_checkpoint.pt": {
+      "expected": "dc86ea590aed841ea7572df4e9228eaa66fcab6b29df4935551f6ae4c634923f",
+      "observed": "dc86ea590aed841ea7572df4e9228eaa66fcab6b29df4935551f6ae4c634923f",
+      "status": "PASS"
+    },
+    "full_atom_bond.manifest_artifact.preflight.json": {
+      "expected": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d",
+      "observed": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d",
+      "status": "PASS"
+    },
+    "full_atom_bond.manifest_artifact.trace.json": {
+      "expected": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef",
+      "observed": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.prediction_eV.dtype": {
+      "expected": "torch.float32",
+      "observed": "torch.float32",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.prediction_eV.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.prediction_eV.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.source_idx.dtype": {
+      "expected": "torch.int64",
+      "observed": "torch.int64",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.source_idx.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.source_idx.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.source_idx_aligned": {
+      "expected": true,
+      "observed": "exact_equal",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.target_aligned": {
+      "expected": true,
+      "observed": "exact_equal",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.target_eV.dtype": {
+      "expected": "torch.float32",
+      "observed": "torch.float32",
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.target_eV.finite": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.payload.target_eV.shape": {
+      "expected": [
+        50000
+      ],
+      "observed": [
+        50000
+      ],
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.accelerator": {
+      "expected": "Tesla T4",
+      "observed": "Tesla T4",
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.accepted": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.parameters": {
+      "expected": 5291964,
+      "observed": 5291964,
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.safety_flags": {
+      "expected": "all true",
+      "observed": {
+        "evaluation_output_bitwise_equal": true,
+        "finite_auxiliary_backward": true,
+        "real_graph_shard_deserialized": true
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "full_atom_bond.preflight.visible_device_count": {
+      "expected": 1,
+      "observed": 1,
+      "status": "PASS"
+    },
+    "full_atom_bond.terminal_input_present": {
+      "expected": "terminal package/evidence",
+      "note": "No terminal package/evidence exists; trajectory remains prospective ACTIVE.",
+      "observed": {
+        "result_evidence_ids": [],
+        "trajectory_decision_outcome": "ACTIVE"
+      },
+      "status": "FAIL"
+    },
+    "full_atom_bond.trace.epoch_sequence": {
+      "expected": "0..59",
+      "observed": [
+        0,
+        1,
+        2,
+        "...",
+        57,
+        58,
+        59
+      ],
+      "status": "PASS"
+    },
+    "full_atom_bond.trace.final_learning_rate_matches_contract": {
+      "expected": 2e-06,
+      "note": "Mechanical comparison to frozen schedule endpoint.",
+      "observed": 1e-06,
+      "status": "FAIL"
+    },
+    "full_atom_bond.trace.max_learning_rate_matches_contract": {
+      "expected": 0.0002,
+      "note": "Mechanical comparison to frozen optimizer identity.",
+      "observed": 0.001,
+      "status": "FAIL"
+    },
+    "full_atom_bond.trace.required_fields_finite": {
+      "expected": {
+        "finite": true,
+        "missing": []
+      },
+      "observed": {
+        "finite": true,
+        "missing": []
+      },
+      "status": "PASS"
+    },
+    "full_atom_bond.trace.row_count": {
+      "expected": 60,
+      "observed": 60,
+      "status": "PASS"
+    },
+    "full_atom_bond.trace.terminal_mae_matches_manifest": {
+      "expected": 0.1493811011314392,
+      "observed": 0.1493811011314392,
+      "status": "PASS"
+    },
+    "full_atom_bond.trace.terminal_optimizer_steps": {
+      "expected": 46860,
+      "observed": 46860,
+      "status": "PASS"
+    },
+    "full_atom_bond.trace.terminal_sample_presentations": {
+      "expected": 5998080,
+      "observed": 5998080,
+      "status": "PASS"
+    },
+    "job_summary.arms": {
+      "expected": [
+        "full_atom",
+        "full_atom_bond"
+      ],
+      "observed": [
+        "full_atom",
+        "full_atom_bond"
+      ],
+      "status": "PASS"
+    },
+    "job_summary.complete": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "job_summary.gpu_allocation": {
+      "expected": [
+        "Tesla T4",
+        "Tesla T4"
+      ],
+      "observed": [
+        "Tesla T4",
+        "Tesla T4"
+      ],
+      "status": "PASS"
+    },
+    "job_summary.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "job_summary.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "job_summary.reference_model_sha256": {
+      "expected": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+      "observed": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+      "status": "PASS"
+    },
+    "job_summary.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "job_summary.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/best_model.pt": {
+      "expected": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+      "observed": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/completion_manifest.json": {
+      "expected": "3d8a5ac2589b97256fe487d67c6296927cf5f06480b6facd5f272e69a3f98258",
+      "observed": "3d8a5ac2589b97256fe487d67c6296927cf5f06480b6facd5f272e69a3f98258",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/development_predictions.pt": {
+      "expected": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+      "observed": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/last_checkpoint.pt": {
+      "expected": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+      "observed": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/preflight.json": {
+      "expected": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+      "observed": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom/trace.json": {
+      "expected": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+      "observed": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/best_model.pt": {
+      "expected": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69",
+      "observed": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/completion_manifest.json": {
+      "expected": "7dc036a72be7a9caf8e0f4af83894604d7fdb28eff5b0c303c16ae22199b73e6",
+      "observed": "7dc036a72be7a9caf8e0f4af83894604d7fdb28eff5b0c303c16ae22199b73e6",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/development_predictions.pt": {
+      "expected": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da",
+      "observed": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/last_checkpoint.pt": {
+      "expected": "dc86ea590aed841ea7572df4e9228eaa66fcab6b29df4935551f6ae4c634923f",
+      "observed": "dc86ea590aed841ea7572df4e9228eaa66fcab6b29df4935551f6ae4c634923f",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/preflight.json": {
+      "expected": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d",
+      "observed": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d",
+      "status": "PASS"
+    },
+    "job_summary_artifact.full_atom_bond/trace.json": {
+      "expected": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef",
+      "observed": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef",
+      "status": "PASS"
+    },
+    "kaggle_terminal_state": {
+      "expected": "COMPLETE",
+      "observed": "COMPLETE",
+      "status": "PASS"
+    },
+    "launch.version2.runner_sha256": {
+      "expected": "216fa35a4e6ab21d3fb1044e732a114e2aed69e83be36fc8de15987a5199c057",
+      "observed": "216fa35a4e6ab21d3fb1044e732a114e2aed69e83be36fc8de15987a5199c057",
+      "status": "PASS"
+    },
+    "launch.version2.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "launch.version2.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    },
+    "paired_comparison.alignment": {
+      "expected": "both true",
+      "observed": {
+        "source_idx_exact_equal_across_all_payloads": true,
+        "target_exact_equal_across_all_payloads": true
+      },
+      "status": "PASS"
+    },
+    "payload.full_atom.mae_manifest_match": {
+      "expected": 0.15068286657333374,
+      "observed": 0.15068287493646146,
+      "status": "PASS"
+    },
+    "payload.full_atom_bond.mae_manifest_match": {
+      "expected": 0.1493811011314392,
+      "observed": 0.149381096624732,
+      "status": "PASS"
+    },
+    "payload.reference.mae_manifest_match": {
+      "expected": 0.14724504947662354,
+      "observed": 0.147245051574111,
+      "status": "PASS"
+    },
+    "reference.manifest.complete": {
+      "expected": true,
+      "observed": true,
+      "status": "PASS"
+    },
+    "reference.manifest.manifest_sha256": {
+      "expected": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "PASS"
+    },
+    "reference.manifest.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "reference.manifest.reference_evidence_id": {
+      "expected": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "observed": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "status": "PASS"
+    },
+    "reference.manifest.reference_model_sha256": {
+      "expected": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+      "observed": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+      "status": "PASS"
+    },
+    "reference.manifest.rows": {
+      "expected": 50000,
+      "observed": 50000,
+      "status": "PASS"
+    },
+    "reference.payload.protected_role_flags": {
+      "expected": "all false",
+      "observed": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "status": "PASS"
+    },
+    "reference.payload.source_idx_expected_range": {
+      "expected": [
+        100000,
+        149999
+      ],
+      "observed": [
+        100000,
+        149999
+      ],
+      "status": "PASS"
+    },
+    "reference.prediction_reproduction": {
+      "expected": "not required",
+      "note": "Inference is prohibited; only identity/hash/finite/alignment checks were performed.",
+      "observed": "NOT_RUN",
+      "status": "NOT_VERIFIABLE"
+    },
+    "repository.comparison_plan.status": {
+      "expected": "prospective_frozen",
+      "observed": "prospective_frozen",
+      "status": "PASS"
+    },
+    "repository.full_atom.trajectory_action_source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "note": "Frozen prospective action still records the pre-v2 source commit.",
+      "observed": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+      "status": "FAIL"
+    },
+    "repository.full_atom_bond.trajectory_action_source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "note": "Frozen prospective action still records the pre-v2 source commit.",
+      "observed": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+      "status": "FAIL"
+    },
+    "repository.role_plan.protected_roles": {
+      "expected": "all protected roles forbidden",
+      "observed": {
+        "format": "molgap-role-plan-v1",
+        "official_validation": "forbidden",
+        "reference_evaluation_role": "fixed_internal_development_50k_reused",
+        "selection_role": "fixed_internal_development_50k_reused",
+        "test_challenge": "forbidden",
+        "test_dev": "forbidden",
+        "training_role": "fixed_official_train_prefix_100k"
+      },
+      "status": "PASS"
+    },
+    "repository.training_contract.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "note": "Frozen contract still records the pre-v2 source commit.",
+      "observed": "ae15157547c09e5e08db40a19f7442bfecd122dd",
+      "status": "FAIL"
+    },
+    "rml.close_terminal_multi_arm": {
+      "expected": "COMPLETE",
+      "note": "Not invoked: required terminal inputs and a non-ACTIVE decision are absent; no repository files were modified.",
+      "observed": "NOT_RUN",
+      "status": "FAIL"
+    },
+    "rml.validate_rebuild_check_frozen": {
+      "expected": "VALID",
+      "note": "Not invoked: finalization inputs are absent and no terminal decision was invented.",
+      "observed": "NOT_RUN",
+      "status": "FAIL"
+    },
+    "runtime.runner_sha256_artifact": {
+      "expected": "216fa35a4e6ab21d3fb1044e732a114e2aed69e83be36fc8de15987a5199c057",
+      "note": "No runner artifact or raw runner SHA certificate was downloaded; only the frozen launch record carries this expected hash.",
+      "observed": [],
+      "status": "NOT_VERIFIABLE"
+    },
+    "runtime.source_archive_certificate": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "runtime.source_archive_sha256": {
+      "expected": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "observed": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+      "status": "PASS"
+    },
+    "runtime.source_commit": {
+      "expected": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "observed": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+      "status": "PASS"
+    }
+  },
+  "format": "molgap-gptrans-feature-denoising-mechanical-acceptance-v1",
+  "inference_executed": false,
+  "kernel": "nothingnessvoid/molgap-gptrans-feature-denoising-s42",
+  "kernel_version": 2,
+  "mechanical_acceptance_root": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance",
+  "official_validation_read": false,
+  "paired_comparison": {
+    "alignment": {
+      "source_idx_exact_equal_across_all_payloads": true,
+      "target_exact_equal_across_all_payloads": true
+    },
+    "array_file": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\paired_comparison_raw.npz",
+    "array_sha256": "555dcb648a7e0970b2c7f759ee3511692f1466ae5dc7528dbae3e4c7ba77fcce",
+    "format": "molgap-gptrans-feature-denoising-paired-comparison-mechanical-v1",
+    "mae_eV": {
+      "full_atom": 0.15068287493646146,
+      "full_atom_bond": 0.149381096624732,
+      "reference": 0.147245051574111
+    },
+    "note": "Raw paired arrays and intervals only; no promotion/rejection/scientific conclusion is made.",
+    "paired_bootstrap": {
+      "full_atom_bond_minus_full_atom": {
+        "ci95_eV": [
+          -0.002163707980632782,
+          -0.0004155651453733445
+        ],
+        "delta_candidate_minus_reference_eV": -0.001301778311729431,
+        "n_bootstrap": 10000,
+        "probability_delta_lt_zero": 0.9986,
+        "seed": 44
+      },
+      "full_atom_bond_minus_reference": {
+        "ci95_eV": [
+          0.001257784205198288,
+          0.0030213369257450105
+        ],
+        "delta_candidate_minus_reference_eV": 0.0021360450506210326,
+        "n_bootstrap": 10000,
+        "probability_delta_lt_zero": 0.0,
+        "seed": 43
+      },
+      "full_atom_minus_reference": {
+        "ci95_eV": [
+          0.0025423934959173202,
+          0.004327587934374809
+        ],
+        "delta_candidate_minus_reference_eV": 0.003437823362350464,
+        "n_bootstrap": 10000,
+        "probability_delta_lt_zero": 0.0,
+        "seed": 42
+      }
+    },
+    "rows": 50000,
+    "scientific_interpretation": false
+  },
+  "raw_evidence_preserved_unchanged": true,
+  "raw_evidence_root": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw",
+  "scheduler_state": "COMPLETE",
+  "status": "ACCEPTANCE_ANOMALY",
+  "terminal_rml": {
+    "close_terminal_multi_arm_invoked": false,
+    "missing_by_arm": {
+      "full_atom": [
+        "experiment-local terminal package",
+        "terminal v5_evidence.json bound to v2 artifacts",
+        "terminal acceptance record and acceptance_ref",
+        "non-ACTIVE terminal decision and decision authority binding",
+        "observed role-event records",
+        "measured cost event (only expected/estimated cost exists)",
+        "retention receipt",
+        "observed comparison-readiness artifact with paired acceptance"
+      ],
+      "full_atom_bond": [
+        "experiment-local terminal package",
+        "terminal v5_evidence.json bound to v2 artifacts",
+        "terminal acceptance record and acceptance_ref",
+        "non-ACTIVE terminal decision and decision authority binding",
+        "observed role-event records",
+        "measured cost event (only expected/estimated cost exists)",
+        "retention receipt",
+        "observed comparison-readiness artifact with paired acceptance"
+      ]
+    },
+    "reason": "Raw completion artifacts exist, but no terminal package/evidence/acceptance/observed role records or non-ACTIVE decision exists. No scientific decision was guessed and no repository mutation was performed.",
+    "status": "BLOCKED_MISSING_TERMINAL_INPUTS"
+  },
+  "test_challenge_read": false,
+  "test_dev_read": false
+}
