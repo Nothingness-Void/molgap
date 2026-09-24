@@ -50,11 +50,12 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The server-owned Kaggle1 K1 topology-portability dual-arm screen is submitted
-as version 1 and initially `RUNNING`. It tests isolated RWSE refresh versus
-relative-degree local-update calibration under fixed100K V4, followed only
-after both training terminals by a frozen fixed500K internal-development
-NO_TRAIN audit. No result or scale-up is claimed. Authority:
+The server-owned Kaggle1 K1 topology-portability dual-arm screen and its
+separate frozen 500K NO_TRAIN audit are complete. Both isolated 100K arms
+improved K1 below the material gate, then regressed against K1 on the fixed
+500K internal development role without retraining. Both exact interventions
+are closed without scale-up. Both training arms have complete RML replay
+entries; the audit is a separate `NO_TRAIN` terminal. Authority:
 `experiments/pcqm_k1_portability_dual_100k/STATUS.md`.
 
 The server-owned K1 conjugated-component hyperedge 100K dual-arm screen is

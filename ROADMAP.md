@@ -21,7 +21,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | P5 | C-K1-ONESHOT-TRIPLET | Completed: favorable versus K1 but below gate and not better than original PairToken | Preserve replay-ready closure; no persistent triplet, layer, width, seed, or scale retry |
 | P6 | C-V5-REFERENCE-TRACE-RECOVERY | Completed: K1-v4 is locally hash-bound as `historical_partial`, and one canonical replay group contains candidates plus the reference | Preserve the replay binding; no training or semantic upgrade of the historical reference |
 | P7 | C-K1-CONJUGATED-HYPEREDGE | Completed: accepted CPU sidecar and paired Kaggle2 T4x2 seed-42 screen; one-shot negative, persistent positive below gate | Preserve both strict replay-ready terminal records; no scale or seed release |
-| P8 | C-K1-TOPOLOGY-PORTABILITY | User-authorized Kaggle1 two-arm 100K screen with a conditional frozen 500K development-role audit | Accept both independent training arms and the separate NO_TRAIN audit; close or shortlist by the prospective gates without automatic scale training |
+| P8 | C-K1-TOPOLOGY-PORTABILITY | Completed: accepted Kaggle1 two-arm 100K screen and separate frozen 500K internal-development audit; both arms below gate and nonportable | Preserve separate terminal RML evidence; no seed, 500K training, full run, or protected-role release |
 
 The K1-MoSE screen completed with a favorable paired row-bootstrap interval
 but only `0.0011191219 eV` gain. It is closed below its frozen `0.003 eV` gate.

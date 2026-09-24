@@ -1,7 +1,11 @@
 # K1 topology-portability dual screen
 
-Prospective source and roles were frozen before submission. No GPU outcome or
-replay-ready terminal claim exists until downloaded output passes acceptance.
+Prospective source and roles were frozen before submission. The terminal
+Kaggle1 output passed local no-inference acceptance. Both 100K arms improved
+below the material gate and regressed against frozen K1 on the predeclared
+500K internal development role. The arm and audit decisions are in
+`arms/*/decision.md` and `audit/decision.md`. No seed, scale training or
+protected role was released.
 
 ## Submission receipt — 2026-09-25 JST
 
@@ -23,3 +27,19 @@ replay-ready terminal claim exists until downloaded output passes acceptance.
   30-minute interval. Healthy RUNNING is silent; terminal events hand off to
   the existing server controller. The separate IMS and desktop jobs were not
   changed.
+
+## Terminal receipt — 2026-09-25 JST
+
+- The same version-1 kernel reached scheduler `COMPLETE`; no retry was
+  submitted. Accepted source, model/checkpoint/payload hashes, 40-epoch
+  traces, row-aligned predictions, 5K-row frozen-audit chunks and role flags
+  are bound by the downloaded `acceptance.json` and compact `results/` records.
+- Local acceptance ran no model inference. The remote post-training audit did
+  infer frozen weights, but updated no model and opened no protected role.
+  Its result is a diagnostic, not an independent test.
+- `results/submission_receipt.json` and `results/portability_analysis.json`
+  retain the scheduler identity and saved-prediction attribution. Both arm
+  trajectories finalized with strict comparison and complete canonical
+  traces; each entered the RML replay pool. The audit finalized separately
+  as `NO_TRAIN` without a training trace or promotion claim. RML validate,
+  rebuild and frozen-output check passed.

@@ -1,0 +1,44 @@
+{
+  "format": "molgap-k1-topology-portability-saved-prediction-analysis-v1",
+  "source_acceptance_sha256": "304652a130bb70984a264eae0fc15003b5b10e0aecc18bb27be063e9f5235c9f",
+  "paired_bootstrap": {
+    "role": "fixed500k-internal-development-500000-549999",
+    "rows": 50000,
+    "replicates": 1000,
+    "seed": 42,
+    "unit": "molecule row",
+    "interpretation_limit": "Row bootstrap does not measure training stochasticity or create an independent held-out role."
+  },
+  "reference": {
+    "model": "neural_atom_k1_v4",
+    "selected_100k_development_mae_eV": 0.141373634338379,
+    "frozen_500k_development_mae_eV": 0.1412533074617386
+  },
+  "arms": {
+    "neural_atom_k1_rwse_refresh": {
+      "selected_100k_development_mae_eV": 0.1403668373823166,
+      "100k_gain_vs_reference_eV": 0.001006796956062317,
+      "100k_material_gate_passed": false,
+      "frozen_500k_development_mae_eV": 0.1423768699169159,
+      "500k_candidate_minus_reference_mae_eV": 0.0011235624551773071,
+      "500k_paired_row_bootstrap_95_eV": [0.00032535399818420414, 0.001968497948765755],
+      "500k_candidate_win_fraction": 0.49298,
+      "frozen_portability_direction": "regressed"
+    },
+    "neural_atom_k1_degree_balance": {
+      "selected_100k_development_mae_eV": 0.1400965452194214,
+      "100k_gain_vs_reference_eV": 0.0012770891189575195,
+      "100k_material_gate_passed": false,
+      "frozen_500k_development_mae_eV": 0.14342398941516876,
+      "500k_candidate_minus_reference_mae_eV": 0.002170681953430176,
+      "500k_paired_row_bootstrap_95_eV": [0.0013697954803705216, 0.002886383111596107],
+      "500k_candidate_win_fraction": 0.4884,
+      "frozen_portability_direction": "regressed"
+    }
+  },
+  "training_executed_during_analysis": false,
+  "model_inference_executed_during_analysis": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
