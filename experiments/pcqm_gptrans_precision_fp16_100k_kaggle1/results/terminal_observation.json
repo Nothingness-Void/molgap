@@ -1,0 +1,288 @@
+{
+  "arms": {
+    "precision-fp16": {
+      "best_development_mae_eV": 0.15577111986100672,
+      "best_epoch": 59,
+      "checks": {
+        "60_epochs": true,
+        "checkpoint_hash_valid": true,
+        "checkpoint_resume_state": true,
+        "complete": true,
+        "fp16_scaler_state": true,
+        "graph_manifest_pin": true,
+        "no_skipped_fp16_steps": true,
+        "optimizer_steps": true,
+        "predictions_50000_aligned": true,
+        "predictions_and_targets_finite": true,
+        "predictions_hash_valid": true,
+        "protected_roles_sealed": true,
+        "runtime_certificate_valid": true,
+        "sample_presentations": true,
+        "selected_model_hash_valid": true,
+        "source_archive_pin": true,
+        "source_commit_pin": true
+      },
+      "epochs": 60,
+      "fp16_scaler": {
+        "_growth_tracker": 46860,
+        "backoff_factor": 0.5,
+        "growth_factor": 2.0,
+        "growth_interval": 1000000,
+        "scale": 1024.0
+      },
+      "identity": {
+        "completion_variant": "reference",
+        "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "precision": "amp-fp16",
+        "runtime_certificate_id": "7b46730459ff347dbb6b02395752356b3097eec9bd88450433ab13c98fb795d6",
+        "runtime_certificate_validation": {
+          "certificate_id": "7b46730459ff347dbb6b02395752356b3097eec9bd88450433ab13c98fb795d6",
+          "platform_id": "kaggle1-t4x2"
+        },
+        "source_archive_sha256": "a87931d1d57c120c5ccf791a07c4b3c73c54924ffdcdf816b092c4cf97a1059c",
+        "source_commit": "2e4ba28d1c0307abfb8c15d82859502fc0ba86a3"
+      },
+      "last_checkpoint_epoch": 59,
+      "last_checkpoint_sha256": "d6e6ee3345ca22ffee9b4509866c31d4476f26d7f511dfe1c0a1e8a768be9a56",
+      "last_development_mae_eV": 0.15577110648155212,
+      "median_steady_state_graphs_per_second_epochs_5_59": 626.4044931086767,
+      "optimizer_steps": 46860,
+      "outcome": "mechanical_run_checks_passed",
+      "preflight_peak_allocated_bytes": 633298944,
+      "preflight_peak_reserved_bytes": 656408576,
+      "retained_artifact_hashes": {
+        "best_model.pt": {
+          "bytes": 21071318,
+          "sha256": "8bde3977812cb25e7f017accdb3ee6e1936bf453ba946d9ac47c3e8115eabd07"
+        },
+        "completion_manifest.json": {
+          "bytes": 1368,
+          "sha256": "e5f5b40fbbff323a5d1d54d7610782a0d8e8936b45abc071ea695a1d0c0640f4"
+        },
+        "development_predictions.pt": {
+          "bytes": 802517,
+          "sha256": "f760c27f62dff61401a0d0939dcf3206e7752d20bba0053183404d2caf768247"
+        },
+        "frozen_reference.json": {
+          "bytes": 1927,
+          "sha256": "c841181a32001b3497131274ed04dea3a10df9f0e774b6423d539720e821f578"
+        },
+        "last_checkpoint.pt": {
+          "bytes": 84398052,
+          "sha256": "d6e6ee3345ca22ffee9b4509866c31d4476f26d7f511dfe1c0a1e8a768be9a56"
+        },
+        "preflight.json": {
+          "bytes": 30652,
+          "sha256": "f399e3104e2e898c2ab6e10e2ade7f886f8fe7565efa57045258a82ddbcff627"
+        },
+        "runtime_certificate.json": {
+          "bytes": 1377,
+          "sha256": "7e168ce26a620a7bc38eea20656f9645220facf17af61c497aa0c43b38456026"
+        },
+        "runtime_manifest.json": {
+          "bytes": 25886,
+          "sha256": "12b6541687a2ea706182f400e1e37c2d85543dd73d458d5165c0eb180e13a593"
+        },
+        "trace.json": {
+          "bytes": 38535,
+          "sha256": "55a45481c7ff7b281ef4a8e8f2bbe56bcc1ebb975db083f35861a0fbf5d38a45"
+        }
+      },
+      "role_reads": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "roles": {
+        "development": {
+          "membership_sha256": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+          "observed_use": "consumed",
+          "row_order_sha256": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+          "usage_sha256": "12c665d7753740992bf4f5d795f9dbbd30319c54e368f0b080e8ba2bf5b6d32d"
+        },
+        "train": {
+          "membership_sha256": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+          "observed_use": "consumed",
+          "row_order_sha256": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+          "usage_sha256": "977a7a11cd53a6fd0c8744b398f2a4355efe91519584d570bf791aa6835e7a2a"
+        }
+      },
+      "sample_presentations": 5998080,
+      "steady_state_optimizer_loop_seconds_epochs_5_59": 8484.871724378001,
+      "synchronized_optimizer_loop_seconds": 9271.754567150001,
+      "training_peak_gpu_memory_bytes": null
+    },
+    "precision-fp32": {
+      "best_development_mae_eV": 0.15601448806226254,
+      "best_epoch": 59,
+      "checks": {
+        "60_epochs": true,
+        "checkpoint_hash_valid": true,
+        "checkpoint_resume_state": true,
+        "complete": true,
+        "fp16_scaler_state": true,
+        "graph_manifest_pin": true,
+        "no_skipped_fp16_steps": true,
+        "optimizer_steps": true,
+        "predictions_50000_aligned": true,
+        "predictions_and_targets_finite": true,
+        "predictions_hash_valid": true,
+        "protected_roles_sealed": true,
+        "runtime_certificate_valid": true,
+        "sample_presentations": true,
+        "selected_model_hash_valid": true,
+        "source_archive_pin": true,
+        "source_commit_pin": true
+      },
+      "epochs": 60,
+      "fp16_scaler": null,
+      "identity": {
+        "completion_variant": "reference",
+        "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "precision": "fp32",
+        "runtime_certificate_id": "7ccb5cc27517a427cb29e8494e4184adce9163759371d9917125048517ab6ad3",
+        "runtime_certificate_validation": {
+          "certificate_id": "7ccb5cc27517a427cb29e8494e4184adce9163759371d9917125048517ab6ad3",
+          "platform_id": "kaggle1-t4x2"
+        },
+        "source_archive_sha256": "a87931d1d57c120c5ccf791a07c4b3c73c54924ffdcdf816b092c4cf97a1059c",
+        "source_commit": "2e4ba28d1c0307abfb8c15d82859502fc0ba86a3"
+      },
+      "last_checkpoint_epoch": 59,
+      "last_checkpoint_sha256": "b6eb06b6135ee3cae3f1f5840bc6580acc770137d559a38f7acc5cc87796aee7",
+      "last_development_mae_eV": 0.15601448714733124,
+      "median_steady_state_graphs_per_second_epochs_5_59": 708.2914868474841,
+      "optimizer_steps": 46860,
+      "outcome": "mechanical_run_checks_passed",
+      "preflight_peak_allocated_bytes": 861149696,
+      "preflight_peak_reserved_bytes": 884998144,
+      "retained_artifact_hashes": {
+        "best_model.pt": {
+          "bytes": 21071318,
+          "sha256": "1a1ecc379b48a929cea91ee37efbb285d6b2a8997248b76b0114373cd3eab0d3"
+        },
+        "completion_manifest.json": {
+          "bytes": 1364,
+          "sha256": "157295b058bbf476f7cdeccbc365be512d3af67f1405da963e51738a2ee4d761"
+        },
+        "development_predictions.pt": {
+          "bytes": 802517,
+          "sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff"
+        },
+        "frozen_reference.json": {
+          "bytes": 1919,
+          "sha256": "9b83c324dbd03d6f83344958a9a6f391fe24ac1c331a29f5bfe131cd98ce83b7"
+        },
+        "last_checkpoint.pt": {
+          "bytes": 84397860,
+          "sha256": "b6eb06b6135ee3cae3f1f5840bc6580acc770137d559a38f7acc5cc87796aee7"
+        },
+        "preflight.json": {
+          "bytes": 30641,
+          "sha256": "23f7ff87b3bc337b207dabbff6272aa779da125f2c1f9d05239e8711d2046690"
+        },
+        "runtime_certificate.json": {
+          "bytes": 1373,
+          "sha256": "3ae2e0dc3e4498cd792719e3f62845d108ea0bc2d5d39b3f60d13dba72a68cc2"
+        },
+        "runtime_manifest.json": {
+          "bytes": 25882,
+          "sha256": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148"
+        },
+        "trace.json": {
+          "bytes": 38541,
+          "sha256": "529a034a9873efa8132914aa622c2f36b177d328ad44e847b7aeb5f731dceee0"
+        }
+      },
+      "role_reads": {
+        "official_validation_role_read": false,
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false
+      },
+      "roles": {
+        "development": {
+          "membership_sha256": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+          "observed_use": "consumed",
+          "row_order_sha256": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+          "usage_sha256": "12c665d7753740992bf4f5d795f9dbbd30319c54e368f0b080e8ba2bf5b6d32d"
+        },
+        "train": {
+          "membership_sha256": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+          "observed_use": "consumed",
+          "row_order_sha256": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+          "usage_sha256": "977a7a11cd53a6fd0c8744b398f2a4355efe91519584d570bf791aa6835e7a2a"
+        }
+      },
+      "sample_presentations": 5998080,
+      "steady_state_optimizer_loop_seconds_epochs_5_59": 7767.209342571998,
+      "synchronized_optimizer_loop_seconds": 8472.941206425998,
+      "training_peak_gpu_memory_bytes": null
+    }
+  },
+  "artifacts_directory": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/remote_output",
+  "canonical_kernel": "nothingnessvoid/molgap-gptrans-fp32-fp16-precision-100k-s42-v1",
+  "dataset_slug": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "diagnostic_log": {
+    "bytes": 384,
+    "note": "minimal extract from the Kaggle kernel log",
+    "sha256": "d105c276f53d916754e8d214ee828f26ae961c5f5762cd663d3eb1a76260b8a9"
+  },
+  "dual_replay_ready": false,
+  "exact_blocker": [
+    "The existing GPTrans mechanical acceptance entry point is pcqm_gptrans_pair_norm_100k/accept_result.py; it is frozen to pair_update_norm/pair_post_norm and a separately trained historical reference, so it cannot accept precision_fp32/precision_fp16 as this experiment\u2019s same-run control/candidate.",
+    "The frozen prospective Spec has no prospective.same_run_replay peer binding. The FP16 trajectory freezes the historical GPTrans-T reference, so terminal closure cannot bind the newly trained FP32 arm as its strict replay reference without changing frozen prospective identity.",
+    "No precision-specific V5 evidence, exact role-use records, native-cost records, calibrated canonical trace manifests, or terminal acceptance metadata are emitted. The existing experiment_cli terminal requires accepted per-arm evidence; fabricating those records would violate the evidence contract.",
+    "The trainer records preflight peak memory but not full-training peak GPU memory, which the frozen comparison requests.",
+    "The selected desktop replay_pool snapshot has zero entries for either precision trajectory; without accepted canonical terminal inputs, rebuild cannot create the two required replay entries."
+  ],
+  "experiment_id": "pcqm-gptrans-precision-fp16-100k-kaggle1",
+  "formal_terminal_acceptance": "blocked",
+  "format": "molgap-gptrans-precision-fp16-100k-terminal-observation-v1",
+  "frozen_protocol_gate": {
+    "mae_gate_passed": true,
+    "mae_noninferiority_limit_eV": 0.001,
+    "observed_fp16_relative_optimizer_time_change": 0.09427816637251918,
+    "required_fp16_speed_improvement_fraction": 0.2,
+    "row_bootstrap_interval_crosses_zero": true,
+    "speed_gate_passed": false
+  },
+  "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "logical_run_id": "gptrans-precision-fp32-fp16-100k-s42-v1",
+  "nomination": "not nominated: FP16 did not meet the 20% optimizer-time reduction gate",
+  "note": "This is a hash-bound terminal observation and scientific comparison, not V5 mechanical acceptance or replay eligibility.",
+  "paired_comparison": {
+    "candidate": "precision-fp16",
+    "fp16_median_steady_state_graphs_per_second": 626.4044931086767,
+    "fp16_optimizer_loop_seconds": 9271.754567150001,
+    "fp16_relative_optimizer_time_change": 0.09427816637251918,
+    "fp32_median_steady_state_graphs_per_second": 708.2914868474841,
+    "fp32_optimizer_loop_seconds": 8472.941206425998,
+    "fp32_over_fp16_speed_ratio": 0.9138444234110539,
+    "gpu_memory_measurement": "preflight calibrated optimizer-step peak only; full-training peak was not emitted",
+    "mae_difference_fp16_minus_fp32_eV": -0.00024336820125581138,
+    "reference": "precision-fp32",
+    "row_bootstrap_candidate_minus_reference": {
+      "ci95": [
+        -0.0012029431509971618,
+        0.0007265048425197599
+      ],
+      "delta": -0.00024336820125579834,
+      "n_bootstrap": 10000,
+      "probability_better": 0.6902,
+      "seed": 42
+    },
+    "row_count": 50000
+  },
+  "platform_status": "KernelWorkerStatus.COMPLETE",
+  "rml_snapshot": {
+    "matching_replay_pool_entries_before_terminal_closure": 0,
+    "reason": "No accepted precision-specific V5, role, cost, and trace inputs exist for terminal RML closure; rebuilding would only retain the active prospective trajectories.",
+    "rebuild_performed": false
+  },
+  "scientific_disposition": "NEGATIVE_UNDER_CONTRACT",
+  "source_archive_sha256": "a87931d1d57c120c5ccf791a07c4b3c73c54924ffdcdf816b092c4cf97a1059c",
+  "source_commit": "2e4ba28d1c0307abfb8c15d82859502fc0ba86a3",
+  "source_dataset_slug": "nothingnessvoid/molgap-gptrans-fp16-precision-100k-source-v1",
+  "source_package_identity": "bf1abb497a865915ab77c9e4f418ef0a328bb55b75a975b942b1f2cb2451fd59",
+  "spec_identity": "4f490e563aba8bfd146a24196348e1cb0d39e268d351f8f032bfe3d6111c7845"
+}
