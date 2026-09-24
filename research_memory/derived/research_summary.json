@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 25,
+      "trajectories_total": 26,
       "with_complete_native_measurement": 2,
-      "with_cost_event": 25,
-      "with_incomplete_native_measurement": 23,
+      "with_cost_event": 26,
+      "with_incomplete_native_measurement": 24,
       "without_cost_event": 0
     },
     "totals_by_hardware": {
@@ -412,19 +412,69 @@
           "not_applicable_records": 0,
           "unknown_records": 1
         }
+      },
+      "one allocated Hygon DCU; eight allocated CPUs": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 3
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 3,
+            "known_total": 0.15861111111111112
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 3,
+            "known_total": 0.06888888888888889
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 3,
+            "known_total": 0.15861111111111112
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
       }
     },
-    "unknown_events": 29
+    "unknown_events": 32
   },
   "evidence": {
-    "validated": 25,
+    "validated": 26,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 8,
+      "count": 9,
       "severity": "INFO"
     },
     {
@@ -434,7 +484,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 23,
+      "count": 24,
       "severity": "WARN"
     },
     {
@@ -454,19 +504,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 104,
-    "explicit_events": 91,
+    "coarse_historical": 109,
+    "explicit_events": 100,
     "repeatedly_selected": 3
   },
-  "source_digest": "71891eb475e83d86c4806763cdb77f701bb0fe9d2234a39c313c0f9558bc3be9",
+  "source_digest": "b73cefa9683304eaec267c68a24837cbb2e062800d796897b5b8cc76348c17ed",
   "trajectories": {
-    "count": 25,
+    "count": 26,
     "outcomes": {
       "ACTIVE": 1,
       "CLOSED": 1,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 8,
-      "NO_TRAIN": 1,
+      "NO_TRAIN": 2,
       "POSITIVE_BELOW_GATE": 7,
       "POSITIVE_UNDER_CONTRACT": 1,
       "STOP_FOR_COST": 1

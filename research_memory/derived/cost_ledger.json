@@ -1,12 +1,13 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 3,
-  "event_count": 31,
+  "event_count": 34,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
+    "cost-TC-k1-cross-scale-launch-failure-20260924",
     "cost-TC-k1-pair-token-node-return-100k-s42-infra-v1"
   ],
-  "measurement_missing_event_count": 29,
+  "measurement_missing_event_count": 32,
   "not_applicable_event_count": 4,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -252,6 +253,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.08388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.02388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.08388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "infrastructure_failure": {
@@ -299,6 +348,104 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.00795
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0008333333333333334
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.019166666666666665
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0008333333333333334
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "preflight": {
+      "one allocated Hygon DCU; eight allocated CPUs:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.025833333333333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.07388888888888889
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -946,6 +1093,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "one allocated Hygon DCU; eight allocated CPUs": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.15861111111111112
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.06888888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.15861111111111112
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     }
   },
@@ -1745,6 +1942,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.20027777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-k1-pair-token-frozen-cross-scale-20260924": {
+      "one allocated Hygon DCU; eight allocated CPUs:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.15861111111111112
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.06888888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "one allocated Hygon DCU; eight allocated CPUs:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.15861111111111112
         },
         "not_applicable_records": 0,
         "unknown_records": 0

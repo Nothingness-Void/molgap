@@ -236,6 +236,46 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/preflight.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A002",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A002",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-pair-token-mose-100k-s42:A001",
       "target": "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -511,6 +551,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-pair-token-scale-attribution",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-conjugated-oneshot-100k-s42",
       "type": "parent_trajectory"
@@ -617,6 +662,11 @@
     },
     {
       "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
       "target": "TC-k1-pair-token-mose-100k-s42",
       "type": "prior_evidence"
     },
@@ -643,6 +693,11 @@
     {
       "source": "pcqm-k1-pair-token-500k-s42",
       "target": "TC-k1-pair-token-batch-profile",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
       "type": "prior_evidence"
     },
     {
@@ -728,6 +783,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
       "type": "prior_evidence"
     },
     {
@@ -837,6 +897,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-pair-token-mose-100k-s42",
       "type": "reference_used"
     },
@@ -936,6 +1001,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-pair-token-mose-100k-s42",
       "type": "evidence"
     },
@@ -1025,6 +1094,10 @@
     },
     {
       "id": "TC-k1-pair-token-batch-profile",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-frozen-cross-scale-20260924",
       "type": "trajectory"
     },
     {

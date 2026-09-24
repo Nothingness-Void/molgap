@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "71891eb475e83d86c4806763cdb77f701bb0fe9d2234a39c313c0f9558bc3be9",
+  "source_digest": "b73cefa9683304eaec267c68a24837cbb2e062800d796897b5b8cc76348c17ed",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -283,6 +283,24 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-token-batch-profile"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_cross_scale_frozen/decision.md",
+      "family_id": "k1-pair-token-frozen-cross-scale",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-pair-token-scale-attribution"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_cross_scale_frozen/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-pair-token-frozen-cross-scale-20260924"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-pair-token-frozen-cross-scale-20260924"
     },
     {
       "completeness_status": "complete",

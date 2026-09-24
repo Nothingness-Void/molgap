@@ -383,6 +383,28 @@
     },
     {
       "artifact_availability": [
+        "ignored_local_verified_by_terminal_chunk_hashes",
+        "repository"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT_DIAGNOSTIC",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pair-token-frozen-cross-scale-20260924",
+      "role_use": {
+        "internal_development_100k": "prediction_and_labels_read_for_reproduction",
+        "internal_development_500k": "prediction_and_labels_read_for_diagnostic",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective NO_TRAIN frozen-100k K1/PairToken inference on original-100k and disjoint-500k internal development roles",
+      "source_envelope": "experiments/pcqm_k1_cross_scale_frozen/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "100K_ADVANTAGE_ATTENUATED_ON_500K_ROLE",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_prelaunch_metadata",
         "repository_retained"
       ],
@@ -516,6 +538,7 @@
         "TC-k1-multiplicative-pair-value-100k-s42",
         "TC-k1-oneshot-triplet-pair-token-100k-s42",
         "TC-k1-pair-token-100k-s42",
+        "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-mose-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-pairtoken-combination-transfer",

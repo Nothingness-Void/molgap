@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 25,
+    "trajectories_total": 26,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 25,
-    "with_incomplete_native_measurement": 23,
+    "with_cost_event": 26,
+    "with_incomplete_native_measurement": 24,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,12 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 8,
+      "count": 9,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-pair-token-batch-profile",
+        "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-scale-attribution",
         "TC-k1-pairtoken-combination-transfer",
         "TC-k1-tf32-a100-paired-s42",
@@ -50,7 +51,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 23,
+      "count": 24,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -66,6 +67,7 @@
         "TC-k1-multiplicative-pair-value-100k-s42",
         "TC-k1-oneshot-triplet-pair-token-100k-s42",
         "TC-k1-pair-token-100k-s42",
+        "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-mose-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
         "TC-k1-pair-token-scale-attribution",
