@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b38db62d9bb471b6e0a813df4cc048e8bf4751bfcfb486c252cadc863ee65f59",
+  "source_digest": "ab65c9b0cf57d4aae883b423508564f6978528155e34d2b1a9537401a8b5730b",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -350,6 +350,38 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/launch_decision.md",
+      "family_id": "gptrans-t-precision-fp16",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/prospective/fp16/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-precision-fp16-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/launch_decision.md",
+      "family_id": "gptrans-t-precision-fp32",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/prospective/fp32/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-precision-fp32-100k-s42"
     },
     {
       "completeness_status": "complete",

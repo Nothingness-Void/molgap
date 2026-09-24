@@ -12,3 +12,5 @@ The release is limited to one paired fixed-100K attempt after both local and
 remote preflight pass. Neither a queue response nor a speed estimate is a
 scientific result. The numerical decision is owned by `protocol.md` and the
 terminal acceptance, not by this launch record.
+
+The frozen machine declaration is [experiment_spec.json](experiment_spec.json).
