@@ -26,6 +26,9 @@ from molgap.research_memory.trace import canonicalize_trace, file_digest, json_b
 
 ROOT = REPO_ROOT / "experiments/pcqm_k1_functional_group_token_100k"
 ROOT_REL = "experiments/pcqm_k1_functional_group_token_100k"
+SHARED_ROOT = None
+SHARED_REL = None
+EXTRA_ARTIFACTS = ()
 RESULTS = ROOT / "results"
 REFERENCE_ROOT = REPO_ROOT / "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference"
 REFERENCE_REL = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference"
@@ -52,6 +55,7 @@ REOPEN_CONDITIONS = [
 ]
 SCIENTIFIC_STATUS = "positive_below_gate"
 FINALIZED_AT = "2026-09-20T19:00:00+09:00"
+MIGRATED_AT = "2026-09-20"
 PLATFORM = "kaggle2"
 HARDWARE = "Tesla_T4_16GB"
 
@@ -76,6 +80,10 @@ def tensor_sha(value: torch.Tensor) -> str:
 
 def rel(name: str) -> str:
     return f"{ROOT_REL}/{name}"
+
+
+def shared_rel(name: str) -> str:
+    return f"{SHARED_REL or ROOT_REL}/{name}"
 
 
 def binding(path: str) -> dict[str, str]:
@@ -249,12 +257,12 @@ def main() -> None:
         "schema": "molgap-trace-manifest-v1",
         "trajectory_id": TRAJECTORY_ID,
         "run_id": RUN_ID,
-        "contract_ref": rel("training_contract.json"),
+        "contract_ref": shared_rel("training_contract.json"),
         "model_identity": record["contract"]["architecture_fingerprint"],
         "reference_id": "pcqm-k1-v4-100k-reference-s42",
         "comparison_role": "candidate",
         "x_axis": "optimizer_steps",
-        "presentation_semantics_ref": rel("training_contract.json"),
+        "presentation_semantics_ref": shared_rel("training_contract.json"),
         "weight_semantics": "raw_model_no_ema",
         "metric_semantics": "internal_development_direct_gap_mae_eV",
         "evaluation_role_identity": comparison_identity["evaluation_role_identity"],
@@ -329,7 +337,7 @@ def main() -> None:
         "cost_records": rel("results/cost_records.json"),
         "acceptance": rel("results/acceptance_summary.json"),
         "decision": rel("decision.md"),
-        "source_config": rel("source_config.json"),
+        "source_config": shared_rel("source_config.json"),
         "paired_analysis": rel("results/paired_analysis.json"),
     }
     reference_bundle = load(REFERENCE_ROOT / "reference_bundle.json")
@@ -370,7 +378,7 @@ def main() -> None:
     complete_reference = {name: "complete" for name in REQUIRED_OBSERVED_BINDINGS if name != "source_config"}
     complete_candidate = dict(complete_reference)
     complete_candidate["paired_analysis"] = "complete"
-    plan = load(ROOT / "role_plan.json")
+    plan = load((SHARED_ROOT or ROOT) / "role_plan.json")
     role_plan = {key: plan[key] for key in (
         "training_membership", "prediction_input", "labels_read", "metric_computed",
         "selection_used", "external_submission",
@@ -447,15 +455,16 @@ def main() -> None:
                 ("paired_analysis", rel("results/paired_analysis.json")),
                 ("comparison_readiness", rel("results/comparison_readiness.json")),
                 ("canonical_trace", rel("results/canonical_trace.json")),
+                *EXTRA_ARTIFACTS,
             )
         ],
         "authority": {"pointers": [
-            rel("protocol.md"), rel("training_contract.json"), rel("source_config.json"),
+            shared_rel("protocol.md"), shared_rel("training_contract.json"), shared_rel("source_config.json"),
             rel("decision.md"), rel("trajectory.json"), rel("results/comparison_readiness.json"),
         ]},
         "migration": {
             "training_executed": False, "inference_executed": False,
-            "scientific_reinterpretation": False, "migrated_at": "2026-09-20",
+            "scientific_reinterpretation": False, "migrated_at": MIGRATED_AT,
             "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis",
         },
     }
