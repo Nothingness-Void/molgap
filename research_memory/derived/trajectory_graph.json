@@ -361,6 +361,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "pcqm-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
       "type": "prior_evidence"
@@ -368,6 +378,16 @@
     {
       "source": "pcqm-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -458,6 +478,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -588,6 +618,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "reference_used"
     },
     {
@@ -843,6 +883,14 @@
     },
     {
       "id": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "trajectory"
     },
     {

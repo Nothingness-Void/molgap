@@ -94,6 +94,13 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   for the same-job control. Authority:
   `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md` and
   `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md`.
+- The desktop-owned Kaggle1 pair-memory dual screen submitted two new directions,
+  `memory_value` and `memory_message`, to one T4x2 kernel on 2026-09-24.
+  `memory_value` is a relative same-run reference for `memory_message`; no
+  GPTrans-T baseline is retrained. Kaggle's first status query returned
+  `RUNNING`. Both prospective RML trajectories are ACTIVE, and no terminal
+  metric or replay-ready result is accepted. Authority:
+  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/STATUS.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated

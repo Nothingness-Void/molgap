@@ -15,6 +15,7 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
 | P0 blocked | B-GPTRANS-CENTER-PAIR-REPLAY | Resolve replay qualification for the terminally accepted Kaggle1 pair | Existing frozen reference identity cannot satisfy strict causal replay entrance for the same-job control; no training successor is released | `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md` |
+| P1 | B-GPTRANS-PAIR-MEMORY-DUAL | Reconcile the submitted Kaggle1 `memory_value` / `memory_message` T4x2 run | Accept each arm and require two complete replay-pool entries or record the exact terminal blocker; no successor is preauthorized | `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/STATUS.md` |
 | P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
