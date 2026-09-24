@@ -327,6 +327,16 @@ train–development gap. This does not reject K1's own 100K-to-500K scale gain.
 No PairToken successor, seed, full run, or protected-role access is released.
 Authority: `experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md`.
 
+A separate, bounded frozen-checkpoint cross-scale diagnostic is complete and
+independently accepted. Most of PairToken's selected 100K advantage disappears
+on the disjoint 500K development molecules before retraining; the matched
+500K training contract adds a smaller, further reversal on those same rows.
+The relative loss is not explained by simple atom-count or conjugation
+marginal shifts, and the existing late learning curve shows a growing
+train–development gap. This remains descriptive, not a unique causal
+mechanism; PairToken promotion stays closed. Authority:
+`experiments/pcqm_k1_cross_scale_frozen/decision.md`.
+
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact
 sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
