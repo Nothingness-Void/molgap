@@ -10,6 +10,7 @@ from pathlib import Path
 PROFILES = {
     "pair-norm-kaggle3-v1": (("pair_update_norm", "pair_post_norm"), "kaggle3-t4x2"),
     "reference-centered-logits-kaggle1-v1": (("reference", "centered_logits"), "kaggle1-t4x2"),
+    "reference-memory-value-kaggle1-v1": (("reference", "memory_value"), "kaggle1-t4x2"),
 }
 PROFILE = os.environ.get("MOLGAP_PAIR_PROFILE", "pair-norm-kaggle3-v1")
 if PROFILE not in PROFILES:
