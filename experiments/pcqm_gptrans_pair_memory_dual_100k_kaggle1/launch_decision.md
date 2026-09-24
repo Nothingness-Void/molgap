@@ -3,10 +3,11 @@
 Decision date: 2026-09-24 (Asia/Tokyo).
 
 The V5 GPTrans-T 100K reference is already accepted, so no new baseline run is
-authorized. The two candidate mechanisms are untested, closely related
-readback variants that share the same frozen dataset, initialization and
-training recipe. Their results can each change whether pair memory is taken
-to a separately gated scale experiment.
+authorized. The two new mechanisms are closely related readback variants with
+the same frozen dataset, initialization and training recipe. `memory_value`
+serves as the same-run relative reference for `memory_message`; both are new
+experiments with independent RML replay outcomes. Their results can change
+whether pair memory is taken to a separately gated scale experiment.
 
 Release one Kaggle1 T4x2 attempt only after all checks in `protocol.md` pass.
 This decision does not authorize a retry on stale status, another seed, 500K,

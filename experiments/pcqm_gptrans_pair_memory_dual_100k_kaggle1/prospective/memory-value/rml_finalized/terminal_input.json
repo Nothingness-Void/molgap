@@ -1,0 +1,70 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/acceptance_no_train.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/acceptance_no_train.json": "a8aee521d1f68f41e8d5af621a4b06dac985b1715d8494c744be8afc316a2f16",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md": "76439d661b7b024ae76f17bbdf472d6182010303450d7bcc5dcc6d1dc60a1e47"
+  },
+  "costs": [],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Only a newly frozen plan with a replay-qualified reference binding."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md",
+        "name": "no_train_decision",
+        "sha256": "76439d661b7b024ae76f17bbdf472d6182010303450d7bcc5dcc6d1dc60a1e47"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md",
+        "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/acceptance_no_train.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "molgap-gptrans-pair-memory-dual-100k-kaggle1-contract-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-24",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Local withdrawal before remote submission"
+    },
+    "outcome": {
+      "artifact_status": "local_decision_only",
+      "budget_decision": "no_remote_cost",
+      "comparison_status": "not_applicable",
+      "execution_status": "not_run",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_applicable"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "prospective_no_train",
+    "track": "B"
+  },
+  "finalized_at": "2026-09-24T07:03:20.780787+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "kaggle1-gptrans-pair-memory-memory-value-100k-s42-v1",
+  "trajectory_id": "TB-gptrans-pair-memory-memory-value-100k-s42"
+}

@@ -1,0 +1,43 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md",
+      "name": "no_train_decision",
+      "sha256": "76439d661b7b024ae76f17bbdf472d6182010303450d7bcc5dcc6d1dc60a1e47"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/decision_no_train.md",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/acceptance_no_train.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-pair-memory-dual-100k-kaggle1-contract-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local withdrawal before remote submission"
+  },
+  "outcome": {
+    "artifact_status": "local_decision_only",
+    "budget_decision": "no_remote_cost",
+    "comparison_status": "not_applicable",
+    "execution_status": "not_run",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_no_train",
+  "track": "B"
+}

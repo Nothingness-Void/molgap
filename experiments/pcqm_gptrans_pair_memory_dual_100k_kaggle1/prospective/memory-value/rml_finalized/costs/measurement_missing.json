@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-dbcacee1fc7c6f884ebc0dc3",
+  "evidence_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "kaggle1-gptrans-pair-memory-memory-value-100k-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-pair-memory-memory-value-100k-s42"
+}

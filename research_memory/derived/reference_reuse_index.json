@@ -318,6 +318,44 @@
     },
     {
       "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_no_train",
+      "source_envelope": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-message/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "prospective_no_train",
+      "source_envelope": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-value/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "paired_development_comparison_complete",
@@ -382,6 +420,8 @@
         "TB-gptrans-memory-value-k1pair-reference-100k-s42",
         "TB-gptrans-noisy-nodes-100k-s42",
         "TB-gptrans-noisy-pair-norm-100k-s42",
+        "TB-gptrans-pair-memory-memory-message-100k-s42",
+        "TB-gptrans-pair-memory-memory-value-100k-s42",
         "TB-gptrans-reference-k1pair-100k-s42",
         "TB-matched-500k-v4-three-arm",
         "TB-pcqm-scale-transfer-attribution",

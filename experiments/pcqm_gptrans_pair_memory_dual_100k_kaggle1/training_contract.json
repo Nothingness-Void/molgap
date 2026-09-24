@@ -6,10 +6,10 @@
     "memory-value",
     "memory-message"
   ],
-  "candidate_variants": ["memory_value", "memory_message"],
-  "reference_evidence_id": "pcqm-gptrans-t-100k-v4-reference",
-  "historical_reference_evidence_id": "pcqm-gptrans-t-100k-v4-reference",
-  "historical_reference_mae_eV": 0.1566272043,
+  "candidate_variants": [
+    "memory_value",
+    "memory_message"
+  ],
   "minimum_paired_gain_eV": 0.003,
   "paired_bootstrap_upper_bound_max_eV": 0.0,
   "dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
@@ -33,5 +33,9 @@
   "maximum_preflight_estimated_training_hours_per_arm": 6.0,
   "official_validation_role_read": false,
   "test_dev_role_read": false,
-  "test_challenge_role_read": false
+  "test_challenge_role_read": false,
+  "same_run_reference_variant": "memory_value",
+  "same_run_candidate_variant": "memory_message",
+  "contextual_v5_reference_evidence_id": "pcqm-gptrans-t-100k-v4-reference",
+  "contextual_v5_reference_mae_eV": 0.1566272043
 }

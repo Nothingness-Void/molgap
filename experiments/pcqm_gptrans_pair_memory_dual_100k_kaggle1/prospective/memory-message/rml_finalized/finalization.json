@@ -1,0 +1,26 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-ee2e726512b006e34bd08baacbd51a0590a254808ac4a36f5018d0ad65a220e4",
+  "finalized_at": "2026-09-24T07:03:20.780787+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-message/acceptance_no_train.json": "f4b55c8852b96139c2c5f757108ae72b4e96053e4657019820761ea50f0e97c1",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-message/decision_no_train.md": "76439d661b7b024ae76f17bbdf472d6182010303450d7bcc5dcc6d1dc60a1e47"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/measurement_missing.json": "f8b8de968d7e16ce70db13cdc508d303d10c801d2f2e252ec2cb7346329c84d9",
+    "prospective_snapshot.json": "6a99850be07de878a4a8c0a20bef5267af78b653be409f51f9c65f2d5daa4bc0",
+    "terminal_input.json": "d873dd87b36b6a765b2b964ff4d5cd7701387307475756954219913ea0dc4893",
+    "trajectory.json": "7f39da028703765b9b1f970ee6801f5306cf69433a9d28b55c5dedb56bdf500b",
+    "v5_evidence.json": "67e3a05d9879d7759327bd6375b0fd441778471af4f823434c4564fdd4c0fc9e"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/memory-message/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "ee2e726512b006e34bd08baacbd51a0590a254808ac4a36f5018d0ad65a220e4",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-pair-memory-memory-message-100k-s42"
+}

@@ -351,6 +351,26 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-flow-ablation-100k-s42",
+      "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-noisy-nodes-100k-s42",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "prior_evidence"
@@ -428,6 +448,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -548,6 +578,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-noisy-pair-norm-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-pair-memory-memory-value-100k-s42",
       "type": "reference_used"
     },
     {
@@ -674,6 +714,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-pair-norm-500k-s42",
       "type": "evidence"
     },
@@ -787,6 +835,14 @@
     },
     {
       "id": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-pair-memory-memory-message-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-pair-memory-memory-value-100k-s42",
       "type": "trajectory"
     },
     {

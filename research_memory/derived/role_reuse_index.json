@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 120,
+  "ambiguous_historical_role_record_count": 126,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -437,6 +437,48 @@
     },
     {
       "evidence_id": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1206,6 +1248,8 @@
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
       "pcqm-gptrans-pair-norm-500k-s42",
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
@@ -1236,6 +1280,8 @@
       "pcqm-gptrans-noisy-nodes-500k-s42",
       "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
+      "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
       "pcqm-gptrans-pair-norm-500k-s42",
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
