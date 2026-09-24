@@ -13,9 +13,25 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 ## Active temporary branches
 
-No desktop temporary experiment branch has an unresolved terminal job in this
-snapshot. The PairNorm 100K shortlist and training-only 500K profile source
-history was Git-merged into `molgap-desktop` at `43db4a9d`. The later standalone
+The 2026-09-24 local branch audit found one retained desktop temporary ref:
+`codex/fix/rml-500k-reference` at `b78b978d`. It contains prospective DSAR/DSMR
+work and its checkout has uncommitted experiment/evidence files. The committed
+tip is also at `origin/codex/fix/rml-500k-reference`; reconcile its evidence
+before integrating it into `molgap-desktop`. This routing statement does not
+assert a remote job's current state.
+
+The superseded shared experiment-infrastructure tips were patch-equivalent to
+the desktop implementation. Archive merge `bbd98fb3` preserves their original
+commit ancestry without changing the archive tree. Their local `codex/` refs
+were retired after the archive push. Dirty worktrees were detached at their
+original commits with their tracked and untracked changes retained. The four
+closed GPTrans flow / K1 pair-screen tips were already in `archive`; their
+remaining local refs were retired under the same preservation rule.
+
+At the earlier PairNorm cleanup snapshot, no desktop temporary experiment
+branch had an unresolved terminal job. The PairNorm 100K shortlist and
+training-only 500K profile source history was Git-merged into
+`molgap-desktop` at `43db4a9d`. The later standalone
 PairNorm 500K experiment closed negative at `0460ba6`; its source history is
 preserved by archive merge `234f511`. Its selected canonical evidence remains
 indexed on `molgap-desktop`. The temporary refs were retired.
