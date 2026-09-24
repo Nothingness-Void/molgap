@@ -1,0 +1,24 @@
+{
+  "architecture_config_identities": {
+    "neural_atom_k1_degree_balance": "798afabf5cead2fb95da9d00f586ee3a3469fa151beb9cd3886a28f6650a9dad",
+    "neural_atom_k1_rwse_refresh": "3437a9ac6c2fda040a9455220a72a84a7fccae44109b3a5856a27043f44ef103"
+  },
+  "candidate_ids": [
+    "neural_atom_k1_rwse_refresh",
+    "neural_atom_k1_degree_balance"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_portability_dual.py",
+    "src/molgap/k1_portability_audit.py",
+    "src/molgap/pcqm_k1_variants.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "separate_changed_mechanisms": [
+    "zero-start-rwse16-refresh-before-exchange-3-6-9",
+    "zero-start-graph-relative-degree-local-update-calibration"
+  ],
+  "source_commit": "e58d0ccfa89f33e7eee57712a0c19deb97ea62d1",
+  "training_contract_ref": "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+  "training_contract_sha256": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+}

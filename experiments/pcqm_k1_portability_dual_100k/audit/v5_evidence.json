@@ -1,0 +1,65 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "name": "source-config",
+      "sha256": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "name": "training-contract",
+      "sha256": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+      "name": "audit-role-plan",
+      "sha256": "014f5a33ed5e02ad3f6b099b5a19916b0bc3d6481aa5db9160946a67c14e73da"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/budget_snapshot.json",
+      "name": "budget-snapshot",
+      "sha256": "4ad1e92bda034588163bad24e3af8e4cf805a192ececce76493434fe7b9dca5a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+      "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+      "experiments/pcqm_k1_portability_dual_100k/audit/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-topology-portability-post100k-audit-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "conditional_no_train_audit_authorized_after_training_acceptance",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_500k_post100k_no_train_audit",
+  "track": "C"
+}

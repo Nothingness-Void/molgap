@@ -1,0 +1,77 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "name": "source-config",
+      "sha256": "ab602dc467f521f2a03fbebdd2fed9518a7e6908a9f8071d93cd4f53a2671bdf"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "name": "training-contract",
+      "sha256": "59140d62922b92b0627152c0dbd0a140bf6b15766d4036832586ceff675a9e57"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/comparison_readiness_prelaunch.json",
+      "name": "comparison-prelaunch",
+      "sha256": "1e29bdb07dd6cda5f7fb46898d639f6c8ca128af12045d489a798caf9f4018df"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/role_plan.json",
+      "name": "role-plan",
+      "sha256": "318e15ab2d3513224e95380b2e3bf13d61824d5d4c75a718be2ceae9b05b9730"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/trace_plan.json",
+      "name": "trace-plan",
+      "sha256": "62d5ee29f8b43a409d16d2abcbf50c1ce767d766f5d14ff18827e9fdbfc0b148"
+    },
+    {
+      "availability": "committed_prelaunch_metadata",
+      "locator": "repo://experiments/pcqm_k1_portability_dual_100k/budget_snapshot.json",
+      "name": "budget-snapshot",
+      "sha256": "4ad1e92bda034588163bad24e3af8e4cf805a192ececce76493434fe7b9dca5a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_portability_dual_100k/protocol.md",
+      "experiments/pcqm_k1_portability_dual_100k/training_contract.json",
+      "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/trajectory.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-degree-balance-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "prospective prelaunch metadata only; terminal evidence not yet claimed"
+  },
+  "outcome": {
+    "artifact_status": "prelaunch_complete_terminal_pending",
+    "budget_decision": "two_independent_arms_one_job_authorized",
+    "comparison_status": "prelaunch_strict_planned",
+    "execution_status": "planned",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "pending",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_architecture_screen",
+  "track": "C"
+}
