@@ -1,0 +1,85 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "f07c2ad06289f1b361c486dfc530c5243409088262ac6880eba3ed1755ef84bb"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "03fcbdfaad5f657974103b5c2239f721fd7f3d059d0a6e5722a76116de1b7ea2"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "b0de17f02c94da1b3336571706b7ea579fce05cd8bdfdd6ffeab320a5082537a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "c4871270d00972bf9250fc7178472627753119442d4612471582960004a0144e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/sidecar_acceptance.json",
+      "name": "sidecar_acceptance",
+      "sha256": "41a5cbf1f9f67a8600baff57216826485a9bd98cf287396e0a731a513b777f47"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/saved_error_attribution.json",
+      "name": "saved_error_attribution",
+      "sha256": "11052086e1abe783fa54358f0e648b4359b35490c14cf45e458577aeb4f498bb"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/submission_receipt.json",
+      "name": "submission_receipt",
+      "sha256": "367064088eb1eb5ad1313462fe6e256047633acec410c0a117fbcd55623d062a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/protocol.md",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/decision.md",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/trajectory.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-conjugated-persistent-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

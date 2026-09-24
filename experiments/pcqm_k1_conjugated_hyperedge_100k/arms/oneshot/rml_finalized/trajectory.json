@@ -1,0 +1,98 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "dual-v1-oneshot-planned"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-conjugated-oneshot-100k-s42-training"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json"
+      ],
+      "run_ids": [
+        "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned"
+      ],
+      "source_commit": "b2340edd93bff46172959bdc2f9771da51fad3d6",
+      "type": "planned_candidate_only_seed42_100k_screen"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "close this arm under the frozen 100K material gate; retain its evidence for replay"
+    ],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a distinct mechanism and compute budget require new prospective authority"
+    ]
+  },
+  "family_id": "k1-conjugated-hyperedge",
+  "hypothesis": {
+    "alternative_explanations": [
+      "GraphState component benefit may not transplant to K1",
+      "new capacity may overfit 100K as PairToken did"
+    ],
+    "changed_mechanism": "conjugated-component-hyperedge-exchange-layer6",
+    "cheapest_falsifier": "one seed42 fixed PCQM-100K arm against immutable K1",
+    "decision_changed_if_negative": "close exact K1 conjugated hyperedge arm",
+    "decision_changed_if_positive": "retain shortlist; require independent matched 500K release",
+    "expected_native_cost_ref": "cost-TC-k1-conjugated-oneshot-100k-s42-training",
+    "historical_unknowns": [
+      "training stochasticity unavailable; not inferred"
+    ],
+    "hypothesis_id": "H-TC-k1-conjugated-oneshot-100k-s42",
+    "observed_deficiency": "K1's low-rank global advantage survived 500K whereas generic PairToken reversed; a prior separate GraphState experiment benefited from conjugated component communication.",
+    "related_closed_family_ids": [
+      "k1-functional-group-token",
+      "k1-sparse-triplet",
+      "k1-gpspp-local",
+      "k1-induced-pair-token"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does conjugated-component hyperedge exchange improve frozen K1?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-conjugated-oneshot-100k-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-v4-100k-reference-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/role_plan.json"
+    ],
+    "source_commit": "b2340edd93bff46172959bdc2f9771da51fad3d6",
+    "source_config_identity": "89249adaa538eef2bbcc266b514459e9d13bb3e0cd456726e120391a6039069b"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-conjugated-oneshot-100k-s42"
+}

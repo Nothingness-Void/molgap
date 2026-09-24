@@ -31,6 +31,8 @@
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f\",\"optimizer_identity\":\"1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34\",\"scientific_contract\":\"pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7\",\"terminal_endpoint_identity\":\"31240-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-k1-v4-100k-reference-s42\"}",
       "run_ids": [
         "kaseichou/molgap-k1-chemistry-typed-pairtoken-s42:v1",
+        "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
+        "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-functional-group-token-s42:v1",
         "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
         "nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1",
@@ -46,6 +48,8 @@
       ],
       "trajectory_ids": [
         "TC-k1-chem-typed-pair-token-100k-s42",
+        "TC-k1-conjugated-oneshot-100k-s42",
+        "TC-k1-conjugated-persistent-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
@@ -63,6 +67,8 @@
   ],
   "included_trajectory_ids": [
     "TC-k1-chem-typed-pair-token-100k-s42",
+    "TC-k1-conjugated-oneshot-100k-s42",
+    "TC-k1-conjugated-persistent-100k-s42",
     "TC-k1-functional-group-token-100k-s42",
     "TC-k1-mose-context-gate-100k-s42",
     "TC-k1-mose-hidden-bn-100k-s42",
@@ -82,5 +88,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 15
+  "trace_count": 17
 }

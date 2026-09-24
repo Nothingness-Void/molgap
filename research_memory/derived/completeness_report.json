@@ -15,13 +15,11 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 10,
+      "count": 8,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
-        "TC-k1-conjugated-oneshot-100k-s42",
-        "TC-k1-conjugated-persistent-100k-s42",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-pair-token-scale-attribution",
         "TC-k1-pairtoken-combination-transfer",
@@ -82,10 +80,8 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 4,
+      "count": 2,
       "items": [
-        "TC-k1-conjugated-oneshot-100k-s42",
-        "TC-k1-conjugated-persistent-100k-s42",
         "TC-k1-tf32-a100-paired-s42",
         "TS-v5-legacy-evidence-migration"
       ],

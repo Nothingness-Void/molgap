@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "4e04e9a82e6d3608a060b670abd705b58c7895f51fc4fd83ce9a98c5d458165e",
+  "source_digest": "71891eb475e83d86c4806763cdb77f701bb0fe9d2234a39c313c0f9558bc3be9",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -92,16 +92,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/decision.md",
       "family_id": "k1-conjugated-hyperedge",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/trajectory.json",
+      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-conjugated-oneshot-100k-s42"
       ],
@@ -110,16 +110,16 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md",
+      "decision_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/decision.md",
       "family_id": "k1-conjugated-hyperedge",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/trajectory.json",
+      "record_path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/trajectory.json",
       "result_evidence_ids": [
         "pcqm-k1-conjugated-persistent-100k-s42"
       ],

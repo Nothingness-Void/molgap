@@ -1,0 +1,85 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "f4c8b38a3703398ff5ef38a73e127a630c08415c4669a944f2c05cb4aa3f8b82"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "0c3cc2fb795b69413d29e41e2f2313fd0d16172ea43392b5c147cf863708016e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "e8c56a490e4edbaa89de87982fae5aec381a617e991280cddf4298a5b2e9b253"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "0f800dd7ff85bb8044eee9cb746451706a8dac2001944d3bb5b93fd03468f4d3"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/sidecar_acceptance.json",
+      "name": "sidecar_acceptance",
+      "sha256": "41a5cbf1f9f67a8600baff57216826485a9bd98cf287396e0a731a513b777f47"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/saved_error_attribution.json",
+      "name": "saved_error_attribution",
+      "sha256": "11052086e1abe783fa54358f0e648b4359b35490c14cf45e458577aeb4f498bb"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_conjugated_hyperedge_100k/results/submission_receipt.json",
+      "name": "submission_receipt",
+      "sha256": "367064088eb1eb5ad1313462fe6e256047633acec410c0a117fbcd55623d062a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/protocol.md",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/decision.md",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/trajectory.json",
+      "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-conjugated-oneshot-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "negative",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

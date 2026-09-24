@@ -1,0 +1,40 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "6261f25c0c71a396022dcfa33fd73dbb0b23cff2a21ce9f421c3788f9c384615",
+    "best_development_payload.pt": "ef4c4e11ead8e343a235ac7deee0f1b7aa22f5e054766984dc8727f065d2c0d6",
+    "best_model.pt": "5a0bd11b50c71d28043a0c4347ade469f9aabfa36f119397a2dc018c9b11961a",
+    "last_checkpoint.pt": "bd44e36f5ebe187edd456e1a949e67092fa477cc7132182cb10a175e26a45568",
+    "preflight.json": "2000c18b6c934fe2df9cc5fc3a30f86d5d477e44f0846ed3b9c81479a0912b69",
+    "recovery_epoch_10.tar": "cd4be2d09574fe74e8acb2b669d48023f3a157808f7e8d16b07ee69b851e4bae",
+    "recovery_epoch_20.tar": "fab21382b3a1c8226a0f8f9e5d69de96510ae87efcbecbb797ee87550105a8bc",
+    "recovery_epoch_30.tar": "6ca6bf7a0b6ac7256a76f59e1825a7448a262ad16b5ecbfd83c51386c62d6fad",
+    "recovery_epoch_40.tar": "305e084b996344e5c55f8a98a58d03d61fa006e0e0fea56d2e647bf2209408dc",
+    "runtime_certificate.json": "2d86d3f330cfa878f011655f97da966fec7d5ebb9ac469c71eafe411f4d7e6f0",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "bca81fb9231c19c9ace8bf1a87e3574bb2a524f40c3931b4c50be453fb548689"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "best_model_sha256": "5a0bd11b50c71d28043a0c4347ade469f9aabfa36f119397a2dc018c9b11961a",
+    "checkpoint_sha256": "bd44e36f5ebe187edd456e1a949e67092fa477cc7132182cb10a175e26a45568",
+    "development_gap_mae_eV": 0.14010509848594666,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 183.0280512467749,
+    "mean_graphs_per_second": 546.1895011121226,
+    "optimizer_steps": 31240,
+    "parameter_count": 3679617,
+    "payload_sha256": "ef4c4e11ead8e343a235ac7deee0f1b7aa22f5e054766984dc8727f065d2c0d6",
+    "peak_allocated_mib": 568.3642578125,
+    "peak_reserved_mib": 606.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "b2cc400565d02f26b448bd2e749352143a7ce875c08c8a2c2af8059c7ca0f30d",
+  "source_commit": "b2340edd93bff46172959bdc2f9771da51fad3d6"
+}

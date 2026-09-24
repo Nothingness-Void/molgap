@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-efec6bf8c62834b9c3369114e8bbcb6edb715f99a1a27b2ab9c312259f91577f",
+  "finalized_at": "2026-09-24T05:58:14+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/decision.md": "b835acdc8c59e0bff0db8036ed90adabd0b99116d007eb092239fed7c2fd62a2",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/acceptance_summary.json": "f4c8b38a3703398ff5ef38a73e127a630c08415c4669a944f2c05cb4aa3f8b82",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/canonical_trace.json": "0f800dd7ff85bb8044eee9cb746451706a8dac2001944d3bb5b93fd03468f4d3",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/comparison_readiness.json": "e8c56a490e4edbaa89de87982fae5aec381a617e991280cddf4298a5b2e9b253",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/paired_analysis.json": "0c3cc2fb795b69413d29e41e2f2313fd0d16172ea43392b5c147cf863708016e",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/results/terminal_acceptance.json": "9020bbfcc52924e18cd2a5aa2e8c380dd6d41d155e5fb40a7558bd60bef714e1",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/trajectory.json": "ced611627adfca44cd6af113cbf68de86d3f004411db806e0bdf6f1358876fe0",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/protocol.md": "7ff97127146ee44f8ad534e71493fc6bc6c194f0eed8cb28c6430553472eaf3b",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/results/saved_error_attribution.json": "11052086e1abe783fa54358f0e648b4359b35490c14cf45e458577aeb4f498bb",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/results/sidecar_acceptance.json": "41a5cbf1f9f67a8600baff57216826485a9bd98cf287396e0a731a513b777f47",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/results/submission_receipt.json": "367064088eb1eb5ad1313462fe6e256047633acec410c0a117fbcd55623d062a",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json": "df0e4a92f468c511facc3a9f1a54e5f0b7ab3dcb23cc6aa40ec158e6bd7645f2",
+    "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json": "613e2faa615639909e821bbf578f4800542b2ccae179c783c34e16da6346bf97"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-conjugated-oneshot-100k-s42-training.json": "7031a3843ab7fa64acf4ccab5649730c23b0d0e73b5c3b3aff831c7b39072b81",
+    "prospective_snapshot.json": "ced611627adfca44cd6af113cbf68de86d3f004411db806e0bdf6f1358876fe0",
+    "roles/role-TC-k1-conjugated-oneshot-100k-s42-labels-read.json": "cf476def283055ed704c3db54148f27ff786788cbd559235a63649ede26735df",
+    "roles/role-TC-k1-conjugated-oneshot-100k-s42-metric-computed.json": "e3f3a6b9ead580027066298d263d0dfb62607887d69858e1b2ab61e415b23b73",
+    "roles/role-TC-k1-conjugated-oneshot-100k-s42-prediction-input.json": "d1966f1c7d2d5ff6d525cb6a71f881076ac3b48aa1bfe48b7bc7706ebbd31508",
+    "roles/role-TC-k1-conjugated-oneshot-100k-s42-selection-used.json": "a68a4278eafcc72efea0c9faba0eaf501f0c329c504be47d863422ae89d53c37",
+    "roles/role-TC-k1-conjugated-oneshot-100k-s42-training-membership.json": "02b35c8a2228985690219d2da85b9b152be102d76f0a7c62f232f96f4341b70d",
+    "terminal_input.json": "49cb35ad21d37c9e83289663f1551fd3d1d019483228b92f1059e8a65d98d824",
+    "trace.json": "0f800dd7ff85bb8044eee9cb746451706a8dac2001944d3bb5b93fd03468f4d3",
+    "trace_manifest.json": "a5c1fec00d7f74e031bf14370da1c7625c315381d618a22793d2fda4cf53b61a",
+    "trajectory.json": "b8b242ae18a5c04ec64d002dd9d8edb5c61c19cedc0acd787b104e4fd4bfc0bb",
+    "v5_evidence.json": "65f7ab3037f1eb8b7bf1bac3965c9338692e813e1e9867394461d6c377e80246"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-conjugated-oneshot-100k-s42-training.json": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/costs/expected_training.json",
+    "trajectory.json": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/trajectory.json",
+    "v5_evidence.json": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/v5_evidence.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "efec6bf8c62834b9c3369114e8bbcb6edb715f99a1a27b2ab9c312259f91577f",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-conjugated-oneshot-100k-s42"
+}

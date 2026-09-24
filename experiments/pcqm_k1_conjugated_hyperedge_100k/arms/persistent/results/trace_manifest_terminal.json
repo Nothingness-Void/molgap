@@ -1,0 +1,53 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "checkpoint_identity": "bd44e36f5ebe187edd456e1a949e67092fa477cc7132182cb10a175e26a45568",
+  "comparability_identity": {
+    "architecture_identity": "76f3a6c11e8de86948e9294c8ac112ea43413d51ccf7d91540fb6fba76c6fd47",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "matched_architecture_required": false,
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+    "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "terminal_endpoint_identity": "31240-optimizer-steps",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "internal_development_direct_gap_mae_eV",
+  "model_identity": "76f3a6c11e8de86948e9294c8ac112ea43413d51ccf7d91540fb6fba76c6fd47",
+  "presentation_semantics_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/training_contract.json",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "run_id": "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "terminal_evidence_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/terminal_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/results/canonical_trace.json",
+  "trace_artifact_sha256": "c4871270d00972bf9250fc7178472627753119442d4612471582960004a0144e",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TC-k1-conjugated-persistent-100k-s42",
+  "weight_semantics": "raw_model_no_ema",
+  "x_axis": "optimizer_steps"
+}

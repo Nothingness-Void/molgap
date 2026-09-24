@@ -1,0 +1,26 @@
+{
+  "format": "molgap-k1-conjugated-dual-submission-receipt-v1",
+  "platform": "kaggle2",
+  "owner": "kaseichou",
+  "kernel": "kaseichou/molgap-k1-conjugated-dual-s42",
+  "kernel_version": 1,
+  "scheduler_terminal_status": "COMPLETE",
+  "prospective_run_id": "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
+  "observed_remote_run_id": "kaseichou/molgap-k1-conjugated-dual-s42:v1",
+  "arms": [
+    "neural_atom_k1_conjugated_oneshot",
+    "neural_atom_k1_conjugated_persistent"
+  ],
+  "source_commit": "b2340edd93bff46172959bdc2f9771da51fad3d6",
+  "source_archive_sha256": "b2cc400565d02f26b448bd2e749352143a7ce875c08c8a2c2af8059c7ca0f30d",
+  "sidecar_dataset": "kaseichou/molgap-k1-conjugated-cache-fixed100k:v1",
+  "sidecar_aggregate_sha256": "d3e34ccba8c35184c25fd9c00d5de5989b4c2cc943fb76020d33ba9a87614cfe",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1:v1",
+  "worker_exit_codes": {
+    "neural_atom_k1_conjugated_oneshot": 0,
+    "neural_atom_k1_conjugated_persistent": 0
+  },
+  "model_inference_executed_during_acceptance": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
