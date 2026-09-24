@@ -12,6 +12,7 @@ PROFILES = {
     "reference-centered-logits-kaggle1-v1": (("reference", "centered_logits"), "kaggle1-t4x2"),
     "reference-memory-value-kaggle1-v1": (("reference", "memory_value"), "kaggle1-t4x2"),
     "memory-value-message-kaggle1-v1": (("memory_value", "memory_message"), "kaggle1-t4x2"),
+    "precision-fp32-fp16-kaggle1-v1": (("precision_fp32", "precision_fp16"), "kaggle1-t4x2"),
 }
 PROFILE = os.environ.get("MOLGAP_PAIR_PROFILE", "pair-norm-kaggle3-v1")
 if PROFILE not in PROFILES:
@@ -70,6 +71,8 @@ def worker(mode: str, root: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     preflight_path = output / "preflight.json"
     phase = os.environ["MOLGAP_PHASE"]
+    precision = "amp-fp16" if mode == "precision_fp16" else "fp32"
+    variant = "reference" if mode.startswith("precision_") else mode
     if phase == "preflight":
         result = run_preflight(
             dataset_root=dataset_root,
@@ -80,7 +83,8 @@ def worker(mode: str, root: Path) -> None:
             output=output,
             platform_id=PLATFORM_ID,
             initial_state_path=initial_state,
-            variant=mode,
+            variant=variant,
+            precision=precision,
         )
         if result.get("accepted") is not True:
             raise RuntimeError(f"Preflight rejected {mode}: {result}")
@@ -97,7 +101,8 @@ def worker(mode: str, root: Path) -> None:
         output=output,
         platform_id=PLATFORM_ID,
         initial_state_path=initial_state,
-        variant=mode,
+        variant=variant,
+        precision=precision,
     )
 
 

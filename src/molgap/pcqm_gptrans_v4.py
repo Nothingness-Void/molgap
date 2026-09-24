@@ -469,26 +469,54 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     return model, optimizer, scheduler, ema
 
 
-def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool):
+def _precision_determinism(precision: str) -> dict:
+    if precision not in ("fp32", "amp-fp16"):
+        raise ValueError(f"Unsupported GPTrans precision: {precision}")
+    determinism = configure_fp32_determinism(SEED)
+    determinism["precision"] = precision
+    return determinism
+
+
+def _precision_scaler(precision: str):
+    import torch
+
+    return torch.amp.GradScaler("cuda", enabled=precision == "amp-fp16",
+                                init_scale=1024.0, growth_interval=1_000_000)
+
+
+def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool,
+                    precision: str = "fp32", scaler=None):
     import torch
     import torch.nn.functional as functional
 
     optimizer.zero_grad(set_to_none=True)
-    prediction = _forward(model, batch)
-    target = (batch.y.view(-1).float() - mean) / std
-    loss = functional.l1_loss(prediction, target)
+    with torch.autocast("cuda", dtype=torch.float16, enabled=precision == "amp-fp16"):
+        prediction = _forward(model, batch)
+        target = (batch.y.view(-1).float() - mean) / std
+        loss = functional.l1_loss(prediction.float(), target)
     if check_finite and not bool(torch.isfinite(loss)):
         raise RuntimeError("Training loss became non-finite")
-    loss.backward()
+    if scaler is None:
+        loss.backward()
+    else:
+        scaler.scale(loss).backward()
+        scaler.unscale_(optimizer)
     gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
     if check_finite and not bool(torch.isfinite(gradient_norm)):
         raise RuntimeError("Gradient norm became non-finite")
-    optimizer.step()
+    if scaler is None:
+        optimizer.step()
+    else:
+        previous_scale = scaler.get_scale()
+        scaler.step(optimizer)
+        scaler.update()
+        if scaler.get_scale() < previous_scale:
+            raise RuntimeError("FP16 overflow skipped an optimizer step")
     ema.update(model)
     return loss.detach()
 
 
-def _evaluate(model, ema, graphs, mean, std) -> dict:
+def _evaluate(model, ema, graphs, mean, std, *, precision: str = "fp32") -> dict:
     import torch
 
     live_state = {name: value.detach().clone() for name, value in model.state_dict().items()}
@@ -500,7 +528,9 @@ def _evaluate(model, ema, graphs, mean, std) -> dict:
     with torch.no_grad():
         for batch in _development_loader(graphs):
             batch = batch.to("cuda", non_blocking=True)
-            predictions.append((_forward(model, batch) * std + mean).cpu())
+            with torch.autocast("cuda", dtype=torch.float16, enabled=precision == "amp-fp16"):
+                prediction = _forward(model, batch)
+            predictions.append((prediction.float() * std + mean).cpu())
             targets.append(batch.y.view(-1).float().cpu())
             source_idx = getattr(batch, "source_idx", getattr(batch, "row_index", None))
             if source_idx is None:
@@ -523,7 +553,7 @@ def _evaluate(model, ema, graphs, mean, std) -> dict:
     }
 
 
-def _scientific_fields() -> dict:
+def _scientific_fields(precision: str = "fp32") -> dict:
     return {
         "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
         "data_role_fingerprint": canonical_fingerprint(
@@ -537,7 +567,7 @@ def _scientific_fields() -> dict:
         ),
         "target_fingerprint": "pcqm4mv2-gap-eV-direct",
         "seed": SEED,
-        "precision": "fp32",
+        "precision": precision,
         "optimizer_fingerprint": canonical_fingerprint(
             {"name": "torch-adamw", "foreach": False, "fused": False, "lr": LEARNING_RATE, "weight_decay": WEIGHT_DECAY}
         ),
@@ -591,13 +621,16 @@ def run_preflight(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    precision: str = "fp32",
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
-    determinism = configure_fp32_determinism(SEED)
+    determinism = _precision_determinism(precision)
     import torch
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("V4 preflight requires exactly one visible accelerator")
+    if precision == "amp-fp16" and torch.cuda.get_device_capability(0) < (7, 0):
+        raise RuntimeError("FP16 autocast requires a supported CUDA accelerator")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
     validate_screen_arm(physical_batch_per_device=PHYSICAL_BATCH)
     if runtime_calibration_fingerprint is None:
@@ -608,7 +641,7 @@ def run_preflight(
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
                 "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "scientific_contract": _scientific_fields(precision),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -630,13 +663,15 @@ def run_preflight(
     repeat_losses = []
     repeat_states = []
     for _ in range(2):
-        configure_fp32_determinism(SEED)
+        _precision_determinism(precision)
         model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+        scaler = _precision_scaler(precision)
         scheduler.step(0)
         repeat_losses.append(
             float(
                 _optimizer_step(
-                    model, optimizer, ema, batch, mean, std, check_finite=True
+                    model, optimizer, ema, batch, mean, std, check_finite=True,
+                    precision=precision, scaler=scaler if precision == "amp-fp16" else None,
                 ).cpu()
             )
         )
@@ -644,7 +679,7 @@ def run_preflight(
         repeat_states.append(
             {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
         )
-        del model, optimizer, scheduler, ema
+        del model, optimizer, scheduler, ema, scaler
         torch.cuda.empty_cache()
     repeatability = certify_numerical_repeatability(
         losses=repeat_losses,
@@ -654,8 +689,9 @@ def run_preflight(
     )
     repeat_hashes = repeatability["state_sha256"]
 
-    configure_fp32_determinism(SEED)
+    _precision_determinism(precision)
     model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    scaler = _precision_scaler(precision)
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -668,6 +704,8 @@ def run_preflight(
             mean,
             std,
             check_finite=True,
+            precision=precision,
+            scaler=scaler if precision == "amp-fp16" else None,
         )
     torch.cuda.synchronize()
     started = time.perf_counter()
@@ -680,6 +718,8 @@ def run_preflight(
             mean,
             std,
             check_finite=False,
+            precision=precision,
+            scaler=scaler if precision == "amp-fp16" else None,
         )
     torch.cuda.synchronize()
     elapsed = time.perf_counter() - started
@@ -697,7 +737,7 @@ def run_preflight(
         "status": "accepted",
         "platform_id": platform_id,
         "accelerator": torch.cuda.get_device_name(0),
-        "precision": "fp32",
+        "precision": precision,
         "tf32_enabled": False,
         "deterministic_algorithms": True,
         "physical_batch_per_device": PHYSICAL_BATCH,
@@ -717,7 +757,7 @@ def run_preflight(
     }
     certificate_id = canonical_fingerprint(certificate)
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(precision),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -727,6 +767,7 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
+        "precision": precision,
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "accepted": True,
@@ -761,7 +802,10 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference") -> None:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema,
+                     trace, best, best_epoch, target_stats, runtime_certificate_id,
+                     source_archive_sha256, variant: str = "reference",
+                     precision: str = "fp32", scaler=None) -> None:
     atomic_torch_save(
         path,
         {
@@ -770,6 +814,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "epoch": epoch,
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
+            **({"amp_scaler": scaler.state_dict()} if scaler is not None else {}),
             "scheduler": scheduler.state_dict(),
             "ema": ema.state_dict(),
             "trace": trace,
@@ -779,7 +824,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "runtime_certificate_id": runtime_certificate_id,
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
-            "scientific_fields": _scientific_fields(),
+            "scientific_fields": _scientific_fields(precision),
         },
     )
 
@@ -796,9 +841,10 @@ def run_training(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    precision: str = "fp32",
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
-    determinism = configure_fp32_determinism(SEED)
+    determinism = _precision_determinism(precision)
     import torch
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
@@ -807,7 +853,9 @@ def run_training(
     completion_path = output / "completion_manifest.json"
     if completion_path.is_file():
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
-        if completion.get("complete") is True and completion.get("variant", "reference") == variant:
+        if (completion.get("complete") is True
+                and completion.get("variant", "reference") == variant
+                and completion.get("precision", "fp32") == precision):
             return completion
         raise RuntimeError("Existing completion manifest is incompatible")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
@@ -817,6 +865,8 @@ def run_training(
         raise RuntimeError("V4 preflight was not accepted")
     if preflight.get("variant", "reference") != variant:
         raise RuntimeError("Preflight model variant changed")
+    if preflight.get("precision", "fp32") != precision:
+        raise RuntimeError("Preflight precision changed")
     if preflight.get("source_archive_sha256") != source_archive_sha256:
         raise RuntimeError("Preflight source archive changed")
     if preflight.get("source_commit") != source_commit:
@@ -831,7 +881,7 @@ def run_training(
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
                 "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "scientific_contract": _scientific_fields(precision),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -841,7 +891,7 @@ def run_training(
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(precision),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -860,6 +910,7 @@ def run_training(
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
     model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    scaler = _precision_scaler(precision)
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []
@@ -873,7 +924,7 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
-        if checkpoint.get("scientific_fields") != _scientific_fields():
+        if checkpoint.get("scientific_fields") != _scientific_fields(precision):
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
             raise RuntimeError("Checkpoint runtime certificate changed")
@@ -881,6 +932,10 @@ def run_training(
             raise RuntimeError("Checkpoint source identity changed")
         model.load_state_dict(checkpoint["model"], strict=True)
         optimizer.load_state_dict(checkpoint["optimizer"])
+        if precision == "amp-fp16":
+            if "amp_scaler" not in checkpoint:
+                raise RuntimeError("FP16 continuation lacks scaler state")
+            scaler.load_state_dict(checkpoint["amp_scaler"])
         scheduler.load_state_dict(checkpoint["scheduler"])
         ema.load_state_dict(checkpoint["ema"])
         restore_rng_state(checkpoint["rng_state"])
@@ -908,12 +963,18 @@ def run_training(
                 mean,
                 std,
                 check_finite=global_step % FINITE_CHECK_EVERY_STEPS == 0,
+                precision=precision,
+                scaler=scaler if precision == "amp-fp16" else None,
             )
             train_loss_sum.add_(loss * int(batch.num_graphs))
             train_count += int(batch.num_graphs)
         if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:
             raise RuntimeError("Epoch sample exposure changed")
-        development = _evaluate(model, ema, development_graphs, mean, std)
+        torch.cuda.synchronize()
+        training_finished = time.perf_counter()
+        development = _evaluate(model, ema, development_graphs, mean, std,
+                                precision=precision)
+        development_finished = time.perf_counter()
         improved = development["mae_eV"] < best
         if improved:
             best = development["mae_eV"]
@@ -925,6 +986,7 @@ def run_training(
                     **_model_config(),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
+                "precision": precision,
                 "target_stats": target_stats,
                 "epoch": epoch,
                 "development_mae_eV": best,
@@ -955,8 +1017,13 @@ def run_training(
             "best_epoch": best_epoch,
             "learning_rate": learning_rate,
             "optimizer_steps": BATCHES_PER_EPOCH,
+            "optimizer_steps_cumulative": (epoch + 1) * BATCHES_PER_EPOCH,
             "sample_presentations": train_count,
-            "elapsed_seconds": time.perf_counter() - epoch_started,
+            "sample_presentations_cumulative": (epoch + 1) * train_count,
+            "selected_model_sha256": sha256_file(output / "best_model.pt"),
+            "training_seconds": training_finished - epoch_started,
+            "development_seconds": development_finished - training_finished,
+            "elapsed_seconds": development_finished - epoch_started,
         }
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
@@ -974,6 +1041,8 @@ def run_training(
             runtime_certificate_id=certificate_id,
             source_archive_sha256=source_archive_sha256,
             variant=variant,
+            precision=precision,
+            scaler=scaler if precision == "amp-fp16" else None,
         )
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
@@ -994,8 +1063,8 @@ def run_training(
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
-        **_scientific_fields(),
-        "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
+        **_scientific_fields(precision),
+        "run_id": f"gptrans-t-100k-v4-{variant}-{precision}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
         "source_archive_sha256": source_archive_sha256,
@@ -1021,6 +1090,7 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
+        "precision": precision,
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "checkpoint_sha256": sha256_file(checkpoint_path),

@@ -40,6 +40,11 @@ FAMILIES = MappingProxyType({
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
         "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
     ),
+    ("gptrans_t", "2"): FamilyContract(
+        "gptrans_t", "2", "molgap.gptrans", "pcqm_gptrans_precision_v1",
+        "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
+        "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
+    ),
     ("neural_atom_k1", "1"): FamilyContract(
         "neural_atom_k1", "1", "molgap.qm9_neural_atom", "pcqm_k1_full",
         "ogb-atom9-bond3-rwse16-v1", ("train",),
@@ -169,9 +174,13 @@ def _arm(arm: dict) -> None:
 
     training = _object(arm["training"], "recipe overrides objective sampler transform", "training")
     _reference(training["recipe"], "training.recipe", name=contract.recipe)
-    # Frozen legacy recipes have no override allowance. A reviewed new recipe
-    # version must define typed bounds before any override can become executable.
-    _object(training["overrides"], "", "training.overrides")
+    # The precision recipe changes only the CUDA execution dtype; all other
+    # GPTrans V4 recipe fields remain frozen.
+    if (contract.name, contract.version) == ("gptrans_t", "2"):
+        override = _object(training["overrides"], "precision", "training.overrides")
+        _choice(override["precision"], ("fp32", "amp-fp16"), "training.overrides.precision")
+    else:
+        _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
     _reference(training["objective"], "training.objective", name="normalized-gap-l1")

@@ -76,6 +76,21 @@ def test_canonical_round_trip_and_detachment(payload):
     assert len(spec.to_dict()["arms"]) == 2
 
 
+@pytest.mark.parametrize("precision", ["fp32", "amp-fp16"])
+def test_gptrans_precision_recipe_accepts_only_frozen_override(payload, precision):
+    candidate = payload["arms"][0]
+    candidate["family"]["version"] = "2"
+    candidate["training"]["recipe"] = ref("pcqm_gptrans_precision_v1")
+    candidate["training"]["overrides"] = {"precision": precision}
+    assert ExperimentSpec(payload).to_dict()["arms"][0]["training"]["overrides"]["precision"] == precision
+    candidate["training"]["overrides"] = {"precision": "bf16"}
+    with pytest.raises(ValueError, match="unsupported value"):
+        ExperimentSpec(payload)
+    candidate["training"]["overrides"] = {"precision": precision, "batch": 256}
+    with pytest.raises(ValueError, match="expected exactly fields"):
+        ExperimentSpec(payload)
+
+
 @pytest.mark.parametrize("device_count", [1, 2, 4])
 def test_positive_device_count_declaration_accepted(payload, device_count):
     """Schema acceptance for two synthetic arms, not real device execution."""

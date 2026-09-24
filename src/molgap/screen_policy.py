@@ -147,7 +147,7 @@ def validate_runtime_certificate(certificate: Mapping, contract: Mapping) -> dic
         "status": "accepted",
         "platform_id": contract.get("platform_id"),
         "accelerator": contract.get("accelerator"),
-        "precision": "fp32",
+        "precision": contract.get("precision", "fp32"),
         "tf32_enabled": False,
         "deterministic_algorithms": True,
         "physical_batch_per_device": PHYSICAL_BATCH_PER_DEVICE,
