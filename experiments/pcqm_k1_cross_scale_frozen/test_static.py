@@ -1,0 +1,31 @@
+"""Contract checks that require neither torch nor a remote accelerator."""
+
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+MODULE = ROOT / "src/molgap/pcqm_k1_cross_scale_diagnostic.py"
+
+
+def test_no_optimizer_or_training_code():
+    source = MODULE.read_text(encoding="utf-8")
+    assert "torch.no_grad()" in source
+    assert "model.load_state_dict(state, strict=True)" in source
+    assert "optimizer =" not in source
+    assert ".backward(" not in source
+    assert "model.train(" not in source
+
+
+def test_reproduction_gate_precedes_500k_role():
+    source = MODULE.read_text(encoding="utf-8")
+    assert '(("original_100k", cache_100k), ("unseen_500k", cache_500k))' in source
+    assert 'raise RuntimeError(f"{arm} original checkpoint failed prediction reproduction' in source
+    assert "500_000, 550_000" in source
+    assert 'shards = [item for item in manifest["geometry_shards"] if item["role"] == "development"]' in source
+
+
+def test_atomic_chunk_and_no_protected_roles():
+    source = MODULE.read_text(encoding="utf-8")
+    assert "atomic_torch_save(chunk_path, row)" in source
+    assert "sha256_file(chunk_path)" in source
+    assert '"official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"' in source
