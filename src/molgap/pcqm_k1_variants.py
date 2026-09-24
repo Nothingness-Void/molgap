@@ -16,6 +16,27 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_rwse_refresh": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "zero-start-rwse16-refresh-before-exchange-3-6-9",
+        "exchange_layers": [3, 6, 9],
+        "rwse_channels": 16,
+        "derived_from_fixed_graph_only": True,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "teacher": False,
+    },
+    "neural_atom_k1_degree_balance": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "zero-start-graph-relative-degree-local-update-calibration",
+        "exchange_layers": [3, 6, 9],
+        "local_layers": 9,
+        "degree_source": "real-directed-bond-topology",
+        "derived_from_fixed_graph_only": True,
+        "initialization_policy": "nested-function",
+        "geometry": False,
+        "teacher": False,
+    },
     "neural_atom_k1_conjugated_oneshot": {
         "backbone": "neural_atom_k1_v4",
         "change": "conjugated-component-hyperedge-exchange-layer6",
@@ -953,6 +974,11 @@ def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
+
+    from .k1_portability_dual import MODES as PORTABILITY_MODES
+    if mode in PORTABILITY_MODES:
+        from .k1_portability_dual import make_encoder as make_portability
+        return make_portability(mode)
 
     from .k1_conjugated_hyperedge import MODES as CONJUGATED_MODES
     if mode in CONJUGATED_MODES:

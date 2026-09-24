@@ -547,6 +547,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         PARAMETERS as PAIR_TOKEN_MOSE_PARAMETERS,
         check_mechanism as check_pair_token_mose,
     )
+    from .k1_portability_dual import (
+        MODES as PORTABILITY_MODES,
+        check_mechanism as check_portability,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -560,6 +564,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
         + PAIR_TOKEN_MOSE_MODES
+        + PORTABILITY_MODES
     )
     import torch
 
@@ -1234,6 +1239,13 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != ONESHOT_TRIPLET_PARAMETERS[mode]
         ):
             raise RuntimeError("One-shot triplet PairToken parameter identity changed")
+    elif mode in PORTABILITY_MODES:
+        mechanism_checks = check_portability(model, batch)
+        if (
+            mechanism_checks["zero_start"] is not True
+            or mechanism_checks["source_from_fixed_graph_only"] is not True
+        ):
+            raise RuntimeError("Portability mechanism preflight failed")
     model.train()
     torch.cuda.reset_peak_memory_stats()
     optimizer = torch.optim.AdamW(
@@ -1289,6 +1301,12 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = (
             list(model.mose_residual.parameters())
             + list(model.relation_token.parameters())
+        )
+    elif mode in PORTABILITY_MODES:
+        candidate_parameters = (
+            list(model.rwse_refresh.parameters())
+            if mode == PORTABILITY_MODES[0]
+            else [model.degree_balance]
         )
     elif mode in MOSE_MODES:
         if mode in MOSE_REPLACEMENT_MODES:
@@ -1489,6 +1507,7 @@ def train_arm(
     from .k1_sparse_triplet import MODES as SPARSE_TRIPLET_MODES
     from .k1_spd_pair_token import MODES as SPD_PAIR_TOKEN_MODES
     from .k1_oneshot_triplet_pair_token import MODES as ONESHOT_TRIPLET_MODES
+    from .k1_portability_dual import MODES as PORTABILITY_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1502,6 +1521,7 @@ def train_arm(
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
+        + PORTABILITY_MODES
         + MOSE_MODES
     )
 
