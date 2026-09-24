@@ -46,6 +46,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-500k-frozen-readout-attribution:A001",
+      "target": "experiments/pcqm_gptrans_500k_frozen_readout/results/full/baseline/extraction.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-500k-frozen-readout-attribution:A001",
+      "target": "experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-500k-frozen-readout-attribution:A001",
+      "target": "experiments/pcqm_gptrans_500k_frozen_readout/results/full/pair_norm/extraction.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-500k-frozen-readout-attribution:A001",
+      "target": "experiments/pcqm_gptrans_500k_frozen_readout/results/prediction_attribution.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-centered-logits-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_centered_logits_100k/launch/cancellation_observation.json",
       "type": "action_produced_evidence"
@@ -251,6 +271,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-100k-s42",
       "type": "parent_trajectory"
@@ -313,6 +343,11 @@
     {
       "source": "TB-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-full-convergence-20260919",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "parent_trajectory"
     },
     {
@@ -423,6 +458,16 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "prior_evidence"
     },
     {
@@ -543,6 +588,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "prior_evidence"
     },
     {
@@ -677,6 +727,11 @@
     },
     {
       "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-500k-frozen-readout-attribution",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "reference_used"
     },
@@ -707,6 +762,10 @@
     },
     {
       "id": "pcqm-gine-1m-local-specialist-v7",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-500k-frozen-readout-attribution",
       "type": "evidence"
     },
     {
@@ -831,6 +890,10 @@
     },
     {
       "id": "TB-gine-1m-gap-specialist-v7",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "trajectory"
     },
     {

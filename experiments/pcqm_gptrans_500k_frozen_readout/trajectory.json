@@ -1,0 +1,68 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-500k-readout-attribution",
+  "question": "Can frozen 500K GPTrans encoder states identify a readout-information bottleneck behind weak scale-transfer gains?",
+  "hypothesis": {
+    "hypothesis_id": "H-gptrans-500k-frozen-readout-attribution",
+    "observed_deficiency": "Three positive 100K GPTrans mechanisms retain only 1-2 meV of gain against the matched 500K baseline.",
+    "supporting_evidence_ids": ["pcqm-matched-500k-v4-three-arm", "pcqm-gptrans-pair-norm-500k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "alternative_explanations": ["Baseline catches up with more optimization and data.", "Regularization changes train-versus-development generalization.", "The selected heads were optimized jointly with their encoders; a frozen probe may miss an end-to-end interaction."],
+    "changed_mechanism": "No encoder change; compare frozen-feature residual readouts with and without mean real-atom states.",
+    "cheapest_falsifier": "First inspect the four aligned retained prediction artifacts and accepted 500K traces without retraining.",
+    "related_closed_family_ids": ["gptrans-pair-norm-500k", "gptrans-noisy-pair-norm-500k", "pcqm-scale-transfer-attribution"],
+    "expected_native_cost_ref": "cost-TB-gptrans-500k-frozen-readout-expected-local",
+    "decision_changed_if_positive": "Prioritize a separately contracted end-to-end readout study over more anti-collapse regularizers.",
+    "decision_changed_if_negative": "Do not claim a frozen-readout cause; investigate optimization, data-scale and generalization separately.",
+    "historical_unknowns": ["Training-seed variance is unmeasured.", "The development role has already been selected on repeatedly.", "Local extraction runtime is not yet measured."]
+  },
+  "state_at_start": {
+    "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+    "contract_refs": ["experiments/pcqm_gptrans_500k_frozen_readout/protocol.md"],
+    "reference_ids": ["pcqm-matched-500k-v4-three-arm"],
+    "parent_trajectory_ids": ["TB-matched-500k-v4-three-arm", "TB-gptrans-pair-norm-500k-s42", "TB-gptrans-noisy-pair-norm-500k-s42"],
+    "prior_evidence_ids": ["pcqm-matched-500k-v4-three-arm", "pcqm-gptrans-pair-norm-500k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_500k_v4_evidence/roles/train.json", "experiments/pcqm_500k_v4_evidence/roles/development.json"],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_500k_frozen_readout/protocol.md",
+    "source_config_identity": "matched-500k-v4-frozen-checkpoint-readout-probe-v1"
+  },
+  "actions": [{
+    "action_id": "A001",
+    "type": "local_frozen_checkpoint_diagnostic",
+    "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+    "run_ids": ["local-gptrans-500k-frozen-readout-20260925"],
+    "attempt_ids": ["attempt-001"],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/prediction_attribution.json",
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/full/baseline/extraction.json",
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/full/pair_norm/extraction.json",
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json"
+    ],
+    "cost_event_ids": [
+      "cost-TB-gptrans-500k-frozen-readout-expected-local",
+      "cost-TB-gptrans-500k-frozen-readout-baseline-extraction",
+      "cost-TB-gptrans-500k-frozen-readout-pair-extraction",
+      "cost-TB-gptrans-500k-frozen-readout-head-fitting"
+    ]
+  }],
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-500k-frozen-readout-attribution"],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_500k_frozen_readout/v5_evidence.json",
+      "experiments/pcqm_gptrans_500k_frozen_readout/decision.md"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_500k_frozen_readout/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": ["No automatic successor; reconcile the separate existing DSAR route before any new readout training."],
+    "reopen_conditions": ["A new, separately frozen 500K causal contract and budget are justified by independent evidence."]
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_500k_frozen_readout/protocol.md",
+  "comparison_blockers": ["Post-hoc reuse of a development role already used for selection.", "No new end-to-end 500K training or independent seed."],
+  "reference_bundle_id": null
+}

@@ -1,13 +1,13 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 31
+- Validated V5 evidence: 32
 - Evidence without trajectory: 0
 
 ## Trajectories
 - ACTIVE: 2
 - CLOSED: 5
-- INCONCLUSIVE: 6
+- INCONCLUSIVE: 7
 - NEGATIVE_UNDER_CONTRACT: 10
 - NO_TRAIN: 6
 - POSITIVE_UNDER_CONTRACT: 7
@@ -18,8 +18,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 44
-- Coarse historical role records: 126
+- Explicit role events: 48
+- Coarse historical role records: 130
 - Repeatedly selected role identities: 6
 
 ## Cost
@@ -39,6 +39,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- NVIDIA_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- NVIDIA_RTX_5060 queue_hours: not applicable (4 records); measurement_missing=0
+- NVIDIA_RTX_5060 wall_hours: measured=0.017583 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE device_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -71,8 +75,8 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Measurement-missing cost events: 29
-- Cost-event coverage: 25/36 trajectories; incomplete native measurement=20
+- Measurement-missing cost events: 33
+- Cost-event coverage: 26/37 trajectories; incomplete native measurement=21
 
 ## Screening Backtest
 - Status: available
@@ -80,9 +84,9 @@
 - Excluded traces: 6
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 22
+- [INFO] trace_unavailable_for_backtest: 23
 - [WARN] historical_partial_record: 17
-- [WARN] incomplete_native_cost_measurement: 20
+- [WARN] incomplete_native_cost_measurement: 21
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 20
 - [WARN] trajectory_without_v5_evidence: 5

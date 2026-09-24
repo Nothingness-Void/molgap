@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-500k-frozen-readout-head-fitting",
+  "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution",
+  "action_id": "A001",
+  "run_id": "local-gptrans-500k-frozen-readout-20260925",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "platform": "local",
+  "hardware": "NVIDIA_RTX_5060",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.00297322186111059, "status": "measured"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json"
+}

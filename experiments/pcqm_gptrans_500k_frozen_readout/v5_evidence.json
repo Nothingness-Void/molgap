@@ -1,0 +1,58 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-500k-frozen-readout-attribution",
+  "track": "B",
+  "scope": "local_frozen_500k_encoder_readout_diagnostic",
+  "legacy_contract": "pcqm-fixed500k-dev50k-matched60-v4-source-artifacts",
+  "outcome": {
+    "execution_status": "complete_local_diagnostic",
+    "artifact_status": "small_summaries_committed_raw_features_local_only",
+    "comparison_status": "paired_development_diagnostic_not_strict_promotion",
+    "scientific_status": "inconclusive_for_broad_readout_cause",
+    "transfer_status": "no_new_500k_scale_claim",
+    "budget_decision": "no_successor_authorized",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_500k_frozen_readout/protocol.md",
+      "experiments/pcqm_gptrans_500k_frozen_readout/decision.md",
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/prediction_attribution.json",
+      "experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "prediction_attribution",
+      "locator": "repo://experiments/pcqm_gptrans_500k_frozen_readout/results/prediction_attribution.json",
+      "sha256": "045aa9e9e3a130960eb5b348821feba2d3b3f44d11e0c9c5afd7c0181551fb5b",
+      "availability": "committed_metadata_verified"
+    },
+    {
+      "name": "frozen_head_probe",
+      "locator": "repo://experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json",
+      "sha256": "1d83dc713711ffacdfd8c656a6738b13ce454813f6f8008f6de6674c38524e3a",
+      "availability": "committed_metadata_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed_for_post_hoc_diagnostic",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "notes": {
+    "experiment_executed_inference": true,
+    "experiment_fitted_small_residual_heads": true,
+    "encoder_training_executed": false,
+    "migration_boolean_scope": "The migration flags below describe envelope construction only, not the experiment."
+  },
+  "migration": {
+    "migrated_at": "2026-09-25",
+    "verification_scope": "prospective local diagnostic with SHA-pinned accepted 500K inputs; no historical facts inferred",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

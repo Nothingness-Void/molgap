@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 126,
+  "ambiguous_historical_role_record_count": 130,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -122,6 +122,34 @@
     },
     {
       "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-500k-frozen-readout-attribution",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed_for_post_hoc_diagnostic"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-500k-frozen-readout-attribution",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-500k-frozen-readout-attribution",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-500k-frozen-readout-attribution",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -884,7 +912,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 44,
+  "explicit_role_event_count": 48,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1052,6 +1080,42 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+      }
+    ],
+    "ogb-train-500k-scnet-v1:2439b17590530e5bd8aac5c11e3999e16271d96c1f435305c4fcddb6c4543f55:official_train_derived_450000_489999": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-gptrans-500k-frozen-readout-head-fit-450000-490000",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution"
+      }
+    ],
+    "ogb-train-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development_500000_549999_reused": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptrans-500k-frozen-readout-audit-500000-550000",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution"
+      }
+    ],
+    "ogb-train-500k-scnet-v1:55766a83249df6318a29e1bec6475f443da2475ae59afdecf529bed3f479c02c:internal_development_500000_509999": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptrans-500k-frozen-readout-diagnostic-500000-510000",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution"
+      }
+    ],
+    "ogb-train-500k-scnet-v1:adaed388faf6c6bbd2090ce21d255934dba1274a2a26bc860555263cc1bf791a:official_train_derived_490000_499999": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptrans-500k-frozen-readout-head-select-490000-500000",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
@@ -1237,6 +1301,7 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-500k-frozen-readout-attribution",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
@@ -1269,6 +1334,7 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-500k-frozen-readout-attribution",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
