@@ -1,0 +1,31 @@
+{
+  "mode": "neural_atom_k1_pair_token_value_decoupled",
+  "parameter_count": 3682689,
+  "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+  "exact_k1_function_at_initialization": true,
+  "initialization_policy": "nested-function",
+  "candidate_mechanism_trainable_after_two_steps": true,
+  "preflight_peak_reserved_mib": 558.0,
+  "preflight_total_memory_mib": 14911.6875,
+  "preflight_memory_reserve_fraction": 0.9625796879125853,
+  "exchange_layers": [
+    3,
+    6,
+    9
+  ],
+  "mechanism_checks": {
+    "target_layer": 6,
+    "pair_channels": 32,
+    "relation_tokens": 1,
+    "pair_source": "all-ordered-pairs-of-current-layer6-node-states",
+    "pair_normalization": "per-pair-across-channels",
+    "dense_atom_to_atom_attention": false,
+    "valid_pair_count_exact": true,
+    "assignment_mass_one": true,
+    "padding_mass_zero": true,
+    "zero_return_projection": true,
+    "zero_initial_update_exact": true,
+    "selection_value_decoupled": true,
+    "value_projection_identity_initialized": true
+  }
+}

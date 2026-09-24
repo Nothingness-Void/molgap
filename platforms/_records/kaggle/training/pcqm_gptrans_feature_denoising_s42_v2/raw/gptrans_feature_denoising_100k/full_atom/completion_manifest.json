@@ -1,0 +1,26 @@
+{
+  "format": "molgap-gptrans-feature-denoising-result-v1",
+  "complete": true,
+  "arm": "full_atom",
+  "parameters": 5291535,
+  "epochs": 60,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "best_development_mae_eV": 0.15068286657333374,
+  "best_epoch": 59,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "source_archive_sha256": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+  "source_commit": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+  "initial_state_sha256": "c5b427a02e3bbf2fa35d5f029f48a71bd9be449468a6d01f2117a5b2ff232a4e",
+  "artifact_sha256": {
+    "preflight.json": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+    "best_model.pt": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+    "development_predictions.pt": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+    "last_checkpoint.pt": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+    "trace.json": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a"
+  },
+  "platform_id": "kaggle1-t4x2-gpu0",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

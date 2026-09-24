@@ -1,0 +1,49 @@
+{
+  "alignment": {
+    "source_idx_exact_equal_across_all_payloads": true,
+    "target_exact_equal_across_all_payloads": true
+  },
+  "array_file": "D:\\\u6587\u6863\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\mechanical_acceptance\\paired_comparison_raw.npz",
+  "array_sha256": "555dcb648a7e0970b2c7f759ee3511692f1466ae5dc7528dbae3e4c7ba77fcce",
+  "format": "molgap-gptrans-feature-denoising-paired-comparison-mechanical-v1",
+  "mae_eV": {
+    "full_atom": 0.15068287493646146,
+    "full_atom_bond": 0.149381096624732,
+    "reference": 0.147245051574111
+  },
+  "note": "Raw paired arrays and intervals only; no promotion/rejection/scientific conclusion is made.",
+  "paired_bootstrap": {
+    "full_atom_bond_minus_full_atom": {
+      "ci95_eV": [
+        -0.002163707980632782,
+        -0.0004155651453733445
+      ],
+      "delta_candidate_minus_reference_eV": -0.001301778311729431,
+      "n_bootstrap": 10000,
+      "probability_delta_lt_zero": 0.9986,
+      "seed": 44
+    },
+    "full_atom_bond_minus_reference": {
+      "ci95_eV": [
+        0.001257784205198288,
+        0.0030213369257450105
+      ],
+      "delta_candidate_minus_reference_eV": 0.0021360450506210326,
+      "n_bootstrap": 10000,
+      "probability_delta_lt_zero": 0.0,
+      "seed": 43
+    },
+    "full_atom_minus_reference": {
+      "ci95_eV": [
+        0.0025423934959173202,
+        0.004327587934374809
+      ],
+      "delta_candidate_minus_reference_eV": 0.003437823362350464,
+      "n_bootstrap": 10000,
+      "probability_delta_lt_zero": 0.0,
+      "seed": 42
+    }
+  },
+  "rows": 50000,
+  "scientific_interpretation": false
+}

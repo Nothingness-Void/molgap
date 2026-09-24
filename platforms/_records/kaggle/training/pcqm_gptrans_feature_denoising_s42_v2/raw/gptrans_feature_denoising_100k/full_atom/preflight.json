@@ -1,0 +1,19 @@
+{
+  "format": "molgap-gptrans-feature-denoising-preflight-v1",
+  "accepted": true,
+  "arm": "full_atom",
+  "parameters": 5291535,
+  "accelerator": "Tesla T4",
+  "visible_device_count": 1,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "source_archive_sha256": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+  "source_commit": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+  "reference_shared_state_sha256": "e43af04fa1bd3c9b6d48bc61d92b861d423e920d91edb70091abe8ab9d9e1045",
+  "candidate_shared_state_sha256": "e43af04fa1bd3c9b6d48bc61d92b861d423e920d91edb70091abe8ab9d9e1045",
+  "evaluation_output_bitwise_equal": true,
+  "finite_auxiliary_backward": true,
+  "real_graph_shard_deserialized": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

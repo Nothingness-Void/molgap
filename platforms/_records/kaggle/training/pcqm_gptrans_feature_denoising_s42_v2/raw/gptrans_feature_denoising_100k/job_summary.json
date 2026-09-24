@@ -1,0 +1,35 @@
+{
+  "arms": [
+    "full_atom",
+    "full_atom_bond"
+  ],
+  "artifacts": {
+    "full_atom/best_model.pt": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd",
+    "full_atom/completion_manifest.json": "3d8a5ac2589b97256fe487d67c6296927cf5f06480b6facd5f272e69a3f98258",
+    "full_atom/development_predictions.pt": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6",
+    "full_atom/last_checkpoint.pt": "fb4fa4287db580a1e22071cc470c9936b6f12386b7450c4d4fff4f9f85b39cc1",
+    "full_atom/preflight.json": "eba101b5930381dd4f56b9ecb1504f98989e5f5be226c88246d8c83f374a708e",
+    "full_atom/trace.json": "58684858589d1f80b047a4f11c6ea79d8906315c3a3b5878f041a392e244925a",
+    "full_atom_bond/best_model.pt": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69",
+    "full_atom_bond/completion_manifest.json": "7dc036a72be7a9caf8e0f4af83894604d7fdb28eff5b0c303c16ae22199b73e6",
+    "full_atom_bond/development_predictions.pt": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da",
+    "full_atom_bond/last_checkpoint.pt": "dc86ea590aed841ea7572df4e9228eaa66fcab6b29df4935551f6ae4c634923f",
+    "full_atom_bond/preflight.json": "1c2504cd834cbeced8cc952efde01d59fcd37587324012ae9417dd6ec31bcf1d",
+    "full_atom_bond/trace.json": "62a076b7812bf0598a3d20a22ee6d95e4acd0a1c055bd93783505a807625f2ef",
+    "reference/completion_manifest.json": "64810f6ac40bd30914d2186a454d2772f2878e20a693e0ab0a414163457a3e30",
+    "reference/development_predictions.pt": "5b1d78898dfccf0725e2cdfe099aa5e70a19753b3e0ab3fc090072b14ac98add"
+  },
+  "complete": true,
+  "format": "molgap-gptrans-feature-denoising-dual-arm-v1",
+  "gpu_allocation": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "official_validation_role_read": false,
+  "reference_model_sha256": "c841cdee799daa7a874e0f112ce6dea2932fe0f640f434812bac15b83684b092",
+  "source_archive_sha256": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8",
+  "source_commit": "fa564238e33c70bd377edf4d64f3182238a3ee49",
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false
+}
