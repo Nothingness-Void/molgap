@@ -1,0 +1,68 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pair-token-frozen-cross-scale-20260924",
+  "track": "C",
+  "scope": "prospective NO_TRAIN frozen-100k K1/PairToken inference on original-100k and disjoint-500k internal development roles",
+  "legacy_contract": "accepted fixed V4 100K endpoints plus matched60-v4 500K endpoint; no retraining",
+  "outcome": {
+    "execution_status": "COMPLETE",
+    "artifact_status": "VERIFIED",
+    "comparison_status": "PAIRED_ENDPOINT_DIAGNOSTIC",
+    "scientific_status": "NO_TRAIN_NO_MODEL_PROMOTION",
+    "transfer_status": "100K_ADVANTAGE_ATTENUATED_ON_500K_ROLE",
+    "budget_decision": "STOP_AFTER_ACCEPTED_DIAGNOSTIC",
+    "full_handoff_status": "NONE"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_cross_scale_frozen/protocol.md",
+      "experiments/pcqm_k1_cross_scale_frozen/role_plan.json",
+      "experiments/pcqm_k1_cross_scale_frozen/results/preflight.json",
+      "experiments/pcqm_k1_cross_scale_frozen/results/terminal.json",
+      "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json",
+      "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "experiments/pcqm_k1_cross_scale_frozen/decision.md"
+    ]
+  },
+  "role_use": {
+    "internal_development_100k": "prediction_and_labels_read_for_reproduction",
+    "internal_development_500k": "prediction_and_labels_read_for_diagnostic",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "artifacts": [
+    {
+      "name": "no_inference_acceptance_and_analysis",
+      "locator": "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json",
+      "availability": "repository",
+      "sha256": "c290062ef3a53bc34ebcf9a2254bd86a434a7ef48241ee26135c0ae2f26be530"
+    },
+    {
+      "name": "full_inference_terminal_and_chunk_hashes",
+      "locator": "experiments/pcqm_k1_cross_scale_frozen/results/terminal.json",
+      "availability": "repository",
+      "sha256": "65720f58b4b6eeb1baff098e2cdb1547059fda93eb6722de73da247d25ac86c6"
+    },
+    {
+      "name": "original_role_preflight",
+      "locator": "experiments/pcqm_k1_cross_scale_frozen/results/preflight.json",
+      "availability": "repository",
+      "sha256": "3f51cdf05de6b82040e25cc38df2c783fd9f78a24a59e0535eed3575d8390f74"
+    },
+    {
+      "name": "independently_retrievable_40_prediction_chunks",
+      "locator": "platforms/_records/scnet/k1_cross_scale_frozen/job_122911152/output/progress.json",
+      "availability": "ignored_local_verified_by_terminal_chunk_hashes",
+      "sha256": "e7c11c96e6a9deb4bb8c270fae953c6b5b53ecc7076c88d7ee1573a6c0bb9670"
+    }
+  ],
+  "migration": {
+    "migrated_at": "2026-09-24",
+    "verification_scope": "pointer-only V5 evidence wrapping after separately recorded native inference; no additional model execution during wrapping",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

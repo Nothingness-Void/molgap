@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-cross-scale-launch-failure-20260924",
+  "trajectory_id": "TC-k1-pair-token-frozen-cross-scale-20260924",
+  "action_id": "A002",
+  "run_id": "122910907",
+  "attempt_id": "failed-wrapper-before-inference",
+  "category": "infrastructure_failure",
+  "platform": "scnet-kunshan",
+  "hardware": "one allocated Hygon DCU; eight allocated CPUs",
+  "measurement": {
+    "device_hours": {"value": 0.0008333333333333334, "status": "measured"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 0.0008333333333333334, "status": "measured"},
+    "queue_hours": {"value": 0.019166666666666665, "status": "measured"}
+  },
+  "evidence_ref": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json"
+}

@@ -1,0 +1,44 @@
+{
+  "format": "molgap-k1-cross-scale-frozen-diagnostic-v1",
+  "complete": false,
+  "preflight_only": true,
+  "training_executed": false,
+  "model_inference_executed": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "identity": {
+    "format": "molgap-k1-cross-scale-frozen-inputs-v1",
+    "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+    "source_archive_sha256": "f08e8991776b43a36b9a9b5128ad7376ff9d15dc4f57e2969594d870080fd9da",
+    "manifest_sha256": {
+      "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    "checkpoint_sha256": {
+      "k1": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95",
+      "pair_token": "ac8b576a3c7e44d50012a885e13e4c5904ad17c3574319796b13518efe98d1cc"
+    },
+    "payload_sha256": {
+      "k1": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "pair_token": "b67be3f9ba0c67ca0eb1cf7dffa00ad535e9f04f5f8371aadad1e6a2711e0331"
+    },
+    "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+    "physical_batch": 128,
+    "chunk_rows": 5000
+  },
+  "records": {
+    "original_100k/k1": {
+      "rows": 128,
+      "mae_eV": 0.1630108803510666,
+      "reproduction_max_abs_eV": 1.9073486328125e-06
+    },
+    "original_100k/pair_token": {
+      "rows": 128,
+      "mae_eV": 0.16090476512908936,
+      "reproduction_max_abs_eV": 9.5367431640625e-07
+    }
+  },
+  "chunk_sha256": {},
+  "elapsed_seconds": 92.61822696961462
+}

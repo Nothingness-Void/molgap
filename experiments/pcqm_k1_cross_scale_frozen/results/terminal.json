@@ -1,0 +1,93 @@
+{
+  "format": "molgap-k1-cross-scale-frozen-diagnostic-v1",
+  "complete": true,
+  "preflight_only": false,
+  "training_executed": false,
+  "model_inference_executed": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "identity": {
+    "format": "molgap-k1-cross-scale-frozen-inputs-v1",
+    "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+    "source_archive_sha256": "f08e8991776b43a36b9a9b5128ad7376ff9d15dc4f57e2969594d870080fd9da",
+    "manifest_sha256": {
+      "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    "checkpoint_sha256": {
+      "k1": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95",
+      "pair_token": "ac8b576a3c7e44d50012a885e13e4c5904ad17c3574319796b13518efe98d1cc"
+    },
+    "payload_sha256": {
+      "k1": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "pair_token": "b67be3f9ba0c67ca0eb1cf7dffa00ad535e9f04f5f8371aadad1e6a2711e0331"
+    },
+    "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+    "physical_batch": 128,
+    "chunk_rows": 5000
+  },
+  "records": {
+    "original_100k/k1": {
+      "rows": 50000,
+      "mae_eV": 0.1413736343383789,
+      "reproduction_max_abs_eV": 8.58306884765625e-06
+    },
+    "original_100k/pair_token": {
+      "rows": 50000,
+      "mae_eV": 0.13833005726337433,
+      "reproduction_max_abs_eV": 1.430511474609375e-06
+    },
+    "unseen_500k/k1": {
+      "rows": 50000,
+      "mae_eV": 0.1412533074617386
+    },
+    "unseen_500k/pair_token": {
+      "rows": 50000,
+      "mae_eV": 0.14083710312843323
+    }
+  },
+  "chunk_sha256": {
+    "original_100k/k1/chunks/chunk_00.pt": "11af7d81b7e87874b32af7aafd3b5c6af465a6bc935526025752b496120bbe5c",
+    "original_100k/k1/chunks/chunk_01.pt": "22043ad209d7650d39598e750c44beb4e6a61e68a3166b3312a212028deef210",
+    "original_100k/k1/chunks/chunk_02.pt": "2ad660c1bbf6c07e19e9678a27d13bfb95512a721de3a7a0db986f37d8400064",
+    "original_100k/k1/chunks/chunk_03.pt": "63650fa662106c4de69e512024e071382f471f3fa3a3e9bef459097eaff90b58",
+    "original_100k/k1/chunks/chunk_04.pt": "a3b6b8ca3dee1374c365f3753d1c06fc32b40090d2fa37cfaba0c229e8697710",
+    "original_100k/k1/chunks/chunk_05.pt": "df69d34a13c64f72e980ecf6118291ea573a434c7f452a7eb3c8b7d82dcb7827",
+    "original_100k/k1/chunks/chunk_06.pt": "eac0d6df51b712d9cde94fd4384f4b32192ffe2cb60a9beebf5a4690076925e1",
+    "original_100k/k1/chunks/chunk_07.pt": "6e6bc6f98e3173b414998fafe2c718d3311e381a5269e23388742cfffe365249",
+    "original_100k/k1/chunks/chunk_08.pt": "0b4f4eedde0a128132a5e1738c310e24ef74ea63ad2460c7420b8a45b1ab57ea",
+    "original_100k/k1/chunks/chunk_09.pt": "8599b72e4d867f43866451976ed4b8823eaf37113670c7991e4e3f275bb70a57",
+    "original_100k/pair_token/chunks/chunk_00.pt": "241b99e3440de68fcdf44052726ad1b32a9479de9d2114f0eb4778442c5c7216",
+    "original_100k/pair_token/chunks/chunk_01.pt": "193ff53bbc6237176e2160576e726ab07b2c072c8e6789f206b6210fbc7f272f",
+    "original_100k/pair_token/chunks/chunk_02.pt": "2a6cae71d9bf3976dcee01c2382ccbf764b1669a24efd2300a011d3c4fd8d504",
+    "original_100k/pair_token/chunks/chunk_03.pt": "8f6e32db9b6468dc77389dc7b365433a8b157457510cb4e5e03cd0143c2e23cd",
+    "original_100k/pair_token/chunks/chunk_04.pt": "909d385b31879cbb9166b3c9bcb7c17990d361d769066895a4a21658d62f3b0d",
+    "original_100k/pair_token/chunks/chunk_05.pt": "09af0084e58083b824848fed4b2f65d83d579b79eb473eb4a7b8717b92a49472",
+    "original_100k/pair_token/chunks/chunk_06.pt": "fd433b1739b0ed4ec86cb6598de2ed0dec120bc925798500598be1c3a95553d3",
+    "original_100k/pair_token/chunks/chunk_07.pt": "1c6a3dda62fbc500ab87337a53deb8ac2b1bfe0c340e052419a33c94549cbe0d",
+    "original_100k/pair_token/chunks/chunk_08.pt": "82ee62f6383486232db07f7d842922bd315d66460f553763d84fa16133aae69c",
+    "original_100k/pair_token/chunks/chunk_09.pt": "6474881b27e4a54edb736c719c11dcfbcd48dbeb91fddfb80f068040a3d4b584",
+    "unseen_500k/k1/chunks/chunk_00.pt": "4cde93b537661da7e2f91e5f8006cf89ef570e29905434ae5073e74232e374d6",
+    "unseen_500k/k1/chunks/chunk_01.pt": "5290dc25a694a58e8260c4ffead3d8d74d4dc5a6aa6befab5837085397fb4672",
+    "unseen_500k/k1/chunks/chunk_02.pt": "47e607b9a5974bcef452416ff2ed1a2122a846e57fae1cee74c7e59a6a513542",
+    "unseen_500k/k1/chunks/chunk_03.pt": "70e3c268b7170ca93ec83842336f5c32a56559c5fac9019da34ad781897a5917",
+    "unseen_500k/k1/chunks/chunk_04.pt": "c46833d597f57603948042f83df07e2b06d2a57fd06f296a18cef8b62284cff0",
+    "unseen_500k/k1/chunks/chunk_05.pt": "53d6d30cbe999e399af3fc1df872147fa20707535ca9eee87091f36b54468528",
+    "unseen_500k/k1/chunks/chunk_06.pt": "7a92b8eafc0b78594d93891ff144602f15b545778a8d35d854a17cb40ecf4d2b",
+    "unseen_500k/k1/chunks/chunk_07.pt": "345f387ff773bdafa5d03697955254dc601ca6927673c16f17569643e0ec8893",
+    "unseen_500k/k1/chunks/chunk_08.pt": "a5426bd1c3b8362b7deabd0dc9740cf414bed8defdc2c0af67a5945cefa517bc",
+    "unseen_500k/k1/chunks/chunk_09.pt": "41582344d3b55f3753c54e9e4d2e17c32b21a0503ba4974e070e490e1dcb1897",
+    "unseen_500k/pair_token/chunks/chunk_00.pt": "0c20490a7c97cdc8e569b0d98663101ac7b66a5d9a018f7f33cc089a4437a5eb",
+    "unseen_500k/pair_token/chunks/chunk_01.pt": "bc59e53d369473d4133532b5a7c9fdc6861e2a75694f546a74c04a71ba981cd8",
+    "unseen_500k/pair_token/chunks/chunk_02.pt": "b2f906c6c549e0b6bf184b81c6a1536f2e335e01e86362c069b73173718ccbba",
+    "unseen_500k/pair_token/chunks/chunk_03.pt": "0acddbe8eff1e3d5ca72d719660b30c0dc28a559353a9fda86a675e0232394a5",
+    "unseen_500k/pair_token/chunks/chunk_04.pt": "3c3ee8be7b79dea4040ea65a6b15f6a1325d6cba0f7bce92c4679df61b4d7cea",
+    "unseen_500k/pair_token/chunks/chunk_05.pt": "9fd2308861b365cec16f0dd2f25de28abf22371a9f1a9ae05727ff0d26a0e418",
+    "unseen_500k/pair_token/chunks/chunk_06.pt": "e176f6832e0d41d888879d454be32236fdfc22c541965d738ae506876828e2a8",
+    "unseen_500k/pair_token/chunks/chunk_07.pt": "38190d6411f41e35c2dfe83f134e717a379b539ad117db30a1d76f66e3575698",
+    "unseen_500k/pair_token/chunks/chunk_08.pt": "c55a6ff3a467b3e48702a8bf1cf8c360486148b974c2c3cd49c61b23e3f2e31e",
+    "unseen_500k/pair_token/chunks/chunk_09.pt": "4f9f95384c7b760fc16aa8d31eceec6e5564a483b1de1a3645eed3771f92ed9d"
+  },
+  "elapsed_seconds": 224.71797060407698
+}

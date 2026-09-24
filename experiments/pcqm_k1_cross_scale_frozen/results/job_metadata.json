@@ -1,0 +1,58 @@
+{
+  "format": "molgap-k1-cross-scale-job-metadata-v1",
+  "platform": "scnet-kunshan",
+  "hardware": "one allocated Hygon DCU, eight CPUs",
+  "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+  "source_archive_sha256": "f08e8991776b43a36b9a9b5128ad7376ff9d15dc4f57e2969594d870080fd9da",
+  "jobs": [
+    {
+      "id": "122910464",
+      "purpose": "first-batch original-100k checkpoint reproduction preflight",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "submitted": "2026-09-24T13:56:45",
+      "started": "2026-09-24T13:58:18",
+      "ended": "2026-09-24T14:02:44",
+      "allocated_seconds": 266,
+      "queue_seconds": 93,
+      "preflight_sha256": "3f51cdf05de6b82040e25cc38df2c783fd9f78a24a59e0535eed3575d8390f74"
+    },
+    {
+      "id": "122910907",
+      "purpose": "full launch; shell wrapper failed before Python inference",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "submitted": "2026-09-24T14:04:12",
+      "started": "2026-09-24T14:05:21",
+      "ended": "2026-09-24T14:05:24",
+      "allocated_seconds": 3,
+      "queue_seconds": 69,
+      "stderr_sha256": "ec1154b5ddef0d3dc683e9e40a61cbd944923b2c1e0d318c6b3d4ecc3bbb2eac",
+      "wrapper_fix_commit": "5727f906"
+    },
+    {
+      "id": "122911152",
+      "purpose": "complete frozen 100k-on-100k and 100k-on-500k inference",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "submitted": "2026-09-24T14:07:29",
+      "started": "2026-09-24T14:08:55",
+      "ended": "2026-09-24T14:13:57",
+      "allocated_seconds": 302,
+      "queue_seconds": 86,
+      "core_inference_seconds": 224.717970604077,
+      "terminal_sha256": "65720f58b4b6eeb1baff098e2cdb1547059fda93eb6722de73da247d25ac86c6",
+      "progress_sha256": "e7c11c96e6a9deb4bb8c270fae953c6b5b53ecc7076c88d7ee1573a6c0bb9670",
+      "stdout_sha256": "5d5e791f692d8c6484418fd7262ebe9712b09b90b0a2801d64c516b0aa739533",
+      "stderr_sha256": "266aa27aba358256c01b85c0f83d1017c98f65550f3ad357d0c5721a758e2592"
+    }
+  ],
+  "allocated_dcu_seconds_total": 571,
+  "queue_seconds_total": 248,
+  "cpu_time_measured": false,
+  "model_training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "ignored_local_record": "platforms/_records/scnet/k1_cross_scale_frozen/job_122911152/output"
+}

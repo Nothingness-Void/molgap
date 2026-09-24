@@ -33,19 +33,40 @@
   "actions": [
     {
       "action_id": "A001",
-      "type": "planned_frozen_checkpoint_cross_scale_inference",
-      "run_ids": ["pending-kunshan-sbatch"],
-      "attempt_ids": ["pending-preflight-and-full"],
+      "type": "accepted_original_100k_first_batch_reproduction_preflight",
+      "run_ids": ["122910464"],
+      "attempt_ids": ["completed-first-batch-preflight"],
       "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
-      "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/protocol.md", "experiments/pcqm_k1_cross_scale_frozen/role_plan.json", "experiments/pcqm_k1_cross_scale_frozen/budget_snapshot.json"],
+      "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/protocol.md", "experiments/pcqm_k1_cross_scale_frozen/results/preflight.json", "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json"],
+      "cost_event_ids": ["cost-TC-k1-cross-scale-preflight-20260924"]
+    },
+    {
+      "action_id": "A002",
+      "type": "failed_full_launch_before_python_inference",
+      "run_ids": ["122910907"],
+      "attempt_ids": ["failed-wrapper-before-inference"],
+      "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+      "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json", "experiments/pcqm_k1_cross_scale_frozen/decision.md"],
+      "cost_event_ids": ["cost-TC-k1-cross-scale-launch-failure-20260924"]
+    },
+    {
+      "action_id": "A003",
+      "type": "accepted_frozen_100k_on_500k_development_inference",
+      "run_ids": ["122911152"],
+      "attempt_ids": ["completed-full-inference"],
+      "source_commit": "ff38382664dcf2261facf6e339106810936c34af",
+      "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/results/terminal.json", "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json", "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json"],
       "cost_event_ids": ["cost-TC-k1-pair-token-frozen-cross-scale-20260924"]
     }
   ],
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": ["pcqm-k1-pair-token-frozen-cross-scale-20260924"],
+    "evidence_refs": ["experiments/pcqm_k1_cross_scale_frozen/v5_evidence.json", "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json", "experiments/pcqm_k1_cross_scale_frozen/results/terminal.json", "experiments/pcqm_k1_cross_scale_frozen/decision.md"]
+  },
   "decision": {
-    "decision_ref": "experiments/pcqm_k1_cross_scale_frozen/protocol.md",
+    "decision_ref": "experiments/pcqm_k1_cross_scale_frozen/decision.md",
     "outcome": "NO_TRAIN",
-    "next_allowed_actions": ["perform the bounded frozen inference only after accepted preflight"],
+    "next_allowed_actions": [],
     "reopen_conditions": ["a separate independent role would be required for a new generalization claim"]
   }
 }
