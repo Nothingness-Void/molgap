@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 12,
-  "event_count": 49,
+  "event_count": 53,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 38,
-  "not_applicable_event_count": 23,
+  "measurement_missing_event_count": 42,
+  "not_applicable_event_count": 27,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -213,7 +213,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 5
       },
       "NVIDIA_RTX_5060:device_hours": {
         "estimated": {
@@ -225,7 +225,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 5
       },
       "NVIDIA_RTX_5060:queue_hours": {
         "estimated": {
@@ -236,7 +236,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 5,
         "unknown_records": 0
       },
       "NVIDIA_RTX_5060:wall_hours": {
@@ -245,11 +245,11 @@
           "known_total": 0.5
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.0165298969166684
+          "known_records": 3,
+          "known_total": 0.03113959833333866
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "other": {
@@ -507,7 +507,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 7
       },
       "NVIDIA_RTX_5060:device_hours": {
         "estimated": {
@@ -519,7 +519,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 7
       },
       "NVIDIA_RTX_5060:queue_hours": {
         "estimated": {
@@ -530,7 +530,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "NVIDIA_RTX_5060:wall_hours": {
@@ -539,8 +539,8 @@
           "known_total": 10.0
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.00297322186111059
         },
         "not_applicable_records": 0,
         "unknown_records": 2
@@ -999,7 +999,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 9
+        "unknown_records": 13
       },
       "device_hours": {
         "estimated": {
@@ -1011,7 +1011,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 9
+        "unknown_records": 13
       },
       "queue_hours": {
         "estimated": {
@@ -1022,7 +1022,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 9,
+        "not_applicable_records": 13,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -1031,11 +1031,11 @@
           "known_total": 10.5
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.0165298969166684
+          "known_records": 4,
+          "known_total": 0.03411282019444925
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       }
     },
     "NVIDIA_T4_SINGLE_VISIBLE": {
@@ -1685,6 +1685,56 @@
         "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
+    "TB-gptrans-500k-frozen-readout-attribution": {
+      "NVIDIA_RTX_5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 4
+      },
+      "NVIDIA_RTX_5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 4
+      },
+      "NVIDIA_RTX_5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 4,
+        "unknown_records": 0
+      },
+      "NVIDIA_RTX_5060:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 3,
+          "known_total": 0.01758292327778085
         },
         "not_applicable_records": 0,
         "unknown_records": 1

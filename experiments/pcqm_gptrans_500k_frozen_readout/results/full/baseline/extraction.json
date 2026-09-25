@@ -1,0 +1,42 @@
+{
+  "format": "molgap-gptrans-500k-frozen-features-v1",
+  "arm": "baseline",
+  "scope": "500k_trained_encoder_frozen_train_role_head_probe",
+  "graph_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "checkpoint_sha256": "e311f1972ba74ade32e1f16be717c44848235eeafbafd592758775553445c79e",
+  "selected_predictions_sha256": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf",
+  "batch_size": 64,
+  "device": "NVIDIA GeForce RTX 5060",
+  "roles": {
+    "train": {
+      "rows": 50000,
+      "source_idx_start": 450000,
+      "source_idx_stop": 500000,
+      "features_sha256": "a4f23b6611f93bf3cd1aef9893af62fe693c2c12535f3105127ab3e10a1d3281",
+      "feature_dimensions": [
+        50000,
+        544
+      ],
+      "base_mae_eV": 0.0786963403224945,
+      "selected_prediction_max_abs_replay_delta_eV": null,
+      "wall_seconds": 20.40950820001308,
+      "peak_cuda_reserved_bytes": 71303168
+    },
+    "development": {
+      "rows": 10000,
+      "source_idx_start": 500000,
+      "source_idx_stop": 510000,
+      "features_sha256": "c741c511cbafc67752c8deb2b8a247f054450f96ae6de059dd751f7afffb68d8",
+      "feature_dimensions": [
+        10000,
+        544
+      ],
+      "base_mae_eV": 0.10169912874698639,
+      "selected_prediction_max_abs_replay_delta_eV": 1.430511474609375e-06,
+      "wall_seconds": 3.713889599981485,
+      "peak_cuda_reserved_bytes": 71303168
+    }
+  },
+  "wall_seconds": 25.556768900016323,
+  "protected_roles_read": false
+}

@@ -137,6 +137,26 @@
     },
     {
       "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "paired_development_diagnostic_not_strict_promotion",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-500k-frozen-readout-attribution",
+      "role_use": {
+        "internal_development": "consumed_for_post_hoc_diagnostic",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_frozen_500k_encoder_readout_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_500k_frozen_readout/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "no_new_500k_scale_claim",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "paired_endpoint_only_not_strict",
@@ -626,6 +646,7 @@
       "track": "B",
       "transfer_status": "nomination_only_not_full_scale_promotion",
       "used_by_trajectory_ids": [
+        "TB-gptrans-500k-frozen-readout-attribution",
         "TB-gptrans-noisy-nodes-500k-s42",
         "TB-gptrans-noisy-pair-norm-500k-s42",
         "TB-gptrans-pair-norm-500k-s42"

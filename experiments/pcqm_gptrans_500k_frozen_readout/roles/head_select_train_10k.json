@@ -1,0 +1,13 @@
+{
+  "schema": "molgap-role-event-v1",
+  "role_event_id": "role-gptrans-500k-frozen-readout-head-select-490000-500000",
+  "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution",
+  "action_id": "A001",
+  "run_id": "local-gptrans-500k-frozen-readout-20260925",
+  "dataset_identity": "ogb-train-500k-scnet-v1",
+  "row_manifest_hash": "adaed388faf6c6bbd2090ce21d255934dba1274a2a26bc860555263cc1bf791a",
+  "role_name": "official_train_derived_490000_499999",
+  "access_kind": "metric_computed",
+  "selection_used": true,
+  "evidence_ref": "experiments/pcqm_gptrans_500k_frozen_readout/results/full/heads/head_probe.json"
+}
