@@ -21,6 +21,12 @@ train metrics at fixed checkpoints. Online train MAE is not a fixed-subset
 train evaluation; do not call their difference a generalization gap. Distinguish
 observed peak, terminal, and selection-point gains.
 
+If the accepted K1 and EdgeState matched-500K manifests and 60-epoch traces
+are locally retained, verify their manifest SHA against the accepted decision,
+then verify each trace SHA and exact step/sample axis. A verified small JSON
+snapshot may be included for source-only reanalysis; prediction/checkpoint
+artifacts remain excluded. Compare their same-step advantage over EdgeState.
+
 Round 3: reconcile accepted full training and continuation budgets. Compare
 source and continuation endpoints only within each architecture. Quote the
 accepted official-validation rank solely from its existing decision; do not

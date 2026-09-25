@@ -29,6 +29,10 @@ MATCH_FIELDS = (
     "x_axis_semantics",
 )
 SNAPSHOT_EPOCHS = (9, 19, 29, 39, 49, 59)
+ACCEPTED_ARCH_MANIFESTS = {
+    "k1": "6de0d6a576729030138a5f0a6914f7afe9cac75860b4355fe49c1e3c5e09f7e1",
+    "edgestate": "01f3862ff557eb3d46cd8901f7512f8bc33f9a10b8e000ce4c69b098fac05c51",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -126,6 +130,78 @@ def analyze(root: Path) -> dict:
             "note": "Contextual cross-scale ratio; EMA, development cohort, and horizon differ.",
         }
 
+    arch_traces = {}
+    for name, expected_manifest_sha in ACCEPTED_ARCH_MANIFESTS.items():
+        source_dir = root / "experiments/pcqm_scale_transfer_reassessment/sources" / name
+        manifest_path = source_dir / "stage_manifest.json"
+        trace_path = source_dir / "trace.json"
+        manifest_sha = sha256(manifest_path)
+        if manifest_sha != expected_manifest_sha:
+            raise ValueError(f"unaccepted architecture manifest: {name}")
+        manifest = load_json(manifest_path)
+        trace_sha = sha256(trace_path)
+        if trace_sha != manifest["artifacts"]["trace.json"]:
+            raise ValueError(f"architecture trace SHA mismatch: {name}")
+        if manifest["status"] != "COMPLETE" or manifest["next_epoch"] != 60:
+            raise ValueError(f"incomplete architecture run: {name}")
+        contract = manifest["contract"]
+        expected_contract = {
+            "benchmark_id": identity["scientific_contract"],
+            "data_role_fingerprint": identity["dataset_identity"],
+            "optimizer_fingerprint": identity["optimizer_identity"],
+            "schedule_fingerprint": identity["lr_schedule_identity"],
+            "target_transform_fingerprint": identity["target_transform_identity"],
+            "selection_fingerprint": identity["selection_role_identity"],
+            "sample_exposure": reference["manifest"]["exposure"]["sample_presentations"],
+        }
+        mismatched = [key for key, value in expected_contract.items() if contract[key] != value]
+        if mismatched:
+            raise ValueError(f"unmatched architecture contract for {name}: {mismatched}")
+        epochs = load_json(trace_path)["epochs"]
+        if len(epochs) != 60 or any(
+            row["epoch"] != i or row["global_step"] != baseline[i]["optimizer_step"]
+            or row["sample_presentations"] != baseline[i]["sample_presentations"]
+            for i, row in enumerate(epochs)
+        ):
+            raise ValueError(f"unmatched architecture trace axis for {name}")
+        arch_traces[name] = {
+            "manifest_ref": str(manifest_path.relative_to(root)).replace("\\", "/"),
+            "manifest_sha256": manifest_sha,
+            "trace_ref": str(trace_path.relative_to(root)).replace("\\", "/"),
+            "trace_sha256": trace_sha,
+            "epochs": epochs,
+        }
+
+    edge_epochs = arch_traces["edgestate"]["epochs"]
+    architecture_curves = {}
+    for name, rows in {
+        "k1": arch_traces["k1"]["epochs"],
+        "gptrans": [
+            {"development_mae_eV": row["live_dev_metric"], "train_mae_eV": row["live_train_metric"]}
+            for row in baseline
+        ],
+    }.items():
+        gains = [edge["development_mae_eV"] - row["development_mae_eV"] for edge, row in zip(edge_epochs, rows)]
+        train_diffs = [edge["train_mae_eV"] - row["train_mae_eV"] for edge, row in zip(edge_epochs, rows)]
+        architecture_curves[name] = {
+            "best_selected_gain_over_edgestate_eV": min(edge["development_mae_eV"] for edge in edge_epochs)
+            - min(row["development_mae_eV"] for row in rows),
+            "first_10_mean_gain_eV": sum(gains[:10]) / 10,
+            "last_10_mean_gain_eV": sum(gains[-10:]) / 10,
+            "terminal_gain_eV": gains[-1],
+            "terminal_online_train_difference_eV": train_diffs[-1],
+            "snapshots": [
+                {
+                    "epoch_zero_based": epoch,
+                    "optimizer_step": baseline[epoch]["optimizer_step"],
+                    "sample_presentations": baseline[epoch]["sample_presentations"],
+                    "same_step_development_gain_eV": gains[epoch],
+                    "online_train_difference_eV": train_diffs[epoch],
+                }
+                for epoch in SNAPSHOT_EPOCHS
+            ],
+        }
+
     gptrans_contract = load_json(root / "experiments/pcqm_k1_gptrans_full_fusion/training_contract.json")
     k1_contract = load_json(root / "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/k1/training_contract.json")
     edge_metrics = load_json(root / "experiments/pcqm_edge_state_full/results/convergence_40/remote_metrics.json")
@@ -141,6 +217,14 @@ def analyze(root: Path) -> dict:
             "reference_best_development_eV": min(item["live_dev_metric"] for item in baseline),
             "arms": arms,
             "online_train_semantics": "epoch-online training metric, not fixed-subset training evaluation",
+        },
+        "matched_500k_architectures": {
+            "source_snapshots": {
+                name: {key: value for key, value in record.items() if key != "epochs"}
+                for name, record in arch_traces.items()
+            },
+            "curves_against_edgestate": architecture_curves,
+            "scope": "Same-contract single-seed development curves; not a cross-scale projection.",
         },
         "cross_scale_context": {
             "transfer": transfer,

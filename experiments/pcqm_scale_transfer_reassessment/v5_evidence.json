@@ -17,6 +17,7 @@
   "authority": {
     "pointers": [
       "experiments/pcqm_scale_transfer_reassessment/protocol.md",
+      "experiments/pcqm_scale_transfer_reassessment/sources/README.md",
       "experiments/pcqm_scale_transfer_reassessment/analysis.json",
       "experiments/pcqm_scale_transfer_reassessment/decision.md"
     ]
@@ -24,7 +25,7 @@
   "artifacts": [{
     "name": "scale_transfer_reassessment",
     "locator": "repo://experiments/pcqm_scale_transfer_reassessment/analysis.json",
-    "sha256": "eafd37c2b747be0c96abe63cc7163293dbbf69d1ea779ffa2f167eb5852aa0ff",
+    "sha256": "7c6abcf47e349189b90ee296090afedda532ebca0544547142435a817b48ade2",
     "availability": "committed_metadata_verified"
   }],
   "role_use": {
@@ -34,7 +35,7 @@
     "test_challenge": "untouched"
   },
   "notes": {
-    "scope": "Only previously accepted JSON traces, contracts, decisions and aggregate metrics were read; no molecular labels, checkpoint weights or prediction tensors were opened.",
+    "scope": "Only previously accepted JSON traces, manifests, contracts, decisions and aggregate metrics were read; no molecular labels, checkpoint weights or prediction tensors were opened.",
     "migration_fields": "The false booleans describe the V5 envelope transaction, not the historical training runs whose evidence was audited."
   },
   "migration": {

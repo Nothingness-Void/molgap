@@ -30,6 +30,12 @@ def test_joint_gain_contract_and_horizon() -> None:
 
 def test_full_budget_and_generated_result_are_reproducible() -> None:
     result = _analyze()
+    architecture = result["matched_500k_architectures"]
+    assert architecture["source_snapshots"]["k1"]["manifest_sha256"].startswith("6de0d6a5")
+    assert architecture["source_snapshots"]["edgestate"]["manifest_sha256"].startswith("01f3862f")
+    assert architecture["curves_against_edgestate"]["k1"]["snapshots"][0]["same_step_development_gain_eV"] > 0.039
+    assert architecture["curves_against_edgestate"]["k1"]["terminal_gain_eV"] < 0.006
+    assert architecture["curves_against_edgestate"]["gptrans"]["terminal_gain_eV"] < 0.005
     full = result["full_context"]
     assert full["gptrans_selected_total_presentations"] == 40271360
     assert full["k1_completed_total_presentations"] == 30135680

@@ -245,6 +245,127 @@
     "reference_trace_ref": "experiments/pcqm_500k_v4_evidence/results/canonical_trace.json",
     "reference_trace_sha256": "6d613216ec56098d3800ed43d4606ed68c31fd9698254545ab3f3069a90e2068"
   },
+  "matched_500k_architectures": {
+    "curves_against_edgestate": {
+      "gptrans": {
+        "best_selected_gain_over_edgestate_eV": 0.004481270909309387,
+        "first_10_mean_gain_eV": 0.007315637171268463,
+        "last_10_mean_gain_eV": 0.004582031071186066,
+        "snapshots": [
+          {
+            "epoch_zero_based": 9,
+            "online_train_difference_eV": 0.03173663766982329,
+            "optimizer_step": 39060,
+            "same_step_development_gain_eV": 0.01741047203540802,
+            "sample_presentations": 4999680
+          },
+          {
+            "epoch_zero_based": 19,
+            "online_train_difference_eV": 0.020250010483552128,
+            "optimizer_step": 78120,
+            "same_step_development_gain_eV": 0.017474398016929626,
+            "sample_presentations": 9999360
+          },
+          {
+            "epoch_zero_based": 29,
+            "online_train_difference_eV": 0.01445791009175705,
+            "optimizer_step": 117180,
+            "same_step_development_gain_eV": 0.017854124307632446,
+            "sample_presentations": 14999040
+          },
+          {
+            "epoch_zero_based": 39,
+            "online_train_difference_eV": 0.01078805612765589,
+            "optimizer_step": 156240,
+            "same_step_development_gain_eV": 0.008229315280914307,
+            "sample_presentations": 19998720
+          },
+          {
+            "epoch_zero_based": 49,
+            "online_train_difference_eV": 0.008815797042528759,
+            "optimizer_step": 195300,
+            "same_step_development_gain_eV": 0.00543271005153656,
+            "sample_presentations": 24998400
+          },
+          {
+            "epoch_zero_based": 59,
+            "online_train_difference_eV": 0.008156860373628116,
+            "optimizer_step": 234360,
+            "same_step_development_gain_eV": 0.0044290050864219666,
+            "sample_presentations": 29998080
+          }
+        ],
+        "terminal_gain_eV": 0.0044290050864219666,
+        "terminal_online_train_difference_eV": 0.008156860373628116
+      },
+      "k1": {
+        "best_selected_gain_over_edgestate_eV": 0.0064889416098594666,
+        "first_10_mean_gain_eV": 0.029855086654424667,
+        "last_10_mean_gain_eV": 0.005783530324697495,
+        "snapshots": [
+          {
+            "epoch_zero_based": 9,
+            "online_train_difference_eV": 0.05335572165733793,
+            "optimizer_step": 39060,
+            "same_step_development_gain_eV": 0.039792947471141815,
+            "sample_presentations": 4999680
+          },
+          {
+            "epoch_zero_based": 19,
+            "online_train_difference_eV": 0.03688612035392015,
+            "optimizer_step": 78120,
+            "same_step_development_gain_eV": 0.01653064787387848,
+            "sample_presentations": 9999360
+          },
+          {
+            "epoch_zero_based": 29,
+            "online_train_difference_eV": 0.030358122152815845,
+            "optimizer_step": 117180,
+            "same_step_development_gain_eV": 0.021420255303382874,
+            "sample_presentations": 14999040
+          },
+          {
+            "epoch_zero_based": 39,
+            "online_train_difference_eV": 0.027190156691271963,
+            "optimizer_step": 156240,
+            "same_step_development_gain_eV": 0.009434126317501068,
+            "sample_presentations": 19998720
+          },
+          {
+            "epoch_zero_based": 49,
+            "online_train_difference_eV": 0.02631196673405871,
+            "optimizer_step": 195300,
+            "same_step_development_gain_eV": 0.00560375303030014,
+            "sample_presentations": 24998400
+          },
+          {
+            "epoch_zero_based": 59,
+            "online_train_difference_eV": 0.026180022186624158,
+            "optimizer_step": 234360,
+            "same_step_development_gain_eV": 0.005527481436729431,
+            "sample_presentations": 29998080
+          }
+        ],
+        "terminal_gain_eV": 0.005527481436729431,
+        "terminal_online_train_difference_eV": 0.026180022186624158
+      }
+    },
+    "scope": "Same-contract single-seed development curves; not a cross-scale projection.",
+    "source_snapshots": {
+      "edgestate": {
+        "manifest_ref": "experiments/pcqm_scale_transfer_reassessment/sources/edgestate/stage_manifest.json",
+        "manifest_sha256": "01f3862ff557eb3d46cd8901f7512f8bc33f9a10b8e000ce4c69b098fac05c51",
+        "trace_ref": "experiments/pcqm_scale_transfer_reassessment/sources/edgestate/trace.json",
+        "trace_sha256": "f0908c6b9a984eb8cec473ee08836bbdd8191415374a9381a2636473a5561902"
+      },
+      "k1": {
+        "manifest_ref": "experiments/pcqm_scale_transfer_reassessment/sources/k1/stage_manifest.json",
+        "manifest_sha256": "6de0d6a576729030138a5f0a6914f7afe9cac75860b4355fe49c1e3c5e09f7e1",
+        "trace_ref": "experiments/pcqm_scale_transfer_reassessment/sources/k1/trace.json",
+        "trace_sha256": "61fc6dda2395d2f93e591af6fe1dc213dd7f6ebadd541bc4c0a31240cf831630"
+      }
+    }
+  },
   "method": "source-only accepted RML trace and contract audit; no predictions or protected roles opened",
   "schema": "molgap-pcqm-scale-transfer-reassessment-v1"
 }
