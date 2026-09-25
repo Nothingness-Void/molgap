@@ -38,15 +38,18 @@
     "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md"],
     "cost_event_ids": ["cost-TB-gptrans-local-selection-probe-expected"]
   }],
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-local-selection-probe-20260925"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/selection_probe/v5_evidence.json", "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/acceptance.json", "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/result.json"]
+  },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["One local raw-weight inference diagnostic under the frozen contract; no training."],
+    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [],
     "reopen_conditions": []
   },
   "comparison_class": "CONTEXT_ONLY",
   "comparison_readiness_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
-  "comparison_blockers": ["No raw-weight result yet; this is a diagnostic outside strict promotion."],
+  "comparison_blockers": ["Weak selection contribution under a single-seed diagnostic does not qualify a 500K retraining or promotion claim."],
   "reference_bundle_id": null
 }

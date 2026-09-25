@@ -1,0 +1,26 @@
+{
+  "format": "molgap-local-gptrans-selection-probe-acceptance-v1",
+  "status": "accepted_diagnostic_only",
+  "trajectory_id": "TB-gptrans-local-selection-probe-20260925",
+  "run_id": "local-gptrans-raw-ema-selection-probe-20260925",
+  "source_commit": "15885dd08a6676ccd422f488c693b09245c94bf6",
+  "source_script_sha256": "6a0b144cebf26a336da970db2f17656bae626fe0d83092baadf7b6e67f9825ce",
+  "result_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/result.json",
+  "result_sha256": "f228b9feb2367852e660ad6f8d6559fdae1fab47f232f442949917245ac6d926",
+  "input_acceptance_ref": "experiments/pcqm_gptrans_100k_transfer_control/acceptance.json",
+  "checks": {
+    "both_checkpoint_hashes_match_terminal_manifests": true,
+    "same_source_and_epoch_59_raw_and_ema": true,
+    "100k_cache_manifest_and_shards_verified": true,
+    "500k_cache_manifest_and_development_shard_verified": true,
+    "paired_source_idx_targets_and_finite_predictions_verified": true,
+    "published_ema_100k_gain_reproduced": true,
+    "official_validation_or_protected_role_read": false,
+    "training_executed": false
+  },
+  "script_wall_seconds": 59.5076289000062,
+  "script_wall_scope": "run_probe only; excludes Python process startup and CLI argument parsing",
+  "full_process_wall_seconds": null,
+  "device_hours": null,
+  "decision_scope": "raw-versus-EMA selection contribution within one local seed and fixed 100K weights; not 500K retraining"
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 136,
+  "ambiguous_historical_role_record_count": 141,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -353,6 +353,41 @@
     },
     {
       "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -954,7 +989,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 50,
+  "explicit_role_event_count": 52,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1184,6 +1219,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-100k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
@@ -1262,6 +1304,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-500k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       },
       {
         "access_kind": "selection_used",
@@ -1360,6 +1409,7 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
       "pcqm-gptrans-noisy-nodes-100k-s42",
@@ -1394,6 +1444,7 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
       "pcqm-gptrans-noisy-nodes-100k-s42",
@@ -1553,6 +1604,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-100k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
@@ -1592,6 +1650,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-500k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       },
       {
         "access_kind": "selection_used",
@@ -1769,6 +1834,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-100k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
@@ -1847,6 +1919,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-local-selection-probe-development-500k",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
       },
       {
         "access_kind": "selection_used",

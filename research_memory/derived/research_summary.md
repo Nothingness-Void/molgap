@@ -1,13 +1,13 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 33
+- Validated V5 evidence: 34
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 3
+- ACTIVE: 2
 - CLOSED: 5
-- INCONCLUSIVE: 9
+- INCONCLUSIVE: 10
 - NEGATIVE_UNDER_CONTRACT: 10
 - NO_TRAIN: 6
 - POSITIVE_UNDER_CONTRACT: 7
@@ -18,8 +18,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 50
-- Coarse historical role records: 136
+- Explicit role events: 52
+- Coarse historical role records: 141
 - Repeatedly selected role identities: 7
 
 ## Cost
@@ -39,10 +39,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- NVIDIA_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- NVIDIA_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- NVIDIA_RTX_5060 queue_hours: not applicable (8 records); measurement_missing=0
-- NVIDIA_RTX_5060 wall_hours: measured=unknown (0 measured records), estimated=10.500000 (5 estimated records), measurement_missing=3, not_applicable=0
+- NVIDIA_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
+- NVIDIA_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
+- NVIDIA_RTX_5060 queue_hours: not applicable (9 records); measurement_missing=0
+- NVIDIA_RTX_5060 wall_hours: measured=0.016530 (1 measured record), estimated=10.500000 (5 estimated records), measurement_missing=3, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE device_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -75,7 +75,7 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Measurement-missing cost events: 37
+- Measurement-missing cost events: 38
 - Cost-event coverage: 29/40 trajectories; incomplete native measurement=24
 
 ## Screening Backtest
@@ -88,5 +88,5 @@
 - [WARN] historical_partial_record: 17
 - [WARN] incomplete_native_cost_measurement: 24
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 22
-- [WARN] trajectory_without_v5_evidence: 7
+- [WARN] missing_explicit_role_identity: 21
+- [WARN] trajectory_without_v5_evidence: 6

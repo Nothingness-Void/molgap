@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "76699c9df852961606a7d54539a8b01a36e4a84b36ea731c35f12b73c62e7bf4",
+  "source_digest": "c280ef6c481dbc5f632b8a02de25b0f0e83d1bfc8729f612ae27708793878387",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -209,9 +209,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md",
       "family_id": "gptrans-100k-local-transfer-control-selection",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-100k-local-reference-control-20260925",
@@ -220,7 +220,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-local-selection-probe-20260925"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
     },

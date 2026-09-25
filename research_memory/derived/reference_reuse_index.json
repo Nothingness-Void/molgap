@@ -243,6 +243,27 @@
       "artifact_availability": [
         "local_verified"
       ],
+      "comparison_status": "paired_diagnostic_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_frozen_raw_versus_ema_development_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "frozen_weight_cohort_diagnostic_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
       "comparison_status": "not_applicable",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
