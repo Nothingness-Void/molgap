@@ -13,7 +13,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | B-DESKTOP-HANDOFF | Await the desktop-owned matched full K1/GPTrans comparison; do not duplicate it on server | Desktop records accepted full artifacts and its separately governed evaluation decision |
+| P0 | B-DESKTOP-HANDOFF | Completed: desktop accepted the full K1/GPTrans chain and bounded continuations; EdgeState remains the full-scale reference | Preserve the [desktop acceptance](https://github.com/Nothingness-Void/molgap/blob/cb53e973/platforms/_records/ims/full_chain_reacceptance_20260926.md); no server duplicate or automatic full continuation |
+| P1 | C-SCALE-AWARE-2D-DIRECTION | Use the [desktop postmortem](https://github.com/Nothingness-Void/molgap/blob/cb53e973/experiments/pcqm_scale_transfer_reassessment/decision.md) to define one distinct pure-2D bottleneck and a late-horizon, matched 500K gate before any new compute | Freeze a prospective question, role identity, cost ceiling, and terminal stop rule; do not reuse official validation for screening |
 | P1 | C-PAIRTOKEN-SCALE-ATTRIBUTION | Completed: all three bounded rounds and the separate frozen cross-scale diagnostic accepted | Preserve [cross-scale decision](experiments/pcqm_k1_cross_scale_frozen/decision.md); no extra seed, variant, or full run |
 | P2 | C-K1-PAIRTOKEN-MOSE | Completed: terminal artifacts retained, but undeclared feature identity prevents strict comparison | Keep contextual endpoint and release-gate repair; no retry, seed, scale bridge, or automatic successor |
 | P3 | C-K1-SPARSE-TRIPLET | Completed: strict negative and replay-ready | Preserve full-depth triplet-state closure; no retry, seed, scale bridge, or return-gate micro-variant |

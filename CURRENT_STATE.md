@@ -36,12 +36,16 @@ the cross-job 500K scalar difference—owns the final comparison. Authority:
 `experiments/pcqm_gptrans_t_500k/results/decision.md`.
 
 The audited full-role implementation is `experiments/pcqm_k1_full/`. The
-desktop-owned branch `codex/pcqm-k1-gptrans-full-fusion` has launched a matched
-K1/GPTrans comparison at 20M presentations, seed 42, strict FP32/no-TF32, and
-physical BS128. Its recoverable checkpoints and scheduler recovery remain
-desktop-owned; server must not launch a duplicate or interfere. Official-role
-use and any final submission remain governed by that experiment's frozen
-contract.
+desktop-owned K1/GPTrans full chain and both bounded continuations are terminal
+and accepted. Neither K1 nor the original blend displaced the converged
+EdgeState official-validation reference; GPTrans improved during continuation
+but stopped at its budget without a plateau or promotion. The desktop's
+[full-chain acceptance](https://github.com/Nothingness-Void/molgap/blob/cb53e973/platforms/_records/ims/full_chain_reacceptance_20260926.md)
+and [scale-transfer postmortem](https://github.com/Nothingness-Void/molgap/blob/cb53e973/experiments/pcqm_scale_transfer_reassessment/decision.md)
+are the authorities. The latter finds substantial erosion of early 500K
+advantages within one matched training contract, not a proven architecture-only
+full-scale reversal. Official validation has been consumed for selection;
+test-dev/challenge remain sealed. Desktop alone owns any new full-scale work.
 
 The separate server-owned K1-v4 A100 FP32/TF32 execution diagnostic is closed.
 Both arms completed and passed no-inference acceptance; TF32 did not improve
