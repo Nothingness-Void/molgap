@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 39,
+      "trajectories_total": 40,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 28,
-      "with_incomplete_native_measurement": 23,
+      "with_cost_event": 29,
+      "with_incomplete_native_measurement": 24,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -224,7 +224,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 7
+          "unknown_records": 8
         },
         "device_hours": {
           "estimated": {
@@ -236,7 +236,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 7
+          "unknown_records": 8
         },
         "queue_hours": {
           "estimated": {
@@ -247,13 +247,13 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 7,
+          "not_applicable_records": 8,
           "unknown_records": 0
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 4,
-            "known_total": 10.0
+            "known_records": 5,
+            "known_total": 10.5
           },
           "measured": {
             "known_records": 0,
@@ -664,7 +664,7 @@
         }
       }
     },
-    "unknown_events": 36
+    "unknown_events": 37
   },
   "evidence": {
     "validated": 33,
@@ -674,7 +674,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 25,
+      "count": 26,
       "severity": "INFO"
     },
     {
@@ -684,7 +684,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 23,
+      "count": 24,
       "severity": "WARN"
     },
     {
@@ -694,12 +694,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 21,
+      "count": 22,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 6,
+      "count": 7,
       "severity": "WARN"
     }
   ],
@@ -708,11 +708,11 @@
     "explicit_events": 50,
     "repeatedly_selected": 7
   },
-  "source_digest": "262a96e3f668b57af476f13338cc0808d5074d7bc9d7411c29e4c0522bb6508d",
+  "source_digest": "76699c9df852961606a7d54539a8b01a36e4a84b36ea731c35f12b73c62e7bf4",
   "trajectories": {
-    "count": 39,
+    "count": 40,
     "outcomes": {
-      "ACTIVE": 2,
+      "ACTIVE": 3,
       "CLOSED": 5,
       "INCONCLUSIVE": 9,
       "NEGATIVE_UNDER_CONTRACT": 10,

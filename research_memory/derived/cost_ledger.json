@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 11,
-  "event_count": 47,
+  "estimated_event_count": 12,
+  "event_count": 48,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 36,
-  "not_applicable_event_count": 21,
+  "measurement_missing_event_count": 37,
+  "not_applicable_event_count": 22,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -199,6 +199,56 @@
           "known_total": null
         },
         "not_applicable_records": 2,
+        "unknown_records": 0
+      }
+    },
+    "inference": {
+      "NVIDIA_RTX_5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_RTX_5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_RTX_5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA_RTX_5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
         "unknown_records": 0
       }
     },
@@ -949,7 +999,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 7
+        "unknown_records": 8
       },
       "device_hours": {
         "estimated": {
@@ -961,7 +1011,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 7
+        "unknown_records": 8
       },
       "queue_hours": {
         "estimated": {
@@ -972,13 +1022,13 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 7,
+        "not_applicable_records": 8,
         "unknown_records": 0
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 4,
-          "known_total": 10.0
+          "known_records": 5,
+          "known_total": 10.5
         },
         "measured": {
           "known_records": 0,
@@ -2032,6 +2082,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "TB-gptrans-local-selection-probe-20260925": {
+      "NVIDIA_RTX_5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_RTX_5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA_RTX_5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA_RTX_5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "TB-gptrans-memory-value-k1pair-candidate-100k-s42": {

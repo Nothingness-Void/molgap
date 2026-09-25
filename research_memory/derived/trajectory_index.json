@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "262a96e3f668b57af476f13338cc0808d5074d7bc9d7411c29e4c0522bb6508d",
+  "source_digest": "76699c9df852961606a7d54539a8b01a36e4a84b36ea731c35f12b73c62e7bf4",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -206,6 +206,23 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gptrans-full-convergence-20260919"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+      "family_id": "gptrans-100k-local-transfer-control-selection",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-100k-local-reference-control-20260925",
+        "TB-gptrans-100k-local-joint-control-20260925"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-local-selection-probe-20260925"
     },
     {
       "completeness_status": "complete",

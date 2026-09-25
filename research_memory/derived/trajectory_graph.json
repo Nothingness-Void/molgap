@@ -126,6 +126,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-local-selection-probe-20260925:A001",
+      "target": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-noisy-nodes-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_noisy_nodes_100k/v5_evidence.json",
       "type": "action_produced_evidence"
@@ -269,6 +274,16 @@
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
       "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-100k-local-joint-control-20260925",
+      "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-100k-local-reference-control-20260925",
+      "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "parent_trajectory"
     },
     {
       "source": "TB-gptrans-100k-transfer-control-local-20260925",
@@ -441,6 +456,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
       "type": "prior_evidence"
@@ -518,6 +543,11 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-gptrans-local-selection-probe-20260925",
       "type": "prior_evidence"
     },
     {
@@ -678,6 +708,11 @@
     {
       "source": "pcqm-edgestate-rich-full-submission",
       "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "target": "TB-gptrans-local-selection-probe-20260925",
       "type": "reference_used"
     },
     {
@@ -996,6 +1031,10 @@
     },
     {
       "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-selection-probe-20260925",
       "type": "trajectory"
     },
     {
