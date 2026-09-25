@@ -39,10 +39,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (1 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.007306 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- NVIDIA_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- NVIDIA_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- NVIDIA_RTX_5060 queue_hours: not applicable (3 records); measurement_missing=0
-- NVIDIA_RTX_5060 wall_hours: measured=unknown (0 measured records), estimated=5.000000 (2 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
+- NVIDIA_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
+- NVIDIA_RTX_5060 queue_hours: not applicable (5 records); measurement_missing=0
+- NVIDIA_RTX_5060 wall_hours: measured=unknown (0 measured records), estimated=10.000000 (4 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE device_hours: measured=unknown (0 measured records), estimated=2.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA_T4_SINGLE_VISIBLE queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -75,7 +75,7 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Measurement-missing cost events: 32
+- Measurement-missing cost events: 34
 - Cost-event coverage: 28/39 trajectories; incomplete native measurement=23
 
 ## Screening Backtest

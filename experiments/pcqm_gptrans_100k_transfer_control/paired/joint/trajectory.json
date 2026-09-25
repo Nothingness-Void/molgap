@@ -37,12 +37,20 @@
     "attempt_ids": ["attempt-001"],
     "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired_release.json"],
     "cost_event_ids": ["cost-TB-gptrans-100k-local-joint-control-expected"]
+  }, {
+    "action_id": "A002",
+    "type": "local_100k_paired_candidate_training_after_infrastructure_fix",
+    "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+    "run_ids": ["local-gptrans-100k-joint-control-v2-20260925"],
+    "attempt_ids": ["attempt-002"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/correction.md", "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json"],
+    "cost_event_ids": ["cost-TB-gptrans-100k-local-joint-control-v2-expected"]
   }],
   "result": {"evidence_ids": [], "evidence_refs": []},
   "decision": {
     "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
     "outcome": "ACTIVE",
-    "next_allowed_actions": ["One local RTX 5060 joint-candidate training attempt under the frozen 100K contract."],
+    "next_allowed_actions": ["One local RTX 5060 joint-candidate training attempt under paired_release_v2.json."],
     "reopen_conditions": []
   },
   "comparison_class": "CONTEXT_ONLY",

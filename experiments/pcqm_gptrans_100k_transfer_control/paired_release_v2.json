@@ -1,0 +1,23 @@
+{
+  "format": "molgap-local-gptrans-100k-paired-release-v2",
+  "supersedes": "experiments/pcqm_gptrans_100k_transfer_control/paired_release.json",
+  "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+  "source_archive_sha256": "2be914d332fa37cd92e6bdd880bbf47a0b2cc2040a4fb4a941b34d26830b520c",
+  "source_archive": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/source_v2/source.tar.gz",
+  "dataset_root": "D:/下载/pcqm4mv2-kaggle2-exports-v1/ogb-train-100k",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initial_state": "D:/文档/molgap-exp/_staging/gptrans_precision_source_dataset_v1/initial_state.pt",
+  "initial_state_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "reference_output": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/reference_v2",
+  "joint_output": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/joint_v2",
+  "train_source_idx": [0, 100000],
+  "development_source_idx": [100000, 150000],
+  "transfer_probe_source_idx": [500000, 550000],
+  "epochs": 60,
+  "optimizer_steps_per_arm": 46860,
+  "sample_presentations_per_arm": 5998080,
+  "selection": "minimum_internal_development_ema_mae_each_arm",
+  "per_arm_wall_hours_ceiling": 2.5,
+  "total_wall_hours_ceiling": 5.0,
+  "protected_roles_allowed": false
+}
