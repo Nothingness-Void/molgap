@@ -1,0 +1,69 @@
+{
+  "format": "molgap-local-gptrans-raw-vs-ema-selection-probe-v1",
+  "status": "diagnostic_only",
+  "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+  "checkpoint_epoch": 59,
+  "raw_development_100k": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14822596963822843,
+    "candidate_mae_eV": 0.1436936725896597,
+    "paired_gain_eV": 0.004532297048568726,
+    "row_bootstrap_95pct_eV": [
+      0.0036419029675722123,
+      0.005498233148455619
+    ],
+    "candidate_better_row_fraction": 0.51286,
+    "material_3mev_point_gain": true
+  },
+  "ema_development_100k": {
+    "rows": 50000,
+    "reference_mae_eV": 0.15589076386392117,
+    "candidate_mae_eV": 0.14970543589055538,
+    "paired_gain_eV": 0.006185327973365784,
+    "row_bootstrap_95pct_eV": [
+      0.00528655917263031,
+      0.007153043402791023
+    ],
+    "candidate_better_row_fraction": 0.52028,
+    "material_3mev_point_gain": true
+  },
+  "raw_frozen_transfer_500k_development": {
+    "rows": 50000,
+    "reference_mae_eV": 0.1503081401014328,
+    "candidate_mae_eV": 0.1459600652885437,
+    "paired_gain_eV": 0.004348074812889099,
+    "row_bootstrap_95pct_eV": [
+      0.0034535734009742735,
+      0.005212061248779296
+    ],
+    "candidate_better_row_fraction": 0.51652,
+    "material_3mev_point_gain": true
+  },
+  "ema_frozen_transfer_500k_development": {
+    "rows": 50000,
+    "reference_mae_eV": 0.15650320180416108,
+    "candidate_mae_eV": 0.15071130101680755,
+    "paired_gain_eV": 0.005791900787353516,
+    "row_bootstrap_95pct_eV": [
+      0.004801451646447181,
+      0.00667521432685852
+    ],
+    "candidate_better_row_fraction": 0.52088,
+    "material_3mev_point_gain": true
+  },
+  "selection_effect_on_gain_100k_eV": 0.0016530309247970582,
+  "selection_effect_on_gain_500k_eV": 0.0014438259744644164,
+  "elapsed_script_seconds": 59.50762890000624,
+  "artifact_sha256": {
+    "reference_last_checkpoint": "be877946ef0599d4565cb5f7b8a28e13050476a85a1e3da3f80358af0d8a5c1c",
+    "candidate_last_checkpoint": "7749309a2dd325a43fd70d4e41384f959bfb3d74e449d291c33fc9dbed3b7568",
+    "reference_ema_development_predictions": "a68dbfa48eebaecaa30e377b529447cea4fc603ed4fc6f7c077985818d33e979",
+    "candidate_ema_development_predictions": "ea5c0ec8e08e3249ca7de23a030283e87a90a0b22694394b1462907e5a096f3b",
+    "prior_analysis": "461c9ccce9d7f171504a0fa314240a6195e278d11f526bd122722e6bbd18b911"
+  },
+  "limitations": [
+    "One training seed; this changes only evaluation weights at the same final epoch.",
+    "The 500K development role was previously used for model selection.",
+    "This does not test the 500K training optimizer or data-size effect."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-100k-local-reference-control-v2-expected",
+  "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925",
+  "action_id": "A002",
+  "run_id": "local-gptrans-100k-reference-control-v2-20260925",
+  "attempt_id": "attempt-002",
+  "category": "training",
+  "platform": "local",
+  "hardware": "NVIDIA_RTX_5060",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": 2.5, "status": "estimated"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json"
+}

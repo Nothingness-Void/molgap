@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-100k-transfer-control-local-preflight",
+  "trajectory_id": "TB-gptrans-100k-transfer-control-local-20260925",
+  "action_id": "A001",
+  "run_id": "local-gptrans-100k-throughput-20260925",
+  "attempt_id": "attempt-001",
+  "category": "audit",
+  "platform": "local",
+  "hardware": "NVIDIA_RTX_5060",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": null, "status": "measurement_missing"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_100k_transfer_control/preflight_result.json"
+}

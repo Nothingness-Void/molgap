@@ -93,6 +93,50 @@
     },
     {
       "artifact_availability": [
+        "local_external_verified"
+      ],
+      "comparison_status": "diagnostic_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_paired_100k_joint_and_frozen_cohort_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/paired/joint/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "frozen_weights_cohort_gain_retained",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_external_verified"
+      ],
+      "comparison_status": "diagnostic_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_paired_100k_reference_and_frozen_cohort_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/paired/reference/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "diagnostic_only",
+      "used_by_trajectory_ids": [
+        "TB-gptrans-local-selection-probe-20260925"
+      ]
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "paired_endpoint_only_not_strict",
@@ -193,6 +237,27 @@
       "source_envelope": "experiments/pcqm_gptrans_full_convergence/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "paired_diagnostic_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-local-selection-probe-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_frozen_raw_versus_ema_development_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "frozen_weight_cohort_diagnostic_only",
       "used_by_trajectory_ids": []
     },
     {
@@ -414,6 +479,9 @@
       "track": "B",
       "transfer_status": "reusable_reference",
       "used_by_trajectory_ids": [
+        "TB-gptrans-100k-local-joint-control-20260925",
+        "TB-gptrans-100k-local-reference-control-20260925",
+        "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-centered-logits-k1pair-100k-s42",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",

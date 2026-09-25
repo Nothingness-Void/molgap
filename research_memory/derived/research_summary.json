@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 36,
+      "trajectories_total": 40,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 25,
-      "with_incomplete_native_measurement": 20,
+      "with_cost_event": 29,
+      "with_incomplete_native_measurement": 24,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -211,6 +211,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 0
+        }
+      },
+      "NVIDIA_RTX_5060": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 9
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 9
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 9,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 5,
+            "known_total": 10.5
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.0165298969166684
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 3
         }
       },
       "NVIDIA_T4_SINGLE_VISIBLE": {
@@ -614,17 +664,17 @@
         }
       }
     },
-    "unknown_events": 29
+    "unknown_events": 38
   },
   "evidence": {
-    "validated": 31,
+    "validated": 34,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 22,
+      "count": 26,
       "severity": "INFO"
     },
     {
@@ -634,7 +684,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 20,
+      "count": 24,
       "severity": "WARN"
     },
     {
@@ -644,27 +694,27 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 20,
+      "count": 21,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 5,
+      "count": 6,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 126,
-    "explicit_events": 44,
-    "repeatedly_selected": 6
+    "coarse_historical": 141,
+    "explicit_events": 52,
+    "repeatedly_selected": 7
   },
-  "source_digest": "b38db62d9bb471b6e0a813df4cc048e8bf4751bfcfb486c252cadc863ee65f59",
+  "source_digest": "c280ef6c481dbc5f632b8a02de25b0f0e83d1bfc8729f612ae27708793878387",
   "trajectories": {
-    "count": 36,
+    "count": 40,
     "outcomes": {
       "ACTIVE": 2,
       "CLOSED": 5,
-      "INCONCLUSIVE": 6,
+      "INCONCLUSIVE": 10,
       "NEGATIVE_UNDER_CONTRACT": 10,
       "NO_TRAIN": 6,
       "POSITIVE_UNDER_CONTRACT": 7

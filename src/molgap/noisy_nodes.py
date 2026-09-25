@@ -212,6 +212,7 @@ def _make_noisy_nodes_model(
             expected_file_sha256=EXPECTED_INITIAL_STATE_ARTIFACT_SHA256,
             expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
             expected_format="molgap-gptrans-t-seed42-initial-state-v1",
+            allowed_missing_keys=("denoise_head.weight", "denoise_head.bias"),
         )
     return model
 
@@ -329,8 +330,36 @@ def run_training_noisy_nodes(
     trace: list[dict] = []
     best = float("inf")
     best_epoch = -1
+    start_epoch = 0
+    checkpoint_path = output / "last_checkpoint.pt"
+    run_identity = {
+        "manifest_sha256": MANIFEST_SHA256,
+        "initial_state_sha256": sha256_file(initial_state_path) if initial_state_path else None,
+        "source_archive_sha256": source_archive_sha256,
+        "source_commit": source_commit,
+        "noise_std": noise_std,
+        "loss_weight": loss_weight,
+        "pair_update_norm": pair_update_norm,
+    }
+    if checkpoint_path.is_file():
+        checkpoint = torch_load_compat(checkpoint_path, map_location="cuda", weights_only=False)
+        if checkpoint.get("format") != "molgap-noisy-nodes-checkpoint-v2":
+            raise RuntimeError("Existing checkpoint has no verified resume identity")
+        if checkpoint.get("run_identity") != run_identity:
+            raise RuntimeError("Checkpoint run identity changed")
+        model.load_state_dict(checkpoint["model_state"], strict=True)
+        optimizer.load_state_dict(checkpoint["optimizer_state"])
+        scheduler.load_state_dict(checkpoint["scheduler_state"])
+        ema.load_state_dict(checkpoint["ema_state"])
+        restore_rng_state(checkpoint["rng_state"])
+        trace = list(checkpoint["trace"])
+        start_epoch = int(checkpoint["epoch"]) + 1
+        if len(trace) != start_epoch:
+            raise RuntimeError("Checkpoint trace and epoch disagree")
+        best = float(checkpoint["best_development_mae_eV"])
+        best_epoch = int(checkpoint["best_epoch"])
 
-    for epoch in range(EPOCHS):
+    for epoch in range(start_epoch, EPOCHS):
         model.train()
         epoch_start = time.perf_counter()
         scheduler.step(epoch)
@@ -355,6 +384,17 @@ def run_training_noisy_nodes(
             best = dev_mae
             best_epoch = epoch
             atomic_torch_save(output / "best_model.pt", ema.state_dict())
+            atomic_torch_save(
+                output / "development_predictions.pt",
+                {
+                    "prediction_eV": dev_result["prediction_eV"],
+                    "target_eV": dev_result["target_eV"],
+                    "source_idx": dev_result["source_idx"],
+                    "official_validation_role_read": False,
+                    "test_dev_role_read": False,
+                    "test_challenge_role_read": False,
+                },
+            )
 
         trace_row = {
             "epoch": epoch,
@@ -368,6 +408,8 @@ def run_training_noisy_nodes(
         atomic_json(output / "trace.json", {"epochs": trace})
 
         last_checkpoint = {
+            "format": "molgap-noisy-nodes-checkpoint-v2",
+            "run_identity": run_identity,
             "epoch": epoch,
             "model_state": model.state_dict(),
             "ema_state": ema.state_dict(),
@@ -375,8 +417,10 @@ def run_training_noisy_nodes(
             "scheduler_state": scheduler.state_dict(),
             "best_development_mae_eV": best,
             "best_epoch": best_epoch,
+            "trace": trace,
+            "rng_state": capture_rng_state(),
         }
-        atomic_torch_save(output / "last_checkpoint.pt", last_checkpoint)
+        atomic_torch_save(checkpoint_path, last_checkpoint)
         print(
             f"NoisyNodes ep{epoch:02d} train_gap={trace_row['train_normalized_gap_mae']:.6f} "
             f"aux={trace_row['train_aux_ce_loss']:.4f} dev={dev_mae:.6f}eV {epoch_seconds:.1f}s"
@@ -397,6 +441,8 @@ def run_training_noisy_nodes(
         "source_commit": source_commit,
         "source_archive_sha256": source_archive_sha256,
         "best_model_sha256": sha256_file(output / "best_model.pt"),
+        "development_predictions_sha256": sha256_file(output / "development_predictions.pt"),
+        "checkpoint_sha256": sha256_file(checkpoint_path),
     }
     atomic_json(output / "completion_manifest.json", completion)
     return completion

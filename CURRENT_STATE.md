@@ -101,6 +101,13 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   `RUNNING`. Both prospective RML trajectories are ACTIVE, and no terminal
   metric or replay-ready result is accepted. Authority:
   `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/STATUS.md`.
+- The local GPTrans-T 100K frozen-initialization diagnostic and raw/EMA probe
+  are terminal and accepted as mechanism evidence, not a model promotion.
+  The 100K gain survives prediction on the previously used 500K development
+  cohort; EMA selection is a weak contributor, while the exact cause of the
+  historical 500K gain contraction remains unresolved. Authority:
+  `experiments/pcqm_gptrans_100k_transfer_control/decision.md` and
+  `experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated
@@ -120,6 +127,8 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   test-dev/challenge remain sealed. Authorities:
   `experiments/pcqm_k1_full_convergence/decision.md` and
   `experiments/pcqm_gptrans_full_convergence/decision.md`.
+  A 2026-09-26 read-only IMS/local recheck found no artifact drift; audit:
+  `platforms/_records/ims/full_chain_reacceptance_20260926.md`.
 - Accepted PCQM scale identities are held on IMS and mirrored to the accepted
   Kaggle account datasets for the 100K/500K roles.
 - Kaggle3 account `nvoid912` now has accepted private, byte-identical 100K and

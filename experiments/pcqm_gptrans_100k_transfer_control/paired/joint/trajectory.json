@@ -1,0 +1,71 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-100k-local-transfer-control-joint",
+  "question": "Does Noisy Nodes plus Pair Update Norm retain a material 100K gain over a same-machine GPTrans-T control and transfer as frozen weights to the 500K development cohort?",
+  "hypothesis": {
+    "hypothesis_id": "H-gptrans-local-joint-control-20260925",
+    "observed_deficiency": "The accepted 100K joint gain of 0.009382 eV shrank to 0.002056 eV at matched 500K, but platform, development cohort and training horizon changed together.",
+    "supporting_evidence_ids": ["pcqm-gptrans-noisy-pair-norm-100k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42", "pcqm-gptrans-t-100k-v4-reference"],
+    "alternative_explanations": ["The 100K gain is specific to the 100K development cohort.", "A longer optimization horizon lets the unregularized reference catch up.", "Single-seed noise or EMA selection contributes to the apparent gain."],
+    "changed_mechanism": "Reuse the existing joint regularizer with no architectural or hyperparameter modification, paired to a local reference.",
+    "cheapest_falsifier": "One same-machine seed-42 60-epoch run, paired 50K development predictions and training curves; frozen-weight transfer only after both arms finish.",
+    "related_closed_family_ids": ["gptrans-noisy-pair-norm-100k", "gptrans-noisy-pair-norm-500k"],
+    "expected_native_cost_ref": "cost-TB-gptrans-100k-local-joint-control-expected",
+    "decision_changed_if_positive": "Attribute the 100K gain more confidently to the regularizer under this single-seed contract, then inspect cohort transfer without a full-run promotion claim.",
+    "decision_changed_if_negative": "Treat the historic 100K gain as cross-run or cohort-sensitive and do not budget new 500K training on it.",
+    "historical_unknowns": ["Training-seed variance remains unmeasured.", "The exact cause of 500K gain contraction remains unisolated."]
+  },
+  "state_at_start": {
+    "source_commit": "4b762834af06218304475a6f46b2fcf0b3cb36cc",
+    "contract_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md", "experiments/pcqm_gptrans_100k_transfer_control/paired_release.json"],
+    "reference_ids": ["pcqm-gptrans-t-100k-v4-reference"],
+    "parent_trajectory_ids": ["TB-gptrans-100k-transfer-control-local-20260925"],
+    "prior_evidence_ids": ["pcqm-gptrans-t-100k-v4-reference", "pcqm-gptrans-noisy-pair-norm-100k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_t_100k_v4/roles/train.json", "experiments/pcqm_gptrans_t_100k_v4/roles/development.json"],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
+    "source_config_identity": "fdadc690291ec30a96a97d2cdff1697f5f726b300ce2cf8b98edb2c5e4046d05"
+  },
+  "actions": [{
+    "action_id": "A001",
+    "type": "local_100k_paired_candidate_training",
+    "source_commit": "4b762834af06218304475a6f46b2fcf0b3cb36cc",
+    "run_ids": ["local-gptrans-100k-joint-control-20260925"],
+    "attempt_ids": ["attempt-001"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired_release.json"],
+    "cost_event_ids": ["cost-TB-gptrans-100k-local-joint-control-expected"]
+  }, {
+    "action_id": "A002",
+    "type": "local_100k_paired_candidate_training_after_infrastructure_fix",
+    "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+    "run_ids": ["local-gptrans-100k-joint-control-v2-20260925"],
+    "attempt_ids": ["attempt-002"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/correction.md", "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json"],
+    "cost_event_ids": ["cost-TB-gptrans-100k-local-joint-control-v2-expected"]
+  }, {
+    "action_id": "A003",
+    "type": "frozen_weights_500k_development_cohort_diagnostic",
+    "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+    "run_ids": ["local-gptrans-100k-joint-control-v2-20260925"],
+    "attempt_ids": ["attempt-002"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json"],
+    "cost_event_ids": []
+  }],
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-100k-local-joint-control-v2-20260925"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired/joint/v5_evidence.json", "experiments/pcqm_gptrans_100k_transfer_control/acceptance.json", "experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
+  "comparison_blockers": ["A positive local diagnostic does not establish a 500K retraining or full-scale promotion claim.", "Selected model and trace are outside Git; full wall/device hours are unmeasured."],
+  "reference_bundle_id": null
+}

@@ -1,0 +1,55 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-local-selection-probe-20260925",
+  "track": "B",
+  "scope": "local_frozen_raw_versus_ema_development_diagnostic",
+  "legacy_contract": "molgap-local-gptrans-raw-vs-ema-selection-probe-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "paired_diagnostic_only",
+    "scientific_status": "weak_selection_contribution",
+    "transfer_status": "frozen_weight_cohort_diagnostic_only",
+    "budget_decision": "closed_no_scale_release",
+    "full_handoff_status": "not_requested"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+      "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/acceptance.json",
+      "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md",
+      "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/result.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "paired_raw_vs_ema_diagnostic",
+      "locator": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/result.json",
+      "sha256": "f228b9feb2367852e660ad6f8d6559fdae1fab47f232f442949917245ac6d926",
+      "availability": "local_verified"
+    }
+  ],
+  "role_use": {
+    "official_train": "untouched",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "raw_100k_paired_gain_eV": 0.004532297048568726,
+    "ema_100k_paired_gain_eV": 0.006185327973365784,
+    "selection_effect_100k_eV": 0.0016530309247970582,
+    "raw_500k_frozen_transfer_gain_eV": 0.004348074812889099,
+    "ema_500k_frozen_transfer_gain_eV": 0.005791900787353516,
+    "selection_effect_500k_eV": 0.0014438259744644164
+  },
+  "migration": {
+    "migrated_at": "2026-09-26",
+    "verification_scope": "This envelope indexes the already completed prospective inference diagnostic; envelope compilation did not execute training, inference, or reinterpretation.",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

@@ -24,14 +24,19 @@ only when its own question or an explicit integration task requires it.
 
 Do the prospective plan, implementation, submission, remote reconciliation,
 training acceptance, scientific decision, and terminal RML update on the
-experiment branch. Keep retries and seeds for the same question there. Do not
-merge a live experiment merely because its kernel was submitted or finished.
+experiment branch. Keep retries and seeds for the same question there. A
+finished job is not itself a finished experiment: review acceptance and make
+the scientific and Git-routing decisions promptly after terminal evidence is
+available. Do not leave an accepted desktop result only on a temporary branch.
+Do not merge a live experiment merely because its kernel was submitted or
+finished.
 
 After a reviewed terminal decision:
 
 | Decision | Git destination |
 |---|---|
 | Positive and adopted | Merge the experiment branch into `molgap-desktop`; rebuild and check desktop RML. |
+| Accepted diagnostic, no model promotion, with reusable implementation | Merge its reviewed evidence and reusable implementation into `molgap-desktop`; record explicitly that the model recommendation is unchanged. Rebuild and check desktop RML. |
 | Negative under its contract | Merge the complete experiment history into `archive`. Bring only the accepted canonical decision/evidence needed for desktop RML discovery into `molgap-desktop`; do not merge rejected implementation. Rebuild and check desktop RML. |
 | Pending, incomplete, or terminal without an adoption/archive decision | Keep the experiment branch until its routing decision is recorded. |
 

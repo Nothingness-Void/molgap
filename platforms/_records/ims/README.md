@@ -11,3 +11,5 @@ these snapshots only for complete remote provenance.
   source identity, and remote registry-audit evidence.
 - `geometry_scratch_audit/` - compact IMS numerical audit manifests; tensor
   shards remain local and are ignored.
+- `full_chain_reacceptance_20260926.md` - read-only remote/local recheck of the
+  already accepted desktop K1/GPTrans-T full chain.

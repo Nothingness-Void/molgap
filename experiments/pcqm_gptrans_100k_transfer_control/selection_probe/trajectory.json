@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-local-selection-probe-20260925",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-100k-local-transfer-control-selection",
+  "question": "Does raw-versus-EMA evaluation materially change the paired gain of the accepted local 100K GPTrans control?",
+  "hypothesis": {
+    "hypothesis_id": "H-gptrans-local-selection-probe-20260925",
+    "observed_deficiency": "The local 100K paired gain is 0.006185 eV under EMA while historical 500K comparison used raw-model selection; data scale, optimizer, and selection changed together.",
+    "supporting_evidence_ids": ["pcqm-gptrans-100k-local-reference-control-v2-20260925", "pcqm-gptrans-100k-local-joint-control-v2-20260925", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "alternative_explanations": ["Raw and EMA gains are similar; contraction comes from training data or optimizer changes.", "Selection changes gain on the 100K weights but not enough to explain the historical cross-contract difference."],
+    "changed_mechanism": "No model or training change; evaluate raw epoch-59 states instead of the already selected EMA epoch-59 states.",
+    "cheapest_falsifier": "Four raw inference passes over the already used internal development roles, compared with SHA-bound accepted EMA predictions.",
+    "related_closed_family_ids": ["gptrans-100k-local-transfer-control-joint", "gptrans-noisy-pair-norm-500k"],
+    "expected_native_cost_ref": "cost-TB-gptrans-local-selection-probe-expected",
+    "decision_changed_if_positive": "Treat selection semantics as a material local contributor and do not attribute historical contraction solely to data scale or horizon.",
+    "decision_changed_if_negative": "Leave optimizer/data-size effects as the next unresolved factor; do not spend 500K training merely to test selection.",
+    "historical_unknowns": ["One-seed training stochasticity remains unmeasured.", "Historical 500K retraining is not replicated by frozen-weight inference."]
+  },
+  "state_at_start": {
+    "source_commit": "15885dd08a6676ccd422f488c693b09245c94bf6",
+    "contract_refs": ["experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md"],
+    "reference_ids": ["pcqm-gptrans-100k-local-reference-control-v2-20260925"],
+    "parent_trajectory_ids": ["TB-gptrans-100k-local-reference-control-20260925", "TB-gptrans-100k-local-joint-control-20260925"],
+    "prior_evidence_ids": ["pcqm-gptrans-100k-local-reference-control-v2-20260925", "pcqm-gptrans-100k-local-joint-control-v2-20260925", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired/reference/roles/development.json", "experiments/pcqm_gptrans_100k_transfer_control/paired/joint/roles/frozen_transfer.json"],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+    "source_config_identity": "6a0b144cebf26a336da970db2f17656bae626fe0d83092baadf7b6e67f9825ce"
+  },
+  "actions": [{
+    "action_id": "A001",
+    "type": "local_frozen_raw_versus_ema_inference_diagnostic",
+    "source_commit": "15885dd08a6676ccd422f488c693b09245c94bf6",
+    "run_ids": ["local-gptrans-raw-ema-selection-probe-20260925"],
+    "attempt_ids": ["attempt-001"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md"],
+    "cost_event_ids": ["cost-TB-gptrans-local-selection-probe-expected"]
+  }],
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-local-selection-probe-20260925"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/selection_probe/v5_evidence.json", "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/acceptance.json", "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/result.json"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [],
+    "reopen_conditions": []
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+  "comparison_blockers": ["Weak selection contribution under a single-seed diagnostic does not qualify a 500K retraining or promotion claim."],
+  "reference_bundle_id": null
+}
