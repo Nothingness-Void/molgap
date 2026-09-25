@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 126,
+  "ambiguous_historical_role_record_count": 130,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -856,6 +856,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-xian-determinism-audit-20260915",
       "role_identity": null,
       "role_name": "official_validation",
@@ -1263,6 +1291,7 @@
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",
       "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-scale-transfer-reassessment-no-train-20260925",
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
@@ -1295,6 +1324,7 @@
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",
       "pcqm-scale-transfer-diagnostic-evidence",
+      "pcqm-scale-transfer-reassessment-no-train-20260925",
       "pcqm-xian-determinism-audit-20260915"
     ]
   },

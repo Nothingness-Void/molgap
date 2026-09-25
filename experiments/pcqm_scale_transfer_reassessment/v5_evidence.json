@@ -1,0 +1,47 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+  "track": "B",
+  "scope": "accepted_rml_trace_and_contract_postmortem",
+  "legacy_contract": "molgap-pcqm-scale-transfer-reassessment-v1",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_source_only_analysis_verified",
+    "comparison_status": "matched_500k_trace_audit_complete_cross_scale_context_only",
+    "scientific_status": "no_train_attribution_limits_recorded",
+    "transfer_status": "no_candidate_promotion",
+    "budget_decision": "no_compute_authorized",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_scale_transfer_reassessment/protocol.md",
+      "experiments/pcqm_scale_transfer_reassessment/analysis.json",
+      "experiments/pcqm_scale_transfer_reassessment/decision.md"
+    ]
+  },
+  "artifacts": [{
+    "name": "scale_transfer_reassessment",
+    "locator": "repo://experiments/pcqm_scale_transfer_reassessment/analysis.json",
+    "sha256": "eafd37c2b747be0c96abe63cc7163293dbbf69d1ea779ffa2f167eb5852aa0ff",
+    "availability": "committed_metadata_verified"
+  }],
+  "role_use": {
+    "internal_development": "not_applicable",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "notes": {
+    "scope": "Only previously accepted JSON traces, contracts, decisions and aggregate metrics were read; no molecular labels, checkpoint weights or prediction tensors were opened.",
+    "migration_fields": "The false booleans describe the V5 envelope transaction, not the historical training runs whose evidence was audited."
+  },
+  "migration": {
+    "migrated_at": "2026-09-25",
+    "verification_scope": "Source-only postmortem with SHA-verified matched 500K traces and accepted full-run contract summaries",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

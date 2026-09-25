@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 36,
+      "trajectories_total": 37,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 25,
-      "with_incomplete_native_measurement": 20,
+      "with_cost_event": 26,
+      "with_incomplete_native_measurement": 21,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -174,7 +174,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "device_hours": {
           "estimated": {
@@ -185,7 +185,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 1,
+          "not_applicable_records": 2,
           "unknown_records": 0
         },
         "queue_hours": {
@@ -197,7 +197,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 1,
+          "not_applicable_records": 2,
           "unknown_records": 0
         },
         "wall_hours": {
@@ -210,7 +210,7 @@
             "known_total": 0.007305555555555556
           },
           "not_applicable_records": 0,
-          "unknown_records": 0
+          "unknown_records": 1
         }
       },
       "NVIDIA_T4_SINGLE_VISIBLE": {
@@ -614,17 +614,17 @@
         }
       }
     },
-    "unknown_events": 29
+    "unknown_events": 30
   },
   "evidence": {
-    "validated": 31,
+    "validated": 32,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 22,
+      "count": 23,
       "severity": "INFO"
     },
     {
@@ -634,7 +634,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 20,
+      "count": 21,
       "severity": "WARN"
     },
     {
@@ -644,7 +644,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 20,
+      "count": 21,
       "severity": "WARN"
     },
     {
@@ -654,19 +654,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 126,
+    "coarse_historical": 130,
     "explicit_events": 44,
     "repeatedly_selected": 6
   },
-  "source_digest": "b38db62d9bb471b6e0a813df4cc048e8bf4751bfcfb486c252cadc863ee65f59",
+  "source_digest": "7ba8493587c20e8f0f02ca65edf0cb2142b10fd2cf9aeb77ee1597068e8f668b",
   "trajectories": {
-    "count": 36,
+    "count": 37,
     "outcomes": {
       "ACTIVE": 2,
       "CLOSED": 5,
       "INCONCLUSIVE": 6,
       "NEGATIVE_UNDER_CONTRACT": 10,
-      "NO_TRAIN": 6,
+      "NO_TRAIN": 7,
       "POSITIVE_UNDER_CONTRACT": 7
     }
   },

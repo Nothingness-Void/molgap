@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b38db62d9bb471b6e0a813df4cc048e8bf4751bfcfb486c252cadc863ee65f59",
+  "source_digest": "7ba8493587c20e8f0f02ca65edf0cb2142b10fd2cf9aeb77ee1597068e8f668b",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -511,6 +511,26 @@
       ],
       "track": "B",
       "trajectory_id": "TB-pcqm-scale-transfer-diagnostic"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_scale_transfer_reassessment/decision.md",
+      "family_id": "pcqm-scale-transfer-postmortem",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-pcqm-scale-transfer-attribution",
+        "TB-pcqm-scale-transfer-diagnostic",
+        "TB-matched-500k-v4-three-arm"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_scale_transfer_reassessment/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-scale-transfer-reassessment-no-train-20260925"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-scale-transfer-reassessment-20260925"
     },
     {
       "completeness_status": "partial",

@@ -1,0 +1,55 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-pcqm-scale-transfer-reassessment-20260925",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "pcqm-scale-transfer-postmortem",
+  "question": "Do newly accepted 500K mechanism endpoints and full convergence traces support the older RML explanation of cross-scale gain erosion and rank reversal?",
+  "hypothesis": {
+    "hypothesis_id": "H-pcqm-scale-transfer-reassessment-20260925",
+    "observed_deficiency": "The earlier scale-transfer diagnostic projected at least 0.0078 eV joint gain at 500K, but accepted joint gain was 0.002056 eV; K1 and GPTrans later trailed EdgeState on the consumed full official-validation role.",
+    "supporting_evidence_ids": ["pcqm-matched-500k-v4-three-arm", "pcqm-gptrans-noisy-nodes-500k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "alternative_explanations": ["A baseline catches up over a longer matched optimization horizon.", "100K EMA selection and 500K live-weight selection are non-identical.", "Full-scale training exposures and schedules differ by architecture.", "Mechanism benefit depends on the development cohort or stochastic seed."],
+    "changed_mechanism": "No model change; backtest earlier RML attribution using newly accepted endpoints and step-aligned traces.",
+    "cheapest_falsifier": "Check RML comparability identities and compare the accepted 500K joint gain with its prior numerical projection before any new computation.",
+    "related_closed_family_ids": ["pcqm-scale-transfer-attribution", "gptrans-t", "matched-500k-architecture-comparison"],
+    "expected_native_cost_ref": "cost-TB-pcqm-scale-transfer-reassessment-audit",
+    "decision_changed_if_positive": "Define one matched, budget-bounded scale-transfer falsifier before considering full training of another 100K winner.",
+    "decision_changed_if_negative": "Keep the accepted EdgeState full-scale preference and stop using 100K STQS as a 500K gain forecast.",
+    "historical_unknowns": ["Training-seed variance is unknown.", "Existing development roles have repeatedly selected models.", "Equalized full-scale budgets across architectures do not exist."]
+  },
+  "state_at_start": {
+    "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+    "contract_refs": ["experiments/pcqm_scale_transfer_reassessment/protocol.md"],
+    "reference_ids": ["pcqm-matched-500k-v4-three-arm"],
+    "parent_trajectory_ids": ["TB-pcqm-scale-transfer-attribution", "TB-pcqm-scale-transfer-diagnostic", "TB-matched-500k-v4-three-arm"],
+    "prior_evidence_ids": ["pcqm-matched-500k-v4-three-arm", "pcqm-gptrans-noisy-nodes-500k-s42", "pcqm-gptrans-noisy-pair-norm-500k-s42"],
+    "role_snapshot_refs": ["experiments/pcqm_500k_v4_evidence/roles/development.json", "experiments/pcqm_gptrans_full_convergence/roles/validation_metric.json"],
+    "budget_snapshot_ref": "experiments/pcqm_scale_transfer_reassessment/protocol.md",
+    "source_config_identity": "offline-rml-20260925-new-evidence-postmortem-v1"
+  },
+  "actions": [{
+    "action_id": "A001",
+    "type": "local_source_only_rml_trace_postmortem",
+    "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+    "run_ids": ["local-pcqm-scale-transfer-reassessment-20260925"],
+    "attempt_ids": ["attempt-001"],
+    "evidence_refs": ["experiments/pcqm_scale_transfer_reassessment/analysis.json", "experiments/pcqm_scale_transfer_reassessment/decision.md"],
+    "cost_event_ids": ["cost-TB-pcqm-scale-transfer-reassessment-audit"]
+  }],
+  "result": {
+    "evidence_ids": ["pcqm-scale-transfer-reassessment-no-train-20260925"],
+    "evidence_refs": ["experiments/pcqm_scale_transfer_reassessment/v5_evidence.json", "experiments/pcqm_scale_transfer_reassessment/analysis.json", "experiments/pcqm_scale_transfer_reassessment/decision.md"]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_scale_transfer_reassessment/decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": ["Recover accepted missing 500K traces and exact references without GPU if durable artifacts exist; no training successor is authorized."],
+    "reopen_conditions": ["A new matched, budget-bounded causal comparison is frozen and separately authorized."]
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_scale_transfer_reassessment/protocol.md",
+  "comparison_blockers": ["Cross-scale optimizer, role, and weight semantics differ.", "Full-scale training exposures differ by architecture."],
+  "reference_bundle_id": null
+}

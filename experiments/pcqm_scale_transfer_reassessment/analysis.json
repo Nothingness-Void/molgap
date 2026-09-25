@@ -1,0 +1,250 @@
+{
+  "cross_scale_context": {
+    "100k_and_500k_development_cohorts_identical": false,
+    "100k_weight_semantics": "EMA decay 0.9999",
+    "500k_weight_semantics": "live/raw",
+    "historical_joint_500k_projection_lower_bound_eV": 0.0078,
+    "historical_projection_source": "experiments/pcqm_scale_transfer_diagnostic/decision.md",
+    "joint_projection_shortfall_eV": 0.005744243252277374,
+    "transfer": {
+      "joint": {
+        "accepted_100k_gain_eV": 0.00938215483129023,
+        "accepted_500k_gain_eV": 0.0020557567477226257,
+        "note": "Contextual cross-scale ratio; EMA, development cohort, and horizon differ.",
+        "retained_fraction": 0.219113496279822
+      },
+      "noisy_nodes": {
+        "accepted_100k_gain_eV": 0.00483962524831294,
+        "accepted_500k_gain_eV": 0.001811385154724121,
+        "note": "Contextual cross-scale ratio; EMA, development cohort, and horizon differ.",
+        "retained_fraction": 0.37428211106956216
+      }
+    }
+  },
+  "full_context": {
+    "edge_state_nominal_selected_presentations_if_complete_passes": 104736786,
+    "edge_state_selected_epoch_zero_based": 30,
+    "edge_state_selected_passes_if_zero_based": 31,
+    "edge_state_train_rows_per_pass": 3378606,
+    "full_training_contracts": {
+      "edgestate": "experiments/pcqm_edge_state_full/results/convergence_40/remote_metrics.json",
+      "gptrans": "experiments/pcqm_k1_gptrans_full_fusion/training_contract.json",
+      "k1": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/k1/training_contract.json"
+    },
+    "gptrans_continuation_ema_development_eV": [
+      0.10822651657275918,
+      0.10702895498168777,
+      0.10571875585009721,
+      0.10472632881024245,
+      0.10405553029439202,
+      0.1037911756121818
+    ],
+    "gptrans_initial_presentations": 20000000,
+    "gptrans_selected_continuation_presentations": 20271360,
+    "gptrans_selected_total_presentations": 40271360,
+    "k1_completed_continuation_presentations": 10135680,
+    "k1_completed_total_presentations": 30135680,
+    "k1_continuation_live_development_eV": [
+      0.11042576880205074,
+      0.11008455009007893,
+      0.10804081530288623
+    ],
+    "k1_initial_presentations": 20000000,
+    "source_sha256": {
+      "edge_state_continuation_metrics": "e9ab77fce98c93d8405b569f38fa577759528e6775c57521f7984bf2ddc7ebea",
+      "gptrans_continuation_trace": "23f6facaa76cfd039a6a03a5865714cda2194c84e435eea050f6e69d0e5f0337",
+      "gptrans_initial_contract": "7b0d8b0f9ac35ce77eedf9231653916e30b95a931b60246201b6d67c12d39107",
+      "k1_continuation_trace": "cef5940fbe9d64387215153d3c997fc5d9066e90f8a1e150a9957b044a59951e",
+      "k1_initial_contract": "f34ec3087166a292d43ec37a4b6610dff17da0db442770fee1384b3059ad2586"
+    }
+  },
+  "matched_500k": {
+    "arms": {
+      "joint": {
+        "best_selected_gain_eV": 0.0020557567477226257,
+        "first_10_mean_gain_eV": 0.013116039335727692,
+        "last_10_mean_gain_eV": 0.0020235709846019743,
+        "peak_same_step_epoch": 0,
+        "peak_same_step_gain_eV": 0.01943981647491455,
+        "snapshots": [
+          {
+            "epoch_zero_based": 9,
+            "online_train_difference_eV": 0.013452128842393413,
+            "optimizer_step": 39060,
+            "same_step_development_gain_eV": 0.018466860055923462,
+            "sample_presentations": 4999680
+          },
+          {
+            "epoch_zero_based": 19,
+            "online_train_difference_eV": 0.010201336608188963,
+            "optimizer_step": 78120,
+            "same_step_development_gain_eV": 0.0032289251685142517,
+            "sample_presentations": 9999360
+          },
+          {
+            "epoch_zero_based": 29,
+            "online_train_difference_eV": 0.009127705255347202,
+            "optimizer_step": 117180,
+            "same_step_development_gain_eV": -0.0008810162544250488,
+            "sample_presentations": 14999040
+          },
+          {
+            "epoch_zero_based": 39,
+            "online_train_difference_eV": 0.008469274244399305,
+            "optimizer_step": 156240,
+            "same_step_development_gain_eV": 0.001557663083076477,
+            "sample_presentations": 19998720
+          },
+          {
+            "epoch_zero_based": 49,
+            "online_train_difference_eV": 0.00846896165584668,
+            "optimizer_step": 195300,
+            "same_step_development_gain_eV": 0.0022340789437294006,
+            "sample_presentations": 24998400
+          },
+          {
+            "epoch_zero_based": 59,
+            "online_train_difference_eV": 0.008469108756342048,
+            "optimizer_step": 234360,
+            "same_step_development_gain_eV": 0.002067267894744873,
+            "sample_presentations": 29998080
+          }
+        ],
+        "terminal_gain_eV": 0.002067267894744873,
+        "terminal_online_train_difference_eV": 0.008469108756342048,
+        "trace_ref": "experiments/pcqm_gptrans_noisy_pair_norm_500k/results/canonical_trace.json",
+        "trace_sha256": "044457ceec7b2a06266654ee0fb0a20a73ffcc37134c4fa895a7feb6c4b0f855"
+      },
+      "noisy_nodes": {
+        "best_selected_gain_eV": 0.001811385154724121,
+        "first_10_mean_gain_eV": 0.007842461764812469,
+        "last_10_mean_gain_eV": 0.001636284589767456,
+        "peak_same_step_epoch": 8,
+        "peak_same_step_gain_eV": 0.018012002110481262,
+        "snapshots": [
+          {
+            "epoch_zero_based": 9,
+            "online_train_difference_eV": 0.0089759067379315,
+            "optimizer_step": 39060,
+            "same_step_development_gain_eV": 0.011472627520561218,
+            "sample_presentations": 4999680
+          },
+          {
+            "epoch_zero_based": 19,
+            "online_train_difference_eV": 0.006593513084218863,
+            "optimizer_step": 78120,
+            "same_step_development_gain_eV": 0.0019781216979026794,
+            "sample_presentations": 9999360
+          },
+          {
+            "epoch_zero_based": 29,
+            "online_train_difference_eV": 0.005825731242543472,
+            "optimizer_step": 117180,
+            "same_step_development_gain_eV": 0.0015764757990837097,
+            "sample_presentations": 14999040
+          },
+          {
+            "epoch_zero_based": 39,
+            "online_train_difference_eV": 0.005286773415159082,
+            "optimizer_step": 156240,
+            "same_step_development_gain_eV": 0.0007149428129196167,
+            "sample_presentations": 19998720
+          },
+          {
+            "epoch_zero_based": 49,
+            "online_train_difference_eV": 0.005297539332662166,
+            "optimizer_step": 195300,
+            "same_step_development_gain_eV": 0.0010139420628547668,
+            "sample_presentations": 24998400
+          },
+          {
+            "epoch_zero_based": 59,
+            "online_train_difference_eV": 0.00542398140219269,
+            "optimizer_step": 234360,
+            "same_step_development_gain_eV": 0.0015367791056632996,
+            "sample_presentations": 29998080
+          }
+        ],
+        "terminal_gain_eV": 0.0015367791056632996,
+        "terminal_online_train_difference_eV": 0.00542398140219269,
+        "trace_ref": "experiments/pcqm_gptrans_noisy_nodes_500k/results/canonical_trace.json",
+        "trace_sha256": "b3f48ff12c8021f0474eb27373475713623453e5a61717a3bd17336a3f877a27"
+      },
+      "pair_norm": {
+        "best_selected_gain_eV": 0.0011400282382965088,
+        "first_10_mean_gain_eV": 0.01136031597852707,
+        "last_10_mean_gain_eV": 0.0010616615414619445,
+        "peak_same_step_epoch": 0,
+        "peak_same_step_gain_eV": 0.040485039353370667,
+        "snapshots": [
+          {
+            "epoch_zero_based": 9,
+            "online_train_difference_eV": 0.00842714834004471,
+            "optimizer_step": 39060,
+            "same_step_development_gain_eV": 0.014908388257026672,
+            "sample_presentations": 4999680
+          },
+          {
+            "epoch_zero_based": 19,
+            "online_train_difference_eV": 0.006014856510653088,
+            "optimizer_step": 78120,
+            "same_step_development_gain_eV": 0.002850547432899475,
+            "sample_presentations": 9999360
+          },
+          {
+            "epoch_zero_based": 29,
+            "online_train_difference_eV": 0.005203680022850737,
+            "optimizer_step": 117180,
+            "same_step_development_gain_eV": -0.0022385120391845703,
+            "sample_presentations": 14999040
+          },
+          {
+            "epoch_zero_based": 39,
+            "online_train_difference_eV": 0.004755850952332968,
+            "optimizer_step": 156240,
+            "same_step_development_gain_eV": 0.0009305328130722046,
+            "sample_presentations": 19998720
+          },
+          {
+            "epoch_zero_based": 49,
+            "online_train_difference_eV": 0.004589480292097076,
+            "optimizer_step": 195300,
+            "same_step_development_gain_eV": 0.0005486905574798584,
+            "sample_presentations": 24998400
+          },
+          {
+            "epoch_zero_based": 59,
+            "online_train_difference_eV": 0.004675451337845624,
+            "optimizer_step": 234360,
+            "same_step_development_gain_eV": 0.0010532662272453308,
+            "sample_presentations": 29998080
+          }
+        ],
+        "terminal_gain_eV": 0.0010532662272453308,
+        "terminal_online_train_difference_eV": 0.004675451337845624,
+        "trace_ref": "experiments/pcqm_gptrans_pair_norm_500k/results/canonical_trace.json",
+        "trace_sha256": "da466aa4bbff3347171d8af432a4b87f8bacb553e4999f5fd854135811f986a1"
+      }
+    },
+    "comparison_identity": {
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "internal_development_500000_549999",
+      "lr_schedule_identity": "cosine60-epoch0-4e-4-epoch59-1e-6",
+      "optimizer_identity": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+      "precision_identity": "fp32:tf32-disabled:deterministic-algorithms:seed42",
+      "row_split_identity": "train[0:500000]-development[500000:550000]",
+      "scientific_contract": "pcqm-fixed500k-dev50k-matched60-v4",
+      "selection_role_identity": "best-development-raw-model-60epochs",
+      "target_transform_identity": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+      "terminal_endpoint_identity": "optimizer_steps234360:sample_presentations29998080",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "online_train_semantics": "epoch-online training metric, not fixed-subset training evaluation",
+    "reference_best_development_eV": 0.10686753690242767,
+    "reference_trace_ref": "experiments/pcqm_500k_v4_evidence/results/canonical_trace.json",
+    "reference_trace_sha256": "6d613216ec56098d3800ed43d4606ed68c31fd9698254545ab3f3069a90e2068"
+  },
+  "method": "source-only accepted RML trace and contract audit; no predictions or protected roles opened",
+  "schema": "molgap-pcqm-scale-transfer-reassessment-v1"
+}
