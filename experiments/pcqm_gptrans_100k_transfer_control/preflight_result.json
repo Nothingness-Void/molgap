@@ -1,0 +1,38 @@
+{
+  "format": "molgap-local-gptrans-v4-train-role-throughput-v1",
+  "scope": "train-role short preflight; not an end-to-end training result",
+  "cache_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "train_shard_sha256": [
+    "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+    "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd"
+  ],
+  "train_rows": 100000,
+  "gpu": "NVIDIA GeForce RTX 5060",
+  "gpu_total_bytes": 8518041600,
+  "peak_allocated_bytes": 859575808,
+  "peak_reserved_bytes": 884998144,
+  "memory_reserve_fraction": 0.8961030967493748,
+  "python": "3.10.6",
+  "torch": "2.7.1+cu128",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch": 128,
+  "loader_workers": 0,
+  "warmup_steps": 10,
+  "warmup_seconds": 6.1102111999989575,
+  "measured_steps": 200,
+  "measured_seconds": 19.362361400000736,
+  "step_seconds": 0.09681180700000368,
+  "eval_steps_on_train_role": 50,
+  "eval_seconds": 1.8714096000003337,
+  "eval_step_seconds": 0.037428192000006674,
+  "estimated_60_epoch_train_hours_only": 1.2601670211167146,
+  "estimated_60_epoch_train_plus_50k_eval_hours": 1.504074072316758,
+  "unmeasured_overhead": [
+    "checkpointing",
+    "epoch startup",
+    "full-run thermal behavior",
+    "role-specific evaluation differences"
+  ]
+}

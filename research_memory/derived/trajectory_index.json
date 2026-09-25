@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b38db62d9bb471b6e0a813df4cc048e8bf4751bfcfb486c252cadc863ee65f59",
+  "source_digest": "65e0591426afe4dea85362862ebfca4d97781fb405e708ce57dfa9b36dc93520",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -65,6 +65,23 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gine-1m-gap-specialist-v7"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/decision.md",
+      "family_id": "gptrans-100k-transfer-control",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-pcqm-scale-transfer-attribution"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_100k_transfer_control/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-100k-transfer-control-local-20260925"
     },
     {
       "completeness_status": "complete",
