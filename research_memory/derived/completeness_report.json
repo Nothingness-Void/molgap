@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 37,
+    "trajectories_total": 39,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 26,
-    "with_incomplete_native_measurement": 21,
+    "with_cost_event": 28,
+    "with_incomplete_native_measurement": 23,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,11 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 23,
+      "count": 25,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
+        "TB-gptrans-100k-local-joint-control-20260925",
+        "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-full-convergence-20260919",
@@ -69,10 +71,12 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 21,
+      "count": 23,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
+        "TB-gptrans-100k-local-joint-control-20260925",
+        "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-centered-logits-k1pair-100k-s42",
@@ -115,11 +119,13 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 21,
+      "count": 23,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
+        "TB-gptrans-100k-local-joint-control-20260925",
+        "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
@@ -143,8 +149,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 6,
+      "count": 8,
       "items": [
+        "TB-gptrans-100k-local-joint-control-20260925",
+        "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-pair-memory-replay-memory-message-100k-s42",

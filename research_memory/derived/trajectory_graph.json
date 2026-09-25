@@ -46,6 +46,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-100k-local-joint-control-20260925:A001",
+      "target": "experiments/pcqm_gptrans_100k_transfer_control/paired_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-100k-local-reference-control-20260925:A001",
+      "target": "experiments/pcqm_gptrans_100k_transfer_control/paired_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-100k-transfer-control-local-20260925:A001",
       "target": "experiments/pcqm_gptrans_100k_transfer_control/preflight_result.json",
       "type": "action_produced_evidence"
@@ -229,6 +239,16 @@
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
       "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-100k-transfer-control-local-20260925",
+      "target": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-100k-transfer-control-local-20260925",
+      "target": "TB-gptrans-100k-local-reference-control-20260925",
+      "type": "parent_trajectory"
     },
     {
       "source": "TB-gptrans-noisy-nodes-100k-s42",
@@ -427,6 +447,16 @@
     },
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-gptrans-100k-local-reference-control-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "prior_evidence"
     },
@@ -452,6 +482,11 @@
     },
     {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "prior_evidence"
     },
@@ -468,6 +503,16 @@
     {
       "source": "pcqm-gptrans-pair-norm-500k-s42",
       "target": "TB-gptrans-reference-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-100k-local-reference-control-20260925",
       "type": "prior_evidence"
     },
     {
@@ -613,6 +658,16 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-100k-local-reference-control-20260925",
       "type": "reference_used"
     },
     {
@@ -871,6 +926,14 @@
     },
     {
       "id": "TB-gine-1m-gap-specialist-v7",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-100k-local-joint-control-20260925",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-100k-local-reference-control-20260925",
       "type": "trajectory"
     },
     {
