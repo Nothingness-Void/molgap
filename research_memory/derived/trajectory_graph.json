@@ -226,6 +226,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-scale-transfer-reassessment-20260925:A001",
+      "target": "experiments/pcqm_scale_transfer_reassessment/analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-scale-transfer-reassessment-20260925:A001",
+      "target": "experiments/pcqm_scale_transfer_reassessment/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-recurrent-graph-state-100k-seed42:A001",
       "target": "experiments/pcqm_gap_architecture/results/recurrent_graph_state_seed42/launch_manifest.json",
       "type": "action_produced_evidence"
@@ -451,6 +461,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-attribution",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "parent_trajectory"
@@ -462,12 +477,22 @@
     },
     {
       "source": "TB-pcqm-scale-transfer-attribution",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-scale-transfer-attribution",
       "target": "TC-k1-pair-value-decoupled-100k-s42",
       "type": "parent_trajectory"
     },
     {
       "source": "TB-pcqm-scale-transfer-diagnostic",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-scale-transfer-diagnostic",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "parent_trajectory"
     },
     {
@@ -536,6 +561,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-noisy-nodes-500k-s42",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "prior_evidence"
@@ -588,6 +618,11 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "prior_evidence"
     },
     {
@@ -738,6 +773,11 @@
     {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "prior_evidence"
     },
     {
@@ -904,6 +944,11 @@
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-pair-norm-500k-s42",
       "type": "reference_used"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "reference_used"
     }
   ],
   "format": "molgap-rml-trajectory-graph-v1",
@@ -1045,6 +1090,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-scale-transfer-reassessment-no-train-20260925",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-xian-determinism-audit-20260915",
       "type": "evidence"
     },
@@ -1182,6 +1231,10 @@
     },
     {
       "id": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "trajectory"
     },
     {

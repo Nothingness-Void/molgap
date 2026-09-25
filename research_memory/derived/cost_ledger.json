@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 12,
-  "event_count": 53,
+  "event_count": 54,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 42,
-  "not_applicable_event_count": 27,
+  "measurement_missing_event_count": 43,
+  "not_applicable_event_count": 28,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -19,7 +19,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "LOCAL_CPU_UNSPECIFIED:device_hours": {
         "estimated": {
@@ -30,7 +30,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:queue_hours": {
@@ -42,7 +42,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:wall_hours": {
@@ -55,7 +55,7 @@
           "known_total": 0.007305555555555556
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "NVIDIA_RTX_5060:cpu_hours": {
         "estimated": {
@@ -949,7 +949,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
@@ -960,7 +960,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -972,7 +972,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -985,7 +985,7 @@
           "known_total": 0.007305555555555556
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "NVIDIA_RTX_5060": {
@@ -3222,6 +3222,56 @@
         },
         "not_applicable_records": 1,
         "unknown_records": 0
+      }
+    },
+    "TB-pcqm-scale-transfer-reassessment-20260925": {
+      "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "LOCAL_CPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
       }
     },
     "TB-xian-determinism-audit-20260915": {

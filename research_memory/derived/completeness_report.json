@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 41,
+    "trajectories_total": 42,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 30,
-    "with_incomplete_native_measurement": 25,
+    "with_cost_event": 31,
+    "with_incomplete_native_measurement": 26,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 27,
+      "count": 28,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -38,6 +38,7 @@
         "TB-k1-residual-reconciliation",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
+        "TB-pcqm-scale-transfer-reassessment-20260925",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
@@ -73,7 +74,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 25,
+      "count": 26,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -98,6 +99,7 @@
         "TB-k1-residual-reconciliation",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
+        "TB-pcqm-scale-transfer-reassessment-20260925",
         "TB-xian-determinism-audit-20260915",
         "TC-k1-pair-value-decoupled-100k-s42"
       ],
@@ -123,7 +125,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 21,
+      "count": 22,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -140,6 +142,7 @@
         "TB-k1-gptrans-full-fusion-r3",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
+        "TB-pcqm-scale-transfer-reassessment-20260925",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
