@@ -122,6 +122,14 @@ these differences are not untouched leaderboard estimates.
    The already reused 500K development role can support diagnostics but not an
    independent promotion claim. A new role must be declared before use; sealed
    official roles remain untouched.
+   A local checkpoint inventory found retained 100K Noisy/Joint candidate
+   files but not the accepted GPTrans-T 100K reference checkpoint whose
+   acceptance SHA256 is `f4da386ae1e32f6953b645c0bdb8e208aaba1f1d7b8ebec132776bd63c22d6ab`.
+   Therefore a frozen-weight 100K-to-500K-cohort paired inference was **not**
+   run. Recover and hash-accept that exact reference first; a separately
+   trained same-job control cannot silently replace it. Log any subsequent
+   internal-role use, source indices, artifact hashes and measured native cost
+   in a prospective RML action.
 3. **Only if a full-scale allocation decision depends on it:** run a matched
    baseline/candidate pair under one fixed 500K recipe, identical seed,
    optimizer-step budget, LR trajectory, evaluation rows and both raw/EMA
