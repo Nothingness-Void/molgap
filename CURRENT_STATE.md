@@ -108,6 +108,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   historical 500K gain contraction remains unresolved. Authority:
   `experiments/pcqm_gptrans_100k_transfer_control/decision.md` and
   `experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md`.
+- The frozen 500K readout probe is inconclusive for a readout bottleneck; the
+  scale-transfer postmortem closes `NO_TRAIN` and does not identify a unique
+  100K-to-500K cause. Neither changes the model recommendation or releases
+  another full run. Authorities:
+  `experiments/pcqm_gptrans_500k_frozen_readout/decision.md` and
+  `experiments/pcqm_scale_transfer_reassessment/decision.md`.
 - The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
   73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
   0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated
