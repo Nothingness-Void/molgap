@@ -130,6 +130,7 @@ def load_frozen_initial_state(
     expected_file_sha256: str,
     expected_state_sha256: str,
     expected_format: str,
+    allowed_missing_keys: tuple[str, ...] = (),
 ):
     """Load and verify a framework-independent frozen initialization."""
     if sha256_file(path) != expected_file_sha256:
@@ -139,8 +140,15 @@ def load_frozen_initial_state(
         raise RuntimeError("Frozen initial-state artifact format changed")
     if "model_state" not in payload:
         raise RuntimeError("Frozen initial-state artifact has no model_state")
-    model.load_state_dict(payload["model_state"], strict=True)
-    observed = model_state_sha256(model)
+    missing, unexpected = model.load_state_dict(
+        payload["model_state"], strict=not allowed_missing_keys
+    )
+    if set(missing) != set(allowed_missing_keys) or unexpected:
+        raise RuntimeError("Frozen initial-state extra parameter keys changed")
+    observed = state_dict_sha256({
+        name: value for name, value in model.state_dict().items()
+        if name not in allowed_missing_keys
+    })
     if payload.get("state_sha256") != observed or observed != expected_state_sha256:
         raise RuntimeError("Frozen initial-state tensor identity changed")
     return {

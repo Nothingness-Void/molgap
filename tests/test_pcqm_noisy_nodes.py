@@ -29,6 +29,32 @@ def test_noisy_nodes_parameters():
     assert noisy_params == base_params + aux_params
 
 
+def test_frozen_core_load_preserves_only_auxiliary_head(tmp_path):
+    from molgap.training_reproducibility import sha256_file
+    from molgap.v4_runtime import load_frozen_initial_state, model_state_sha256
+
+    configure_fp32_determinism(42)
+    core = OGBGPTransTiny()
+    state = core.state_dict()
+    artifact = tmp_path / "initial_state.pt"
+    torch.save({"format": "test-frozen-state", "model_state": state,
+                "state_sha256": model_state_sha256(core)}, artifact)
+    candidate = GPTransNoisyNodes()
+    auxiliary_before = {key: value.clone() for key, value in candidate.state_dict().items()
+                        if key.startswith("denoise_head.")}
+    load_frozen_initial_state(
+        candidate, artifact,
+        expected_file_sha256=sha256_file(artifact),
+        expected_state_sha256=model_state_sha256(core),
+        expected_format="test-frozen-state",
+        allowed_missing_keys=("denoise_head.weight", "denoise_head.bias"),
+    )
+    for key, value in state.items():
+        assert torch.equal(candidate.state_dict()[key], value)
+    for key, value in auxiliary_before.items():
+        assert torch.equal(candidate.state_dict()[key], value)
+
+
 def test_noisy_nodes_forward_train_and_backward():
     configure_fp32_determinism(42)
     model = GPTransNoisyNodes(noise_std=0.15, loss_weight=0.1)

@@ -212,6 +212,7 @@ def _make_noisy_nodes_model(
             expected_file_sha256=EXPECTED_INITIAL_STATE_ARTIFACT_SHA256,
             expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
             expected_format="molgap-gptrans-t-seed42-initial-state-v1",
+            allowed_missing_keys=("denoise_head.weight", "denoise_head.bias"),
         )
     return model
 
