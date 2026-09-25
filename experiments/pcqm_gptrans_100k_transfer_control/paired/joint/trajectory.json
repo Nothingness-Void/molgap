@@ -45,16 +45,27 @@
     "attempt_ids": ["attempt-002"],
     "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/correction.md", "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json"],
     "cost_event_ids": ["cost-TB-gptrans-100k-local-joint-control-v2-expected"]
+  }, {
+    "action_id": "A003",
+    "type": "frozen_weights_500k_development_cohort_diagnostic",
+    "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+    "run_ids": ["local-gptrans-100k-joint-control-v2-20260925"],
+    "attempt_ids": ["attempt-002"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json"],
+    "cost_event_ids": []
   }],
-  "result": {"evidence_ids": [], "evidence_refs": []},
+  "result": {
+    "evidence_ids": ["pcqm-gptrans-100k-local-joint-control-v2-20260925"],
+    "evidence_refs": ["experiments/pcqm_gptrans_100k_transfer_control/paired/joint/v5_evidence.json", "experiments/pcqm_gptrans_100k_transfer_control/acceptance.json", "experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json"]
+  },
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
-    "outcome": "ACTIVE",
-    "next_allowed_actions": ["One local RTX 5060 joint-candidate training attempt under paired_release_v2.json."],
+    "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [],
     "reopen_conditions": []
   },
   "comparison_class": "CONTEXT_ONLY",
   "comparison_readiness_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
-  "comparison_blockers": ["No terminal same-machine paired endpoint yet."],
+  "comparison_blockers": ["A positive local diagnostic does not establish a 500K retraining or full-scale promotion claim.", "Selected model and trace are outside Git; full wall/device hours are unmeasured."],
   "reference_bundle_id": null
 }

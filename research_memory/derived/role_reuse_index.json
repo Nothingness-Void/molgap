@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 126,
+  "ambiguous_historical_role_record_count": 136,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -122,6 +122,76 @@
     },
     {
       "evidence_id": "pcqm-gine-1m-local-specialist-v7",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "official_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -884,7 +954,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 44,
+  "explicit_role_event_count": 50,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1100,6 +1170,22 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",
@@ -1146,7 +1232,37 @@
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_99999": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
@@ -1237,6 +1353,8 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
@@ -1269,6 +1387,8 @@
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
+      "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
@@ -1419,6 +1539,22 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",
@@ -1443,6 +1579,20 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
@@ -1605,6 +1755,22 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "selection_used",
@@ -1651,7 +1817,37 @@
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_99999": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-joint-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-gptrans-100k-local-reference-v2-frozen-transfer",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",

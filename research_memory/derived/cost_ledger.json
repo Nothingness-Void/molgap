@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 11,
-  "event_count": 45,
+  "event_count": 47,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 34,
-  "not_applicable_event_count": 19,
+  "measurement_missing_event_count": 36,
+  "not_applicable_event_count": 21,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -457,7 +457,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 6
       },
       "NVIDIA_RTX_5060:device_hours": {
         "estimated": {
@@ -469,7 +469,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 6
       },
       "NVIDIA_RTX_5060:queue_hours": {
         "estimated": {
@@ -480,7 +480,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "NVIDIA_RTX_5060:wall_hours": {
@@ -493,7 +493,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 2
       },
       "NVIDIA_T4_SINGLE_VISIBLE:cpu_hours": {
         "estimated": {
@@ -949,7 +949,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "device_hours": {
         "estimated": {
@@ -961,7 +961,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "queue_hours": {
         "estimated": {
@@ -972,7 +972,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 5,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -985,7 +985,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 3
       }
     },
     "NVIDIA_T4_SINGLE_VISIBLE": {
@@ -1501,7 +1501,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_RTX_5060:device_hours": {
         "estimated": {
@@ -1513,7 +1513,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_RTX_5060:queue_hours": {
         "estimated": {
@@ -1524,7 +1524,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "NVIDIA_RTX_5060:wall_hours": {
@@ -1537,7 +1537,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "TB-gptrans-100k-local-reference-control-20260925": {
@@ -1551,7 +1551,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_RTX_5060:device_hours": {
         "estimated": {
@@ -1563,7 +1563,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA_RTX_5060:queue_hours": {
         "estimated": {
@@ -1574,7 +1574,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "NVIDIA_RTX_5060:wall_hours": {
@@ -1587,7 +1587,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "TB-gptrans-100k-transfer-control-local-20260925": {

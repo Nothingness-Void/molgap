@@ -1,0 +1,49 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+  "track": "B",
+  "scope": "local_paired_100k_reference_and_frozen_cohort_diagnostic",
+  "legacy_contract": "molgap-local-gptrans-100k-paired-release-v2",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "external_local_hash_verified",
+    "comparison_status": "diagnostic_paired_endpoint",
+    "scientific_status": "context_only",
+    "transfer_status": "diagnostic_only",
+    "budget_decision": "closed_no_scale_release",
+    "full_handoff_status": "not_requested"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
+      "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json",
+      "experiments/pcqm_gptrans_100k_transfer_control/acceptance.json",
+      "experiments/pcqm_gptrans_100k_transfer_control/decision.md"
+    ]
+  },
+  "artifacts": [
+    {"name": "completion_manifest", "locator": "external://local-rtx5060/gptrans_100k_transfer_pair_20260925/reference_v2/training/completion_manifest.json", "sha256": "5aaf81195335ca88eb7d56b791023ffbf09295258577e65a05f3600c245e2107", "availability": "local_external_verified"},
+    {"name": "selected_model", "locator": "external://local-rtx5060/gptrans_100k_transfer_pair_20260925/reference_v2/training/best_model.pt", "sha256": "a9a37fe14ecbf8281c2033ad9e0a28d1b9216e582bbbaccfa4ba1ea5f15f8433", "availability": "local_external_verified"},
+    {"name": "trace", "locator": "external://local-rtx5060/gptrans_100k_transfer_pair_20260925/reference_v2/training/trace.json", "sha256": "e51b17dc8137c4c208e27b88509fb7d584df4cc7c820ed36e860e6d816a07373", "availability": "local_external_verified"}
+  ],
+  "role_use": {
+    "official_train": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "development_100k_gap_mae_eV": 0.15589076386392117,
+    "frozen_transfer_500k_development_gap_mae_eV": 0.15650320180416108,
+    "best_epoch": 59
+  },
+  "migration": {
+    "migrated_at": "2026-09-25",
+    "verification_scope": "Prospective training was already completed; this envelope only indexes the accepted local diagnostic and did not itself execute training, inference, or scientific reinterpretation.",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

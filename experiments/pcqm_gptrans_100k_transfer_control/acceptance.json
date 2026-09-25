@@ -1,0 +1,74 @@
+{
+  "format": "molgap-local-gptrans-100k-paired-diagnostic-acceptance-v1",
+  "status": "accepted_diagnostic_only",
+  "release_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json",
+  "analysis_ref": "experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json",
+  "analysis_sha256": "461c9ccce9d7f171504a0fa314240a6195e278d11f526bd122722e6bbd18b911",
+  "source_commit": "12f930f42adc10d3a8ae6dbb53ac874f96cdb052",
+  "source_archive_sha256": "2be914d332fa37cd92e6bdd880bbf47a0b2cc2040a4fb4a941b34d26830b520c",
+  "initial_core_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "train_and_development_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "frozen_transfer_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "arms": {
+    "reference": {
+      "run_id": "local-gptrans-100k-reference-control-v2-20260925",
+      "external_artifact_dir": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/reference_v2/training",
+      "complete": true,
+      "parameters": 5246817,
+      "epochs": 60,
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080,
+      "best_epoch": 59,
+      "completion_manifest_sha256": "5aaf81195335ca88eb7d56b791023ffbf09295258577e65a05f3600c245e2107",
+      "trace_sha256": "e51b17dc8137c4c208e27b88509fb7d584df4cc7c820ed36e860e6d816a07373",
+      "best_model_sha256": "a9a37fe14ecbf8281c2033ad9e0a28d1b9216e582bbbaccfa4ba1ea5f15f8433",
+      "development_predictions_sha256": "a68dbfa48eebaecaa30e377b529447cea4fc603ed4fc6f7c077985818d33e979",
+      "last_checkpoint_sha256": "be877946ef0599d4565cb5f7b8a28e13050476a85a1e3da3f80358af0d8a5c1c",
+      "timed_epoch_hours": 1.25977875966666,
+      "timed_epoch_scope": "training, development evaluation, and per-epoch artifact writes; excludes setup and finalization"
+    },
+    "joint": {
+      "run_id": "local-gptrans-100k-joint-control-v2-20260925",
+      "external_artifact_dir": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/joint_v2/training",
+      "complete": true,
+      "parameters": 5277400,
+      "epochs": 60,
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080,
+      "best_epoch": 59,
+      "completion_manifest_sha256": "cff84dc01e89466c4f14b7074c046c87be1b1e668673651eee08e6e5c955a97a",
+      "trace_sha256": "5b442c916bbbd4e8dc996930b43119b9551212bfd018436f7fe7c1850a269467",
+      "best_model_sha256": "6da5bb02f7b9c5ed31c0dcd7377a232546c50d0b07b84abde0f420748d56eea8",
+      "development_predictions_sha256": "ea5c0ec8e08e3249ca7de23a030283e87a90a0b22694394b1462907e5a096f3b",
+      "last_checkpoint_sha256": "7749309a2dd325a43fd70d4e41384f959bfb3d74e449d291c33fc9dbed3b7568",
+      "timed_epoch_hours": 1.1690260295,
+      "timed_epoch_scope": "training loops only; excludes development evaluation, setup, and finalization"
+    }
+  },
+  "checks": {
+    "source_and_initial_core_match": true,
+    "both_complete_and_60_epochs": true,
+    "all_recorded_artifact_hashes_match": true,
+    "paired_development_source_idx_and_targets_match": true,
+    "frozen_transfer_source_idx_and_targets_match": true,
+    "predictions_and_targets_finite": true,
+    "official_validation_or_protected_role_read": false,
+    "full_wall_or_device_hours_measured": false,
+    "repository_portable_model_artifacts": false
+  },
+  "metrics": {
+    "development_100k_reference_mae_eV": 0.15589076386392117,
+    "development_100k_joint_mae_eV": 0.14970543589055538,
+    "development_100k_paired_gain_eV": 0.006185327973365784,
+    "frozen_transfer_500k_reference_mae_eV": 0.15650320180416108,
+    "frozen_transfer_500k_joint_mae_eV": 0.15071130101680755,
+    "frozen_transfer_500k_paired_gain_eV": 0.005791900787353516
+  },
+  "limitations": [
+    "One seed; row bootstrap does not measure training stochasticity.",
+    "The 500K development role was already used for model selection and is diagnostic only.",
+    "Frozen-weight cohort transfer is not a 500K retraining outcome.",
+    "Reference and joint epoch timings cover different scopes; full wall and device hours were not instrumented.",
+    "Large model artifacts remain outside Git and are not repository-portable."
+  ]
+}

@@ -224,7 +224,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "device_hours": {
           "estimated": {
@@ -236,7 +236,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "queue_hours": {
           "estimated": {
@@ -247,7 +247,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 5,
+          "not_applicable_records": 7,
           "unknown_records": 0
         },
         "wall_hours": {
@@ -260,7 +260,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 3
         }
       },
       "NVIDIA_T4_SINGLE_VISIBLE": {
@@ -664,10 +664,10 @@
         }
       }
     },
-    "unknown_events": 34
+    "unknown_events": 36
   },
   "evidence": {
-    "validated": 31,
+    "validated": 33,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -694,27 +694,27 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 23,
+      "count": 21,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 8,
+      "count": 6,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 126,
-    "explicit_events": 44,
-    "repeatedly_selected": 6
+    "coarse_historical": 136,
+    "explicit_events": 50,
+    "repeatedly_selected": 7
   },
-  "source_digest": "6db77de0f43a72ba7b65cf62a8f4a0d4b7f6bf3c89955d84fb9351952b87627a",
+  "source_digest": "262a96e3f668b57af476f13338cc0808d5074d7bc9d7411c29e4c0522bb6508d",
   "trajectories": {
     "count": 39,
     "outcomes": {
-      "ACTIVE": 4,
+      "ACTIVE": 2,
       "CLOSED": 5,
-      "INCONCLUSIVE": 7,
+      "INCONCLUSIVE": 9,
       "NEGATIVE_UNDER_CONTRACT": 10,
       "NO_TRAIN": 6,
       "POSITIVE_UNDER_CONTRACT": 7

@@ -484,10 +484,17 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         [],
     )
     assert set(no_evidence_trajectories) == {
+        "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
+        "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
+        "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }
+    for arm in ("reference", "joint"):
+        trajectory_id = f"TB-gptrans-100k-local-{arm}-control-20260925"
+        assert trajectories[trajectory_id]["completeness_status"] == "complete"
+        assert trajectory_id not in no_evidence_trajectories
     assert trajectories["TB-gptrans-centered-logits-100k-s42"]["outcome"] == "INCONCLUSIVE"
     assert trajectories["TB-gptrans-centered-logits-100k-s42"]["result_evidence_ids"] == []
     assert trajectories["TB-gptrans-noisy-pair-norm-500k-s42"]["completeness_status"] == "complete"

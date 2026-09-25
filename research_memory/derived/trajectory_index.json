@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6db77de0f43a72ba7b65cf62a8f4a0d4b7f6bf3c89955d84fb9351952b87627a",
+  "source_digest": "262a96e3f668b57af476f13338cc0808d5074d7bc9d7411c29e4c0522bb6508d",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -68,9 +68,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
+      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/decision.md",
       "family_id": "gptrans-100k-local-transfer-control-joint",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-100k-transfer-control-local-20260925"
@@ -78,15 +78,17 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_100k_transfer_control/paired/joint/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-100k-local-joint-control-v2-20260925"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-100k-local-joint-control-20260925"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/paired_training_contract.md",
+      "decision_ref": "experiments/pcqm_gptrans_100k_transfer_control/decision.md",
       "family_id": "gptrans-100k-local-transfer-control-reference",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-100k-transfer-control-local-20260925"
@@ -94,7 +96,9 @@
       "ready_package_ids": [],
       "record_mode": "prospective",
       "record_path": "experiments/pcqm_gptrans_100k_transfer_control/paired/reference/trajectory.json",
-      "result_evidence_ids": [],
+      "result_evidence_ids": [
+        "pcqm-gptrans-100k-local-reference-control-v2-20260925"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
     },

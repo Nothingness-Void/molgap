@@ -93,6 +93,48 @@
     },
     {
       "artifact_availability": [
+        "local_external_verified"
+      ],
+      "comparison_status": "diagnostic_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_paired_100k_joint_and_frozen_cohort_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/paired/joint/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "frozen_weights_cohort_gain_retained",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_external_verified"
+      ],
+      "comparison_status": "diagnostic_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local_paired_100k_reference_and_frozen_cohort_diagnostic",
+      "source_envelope": "experiments/pcqm_gptrans_100k_transfer_control/paired/reference/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "diagnostic_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "paired_endpoint_only_not_strict",

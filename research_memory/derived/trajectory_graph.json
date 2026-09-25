@@ -61,6 +61,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-100k-local-joint-control-20260925:A003",
+      "target": "experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-100k-local-reference-control-20260925:A001",
       "target": "experiments/pcqm_gptrans_100k_transfer_control/paired_release.json",
       "type": "action_produced_evidence"
@@ -73,6 +78,11 @@
     {
       "source": "TB-gptrans-100k-local-reference-control-20260925:A002",
       "target": "experiments/pcqm_gptrans_100k_transfer_control/paired_release_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-100k-local-reference-control-20260925:A003",
+      "target": "experiments/pcqm_gptrans_100k_transfer_control/analysis_result.json",
       "type": "action_produced_evidence"
     },
     {
@@ -822,6 +832,14 @@
     },
     {
       "id": "pcqm-gine-1m-local-specialist-v7",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "type": "evidence"
     },
     {
