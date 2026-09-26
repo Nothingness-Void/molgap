@@ -1,15 +1,33 @@
 # Execution state
 
-## Submitted, awaiting startup
+## Training complete; separate audit running
 
-At 2026-09-27 04:31 JST both private Kaggle2 v1 notebooks were `QUEUED` with
-no startup logs. Requested hardware is not proof of assigned hardware or
-successful model preflight.
+All three arms completed 40 epochs / 31,240 optimizer steps and passed strict
+saved-artifact acceptance on September 27, 2026. All three native training
+traces were finalized and included in the RML replay pool. The immutable K1
+reference development MAE is 0.1413736343383789 eV; it was not retrained.
 
-| Slot | Actual scheduler identity | Arms | Request / returned metadata |
-|---|---|---|---|
-| dual | `kaseichou/molgap-k1-receiver-and-triplet-s42`, kernel 136015255, v1 | receiver-pair; triplet-aggregate | T4x2 / `NvidiaTeslaT4` |
-| rrwp | `kaseichou/molgap-k1-rrwp-pair-s42`, kernel 136015256, v1 | RRWP-pair | P100 / generic `Gpu`; actual device pending |
+| Arm | Parameters | Best epoch (zero-based) | Dev MAE, eV | Gain vs K1, eV | Outcome |
+|---|---:|---:|---:|---:|---|
+| Receiver-pair | 3,681,665 | 38 | 0.1395080686 | 0.0018655657 | POSITIVE_BELOW_GATE |
+| Triplet-aggregate | 3,683,843 | 39 | 0.1398579329 | 0.0015157014 | POSITIVE_BELOW_GATE |
+| RRWP-pair | 3,681,953 | 36 | 0.1389245242 | 0.0024491102 | POSITIVE_BELOW_GATE |
+
+All paired row-bootstrap intervals against K1 were favorable, but row bootstrap
+does not estimate training stochasticity. None cleared this study's prospective
+0.003 eV material gate. RRWP had the lowest observed score; it is not a confirmed
+new incumbent or evidence of successful 500K/full training transfer.
+Frozen per-arm authorities: [receiver](arms/receiver_pair/decision.md),
+[triplet](arms/triplet_aggregate/decision.md), [RRWP](arms/rrwp_pair/decision.md).
+
+| Slot | Actual scheduler identity | Observed allocation |
+|---|---|---|
+| dual | `kaseichou/molgap-k1-receiver-and-triplet-s42`, kernel 136015255, v1 | two independent T4 workers |
+| rrwp | `kaseichou/molgap-k1-rrwp-pair-s42`, kernel 136015256, v1 | P100 requested; two T4 allocated, one used |
+
+Cost records count observed allocated devices, including the unused second
+RRWP T4 and setup time. These are resource-occupancy records, not a claim about
+Kaggle's billing formula. No idle allocation is hidden as zero cost.
 
 Release/source identity and the exact downloaded entry/metadata hashes are in
 `submission_receipt_v1.json`. Scientific source commit:
@@ -25,23 +43,37 @@ kernel **136015255/v1** with matching source and entry; nothing was resubmitted
 or rewritten. Terminal provenance must retain this explicit alias and receipt,
 not invent a second physical run. Monitoring uses only the actual slug.
 
-## Validation and monitoring
+## Acceptance and separate portability audit
 
-- New static/mock checks: 18 passed; no local model construction or inference.
-- V5 targeted checks passed before release; prospective RML `validate`,
-  `rebuild`, and `check --frozen` passed after all four plans were created.
-- Three training trajectories plus one conditional separate `NO_TRAIN` audit
-  plan exist. No terminal result or new replay-ready training entry is claimed.
-- `monitor_binding.json` binds two independent local control stores to the
-  existing Luna B `01a04479-ca44-7d31-95c4-6be485f256cc` and existing A
-  `01a025a1-3b87-7781-8a91-f183193f7865`.
-- The existing heartbeat `molgap-k1-conjugated-dual-kaggle2-monitor` was updated
-  in place, enabled every 30 minutes, and renamed for this study. Healthy
-  checks are silent. Each terminal/fault produces one idempotent handoff to A
-  without overriding A's model or reasoning setting. The first terminal job
-  does not close monitoring for the other job.
-- Training acceptance uses `accept.py` independently for each slot. A owns
-  scientific attribution, strict RML terminal closure and replay rebuild.
-  Only after accepted training may A release the separate frozen500K internal
-  development inference audit. There is no automatic scale-up, extra seed,
-  training successor, or protected-role access.
+The initial RRWP acceptance failure was a local consumer field-name mismatch,
+not a training failure. The repair requires both actual producer checks and
+rejects missing/false values; remote training artifacts were not changed.
+See [interface diagnosis](acceptance_interface_diagnosis.md).
+
+The prospectively registered NO_TRAIN audit was submitted only after all three
+training arms passed acceptance. Kernel
+`kaseichou/molgap-k1-relation-audit-s42`, numeric ID **136030465**, version **1**,
+was confirmed `RUNNING` after submission. Actual device qualification remains
+pending terminal evidence. The audit first reproduces original development
+predictions for every candidate, then infers the fixed500K internal-dev 50K
+rows. Already accepted K1 predictions are reused byte-for-byte. No optimizer,
+official validation, test-dev, test-challenge, or other protected role is opened.
+The cap is 5,400 allocated device-seconds, divided by the actual assigned GPU
+count; the parent launcher enforces the remaining wall budget after setup.
+
+- Released checkpoint, reference prediction, scientific source and audit-helper
+  hashes: [audit release](audit_release.json).
+- Actual submission and downloaded entry identity:
+  [audit receipt](audit_submission_receipt_v1.json).
+- Three training trajectories are replay-ready; the separate audit remains
+  prospective until its own terminal is accepted. It is not training replay.
+- Targeted static/mock checks: 60 passed; RML `validate` and `check --frozen`
+  passed after training closure. No local model construction or inference.
+- `monitor_binding.json` and its stores retain the two closed training events;
+  `audit_monitor_binding.json` binds only the new audit to the same A/B pair.
+- Existing heartbeat `molgap-k1-conjugated-dual-kaggle2-monitor` is reused at
+  30-minute intervals in Luna B. Healthy checks are silent. A successful
+  terminal/fault handoff to A is acknowledged idempotently, then monitoring
+  pauses. No model/reasoning override is sent to A.
+- No automatic scale-up, extra seed, training successor, or protected-role
+  access is released by these results.

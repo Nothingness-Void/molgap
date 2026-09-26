@@ -66,13 +66,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The user authorized a bounded Kaggle2 overnight relation-resolution study:
-receiver-specific pair messages and one-shot vector triplet aggregation share
-a T4x2 notebook; an RRWP-conditioned pair arm uses the second notebook slot.
-Both v1 notebooks are submitted and queued; the prospective source/RML gates
-passed. Hardware qualification and training remain unverified until startup.
-The existing Luna B monitors both exact scheduler identities. The K1 reference is reused;
-post100K frozen500K inference is a separate acceptance-gated NO_TRAIN stage.
+The Kaggle2 overnight relation-resolution study completed all three arms.
+Receiver-pair, vector triplet aggregation and RRWP-pair passed strict saved
+acceptance and entered the RML replay pool. Each is positive below this study's
+predeclared material gate; no scale-up or new training is released. The separate
+accepted-checkpoint frozen500K internal-dev `NO_TRAIN` audit is submitted and
+running, reusing accepted K1 predictions. The existing Luna B monitors only
+that exact audit job and returns terminal/fault events to the existing A.
 Authority: `experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
 
 The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early
