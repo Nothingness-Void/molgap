@@ -197,6 +197,10 @@ path strings are retained, except `recovery_spec`: its path stays in the
 descriptor while its strict JSON object is loaded into the closure input,
 as required by the existing API. Nothing missing is filled in.
 
+In the `molgap-server` checkout, translation and execution preserve the existing
+server ownership boundary and accept only server-owned prospective trajectories.
+Desktop-owned terminal records remain on the independent desktop checkout.
+
 The recovery object requires `metric_semantics` and permits only
 `trajectory_id`, `run_id`, `rows_key`, `field_mapping`, `device_time_semantics`
 in addition. Supplied IDs must match the arm. Mapping keys use existing trace

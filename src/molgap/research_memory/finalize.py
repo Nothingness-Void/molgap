@@ -19,6 +19,7 @@ from typing import Any
 
 from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
+from .paired import accepted_reference_evidence, pair_binding, reference_trajectory, validate_pair_observation
 from .roles import validate_observed_role_truth
 from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
@@ -144,6 +145,9 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         raise ValueError("pass the original prospective trajectory, not its finalized overlay")
     frozen_bytes = trajectory_path.read_bytes()
     frozen = validate_trajectory(json.loads(frozen_bytes))
+    paired = pair_binding(frozen)
+    if paired is not None:
+        reference_trajectory(root, frozen)
     if frozen["record_mode"] != "prospective" or frozen["owner"] != "server":
         raise ValueError("finalize requires a server-owned prospective trajectory")
     source = repo_local_path(root, terminal)
@@ -223,7 +227,9 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha),
         )
         if comparison.get("reference_id") not in frozen["state_at_start"]["reference_ids"]:
-            raise ValueError("terminal comparison does not use a frozen reference")
+            if (paired is None or paired["comparison_role"] != "candidate"
+                    or comparison.get("reference_id") != accepted_reference_evidence(root, frozen)[0]):
+                raise ValueError("terminal comparison does not use a frozen reference")
         if frozen.get("reference_bundle_id") is not None and comparison["reference_bundle_id"] != frozen["reference_bundle_id"]:
             raise ValueError("terminal comparison changed the frozen reference bundle")
         updated.update(comparison_class=comparison["comparison_class"],
@@ -293,13 +299,39 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
                 action["cost_event_ids"] = sorted(set(action["cost_event_ids"]) | {missing_cost["cost_event_id"]})
     if trace_bytes is not None:
         manifest = copy.deepcopy(package["trace_manifest"])
-        if manifest["backtest_eligibility"]["eligible"] and (comparison is None or not comparison["strict_ready"]):
+        eligible = manifest["backtest_eligibility"]["eligible"]
+        if paired is not None and eligible:
+            observation = validate_pair_observation(package.get("same_run_observation"))
+            if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
+                paired["spec_identity"], paired["logical_run_id"], frozen["state_at_start"]["source_commit"]
+            ):
+                raise ValueError("same-run observation differs from frozen prospective identity")
+            if manifest["comparison_role"] != paired["comparison_role"]:
+                raise ValueError("trace role differs from frozen same-run arm role")
+            if paired["comparison_role"] == "reference":
+                if (manifest["reference_id"] != evidence["evidence_id"]
+                        or evidence["outcome"]["execution_status"] != "complete"):
+                    raise ValueError("same-run reference trace must bind its complete accepted evidence")
+            elif (
+                manifest["reference_id"] != accepted_reference_evidence(root, frozen)[0]
+                or comparison is None or not comparison["strict_ready"]
+                or comparison["reference_id"] != manifest["reference_id"]
+            ):
+                raise ValueError("same-run candidate trace requires accepted control and strict V5 comparison")
+            if paired["comparison_role"] == "candidate":
+                reference_path = resolve_repo_pointer(root, paired["reference_trajectory_ref"])
+                assert reference_path is not None
+                reference_terminal = load_json_object(reference_path.parent / "rml_finalized/terminal_input.json")
+                if validate_pair_observation(reference_terminal.get("same_run_observation")) != observation:
+                    raise ValueError("same-run candidate and control have different observed platform jobs")
+        elif eligible and (comparison is None or not comparison["strict_ready"]):
             raise ValueError("new eligible trace requires existing strict V5 comparison acceptance")
         if (manifest["trajectory_id"], manifest["run_id"]) != (frozen["trajectory_id"], run_id):
             raise ValueError("manifest identity mismatch")
         if manifest["contract_ref"] not in frozen["state_at_start"]["contract_refs"]:
             raise ValueError("manifest contract not frozen")
-        if manifest["reference_id"] not in frozen["state_at_start"]["reference_ids"]:
+        if (not (paired is not None and eligible)
+                and manifest["reference_id"] not in frozen["state_at_start"]["reference_ids"]):
             raise ValueError("manifest reference not frozen")
         manifest.update(trace_artifact_ref=prefix + "/trace.json",
                         trace_artifact_sha256=hashlib.sha256(trace_bytes).hexdigest(),

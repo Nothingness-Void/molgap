@@ -31,6 +31,9 @@ handoff rules; this root file stays a short navigation and safety protocol.
   or experiment's `scripts/` are thin CLI wrappers. Public inference is implemented in `src/molgap/inference.py`
   and lazily exported by `src/molgap/__init__.py`. Don't redefine model classes
   in scripts. See `ARCHITECTURE.md`.
+- **Shared experiment CLI**: `molgap.experiment_cli` is a local identity,
+  packaging, diagnostic, receipt, and terminal entry point only. Never add a
+  platform submitter; use the owning platform adapter and workload skill.
 - **Don't re-run completed experiments** — cite the experiment's own decision
   record under `experiments/`.
 - **Test scripts locally before delivering.**
@@ -159,3 +162,4 @@ delivery candidate may be promoted from the integration branches to `master`.
 | Where to edit code? | `ARCHITECTURE.md` |
 | How should paths and artifacts be named? | `NAMING.md` |
 | How to install / basic inference? | `README.md` |
+| How to use the shared local experiment entry? | `docs/operations/EXPERIMENT_ADDON_GUIDE.md` and `docs/operations/EXPERIMENT_CLI.md` |
