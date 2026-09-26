@@ -21,6 +21,7 @@ class K1AdapterMetadata:
     scientific_role: str
     source_module: str
     factory: str
+    architecture_base_factory: str = "molgap.qm9_local_hierarchy.make_encoder"
     checkpoint_resume_owner: str = "molgap.pcqm_k1_full_runner"
     checkpoint_resume_implemented: bool = False
     runtime_evidence_statement: str = (

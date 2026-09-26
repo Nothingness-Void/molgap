@@ -1,5 +1,16 @@
 # K1 model adapter
 
+K1 is a Neural-Atom variant of the basic OGB EdgeState Structural GPS9 model.
+The basic model is already constructed by
+`molgap.qm9_local_hierarchy.make_encoder()`; K1 replaces its global GPS
+attention with local blocks plus Neural-Atom mixers. The family contract
+exposes `architecture_base` and adapter metadata exposes
+`architecture_base_factory` for this lineage. Neither is a new training or
+comparison authority. In the frozen K1 Spec, `reference` still means the K1
+reference for the pair-token addon, not the basic EdgeState model. A direct
+EdgeState-vs-K1 training comparison needs its own matched, reviewed recipe;
+`pcqm_k1_full` hardcodes K1 and must not be relabeled as that recipe.
+
 `molgap.k1_adapter.k1_metadata(spec, arm_id)` resolves declarations without model
 imports. `build_k1_model(spec, arm_id)` constructs a model using caller-controlled
 RNG. Both accept exactly `ExperimentSpec`, revalidate its canonical JSON and

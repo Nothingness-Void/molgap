@@ -246,7 +246,7 @@ def test_forged_snapshot_is_revalidated(payload, forbidden_factory, entrypoint, 
     else:
         arm.update(addons=[_addon("pair_prenorm")], addon_semantics="ordered")
         if case == "addon":
-            arm["addons"][0]["name"] = "memory_value"
+            arm["addons"][0]["name"] = "unregistered_memory"
         elif case == "addon_version":
             arm["addons"][0]["version"] = "99"
         else:
@@ -258,6 +258,15 @@ def test_forged_snapshot_is_revalidated(payload, forbidden_factory, entrypoint, 
     object.__setattr__(forged, "_canonical_json", json.dumps(payload))
     with pytest.raises(ValueError, match=match):
         entrypoint(forged, "reference")
+
+
+@pytest.mark.parametrize("entrypoint", [gptrans_metadata, build_gptrans_model])
+def test_registered_memory_addon_is_not_supported_by_adapter(payload, forbidden_factory, entrypoint):
+    arm = payload["arms"][0]
+    arm.update(addons=[_addon("memory_value")], addon_semantics="ordered")
+    spec = ExperimentSpec(payload)
+    with pytest.raises(ValueError, match="Unsupported GPTrans addon/version"):
+        entrypoint(spec, "reference")
 
 
 @pytest.mark.parametrize("entrypoint", [gptrans_metadata, build_gptrans_model])

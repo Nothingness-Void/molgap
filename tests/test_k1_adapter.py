@@ -7,9 +7,10 @@ from unittest.mock import Mock
 import pytest
 import torch
 
-from molgap import k1_pair_token, qm9_neural_atom
+from molgap import k1_pair_token, qm9_local_hierarchy, qm9_neural_atom
 from molgap.experiment_spec import ExperimentSpec, FAMILIES, SCHEMA_VERSION, TERMINAL_PROTOCOL
 from molgap.k1_adapter import build_k1_model, k1_metadata
+from molgap.pcqm_gap_architecture import OGBEdgeStateStructuralGPSWrapper
 
 VARIANTS = ("reference", "k1_pair_value")
 
@@ -95,6 +96,25 @@ def _same_state(actual, expected):
     assert actual.keys() == expected.keys()
     for key in actual:
         assert torch.equal(actual[key], expected[key]), key
+
+
+def test_k1_is_edge_state_architecture_variant(spec):
+    with torch.random.fork_rng(devices=[]):
+        torch.manual_seed(42)
+        edge_state = qm9_local_hierarchy.make_encoder()
+        torch.manual_seed(42)
+        k1 = qm9_neural_atom.make_encoder("neural_atom_k1")
+
+    assert type(edge_state) is OGBEdgeStateStructuralGPSWrapper
+    assert isinstance(k1, OGBEdgeStateStructuralGPSWrapper)
+    assert spec.family_contract("reference").architecture_base == "ogb_edge_state_structural_gps9"
+    assert k1_metadata(spec, "reference").architecture_base_factory == (
+        "molgap.qm9_local_hierarchy.make_encoder"
+    )
+    for name in ("node_emb", "edge_emb", "rwse_encoder", "edge_updates", "head"):
+        _same_state(getattr(k1, name).state_dict(), getattr(edge_state, name).state_dict())
+    assert len(k1.local_blocks) == len(edge_state.convs)
+    assert len(k1.neural_atom_mixers) > 0
 
 
 def test_baseline_matches_old_factory(spec, synthetic_inputs):

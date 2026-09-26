@@ -28,8 +28,12 @@ The static, immutable registries expose `FamilyContract` and `AddonContract`.
 importing model code or dispatching a callable supplied by an author.
 Family version `1` is an interface version, not a promoted model generation.
 GPTrans-T binds the `pcqm_gptrans_v4` recipe and K1 binds `pcqm_k1_full`.
-These names point to the existing package modules. No historical experiment
-identity is copied. Recipe overrides must be exactly `{}`: these frozen
+These names point to the existing package modules. K1's
+`architecture_base` is `ogb_edge_state_structural_gps9`: it is an EdgeState
+backbone variant, not an independent backbone family. This metadata does not
+change any frozen K1 Spec identity or make the K1-only training recipe an
+EdgeState reference trainer. No historical experiment identity is copied.
+Recipe overrides must be exactly `{}`: these frozen
 recipes have no approved override range. Seed 42 is required.
 Future overrides need a reviewed recipe version with typed bounds.
 
@@ -42,13 +46,15 @@ arm count, GPU visibility, processes, and declared device count, including
 dual-arm isolation. This schema implements no runner and grants no proof of
 real dual-GPU execution or runtime acceptance.
 
-The two parameter-free `gptrans_variants.py` addons are registered:
-`pair_prenorm` and `centered_logits`. Both require empty config and a source
-digest; they are mutually exclusive attention replacements and GPTrans-only.
-K1 additionally registers `k1_pair_value/1` with empty config; its model-only
-mapping and migration boundary are in [K1_ADAPTER.md](K1_ADAPTER.md).
-Other addons and arbitrary addon configuration are rejected. New combinations
-need explicit registry/code review and a contract version change.
+GPTrans-T registers `pair_prenorm`, `centered_logits`, `memory_value`, and
+`memory_message` as mutually exclusive attention replacements. The first two
+are implemented by the construction adapter; registering the memory variants
+in the Spec does not make that adapter support them. All require empty config
+and a source digest. K1 additionally registers `k1_pair_value/1` with empty
+config; its model-only mapping and migration boundary are in
+[K1_ADAPTER.md](K1_ADAPTER.md). Other addons and arbitrary addon configuration
+are rejected. New combinations need explicit registry/code review and a
+contract version change.
 
 All object fields are required and unknown fields are rejected recursively;
 duplicate JSON keys are rejected too. There is no author-supplied readiness

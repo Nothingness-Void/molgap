@@ -32,6 +32,7 @@ class FamilyContract:
     roles: tuple[str, ...]
     sampler: str
     transform: str
+    architecture_base: str | None = None
 
 
 FAMILIES = MappingProxyType({
@@ -44,6 +45,7 @@ FAMILIES = MappingProxyType({
         "neural_atom_k1", "1", "molgap.qm9_neural_atom", "pcqm_k1_full",
         "ogb-atom9-bond3-rwse16-v1", ("train",),
         "seed42-global-randperm-by-pass-v1", "full-train-mean-sample-std",
+        "ogb_edge_state_structural_gps9",
     ),
 })
 
