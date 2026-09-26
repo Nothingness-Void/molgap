@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-rrwp-pair-100k-s42",
+  "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/budget_snapshot.json",
+  "hardware": "actual_GPU_pending",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 3.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.0
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-rrwp-pair-100k-s42"
+}

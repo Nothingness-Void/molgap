@@ -1,0 +1,21 @@
+{
+  "architecture_config_identities": {
+    "neural_atom_k1_receiver_pair": "97207dfdabcef9a1807dffe7c1b526d57e086dcd56827816c0c025a45c460f6c",
+    "neural_atom_k1_rrwp_pair": "65e79207c95139c1eebdd67df8157a4fb0e8747767674deeca16481273e6146b",
+    "neural_atom_k1_triplet_aggregate": "6c8a3cace4d06cde5131caabe87d5d31c7e5beb4f6ab5bf94fd209a23d33a47a"
+  },
+  "candidate_ids": [
+    "neural_atom_k1_receiver_pair",
+    "neural_atom_k1_triplet_aggregate",
+    "neural_atom_k1_rrwp_pair"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_relation_resolution.py",
+    "src/molgap/k1_relation_study_runtime.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+  "training_contract_ref": "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+  "training_contract_sha256": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+}

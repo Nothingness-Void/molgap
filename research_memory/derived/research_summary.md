@@ -5,6 +5,7 @@
 - Evidence without trajectory: 2
 
 ## Trajectories
+- ACTIVE: 4
 - CLOSED: 2
 - INFRASTRUCTURE_ONLY: 6
 - NEGATIVE_UNDER_CONTRACT: 9
@@ -44,6 +45,10 @@
 - Tesla_T4_16GB device_hours: measured=19.868701 (14 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - Tesla_T4_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=21, not_applicable=0
 - Tesla_T4_16GB wall_hours: measured=0.076593 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=18, not_applicable=0
+- actual_GPU_pending cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- actual_GPU_pending device_hours: measured=unknown (0 measured records), estimated=10.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- actual_GPU_pending queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- actual_GPU_pending wall_hours: measured=unknown (0 measured records), estimated=10.000000 (4 estimated records), measurement_missing=0, not_applicable=0
 - local-cpu cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - local-cpu device_hours: not applicable (2 records); measurement_missing=0
 - local-cpu queue_hours: not applicable (2 records); measurement_missing=0
@@ -60,8 +65,8 @@
 - one allocated Hygon DCU; eight allocated CPUs device_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs queue_hours: measured=0.068889 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs wall_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Measurement-missing cost events: 38
-- Cost-event coverage: 32/32 trajectories; incomplete native measurement=30
+- Measurement-missing cost events: 42
+- Cost-event coverage: 36/36 trajectories; incomplete native measurement=34
 
 ## Screening Backtest
 - Status: available
@@ -69,9 +74,9 @@
 - Excluded traces: 4
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 11
+- [INFO] trace_unavailable_for_backtest: 15
 - [WARN] historical_partial_record: 14
-- [WARN] incomplete_native_cost_measurement: 30
-- [WARN] missing_explicit_role_identity: 2
-- [WARN] trajectory_without_v5_evidence: 1
+- [WARN] incomplete_native_cost_measurement: 34
+- [WARN] missing_explicit_role_identity: 6
+- [WARN] trajectory_without_v5_evidence: 5
 - [WARN] v5_evidence_without_trajectory: 2
