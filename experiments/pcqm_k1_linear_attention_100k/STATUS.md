@@ -5,9 +5,11 @@ but its training worker completed 40 epochs and passed saved-artifact acceptance
 The independent audit failed on its first CuBLAS operation. The candidate did
 not pass the 100K material gate. [Diagnosis and retained evidence](results/audit_failure_v1.md).
 
-Only a frozen-checkpoint NO_TRAIN audit recovery is prepared. No retraining,
-new seed or architecture successor is released. Operational recovery submission
-is pending; this status must not be read as a queued job receipt.
+Only a frozen-checkpoint NO_TRAIN audit recovery was submitted. The resolved
+kernel `nothingnessvoid/molgap-k1-linear-attention-frozen-audit-s42` version 1
+is RUNNING; startup and completed inference are not yet verified.
+[Recovery receipt](results/audit_recovery_receipt.json). No retraining,
+new seed or architecture successor is released.
 
 Submission/source identities: [receipt](results/submission_receipt.json).
 Native training and separate NO_TRAIN audit plans are frozen in `rml_plan/` and

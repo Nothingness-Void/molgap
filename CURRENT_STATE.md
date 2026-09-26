@@ -58,7 +58,7 @@ modify or take custody of the desktop full run.
 The user authorized one new pure-2D Kaggle1 screen replacing K1's single-slot
 exchanges with per-node normalized linear attention. Version 1 completed training
 without a promotion win, then failed its separate audit on a CuBLAS environment
-setting. Only frozen-checkpoint audit recovery is prepared; no retraining or
+setting. Frozen-checkpoint audit recovery is submitted and RUNNING; no retraining or
 architecture successor is released. Terminal RML/replay closure remains pending.
 Authority and operational state:
 `experiments/pcqm_k1_linear_attention_100k/STATUS.md`.
