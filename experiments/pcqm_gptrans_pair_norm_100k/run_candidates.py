@@ -12,6 +12,7 @@ PROFILES = {
     "reference-centered-logits-kaggle1-v1": (("reference", "centered_logits"), "kaggle1-t4x2"),
     "reference-memory-value-kaggle1-v1": (("reference", "memory_value"), "kaggle1-t4x2"),
     "memory-value-message-kaggle1-v1": (("memory_value", "memory_message"), "kaggle1-t4x2"),
+    "rwse16-local-edge-kaggle1-v1": (("rwse16", "rwse16_local_edge"), "kaggle1-t4x2"),
 }
 PROFILE = os.environ.get("MOLGAP_PAIR_PROFILE", "pair-norm-kaggle3-v1")
 if PROFILE not in PROFILES:

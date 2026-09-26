@@ -85,6 +85,13 @@ MAX_REPEAT_LOSS_DELTA = 1.0e-7
 MAX_REPEAT_PARAMETER_DELTA = 1.0e-7
 RUN_FORMAT = "molgap-pcqm-gptrans-t-100k-reference-v4"
 CHECKPOINT_FORMAT = "molgap-pcqm-gptrans-t-100k-checkpoint-v4"
+LOCAL_BIAS_VARIANTS = ("rwse16", "rwse16_local_edge")
+LOCAL_BIAS_IDENTITIES = {
+    # Pinned after the frozen seed-42 core is verified, then the independent
+    # seed-420016 addon stream is applied. Values are tested on synthetic inputs.
+    "rwse16": (5_250_913, "20ea118bd338d07612ff92883b3c6593c6497179921334f8f7be3dc12a7e7ac9"),
+    "rwse16_local_edge": (5_945_761, "9e2e58fa54f68c061f47637a9c406dd4c849ae9b0d49623881f63bb94655db0b"),
+}
 
 
 @dataclass(frozen=True)
@@ -256,7 +263,9 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     from .gptrans import OGBGPTransTiny
-    if variant in ("memory_value", "memory_message"):
+    if variant in LOCAL_BIAS_VARIANTS:
+        from .gptrans_local_inductive_bias import apply_local_inductive_bias as apply_variant
+    elif variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
     else:
         from .gptrans_variants import apply_variant
@@ -284,8 +293,8 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     return apply_variant(model, variant)
 
 
-def _model_config() -> dict:
-    return {
+def _model_config(variant: str = "reference") -> dict:
+    config = {
         "node_channels": 256,
         "pair_channels": 32,
         "num_layers": 12,
@@ -296,6 +305,11 @@ def _model_config() -> dict:
         "layer_scale": 1.0,
         "n_targets": 1,
     }
+    if variant in LOCAL_BIAS_VARIANTS:
+        config["rwse_dim"] = 16
+    if variant == "rwse16_local_edge":
+        config["persistent_true_bond_edge_channels"] = 64
+    return config
 
 
 def run_v4_spec(*, mode: str, run_spec: dict, runtime_certificate: dict | None):
@@ -377,19 +391,25 @@ def _batch_sha256(batch) -> str:
     return digest.hexdigest()
 
 
-def _verify_model_identity(model) -> tuple[int, str]:
+def _verify_model_identity(model, variant: str = "reference") -> tuple[int, str]:
     architecture_path = Path(__file__).with_name("gptrans.py")
     architecture_sha256 = _source_sha256(architecture_path)
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())
-    if parameters != EXPECTED_PARAMETERS:
+    if variant in LOCAL_BIAS_VARIANTS:
+        if _state_sha256(model.base) != EXPECTED_INITIAL_MODEL_SHA256:
+            raise RuntimeError("Frozen random GPTrans-T core changed before addon construction")
+        expected_parameters, expected_state_sha256 = LOCAL_BIAS_IDENTITIES[variant]
+    else:
+        expected_parameters, expected_state_sha256 = EXPECTED_PARAMETERS, EXPECTED_INITIAL_MODEL_SHA256
+    if parameters != expected_parameters:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
-    if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
+    if initial_sha256 != expected_state_sha256:
         raise RuntimeError(
             "Frozen GPTrans-T seed-42 initialization changed: "
-            f"observed={initial_sha256} expected={EXPECTED_INITIAL_MODEL_SHA256}"
+            f"observed={initial_sha256} expected={expected_state_sha256}"
         )
     return parameters, architecture_sha256
 
@@ -456,7 +476,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
-    _verify_model_identity(model)
+    _verify_model_identity(model, variant)
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -488,11 +508,13 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     return loss.detach()
 
 
-def _evaluate(model, ema, graphs, mean, std) -> dict:
+def _evaluate(model, ema, graphs, mean, std, *, use_ema: bool = True) -> dict:
     import torch
 
-    live_state = {name: value.detach().clone() for name, value in model.state_dict().items()}
-    model.load_state_dict(ema.state_dict(), strict=True)
+    live_state = ({name: value.detach().clone() for name, value in model.state_dict().items()}
+                  if use_ema else None)
+    if use_ema:
+        model.load_state_dict(ema.state_dict(), strict=True)
     model.eval()
     predictions = []
     targets = []
@@ -506,7 +528,8 @@ def _evaluate(model, ema, graphs, mean, std) -> dict:
             if source_idx is None:
                 raise RuntimeError("Development graphs have no source identity")
             source_indices.append(source_idx.view(-1).long().cpu())
-    model.load_state_dict(live_state, strict=True)
+    if live_state is not None:
+        model.load_state_dict(live_state, strict=True)
     prediction = torch.cat(predictions)
     target = torch.cat(targets)
     source_idx = torch.cat(source_indices)
@@ -523,8 +546,8 @@ def _evaluate(model, ema, graphs, mean, std) -> dict:
     }
 
 
-def _scientific_fields() -> dict:
-    return {
+def _scientific_fields(variant: str = "reference") -> dict:
+    fields = {
         "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
         "data_role_fingerprint": canonical_fingerprint(
             {"manifest_sha256": MANIFEST_SHA256, "train": [0, 100_000], "development": [100_000, 150_000]}
@@ -555,6 +578,13 @@ def _scientific_fields() -> dict:
         "sample_exposure": SAMPLE_PRESENTATIONS,
         "tail_batch_policy": "drop_last",
     }
+    if variant in LOCAL_BIAS_VARIANTS:
+        fields["feature_fingerprint"] = canonical_fingerprint({
+            "payload": "ogb-geometry-v1",
+            "used": ["atom9", "bond3", "shortest-path-cap20", "rwse16"],
+            "geometry_used": False,
+        })
+    return fields
 
 
 def _gpu_utilization_percent() -> float | None:
@@ -607,8 +637,8 @@ def run_preflight(
                 "model_family": "gptrans-t",
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
-                "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "model_config": _model_config(variant),
+                "scientific_contract": _scientific_fields(variant),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -717,7 +747,7 @@ def run_preflight(
     }
     certificate_id = canonical_fingerprint(certificate)
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -727,8 +757,13 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "parameters": (LOCAL_BIAS_IDENTITIES[variant][0] if variant in LOCAL_BIAS_VARIANTS
+                       else EXPECTED_PARAMETERS),
+        "variant_source_sha256": _source_sha256(Path(__file__).with_name(
+            "gptrans_local_inductive_bias.py" if variant in LOCAL_BIAS_VARIANTS else
+            "gptrans_memory.py" if variant in ("memory_value", "memory_message") else
+            "gptrans_variants.py"
+        )),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -779,9 +814,65 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "runtime_certificate_id": runtime_certificate_id,
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
-            "scientific_fields": _scientific_fields(),
+            "scientific_fields": _scientific_fields(variant),
         },
     )
+
+
+def _observed_trace_row(row: dict, checkpoint_sha256: str, wall_seconds: float) -> dict:
+    """Use only per-epoch values observed during training and after checkpoint save."""
+    required = (
+        "epoch", "optimizer_steps_cumulative", "sample_presentations_cumulative",
+        "learning_rate", "train_mae_eV", "live_development_mae_eV",
+        "development_mae_eV",
+    )
+    if any(field not in row for field in required):
+        raise RuntimeError("New-variant trace lacks an observed replay field")
+    return {
+        "epoch": row["epoch"],
+        "optimizer_step": row["optimizer_steps_cumulative"],
+        "sample_presentations": row["sample_presentations_cumulative"],
+        "learning_rate": row["learning_rate"],
+        "live_train_mae_eV": row["train_mae_eV"],
+        "live_dev_mae_eV": row["live_development_mae_eV"],
+        "ema_dev_mae_eV": row["development_mae_eV"],
+        "checkpoint_identity": checkpoint_sha256,
+        "wall_time_seconds": wall_seconds,
+    }
+
+
+def _load_observed_trace(output: Path, variant: str, trace: list[dict], checkpoint_path: Path) -> list[dict]:
+    """Reconcile the sole possible checkpoint/sidecar crash gap on resume."""
+    path = output / "observed_trace.json"
+    if path.is_file():
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if (payload.get("format") != "molgap-gptrans-local-bias-observed-trace-v1"
+                or payload.get("variant") != variant or type(payload.get("rows")) is not list):
+            raise RuntimeError("Observed trace identity changed")
+        rows = payload["rows"]
+    else:
+        rows = []
+    if len(rows) > len(trace) or len(trace) - len(rows) > 1:
+        raise RuntimeError("Observed trace and checkpoint cursor disagree")
+    for observed, checkpoint_row in zip(rows, trace):
+        if (observed.get("epoch") != checkpoint_row.get("epoch")
+                or observed.get("optimizer_step") != checkpoint_row.get("optimizer_steps_cumulative")
+                or observed.get("sample_presentations") != checkpoint_row.get("sample_presentations_cumulative")
+                or observed.get("live_dev_mae_eV") != checkpoint_row.get("live_development_mae_eV")):
+            raise RuntimeError("Observed trace differs from retained checkpoint trace")
+    if trace:
+        current_sha = sha256_file(checkpoint_path)
+        if len(rows) == len(trace) - 1:
+            # The checkpoint contains this row, but a crash preceded sidecar publication.
+            rows.append(_observed_trace_row(trace[-1], current_sha, trace[-1]["elapsed_seconds"]))
+            atomic_json(path, {
+                "format": "molgap-gptrans-local-bias-observed-trace-v1",
+                "variant": variant,
+                "rows": rows,
+            })
+        elif rows[-1].get("checkpoint_identity") != current_sha:
+            raise RuntimeError("Latest observed checkpoint hash changed")
+    return rows
 
 
 def run_training(
@@ -830,8 +921,8 @@ def run_training(
                 "model_family": "gptrans-t",
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
-                "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "model_config": _model_config(variant),
+                "scientific_contract": _scientific_fields(variant),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -841,7 +932,7 @@ def run_training(
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -865,6 +956,8 @@ def run_training(
     trace: list[dict] = []
     best = float("inf")
     best_epoch = -1
+    observed_steps = 0
+    observed_presentations = 0
     if checkpoint_path.is_file():
         checkpoint = torch_load_compat(
             checkpoint_path, map_location="cuda", weights_only=False
@@ -873,7 +966,7 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
-        if checkpoint.get("scientific_fields") != _scientific_fields():
+        if checkpoint.get("scientific_fields") != _scientific_fields(variant):
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
             raise RuntimeError("Checkpoint runtime certificate changed")
@@ -888,6 +981,12 @@ def run_training(
         trace = list(checkpoint["trace"])
         best = float(checkpoint["best_development_mae_eV"])
         best_epoch = int(checkpoint["best_epoch"])
+        if variant in LOCAL_BIAS_VARIANTS and trace:
+            observed_steps = int(trace[-1]["optimizer_steps_cumulative"])
+            observed_presentations = int(trace[-1]["sample_presentations_cumulative"])
+
+    observed_rows = (_load_observed_trace(output, variant, trace, checkpoint_path)
+                     if variant in LOCAL_BIAS_VARIANTS else [])
 
     for epoch in range(start_epoch, EPOCHS):
         learning_rate = scheduler.step(epoch)
@@ -911,9 +1010,14 @@ def run_training(
             )
             train_loss_sum.add_(loss * int(batch.num_graphs))
             train_count += int(batch.num_graphs)
+            if variant in LOCAL_BIAS_VARIANTS:
+                observed_steps += 1  # _optimizer_step returned after optimizer.step()
+                observed_presentations += int(batch.num_graphs)
         if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:
             raise RuntimeError("Epoch sample exposure changed")
         development = _evaluate(model, ema, development_graphs, mean, std)
+        live_development = (_evaluate(model, ema, development_graphs, mean, std, use_ema=False)
+                            if variant in LOCAL_BIAS_VARIANTS else None)
         improved = development["mae_eV"] < best
         if improved:
             best = development["mae_eV"]
@@ -922,7 +1026,7 @@ def run_training(
                 "format": RUN_FORMAT,
                 "model_config": {
                     "variant": variant,
-                    **_model_config(),
+                    **_model_config(variant),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
                 "target_stats": target_stats,
@@ -958,6 +1062,12 @@ def run_training(
             "sample_presentations": train_count,
             "elapsed_seconds": time.perf_counter() - epoch_started,
         }
+        if variant in LOCAL_BIAS_VARIANTS:
+            row.update({
+                "optimizer_steps_cumulative": observed_steps,
+                "sample_presentations_cumulative": observed_presentations,
+                "live_development_mae_eV": live_development["mae_eV"],
+            })
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         _save_checkpoint(
@@ -975,6 +1085,15 @@ def run_training(
             source_archive_sha256=source_archive_sha256,
             variant=variant,
         )
+        if variant in LOCAL_BIAS_VARIANTS:
+            observed_rows.append(_observed_trace_row(
+                row, sha256_file(checkpoint_path), row["elapsed_seconds"]
+            ))
+            atomic_json(output / "observed_trace.json", {
+                "format": "molgap-gptrans-local-bias-observed-trace-v1",
+                "variant": variant,
+                "rows": observed_rows,
+            })
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
             f"dev={row['development_mae_eV']:.6f}eV best={best:.6f}@{best_epoch} "
@@ -994,7 +1113,7 @@ def run_training(
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
@@ -1021,9 +1140,12 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": (LOCAL_BIAS_IDENTITIES[variant][0] if variant in LOCAL_BIAS_VARIANTS
+                       else EXPECTED_PARAMETERS),
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "checkpoint_sha256": sha256_file(checkpoint_path),
+        **({"observed_trace_sha256": sha256_file(output / "observed_trace.json")}
+           if variant in LOCAL_BIAS_VARIANTS else {}),
         "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
         "complete": True,
         "epochs": EPOCHS,

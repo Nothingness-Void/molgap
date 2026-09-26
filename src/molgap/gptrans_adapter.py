@@ -54,7 +54,8 @@ def _resolve(spec: ExperimentSpec, arm_id: str):
     variant = "reference"
     if addons:
         addon_key = (addons[0]["name"], addons[0]["version"])
-        if addon_key not in (("pair_prenorm", "1"), ("centered_logits", "1")):
+        if addon_key not in (("pair_prenorm", "1"), ("centered_logits", "1"),
+                             ("rwse16", "1"), ("rwse16_local_edge", "1")):
             raise ValueError("Unsupported GPTrans addon/version")
         if ADDONS[addon_key].family != key[0]:
             raise ValueError("Incompatible GPTrans addon family")

@@ -339,7 +339,9 @@ def _smoke_variant(arm):
         raise ValueError("Model smoke v1 requires declared random initialization")
     names = tuple((a["name"], a["version"]) for a in arm["addons"])
     dispatch = {(): "reference", (("pair_prenorm", "1"),): "pair_prenorm",
-                (("centered_logits", "1"),): "centered_logits"}
+                (("centered_logits", "1"),): "centered_logits",
+                (("rwse16", "1"),): "rwse16",
+                (("rwse16_local_edge", "1"),): "rwse16_local_edge"}
     if names not in dispatch:
         raise ValueError("Unsupported model smoke addon dispatch")
     return dispatch[names]
