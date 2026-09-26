@@ -7,6 +7,15 @@ from .finalize import finalize
 from .plan import plan
 from .recovery import recover_trace
 from .pipeline import finalize_rebuild_backtest
+from .terminal_wiring import (
+    build_default_trace_manifest,
+    close_terminal_arm,
+    close_terminal_multi_arm,
+    inspect_trace_retention_evidence,
+    is_trace_artifact,
+    resolve_metric_semantics,
+    resolve_trace_for_terminal_arm,
+)
 
 __all__ = [
     "compile_research_memory",
@@ -21,4 +30,11 @@ __all__ = [
     "plan",
     "recover_trace",
     "finalize_rebuild_backtest",
+    "build_default_trace_manifest",
+    "close_terminal_arm",
+    "close_terminal_multi_arm",
+    "inspect_trace_retention_evidence",
+    "is_trace_artifact",
+    "resolve_metric_semantics",
+    "resolve_trace_for_terminal_arm",
 ]

@@ -13,6 +13,10 @@ from .compiler import compile_research_memory, frozen_differences, rebuild_resea
 from .ready import build_ready_package
 from .validate import validate_repository_records
 from .paths import repo_local_path
+from .portability import (
+    committed_head_differences,
+    missing_locally_claimed_artifacts,
+)
 
 
 def _root(value: str | None) -> Path:
@@ -30,17 +34,23 @@ def main(argv: list[str] | None = None) -> None:
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
     check.add_argument("--frozen", action="store_true", required=True)
+    check.add_argument("--portable", action="store_true")
     ready = commands.add_parser("package-ready")
     ready.add_argument("--trajectory", required=True)
     commands.add_parser("backtest-screening")
     planner = commands.add_parser("plan")
     planner.add_argument("--spec", required=True)
     planner.add_argument("--output", required=True)
-    for name in ("finalize", "terminal-pipeline"):
-        command = commands.add_parser(name)
-        command.add_argument("--trajectory", required=True)
-        command.add_argument("--terminal", required=True)
-        command.add_argument("--trace")
+    finalize_cmd = commands.add_parser("finalize")
+    finalize_cmd.add_argument("--trajectory", required=True)
+    finalize_cmd.add_argument("--terminal", required=True)
+    finalize_cmd.add_argument("--trace")
+    terminal_cmd = commands.add_parser("terminal-pipeline")
+    terminal_cmd.add_argument("--trajectory", required=True)
+    terminal_cmd.add_argument("--terminal", required=True)
+    terminal_cmd.add_argument("--trace")
+    terminal_cmd.add_argument("--trace-source")
+    terminal_cmd.add_argument("--arm")
     recovery = commands.add_parser("recover-trace")
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
@@ -64,8 +74,15 @@ def main(argv: list[str] | None = None) -> None:
             from .finalize import finalize
             result = finalize(root, args.trajectory, args.terminal, args.trace)
         else:
-            from .pipeline import finalize_rebuild_backtest
-            result = finalize_rebuild_backtest(root, args.trajectory, args.terminal, args.trace)
+            from .terminal_wiring import close_terminal_arm
+            result = close_terminal_arm(
+                repo_root=root,
+                trajectory=args.trajectory,
+                terminal=args.terminal,
+                trace=args.trace,
+                arm_identifier=args.arm,
+                trace_source=args.trace_source,
+            )
         print(json.dumps(result, indent=2, sort_keys=True))
         if args.command == "terminal-pipeline" and result.get("pipeline_status") != "COMPLETE":
             raise SystemExit(1)
@@ -83,7 +100,39 @@ def main(argv: list[str] | None = None) -> None:
         differences = frozen_differences(root)
         if differences:
             raise SystemExit("stale derived outputs: " + ", ".join(differences))
-        print("RML derived outputs are frozen and current")
+        if args.portable:
+            records = validate_repository_records(root)["records"]
+            try:
+                head_differences = committed_head_differences(root, records)
+                missing_artifacts = missing_locally_claimed_artifacts(root, records)
+            except ValueError as exc:
+                raise SystemExit(str(exc)) from exc
+            failures = []
+            if missing_artifacts:
+                failures.append(
+                    "V5 evidence claims missing local artifacts:\n  "
+                    + "\n  ".join(missing_artifacts)
+                )
+            missing_from_head = head_differences["missing_from_head"]
+            if missing_from_head:
+                failures.append(
+                    "RML portable inputs are absent from Git HEAD:\n  "
+                    + "\n  ".join(missing_from_head)
+                )
+            changed_from_head = head_differences["changed_from_head"]
+            if changed_from_head:
+                failures.append(
+                    "RML portable inputs, runtime, or derived outputs differ from Git HEAD:\n  "
+                    + "\n  ".join(changed_from_head)
+                )
+            if failures:
+                raise SystemExit("\n".join(failures))
+            print(
+                "RML derived outputs are frozen and current; "
+                "committed evidence closure, runtime, derived outputs, and local artifact claims are complete"
+            )
+        else:
+            print("RML derived outputs are frozen and current")
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"

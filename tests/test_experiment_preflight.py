@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tarfile
+from types import SimpleNamespace
 
 import pytest
 
@@ -50,8 +51,8 @@ def validate(payload, value, path):
 def test_missing_real_and_k1_are_not_pass(package, payload, tmp_path):
     result = run(package, payload, tmp_path)
     assert [a["status"] for a in result["arms"]] == [
-        "MISSING_REAL_SHARD", "UNSUPPORTED_FAMILY_PREFLIGHT"]
-    assert result["status"] == "MIXED_NONPASS"
+        "MISSING_REAL_SHARD", "MISSING_REAL_SHARD"]
+    assert result["status"] == "MISSING_REAL_SHARD"
     for arm in result["arms"]:
         assert arm["package_verified"]
         assert arm["device"] is None
@@ -99,6 +100,64 @@ def test_manifest_declaration_is_not_real_verification(payload, manifest):
     parsed = validate(payload, value, path)
     assert "status" not in parsed
     assert "shard_verified" not in parsed
+
+
+def test_k1_manifest_rejects_extra_shards_before_staging(payload, manifest):
+    value, path = manifest
+    arm = payload["arms"][1]
+    entry = copy.deepcopy(value["arms"][0])
+    entry.update(arm_id=arm["arm_id"], arm_identity=canonical_fingerprint(arm),
+                 data=copy.deepcopy(arm["data"]))
+    entry["files"] = [
+        {"path": "k1-a.pt", "sha256": "2" * 64, "bytes": 5, "role": "train"},
+        {"path": "k1-b.pt", "sha256": "3" * 64, "bytes": 5, "role": "train"},
+    ]
+    value["arms"] = [entry]
+    with pytest.raises(ValueError, match="exactly one"):
+        validate(payload, value, path)
+
+
+@pytest.mark.parametrize("mutation", ["none", "wrong_scope", "wrong_shard", "wrong_role"])
+def test_partial_worker_receipt_is_explicitly_bounded(tmp_path, monkeypatch, mutation):
+    root = tmp_path / "source"
+    module = root / "src/molgap"
+    module.mkdir(parents=True)
+    (module / "pcqm_topology.py").write_text("", encoding="ascii")
+    entry = {"files": [{"path": "train.pt", "sha256": "a" * 64,
+                        "bytes": 5, "role": "train"}]}
+    arm = {"family": {"name": "neural_atom_k1", "version": "1"}}
+    result = {
+        "status": "PARTIAL_LOADER_VERIFIED_ONLY", "shard_verified": True,
+        "loader_batch_built": True, "import_origins": {
+            "molgap.pcqm_topology": "src/molgap/pcqm_topology.py"},
+        "batches": {"train": {"graphs": 128, "rows": 128, "device": "cpu",
+                              "shard": "train.pt", "sha256": "a" * 64,
+                              "source_idx_min": 0, "source_idx_max": 127}},
+        "device": "cpu", "scope": "selected-topology-shards", "error": None,
+        "forward_checked": False, "backward_checked": False,
+        "optimizer_step_checked": False, "checkpoint_roundtrip_checked": False,
+        "initial_state_checked": False, "initial_state_sha256": None,
+        "normalized_gap_l1": None,
+    }
+    if mutation == "wrong_scope":
+        result["scope"] = "complete-frozen-shards"
+    elif mutation == "wrong_shard":
+        result["batches"]["train"]["sha256"] = "b" * 64
+    elif mutation == "wrong_role":
+        result["batches"]["development"] = result["batches"].pop("train")
+
+    def worker(command, **kwargs):
+        Path(command[-1]).write_bytes(pf._canonical(result))
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(pf.subprocess, "run", worker)
+    stage = tmp_path / "stage"
+    stage.mkdir()
+    if mutation == "none":
+        assert pf._launch(root, tmp_path, entry, 30, stage, arm=arm)["scope"] == "selected-topology-shards"
+    else:
+        with pytest.raises(ValueError, match="partial|topology"):
+            pf._launch(root, tmp_path, entry, 30, stage, arm=arm)
 
 
 @pytest.mark.parametrize("raw", [b'{"x":1,"x":1}', b'{ "x": 1 }', b'{"x":NaN}', b'{}\n'])
@@ -233,6 +292,31 @@ def test_worker_missing_frozen_loader_is_unsupported(tmp_path, manifest):
     result = pf._launch(root, tmp_path / "missing-data", manifest[0]["arms"][0], 30, stage)
     assert result["status"] == "UNSUPPORTED_FAMILY_PREFLIGHT"
     assert result["loader_batch_built"] is False
+
+
+def test_k1_isolated_worker_dispatch_fails_closed_on_nonreal_manifest(tmp_path):
+    root = tmp_path / "source"
+    module = root / "src/molgap"
+    module.mkdir(parents=True)
+    (module / "__init__.py").write_text("", encoding="ascii")
+    (module / "pcqm_topology.py").write_text(
+        'def inspect_selected_topology_shards(*args): raise ValueError("not real topology")\n',
+        encoding="ascii")
+    data = tmp_path / "data"
+    data.mkdir()
+    raw = b"not a frozen manifest"
+    (data / "fixed.json").write_bytes(raw)
+    entry = {"fixed_manifest": {"path": "fixed.json", "sha256": pf._sha(raw)},
+             "files": [{"path": "train.pt", "sha256": "a" * 64,
+                        "bytes": 5, "role": "train"}]}
+    arm = {"family": {"name": "neural_atom_k1", "version": "1"}}
+    stage = tmp_path / "worker"
+    stage.mkdir()
+    result = pf._launch(root, data, entry, 30, stage, arm=arm)
+    assert result["status"] == "LOADER_FAILED"
+    assert result["error"]["message"] == "not real topology"
+    assert result["import_origins"]["molgap.pcqm_topology"] == "src/molgap/pcqm_topology.py"
+    assert not result["shard_verified"] and not result["loader_batch_built"]
 
 
 def test_smoke_dependency_failure_is_structured(tmp_path, manifest):

@@ -40,6 +40,7 @@ LIMITATIONS = [
     "No training, platform submission, scientific acceptance or downstream authority.",
     "Source and packed pickle inputs must be trusted; isolation is not a security sandbox.",
     "Manifest identities bind declarations, not independent scientific provenance.",
+    "K1/EdgeState loader checks cover one selected topology shard per role, not the full dataset.",
 ]
 
 
@@ -198,6 +199,9 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
             observed_roles.add(item["role"])
         if observed_roles != roles:
             raise ValueError("Incomplete authorized role coverage")
+        if (arm["family"]["name"], arm["family"]["version"]) in {
+                ("neural_atom_k1", "1"), ("edge_state_gps", "1")} and len(entry["files"]) != len(roles):
+            raise ValueError("Select exactly one topology shard per role")
     return manifest
 
 
@@ -396,10 +400,27 @@ def _worker(request):
     sys.meta_path.insert(0, _PackageOnly(root))
     result = {"status": "LOADER_FAILED", "shard_verified": False,
               "loader_batch_built": False, "import_origins": {}, "batches": {},
-              "device": None, "error": None, **{key: False for key in MODEL_CHECKS},
+              "device": None, "scope": None, "error": None, **{key: False for key in MODEL_CHECKS},
               "initial_state_checked": False, "initial_state_sha256": None,
               "normalized_gap_l1": None}
     try:
+        arm = request["arm"]
+        family = (arm["family"]["name"], arm["family"]["version"]) if arm else ("gptrans_t", "1")
+        if family in {("neural_atom_k1", "1"), ("edge_state_gps", "1")}:
+            if request["mode"] != LOADER_MODE:
+                raise ValueError("K1/EdgeState support is loader-only")
+            topology = importlib.import_module("molgap.pcqm_topology")
+            result["import_origins"] = _origins(root)
+            entry = request["entry"]
+            data_root = Path(request["data_root"])
+            fixed = _under(data_root, entry["fixed_manifest"]["path"])
+            if _file_sha(fixed) != entry["fixed_manifest"]["sha256"]:
+                raise ValueError("Frozen topology manifest bytes changed after staging")
+            result["batches"] = topology.inspect_selected_topology_shards(data_root, entry, arm)
+            result["import_origins"] = _origins(root)
+            result.update(status="PARTIAL_LOADER_VERIFIED_ONLY", shard_verified=True,
+                          loader_batch_built=True, device="cpu", scope="selected-topology-shards")
+            return result
         runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
         result["import_origins"] = _origins(root)
         if (not all(callable(getattr(runtime, name, None)) for name in (
@@ -449,7 +470,8 @@ def _worker(request):
                 generator = getattr(loader, "generator", None)
             del batch, loader, graphs, shards
         result["import_origins"] = _origins(root)
-        result.update(status="LOADER_VERIFIED_ONLY", loader_batch_built=True)
+        result.update(status="LOADER_VERIFIED_ONLY", loader_batch_built=True,
+                      scope="complete-frozen-shards")
         if request["mode"] == MODEL_MODE:
             result["status"] = "MODEL_SMOKE_FAILED"
             _model_smoke(runtime, request["arm"], train_batch, stats,
@@ -482,20 +504,44 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
     if child.returncode != 0:
         raise RuntimeError(f"Isolated loader exited {child.returncode}")
     result = _load(_regular(response_path).read_bytes())
-    _fields(result, "status shard_verified loader_batch_built import_origins batches device error "
+    _fields(result, "status shard_verified loader_batch_built import_origins batches device scope error "
             "forward_checked backward_checked optimizer_step_checked checkpoint_roundtrip_checked "
             "initial_state_checked initial_state_sha256 normalized_gap_l1")
-    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT",
+    if result["status"] not in {"LOADER_VERIFIED_ONLY", "PARTIAL_LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT",
                                "MODEL_SMOKE_FAILED", "MODEL_SMOKE_VERIFIED_ONLY"}:
         raise ValueError("Invalid worker status")
     if any(type(result[key]) is not bool for key in (
             "shard_verified", "loader_batch_built", "initial_state_checked", *MODEL_CHECKS)):
         raise ValueError("Invalid worker observations")
-    if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
+    if result["status"] == "PARTIAL_LOADER_VERIFIED_ONLY":
+        family = (arm["family"]["name"], arm["family"]["version"]) if arm else None
+        expected_roles = {"train"} if family == ("neural_atom_k1", "1") else {"train", "development"}
+        if (family not in {("neural_atom_k1", "1"), ("edge_state_gps", "1")}
+                or mode != LOADER_MODE or not result["shard_verified"]
+                or not result["loader_batch_built"] or result["error"] is not None
+                or set(result["batches"]) != expected_roles
+                or "molgap.pcqm_topology" not in result["import_origins"]
+                or result["device"] != "cpu" or result["scope"] != "selected-topology-shards"):
+            raise ValueError("Incomplete partial topology loader observations")
+        selected = {item["role"]: item for item in entry["files"]}
+        for role, observed in result["batches"].items():
+            if (type(observed) is not dict or set(observed) != {
+                    "graphs", "rows", "device", "shard", "sha256", "source_idx_min", "source_idx_max"}
+                    or type(observed["graphs"]) is not int or observed["graphs"] != 128
+                    or type(observed["rows"]) is not int or observed["rows"] < 128
+                    or observed["device"] != "cpu"
+                    or observed["shard"] != selected[role]["path"]
+                    or observed["sha256"] != selected[role]["sha256"]
+                    or type(observed["source_idx_min"]) is not int
+                    or type(observed["source_idx_max"]) is not int
+                    or observed["source_idx_min"] < 0
+                    or observed["source_idx_max"] - observed["source_idx_min"] + 1 != observed["rows"]):
+                raise ValueError("Invalid selected topology batch receipt")
+    elif result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
         if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
                 or set(result["batches"]) != {"train", "development"}
                 or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
-                or result["device"] != "cpu"):
+                or result["device"] != "cpu" or result["scope"] != "complete-frozen-shards"):
             raise ValueError("Incomplete worker observations")
     elif result["loader_batch_built"] and result["status"] != "MODEL_SMOKE_FAILED":
         raise ValueError("Failed worker claimed completed loader observation")
@@ -505,7 +551,7 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
                                or result["normalized_gap_l1"] is not None
                                or result["status"].startswith("MODEL_")):
         raise ValueError("Loader-only worker claimed model observations")
-    if mode == MODEL_MODE and result["status"] == "LOADER_VERIFIED_ONLY":
+    if mode == MODEL_MODE and result["status"] in {"LOADER_VERIFIED_ONLY", "PARTIAL_LOADER_VERIFIED_ONLY"}:
         raise ValueError("Explicit model smoke request returned only loader observations")
     if result["status"] == "MODEL_SMOKE_VERIFIED_ONLY":
         if (mode != MODEL_MODE or not all(result[key] for key in MODEL_CHECKS)
@@ -525,7 +571,7 @@ def _blank(spec, arm, package_identity, manifest_digest):
             "package_identity": package_identity, "shard_manifest_sha256": manifest_digest,
             "arm_id": arm["arm_id"], "arm_identity": canonical_fingerprint(arm),
             "status": "NOT_RUN", **{key: False for key in CHECKS},
-            "requested_device": "cpu", "device": None,
+            "requested_device": "cpu", "device": None, "scope": None,
             "initial_state_checked": False, "initial_state_sha256": None,
             "normalized_gap_l1": None,
             "import_origins": {}, "batches": {}, "error": None,
@@ -611,10 +657,12 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 report.update(status="PACKAGE_INVALID", error=package_error)
             elif manifest_error:
                 report.update(status="SHARD_MANIFEST_INVALID", error=manifest_error)
-            elif arm["family"]["name"] != "gptrans_t":
+            elif ((arm["family"]["name"], arm["family"]["version"]) not in {
+                    ("gptrans_t", "1"), ("neural_atom_k1", "1"), ("edge_state_gps", "1")}
+                  or (mode == MODEL_MODE and arm["family"]["name"] != "gptrans_t")):
                 report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
                 report["limitations"].append(
-                    f"No frozen {arm['family']['name']} PCQM loader supported by this boundary."
+                    f"No {mode} support for {arm['family']['name']} in this boundary."
                 )
             elif arm["arm_id"] not in entries or shard_root is None:
                 report["status"] = "MISSING_REAL_SHARD"
@@ -626,7 +674,9 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 data_root.mkdir()
                 try:
                     _unpack(snapshot, source_root)
-                    if not (source_root / "src/molgap/pcqm_gptrans_v4.py").is_file():
+                    module = ("pcqm_gptrans_v4" if arm["family"]["name"] == "gptrans_t"
+                              else "pcqm_topology")
+                    if not (source_root / f"src/molgap/{module}.py").is_file():
                         report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
                     else:
                         entry = entries[arm["arm_id"]]

@@ -64,7 +64,8 @@ def _resolve(spec: ExperimentSpec, arm_id: str) -> K1AdapterMetadata:
             raise ValueError("Unsupported K1 addon/version/config combination")
         mode = "neural_atom_k1_pair_token_value_decoupled"
         addon = ("k1_pair_value", "1")
-        source_module = "molgap.k1_pair_token"
+        # The server retains historical coupled/node-return mechanisms separately.
+        source_module = "molgap.k1_pair_value"
     return K1AdapterMetadata(
         family=FAMILIES[key], mode=mode, addon=addon,
         spec_identity=validated.identity, arm_id=arm_id,
@@ -92,5 +93,5 @@ def build_k1_model(
     if metadata.addon is None:
         from .qm9_neural_atom import make_encoder
     else:
-        from .k1_pair_token import make_encoder
+        from .k1_pair_value import make_encoder
     return make_encoder(metadata.mode)
