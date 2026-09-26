@@ -55,6 +55,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The user authorized one new pure-2D Kaggle1 screen replacing K1's single-slot
+exchanges with per-node normalized linear attention. Source/release preparation
+is in progress; no new result is claimed. Authority and operational state:
+`experiments/pcqm_k1_linear_attention_100k/STATUS.md`.
+
 The server-owned Kaggle1 K1 topology-portability dual-arm screen and its
 separate frozen 500K NO_TRAIN audit are complete. Both isolated 100K arms
 improved K1 below the material gate, then regressed against K1 on the fixed

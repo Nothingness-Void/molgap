@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Can per-node linear-kernel retrieval replace K1's single global slot? | One pure-2D candidate and separate frozen-500K audit; no outcome assumed | `pcqm_k1_linear_attention_100k/` |
 | Should K1 normalize stored bond memory or only its reads? | Bounded two-arm protocol; no outcome assumed | `pcqm_k1_edge_memory_100k/` |
 | Are K1 edge-context normalization and global-slot simplifications additive? | Round2 pairwise interaction protocol; no outcome assumed | `pcqm_k1_edge_slot_interaction_100k/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
