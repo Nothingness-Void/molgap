@@ -355,6 +355,8 @@ def _shared_k1_state_sha256(model, mode: str) -> str:
     """Hash the unchanged K1 state retained by an isolated candidate."""
     digest = hashlib.sha256()
     for name, value in sorted(model.state_dict().items()):
+        if mode == "neural_atom_k1_linear_attention" and name.startswith("neural_atom_mixers."):
+            continue
         if mode in MOSE_REPLACEMENT_MODES and "rwse_encoder." in name:
             continue
         if mode == "neural_atom_k1_tied_selector" and (
@@ -551,6 +553,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         MODES as PORTABILITY_MODES,
         check_mechanism as check_portability,
     )
+    from .k1_linear_attention import MODES as LINEAR_MODES, check_mechanism as check_linear
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -564,7 +567,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
         + PAIR_TOKEN_MOSE_MODES
-        + PORTABILITY_MODES
+        + PORTABILITY_MODES + LINEAR_MODES
     )
     import torch
 
@@ -1239,6 +1242,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             != ONESHOT_TRIPLET_PARAMETERS[mode]
         ):
             raise RuntimeError("One-shot triplet PairToken parameter identity changed")
+    elif mode in LINEAR_MODES:
+        mechanism_checks = check_linear(model, batch)
     elif mode in PORTABILITY_MODES:
         mechanism_checks = check_portability(model, batch)
         if (
@@ -1302,6 +1307,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             list(model.mose_residual.parameters())
             + list(model.relation_token.parameters())
         )
+    elif mode in LINEAR_MODES:
+        candidate_parameters = list(model.base.neural_atom_mixers.parameters())
     elif mode in PORTABILITY_MODES:
         candidate_parameters = (
             list(model.rwse_refresh.parameters())
@@ -1508,6 +1515,7 @@ def train_arm(
     from .k1_spd_pair_token import MODES as SPD_PAIR_TOKEN_MODES
     from .k1_oneshot_triplet_pair_token import MODES as ONESHOT_TRIPLET_MODES
     from .k1_portability_dual import MODES as PORTABILITY_MODES
+    from .k1_linear_attention import MODES as LINEAR_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1521,7 +1529,7 @@ def train_arm(
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
-        + PORTABILITY_MODES
+        + PORTABILITY_MODES + LINEAR_MODES
         + MOSE_MODES
     )
 
@@ -1631,6 +1639,15 @@ def train_arm(
         # Their initial base-seed draw must not advance the restored model RNG.
         iter(development_loader)
         restore_rng_state(checkpoint["rng_state"])
+    canonical = None
+    if mode in LINEAR_MODES:
+        from .k1_screen_trace import recorder, record_epoch
+        if resume_from is not None:
+            raise RuntimeError("Linear screen resume requires a separately reviewed canonical-trace binding")
+        canonical = recorder(output, "TC-k1-linear-attention-100k-s42",
+                             "nothingnessvoid/molgap-k1-linear-attention-s42:v1")
+    observed_steps = 0
+    observed_samples = 0
     torch.cuda.reset_peak_memory_stats()
     for epoch in range(start_epoch, EPOCHS):
         model.train()
@@ -1648,6 +1665,8 @@ def train_arm(
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
+            observed_steps += 1
+            observed_samples += int(target.numel())
             absolute += float((prediction.detach() - target).abs().sum())
             rows += int(target.numel())
         if rows != ROWS_PER_EPOCH:
@@ -1709,6 +1728,9 @@ def train_arm(
                 "test_challenge_role_read": False,
             },
         )
+        if canonical is not None:
+            record_epoch(canonical, output, row, observed_steps=observed_steps,
+                         observed_samples=observed_samples, elapsed=time.perf_counter() - started)
         atomic_json(output / "trace.json", {"epochs": trace})
         if mode in recovery_chunk_modes and (epoch + 1) % 10 == 0:
             import tarfile
@@ -1717,6 +1739,9 @@ def train_arm(
             with tarfile.open(temporary, "w") as archive:
                 for name in ("last_checkpoint.pt", "best_model.pt", "best_development_payload.pt", "trace.json", "preflight.json", "runtime_certificate.json"):
                     archive.add(output / name, arcname=name)
+                if canonical is not None:
+                    for name in ("canonical_trace.json", "observed_role_history.json"):
+                        archive.add(output / name, arcname=name)
             os.replace(temporary, chunk)
         print(
             f"{mode} ep{epoch:02d} train={row['train_normalized_mae']:.6f} "

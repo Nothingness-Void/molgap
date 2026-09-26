@@ -16,6 +16,15 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_linear_attention": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "replace-single-slot-with-node-query-normalized-linear-kernel-exchange",
+        "exchange_layers": [3, 6, 9],
+        "kernel": "elu-plus-one", "query_key_value_channels": 64,
+        "normalization": "per-molecule-positive-kernel",
+        "initialization_policy": "nested-function-zero-return-shared-local-backbone",
+        "dense_atom_attention": False, "geometry": False, "teacher": False,
+    },
     "neural_atom_k1_rwse_refresh": {
         "backbone": "neural_atom_k1_v4",
         "change": "zero-start-rwse16-refresh-before-exchange-3-6-9",
@@ -975,6 +984,10 @@ def make_encoder(mode: str):
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
 
+    from .k1_linear_attention import MODES as LINEAR_MODES
+    if mode in LINEAR_MODES:
+        from .k1_linear_attention import make_encoder as make_linear
+        return make_linear(mode)
     from .k1_portability_dual import MODES as PORTABILITY_MODES
     if mode in PORTABILITY_MODES:
         from .k1_portability_dual import make_encoder as make_portability

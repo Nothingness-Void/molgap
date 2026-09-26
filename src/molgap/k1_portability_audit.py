@@ -121,6 +121,7 @@ def run(
     *, cache_100k: Path, cache_500k: Path, reference_model: Path,
     reference_payload: Path, transform_asset: Path, candidate_root: Path,
     output: Path, source_commit: str, source_archive_sha256: str,
+    modes: tuple[str, ...] = MODES,
 ):
     import torch
     from .pcqm_k1_variants import make_encoder
@@ -150,7 +151,9 @@ def run(
             "payload_sha256": FROZEN_REFERENCE["k1"]["payload_sha256"],
         }
     }
-    for mode in MODES:
+    if not modes or len(modes) != len(set(modes)) or "neural_atom_k1_v4" in modes:
+        raise ValueError("Audit must bind explicit distinct candidate modes")
+    for mode in modes:
         root = candidate_root / mode
         record = json.loads((root / "arm_record.json").read_text(encoding="utf-8"))
         if (
