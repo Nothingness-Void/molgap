@@ -32,7 +32,8 @@ def test_acceptance_binds_native_observations_and_exact_source():
                      '"observed_role_history.json"', '"native_cost.json"',
                      "math.isfinite", "31240", "3998720", '"last_checkpoint.pt"',
                      '"source_archive_sha256"', '"resume_two_step_bitwise_equal"',
-                     '"rrwp_powers_match_independent_expected"',
+                     '"rrwp_batched_graphs_match_independent_expected"',
+                     '"rrwp_isolate_self_transition"',
                      '"tgt_vector_loop_agreement"', "post100k_audit_accepted=False"):
         assert required in code
     tree = ast.parse(code)

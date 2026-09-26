@@ -145,6 +145,24 @@ def freeze():
     return {"source_commit": commit, "plans": plans}
 
 
+def validate_mechanism_evidence(mode, checks):
+    """Require the checks emitted by the frozen remote preflight, not aliases."""
+    required = {"zero_return_projection", "zero_update", "valid_row_assignment_sum_one",
+        "padding_assignment_zero", "finite", "different_receiver_features_within_graph",
+        "graph0_perturbation_isolated", "receiver_specific_return_features",
+        "permutation_equivariant_before_return", "resume_two_step_bitwise_equal"}
+    if mode.endswith("rrwp_pair"):
+        required.update({"rrwp_batched_graphs_match_independent_expected",
+                         "rrwp_isolate_self_transition"})
+    if mode.endswith("triplet_aggregate"):
+        required.add("tgt_vector_loop_agreement")
+    missing = sorted(key for key in required if checks.get(key) is not True)
+    if missing:
+        raise ValueError(f"Missing or failed remote mechanism checks: {missing}")
+    if checks.get("largest_train_shape_probe", {}).get("graphs") != 128:
+        raise ValueError("Missing full-batch worst-shape memory qualification")
+
+
 def accept_training(reference_root, candidate_root, source_commit, archive_sha256, slot):
     """Verify retained tensors and telemetry; never instantiate an encoder."""
     from .k1_relation_resolution import PARAMETERS
@@ -188,17 +206,7 @@ def accept_training(reference_root, candidate_root, source_commit, archive_sha25
             or record["source_commit"] != source_commit
             or record["contract"]["source_archive_sha256"] != archive_sha256):
             raise ValueError("Native identity, source or cost incomplete")
-        checks = record["preflight"]["mechanism_checks"]
-        if any(checks.get(k) is not True for k in ("zero_update", "valid_row_assignment_sum_one",
-            "padding_assignment_zero", "finite", "receiver_specific_return_features",
-            "permutation_equivariant_before_return", "resume_two_step_bitwise_equal")):
-            raise ValueError("Missing remote mechanism checks")
-        if mode.endswith("rrwp_pair") and checks.get("rrwp_powers_match_independent_expected") is not True:
-            raise ValueError("RRWP equation not verified")
-        if mode.endswith("triplet_aggregate") and checks.get("tgt_vector_loop_agreement") is not True:
-            raise ValueError("Triplet vector equation not verified")
-        if checks.get("largest_train_shape_probe", {}).get("graphs") != 128:
-            raise ValueError("Missing full-batch worst-shape memory qualification")
+        validate_mechanism_evidence(mode, record["preflight"]["mechanism_checks"])
         if any(roles.get(flag) is not False for flag in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
             raise ValueError("Protected role access cannot be accepted")
     result.update(source_commit=source_commit, source_archive_sha256=archive_sha256,
