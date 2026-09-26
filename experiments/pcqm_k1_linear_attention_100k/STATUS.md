@@ -1,22 +1,22 @@
 # Linear attention screen status
 
-Kaggle1 `nothingnessvoid/molgap-k1-linear-attention-s42` version 1 is ERROR,
-but its training worker completed 40 epochs and passed saved-artifact acceptance.
-The independent audit failed on its first CuBLAS operation. The candidate did
-not pass the 100K material gate. [Diagnosis and retained evidence](results/audit_failure_v1.md).
+Closed, no promoted candidate and no active job in this chain.
+[Scientific decision and attribution](decision.md).
 
-Only a frozen-checkpoint NO_TRAIN audit recovery was submitted. The resolved
-kernel `nothingnessvoid/molgap-k1-linear-attention-frozen-audit-s42` version 1
-is RUNNING; startup and completed inference are not yet verified.
-[Recovery receipt](results/audit_recovery_receipt.json). No retraining,
-new seed or architecture successor is released.
+- The original v1 training stage completed and is strictly accepted, with a
+  complete candidate/reference training replay entry and native measured cost.
+- Its separate audit failed and is finalized as `INFRASTRUCTURE_ONLY` under
+  the original physical run ID. [Failure diagnosis](results/audit_failure_v1.md).
+- The frozen-audit recovery v1 completed and passed independent no-inference
+  acceptance. It is separate `retrospective_partial` / `NO_TRAIN` evidence,
+  not a fabricated prospective continuation under the original run ID.
+  [Recovery receipt](results/audit_recovery_receipt.json).
 
-Submission/source identities: [receipt](results/submission_receipt.json).
-Native training and separate NO_TRAIN audit plans are frozen in `rml_plan/` and
-`audit_plan/`. Repair static/V5 tests: 58 passed, no local model execution.
-Training acceptance is retained independently; portability and terminal RML/replay
-closure remain pending. Original failed outputs are retained unchanged.
+[RML closure and verification](results/rml_closure.json).
+Original prospective files, models, checkpoints, raw logs and prediction chunks
+are retained. Targeted tests: 63 passed; RML validate/rebuild/frozen check passed.
+No local model training/inference, new seed, 500K training, full training or
+protected-role access. Missing audit device/setup/queue costs remain missing.
 
-The existing Luna B receives [only this bound server job](monitor_binding.json).
-It must use the authoritative original workspace paths, not its older worktree.
-Healthy running is silent; confirmed terminal/fault is handed to A once.
+The existing Luna B heartbeat is PAUSED after one terminal handoff. No new chat,
+automation, retraining, or architecture successor was created.

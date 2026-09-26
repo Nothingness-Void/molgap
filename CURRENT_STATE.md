@@ -55,12 +55,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The user authorized one new pure-2D Kaggle1 screen replacing K1's single-slot
-exchanges with per-node normalized linear attention. Version 1 completed training
-without a promotion win, then failed its separate audit on a CuBLAS environment
-setting. Frozen-checkpoint audit recovery is submitted and RUNNING; no retraining or
-architecture successor is released. Terminal RML/replay closure remains pending.
-Authority and operational state:
+The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early
+advantage disappeared at the matched terminal exposure; frozen500K internal
+development inference also regressed. The training candidate has a complete
+strict RML replay entry. The failed original audit and successful NO_TRAIN
+recovery retain distinct physical run identities; recovery is retrospective
+diagnostic evidence, not a training replay claim. No successor or scale-up is released.
+Authority and retained evidence:
 `experiments/pcqm_k1_linear_attention_100k/STATUS.md`.
 
 The server-owned Kaggle1 K1 topology-portability dual-arm screen and its
