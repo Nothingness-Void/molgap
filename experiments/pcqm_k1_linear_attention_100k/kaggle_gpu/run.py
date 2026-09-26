@@ -9,6 +9,10 @@ import shutil
 import subprocess
 import sys
 
+# A child's environment changes never propagate back to the launcher. The audit
+# is a fresh sibling of training, so both must inherit the CuBLAS contract here.
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+
 
 MODES = ("neural_atom_k1_linear_attention",)
 OUT = Path("/kaggle/working/pcqm_k1_linear_attention")

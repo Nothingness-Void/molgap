@@ -1,4 +1,4 @@
-"""No-model-inference acceptance of both training arms and frozen audit."""
+"""No-model-inference acceptance of the training arm and frozen audit."""
 from __future__ import annotations
 
 import argparse
@@ -49,8 +49,8 @@ def _joined(output: Path, chunks: list[dict], start: int):
     }
 
 
-def accept(reference_root: Path, candidate_root: Path, source_commit: str,
-           archive_sha256: str):
+def accept_training(reference_root: Path, candidate_root: Path, source_commit: str,
+                    archive_sha256: str):
     shared_path = REPO_ROOT / "experiments/pcqm_k1_variants_100k/accept.py"
     spec = importlib.util.spec_from_file_location("k1_shared_acceptance", shared_path)
     shared = importlib.util.module_from_spec(spec)
@@ -91,7 +91,13 @@ def accept(reference_root: Path, candidate_root: Path, source_commit: str,
             ))
         ):
             raise RuntimeError(f"Training identity or mechanism failed: {mode}")
-    audit_root = candidate_root / "post100k_audit"
+    return training
+
+
+def accept(reference_root: Path, candidate_root: Path, source_commit: str,
+           archive_sha256: str, audit_root: Path | None = None):
+    training = accept_training(reference_root, candidate_root, source_commit, archive_sha256)
+    audit_root = audit_root or candidate_root / "post100k_audit"
     terminal = json.loads((audit_root / "terminal.json").read_text(encoding="utf-8"))
     if (
         terminal.get("format") != "molgap-k1-post100k-portability-audit-v1"
@@ -119,6 +125,8 @@ def accept(reference_root: Path, candidate_root: Path, source_commit: str,
     target_500k = None
     for mode in names:
         role_path = reference_root / "neural_atom_k1_v4" if mode == names[0] else candidate_root / mode
+        if terminal["checkpoint_sha256"].get(mode) != sha256_file(role_path / "best_model.pt"):
+            raise RuntimeError(f"Audit did not bind the accepted best checkpoint: {mode}")
         saved_path = role_path / "best_development_payload.pt"
         saved = reference_payload if mode == names[0] else torch.load(
             saved_path, map_location="cpu", weights_only=False
@@ -170,8 +178,15 @@ if __name__ == "__main__":
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--archive-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--training-only", action="store_true",
+                        help="Verify the completed training substage; do not claim audit acceptance")
+    parser.add_argument("--audit-root", type=Path,
+                        help="Separate audit-only recovery output; preserve the failed original output")
     args = parser.parse_args()
-    atomic_json(args.output, accept(
+    if args.training_only and args.audit_root:
+        parser.error("--audit-root cannot be used with --training-only")
+    operation = accept_training if args.training_only else accept
+    atomic_json(args.output, operation(
         args.reference_root, args.candidate_root, args.source_commit,
-        args.archive_sha256,
+        args.archive_sha256, **({"audit_root": args.audit_root} if not args.training_only else {}),
     ))

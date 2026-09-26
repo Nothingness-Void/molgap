@@ -74,6 +74,41 @@ def test_remote_audit_binds_exact_candidate_and_no_optimizer():
     assert "torch==2.4.1+cu121" in entry
 
 
+def test_cublas_environment_is_in_parent_before_any_torch_import():
+    for entry in (ROOT / "kaggle_gpu/run.py", ROOT / "kaggle_audit/run.py"):
+        tree = ast.parse(entry.read_text())
+        environment = next(node for node in tree.body if isinstance(node, ast.Assign)
+            and any(isinstance(target, ast.Subscript)
+                    and isinstance(target.slice, ast.Constant)
+                    and target.slice.value == "CUBLAS_WORKSPACE_CONFIG" for target in node.targets))
+        assert environment.value.value == ":4096:8"
+        imports = [node for node in ast.walk(tree) if isinstance(node, ast.Import)
+                   and any(alias.name == "torch" for alias in node.names)]
+        assert imports and all(environment.lineno < node.lineno for node in imports)
+
+
+def test_recovery_is_frozen_no_train_single_device():
+    entry = (ROOT / "kaggle_audit/run.py").read_text()
+    spec = json.loads((ROOT / "audit_recovery.json").read_text())
+    metadata = json.loads((ROOT / "kaggle_audit/kernel-metadata.json").read_text())
+    assert spec["training_authorized"] is False
+    assert spec["source_commit"] in entry and spec["source_archive_sha256"] in entry
+    assert spec["mode"] == MODE and spec["physical_batch"] == 128
+    assert spec["precision"] == "fp32" and spec["tf32_enabled"] is False
+    assert spec["audit_seconds_limit"] == 5400 and "timeout=5400" in entry
+    assert "train_arm" not in entry and "optimizer.step" not in entry
+    assert "candidate_payload.bin" in entry and 'filter="data"' in entry
+    assert metadata["id"] == spec["recovery_kernel"] and metadata["is_private"] is True
+    assert metadata["competition_sources"] == [] and len(metadata["dataset_sources"]) == 4
+
+
+def test_split_acceptance_preserves_failed_outputs_and_checkpoint_binding():
+    source = (ROOT / "accept.py").read_text()
+    assert "def accept_training(" in source and '"--training-only"' in source
+    assert '"--audit-root"' in source
+    assert 'terminal["checkpoint_sha256"].get(mode) != sha256_file(role_path / "best_model.pt")' in source
+
+
 def test_observed_trace_records_real_checkpoint_hash_and_terminal(tmp_path):
     checkpoint = tmp_path / "last_checkpoint.pt"
     checkpoint.write_bytes(b"synthetic-metadata-not-a-model")

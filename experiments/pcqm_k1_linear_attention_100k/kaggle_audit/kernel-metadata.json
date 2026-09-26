@@ -1,0 +1,20 @@
+{
+  "id": "nothingnessvoid/molgap-k1-linear-attention-audit-s42",
+  "title": "MolGap K1 Linear Attention Frozen Audit S42",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaP100",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-linear-attention-source",
+    "nothingnessvoid/molgap-k1-linear-attention-audit-inputs",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
