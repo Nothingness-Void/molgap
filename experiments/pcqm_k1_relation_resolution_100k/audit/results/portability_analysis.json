@@ -1,0 +1,226 @@
+{
+  "bootstrap_seed": 2026091142,
+  "format": "molgap-relation-portability-analysis-v1",
+  "model_inference_executed_locally": false,
+  "retention": {
+    "neural_atom_k1_receiver_pair": {
+      "favorable_ordered_5k_blocks": 5,
+      "frozen500k_gain_eV": -0.002190359721183777,
+      "gain_retention_ratio": -1.1740958800485077,
+      "original_gain_eV": 0.0018655714225769044
+    },
+    "neural_atom_k1_rrwp_pair": {
+      "favorable_ordered_5k_blocks": 6,
+      "frozen500k_gain_eV": -0.0035759267139434813,
+      "gain_retention_ratio": -1.4600880194979797,
+      "original_gain_eV": 0.0024491172218322754
+    },
+    "neural_atom_k1_triplet_aggregate": {
+      "favorable_ordered_5k_blocks": 6,
+      "frozen500k_gain_eV": -0.0019418744039535521,
+      "gain_retention_ratio": -1.2811540869016804,
+      "original_gain_eV": 0.0015157227563858033
+    }
+  },
+  "roles": {
+    "original_100k": {
+      "mae_eV": {
+        "neural_atom_k1_receiver_pair": 0.1395080664008856,
+        "neural_atom_k1_rrwp_pair": 0.1389245206016302,
+        "neural_atom_k1_triplet_aggregate": 0.13985791506707668,
+        "neural_atom_k1_v4": 0.1413736378234625
+      },
+      "versus_k1": {
+        "neural_atom_k1_receiver_pair": {
+          "candidate_minus_reference_eV": -0.0018655714225769044,
+          "candidate_win_fraction": 0.51332,
+          "losing_margin_mean_eV": 0.0642836341295911,
+          "ordered_5k_block_delta_eV": [
+            -0.002785107421875,
+            0.0016410632610321045,
+            -0.0028541563034057615,
+            -0.0038583819389343263,
+            -0.002929390621185303,
+            -0.0022416800022125242,
+            0.0007251564502716065,
+            -0.0012432634353637694,
+            -0.0016130734443664551,
+            -0.003496880769729614
+          ],
+          "paired_row_bootstrap_95_eV": [
+            -0.0027637538375854492,
+            -0.0010377255692481996
+          ],
+          "winning_margin_mean_eV": 0.06458180176257752
+        },
+        "neural_atom_k1_rrwp_pair": {
+          "candidate_minus_reference_eV": -0.0024491172218322754,
+          "candidate_win_fraction": 0.50882,
+          "losing_margin_mean_eV": 0.06404968826180245,
+          "ordered_5k_block_delta_eV": [
+            -0.0013632755279541016,
+            0.0012505192279815673,
+            -0.004321255159378052,
+            -0.004279505395889283,
+            -0.002778317451477051,
+            -0.004096883535385132,
+            -0.00039631400108337405,
+            -0.0013911255359649658,
+            -0.0011688163757324218,
+            -0.0059461984634399416
+          ],
+          "paired_row_bootstrap_95_eV": [
+            -0.0033198916836977006,
+            -0.001576902977228165
+          ],
+          "winning_margin_mean_eV": 0.0666425122877725
+        },
+        "neural_atom_k1_triplet_aggregate": {
+          "candidate_minus_reference_eV": -0.0015157227563858033,
+          "candidate_win_fraction": 0.50794,
+          "losing_margin_mean_eV": 0.06430633113727585,
+          "ordered_5k_block_delta_eV": [
+            -0.0029436347484588623,
+            0.0014966955661773682,
+            0.0013591094017028809,
+            -0.00419932632446289,
+            -0.00038370933532714846,
+            -0.0016838623046875,
+            -0.0021828616619110107,
+            0.0010519133567810058,
+            -0.002350504732131958,
+            -0.005321046781539917
+          ],
+          "paired_row_bootstrap_95_eV": [
+            -0.002409544188857079,
+            -0.0006072651770114906
+          ],
+          "winning_margin_mean_eV": 0.06527994656021137
+        }
+      },
+      "versus_receiver_pair": {
+        "neural_atom_k1_rrwp_pair": {
+          "candidate_minus_reference_eV": -0.0005835457992553711,
+          "candidate_win_fraction": 0.49974,
+          "losing_margin_mean_eV": 0.05961766664476562,
+          "paired_row_bootstrap_95_eV": [
+            -0.0013728040972948074,
+            0.00024679689240455555
+          ],
+          "winning_margin_mean_eV": 0.06084740007797219
+        },
+        "neural_atom_k1_triplet_aggregate": {
+          "candidate_minus_reference_eV": 0.0003498486661911011,
+          "candidate_win_fraction": 0.49856,
+          "losing_margin_mean_eV": 0.0604254171661153,
+          "paired_row_bootstrap_95_eV": [
+            -0.000490198762178421,
+            0.00117285040128231
+          ],
+          "winning_margin_mean_eV": 0.06007275456832829
+        }
+      }
+    },
+    "unseen_500k": {
+      "mae_eV": {
+        "neural_atom_k1_receiver_pair": 0.14344366698265076,
+        "neural_atom_k1_rrwp_pair": 0.14482923397541045,
+        "neural_atom_k1_triplet_aggregate": 0.14319518166542053,
+        "neural_atom_k1_v4": 0.14125330726146698
+      },
+      "versus_k1": {
+        "neural_atom_k1_receiver_pair": {
+          "candidate_minus_reference_eV": 0.002190359721183777,
+          "candidate_win_fraction": 0.49334,
+          "losing_margin_mean_eV": 0.06651037657806284,
+          "ordered_5k_block_delta_eV": [
+            0.0011502625942230226,
+            -0.003957909154891968,
+            -0.0003092470169067383,
+            -0.0021874776840209963,
+            -0.0012277112007141114,
+            -0.001315488862991333,
+            0.004273626613616944,
+            0.00901999282836914,
+            0.00968464207649231,
+            0.006772907018661499
+          ],
+          "paired_row_bootstrap_95_eV": [
+            0.0013973854341506958,
+            0.003025486406803131
+          ],
+          "winning_margin_mean_eV": 0.0638662741230339
+        },
+        "neural_atom_k1_rrwp_pair": {
+          "candidate_minus_reference_eV": 0.0035759267139434813,
+          "candidate_win_fraction": 0.48784,
+          "losing_margin_mean_eV": 0.06716589067772528,
+          "ordered_5k_block_delta_eV": [
+            -0.0005165432453155518,
+            -0.0006912475109100342,
+            -0.0010987401485443116,
+            -0.0028056874752044676,
+            -0.0001570396900177002,
+            -0.005992554426193238,
+            0.0030306684494018554,
+            0.01247260913848877,
+            0.009554321146011353,
+            0.021963480901718138
+          ],
+          "paired_row_bootstrap_95_eV": [
+            0.0027142164083719254,
+            0.004420298805832862
+          ],
+          "winning_margin_mean_eV": 0.06318415024508098
+        },
+        "neural_atom_k1_triplet_aggregate": {
+          "candidate_minus_reference_eV": 0.0019418744039535521,
+          "candidate_win_fraction": 0.496,
+          "losing_margin_mean_eV": 0.06586390763048142,
+          "ordered_5k_block_delta_eV": [
+            -0.0018173937320709228,
+            -0.0020332353591918945,
+            -0.0011167364120483398,
+            -0.0031839052200317384,
+            0.0021976167201995848,
+            -0.0016743817806243897,
+            0.002610336208343506,
+            -0.00014664516448974609,
+            0.011276458740234375,
+            0.013306630039215088
+          ],
+          "paired_row_bootstrap_95_eV": [
+            0.001137795646071434,
+            0.002814754256606101
+          ],
+          "winning_margin_mean_eV": 0.06301115935848606
+        }
+      },
+      "versus_receiver_pair": {
+        "neural_atom_k1_rrwp_pair": {
+          "candidate_minus_reference_eV": 0.0013855669927597045,
+          "candidate_win_fraction": 0.49094,
+          "losing_margin_mean_eV": 0.06061467931241843,
+          "paired_row_bootstrap_95_eV": [
+            0.0006046487002372741,
+            0.0021684044402837752
+          ],
+          "winning_margin_mean_eV": 0.06002962003100179
+        },
+        "neural_atom_k1_triplet_aggregate": {
+          "candidate_minus_reference_eV": -0.0002484853172302246,
+          "candidate_win_fraction": 0.5053,
+          "losing_margin_mean_eV": 0.06039677268691995,
+          "paired_row_bootstrap_95_eV": [
+            -0.0009690651292800904,
+            0.0005440425289869303
+          ],
+          "winning_margin_mean_eV": 0.059621549110329554
+        }
+      }
+    }
+  },
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "statistical_scope": "post-hoc paired row bootstrap; 2000 replicates; not seed uncertainty, not multiplicity adjusted",
+  "training_executed": false
+}

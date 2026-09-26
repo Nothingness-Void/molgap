@@ -1,6 +1,6 @@
 # Execution state
 
-## Training complete; separate audit running
+## Training and separate audit complete; exact routes closed
 
 All three arms completed 40 epochs / 31,240 optimizer steps and passed strict
 saved-artifact acceptance on September 27, 2026. All three native training
@@ -53,27 +53,30 @@ See [interface diagnosis](acceptance_interface_diagnosis.md).
 The prospectively registered NO_TRAIN audit was submitted only after all three
 training arms passed acceptance. Kernel
 `kaseichou/molgap-k1-relation-audit-s42`, numeric ID **136030465**, version **1**,
-was confirmed `RUNNING` after submission. Actual device qualification remains
-pending terminal evidence. The audit first reproduces original development
-predictions for every candidate, then infers the fixed500K internal-dev 50K
-rows. Already accepted K1 predictions are reused byte-for-byte. No optimizer,
-official validation, test-dev, test-challenge, or other protected role is opened.
-The cap is 5,400 allocated device-seconds, divided by the actual assigned GPU
-count; the parent launcher enforces the remaining wall budget after setup.
+completed and passed independent saved-tensor acceptance. It reproduced every
+candidate's original-development predictions, then inferred the fixed500K
+internal-dev 50K rows. Already accepted K1 predictions were reused byte-for-byte.
+All three candidates regressed against K1 on this role, before any change of
+training scale. Paired intervals, ordered-row concentration and the limits of
+causal attribution are retained in the [audit decision](audit/decision.md).
+No optimizer, official validation, test-dev, test-challenge, or other protected
+role was opened. The actual two-T4 allocation consumed 760.935 device-seconds,
+including the unused device and setup, below the 5,400-second cap.
 
 - Released checkpoint, reference prediction, scientific source and audit-helper
   hashes: [audit release](audit_release.json).
 - Actual submission and downloaded entry identity:
   [audit receipt](audit_submission_receipt_v1.json).
-- Three training trajectories are replay-ready; the separate audit remains
-  prospective until its own terminal is accepted. It is not training replay.
-- Targeted static/mock checks: 60 passed; RML `validate` and `check --frozen`
-  passed after training closure. No local model construction or inference.
+- Three training trajectories remain replay-ready. The separate prospective
+  audit completed terminal publication, RML validation and derived rebuild;
+  its `NO_TRAIN` outcome does not add a training-prefix replay entry.
+- Training/audit static checks and synthetic saved-record checks passed;
+  RML `validate` and `check --frozen` passed. No local model construction or inference.
 - `monitor_binding.json` and its stores retain the two closed training events;
   `audit_monitor_binding.json` binds only the new audit to the same A/B pair.
-- Existing heartbeat `molgap-k1-conjugated-dual-kaggle2-monitor` is reused at
-  30-minute intervals in Luna B. Healthy checks are silent. A successful
-  terminal/fault handoff to A is acknowledged idempotently, then monitoring
-  pauses. No model/reasoning override is sent to A.
+- Existing heartbeat `molgap-k1-conjugated-dual-kaggle2-monitor` is paused after
+  Luna B's successful idempotent terminal handoff. Event
+  `evt-f2d487371d32940d6be7d5a1` was claimed and closed by A. No model/reasoning
+  override or additional controller conversation was used.
 - No automatic scale-up, extra seed, training successor, or protected-role
   access is released by these results.

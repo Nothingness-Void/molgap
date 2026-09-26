@@ -1,0 +1,96 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "5c7b4473031bfd0f0f8414c86d7eb6d6dbcc00c4d456fff8553fbae8e46ce906"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/audit_terminal.json",
+      "name": "audit_terminal",
+      "sha256": "ab1b3548d7e11075dd2490862a2f3b09dab4e8607c8547b64aaabcc40cb27693"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/execution.json",
+      "name": "execution",
+      "sha256": "a3000017902fd5118b63c0e5fd8146ab974a3b407ce2c095bdb4573cb5b807d7"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/portability_analysis.json",
+      "name": "portability_analysis",
+      "sha256": "833acb95b03ad12baeaa68aa849f6805c07bfbd002a31dd0333f9bfbad35b923"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_row_manifests.json",
+      "name": "role_row_manifests",
+      "sha256": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_history.json",
+      "name": "role_history",
+      "sha256": "03990b7f9bd79cc9f627fe41096a163e7651e46d6f659d425e695573fe720658"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/cost_records.json",
+      "name": "cost_records",
+      "sha256": "16aa05ba6ad32b6c2ce1dbeb083edb2ba302272d7084b7a58a545ada11a55907"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit_submission_receipt_v1.json",
+      "name": "audit_submission_receipt_v1",
+      "sha256": "88bec16b1e1f54a2422dba205d72631ee40483a7c1e00cebf4f356dc6ec8831d"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/audit_release.json",
+      "name": "audit_release",
+      "sha256": "383515d163d4b652c2a9b7d78525ce77e6c397db7255b7a0fd6fd503f6c46e79"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+      "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+      "experiments/pcqm_k1_relation_resolution_100k/audit_role_plan.json",
+      "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-26T23:04:54Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "saved remote artifacts; no local model inference; distinct NO_TRAIN evidence"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "paired_endpoint_diagnostic",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "no_train_negative_transfer",
+    "transfer_status": "frozen_portability_regressed"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "frozen_checkpoint_NO_TRAIN_portability_not_scale_training",
+  "track": "C"
+}

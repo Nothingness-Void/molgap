@@ -66,13 +66,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The Kaggle2 overnight relation-resolution study completed all three arms.
-Receiver-pair, vector triplet aggregation and RRWP-pair passed strict saved
-acceptance and entered the RML replay pool. Each is positive below this study's
-predeclared material gate; no scale-up or new training is released. The separate
-accepted-checkpoint frozen500K internal-dev `NO_TRAIN` audit is submitted and
-running, reusing accepted K1 predictions. The existing Luna B monitors only
-that exact audit job and returns terminal/fault events to the existing A.
+The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit
+are complete. Receiver-pair, vector triplet aggregation and RRWP-pair were
+positive below the original-role material gate, but all three regressed on
+fixed500K internal-dev molecules with unchanged 100K checkpoints. The three
+training trajectories remain replay-ready; the audit has a distinct accepted
+NO_TRAIN terminal. All three exact interventions are closed without scale-up,
+extra seeds or successor training. Luna monitoring is paused.
 Authority: `experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
 
 The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early

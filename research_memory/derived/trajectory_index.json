@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "734b6b6455b55a0447d6f050c75333573e8a902dad5cc4e15779b0b4ac977813",
+  "source_digest": "fc4dccdece3733e194acc647f2d79c91b1957b61b2a812b5e9a08b89ac884e74",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -464,9 +464,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md",
       "family_id": "k1-receiver-relation-resolution",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-receiver-pair-100k-s42",
@@ -475,8 +475,10 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-relation-resolution-post100k-audit-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
     },

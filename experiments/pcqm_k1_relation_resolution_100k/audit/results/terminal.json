@@ -1,0 +1,249 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md": "f2837becadb084378e36d751cb5c8c0d5faed972abab6d6b7c9e20bd9c2c5bb1",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/acceptance_summary.json": "5c7b4473031bfd0f0f8414c86d7eb6d6dbcc00c4d456fff8553fbae8e46ce906",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/audit_terminal.json": "ab1b3548d7e11075dd2490862a2f3b09dab4e8607c8547b64aaabcc40cb27693",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/cost_records.json": "16aa05ba6ad32b6c2ce1dbeb083edb2ba302272d7084b7a58a545ada11a55907",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/execution.json": "a3000017902fd5118b63c0e5fd8146ab974a3b407ce2c095bdb4573cb5b807d7",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/portability_analysis.json": "833acb95b03ad12baeaa68aa849f6805c07bfbd002a31dd0333f9bfbad35b923",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_history.json": "03990b7f9bd79cc9f627fe41096a163e7651e46d6f659d425e695573fe720658",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_row_manifests.json": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json": "e73bbb61b41f5ff1f6c5751afe598d180b7dd60977e8a7aa341124533ebe9d7f",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json": "93658c1e3a50a775751c4791031599cd36ba36668643c1e6ebe183a13a18084a",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_release.json": "383515d163d4b652c2a9b7d78525ce77e6c397db7255b7a0fd6fd503f6c46e79",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_submission_receipt_v1.json": "88bec16b1e1f54a2422dba205d72631ee40483a7c1e00cebf4f356dc6ec8831d",
+    "experiments/pcqm_k1_relation_resolution_100k/protocol.md": "3608884c7c74a89dfd47bac816fc0f6dc2051ef51450b8804e67093615093e57",
+    "experiments/pcqm_k1_relation_resolution_100k/training_contract.json": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-k1-relation-resolution-post100k-audit-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.21137076299666668
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.10568538149833334
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "new mechanism evidence and explicit prospective authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "5c7b4473031bfd0f0f8414c86d7eb6d6dbcc00c4d456fff8553fbae8e46ce906"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/audit_terminal.json",
+        "name": "audit_terminal",
+        "sha256": "ab1b3548d7e11075dd2490862a2f3b09dab4e8607c8547b64aaabcc40cb27693"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/execution.json",
+        "name": "execution",
+        "sha256": "a3000017902fd5118b63c0e5fd8146ab974a3b407ce2c095bdb4573cb5b807d7"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/portability_analysis.json",
+        "name": "portability_analysis",
+        "sha256": "833acb95b03ad12baeaa68aa849f6805c07bfbd002a31dd0333f9bfbad35b923"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_row_manifests.json",
+        "name": "role_row_manifests",
+        "sha256": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_history.json",
+        "name": "role_history",
+        "sha256": "03990b7f9bd79cc9f627fe41096a163e7651e46d6f659d425e695573fe720658"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit/results/cost_records.json",
+        "name": "cost_records",
+        "sha256": "16aa05ba6ad32b6c2ce1dbeb083edb2ba302272d7084b7a58a545ada11a55907"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit_submission_receipt_v1.json",
+        "name": "audit_submission_receipt_v1",
+        "sha256": "88bec16b1e1f54a2422dba205d72631ee40483a7c1e00cebf4f356dc6ec8831d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/audit_release.json",
+        "name": "audit_release",
+        "sha256": "383515d163d4b652c2a9b7d78525ce77e6c397db7255b7a0fd6fd503f6c46e79"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+        "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+        "experiments/pcqm_k1_relation_resolution_100k/audit_role_plan.json",
+        "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-26T23:04:54Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "saved remote artifacts; no local model inference; distinct NO_TRAIN evidence"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "paired_endpoint_diagnostic",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "no_train_negative_transfer",
+      "transfer_status": "frozen_portability_regressed"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "internal_development_500000_550000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "frozen_checkpoint_NO_TRAIN_portability_not_scale_training",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-26T23:04:54Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+}

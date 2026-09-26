@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 158,
+  "ambiguous_historical_role_record_count": 163,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -814,6 +814,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-rrwp-pair-100k-s42",
       "role_identity": null,
       "role_name": "internal_development_100000_150000",
@@ -1108,7 +1143,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 152,
+  "explicit_role_event_count": 158,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -2071,6 +2106,52 @@
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f:internal_development_100000_150000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391:internal_development_500000_550000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
       {
         "access_kind": "selection_used",
@@ -2224,6 +2305,7 @@
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
       "pcqm-k1-receiver-pair-100k-s42",
+      "pcqm-k1-relation-resolution-post100k-audit-s42",
       "pcqm-k1-rrwp-pair-100k-s42",
       "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
@@ -2261,6 +2343,7 @@
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
       "pcqm-k1-receiver-pair-100k-s42",
+      "pcqm-k1-relation-resolution-post100k-audit-s42",
       "pcqm-k1-rrwp-pair-100k-s42",
       "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",
@@ -2298,6 +2381,7 @@
       "pcqm-k1-pair-token-node-return-100k-s42",
       "pcqm-k1-pairtoken-combination-transfer-20260923",
       "pcqm-k1-receiver-pair-100k-s42",
+      "pcqm-k1-relation-resolution-post100k-audit-s42",
       "pcqm-k1-rrwp-pair-100k-s42",
       "pcqm-k1-rwse-refresh-100k-s42",
       "pcqm-k1-sparse-triplet-100k-s42",

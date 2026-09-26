@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "audit",
+  "cost_event_id": "cost-TC-k1-relation-resolution-post100k-audit-s42",
+  "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.21137076299666668
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.10568538149833334
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+}

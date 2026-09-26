@@ -1,0 +1,144 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-k1-relation-resolution-post100k-audit-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.21137076299666668
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.10568538149833334
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    }
+  ],
+  "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "paired_endpoint_diagnostic",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "no_train_negative_transfer",
+    "transfer_status": "frozen_portability_regressed"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "source_acceptance_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/results/acceptance_summary.json",
+  "source_acceptance_sha256": "5c7b4473031bfd0f0f8414c86d7eb6d6dbcc00c4d456fff8553fbae8e46ce906",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "new mechanism evidence and explicit prospective authority"
+    ]
+  }
+}

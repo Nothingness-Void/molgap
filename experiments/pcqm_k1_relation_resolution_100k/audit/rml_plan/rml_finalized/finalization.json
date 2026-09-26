@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-678a6ed018d19d110ae841fc7b91011fe2d4022eeb04eb9198cabb031507ffa0",
+  "finalized_at": "2026-09-26T23:04:54Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/audit/decision.md": "f2837becadb084378e36d751cb5c8c0d5faed972abab6d6b7c9e20bd9c2c5bb1",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/acceptance_summary.json": "5c7b4473031bfd0f0f8414c86d7eb6d6dbcc00c4d456fff8553fbae8e46ce906",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/audit_terminal.json": "ab1b3548d7e11075dd2490862a2f3b09dab4e8607c8547b64aaabcc40cb27693",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/cost_records.json": "16aa05ba6ad32b6c2ce1dbeb083edb2ba302272d7084b7a58a545ada11a55907",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/execution.json": "a3000017902fd5118b63c0e5fd8146ab974a3b407ce2c095bdb4573cb5b807d7",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/portability_analysis.json": "833acb95b03ad12baeaa68aa849f6805c07bfbd002a31dd0333f9bfbad35b923",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_history.json": "03990b7f9bd79cc9f627fe41096a163e7651e46d6f659d425e695573fe720658",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/role_row_manifests.json": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/results/terminal_acceptance.json": "e73bbb61b41f5ff1f6c5751afe598d180b7dd60977e8a7aa341124533ebe9d7f",
+    "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json": "93658c1e3a50a775751c4791031599cd36ba36668643c1e6ebe183a13a18084a",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_release.json": "383515d163d4b652c2a9b7d78525ce77e6c397db7255b7a0fd6fd503f6c46e79",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_relation_resolution_100k/audit_submission_receipt_v1.json": "88bec16b1e1f54a2422dba205d72631ee40483a7c1e00cebf4f356dc6ec8831d",
+    "experiments/pcqm_k1_relation_resolution_100k/protocol.md": "3608884c7c74a89dfd47bac816fc0f6dc2051ef51450b8804e67093615093e57",
+    "experiments/pcqm_k1_relation_resolution_100k/training_contract.json": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-k1-relation-resolution-post100k-audit-s42.json": "77fc87f6974e1a6fd8e23b87b550bb80da1eb9fe803885a8e5ee501c2d697782",
+    "prospective_snapshot.json": "93658c1e3a50a775751c4791031599cd36ba36668643c1e6ebe183a13a18084a",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-labels_read.json": "9f199ec6762c9546bb33098c5485f3c562bdbe5cdd9f46da581843f74cfb5fee",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-metric_computed.json": "855f98606173fbfecdfa856fe5a4e9c41e2d5b3392161e0ee319522b018e7dc7",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-prediction_input.json": "6391514e04a174d5cfb9532d97549d2049110a97007a61891f7d2fe64b1d07ba",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-labels_read.json": "bce39bfb051b6f12f62de4f84c9f7806deb02b61e76a278f4e8ebbb560aad73e",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-metric_computed.json": "c50e90ebbbd0d33703938a54134dd9de6d3ceb503886a865a1415270cc268e1c",
+    "roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-prediction_input.json": "fa6750c17817477591e6dc561704370fcea43647530d861488465271946292e0",
+    "terminal_input.json": "623e4276e1cd88a79fd3383097289b9b8d3f02f0191db25a7e4ed087887decdd",
+    "trajectory.json": "0e68758d0aa46283d0d2e0c57218f04a5a2876fa1c6c6ba3b0d584ac38fc7e05",
+    "v5_evidence.json": "5a7fc90803c3751f4290c868d558eb1acc35705f862360df327a0b62bb3dd0b2"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-relation-resolution-post100k-audit-s42.json": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/costs/cost-TC-k1-relation-resolution-post100k-audit-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "678a6ed018d19d110ae841fc7b91011fe2d4022eeb04eb9198cabb031507ffa0",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+}

@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-K1-RELATION-RESOLUTION | Authorized: receiver-resolved pair messages, internal RRWP conditioning, and one-shot vector triplet aggregation in two Kaggle2 notebook slots | Each arm needs a native replay-ready terminal; only accepted frozen checkpoints enter the separately planned NO_TRAIN audit; no scale/full/seed successor |
+| P1 | C-K1-RELATION-RESOLUTION | Completed: three replay-ready original-role positives below gate, all negative in the separate fixed500K NO_TRAIN audit | Preserve [audit attribution](experiments/pcqm_k1_relation_resolution_100k/audit/decision.md); no scale/full/seed successor |
 | P0 | B-DESKTOP-HANDOFF | Completed: desktop accepted the full K1/GPTrans chain and bounded continuations; EdgeState remains the full-scale reference | Preserve the [desktop acceptance](https://github.com/Nothingness-Void/molgap/blob/cb53e973/platforms/_records/ims/full_chain_reacceptance_20260926.md); no server duplicate or automatic full continuation |
 | P1 | C-SCALE-AWARE-2D-DIRECTION | Completed: node-query linear attention lost early gains and regressed in frozen500K inference; [decision](experiments/pcqm_k1_linear_attention_100k/decision.md) | Preserve complete training replay and separate audit identities; no retry, seed, 500K/full training or successor |
 | P1 | C-PAIRTOKEN-SCALE-ATTRIBUTION | Completed: all three bounded rounds and the separate frozen cross-scale diagnostic accepted | Preserve [cross-scale decision](experiments/pcqm_k1_cross_scale_frozen/decision.md); no extra seed, variant, or full run |

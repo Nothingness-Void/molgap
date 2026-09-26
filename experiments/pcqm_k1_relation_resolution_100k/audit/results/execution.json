@@ -1,0 +1,71 @@
+{
+  "allocated_device_seconds": 760.9347467880001,
+  "allocated_devices": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "complete": true,
+  "cublas_workspace_config": ":4096:8",
+  "optimizer_steps": 0,
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "spec": {
+    "audit_helper_commit": "83ee3d1992db7d2e5ca22e12b810163f22fdb0cd",
+    "audit_helper_sha256": "fe1a23c4de42563708b2bdc3ed9ba52e63f877b3f23fb27dd0325fcb84ae3155",
+    "format": "molgap-relation-audit-release-v1",
+    "input_archive_sha256": "5aaf39d8ca7057e9ed96973d201cd09a6678f0915d9d3d52a065d7faac00828b",
+    "input_files": {
+      "candidates/neural_atom_k1_receiver_pair/arm_record.json": "5fb8a11669e02009f835c9828138e71decb011a8399c2ced2665858761c88a20",
+      "candidates/neural_atom_k1_receiver_pair/best_development_payload.pt": "38c93ca179c39b4661996b46cd3035b26db82ff7919201080f351347b861c68f",
+      "candidates/neural_atom_k1_receiver_pair/best_model.pt": "63e094f1479984fa6cfdf6a7a0eb8cbfdc224c2587f058fec29158fedb5644ae",
+      "candidates/neural_atom_k1_rrwp_pair/arm_record.json": "43a1b88dd4deba4e5649686ef98678418fdc6b8f1641bb41cce4d1c5fda05541",
+      "candidates/neural_atom_k1_rrwp_pair/best_development_payload.pt": "d1fb9c069f18369c877290feffa61dd8e7f20668db8a4204ccc736a01f2a9c88",
+      "candidates/neural_atom_k1_rrwp_pair/best_model.pt": "5888162ec5a301d0b2803d0c48dfd91ac2b00a75970c04a5d0da055d48b70a7e",
+      "candidates/neural_atom_k1_triplet_aggregate/arm_record.json": "a94bd7c813616020e798630f976b88bc8b0dfadbd3fb881cfb64813ebf365a70",
+      "candidates/neural_atom_k1_triplet_aggregate/best_development_payload.pt": "13ff943bc7840e3a60ad3fd1764ade822cb0ac0c973a8228f1f0f8cd9982f531",
+      "candidates/neural_atom_k1_triplet_aggregate/best_model.pt": "fa7394ec380d99e4d47c971e04c4a06c14317d5852cc96388000b705b7b0c016",
+      "reference/original_100k/neural_atom_k1_v4/chunk_00.pt": "1b307b01d992a8feb287e3985a56e596497f259c6b3661e40bdd7ad571b85fe4",
+      "reference/original_100k/neural_atom_k1_v4/chunk_01.pt": "5541b450663a43438953519bcb09b4550edccc7bf79343c8da262a0e42a7ae7a",
+      "reference/original_100k/neural_atom_k1_v4/chunk_02.pt": "65fdf93cf18cef1a9e30f229cc318b6a491a5b548ff17e0d0bfecb6f616127d7",
+      "reference/original_100k/neural_atom_k1_v4/chunk_03.pt": "8dd171f8abde5df51ddcbf2ec88f2cf39d79e5f3bdd84dfbdfc37d56a5bf1bc2",
+      "reference/original_100k/neural_atom_k1_v4/chunk_04.pt": "ab1aac57ebc7e67bb9f4759c36bfa00f28adf2719d4d61e737d73b5ded198576",
+      "reference/original_100k/neural_atom_k1_v4/chunk_05.pt": "830793ac6b30ded2c611fe1498a02029f83592b95c05ca7080bd39439cebae34",
+      "reference/original_100k/neural_atom_k1_v4/chunk_06.pt": "8421817c0bb56c938aaca037b1e932ff62e09032655d6d66069004e0a24c3dc4",
+      "reference/original_100k/neural_atom_k1_v4/chunk_07.pt": "7643a1dd2d6bb344064d3d59b14571f0873290fd4d9240fb5070baa1525b21fc",
+      "reference/original_100k/neural_atom_k1_v4/chunk_08.pt": "e1b41490f85c75d597c7370ea21c3c0890485c41d4f2fc2605e0433b65e35d53",
+      "reference/original_100k/neural_atom_k1_v4/chunk_09.pt": "77438d245aed851f5c6cbff409dd29d3c256076c095787ad506222d1422ccf1c",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_00.pt": "f86a73f4a48de4b62aea89c413b02e4095310cf2b0b1645a80040cee01535ab1",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_01.pt": "c542d8b7ff7de941b4fe77152a5d871d7e0520cbfc53afeefaf15d9c4291b152",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_02.pt": "8db1136e4222e346f82e55952b63eae67fc1aa72145b001ab955eb3dadd3f245",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_03.pt": "6306b199c24ef85822a805ff173efaa4e47ba72f05d29233081952ae2ae1c2f9",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_04.pt": "317c9d034f440015c450e2aa93f9aa3b1b593341cbc98964350c41ba23c2bb6f",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_05.pt": "6fffd4af81422187a8e0d72da00c5dd30264a1d4197efc4d20a98b0ec46c04bb",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_06.pt": "efdefd032be1b0a06653a556857d53a89572b56b4960e5405021fc99ae0cbc56",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_07.pt": "84c498ec89d04c2aad9abb0a50080a5cca0fa6e7237fc10952183b3fe9fc5ac6",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_08.pt": "b3b1187e478438cfffb8e11f86c6126c398b697f19f5a97e8e4c1d0e2f6ebcad",
+      "reference/unseen_500k/neural_atom_k1_v4/chunk_09.pt": "586624b48644e6bedb3bd4deafad80f1a5e33df8015c8e5c6c9549c8e0b35ee2",
+      "reference_development.pt": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "reference_terminal.json": "95ffa2d9bac29ef9ae6dfc715985bff7c36529049748f22f273c255dd8972022",
+      "target_transform.json": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3"
+    },
+    "max_allocated_device_seconds": 5400,
+    "model_source_dataset": "kaseichou/molgap-k1-relation-resolution-source",
+    "modes": [
+      "neural_atom_k1_receiver_pair",
+      "neural_atom_k1_triplet_aggregate",
+      "neural_atom_k1_rrwp_pair"
+    ],
+    "reference_acceptance_sha256": "719779a7d6c07ae373c3c4955f51e256b058cf41613e45a445d6163851de1e5a",
+    "reference_inference_reused": true,
+    "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+    "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+    "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+    "training_acceptance_sha256": {
+      "dual": "50d850ae5fbc35e0a66a8bff8f8fa4aa69fcef4329638e35c93b172a6a6ef6fb",
+      "rrwp": "bf3a923600642cae376f41ac3528e484ee6eed09f50ac80ca3dc506031d55133"
+    },
+    "training_authorized": false
+  },
+  "training_executed": false,
+  "used_device_count": 1,
+  "wall_seconds": 380.46737339400005
+}

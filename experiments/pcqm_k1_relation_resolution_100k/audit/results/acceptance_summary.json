@@ -1,0 +1,30 @@
+{
+  "accepted": true,
+  "audit": {
+    "neural_atom_k1_receiver_pair": {
+      "mae_eV": 0.14344365894794464,
+      "reproduction_max_abs_eV": 1.9073486328125e-06
+    },
+    "neural_atom_k1_rrwp_pair": {
+      "mae_eV": 0.14482924342155457,
+      "reproduction_max_abs_eV": 1.9073486328125e-06
+    },
+    "neural_atom_k1_triplet_aggregate": {
+      "mae_eV": 0.14319518208503723,
+      "reproduction_max_abs_eV": 1.6689300537109375e-06
+    },
+    "neural_atom_k1_v4": {
+      "mae_eV": 0.1412533074617386,
+      "reproduction_max_abs_eV": 7.62939453125e-06
+    }
+  },
+  "full_training_authorized": false,
+  "model_inference_executed_by_acceptance": false,
+  "official_validation_role_read": false,
+  "reference_inference_reused": true,
+  "run_id": "kaseichou/molgap-k1-relation-audit-s42:v1",
+  "source_acceptance_sha256": "1bf24a490bb014be1c9a143557557d68fb364fff46e6c656b9ff56ff4277d7f0",
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "training_executed": false
+}

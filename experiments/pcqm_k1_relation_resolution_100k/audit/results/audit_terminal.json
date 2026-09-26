@@ -1,0 +1,476 @@
+{
+  "checkpoint_sha256": {
+    "neural_atom_k1_receiver_pair": "63e094f1479984fa6cfdf6a7a0eb8cbfdc224c2587f058fec29158fedb5644ae",
+    "neural_atom_k1_rrwp_pair": "5888162ec5a301d0b2803d0c48dfd91ac2b00a75970c04a5d0da055d48b70a7e",
+    "neural_atom_k1_triplet_aggregate": "fa7394ec380d99e4d47c971e04c4a06c14317d5852cc96388000b705b7b0c016",
+    "neural_atom_k1_v4": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95"
+  },
+  "complete": true,
+  "elapsed_seconds": 194.11309420000003,
+  "experiment_purpose": "NO_TRAIN",
+  "format": "molgap-k1-post100k-portability-audit-v1",
+  "manifest_sha256": {
+    "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+  },
+  "model_inference_executed": true,
+  "official_validation_role_read": false,
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "reference_inference_reused": true,
+  "reference_model_inference_executed": false,
+  "reference_terminal_sha256": "95ffa2d9bac29ef9ae6dfc715985bff7c36529049748f22f273c255dd8972022",
+  "reproduction": {
+    "neural_atom_k1_receiver_pair": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "7a618ae44d71573eb22a925424a7225f74a625b0d018a7cc07e2ec190cbe6968"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "ffd6630b2b07a8c3d7c7aca9da9ba37e1f765441cbfff140ccc8abf457c66843"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "4726b5f827de71ee1401d26ebd463a83a2769914fce66476e48169346308c48e"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "9380e75c3f8ad1b070dbd57d5d81881815702cbce69d3062615f7402c0a11ecc"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "60f6d54b72cea823add6158a319873fc318cef0e8a5a4ba0fad6982307a88270"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "182bd66dcc76556bcdbba60be5c3da44e14c87ac0cfde21f3eb668a77e105659"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "357476115df36365942247e94625c94ea36ab10d32bd323d3ebda924ede8ab58"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "38011d82683485e6e8486bc373f273fe52d0251543a9d4dce5503556138f5435"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "621a479e8b39718fd97f82a330c70b4c341cbb08771b2507c87c10c0f08dee2b"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "0390443a6559f5542c2e1f558cdb336a03b9524aced70351da1ecf9ef93c5666"
+        }
+      ],
+      "max_abs_eV": 1.9073486328125e-06
+    },
+    "neural_atom_k1_rrwp_pair": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "26e0b5bd7b8c83cdcc9511cbcb106e96a07ee0a5b742b56ca78fa8a31cc11964"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "c722c0fee55ab5a5dad7dc50f2b1e9f6507a3ebcf450adb2f4953026932903db"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "ac4ae11c9d27907555f0ea0ec14e49384cbfe464db6136043dfb611cbb165ab5"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "01d73fbba446b5cd637b8ec01bb6dd0a3060b44279e024ae7e1529a92a4abd16"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "911d7b516dadeed1a426ee88176337a43017a59ce5b267320e78e3f1044de0a4"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "0dc85212a2ed243130ce20dcdbe09b76cf6ad15ad23c2b76a1ddd393078aadfb"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "b651a37e0c0d5afa76ba8b3cfc180a13fa97ad293ca980ae21945c1f9018e691"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "9da39a1a5f073e141b7bf9e739c44eab4024112d2aa82e9cac2ecb8dae3bb99b"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "c1fa489f0690bfbe3897b6bb9e0fd5cb702a5172f7a30a2a5ed5f8ba609bc358"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "7995abef23ed178c6eb44598f37634d7c5e3c1367f9b157aac8f0bd5a84eed44"
+        }
+      ],
+      "max_abs_eV": 1.9073486328125e-06
+    },
+    "neural_atom_k1_triplet_aggregate": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "e088cc38b625bc0b64278dbe0a6d65e66022f468a4ab6a42971007bbeba0d3a3"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "64d51d81ad4589d1740f840244db005cb3b2976d3961275f79a8b8ae7d3de58e"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "a5b299e7469eed0f56b00cab0e4307e9f2cecfe66a6fdf669b937c5c85c8280b"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "54a809c374139d07fa9726aee6cb3b956d7caa234507c81e3345d7a646ec70a6"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "277e8c6561ffaebc7095a93342259b0c1319cc1debbd56b7814e86372619dbbf"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "d652d32276340a2b2c36d1ce4dd2d15518bdadf51d856d56562bc46020d29374"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "8cc5f97abb0b98c24dea05edf1557b94b00458f4184cd4209f4b8826c708e76a"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "a1d086d37c34578108a6c3278bafff12c07b2ef9e65ea80c63f6f75031828c30"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "c3e2424b61e77ce4972636863978833f9dd3fae2c1d1a152477535ab5b495b18"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "46c56df278bba86aa3caffb792294782c869f8f02759075e6ad5bc442fc7e5dc"
+        }
+      ],
+      "max_abs_eV": 1.6689300537109375e-06
+    },
+    "neural_atom_k1_v4": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "1b307b01d992a8feb287e3985a56e596497f259c6b3661e40bdd7ad571b85fe4"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "5541b450663a43438953519bcb09b4550edccc7bf79343c8da262a0e42a7ae7a"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "65fdf93cf18cef1a9e30f229cc318b6a491a5b548ff17e0d0bfecb6f616127d7"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "8dd171f8abde5df51ddcbf2ec88f2cf39d79e5f3bdd84dfbdfc37d56a5bf1bc2"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "ab1aac57ebc7e67bb9f4759c36bfa00f28adf2719d4d61e737d73b5ded198576"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "830793ac6b30ded2c611fe1498a02029f83592b95c05ca7080bd39439cebae34"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "8421817c0bb56c938aaca037b1e932ff62e09032655d6d66069004e0a24c3dc4"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "7643a1dd2d6bb344064d3d59b14571f0873290fd4d9240fb5070baa1525b21fc"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "e1b41490f85c75d597c7370ea21c3c0890485c41d4f2fc2605e0433b65e35d53"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "77438d245aed851f5c6cbff409dd29d3c256076c095787ad506222d1422ccf1c"
+        }
+      ],
+      "max_abs_eV": 7.62939453125e-06
+    }
+  },
+  "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+  "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+  "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "training_executed_in_audit_stage": false,
+  "unseen_500k": {
+    "neural_atom_k1_receiver_pair": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "25efc28ed889d77f59d7a72e4c22926dc66737ee9ddaa5a736717f1933e06d05"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "406fcb4989ad2dfe1c8cfcbd19da64ac053d12955b94a52fe93c3e7029c09745"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "42dac459d9e24af8e9f711d9cf28f65ee5c863577f0fe930025f86c09a856a73"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "6272e0b7ac8bb03f614dda6496a59501d90514b6c1e97fee9715195794fcd3d2"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "321bc914d6f22941471241f933ee56773c8318c477039b9db64da4ff510b31fa"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "5d7c8b761edb07bebfbd3805c1de2bbd00ce10c362a28b013f769d69a60ee0bb"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "00d4484e20969a5adb663c018121a0e87eb7286dab4163f756e1d732b0f6bf30"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "35050fbe3591ae5701628196ecc9f282cb29a011f4572cd17d44cb6a3a7ba9d7"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "cb56c8ed572664443f85fa4a78d93b64561e4c68ee93d45f4561ec5c8508cde9"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "6abb5a380ee538c1b851d6886702c04aa25b90f1d49d108bb71150b82cf3562e"
+        }
+      ],
+      "mae_eV": 0.14344365894794464,
+      "rows": 50000
+    },
+    "neural_atom_k1_rrwp_pair": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "c00ff3ab0ee4659bdb64277a4692c0ec684b35a3a2e5f7269cf5120811440939"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "0fe8f02f47e8f11e185c55b305a5335621ed09d55fbf66b6f8ce749222b8a17c"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "616d0ef24b216801a66dc8627a35f37dd354badd1fa2bbc058eb0aa7c9778767"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "15c2f1499722c7145b008cdfb8f1f23255f7b322ab17ad3d85b9c8c75e2a4ece"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "b926ad2b185820e6f92c90343aba9f316dda9edb1bdb1830180bcf7956bff446"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "71aaf0655b5feb032379a1e27e298dc9bc2305b7258e45c01fbd760e9a32d86b"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "e3fa2ced6357f5b496043f26a766b9191cab8167422459b6c270167ccac33fd1"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "98e94dca08cc5d5fd02dabbf666e0ac5c95a904fb6ad0774deb7f9bc902d068b"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "ec6756fb406207f9292e4a238257e23e84cb5d7bcf7b8eeb125c68f1df7fb375"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "2c0d65c112d296d2d5ff6d9d260bc01319f1b53a2f04b5c18cfc163f25ee2e23"
+        }
+      ],
+      "mae_eV": 0.14482924342155457,
+      "rows": 50000
+    },
+    "neural_atom_k1_triplet_aggregate": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "2a924094204a5165686edc093a4abf92c57daf7d018282af3c12594ae7ebf3a8"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "71d3aa3420c1d386742a624d36af8a5dd0a1dc2240e23958953a49b405385875"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "c35970f477a6f2560564e70d0c51e0689c66a21a1d02b3a616fdba04d21fb092"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "b37f00a6c623a50f0f3eab4b6855c77926d42f97eb5688511e4ff7f3290339df"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "f4165ab4ce272714abe589a05e361ced82cbe0fd0491113d26ace99f6553e7d6"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "65f4dde4d8f58ff4ba39b1badee1c4860cf7ac50355062fd285e209eeb2309a1"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "b50bff9b892ae189aea049f34775876b34abcc7bf7a755b3edddeddb977cbb66"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "77e6cfe6c55bb6e050ff51133624698e683f81d5d64c721052d954de522c4b78"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "6f973f04a7368d299f082df11dab5ce30fcdaca912e6eb24e24927840eee5f22"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "d9da30e87715dff1570b3b55e4e46a135ccec47bd80d5ccc07b159e7126f5fc0"
+        }
+      ],
+      "mae_eV": 0.14319518208503723,
+      "rows": 50000
+    },
+    "neural_atom_k1_v4": {
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "rows": 5000,
+          "sha256": "f86a73f4a48de4b62aea89c413b02e4095310cf2b0b1645a80040cee01535ab1"
+        },
+        {
+          "file": "chunk_01.pt",
+          "rows": 5000,
+          "sha256": "c542d8b7ff7de941b4fe77152a5d871d7e0520cbfc53afeefaf15d9c4291b152"
+        },
+        {
+          "file": "chunk_02.pt",
+          "rows": 5000,
+          "sha256": "8db1136e4222e346f82e55952b63eae67fc1aa72145b001ab955eb3dadd3f245"
+        },
+        {
+          "file": "chunk_03.pt",
+          "rows": 5000,
+          "sha256": "6306b199c24ef85822a805ff173efaa4e47ba72f05d29233081952ae2ae1c2f9"
+        },
+        {
+          "file": "chunk_04.pt",
+          "rows": 5000,
+          "sha256": "317c9d034f440015c450e2aa93f9aa3b1b593341cbc98964350c41ba23c2bb6f"
+        },
+        {
+          "file": "chunk_05.pt",
+          "rows": 5000,
+          "sha256": "6fffd4af81422187a8e0d72da00c5dd30264a1d4197efc4d20a98b0ec46c04bb"
+        },
+        {
+          "file": "chunk_06.pt",
+          "rows": 5000,
+          "sha256": "efdefd032be1b0a06653a556857d53a89572b56b4960e5405021fc99ae0cbc56"
+        },
+        {
+          "file": "chunk_07.pt",
+          "rows": 5000,
+          "sha256": "84c498ec89d04c2aad9abb0a50080a5cca0fa6e7237fc10952183b3fe9fc5ac6"
+        },
+        {
+          "file": "chunk_08.pt",
+          "rows": 5000,
+          "sha256": "b3b1187e478438cfffb8e11f86c6126c398b697f19f5a97e8e4c1d0e2f6ebcad"
+        },
+        {
+          "file": "chunk_09.pt",
+          "rows": 5000,
+          "sha256": "586624b48644e6bedb3bd4deafad80f1a5e33df8015c8e5c6c9549c8e0b35ee2"
+        }
+      ],
+      "mae_eV": 0.1412533074617386,
+      "rows": 50000
+    }
+  }
+}
