@@ -25,8 +25,10 @@ primitive values. The spec snapshot is canonically revalidated before spawn;
 subclasses, providers, injected instance methods and noncanonical snapshots are
 rejected. No user-supplied callback, module name or dynamic provider is accepted.
 
-The fixed family/version registry maps `gptrans_t/1` to `gptrans_adapter` and
-`neural_atom_k1/1` to `k1_adapter`. The only workers are:
+The fixed family/version registry maps `gptrans_t/1` to `gptrans_adapter`,
+legacy `neural_atom_k1/1` to `k1_adapter`, and prospective `edge_state_gps/1`
+to `edge_state_adapter`. See [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md) for
+the model-only depth/K1 variants. The only workers are:
 
 - `adapter_probe`: adapter metadata only; no NumPy, torch or model import is
   required by the worker, and no factory is called. Frozen-state declarations

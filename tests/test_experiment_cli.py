@@ -69,6 +69,23 @@ def test_examples(capsys, filename, family, addon):
     assert path.parent == EXAMPLES
 
 
+def test_edge_state_example(capsys):
+    path = EXAMPLES / "edge_state_v1.json"
+    raw = path.read_bytes().decode()
+    spec = ExperimentSpec.from_json(raw)
+    assert raw == spec.to_json()
+    result = invoke(capsys, ["validate-spec", "--spec", path])
+    assert result["spec_identity"] == spec.identity
+    reference, candidate = result["spec"]["arms"]
+    assert reference["family"] == candidate["family"] == {
+        "name": "edge_state_gps", "version": "1",
+    }
+    assert reference["addons"] == []
+    assert candidate["addons"][0]["config"] == {"num_layers": 6}
+    assert all(arm["initialization"]["state_sha256"] == SHA
+               for arm in (reference, candidate))
+
+
 @pytest.mark.parametrize("bad", ["{", '{"x":1,"x":2}', "{}", '{"replay_ready":true}'])
 def test_bad_json(capsys, spec_file, bad):
     spec_file.write_bytes(bad.encode())

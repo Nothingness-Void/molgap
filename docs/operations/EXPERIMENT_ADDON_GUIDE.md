@@ -26,6 +26,9 @@ detailed contract: [spec](EXPERIMENT_SPEC.md),
 [prospective planning](EXPERIMENT_PROSPECTIVE_PLANNING.md),
 [package](EXPERIMENT_PACKAGE.md), [preflight](EXPERIMENT_PREFLIGHT.md),
 [runner](EXPERIMENT_RUNNER.md), or [launch receipts](EXPERIMENT_LAUNCH.md).
+For an EdgeState baseline, depth change, or K1 architecture comparison, start
+with [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md); its model-only recipe is
+not a trainer.
 
 ## Addon Ownership
 

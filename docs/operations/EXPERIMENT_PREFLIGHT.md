@@ -70,6 +70,8 @@ nested DataLoader processes and is explicitly not production runtime parity.
 
 K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
 loader integration for that family. It never borrows code from another checkout.
+The prospective `edge_state_gps/1` family is also unsupported here; its model
+construction diagnostic does not authorize a real-shard loader or training.
 Missing package GPTrans loader source is likewise unsupported.
 
 ## Isolation And Reports

@@ -7,6 +7,7 @@ Set-Location D:\w\cli
 .\.venv\Scripts\python.exe -m molgap.experiment_cli --help
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/gptrans_t_v1.json
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/k1_v1.json
+.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/edge_state_v1.json
 ```
 
 The module is a new unified local entry point, not a complete migration. Existing
@@ -143,6 +144,8 @@ replay-ineligible. Older terminal records are not upgraded by this workflow.
 
 `examples/gptrans_t_v1.json` declares a GPTrans-T baseline arm.
 `examples/k1_v1.json` declares a neural-atom K1 candidate with `k1_pair_value/1`.
+`examples/edge_state_v1.json` declares a basic EdgeState GPS9 reference and a
+depth-6 candidate; see [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md).
 Both match the v1 registry and the field structure in `test_experiment_spec`.
 Every digest is an explicitly unauthenticated all-zero placeholder. These are
 structure examples, not executable data authorization, accepted evidence,
@@ -152,7 +155,9 @@ evidence package is created for either example.
 
 Platform submission is unimplemented within this shared CLI
 (`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
-K1 real-shard loader/model preflight remains unsupported by the existing core.
+K1 and EdgeState real-shard loader/model preflight remain unsupported by the
+existing core. EdgeState's recipe is model-only; a platform-specific trainer
+addon must freeze and enforce its own executable training contract.
 No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
 training launch or production promotion is provided. Local CLI success cannot
 release any of those operations.

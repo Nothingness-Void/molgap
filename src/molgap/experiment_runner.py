@@ -22,7 +22,11 @@ __all__ = ["run_experiment"]
 
 ARM_FORMAT = "molgap-experiment-arm-result-v1"
 RUN_FORMAT = "molgap-experiment-run-summary-v1"
-_FAMILIES = MappingProxyType({("gptrans_t", "1"): "gptrans", ("neural_atom_k1", "1"): "k1"})
+_FAMILIES = MappingProxyType({
+    ("gptrans_t", "1"): "gptrans",
+    ("neural_atom_k1", "1"): "k1",
+    ("edge_state_gps", "1"): "edge_state",
+})
 _WORKERS = frozenset({"adapter_probe", "construct"})
 _LIMITATIONS = (
     "Orchestration diagnostic only; no forward, training, checkpoint or state loading. "
@@ -118,6 +122,9 @@ def _adapter(arm: dict):
     if token == "gptrans":
         from .gptrans_adapter import gptrans_metadata, build_gptrans_model
         return gptrans_metadata, build_gptrans_model
+    if token == "edge_state":
+        from .edge_state_adapter import edge_state_metadata, build_edge_state_model
+        return edge_state_metadata, build_edge_state_model
     from .k1_adapter import k1_metadata, build_k1_model
     return k1_metadata, build_k1_model
 

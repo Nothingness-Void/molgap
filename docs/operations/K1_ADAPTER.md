@@ -10,6 +10,9 @@ comparison authority. In the frozen K1 Spec, `reference` still means the K1
 reference for the pair-token addon, not the basic EdgeState model. A direct
 EdgeState-vs-K1 training comparison needs its own matched, reviewed recipe;
 `pcqm_k1_full` hardcodes K1 and must not be relabeled as that recipe.
+For new prospective basic-EdgeState-versus-K1 model comparisons, use the
+separate [EdgeState model-only family](EDGE_STATE_ADAPTER.md); retain this
+legacy K1 family for its frozen experiment identities.
 
 `molgap.k1_adapter.k1_metadata(spec, arm_id)` resolves declarations without model
 imports. `build_k1_model(spec, arm_id)` constructs a model using caller-controlled

@@ -18,6 +18,9 @@ from .screen_policy import canonical_fingerprint
 SCHEMA_VERSION = "molgap-experiment-spec-v1"
 SCHEMA_VERSION_V2 = "molgap-experiment-spec-v2"
 TERMINAL_PROTOCOL = "molgap-experiment-terminal-descriptor-v1"
+EDGE_STATE_BASE_LAYERS = 9
+EDGE_STATE_MIN_LAYERS = 1
+EDGE_STATE_MAX_LAYERS = 16
 
 
 @dataclass(frozen=True)
@@ -36,6 +39,12 @@ class FamilyContract:
 
 
 FAMILIES = MappingProxyType({
+    ("edge_state_gps", "1"): FamilyContract(
+        "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
+        "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
+        ("train", "development"), "seed42-epoch-global-randperm-v1",
+        "train-mean-unbiased-std", "ogb_edge_state_structural_gps9",
+    ),
     ("gptrans_t", "1"): FamilyContract(
         "gptrans_t", "1", "molgap.gptrans", "pcqm_gptrans_v4",
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
@@ -59,6 +68,12 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("edge_state_depth", "1"): AddonContract(
+        "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
+    ),
+    ("neural_atom_k1", "1"): AddonContract(
+        "edge_state_gps", "edge-state-architecture", "molgap.qm9_neural_atom",
+    ),
     **{
         (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants")
         for name in ("pair_prenorm", "centered_logits")
@@ -194,7 +209,18 @@ def _arm(arm: dict) -> None:
         if extension.family != contract.name or extension.exclusive_group in groups:
             raise ValueError("Incompatible addon combination/family")
         groups.add(extension.exclusive_group)
-        _object(addon["config"], "", "addon.config")
+        if addon["name"] == "edge_state_depth":
+            config = _object(addon["config"], "num_layers", "addon.config")
+            _integer(config["num_layers"], "addon.config.num_layers")
+            if (not EDGE_STATE_MIN_LAYERS <= config["num_layers"] <= EDGE_STATE_MAX_LAYERS
+                    or config["num_layers"] == EDGE_STATE_BASE_LAYERS):
+                raise ValueError(
+                    f"edge_state_depth requires num_layers in "
+                    f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
+                    f"except {EDGE_STATE_BASE_LAYERS}"
+                )
+        else:
+            _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")
 
 

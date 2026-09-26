@@ -613,7 +613,9 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 report.update(status="SHARD_MANIFEST_INVALID", error=manifest_error)
             elif arm["family"]["name"] != "gptrans_t":
                 report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
-                report["limitations"].append("No frozen K1 PCQM loader supported by this boundary.")
+                report["limitations"].append(
+                    f"No frozen {arm['family']['name']} PCQM loader supported by this boundary."
+                )
             elif arm["arm_id"] not in entries or shard_root is None:
                 report["status"] = "MISSING_REAL_SHARD"
             else:

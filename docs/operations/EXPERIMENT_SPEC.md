@@ -33,6 +33,10 @@ These names point to the existing package modules. K1's
 backbone variant, not an independent backbone family. This metadata does not
 change any frozen K1 Spec identity or make the K1-only training recipe an
 EdgeState reference trainer. No historical experiment identity is copied.
+For new architecture questions, `edge_state_gps/1` declares that basic
+EdgeState as the reference and K1 or a non-nine-layer EdgeState as exclusive
+variants. Its model-only scope and typed depth range are owned by
+[EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md); it does not execute a trainer.
 Recipe overrides must be exactly `{}`: these frozen
 recipes have no approved override range. Seed 42 is required.
 Future overrides need a reviewed recipe version with typed bounds.
