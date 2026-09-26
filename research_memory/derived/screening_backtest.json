@@ -52,6 +52,9 @@
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-functional-group-token-s42:v1",
+        "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+        "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+        "kaseichou/molgap-k1-rrwp-pair-s42:v1",
         "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
         "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
         "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
@@ -82,9 +85,12 @@
         "TC-k1-oneshot-triplet-pair-token-100k-s42",
         "TC-k1-pair-token-100k-s42",
         "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-receiver-pair-100k-s42",
+        "TC-k1-rrwp-pair-100k-s42",
         "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42",
+        "TC-k1-triplet-aggregate-100k-s42",
         "TC-k1-v4-100k-reference-s42"
       ]
     }
@@ -104,9 +110,12 @@
     "TC-k1-oneshot-triplet-pair-token-100k-s42",
     "TC-k1-pair-token-100k-s42",
     "TC-k1-pair-token-node-return-100k-s42",
+    "TC-k1-receiver-pair-100k-s42",
+    "TC-k1-rrwp-pair-100k-s42",
     "TC-k1-rwse-refresh-100k-s42",
     "TC-k1-sparse-triplet-100k-s42",
     "TC-k1-spd-pair-token-100k-s42",
+    "TC-k1-triplet-aggregate-100k-s42",
     "TC-k1-v4-100k-reference-s42"
   ],
   "native_cost_added": null,
@@ -115,5 +124,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 22
+  "trace_count": 25
 }

@@ -1,0 +1,40 @@
+{
+  "allocated_device_count": 2,
+  "allocated_device_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "audit_submitted": false,
+  "automatic_successor_submitted": false,
+  "complete": true,
+  "cost_scope": "source-verified-bootstrap-through-workers-including-runtime-install",
+  "format": "molgap-relation-study-execution-v1",
+  "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+  "total_allocated_device_seconds": 14564.959781994,
+  "total_job_wall_seconds": 7282.479890502,
+  "used_device_count": 2,
+  "workers": [
+    {
+      "allocated_device_seconds": 7013.3147270790005,
+      "complete": true,
+      "device": 0,
+      "exit_code": 0,
+      "log": "neural_atom_k1_receiver_pair.log",
+      "mode": "neural_atom_k1_receiver_pair",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "timed_out": false,
+      "worker_wall_seconds": 7013.3147270790005
+    },
+    {
+      "allocated_device_seconds": 7062.03629505,
+      "complete": true,
+      "device": 1,
+      "exit_code": 0,
+      "log": "neural_atom_k1_triplet_aggregate.log",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "timed_out": false,
+      "worker_wall_seconds": 7062.03629505
+    }
+  ]
+}

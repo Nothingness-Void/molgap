@@ -1,0 +1,314 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/decision.md": "a92d9cd30a43a3c02e3beb405e2e5cc1267336f33d45d39886fd99c4317c4939",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/acceptance_summary.json": "e6d7fe76b4ef5357558ecf9dc3286eacf615349090014eb3ea470a762700aa0e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/arm_record.json": "6f75c4c6f49e46f612f6ccb949f2eaa775cf86f2b70d70c122dbe6d25a0bc12e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/canonical_trace.json": "aae13da5f2a2a64a8906420e9f9fa46e7785ca23e3887af11dbd1dbd24834aaf",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json": "f940478ec9d967211d1860143c7e09cee09e548996c1a716021179ad1909cf3f",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/completion_manifest.json": "1e954b210c17b744ececcda682a238d475e5910c7c0926e33eeeeba1e297131f",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/cost_allocation.json": "d2fdac391a4b6a5b5bc5dde7228ec5523f0dd4dc7df4133ff3d141306a7d144e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/execution_summary.json": "808387a912b70c0e0b839c8e97b0ea3681651dfa2ff044f04462221562322186",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/native_cost.json": "f76959965061a91a0091f31180d7169c4b29e4e16d4cb9853c3541dd3e79b732",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/observed_role_history.json": "e61cd0799cc9dcd33c9e97cf4004381382e2ca49e8e04261e37f20444e3f82de",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/paired_analysis.json": "e69e4fb5cdaec9c3df7ee820611cc812b89552e3a951db78cc7495a5b3ef3f44",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json": "85c002638ff3346d35de8041b35365e224d5a929d09e0720cdeaea780bdd6630",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/trajectory.json": "99d477b7df2ec7fb61887ba7fc4973bf07890128562cb0ff14b7a795f8f2fd52",
+    "experiments/pcqm_k1_relation_resolution_100k/protocol.md": "3608884c7c74a89dfd47bac816fc0f6dc2051ef51450b8804e67093615093e57",
+    "experiments/pcqm_k1_relation_resolution_100k/source_config.json": "e9f12f81329260b99a17da8cd8a02cd652607aa7050e8a00e77e7fb26bd93b02",
+    "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05",
+    "experiments/pcqm_k1_relation_resolution_100k/training_contract.json": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-triplet-aggregate-100k-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.961676748625
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.961676748625
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "separate predeclared accepted-checkpoint NO_TRAIN audit after all training arms are accepted"
+    ],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": [
+      "new scientific mechanism and explicit prospective compute authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "e6d7fe76b4ef5357558ecf9dc3286eacf615349090014eb3ea470a762700aa0e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "e69e4fb5cdaec9c3df7ee820611cc812b89552e3a951db78cc7495a5b3ef3f44"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "f940478ec9d967211d1860143c7e09cee09e548996c1a716021179ad1909cf3f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "aae13da5f2a2a64a8906420e9f9fa46e7785ca23e3887af11dbd1dbd24834aaf"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/native_cost.json",
+        "name": "native_cost",
+        "sha256": "f76959965061a91a0091f31180d7169c4b29e4e16d4cb9853c3541dd3e79b732"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/observed_role_history.json",
+        "name": "observed_role_history",
+        "sha256": "e61cd0799cc9dcd33c9e97cf4004381382e2ca49e8e04261e37f20444e3f82de"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/arm_record.json",
+        "name": "arm_record",
+        "sha256": "6f75c4c6f49e46f612f6ccb949f2eaa775cf86f2b70d70c122dbe6d25a0bc12e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/completion_manifest.json",
+        "name": "completion_manifest",
+        "sha256": "1e954b210c17b744ececcda682a238d475e5910c7c0926e33eeeeba1e297131f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/execution_summary.json",
+        "name": "execution_summary",
+        "sha256": "808387a912b70c0e0b839c8e97b0ea3681651dfa2ff044f04462221562322186"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/cost_allocation.json",
+        "name": "cost_allocation",
+        "sha256": "d2fdac391a4b6a5b5bc5dde7228ec5523f0dd4dc7df4133ff3d141306a7d144e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json",
+        "name": "submission_receipt",
+        "sha256": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md",
+        "name": "acceptance_interface_diagnosis",
+        "sha256": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+        "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+        "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+        "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/decision.md",
+        "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-triplet-aggregate-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-26",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "positive_below_gate",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-26T22:12:26.7261832Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-triplet-aggregate-100k-s42-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-triplet-aggregate-100k-s42-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-triplet-aggregate-100k-s42-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-triplet-aggregate-100k-s42-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-triplet-aggregate-100k-s42-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "2dfded1e0b14d704169c4b1c24c64620235885d7abfe1c4df6a6eb62dc83f00d",
+    "comparability_identity": {
+      "architecture_identity": "6c8a3cace4d06cde5131caabe87d5d31c7e5beb4f6ab5bf94fd209a23d33a47a",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "6c8a3cace4d06cde5131caabe87d5d31c7e5beb4f6ab5bf94fd209a23d33a47a",
+    "presentation_semantics_ref": "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/canonical_trace.json",
+    "trace_artifact_sha256": "aae13da5f2a2a64a8906420e9f9fa46e7785ca23e3887af11dbd1dbd24834aaf",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-triplet-aggregate-100k-s42",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+}

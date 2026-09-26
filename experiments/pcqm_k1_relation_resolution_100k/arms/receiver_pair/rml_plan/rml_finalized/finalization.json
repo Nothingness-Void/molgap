@@ -1,0 +1,50 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-f32a69b429495f126cb406ef818ca7c36cf97d7d92f6115d24eea5a18dd9009b",
+  "finalized_at": "2026-09-26T22:12:26.7261832Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/decision.md": "3ca83e1e5ba5b9a3cddf41db6b72598aafd5ddb41fbbf2b758b63ee741a911ef",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/acceptance_summary.json": "8465d679dd63afa1083470109ea0dfe10832744baa1016dd68a6d5fe678ad01a",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/arm_record.json": "db33ec8ac9d346693c79599771309701a79bca3014c12633a91f4c5934a85f32",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/canonical_trace.json": "2938c42a8901f7853864d4adb66f871f43e19b0898f41a1899cbfeab09bd850e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/comparison_readiness.json": "140e7302ee28424e143ba52f113dcdbea671e4541ffc20aabf24c209daf91af1",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/completion_manifest.json": "88e107ebd8ff6f5528090ee1b990929ebbc05da22894621f791b3f220df0fe9b",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/cost_allocation.json": "e68a8a3a9d84d432a136082ff7143b1ecceed87319f7087b58662a01d4954823",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/execution_summary.json": "808387a912b70c0e0b839c8e97b0ea3681651dfa2ff044f04462221562322186",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/native_cost.json": "73739b9b0d178eff9cce9e5ead9a3a2e415782a3689339ea30b7c5649ecdff82",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/observed_role_history.json": "193b84bee965a49c076f187b89ca0583d197d57a425d943762dcc1d85dfb92cc",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/paired_analysis.json": "25836a304626533f4dcac547acd3a4cc337a0710c0a0dd55326a3b30e62b8146",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/terminal_acceptance.json": "473fc28790bd82a61fca8c840f75bb252f94f9d3d5b8c65afb9a30f0ec7b3a3e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/trajectory.json": "bb25af0df66e3ecc113985e62ad8ab15036f29c90dd010c25fb9fe08812dc21c",
+    "experiments/pcqm_k1_relation_resolution_100k/protocol.md": "3608884c7c74a89dfd47bac816fc0f6dc2051ef51450b8804e67093615093e57",
+    "experiments/pcqm_k1_relation_resolution_100k/source_config.json": "e9f12f81329260b99a17da8cd8a02cd652607aa7050e8a00e77e7fb26bd93b02",
+    "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05",
+    "experiments/pcqm_k1_relation_resolution_100k/training_contract.json": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-receiver-pair-100k-s42.json": "4a491d330b4a60bf993bbeb59b16d9338a4970960f5cec52a788ab6639fb8ddb",
+    "prospective_snapshot.json": "bb25af0df66e3ecc113985e62ad8ab15036f29c90dd010c25fb9fe08812dc21c",
+    "roles/role-TC-k1-receiver-pair-100k-s42-labels-read.json": "c4d708dde6a51e8f268191dd2de708bdb4019579bd5c586116a2e8985d399343",
+    "roles/role-TC-k1-receiver-pair-100k-s42-metric-computed.json": "c97fa5fbcaeb4b45ecd22c805bb131fc90d86af0721619e13b43a0a669f411da",
+    "roles/role-TC-k1-receiver-pair-100k-s42-prediction-input.json": "f66209e456db13d7b078d714efc6765e1163f5b36a318a5894b83ea33833e437",
+    "roles/role-TC-k1-receiver-pair-100k-s42-selection-used.json": "65b70ef13c6fca4c40430567177fb7d5a29a44136bc0ba559f687f394d2b76d0",
+    "roles/role-TC-k1-receiver-pair-100k-s42-training-membership.json": "3a337b33274169c7c6f30e282f1c1085bb7dbc6a8390bdde5e38bc1046b87b98",
+    "terminal_input.json": "6f0fa52191907fe1107b9a1f7832c35fc2ba74b39fe6e88ea4be9011ff646fc7",
+    "trace.json": "2938c42a8901f7853864d4adb66f871f43e19b0898f41a1899cbfeab09bd850e",
+    "trace_manifest.json": "63f9a2063a3fa05ce6db400e054b38342e4ee6823bcdc3ad60d1a87a5b527960",
+    "trajectory.json": "14dc76de6f4218c53aede3daf83be31efbfc1e5a78a1e6a77b3b9344ceea3817",
+    "v5_evidence.json": "e544a6c7c3c29213be5574ccb2a396fabd5d163be2e18205c97ea8fa68f77f18"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-receiver-pair-100k-s42.json": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/costs/cost-TC-k1-receiver-pair-100k-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "f32a69b429495f126cb406ef818ca7c36cf97d7d92f6115d24eea5a18dd9009b",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-receiver-pair-100k-s42"
+}

@@ -1,0 +1,29 @@
+{
+  "allocated_device_count": 2,
+  "allocated_device_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "audit_submitted": false,
+  "automatic_successor_submitted": false,
+  "complete": true,
+  "cost_scope": "source-verified-bootstrap-through-workers-including-runtime-install",
+  "format": "molgap-relation-study-execution-v1",
+  "run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+  "total_allocated_device_seconds": 12011.534021008001,
+  "total_job_wall_seconds": 6005.767009966,
+  "used_device_count": 1,
+  "workers": [
+    {
+      "allocated_device_seconds": 5780.3552850979995,
+      "complete": true,
+      "device": 0,
+      "exit_code": 0,
+      "log": "neural_atom_k1_rrwp_pair.log",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+      "timed_out": false,
+      "worker_wall_seconds": 5780.3552850979995
+    }
+  ]
+}

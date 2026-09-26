@@ -1,0 +1,115 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "8465d679dd63afa1083470109ea0dfe10832744baa1016dd68a6d5fe678ad01a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "25836a304626533f4dcac547acd3a4cc337a0710c0a0dd55326a3b30e62b8146"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "140e7302ee28424e143ba52f113dcdbea671e4541ffc20aabf24c209daf91af1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "2938c42a8901f7853864d4adb66f871f43e19b0898f41a1899cbfeab09bd850e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "73739b9b0d178eff9cce9e5ead9a3a2e415782a3689339ea30b7c5649ecdff82"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "193b84bee965a49c076f187b89ca0583d197d57a425d943762dcc1d85dfb92cc"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "db33ec8ac9d346693c79599771309701a79bca3014c12633a91f4c5934a85f32"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "88e107ebd8ff6f5528090ee1b990929ebbc05da22894621f791b3f220df0fe9b"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "808387a912b70c0e0b839c8e97b0ea3681651dfa2ff044f04462221562322186"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/cost_allocation.json",
+      "name": "cost_allocation",
+      "sha256": "e68a8a3a9d84d432a136082ff7143b1ecceed87319f7087b58662a01d4954823"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json",
+      "name": "submission_receipt",
+      "sha256": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md",
+      "name": "acceptance_interface_diagnosis",
+      "sha256": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+      "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+      "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/decision.md",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-receiver-pair-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-26",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

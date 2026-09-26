@@ -1,0 +1,50 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-fa09ef169857d339ffa0e804410159988ec5b93ffbafed9483baa3ffc75a5541",
+  "finalized_at": "2026-09-26T22:12:00Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/decision.md": "795f2488932b349ed86a4425291d157ac61dad74187225e474988dbd7b1c9e2b",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/acceptance_summary.json": "31117a3301ed5afd5526ab7fbaf4051425cfa1f00f3415114897d9e1e5ce69d6",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/arm_record.json": "36ef80e1c83868845a9e75ae93dab31a21107b535b0bb226b63372f2d06ad0e1",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/canonical_trace.json": "2d03a32cbee9b1ffcfcedebc4b4cda0a9193e24d28335b32140ba56a47fd3ead",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/comparison_readiness.json": "0b27d416f02a119b74e562749be6f15824187fd20f2ceb68fa9a47ebd9474a14",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/completion_manifest.json": "c74f0616aaea98903dd8cc79865f31e0098308c9b01ce10d7870bf733bdf798a",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/cost_allocation.json": "1e568e115572ff4d7a9d68387d363856a3eaee727daafbf4a20167798872006e",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/execution_summary.json": "f66581c369e354e283d76e19c1436353f91d479ea386842f462e6db69892d6f0",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/native_cost.json": "73f285aee2d7b8c3d3337b3c777aa8ac825fab6b4c5319ef4cb5a470525ecdf2",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/observed_role_history.json": "1f5af7695f909abc2fa85f016a21c02deffda44814161af1cc52e0bf1417bb7b",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/paired_analysis.json": "0b1c5dd16287287cdbfa20fd70a02b245e6082263ff3466798c7763e9273881d",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/terminal_acceptance.json": "1e9657f61cfb9df8394aca72740fe2512db7b88058cf320aeb74d22f1ab482b2",
+    "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/trajectory.json": "42416de37bda67f7c5b8e86d11ef21c7cb6585dcfc451262fc1a48cc14c4b5fd",
+    "experiments/pcqm_k1_relation_resolution_100k/protocol.md": "3608884c7c74a89dfd47bac816fc0f6dc2051ef51450b8804e67093615093e57",
+    "experiments/pcqm_k1_relation_resolution_100k/source_config.json": "e9f12f81329260b99a17da8cd8a02cd652607aa7050e8a00e77e7fb26bd93b02",
+    "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05",
+    "experiments/pcqm_k1_relation_resolution_100k/training_contract.json": "47a82dd86fca1e1bbb7c18684e755dd1a973e97c9449672d61d02f274f7ba980"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "published_hashes": {
+    "costs/cost-TC-k1-rrwp-pair-100k-s42.json": "41bc5c1e768f81731c793e7d26f648dfd4aecb220d8ae9656eafcb241f59e068",
+    "prospective_snapshot.json": "42416de37bda67f7c5b8e86d11ef21c7cb6585dcfc451262fc1a48cc14c4b5fd",
+    "roles/role-TC-k1-rrwp-pair-100k-s42-labels-read.json": "f04cf3718ccda448093f51d7d54adb1a141fd70d3898a76a6122761b828717eb",
+    "roles/role-TC-k1-rrwp-pair-100k-s42-metric-computed.json": "17479abe0de18a52cdc6a6bbcc89d5469fd2b29e2b4bd2882fafb474b9599233",
+    "roles/role-TC-k1-rrwp-pair-100k-s42-prediction-input.json": "1f712bd93c5de94d54da5a2ad9a252c94f39dbec2317dad3b631f910e6d08689",
+    "roles/role-TC-k1-rrwp-pair-100k-s42-selection-used.json": "3993027a54ce95f13946c5da124e3feb490d40968fcddc63ca5122d0b364c3e9",
+    "roles/role-TC-k1-rrwp-pair-100k-s42-training-membership.json": "ce5e676e4507bc4ad3f0a21a9da8a13c562e3dc2916ea0c1baf569b55937b4c5",
+    "terminal_input.json": "3f048ff421b091d3c0bd21002814e55e6dab9ff5ac0357dcaad4d890c4afabbc",
+    "trace.json": "2d03a32cbee9b1ffcfcedebc4b4cda0a9193e24d28335b32140ba56a47fd3ead",
+    "trace_manifest.json": "139f5cd9901cda1ca173a7129806d8f1c1ed97b590f121446fef1b6ff5d86220",
+    "trajectory.json": "54195536436d3c2e9e1e5c0106def85680a15a5a1ec7c77933a34b1569aff6e7",
+    "v5_evidence.json": "9c9727fc3f1c53a7391c295d6b1810c91c47fb5f042fa943cde91beba0915fe9"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-rrwp-pair-100k-s42.json": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/costs/cost-TC-k1-rrwp-pair-100k-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "fa09ef169857d339ffa0e804410159988ec5b93ffbafed9483baa3ffc75a5541",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-rrwp-pair-100k-s42"
+}

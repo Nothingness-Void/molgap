@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-triplet-aggregate-100k-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/terminal_acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.961676748625
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.961676748625
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-triplet-aggregate-100k-s42"
+    }
+  ],
+  "format": "molgap-cost-records-v1"
+}

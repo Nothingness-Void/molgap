@@ -1,0 +1,115 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "e6d7fe76b4ef5357558ecf9dc3286eacf615349090014eb3ea470a762700aa0e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "e69e4fb5cdaec9c3df7ee820611cc812b89552e3a951db78cc7495a5b3ef3f44"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "f940478ec9d967211d1860143c7e09cee09e548996c1a716021179ad1909cf3f"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "aae13da5f2a2a64a8906420e9f9fa46e7785ca23e3887af11dbd1dbd24834aaf"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "f76959965061a91a0091f31180d7169c4b29e4e16d4cb9853c3541dd3e79b732"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "e61cd0799cc9dcd33c9e97cf4004381382e2ca49e8e04261e37f20444e3f82de"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "6f75c4c6f49e46f612f6ccb949f2eaa775cf86f2b70d70c122dbe6d25a0bc12e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "1e954b210c17b744ececcda682a238d475e5910c7c0926e33eeeeba1e297131f"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "808387a912b70c0e0b839c8e97b0ea3681651dfa2ff044f04462221562322186"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/cost_allocation.json",
+      "name": "cost_allocation",
+      "sha256": "d2fdac391a4b6a5b5bc5dde7228ec5523f0dd4dc7df4133ff3d141306a7d144e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json",
+      "name": "submission_receipt",
+      "sha256": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md",
+      "name": "acceptance_interface_diagnosis",
+      "sha256": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+      "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+      "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/decision.md",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-triplet-aggregate-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-26",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

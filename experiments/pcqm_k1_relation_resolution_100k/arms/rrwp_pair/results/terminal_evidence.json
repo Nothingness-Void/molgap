@@ -1,0 +1,115 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "31117a3301ed5afd5526ab7fbaf4051425cfa1f00f3415114897d9e1e5ce69d6"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "0b1c5dd16287287cdbfa20fd70a02b245e6082263ff3466798c7763e9273881d"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "0b27d416f02a119b74e562749be6f15824187fd20f2ceb68fa9a47ebd9474a14"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "2d03a32cbee9b1ffcfcedebc4b4cda0a9193e24d28335b32140ba56a47fd3ead"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "73f285aee2d7b8c3d3337b3c777aa8ac825fab6b4c5319ef4cb5a470525ecdf2"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "1f5af7695f909abc2fa85f016a21c02deffda44814161af1cc52e0bf1417bb7b"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "36ef80e1c83868845a9e75ae93dab31a21107b535b0bb226b63372f2d06ad0e1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "c74f0616aaea98903dd8cc79865f31e0098308c9b01ce10d7870bf733bdf798a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "f66581c369e354e283d76e19c1436353f91d479ea386842f462e6db69892d6f0"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/cost_allocation.json",
+      "name": "cost_allocation",
+      "sha256": "1e568e115572ff4d7a9d68387d363856a3eaee727daafbf4a20167798872006e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/submission_receipt_v1.json",
+      "name": "submission_receipt",
+      "sha256": "f3f16143ee2f473ae93336936bacf530966df132159d403e9bcbc59e51a97c05"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_relation_resolution_100k/acceptance_interface_diagnosis.md",
+      "name": "acceptance_interface_diagnosis",
+      "sha256": "f58912032801bd052d30da94088ab0ee3b52bf0c2382693bb97f23763203112c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_relation_resolution_100k/protocol.md",
+      "experiments/pcqm_k1_relation_resolution_100k/training_contract.json",
+      "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/decision.md",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-rrwp-pair-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-26",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "positive_below_gate",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}

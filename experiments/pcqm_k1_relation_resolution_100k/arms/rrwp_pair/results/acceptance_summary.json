@@ -1,0 +1,43 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "43a1b88dd4deba4e5649686ef98678418fdc6b8f1641bb41cce4d1c5fda05541",
+    "best_development_payload.pt": "d1fb9c069f18369c877290feffa61dd8e7f20668db8a4204ccc736a01f2a9c88",
+    "best_model.pt": "5888162ec5a301d0b2803d0c48dfd91ac2b00a75970c04a5d0da055d48b70a7e",
+    "canonical_trace.json": "2d03a32cbee9b1ffcfcedebc4b4cda0a9193e24d28335b32140ba56a47fd3ead",
+    "last_checkpoint.pt": "4a94a2c9da238dc5e149fbc891bf1a6f62a32061920799db181cff0fae60e365",
+    "native_cost.json": "f47e55e2bec82e42e72ef3528e950fdfe964e73d651df2f25d86c0fe6669f04d",
+    "observed_role_history.json": "1e4e481fad514aed05074c4cf03b1fb871b9989286727b4e69774ffe9592f056",
+    "preflight.json": "03d3d9d56a6221f5b852561e207339a627c746ff99f6f37503b5b2620c1409de",
+    "recovery_epoch_10.tar": "883c56966ad833221f2406aa1782da1c7150720914ebb7ec7597975645bb9b8e",
+    "recovery_epoch_20.tar": "f04fd8502223984bf89ccebd52360a9823d416f95c546c17898b1adbb32eb9d7",
+    "recovery_epoch_30.tar": "ae0a775f9d5d6f71df73994037ebdd99d8a858e22ede20f05034b4d75bfd2847",
+    "recovery_epoch_40.tar": "f1c461a7e8a7038baa7483aa4f8f8410ce1f2ce07005b0362857a8e7295e16e3",
+    "runtime_certificate.json": "7fa9361056757729944489fcaf8711ef969a3cfd7ee9498ae583043bdc0cc11a",
+    "runtime_manifest.json": "89f5bdeae331b2b78b14480bebfd00daf4aa678222e7c0411500ad133153d0b9",
+    "trace.json": "852cb28cdd5b20c2ba877b603face9caeca7d85a35124793b1d87bd012ebcf45"
+  },
+  "candidate": {
+    "best_epoch": 36,
+    "best_model_sha256": "5888162ec5a301d0b2803d0c48dfd91ac2b00a75970c04a5d0da055d48b70a7e",
+    "checkpoint_sha256": "4a94a2c9da238dc5e149fbc891bf1a6f62a32061920799db181cff0fae60e365",
+    "development_gap_mae_eV": 0.1389245241880417,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 142.32278264132495,
+    "mean_graphs_per_second": 702.4033548580522,
+    "optimizer_steps": 31240,
+    "parameter_count": 3681953,
+    "payload_sha256": "d1fb9c069f18369c877290feffa61dd8e7f20668db8a4204ccc736a01f2a9c88",
+    "peak_allocated_mib": 606.4599609375,
+    "peak_reserved_mib": 646.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+  "source_commit": "f2d794f953af437af3fab60b33d49720531c7195"
+}
