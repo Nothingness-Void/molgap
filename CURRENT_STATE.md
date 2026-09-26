@@ -66,6 +66,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The user authorized a bounded Kaggle2 overnight relation-resolution study:
+receiver-specific pair messages and one-shot vector triplet aggregation share
+a T4x2 notebook; an RRWP-conditioned pair arm uses the second notebook slot.
+Release is pending source/RML gates. The existing K1 reference is reused;
+post100K frozen500K inference is a separate acceptance-gated NO_TRAIN stage.
+Authority: `experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
+
 The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early
 advantage disappeared at the matched terminal exposure; frozen500K internal
 development inference also regressed. The training candidate has a complete
