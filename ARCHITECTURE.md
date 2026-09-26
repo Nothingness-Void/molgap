@@ -39,6 +39,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `pcqm_expert.py` | PCQM GINE graph contracts, packed scale-up, checkpoints, and artifact acceptance | Continuing or validating the benchmark-only PCQM Gap specialist |
 | `pcqm_gap_architecture.py` | Official OGB categorical Structural GPS and persistent EdgeState Gap-only candidates | Screening bounded pure-2D PCQM leaderboard architectures |
 | `edge_state_model_only_v1.py`, `edge_state_adapter.py` | Basic OGB EdgeState model construction and Spec-bound depth/K1 dispatch; no trainer | Declaring a new EdgeState architecture variant without changing frozen K1 sources |
+| `edge_state_training_core.py` | Spec-bound EdgeState train-target stats, epoch sampler, batch checks, normalized Gap step, development predictions, and checkpoint/resume; no science recipe or platform submitter | Reusing model-facing training logic for a new EdgeState experiment |
 | `pcqm_route_b.py` | Aligned expanded-2D and paired ETKDGv3+MMFF PCQM caches | Preparing the Track B PCQM precision experiment |
 | `ensemble_evaluation.py` | Identity-aligned equal-seed evaluation | Changing multi-seed accuracy-mode evidence |
 | `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing GPS7/GPS9 Router-label preparation |

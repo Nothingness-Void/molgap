@@ -20,6 +20,9 @@ Reuse these modules instead of copying their logic into an experiment script:
   it does not contact a platform.
 - `experiment_terminal.py`: validates terminal bindings and delegates explicit
   closure to the existing RML pipeline.
+- `edge_state_training_core.py`: Spec-bound EdgeState target statistics,
+  deterministic full-batch sampler, OGB batch checks, normalized Gap step,
+  source-aligned development predictions, and SHA-pinned checkpoint/resume.
 
 Start with the [local CLI](EXPERIMENT_CLI.md), then read only the relevant
 detailed contract: [spec](EXPERIMENT_SPEC.md),
@@ -28,16 +31,19 @@ detailed contract: [spec](EXPERIMENT_SPEC.md),
 [runner](EXPERIMENT_RUNNER.md), or [launch receipts](EXPERIMENT_LAUNCH.md).
 For an EdgeState baseline, depth change, or K1 architecture comparison, start
 with [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md); its model-only recipe is
-not a trainer.
+not an executable training contract.
 
 ## Addon Ownership
 
-The experiment-owned addon is responsible for family-specific training and
-checkpoint/resume semantics, any extra model/data validation not supported by
-the shared preflight, and platform-specific submission, status reconciliation
-and artifact retrieval. Prefer a thin wrapper around existing training code.
-Do not copy reusable model, RML, source-packaging or receipt logic into a
-second implementation.
+The experiment-owned addon is responsible for its frozen scientific recipe,
+authenticated graph/data loader, sampler and exact row-order replay, training
+loop, selection, and any validation not supported by shared preflight. For an
+EdgeState arm, call the shared training core rather than copying its step,
+evaluation, or checkpoint code. Do not copy reusable model, RML,
+source-packaging or receipt logic into a second implementation. Platform
+submission, status reconciliation, and artifact retrieval belong to the
+applicable Kaggle/IMS/SCNet skill and its existing platform adapter, not to
+the shared CLI or experiment training core.
 
 The current shared CLI intentionally has no training command or platform
 submitter. The new addon must not claim a successful dry run is a submitted job,
