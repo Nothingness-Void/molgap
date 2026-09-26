@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .edge_state_adapter import build_edge_state_model, edge_state_metadata
 from .experiment_spec import ExperimentSpec
+from .pcqm_topology import graph_source_idx, validate_ogb_gap_batch
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import (
     assert_finite_state_dict, atomic_torch_save, capture_rng_state,
@@ -248,55 +249,6 @@ def construct_bound_model(spec: ExperimentSpec, binding: EdgeStateTrainingBindin
     return model
 
 
-def validate_ogb_gap_batch(batch) -> int:
-    """Validate one accepted train/development batch's model-facing contract."""
-    import torch
-
-    from .ogb_features import ATOM_FEATURE_DIMS, BOND_FEATURE_DIMS
-
-    fields = ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx")
-    if any(not torch.is_tensor(getattr(batch, name, None)) for name in fields):
-        raise ValueError("EdgeState batch is missing required tensor fields")
-    x, edges, bonds, groups = batch.x, batch.edge_index, batch.edge_attr, batch.batch
-    pe, target, source = batch.random_walk_pe, batch.y.reshape(-1), batch.source_idx.reshape(-1)
-    integers = (torch.uint8, torch.int8, torch.int16, torch.int32, torch.int64)
-    if (x.ndim != 2 or x.shape[1] != len(ATOM_FEATURE_DIMS) or x.shape[0] == 0
-            or x.dtype not in integers):
-        raise ValueError("Expected nonempty OGB atom9 categorical features")
-    if (edges.ndim != 2 or edges.shape[0] != 2 or edges.dtype not in integers
-            or bonds.ndim != 2 or bonds.shape != (edges.shape[1], len(BOND_FEATURE_DIMS))
-            or bonds.dtype not in integers):
-        raise ValueError("Expected aligned OGB bond3 features and edge_index")
-    if (groups.ndim != 1 or groups.numel() != x.shape[0] or groups.dtype not in integers
-            or groups.numel() == 0):
-        raise ValueError("Invalid graph batch vector")
-    if len({value.device for value in (x, edges, bonds, groups, pe, target, source)}) != 1:
-        raise ValueError("Batch tensors must be on one device")
-    if bool(((groups < 0) | (groups >= x.shape[0])).any()):
-        raise ValueError("Graph IDs must be contiguous from zero")
-    count = int(groups.max()) + 1
-    if count < 1 or not torch.equal(torch.unique(groups), torch.arange(count, device=groups.device)):
-        raise ValueError("Graph IDs must be contiguous from zero")
-    if (pe.shape != (x.shape[0], 16) or not pe.is_floating_point()
-            or not bool(torch.isfinite(pe).all())):
-        raise ValueError("Expected finite RWSE16 per atom")
-    if (batch.y.shape not in ((count,), (count, 1)) or not target.is_floating_point()
-            or not bool(torch.isfinite(target).all())):
-        raise ValueError("Expected one finite Gap target in eV per graph")
-    if (batch.source_idx.shape not in ((count,), (count, 1)) or source.dtype not in integers
-            or bool((source < 0).any()) or torch.unique(source).numel() != count):
-        raise ValueError("Expected unique nonnegative source_idx per graph")
-    if edges.numel() and bool(((edges < 0) | (edges >= x.shape[0])).any()):
-        raise ValueError("edge_index refers to a nonexistent atom")
-    if edges.numel() and bool((groups[edges[0].long()] != groups[edges[1].long()]).any()):
-        raise ValueError("edge_index crosses graph boundaries")
-    if bool(((x < 0) | (x >= x.new_tensor(ATOM_FEATURE_DIMS))).any()):
-        raise ValueError("OGB atom feature outside its categorical range")
-    if bool(((bonds < 0) | (bonds >= bonds.new_tensor(BOND_FEATURE_DIMS))).any()):
-        raise ValueError("OGB bond feature outside its categorical range")
-    return count
-
-
 def _predict(model, batch, rows: int):
     import torch
 
@@ -362,7 +314,7 @@ def evaluate_development(model, batches, binding: EdgeStateTrainingBinding, *, e
                 prediction_eV = prediction * binding.target_std_eV + binding.target_mean_eV
                 if not bool(torch.isfinite(prediction_eV).all()):
                     raise RuntimeError("Denormalized EdgeState predictions are nonfinite")
-                results["source_idx"].append(batch.source_idx.reshape(-1).long().cpu())
+                results["source_idx"].append(graph_source_idx(batch).reshape(-1).long().cpu())
                 results["target_eV"].append(batch.y.reshape(-1).cpu())
                 results["prediction_eV"].append(prediction_eV.cpu())
     finally:

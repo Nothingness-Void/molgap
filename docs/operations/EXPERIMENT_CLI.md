@@ -155,8 +155,11 @@ evidence package is created for either example.
 
 Platform submission is unimplemented within this shared CLI
 (`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
-K1 and EdgeState real-shard loader/model preflight remain unsupported by the
-existing core. EdgeState's recipe is model-only; a platform-specific trainer
+K1 and EdgeState now have selected-topology-shard CPU loader-only preflight
+under the accepted fixed manifests; the result is explicitly partial, not a
+full-role or model check. Their model smoke remains unsupported. See
+[EXPERIMENT_PREFLIGHT.md](EXPERIMENT_PREFLIGHT.md) for the family-specific
+shard selection and required packaged modules. EdgeState's recipe is model-only; a platform-specific trainer
 addon must freeze and enforce its own executable training contract.
 No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
 training launch or production promotion is provided. Local CLI success cannot

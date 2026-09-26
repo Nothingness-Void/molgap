@@ -68,11 +68,25 @@ For CPU inspection only, `LOADER_WORKERS` is set to zero in the isolated process
 Sampler, seed, batch size, role and source files are not rewritten. This avoids
 nested DataLoader processes and is explicitly not production runtime parity.
 
-K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
-loader integration for that family. It never borrows code from another checkout.
-The prospective `edge_state_gps/1` family is also unsupported here; its model
-construction diagnostic does not authorize a real-shard loader or training.
-Missing package GPTrans loader source is likewise unsupported.
+K1 (`neural_atom_k1/1`) and EdgeState (`edge_state_gps/1`) support
+`loader-only-v1` for accepted **topology** manifests. K1 uses the frozen
+`ogb-train-full` manifest and selects exactly one train shard. EdgeState uses
+one of the accepted `ogb-train-100k`, `ogb-train-500k-scnet-v1`, or
+`ogb-train-1m` manifests and selects exactly one train and one development
+shard. Select records directly from the fixed manifest's `assets.topology`;
+geometry files and extra shards are rejected. The source package must include
+`pcqm_topology.py`, `ogb_features.py`, `screen_policy.py`, `v4_runtime.py`,
+`training_reproducibility.py`, and their package dependencies. The worker
+checks the fixed manifest's canonical frozen fingerprint, selected shard bytes,
+size and row range, finite targets, OGB atom9/bond3/RWSE16 features, and one
+ordered CPU batch per role. It normalizes PyG's automatic `row_index` batch
+offset before comparing source rows.
+
+The outcome is `PARTIAL_LOADER_VERIFIED_ONLY`, with
+`scope=selected-topology-shards`. It does **not** validate the other shards,
+full-role sampler, target statistics, model construction, or trainability.
+`gptrans-model-smoke-v1` remains GPTrans-only. Missing family source is
+unsupported; missing selected data is missing, not pass.
 
 ## Isolation And Reports
 
@@ -103,8 +117,10 @@ The independent observed flags are `package_verified`, `shard_verified`,
 `loader_batch_built`, `forward_checked`, `backward_checked`,
 `optimizer_step_checked`, and `checkpoint_roundtrip_checked`. False means no
 successful observation, not necessarily that the operation ran and failed.
-`missing_evidence`, error and status preserve that distinction. Successful loader
-inspection is `LOADER_VERIFIED_ONLY`, never complete numerical qualification.
+`missing_evidence`, error and status preserve that distinction. GPTrans's
+complete frozen-shard loader result is `LOADER_VERIFIED_ONLY`; K1/EdgeState's
+selected-shard result is `PARTIAL_LOADER_VERIFIED_ONLY`. Neither is complete
+numerical qualification.
 `requested_device` is a declaration; `device` remains null until a CPU batch is
 actually observed, including when source verification succeeds without loading.
 Mixed outcomes are `MIXED_NONPASS`. No RML, READY or replay authority fields are
@@ -116,10 +132,10 @@ bind bytes and explicit declarations; they do not independently prove scientific
 role provenance or protect against an adversary controlling the process/OS.
 Dependencies are host-installed; their versions are not certified here.
 
-## Unexecuted Test Handoff
+## Real-Input Test Handoff
 
-Tests were authored, not run as part of this implementation. Synthetic tests
-exercise rejection and blocked semantics only. The real dual-arm integration
+Synthetic tests cover loader mechanics and rejection, not real accepted data.
+The real GPTrans dual-arm integration
 test skips unless `MOLGAP_PREFLIGHT_REAL_INPUTS` points to a user-authorized JSON
 configuration with `spec`, `package_dir`, `expected_package_identity`,
 `shard_manifest`, `shard_root`, and `expected_shard_manifest_sha256`. It requires
@@ -127,8 +143,8 @@ two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
 the first arm's real loader result. It is parameterized over both modes; only the explicitly selected smoke case constructs a model.
 
-Suggested Luna commands, from this isolated worktree, using a project virtualenv
-with torch, NumPy, PyG and the frozen source package's dependencies installed:
+Suggested local commands from the desktop checkout, with torch, NumPy, PyG and
+the frozen source package's dependencies installed:
 
 ```powershell
 $env:PYTHONPATH = (Join-Path $PWD 'src')
@@ -136,13 +152,14 @@ $env:PYTHONPATH = (Join-Path $PWD 'src')
 & '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
 ```
 
-The `.venv` must be provisioned in this worktree before these commands are used.
+Use the project `.venv` or another environment with the same dependencies.
 The real integration cases require explicit authorization and
 `MOLGAP_PREFLIGHT_REAL_INPUTS`; do not run them against protected roles. Both arms
 must declare random initialization with the correct model state digest. The
 second command runs the real CPU model smoke as well as loader inspection, so
 it requires separate execution authorization and enough time/RAM for GPTrans-T.
-Neither command was executed by the implementer.
+K1/EdgeState real-input loader execution requires their authorized packed files;
+the repository contains manifests but not those `.pt` assets.
 
 ## Explicit Model Smoke V1
 

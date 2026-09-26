@@ -25,8 +25,9 @@ with only `num_layers` changed.
 `edge_state_metadata()` is a lightweight declaration lookup;
 `build_edge_state_model()` constructs with caller-controlled RNG and does not
 load checkpoint state. `experiment_runner` supports `adapter_probe` and
-`construct` for this family. The shared real-shard preflight returns
-`UNSUPPORTED_FAMILY_PREFLIGHT`, not a pass. The Spec's
+`construct` for this family. The shared preflight can now inspect one selected
+train/development topology shard per role from an accepted fixed manifest and
+returns `PARTIAL_LOADER_VERIFIED_ONLY`, never a full-role pass. The Spec's
 `edge_state_model_only_v1` recipe name marks this construction boundary, **not
 an executable optimizer/data/selection contract**. Its sampler, transform,
 roles, and placeholder example hashes are declarations requiring independent
@@ -67,9 +68,9 @@ source-row checks, approval of train-only statistics, optimizer and
 scheduler construction, stopping/selection policy, training loop, measured
 cost, trace, and V5/RML evidence. A mid-epoch checkpoint records sampler state
 but cannot prove that the addon restored the same source-row-to-dataset-index
-mapping or worker/prefetch behavior. The shared
-real-shard CLI preflight remains unsupported for this family; a validated
-model-facing batch is not a real-data acceptance certificate. Kaggle/IMS/SCNet
+mapping or worker/prefetch behavior. The shared real-shard CLI preflight only
+checks selected topology shards; a validated model-facing batch is not a
+full-role data acceptance certificate. Kaggle/IMS/SCNet
 submission and remote reconciliation belong to their platform skills, not this
 module. No new scientific recipe or platform submission command is implied.
 

@@ -104,6 +104,27 @@ def test_batch_contract_rejects_invalid_graphs(field, mutate, match):
         validate_ogb_gap_batch(batch)
 
 
+def test_accepted_row_index_alias_and_disagreement(bound_spec):
+    graphs = _batch().to_data_list()
+    for graph in graphs:
+        graph.row_index = graph.source_idx.clone()
+    batch = Batch.from_data_list(graphs)
+    assert not torch.equal(batch.row_index, batch.source_idx)
+    assert validate_ogb_gap_batch(batch) == 2
+    for graph in graphs:
+        graph.source_idx = None
+    batch = Batch.from_data_list(graphs)
+    assert validate_ogb_gap_batch(batch) == 2
+    spec, binding = bound_spec
+    with torch.random.fork_rng(devices=[]):
+        output = evaluate_development(_model(spec, binding), [batch], binding,
+                                      expected_source_idx=[10, 11])
+    assert output["source_idx"].tolist() == [10, 11]
+    batch.source_idx = torch.tensor([10, 12])
+    with pytest.raises(ValueError, match="disagree"):
+        validate_ogb_gap_batch(batch)
+
+
 def test_one_step_and_source_aligned_development(bound_spec):
     spec, binding = bound_spec
     with torch.random.fork_rng(devices=[]):
