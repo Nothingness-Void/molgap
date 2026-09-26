@@ -1,0 +1,42 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "c173d7cc75a0859a81366748fec98dbad89d251eff2b91e19dcc0423a8a38c63",
+    "best_development_payload.pt": "619dfea3089d6631644c62f6c50077acbcb8679a34131f7d61aad55e83efa8fd",
+    "best_model.pt": "5f74d767cfd1fe9a136740caa61955ca5a9ccc9784caf41227a96e889f37d4f4",
+    "canonical_trace.json": "28f8ae9d5ae36329e780a62b3699380524c3bf52546cafe72276682ed05bfaa2",
+    "last_checkpoint.pt": "e5e224ef3e01f15b43372321326c8a26f3a0f2f643cc94b9c5c3e8e6cc929c71",
+    "observed_role_history.json": "527aefd6a940d0a85f4e128412ce0d0414e0b84a3661fd1c4fe74a40de94a271",
+    "preflight.json": "e0c20fa2c4e0f57395c8df7bd4723fda250503c548cfc47277122eeed9bede1d",
+    "recovery_epoch_10.tar": "2aaa55f97df179830f63d9b1f26108afe50dc0f6f16e324786c529e3e5e31eb0",
+    "recovery_epoch_20.tar": "6544646ff849e392ab295293b5dbc74dd0376341044169ef8c6caf4fcf61dc50",
+    "recovery_epoch_30.tar": "7ccb832e29916f84e53914a4b16dac33ece0e7c63bf7f232cb76069dd5ddf7f1",
+    "recovery_epoch_40.tar": "1feb307e19526a4bb0958432f1a9c2d00b93cbb434d6cd7065ad4e6b7829aca3",
+    "runtime_certificate.json": "e69ebc1a293cba1d267bc36543bb86e3d1f5fd2caabb3bac744b3beca85a180e",
+    "runtime_manifest.json": "89f5bdeae331b2b78b14480bebfd00daf4aa678222e7c0411500ad133153d0b9",
+    "trace.json": "c9c0dbf3eb5d20c838d67c2d12598b8918ccecbc779435ff02154749a9a79add"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "best_model_sha256": "5f74d767cfd1fe9a136740caa61955ca5a9ccc9784caf41227a96e889f37d4f4",
+    "checkpoint_sha256": "e5e224ef3e01f15b43372321326c8a26f3a0f2f643cc94b9c5c3e8e6cc929c71",
+    "development_gap_mae_eV": 0.1417725831270218,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 123.12264686397502,
+    "mean_graphs_per_second": 811.9383602144608,
+    "optimizer_steps": 31240,
+    "parameter_count": 3582209,
+    "payload_sha256": "619dfea3089d6631644c62f6c50077acbcb8679a34131f7d61aad55e83efa8fd",
+    "peak_allocated_mib": 588.71728515625,
+    "peak_reserved_mib": 634.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_linear_attention_100k/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "974c198ac45d759d2988ece962dc288130e64390dc7022a7fe689c5f15e7271f",
+  "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996"
+}

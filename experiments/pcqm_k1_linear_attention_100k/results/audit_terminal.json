@@ -1,0 +1,249 @@
+{
+  "format": "molgap-k1-post100k-portability-audit-v1",
+  "complete": true,
+  "experiment_purpose": "NO_TRAIN",
+  "training_executed_in_audit_stage": false,
+  "model_inference_executed": true,
+  "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996",
+  "source_archive_sha256": "974c198ac45d759d2988ece962dc288130e64390dc7022a7fe689c5f15e7271f",
+  "manifest_sha256": {
+    "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+  },
+  "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "checkpoint_sha256": {
+    "neural_atom_k1_v4": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95",
+    "neural_atom_k1_linear_attention": "5f74d767cfd1fe9a136740caa61955ca5a9ccc9784caf41227a96e889f37d4f4"
+  },
+  "reproduction": {
+    "neural_atom_k1_v4": {
+      "max_abs_eV": 7.62939453125e-06,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "1b307b01d992a8feb287e3985a56e596497f259c6b3661e40bdd7ad571b85fe4",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "5541b450663a43438953519bcb09b4550edccc7bf79343c8da262a0e42a7ae7a",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "65fdf93cf18cef1a9e30f229cc318b6a491a5b548ff17e0d0bfecb6f616127d7",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "8dd171f8abde5df51ddcbf2ec88f2cf39d79e5f3bdd84dfbdfc37d56a5bf1bc2",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "ab1aac57ebc7e67bb9f4759c36bfa00f28adf2719d4d61e737d73b5ded198576",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "830793ac6b30ded2c611fe1498a02029f83592b95c05ca7080bd39439cebae34",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "8421817c0bb56c938aaca037b1e932ff62e09032655d6d66069004e0a24c3dc4",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "7643a1dd2d6bb344064d3d59b14571f0873290fd4d9240fb5070baa1525b21fc",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "e1b41490f85c75d597c7370ea21c3c0890485c41d4f2fc2605e0433b65e35d53",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "77438d245aed851f5c6cbff409dd29d3c256076c095787ad506222d1422ccf1c",
+          "rows": 5000
+        }
+      ]
+    },
+    "neural_atom_k1_linear_attention": {
+      "max_abs_eV": 1.430511474609375e-06,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "58b915dc157e61e2c529323905c5a9bf5154c372f5d8f5cc9632c42e30016f4d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "eea5e0294a1f876f79100690aa54b3ce8e89bbafa0eaa5dc1016832c161ed0a3",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "028e111fd045675663f2255898db8abe179770f2b41e9e377c05e621ce63e70d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "a10bf99248b23a1a0d783ff7c2c70e4c3e5a16a4ece2a34a3d8fecb5b106fb3d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "d1997c2b1be2ece3e639264140e1cdd9e00e36ca062c29db2192495f7f7d059b",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "c268be7315772294684320f464c10fa66506b969c3f2bfba3c4a65c5ce9b8bdb",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "eaea6b3c8c4ee289937d2d9f0e1fd4d39805f67caa7974aa8b898abd025c2709",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "a4851ee25b88726e2e0acb698002943621a4e1aa41d1d4d3e12603ec03eb1aba",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "3dee5a1830650572a5e29c6e786ae8bb2451b1d606ba190f8a09b0f0974120f7",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "3516efaf966ab475f73de29d55dbdc40b891229041eff03e4fb5453f64e6e277",
+          "rows": 5000
+        }
+      ]
+    }
+  },
+  "unseen_500k": {
+    "neural_atom_k1_v4": {
+      "mae_eV": 0.1412533074617386,
+      "rows": 50000,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "f86a73f4a48de4b62aea89c413b02e4095310cf2b0b1645a80040cee01535ab1",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "c542d8b7ff7de941b4fe77152a5d871d7e0520cbfc53afeefaf15d9c4291b152",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "8db1136e4222e346f82e55952b63eae67fc1aa72145b001ab955eb3dadd3f245",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "6306b199c24ef85822a805ff173efaa4e47ba72f05d29233081952ae2ae1c2f9",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "317c9d034f440015c450e2aa93f9aa3b1b593341cbc98964350c41ba23c2bb6f",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "6fffd4af81422187a8e0d72da00c5dd30264a1d4197efc4d20a98b0ec46c04bb",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "efdefd032be1b0a06653a556857d53a89572b56b4960e5405021fc99ae0cbc56",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "84c498ec89d04c2aad9abb0a50080a5cca0fa6e7237fc10952183b3fe9fc5ac6",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "b3b1187e478438cfffb8e11f86c6126c398b697f19f5a97e8e4c1d0e2f6ebcad",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "586624b48644e6bedb3bd4deafad80f1a5e33df8015c8e5c6c9549c8e0b35ee2",
+          "rows": 5000
+        }
+      ]
+    },
+    "neural_atom_k1_linear_attention": {
+      "mae_eV": 0.14420673251152039,
+      "rows": 50000,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "a700770cffe5f523acfb773cbe30ca01c969ae3385e297deb9b2752cedd3751c",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "38aaa892487d286d474107ff3a60419f6df737ff993a069cd56387ccf440b3f7",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "afc04f921c0c868281deb3151323edcbb380013ca79143ce9404394e9e6fc39a",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "3975dada44d3894147a52e91e1ea481c0298d50af814b4130937a8a2bc55cb77",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "1d6f2cd10436c5ea83907518dfec070e6bac3090718c24ca77909f8c944866f6",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "4da3ffd8bf3a0d62437bf631bc371b998e07b83d322eeb1bdb7a40fe5f875416",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "4fd44d474632525ad21385c012246e6b67811fe10a247094fcc85dbe2f229708",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "f581f6eb61c8baa9d5105dc45ea78527b501a7fe0718ae1c9d4af0bc192c9ca0",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "0847544db088fecba130bbd3831ceb2eaf60e28f1590b2bef483a24c519ae69a",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "ce19cb350f471c9f04bff0f75e2786dd8b2c4c5cb3ef372ed21c0ac77bed9dad",
+          "rows": 5000
+        }
+      ]
+    }
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "elapsed_seconds": 134.54941764300003
+}

@@ -28,3 +28,13 @@ experiments/pcqm_k1_tf32_runtime_comparison_100k/v5_evidence.json text eol=lf
 experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/*.json text eol=lf
 experiments/pcqm_k1_tf32_runtime_comparison_100k/arms/*/trace_manifest.json text eol=lf
 experiments/pcqm_k1_tf32_runtime_comparison_100k/results/*/canonical_trace.json text eol=lf
+
+# Keep accepted linear-attention evidence byte-identical after a fresh checkout.
+experiments/pcqm_k1_linear_attention_100k/** text eol=lf
+experiments/pcqm_k1_linear_attention_100k/audit_failure/** text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/audit_recovery/** text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/results/audit_acceptance_summary.json text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_execution.json text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/results/audit_terminal.json text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/results/observed_role_history.json text eol=crlf
+experiments/pcqm_k1_linear_attention_100k/results/portability_analysis.json text eol=crlf

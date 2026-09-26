@@ -1,0 +1,34 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-964a1450b0038c9ccc6764ecee226ec63a895d0273c28511d2a6dba38fdea881",
+  "finalized_at": "2026-09-26T07:03:42+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_linear_attention_100k/audit_failure/results/terminal_acceptance.json": "8744b1d64f7de2e7a300356e2d4878675739d8eaf0728f205b8c110b8438d1a2",
+    "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json": "8e8d049bc080135da2ab1f88d0999b9f18b6e6d67edd603eaa54168b4282adb1",
+    "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json": "02253361274a1c6a310fa289d20fb6206dda2876573066804a21c329c3da0397",
+    "experiments/pcqm_k1_linear_attention_100k/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_linear_attention_100k/decision.md": "8b8c9150d160b292ff70b418b5a9f821fac99a5621ccc1725968943ece4760a5",
+    "experiments/pcqm_k1_linear_attention_100k/protocol.md": "5d12d260a87b8ee64f428ea788d5be17505b732e8d937550f6214fb54d65c9af",
+    "experiments/pcqm_k1_linear_attention_100k/results/audit_failure_v1.md": "cff91eca21529ea0e919495d957474ee86ce3193dbd9c7ba407ea625e13c921d",
+    "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json": "71fc52f8c63bc02e0dab65f122af9d3c4440bb7d70d2dce97864c67100e7eff3",
+    "experiments/pcqm_k1_linear_attention_100k/training_contract.json": "9ade57bb493ab5f1411f3fbd3c0c5adae40b251fa775de4aad603acbedec3c97"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-k1-linear-attention-post100k-audit-s42.json": "416b6cafbf60f0d099e6e79ede4c477b90347ee486b08e4b5cd9b993b75f4f43",
+    "prospective_snapshot.json": "8e8d049bc080135da2ab1f88d0999b9f18b6e6d67edd603eaa54168b4282adb1",
+    "terminal_input.json": "fa1824c5d332ed32ca62069611a6c37b347c17cdea81fe2c300959428cfd4d79",
+    "trajectory.json": "f1e650c3560648f1a9c6c2b877b434125008708418015f8f417df17a84f3fe58",
+    "v5_evidence.json": "9be7faae5eb6e849fd5ad9cdc6a4ddd4c1bbcdfed7db8f85af4857211891dcf6"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-linear-attention-post100k-audit-s42.json": "experiments/pcqm_k1_linear_attention_100k/audit_plan/costs/cost-TC-k1-linear-attention-post100k-audit-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "964a1450b0038c9ccc6764ecee226ec63a895d0273c28511d2a6dba38fdea881",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42"
+}

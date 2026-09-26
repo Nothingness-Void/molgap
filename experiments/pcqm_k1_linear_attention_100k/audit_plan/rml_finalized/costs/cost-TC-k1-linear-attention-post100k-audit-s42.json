@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "original-audit-cublas-failure",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-k1-linear-attention-post100k-audit-s42",
+  "evidence_ref": "experiments/pcqm_k1_linear_attention_100k/audit_failure/results/terminal_acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42"
+}

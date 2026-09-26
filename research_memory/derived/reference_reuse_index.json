@@ -213,6 +213,68 @@
     },
     {
       "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "strict_causal",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-linear-attention-100k-s42",
+      "role_use": {
+        "internal_development_100000_150000": "used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "no_comparison",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-linear-attention-post100k-audit-s42",
+      "role_use": {
+        "internal_development_100000_150000": "unknown",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "original_audit_execution_failure",
+      "source_envelope": "experiments/pcqm_k1_linear_attention_100k/audit_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "unavailable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "paired_endpoint_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
+      "role_use": {
+        "internal_development_100000_150000": "used",
+        "internal_development_500000_550000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "recovered_frozen_NO_TRAIN_audit",
+      "source_envelope": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "frozen_portability_regressed",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata",
         "local_record_verified"
       ],
@@ -619,6 +681,7 @@
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-linear-attention-100k-s42",
         "TC-k1-linear-attention-post100k-audit-s42",
+        "TC-k1-linear-attention-post100k-audit-s42-recovery",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
         "TC-k1-mose-replacement-100k-s42",

@@ -1,0 +1,127 @@
+{
+  "accepted": true,
+  "model_inference_executed_by_acceptance": false,
+  "source_acceptance_ref": "platforms/_records/kaggle/training/pcqm_k1_linear_attention_audit_s42_v1/controller_acceptance.json",
+  "source_acceptance_sha256": "719779a7d6c07ae373c3c4955f51e256b058cf41613e45a445d6163851de1e5a",
+  "checkpoint_sha256": {
+    "neural_atom_k1_v4": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95",
+    "neural_atom_k1_linear_attention": "5f74d767cfd1fe9a136740caa61955ca5a9ccc9784caf41227a96e889f37d4f4"
+  },
+  "reproduction": {
+    "neural_atom_k1_v4": {
+      "max_abs_eV": 7.62939453125e-06,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "1b307b01d992a8feb287e3985a56e596497f259c6b3661e40bdd7ad571b85fe4",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "5541b450663a43438953519bcb09b4550edccc7bf79343c8da262a0e42a7ae7a",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "65fdf93cf18cef1a9e30f229cc318b6a491a5b548ff17e0d0bfecb6f616127d7",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "8dd171f8abde5df51ddcbf2ec88f2cf39d79e5f3bdd84dfbdfc37d56a5bf1bc2",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "ab1aac57ebc7e67bb9f4759c36bfa00f28adf2719d4d61e737d73b5ded198576",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "830793ac6b30ded2c611fe1498a02029f83592b95c05ca7080bd39439cebae34",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "8421817c0bb56c938aaca037b1e932ff62e09032655d6d66069004e0a24c3dc4",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "7643a1dd2d6bb344064d3d59b14571f0873290fd4d9240fb5070baa1525b21fc",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "e1b41490f85c75d597c7370ea21c3c0890485c41d4f2fc2605e0433b65e35d53",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "77438d245aed851f5c6cbff409dd29d3c256076c095787ad506222d1422ccf1c",
+          "rows": 5000
+        }
+      ]
+    },
+    "neural_atom_k1_linear_attention": {
+      "max_abs_eV": 1.430511474609375e-06,
+      "chunks": [
+        {
+          "file": "chunk_00.pt",
+          "sha256": "58b915dc157e61e2c529323905c5a9bf5154c372f5d8f5cc9632c42e30016f4d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_01.pt",
+          "sha256": "eea5e0294a1f876f79100690aa54b3ce8e89bbafa0eaa5dc1016832c161ed0a3",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_02.pt",
+          "sha256": "028e111fd045675663f2255898db8abe179770f2b41e9e377c05e621ce63e70d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_03.pt",
+          "sha256": "a10bf99248b23a1a0d783ff7c2c70e4c3e5a16a4ece2a34a3d8fecb5b106fb3d",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_04.pt",
+          "sha256": "d1997c2b1be2ece3e639264140e1cdd9e00e36ca062c29db2192495f7f7d059b",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_05.pt",
+          "sha256": "c268be7315772294684320f464c10fa66506b969c3f2bfba3c4a65c5ce9b8bdb",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_06.pt",
+          "sha256": "eaea6b3c8c4ee289937d2d9f0e1fd4d39805f67caa7974aa8b898abd025c2709",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_07.pt",
+          "sha256": "a4851ee25b88726e2e0acb698002943621a4e1aa41d1d4d3e12603ec03eb1aba",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_08.pt",
+          "sha256": "3dee5a1830650572a5e29c6e786ae8bb2451b1d606ba190f8a09b0f0974120f7",
+          "rows": 5000
+        },
+        {
+          "file": "chunk_09.pt",
+          "sha256": "3516efaf966ab475f73de29d55dbdc40b891229041eff03e4fb5453f64e6e277",
+          "rows": 5000
+        }
+      ]
+    }
+  },
+  "500k_mae_eV": {
+    "neural_atom_k1_v4": 0.1412533074617386,
+    "neural_atom_k1_linear_attention": 0.14420673251152039
+  },
+  "protected_roles_read": false
+}

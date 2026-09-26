@@ -1,0 +1,55 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_failure_v1.md",
+      "name": "audit_failure_v1",
+      "sha256": "cff91eca21529ea0e919495d957474ee86ce3193dbd9c7ba407ea625e13c921d"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json",
+      "name": "audit_recovery_receipt",
+      "sha256": "71fc52f8c63bc02e0dab65f122af9d3c4440bb7d70d2dce97864c67100e7eff3"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_linear_attention_100k/protocol.md",
+      "experiments/pcqm_k1_linear_attention_100k/training_contract.json",
+      "experiments/pcqm_k1_linear_attention_100k/audit_role_plan.json",
+      "experiments/pcqm_k1_linear_attention_100k/decision.md",
+      "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json",
+      "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json",
+      "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-linear-attention-post100k-audit-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-v5-audit-physical-run-binding",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-26T07:03:42+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "saved metadata/chunks; distinct physical run IDs, no local model execution"
+  },
+  "outcome": {
+    "artifact_status": "failure_logs_preserved",
+    "budget_decision": "recovery_recorded_separately",
+    "comparison_status": "no_comparison",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "unavailable"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "original_audit_execution_failure",
+  "track": "C"
+}

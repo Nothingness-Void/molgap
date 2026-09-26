@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "12795e0d09bc3fdfa91fb4b3598020d52bff7ff02a58d2f9f25e273ed20862b1",
+  "source_digest": "a6630d9823fcb8b58f1a14fbe0456389a40a9a59e8fce87696103b0af197a80a",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -164,35 +164,57 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_linear_attention_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_linear_attention_100k/decision.md",
       "family_id": "node-query-linear-global-exchange",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-linear-attention-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-linear-attention-100k-s42"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_linear_attention_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_linear_attention_100k/decision.md",
       "family_id": "node-query-linear-global-exchange",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-linear-attention-100k-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_linear_attention_100k/audit_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-linear-attention-post100k-audit-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_linear_attention_100k/decision.md",
+      "family_id": "node-query-linear-global-exchange",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-linear-attention-post100k-audit-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-linear-attention-post100k-audit-s42-recovery"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42-recovery"
     },
     {
       "completeness_status": "partial",

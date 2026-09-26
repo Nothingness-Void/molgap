@@ -1,0 +1,63 @@
+{
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "evidence_id": "pcqm-k1-linear-attention-post100k-audit-s42",
+  "run_id": "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
+  "outcome": {
+    "execution_status": "failed",
+    "artifact_status": "failure_logs_preserved",
+    "comparison_status": "no_comparison",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "unavailable",
+    "budget_decision": "recovery_recorded_separately",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_linear_attention_100k/decision.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "new authority required"
+    ],
+    "final": true
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "internal_development_100000_150000": "unknown"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-k1-linear-attention-post100k-audit-s42",
+      "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42",
+      "action_id": "A001",
+      "run_id": "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
+      "attempt_id": "original-audit-cublas-failure",
+      "category": "infrastructure_failure",
+      "platform": "kaggle1",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "evidence_ref": "experiments/pcqm_k1_linear_attention_100k/audit_failure/results/terminal_acceptance.json"
+    }
+  ],
+  "roles": [],
+  "cost_caveat": "Audit wall interval only; device/setup/queue costs unavailable. Not account-billed hours."
+}

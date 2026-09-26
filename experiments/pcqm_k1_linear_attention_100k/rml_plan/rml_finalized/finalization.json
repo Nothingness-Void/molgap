@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-64407cad9079e302cbff26146b7c82c5d03797dddbdd2ca238401092da335563",
+  "finalized_at": "2026-09-26T07:03:42+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_linear_attention_100k/decision.md": "8b8c9150d160b292ff70b418b5a9f821fac99a5621ccc1725968943ece4760a5",
+    "experiments/pcqm_k1_linear_attention_100k/protocol.md": "5d12d260a87b8ee64f428ea788d5be17505b732e8d937550f6214fb54d65c9af",
+    "experiments/pcqm_k1_linear_attention_100k/results/acceptance_summary.json": "c98d757eaa8b371ac9bc60293dc59db303adc300de23d22749fc126d0141f5fa",
+    "experiments/pcqm_k1_linear_attention_100k/results/audit_failure_v1.md": "cff91eca21529ea0e919495d957474ee86ce3193dbd9c7ba407ea625e13c921d",
+    "experiments/pcqm_k1_linear_attention_100k/results/canonical_trace.json": "28f8ae9d5ae36329e780a62b3699380524c3bf52546cafe72276682ed05bfaa2",
+    "experiments/pcqm_k1_linear_attention_100k/results/comparison_readiness.json": "c7b7f9a876d19aa1a9200a0e32a4fe4f8e4073e1d254f2a3a469ef1525e51062",
+    "experiments/pcqm_k1_linear_attention_100k/results/observed_role_history.json": "879fa8757f3d1bf03d5d9eba244dd420d39b6f68ef00e1b96a24a0898aa2d2c8",
+    "experiments/pcqm_k1_linear_attention_100k/results/paired_analysis.json": "8dbd1194436503ce618ff47599845a74896be8f55f3dc4189be2ea238d716d0b",
+    "experiments/pcqm_k1_linear_attention_100k/results/portability_analysis.json": "032e64a009e11c0225dcc52e359175960acc0670b3d55a3b38f18089e8af14ae",
+    "experiments/pcqm_k1_linear_attention_100k/results/submission_receipt.json": "c0b4d4cd24a72381edad52dde50f9d73086a28a25c068e1dccf67bc963f152c2",
+    "experiments/pcqm_k1_linear_attention_100k/results/terminal_acceptance.json": "6f6dc05bbe2a290fc55f791a98804a3fa2ceeb9da79810d17034f1588762a5c6",
+    "experiments/pcqm_k1_linear_attention_100k/rml_plan/trajectory.json": "ff357ad0b45f87960b52638de9afd66acb80edd627cd32da1cf26cb6f6697cb3",
+    "experiments/pcqm_k1_linear_attention_100k/source_config.json": "99fd1a0507d1c701c0451470c54f31febba54ea1146422a6b72e37f0fcbde44f",
+    "experiments/pcqm_k1_linear_attention_100k/training_contract.json": "9ade57bb493ab5f1411f3fbd3c0c5adae40b251fa775de4aad603acbedec3c97"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-linear-attention-100k-s42.json": "71bbb09325d5ca24841d90f483865be385c681e9e0c42f7a2b376f288cfb5a08",
+    "prospective_snapshot.json": "ff357ad0b45f87960b52638de9afd66acb80edd627cd32da1cf26cb6f6697cb3",
+    "roles/role-TC-k1-linear-attention-100k-s42-labels-read.json": "c7985c0ce6697c9f359db1d287f0a850b81fc96a105c63f23b150d7dca9e1fb4",
+    "roles/role-TC-k1-linear-attention-100k-s42-metric-computed.json": "005401277ad1b68ef77b20629ed6b77533efddbb3d8ae41817286215a08e58e7",
+    "roles/role-TC-k1-linear-attention-100k-s42-prediction-input.json": "c171d0fdcabc47091acd95838c86bb0561a5465dc742b4403abc65d0946567b9",
+    "roles/role-TC-k1-linear-attention-100k-s42-selection-used.json": "4725e6a59c6b2e7ea640cfdeef91536fe7ca18956faff033e1af4f21602a388a",
+    "roles/role-TC-k1-linear-attention-100k-s42-training-membership.json": "3b3e772a361052b8b63788d68edf2124fb80d2a85ce42ad45c0f0acb4c9115c4",
+    "terminal_input.json": "7a3f6187291540fde1b67a27d76ee79f2327e9240435bdfaaf50d2938221947f",
+    "trace.json": "28f8ae9d5ae36329e780a62b3699380524c3bf52546cafe72276682ed05bfaa2",
+    "trace_manifest.json": "31f609b3e63b084dfa56db3b7f385c35ffb9e12776d43bd8b59fd3004f77587e",
+    "trajectory.json": "c6dbcd2b5ae324892ca9e7be35bad11569de52b9471ae56fcfd26b52e0acfa17",
+    "v5_evidence.json": "b6c8d980d0317f7d23679c384f10dc69b9c44c26fdb196de5f6f0a4d484e3218"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-linear-attention-100k-s42.json": "experiments/pcqm_k1_linear_attention_100k/rml_plan/costs/cost-TC-k1-linear-attention-100k-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_linear_attention_100k/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "64407cad9079e302cbff26146b7c82c5d03797dddbdd2ca238401092da335563",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-linear-attention-100k-s42"
+}

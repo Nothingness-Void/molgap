@@ -1,0 +1,30 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TC-k1-linear-attention-post100k-audit-s42-recovery",
+  "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+  "action_id": "A001",
+  "run_id": "nothingnessvoid/molgap-k1-linear-attention-frozen-audit-s42:v1",
+  "attempt_id": "frozen-audit-recovery-v1",
+  "category": "audit",
+  "platform": "kaggle1",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.037512158614722214
+    }
+  },
+  "evidence_ref": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/results/terminal_acceptance.json"
+}

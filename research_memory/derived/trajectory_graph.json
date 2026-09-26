@@ -121,6 +121,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-linear-attention-post100k-audit-s42-recovery:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-linear-attention-post100k-audit-s42-recovery:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-linear-attention-post100k-audit-s42:A001",
       "target": "experiments/pcqm_k1_linear_attention_100k/source_config.json",
       "type": "action_produced_evidence"
@@ -556,6 +566,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-linear-attention-post100k-audit-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-mose-replacement-100k-s42",
       "target": "TC-k1-mose-hidden-bn-100k-s42",
       "type": "parent_trajectory"
@@ -842,6 +857,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-mose-context-gate-100k-s42",
       "type": "prior_evidence"
     },
@@ -977,6 +997,11 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-mose-context-gate-100k-s42",
       "type": "reference_used"
     },
@@ -1091,6 +1116,18 @@
     },
     {
       "id": "pcqm-k1-functional-group-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-post100k-audit-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
       "type": "evidence"
     },
     {
@@ -1215,6 +1252,10 @@
     },
     {
       "id": "TC-k1-linear-attention-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-linear-attention-post100k-audit-s42-recovery",
       "type": "trajectory"
     },
     {

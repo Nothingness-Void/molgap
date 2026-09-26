@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 31,
+    "trajectories_total": 32,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 31,
-    "with_incomplete_native_measurement": 29,
+    "with_cost_event": 32,
+    "with_incomplete_native_measurement": 30,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -20,8 +20,8 @@
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
-        "TC-k1-linear-attention-100k-s42",
         "TC-k1-linear-attention-post100k-audit-s42",
+        "TC-k1-linear-attention-post100k-audit-s42-recovery",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-scale-attribution",
@@ -33,12 +33,13 @@
     },
     {
       "code": "historical_partial_record",
-      "count": 13,
+      "count": 14,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TB-k1-pair-token-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
+        "TC-k1-linear-attention-post100k-audit-s42-recovery",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
         "TC-k1-mose-replacement-100k-s42",
@@ -53,7 +54,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 29,
+      "count": 30,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -65,6 +66,7 @@
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-linear-attention-100k-s42",
         "TC-k1-linear-attention-post100k-audit-s42",
+        "TC-k1-linear-attention-post100k-audit-s42-recovery",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
         "TC-k1-mose-replacement-100k-s42",
@@ -89,9 +91,8 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 3,
+      "count": 2,
       "items": [
-        "TC-k1-linear-attention-100k-s42",
         "TC-k1-linear-attention-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -99,10 +100,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 3,
+      "count": 1,
       "items": [
-        "TC-k1-linear-attention-100k-s42",
-        "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"

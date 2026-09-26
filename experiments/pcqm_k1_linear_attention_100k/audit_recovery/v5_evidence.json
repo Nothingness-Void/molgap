@@ -1,0 +1,80 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "legacy_contract": "none-v5-audit-physical-run-binding",
+  "evidence_id": "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
+  "track": "C",
+  "scope": "recovered_frozen_NO_TRAIN_audit",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "paired_endpoint_diagnostic",
+    "scientific_status": "no_train_negative_transfer",
+    "transfer_status": "frozen_portability_regressed",
+    "budget_decision": "stop_under_contract",
+    "full_handoff_status": "not_authorized"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_linear_attention_100k/protocol.md",
+      "experiments/pcqm_k1_linear_attention_100k/training_contract.json",
+      "experiments/pcqm_k1_linear_attention_100k/audit_role_plan.json",
+      "experiments/pcqm_k1_linear_attention_100k/decision.md",
+      "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json",
+      "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json",
+      "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "audit_failure_v1",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_failure_v1.md",
+      "availability": "repository_retained",
+      "sha256": "cff91eca21529ea0e919495d957474ee86ce3193dbd9c7ba407ea625e13c921d"
+    },
+    {
+      "name": "audit_recovery_receipt",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json",
+      "availability": "repository_retained",
+      "sha256": "71fc52f8c63bc02e0dab65f122af9d3c4440bb7d70d2dce97864c67100e7eff3"
+    },
+    {
+      "name": "audit_terminal",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_terminal.json",
+      "availability": "repository_retained",
+      "sha256": "84c5ad36444b489d87d3cb1ed3535b075e3f0fb3dc311a6c9a8893f118eb2f95"
+    },
+    {
+      "name": "audit_recovery_execution",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_execution.json",
+      "availability": "repository_retained",
+      "sha256": "cfc34a527c22238da21e022f3017451671044388d55e718a770a43c68dababeb"
+    },
+    {
+      "name": "audit_acceptance_summary",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/audit_acceptance_summary.json",
+      "availability": "repository_retained",
+      "sha256": "4cf5a3eb10c73591902040a05aaf355c8bdce992fffbaa90692c6aed2cf5876e"
+    },
+    {
+      "name": "portability_analysis",
+      "locator": "experiments/pcqm_k1_linear_attention_100k/results/portability_analysis.json",
+      "availability": "repository_retained",
+      "sha256": "032e64a009e11c0225dcc52e359175960acc0670b3d55a3b38f18089e8af14ae"
+    }
+  ],
+  "migration": {
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false,
+    "migrated_at": "2026-09-26T07:03:42+00:00",
+    "verification_scope": "saved metadata/chunks; distinct physical run IDs, no local model execution"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "frozen_NO_TRAIN_infrastructure_recovery",
+      "run_ids": [
+        "nothingnessvoid/molgap-k1-linear-attention-frozen-audit-s42:v1"
+      ],
+      "attempt_ids": [
+        "v1"
+      ],
+      "source_commit": "3bec85d57997592a2ae74b73c2264374d7131532",
+      "evidence_refs": [
+        "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json",
+        "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json"
+      ],
+      "cost_event_ids": [
+        "cost-TC-k1-linear-attention-post100k-audit-s42-recovery"
+      ]
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_linear_attention_100k/decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "new authority required"
+    ],
+    "final": true
+  },
+  "family_id": "node-query-linear-global-exchange",
+  "hypothesis": {
+    "alternative_explanations": [
+      "smooth kernel underfits",
+      "node query overfits",
+      "reused-role selection optimism"
+    ],
+    "changed_mechanism": "frozen-checkpoint NO_TRAIN portability audit",
+    "cheapest_falsifier": "one candidate seed42 plus separately recorded frozen-500K inference",
+    "decision_changed_if_negative": "close exact mechanism without successor",
+    "decision_changed_if_positive": "propose an explicitly authorized late-horizon matched 500K bridge",
+    "expected_native_cost_ref": "cost-TC-k1-linear-attention-post100k-audit-s42-recovery",
+    "historical_unknowns": [
+      "Recovery spec/receipt preceded execution, but no native RML plan bound this physical recovery ID",
+      "No device allocation/account-billed cost available for either audit attempt"
+    ],
+    "hypothesis_id": "H-TC-k1-linear-attention-post100k-audit-s42-recovery",
+    "observed_deficiency": "K1 shared-slot variants lost late-horizon or frozen-role gains; query-specific retrieval is untested.",
+    "related_closed_family_ids": [
+      "k1-uniform-global-return",
+      "k1-inverse-global-return",
+      "k1-molecule-context-gate",
+      "k1-induced-pair-token",
+      "shortest-path-attention"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does node-specific linear exchange improve portable 2D regression?",
+  "record_mode": "retrospective_partial",
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-linear-attention-post100k-audit-s42-recovery"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_linear_attention_100k/audit_recovery/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_linear_attention_100k/budget_snapshot.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_linear_attention_100k/training_contract.json"
+    ],
+    "parent_trajectory_ids": [
+      "TC-k1-linear-attention-post100k-audit-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "pcqm-k1-v4-100k-reference-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_linear_attention_100k/audit_role_plan.json"
+    ],
+    "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996",
+    "source_config_identity": "2f55dcb2ca737c47383bded0850d1a883bb5ebb184fa9e224c075e495ca52e7b"
+  },
+  "track": "C",
+  "trajectory_id": "TC-k1-linear-attention-post100k-audit-s42-recovery"
+}

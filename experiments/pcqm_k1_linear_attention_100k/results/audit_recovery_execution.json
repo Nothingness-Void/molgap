@@ -1,0 +1,35 @@
+{
+  "format": "molgap-audit-recovery-execution-v1",
+  "complete": true,
+  "spec": {
+    "format": "molgap-frozen-audit-recovery-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "original_run": "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
+    "recovery_kernel": "nothingnessvoid/molgap-k1-linear-attention-audit-s42",
+    "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996",
+    "source_archive_sha256": "974c198ac45d759d2988ece962dc288130e64390dc7022a7fe689c5f15e7271f",
+    "mode": "neural_atom_k1_linear_attention",
+    "candidate_files": {
+      "arm_record.json": "c173d7cc75a0859a81366748fec98dbad89d251eff2b91e19dcc0423a8a38c63",
+      "best_model.pt": "5f74d767cfd1fe9a136740caa61955ca5a9ccc9784caf41227a96e889f37d4f4",
+      "best_development_payload.pt": "619dfea3089d6631644c62f6c50077acbcb8679a34131f7d61aad55e83efa8fd"
+    },
+    "cublas_workspace_config": ":4096:8",
+    "physical_batch": 128,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "training_authorized": false,
+    "inference_scope": "Original frozen 100K internal dev reproduction, then fixed500K internal dev; no official roles",
+    "audit_seconds_limit": 5400,
+    "planned_audit_trajectory": "experiments/pcqm_k1_linear_attention_100k/audit_plan/trajectory.json",
+    "candidate_archive_sha256": "f48cd00706f4f080ba0670e60f6f120eced9f3fcaf36334ca71f83c5be3d4908",
+    "launcher_commit": "3bec85d57997592a2ae74b73c2264374d7131532",
+    "launcher_sha256": "ab2e90ab4a7ae807b63d541b660cef9b07efc35d6d5694efdbcdcf42b39e8345"
+  },
+  "gpu": "Tesla T4",
+  "torch": "2.4.1+cu121",
+  "cublas_workspace_config": ":4096:8",
+  "training_executed": false,
+  "optimizer_steps": 0,
+  "elapsed_seconds": 135.04377101299997
+}
