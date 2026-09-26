@@ -58,6 +58,7 @@ FINALIZED_AT = "2026-09-20T19:00:00+09:00"
 MIGRATED_AT = "2026-09-20"
 PLATFORM = "kaggle2"
 HARDWARE = "Tesla_T4_16GB"
+COST_EVENT_ID = None
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -304,10 +305,14 @@ def main() -> None:
             "events": roles,
         },
     )
-    elapsed = sum(float(row["seconds"]) for row in raw_trace["epochs"])
+    # Native recorders include evaluation/checkpoint IO in their observed device
+    # interval; do not replace that measurement with an epoch-timer reconstruction.
+    elapsed = trace["observations"][-1]["cumulative_device_time_seconds"]
+    if elapsed is None:
+        raise RuntimeError("Training terminal adapter requires observed device timing")
     cost = {
         "schema": "molgap-cost-event-v1",
-        "cost_event_id": f"cost-{TRAJECTORY_ID}-training",
+        "cost_event_id": COST_EVENT_ID or f"cost-{TRAJECTORY_ID}-training",
         "trajectory_id": TRAJECTORY_ID,
         "action_id": ACTION_ID,
         "run_id": RUN_ID,
