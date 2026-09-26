@@ -1,0 +1,23 @@
+{
+  "format": "molgap-kaggle-submission-receipt-v1",
+  "owner": "server",
+  "platform": "kaggle1",
+  "credential_owner_verified": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-k1-linear-attention-s42",
+  "version": 1,
+  "authoritative_api_status": "RUNNING",
+  "status_checked_date_utc": "2026-09-26",
+  "requested_accelerator": "NvidiaTeslaP100",
+  "actual_accelerator": null,
+  "kernel_timeout_seconds": 28800,
+  "source_dataset": "nothingnessvoid/molgap-k1-linear-attention-source",
+  "source_dataset_status": "ready",
+  "source_payload_remote_bytes": 645813,
+  "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996",
+  "source_archive_sha256": "974c198ac45d759d2988ece962dc288130e64390dc7022a7fe689c5f15e7271f",
+  "release_commit": "13bd2c26",
+  "training_started_verified": false,
+  "scientific_outcome": "pending",
+  "duplicate_submission": false,
+  "infrastructure_note": "First dataset upload failed locally before uploading its first file due to Windows relative-path upload-cache naming; using package directory as cwd succeeded. No GPU retry was made."
+}
