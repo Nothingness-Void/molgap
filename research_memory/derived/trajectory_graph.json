@@ -672,6 +672,16 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
       "type": "prior_evidence"
     },
@@ -838,6 +848,16 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
       "type": "reference_used"
     },
     {
@@ -1147,6 +1167,14 @@
     },
     {
       "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
       "type": "trajectory"
     },
     {
