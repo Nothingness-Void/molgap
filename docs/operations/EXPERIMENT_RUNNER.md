@@ -112,9 +112,10 @@ success does not satisfy them.
 The synthetic tests in `tests/test_experiment_runner.py` use temporary directories,
 real spawn for metadata probes, patched lightweight factories for construction,
 and fake processes for deterministic crashes/timeouts. They use no datasets or
-protected evaluation roles and do not construct real models. They were authored
-without execution in this implementation pass. Suggested follow-up from this
-worktree with its configured project virtual environment and `src` on PYTHONPATH:
+protected evaluation roles and do not construct real models. Executed server
+scope is retained in the [integration review](shared_experiment_verification.md).
+Run from the selected checkout with its project virtual environment and `src`
+on PYTHONPATH:
 
 ```powershell
 $env:PYTHONPATH = (Join-Path (Get-Location) 'src')

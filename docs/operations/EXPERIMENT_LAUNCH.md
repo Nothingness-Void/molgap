@@ -193,19 +193,19 @@ conflicts without guessing, and reconcile authoritative existing identities
 before permitting any separately authorized retry. No such adapter is implemented
 here, and no historical platform script is modified.
 
-## Unexecuted Test Handoff
+## Local Verification
 
-Tests were authored but not executed. Luna may run this local-only suite in the
-specified worktree after a project virtualenv is provisioned there:
+Run this local-only suite from the selected checkout with its project virtualenv.
+The server's executed scope is in the
+[integration review](shared_experiment_verification.md):
 
 ```powershell
-Set-Location 'C:\Users\17449\.codex\worktrees\d3cc\molgap'
 $env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_launch.py -q
+& '.\.venv\Scripts\python.exe' -m pytest --noconftest tests/test_experiment_launch.py -q
 ```
 
 Fixtures create a tiny synthetic local Git repository/package in pytest's
 temporary directory; they neither access remote platforms nor consume molecular
 data. The no-external-call test blocks network/process calls after fixture setup.
-No test success, actual submission, training result or platform compatibility is
-claimed by this implementation.
+Synthetic test success does not establish actual submission, training results
+or platform compatibility.

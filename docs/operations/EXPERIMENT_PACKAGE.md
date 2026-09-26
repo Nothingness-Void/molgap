@@ -106,7 +106,7 @@ This manifest is derived packaging evidence only. `source_packaged` never
 means READY, replay-ready, training success, measured cost, runtime acceptance,
 or RML closure. Spec schema and terminal protocol versions are unchanged.
 
-## Review handoff
+## Local Verification
 
 Synthetic tests are in `tests/test_experiment_package.py`. They create temporary
 caller-owned Git repositories, reuse the existing synthetic spec fixture, and
@@ -114,8 +114,10 @@ cover deterministic rebuilding, sidecar/declaration/source tampering, tracked
 source boundaries, unsafe tar members, identity consistency and lack of runtime
 authority. Symlink creation tests skip on hosts without that capability.
 
-Suggested reviewer command (not executed during implementation):
+Executed server scope is in the
+[integration review](shared_experiment_verification.md). From the selected
+checkout and its project virtualenv:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/test_experiment_package.py tests/test_experiment_spec.py
+.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_package.py tests/test_experiment_spec.py
 ```

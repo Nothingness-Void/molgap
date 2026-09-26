@@ -116,10 +116,11 @@ bind bytes and explicit declarations; they do not independently prove scientific
 role provenance or protect against an adversary controlling the process/OS.
 Dependencies are host-installed; their versions are not certified here.
 
-## Unexecuted Test Handoff
+## Verification Boundary
 
-Tests were authored, not run as part of this implementation. Synthetic tests
-exercise rejection and blocked semantics only. The real dual-arm integration
+Synthetic tests cover rejection, blocked semantics and mocked diagnostic
+workers, not real-model compatibility. Their executed server scope is in the
+[integration review](shared_experiment_verification.md). The real dual-arm integration
 test skips unless `MOLGAP_PREFLIGHT_REAL_INPUTS` points to a user-authorized JSON
 configuration with `spec`, `package_dir`, `expected_package_identity`,
 `shard_manifest`, `shard_root`, and `expected_shard_manifest_sha256`. It requires
@@ -127,22 +128,23 @@ two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
 the first arm's real loader result. It is parameterized over both modes; only the explicitly selected smoke case constructs a model.
 
-Suggested Luna commands, from this isolated worktree, using a project virtualenv
-with torch, NumPy, PyG and the frozen source package's dependencies installed:
+Use the selected checkout's project virtualenv with torch, NumPy, PyG and the
+frozen source package's dependencies installed. The default local check excludes
+real data and model execution:
 
 ```powershell
 $env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
+& '.\.venv\Scripts\python.exe' -m pytest --noconftest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
 ```
 
 The `.venv` must be provisioned in this worktree before these commands are used.
 The real integration cases require explicit authorization and
 `MOLGAP_PREFLIGHT_REAL_INPUTS`; do not run them against protected roles. Both arms
 must declare random initialization with the correct model state digest. The
-second command runs the real CPU model smoke as well as loader inspection, so
-it requires separate execution authorization and enough time/RAM for GPTrans-T.
-Neither command was executed by the implementer.
+real integration selection (`-k real_dual_arm`) runs the real CPU model smoke
+as well as loader inspection, so it requires separate execution authorization
+and enough time/RAM for GPTrans-T. It was not part of the server integration
+review; do not interpret synthetic success as a GPU/DCU runtime certificate.
 
 ## Explicit Model Smoke V1
 

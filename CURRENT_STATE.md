@@ -3,6 +3,16 @@
 > Live truth only. Historical methods, metrics, and failures live in experiment
 > decisions; task order lives in `ROADMAP.md`.
 
+## Shared experiment infrastructure
+
+The shared local experiment CLI, packaging, planning and terminal/RML helpers
+are integrated. Platform submission and executable training recipes remain
+with their owning adapters. Server K1's value-decoupled addon is declaration-only
+until its factory mismatch is resolved; schema success cannot release it.
+Capability routing: [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md).
+Verification and remaining boundaries:
+[integration review](docs/operations/shared_experiment_verification.md).
+
 ## Production
 
 - Recommended Track A model: repaired-2M three-GPS dense pure 2D.

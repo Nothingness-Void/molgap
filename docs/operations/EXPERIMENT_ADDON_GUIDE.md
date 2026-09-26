@@ -35,6 +35,28 @@ For an EdgeState baseline, depth change, or K1 architecture comparison, start
 with [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md); its model-only recipe is
 not an executable training contract.
 
+## Server capability boundary
+
+| Task | Reuse | Remaining experiment responsibility |
+|---|---|---|
+| Identity and prospective records | Spec v2 and per-arm RML planning | Authenticated scientific, role, budget and source inputs |
+| Source and receipts | Explicit source package and local launch receipts | Platform submission, verified responses and server A/B binding |
+| Family diagnostics | Metadata probes and reviewed construction adapters | Supported-mode checks and actual accelerator qualification |
+| EdgeState training primitives | Target statistics, sampler, step, evaluation and checkpoint helpers | Accepted graph loader, frozen training loop, selection, native cost and trace |
+| Terminal closure | Descriptor translation and explicit RML execution | Independent acceptance, actual artifacts and eligible candidate/reference evidence |
+
+Read [K1 adapter compatibility](K1_ADAPTER.md) before selecting its registered
+addons. Registration or a successful metadata probe does not establish factory
+compatibility. K1/EdgeState real-shard preflight is unsupported by the shared
+core; use only an independently validated experiment-owned path.
+Verification scope and unresolved integration gaps are recorded in
+[the server integration review](shared_experiment_verification.md).
+
+An existing immutable reference remains the default. Optional
+`prospective.same_run_replay` is for an explicitly justified new paired run,
+not a reason to retrain the baseline for every candidate. Merely writing a
+terminal descriptor does not make either arm replay-ready.
+
 ## Addon Ownership
 
 The experiment-owned addon is responsible for its frozen scientific recipe,
@@ -85,12 +107,11 @@ alone and record why two arms were not feasible.
 
 ## Minimal Handoff Sequence
 
-1. Follow `AGENTS.md`, `BRANCHES.md`, `CURRENT_STATE.md`, and the owning
-   experiment contract. Query RML before opening a new research question. For
-   a desktop-owned new experiment, create its dedicated branch and worktree from
-   the verified current `molgap-desktop` tip before changing source or publishing
-   prospective records. Complete training reconciliation, acceptance, decision,
-   and terminal RML on that branch; route the closed result by `BRANCHES.md`.
+1. Follow the selected checkout's `AGENTS.md`, `CURRENT_STATE.md`, and owning
+   experiment contract. Query RML before opening a new research question.
+   On server, branch governance is in `AGENTS.md`: use `molgap-server`, with
+   temporary isolation only when needed. Desktop's branch/worktree policy
+   belongs to its own checkout; do not import that workflow or adopt its jobs.
 2. Identify the existing family trainer and platform submitter before writing
    an addon. Inspect the platform input mounts, staged source shape, kernel
    entry point, and metadata limits with read-only or local static checks.

@@ -7,6 +7,12 @@ job status.
 For cross-platform takeover, connection-independent resume rules, and the
 bootstrap prompt for another Agent, read `REMOTE_HANDOFF.md`.
 
+The [shared experiment CLI](../docs/operations/EXPERIMENT_CLI.md) owns local
+packages and receipts only. Actual submission, reconciliation and retrieval
+remain in the owning platform adapter/workload skill; a local receipt is not
+a submitted job. Start integration at the
+[addon guide](../docs/operations/EXPERIMENT_ADDON_GUIDE.md).
+
 | Platform | Path | Role |
 |---|---|---|
 | Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |

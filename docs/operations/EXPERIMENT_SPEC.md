@@ -28,7 +28,8 @@ The static, immutable registries expose `FamilyContract` and `AddonContract`.
 importing model code or dispatching a callable supplied by an author.
 Family version `1` is an interface version, not a promoted model generation.
 GPTrans-T binds the `pcqm_gptrans_v4` recipe and K1 binds `pcqm_k1_full`.
-These names point to the existing package modules. K1's
+These are recipe identities, not literal import paths: the retained runners
+are `molgap.pcqm_gptrans_v4` and `molgap.pcqm_k1_full_runner`. K1's
 `architecture_base` is `ogb_edge_state_structural_gps9`: it is an EdgeState
 backbone variant, not an independent backbone family. This metadata does not
 change any frozen K1 Spec identity or make the K1-only training recipe an

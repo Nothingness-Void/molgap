@@ -11,6 +11,12 @@ Track ownership is defined only in `TRACKS.md`: general-model work belongs to
 Track A, PCQM leaderboard specialists to Track B, and architecture discovery to
 Track C.
 
+For new experiment plumbing, start with the
+[shared addon guide](../docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
+[local CLI](../docs/operations/EXPERIMENT_CLI.md). Keep the scientific question,
+trainer integration and evidence beside the owning experiment; do not copy
+shared packaging, planning or terminal logic.
+
 | Question | Verdict | Directory |
 |---|---|---|
 | Can per-node linear-kernel retrieval replace K1's single global slot? | No retained terminal gain; negative frozen500K portability, complete training replay, route closed | `pcqm_k1_linear_attention_100k/` |

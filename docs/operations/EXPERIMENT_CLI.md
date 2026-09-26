@@ -3,7 +3,7 @@
 Run from the selected checkout using its configured project environment:
 
 ```powershell
-Set-Location D:\w\cli
+# Start in the selected MolGap checkout; use its project virtual environment.
 .\.venv\Scripts\python.exe -m molgap.experiment_cli --help
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/gptrans_t_v1.json
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/k1_v1.json
@@ -56,12 +56,12 @@ $shardRoot = 'D:\local-inputs\real-shard'
 $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
-.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root D:\w\cli
-.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root D:\w\cli --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
+.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root .
+.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root . --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
 .\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
 .\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
 .\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
-.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root D:\w\cli
+.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root .
 ```
 
 - `validate-spec` returns the canonical declaration and its identity. This is
@@ -90,7 +90,7 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
   `construct` are allowed. Neither runs forward, trains or loads state. Construct
   requires random initialization. Device tokens must be unique and match the
   arm count and declared device count. The example command assumes two arms;
-  use `--device cpu` for either one-arm structural example. Device visibility
+  use `--device cpu` for a one-arm structural example. Device visibility
   tokens do not certify actual accelerator allocation.
 - `launch-receipt` builds and writes a local receipt in an existing dedicated
   directory. Optional `--response PATH` invokes local reconciliation of a
@@ -107,6 +107,8 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
 ## Desktop Kaggle GPTrans Paired Route (reference only)
 
+The experiment paths in this subsection belong to `molgap-desktop`, not this
+server checkout. They are context, not server-local runnable examples.
 For a desktop-owned GPTrans two-arm screen, use the owning experiment's contract
 and the [addon handoff sequence](EXPERIMENT_ADDON_GUIDE.md). The submitted
 Kaggle1 paired example is under
@@ -151,12 +153,14 @@ replay-ineligible. Older terminal records are not upgraded by this workflow.
 `examples/k1_v1.json` declares a neural-atom K1 candidate with `k1_pair_value/1`.
 `examples/edge_state_v1.json` declares a basic EdgeState GPS9 reference and a
 depth-6 candidate; see [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md).
-Both match the v1 registry and the field structure in `test_experiment_spec`.
+All three match the v1 registry and field structure in `test_experiment_spec`.
 Every digest is an explicitly unauthenticated all-zero placeholder. These are
 structure examples, not executable data authorization, accepted evidence,
 READY evidence or replay-ready specs. The prospective fields are declarations,
 not canonical trajectory records. No experiment directory, trajectory or
-evidence package is created for either example.
+evidence package is created for any example. The K1 addon example is declaration
+only; consult [server K1 factory compatibility](K1_ADAPTER.md) before attempting
+construction. Successful `validate-spec` is not a construction test.
 
 Platform submission is unimplemented within this shared CLI
 (`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
@@ -175,10 +179,12 @@ local package fixtures use temporary local Git repositories. They do not submit
 remotely or train models.
 
 ```powershell
-Set-Location D:\w\cli
+# Start in the selected MolGap checkout.
 $env:PYTHONPATH = (Resolve-Path src).Path
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
+.\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
+.\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
 ```
 
 These local tests do not confer formal training authorization.
+Server verification scope is retained in
+[shared_experiment_verification.md](shared_experiment_verification.md).
