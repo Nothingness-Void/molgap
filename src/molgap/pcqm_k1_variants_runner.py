@@ -554,6 +554,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         check_mechanism as check_portability,
     )
     from .k1_linear_attention import MODES as LINEAR_MODES, check_mechanism as check_linear
+    from .k1_relation_resolution import (
+        MODES as RESOLUTION_MODES, PARAMETERS as RESOLUTION_PARAMETERS,
+        check_mechanism as check_resolution,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -567,7 +571,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
         + PAIR_TOKEN_MOSE_MODES
-        + PORTABILITY_MODES + LINEAR_MODES
+        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES
     )
     import torch
 
@@ -1244,6 +1248,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
             raise RuntimeError("One-shot triplet PairToken parameter identity changed")
     elif mode in LINEAR_MODES:
         mechanism_checks = check_linear(model, batch)
+    elif mode in RESOLUTION_MODES:
+        mechanism_checks = check_resolution(model, batch)
+        if sum(parameter.numel() for parameter in model.parameters()) != RESOLUTION_PARAMETERS[mode]:
+            raise RuntimeError("Relation-resolution parameter identity changed")
     elif mode in PORTABILITY_MODES:
         mechanism_checks = check_portability(model, batch)
         if (
@@ -1309,6 +1317,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         )
     elif mode in LINEAR_MODES:
         candidate_parameters = list(model.base.neural_atom_mixers.parameters())
+    elif mode in RESOLUTION_MODES:
+        candidate_parameters = list(model.relation_token.parameters())
     elif mode in PORTABILITY_MODES:
         candidate_parameters = (
             list(model.rwse_refresh.parameters())
@@ -1408,6 +1418,23 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
                 "PairToken or MoSE residual has no finite gradient after two steps"
             )
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    if mode in RESOLUTION_MODES:
+        # Dense relation memory depends on padded node count, not only on
+        # the first shuffled batch. Probe the bounded worst training shapes
+        # before paying for forty epochs. These steps are discarded below.
+        from torch_geometric.data import Batch
+        sizes = torch.cat([
+            part.slices["x"][1:] - part.slices["x"][:-1]
+            for part in roles["train"].datasets
+        ])
+        indices = torch.argsort(sizes, descending=True, stable=True)[:BATCH_SIZE].tolist()
+        largest = Batch.from_data_list([roles["train"][index] for index in indices]).to("cuda")
+        _optimizer_step(model, optimizer, largest, mean, std)
+        mechanism_checks["largest_train_shape_probe"] = {
+            "graphs": len(indices), "maximum_nodes": int(sizes.max()),
+            "source_role": "train", "steps_discarded_before_scientific_training": True,
+        }
+        del largest
     if (
         mode in MOSE_MODES
         and parameter_count
@@ -1498,6 +1525,8 @@ def train_arm(
     source_commit: str,
     source_archive_sha256: str,
     resume_from: Path | None = None,
+    trajectory_id: str | None = None,
+    physical_run_id: str | None = None,
 ) -> dict:
     import torch
     import torch.nn.functional as functional
@@ -1516,6 +1545,7 @@ def train_arm(
     from .k1_oneshot_triplet_pair_token import MODES as ONESHOT_TRIPLET_MODES
     from .k1_portability_dual import MODES as PORTABILITY_MODES
     from .k1_linear_attention import MODES as LINEAR_MODES
+    from .k1_relation_resolution import MODES as RESOLUTION_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1529,7 +1559,7 @@ def train_arm(
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
-        + PORTABILITY_MODES + LINEAR_MODES
+        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES
         + MOSE_MODES
     )
 
@@ -1537,6 +1567,11 @@ def train_arm(
         raise ValueError(f"Unknown mode: {mode}")
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
+    if mode in RESOLUTION_MODES:
+        if not trajectory_id or not physical_run_id:
+            raise ValueError("Relation study requires prospective trajectory and physical run binding")
+        if resume_from is not None:
+            raise RuntimeError("Recovered relation runs require a reviewed new physical-attempt trace binding")
     validate_screen_arm(physical_batch_per_device=BATCH_SIZE)
     if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
         raise RuntimeError("Frozen row order implementation changed")
@@ -1646,6 +1681,9 @@ def train_arm(
             raise RuntimeError("Linear screen resume requires a separately reviewed canonical-trace binding")
         canonical = recorder(output, "TC-k1-linear-attention-100k-s42",
                              "nothingnessvoid/molgap-k1-linear-attention-s42:v1")
+    elif mode in RESOLUTION_MODES:
+        from .k1_screen_trace import recorder, record_epoch
+        canonical = recorder(output, trajectory_id, physical_run_id)
     observed_steps = 0
     observed_samples = 0
     torch.cuda.reset_peak_memory_stats()

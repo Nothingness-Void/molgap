@@ -1,0 +1,9 @@
+{
+  "id": "kaseichou/molgap-k1-rrwp-pair-s42",
+  "title": "MolGap K1 RRWP Pair S42",
+  "code_file": "run.py", "language": "python", "kernel_type": "script",
+  "is_private": true, "enable_gpu": true, "enable_internet": true,
+  "machine_shape": "NvidiaTeslaP100",
+  "dataset_sources": ["kaseichou/molgap-k1-relation-resolution-source", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"],
+  "competition_sources": [], "kernel_sources": []
+}

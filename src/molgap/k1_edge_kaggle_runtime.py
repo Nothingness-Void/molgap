@@ -64,7 +64,7 @@ def _atomic_json(path: Path, value: dict) -> None:
     os.replace(temporary, path)
 
 
-def _pin_runtime() -> None:
+def _pin_runtime(*, required_devices: int = 2, required_name: str | None = "T4") -> None:
     """Install the accepted K1 software tuple without touching NumPy."""
     subprocess.check_call(
         [
@@ -102,8 +102,8 @@ def _pin_runtime() -> None:
                 f"assert torch.version.cuda == {TORCH_CUDA_VERSION!r}; "
                 f"assert metadata.version('torch-geometric') == {PYG_VERSION!r}; "
                 f"assert metadata.version('ogb') == {OGB_VERSION!r}; "
-                "assert torch.cuda.device_count() == 2; "
-                "assert all('T4' in torch.cuda.get_device_name(i) for i in range(2))"
+                f"assert torch.cuda.device_count() >= {required_devices}; "
+                f"assert {required_name!r} is None or all({required_name!r} in torch.cuda.get_device_name(i) for i in range({required_devices}))"
             ),
         ]
     )

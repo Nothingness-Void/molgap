@@ -4,6 +4,8 @@ from __future__ import annotations
 import copy
 import math
 
+from .k1_relation_resolution import CONFIGS as RELATION_RESOLUTION_CONFIGS
+
 
 HIDDEN_CHANNELS = 192
 EDGE_STATE_CHANNELS = 64
@@ -16,6 +18,7 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    **RELATION_RESOLUTION_CONFIGS,
     "neural_atom_k1_linear_attention": {
         "backbone": "neural_atom_k1_v4",
         "change": "replace-single-slot-with-node-query-normalized-linear-kernel-exchange",
@@ -984,6 +987,9 @@ def make_encoder(mode: str):
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
 
+    if mode in RELATION_RESOLUTION_CONFIGS:
+        from .k1_relation_resolution import make_encoder as make_relation_resolution
+        return make_relation_resolution(mode)
     from .k1_linear_attention import MODES as LINEAR_MODES
     if mode in LINEAR_MODES:
         from .k1_linear_attention import make_encoder as make_linear
