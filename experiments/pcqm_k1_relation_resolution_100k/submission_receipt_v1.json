@@ -1,0 +1,48 @@
+{
+  "jobs": [
+    {
+      "actual_hardware": "pending_startup_log",
+      "actual_physical_run_id": "kaseichou/molgap-k1-receiver-and-triplet-s42:v1",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "kernel": "kaseichou/molgap-k1-receiver-and-triplet-s42",
+      "kernel_id": 136015255,
+      "outputs_directory": "platforms/_records/kaggle/training/k1_relation_resolution_dual_v1",
+      "remote_entry_sha256": "e8ed6b3dd7b88b55b61d81ea7a8aa86fba99420761d97cb0948d418e4bde3c22",
+      "remote_metadata_sha256": "7e02be741bba16a2b979a6d0ba0cf718d0efa21da483df943b02f5f9505d8ffd",
+      "returned_machine_shape": "NvidiaTeslaT4",
+      "run_alias_reason": "Kaggle generated its slug from the title on first creation",
+      "runtime_trace_identity_rewritten": false,
+      "scientific_entry_text_matches": true,
+      "slot": "dual",
+      "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+      "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+      "submission_confirmed": true,
+      "version": 1
+    },
+    {
+      "actual_hardware": "pending_startup_log",
+      "actual_physical_run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+      "kernel": "kaseichou/molgap-k1-rrwp-pair-s42",
+      "kernel_id": 136015256,
+      "outputs_directory": "platforms/_records/kaggle/training/k1_relation_resolution_rrwp_v1",
+      "remote_entry_sha256": "f84753955495b519e71da4ceef55d92f2a9acf8d4c66ebc233ecc1d5355bba5b",
+      "remote_metadata_sha256": "918134fd7246f6a7b1dfbee6a9c7041ebe1b9bf56ec2da4f747188c02426cc87",
+      "returned_machine_shape": "Gpu",
+      "run_alias_reason": null,
+      "runtime_trace_identity_rewritten": false,
+      "scientific_entry_text_matches": true,
+      "slot": "rrwp",
+      "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+      "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+      "submission_confirmed": true,
+      "version": 1
+    }
+  ],
+  "protected_roles_accessed": false,
+  "recorded_at": "2026-09-26T19:29:01Z",
+  "source_dataset": "kaseichou/molgap-k1-relation-resolution-source",
+  "source_dataset_private": true,
+  "source_dataset_status_at_release": "ready",
+  "upload_note": "First CLI upload failed locally before dataset creation due to slash handling; normalized Windows path succeeded. No training retry."
+}

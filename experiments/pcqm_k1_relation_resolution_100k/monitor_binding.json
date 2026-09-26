@@ -1,0 +1,53 @@
+{
+  "acceptance_script": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\pcqm_k1_relation_resolution_100k\\accept.py",
+  "automatic_training_retry": false,
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
+  "credential_owner": "kaseichou",
+  "first_terminal_does_not_close_other_job": true,
+  "format": "molgap-server-multi-job-monitor-v1",
+  "healthy_action": "SILENT",
+  "jobs": [
+    {
+      "candidate_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_dual_v1\\pcqm_k1_relation_resolution",
+      "closed": false,
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_dual_v1\\monitor\\control_state.json",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+      "kernel": "kaseichou/molgap-k1-receiver-and-triplet-s42",
+      "kernel_id": 136015255,
+      "modes": [
+        "neural_atom_k1_receiver_pair",
+        "neural_atom_k1_triplet_aggregate"
+      ],
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_dual_v1",
+      "run_id": "kaseichou/molgap-k1-receiver-and-triplet-s42:v1",
+      "slot": "dual",
+      "version": 1
+    },
+    {
+      "candidate_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_rrwp_v1\\pcqm_k1_relation_resolution",
+      "closed": false,
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_rrwp_v1\\monitor\\control_state.json",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+      "kernel": "kaseichou/molgap-k1-rrwp-pair-s42",
+      "kernel_id": 136015256,
+      "modes": [
+        "neural_atom_k1_rrwp_pair"
+      ],
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_resolution_rrwp_v1",
+      "run_id": "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+      "slot": "rrwp",
+      "version": 1
+    }
+  ],
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "no_train_audit_requires_controller_training_acceptance": true,
+  "owner": "server",
+  "python": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+  "reference_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_k1_v4_reference_s42_v2\\pcqm_k1_v4_reference",
+  "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+  "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+  "terminal_action": "one idempotent handoff per job to existing A; no model/thinking override",
+  "working_directory": "C:\\Users\\Adminn\\Documents\\molgap"
+}
