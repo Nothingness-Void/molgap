@@ -1,6 +1,50 @@
 {
   "format": "molgap-rml-policy-backtest-v1",
   "policy_activated": false,
-  "reports": [],
+  "reports": [
+    {
+      "action_match_count": 0,
+      "action_match_rate": null,
+      "candidate_prefix_rule": null,
+      "comparable_group_count": 0,
+      "could_not_decide_count": 0,
+      "decisions": [],
+      "deferred_decision_count": 0,
+      "evaluated_decisions": 0,
+      "exclusions": [],
+      "false_promote_count": null,
+      "false_promote_rate": null,
+      "false_stop_count": null,
+      "false_stop_rate": null,
+      "family_coverage": [],
+      "native_cost_by_hardware": {},
+      "native_device_hours_added": null,
+      "native_device_hours_saved": null,
+      "net_native_device_hours": null,
+      "policy_activated": false,
+      "policy_id": "k1-linear-attention-bounded-research",
+      "policy_sha256": "cd06a44a135514f1f32e8884ae145640badfda793a59d1477e10566b67c811ed",
+      "policy_status": "candidate",
+      "policy_type": "research_action",
+      "policy_version": "v1",
+      "recommended_early_stop": null,
+      "slow_starter_count": null,
+      "source_digest": "25a9b2731684f7a9f3c58c0dd03e0f410b9de3ada4cdae453b435bbb0b0543bc",
+      "trajectory_count": 0,
+      "unavailable_reasons": {
+        "false_promote_count": "not_a_screening_or_scale_label",
+        "false_promote_rate": "not_a_screening_or_scale_label",
+        "false_stop_count": "not_a_screening_or_scale_label",
+        "false_stop_rate": "not_a_screening_or_scale_label",
+        "native_device_hours": "missing_measurements_or_multiple_hardware_units_or_no_decisions",
+        "slow_starter_count": "not_a_screening_or_scale_label",
+        "winner_retained_count": "not_a_screening_or_scale_label",
+        "winner_retention_rate": "not_a_screening_or_scale_label"
+      },
+      "unknown_cost_count": 0,
+      "winner_retained_count": null,
+      "winner_retention_rate": null
+    }
+  ],
   "source_digest": "25a9b2731684f7a9f3c58c0dd03e0f410b9de3ada4cdae453b435bbb0b0543bc"
 }

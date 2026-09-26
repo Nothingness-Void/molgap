@@ -1,0 +1,18 @@
+{
+  "architecture_config_identities": {
+    "neural_atom_k1_linear_attention": "2f55dcb2ca737c47383bded0850d1a883bb5ebb184fa9e224c075e495ca52e7b"
+  },
+  "candidate_ids": [
+    "neural_atom_k1_linear_attention"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_linear_attention.py",
+    "src/molgap/k1_screen_trace.py",
+    "src/molgap/pcqm_k1_variants_runner.py",
+    "src/molgap/k1_portability_audit.py"
+  ],
+  "source_commit": "63ef7266facf38ca2fd4be3102031ad0ceb2f996",
+  "training_contract_ref": "experiments/pcqm_k1_linear_attention_100k/training_contract.json",
+  "training_contract_sha256": "9ade57bb493ab5f1411f3fbd3c0c5adae40b251fa775de4aad603acbedec3c97"
+}

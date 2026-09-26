@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "RUN_BOUNDED_2D_SCREEN",
+    "field": "distinct_pure2d_question_frozen",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "controller-only-bounded-user-authorization",
+    "authority_ref": "experiments/pcqm_k1_linear_attention_100k/protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "5d12d260a87b8ee64f428ea788d5be17505b732e8d937550f6214fb54d65c9af",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-linear-attention-bounded-research",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "distinct_pure2d_question_frozen"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

@@ -13,6 +13,7 @@ from molgap.constants import REPO_ROOT
 from molgap.k1_linear_attention import MODES, EXPECTED_PARAMETERS as PARAMETER_COUNT
 from molgap.pcqm_k1_cross_scale_diagnostic import DEVELOPMENT, MANIFESTS
 from molgap.training_reproducibility import atomic_json, sha256_file
+from molgap.research_memory.trace import load_canonical_trace
 
 
 EXPECTED_PARAMETERS = {
@@ -62,6 +63,22 @@ def accept(reference_root: Path, candidate_root: Path, source_commit: str,
     for mode in MODES:
         record = training["candidates"][mode]["record"]
         checks = record["preflight"]["mechanism_checks"]
+        canonical = load_canonical_trace(candidate_root / mode / "canonical_trace.json")
+        observations = canonical["observations"]
+        native = json.loads((candidate_root / mode / "trace.json").read_text())["epochs"]
+        if (canonical["trajectory_id"] != "TC-k1-linear-attention-100k-s42"
+            or canonical["run_id"] != "nothingnessvoid/molgap-k1-linear-attention-s42:v1"
+            or len(observations) != 40 or observations[-1]["event"] != "terminal"
+            or observations[-1]["optimizer_step"] != 31240
+            or observations[-1]["sample_presentations"] != 3998720
+            or observations[-1]["checkpoint_identity"] != record["training"]["checkpoint_sha256"]):
+            raise RuntimeError("Native canonical trace or checkpoint binding incomplete")
+        for row, raw in zip(observations, native):
+            if (row["live_dev_metric"] != raw["development_gap_mae_eV"]
+                or row["live_train_metric"] != raw["train_normalized_mae"]
+                or row["optimizer_step"] != raw["optimizer_steps"]
+                or not row["checkpoint_identity"]):
+                raise RuntimeError("Canonical observations do not match the actual training record")
         if (
             record["source_commit"] != source_commit
             or record["contract"]["source_archive_sha256"] != archive_sha256

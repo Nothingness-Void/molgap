@@ -5,6 +5,7 @@
 - Evidence without trajectory: 2
 
 ## Trajectories
+- ACTIVE: 2
 - CLOSED: 2
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 8
@@ -60,8 +61,12 @@
 - one allocated Hygon DCU; eight allocated CPUs device_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs queue_hours: measured=0.068889 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs wall_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Measurement-missing cost events: 35
-- Cost-event coverage: 29/29 trajectories; incomplete native measurement=27
+- requested_P100_actual_pending cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- requested_P100_actual_pending device_hours: measured=unknown (0 measured records), estimated=4.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- requested_P100_actual_pending queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- requested_P100_actual_pending wall_hours: measured=unknown (0 measured records), estimated=4.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- Measurement-missing cost events: 37
+- Cost-event coverage: 31/31 trajectories; incomplete native measurement=29
 
 ## Screening Backtest
 - Status: available
@@ -69,9 +74,9 @@
 - Excluded traces: 4
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 9
+- [INFO] trace_unavailable_for_backtest: 11
 - [WARN] historical_partial_record: 13
-- [WARN] incomplete_native_cost_measurement: 27
-- [WARN] missing_explicit_role_identity: 1
-- [WARN] trajectory_without_v5_evidence: 1
+- [WARN] incomplete_native_cost_measurement: 29
+- [WARN] missing_explicit_role_identity: 3
+- [WARN] trajectory_without_v5_evidence: 3
 - [WARN] v5_evidence_without_trajectory: 2

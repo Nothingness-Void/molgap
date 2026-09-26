@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 29,
+    "trajectories_total": 31,
     "with_complete_native_measurement": 2,
-    "with_cost_event": 29,
-    "with_incomplete_native_measurement": 27,
+    "with_cost_event": 31,
+    "with_incomplete_native_measurement": 29,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,11 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 9,
+      "count": 11,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
+        "TC-k1-linear-attention-100k-s42",
+        "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-pair-token-batch-profile",
         "TC-k1-pair-token-frozen-cross-scale-20260924",
         "TC-k1-pair-token-scale-attribution",
@@ -51,7 +53,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 27,
+      "count": 29,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -61,6 +63,8 @@
         "TC-k1-conjugated-persistent-100k-s42",
         "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
+        "TC-k1-linear-attention-100k-s42",
+        "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-mose-context-gate-100k-s42",
         "TC-k1-mose-hidden-bn-100k-s42",
         "TC-k1-mose-replacement-100k-s42",
@@ -85,16 +89,20 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 1,
+      "count": 3,
       "items": [
+        "TC-k1-linear-attention-100k-s42",
+        "TC-k1-linear-attention-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 1,
+      "count": 3,
       "items": [
+        "TC-k1-linear-attention-100k-s42",
+        "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"
