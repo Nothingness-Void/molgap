@@ -1,5 +1,10 @@
 # Shared experiment infrastructure: server integration review
 
+This record contains two dated review stages. The
+[desktop completion](#desktop-completion-review) supersedes the initial
+missing-factory and unsupported-loader findings below; historical verification
+scope is retained rather than rewritten.
+
 ## Scope and source
 
 On 2026-09-27, the `molgap-server` checkout was reviewed after these integrations:
@@ -81,3 +86,66 @@ historical partial evidence.
 
 No remote job, protected-role access, training, inference, model promotion,
 desktop modification or desktop job adoption occurred in this review.
+
+## Desktop completion review
+
+On 2026-09-27, the user authorized copying missing reusable components from
+`molgap-desktop`. The reviewed donor was
+`a47b945fc50a904a3d97949fbd8bdb478a10d73a`; no branch-wide merge was performed.
+
+| Component | Integration |
+|---|---|
+| Selected topology-shard preflight | Exact donor copies of `experiment_preflight.py`, `pcqm_topology.py`, `edge_state_training_core.py`, their three test files and `EDGE_STATE_ADAPTER.md` |
+| K1 value-decoupled model | Exact donor `k1_pair_token.py` contents under `k1_pair_value.py`; adapter routing and copied test import adjusted, historical server file unchanged |
+| GPTrans adapter coverage | Exact donor `tests/test_gptrans_adapter.py`; existing implementation already matched |
+| RML public/CLI entry points | Exact donor `research_memory/__init__.py` and `cli.py`, exposing existing terminal trace wiring and optional portable checks |
+| Same-run peer validation | Additive donor pointer/peer checks only; retained server prelaunch recomputation and ownership restrictions |
+| Additional synthetic coverage | Copied terminal/paired replay tests with fixture owner changed to server; copied portable-closure and runtime/bundle cases without desktop-corpus or legacy submission dependencies |
+
+Ten same-path files matched donor Git blobs exactly. The renamed K1 model also
+matched its donor blob, and the old server model matched its pre-integration
+blob; both are regression-guarded. The K1 guide owns precise model provenance.
+No Spec identity, old scientific threshold, training recipe, frozen historical
+implementation, production registry, server/desktop topology or canonical RML
+record was rewritten. Desktop full/official-evaluation runners, old V4
+submission/audit stack and machine-owned operational state were not copied.
+
+The copied preflight verifies selected topology inputs only. It does not turn
+the K1/EdgeState construction family into an end-to-end training launcher or
+grant model-smoke, protected-role, full-scale or remote resource authorization.
+
+### Follow-up verification
+
+| Suite / selection | Passed | Skipped | Deselected |
+|---|---:|---:|---:|
+| Shared experiment suites plus topology and portable-closure tests (`not real_dual_arm`) | 827 | 7 | 2 |
+| K1/GPTrans adapters and integration guards, excluding real-model construction/forward cases | 102 | 0 | 6 |
+| EdgeState core (`batch_contract or sampler_cursor or training_stats`) | 9 | 0 | 6 |
+| EdgeState adapter, excluding real-model cases | 14 | 0 | 6 |
+| V5 common, server contract and comparison readiness | 47 | 0 | 0 |
+| Terminal trace closure, same-run replay and shared runtime compatibility | 30 | 0 | 0 |
+| Total | 1,029 | 7 | 20 |
+
+The skipped tests required Windows symlink capability. Deselected tests were
+real-model/real-input checks. Executed tests used synthetic graphs, dummy
+factories and local temporary repositories; no real model forward/training or
+protected molecular role was executed. `--noconftest` and the project virtualenv
+were used as in the first review.
+
+The retained corpus passed `RML validate` and `check --frozen`, without rebuild
+or derived/canonical evidence edits. The new stronger `--portable` check found
+one pre-existing closure path absent from Git HEAD:
+
+```text
+platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/trace.json
+```
+
+Before commit, that check also correctly rejected the edited RML runtime files.
+The historical trace-path gap was not papered over by changing evidence or
+weakening checks. Ordinary frozen-index validation is not a claim that the
+entire historical artifact closure is portable. Retaining or migrating that
+source trace is separate evidence maintenance, not a reason to retrain K1.
+
+The existing uncommitted `tests/test_research_memory.py` was preserved byte for
+byte and excluded from the integration commit. No desktop branch, remote job,
+monitor, protected role or training/inference run was changed.

@@ -47,8 +47,9 @@ not an executable training contract.
 
 Read [K1 adapter compatibility](K1_ADAPTER.md) before selecting its registered
 addons. Registration or a successful metadata probe does not establish factory
-compatibility. K1/EdgeState real-shard preflight is unsupported by the shared
-core; use only an independently validated experiment-owned path.
+compatibility. K1/EdgeState loader-only preflight checks selected frozen topology
+shards, not a complete role or model. Model smoke remains unsupported for those
+families; experiment-owned training admission remains separate.
 Verification scope and unresolved integration gaps are recorded in
 [the server integration review](shared_experiment_verification.md).
 

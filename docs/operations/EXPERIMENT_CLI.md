@@ -158,14 +158,17 @@ Every digest is an explicitly unauthenticated all-zero placeholder. These are
 structure examples, not executable data authorization, accepted evidence,
 READY evidence or replay-ready specs. The prospective fields are declarations,
 not canonical trajectory records. No experiment directory, trajectory or
-evidence package is created for any example. The K1 addon example is declaration
-only; consult [server K1 factory compatibility](K1_ADAPTER.md) before attempting
-construction. Successful `validate-spec` is not a construction test.
+evidence package is created for any example. Consult
+[server K1 factory compatibility](K1_ADAPTER.md) for its model-only implementation
+and preserved historical modes. Successful `validate-spec` is not a construction test.
 
 Platform submission is unimplemented within this shared CLI
 (`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
-K1 and EdgeState real-shard loader/model preflight remain unsupported by the
-existing core. EdgeState's recipe is model-only; a platform-specific trainer
+K1 and EdgeState have selected-topology-shard CPU loader-only preflight under
+accepted fixed manifests. Its result is explicitly partial, not a full-role or
+model check. Their model smoke remains unsupported; see
+[preflight](EXPERIMENT_PREFLIGHT.md) for supported identities and source modules.
+EdgeState's recipe is model-only; a platform-specific trainer
 addon must freeze and enforce its own executable training contract.
 No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
 training launch or production promotion is provided. Local CLI success cannot

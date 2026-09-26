@@ -17,20 +17,27 @@ contract in its owning experiment.
 | Declaration | Factory mode | Server compatibility |
 |---|---|---|
 | `neural_atom_k1/1`, no addon | `qm9_neural_atom.make_encoder("neural_atom_k1")` | Existing baseline factory |
-| `neural_atom_k1/1` + `k1_pair_value/1` | `k1_pair_token.make_encoder("neural_atom_k1_pair_token_value_decoupled")` | Declaration only; unsupported by the retained server factory |
+| `neural_atom_k1/1` + `k1_pair_value/1` | `k1_pair_value.make_encoder("neural_atom_k1_pair_token_value_decoupled")` | Desktop model implementation, copied under a non-conflicting server module name |
 
-The shared adapter imported from desktop selects the value-decoupled mode,
-but server's `src/molgap/k1_pair_token.py` accepts only
-`neural_atom_k1_pair_token` and `neural_atom_k1_pair_token_node_return`.
-Its mode guard rejects the requested addon before model construction.
-The example `examples/k1_v1.json` can pass schema validation and metadata probes
-without being constructible in this checkout.
+The addon constructs K1 first, then inserts one 32-channel ordered-pair token
+after layer 6. Pair selection uses channel normalization and masked softmax.
+Its value projection starts at identity; its return projection starts at zero.
+The implementation contains no optimizer, loader, training recipe or resume.
 
-Do not map the addon silently to either existing mode or replace the retained
-server implementation: those files own different frozen historical mechanisms.
-Enabling value-decoupled execution needs an explicit reviewed implementation
-and adapter/source-identity integration, with focused compatibility tests.
-This documentation update does not authorize that migration or new training.
+On 2026-09-27 the complete model file was copied unchanged from
+`a47b945fc50a904a3d97949fbd8bdb478a10d73a:src/molgap/k1_pair_token.py` to
+`src/molgap/k1_pair_value.py`. Only the adapter's module routing and its copied
+test import were adjusted. The donor Git blob is
+`6c4801fdf60a933ddec04d06292585d10a6d3bf8`. Desktop had extracted that model
+from its `codex/exp/k1-pair-value-100k` source at
+`6859c2ffde1b906c3087edf2e1d29bab59b15873`.
+
+Server's `k1_pair_token.py` remains unchanged: it owns the coupled and
+node-return historical modes, parameter tables and mechanism checks. Do not
+alias those modes to the new implementation. Fresh packages must include the
+new module and authenticate actual source bytes; frozen historical packages
+and Spec declarations are not silently rewritten. The structural example's
+all-zero hashes remain placeholders, not executable authorization.
 
 ## Evidence and execution
 
@@ -42,6 +49,8 @@ authenticate the loader, training recipe, role history or checkpoint.
 The legacy adapter does not implement resume. The shared
 `edge_state_training_core.py` has separate binding/checkpoint primitives for
 the EdgeState model-only family; their presence does not extend this legacy
-family's trainer. K1 real-shard preflight remains unsupported by the shared
-core. Use the [addon guide](EXPERIMENT_ADDON_GUIDE.md) for ownership and
+family's trainer. K1 preflight supports only a selected train topology shard
+from its accepted full manifest; model smoke is unsupported. See
+[preflight](EXPERIMENT_PREFLIGHT.md) for the precise family/role boundary.
+Use the [addon guide](EXPERIMENT_ADDON_GUIDE.md) for ownership and
 [verification record](shared_experiment_verification.md) for tested scope.

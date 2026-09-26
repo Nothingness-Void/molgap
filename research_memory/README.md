@@ -30,6 +30,7 @@ Run from the selected checkout with its project virtualenv, not system Python.
 .venv\Scripts\python.exe -m molgap.research_memory status
 .venv\Scripts\python.exe -m molgap.research_memory doctor
 .venv\Scripts\python.exe -m molgap.research_memory check --frozen
+.venv\Scripts\python.exe -m molgap.research_memory check --frozen --portable
 .venv\Scripts\python.exe -m molgap.research_memory package-ready --trajectory <trajectory-id>
 .venv\Scripts\python.exe -m molgap.research_memory backtest-screening
 .venv\Scripts\python.exe -m molgap.research_memory plan --spec plan.json --output experiments/<new-question>
@@ -39,6 +40,12 @@ Run from the selected checkout with its project virtualenv, not system Python.
 .venv\Scripts\python.exe -m molgap.research_memory backtest-policy --policy-id <id> --policy-version <version>
 .venv\Scripts\python.exe -m molgap.research_memory terminal-pipeline --trajectory experiments/<question> --terminal <retained-directory> --trace <trace.json>
 ```
+
+`check --frozen --portable` additionally checks committed evidence/runtime
+closure and explicit local artifact claims; it does not fetch missing artifacts
+or qualify remote-only evidence. `terminal-pipeline` accepts `--trace-source`
+and `--arm` through shared trace wiring. Server planning/finalization remains
+server-owned only; these entry points do not import desktop operational custody.
 
 RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no

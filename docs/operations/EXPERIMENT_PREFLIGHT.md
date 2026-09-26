@@ -68,11 +68,25 @@ For CPU inspection only, `LOADER_WORKERS` is set to zero in the isolated process
 Sampler, seed, batch size, role and source files are not rewritten. This avoids
 nested DataLoader processes and is explicitly not production runtime parity.
 
-K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
-loader integration for that family. It never borrows code from another checkout.
-The prospective `edge_state_gps/1` family is also unsupported here; its model
-construction diagnostic does not authorize a real-shard loader or training.
-Missing package GPTrans loader source is likewise unsupported.
+K1 (`neural_atom_k1/1`) and EdgeState (`edge_state_gps/1`) support
+`loader-only-v1` for accepted **topology** manifests. K1 uses the frozen
+`ogb-train-full` manifest and selects exactly one train shard. EdgeState uses
+one of the accepted `ogb-train-100k`, `ogb-train-500k-scnet-v1`, or
+`ogb-train-1m` manifests and selects exactly one train and one development
+shard. Select records directly from the fixed manifest's `assets.topology`;
+geometry files and extra shards are rejected. The source package must include
+`pcqm_topology.py`, `ogb_features.py`, `screen_policy.py`, `v4_runtime.py`,
+`training_reproducibility.py`, and their package dependencies. The worker
+checks the fixed manifest's canonical frozen fingerprint, selected shard bytes,
+size and row range, finite targets, OGB atom9/bond3/RWSE16 features, and one
+ordered CPU batch per role. It normalizes PyG's automatic `row_index` batch
+offset before comparing source rows.
+
+The outcome is `PARTIAL_LOADER_VERIFIED_ONLY`, with
+`scope=selected-topology-shards`. It does **not** validate the other shards,
+full-role sampler, target statistics, model construction, or trainability.
+`gptrans-model-smoke-v1` remains GPTrans-only. Missing family source is
+unsupported; missing selected data is missing, not pass.
 
 ## Isolation And Reports
 
@@ -103,8 +117,10 @@ The independent observed flags are `package_verified`, `shard_verified`,
 `loader_batch_built`, `forward_checked`, `backward_checked`,
 `optimizer_step_checked`, and `checkpoint_roundtrip_checked`. False means no
 successful observation, not necessarily that the operation ran and failed.
-`missing_evidence`, error and status preserve that distinction. Successful loader
-inspection is `LOADER_VERIFIED_ONLY`, never complete numerical qualification.
+`missing_evidence`, error and status preserve that distinction. GPTrans's
+complete frozen-shard loader result is `LOADER_VERIFIED_ONLY`; K1/EdgeState's
+selected-shard result is `PARTIAL_LOADER_VERIFIED_ONLY`. Neither is complete
+numerical qualification.
 `requested_device` is a declaration; `device` remains null until a CPU batch is
 actually observed, including when source verification succeeds without loading.
 Mixed outcomes are `MIXED_NONPASS`. No RML, READY or replay authority fields are
