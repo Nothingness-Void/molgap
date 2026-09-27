@@ -1,9 +1,12 @@
 # Operational status
 
-2026-09-28: private Kaggle2 version 3 is confirmed submitted and QUEUED. It is
-the sole active physical attempt. No training result or replay readiness exists.
+2026-09-28: private Kaggle2 version 3 is COMPLETE and independently accepted.
+Both training arms and the separate NO_TRAIN audit are finalized through the
+shared RML pipeline. Both training entries are replay-ready. No candidate was
+promoted and no successor was submitted. Scientific authority:
+[terminal decision](decision.md).
 
-## Active attempt
+## Completed attempt
 
 - Kernel: `kaseichou/molgap-k1-joint-atom-s42`, numeric `136108187`, version 3.
 - Source: `bbc391d65136dd83558e755eaee1a433aa2d3605`; the private source dataset
@@ -15,19 +18,27 @@ the sole active physical attempt. No training result or replay readiness exists.
   rebuild and frozen-check passed before release.
 - The [v3 receipt](submission_receipt_v3.json) verifies actual version, ID,
   private visibility, source and data mounts, requested T4 and returned code.
-  Device names and model preflight remain pending while the task is queued.
-- The existing Luna B and original 30-minute heartbeat are ACTIVE through
-  [monitor binding](monitor_binding.json). Healthy queue/run status is silent;
-  terminal or actionable fault is handed to A once, without overriding A's
-  model. The monitor checks actual latest version/ID because the installed SDK
-  ignores the version suffix on its status endpoint.
-  `CANCEL_ACKNOWLEDGED` now becomes an immediate idempotent `CANCELLED` event;
-  the raw API status is retained and unacknowledged cancellation stays UNKNOWN.
+  Both observed devices were Tesla T4; preflight and 40-epoch completion
+  manifests passed. Both workers exited zero without timing out.
+- Existing Luna B delivered event `evt-0ef0579df4de9b584b0bbe4e` to A once and
+  paused the same heartbeat. A accepted the artifacts and closed the chain;
+  [monitor binding](monitor_binding.json) is closed. No new chat or recurring
+  monitor was created and A's model settings were not overridden.
 - Retained output directory:
   `platforms/_records/kaggle/training/k1_joint_atom_s42_v3/`.
-- Retry checks: 17 targeted static/synthetic tests passed. Source AST/inventory,
-  actual-reference release gates and RML validate/rebuild/frozen-check passed.
-  No local model execution or protected-role access occurred.
+- Retry checks: 17 targeted static/synthetic tests passed before submission.
+  Terminal translation checks: 28 targeted tests passed, including unchanged
+  historical audit bytes, typed objective comparison, and no double counting
+  of training/audit allocation. Both training closures returned VALID,
+  FINALIZED and replay-pool inclusion; audit returned VALID, FINALIZED and no
+  training replay entry. No local model execution or protected-role access.
+- RML terminal packages:
+  [A](attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/finalization.json),
+  [B](attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/finalization.json),
+  [audit](attempts/v3/audit/rml_plan/rml_finalized/finalization.json).
+  The two training decisions are NEGATIVE_UNDER_CONTRACT and
+  POSITIVE_BELOW_GATE; the audit is NO_TRAIN. Replay inclusion does not promote
+  a policy or turn the historically partial K1 reference into prospective data.
 
 ## Preserved cancelled attempt
 
