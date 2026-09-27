@@ -23,7 +23,9 @@
       "source_envelope": "experiments/pcqm_distance_angle_500k/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_v5_qualified",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-geometry-component-attribution-20260928"
+      ]
     },
     {
       "artifact_availability": [
@@ -48,6 +50,26 @@
       "used_by_trajectory_ids": [
         "TB-k1-gptrans-full-fusion-r3"
       ]
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "legacy_pair_endpoint_recomputed_strict_component_comparison_not_available",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "role_use": {
+        "fixed50k_development": "metric_computed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "accepted_existing_prediction_geometry_component_diagnostic",
+      "source_envelope": "experiments/pcqm_geometry_component_attribution/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_v5_qualified",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [

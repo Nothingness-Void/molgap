@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 167,
+  "ambiguous_historical_role_record_count": 171,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -63,6 +63,34 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "metric_computed"
+    },
+    {
+      "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "pcqm-geometry-transfer-500k-contextual",
@@ -1171,7 +1199,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 66,
+  "explicit_role_event_count": 69,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1384,6 +1412,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
       }
     ],
     "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_50k": [
@@ -1688,6 +1737,7 @@
   "protected_roles_reported_untouched": {
     "test_challenge": [
       "pcqm-distance-angle-triangle-500k-20260911",
+      "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-100k-local-joint-control-v2-20260925",
@@ -1729,6 +1779,7 @@
     ],
     "test_dev": [
       "pcqm-distance-angle-triangle-500k-20260911",
+      "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-transfer-500k-contextual",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-100k-local-joint-control-v2-20260925",
@@ -1914,6 +1965,27 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
@@ -2198,6 +2270,57 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_distance_angle_triangle_edge_state_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-distance-angle-triangle-500k-20260911-ogb_edge_state_structural_gps9-dev_selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-distance-angle-triangle-500k-20260911"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
