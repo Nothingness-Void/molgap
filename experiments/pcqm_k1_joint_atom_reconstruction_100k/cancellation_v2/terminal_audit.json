@@ -1,0 +1,88 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/terminal_acceptance_audit.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json": "5316b66f93eb15ef93baa7582ed93c93a29ad6594cfa3b39760cc822735622ab",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json": "0bdd48957cf6a2a61ee93cbd396b80e7a3cd7fe6b3cdb74c3a244c1358dc9d70",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md": "bec7b5ca82c85e6d71ac67a67234fc993b7cbe74039f754e4fe2c36ffb9d4f2c",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/platform_observation.json": "797bede42e3f2e9e7c2e4b51bb534d794d29565cbedfe23727021aacde266619",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/terminal_acceptance_audit.json": "f4c4781ff16cdbc9cb7404b98cabe2076ab976c4c6fecc96e9cb23366965e24a",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v2.json": "5ef4416be8f832f6c71f39770c3c7a5cf56ada47f187a08678f348ef464f15a7",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+  },
+  "costs": [],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "explicitly authorized new physical attempt"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained_platform_record",
+        "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/platform_observation.json",
+        "name": "platform_observation",
+        "sha256": "797bede42e3f2e9e7c2e4b51bb534d794d29565cbedfe23727021aacde266619"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v2.json",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/platform_observation.json",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-v5-prospective-cancellation",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-27T15:36:08.224143+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Scheduler cancellation only; remote training, inference, cost and role access remain unknown. Closure executes no models."
+    },
+    "outcome": {
+      "artifact_status": "no_native_outputs_available",
+      "budget_decision": "cancellation_recorded_cost_unknown",
+      "comparison_status": "not_evaluated",
+      "execution_status": "cancelled",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "unavailable"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown",
+      "official_validation": "not_applicable",
+      "test_challenge": "not_applicable",
+      "test_dev": "not_applicable",
+      "train": "unknown"
+    },
+    "scope": "scheduler_cancellation_without_native_worker_evidence",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-27T15:36:08.224143+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "roles": [],
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v2",
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v2"
+}

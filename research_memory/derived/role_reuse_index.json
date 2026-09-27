@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 180,
+  "ambiguous_historical_role_record_count": 198,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -329,6 +329,132 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "not_applicable"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
     },
     {
       "evidence_id": "pcqm-k1-linear-attention-100k-s42",

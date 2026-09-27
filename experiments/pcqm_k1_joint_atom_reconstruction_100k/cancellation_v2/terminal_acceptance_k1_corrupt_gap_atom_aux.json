@@ -1,0 +1,35 @@
+{
+  "costs": [],
+  "evidence_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+  "finalized_at": "2026-09-27T15:36:08.224143+00:00",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "native_measurements_available": false,
+  "outcome": {
+    "artifact_status": "no_native_outputs_available",
+    "budget_decision": "cancellation_recorded_cost_unknown",
+    "comparison_status": "not_evaluated",
+    "execution_status": "cancelled",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "unavailable"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "roles": [],
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v2",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "explicitly authorized new physical attempt"
+    ]
+  }
+}

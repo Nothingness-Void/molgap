@@ -1,0 +1,32 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-37028ebe7f0875faf2c75c0af1d9041acb1dedab0038fc4188cc730e04d0731a",
+  "finalized_at": "2026-09-27T15:36:08.224143+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json": "5316b66f93eb15ef93baa7582ed93c93a29ad6594cfa3b39760cc822735622ab",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json": "0bdd48957cf6a2a61ee93cbd396b80e7a3cd7fe6b3cdb74c3a244c1358dc9d70",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md": "bec7b5ca82c85e6d71ac67a67234fc993b7cbe74039f754e4fe2c36ffb9d4f2c",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/platform_observation.json": "797bede42e3f2e9e7c2e4b51bb534d794d29565cbedfe23727021aacde266619",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/terminal_acceptance_audit.json": "f4c4781ff16cdbc9cb7404b98cabe2076ab976c4c6fecc96e9cb23366965e24a",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v2.json": "5ef4416be8f832f6c71f39770c3c7a5cf56ada47f187a08678f348ef464f15a7",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/measurement_missing.json": "49fcff749cb059e385744ccc0bb8312022a5922b5ea59bbe2fd808dcd247ab07",
+    "prospective_snapshot.json": "5316b66f93eb15ef93baa7582ed93c93a29ad6594cfa3b39760cc822735622ab",
+    "terminal_input.json": "2cc626ad446c67488deffd161b08effaba0620b70c9266f3e2d007402210d35f",
+    "trajectory.json": "6f1dbccb3ab2aa9bda588d1c9969928ba4b87e421d7c81f81e0738e1c19dc21e",
+    "v5_evidence.json": "3ad4c15379acca8f2b9c194a992ee6e7a1e07128c4b38c592a2bc9f09362e958"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "37028ebe7f0875faf2c75c0af1d9041acb1dedab0038fc4188cc730e04d0731a",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v2"
+}

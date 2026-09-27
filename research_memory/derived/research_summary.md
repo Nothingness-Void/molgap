@@ -1,13 +1,12 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 41
+- Validated V5 evidence: 44
 - Evidence without trajectory: 2
 
 ## Trajectories
-- ACTIVE: 3
 - CLOSED: 2
-- INFRASTRUCTURE_ONLY: 9
+- INFRASTRUCTURE_ONLY: 12
 - NEGATIVE_UNDER_CONTRACT: 9
 - NO_TRAIN: 6
 - POSITIVE_BELOW_GATE: 12
@@ -21,7 +20,7 @@
 
 ## Roles
 - Explicit role events: 164
-- Coarse historical role records: 180
+- Coarse historical role records: 198
 - Repeatedly selected role identities: 3
 
 ## Cost
@@ -69,7 +68,11 @@
 - requested_Tesla_T4_actual_pending device_hours: measured=unknown (0 measured records), estimated=13.000000 (5 estimated records), measurement_missing=0, not_applicable=0
 - requested_Tesla_T4_actual_pending queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
 - requested_Tesla_T4_actual_pending wall_hours: measured=unknown (0 measured records), estimated=12.500000 (5 estimated records), measurement_missing=0, not_applicable=0
-- Measurement-missing cost events: 51
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
+- Measurement-missing cost events: 54
 - Cost-event coverage: 43/43 trajectories; incomplete native measurement=39
 
 ## Screening Backtest
@@ -82,5 +85,5 @@
 - [WARN] historical_partial_record: 14
 - [WARN] incomplete_native_cost_measurement: 39
 - [WARN] missing_explicit_role_identity: 8
-- [WARN] trajectory_without_v5_evidence: 4
+- [WARN] trajectory_without_v5_evidence: 1
 - [WARN] v5_evidence_without_trajectory: 2

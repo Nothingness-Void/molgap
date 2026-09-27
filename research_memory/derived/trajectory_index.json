@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6c980b070e2e4e528132a61f995b96190628464e0d51f3dbaa8d546729abc9e4",
+  "source_digest": "5b2a432d66935e2dab5598dfeee02579631d3d4431e6948adb75b8dca70bd25e",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -146,17 +146,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md",
       "family_id": "k1-joint-objective",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v2"
     },
@@ -180,17 +182,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md",
       "family_id": "k1-joint-objective",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2"
     },
@@ -251,9 +255,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md",
       "family_id": "k1-joint-objective",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-corrupt-gap-100k-s42-v2",
@@ -261,8 +265,10 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-joint-audit-cancelled-v2"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v2"
     },

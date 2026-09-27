@@ -1,0 +1,32 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-cf9b5f97d3099a8a8d34ad456833ce5844d2da89ddef025a5324d26be9668fe8",
+  "finalized_at": "2026-09-27T15:36:08.224143+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json": "8e25bd343fd1a2ccb3c451f9b02e45b49414fa470e900846922c6bbd91e55acc",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json": "0bdd48957cf6a2a61ee93cbd396b80e7a3cd7fe6b3cdb74c3a244c1358dc9d70",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/decision.md": "bec7b5ca82c85e6d71ac67a67234fc993b7cbe74039f754e4fe2c36ffb9d4f2c",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/platform_observation.json": "797bede42e3f2e9e7c2e4b51bb534d794d29565cbedfe23727021aacde266619",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/cancellation_v2/terminal_acceptance_k1_corrupt_gap_atom_aux.json": "1ecb35a23fd0fa4ee377012b941568d284b2bbb5887886652fec99ebb0e573fe",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v2.json": "5ef4416be8f832f6c71f39770c3c7a5cf56ada47f187a08678f348ef464f15a7",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/measurement_missing.json": "43fc8b2078d9ac6d8bc239bf78f3a6d64b2f88fa2f778a6d93773be5ebc6858a",
+    "prospective_snapshot.json": "8e25bd343fd1a2ccb3c451f9b02e45b49414fa470e900846922c6bbd91e55acc",
+    "terminal_input.json": "4cc32d942e33cea8f4ebe15e415e0659226334fbf433c6752d35c9a7916b1d5a",
+    "trajectory.json": "25422c814db6ef4aa3666a7ddeaade073a1d98eda16844a1c5e21acbab9f4cc4",
+    "v5_evidence.json": "532f4e97baf4f9ae9ea8391b39915a131dd027b9ec120e4004c45595361f7a19"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "cf9b5f97d3099a8a8d34ad456833ce5844d2da89ddef025a5324d26be9668fe8",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2"
+}

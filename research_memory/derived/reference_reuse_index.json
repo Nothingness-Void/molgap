@@ -233,6 +233,72 @@
     },
     {
       "artifact_availability": [
+        "repository_retained_platform_record"
+      ],
+      "comparison_status": "not_evaluated",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-joint-audit-cancelled-v2",
+      "role_use": {
+        "internal_development_100000_150000": "unknown",
+        "internal_development_500000_550000": "unknown",
+        "official_validation": "not_applicable",
+        "test_challenge": "not_applicable",
+        "test_dev": "not_applicable",
+        "train": "unknown"
+      },
+      "scientific_scope": "scheduler_cancellation_without_native_worker_evidence",
+      "source_envelope": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "unavailable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained_platform_record"
+      ],
+      "comparison_status": "not_evaluated",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "role_use": {
+        "internal_development_100000_150000": "unknown",
+        "internal_development_500000_550000": "unknown",
+        "official_validation": "not_applicable",
+        "test_challenge": "not_applicable",
+        "test_dev": "not_applicable",
+        "train": "unknown"
+      },
+      "scientific_scope": "scheduler_cancellation_without_native_worker_evidence",
+      "source_envelope": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "unavailable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained_platform_record"
+      ],
+      "comparison_status": "not_evaluated",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "role_use": {
+        "internal_development_100000_150000": "unknown",
+        "internal_development_500000_550000": "unknown",
+        "official_validation": "not_applicable",
+        "test_challenge": "not_applicable",
+        "test_dev": "not_applicable",
+        "train": "unknown"
+      },
+      "scientific_scope": "scheduler_cancellation_without_native_worker_evidence",
+      "source_envelope": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "unavailable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "repository_retained"
       ],
       "comparison_status": "strict_causal",
