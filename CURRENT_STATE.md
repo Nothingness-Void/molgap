@@ -66,8 +66,8 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-One Kaggle2 dual-arm joint-Gap/atom-reconstruction study reached an execution
-failure before training; a reconciled identity-gate repair is in preparation.
+One Kaggle2 dual-arm joint-Gap/atom-reconstruction study is submitted as v2 and
+QUEUED after a reconciled, training-before-start identity-gate failure in v1.
 It changes the training objective, not K1's inference
 architecture, and retains a separately identified frozen500K terminal audit.
 No result or successor is assumed. Authority:
