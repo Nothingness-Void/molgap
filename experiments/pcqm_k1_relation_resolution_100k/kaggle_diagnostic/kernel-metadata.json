@@ -1,0 +1,12 @@
+{
+  "id": "kaseichou/molgap-k1-relation-diagnostic-s42",
+  "title": "MolGap K1 Frozen Relation Diagnostic S42",
+  "code_file": "run.py", "language": "python", "kernel_type": "script",
+  "is_private": true, "enable_gpu": true, "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["kaseichou/molgap-k1-relation-resolution-source",
+    "kaseichou/molgap-k1-relation-diagnostic-inputs",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+    "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"],
+  "kernel_sources": [], "competition_sources": []
+}
