@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 159,
+  "ambiguous_historical_role_record_count": 167,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -422,6 +422,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
       "role_identity": null,
       "role_name": "internal_development",
@@ -451,6 +479,34 @@
     },
     {
       "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1643,7 +1699,9 @@
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
       "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
@@ -1682,7 +1740,9 @@
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
       "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
