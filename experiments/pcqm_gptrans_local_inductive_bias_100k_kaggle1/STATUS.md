@@ -16,8 +16,8 @@ outcome is therefore `NEGATIVE_UNDER_CONTRACT`; no scale-up or successor is
 authorized. See [attempt 002 terminal decision](decision_attempt_002.md) and
 the retained platform artifacts. [RML closure](RML_CLOSURE_ATTEMPT_002.md)
 records the completed strict same-job comparison and two distinct replay-ready
-entries. The negative experiment history is routed to `archive`; only its
-accepted evidence is eligible for desktop RML integration.
+entries. The negative experiment history is preserved on `archive`; accepted
+evidence is indexed on `molgap-desktop` without the rejected implementation.
 
 **Kaggle1 attempt 001 ended `KernelWorkerStatus.ERROR` before training.** The
 remote `rwse16` worker accepted its T4 runtime preflight. The
@@ -31,7 +31,9 @@ and retained remote log.
 Attempt 001 has no completion manifest, selected model, aligned development
 predictions, resumable training checkpoint, or 60-epoch trace. No MAE or
 B-versus-A scientific decision is accepted for attempt 001. The failed v1
-attempt is not negative mechanism evidence. Attempt 002 has the accepted
-paired result and RML qualification above.
+attempt is not negative mechanism evidence. Both v1 prospective trajectories
+are now closed `INFRASTRUCTURE_ONLY`, with no training trace or replay entry;
+see the [infrastructure disposition](decision_attempt_001_infrastructure.md).
+Attempt 002 has the accepted paired result and RML qualification above.
 The [initial release decision](launch_decision.md) authorized attempt 001;
 the user separately authorized the bounded attempt 002.

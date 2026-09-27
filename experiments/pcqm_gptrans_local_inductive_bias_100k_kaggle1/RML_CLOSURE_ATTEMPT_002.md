@@ -25,3 +25,7 @@ same-job RWSE16 reference, below the frozen 3.0 meV gate. The accepted result
 closes this question as negative. The experiment's full source/history belongs
 in `archive`; desktop may import only the accepted canonical evidence required
 for RML discovery, without adopting the rejected model implementation.
+
+The earlier v1 preflight failure has separate `INFRASTRUCTURE_ONLY` terminal
+records for both arms. Those records have no training trace or replay entry and
+do not change the attempt-002 scientific result.

@@ -1,0 +1,57 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel_status.txt",
+      "name": "kaggle_status",
+      "sha256": "1907da3ce3d5b14e0c24154a9fe8781978d96e4eb63439af498c8d0a24694c54"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel.log",
+      "name": "kernel_log",
+      "sha256": "d0084de450eded665f05ec96e0278d1bfc0ad6658d59104c95a8aaddee59b0b5"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/rwse16_preflight.json",
+      "name": "rwse16_preflight",
+      "sha256": "6df19423064fe758e61efd4ec390e54ffce31c2c5cb5356e0fe3f5ef519f27c9"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_001_infrastructure.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/README.md",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16/terminal_inputs_infrastructure/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-local-inductive-bias-100k-kaggle1-contract-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-27T16:02:01.913145+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained Kaggle1 error status, log, and A-only preflight; no training result"
+  },
+  "outcome": {
+    "artifact_status": "preflight_only",
+    "budget_decision": "v1_closed_after_separate_v2_retry",
+    "comparison_status": "not_applicable",
+    "execution_status": "preflight_failed",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "official_train_prefix": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "attempt-001-infrastructure-rwse16",
+  "track": "B"
+}
