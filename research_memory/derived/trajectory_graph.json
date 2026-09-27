@@ -311,6 +311,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-distance-angle-triangle-500k-20260911",
+      "target": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-100k-local-joint-control-20260925",
       "target": "TB-gptrans-local-selection-probe-20260925",
       "type": "parent_trajectory"
@@ -481,6 +486,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-geometry-component-attribution-20260928",
+      "target": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-attribution",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "parent_trajectory"
@@ -533,6 +543,16 @@
     {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-distance-angle-triangle-500k-20260911",
+      "target": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-component-attribution-no-train-20260928",
+      "target": "TB-pcqm-geometry-reliability-screen-20260928",
       "type": "prior_evidence"
     },
     {
@@ -841,6 +861,11 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-distance-angle-triangle-500k-20260911",
+      "target": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-edgestate-rich-full-submission",
       "target": "TB-k1-gptrans-full-fusion-r3",
       "type": "reference_used"
@@ -1028,6 +1053,10 @@
     },
     {
       "id": "pcqm-geometry-component-attribution-no-train-20260928",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-geometry-reliability-screen-positive-20260928",
       "type": "evidence"
     },
     {
@@ -1328,6 +1357,10 @@
     },
     {
       "id": "TB-pcqm-geometry-component-attribution-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-geometry-reliability-screen-20260928",
       "type": "trajectory"
     },
     {

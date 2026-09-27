@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "accepted_geometry_pair_gain_eV",
+    "operator": "le",
+    "threshold": -0.001
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "molgap-pcqm-distance-angle-500k-paired-acceptance-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "9ad82d0298dd3979aa1d7bb95c6c60cda1dc241a33cd014a6329920f7c682ecc",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-geometry-reliability-screen",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_geometry_pair_gain_eV"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

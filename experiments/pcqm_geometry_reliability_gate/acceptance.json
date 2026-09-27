@@ -1,0 +1,101 @@
+{
+  "format": "molgap-geometry-fusion-screen-acceptance-v1",
+  "accepted": true,
+  "evidence_id": "pcqm-geometry-reliability-screen-positive-20260928",
+  "run_id": "local-geometry-reliability-screen-20260928",
+  "source_evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+  "checks": {
+    "source_pair_accepted": true,
+    "hash_bound_predictions": true,
+    "source_idx_and_target_alignment": true,
+    "finite_predictions": true,
+    "accepted_component_mae_recomputed": true,
+    "frozen_five_fold_rule_executed": true,
+    "frozen_screen_pass": true,
+    "protected_roles_sealed": true,
+    "model_training_or_inference_executed": false
+  },
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "hash_verified_existing_prediction_screen",
+    "comparison_status": "cross_fitted_prediction_complementarity_screen_only",
+    "scientific_status": "POSITIVE_UNDER_CONTRACT",
+    "transfer_status": "not_v5_qualified",
+    "budget_decision": "no_accelerator_release_from_screen_alone",
+    "full_handoff_status": "not_applicable"
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "wall_measurement_scope": "screen phase inside Python, excluding process imports and discovery",
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-geometry-reliability-local-screen",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "action_id": "A001",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "platform": "local",
+      "hardware": "LOCAL_CPU_UNSPECIFIED",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+      "measurement": {
+        "device_hours": {"value": null, "status": "not_applicable"},
+        "cpu_hours": {"value": null, "status": "measurement_missing"},
+        "wall_hours": {"value": 0.000017164444444562023, "status": "measured"},
+        "queue_hours": {"value": null, "status": "not_applicable"}
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-prediction",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "action_id": "A001",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "role_name": "fixed50k_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-labels",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "action_id": "A001",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "role_name": "fixed50k_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-selection",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "action_id": "A001",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "role_name": "fixed50k_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json"
+    }
+  ],
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_geometry_reliability_gate/decision.md",
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "next_allowed_actions": [],
+    "reopen_conditions": ["A separately frozen geometry-capable matched training contract and strict reference qualification."]
+  }
+}

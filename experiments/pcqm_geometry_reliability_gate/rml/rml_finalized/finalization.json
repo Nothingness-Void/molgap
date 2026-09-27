@@ -1,0 +1,34 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-086b5ee4627926549a304f27f0ac06e566af35d3af170a74c076e5ded3b57189",
+  "finalized_at": "2026-09-27T17:38:31+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_distance_angle_500k/results/local_acceptance_20260923.json": "7fe203f663ce7a4ce850e434ed9eb63e99284c8c1d13dfc86dc1f39674149a3f",
+    "experiments/pcqm_distance_angle_500k/v5_evidence.json": "eac13afbc4877a4ce8ef66a2dc6ffa389407e3f9de67953bfffa7d4f88d3fef6",
+    "experiments/pcqm_geometry_reliability_gate/acceptance.json": "d4c46cc412e29a76e03716c7c935f60f979b613692e72c4861df85cc805eb9a6",
+    "experiments/pcqm_geometry_reliability_gate/analysis.json": "abfdf4a4b6bd7581db65481a194755c0e47117b86dd71c538eb10a7254d469b7",
+    "experiments/pcqm_geometry_reliability_gate/decision.md": "d46d22eb872a5c518fc477526c35e1449a80fb84fa465278e12294853360b234",
+    "experiments/pcqm_geometry_reliability_gate/protocol.md": "9ad82d0298dd3979aa1d7bb95c6c60cda1dc241a33cd014a6329920f7c682ecc"
+  },
+  "outcome": "POSITIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TB-pcqm-geometry-reliability-local-screen.json": "e2686ed907b6a04c9f8fe0b581a49632ebb6895158408c7f8c7c38b23da9c7ce",
+    "prospective_snapshot.json": "3019c87f1148373d74273354d3d3ecc4a740234976a6d60997f474d5a6eff25a",
+    "roles/role-TB-pcqm-geometry-reliability-20260928-dev-labels.json": "62591249ae848882af3cd741058a38ad094fd35c1081df3c3d529d05404d6eef",
+    "roles/role-TB-pcqm-geometry-reliability-20260928-dev-prediction.json": "1786f4d70794b578d4890b05b479d4e91a923aa0c949936b4293cf2739e4f9a7",
+    "roles/role-TB-pcqm-geometry-reliability-20260928-dev-selection.json": "08589bf6f04473ceafc862cbe2fdb8d043a427b9af7730a37f930ae649d30ff5",
+    "terminal_input.json": "033a61a2eacd34100d7027714c28074165e1395e997a07efbd11a080681c6112",
+    "trajectory.json": "62b54f58d2f955e703ac3c7c167b73b25696cac0be530c9410ae8e4974e7c4b5",
+    "v5_evidence.json": "8e909ffd57b9a55e57d4736ea520dfd27ec5621f25241c5dbfb129f83560b6c5"
+  },
+  "replacements": {
+    "costs/cost-TB-pcqm-geometry-reliability-local-screen.json": "experiments/pcqm_geometry_reliability_gate/rml/costs/cost-TB-pcqm-geometry-reliability-local-screen.json",
+    "trajectory.json": "experiments/pcqm_geometry_reliability_gate/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "086b5ee4627926549a304f27f0ac06e566af35d3af170a74c076e5ded3b57189",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+}

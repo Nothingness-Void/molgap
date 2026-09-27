@@ -1,0 +1,155 @@
+{
+  "acceptance_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_distance_angle_500k/results/local_acceptance_20260923.json": "7fe203f663ce7a4ce850e434ed9eb63e99284c8c1d13dfc86dc1f39674149a3f",
+    "experiments/pcqm_distance_angle_500k/v5_evidence.json": "eac13afbc4877a4ce8ef66a2dc6ffa389407e3f9de67953bfffa7d4f88d3fef6",
+    "experiments/pcqm_geometry_reliability_gate/acceptance.json": "d4c46cc412e29a76e03716c7c935f60f979b613692e72c4861df85cc805eb9a6",
+    "experiments/pcqm_geometry_reliability_gate/analysis.json": "abfdf4a4b6bd7581db65481a194755c0e47117b86dd71c538eb10a7254d469b7",
+    "experiments/pcqm_geometry_reliability_gate/decision.md": "d46d22eb872a5c518fc477526c35e1449a80fb84fa465278e12294853360b234",
+    "experiments/pcqm_geometry_reliability_gate/protocol.md": "9ad82d0298dd3979aa1d7bb95c6c60cda1dc241a33cd014a6329920f7c682ecc"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "cost_event_id": "cost-TB-pcqm-geometry-reliability-local-screen",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+      "hardware": "LOCAL_CPU_UNSPECIFIED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.7164444444562022e-05
+        }
+      },
+      "platform": "local",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_geometry_reliability_gate/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "A separately frozen geometry-capable matched training contract and strict reference qualification."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "committed_metadata_verified",
+        "locator": "experiments/pcqm_geometry_reliability_gate/analysis.json",
+        "name": "fusion_screen_analysis",
+        "sha256": "abfdf4a4b6bd7581db65481a194755c0e47117b86dd71c538eb10a7254d469b7"
+      },
+      {
+        "availability": "committed_metadata_verified",
+        "locator": "experiments/pcqm_geometry_reliability_gate/decision.md",
+        "name": "screen_decision",
+        "sha256": "d46d22eb872a5c518fc477526c35e1449a80fb84fa465278e12294853360b234"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_geometry_reliability_gate/protocol.md",
+        "experiments/pcqm_geometry_reliability_gate/analysis.json",
+        "experiments/pcqm_geometry_reliability_gate/decision.md",
+        "experiments/pcqm_geometry_reliability_gate/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-geometry-reliability-screen-positive-20260928",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "molgap-pcqm-geometry-fusion-screen-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Hash-gated existing-prediction cross-fitted screen; no model execution"
+    },
+    "outcome": {
+      "artifact_status": "hash_verified_existing_prediction_screen",
+      "budget_decision": "no_accelerator_release_from_screen_alone",
+      "comparison_status": "cross_fitted_prediction_complementarity_screen_only",
+      "execution_status": "complete_no_training",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "POSITIVE_UNDER_CONTRACT",
+      "transfer_status": "not_v5_qualified"
+    },
+    "role_use": {
+      "fixed50k_development": "selection_used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "accepted_existing_prediction_geometry_fusion_screen",
+    "track": "B"
+  },
+  "finalized_at": "2026-09-27T17:38:31+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-prediction",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-labels",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-reliability-20260928-dev-selection",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+    }
+  ],
+  "run_id": "local-geometry-reliability-screen-20260928",
+  "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+}

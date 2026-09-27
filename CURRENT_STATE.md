@@ -68,6 +68,11 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   existing-prediction component diagnostic closed `NO_TRAIN`; its accepted
   result and strict-reference blocker are in
   `experiments/pcqm_geometry_component_attribution/decision.md`.
+  A separate hash-gated 2D/geometry fusion screen reached `0.111103 eV`
+  cross-fitted development MAE, a `0.003038 eV` gain over the geometry arm.
+  This is exploratory on an already used role and does not release a Kaggle
+  run or change the model recommendation. Authority:
+  `experiments/pcqm_geometry_reliability_gate/decision.md`.
 - Xi'an full-model replay job `67440607` matched predictions but differed in
   269 cross-process gradient tensors. The audit is closed negative; Xi'an V4
   ranking remains gated. Authority: `experiments/pcqm_xian_determinism/decision.md`.
