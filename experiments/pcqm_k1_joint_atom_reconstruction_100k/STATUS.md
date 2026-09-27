@@ -39,6 +39,13 @@ promoted and no successor was submitted. Scientific authority:
   The two training decisions are NEGATIVE_UNDER_CONTRACT and
   POSITIVE_BELOW_GATE; the audit is NO_TRAIN. Replay inclusion does not promote
   a policy or turn the historically partial K1 reference into prospective data.
+- Repository `validate` and `check --frozen` passed. The additional
+  `check --frozen --portable` did not pass: nine retained v1 startup-failure
+  inputs and the historical K1 reference `trace.json` are locally retrievable
+  but absent from Git HEAD. This is a historical cross-machine packaging gap,
+  not missing v3 worker evidence. Local replay qualification is preserved;
+  full-corpus portable qualification is not claimed and no historical record
+  was rewritten to hide the gap.
 
 ## Preserved cancelled attempt
 
