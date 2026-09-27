@@ -1,17 +1,23 @@
 # GPTrans local inductive bias 100K status
 
-**Kaggle1 attempt 002 was submitted and was `KernelWorkerStatus.RUNNING` at
-2026-09-27 07:30:37 UTC.** The authoritative live state is the Kaggle kernel
+**Kaggle1 attempt 002 completed** on 2026-09-27. The authoritative remote
+terminal state is `KernelWorkerStatus.COMPLETE` for the Kaggle kernel
 `nothingnessvoid/molgap-gptrans-rwse-local-bias-paired-100k-s42-v2`. This is a
 paired job with independent `rwse16` and `rwse16_local_edge` arms. The
 [retry decision](retry_decision_attempt_002.md),
 [release gate](release_gate_attempt_002.json), and
 [observed launch record](launch_attempt_002/kaggle_observation.json) pin the
-source, data, Spec, and kernel identities. The local
-[reconciled receipt](launch_attempt_002/reconciled_receipts/17faa1313b7d3d4637c914ccb22abfba0820948e36a219a76e8502922949e081.json)
-binds the platform reference to the package; it does not qualify runtime or
-accept scientific evidence. Wait for the remote terminal state before fetching
-the minimal replay artifacts and independently accepting each arm.
+source, data, Spec, and kernel identities. Both arms independently passed
+artifact acceptance for the frozen 60-epoch exposure, runtime, selected and
+resumable checkpoints, aligned 50K predictions, trace, and protected-role
+sealing. The paired gain was 0.0010816 eV, below the frozen 0.003 eV minimum;
+the paired row-bootstrap upper bound for B−A was −0.0000293 eV. The scientific
+outcome is therefore `NEGATIVE_UNDER_CONTRACT`; no scale-up or successor is
+authorized. See [attempt 002 terminal decision](decision_attempt_002.md) and
+the retained platform artifacts. RML dual replay-ready closure is pending the
+strict same-job comparison-readiness transaction; do not describe this pair as
+dual replay-ready until the pool reports two complete entries with no
+exclusions.
 
 **Kaggle1 attempt 001 ended `KernelWorkerStatus.ERROR` before training.** The
 remote `rwse16` worker accepted its T4 runtime preflight. The
@@ -24,8 +30,9 @@ and retained remote log.
 
 Attempt 001 has no completion manifest, selected model, aligned development
 predictions, resumable training checkpoint, or 60-epoch trace. No MAE or
-B-versus-A scientific decision is accepted for either attempt, and neither arm
-is replay-ready. The failed v1 attempt is not negative mechanism evidence.
+B-versus-A scientific decision is accepted for attempt 001. The failed v1
+attempt is not negative mechanism evidence. Attempt 002 has the accepted
+paired result above; its RML replay qualification remains pending.
 Attempt 002 remains on this experiment branch through terminal acceptance.
 The [initial release decision](launch_decision.md) authorized attempt 001;
 the user separately authorized the bounded attempt 002.
