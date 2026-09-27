@@ -261,6 +261,48 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "same_job_reference",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same-job-paired-100k-rwse16",
+      "source_envelope": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "strict_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same-job-paired-100k-rwse16_local_edge",
+      "source_envelope": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "local_verified"
       ],
       "comparison_status": "paired_diagnostic_only",
@@ -504,6 +546,10 @@
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-centered-logits-k1pair-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
         "TB-gptrans-memory-value-k1pair-reference-100k-s42",
         "TB-gptrans-noisy-nodes-100k-s42",

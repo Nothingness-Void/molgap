@@ -1,0 +1,33 @@
+{
+  "format": "molgap-pcqm-gptrans-t-100k-reference-v4",
+  "variant": "rwse16",
+  "parameters": 5250913,
+  "variant_source_sha256": "216e9472e9cb7453505374acfc5ef8e499e8c9e23c70099f3e9eec11cf5f24c4",
+  "checkpoint_sha256": "9c24fe1604c6946a1ba94231ae08e109665eb4c0a59630ef3c6a49146efc6946",
+  "observed_trace_sha256": "99f6c3dd5e642a29f75329ef74bbae35bf8397b4d5bb1f55a358a0e02955b569",
+  "checkpoint_chunks": {
+    "checkpoint_epoch_09.pt": "47075ecf45d435060dd6c1df82b64c007fde606ce547435db5808894226fa32d",
+    "checkpoint_epoch_19.pt": "50c8a291635abd4469f499c0d1f6711fba48ebe22c8e5b95872ecbab73dd2b41",
+    "checkpoint_epoch_29.pt": "827624b63442925cd1330386d0527e067351ed7afcd6944df30172450d42418d",
+    "checkpoint_epoch_39.pt": "4893100f96799016699e5d740a51e5979b10b6fdd07f6f5a3a6c25e7479721ff",
+    "checkpoint_epoch_49.pt": "cea9fd645e3876c49da1ae596590bf31f0196d57a6df75a61f18dbcfac33c9e7",
+    "checkpoint_epoch_59.pt": "9c24fe1604c6946a1ba94231ae08e109665eb4c0a59630ef3c6a49146efc6946"
+  },
+  "complete": true,
+  "epochs": 60,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "best_development_mae_eV": 0.15415385365486145,
+  "best_epoch": 59,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "runtime_certificate_id": "8056724bd536e2dc0df2843ff21a51b7b1b6b8ef9d4fcf72b6f2c43000aa62d0",
+  "runtime_calibration_fingerprint": "523c93ff9c05523e3abe40462077dae959b07dc9facd31d22eb5ae7864cc1c41",
+  "source_archive_sha256": "a0b43fc727ad8bb8dde6dec523fb157dba595798e54c579d0f79489f1a6007cc",
+  "source_commit": "057765023b3ec8dd284fa664bf636fca4460fa53",
+  "best_model_sha256": "6624ac73d5c4c1f25139a0bb7f4240f59b381a43cffa4982d39274eaa2d6ec79",
+  "development_predictions_sha256": "3cb9ff55ed21a9df562d01d1e5aa7330754080009a91504f113d4005ddceca80",
+  "frozen_reference_sha256": "252c523de4ded7576c0db708f049e8679d3ad311c752146339f09cbe160b603d",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

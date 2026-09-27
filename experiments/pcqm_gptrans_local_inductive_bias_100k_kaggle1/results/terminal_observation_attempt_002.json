@@ -1,0 +1,21 @@
+{
+  "format": "molgap-kaggle-terminal-observation-attempt-002-v1",
+  "kernel_ref": "nothingnessvoid/molgap-gptrans-rwse-local-bias-paired-100k-s42-v2",
+  "remote_status": "KernelWorkerStatus.COMPLETE",
+  "attempt_id": "attempt-002",
+  "source_commit": "057765023b3ec8dd284fa664bf636fca4460fa53",
+  "source_archive_sha256": "a0b43fc727ad8bb8dde6dec523fb157dba595798e54c579d0f79489f1a6007cc",
+  "package_identity": "7b78c99f427a7a526034eff64950b0bba98bcaac6ae76f352d31ee757583c65f",
+  "spec_identity": "5f25875f8121c388a54f4237873b6f0921e0f9235f67e42b26beb5fdaaf2af3e",
+  "source_dataset": "nothingnessvoid/molgap-gptrans-rwse-local-bias-100k-source-v2",
+  "graph_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "source_entry_sha256": "bfc66a2fe1b54e0767c14650042f2fa268078ebfb1047b1d2fad26f4bd1d029d",
+  "arm_acceptance": {
+    "rwse16": "accepted",
+    "rwse16_local_edge": "accepted"
+  },
+  "paired_comparison_ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json",
+  "protected_role_read": false,
+  "terminal_disposition": "NEGATIVE_UNDER_CONTRACT",
+  "replay_pool_status": "PENDING_STRICT_COMPARISON_READINESS_AND_TERMINAL_INGESTION"
+}

@@ -1,0 +1,27 @@
+{
+  "format": "molgap-kaggle-paired-release-gate-attempt-002-v1",
+  "status": "LOCAL_MODEL_SMOKE_VERIFIED_REMOTE_T4_PREFLIGHT_REQUIRED",
+  "owner": "desktop",
+  "attempt_id": "attempt-002",
+  "prior_attempt_status": "KernelWorkerStatus.ERROR",
+  "source_commit": "057765023b3ec8dd284fa664bf636fca4460fa53",
+  "source_archive_sha256": "a0b43fc727ad8bb8dde6dec523fb157dba595798e54c579d0f79489f1a6007cc",
+  "package_identity": "7b78c99f427a7a526034eff64950b0bba98bcaac6ae76f352d31ee757583c65f",
+  "spec_identity": "5f25875f8121c388a54f4237873b6f0921e0f9235f67e42b26beb5fdaaf2af3e",
+  "shard_manifest_sha256": "77cfea86bf1b5808cfe91667fc6d8df0cd3f4a374c47fb42d9c137ff88fd76d5",
+  "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "base_initial_state_artifact_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "local_edge_addon_initial_state_artifact_sha256": "174d884a8e1593baf66c03f049d762c07f69ec3936c15a8bea4050da988d68be",
+  "arm_initial_state_sha256": {
+    "rwse16": "20ea118bd338d07612ff92883b3c6593c6497179921334f8f7be3dc12a7e7ac9",
+    "rwse16_local_edge": "9e2e58fa54f68c061f47637a9c406dd4c849ae9b0d49623881f63bb94655db0b"
+  },
+  "arm_local_preflight_status": {
+    "rwse16": "MODEL_SMOKE_VERIFIED_ONLY",
+    "rwse16_local_edge": "MODEL_SMOKE_VERIFIED_ONLY"
+  },
+  "source_dataset": "nothingnessvoid/molgap-gptrans-rwse-local-bias-100k-source-v2",
+  "graph_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "kernel": "nothingnessvoid/molgap-gptrans-rwse-local-bias-paired-100k-s42-v2",
+  "remote_training_condition": "both_independent_T4_runtime_preflights_accepted_and_estimate_le_6h_per_arm"
+}

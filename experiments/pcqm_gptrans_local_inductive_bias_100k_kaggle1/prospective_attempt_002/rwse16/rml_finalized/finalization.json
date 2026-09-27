@@ -1,0 +1,47 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-fa976266def11a7a6451bfe2ab91dbfb1900b793f212ad35b8e734d0c55f87d0",
+  "finalized_at": "2026-09-27T15:41:00.813682+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md": "24364e071470f53ea6d927642cff6b6927d3c87bfe7036d52ad8265badda98b0",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/acceptance.json": "be0532570171c62fd274867b3b2b1626c8edaf7ccc635bd0ac59840af18eda57",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/cost_records.json": "496da9614b52690468b4c8f3b43367a4891d5d74ee3e2283ff6c1d08d06e6836",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/role_history.json": "d922907c7ab7792ae8fb55ed4a12f50bbc1d41bf30479269337e19d579d8fddd",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/protocol.md": "5492d2401a509d6c3084208caff3d4aae3a182a46f6f46df6999bc7d9c925fd7",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/release_gate_attempt_002.json": "e522f21a725a0306578714752a57682bf83f20d2aa247d7df0a374ea31fbc3ec",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json": "b14722c317c8ff26f8c4e330b4af6777d3d3f14a7ad0ca48dea94efbd68c630e",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/terminal_observation_attempt_002.json": "27d767d1b714377df3717fa7900730f309a9837cafe0ec75fc8f9716ed926acf",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/training_contract_attempt_002.json": "30edab95705689f9ef620c0afa9d2ff4133146c57f78a2b209215c909b304d94",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/mechanical_acceptance.json": "021bdadd3efd50aa662ff6ed58a5ae1e5de7a2dcdc617ec1b97743a3a004e1a4",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/best_model.pt": "6624ac73d5c4c1f25139a0bb7f4240f59b381a43cffa4982d39274eaa2d6ec79",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/completion_manifest.json": "79bed54c5574b00db2f1ecf348b5beca72692d4553ad0ab2fb901ce97973ce7a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/development_predictions.pt": "3cb9ff55ed21a9df562d01d1e5aa7330754080009a91504f113d4005ddceca80",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/last_checkpoint.pt": "9c24fe1604c6946a1ba94231ae08e109665eb4c0a59630ef3c6a49146efc6946",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/observed_trace.json": "99f6c3dd5e642a29f75329ef74bbae35bf8397b4d5bb1f55a358a0e02955b569",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/runtime_certificate.json": "903d7bb5a6dd0dbd2b99c1a2a36f09e584a37d19408e7641efb7f9fcda3f522c"
+  },
+  "outcome": "CLOSED",
+  "published_hashes": {
+    "costs/cost-TB-gptrans-local-bias-rwse16-100k-s42-a2-observed-training.json": "5301306ce2524cf36f5a7328ac09aac7fdad02a681329788c796783b4eff7807",
+    "prospective_snapshot.json": "adede9904b06a5576b62e3073c6da773c80278dd06acc04ea1c550ad0182d3a9",
+    "roles/role-rwse16-labels_read-a2.json": "7c825cb109a0194cb6cdba8090c4e573de7e959bb6bf8fa19adae709f82544d3",
+    "roles/role-rwse16-metric_computed-a2.json": "0171f2c4d2c7165c3327469719a379e14e1cc2e17a1b6efaf301d806b0dc92f3",
+    "roles/role-rwse16-prediction_input-a2.json": "9a593a93d0a8ad34b87204dfd540d7dac66c3f3e813f497da41c91d99037df18",
+    "roles/role-rwse16-selection_used-a2.json": "7df452339404480a968fe85b56cfae2c1e604b300020db9ccc9c6517bf2f166a",
+    "roles/role-rwse16-training_membership-a2.json": "17a831f8d48ae50c608f83e8c74491c3f01cb50ca1907e2c743dcd177f889a76",
+    "terminal_input.json": "ea511400f8c7e737ebf63910bdb483872a8e4108bf8e2d15398c91f2c3422872",
+    "trace.json": "23866b403e20c7779251309809c23112393dd5205409ff4f1a8094065fa9a0d9",
+    "trace_manifest.json": "f31bb5e317991d4731c2e4fc11956f3b8fd164e2a4f1d87cb1165e50e0e41d33",
+    "trajectory.json": "8106cdacfcd3d46c67b2138b520c393990338e507b5d4f19f1b6e946723e3797",
+    "v5_evidence.json": "3c48be50225202d46465901c3bc1ca6e031f160bb16230193a5aad7ba22916a2"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "fa976266def11a7a6451bfe2ab91dbfb1900b793f212ad35b8e734d0c55f87d0",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+}

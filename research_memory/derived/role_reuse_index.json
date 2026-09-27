@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 149,
+  "ambiguous_historical_role_record_count": 159,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -381,6 +381,76 @@
     },
     {
       "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1045,7 +1115,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 56,
+  "explicit_role_event_count": 66,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1126,6 +1196,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16_local_edge-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16_local_edge-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16_local_edge-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16_local_edge-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
@@ -1142,6 +1268,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-rwse16-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-rwse16_local_edge-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed500k_train": [
@@ -1502,6 +1642,8 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
       "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
@@ -1539,6 +1681,8 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
       "pcqm-gptrans-local-selection-probe-20260925",
       "pcqm-gptrans-memory-value-aborted-candidate-no-train",
       "pcqm-gptrans-memory-value-aborted-reference-no-train",
@@ -1624,6 +1768,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16_local_edge-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16_local_edge-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16_local_edge-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16_local_edge-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [
@@ -1852,6 +2052,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-rwse16_local_edge-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-rwse16_local_edge-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-rwse16_local_edge-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-rwse16_local_edge-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
@@ -1868,6 +2124,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-rwse16-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-rwse16_local_edge-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
