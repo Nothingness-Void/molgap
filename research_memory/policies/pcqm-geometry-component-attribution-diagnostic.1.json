@@ -1,0 +1,24 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-geometry-component-attribution-diagnostic",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "molgap-pcqm-distance-angle-500k-paired-acceptance-v1"
+  },
+  "required_observable_fields": ["accepted_geometry_pair_gain_eV"],
+  "action_rule": {
+    "field": "accepted_geometry_pair_gain_eV",
+    "operator": "le",
+    "threshold": -0.001,
+    "action": "RUN_DIAGNOSTIC"
+  },
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []},
+  "approval": {"approved_by": null, "approved_at": null, "authority_ref": null},
+  "created_from_source_digest": "272b50a6692ae94fefb5ac98196508e74beb524585818e430dfc42d3b594ec8b"
+}
