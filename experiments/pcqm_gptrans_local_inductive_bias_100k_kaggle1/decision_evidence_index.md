@@ -8,3 +8,4 @@ the aligned 50K-row MAE and bootstrap result. The
 [RML comparison readiness](results/comparison_readiness.json) binds the
 same-job reference and candidate artifacts; the per-arm `rml_finalized/`
 records own terminal trajectory, role, cost, trace, and V5 evidence.
+Machine evidence pointer: `results/paired_comparison_attempt_002.json`.
