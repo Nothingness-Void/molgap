@@ -1,0 +1,30 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-7f3516495c50c1561759030c98e88b4eba6e9c6cb3c6a9777dd35e886a8feaee",
+  "finalized_at": "2026-09-27T16:02:01.913145+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_001_infrastructure.md": "43ee73084b5557220275d24302a9f09f65c203a204f04ee7993bab9d9ef82dc1",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16/terminal_inputs_infrastructure/acceptance.json": "d8e2f4cd4ac7125105d77b24e3fcb18b8300525223c6ca113d4c097db3b00c54",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/README.md": "ed04c0b12d13614e166d51a906830994a639c23237fe686af0219eb33fb3e3bb",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel.log": "d0084de450eded665f05ec96e0278d1bfc0ad6658d59104c95a8aaddee59b0b5",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel_status.txt": "1907da3ce3d5b14e0c24154a9fe8781978d96e4eb63439af498c8d0a24694c54",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/rwse16_preflight.json": "6df19423064fe758e61efd4ec390e54ffce31c2c5cb5356e0fe3f5ef519f27c9"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/measurement_missing.json": "7614f04f46d39cf9d0effcf5bcce91002fb98c6944da5cad5cf775ff0dc99765",
+    "prospective_snapshot.json": "da065f388ebfa689148a6fa57b486d897d30cda828c3e734c3e0984f2154262b",
+    "terminal_input.json": "9b0303085ee499923c830e5d7cbea5fe04647496a5b8156ce1db3b3d38f4765c",
+    "trajectory.json": "5fb12da2e94f010c3994c36b41d21035fae3cafe3da75dee5cd6d4c12f30f93d",
+    "v5_evidence.json": "24b2dd623ff29712c9d8e331bd4c8ae2390194c44f46ed5ca1cd68ddefbb0d73"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "7f3516495c50c1561759030c98e88b4eba6e9c6cb3c6a9777dd35e886a8feaee",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-local-bias-rwse16-100k-s42"
+}

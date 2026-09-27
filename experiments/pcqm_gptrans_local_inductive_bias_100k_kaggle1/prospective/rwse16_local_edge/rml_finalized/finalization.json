@@ -1,0 +1,29 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-96bb3382dca2dee0aa849ad8ee347178c5860ae6255abb4a481697684c9fdd3f",
+  "finalized_at": "2026-09-27T16:02:01.913145+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_001_infrastructure.md": "43ee73084b5557220275d24302a9f09f65c203a204f04ee7993bab9d9ef82dc1",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16_local_edge/terminal_inputs_infrastructure/acceptance.json": "b4b2631cd829e0fe63d2aae9aced0388537a05c0c7796a0d4fbf06ba3cc0786a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/README.md": "ed04c0b12d13614e166d51a906830994a639c23237fe686af0219eb33fb3e3bb",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel.log": "d0084de450eded665f05ec96e0278d1bfc0ad6658d59104c95a8aaddee59b0b5",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v1/attempt_001/kernel_status.txt": "1907da3ce3d5b14e0c24154a9fe8781978d96e4eb63439af498c8d0a24694c54"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/measurement_missing.json": "3d489e783deaba0be28e775c1aa3072a471104e001eab41cf716a38eb31b37af",
+    "prospective_snapshot.json": "71f2d7b4d1c74929dc8cfcd678054f82ffa3abd2c6e67621d1bbba3f6d0dd3c6",
+    "terminal_input.json": "bac94866be7eb0b4d62c60e358532669b6f1a36e2e57ae5e2a2515f81d5c8243",
+    "trajectory.json": "a4238c046f415462ad84a164f5e1e32761813fe78b2d913d1bbc35029d6d5a7b",
+    "v5_evidence.json": "cfb78e78b0a09cc31cdba370e58ad37c22a637e59c711cd8fefeed416ca2443d"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16_local_edge/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "96bb3382dca2dee0aa849ad8ee347178c5860ae6255abb4a481697684c9fdd3f",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42"
+}

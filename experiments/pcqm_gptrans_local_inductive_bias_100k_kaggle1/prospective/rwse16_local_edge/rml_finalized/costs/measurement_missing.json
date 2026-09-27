@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-96bb3382dca2dee0aa849ad8",
+  "evidence_ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective/rwse16_local_edge/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "kaggle1-local-bias-rwse16-local-edge-100k-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42"
+}

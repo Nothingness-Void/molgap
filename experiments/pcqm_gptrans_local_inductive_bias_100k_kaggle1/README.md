@@ -31,7 +31,11 @@ bounded test; they do not predict its outcome. Follow the
 [RML index](../../research_memory/README.md) to each canonical decision before
 making a scientific claim.
 
-Attempt 002 closed `NEGATIVE_UNDER_CONTRACT`: the local-edge arm improved the
+Attempt 001 stopped at remote preflight; both trajectories closed
+`INFRASTRUCTURE_ONLY` without training or replay evidence. Its
+[infrastructure disposition](decision_attempt_001_infrastructure.md) is
+separate from the scientific result. Attempt 002 closed
+`NEGATIVE_UNDER_CONTRACT`: the local-edge arm improved the
 same-job RWSE16 reference by 1.082 meV, below the frozen 3.0 meV gate.
 The [terminal decision](decision_attempt_002.md) owns the scientific verdict;
 [decision evidence index](decision_evidence_index.md) links its machine records;

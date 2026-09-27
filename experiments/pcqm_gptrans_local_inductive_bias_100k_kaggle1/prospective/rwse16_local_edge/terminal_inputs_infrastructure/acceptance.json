@@ -1,0 +1,28 @@
+{
+  "contracted_training_executed": false,
+  "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-v1-infra",
+  "measured_native_device_time": null,
+  "outcome": {
+    "artifact_status": "preflight_only",
+    "budget_decision": "v1_closed_after_separate_v2_retry",
+    "comparison_status": "not_applicable",
+    "execution_status": "preflight_failed",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "not_applicable"
+  },
+  "remote_submission": true,
+  "role_use": {
+    "official_train_prefix": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "kaggle1-local-bias-rwse16-local-edge-100k-s42-v1",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_001_infrastructure.md",
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": []
+  }
+}
