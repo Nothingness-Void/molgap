@@ -39,6 +39,7 @@ Track C.
 | Does decoupling PairToken relation values improve K1 at fixed 100K? | Point gates failed and strict replay gaps remain; route closed | `pcqm_k1_pair_value_100k/` |
 | Does expanded feature denoising improve GPTrans-T at fixed 100K? | No observed gain; frozen source/optimizer mismatch excludes strict replay | `pcqm_gptrans_feature_denoising_100k/` |
 | Does distance-angle Triangle EdgeState retain its gain at matched 500K? | Positive internal-development point nomination; separate V5 transfer review required | `pcqm_distance_angle_500k/` |
+| Do accepted 500K predictions justify distance-only versus angle-only training? | Existing-prediction diagnostic accepted; component training closed `NO_TRAIN` without a strict 2D comparator or replay-qualified reference | `pcqm_geometry_component_attribution/` |
 | Does Xi'an Card2 reproduce full-model gradients across processes? | No; bounded audit closed after exact replay of 269 differing gradient fingerprints | `pcqm_xian_determinism/` |
 | Can EdgeState Structural GPS transfer under a strict official PCQM4Mv2 protocol? | Full official-only baseline submitted; public reproduction passed a clean-clone audit and OGB review is pending | `pcqm_edge_state_full/` |
 | Did the early full repaired-2M PairGPS2D attempt establish a model? | No; the run was stopped and superseded by the matched validation-only protocol | `pubchemqc_pair_gps_2d/` |

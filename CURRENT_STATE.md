@@ -64,7 +64,10 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   candidate `0.114141 eV` versus baseline `0.117659 eV` on the same 50K
   development rows. It is nominated under its frozen point gate, but has no
   V5 transfer qualification or automatic scale release. Authority:
-  `experiments/pcqm_distance_angle_500k/decision.md`.
+  `experiments/pcqm_distance_angle_500k/decision.md`. The subsequent
+  existing-prediction component diagnostic closed `NO_TRAIN`; its accepted
+  result and strict-reference blocker are in
+  `experiments/pcqm_geometry_component_attribution/decision.md`.
 - Xi'an full-model replay job `67440607` matched predictions but differed in
   269 cross-process gradient tensors. The audit is closed negative; Xi'an V4
   ranking remains gated. Authority: `experiments/pcqm_xian_determinism/decision.md`.
