@@ -6,3 +6,6 @@ predictions be combined to reduce development error without new training?
 `protocol.md` freezes the local screen. `screen.py` reads only the two accepted
 prediction payloads and emits a row-aligned result. The terminal decision and
 RML records remain separate from the historical training pair.
+
+`kaggle_feasibility.md` records why the positive local screen did not release
+a remote kernel and what a later matched geometry submission would require.
