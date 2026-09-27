@@ -243,6 +243,31 @@ def test_all_fields_and_complete_artifacts_are_strict_causal():
     )
 
 
+def test_training_objective_is_an_explicit_loss_only_intervention():
+    candidate, reference = _side("reference-arch"), _reference_side()
+    candidate["comparison_identity"]["loss_identity"] = "frozen-joint-objective-sha"
+    record = _assess(candidate, reference,
+        experiment_purpose="training_objective_comparison",
+        intervention_group_id="joint-training-objective",
+        declared_intervention_fields=["loss_identity"])
+    assert record["strict_ready"] is True
+    validate_comparison_readiness(record, evidence_verifier=lambda *_: None)
+    for extra in ("optimizer_identity", "architecture_config_identity", "feature_identity"):
+        invalid = copy.deepcopy(candidate)
+        invalid["comparison_identity"][extra] = "undeclared-change"
+        rejected = _assess(invalid, reference,
+            experiment_purpose="training_objective_comparison",
+            intervention_group_id="joint-training-objective",
+            declared_intervention_fields=["loss_identity"])
+        assert rejected["strict_ready"] is False
+
+
+def test_objective_change_cannot_hide_in_architecture_comparison():
+    candidate = _side("candidate-arch")
+    candidate["comparison_identity"]["loss_identity"] = "changed-objective"
+    assert _assess(candidate)["strict_ready"] is False
+
+
 @pytest.mark.parametrize(
     "experiment_purpose",
     (

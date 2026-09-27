@@ -43,8 +43,8 @@ PROSPECTIVE_REUSE_STATUSES = frozenset(
 )
 
 # Every field is explicit so a fingerprint cannot conceal a scientific
-# difference.  ``architecture_config_identity`` may differ only when it is a
-# predeclared intervention; all other differences remain confounders.
+# difference. Only the purpose-scoped, predeclared intervention may differ;
+# all other differences remain confounders.
 STRICT_IDENTITY_FIELDS = (
     "benchmark_identity",
     "dataset_identity",
@@ -167,6 +167,9 @@ INTERVENTION_FIELDS_BY_PURPOSE = {
         }
     ),
     "schedule_comparison": frozenset({"schedule_identity"}),
+    # The frozen objective asset identifies the loss AND any train-only input
+    # corruption that defines it. Clean cached/evaluation features cannot vary.
+    "training_objective_comparison": frozenset({"loss_identity"}),
 }
 NONCAUSAL_PURPOSES = frozenset(
     {

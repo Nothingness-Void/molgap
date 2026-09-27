@@ -648,6 +648,17 @@ schedule comparisons have separate allowed field groups. One strict experiment
 has one `intervention_group_id`; unrelated scientific mismatches remain
 confounders.
 
+An explicitly authorized `training_objective_comparison` may vary only
+`loss_identity`. Its frozen objective asset must spell out the train-only input
+transformation, its RNG/counter policy, all loss terms and units, reductions,
+weights, and training-only heads. The loss identity hashes that complete recipe,
+not just the loss function name. Cached/clean inference features, inference
+architecture, data, optimizer, schedule and exposure still match. A compound
+objective estimates the effect of that whole recipe; isolating an auxiliary
+term requires a matched corruption-only arm. This adds a typed intervention,
+not a waiver for arbitrary feature or optimizer differences; historical
+architecture-only comparisons retain their original interpretation.
+
 Historical validity and prospective reuse are separate. Preserve claims valid
 under an original contract, while independently classifying future reference
 reuse as `READY`, `INCOMPLETE_RECOVERABLE`, `NOT_COMPATIBLE`, or `UNAVAILABLE`.

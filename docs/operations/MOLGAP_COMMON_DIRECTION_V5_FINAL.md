@@ -621,6 +621,15 @@ architecture/config mechanism; a mechanism comparison also names its
 respective fields. Every strict experiment has one `intervention_group_id`.
 Listing unrelated mismatches as interventions cannot bypass the strict gate.
 
+An explicitly authorized `training_objective_comparison` may vary only
+`loss_identity`, binding a frozen asset with the complete train-only input
+corruption and loss/head recipe, coefficients, units and RNG semantics. Clean
+feature and inference-architecture identities still match. It permits causal
+attribution to the declared objective recipe, not to a hidden architecture or
+optimizer change. Auxiliary-term attribution additionally needs a matched
+corruption-only contrast. All reference-evidence, role, trace and release-time
+checks remain mandatory, and historical purposes are unchanged.
+
 Every future scientific run declares each role-event kind as `applicable` or
 `not_applicable`: training membership, prediction input, label reads, metric
 computation, selection and external submission. Post-run acceptance requires
