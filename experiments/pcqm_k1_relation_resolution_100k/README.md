@@ -10,3 +10,7 @@ Reusable models/runtime/records live in `src/molgap/k1_relation_*`.
 Decisions: [frozen portability](audit/decision.md) and
 [frozen relation dependence](diagnostic/decision.md). Knockout dependence is
 not a substitute for a matched from-scratch architecture benefit.
+
+Research-only alternatives after closure:
+[generalization-oriented follow-up](diagnostic/followup_research.md).
+This is not a training release or a reopening of the closed arms.

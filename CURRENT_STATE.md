@@ -66,11 +66,18 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+One Kaggle2 dual-arm joint-Gap/atom-reconstruction study is authorized and in
+prelaunch preparation. It changes the training objective, not K1's inference
+architecture, and retains a separately identified frozen500K terminal audit.
+No result or successor is assumed. Authority:
+[joint-objective protocol](experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md)
+and [status](experiments/pcqm_k1_joint_atom_reconstruction_100k/STATUS.md).
+
 The Kaggle2 frozen-checkpoint relation-intervention diagnostic is complete.
 Receiver, Triplet and RRWP computations helped within their co-adapted networks,
 but none established a new portable architecture winner. Attenuation and
 targeted knockouts did not repair the weak molecular groups. The separate
-NO_TRAIN terminal is closed; no training successor is authorized. Authority:
+NO_TRAIN terminal is closed; that diagnostic releases no automatic successor. Authority:
 [diagnostic decision](experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md).
 
 The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit

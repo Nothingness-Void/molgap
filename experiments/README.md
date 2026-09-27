@@ -19,6 +19,7 @@ shared packaging, planning or terminal logic.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does local atom reconstruction help when every optimizer step retains Gap supervision? | One prospective paired training-objective study; no outcome assumed | `pcqm_k1_joint_atom_reconstruction_100k/` |
 | Can per-node linear-kernel retrieval replace K1's single global slot? | No retained terminal gain; negative frozen500K portability, complete training replay, route closed | `pcqm_k1_linear_attention_100k/` |
 | Should K1 normalize stored bond memory or only its reads? | Bounded two-arm protocol; no outcome assumed | `pcqm_k1_edge_memory_100k/` |
 | Are K1 edge-context normalization and global-slot simplifications additive? | Round2 pairwise interaction protocol; no outcome assumed | `pcqm_k1_edge_slot_interaction_100k/` |
