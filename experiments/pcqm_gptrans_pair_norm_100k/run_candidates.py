@@ -67,6 +67,10 @@ def worker(mode: str, root: Path) -> None:
     source_sha = find_one("SOURCE_ARCHIVE_SHA256.txt").read_text().strip()
     source_commit = find_one("SOURCE_COMMIT.txt").read_text().strip()
     initial_state = find_one("initial_state.pt")
+    if mode in ("distance_only", "distance_angle"):
+        geometry_state = find_one("geometry_initial_state.pt")
+        if geometry_state.parent != initial_state.parent:
+            raise RuntimeError("Frozen core and geometry states are not co-mounted")
     output = Path(os.environ["MOLGAP_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     preflight_path = output / "preflight.json"

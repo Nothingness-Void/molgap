@@ -95,6 +95,7 @@ GEOMETRY_STATE_KEYS = (
 )
 GEOMETRY_PARAMETERS = 5_251_425
 EXPECTED_GEOMETRY_INITIAL_MODEL_SHA256 = "d471924cebde2e0382fe758021a066108acce3858e99c4838451c8c92db9ffba"
+EXPECTED_GEOMETRY_INITIAL_STATE_ARTIFACT_SHA256 = "c3b49755c30a511a30720cf4845c7ac688f139535382b5bc79ce2500c14b5c97"
 
 
 @dataclass(frozen=True)
@@ -278,6 +279,13 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
                 expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
                 expected_format="molgap-gptrans-t-seed42-initial-state-v1",
                 allowed_missing_keys=GEOMETRY_STATE_KEYS,
+            )
+            load_frozen_initial_state(
+                model,
+                initial_state_path.with_name("geometry_initial_state.pt"),
+                expected_file_sha256=EXPECTED_GEOMETRY_INITIAL_STATE_ARTIFACT_SHA256,
+                expected_state_sha256=EXPECTED_GEOMETRY_INITIAL_MODEL_SHA256,
+                expected_format="molgap-gptrans-geometry-seed42-initial-state-v1",
             )
         return model
     if variant in ("memory_value", "memory_message"):
