@@ -1,0 +1,63 @@
+{
+  "accepted": true,
+  "arms": {
+    "k1_corrupt_gap": {
+      "original_100k": {
+        "candidate_win_fraction": 0.49982,
+        "gain_eV": -0.000352301664352417,
+        "mae_eV": 0.1417259394878149,
+        "paired_error_delta_bootstrap_95_eV": [
+          -0.0005394371018409729,
+          0.0012498053829669948
+        ],
+        "row_interval_favorable": false,
+        "training_stochasticity_measured": false
+      },
+      "shortlist_gate": false,
+      "unseen_500k": {
+        "candidate_win_fraction": 0.48602,
+        "gain_eV": -0.0031896144485473632,
+        "mae_eV": 0.14444292171001435,
+        "paired_error_delta_bootstrap_95_eV": [
+          0.0023802506186962127,
+          0.00400289672267437
+        ],
+        "row_interval_favorable": false,
+        "training_stochasticity_measured": false
+      }
+    },
+    "k1_corrupt_gap_atom_aux": {
+      "original_100k": {
+        "candidate_win_fraction": 0.51378,
+        "gain_eV": 0.0028601730632781984,
+        "mae_eV": 0.13851346476018428,
+        "paired_error_delta_bootstrap_95_eV": [
+          -0.0037476003757715226,
+          -0.0019524055228233338
+        ],
+        "row_interval_favorable": true,
+        "training_stochasticity_measured": false
+      },
+      "shortlist_gate": false,
+      "unseen_500k": {
+        "candidate_win_fraction": 0.5025,
+        "gain_eV": -0.0006199696826934814,
+        "mae_eV": 0.14187327694416046,
+        "paired_error_delta_bootstrap_95_eV": [
+          -0.0001466367789506912,
+          0.0014113227541446684
+        ],
+        "row_interval_favorable": false,
+        "training_stochasticity_measured": false
+      }
+    }
+  },
+  "experiment_purpose": "NO_TRAIN",
+  "model_inference_executed_by_acceptance": false,
+  "official_validation_role_read": false,
+  "reference_inference_reused": true,
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "training_executed": false,
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+}

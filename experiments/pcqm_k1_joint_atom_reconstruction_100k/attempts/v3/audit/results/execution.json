@@ -1,0 +1,359 @@
+{
+  "allocation": {
+    "audit_device_seconds": 154.9601442989997,
+    "semantics": "Observed per-device audit intervals excluded from training; notebook bootstrap/idle assigned once to first training arm. No account-billing claim.",
+    "total_allocated_device_seconds": 15451.103287769998,
+    "training": {
+      "k1_corrupt_gap": {
+        "allocated_overhead_seconds": 390.66156034900087,
+        "allocation_semantics": "all observed notebook bootstrap/idle occupancy assigned once to first worker; not per-arm model throughput",
+        "audit_device_seconds_excluded": 72.5759157120001,
+        "device_seconds": 7858.265154117001,
+        "wall_seconds": 7467.603593768
+      },
+      "k1_corrupt_gap_atom_aux": {
+        "allocated_overhead_seconds": 0,
+        "allocation_semantics": "all observed notebook bootstrap/idle occupancy assigned once to first worker; not per-arm model throughput",
+        "audit_device_seconds_excluded": 82.3842285869996,
+        "device_seconds": 7437.8779893539995,
+        "wall_seconds": 7437.8779893539995
+      }
+    }
+  },
+  "native_audit_terminals": {
+    "k1_corrupt_gap": {
+      "checkpoint_sha256": "a98d18143f2a48f09cd6350fad47f5abd90caec3f6821bb60c1d53d427858dfd",
+      "complete": true,
+      "experiment_purpose": "NO_TRAIN",
+      "format": "molgap-k1-joint-portability-audit-v1",
+      "manifest_sha256": {
+        "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+      },
+      "model_inference_executed": true,
+      "official_validation_role_read": false,
+      "optimizer_steps_in_audit_stage": 0,
+      "original_100k": {
+        "chunks": [
+          {
+            "file": "chunk_00.pt",
+            "rows": 5000,
+            "sha256": "bc1406045069bf12940d9bf554bf3d95ab77b7cd39520fb2b6a335d983369943"
+          },
+          {
+            "file": "chunk_01.pt",
+            "rows": 5000,
+            "sha256": "492832870fb50b69227ebae09d1ea7a0473f63a0b72470cc9080516cbbb58fe4"
+          },
+          {
+            "file": "chunk_02.pt",
+            "rows": 5000,
+            "sha256": "411cef7b7fca80932b8bd02457c512080b9df6320ecd0a63f93bc81f5313a449"
+          },
+          {
+            "file": "chunk_03.pt",
+            "rows": 5000,
+            "sha256": "763e6b14ced3f98311be033fbabf0a4ed1ba47b4f92c38133e079f89399efa9a"
+          },
+          {
+            "file": "chunk_04.pt",
+            "rows": 5000,
+            "sha256": "8ce76e73cb825cc4c6e1c0569ae31cd22882f302b67afc2d4f68b980e9e5e067"
+          },
+          {
+            "file": "chunk_05.pt",
+            "rows": 5000,
+            "sha256": "c106baf918732580d3159eef0f0d37e0c0ad653d8a0b75caf57381e157dc5166"
+          },
+          {
+            "file": "chunk_06.pt",
+            "rows": 5000,
+            "sha256": "53143ce1d50e7cfd6d1211e3bbef5850f2a8036ae58c3639d2de6357066a18fe"
+          },
+          {
+            "file": "chunk_07.pt",
+            "rows": 5000,
+            "sha256": "50f42952780db9e85e3d72ee705e873168af2511f3944e1345419871bde666bf"
+          },
+          {
+            "file": "chunk_08.pt",
+            "rows": 5000,
+            "sha256": "1e131288f8d0b9800998d736f440e262ab0304be91f1fd24404c391411b423a5"
+          },
+          {
+            "file": "chunk_09.pt",
+            "rows": 5000,
+            "sha256": "bc2f5df9a2ccdcc15b6c01f622b5525ce7857bb9e972866bb42ecc1fa0190130"
+          }
+        ],
+        "rows": 50000
+      },
+      "original_reproduction_max_abs_eV": 1.9073486328125e-06,
+      "recipe": "k1_corrupt_gap",
+      "roles_observed": {
+        "internal_development_100000_150000": [
+          "prediction_input",
+          "labels_read",
+          "metric_computed"
+        ],
+        "internal_development_500000_550000": [
+          "prediction_input",
+          "labels_read",
+          "metric_computed"
+        ]
+      },
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "selection_used_in_audit_stage": false,
+      "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+      "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
+      "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+      "test_challenge_role_read": false,
+      "test_dev_role_read": false,
+      "training_executed_in_audit_stage": false,
+      "training_membership_in_audit_stage": false,
+      "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "unseen_500k": {
+        "chunks": [
+          {
+            "file": "chunk_00.pt",
+            "rows": 5000,
+            "sha256": "90e00a1ea26f61aadea5cd6c7af29ac1411476422fe5b9bf53c504a1b069d37e"
+          },
+          {
+            "file": "chunk_01.pt",
+            "rows": 5000,
+            "sha256": "aaba6056bb5499d4f3065a09a4fdce95d37aa2184b5b8b27918e9f6f96a45397"
+          },
+          {
+            "file": "chunk_02.pt",
+            "rows": 5000,
+            "sha256": "343597baf7a60e73810773604f4b49d2bf283d0d6d11a595a03ad1a6ed0c7091"
+          },
+          {
+            "file": "chunk_03.pt",
+            "rows": 5000,
+            "sha256": "2dd6e08cd041389a66cd171a067c7ea5ce61119564e57afb19b7f2d6f8725661"
+          },
+          {
+            "file": "chunk_04.pt",
+            "rows": 5000,
+            "sha256": "0e99e30211fa821f55aa484fdc6e23d60fa83371bb35482a5b443e79a82a5946"
+          },
+          {
+            "file": "chunk_05.pt",
+            "rows": 5000,
+            "sha256": "647e9011c1a73ef175f0e641a791ced7bd3a5968d9f7cc8ec02a93d9d6e3dc42"
+          },
+          {
+            "file": "chunk_06.pt",
+            "rows": 5000,
+            "sha256": "caed2c56da3517cbc72fb97257bd11fdbaa5ae9e8c6a0e1f443bdbc33819cae5"
+          },
+          {
+            "file": "chunk_07.pt",
+            "rows": 5000,
+            "sha256": "8e2e295c0be0de1041174ba1adcf4e660ea21eed236c0b51bb4fc8a3b97bb2a5"
+          },
+          {
+            "file": "chunk_08.pt",
+            "rows": 5000,
+            "sha256": "85769344f6f6fa54837c1d393de780280f6acea3fb70470fc33c250308335cdd"
+          },
+          {
+            "file": "chunk_09.pt",
+            "rows": 5000,
+            "sha256": "ed8bfd027dee4e20e8fe8d62a05eb963a5bb679458ce7cd3d976c0c4aa116dd7"
+          }
+        ],
+        "mae_eV": 0.14444292171001435,
+        "rows": 50000
+      },
+      "wall_seconds": 72.5759157120001
+    },
+    "k1_corrupt_gap_atom_aux": {
+      "checkpoint_sha256": "739020587d2928b82daa4cedb687a93b1025a1118eb485a2cdd5a274056e6e5d",
+      "complete": true,
+      "experiment_purpose": "NO_TRAIN",
+      "format": "molgap-k1-joint-portability-audit-v1",
+      "manifest_sha256": {
+        "original_100k": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "unseen_500k": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+      },
+      "model_inference_executed": true,
+      "official_validation_role_read": false,
+      "optimizer_steps_in_audit_stage": 0,
+      "original_100k": {
+        "chunks": [
+          {
+            "file": "chunk_00.pt",
+            "rows": 5000,
+            "sha256": "d619a3080d2ca872c5dba7820d0d89910fd6fdeffaa4898d337d30bd8837a6ea"
+          },
+          {
+            "file": "chunk_01.pt",
+            "rows": 5000,
+            "sha256": "febed3ed5fa272289b30a30f36ba0306796d4b5eec149a0eec32252fa97f222c"
+          },
+          {
+            "file": "chunk_02.pt",
+            "rows": 5000,
+            "sha256": "e71adb43d1db43bb8004d579dcb96592082425f804b894a3368a8febc9a46905"
+          },
+          {
+            "file": "chunk_03.pt",
+            "rows": 5000,
+            "sha256": "75d77d4d22d09f81204dbc326e9aed9b4aa48a5441b698db96255ed748ac33ba"
+          },
+          {
+            "file": "chunk_04.pt",
+            "rows": 5000,
+            "sha256": "721dfc85903ca79f4b2463346aea4c62a51daa44b3267bede9f7dcb3823b0361"
+          },
+          {
+            "file": "chunk_05.pt",
+            "rows": 5000,
+            "sha256": "5f2c0a2017719d6574f8582907c906b908638b89ab9020052cb35cfa53d70a9c"
+          },
+          {
+            "file": "chunk_06.pt",
+            "rows": 5000,
+            "sha256": "432260ffc461f5ed1054cb2f64175ecc25031a3d283b4e89ab338b516fb20de6"
+          },
+          {
+            "file": "chunk_07.pt",
+            "rows": 5000,
+            "sha256": "9196eb97211b05e4d57a341b08001e30d152bb67999bfe2b1b92eddd09a63efc"
+          },
+          {
+            "file": "chunk_08.pt",
+            "rows": 5000,
+            "sha256": "af006d2d2660fbc46b4707c8aa41e0a8d36120ebc997bc96ce36f147c7bafbf6"
+          },
+          {
+            "file": "chunk_09.pt",
+            "rows": 5000,
+            "sha256": "f8da04f5040f0a31e2f8b749cd4c6ddfac6e79178bc2e514763ba73d7e9a4206"
+          }
+        ],
+        "rows": 50000
+      },
+      "original_reproduction_max_abs_eV": 1.9073486328125e-06,
+      "recipe": "k1_corrupt_gap_atom_aux",
+      "roles_observed": {
+        "internal_development_100000_150000": [
+          "prediction_input",
+          "labels_read",
+          "metric_computed"
+        ],
+        "internal_development_500000_550000": [
+          "prediction_input",
+          "labels_read",
+          "metric_computed"
+        ]
+      },
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "selection_used_in_audit_stage": false,
+      "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+      "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
+      "target_transform_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+      "test_challenge_role_read": false,
+      "test_dev_role_read": false,
+      "training_executed_in_audit_stage": false,
+      "training_membership_in_audit_stage": false,
+      "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "unseen_500k": {
+        "chunks": [
+          {
+            "file": "chunk_00.pt",
+            "rows": 5000,
+            "sha256": "67674af6b61aa75126e74798300352aadf92e9cefcf980101b9f4f43bcd2a822"
+          },
+          {
+            "file": "chunk_01.pt",
+            "rows": 5000,
+            "sha256": "93f4700e7aeb1986e0f63a8f8d36d5cfcd26a99764f68291223ad258bcf0a296"
+          },
+          {
+            "file": "chunk_02.pt",
+            "rows": 5000,
+            "sha256": "0a5c4c334622faa66f4e1072bf54cebd7c9c4e4ff7f086ac81a1d0287ccefa7a"
+          },
+          {
+            "file": "chunk_03.pt",
+            "rows": 5000,
+            "sha256": "1e41e50df403e2b061279e79b933caea519e98820ac1c22016cc3ae040f60304"
+          },
+          {
+            "file": "chunk_04.pt",
+            "rows": 5000,
+            "sha256": "5c4c092f3ca2377b47689b57b8e56bafd6ebddbc40bca7d8c6b0f983cadd4fc4"
+          },
+          {
+            "file": "chunk_05.pt",
+            "rows": 5000,
+            "sha256": "01ee174893aad62d7a70cc719b7ad3c78e54bae338b67c7033ce84a75ed078a8"
+          },
+          {
+            "file": "chunk_06.pt",
+            "rows": 5000,
+            "sha256": "2db6965ccc29faa41f2f30798678ac63dc5f71eb810ab25fd21640d4abe76d48"
+          },
+          {
+            "file": "chunk_07.pt",
+            "rows": 5000,
+            "sha256": "8193e555c22e0b772691efc004fb3015af31352f4336afece094780f66ca1e40"
+          },
+          {
+            "file": "chunk_08.pt",
+            "rows": 5000,
+            "sha256": "6ba38459f53ea84bdb296912ee42d4a343bcb7edcc72d3711275776724d918b8"
+          },
+          {
+            "file": "chunk_09.pt",
+            "rows": 5000,
+            "sha256": "c1a7ee84797d3f984ff44a41be4c1a3fe4ec1cea87122e998ffb0baf76547c60"
+          }
+        ],
+        "mae_eV": 0.14187327694416046,
+        "rows": 50000
+      },
+      "wall_seconds": 82.3842285869996
+    }
+  },
+  "native_cost": {
+    "k1_corrupt_gap": {
+      "allocated_device_seconds": 7538.7593280090005,
+      "audit_wall_seconds": 72.5759157120001,
+      "complete": true,
+      "cpu_process_seconds": 7981.1156880319995,
+      "cpu_scope": "worker process only; dataloader subprocess CPU unmeasured",
+      "device_count": 1,
+      "format": "molgap-joint-study-native-cost-v1",
+      "hardware": "Tesla T4",
+      "measurement": "monotonic-wall-times-one-device",
+      "recipe": "k1_corrupt_gap",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "training_completed": true,
+      "training_wall_seconds": 7465.990040548,
+      "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3",
+      "wall_seconds": 7538.7593280090005
+    },
+    "k1_corrupt_gap_atom_aux": {
+      "allocated_device_seconds": 7518.6348631480005,
+      "audit_wall_seconds": 82.3842285869996,
+      "complete": true,
+      "cpu_process_seconds": 7952.127739252,
+      "cpu_scope": "worker process only; dataloader subprocess CPU unmeasured",
+      "device_count": 1,
+      "format": "molgap-joint-study-native-cost-v1",
+      "hardware": "Tesla T4",
+      "measurement": "monotonic-wall-times-one-device",
+      "recipe": "k1_corrupt_gap_atom_aux",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "training_completed": true,
+      "training_wall_seconds": 7436.045968356,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "wall_seconds": 7518.6348631480005
+    }
+  }
+}

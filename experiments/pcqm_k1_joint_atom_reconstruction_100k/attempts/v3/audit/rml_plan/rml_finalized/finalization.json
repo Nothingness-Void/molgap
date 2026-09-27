@@ -1,0 +1,44 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-b78c1205ee94b6a499c079db7cea8b3c94cea7782cba17c759693e8b5eaae711",
+  "finalized_at": "2026-09-27T20:55:09Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/decision.md": "b227e3a13375125a2d60810afdb0ea8f72aed6c89ac69b10fd92366395affb1a",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/acceptance_summary.json": "209bd56dda6ca69d892f8dc8a1a14efca01d66814c587e11f33829b6c9bfa58f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/cost_records.json": "6d912e94fd00f064143f1767fae5e60662c455553be7039acd8df93f8aa904a8",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/execution.json": "73f37f7a9f9aee747f8ae920b9a84e5f884f4c593c698683acb609c5a47df620",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/role_history.json": "2d81203fd1e270d587194a6fbc3a38bd0134eb9e57bda50231e95a0c83a83ed0",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/role_row_manifests.json": "d23efacb773f27f25d48e133471c56f12092e0af90107fc29ea3547c3eea7538",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/results/terminal_acceptance.json": "f05abb80cd7eb69fe075d1aefede40672296625ffd644b94bb6e141c4b609b97",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/trajectory.json": "737bf56258c5c367529726d2ff72dbfd030825cca7d8f8c8df3a13e2fcb93740",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/results/analysis.json": "28bc849db7f0a9ec5299bc56cfbaf48e0d0e2bf86ab6e9f37cf5d3e275aacc0f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v3.json": "b315b577e1538ca3aedb67acef2f876d962e29c19e983c7a8ff23150acc467e4",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-k1-joint-atom-post100k-audit-s42-v3.json": "1d7fe9877ec5f189d1601d1ee5de51f4253dc6bd5f3f91475f8324b4adb64679",
+    "prospective_snapshot.json": "737bf56258c5c367529726d2ff72dbfd030825cca7d8f8c8df3a13e2fcb93740",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-labels_read.json": "26b6d1c26560b828a951af49bcc69f3be0f69d27318df18d0e348a69f0f90d35",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-metric_computed.json": "65bee431a48994b435d6b881ad6260a4bb061cfc3914b92502d3d0aecab7f576",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-prediction_input.json": "6f9837101c369faa1556de084abd53f8ad9f9b17a581cb48d4e9ce18e04973a7",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-labels_read.json": "08888d76880aa6a5a30e26471b15d6b388306291a5f52e3ba0b00d18da6dfcb3",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-metric_computed.json": "0a6b250ef5ab9c248b00920dfbc8175eacf1501e65eaea4575111970a5d97220",
+    "roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-prediction_input.json": "e1af97b7c32826067be09e8bca6f78a0ca37780f914cc9fc49fe8a6196431142",
+    "terminal_input.json": "647359e008f4757dc83e43fe9e0dc4f692d1b6ae17b62d319ec3df7cfbfe470f",
+    "trajectory.json": "781c5c91ac80b92564b6321e264254085308f02c2485364579e5528b34cc930b",
+    "v5_evidence.json": "c3e248d6027071026a2cde98b57b14b335322c230bcba152c4b37b2160a61f4f"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-joint-atom-post100k-audit-s42-v3.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/costs/cost-TC-k1-joint-atom-post100k-audit-s42-v3.json",
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "b78c1205ee94b6a499c079db7cea8b3c94cea7782cba17c759693e8b5eaae711",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+}

@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-d6dbd1bce1a25f0dd5761b88ead5c78fb10bfd6973262b1166c10c7c3bedd309",
+  "finalized_at": "2026-09-27T20:55:09Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/decision.md": "00a23ec3833d2c461931812c79387e32972d41c5b6297a283538eedb982a7d79",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/acceptance_summary.json": "b5ba2f0845331f2beeb6db6f0122f979f7768f2f0b9de6373b205f52299a1b0d",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/arm_record.json": "d64964880db3234e419e8108ecac51086f258eafe5fb4b6a7da704bb06ecf4ef",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/canonical_trace.json": "fd850288266f81b6d6891f3e22075c40b02bc36126b95d6935e183fd7cdd0486",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/comparison_readiness.json": "3636e0b5cb2cd741183b3419e6afd59364573c13f06fd11f34fefaf757daf29f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/completion_manifest.json": "4ab464a5066e746bed1a440b60f5c2ae86ac1953a9e06995ce6e4b322e38909b",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/cost_allocation.json": "65d1eb1020e4083770e531996ce7f7b6abb48b005cbb8cdeeb95975295c9d82c",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/native_cost.json": "8c0ff26b641632dbee0aa4ceb3733df9fc4d0126845e1e91a4ff6575297bf0d8",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/objective_config.json": "d49079b1ad5091ca41d6cf341986c254e051562f88ad5120e50debc3c090f989",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/observed_role_history.json": "6e2cf63b176006cac42d1d6a5995189e8594107bc4253367f85bf8dcd5fb6906",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/paired_analysis.json": "f9c1882e9a05dd8284386f6b40ee1714647c669caec29ff928fe6f84c7b0d3cd",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/target_transform_asset.json": "49fb4e78610a2610d6d6c740612d8b6f07c587c5c46c78b3567134ee4c432573",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/terminal_acceptance.json": "add671a7571354d8a4ee555b8387e4fef78d4735f80a5b15e3c3fe15a4dbc68f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/trajectory.json": "564871f05641a3ac77c7989faa9b00f7bc593de6cf5b1e680d122a32eed451e0",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/results/analysis.json": "28bc849db7f0a9ec5299bc56cfbaf48e0d0e2bf86ab6e9f37cf5d3e275aacc0f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json": "b88ea6c3debda3ebc60ab622fa354c2c735833a82b8e581d62371a2fc6056ac7",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v3.json": "b315b577e1538ca3aedb67acef2f876d962e29c19e983c7a8ff23150acc467e4",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-corrupt-gap-100k-s42-v3.json": "6606cd45008a8a6261f44ae8c2db8c385794d7055d8c9116e721b75399923336",
+    "prospective_snapshot.json": "564871f05641a3ac77c7989faa9b00f7bc593de6cf5b1e680d122a32eed451e0",
+    "roles/role-TC-k1-corrupt-gap-100k-s42-v3-labels-read.json": "547b7c5cd9f7fa314165ddff3c38ed9350bf0a4c772cfec8b3824b0c838891ef",
+    "roles/role-TC-k1-corrupt-gap-100k-s42-v3-metric-computed.json": "f74081fadfc73db874a5be0399b38b889efa8432cfd64b3214c6679028999fe3",
+    "roles/role-TC-k1-corrupt-gap-100k-s42-v3-prediction-input.json": "6415bb9445112525d91278b19884cfec63258e0c241b4535bd68ffbe9bc9e726",
+    "roles/role-TC-k1-corrupt-gap-100k-s42-v3-selection-used.json": "8dc58f69f9de80fd7f7ccbcd4e1106e073e7439fdeb400772bb14ad7af7d811d",
+    "roles/role-TC-k1-corrupt-gap-100k-s42-v3-training-membership.json": "e318c125375e7e6681aa70fe877722a090483b810a5a7ce70fa05119743324f8",
+    "terminal_input.json": "df0847c5e0bab214e42387f6ddc4b30c2950c10c08663e1117c95f6482d55c93",
+    "trace.json": "fd850288266f81b6d6891f3e22075c40b02bc36126b95d6935e183fd7cdd0486",
+    "trace_manifest.json": "9252e2df209d37e5e4ca1ab82544484b4a56d85076ee8f7bc6080a9a8ebf04d2",
+    "trajectory.json": "ec221a7bd51947398d2e12ffdf18f0d5dd7d4af56069b8a816547afb6b4fb712",
+    "v5_evidence.json": "bcfc0baa4445006fa7a228394c2c8b83f31ae2b5630431f38d81092727158f14"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-corrupt-gap-100k-s42-v3.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/costs/cost-TC-k1-corrupt-gap-100k-s42-v3.json",
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "d6dbd1bce1a25f0dd5761b88ead5c78fb10bfd6973262b1166c10c7c3bedd309",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+}

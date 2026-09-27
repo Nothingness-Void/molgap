@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v3",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-corrupt-gap-100k-s42-v3",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.182851431699167
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.074334331602222
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+    }
+  ],
+  "format": "molgap-cost-records-v1"
+}

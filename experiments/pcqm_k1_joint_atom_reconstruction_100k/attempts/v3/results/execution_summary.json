@@ -1,0 +1,37 @@
+{
+  "allocated_device_count": 2,
+  "allocated_device_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "automatic_successor_submitted": false,
+  "complete": true,
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+  "total_allocated_device_seconds": 15451.10328777,
+  "total_job_wall_seconds": 7725.551643885,
+  "used_device_count": 2,
+  "workers": [
+    {
+      "allocated_device_seconds": 7540.17950948,
+      "complete": true,
+      "device": 0,
+      "exit_code": 0,
+      "log": "k1_corrupt_gap.log",
+      "mode": "k1_corrupt_gap",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "timed_out": false,
+      "worker_wall_seconds": 7540.17950948
+    },
+    {
+      "allocated_device_seconds": 7520.262217940999,
+      "complete": true,
+      "device": 1,
+      "exit_code": 0,
+      "log": "k1_corrupt_gap_atom_aux.log",
+      "mode": "k1_corrupt_gap_atom_aux",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "timed_out": false,
+      "worker_wall_seconds": 7520.262217940999
+    }
+  ]
+}

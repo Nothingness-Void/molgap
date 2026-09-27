@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 198,
+  "ambiguous_historical_role_record_count": 213,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -233,6 +233,76 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-degree-balance-100k-s42",
       "role_identity": null,
       "role_name": "internal_development_100000_150000",
@@ -325,6 +395,41 @@
     },
     {
       "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1388,7 +1493,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 164,
+  "explicit_role_event_count": 180,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -1626,6 +1731,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
       },
       {
         "access_kind": "labels_read",
@@ -2205,6 +2366,20 @@
       },
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-degree-balance-100k-s42-training-membership",
         "selection_used": false,
         "semantics": "explicit",
@@ -2395,6 +2570,29 @@
         "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:b459b80db284ff3f51c8baf31e008616e60eb8ed4594b686a248242feee0e7eb:internal_development_100000_150000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391:internal_development_500000_550000": [
       {
         "access_kind": "labels_read",
@@ -2437,6 +2635,29 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:559d993a7ff8cfbf4300ba709bdb15a8643e5087484e4071af7f1383dc8ed010:internal_development_500000_550000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
@@ -2573,9 +2794,12 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2615,9 +2839,12 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2657,9 +2884,12 @@
       "pcqm-k1-chem-typed-pair-token-100k-s42",
       "pcqm-k1-conjugated-oneshot-100k-s42",
       "pcqm-k1-conjugated-persistent-100k-s42",
+      "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2841,6 +3071,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
       },
       {
         "access_kind": "labels_read",
@@ -3571,6 +3857,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-degree-balance-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -4144,6 +4486,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-conjugated-persistent-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-corrupt-gap-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
       },
       {
         "access_kind": "training_membership",

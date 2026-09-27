@@ -1,0 +1,131 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v3",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.066077219265
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.066077219265
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    }
+  ],
+  "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "POSITIVE_BELOW_GATE",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+  "source_acceptance_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/raw_acceptance.json",
+  "source_acceptance_sha256": "a097699167ad4e7d4c1e2b6dcea30181ae4954c245f76ab41c6a051384c1a215",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": [
+      "new mechanism and explicit prospective authorization; no scale-up or extra seed released"
+    ]
+  }
+}

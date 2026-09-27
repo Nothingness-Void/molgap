@@ -15,17 +15,15 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 22,
+      "count": 20,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
-        "TC-k1-corrupt-gap-100k-s42-v3",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
         "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
-        "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
         "TC-k1-joint-atom-post100k-audit-s42",
         "TC-k1-joint-atom-post100k-audit-s42-v2",
         "TC-k1-joint-atom-post100k-audit-s42-v3",
@@ -114,17 +112,14 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 11,
+      "count": 8,
       "items": [
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
-        "TC-k1-corrupt-gap-100k-s42-v3",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
         "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
-        "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
         "TC-k1-joint-atom-post100k-audit-s42",
         "TC-k1-joint-atom-post100k-audit-s42-v2",
-        "TC-k1-joint-atom-post100k-audit-s42-v3",
         "TC-k1-linear-attention-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -132,11 +127,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 4,
+      "count": 1,
       "items": [
-        "TC-k1-corrupt-gap-100k-s42-v3",
-        "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
-        "TC-k1-joint-atom-post100k-audit-s42-v3",
         "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"

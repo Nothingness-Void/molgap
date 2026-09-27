@@ -1,0 +1,121 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "c679d3028d25482f1ec51a56f13fc6607217319331b6f2e2675c47e74beb60e9"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "4541574effa3196af4f368cf70bdcc60fa0ef80291189d4b3a0c9811aa2e431f"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "c2c44eed380dfc687e04669d0d465d4bcafb59c1e022b727052a4facd56a8e32"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "69068e767ea7fb80ca7d71336a7e0475d4088c3fa090f5a5ff7178dfe3d50062"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "f725d58426933e252e8bc70ef5f3bfa9f84ccb576e04f4e723898de6cc60ac8a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "3c25fc433609c18d953c8bbf9f2f0a77f4ca433f1991e50dc4bf9f4adb71c95e"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "f8ab42e390fbdd910f2247ed0be9ee304ed7aa49d822ebd326d47bb398486ec1"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "6f76a51d2e2aa1a981229e676879c46a008fbc281120b35219611997ff1f2781"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/objective_config.json",
+      "name": "objective_config",
+      "sha256": "c63813c6f0cc7c109d349e45da2b260f4ef595de524a1d98e68fbeefff57e76a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/target_transform_asset.json",
+      "name": "target_transform_asset",
+      "sha256": "49fb4e78610a2610d6d6c740612d8b6f07c587c5c46c78b3567134ee4c432573"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/cost_allocation.json",
+      "name": "cost_allocation",
+      "sha256": "9bfffd6bfdb5aedaf9a7bba05c94016a068919badaa526bec5d0bf55dcb31015"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/submission_receipt_v3.json",
+      "name": "submission_receipt",
+      "sha256": "b315b577e1538ca3aedb67acef2f876d962e29c19e983c7a8ff23150acc467e4"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/results/analysis.json",
+      "name": "study_analysis",
+      "sha256": "28bc849db7f0a9ec5299bc56cfbaf48e0d0e2bf86ab6e9f37cf5d3e275aacc0f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/decision.md",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-27T20:55:09Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "POSITIVE_BELOW_GATE",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_training_objective_screen",
+  "track": "C"
+}

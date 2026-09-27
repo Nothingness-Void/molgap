@@ -52,6 +52,8 @@
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
         "kaseichou/molgap-k1-functional-group-token-s42:v1",
+        "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "kaseichou/molgap-k1-joint-atom-s42:v3",
         "kaseichou/molgap-k1-receiver-triplet-s42:v1",
         "kaseichou/molgap-k1-receiver-triplet-s42:v1",
         "kaseichou/molgap-k1-rrwp-pair-s42:v1",
@@ -74,6 +76,8 @@
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
+        "TC-k1-corrupt-gap-100k-s42-v3",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
         "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-linear-attention-100k-s42",
@@ -99,6 +103,8 @@
     "TC-k1-chem-typed-pair-token-100k-s42",
     "TC-k1-conjugated-oneshot-100k-s42",
     "TC-k1-conjugated-persistent-100k-s42",
+    "TC-k1-corrupt-gap-100k-s42-v3",
+    "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
     "TC-k1-degree-balance-100k-s42",
     "TC-k1-functional-group-token-100k-s42",
     "TC-k1-linear-attention-100k-s42",
@@ -124,5 +130,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 25
+  "trace_count": 27
 }

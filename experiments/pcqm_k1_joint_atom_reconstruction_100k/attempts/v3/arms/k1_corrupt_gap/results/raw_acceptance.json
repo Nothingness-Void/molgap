@@ -1,0 +1,1407 @@
+{
+  "accepted": true,
+  "audit": {
+    "accepted": true,
+    "arms": {
+      "k1_corrupt_gap": {
+        "original_100k": {
+          "candidate_win_fraction": 0.49982,
+          "gain_eV": -0.000352301664352417,
+          "mae_eV": 0.1417259394878149,
+          "paired_error_delta_bootstrap_95_eV": [
+            -0.0005394371018409729,
+            0.0012498053829669948
+          ],
+          "row_interval_favorable": false,
+          "training_stochasticity_measured": false
+        },
+        "shortlist_gate": false,
+        "unseen_500k": {
+          "candidate_win_fraction": 0.48602,
+          "gain_eV": -0.0031896144485473632,
+          "mae_eV": 0.14444292171001435,
+          "paired_error_delta_bootstrap_95_eV": [
+            0.0023802506186962127,
+            0.00400289672267437
+          ],
+          "row_interval_favorable": false,
+          "training_stochasticity_measured": false
+        }
+      },
+      "k1_corrupt_gap_atom_aux": {
+        "original_100k": {
+          "candidate_win_fraction": 0.51378,
+          "gain_eV": 0.0028601730632781984,
+          "mae_eV": 0.13851346476018428,
+          "paired_error_delta_bootstrap_95_eV": [
+            -0.0037476003757715226,
+            -0.0019524055228233338
+          ],
+          "row_interval_favorable": true,
+          "training_stochasticity_measured": false
+        },
+        "shortlist_gate": false,
+        "unseen_500k": {
+          "candidate_win_fraction": 0.5025,
+          "gain_eV": -0.0006199696826934814,
+          "mae_eV": 0.14187327694416046,
+          "paired_error_delta_bootstrap_95_eV": [
+            -0.0001466367789506912,
+            0.0014113227541446684
+          ],
+          "row_interval_favorable": false,
+          "training_stochasticity_measured": false
+        }
+      }
+    },
+    "experiment_purpose": "NO_TRAIN",
+    "model_inference_executed_by_acceptance": false,
+    "official_validation_role_read": false,
+    "reference_inference_reused": true,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "training_executed": false,
+    "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v3"
+  },
+  "candidates": {
+    "k1_corrupt_gap": {
+      "comparison_identity": {
+        "architecture_config_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+        "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+        "checkpoint_selection_identity": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+        "data_role_identity": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+        "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "deterministic_algorithms": true,
+        "ema_decay": null,
+        "ema_enabled": false,
+        "ema_update_frequency": null,
+        "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+        "evaluation_weight_source": "live",
+        "feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+        "gradient_accumulation_steps": 1,
+        "loss_identity": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+        "optimizer_fused": false,
+        "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+        "optimizer_mode": "adamw-single-parameter-group",
+        "optimizer_steps": 31240,
+        "physical_batch_per_device": 128,
+        "precision": "fp32",
+        "row_membership_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "row_order_identity": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+        "runtime_certificate_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+        "sample_presentations": 3998720,
+        "schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+        "seed": 42,
+        "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+        "tail_batch_policy": "drop_last",
+        "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+        "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+        "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+        "tf32_enabled": false,
+        "weight_semantics": "live"
+      },
+      "gate": {
+        "gain_eV": -0.0003522982978820801,
+        "memory_reserve_fraction": 0.9594948593175655,
+        "passed": false,
+        "required_gain_eV": 0.003,
+        "row_bootstrap_is_sufficient_alone": false,
+        "training_stochasticity_accounted": false,
+        "training_stochasticity_measured": false
+      },
+      "native_cost": {
+        "allocated_device_seconds": 7538.7593280090005,
+        "audit_wall_seconds": 72.5759157120001,
+        "complete": true,
+        "cpu_process_seconds": 7981.1156880319995,
+        "cpu_scope": "worker process only; dataloader subprocess CPU unmeasured",
+        "device_count": 1,
+        "format": "molgap-joint-study-native-cost-v1",
+        "hardware": "Tesla T4",
+        "measurement": "monotonic-wall-times-one-device",
+        "recipe": "k1_corrupt_gap",
+        "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "training_completed": true,
+        "training_wall_seconds": 7465.990040548,
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3",
+        "wall_seconds": 7538.7593280090005
+      },
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0005394424754381179,
+        0.0012498016717433925
+      ],
+      "paired_vs_k1": {
+        "candidate_win_fraction": 0.49982,
+        "gain_eV": -0.0003522982978820801,
+        "paired_error_delta_bootstrap_95_eV": [
+          -0.0005394424754381179,
+          0.0012498016717433925
+        ],
+        "row_interval_favorable": false,
+        "training_stochasticity_measured": false
+      },
+      "recomputed_development_gap_mae_eV": 0.14172593964993954,
+      "record": {
+        "architecture": {
+          "backbone": "neural_atom_k1",
+          "exchange_layers": [
+            3,
+            6,
+            9
+          ],
+          "global_exchange": "one-atom-slot-64"
+        },
+        "complete": true,
+        "contract": {
+          "accelerator": "Tesla T4",
+          "architecture_fingerprint": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+          "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+          "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "device_count": 1,
+          "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+          "gradient_accumulation_steps": 1,
+          "loss_fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+          "model_id": "neural_atom_k1_v4",
+          "objective_fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+          "objective_recipe": "k1_corrupt_gap",
+          "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "result_artifact_sha256": "d37b91ec94a5858cce7d4b862c517219133ab22600ae24ab4780116debdb8a6c",
+          "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+          "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+          "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4-k1_corrupt_gap",
+          "runtime_certificate_id": "90fd9006d74fe01908573240421c949a24c5ce498af66a5aa5c59f1444567800",
+          "sample_exposure": 3998720,
+          "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+          "seed": 42,
+          "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+          "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+          "tail_batch_policy": "drop_last",
+          "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+          "target_transform_asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+          "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+          "target_transform_file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+          "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7"
+        },
+        "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+        "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+        "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "format": "molgap-pcqm-k1-variant-arm-v1",
+        "geometry_attributes_removed_before_batching": true,
+        "objective": {
+          "config": {
+            "auxiliary_heads": {
+              "constructed_for_gap_only_arm": true,
+              "count": 9,
+              "encoder_copy": false,
+              "initialization": "same-seed-under-torch.random.fork_rng",
+              "input_units": 192,
+              "output_units": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "state_source": "final-node-states-stable-final-k1-mixer-hook",
+              "training_only": true,
+              "type": "linear"
+            },
+            "auxiliary_loss": {
+              "coefficient_applies_to_total": true,
+              "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+              "labels": "original-clean-ogb-atom-categories",
+              "weight": 0.0,
+              "zero_selected_rows": "differentiable-zero"
+            },
+            "checkpoint": {
+              "atomic": true,
+              "inference_export": "model-state-only-original-gap-head",
+              "last_checkpoint_includes": [
+                "model",
+                "objective_heads",
+                "optimizer",
+                "scheduler",
+                "global_rng_state",
+                "augmentation_counter_state"
+              ],
+              "resume_replay_requires_config_fingerprint": true
+            },
+            "corruption": {
+              "category_dims": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "edge_attr_unchanged": true,
+              "edge_index_unchanged": true,
+              "feature_count": 9,
+              "fields": "all-nine-ogb-atom-features",
+              "gap_target_unchanged": true,
+              "kind": "atom_categorical",
+              "probability": 0.01,
+              "random_walk_pe_unchanged": true,
+              "replacement": "uniform-other-valid-category-per-field",
+              "selection": "independent-bernoulli-per-atom-row"
+            },
+            "corruption_rate": 0.01,
+            "epochs": 40,
+            "format": "molgap-k1-joint-objective-config-v1",
+            "gap_loss": {
+              "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+              "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+              "present_every_optimizer_step": true,
+              "target": "gap",
+              "unit": "eV"
+            },
+            "gradient_clipping": {
+              "auxiliary_heads_max_norm": 1.0,
+              "backbone_max_norm": 1.0,
+              "separate_parameter_groups": true
+            },
+            "inference_model_id": "neural_atom_k1_v4",
+            "model_initialization": {
+              "factory": "molgap.pcqm_k1_variants.make_encoder",
+              "mode": "neural_atom_k1_v4",
+              "policy": "exact-existing-k1-v4-config-and-initial-state",
+              "seed": 42
+            },
+            "model_mode": "neural_atom_k1_v4",
+            "optimizer_steps": 31240,
+            "physical_batch_size": 128,
+            "precision": "fp32",
+            "recipe_id": "k1_corrupt_gap",
+            "rng": {
+              "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+              "device": "cpu",
+              "generator": "torch.Generator",
+              "global_rng_draws": false,
+              "same_counter_replays_identically": true,
+              "scope": "epoch-step-counter",
+              "seed": 42
+            },
+            "seed": 42,
+            "steps_per_epoch": 781,
+            "target_transform_asset": {
+              "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+              "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+              "computed_train_statistics_must_equal_asset": true,
+              "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+              "statistics": "asset-mean-and-sample-std-used-exactly"
+            }
+          },
+          "fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+          "inference_export": "best_model.pt contains model state only",
+          "physical_run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+          "recipe_id": "k1_corrupt_gap",
+          "target_transform_asset": {
+            "applied_mean_eV": 5.3383002281188965,
+            "applied_sample_std_eV": 1.275090217590332,
+            "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+            "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+            "computed_statistics_usage": "diagnostic_only_not_transform",
+            "computed_train_mean_eV": 5.338300704956055,
+            "computed_train_sample_std_eV": 1.275090217590332,
+            "ddof": 1,
+            "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+            "format": "molgap-target-transform-asset-v1",
+            "mean": 5.3383002281188965,
+            "source_row_manifest_sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+            "std": 1.275090217590332,
+            "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+            "target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "train_rows": 100000,
+            "train_source_indices_verified": true,
+            "train_target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "transform_source": "immutable_asset_exact_values",
+            "variance_convention": "sample-standard-deviation-over-fixed-100k-train-role"
+          },
+          "training_checkpoint": {
+            "contains": [
+              "objective_heads",
+              "objective_state",
+              "optimizer",
+              "augmentation_counter_state"
+            ],
+            "path": "last_checkpoint.pt"
+          },
+          "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+        },
+        "official_validation_role_read": false,
+        "physical_run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "preflight": {
+          "candidate_mechanism_trainable_after_two_steps": true,
+          "exact_k1_function_at_initialization": true,
+          "exchange_layers": [
+            3,
+            6,
+            9
+          ],
+          "initialization_policy": "nested-function",
+          "mechanism_checks": {},
+          "mode": "neural_atom_k1_v4",
+          "objective": {
+            "inference_model_id": "neural_atom_k1_v4",
+            "objective_config": {
+              "auxiliary_heads": {
+                "constructed_for_gap_only_arm": true,
+                "count": 9,
+                "encoder_copy": false,
+                "initialization": "same-seed-under-torch.random.fork_rng",
+                "input_units": 192,
+                "output_units": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "state_source": "final-node-states-stable-final-k1-mixer-hook",
+                "training_only": true,
+                "type": "linear"
+              },
+              "auxiliary_loss": {
+                "coefficient_applies_to_total": true,
+                "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+                "labels": "original-clean-ogb-atom-categories",
+                "weight": 0.0,
+                "zero_selected_rows": "differentiable-zero"
+              },
+              "checkpoint": {
+                "atomic": true,
+                "inference_export": "model-state-only-original-gap-head",
+                "last_checkpoint_includes": [
+                  "model",
+                  "objective_heads",
+                  "optimizer",
+                  "scheduler",
+                  "global_rng_state",
+                  "augmentation_counter_state"
+                ],
+                "resume_replay_requires_config_fingerprint": true
+              },
+              "corruption": {
+                "category_dims": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "edge_attr_unchanged": true,
+                "edge_index_unchanged": true,
+                "feature_count": 9,
+                "fields": "all-nine-ogb-atom-features",
+                "gap_target_unchanged": true,
+                "kind": "atom_categorical",
+                "probability": 0.01,
+                "random_walk_pe_unchanged": true,
+                "replacement": "uniform-other-valid-category-per-field",
+                "selection": "independent-bernoulli-per-atom-row"
+              },
+              "corruption_rate": 0.01,
+              "epochs": 40,
+              "format": "molgap-k1-joint-objective-config-v1",
+              "gap_loss": {
+                "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+                "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+                "present_every_optimizer_step": true,
+                "target": "gap",
+                "unit": "eV"
+              },
+              "gradient_clipping": {
+                "auxiliary_heads_max_norm": 1.0,
+                "backbone_max_norm": 1.0,
+                "separate_parameter_groups": true
+              },
+              "inference_model_id": "neural_atom_k1_v4",
+              "model_initialization": {
+                "factory": "molgap.pcqm_k1_variants.make_encoder",
+                "mode": "neural_atom_k1_v4",
+                "policy": "exact-existing-k1-v4-config-and-initial-state",
+                "seed": 42
+              },
+              "model_mode": "neural_atom_k1_v4",
+              "optimizer_steps": 31240,
+              "physical_batch_size": 128,
+              "precision": "fp32",
+              "recipe_id": "k1_corrupt_gap",
+              "rng": {
+                "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+                "device": "cpu",
+                "generator": "torch.Generator",
+                "global_rng_draws": false,
+                "same_counter_replays_identically": true,
+                "scope": "epoch-step-counter",
+                "seed": 42
+              },
+              "seed": 42,
+              "steps_per_epoch": 781,
+              "target_transform_asset": {
+                "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+                "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+                "computed_train_statistics_must_equal_asset": true,
+                "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+                "statistics": "asset-mean-and-sample-std-used-exactly"
+              }
+            },
+            "objective_fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+            "recipe_id": "k1_corrupt_gap",
+            "training_only_auxiliary_heads": true
+          },
+          "objective_training": {
+            "accepted": true,
+            "auxiliary_head_clip_norm": 0.0,
+            "auxiliary_head_gradient_nonzero": false,
+            "auxiliary_head_gradient_ok": true,
+            "auxiliary_head_gradient_required": false,
+            "auxiliary_logits_elements": 310938,
+            "backbone_clip_norm": 0.4933699071407318,
+            "batch_atom_rows": 1787,
+            "clean_eval_finite": true,
+            "clean_eval_no_corruption": true,
+            "corruption_replayable": true,
+            "feature_bounds": {
+              "category_dims": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "fields": 9,
+              "maximums": [
+                34,
+                2,
+                4,
+                6,
+                3,
+                1,
+                2,
+                1,
+                1
+              ],
+              "minimums": [
+                4,
+                0,
+                1,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "rows": 1787
+            },
+            "finite_component_losses": true,
+            "finite_gradients": true,
+            "finite_optimizer": true,
+            "format": "molgap-k1-joint-objective-preflight-v1",
+            "head_initialization_rng_unchanged": true,
+            "inference_export_is_model_only": true,
+            "inference_model_id": "neural_atom_k1_v4",
+            "initial_encoder_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+            "objective_config": {
+              "auxiliary_heads": {
+                "constructed_for_gap_only_arm": true,
+                "count": 9,
+                "encoder_copy": false,
+                "initialization": "same-seed-under-torch.random.fork_rng",
+                "input_units": 192,
+                "output_units": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "state_source": "final-node-states-stable-final-k1-mixer-hook",
+                "training_only": true,
+                "type": "linear"
+              },
+              "auxiliary_loss": {
+                "coefficient_applies_to_total": true,
+                "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+                "labels": "original-clean-ogb-atom-categories",
+                "weight": 0.0,
+                "zero_selected_rows": "differentiable-zero"
+              },
+              "checkpoint": {
+                "atomic": true,
+                "inference_export": "model-state-only-original-gap-head",
+                "last_checkpoint_includes": [
+                  "model",
+                  "objective_heads",
+                  "optimizer",
+                  "scheduler",
+                  "global_rng_state",
+                  "augmentation_counter_state"
+                ],
+                "resume_replay_requires_config_fingerprint": true
+              },
+              "corruption": {
+                "category_dims": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "edge_attr_unchanged": true,
+                "edge_index_unchanged": true,
+                "feature_count": 9,
+                "fields": "all-nine-ogb-atom-features",
+                "gap_target_unchanged": true,
+                "kind": "atom_categorical",
+                "probability": 0.01,
+                "random_walk_pe_unchanged": true,
+                "replacement": "uniform-other-valid-category-per-field",
+                "selection": "independent-bernoulli-per-atom-row"
+              },
+              "corruption_rate": 0.01,
+              "epochs": 40,
+              "format": "molgap-k1-joint-objective-config-v1",
+              "gap_loss": {
+                "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+                "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+                "present_every_optimizer_step": true,
+                "target": "gap",
+                "unit": "eV"
+              },
+              "gradient_clipping": {
+                "auxiliary_heads_max_norm": 1.0,
+                "backbone_max_norm": 1.0,
+                "separate_parameter_groups": true
+              },
+              "inference_model_id": "neural_atom_k1_v4",
+              "model_initialization": {
+                "factory": "molgap.pcqm_k1_variants.make_encoder",
+                "mode": "neural_atom_k1_v4",
+                "policy": "exact-existing-k1-v4-config-and-initial-state",
+                "seed": 42
+              },
+              "model_mode": "neural_atom_k1_v4",
+              "optimizer_steps": 31240,
+              "physical_batch_size": 128,
+              "precision": "fp32",
+              "recipe_id": "k1_corrupt_gap",
+              "rng": {
+                "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+                "device": "cpu",
+                "generator": "torch.Generator",
+                "global_rng_draws": false,
+                "same_counter_replays_identically": true,
+                "scope": "epoch-step-counter",
+                "seed": 42
+              },
+              "seed": 42,
+              "steps_per_epoch": 781,
+              "target_transform_asset": {
+                "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+                "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+                "computed_train_statistics_must_equal_asset": true,
+                "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+                "statistics": "asset-mean-and-sample-std-used-exactly"
+              }
+            },
+            "objective_fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+            "peak_allocated_mib": 527.16845703125,
+            "peak_reserved_mib": 560.0,
+            "physical_batch_size": 128,
+            "preflight_corrupted_atom_rows": 22,
+            "resume_counter_replayable": true,
+            "same_encoder_initialization": true,
+            "same_encoder_initialization_checked_against": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+            "selected_rows_are_other_categories": true
+          },
+          "parameter_count": 3658817,
+          "preflight_memory_reserve_fraction": 0.9611043351062715,
+          "preflight_peak_reserved_mib": 580.0,
+          "preflight_total_memory_mib": 14911.6875,
+          "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+          "target_transform_asset": {
+            "applied_mean_eV": 5.3383002281188965,
+            "applied_sample_std_eV": 1.275090217590332,
+            "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+            "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+            "computed_statistics_usage": "diagnostic_only_not_transform",
+            "computed_train_mean_eV": 5.338300704956055,
+            "computed_train_sample_std_eV": 1.275090217590332,
+            "ddof": 1,
+            "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+            "format": "molgap-target-transform-asset-v1",
+            "mean": 5.3383002281188965,
+            "source_row_manifest_sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+            "std": 1.275090217590332,
+            "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+            "target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "train_rows": 100000,
+            "train_source_indices_verified": true,
+            "train_target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "transform_source": "immutable_asset_exact_values",
+            "variance_convention": "sample-standard-deviation-over-fixed-100k-train-role"
+          }
+        },
+        "pure_2d": true,
+        "runtime_certificate": {
+          "accelerator": "Tesla T4",
+          "calibration_checks_passed": true,
+          "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+          "calibration_model_id": "neural_atom_k1_v4",
+          "calibration_output_sha256": "a2216cf72bd696b4b7126746b3fecd901b628968b757d3f5ece7bb73f3919c0e",
+          "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+          "deterministic_algorithms": true,
+          "format": "molgap-runtime-certificate-v1",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "runtime_fingerprint": "c24f5a0fd6a944b4478f40c359381b1f4656de84a710452ca183a2d4aae20bdf",
+          "software_fingerprint": "5313abd0b164656d00341c883e1e3f48c2c58cd7c8a0d2a74eb31c7576914cae",
+          "status": "accepted",
+          "tail_batch_policy": "drop_last",
+          "tf32_enabled": false
+        },
+        "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false,
+        "training": {
+          "best_epoch": 39,
+          "best_model_sha256": "a98d18143f2a48f09cd6350fad47f5abd90caec3f6821bb60c1d53d427858dfd",
+          "checkpoint_sha256": "b3739e94a42d0523553f1c2d77d15d354ec23552463b470cfb6e43b5fe0817cf",
+          "development_gap_mae_eV": 0.14172594249248505,
+          "epochs_completed": 40,
+          "mean_epoch_seconds": 184.48719093444998,
+          "mean_graphs_per_second": 541.8695980661312,
+          "objective_fingerprint": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+          "objective_head_parameter_count": 33582,
+          "objective_recipe": "k1_corrupt_gap",
+          "optimizer_steps": 31240,
+          "parameter_count": 3658817,
+          "payload_sha256": "d37b91ec94a5858cce7d4b862c517219133ab22600ae24ab4780116debdb8a6c",
+          "peak_allocated_mib": 561.99560546875,
+          "peak_reserved_mib": 604.0,
+          "sample_presentations": 3998720,
+          "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+          "target_transform_file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+          "total_memory_mib": 14911.6875
+        },
+        "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v3"
+      }
+    },
+    "k1_corrupt_gap_atom_aux": {
+      "comparison_identity": {
+        "architecture_config_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+        "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+        "checkpoint_selection_identity": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+        "data_role_identity": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+        "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "deterministic_algorithms": true,
+        "ema_decay": null,
+        "ema_enabled": false,
+        "ema_update_frequency": null,
+        "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+        "evaluation_weight_source": "live",
+        "feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+        "gradient_accumulation_steps": 1,
+        "loss_identity": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+        "optimizer_fused": false,
+        "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+        "optimizer_mode": "adamw-single-parameter-group",
+        "optimizer_steps": 31240,
+        "physical_batch_per_device": 128,
+        "precision": "fp32",
+        "row_membership_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "row_order_identity": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+        "runtime_certificate_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+        "sample_presentations": 3998720,
+        "schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+        "seed": 42,
+        "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+        "tail_batch_policy": "drop_last",
+        "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+        "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+        "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+        "tf32_enabled": false,
+        "weight_semantics": "live"
+      },
+      "gate": {
+        "gain_eV": 0.0028601769304275513,
+        "memory_reserve_fraction": 0.9594948593175655,
+        "passed": false,
+        "required_gain_eV": 0.003,
+        "row_bootstrap_is_sufficient_alone": false,
+        "training_stochasticity_accounted": false,
+        "training_stochasticity_measured": false
+      },
+      "native_cost": {
+        "allocated_device_seconds": 7518.6348631480005,
+        "audit_wall_seconds": 82.3842285869996,
+        "complete": true,
+        "cpu_process_seconds": 7952.127739252,
+        "cpu_scope": "worker process only; dataloader subprocess CPU unmeasured",
+        "device_count": 1,
+        "format": "molgap-joint-study-native-cost-v1",
+        "hardware": "Tesla T4",
+        "measurement": "monotonic-wall-times-one-device",
+        "recipe": "k1_corrupt_gap_atom_aux",
+        "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "training_completed": true,
+        "training_wall_seconds": 7436.045968356,
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+        "wall_seconds": 7518.6348631480005
+      },
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0037476041640043256,
+        -0.0019524126558303836
+      ],
+      "paired_vs_k1": {
+        "candidate_win_fraction": 0.51378,
+        "gain_eV": 0.0028601769304275513,
+        "paired_error_delta_bootstrap_95_eV": [
+          -0.0037476041640043256,
+          -0.0019524126558303836
+        ],
+        "row_interval_favorable": true,
+        "training_stochasticity_measured": false
+      },
+      "recomputed_development_gap_mae_eV": 0.1385134644216299,
+      "record": {
+        "architecture": {
+          "backbone": "neural_atom_k1",
+          "exchange_layers": [
+            3,
+            6,
+            9
+          ],
+          "global_exchange": "one-atom-slot-64"
+        },
+        "complete": true,
+        "contract": {
+          "accelerator": "Tesla T4",
+          "architecture_fingerprint": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+          "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+          "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "device_count": 1,
+          "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+          "gradient_accumulation_steps": 1,
+          "loss_fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+          "model_id": "neural_atom_k1_v4",
+          "objective_fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+          "objective_recipe": "k1_corrupt_gap_atom_aux",
+          "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "result_artifact_sha256": "8bcb48e0a4f8ee478787413fc733db69fe2d1cc3351bf6a4e4030dc610c88e90",
+          "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+          "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+          "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4-k1_corrupt_gap_atom_aux",
+          "runtime_certificate_id": "90fd9006d74fe01908573240421c949a24c5ce498af66a5aa5c59f1444567800",
+          "sample_exposure": 3998720,
+          "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+          "seed": 42,
+          "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+          "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+          "tail_batch_policy": "drop_last",
+          "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+          "target_transform_asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+          "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+          "target_transform_file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+          "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7"
+        },
+        "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+        "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+        "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "format": "molgap-pcqm-k1-variant-arm-v1",
+        "geometry_attributes_removed_before_batching": true,
+        "objective": {
+          "config": {
+            "auxiliary_heads": {
+              "constructed_for_gap_only_arm": true,
+              "count": 9,
+              "encoder_copy": false,
+              "initialization": "same-seed-under-torch.random.fork_rng",
+              "input_units": 192,
+              "output_units": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "state_source": "final-node-states-stable-final-k1-mixer-hook",
+              "training_only": true,
+              "type": "linear"
+            },
+            "auxiliary_loss": {
+              "coefficient_applies_to_total": true,
+              "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+              "labels": "original-clean-ogb-atom-categories",
+              "weight": 0.1,
+              "zero_selected_rows": "differentiable-zero"
+            },
+            "checkpoint": {
+              "atomic": true,
+              "inference_export": "model-state-only-original-gap-head",
+              "last_checkpoint_includes": [
+                "model",
+                "objective_heads",
+                "optimizer",
+                "scheduler",
+                "global_rng_state",
+                "augmentation_counter_state"
+              ],
+              "resume_replay_requires_config_fingerprint": true
+            },
+            "corruption": {
+              "category_dims": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "edge_attr_unchanged": true,
+              "edge_index_unchanged": true,
+              "feature_count": 9,
+              "fields": "all-nine-ogb-atom-features",
+              "gap_target_unchanged": true,
+              "kind": "atom_categorical",
+              "probability": 0.01,
+              "random_walk_pe_unchanged": true,
+              "replacement": "uniform-other-valid-category-per-field",
+              "selection": "independent-bernoulli-per-atom-row"
+            },
+            "corruption_rate": 0.01,
+            "epochs": 40,
+            "format": "molgap-k1-joint-objective-config-v1",
+            "gap_loss": {
+              "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+              "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+              "present_every_optimizer_step": true,
+              "target": "gap",
+              "unit": "eV"
+            },
+            "gradient_clipping": {
+              "auxiliary_heads_max_norm": 1.0,
+              "backbone_max_norm": 1.0,
+              "separate_parameter_groups": true
+            },
+            "inference_model_id": "neural_atom_k1_v4",
+            "model_initialization": {
+              "factory": "molgap.pcqm_k1_variants.make_encoder",
+              "mode": "neural_atom_k1_v4",
+              "policy": "exact-existing-k1-v4-config-and-initial-state",
+              "seed": 42
+            },
+            "model_mode": "neural_atom_k1_v4",
+            "optimizer_steps": 31240,
+            "physical_batch_size": 128,
+            "precision": "fp32",
+            "recipe_id": "k1_corrupt_gap_atom_aux",
+            "rng": {
+              "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+              "device": "cpu",
+              "generator": "torch.Generator",
+              "global_rng_draws": false,
+              "same_counter_replays_identically": true,
+              "scope": "epoch-step-counter",
+              "seed": 42
+            },
+            "seed": 42,
+            "steps_per_epoch": 781,
+            "target_transform_asset": {
+              "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+              "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+              "computed_train_statistics_must_equal_asset": true,
+              "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+              "statistics": "asset-mean-and-sample-std-used-exactly"
+            }
+          },
+          "fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+          "inference_export": "best_model.pt contains model state only",
+          "physical_run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+          "recipe_id": "k1_corrupt_gap_atom_aux",
+          "target_transform_asset": {
+            "applied_mean_eV": 5.3383002281188965,
+            "applied_sample_std_eV": 1.275090217590332,
+            "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+            "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+            "computed_statistics_usage": "diagnostic_only_not_transform",
+            "computed_train_mean_eV": 5.338300704956055,
+            "computed_train_sample_std_eV": 1.275090217590332,
+            "ddof": 1,
+            "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+            "format": "molgap-target-transform-asset-v1",
+            "mean": 5.3383002281188965,
+            "source_row_manifest_sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+            "std": 1.275090217590332,
+            "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+            "target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "train_rows": 100000,
+            "train_source_indices_verified": true,
+            "train_target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "transform_source": "immutable_asset_exact_values",
+            "variance_convention": "sample-standard-deviation-over-fixed-100k-train-role"
+          },
+          "training_checkpoint": {
+            "contains": [
+              "objective_heads",
+              "objective_state",
+              "optimizer",
+              "augmentation_counter_state"
+            ],
+            "path": "last_checkpoint.pt"
+          },
+          "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+        },
+        "official_validation_role_read": false,
+        "physical_run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "preflight": {
+          "candidate_mechanism_trainable_after_two_steps": true,
+          "exact_k1_function_at_initialization": true,
+          "exchange_layers": [
+            3,
+            6,
+            9
+          ],
+          "initialization_policy": "nested-function",
+          "mechanism_checks": {},
+          "mode": "neural_atom_k1_v4",
+          "objective": {
+            "inference_model_id": "neural_atom_k1_v4",
+            "objective_config": {
+              "auxiliary_heads": {
+                "constructed_for_gap_only_arm": true,
+                "count": 9,
+                "encoder_copy": false,
+                "initialization": "same-seed-under-torch.random.fork_rng",
+                "input_units": 192,
+                "output_units": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "state_source": "final-node-states-stable-final-k1-mixer-hook",
+                "training_only": true,
+                "type": "linear"
+              },
+              "auxiliary_loss": {
+                "coefficient_applies_to_total": true,
+                "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+                "labels": "original-clean-ogb-atom-categories",
+                "weight": 0.1,
+                "zero_selected_rows": "differentiable-zero"
+              },
+              "checkpoint": {
+                "atomic": true,
+                "inference_export": "model-state-only-original-gap-head",
+                "last_checkpoint_includes": [
+                  "model",
+                  "objective_heads",
+                  "optimizer",
+                  "scheduler",
+                  "global_rng_state",
+                  "augmentation_counter_state"
+                ],
+                "resume_replay_requires_config_fingerprint": true
+              },
+              "corruption": {
+                "category_dims": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "edge_attr_unchanged": true,
+                "edge_index_unchanged": true,
+                "feature_count": 9,
+                "fields": "all-nine-ogb-atom-features",
+                "gap_target_unchanged": true,
+                "kind": "atom_categorical",
+                "probability": 0.01,
+                "random_walk_pe_unchanged": true,
+                "replacement": "uniform-other-valid-category-per-field",
+                "selection": "independent-bernoulli-per-atom-row"
+              },
+              "corruption_rate": 0.01,
+              "epochs": 40,
+              "format": "molgap-k1-joint-objective-config-v1",
+              "gap_loss": {
+                "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+                "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+                "present_every_optimizer_step": true,
+                "target": "gap",
+                "unit": "eV"
+              },
+              "gradient_clipping": {
+                "auxiliary_heads_max_norm": 1.0,
+                "backbone_max_norm": 1.0,
+                "separate_parameter_groups": true
+              },
+              "inference_model_id": "neural_atom_k1_v4",
+              "model_initialization": {
+                "factory": "molgap.pcqm_k1_variants.make_encoder",
+                "mode": "neural_atom_k1_v4",
+                "policy": "exact-existing-k1-v4-config-and-initial-state",
+                "seed": 42
+              },
+              "model_mode": "neural_atom_k1_v4",
+              "optimizer_steps": 31240,
+              "physical_batch_size": 128,
+              "precision": "fp32",
+              "recipe_id": "k1_corrupt_gap_atom_aux",
+              "rng": {
+                "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+                "device": "cpu",
+                "generator": "torch.Generator",
+                "global_rng_draws": false,
+                "same_counter_replays_identically": true,
+                "scope": "epoch-step-counter",
+                "seed": 42
+              },
+              "seed": 42,
+              "steps_per_epoch": 781,
+              "target_transform_asset": {
+                "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+                "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+                "computed_train_statistics_must_equal_asset": true,
+                "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+                "statistics": "asset-mean-and-sample-std-used-exactly"
+              }
+            },
+            "objective_fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+            "recipe_id": "k1_corrupt_gap_atom_aux",
+            "training_only_auxiliary_heads": true
+          },
+          "objective_training": {
+            "accepted": true,
+            "auxiliary_head_clip_norm": 0.2439841628074646,
+            "auxiliary_head_gradient_nonzero": true,
+            "auxiliary_head_gradient_ok": true,
+            "auxiliary_head_gradient_required": true,
+            "auxiliary_logits_elements": 310938,
+            "backbone_clip_norm": 0.8013116121292114,
+            "batch_atom_rows": 1787,
+            "clean_eval_finite": true,
+            "clean_eval_no_corruption": true,
+            "corruption_replayable": true,
+            "feature_bounds": {
+              "category_dims": [
+                119,
+                5,
+                12,
+                12,
+                10,
+                6,
+                6,
+                2,
+                2
+              ],
+              "fields": 9,
+              "maximums": [
+                34,
+                2,
+                4,
+                6,
+                3,
+                1,
+                2,
+                1,
+                1
+              ],
+              "minimums": [
+                4,
+                0,
+                1,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "rows": 1787
+            },
+            "finite_component_losses": true,
+            "finite_gradients": true,
+            "finite_optimizer": true,
+            "format": "molgap-k1-joint-objective-preflight-v1",
+            "head_initialization_rng_unchanged": true,
+            "inference_export_is_model_only": true,
+            "inference_model_id": "neural_atom_k1_v4",
+            "initial_encoder_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+            "objective_config": {
+              "auxiliary_heads": {
+                "constructed_for_gap_only_arm": true,
+                "count": 9,
+                "encoder_copy": false,
+                "initialization": "same-seed-under-torch.random.fork_rng",
+                "input_units": 192,
+                "output_units": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "state_source": "final-node-states-stable-final-k1-mixer-hook",
+                "training_only": true,
+                "type": "linear"
+              },
+              "auxiliary_loss": {
+                "coefficient_applies_to_total": true,
+                "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+                "labels": "original-clean-ogb-atom-categories",
+                "weight": 0.1,
+                "zero_selected_rows": "differentiable-zero"
+              },
+              "checkpoint": {
+                "atomic": true,
+                "inference_export": "model-state-only-original-gap-head",
+                "last_checkpoint_includes": [
+                  "model",
+                  "objective_heads",
+                  "optimizer",
+                  "scheduler",
+                  "global_rng_state",
+                  "augmentation_counter_state"
+                ],
+                "resume_replay_requires_config_fingerprint": true
+              },
+              "corruption": {
+                "category_dims": [
+                  119,
+                  5,
+                  12,
+                  12,
+                  10,
+                  6,
+                  6,
+                  2,
+                  2
+                ],
+                "edge_attr_unchanged": true,
+                "edge_index_unchanged": true,
+                "feature_count": 9,
+                "fields": "all-nine-ogb-atom-features",
+                "gap_target_unchanged": true,
+                "kind": "atom_categorical",
+                "probability": 0.01,
+                "random_walk_pe_unchanged": true,
+                "replacement": "uniform-other-valid-category-per-field",
+                "selection": "independent-bernoulli-per-atom-row"
+              },
+              "corruption_rate": 0.01,
+              "epochs": 40,
+              "format": "molgap-k1-joint-objective-config-v1",
+              "gap_loss": {
+                "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+                "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+                "present_every_optimizer_step": true,
+                "target": "gap",
+                "unit": "eV"
+              },
+              "gradient_clipping": {
+                "auxiliary_heads_max_norm": 1.0,
+                "backbone_max_norm": 1.0,
+                "separate_parameter_groups": true
+              },
+              "inference_model_id": "neural_atom_k1_v4",
+              "model_initialization": {
+                "factory": "molgap.pcqm_k1_variants.make_encoder",
+                "mode": "neural_atom_k1_v4",
+                "policy": "exact-existing-k1-v4-config-and-initial-state",
+                "seed": 42
+              },
+              "model_mode": "neural_atom_k1_v4",
+              "optimizer_steps": 31240,
+              "physical_batch_size": 128,
+              "precision": "fp32",
+              "recipe_id": "k1_corrupt_gap_atom_aux",
+              "rng": {
+                "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+                "device": "cpu",
+                "generator": "torch.Generator",
+                "global_rng_draws": false,
+                "same_counter_replays_identically": true,
+                "scope": "epoch-step-counter",
+                "seed": 42
+              },
+              "seed": 42,
+              "steps_per_epoch": 781,
+              "target_transform_asset": {
+                "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+                "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+                "computed_train_statistics_must_equal_asset": true,
+                "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+                "statistics": "asset-mean-and-sample-std-used-exactly"
+              }
+            },
+            "objective_fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+            "peak_allocated_mib": 527.16845703125,
+            "peak_reserved_mib": 560.0,
+            "physical_batch_size": 128,
+            "preflight_corrupted_atom_rows": 22,
+            "resume_counter_replayable": true,
+            "same_encoder_initialization": true,
+            "same_encoder_initialization_checked_against": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+            "selected_rows_are_other_categories": true
+          },
+          "parameter_count": 3658817,
+          "preflight_memory_reserve_fraction": 0.9611043351062715,
+          "preflight_peak_reserved_mib": 580.0,
+          "preflight_total_memory_mib": 14911.6875,
+          "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+          "target_transform_asset": {
+            "applied_mean_eV": 5.3383002281188965,
+            "applied_sample_std_eV": 1.275090217590332,
+            "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+            "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+            "computed_statistics_usage": "diagnostic_only_not_transform",
+            "computed_train_mean_eV": 5.338300704956055,
+            "computed_train_sample_std_eV": 1.275090217590332,
+            "ddof": 1,
+            "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+            "format": "molgap-target-transform-asset-v1",
+            "mean": 5.3383002281188965,
+            "source_row_manifest_sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+            "std": 1.275090217590332,
+            "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+            "target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "train_rows": 100000,
+            "train_source_indices_verified": true,
+            "train_target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+            "transform_source": "immutable_asset_exact_values",
+            "variance_convention": "sample-standard-deviation-over-fixed-100k-train-role"
+          }
+        },
+        "pure_2d": true,
+        "runtime_certificate": {
+          "accelerator": "Tesla T4",
+          "calibration_checks_passed": true,
+          "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+          "calibration_model_id": "neural_atom_k1_v4",
+          "calibration_output_sha256": "a2216cf72bd696b4b7126746b3fecd901b628968b757d3f5ece7bb73f3919c0e",
+          "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+          "deterministic_algorithms": true,
+          "format": "molgap-runtime-certificate-v1",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "runtime_fingerprint": "c24f5a0fd6a944b4478f40c359381b1f4656de84a710452ca183a2d4aae20bdf",
+          "software_fingerprint": "5313abd0b164656d00341c883e1e3f48c2c58cd7c8a0d2a74eb31c7576914cae",
+          "status": "accepted",
+          "tail_batch_policy": "drop_last",
+          "tf32_enabled": false
+        },
+        "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false,
+        "training": {
+          "best_epoch": 39,
+          "best_model_sha256": "739020587d2928b82daa4cedb687a93b1025a1118eb485a2cdd5a274056e6e5d",
+          "checkpoint_sha256": "f2dd7d703ef9f50d46096a31dbcdf791c6b8e927d9591e9acd9fec9db3b86cc6",
+          "development_gap_mae_eV": 0.1385134607553482,
+          "epochs_completed": 40,
+          "mean_epoch_seconds": 183.69176196117502,
+          "mean_graphs_per_second": 544.2160221704944,
+          "objective_fingerprint": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268",
+          "objective_head_parameter_count": 33582,
+          "objective_recipe": "k1_corrupt_gap_atom_aux",
+          "optimizer_steps": 31240,
+          "parameter_count": 3658817,
+          "payload_sha256": "8bcb48e0a4f8ee478787413fc733db69fe2d1cc3351bf6a4e4030dc610c88e90",
+          "peak_allocated_mib": 561.99560546875,
+          "peak_reserved_mib": 604.0,
+          "sample_presentations": 3998720,
+          "target_transform_asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+          "target_transform_file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+          "total_memory_mib": 14911.6875
+        },
+        "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3"
+      }
+    }
+  },
+  "declared_intervention_fields": [
+    "loss_identity"
+  ],
+  "experiment_purpose": "training_objective_comparison",
+  "format": "molgap-k1-joint-objective-acceptance-v1",
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "paired_b_minus_a": {
+    "candidate_win_fraction": 0.51928,
+    "gain_eV": 0.0032124752283096314,
+    "paired_error_delta_bootstrap_95_eV": [
+      -0.0041031721168756485,
+      -0.0023223432970047
+    ],
+    "row_interval_favorable": true,
+    "training_stochasticity_measured": false
+  },
+  "reference_development_gap_mae_eV": 0.14137364135205746,
+  "replay_status": "pending_controller_terminal_closure",
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
+  "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+  "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "training_executed": false
+}
