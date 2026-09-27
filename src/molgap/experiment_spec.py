@@ -82,6 +82,10 @@ ADDONS = MappingProxyType({
         (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory")
         for name in ("memory_value", "memory_message")
     },
+    **{
+        (name, "1"): AddonContract("gptrans_t", "geometry-input", "molgap.pcqm_geometry_transfer")
+        for name in ("geometry_distance", "geometry_distance_angle")
+    },
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
     ),
@@ -170,7 +174,11 @@ def _arm(arm: dict) -> None:
     data = _object(arm["data"], "dataset split roles feature_schema feature_sha256 target", "data")
     _reference(data["dataset"], "data.dataset", name="pcqm4mv2")
     _reference(data["split"], "data.split")
-    _choice(data["feature_schema"], (contract.feature_schema,), "data.feature_schema")
+    geometry_features = {
+        "geometry_distance": "ogb-atom9-bond3-shortest-path-cap20-etkdgv3-mmff94s-distance",
+        "geometry_distance_angle": "ogb-atom9-bond3-shortest-path-cap20-etkdgv3-mmff94s-distance-angle",
+    }
+    _choice(data["feature_schema"], (contract.feature_schema, *geometry_features.values()), "data.feature_schema")
     _digest(data["feature_sha256"], "data.feature_sha256")
     _choice(data["target"], ("pcqm4mv2-gap-eV-direct",), "data.target")
     _list(data["roles"], "data.roles")
@@ -222,6 +230,10 @@ def _arm(arm: dict) -> None:
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")
+    geometry = [addon["name"] for addon in arm["addons"] if addon["name"] in geometry_features]
+    expected_feature = geometry_features[geometry[0]] if geometry else contract.feature_schema
+    if data["feature_schema"] != expected_feature:
+        raise ValueError("Feature schema does not match the declared geometry addon")
 
 
 def validate_experiment_spec(payload: dict) -> dict:

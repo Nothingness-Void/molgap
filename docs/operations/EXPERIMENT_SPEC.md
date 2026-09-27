@@ -60,6 +60,13 @@ config; its model-only mapping and migration boundary are in
 are rejected. New combinations need explicit registry/code review and a
 contract version change.
 
+The GPTrans geometry-channel screen also registers the exclusive
+`geometry_distance` and `geometry_distance_angle` addons. Each requires its
+matching ETKDGv3+MMFF94s feature schema; a baseline arm cannot claim that
+schema. Their executable variants are `distance_only` and `distance_angle`
+in `pcqm_gptrans_v4.py`, backed by `pcqm_geometry_transfer.py`. Spec validity
+still does not certify a geometry-capable runtime or authorize role access.
+
 All object fields are required and unknown fields are rejected recursively;
 duplicate JSON keys are rejected too. There is no author-supplied readiness
 field. Prospective requirements and evidence requirements are declarations,

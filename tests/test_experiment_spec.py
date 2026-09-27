@@ -139,6 +139,24 @@ def test_addon_family_and_config(payload):
         ExperimentSpec(payload)
 
 
+@pytest.mark.parametrize("name,feature", [
+    ("geometry_distance", "ogb-atom9-bond3-shortest-path-cap20-etkdgv3-mmff94s-distance"),
+    ("geometry_distance_angle", "ogb-atom9-bond3-shortest-path-cap20-etkdgv3-mmff94s-distance-angle"),
+])
+def test_geometry_addon_requires_its_feature_contract(payload, name, feature):
+    payload["arms"].pop()
+    arm = payload["arms"][0]
+    arm.update(addons=[addon(name)], addon_semantics="ordered")
+    with pytest.raises(ValueError, match="Feature schema"):
+        ExperimentSpec(payload)
+    arm["data"]["feature_schema"] = feature
+    ExperimentSpec(payload)
+    arm["addons"] = []
+    arm["addon_semantics"] = "baseline"
+    with pytest.raises(ValueError, match="Feature schema"):
+        ExperimentSpec(payload)
+
+
 @pytest.mark.parametrize("role", ["official_validation", "test_dev", "test_challenge", "unknown"])
 def test_invalid_role(payload, role):
     payload["arms"][0]["data"]["roles"][0]["role"] = role

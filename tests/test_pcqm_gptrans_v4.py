@@ -16,6 +16,7 @@ from molgap.pcqm_gptrans_v4 import (
     FrozenEpochScheduler,
     _forward,
     _make_model,
+    _model_config,
     _scientific_fields,
     _source_sha256,
     _state_sha256,
@@ -104,6 +105,16 @@ def test_schedule_and_contract_are_frozen():
     )
     for key, value in fields.items():
         assert contract[key] == value
+
+
+def test_geometry_channel_contract_keeps_training_and_role_identity():
+    reference = _scientific_fields()
+    distance = _scientific_fields("distance_only")
+    angle = _scientific_fields("distance_angle")
+    assert {k for k in reference if reference[k] != distance[k]} == {"feature_fingerprint"}
+    assert {k for k in distance if distance[k] != angle[k]} == {"feature_fingerprint"}
+    assert _model_config("distance_only")["geometry_mode"] == "distance_only"
+    assert _model_config("distance_angle")["geometry_mode"] == "distance_angle"
 
 
 def test_remote_payload_requires_v4_guards():

@@ -33,6 +33,7 @@ from .v4_runtime import (
     load_frozen_initial_state,
     make_adamw_compat,
     model_state_sha256,
+    state_dict_sha256,
     normalized_source_sha256,
     sample_std_compat,
     torch_load_compat,
@@ -85,6 +86,15 @@ MAX_REPEAT_LOSS_DELTA = 1.0e-7
 MAX_REPEAT_PARAMETER_DELTA = 1.0e-7
 RUN_FORMAT = "molgap-pcqm-gptrans-t-100k-reference-v4"
 CHECKPOINT_FORMAT = "molgap-pcqm-gptrans-t-100k-checkpoint-v4"
+GEOMETRY_VARIANTS = ("distance_only", "distance_angle")
+GEOMETRY_STATE_KEYS = (
+    "distance_basis.centers",
+    "angle_basis.centers",
+    "distance_to_pair.weight",
+    "angle_to_node.weight",
+)
+GEOMETRY_PARAMETERS = 5_251_425
+EXPECTED_GEOMETRY_INITIAL_MODEL_SHA256 = "d471924cebde2e0382fe758021a066108acce3858e99c4838451c8c92db9ffba"
 
 
 @dataclass(frozen=True)
@@ -256,6 +266,20 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     from .gptrans import OGBGPTransTiny
+    if variant in GEOMETRY_VARIANTS:
+        from .pcqm_geometry_transfer import GeometryGPTransTiny
+
+        model = GeometryGPTransTiny(geometry_mode=variant)
+        if initial_state_path is not None:
+            load_frozen_initial_state(
+                model,
+                initial_state_path,
+                expected_file_sha256=EXPECTED_INITIAL_STATE_ARTIFACT_SHA256,
+                expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
+                expected_format="molgap-gptrans-t-seed42-initial-state-v1",
+                allowed_missing_keys=GEOMETRY_STATE_KEYS,
+            )
+        return model
     if variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
     else:
@@ -284,8 +308,8 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     return apply_variant(model, variant)
 
 
-def _model_config() -> dict:
-    return {
+def _model_config(variant: str = "reference") -> dict:
+    config = {
         "node_channels": 256,
         "pair_channels": 32,
         "num_layers": 12,
@@ -296,6 +320,16 @@ def _model_config() -> dict:
         "layer_scale": 1.0,
         "n_targets": 1,
     }
+    if variant in GEOMETRY_VARIANTS:
+        config["geometry_mode"] = variant
+    return config
+
+
+def _variant_source_path(variant: str) -> Path:
+    name = ("pcqm_geometry_transfer.py" if variant in GEOMETRY_VARIANTS else
+            "gptrans_memory.py" if variant in ("memory_value", "memory_message") else
+            "gptrans_variants.py")
+    return Path(__file__).with_name(name)
 
 
 def run_v4_spec(*, mode: str, run_spec: dict, runtime_certificate: dict | None):
@@ -366,9 +400,12 @@ def _source_sha256(path: Path) -> str:
     return normalized_source_sha256(path)
 
 
-def _batch_sha256(batch) -> str:
+def _batch_sha256(batch, variant: str = "reference") -> str:
     digest = hashlib.sha256()
-    for name in ("x", "edge_index", "edge_attr", "y", "batch"):
+    names = ["x", "edge_index", "edge_attr", "y", "batch"]
+    if variant in GEOMETRY_VARIANTS:
+        names.extend(("edge_distance", "wedge_edge_ids", "wedge_angle_cos", "geometry_valid"))
+    for name in names:
         value = getattr(batch, name).detach().cpu().contiguous()
         digest.update(name.encode("ascii") + b"\0")
         digest.update(str(value.dtype).encode("ascii") + b"\0")
@@ -377,24 +414,37 @@ def _batch_sha256(batch) -> str:
     return digest.hexdigest()
 
 
-def _verify_model_identity(model) -> tuple[int, str]:
+def _verify_model_identity(model, variant: str = "reference") -> tuple[int, str]:
     architecture_path = Path(__file__).with_name("gptrans.py")
     architecture_sha256 = _source_sha256(architecture_path)
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())
-    if parameters != EXPECTED_PARAMETERS:
+    expected_parameters = GEOMETRY_PARAMETERS if variant in GEOMETRY_VARIANTS else EXPECTED_PARAMETERS
+    if parameters != expected_parameters:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
-    initial_sha256 = _state_sha256(model)
+    state = model.state_dict()
+    if variant in GEOMETRY_VARIANTS:
+        if set(GEOMETRY_STATE_KEYS) - set(state):
+            raise RuntimeError("Geometry initialization keys changed")
+        initial_sha256 = state_dict_sha256({k: v for k, v in state.items() if k not in GEOMETRY_STATE_KEYS})
+    else:
+        initial_sha256 = _state_sha256(model)
     if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
         raise RuntimeError(
             "Frozen GPTrans-T seed-42 initialization changed: "
             f"observed={initial_sha256} expected={EXPECTED_INITIAL_MODEL_SHA256}"
         )
+    if variant in GEOMETRY_VARIANTS and _state_sha256(model) != EXPECTED_GEOMETRY_INITIAL_MODEL_SHA256:
+        raise RuntimeError("Frozen GPTrans geometry initialization changed")
     return parameters, architecture_sha256
 
 
 def _forward(model, batch):
+    if getattr(model, "geometry_mode", None) in GEOMETRY_VARIANTS:
+        from .pcqm_geometry_transfer import forward_geometry_transfer
+
+        return forward_geometry_transfer(model, batch)
     return model(
         batch.x,
         batch.edge_index,
@@ -456,7 +506,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
-    _verify_model_identity(model)
+    _verify_model_identity(model, variant)
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -523,8 +573,8 @@ def _evaluate(model, ema, graphs, mean, std) -> dict:
     }
 
 
-def _scientific_fields() -> dict:
-    return {
+def _scientific_fields(variant: str = "reference") -> dict:
+    fields = {
         "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
         "data_role_fingerprint": canonical_fingerprint(
             {"manifest_sha256": MANIFEST_SHA256, "train": [0, 100_000], "development": [100_000, 150_000]}
@@ -555,6 +605,14 @@ def _scientific_fields() -> dict:
         "sample_exposure": SAMPLE_PRESENTATIONS,
         "tail_batch_policy": "drop_last",
     }
+    if variant in GEOMETRY_VARIANTS:
+        used = ["atom9", "bond3", "shortest-path-cap20", "ETKDGv3-MMFF94s-distance"]
+        if variant == "distance_angle":
+            used.append("ETKDGv3-MMFF94s-angle")
+        fields["feature_fingerprint"] = canonical_fingerprint(
+            {"payload": "ogb-geometry-v1", "used": used, "geometry_used": True}
+        )
+    return fields
 
 
 def _gpu_utilization_percent() -> float | None:
@@ -607,8 +665,8 @@ def run_preflight(
                 "model_family": "gptrans-t",
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
-                "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "model_config": _model_config(variant),
+                "scientific_contract": _scientific_fields(variant),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -625,7 +683,7 @@ def run_preflight(
     batch = next(iter(_training_loader(train_graphs, 0))).to("cuda", non_blocking=True)
     if int(batch.num_graphs) != PHYSICAL_BATCH:
         raise RuntimeError("Preflight did not receive physical batch 128")
-    fixture_sha256 = _batch_sha256(batch)
+    fixture_sha256 = _batch_sha256(batch, variant)
 
     repeat_losses = []
     repeat_states = []
@@ -717,7 +775,7 @@ def run_preflight(
     }
     certificate_id = canonical_fingerprint(certificate)
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -727,8 +785,8 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "parameters": GEOMETRY_PARAMETERS if variant in GEOMETRY_VARIANTS else EXPECTED_PARAMETERS,
+        "variant_source_sha256": _source_sha256(_variant_source_path(variant)),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -779,7 +837,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "runtime_certificate_id": runtime_certificate_id,
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
-            "scientific_fields": _scientific_fields(),
+            "scientific_fields": _scientific_fields(variant),
         },
     )
 
@@ -830,8 +888,8 @@ def run_training(
                 "model_family": "gptrans-t",
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
-                "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "model_config": _model_config(variant),
+                "scientific_contract": _scientific_fields(variant),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -841,7 +899,7 @@ def run_training(
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -873,7 +931,7 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
-        if checkpoint.get("scientific_fields") != _scientific_fields():
+        if checkpoint.get("scientific_fields") != _scientific_fields(variant):
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
             raise RuntimeError("Checkpoint runtime certificate changed")
@@ -922,7 +980,7 @@ def run_training(
                 "format": RUN_FORMAT,
                 "model_config": {
                     "variant": variant,
-                    **_model_config(),
+                    **_model_config(variant),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
                 "target_stats": target_stats,
@@ -994,7 +1052,7 @@ def run_training(
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
@@ -1021,7 +1079,7 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": GEOMETRY_PARAMETERS if variant in GEOMETRY_VARIANTS else EXPECTED_PARAMETERS,
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "checkpoint_sha256": sha256_file(checkpoint_path),
         "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
