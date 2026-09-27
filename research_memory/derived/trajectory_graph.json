@@ -91,6 +91,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-degree-balance-100k-s42:A001",
       "target": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -113,6 +123,11 @@
     {
       "source": "TC-k1-functional-group-token-100k-s42:A002",
       "target": "experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -576,6 +591,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-degree-balance-100k-s42",
       "target": "TC-k1-topology-portability-post100k-audit-s42",
       "type": "parent_trajectory"
@@ -683,6 +708,16 @@
     {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -902,12 +937,27 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-degree-balance-100k-s42",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
       "type": "prior_evidence"
     },
     {
@@ -1067,12 +1117,27 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-degree-balance-100k-s42",
       "type": "reference_used"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
       "type": "reference_used"
     },
     {
@@ -1374,11 +1439,23 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-k1-corrupt-gap-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-k1-degree-balance-100k-s42",
       "type": "trajectory"
     },
     {
       "id": "TC-k1-functional-group-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42",
       "type": "trajectory"
     },
     {

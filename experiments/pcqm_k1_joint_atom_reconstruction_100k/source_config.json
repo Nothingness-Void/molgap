@@ -1,0 +1,21 @@
+{
+  "candidate_ids": [
+    "k1_corrupt_gap",
+    "k1_corrupt_gap_atom_aux"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_joint_objective.py",
+    "src/molgap/pcqm_k1_variants_runner.py",
+    "src/molgap/k1_joint_study_runtime.py"
+  ],
+  "objective_identities": {
+    "k1_corrupt_gap": "cb23532a7e37db47dbca466e6897b1488ef4bce69a43d60ad3d28b36f6d05711",
+    "k1_corrupt_gap_atom_aux": "edc0ec410dd9de8d2748f41dd5a18924677f78a32d2a43d3464ff5421c8c2268"
+  },
+  "registry_capability_gap": "existing ExperimentSpec K1 mode binds a full-run recipe, not this 100K objective intervention; use direct shared RML and source-bundle APIs",
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+  "source_commit": "6576b4797b79308d1772a5fd6001ba86f0d74f43",
+  "training_contract_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json",
+  "training_contract_sha256": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f"
+}

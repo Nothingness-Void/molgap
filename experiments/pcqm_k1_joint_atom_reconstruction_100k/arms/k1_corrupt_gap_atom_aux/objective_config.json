@@ -1,0 +1,111 @@
+{
+  "auxiliary_heads": {
+    "constructed_for_gap_only_arm": true,
+    "count": 9,
+    "encoder_copy": false,
+    "initialization": "same-seed-under-torch.random.fork_rng",
+    "input_units": 192,
+    "output_units": [
+      119,
+      5,
+      12,
+      12,
+      10,
+      6,
+      6,
+      2,
+      2
+    ],
+    "state_source": "final-node-states-stable-final-k1-mixer-hook",
+    "training_only": true,
+    "type": "linear"
+  },
+  "auxiliary_loss": {
+    "coefficient_applies_to_total": true,
+    "formula": "mean(field_CE(original_x[field]) for all nine fields over selected rows)",
+    "labels": "original-clean-ogb-atom-categories",
+    "weight": 0.1,
+    "zero_selected_rows": "differentiable-zero"
+  },
+  "checkpoint": {
+    "atomic": true,
+    "inference_export": "model-state-only-original-gap-head",
+    "last_checkpoint_includes": [
+      "model",
+      "objective_heads",
+      "optimizer",
+      "scheduler",
+      "global_rng_state",
+      "augmentation_counter_state"
+    ],
+    "resume_replay_requires_config_fingerprint": true
+  },
+  "corruption": {
+    "category_dims": [
+      119,
+      5,
+      12,
+      12,
+      10,
+      6,
+      6,
+      2,
+      2
+    ],
+    "edge_attr_unchanged": true,
+    "edge_index_unchanged": true,
+    "feature_count": 9,
+    "fields": "all-nine-ogb-atom-features",
+    "gap_target_unchanged": true,
+    "kind": "atom_categorical",
+    "probability": 0.01,
+    "random_walk_pe_unchanged": true,
+    "replacement": "uniform-other-valid-category-per-field",
+    "selection": "independent-bernoulli-per-atom-row"
+  },
+  "corruption_rate": 0.01,
+  "epochs": 40,
+  "format": "molgap-k1-joint-objective-config-v1",
+  "gap_loss": {
+    "formula": "L1(predicted_normalized_gap, original_normalized_gap)",
+    "normalization": "immutable-target-transform-asset-mean-and-sample-std",
+    "present_every_optimizer_step": true,
+    "target": "gap",
+    "unit": "eV"
+  },
+  "gradient_clipping": {
+    "auxiliary_heads_max_norm": 1.0,
+    "backbone_max_norm": 1.0,
+    "separate_parameter_groups": true
+  },
+  "inference_model_id": "neural_atom_k1_v4",
+  "model_initialization": {
+    "factory": "molgap.pcqm_k1_variants.make_encoder",
+    "mode": "neural_atom_k1_v4",
+    "policy": "exact-existing-k1-v4-config-and-initial-state",
+    "seed": 42
+  },
+  "model_mode": "neural_atom_k1_v4",
+  "optimizer_steps": 31240,
+  "physical_batch_size": 128,
+  "precision": "fp32",
+  "recipe_id": "k1_corrupt_gap_atom_aux",
+  "rng": {
+    "derivation": "sha256(domain:seed:epoch:step) low-63-bits",
+    "device": "cpu",
+    "generator": "torch.Generator",
+    "global_rng_draws": false,
+    "same_counter_replays_identically": true,
+    "scope": "epoch-step-counter",
+    "seed": 42
+  },
+  "seed": 42,
+  "steps_per_epoch": 781,
+  "target_transform_asset": {
+    "asset_id": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "asset_sha256": "1631a6842bcd0ed330eada408cc78b3abe05109a1266466eb2f2ded731857932",
+    "computed_train_statistics_must_equal_asset": true,
+    "file_sha256": "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b3",
+    "statistics": "asset-mean-and-sample-std-used-exactly"
+  }
+}
