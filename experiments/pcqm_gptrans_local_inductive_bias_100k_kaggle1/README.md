@@ -18,9 +18,9 @@ shortlist the mechanism for a separately contracted decision.
 Read [protocol.md](protocol.md) for the question and decision gate,
 [training_contract.json](training_contract.json) for the frozen numeric contract,
 and [STATUS.md](STATUS.md) for release state. Canonical prospective and terminal
-RML records must be generated through the existing experiment CLI after the
-source and ExperimentSpec are frozen; this directory does not itself claim a
-submitted job or replay-ready evidence.
+RML records are generated through the existing experiment CLI after the source
+and ExperimentSpec are frozen. The attempt-002 launch record owns the submitted
+job identity; no arm is replay-ready until terminal acceptance.
 
 Evidence basis: the accepted [GPTrans-T 100K decision](../pcqm_gptrans_t_100k_v4/decision.md)
 identifies RWSE16 and a persistent sparse real-bond path as omitted mechanisms.
