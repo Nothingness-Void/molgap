@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 44,
+    "trajectories_total": 46,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 33,
-    "with_incomplete_native_measurement": 28,
+    "with_cost_event": 35,
+    "with_incomplete_native_measurement": 30,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 30,
+      "count": 32,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -27,7 +27,9 @@
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-full-convergence-20260919",
         "TB-gptrans-local-bias-rwse16-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
         "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
         "TB-gptrans-local-selection-probe-20260925",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
         "TB-gptrans-memory-value-k1pair-reference-100k-s42",
@@ -76,7 +78,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 28,
+      "count": 30,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -90,7 +92,9 @@
         "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
         "TB-gptrans-full-convergence-20260919",
         "TB-gptrans-local-bias-rwse16-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
         "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
         "TB-gptrans-local-selection-probe-20260925",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
         "TB-gptrans-memory-value-k1pair-reference-100k-s42",
@@ -129,7 +133,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 24,
+      "count": 26,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -137,7 +141,9 @@
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-local-bias-rwse16-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
         "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
         "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
         "TB-gptrans-memory-value-k1pair-reference-100k-s42",
         "TB-gptrans-pair-memory-memory-message-100k-s42",
@@ -160,12 +166,14 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 8,
+      "count": 10,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-local-bias-rwse16-100k-s42",
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
         "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
         "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
         "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
