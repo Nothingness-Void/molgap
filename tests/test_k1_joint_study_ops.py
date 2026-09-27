@@ -25,7 +25,7 @@ def _setup(tmp_path, monkeypatch):
         (directory / "kernel-metadata.json").write_text(json.dumps(metadata))
         (directory / "run.py").write_text("# frozen entry\n", encoding="utf-8")
     (records / "push_response.json").write_text(json.dumps({
-        "ref": metadata["id"], "version_number": 1, "kernel_id": 123,
+        "ref": metadata["id"], "version_number": ops.ATTEMPT, "kernel_id": 123,
         "error": None,
     }))
     (source / "SOURCE_COMMIT.txt").write_text("a" * 40)
@@ -33,11 +33,18 @@ def _setup(tmp_path, monkeypatch):
     return root, source, records
 
 
-def test_confirmed_receipt_reuses_existing_ab_binding(tmp_path, monkeypatch):
+@pytest.mark.parametrize("ref_prefix", ["", "/code/"])
+def test_confirmed_receipt_reuses_existing_ab_binding(tmp_path, monkeypatch, ref_prefix):
     root, source, records = _setup(tmp_path, monkeypatch)
+    pushed_path = records / "push_response.json"
+    pushed = json.loads(pushed_path.read_text())
+    pushed["ref"] = ref_prefix + pushed["ref"]
+    pushed_path.write_text(json.dumps(pushed))
     result = ops.bind(source, records)
     binding = json.loads((root / "monitor_binding.json").read_text())
     assert result["submission_confirmed"] is True
+    assert result["raw_returned_ref"] == pushed["ref"]
+    assert result["job"]["kernel"] == "kaseichou/molgap-k1-joint-atom-s42"
     assert result["actual_hardware"] == "pending_startup_log"
     assert binding["controller_thread_id"] == ops.A
     assert binding["monitor_thread_id"] == ops.B
@@ -54,4 +61,4 @@ def test_changed_remote_entry_cannot_bind_as_released(tmp_path, monkeypatch):
     (records / "remote_metadata/run.py").write_text("# not frozen entry\n")
     with pytest.raises(RuntimeError, match="Remote entry differs"):
         ops.bind(source, records)
-    assert not (root / "submission_receipt_v1.json").exists()
+    assert not (root / f"submission_receipt_v{ops.ATTEMPT}.json").exists()

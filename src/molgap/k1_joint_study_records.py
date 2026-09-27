@@ -7,10 +7,11 @@ from pathlib import Path
 import subprocess
 
 from .constants import REPO_ROOT
-from .k1_joint_study_runtime import AUDIT_TRAJECTORY, RECIPES, RUN_ID, TRAJECTORIES
+from .k1_joint_study_runtime import ATTEMPT, AUDIT_TRAJECTORY, RECIPES, RUN_ID, TRAJECTORIES
 from .research_memory.trace import atomic_write, file_digest, json_bytes
 
 REL = "experiments/pcqm_k1_joint_atom_reconstruction_100k"
+RELEASE_REL = f"{REL}/attempts/v{ATTEMPT}"
 REFERENCE = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json"
 TRANSFORM = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_transform.json"
 POLICY = "k1-joint-atom-bounded-research"
@@ -36,7 +37,8 @@ def freeze():
     from .k1_joint_objective import objective_config, objective_fingerprint
     from .research_memory.plan import plan, plan_many
 
-    root = REPO_ROOT / REL
+    root = REPO_ROOT / RELEASE_REL
+    authority_root = REPO_ROOT / REL
     if git("status", "--porcelain", "--", "src", REL):
         raise RuntimeError("Commit executable source and protocol before freezing")
     if (root / "source_config.json").exists():
@@ -61,7 +63,9 @@ def freeze():
         "candidate_ids": list(RECIPES), "run_id": RUN_ID,
         "objective_identities": fingerprints,
         "training_contract_ref": f"{REL}/training_contract.json",
-        "training_contract_sha256": file_digest(root / "training_contract.json"),
+        "training_contract_sha256": file_digest(authority_root / "training_contract.json"),
+        "attempt_id": f"v{ATTEMPT}",
+        "prior_failure_ref": f"{REL}/failure_v1/decision.md",
         "implementation_refs": ["src/molgap/k1_joint_objective.py", "src/molgap/pcqm_k1_variants_runner.py", "src/molgap/k1_joint_study_runtime.py"],
         "registry_capability_gap": "existing ExperimentSpec K1 mode binds a full-run recipe, not this 100K objective intervention; use direct shared RML and source-bundle APIs"})
     save(root / "budget_snapshot.json", {
@@ -78,7 +82,7 @@ def freeze():
         "policy_type": "research_action", "status": "candidate",
         "comparability_selector": {"scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"},
         "required_observable_fields": ["joint_gap_objective_question_frozen"],
-        "created_from_source_digest": file_digest(root / "protocol.md"),
+        "created_from_source_digest": file_digest(authority_root / "protocol.md"),
         "approval": {"authority_ref": f"{REL}/protocol.md", "activation": "controller-only-bounded-user-authorization"},
         "cost_model": {"kind": "measured_only", "assumptions": ["no cross-hardware scalar conversion"]},
         "observation_point": None, "promotion_rule": None, "early_stop_rule": None,
@@ -126,28 +130,28 @@ def freeze():
                 "contract_refs": [f"{REL}/training_contract.json"], "reference_ids": [bundle["reference_id"]],
                 "parent_trajectory_ids": list(TRAJECTORIES.values()) if audit else ["TC-k1-v4-100k-reference-s42"],
                 "prior_trajectory_ids": [], "prior_evidence_ids": [bundle["reference_id"]],
-                "role_snapshot_refs": [f"{REL}/{'audit_role_plan' if audit else 'role_plan'}.json"],
-                "budget_snapshot_ref": f"{REL}/budget_snapshot.json"},
+                "role_snapshot_refs": [f"{RELEASE_REL}/{'audit_role_plan' if audit else 'role_plan'}.json"],
+                "budget_snapshot_ref": f"{RELEASE_REL}/budget_snapshot.json"},
             "actions": [{"action_id": "A001", "type": "conditional_NO_TRAIN_audit" if audit else "bounded_100k_objective_training",
-                "run_ids": [RUN_ID], "attempt_ids": ["v1"], "source_commit": commit,
-                "evidence_refs": [f"{REL}/source_config.json"], "cost_event_ids": [cost_id]}],
+                "run_ids": [RUN_ID], "attempt_ids": [f"v{ATTEMPT}"], "source_commit": commit,
+                "evidence_refs": [f"{RELEASE_REL}/source_config.json"], "cost_event_ids": [cost_id]}],
             "result": {"evidence_ids": [], "evidence_refs": []},
             "decision": {"decision_ref": f"{REL}/protocol.md", "outcome": "ACTIVE",
                 "next_allowed_actions": ["frozen checkpoint audit after training completion gate" if audit else "one frozen candidate submission"],
                 "reopen_conditions": ["terminal attribution plus explicit new compute decision"]}}
         if not audit:
             trajectory.update(comparison_class="NO_COMPARISON", comparison_blockers=[],
-                comparison_readiness_ref=f"{REL}/{sub}/comparison_readiness_prelaunch.json",
+                comparison_readiness_ref=f"{RELEASE_REL}/{sub}/comparison_readiness_prelaunch.json",
                 reference_bundle_id=bundle["reference_bundle_id"])
         cost = {"schema": "molgap-cost-event-v1", "cost_event_id": cost_id, "trajectory_id": tid,
-            "action_id": "A001", "run_id": RUN_ID, "attempt_id": "v1", "platform": "kaggle2",
+            "action_id": "A001", "run_id": RUN_ID, "attempt_id": f"v{ATTEMPT}", "platform": "kaggle2",
             "hardware": "requested_Tesla_T4_actual_pending", "category": "inference" if audit else "training",
-            "evidence_ref": f"{REL}/budget_snapshot.json", "measurement": {
+            "evidence_ref": f"{RELEASE_REL}/budget_snapshot.json", "measurement": {
                 "device_hours": {"value": 1.0 if audit else 3.0, "status": "estimated"},
                 "wall_hours": {"value": 0.5 if audit else 3.0, "status": "estimated"},
                 "cpu_hours": {"value": None, "status": "measurement_missing"},
                 "queue_hours": {"value": None, "status": "measurement_missing"}}}
-        return {"output": f"{REL}/{sub}/rml_plan", "spec": {"trajectory": trajectory, "costs": [cost],
+        return {"output": f"{RELEASE_REL}/{sub}/rml_plan", "spec": {"trajectory": trajectory, "costs": [cost],
             "decision_state": {"available_actions": ["RUN_BOUNDED_JOINT_STUDY", "DEFER"], "chosen_action": "RUN_BOUNDED_JOINT_STUDY",
                 "policy_id": POLICY, "policy_version": "v1", "state_timestamp": now}}}
 
@@ -162,7 +166,7 @@ def package(output):
     from .server_acceptance import validate_server_scientific_prelaunch
     from .v4_bundle import build_v4_source_bundle
 
-    root, output = REPO_ROOT / REL, Path(output).resolve()
+    root, output = REPO_ROOT / RELEASE_REL, Path(output).resolve()
     if output.exists():
         raise FileExistsError("Do not overwrite an immutable source package")
     commit = load(root / "source_config.json")["source_commit"]

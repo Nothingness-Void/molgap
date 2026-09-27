@@ -1667,14 +1667,15 @@ def train_arm(
             raise RuntimeError("Unexpected target-transform asset identity")
         if not math.isfinite(float(transform["mean"])) or not math.isfinite(float(transform["std"])):
             raise RuntimeError("Target-transform asset statistics are not finite")
-        computed_mean, computed_std = _target_stats(roles["train"])
-        if (
-            computed_mean != float(transform["mean"])
-            or computed_std != float(transform["std"])
-        ):
-            raise RuntimeError(
-                "Computed calibration target statistics differ from immutable asset"
-            )
+        from .k1_joint_objective import verify_frozen_train_targets
+
+        # FP32 CPU reductions depend on the thread partition. Label-byte identity,
+        # not a fresh reduction, qualifies the already frozen transform.
+        target_observation = verify_frozen_train_targets(
+            torch.cat([part._data.y.view(-1).float() for part in roles["train"].datasets]),
+            torch.cat([part._data.source_idx.view(-1).long() for part in roles["train"].datasets]),
+            transform,
+        )
         target_stats_override = {
             "mean_eV": float(transform["mean"]),
             "sample_std_eV": float(transform["std"]),
@@ -1682,8 +1683,7 @@ def train_arm(
         target_transform_record = {
             **transform,
             "file_sha256": file_sha256,
-            "computed_train_mean_eV": computed_mean,
-            "computed_train_sample_std_eV": computed_std,
+            **target_observation,
         }
     conjugated_manifest = None
     if mode in CONJUGATED_MODES:

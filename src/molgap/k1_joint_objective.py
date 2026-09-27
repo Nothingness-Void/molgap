@@ -205,6 +205,29 @@ def objective_fingerprint(recipe: object) -> str:
     return _canonical_fingerprint(config)
 
 
+def verify_frozen_train_targets(values, source_idx, transform):
+    """Bind labels bitwise, but never replace frozen constants with a CPU reduction."""
+    import torch
+
+    values = values.detach().cpu().view(-1).float().contiguous()
+    source_idx = source_idx.detach().cpu().view(-1).long()
+    if values.numel() != 100_000 or not torch.equal(source_idx, torch.arange(100_000)):
+        raise RuntimeError("Frozen target training membership changed")
+    digest = hashlib.sha256(values.numpy().tobytes(order="C")).hexdigest()
+    if digest != transform["target_sha256"] or not torch.isfinite(values).all().item():
+        raise RuntimeError("Frozen training target bytes changed")
+    return {
+        "train_target_sha256": digest, "train_rows": values.numel(),
+        "train_source_indices_verified": True,
+        "computed_train_mean_eV": float(values.mean()),
+        "computed_train_sample_std_eV": float(values.std()),
+        "computed_statistics_usage": "diagnostic_only_not_transform",
+        "applied_mean_eV": float(transform["mean"]),
+        "applied_sample_std_eV": float(transform["std"]),
+        "transform_source": "immutable_asset_exact_values",
+    }
+
+
 @dataclass(frozen=True)
 class CorruptionResult:
     """A single deterministic corruption draw for one batched node table."""

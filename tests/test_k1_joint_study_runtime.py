@@ -10,11 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_joint_launch_matches_fixed_assets_and_two_isolated_arms():
-    from molgap.k1_joint_study_runtime import RECIPES, RUN_ID, TRAJECTORIES
+    from molgap.k1_joint_study_runtime import ATTEMPT, RECIPES, RUN_ID, TRAJECTORIES
     root = ROOT / "experiments/pcqm_k1_joint_atom_reconstruction_100k"
     metadata = json.loads((root / "kaggle/kernel-metadata.json").read_text())
     contract = json.loads((root / "training_contract.json").read_text())
-    assert metadata["id"] + ":v1" == RUN_ID
+    assert metadata["id"] + f":v{ATTEMPT}" == RUN_ID
     assert metadata["machine_shape"] == "NvidiaTeslaT4"
     assert set(contract["arms"]) == set(RECIPES) == set(TRAJECTORIES)
     assert len(set(TRAJECTORIES.values())) == 2

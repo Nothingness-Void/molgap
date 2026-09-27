@@ -171,8 +171,9 @@ def test_runner_integration_is_scoped_and_preflight_forward_has_one_argument():
     assert any(isinstance(node, ast.Return) and node.value is not None for node in ast.walk(architecture))
     source = RUNNER_SOURCE.read_text(encoding="utf-8")
     assert "validate_target_transform_asset" in source
-    assert "computed_mean != float(transform[\"mean\"])" in source
-    assert "computed_std != float(transform[\"std\"])" in source
+    assert "verify_frozen_train_targets(" in source
+    assert '"mean_eV": float(transform["mean"])' in source
+    assert '"sample_std_eV": float(transform["std"])' in source
     assert '"target_transform_file_sha256"' in source
     assert '"target_transform_asset_sha256"' in source
     assert "clip_joint_gradients(model, joint_objective)" in source

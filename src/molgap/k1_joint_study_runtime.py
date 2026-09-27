@@ -10,9 +10,10 @@ import time
 import traceback
 
 RECIPES = ("k1_corrupt_gap", "k1_corrupt_gap_atom_aux")
-RUN_ID = "kaseichou/molgap-k1-joint-atom-s42:v1"
-TRAJECTORIES = {recipe: "TC-" + recipe.replace("_", "-") + "-100k-s42" for recipe in RECIPES}
-AUDIT_TRAJECTORY = "TC-k1-joint-atom-post100k-audit-s42"
+ATTEMPT = 2
+RUN_ID = f"kaseichou/molgap-k1-joint-atom-s42:v{ATTEMPT}"
+TRAJECTORIES = {recipe: "TC-" + recipe.replace("_", "-") + f"-100k-s42-v{ATTEMPT}" for recipe in RECIPES}
+AUDIT_TRAJECTORY = f"TC-k1-joint-atom-post100k-audit-s42-v{ATTEMPT}"
 ROOT = Path("/kaggle/working/pcqm_k1_joint_atom_reconstruction")
 MAX_SECONDS = 6 * 3600
 

@@ -59,7 +59,9 @@ def verify_observed_recipe(record, root, recipe, reference):
     observed = load(root / "target_transform_asset.json")
     _require(all(observed.get(k) == v for k, v in asset.items()), "Observed transform asset differs")
     _require(observed["file_sha256"] == TRANSFORM_FILE_SHA, "Observed transform file hash differs")
-    _require(observed["computed_train_mean_eV"] == asset["mean"] and observed["computed_train_sample_std_eV"] == asset["std"], "Observed train statistics differ")
+    _require(observed["train_target_sha256"] == asset["target_sha256"] and observed["train_rows"] == 100000 and observed["train_source_indices_verified"] is True, "Observed training target identity differs")
+    _require(observed["applied_mean_eV"] == asset["mean"] and observed["applied_sample_std_eV"] == asset["std"], "Applied frozen transform differs")
+    _require(observed["transform_source"] == "immutable_asset_exact_values" and observed["computed_statistics_usage"] == "diagnostic_only_not_transform", "Target transform was recomputed")
     for key, expected in (("target_transform_fingerprint", asset["asset_id"]),
         ("target_transform_asset_sha256", asset["asset_sha256"]), ("target_transform_file_sha256", TRANSFORM_FILE_SHA)):
         _require(contract[key] == expected, f"Transform contract mismatch: {key}")
