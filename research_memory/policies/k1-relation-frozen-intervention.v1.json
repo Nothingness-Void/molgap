@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "RUN_FROZEN_INTERVENTIONS",
+    "field": "accepted_frozen_models_with_unresolved_interference",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-NO_TRAIN-diagnostic",
+    "authority_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "65803b62532c51698fbb5eb8ca7ad93396b79eca076cddd3925ae56b27575daa",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-relation-frozen-intervention",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_frozen_models_with_unresolved_interference"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}
