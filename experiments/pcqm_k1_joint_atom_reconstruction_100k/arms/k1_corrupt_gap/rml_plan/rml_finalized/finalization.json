@@ -1,0 +1,42 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-9d5a9c30215af3d0b5e141d702496e91fbe715aa5ac73a7539f64a031047dd9a",
+  "finalized_at": "2026-09-27T12:18:57Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/comparison_readiness_prelaunch.json": "eff4fe33718ab4362138c094a1cfd135f12bbe018361fd21b0ca3ca211dfc14f",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/rml_plan/trajectory.json": "a9ce5f3034c7fd7b95601f112df4cc921e809d1be40475c69aadd02133f09fc0",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/budget_snapshot.json": "41354cc96d3b2021bbb09cc4903279e81dbf4a0c67665c7a83851cff829987b2",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md": "629832572b8ef1a052d1a0a1bcf0963c30fce8c53812cb706336bd67b3dffe33",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/failure_summary.json": "ea31e9606d9154ebd88807259d9ab4515f46942770e6a788b4062188706c248e",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/target_reduction_diagnostic.json": "b1b2a2862ef5092d31d05b7ed30f7bda78a5cf4a8da338b757b321da0b473bc5",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/terminal_acceptance_k1_corrupt_gap.json": "b1918b14afad182cae334192a06b6a69a74f8d45ceedd294b41992ff64558c08",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/role_plan.json": "42c16241415b0663b25dd2304bca21d7844402dd4837f039253038323cc838cb",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json": "ee6a1ef68d72d3d58336fd966da37a66d1c5c08405014072db4150cc44c5e106",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/execution_summary.json": "9c23ad45d470b4adffac351f2d3fd8b0e7d86c020f4c35f062202bccec0fcfc7",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap.log": "a0463f8d679f05939a96e84af948e2813a00aa1e2d061106a5638a249242697c",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap/failure.json": "74973d3fb7d4968cd9d6aa9d5a861cbf8e1a70c74d01179b85c30480ab7ea043",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap/native_cost.json": "4c3477a8fc7c25e1bd800646a249fba22adcf71a8ec7e4217866b5f402e3c7ff",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/launch_identity.json": "9b794466e99ff51bca917ac9599af1e57542251dd8c9376d58104f6da342ea3a",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/terminal_observation.json": "b6dd4f4f5d6e11e9015342e22433b5ae704fe4444f4a0ab3b6b3884e359198a9"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-k1-corrupt-gap-100k-s42-training.json": "5138a0adc563155fc1f15ea290ccbae9f8349fc1d9a34ecb36453d39454d61b4",
+    "prospective_snapshot.json": "a9ce5f3034c7fd7b95601f112df4cc921e809d1be40475c69aadd02133f09fc0",
+    "terminal_input.json": "cbed78d62c2ea1484b2b33e7c99933727ddd28f7fd3d80370283ee6e36e2457f",
+    "trajectory.json": "41492df731ee70b85866efea494c3c81c1974ee76e4e2a33362b58b2ede44e24",
+    "v5_evidence.json": "2240f9d882af68894d6c2489bb8005325e20cee0c05109b9c2400d01f164af01"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "9d5a9c30215af3d0b5e141d702496e91fbe715aa5ac73a7539f64a031047dd9a",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-corrupt-gap-100k-s42"
+}

@@ -1,0 +1,39 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-599f394f05cc54bb097b1801afed82d33dccf49c6305e7f81d70b6dd8a41d16e",
+  "finalized_at": "2026-09-27T12:18:57Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/trajectory.json": "10fb450c67d9cb60da0c58fa55a29db4def4bb776580073cda7c035e2d22c4ae",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit_role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/budget_snapshot.json": "41354cc96d3b2021bbb09cc4903279e81dbf4a0c67665c7a83851cff829987b2",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md": "629832572b8ef1a052d1a0a1bcf0963c30fce8c53812cb706336bd67b3dffe33",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/failure_summary.json": "ea31e9606d9154ebd88807259d9ab4515f46942770e6a788b4062188706c248e",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/target_reduction_diagnostic.json": "b1b2a2862ef5092d31d05b7ed30f7bda78a5cf4a8da338b757b321da0b473bc5",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/terminal_acceptance_audit.json": "7d00c913791b40591046978d1a8e002ad28bcd66aaec27c708ec23731e64a687",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md": "d31eda51a770de99644f7b9f0006b9444be4f7da028d8539cbbb07c68bebca54",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/role_plan.json": "42c16241415b0663b25dd2304bca21d7844402dd4837f039253038323cc838cb",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json": "ee6a1ef68d72d3d58336fd966da37a66d1c5c08405014072db4150cc44c5e106",
+    "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json": "74521cd60d80b0f1f36148c016ef344d800bd67b5f2e3462437298cf762a463f",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/execution_summary.json": "9c23ad45d470b4adffac351f2d3fd8b0e7d86c020f4c35f062202bccec0fcfc7",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/launch_identity.json": "9b794466e99ff51bca917ac9599af1e57542251dd8c9376d58104f6da342ea3a",
+    "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/terminal_observation.json": "b6dd4f4f5d6e11e9015342e22433b5ae704fe4444f4a0ab3b6b3884e359198a9"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-k1-joint-atom-post100k-audit-s42.json": "4f6398a0d8bca6e4f5edd922e79276c9721bc0e288729b1e4312160206e0bb77",
+    "prospective_snapshot.json": "10fb450c67d9cb60da0c58fa55a29db4def4bb776580073cda7c035e2d22c4ae",
+    "terminal_input.json": "1232faffe3391ef2cbde60e4b96225d6745c7e7ca40868659bdeb28e59eda5c1",
+    "trajectory.json": "f8ccff2ae9725158bbd6ffb0720537da99b10dca221152035e02ccf0f3f08f0d",
+    "v5_evidence.json": "c86eb983698e812cee5cb02d6ee5e6ce31555f8ae6a99afae56fd1963773d333"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-joint-atom-post100k-audit-s42.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/costs/cost-TC-k1-joint-atom-post100k-audit-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "599f394f05cc54bb097b1801afed82d33dccf49c6305e7f81d70b6dd8a41d16e",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42"
+}

@@ -1,0 +1,106 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/failure_summary.json",
+      "name": "failure_summary",
+      "sha256": "ea31e9606d9154ebd88807259d9ab4515f46942770e6a788b4062188706c248e"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/target_reduction_diagnostic.json",
+      "name": "target_reduction_diagnostic",
+      "sha256": "b1b2a2862ef5092d31d05b7ed30f7bda78a5cf4a8da338b757b321da0b473bc5"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "9c23ad45d470b4adffac351f2d3fd8b0e7d86c020f4c35f062202bccec0fcfc7"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/launch_identity.json",
+      "name": "launch_identity",
+      "sha256": "9b794466e99ff51bca917ac9599af1e57542251dd8c9376d58104f6da342ea3a"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/failure.json",
+      "name": "failure",
+      "sha256": "636932591efe7b9beadb6550a0b19b485582bd6db7a6255879cb104d5967285d"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/native_cost.json",
+      "name": "native_cost",
+      "sha256": "7405c1ae8e8aa8bf3c0ebaeddf5b2670ff4f1fb212f35c29b1c156d3d8d3a579"
+    },
+    {
+      "availability": "repository_retained_native_record",
+      "locator": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux.log",
+      "name": "k1_corrupt_gap_atom_aux",
+      "sha256": "a0463f8d679f05939a96e84af948e2813a00aa1e2d061106a5638a249242697c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/training_contract.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/role_plan.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit_role_plan.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/budget_snapshot.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/terminal_observation.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/failure_summary.json",
+      "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/target_reduction_diagnostic.json",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/execution_summary.json",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/launch_identity.json",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/failure.json",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/native_cost.json",
+      "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux.log"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "cost_summary": {
+    "arm_cost_scope": "native per-worker intervals only",
+    "audit_entered": false,
+    "device_count": 2,
+    "job_total_allocated_device_seconds": 462.581852714,
+    "job_total_wall_seconds": 231.290926357,
+    "parent_job_scope": "includes bootstrap and both Tesla T4 devices; not allocated to either arm cost event"
+  },
+  "costs_bound": [
+    "cost-TC-k1-corrupt-gap-atom-aux-100k-s42-training"
+  ],
+  "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-v5-prospective-infrastructure-failure",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-27T12:18:57Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "native preflight failure and target-stat diagnostic only; internal-development role access is unknown because no native role events were emitted; no model metrics, checkpoints, traces, 500K audit, or protected-role access"
+  },
+  "outcome": {
+    "artifact_status": "failure_logs_preserved",
+    "budget_decision": "infrastructure_failure_recorded",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed_before_model_preflight",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "unavailable"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "prospective_fixed_100k_joint_objective_execution_infrastructure_failure",
+  "track": "C"
+}

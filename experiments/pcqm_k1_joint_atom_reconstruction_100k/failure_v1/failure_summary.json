@@ -1,0 +1,48 @@
+{
+  "arms": {
+    "k1_corrupt_gap": {
+      "failure_ref": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap/failure.json",
+      "failure_sha256": "74973d3fb7d4968cd9d6aa9d5a861cbf8e1a70c74d01179b85c30480ab7ea043",
+      "native_cost_ref": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap/native_cost.json",
+      "native_cost_sha256": "4c3477a8fc7c25e1bd800646a249fba22adcf71a8ec7e4217866b5f402e3c7ff",
+      "trajectory_id": "TC-k1-corrupt-gap-100k-s42",
+      "worker_wall_seconds": 49.58226339999999
+    },
+    "k1_corrupt_gap_atom_aux": {
+      "failure_ref": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/failure.json",
+      "failure_sha256": "636932591efe7b9beadb6550a0b19b485582bd6db7a6255879cb104d5967285d",
+      "native_cost_ref": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/native_cost.json",
+      "native_cost_sha256": "7405c1ae8e8aa8bf3c0ebaeddf5b2670ff4f1fb212f35c29b1c156d3d8d3a579",
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "worker_wall_seconds": 49.582282168999996
+    }
+  },
+  "checkpoints_emitted": false,
+  "diagnostic_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/target_reduction_diagnostic.json",
+  "diagnostic_sha256": "b1b2a2862ef5092d31d05b7ed30f7bda78a5cf4a8da338b757b321da0b473bc5",
+  "failure_location": "src/molgap/pcqm_k1_variants_runner.py:1675",
+  "failure_reason": "Computed calibration target statistics differ from immutable asset",
+  "failure_stage": "preflight_training",
+  "finalized_at": "2026-09-27T12:18:57Z",
+  "fixed_500k_audit_entered": false,
+  "format": "molgap-k1-joint-study-failure-v1",
+  "job_summary": {
+    "allocated_devices": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "scope": "parent execution total includes bootstrap and both devices; arm costs are worker-scoped",
+    "total_allocated_device_seconds": 462.581852714,
+    "total_job_wall_seconds": 231.290926357,
+    "used_device_count": 2
+  },
+  "model_constructed": false,
+  "model_metrics_emitted": false,
+  "protected_roles_read": false,
+  "role_access_statement": "Only training/internal-100K data loading needed for role validation and target-stat calculation is evidenced; no native role events were emitted, so internal role use is unknown.",
+  "role_events_emitted": false,
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+  "source_commit": "6576b4797b79308d1772a5fd6001ba86f0d74f43",
+  "traces_emitted": false,
+  "training_executed": false
+}

@@ -1,0 +1,31 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1-training-failure-audit-not-entered",
+  "category": "infrastructure_failure",
+  "cost_caveat": "The separate NO_TRAIN audit was never entered; the job summary is retained but not allocated to this action.",
+  "cost_event_id": "cost-TC-k1-joint-atom-post100k-audit-s42",
+  "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/terminal_acceptance_audit.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42"
+}

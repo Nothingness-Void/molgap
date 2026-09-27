@@ -1,0 +1,67 @@
+{
+  "cost_caveat": "Measured native worker wall/device/CPU-process intervals are retained for arms; the parent device total includes bootstrap and both T4 devices; the separate NO_TRAIN audit was not entered and remains measurement_missing.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1-preflight-target-stat-failure",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-k1-corrupt-gap-atom-aux-100k-s42-training",
+      "evidence_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/terminal_acceptance_k1_corrupt_gap_atom_aux.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.005078113725
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.013411495173333335
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.013411495173333335
+        }
+      },
+      "native_cost_ref": "platforms/_records/kaggle/training/k1_joint_atom_s42_v1/pcqm_k1_joint_atom_reconstruction/k1_corrupt_gap_atom_aux/native_cost.json",
+      "native_cost_scope": "one arm worker interval; parent job allocation includes bootstrap and both T4 devices",
+      "native_cpu_scope": "worker process only; dataloader subprocess CPU unmeasured",
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42"
+    }
+  ],
+  "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+  "finalized_at": "2026-09-27T12:18:57Z",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "outcome": {
+    "artifact_status": "failure_logs_preserved",
+    "budget_decision": "infrastructure_failure_recorded",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed_before_model_preflight",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "unavailable"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "new prospective v2 authority after immutable target-stat identity repair"
+    ]
+  }
+}
