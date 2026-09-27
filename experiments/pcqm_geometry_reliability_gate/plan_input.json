@@ -1,0 +1,99 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "pcqm-geometry-reliability-screen",
+    "question": "Does a global convex combination of accepted matched 2D and distance-angle EdgeState predictions materially and consistently beat the geometry model on the fixed development role?",
+    "hypothesis": {
+      "hypothesis_id": "H-pcqm-geometry-reliability-screen-20260928",
+      "observed_deficiency": "The accepted geometry model gains 3.518 meV overall but harms the 2-4 eV and >=8 eV target-gap tails; the paired prediction residuals may be complementary.",
+      "supporting_evidence_ids": ["pcqm-distance-angle-triangle-500k-20260911", "pcqm-geometry-component-attribution-no-train-20260928"],
+      "alternative_explanations": [
+        "The component residuals are too correlated for a material blend gain.",
+        "A fitted weight only exploits the already consumed development role.",
+        "Geometry-tail harm cannot be corrected by one global weight without losing central gains."
+      ],
+      "changed_mechanism": "No model change; one global convex 2D/geometry prediction weight fitted by five-fold cross-fitting on accepted aligned predictions.",
+      "cheapest_falsifier": "One hash-gated local CPU screen on the two retained 50K prediction payloads, with a predeclared weight grid and fold rule.",
+      "related_closed_family_ids": ["distance-angle-triangle-500k", "pcqm-geometry-component-attribution", "distance-angle-transfer"],
+      "expected_native_cost_ref": "cost-TB-pcqm-geometry-reliability-local-screen",
+      "decision_changed_if_positive": "Consider a separately frozen geometry-reliability mechanism and matched V4 reference qualification; do not promote from reused development predictions.",
+      "decision_changed_if_negative": "Close NO_TRAIN and preserve the accepted geometry nomination without a new fusion or training claim.",
+      "historical_unknowns": [
+        "The old pair lacks complete observed V5 training trace fields.",
+        "The development role has already selected both component models.",
+        "Per-molecule geometry quality metadata are not in the retained prediction files."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "e77ac57e87c1a8ccb4fccc0e33ed9f8a5b88a0d0",
+      "contract_refs": [
+        "experiments/pcqm_geometry_reliability_gate/protocol.md",
+        "experiments/pcqm_distance_angle_500k/protocol.md"
+      ],
+      "reference_ids": ["pcqm-distance-angle-triangle-500k-20260911"],
+      "parent_trajectory_ids": ["TB-distance-angle-triangle-500k-20260911", "TB-pcqm-geometry-component-attribution-20260928"],
+      "prior_evidence_ids": ["pcqm-distance-angle-triangle-500k-20260911", "pcqm-geometry-component-attribution-no-train-20260928"],
+      "role_snapshot_refs": [
+        "experiments/pcqm_distance_angle_500k/roles/ogb_edge_state_structural_gps9_dev_selection.json",
+        "experiments/pcqm_distance_angle_500k/roles/ogb_distance_angle_triangle_edge_state_gps9_dev_selection.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_geometry_reliability_gate/protocol.md",
+      "source_config_identity": "9ad82d0298dd3979aa1d7bb95c6c60cda1dc241a33cd014a6329920f7c682ecc"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_existing_prediction_diagnostic",
+        "source_commit": "e77ac57e87c1a8ccb4fccc0e33ed9f8a5b88a0d0",
+        "run_ids": ["local-geometry-reliability-screen-20260928"],
+        "attempt_ids": ["attempt-001"],
+        "evidence_refs": [],
+        "cost_event_ids": ["cost-TB-pcqm-geometry-reliability-local-screen"]
+      }
+    ],
+    "result": {"evidence_ids": [], "evidence_refs": []},
+    "decision": {
+      "decision_ref": "experiments/pcqm_geometry_reliability_gate/decision_plan.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": ["one_hash_gated_local_screen"],
+      "reopen_conditions": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": ["RUN_DIAGNOSTIC", "NO_TRAIN"],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-geometry-reliability-screen",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_geometry_reliability_gate/protocol.md",
+    "role_snapshot_refs": [],
+    "state_timestamp": "2026-09-27T17:28:59+00:00",
+    "source_commit": "e77ac57e87c1a8ccb4fccc0e33ed9f8a5b88a0d0"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-geometry-reliability-local-screen",
+      "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "action_id": "A001",
+      "run_id": "local-geometry-reliability-screen-20260928",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "platform": "local",
+      "hardware": "LOCAL_CPU_UNSPECIFIED",
+      "evidence_ref": "experiments/pcqm_geometry_reliability_gate/protocol.md",
+      "measurement": {
+        "device_hours": {"value": null, "status": "not_applicable"},
+        "cpu_hours": {"value": null, "status": "measurement_missing"},
+        "wall_hours": {"value": null, "status": "measurement_missing"},
+        "queue_hours": {"value": null, "status": "not_applicable"}
+      }
+    }
+  ]
+}

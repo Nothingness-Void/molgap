@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "audit",
+  "cost_event_id": "cost-TB-pcqm-geometry-reliability-local-screen",
+  "evidence_ref": "experiments/pcqm_geometry_reliability_gate/protocol.md",
+  "hardware": "LOCAL_CPU_UNSPECIFIED",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local",
+  "run_id": "local-geometry-reliability-screen-20260928",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+}

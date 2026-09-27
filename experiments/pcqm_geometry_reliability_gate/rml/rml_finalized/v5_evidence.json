@@ -1,0 +1,52 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_geometry_reliability_gate/analysis.json",
+      "name": "fusion_screen_analysis",
+      "sha256": "abfdf4a4b6bd7581db65481a194755c0e47117b86dd71c538eb10a7254d469b7"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_geometry_reliability_gate/decision.md",
+      "name": "screen_decision",
+      "sha256": "d46d22eb872a5c518fc477526c35e1449a80fb84fa465278e12294853360b234"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_geometry_reliability_gate/protocol.md",
+      "experiments/pcqm_geometry_reliability_gate/analysis.json",
+      "experiments/pcqm_geometry_reliability_gate/decision.md",
+      "experiments/pcqm_geometry_reliability_gate/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-geometry-reliability-screen-positive-20260928",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-geometry-fusion-screen-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Hash-gated existing-prediction cross-fitted screen; no model execution"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_existing_prediction_screen",
+    "budget_decision": "no_accelerator_release_from_screen_alone",
+    "comparison_status": "cross_fitted_prediction_complementarity_screen_only",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "POSITIVE_UNDER_CONTRACT",
+    "transfer_status": "not_v5_qualified"
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "accepted_existing_prediction_geometry_fusion_screen",
+  "track": "B"
+}

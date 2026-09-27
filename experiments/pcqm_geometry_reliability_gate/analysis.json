@@ -1,0 +1,99 @@
+{
+  "aligned_rows": 50000,
+  "baseline_mae_eV": 0.11765888021469116,
+  "fixed_weight_mae_eV": {
+    "0.5": 0.1112922878742218,
+    "0.75": 0.1115488216805458,
+    "1.0": 0.11414085101127625
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "geometry_mae_eV": 0.11507501459121704,
+      "geometry_weight": 0.6,
+      "oof_gain_over_geometry_eV": 0.003583098688125591,
+      "oof_mae_eV": 0.11149191590309145,
+      "rows": 10000,
+      "training_mae_eV": 0.11100620460033417
+    },
+    {
+      "fold": 1,
+      "geometry_mae_eV": 0.11162678031921387,
+      "geometry_weight": 0.6,
+      "oof_gain_over_geometry_eV": 0.002488189401626581,
+      "oof_mae_eV": 0.10913859091758729,
+      "rows": 10000,
+      "training_mae_eV": 0.11159453584671021
+    },
+    {
+      "fold": 2,
+      "geometry_mae_eV": 0.1160995565533638,
+      "geometry_weight": 0.6,
+      "oof_gain_over_geometry_eV": 0.0032347901821136588,
+      "oof_mae_eV": 0.11286476637125015,
+      "rows": 10000,
+      "training_mae_eV": 0.1106629919832945
+    },
+    {
+      "fold": 3,
+      "geometry_mae_eV": 0.11349535082578659,
+      "geometry_weight": 0.6,
+      "oof_gain_over_geometry_eV": 0.0027914328002929673,
+      "oof_mae_eV": 0.11070391802549362,
+      "rows": 10000,
+      "training_mae_eV": 0.11120320406973362
+    },
+    {
+      "fold": 4,
+      "geometry_mae_eV": 0.11440755276679992,
+      "geometry_weight": 0.6,
+      "oof_gain_over_geometry_eV": 0.0030900096797943227,
+      "oof_mae_eV": 0.1113175430870056,
+      "rows": 10000,
+      "training_mae_eV": 0.11104979780435563
+    }
+  ],
+  "format": "molgap-pcqm-geometry-fusion-screen-v1",
+  "frozen_screen_pass": true,
+  "geometry_mae_eV": 0.11414085101127625,
+  "local_wall_seconds": 0.061792000000423286,
+  "model_inference_executed": false,
+  "model_training_executed": false,
+  "oof_gain_over_geometry_eV": 0.003037504150390613,
+  "oof_mae_eV": 0.11110334686088563,
+  "role_use": {
+    "internal_development": "previously_consumed_reused_for_exploratory_weight_selection",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "source_acceptance_sha256": "7fe203f663ce7a4ce850e434ed9eb63e99284c8c1d13dfc86dc1f39674149a3f",
+  "source_envelope_sha256": "eac13afbc4877a4ce8ef66a2dc6ffa389407e3f9de67953bfffa7d4f88d3fef6",
+  "source_evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+  "source_idx_range": [
+    500000,
+    549999
+  ],
+  "source_inputs": {
+    "ogb_distance_angle_triangle_edge_state_gps9": {
+      "locator": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_development.pt",
+      "sha256": "8dd42e95819448b7544d502addd3ac7162ddfa62942a77205ffee0cb3428f2c1"
+    },
+    "ogb_edge_state_structural_gps9": {
+      "locator": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_development.pt",
+      "sha256": "9822150944b49b8329c0edecc2b7253412fa93c27cef5f69dfa0feda0ffeff0f"
+    }
+  },
+  "target_gap_tail_descriptions": {
+    "2_4": {
+      "geometry_mae_eV": 0.18146546825679236,
+      "oof_mae_eV": 0.16249578162972195,
+      "rows": 1877
+    },
+    "8_inf": {
+      "geometry_mae_eV": 0.18198082569911464,
+      "oof_mae_eV": 0.16900810636273955,
+      "rows": 1339
+    }
+  }
+}
