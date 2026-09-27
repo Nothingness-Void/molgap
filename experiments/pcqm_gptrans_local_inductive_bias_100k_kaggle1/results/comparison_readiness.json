@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/acceptance.json",
+      "sha256": "e3fad1f219776ff06a21ebbfcfdc983d5c40d5e66b6056e64ab3b305a2926fd6"
+    },
+    "checkpoint": {
+      "ref": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt",
+      "sha256": "faccd5f58a6ff5879cf41b39e3d9ba39778a83cfcb65b05d5c9e71f9b1e78eb0"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/cost_records.json",
+      "sha256": "8a78fc4ffac2589092a9c71fd0b797800f0e85678d3e66dfcd6c3b4b4b336525"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md",
+      "sha256": "24364e071470f53ea6d927642cff6b6927d3c87bfe7036d52ad8265badda98b0"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json",
+      "sha256": "b14722c317c8ff26f8c4e330b4af6777d3d3f14a7ad0ca48dea94efbd68c630e"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/prediction_manifest.json",
+      "sha256": "17494b07788c8323351f130cd56cea14dc218666042d9356e894d68040cd1817"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/role_history.json",
+      "sha256": "b5d06094489cd949fb9f7ea9879ef3c0fcc631beb09b88adb4997ece175b9f0c"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/development_row_manifest.json",
+      "sha256": "5c0c22358e226bde97834b6d555e627141c4402a85ad0bf4f430cf098e80650c"
+    },
+    "runtime_certificate": {
+      "ref": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/runtime_certificate.json",
+      "sha256": "2601feb7ec03ebb5ab924dd586cfc0d1a61f2e5bb66feca560aa78630d44ba66"
+    },
+    "source_config": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/release_gate_attempt_002.json",
+      "sha256": "e522f21a725a0306578714752a57682bf83f20d2aa247d7df0a374ea31fbc3ec"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/development_target_manifest.json",
+      "sha256": "c9e688dd9ce5f115c89cbaa5a84161d6b366f6f06a4d795807dfbefabd5babc7"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/target_transform.json",
+      "sha256": "b2770f515237346db37581e1b789c43c871a6c799eb1db62a174cfdf3c6f06cc"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/preclosure_trace_manifest.json",
+      "sha256": "be232a2ef31e26853b96b92dff8eff742825233f6b81e295671c0a8741eaa430"
+    }
+  },
+  "candidate_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+  "candidate_observed_role_event_kinds": [
+    "training_membership",
+    "prediction_input",
+    "labels_read",
+    "metric_computed",
+    "selection_used"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "sparse-real-bond-local-path",
+  "matched_fields": {
+    "benchmark_identity": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+    "checkpoint_selection_identity": "best-development-ema9999-60epochs",
+    "data_role_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.9999,
+    "ema_enabled": true,
+    "ema_update_frequency": "per-optimizer-step",
+    "evaluation_role_identity": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+    "evaluation_weight_source": "ema",
+    "feature_identity": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "normalized-gap-l1",
+    "optimizer_fused": false,
+    "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "optimizer_mode": "AdamW-foreach-false",
+    "optimizer_steps": 46860,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "5fcf7589d020f94420fdad3d619e2c94510289c0757564bc508caff7543b0eb6",
+    "row_order_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "runtime_certificate_scope": "kaggle1-same-job-per-arm-Tesla-T4-accepted",
+    "sample_presentations": 5998080,
+    "schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "seed": 42,
+    "selection_role_identity": "best-development-ema9999-60epochs",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "f92865c6a63393a03604d7e232cba5fbdda00f4d0fb9d888e8c5781b4e307feb",
+    "target_transform_identity": "pcqm-local-bias-100k-a2-train-gap-transform",
+    "tf32_enabled": false,
+    "weight_semantics": "ema-decay-0.9999"
+  },
+  "mechanism_id": "persistent-real-bond-edge-state",
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "0c62d8b26e0505b89906656c792a063d18d808b6698c3f5abcb17f35ac7121e9",
+      "reference": "56d03891656d25093a447551e8cd56ded05a61a5505bb5347d510912b31a046b"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/acceptance.json",
+      "sha256": "be0532570171c62fd274867b3b2b1626c8edaf7ccc635bd0ac59840af18eda57"
+    },
+    "checkpoint": {
+      "ref": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/best_model.pt",
+      "sha256": "6624ac73d5c4c1f25139a0bb7f4240f59b381a43cffa4982d39274eaa2d6ec79"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/cost_records.json",
+      "sha256": "496da9614b52690468b4c8f3b43367a4891d5d74ee3e2283ff6c1d08d06e6836"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md",
+      "sha256": "24364e071470f53ea6d927642cff6b6927d3c87bfe7036d52ad8265badda98b0"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/prediction_manifest.json",
+      "sha256": "1728b2f522cae23e55c25c035e9a2c5cfff4fd0b40c8305731204140d397c34b"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/terminal_inputs/role_history.json",
+      "sha256": "d922907c7ab7792ae8fb55ed4a12f50bbc1d41bf30479269337e19d579d8fddd"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/development_row_manifest.json",
+      "sha256": "5c0c22358e226bde97834b6d555e627141c4402a85ad0bf4f430cf098e80650c"
+    },
+    "runtime_certificate": {
+      "ref": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/runtime_certificate.json",
+      "sha256": "903d7bb5a6dd0dbd2b99c1a2a36f09e584a37d19408e7641efb7f9fcda3f522c"
+    },
+    "source_config": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/release_gate_attempt_002.json",
+      "sha256": "e522f21a725a0306578714752a57682bf83f20d2aa247d7df0a374ea31fbc3ec"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/development_target_manifest.json",
+      "sha256": "c9e688dd9ce5f115c89cbaa5a84161d6b366f6f06a4d795807dfbefabd5babc7"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/target_transform.json",
+      "sha256": "b2770f515237346db37581e1b789c43c871a6c799eb1db62a174cfdf3c6f06cc"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/rml_finalized/trace_manifest.json",
+      "sha256": "f31bb5e317991d4731c2e4fc11956f3b8fd164e2a4f1d87cb1165e50e0e41d33"
+    }
+  },
+  "reference_bundle_id": "bundle-local-bias-rwse16-100k-a2",
+  "reference_bundle_sha256": "fd7e6712f98ce2d26a4c19fde28498d97f22119d45a29e9fe821f080a0be93e7",
+  "reference_id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+  "reference_observed_role_event_kinds": [
+    "training_membership",
+    "prediction_input",
+    "labels_read",
+    "metric_computed",
+    "selection_used"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "single_seed_row_bootstrap_only",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

@@ -1,0 +1,99 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt",
+      "name": "best_model",
+      "sha256": "faccd5f58a6ff5879cf41b39e3d9ba39778a83cfcb65b05d5c9e71f9b1e78eb0"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/last_checkpoint.pt",
+      "name": "resume_checkpoint",
+      "sha256": "dda32ec8d0e174a3da292e1834253b4604ab6d507f5285082f0a1e493473a0dd"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "b306a04e1e485fbd6ea5a532cbc6859a1a1d185c095334bdbcc0e8fd269a18c4"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/observed_trace.json",
+      "name": "training_trace",
+      "sha256": "080e359d5ec3ceb5a5829fc6066b6eba9a9851e0b983e323899fdb0444476cb3"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "cbd26fddbf0cc3618a74abb0173fa12251c14fd14529621c32cf29c80535047c"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "sha256": "2601feb7ec03ebb5ab924dd586cfc0d1a61f2e5bb66feca560aa78630d44ba66"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/mechanical_acceptance.json",
+      "name": "mechanical_acceptance",
+      "sha256": "387498108a35a22151c2279395705ff5a6b4279efcb07c0031d4c9e145686225"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json",
+      "name": "paired_comparison",
+      "sha256": "b14722c317c8ff26f8c4e330b4af6777d3d3f14a7ad0ca48dea94efbd68c630e"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/protocol.md",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/training_contract_attempt_002.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/release_gate_attempt_002.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/acceptance.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/cost_records.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/role_history.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/terminal_observation_attempt_002.json",
+      "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-local-inductive-bias-100k-kaggle1-attempt-002",
+  "metrics": {
+    "best_epoch": 59,
+    "observed_development_gap_mae_eV": 0.15307225094258786,
+    "source_commit_observed": "057765023b3ec8dd284fa664bf636fca4460fa53"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-27T15:45:57.640934+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "terminal no-inference mechanical, source, role, trace and paired-row audit"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "strict_paired_endpoint",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "same-job-paired-100k-rwse16_local_edge",
+  "track": "B"
+}

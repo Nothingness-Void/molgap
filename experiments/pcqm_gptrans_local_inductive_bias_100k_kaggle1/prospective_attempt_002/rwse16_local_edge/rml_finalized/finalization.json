@@ -1,0 +1,48 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-2a5f16076701c6454a45df5041f35ad4e5a6324904048b326d6cf4c19ca9af0e",
+  "finalized_at": "2026-09-27T15:45:57.645538+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md": "24364e071470f53ea6d927642cff6b6927d3c87bfe7036d52ad8265badda98b0",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/acceptance.json": "e3fad1f219776ff06a21ebbfcfdc983d5c40d5e66b6056e64ab3b305a2926fd6",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/cost_records.json": "8a78fc4ffac2589092a9c71fd0b797800f0e85678d3e66dfcd6c3b4b4b336525",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/terminal_inputs/role_history.json": "b5d06094489cd949fb9f7ea9879ef3c0fcc631beb09b88adb4997ece175b9f0c",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/protocol.md": "5492d2401a509d6c3084208caff3d4aae3a182a46f6f46df6999bc7d9c925fd7",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/release_gate_attempt_002.json": "e522f21a725a0306578714752a57682bf83f20d2aa247d7df0a374ea31fbc3ec",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/comparison_readiness.json": "fd07b72c5f62436d9fa1069f7cdb7bda0757d9eda857c393748da1f081916811",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json": "b14722c317c8ff26f8c4e330b4af6777d3d3f14a7ad0ca48dea94efbd68c630e",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/terminal_observation_attempt_002.json": "27d767d1b714377df3717fa7900730f309a9837cafe0ec75fc8f9716ed926acf",
+    "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/training_contract_attempt_002.json": "30edab95705689f9ef620c0afa9d2ff4133146c57f78a2b209215c909b304d94",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/mechanical_acceptance.json": "387498108a35a22151c2279395705ff5a6b4279efcb07c0031d4c9e145686225",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt": "faccd5f58a6ff5879cf41b39e3d9ba39778a83cfcb65b05d5c9e71f9b1e78eb0",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/completion_manifest.json": "cbd26fddbf0cc3618a74abb0173fa12251c14fd14529621c32cf29c80535047c",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/development_predictions.pt": "b306a04e1e485fbd6ea5a532cbc6859a1a1d185c095334bdbcc0e8fd269a18c4",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/last_checkpoint.pt": "dda32ec8d0e174a3da292e1834253b4604ab6d507f5285082f0a1e493473a0dd",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/observed_trace.json": "080e359d5ec3ceb5a5829fc6066b6eba9a9851e0b983e323899fdb0444476cb3",
+    "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/runtime_certificate.json": "2601feb7ec03ebb5ab924dd586cfc0d1a61f2e5bb66feca560aa78630d44ba66"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2-observed-training.json": "ec2243aa9fd01204bbfc39f5d561233ffdeeff94a19d15f51198741efb7feada",
+    "prospective_snapshot.json": "1296a697d5d589758450465ad39d3483febeaf6460b9927d74b31e6a123b4337",
+    "roles/role-rwse16_local_edge-labels_read-a2.json": "3d134877adec2dfa231945cc6349f1e5001b42a6a466827a466e735ad1fd96fe",
+    "roles/role-rwse16_local_edge-metric_computed-a2.json": "7fda79adcf9a457c2708a2a7be457434d97017873bda39bf576314c9283b737a",
+    "roles/role-rwse16_local_edge-prediction_input-a2.json": "b09af52580984d791c10173bdab71f8b529e7b9a38f075fcb9a27e73dac557a7",
+    "roles/role-rwse16_local_edge-selection_used-a2.json": "0ebdb225f167d5555edf323593a7d534b8d71c0787431c2e414f65e6b2312dac",
+    "roles/role-rwse16_local_edge-training_membership-a2.json": "6604f1543e1282b3c82d4825d0b3879f9e2028425ce6ec3811edf3246c7d0573",
+    "terminal_input.json": "d71f2c7f8cac3f1306ec9b2eaedbbed216c8b981419809f7e592bc27dad7299b",
+    "trace.json": "9dcd1e2de5e2752038bdb8bc2bd7c2b56d29cc1f0e5e6174330cd455bc666655",
+    "trace_manifest.json": "643f9f083146e25107fd2c5ceefbd50fffaaaa2fd067c896f418b9cf2f8b465f",
+    "trajectory.json": "9006334033001020519a39bfbc310ce19abc5c4751c9491f6d26658551b7f83b",
+    "v5_evidence.json": "0e1aacc6b5cc93ff0933af93bf68c43f781606d3a6b1e400a9d4cb076cb20d0b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16_local_edge/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "2a5f16076701c6454a45df5041f35ad4e5a6324904048b326d6cf4c19ca9af0e",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+}
