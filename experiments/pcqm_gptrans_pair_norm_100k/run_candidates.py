@@ -67,6 +67,8 @@ def worker(mode: str, root: Path) -> None:
     source_sha = find_one("SOURCE_ARCHIVE_SHA256.txt").read_text().strip()
     source_commit = find_one("SOURCE_COMMIT.txt").read_text().strip()
     initial_state = find_one("initial_state.pt")
+    addon_state = (find_one("local_bias_addon_initial_state.pt")
+                   if mode == "rwse16_local_edge" else None)
     output = Path(os.environ["MOLGAP_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     preflight_path = output / "preflight.json"
@@ -81,6 +83,7 @@ def worker(mode: str, root: Path) -> None:
             output=output,
             platform_id=PLATFORM_ID,
             initial_state_path=initial_state,
+            addon_state_path=addon_state,
             variant=mode,
         )
         if result.get("accepted") is not True:
@@ -98,6 +101,7 @@ def worker(mode: str, root: Path) -> None:
         output=output,
         platform_id=PLATFORM_ID,
         initial_state_path=initial_state,
+        addon_state_path=addon_state,
         variant=mode,
     )
 

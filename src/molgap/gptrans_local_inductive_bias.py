@@ -6,18 +6,32 @@ stream, so constructing them cannot change the frozen core or its training RNG.
 """
 from __future__ import annotations
 
+from collections.abc import Mapping
+from pathlib import Path
+
 import torch
 from torch import nn
 from torch_geometric.utils import to_dense_batch
 
 from .gptrans import OGBGPTransTiny
 from .gps import _PersistentEdgeUpdate
+from .training_reproducibility import sha256_file
+from .v4_runtime import model_state_sha256, state_dict_sha256, torch_load_compat
 
 
 MODES = ("rwse16", "rwse16_local_edge")
 RWSE_CHANNELS = 16
 EDGE_STATE_CHANNELS = 64
 ADDON_SEED = 420_016
+ADDON_INITIAL_STATE_ARTIFACT_SHA256 = (
+    "174d884a8e1593baf66c03f049d762c07f69ec3936c15a8bea4050da988d68be"
+)
+ADDON_INITIAL_STATE_SHA256 = (
+    "139f7e94070c6e37d6c9d49dd10961272a99242ef9deb887da85cfc716677cd8"
+)
+FULL_LOCAL_EDGE_INITIAL_STATE_SHA256 = (
+    "9e2e58fa54f68c061f47637a9c406dd4c849ae9b0d49623881f63bb94655db0b"
+)
 
 
 class LocalInductiveBiasGPTrans(nn.Module):
@@ -108,3 +122,34 @@ class LocalInductiveBiasGPTrans(nn.Module):
 def apply_local_inductive_bias(base: OGBGPTransTiny, mode: str) -> LocalInductiveBiasGPTrans:
     """Wrap a separately verified, randomly initialized frozen GPTrans core."""
     return LocalInductiveBiasGPTrans(base, mode)
+
+
+def load_frozen_local_edge_initial_state(
+    model: LocalInductiveBiasGPTrans, path: Path
+) -> str:
+    """Replace runtime-generated B-only tensors with the frozen local payload."""
+    if not isinstance(model, LocalInductiveBiasGPTrans) or model.mode != "rwse16_local_edge":
+        raise ValueError("Frozen local-edge state requires the B arm")
+    if sha256_file(path) != ADDON_INITIAL_STATE_ARTIFACT_SHA256:
+        raise RuntimeError("Frozen local-edge initial-state artifact changed")
+    payload = torch_load_compat(path, map_location="cpu", weights_only=False)
+    if (not isinstance(payload, Mapping)
+            or payload.get("format") != "molgap-local-bias-addon-initial-state-v1"
+            or payload.get("variant") != model.mode
+            or payload.get("addon_seed") != ADDON_SEED
+            or payload.get("full_model_state_sha256") != FULL_LOCAL_EDGE_INITIAL_STATE_SHA256
+            or payload.get("addon_state_sha256") != ADDON_INITIAL_STATE_SHA256):
+        raise RuntimeError("Frozen local-edge initial-state metadata changed")
+    addon_state = payload.get("addon_state")
+    model_keys = set(model.state_dict())
+    base_keys = {name for name in model_keys if name.startswith("base.")}
+    if not isinstance(addon_state, Mapping) or set(addon_state) != model_keys - base_keys:
+        raise RuntimeError("Frozen local-edge initial-state tensor keys changed")
+    if state_dict_sha256(addon_state) != ADDON_INITIAL_STATE_SHA256:
+        raise RuntimeError("Frozen local-edge initial-state tensor values changed")
+    missing, unexpected = model.load_state_dict(addon_state, strict=False)
+    if set(missing) != base_keys or unexpected:
+        raise RuntimeError("Frozen local-edge initial-state load changed the core")
+    if model_state_sha256(model) != FULL_LOCAL_EDGE_INITIAL_STATE_SHA256:
+        raise RuntimeError("Frozen local-edge full initial state changed")
+    return ADDON_INITIAL_STATE_ARTIFACT_SHA256

@@ -472,10 +472,21 @@ class FrozenEpochScheduler:
         self.epoch = int(state["epoch"])
 
 
-def _make_training_state(initial_state_path: Path, variant: str = "reference"):
+def _make_training_state(
+    initial_state_path: Path,
+    variant: str = "reference",
+    addon_state_path: Path | None = None,
+):
     import torch
 
-    model = _make_model(initial_state_path, variant).to("cuda")
+    model = _make_model(initial_state_path, variant)
+    if variant == "rwse16_local_edge":
+        if addon_state_path is None:
+            raise RuntimeError("Frozen local-edge addon initial state is required")
+        from .gptrans_local_inductive_bias import load_frozen_local_edge_initial_state
+
+        load_frozen_local_edge_initial_state(model, addon_state_path)
+    model = model.to("cuda")
     _verify_model_identity(model, variant)
     optimizer = make_adamw_compat(
         model.parameters(),
@@ -621,6 +632,7 @@ def run_preflight(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    addon_state_path: Path | None = None,
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
@@ -661,7 +673,9 @@ def run_preflight(
     repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+        model, optimizer, scheduler, ema = _make_training_state(
+            initial_state_path, variant, addon_state_path
+        )
         scheduler.step(0)
         repeat_losses.append(
             float(
@@ -685,7 +699,9 @@ def run_preflight(
     repeat_hashes = repeatability["state_sha256"]
 
     configure_fp32_determinism(SEED)
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(
+        initial_state_path, variant, addon_state_path
+    )
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -754,6 +770,11 @@ def run_preflight(
         "runtime_calibration_fingerprint": runtime_calibration_fingerprint,
     }
     validate_runtime_certificate(certificate, provisional_contract)
+    addon_initial_state_artifact_sha256 = None
+    if variant == "rwse16_local_edge":
+        from .gptrans_local_inductive_bias import ADDON_INITIAL_STATE_ARTIFACT_SHA256
+
+        addon_initial_state_artifact_sha256 = ADDON_INITIAL_STATE_ARTIFACT_SHA256
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
@@ -765,6 +786,9 @@ def run_preflight(
             "gptrans_variants.py"
         )),
         "accepted": True,
+        **({"addon_initial_state_artifact_sha256":
+            addon_initial_state_artifact_sha256}
+           if variant == "rwse16_local_edge" else {}),
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
         "runtime_manifest": runtime,
@@ -887,6 +911,7 @@ def run_training(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    addon_state_path: Path | None = None,
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
@@ -912,6 +937,11 @@ def run_training(
         raise RuntimeError("Preflight source archive changed")
     if preflight.get("source_commit") != source_commit:
         raise RuntimeError("Preflight source commit changed")
+    if variant == "rwse16_local_edge":
+        from .gptrans_local_inductive_bias import ADDON_INITIAL_STATE_ARTIFACT_SHA256
+
+        if preflight.get("addon_initial_state_artifact_sha256") != ADDON_INITIAL_STATE_ARTIFACT_SHA256:
+            raise RuntimeError("Preflight local-edge initial-state artifact changed")
     certificate = preflight["runtime_certificate"]
     certificate_id = preflight["runtime_certificate_id"]
     if runtime_calibration_fingerprint is None:
@@ -950,7 +980,9 @@ def run_training(
         raise RuntimeError("Target statistics differ from preflight")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(
+        initial_state_path, variant, addon_state_path
+    )
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []
@@ -1143,6 +1175,9 @@ def run_training(
         "parameters": (LOCAL_BIAS_IDENTITIES[variant][0] if variant in LOCAL_BIAS_VARIANTS
                        else EXPECTED_PARAMETERS),
         "variant_source_sha256": preflight.get("variant_source_sha256"),
+        **({"addon_initial_state_artifact_sha256":
+            preflight["addon_initial_state_artifact_sha256"]}
+           if variant == "rwse16_local_edge" else {}),
         "checkpoint_sha256": sha256_file(checkpoint_path),
         **({"observed_trace_sha256": sha256_file(output / "observed_trace.json")}
            if variant in LOCAL_BIAS_VARIANTS else {}),
