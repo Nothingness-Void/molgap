@@ -10,7 +10,7 @@ import time
 import traceback
 
 RECIPES = ("k1_corrupt_gap", "k1_corrupt_gap_atom_aux")
-ATTEMPT = 2
+ATTEMPT = 3
 RUN_ID = f"kaseichou/molgap-k1-joint-atom-s42:v{ATTEMPT}"
 TRAJECTORIES = {recipe: "TC-" + recipe.replace("_", "-") + f"-100k-s42-v{ATTEMPT}" for recipe in RECIPES}
 AUDIT_TRAJECTORY = f"TC-k1-joint-atom-post100k-audit-s42-v{ATTEMPT}"

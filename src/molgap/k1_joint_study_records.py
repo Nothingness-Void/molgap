@@ -65,7 +65,7 @@ def freeze():
         "training_contract_ref": f"{REL}/training_contract.json",
         "training_contract_sha256": file_digest(authority_root / "training_contract.json"),
         "attempt_id": f"v{ATTEMPT}",
-        "prior_failure_ref": f"{REL}/failure_v1/decision.md",
+        "prior_failure_ref": f"{REL}/cancellation_v2/decision.md",
         "implementation_refs": ["src/molgap/k1_joint_objective.py", "src/molgap/pcqm_k1_variants_runner.py", "src/molgap/k1_joint_study_runtime.py"],
         "registry_capability_gap": "existing ExperimentSpec K1 mode binds a full-run recipe, not this 100K objective intervention; use direct shared RML and source-bundle APIs"})
     save(root / "budget_snapshot.json", {
