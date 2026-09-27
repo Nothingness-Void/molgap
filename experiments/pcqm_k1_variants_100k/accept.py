@@ -44,9 +44,10 @@ def _load_arm(
     *,
     expected_parameters: dict[str, int] | None = None,
     initialization_policy: str = "nested-function",
+    arm_directory: Path | None = None,
 ) -> tuple[dict, dict]:
     parameter_table = EXPECTED_PARAMETERS if expected_parameters is None else expected_parameters
-    arm_root = root / mode
+    arm_root = Path(arm_directory) if arm_directory is not None else root / mode
     record = json.loads((arm_root / "arm_record.json").read_text(encoding="utf-8"))
     completion = json.loads(
         (arm_root / "completion_manifest.json").read_text(encoding="utf-8")

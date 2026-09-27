@@ -411,12 +411,19 @@ def build_runtime_certificate(
     output: Path,
     *,
     calibration_mode: str = "neural_atom_k1_v4",
+    target_stats_override: dict | None = None,
 ) -> tuple[dict, dict]:
     import torch
 
     determinism = configure_fp32_determinism(SEED)
     runtime = build_runtime_manifest(determinism)
-    mean_value, std_value = _target_stats(roles["train"])
+    if target_stats_override is None:
+        mean_value, std_value = _target_stats(roles["train"])
+    else:
+        mean_value = float(target_stats_override["mean_eV"])
+        std_value = float(target_stats_override["sample_std_eV"])
+        if not math.isfinite(mean_value) or not math.isfinite(std_value) or std_value <= 0:
+            raise RuntimeError("Target-transform override is not finite and positive")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
     batch = next(iter(_train_loader(roles["train"], 0))).to("cuda", non_blocking=True)
@@ -1478,10 +1485,17 @@ def _contract(
     runtime_certificate_id: str,
     source_archive_sha256: str,
     result_artifact_sha256: str,
+    objective_config: dict | None = None,
+    target_transform_asset: dict | None = None,
 ) -> dict:
     architecture_fingerprint = canonical_fingerprint(ARCHITECTURE_CONFIGS[mode])
-    return {
-        "run_id": f"pcqm-k1-variants-100k-s42-v1-{mode}",
+    run_suffix = (
+        f"-{objective_config['recipe_id']}"
+        if objective_config is not None
+        else ""
+    )
+    contract = {
+        "run_id": f"pcqm-k1-variants-100k-s42-v1-{mode}{run_suffix}",
         "model_id": mode,
         "architecture_fingerprint": architecture_fingerprint,
         "source_archive_sha256": source_archive_sha256,
@@ -1516,6 +1530,38 @@ def _contract(
         "device_count": 1,
         "gradient_accumulation_steps": 1,
     }
+    if objective_config is not None:
+        from .k1_joint_objective import objective_fingerprint
+
+        objective_hash = objective_fingerprint(objective_config)
+        contract.update(
+            {
+                "loss_fingerprint": objective_hash,
+                "objective_recipe": objective_config["recipe_id"],
+                "objective_fingerprint": objective_hash,
+                "target_transform_fingerprint": (
+                    target_transform_asset["asset_id"]
+                    if target_transform_asset is not None
+                    else TARGET_TRANSFORM_FINGERPRINT
+                ),
+                "target_transform_asset_sha256": (
+                    target_transform_asset["asset_sha256"]
+                    if target_transform_asset is not None
+                    else None
+                ),
+                "target_transform_file_sha256": (
+                    target_transform_asset["file_sha256"]
+                    if target_transform_asset is not None
+                    else None
+                ),
+                "target_transform_asset_id": (
+                    target_transform_asset["asset_id"]
+                    if target_transform_asset is not None
+                    else None
+                ),
+            }
+        )
+    return contract
 
 
 def train_arm(
@@ -1527,6 +1573,8 @@ def train_arm(
     resume_from: Path | None = None,
     trajectory_id: str | None = None,
     physical_run_id: str | None = None,
+    objective_recipe: object | None = None,
+    target_transform_asset: Path | None = None,
 ) -> dict:
     import torch
     import torch.nn.functional as functional
@@ -1565,6 +1613,20 @@ def train_arm(
 
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown mode: {mode}")
+    joint_config = None
+    if objective_recipe is not None:
+        from .k1_joint_objective import objective_config as build_objective_config
+
+        if mode != "neural_atom_k1_v4":
+            raise ValueError("joint objective is only supported by neural_atom_k1_v4")
+        if target_transform_asset is None:
+            raise ValueError("joint objective requires an immutable target transform asset")
+        if not trajectory_id or not physical_run_id:
+            raise ValueError("joint objective requires prospective trajectory and physical run binding")
+        joint_config = build_objective_config(objective_recipe)
+        recovery_chunk_modes += ("neural_atom_k1_v4",)
+    elif target_transform_asset is not None:
+        raise ValueError("target_transform_asset is only valid with objective_recipe")
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
     if mode in RESOLUTION_MODES:
@@ -1582,6 +1644,47 @@ def train_arm(
         manifest,
         retain_wedge_topology=mode in SPARSE_TRIPLET_MODES + ONESHOT_TRIPLET_MODES,
     )
+    target_stats_override = None
+    target_transform_record = None
+    if joint_config is not None:
+        from .comparison_readiness import validate_target_transform_asset
+        from .pcqm_k1_cross_scale_diagnostic import (
+            TARGET_TRANSFORM_ID,
+            TRANSFORM_SHA256,
+        )
+
+        transform_path = Path(target_transform_asset)
+        file_sha256 = sha256_file(transform_path)
+        if file_sha256 != TRANSFORM_SHA256:
+            raise RuntimeError("Immutable target-transform asset bytes changed")
+        try:
+            transform = validate_target_transform_asset(
+                json.loads(transform_path.read_text(encoding="utf-8"))
+            )
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            raise RuntimeError("Immutable target-transform asset failed validation") from exc
+        if transform.get("asset_id") != TARGET_TRANSFORM_ID or transform.get("ddof") != 1:
+            raise RuntimeError("Unexpected target-transform asset identity")
+        if not math.isfinite(float(transform["mean"])) or not math.isfinite(float(transform["std"])):
+            raise RuntimeError("Target-transform asset statistics are not finite")
+        computed_mean, computed_std = _target_stats(roles["train"])
+        if (
+            computed_mean != float(transform["mean"])
+            or computed_std != float(transform["std"])
+        ):
+            raise RuntimeError(
+                "Computed calibration target statistics differ from immutable asset"
+            )
+        target_stats_override = {
+            "mean_eV": float(transform["mean"]),
+            "sample_std_eV": float(transform["std"]),
+        }
+        target_transform_record = {
+            **transform,
+            "file_sha256": file_sha256,
+            "computed_train_mean_eV": computed_mean,
+            "computed_train_sample_std_eV": computed_std,
+        }
     conjugated_manifest = None
     if mode in CONJUGATED_MODES:
         from .k1_conjugated_sidecar import attach_sidecar
@@ -1605,13 +1708,34 @@ def train_arm(
             retain_rwse=mode in MOSE_DUAL_MODES,
         )
     output.mkdir(parents=True, exist_ok=True)
-    certificate, runtime = build_runtime_certificate(
-        roles,
-        output,
-        calibration_mode=mode,
-    )
+    if target_stats_override is None:
+        certificate, runtime = build_runtime_certificate(
+            roles,
+            output,
+            calibration_mode=mode,
+        )
+    else:
+        certificate, runtime = build_runtime_certificate(
+            roles,
+            output,
+            calibration_mode=mode,
+            target_stats_override=target_stats_override,
+        )
     target_stats = runtime["target_stats"]
     preflight = _architecture_preflight(mode, roles, target_stats)
+    if joint_config is not None:
+        from .k1_joint_objective import objective_fingerprint
+
+        preflight["objective"] = {
+            "recipe_id": joint_config["recipe_id"],
+            "objective_config": joint_config,
+            "objective_fingerprint": objective_fingerprint(joint_config),
+            "inference_model_id": "neural_atom_k1_v4",
+            "training_only_auxiliary_heads": True,
+        }
+        preflight["target_transform_asset"] = target_transform_record
+        atomic_json(output / "objective_config.json", joint_config)
+        atomic_json(output / "target_transform_asset.json", target_transform_record)
     if functional_group_manifest is not None:
         preflight["functional_group_sidecar"] = {
             "aggregate_sha256": functional_group_manifest["aggregate_sha256"],
@@ -1632,8 +1756,24 @@ def train_arm(
     atomic_json(output / "preflight.json", preflight)
     configure_fp32_determinism(SEED)
     model = make_encoder(mode).to("cuda")
+    joint_objective = None
+    objective_preflight = None
+    if joint_config is not None:
+        from .k1_joint_objective import (
+            make_joint_objective,
+            objective_parameter_groups,
+            run_objective_preflight,
+        )
+
+        joint_objective = make_joint_objective(model, joint_config)
+        backbone_parameters, head_parameters = objective_parameter_groups(
+            model, joint_objective
+        )
+        optimizer_parameters = backbone_parameters + head_parameters
+    else:
+        optimizer_parameters = list(model.parameters())
     optimizer = torch.optim.AdamW(
-        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+        optimizer_parameters, lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=EPOCHS, eta_min=1e-6
@@ -1641,6 +1781,28 @@ def train_arm(
     mean = torch.tensor(target_stats["mean_eV"], device="cuda")
     std = torch.tensor(target_stats["sample_std_eV"], device="cuda")
     development_loader = _development_loader(roles["development"])
+    if joint_objective is not None:
+        preflight_rng = capture_rng_state()
+        try:
+            preflight_batch = next(iter(_train_loader(roles["train"], 0))).to(
+                "cuda", non_blocking=True
+            )
+            objective_preflight = run_objective_preflight(
+                model,
+                joint_objective,
+                optimizer,
+                lambda batch: _forward(model, batch),
+                preflight_batch,
+                mean,
+                std,
+                initial_encoder_state_sha256=_shared_k1_state_sha256(model, mode),
+                expected_encoder_state_sha256=preflight["shared_k1_initial_state_sha256"],
+            )
+        finally:
+            restore_rng_state(preflight_rng)
+        preflight["objective_training"] = objective_preflight
+        atomic_json(output / "preflight.json", preflight)
+        del preflight_batch
     best = math.inf
     best_epoch = -1
     trace = []
@@ -1657,6 +1819,19 @@ def train_arm(
         }.items():
             if checkpoint.get(key) != expected:
                 raise RuntimeError(f"Resume identity mismatch: {key}")
+        if joint_objective is not None:
+            if "objective_heads" not in checkpoint or "objective_state" not in checkpoint:
+                raise RuntimeError("Joint-objective resume state is incomplete")
+            if checkpoint.get("trajectory_id") != trajectory_id or checkpoint.get(
+                "physical_run_id"
+            ) != physical_run_id:
+                raise RuntimeError("Joint-objective trajectory binding changed on resume")
+            joint_objective.objective_heads.load_state_dict(
+                checkpoint["objective_heads"], strict=True
+            )
+            joint_objective.restore_checkpoint_state(checkpoint["objective_state"])
+        elif "objective_state" in checkpoint or "objective_heads" in checkpoint:
+            raise RuntimeError("Non-objective resume received joint-objective state")
         model.load_state_dict(checkpoint["model"], strict=True)
         optimizer.load_state_dict(checkpoint["optimizer"])
         scheduler.load_state_dict(checkpoint["scheduler"])
@@ -1664,6 +1839,10 @@ def train_arm(
         start_epoch = checkpoint["epoch"] + 1
         if len(trace) != start_epoch or not 0 <= start_epoch <= EPOCHS:
             raise RuntimeError("Resume epoch/trace mismatch")
+        if joint_objective is not None and joint_objective.counter.optimizer_steps != (
+            start_epoch * STEPS_PER_EPOCH
+        ):
+            raise RuntimeError("Resume augmentation counter does not match epoch")
         best, best_epoch = checkpoint["best"], checkpoint["best_epoch"]
         for name, digest in checkpoint["best_artifact_sha256"].items():
             if sha256_file(resume_from / name) != digest:
@@ -1674,6 +1853,36 @@ def train_arm(
         # Their initial base-seed draw must not advance the restored model RNG.
         iter(development_loader)
         restore_rng_state(checkpoint["rng_state"])
+    if joint_objective is not None and resume_from is not None:
+        import shutil
+
+        from .research_memory.trace import load_canonical_trace
+
+        for name in ("canonical_trace.json", "observed_role_history.json"):
+            source = resume_from / name
+            if not source.is_file():
+                raise RuntimeError(f"Joint-objective resume is missing {name}")
+            destination = output / name
+            if destination.resolve() != source.resolve():
+                shutil.copyfile(source, destination)
+            if sha256_file(destination) != sha256_file(source):
+                raise RuntimeError(f"Joint-objective resume copied {name} incorrectly")
+        existing_trace = load_canonical_trace(output / "canonical_trace.json")
+        if (
+            existing_trace["trajectory_id"] != trajectory_id
+            or existing_trace["run_id"] != physical_run_id
+            or len(existing_trace["observations"]) != start_epoch
+        ):
+            raise RuntimeError("Joint-objective canonical trace prefix identity changed")
+        role_history = json.loads(
+            (output / "observed_role_history.json").read_text(encoding="utf-8")
+        )
+        if (
+            role_history.get("trajectory_id") != trajectory_id
+            or role_history.get("run_id") != physical_run_id
+            or role_history.get("epoch") != start_epoch - 1
+        ):
+            raise RuntimeError("Joint-objective observed role history prefix changed")
     canonical = None
     if mode in LINEAR_MODES:
         from .k1_screen_trace import recorder, record_epoch
@@ -1684,25 +1893,75 @@ def train_arm(
     elif mode in RESOLUTION_MODES:
         from .k1_screen_trace import recorder, record_epoch
         canonical = recorder(output, trajectory_id, physical_run_id)
-    observed_steps = 0
-    observed_samples = 0
+    elif joint_objective is not None:
+        from .k1_screen_trace import recorder, record_epoch
+
+        canonical = recorder(output, trajectory_id, physical_run_id)
+    observed_steps = (
+        start_epoch * STEPS_PER_EPOCH if joint_objective is not None else 0
+    )
+    observed_samples = start_epoch * ROWS_PER_EPOCH if joint_objective is not None else 0
     torch.cuda.reset_peak_memory_stats()
     for epoch in range(start_epoch, EPOCHS):
         model.train()
+        if joint_objective is not None:
+            joint_objective.train()
         absolute = 0.0
+        auxiliary_total = 0.0
+        total_loss_total = 0.0
+        corrupted_atom_rows = 0
+        total_atom_rows = 0
+        backbone_gradient_norm_max = 0.0
+        auxiliary_head_gradient_norm_max = 0.0
+        gradient_clip_group_count = 0
         rows = 0
         started = time.perf_counter()
-        for batch in _train_loader(roles["train"], epoch):
+        for step, batch in enumerate(_train_loader(roles["train"], epoch)):
             batch = batch.to("cuda", non_blocking=True)
+            total_atom_rows += int(batch.x.shape[0])
+            corruption = None
+            train_batch = batch
+            if joint_objective is not None:
+                train_batch, corruption = joint_objective.prepare_batch(
+                    batch, epoch=epoch, step=step
+                )
             optimizer.zero_grad(set_to_none=True)
-            prediction = _forward(model, batch)
+            prediction = _forward(model, train_batch)
             target = (batch.y.view(-1) - mean) / std
-            loss = functional.l1_loss(prediction, target)
+            if joint_objective is not None:
+                losses = joint_objective.loss_from_prediction(
+                    prediction, batch, corruption, mean, std
+                )
+                loss = losses.total_loss
+            else:
+                losses = None
+                loss = functional.l1_loss(prediction, target)
             if not torch.isfinite(loss):
                 raise RuntimeError("Nonfinite training loss")
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            if joint_objective is not None:
+                from .k1_joint_objective import clip_joint_gradients
+
+                backbone_norm, head_norm = clip_joint_gradients(model, joint_objective)
+                backbone_norm_value = float(backbone_norm.detach().cpu())
+                head_norm_value = float(head_norm.detach().cpu())
+                backbone_gradient_norm_max = max(
+                    backbone_gradient_norm_max, backbone_norm_value
+                )
+                auxiliary_head_gradient_norm_max = max(
+                    auxiliary_head_gradient_norm_max, head_norm_value
+                )
+                gradient_clip_group_count += int(backbone_norm_value > 1.0)
+                gradient_clip_group_count += int(head_norm_value > 1.0)
+            else:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
+            if joint_objective is not None:
+                joint_objective.counter.advance(epoch, step)
+                auxiliary_total += float(losses.auxiliary_loss.detach().cpu())
+                total_loss_total += float(losses.total_loss.detach().cpu())
+                corrupted_atom_rows += int(corruption.selected_count)
+                joint_objective.clear_node_states()
             observed_steps += 1
             observed_samples += int(target.numel())
             absolute += float((prediction.detach() - target).abs().sum())
@@ -1712,6 +1971,8 @@ def train_arm(
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
             model, development_loader, mean, std
         )
+        if joint_objective is not None:
+            joint_objective.eval()
         improved = validation_mae < best
         if not math.isfinite(validation_mae):
             raise RuntimeError("Nonfinite development MAE")
@@ -1737,45 +1998,79 @@ def train_arm(
             "seconds": time.perf_counter() - started,
             "improved": improved,
         }
+        if joint_objective is not None:
+            row.update(
+                {
+                    "gap_loss": absolute / rows,
+                    "auxiliary_loss": auxiliary_total / STEPS_PER_EPOCH,
+                    "total_loss": total_loss_total / STEPS_PER_EPOCH,
+                    "corrupted_atom_rows": corrupted_atom_rows,
+                    "total_atom_rows": total_atom_rows,
+                    "corruption_rate_observed": corrupted_atom_rows / total_atom_rows,
+                    "backbone_gradient_norm_max": backbone_gradient_norm_max,
+                    "auxiliary_head_gradient_norm_max": auxiliary_head_gradient_norm_max,
+                    "gradient_clip_group_count": gradient_clip_group_count,
+                    "gradient_clip_max_norm": 1.0,
+                }
+            )
         trace.append(row)
         scheduler.step()
-        atomic_torch_save(
-            output / "last_checkpoint.pt",
-            {
-                "format": "molgap-k1-variant-checkpoint-v1",
-                "mode": mode,
-                "epoch": epoch,
-                "model": model.state_dict(),
-                "optimizer": optimizer.state_dict(),
-                "scheduler": scheduler.state_dict(),
-                "trace": trace,
-                "source_commit": source_commit,
-                "source_archive_sha256": source_archive_sha256,
-                "runtime_certificate_id": runtime["runtime_certificate_id"],
-                "rng_state": capture_rng_state(),
-                "best": best,
-                "best_epoch": best_epoch,
-                "best_artifact_sha256": {
-                    name: sha256_file(output / name)
-                    for name in ("best_model.pt", "best_development_payload.pt")
-                },
-                "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
-                "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
-                "official_validation_role_read": False,
-                "test_dev_role_read": False,
-                "test_challenge_role_read": False,
+        checkpoint = {
+            "format": "molgap-k1-variant-checkpoint-v1",
+            "mode": mode,
+            "epoch": epoch,
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "trace": trace,
+            "source_commit": source_commit,
+            "source_archive_sha256": source_archive_sha256,
+            "runtime_certificate_id": runtime["runtime_certificate_id"],
+            "rng_state": capture_rng_state(),
+            "best": best,
+            "best_epoch": best_epoch,
+            "best_artifact_sha256": {
+                name: sha256_file(output / name)
+                for name in ("best_model.pt", "best_development_payload.pt")
             },
-        )
+            "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
+            "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+            "official_validation_role_read": False,
+            "test_dev_role_read": False,
+            "test_challenge_role_read": False,
+        }
+        if joint_objective is not None:
+            checkpoint.update(
+                {
+                    "objective_heads": joint_objective.objective_heads.state_dict(),
+                    "objective_state": joint_objective.checkpoint_state(),
+                    "trajectory_id": trajectory_id,
+                    "physical_run_id": physical_run_id,
+                }
+            )
+        atomic_torch_save(output / "last_checkpoint.pt", checkpoint)
         if canonical is not None:
             record_epoch(canonical, output, row, observed_steps=observed_steps,
                          observed_samples=observed_samples, elapsed=time.perf_counter() - started)
         atomic_json(output / "trace.json", {"epochs": trace})
-        if mode in recovery_chunk_modes and (epoch + 1) % 10 == 0:
+        if (mode in recovery_chunk_modes or joint_objective is not None) and (epoch + 1) % 10 == 0:
             import tarfile
             chunk = output / f"recovery_epoch_{epoch + 1:02d}.tar"
             temporary = chunk.with_suffix(".tmp")
+            recovery_names = [
+                "last_checkpoint.pt",
+                "best_model.pt",
+                "best_development_payload.pt",
+                "trace.json",
+                "preflight.json",
+                "runtime_certificate.json",
+            ]
+            if joint_objective is not None:
+                recovery_names.extend(
+                    ["objective_config.json", "target_transform_asset.json"]
+                )
             with tarfile.open(temporary, "w") as archive:
-                for name in ("last_checkpoint.pt", "best_model.pt", "best_development_payload.pt", "trace.json", "preflight.json", "runtime_certificate.json"):
+                for name in recovery_names:
                     archive.add(output / name, arcname=name)
                 if canonical is not None:
                     for name in ("canonical_trace.json", "observed_role_history.json"):
@@ -1794,6 +2089,8 @@ def train_arm(
         runtime_certificate_id=runtime["runtime_certificate_id"],
         source_archive_sha256=source_archive_sha256,
         result_artifact_sha256=payload_sha,
+        objective_config=joint_config,
+        target_transform_asset=target_transform_record,
     )
     training = {
         "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
@@ -1811,6 +2108,19 @@ def train_arm(
         "payload_sha256": payload_sha,
         "checkpoint_sha256": sha256_file(output / "last_checkpoint.pt"),
     }
+    if joint_objective is not None:
+        training.update(
+            {
+                "objective_head_parameter_count": sum(
+                    parameter.numel()
+                    for parameter in joint_objective.objective_heads.parameters()
+                ),
+                "objective_fingerprint": joint_objective.fingerprint,
+                "objective_recipe": joint_config["recipe_id"],
+                "target_transform_asset_sha256": target_transform_record["asset_sha256"],
+                "target_transform_file_sha256": target_transform_record["file_sha256"],
+            }
+        )
     record = {
         "format": "molgap-pcqm-k1-variant-arm-v1",
         "complete": True,
@@ -1829,6 +2139,22 @@ def train_arm(
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
     }
+    if joint_config is not None:
+        record["trajectory_id"] = trajectory_id
+        record["physical_run_id"] = physical_run_id
+        record["objective"] = {
+            "recipe_id": joint_config["recipe_id"],
+            "trajectory_id": trajectory_id,
+            "physical_run_id": physical_run_id,
+            "config": joint_config,
+            "fingerprint": joint_objective.fingerprint,
+            "target_transform_asset": target_transform_record,
+            "inference_export": "best_model.pt contains model state only",
+            "training_checkpoint": {
+                "path": "last_checkpoint.pt",
+                "contains": ["objective_heads", "objective_state", "optimizer", "augmentation_counter_state"],
+            },
+        }
     if mose_manifest is not None:
         record["mose_cache"] = {
             "format": mose_manifest["format"],
@@ -1858,7 +2184,7 @@ def train_arm(
             "aggregate_sha256": conjugated_manifest["aggregate_sha256"],
             "source_commit": conjugated_manifest["source_commit"],
         }
-    if mode == "neural_atom_k1_v4":
+    if mode == "neural_atom_k1_v4" and joint_config is None:
         record["contract"].update(
             {
                 "frozen_reference": True,

@@ -95,17 +95,20 @@ def child(context, mode):
             atomic_json(manifest_path, manifest)
 
 
-def worker(context, mode, device, deadline):
+def worker(context, mode, device, deadline, *, output_root=None,
+           child_module="molgap.k1_relation_study_runtime", run_id=None):
     from .training_reproducibility import atomic_json
+    root = Path(output_root) if output_root is not None else ROOT
+    run_id = run_id or RUNS[context["slot"]]
     env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), CUBLAS_WORKSPACE_CONFIG=":4096:8",
                PYTHONHASHSEED="42", PYTHONUNBUFFERED="1", PYTHONPATH=context["python_root"],
                MOLGAP_PLATFORM_ID="kaggle2",
                MOLGAP_FIXED_DATASET="kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
                MOLGAP_RELATION_CONTEXT=json.dumps(context), MOLGAP_RELATION_MODE=mode)
-    log_path = ROOT / f"{mode}.log"
+    log_path = root / f"{mode}.log"
     started = time.monotonic()
     with log_path.open("w", encoding="utf-8") as log:
-        process = subprocess.Popen([sys.executable, "-m", "molgap.k1_relation_study_runtime"],
+        process = subprocess.Popen([sys.executable, "-m", child_module],
                                    env=env, stdout=log, stderr=subprocess.STDOUT)
         last = None
         timed_out = False
@@ -132,9 +135,9 @@ def worker(context, mode, device, deadline):
     elapsed = time.monotonic() - started
     result = {"mode": mode, "device": device, "exit_code": process.returncode,
         "timed_out": timed_out, "worker_wall_seconds": elapsed,
-        "allocated_device_seconds": elapsed, "run_id": RUNS[context["slot"]],
+        "allocated_device_seconds": elapsed, "run_id": run_id,
         "log": log_path.name, "complete": process.returncode == 0 and not timed_out}
-    atomic_json(ROOT / f"{mode}_execution.json", result)
+    atomic_json(root / f"{mode}_execution.json", result)
     if not result["complete"]:
         print(log_path.read_text(errors="replace")[-14000:], flush=True)
     return result

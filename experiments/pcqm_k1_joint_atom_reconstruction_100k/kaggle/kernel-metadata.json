@@ -1,0 +1,9 @@
+{
+  "id": "kaseichou/molgap-k1-joint-atom-s42",
+  "title": "MolGap K1 Joint Atom S42",
+  "code_file": "run.py", "language": "python", "kernel_type": "script",
+  "is_private": true, "enable_gpu": true, "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["kaseichou/molgap-k1-joint-atom-source", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1", "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"],
+  "competition_sources": [], "kernel_sources": []
+}

@@ -268,6 +268,35 @@ def test_objective_change_cannot_hide_in_architecture_comparison():
     assert _assess(candidate)["strict_ready"] is False
 
 
+def test_objective_prelaunch_preserves_real_evidence_and_trace_gates(tmp_path):
+    bundle = _reference_bundle()
+    bundle_path = _write_reference_bundle_tree(tmp_path, bundle)
+    identity = _identity("reference-arch")
+    identity["loss_identity"] = "new-objective"
+    kwargs = dict(candidate_id="candidate", reference_id="reference",
+        reference_bundle=bundle, candidate_plan={"comparison_identity": identity,
+            "source_config_status": "frozen", "source_commit_or_archive": "2" * 40},
+        experiment_purpose="training_objective_comparison",
+        intervention_group_id="joint-objective", declared_intervention_fields=["loss_identity"],
+        role_applicability_plan=_side("reference-arch")["role_applicability_plan"],
+        trace_plan=_side("reference-arch")["trace_field_availability"],
+        runtime_qualification_plan={"status": "declared", "runtime_certificate_required": True,
+            "qualification_scope": "unchanged-fp32-backbone"})
+    planned = assess_comparison_prelaunch(**kwargs)
+    assert planned["prelaunch_ready"] is True
+    assert validate_server_scientific_prelaunch(comparison_prelaunch=planned,
+        experiment_purpose="training_objective_comparison", reference_bundle=bundle,
+        repo_root=tmp_path, reference_bundle_path=bundle_path)["gate"] == "PASS"
+    (tmp_path / bundle["runtime_certificate_ref"]).unlink()
+    with pytest.raises(ValueError):
+        validate_server_scientific_prelaunch(comparison_prelaunch=planned,
+            experiment_purpose="training_objective_comparison", reference_bundle=bundle,
+            repo_root=tmp_path, reference_bundle_path=bundle_path)
+    kwargs["trace_plan"] = {k: False for k in kwargs["trace_plan"]}
+    with pytest.raises(ValueError):
+        assess_comparison_prelaunch(**kwargs)
+
+
 @pytest.mark.parametrize(
     "experiment_purpose",
     (
