@@ -36,6 +36,77 @@ def save(path, value):
     atomic_write(path, json_bytes(value))
 
 
+def bind_submission():
+    """Bind the observed scheduler identity, not an assumed title-derived slug."""
+    from .server_control import BoundRun, LocalServerControlStore, utc_timestamp
+    receipt_path = ROOT / "submission_receipt_v1.json"
+    binding_path = ROOT / "monitor_binding.json"
+    state_path = RECORDS / "monitor/control_state.json"
+    if any(path.exists() for path in (receipt_path, binding_path, state_path)):
+        raise FileExistsError("Never reset an existing diagnostic receipt or event store")
+    push = load(RECORDS / "kernel_push.json")
+    response = json.loads(push["response_text"])
+    status = load(RECORDS / "confirmed_status.json")
+    release_path = ROOT / "release.json"
+    release = load(release_path)
+    metadata_path = RECORDS / "remote_metadata/kernel-metadata.json"
+    metadata = load(metadata_path)
+    package = REPO_ROOT / BASE / "kaggle_diagnostic"
+    expected = load(package / "kernel-metadata.json")
+    kernel = response["ref"].removeprefix("/code/")
+    if (push["status"] != "PUSH_RETURNED" or response.get("error") is not None
+        or response["versionNumber"] != 1 or not kernel.startswith("kaseichou/")
+        or not isinstance(response["kernelId"], int) or response["kernelId"] <= 0
+        or any(response.get(key) for key in ("invalidTags", "invalidDatasetSources",
+                   "invalidCompetitionSources", "invalidKernelSources", "invalidModelSources"))
+        or status["response"] != response
+        or (status["kernel"], status["kernel_id"], status["version"]) != (kernel, response["kernelId"], 1)
+        or (metadata["id"], metadata["id_no"], metadata["is_private"]) != (kernel, response["kernelId"], True)
+        or sorted(metadata["dataset_sources"]) != sorted(expected["dataset_sources"])
+        or metadata.get("kernel_sources", []) or metadata.get("competition_sources", [])):
+        raise ValueError("Confirmed private scheduler identity/mounts differ from push receipt")
+    remote_entry = metadata_path.parent / metadata["code_file"]
+    local_entry = package / "run.py"
+    if (remote_entry.read_text(encoding="utf-8") != local_entry.read_text(encoding="utf-8")
+        or file_digest(local_entry) != release["entry_sha256"]
+        or release["training_authorized"] is not False or release["run_id"] != RUN):
+        raise ValueError("Frozen NO_TRAIN entry/release differs")
+    old = load(REPO_ROOT / BASE / "audit_monitor_binding.json")
+    job = {"slot": "diagnostic", "kernel": kernel, "kernel_id": response["kernelId"],
+        "version": 1, "run_id": kernel + ":v1", "experiment_run_id": RUN, "closed": False,
+        "control_state": str(state_path), "output_directory": str(RECORDS), "audit_root": str(REMOTE)}
+    LocalServerControlStore(state_path).bind_run(BoundRun(
+        campaign_id="k1-relation-dependency-20260927", chain_id="diagnostic",
+        run_id=job["run_id"], attempt_id="v1", a_thread_id=old["controller_thread_id"],
+        b_thread_id=old["monitor_thread_id"], monitor_generation=1, remote_platform="kaggle2",
+        remote_job_identity={key: job[key] for key in ("kernel", "kernel_id", "version")},
+        release_identity=release["input_archive_sha256"],
+        reference_identity="reference-k1-v4-100k-s42-v5-recovered",
+        budget_reserved_native={"max_allocated_device_seconds": release["max_allocated_device_seconds"]},
+        decision_ref=f"{REL}/release.json"))
+    receipt = {"recorded_at": utc_timestamp(), "submission_confirmed": True, **job,
+        "requested_kernel": KERNEL, "logical_run_id": RUN,
+        "slug_alias_reason": "Kaggle generated the slug from the title; one physical v1 only",
+        "training_authorized": False, "reference_inference_reused": True,
+        "release_sha256": file_digest(release_path), "push_receipt_sha256": file_digest(RECORDS / "kernel_push.json"),
+        "remote_metadata_sha256": file_digest(metadata_path), "remote_entry_sha256": file_digest(remote_entry),
+        "entry_text_matches": True, "source_commit": release["model_source_commit"],
+        "helper_commit": release["helper_commit"], "source_archive_sha256": release["source_archive_sha256"],
+        "input_archive_sha256": release["input_archive_sha256"],
+        "returned_machine_shape": metadata.get("machine_shape"),
+        "status_observed_after_push": json.loads(status["status_text"])["status"],
+        "actual_device_pending": True}
+    binding = {key: old[key] for key in ("format", "owner", "working_directory", "python", "credential_file",
+        "credential_owner", "controller_thread_id", "monitor_thread_id", "healthy_action", "terminal_action")}
+    binding.update(closed=False, jobs=[job], experiment_purpose="NO_TRAIN", automatic_training_retry=False,
+        source_commit=release["model_source_commit"], source_archive_sha256=release["source_archive_sha256"],
+        acceptance_script=str(REPO_ROOT / BASE / "diagnose.py"), acceptance_operation="accept-analyze",
+        helper_commit=release["helper_commit"])
+    save(receipt_path, receipt)
+    save(binding_path, binding)
+    return {"receipt": str(receipt_path), "binding": str(binding_path), "job": job}
+
+
 def package_and_plan(destination):
     """Creates a new private input package; never submits or loads a model."""
     from .k1_relation_audit import accept_audit

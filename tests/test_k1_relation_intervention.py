@@ -122,3 +122,44 @@ def test_no_training_and_private_two_gpu_metadata():
     assert metadata["is_private"] is True
     assert not metadata["kernel_sources"] and not metadata["competition_sources"]
     assert all("full" not in item and "1m" not in item for item in metadata["dataset_sources"])
+
+
+def test_submission_binding_preserves_actual_and_logical_identity(tmp_path, monkeypatch):
+    from molgap import k1_relation_intervention_records as records
+    base = tmp_path / records.BASE
+    diagnostic = base / "diagnostic"
+    store = tmp_path / "records"
+    monkeypatch.setattr(records, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(records, "ROOT", diagnostic)
+    monkeypatch.setattr(records, "RECORDS", store)
+    monkeypatch.setattr(records, "REMOTE", store / "pcqm_k1_relation_diagnostic")
+    actual = "kaseichou/title-derived-diagnostic"
+    response = {"ref": "/code/"+actual, "kernelId": 123, "versionNumber": 1, "error": None}
+    metadata = {"id": actual, "id_no": 123, "is_private": True,
+                "dataset_sources": ["kaseichou/fixed-data"], "code_file": "remote.py"}
+    package = base / "kaggle_diagnostic"
+    package.mkdir(parents=True)
+    entry = package / "run.py"
+    entry.write_text("# synthetic entry\n")
+    remote_entry = store / "remote_metadata/remote.py"
+    remote_entry.parent.mkdir(parents=True)
+    remote_entry.write_bytes(entry.read_bytes())
+    records.save(diagnostic / "release.json", {"run_id": records.RUN, "training_authorized": False,
+        "entry_sha256": records.file_digest(entry), "input_archive_sha256": "a"*64,
+        "model_source_commit": "b"*40, "helper_commit": "c"*40, "source_archive_sha256": "d"*64,
+        "max_allocated_device_seconds": 5400})
+    records.save(store / "kernel_push.json", {"status": "PUSH_RETURNED", "response_text": json.dumps(response)})
+    records.save(store / "confirmed_status.json", {"response": response, "kernel": actual,
+        "kernel_id": 123, "version": 1, "status_text": '{"status":"RUNNING"}'})
+    records.save(store / "remote_metadata/kernel-metadata.json", metadata)
+    records.save(package / "kernel-metadata.json", metadata)
+    records.save(base / "audit_monitor_binding.json", {"format": "molgap-server-multi-job-monitor-v1",
+        "owner": "server", "working_directory": str(tmp_path), "python": "python", "credential_file": "unread.json",
+        "credential_owner": "kaseichou", "controller_thread_id": "controller", "monitor_thread_id": "monitor",
+        "healthy_action": "SILENT", "terminal_action": "handoff"})
+    result = records.bind_submission()
+    assert result["job"]["run_id"] == actual+":v1"
+    assert result["job"]["experiment_run_id"] == records.RUN
+    assert records.load(Path(result["receipt"]))["logical_run_id"] == records.RUN
+    with pytest.raises(FileExistsError):
+        records.bind_submission()
