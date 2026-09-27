@@ -1,0 +1,32 @@
+{
+  "evidence_id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+  "format": "molgap-local-bias-terminal-acceptance-v1",
+  "mechanical_acceptance_ref": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/mechanical_acceptance.json",
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "strict_paired_endpoint",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_ready"
+  },
+  "paired_comparison_ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/paired_comparison_attempt_002.json",
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/decision_attempt_002.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a new prospectively frozen decision-relevant question"
+    ]
+  }
+}

@@ -82,6 +82,17 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-local-bias-rwse16-100k-s42-a2\"}",
+      "run_ids": [
+        "kaggle1-local-bias-rwse16-100k-s42-v2",
+        "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2"
+      ],
+      "trajectory_ids": [
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-t-100k-v4-reference\"}",
       "run_ids": [
         "kaggle2-gptrans-t-100k-v4-seed42",
@@ -98,6 +109,8 @@
     }
   ],
   "included_trajectory_ids": [
+    "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+    "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
     "TB-gptrans-noisy-nodes-100k-s42",
     "TB-gptrans-noisy-nodes-500k-s42",
     "TB-gptrans-noisy-pair-norm-100k-s42",
@@ -113,5 +126,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 14
+  "trace_count": 16
 }

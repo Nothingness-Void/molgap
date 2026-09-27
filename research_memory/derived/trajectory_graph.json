@@ -326,6 +326,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-noisy-nodes-100k-s42",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "parent_trajectory"
@@ -672,6 +682,26 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
       "type": "prior_evidence"
     },
@@ -842,6 +872,26 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
       "type": "reference_used"
     },
@@ -1002,6 +1052,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-local-selection-probe-20260925",
       "type": "evidence"
     },
@@ -1147,6 +1205,22 @@
     },
     {
       "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
       "type": "trajectory"
     },
     {

@@ -1,0 +1,38 @@
+[{"stream_name":"stdout","time":4.371188323,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 63.1/63.1 kB 2.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":4.519157669,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 1.1/1.1 MB 20.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":4.554739056,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 78.8/78.8 kB 3.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":10.572636195,"data":"GPU allocation: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stderr","time":47.451713631,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":47.451804514,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 131, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":47.451947116,"data":"    main()\n"}
+,{"stream_name":"stderr","time":47.451955021,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 112, in main\n"}
+,{"stream_name":"stderr","time":47.452204158,"data":"    worker(mode, root)\n"}
+,{"stream_name":"stderr","time":47.452216067,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 75, in worker\n"}
+,{"stream_name":"stderr","time":47.452221991,"data":"    result = run_preflight(\n"}
+,{"stream_name":"stderr","time":47.452231719,"data":"             ^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":47.452272186,"data":"  File \"/kaggle/temp/molgap-source/src/molgap/pcqm_gptrans_v4.py\", line 664, in run_preflight\n"}
+,{"stream_name":"stderr","time":47.452474272,"data":"    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)\n"}
+,{"stream_name":"stderr","time":47.452507322,"data":"                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":47.452514576,"data":"  File \"/kaggle/temp/molgap-source/src/molgap/pcqm_gptrans_v4.py\", line 479, in _make_training_state\n"}
+,{"stream_name":"stderr","time":47.452769614,"data":"    _verify_model_identity(model, variant)\n"}
+,{"stream_name":"stderr","time":47.45278687,"data":"  File \"/kaggle/temp/molgap-source/src/molgap/pcqm_gptrans_v4.py\", line 410, in _verify_model_identity\n"}
+,{"stream_name":"stderr","time":47.452997448,"data":"    raise RuntimeError(\n"}
+,{"stream_name":"stderr","time":47.453012301,"data":"RuntimeError: Frozen GPTrans-T seed-42 initialization changed: observed=96eefae91355e36eff3566e063bee88bceae903ed8cae56e8269cc984b156cc9 expected=9e2e58fa54f68c061f47637a9c406dd4c849ae9b0d49623881f63bb94655db0b\n"}
+,{"stream_name":"stderr","time":57.685783696,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":57.685847953,"data":"  File \"/kaggle/src/script.py\", line 44, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":57.685947506,"data":"    runpy.run_path(\n"}
+,{"stream_name":"stderr","time":57.685959272,"data":"  File \"\u003cfrozen runpy\u003e\", line 287, in run_path\n"}
+,{"stream_name":"stderr","time":57.685965218,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":57.685970615,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":57.685975408,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 131, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":57.686142011,"data":"    main()\n"}
+,{"stream_name":"stderr","time":57.686170633,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 127, in main\n"}
+,{"stream_name":"stderr","time":57.68640161,"data":"    raise RuntimeError(f\"Pair {phase} workers failed: {codes}\")\n"}
+,{"stream_name":"stderr","time":57.686426599,"data":"RuntimeError: Pair preflight workers failed: [0, 1]\n"}
+,{"stream_name":"stderr","time":60.272984317,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":60.2730161,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":60.503714774,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":60.503742536,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":61.202358298,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":62.48223509,"data":"[NbConvertApp] Writing 281739 bytes to __results__.html\n"}
+]
