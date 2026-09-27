@@ -1,0 +1,6 @@
+interface:
+  display_name: "MolGap Experiment Reuse"
+  short_description: "Reuse MolGap runners, evidence and platform plumbing"
+  default_prompt: "Use $molgap-experiment-reuse to identify existing MolGap components and implement only the missing experiment behavior."
+policy:
+  allow_implicit_invocation: true

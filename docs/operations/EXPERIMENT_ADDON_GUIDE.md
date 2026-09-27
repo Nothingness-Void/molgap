@@ -4,6 +4,11 @@ This is the short handoff for extending the shared experiment core. It defines
 ownership boundaries; the linked contracts remain authoritative for field-level
 schemas and safety checks.
 
+Before adding plumbing, use the repository's
+[experiment reuse skill](../../.agents/skills/molgap-experiment-reuse/SKILL.md).
+It routes to existing components and records only the missing behavior; the
+contracts below remain authoritative. It does not add a second execution core.
+
 ## Shared Core
 
 Reuse these modules instead of copying their logic into an experiment script:

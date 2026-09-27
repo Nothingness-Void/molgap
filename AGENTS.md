@@ -34,6 +34,9 @@ handoff rules; this root file stays a short navigation and safety protocol.
 - **Shared experiment CLI**: `molgap.experiment_cli` is a local identity,
   packaging, diagnostic, receipt, and terminal entry point only. Never add a
   platform submitter; use the owning platform adapter and workload skill.
+- **Experiment plumbing**: use `.agents/skills/molgap-experiment-reuse/SKILL.md`
+  before writing a runner, diagnostic, packaging or RML adapter. If absent from
+  the skill picker, read that file directly; do not recreate an existing wheel.
 - **Don't re-run completed experiments** — cite the experiment's own decision
   record under `experiments/`.
 - **Test scripts locally before delivering.**

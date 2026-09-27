@@ -6,6 +6,8 @@ a human identify an artifact's role and scope without opening it.
 ## General rules
 
 - Use lowercase ASCII `snake_case` for directories and files.
+- Provider-defined skill folders under `.agents/skills/` use the required
+  lowercase hyphenated skill name; their reusable Python stays in `src/molgap/`.
 - Name a directory by its role, model composition, or experimental question.
 - Do not use dates or calendar phases in active directory names.
 - Do not use ambiguous words such as `new`, `latest`, `final`, `best`, `tmp`,
