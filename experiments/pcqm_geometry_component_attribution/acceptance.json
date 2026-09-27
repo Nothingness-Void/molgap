@@ -1,0 +1,112 @@
+{
+  "accepted": true,
+  "checks": {
+    "accepted_endpoint_recomputed": true,
+    "all_predictions_finite": true,
+    "hash_bound_predictions": true,
+    "protected_roles_sealed": true,
+    "source_idx_and_target_alignment": true,
+    "training_or_model_inference_executed": false
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "cost_event_id": "cost-TB-pcqm-geometry-component-attribution-local-audit",
+      "evidence_ref": "experiments/pcqm_geometry_component_attribution/acceptance.json",
+      "hardware": "LOCAL_CPU_UNSPECIFIED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.4510666666562126e-05
+        }
+      },
+      "platform": "local",
+      "run_id": "local-geometry-component-attribution-20260928",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+    }
+  ],
+  "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+  "format": "molgap-geometry-component-diagnostic-acceptance-v1",
+  "outcome": {
+    "artifact_status": "hash_verified_existing_prediction_diagnostic",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "legacy_pair_endpoint_recomputed_strict_component_comparison_not_available",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified"
+  },
+  "role_use": {
+    "fixed50k_development": "metric_computed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_component_attribution/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-prediction_input",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-component-attribution-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_component_attribution/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-labels_read",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-component-attribution-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "PCQM4Mv2 OGB fixed 500K/50K cache",
+      "evidence_ref": "experiments/pcqm_geometry_component_attribution/acceptance.json",
+      "role_event_id": "role-TB-pcqm-geometry-component-attribution-20260928-dev-metric_computed",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20",
+      "run_id": "local-geometry-component-attribution-20260928",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+    }
+  ],
+  "run_id": "local-geometry-component-attribution-20260928",
+  "source_evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_geometry_component_attribution/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "A separately frozen strict component contract with a qualified 2D comparator, accepted executable cache, budget, preflight, and replay-complete per-arm evidence."
+    ]
+  },
+  "wall_measurement_scope": "analysis phase inside Python, excluding process imports and discovery"
+}

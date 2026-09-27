@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-e76448388438a5ff4aa233a82b8dc15e8c54fce2eff4f817038edf68ab0d82ce",
+  "finalized_at": "2026-09-27T16:56:25.605090+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_distance_angle_500k/results/baseline_canonical_trace.json": "517d5b354d0f1bc70551aef766168a18c31c29930289859c1cc1dd0054c89cfd",
+    "experiments/pcqm_distance_angle_500k/results/candidate_canonical_trace.json": "4876243811d5c073d2e6667182643fb6d99c9667e966ae44ff742aed8b21cefc",
+    "experiments/pcqm_distance_angle_500k/results/local_acceptance_20260923.json": "7fe203f663ce7a4ce850e434ed9eb63e99284c8c1d13dfc86dc1f39674149a3f",
+    "experiments/pcqm_distance_angle_500k/v5_evidence.json": "eac13afbc4877a4ce8ef66a2dc6ffa389407e3f9de67953bfffa7d4f88d3fef6",
+    "experiments/pcqm_geometry_component_attribution/acceptance.json": "4654e1900ae27a14b7a494a5bfe20210efef03a15670bef50b5a6bbcb788ff70",
+    "experiments/pcqm_geometry_component_attribution/analysis.json": "199f024fb0437e8d897ff0f27ba345d38dc3407c1225d0e21543c2431fae530c",
+    "experiments/pcqm_geometry_component_attribution/decision.md": "ade707dd44a8e3f67965296bea1a340596cd2d5ea05f95e9edd8a5145c00873f",
+    "experiments/pcqm_geometry_component_attribution/protocol.md": "272b50a6692ae94fefb5ac98196508e74beb524585818e430dfc42d3b594ec8b"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-pcqm-geometry-component-attribution-local-audit.json": "ff9d23f70a18409ca543797fed6526fc39f86756b0296105b5c6d69cc49ac01f",
+    "prospective_snapshot.json": "b0b79e44ec4158656aac3b7e859fc16189e4cbeacf16853b41f8da50433e60ad",
+    "roles/role-TB-pcqm-geometry-component-attribution-20260928-dev-labels_read.json": "8e2d8f732f0e4138c6bb8fae8ab30d2d0289141f2051b5fe6eab0ba226ee8e51",
+    "roles/role-TB-pcqm-geometry-component-attribution-20260928-dev-metric_computed.json": "fdce86a5cc288f1b784156cc5d28b597c1f3b55e9c0d6cc49e302d6fc6e77421",
+    "roles/role-TB-pcqm-geometry-component-attribution-20260928-dev-prediction_input.json": "cab83fb4c222ed2ce8904a4abdefb3294eb15dc4e747573173f5b1deb331b5da",
+    "terminal_input.json": "93b56c0e1c935a8f0da9aceb635b37195ab3cce82da88841e84c3c44af97b2e1",
+    "trajectory.json": "13fbae534ad0ad1082339f9724dccfe767fd470341ed366e842b806c4fcc6a6d",
+    "v5_evidence.json": "9152533012b30cc154071c55a3f588b60c77c4e2cf26ea3784e7aa16ff8e2d06"
+  },
+  "replacements": {
+    "costs/cost-TB-pcqm-geometry-component-attribution-local-audit.json": "experiments/pcqm_geometry_component_attribution/rml/costs/cost-TB-pcqm-geometry-component-attribution-local-audit.json",
+    "trajectory.json": "experiments/pcqm_geometry_component_attribution/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "e76448388438a5ff4aa233a82b8dc15e8c54fce2eff4f817038edf68ab0d82ce",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928"
+}

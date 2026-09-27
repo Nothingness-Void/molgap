@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 12,
-  "event_count": 62,
+  "event_count": 63,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 51,
-  "not_applicable_event_count": 28,
+  "measurement_missing_event_count": 52,
+  "not_applicable_event_count": 29,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -19,7 +19,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "LOCAL_CPU_UNSPECIFIED:device_hours": {
         "estimated": {
@@ -30,7 +30,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:queue_hours": {
@@ -42,7 +42,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:wall_hours": {
@@ -51,8 +51,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.007305555555555556
+          "known_records": 2,
+          "known_total": 0.0073200662222221175
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -949,7 +949,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "device_hours": {
         "estimated": {
@@ -960,7 +960,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -972,7 +972,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -981,8 +981,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.007305555555555556
+          "known_records": 2,
+          "known_total": 0.0073200662222221175
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -3511,6 +3511,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-pcqm-geometry-component-attribution-20260928": {
+      "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "LOCAL_CPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 1.4510666666562126e-05
         },
         "not_applicable_records": 0,
         "unknown_records": 0

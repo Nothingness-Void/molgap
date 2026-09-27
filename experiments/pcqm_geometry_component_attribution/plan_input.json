@@ -1,0 +1,95 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "pcqm-geometry-component-attribution",
+    "question": "What can accepted distance-plus-angle 500K predictions establish about per-row benefit and strict reference readiness before component training?",
+    "hypothesis": {
+      "hypothesis_id": "H-pcqm-geometry-component-attribution-20260928",
+      "observed_deficiency": "The accepted combined geometry arm gained 0.0035180449 eV over its matched 2D arm, but the individual distance and angle contributions and strict V5 replay qualification remain unresolved.",
+      "supporting_evidence_ids": ["pcqm-distance-angle-triangle-500k-20260911"],
+      "alternative_explanations": [
+        "A small gain is spread across most development rows.",
+        "The gain is concentrated in high-error or specific target-gap rows.",
+        "Additional parameters, random seed, or optimization rather than geometry semantics account for part of the gain."
+      ],
+      "changed_mechanism": "No model change; hash-gated analysis of the already accepted 2D and combined-geometry development predictions and replay metadata.",
+      "cheapest_falsifier": "Read only two retained 50K prediction payloads and canonical trace metadata; recompute row-aligned error strata and inspect missing V5 replay fields.",
+      "related_closed_family_ids": ["distance-angle-triangle-500k", "pcqm-geometry-transfer-500k"],
+      "expected_native_cost_ref": "cost-TB-pcqm-geometry-component-attribution-local-audit",
+      "decision_changed_if_positive": "Freeze a separate bounded distance-only and angle-only experiment only if it can answer a decision-relevant attribution question with executable cache and complete per-arm replay.",
+      "decision_changed_if_negative": "Close this question NO_TRAIN and retain the accepted combined geometry nomination without a component claim.",
+      "historical_unknowns": [
+        "The retained pair is one training seed on an already consumed development role.",
+        "No per-molecule geometry features are retained in the local accepted metadata.",
+        "The historical canonical traces omit observed optimizer-step, sample-presentation, and checkpoint identities."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "e76a6321",
+      "contract_refs": [
+        "experiments/pcqm_geometry_component_attribution/protocol.md",
+        "experiments/pcqm_distance_angle_500k/protocol.md"
+      ],
+      "reference_ids": ["pcqm-distance-angle-triangle-500k-20260911"],
+      "parent_trajectory_ids": ["TB-distance-angle-triangle-500k-20260911"],
+      "prior_evidence_ids": ["pcqm-distance-angle-triangle-500k-20260911"],
+      "role_snapshot_refs": [
+        "experiments/pcqm_distance_angle_500k/roles/ogb_edge_state_structural_gps9_dev_selection.json",
+        "experiments/pcqm_distance_angle_500k/roles/ogb_distance_angle_triangle_edge_state_gps9_dev_selection.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_geometry_component_attribution/protocol.md",
+      "source_config_identity": "272b50a6692ae94fefb5ac98196508e74beb524585818e430dfc42d3b594ec8b"
+    },
+    "actions": [{
+      "action_id": "A001",
+      "type": "local_existing_prediction_diagnostic",
+      "source_commit": "e76a6321",
+      "run_ids": ["local-geometry-component-attribution-20260928"],
+      "attempt_ids": ["attempt-001"],
+      "evidence_refs": [],
+      "cost_event_ids": ["cost-TB-pcqm-geometry-component-attribution-local-audit"]
+    }],
+    "result": {"evidence_ids": [], "evidence_refs": []},
+    "decision": {
+      "decision_ref": "experiments/pcqm_geometry_component_attribution/decision_plan.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": ["one_hash_gated_local_diagnostic"],
+      "reopen_conditions": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": ["RUN_DIAGNOSTIC", "NO_TRAIN"],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-geometry-component-attribution-diagnostic",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_geometry_component_attribution/protocol.md",
+    "role_snapshot_refs": [],
+    "state_timestamp": "2026-09-27T16:49:00+00:00",
+    "source_commit": "e76a6321"
+  },
+  "costs": [{
+    "schema": "molgap-cost-event-v1",
+    "cost_event_id": "cost-TB-pcqm-geometry-component-attribution-local-audit",
+    "trajectory_id": "TB-pcqm-geometry-component-attribution-20260928",
+    "action_id": "A001",
+    "run_id": "local-geometry-component-attribution-20260928",
+    "attempt_id": "attempt-001",
+    "category": "audit",
+    "platform": "local",
+    "hardware": "LOCAL_CPU_UNSPECIFIED",
+    "evidence_ref": "experiments/pcqm_geometry_component_attribution/protocol.md",
+    "measurement": {
+      "device_hours": {"value": null, "status": "not_applicable"},
+      "cpu_hours": {"value": null, "status": "measurement_missing"},
+      "wall_hours": {"value": null, "status": "measurement_missing"},
+      "queue_hours": {"value": null, "status": "not_applicable"}
+    }
+  }]
+}

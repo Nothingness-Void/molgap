@@ -1,0 +1,52 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_geometry_component_attribution/analysis.json",
+      "name": "diagnostic_analysis",
+      "sha256": "199f024fb0437e8d897ff0f27ba345d38dc3407c1225d0e21543c2431fae530c"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_geometry_component_attribution/decision.md",
+      "name": "no_train_decision",
+      "sha256": "ade707dd44a8e3f67965296bea1a340596cd2d5ea05f95e9edd8a5145c00873f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_geometry_component_attribution/protocol.md",
+      "experiments/pcqm_geometry_component_attribution/analysis.json",
+      "experiments/pcqm_geometry_component_attribution/decision.md",
+      "experiments/pcqm_geometry_component_attribution/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-geometry-component-attribution-no-train-20260928",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pcqm-geometry-component-attribution-diagnostic-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local SHA-gated accepted-prediction and canonical-trace diagnostic; no model execution"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_existing_prediction_diagnostic",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "legacy_pair_endpoint_recomputed_strict_component_comparison_not_available",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified"
+  },
+  "role_use": {
+    "fixed50k_development": "metric_computed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "accepted_existing_prediction_geometry_component_diagnostic",
+  "track": "B"
+}
