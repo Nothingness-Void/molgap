@@ -24,6 +24,8 @@ def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch
     fake = types.ModuleType("kaggle.api.kaggle_api_extended")
     fake.KaggleApi = FakeAPI
     monkeypatch.setitem(sys.modules, "kaggle.api.kaggle_api_extended", fake)
+    monkeypatch.setattr("molgap.k1_relation_study_monitor._latest_identity",
+        lambda api, kernel: {"kernel": kernel, "kernel_id": 123, "version": 1})
     monkeypatch.setenv("KAGGLE_USERNAME", "test-owner")
     monkeypatch.setenv("KAGGLE_KEY", "test-placeholder")
     credential = tmp_path / "account.json"
@@ -35,7 +37,7 @@ def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch
             attempt_id="v1", a_thread_id="A", b_thread_id="B", monitor_generation=1,
             remote_platform="kaggle2", remote_job_identity={"kernel": slot}, release_identity="frozen")
         LocalServerControlStore(path).bind_run(run)
-        jobs.append({"slot": slot, "kernel": f"kaseichou/{slot}", "version": 1, "control_state": str(path)})
+        jobs.append({"slot": slot, "kernel": f"kaseichou/{slot}", "kernel_id": 123, "version": 1, "control_state": str(path)})
     binding = tmp_path / "binding.json"
     binding.write_text(json.dumps({"owner": "server", "credential_file": str(credential), "jobs": jobs}))
     assert not tick(binding)["events"]
@@ -46,6 +48,15 @@ def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch
     LocalServerControlStore(Path(jobs[0]["control_state"])).deliver_to_a(first[0]["event_id"])
     assert not tick(binding)["events"]
     assert calls[-1] == "kaseichou/rrwp/1"
+
+    # An unrelated newer version must never inherit this job's terminal status.
+    monkeypatch.setattr("molgap.k1_relation_study_monitor._latest_identity",
+        lambda api, kernel: {"kernel": kernel, "kernel_id": 123, "version": 2})
+    before = len(calls)
+    observed = tick(binding)
+    assert not observed["events"]
+    assert observed["observations"][0]["status"] == "UNKNOWN"
+    assert len(calls) == before
 
 
 def test_closed_binding_does_not_read_credentials(tmp_path):

@@ -10,6 +10,18 @@ from pathlib import Path
 from .server_control import LocalServerControlStore
 
 
+def _latest_identity(api, kernel):
+    from kaggle.api.kaggle_api_extended import ApiGetKernelRequest
+
+    owner, slug = kernel.split("/", 1)
+    request = ApiGetKernelRequest()
+    request.user_name, request.kernel_slug = owner, slug
+    with api.build_kaggle_client() as client:
+        metadata = client.kernels.kernels_api_client.get_kernel(request).metadata
+    return {"kernel": metadata.ref, "kernel_id": metadata.id,
+            "version": metadata.current_version_number}
+
+
 def tick(binding_path):
     binding = json.loads(Path(binding_path).read_text(encoding="utf-8"))
     if binding.get("owner") != "server" or binding.get("closed") is True:
@@ -42,6 +54,12 @@ def tick(binding_path):
             continue
         detail = {"kernel": job["kernel"], "version": job["version"]}
         try:
+            # The SDK accepts /version but its status endpoint ignores it.
+            # Qualify the latest physical version before trusting its status.
+            identity = _latest_identity(api, job["kernel"])
+            detail["resolved_latest_identity"] = identity
+            if identity != {key: job[key] for key in ("kernel", "kernel_id", "version")}:
+                raise RuntimeError("Latest remote version is not the bound job")
             response = api.kernels_status(f"{job['kernel']}/{job['version']}")
             status = getattr(response, "status", response)
             status = getattr(status, "name", str(status)).split(".")[-1].upper()
