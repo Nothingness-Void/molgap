@@ -1,17 +1,19 @@
 # Operational status
 
-2026-09-27: private Kaggle2 version 2 is confirmed submitted and QUEUED. It is
+2026-09-28: private Kaggle2 version 3 is confirmed submitted and QUEUED. It is
 the sole active physical attempt. No training result or replay readiness exists.
 
 ## Active attempt
 
-- Kernel: `kaseichou/molgap-k1-joint-atom-s42`, numeric `136108187`, version 2.
-- Source: `00bb679635eaf9fca208c6612f920afbc923d71b`; private source dataset v2
+- Kernel: `kaseichou/molgap-k1-joint-atom-s42`, numeric `136108187`, version 3.
+- Source: `bbc391d65136dd83558e755eaee1a433aa2d3605`; the private source dataset
   is ready. All six mounted source files were downloaded and hash-verified.
+  Only attempt identity and local cancellation/recording adapters changed;
+  the training recipe, encoder and target-transform bytes are unchanged.
 - Both actual-reference-bound plans plus the separate `NO_TRAIN` audit are
-  frozen in [attempts/v2](attempts/v2/source_config.json); RML validate,
+  frozen in [attempts/v3](attempts/v3/source_config.json); RML validate,
   rebuild and frozen-check passed before release.
-- The [v2 receipt](submission_receipt_v2.json) verifies actual version, ID,
+- The [v3 receipt](submission_receipt_v3.json) verifies actual version, ID,
   private visibility, source and data mounts, requested T4 and returned code.
   Device names and model preflight remain pending while the task is queued.
 - The existing Luna B and original 30-minute heartbeat are ACTIVE through
@@ -19,10 +21,24 @@ the sole active physical attempt. No training result or replay readiness exists.
   terminal or actionable fault is handed to A once, without overriding A's
   model. The monitor checks actual latest version/ID because the installed SDK
   ignores the version suffix on its status endpoint.
+  `CANCEL_ACKNOWLEDGED` now becomes an immediate idempotent `CANCELLED` event;
+  the raw API status is retained and unacknowledged cancellation stays UNKNOWN.
 - Retained output directory:
-  `platforms/_records/kaggle/training/k1_joint_atom_s42_v2/`.
-- Repair checks: 69 targeted tests passed; five additional monitor/receipt
-  tests passed. No local model execution or protected-role access occurred.
+  `platforms/_records/kaggle/training/k1_joint_atom_s42_v3/`.
+- Retry checks: 17 targeted static/synthetic tests passed. Source AST/inventory,
+  actual-reference release gates and RML validate/rebuild/frozen-check passed.
+  No local model execution or protected-role access occurred.
+
+## Preserved cancelled attempt
+
+Version 2 was independently confirmed `CANCEL_ACKNOWLEDGED`, with no exposed
+outputs, logs or reason. Its two training plans and separate audit plan were
+closed as `INFRASTRUCTURE_ONLY`; worker execution, role telemetry and native
+cost were left unavailable. The controller event was finalized `NEXT_RUN_BOUND`
+only after the actual v3 receipt. The user authorized one resubmission, not a
+new scientific recipe. Authority: [cancellation decision](cancellation_v2/decision.md).
+The original [v2 receipt](submission_receipt_v2.json), prospective files and
+source package remain preserved. No v2 replay readiness is claimed.
 
 ## Preserved failed attempt
 

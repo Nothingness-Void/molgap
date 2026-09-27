@@ -10,27 +10,27 @@
   "healthy_action": "SILENT",
   "jobs": [
     {
-      "candidate_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v2\\pcqm_k1_joint_atom_reconstruction",
+      "candidate_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v3\\pcqm_k1_joint_atom_reconstruction",
       "closed": false,
-      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v2\\monitor\\control_state.json",
-      "embedded_trace_run_id": "kaseichou/molgap-k1-joint-atom-s42:v2",
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v3\\monitor\\control_state.json",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
       "kernel": "kaseichou/molgap-k1-joint-atom-s42",
       "kernel_id": 136108187,
-      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v2",
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v3",
       "recipes": [
         "k1_corrupt_gap",
         "k1_corrupt_gap_atom_aux"
       ],
-      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v2",
+      "run_id": "kaseichou/molgap-k1-joint-atom-s42:v3",
       "slot": "dual",
-      "version": 2
+      "version": 3
     }
   ],
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "owner": "server",
   "python": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
-  "source_archive_sha256": "ecc088195ad1e14122690c2cbad764b5a3d61f47d1dce98367dd7a344ce3defc",
-  "source_commit": "00bb679635eaf9fca208c6612f920afbc923d71b",
+  "source_archive_sha256": "778a2e3cef037fe340a186ff546f54d9bbf6abe46f3137250d93a678a590387d",
+  "source_commit": "bbc391d65136dd83558e755eaee1a433aa2d3605",
   "terminal_action": "one idempotent handoff to existing A; no model/thinking override",
   "working_directory": "C:\\Users\\Adminn\\Documents\\molgap"
 }
