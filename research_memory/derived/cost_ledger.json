@@ -1,6 +1,6 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 2,
+  "estimated_event_count": 1,
   "event_count": 45,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
@@ -71,7 +71,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "Tesla_T4_16GB:device_hours": {
         "estimated": {
@@ -79,8 +79,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.21137076299666668
+          "known_records": 2,
+          "known_total": 0.6171500686494444
         },
         "not_applicable_records": 0,
         "unknown_records": 2
@@ -95,7 +95,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "Tesla_T4_16GB:wall_hours": {
         "estimated": {
@@ -103,8 +103,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 0.17432857990333336
+          "known_records": 4,
+          "known_total": 0.37721823272972227
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -299,54 +299,6 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.13777777777777778
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
-      },
-      "actual_GPU_pending:cpu_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "actual_GPU_pending:device_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 1.0
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
-      },
-      "actual_GPU_pending:queue_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "actual_GPU_pending:wall_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 0.5
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -1101,7 +1053,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 22
+        "unknown_records": 23
       },
       "device_hours": {
         "estimated": {
@@ -1109,8 +1061,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 15,
-          "known_total": 20.08007166948194
+          "known_records": 16,
+          "known_total": 20.485850975134717
         },
         "not_applicable_records": 0,
         "unknown_records": 7
@@ -1125,7 +1077,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 22
+        "unknown_records": 23
       },
       "wall_hours": {
         "estimated": {
@@ -1133,61 +1085,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 4,
-          "known_total": 0.18227857990333338
+          "known_records": 5,
+          "known_total": 0.3851682327297223
         },
         "not_applicable_records": 0,
         "unknown_records": 18
-      }
-    },
-    "actual_GPU_pending": {
-      "cpu_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "device_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 1.0
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
-      },
-      "queue_hours": {
-        "estimated": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 1
-      },
-      "wall_hours": {
-        "estimated": {
-          "known_records": 1,
-          "known_total": 0.5
-        },
-        "measured": {
-          "known_records": 0,
-          "known_total": null
-        },
-        "not_applicable_records": 0,
-        "unknown_records": 0
       }
     },
     "local-cpu": {
@@ -2741,7 +2643,7 @@
       }
     },
     "TC-k1-relation-frozen-intervention-s42": {
-      "actual_GPU_pending:cpu_hours": {
+      "Tesla_T4_16GB:cpu_hours": {
         "estimated": {
           "known_records": 0,
           "known_total": null
@@ -2753,19 +2655,19 @@
         "not_applicable_records": 0,
         "unknown_records": 1
       },
-      "actual_GPU_pending:device_hours": {
+      "Tesla_T4_16GB:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 1.0
-        },
-        "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.40577930565277776
         },
         "not_applicable_records": 0,
         "unknown_records": 0
       },
-      "actual_GPU_pending:queue_hours": {
+      "Tesla_T4_16GB:queue_hours": {
         "estimated": {
           "known_records": 0,
           "known_total": null
@@ -2777,14 +2679,14 @@
         "not_applicable_records": 0,
         "unknown_records": 1
       },
-      "actual_GPU_pending:wall_hours": {
+      "Tesla_T4_16GB:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.5
-        },
-        "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.20288965282638888
         },
         "not_applicable_records": 0,
         "unknown_records": 0

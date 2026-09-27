@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7a6ddef55dbdc9b4616e1e551a29a76ef08ca33ff9af540c5f9a32f1e62005e0",
+  "source_digest": "5c0375e95e5d4a42f7fd97d49ea7b717c4ba4bc0b878038e9004e830fab231a5",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -464,17 +464,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md",
       "family_id": "k1-frozen-relation-dependency",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-relation-resolution-post100k-audit-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-relation-frozen-intervention-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
     },

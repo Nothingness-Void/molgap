@@ -1,0 +1,2710 @@
+{
+  "decision_scope": "checkpoint dependence/interference only; no retrained ablation, no new candidate promotion",
+  "format": "molgap-relation-intervention-analysis-v1",
+  "model_inference_executed_locally": false,
+  "models": {
+    "neural_atom_k1_receiver_pair": {
+      "original_100k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.18006932393968106,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04056125753879547,
+                  "candidate_win_fraction": 0.3626,
+                  "losing_margin_mean_eV": 0.10036049836070825,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03948446639013291,
+                    0.041662902669429784
+                  ],
+                  "winning_margin_mean_eV": 0.0645352875798431
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.03869568611621857,
+                  "candidate_win_fraction": 0.38634,
+                  "losing_margin_mean_eV": 0.11645119122536052,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03741509592914581,
+                    0.03997207649457454
+                  ],
+                  "winning_margin_mean_eV": 0.08481066390002633
+                }
+              },
+              "full": {
+                "mae_eV": 0.1395080664008856,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0018655714225769044,
+                  "candidate_win_fraction": 0.51332,
+                  "losing_margin_mean_eV": 0.0642836341295911,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0027637538375854492,
+                    -0.0010377255692481996
+                  ],
+                  "winning_margin_mean_eV": 0.06458180176257752
+                }
+              },
+              "half": {
+                "mae_eV": 0.19642113992631435,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.05691307352542877,
+                  "candidate_win_fraction": 0.31712,
+                  "losing_margin_mean_eV": 0.12390656888680472,
+                  "paired_row_bootstrap_95_eV": [
+                    0.055773654903411865,
+                    0.058106181087970735
+                  ],
+                  "winning_margin_mean_eV": 0.08734940790865424
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.05504750210285187,
+                  "candidate_win_fraction": 0.33606,
+                  "losing_margin_mean_eV": 0.1328609564485552,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05368719105565548,
+                    0.056387292420029635
+                  ],
+                  "winning_margin_mean_eV": 0.09868535773850463
+                }
+              },
+              "off": {
+                "mae_eV": 0.33048764990746976,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.19097958350658417,
+                  "candidate_win_fraction": 0.20142,
+                  "losing_margin_mean_eV": 0.26913873061215676,
+                  "paired_row_bootstrap_95_eV": [
+                    0.18891357814764978,
+                    0.1932460168931484
+                  ],
+                  "winning_margin_mean_eV": 0.11890191632247045
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.18911401208400727,
+                  "candidate_win_fraction": 0.20808,
+                  "losing_margin_mean_eV": 0.2716506105840224,
+                  "paired_row_bootstrap_95_eV": [
+                    0.18694213677048685,
+                    0.191374445607543
+                  ],
+                  "winning_margin_mean_eV": 0.12500739835492009
+                }
+              }
+            },
+            "k1_mae_eV": 0.1413736378234625,
+            "mean_descriptors": {
+              "atom_count": 13.9378,
+              "bond_count": 14.462,
+              "conjugated_bond_fraction": 0.5021915429714322,
+              "ring_atom_fraction": 0.5450672379639745,
+              "rwse_mean": 0.1378407478104532
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.343244540565014,
+              "receiver_dispersion_rms": 0.263895206095539,
+              "update_rms": 0.4605755927991867,
+              "update_to_hidden_rms": 0.5227926931995154
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.19432661038961976,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.06465102870879708,
+                  "candidate_win_fraction": 0.300914876690533,
+                  "losing_margin_mean_eV": 0.13041776949447045,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06192963249276058,
+                    0.06724535372632785
+                  ],
+                  "winning_margin_mean_eV": 0.08813819393604226
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.062011616231907714,
+                  "candidate_win_fraction": 0.3283611774065235,
+                  "losing_margin_mean_eV": 0.13977289058627693,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0591030895176537,
+                    0.06497742446908518
+                  ],
+                  "winning_margin_mean_eV": 0.09704339497021514
+                }
+              },
+              "full": {
+                "mae_eV": 0.1296755816808227,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.002639412476889368,
+                  "candidate_win_fraction": 0.5204852824184566,
+                  "losing_margin_mean_eV": 0.06255983426233684,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.004405874088584381,
+                    -0.0008528482669767357
+                  ],
+                  "winning_margin_mean_eV": 0.06270642962945888
+                }
+              },
+              "half": {
+                "mae_eV": 0.19392198949827025,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.06424640781744757,
+                  "candidate_win_fraction": 0.29146778042959426,
+                  "losing_margin_mean_eV": 0.12828999613042463,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06174539506625067,
+                    0.0666709763895166
+                  ],
+                  "winning_margin_mean_eV": 0.09143785241113023
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.061606995340558204,
+                  "candidate_win_fraction": 0.3157319013524264,
+                  "losing_margin_mean_eV": 0.13662673945067286,
+                  "paired_row_bootstrap_95_eV": [
+                    0.058835096816719765,
+                    0.06442921564409726
+                  ],
+                  "winning_margin_mean_eV": 0.10097910205210288
+                }
+              },
+              "off": {
+                "mae_eV": 0.33060253600315054,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.20092695432232785,
+                  "candidate_win_fraction": 0.18685361972951472,
+                  "losing_margin_mean_eV": 0.27400433668752633,
+                  "paired_row_bootstrap_95_eV": [
+                    0.19624784740255577,
+                    0.20529125846904617
+                  ],
+                  "winning_margin_mean_eV": 0.11708994594389228
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.19828754184543848,
+                  "candidate_win_fraction": 0.19669848846459825,
+                  "losing_margin_mean_eV": 0.2774985681875238,
+                  "paired_row_bootstrap_95_eV": [
+                    0.19367553218013728,
+                    0.2029154243491525
+                  ],
+                  "winning_margin_mean_eV": 0.12520420274069144
+                }
+              }
+            },
+            "k1_mae_eV": 0.13231499415771206,
+            "mean_descriptors": {
+              "atom_count": 14.035700079554495,
+              "bond_count": 14.710719968178202,
+              "conjugated_bond_fraction": 0.8434134776286881,
+              "ring_atom_fraction": 0.6153010027949878,
+              "rwse_mean": 0.133668150792051
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.421904738295998,
+              "receiver_dispersion_rms": 0.288712043536704,
+              "update_rms": 0.47964253899098247,
+              "update_to_hidden_rms": 0.4876549613818396
+            },
+            "rows": 10056
+          },
+          "low_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.20457159049278134,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.012409863303316273,
+                  "candidate_win_fraction": 0.44029023480802176,
+                  "losing_margin_mean_eV": 0.06334099978332025,
+                  "paired_row_bootstrap_95_eV": [
+                    0.010589945952425942,
+                    0.014285524750048986
+                  ],
+                  "winning_margin_mean_eV": 0.052291786733440905
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.010311332018543826,
+                  "candidate_win_fraction": 0.46367026100977526,
+                  "losing_margin_mean_eV": 0.10042320965197427,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007175616851968293,
+                    0.013237922173960123
+                  ],
+                  "winning_margin_mean_eV": 0.0939215331770912
+                }
+              },
+              "full": {
+                "mae_eV": 0.1921617271894651,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0020985312847724476,
+                  "candidate_win_fraction": 0.5146629043635997,
+                  "losing_margin_mean_eV": 0.0838521701156895,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.004810847045432701,
+                    0.0008485941532265318
+                  ],
+                  "winning_margin_mean_eV": 0.08315170887330285
+                }
+              },
+              "half": {
+                "mae_eV": 0.26817773713059306,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.07601600994112799,
+                  "candidate_win_fraction": 0.30847525949813565,
+                  "losing_margin_mean_eV": 0.16463264328715616,
+                  "paired_row_bootstrap_95_eV": [
+                    0.07283750157808928,
+                    0.07941767227790246
+                  ],
+                  "winning_margin_mean_eV": 0.12264042195055617
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.07391747865635553,
+                  "candidate_win_fraction": 0.32580872719943565,
+                  "losing_margin_mean_eV": 0.17948479591820093,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06982466206667849,
+                    0.07801929458511772
+                  ],
+                  "winning_margin_mean_eV": 0.14453143952544023
+                }
+              },
+              "off": {
+                "mae_eV": 0.4600738559316558,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.2679121287421907,
+                  "candidate_win_fraction": 0.18179985891363498,
+                  "losing_margin_mean_eV": 0.36610921475522873,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2622877162796444,
+                    0.27383166565765815
+                  ],
+                  "winning_margin_mean_eV": 0.17402919129098862
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.2658135974574183,
+                  "candidate_win_fraction": 0.18573012193892977,
+                  "losing_margin_mean_eV": 0.37004878544571373,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2597289541015627,
+                    0.27224129568986283
+                  ],
+                  "winning_margin_mean_eV": 0.19116975519880935
+                }
+              }
+            },
+            "k1_mae_eV": 0.19426025847423753,
+            "mean_descriptors": {
+              "atom_count": 12.702106217877658,
+              "bond_count": 12.804494608485337,
+              "conjugated_bond_fraction": 0.09124492690572332,
+              "ring_atom_fraction": 0.3990753537045243,
+              "rwse_mean": 0.14313056132542465
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.1950232881362264,
+              "receiver_dispersion_rms": 0.20992959558623644,
+              "update_rms": 0.43227128940406834,
+              "update_to_hidden_rms": 0.5251881993430811
+            },
+            "rows": 9923
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.16719476068239456,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.041797044025359005,
+                  "candidate_win_fraction": 0.35758302521568236,
+                  "losing_margin_mean_eV": 0.10005936382779317,
+                  "paired_row_bootstrap_95_eV": [
+                    0.040527466489784184,
+                    0.04314617333042562
+                  ],
+                  "winning_margin_mean_eV": 0.06286499978888574
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04026768413320189,
+                  "candidate_win_fraction": 0.3802005262982579,
+                  "losing_margin_mean_eV": 0.11257018732628664,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03877371162725104,
+                    0.041763032022932495
+                  ],
+                  "winning_margin_mean_eV": 0.07759920538087975
+                }
+              },
+              "full": {
+                "mae_eV": 0.12539771665703556,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0015293598921571143,
+                  "candidate_win_fraction": 0.51047600013324,
+                  "losing_margin_mean_eV": 0.05843647120436314,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.002493130987209354,
+                    -0.0005718083153487025
+                  ],
+                  "winning_margin_mean_eV": 0.05903395067809262
+                }
+              },
+              "half": {
+                "mae_eV": 0.1735401813521947,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04814246469515915,
+                  "candidate_win_fraction": 0.3285700009993005,
+                  "losing_margin_mean_eV": 0.1084928544627335,
+                  "paired_row_bootstrap_95_eV": [
+                    0.04685322571525861,
+                    0.04948490523115823
+                  ],
+                  "winning_margin_mean_eV": 0.07518304286211946
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.046613104803002035,
+                  "candidate_win_fraction": 0.34625761966623364,
+                  "losing_margin_mean_eV": 0.11564777806837066,
+                  "paired_row_bootstrap_95_eV": [
+                    0.045121863057614085,
+                    0.04814139233987656
+                  ],
+                  "winning_margin_mean_eV": 0.08372595219614415
+                }
+              },
+              "off": {
+                "mae_eV": 0.28761635258372426,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.16221863592668867,
+                  "candidate_win_fraction": 0.2127843842643483,
+                  "losing_margin_mean_eV": 0.23414150547629178,
+                  "paired_row_bootstrap_95_eV": [
+                    0.15990387181633575,
+                    0.1646094527811925
+                  ],
+                  "winning_margin_mean_eV": 0.10386670785317513
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.16068927603453156,
+                  "candidate_win_fraction": 0.21927983744712035,
+                  "losing_margin_mean_eV": 0.23571336959061215,
+                  "paired_row_bootstrap_95_eV": [
+                    0.15839316098259038,
+                    0.16324502889389939
+                  ],
+                  "winning_margin_mean_eV": 0.10642521656267588
+                }
+              }
+            },
+            "k1_mae_eV": 0.12692707654919266,
+            "mean_descriptors": {
+              "atom_count": 14.313447253589155,
+              "bond_count": 14.926551414010193,
+              "conjugated_bond_fraction": 0.5237263185054472,
+              "ring_atom_fraction": 0.5697968182033354,
+              "rwse_mean": 0.13748995390312133
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.365888441150207,
+              "receiver_dispersion_rms": 0.27341995996034885,
+              "update_rms": 0.46354439436092887,
+              "update_to_hidden_rms": 0.5337708226321106
+            },
+            "rows": 30021
+          }
+        }
+      },
+      "unseen_500k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.17342005843639374,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.029976391453742982,
+                  "candidate_win_fraction": 0.39374,
+                  "losing_margin_mean_eV": 0.08971954795185029,
+                  "paired_row_bootstrap_95_eV": [
+                    0.02905418473148346,
+                    0.030886066812753677
+                  ],
+                  "winning_margin_mean_eV": 0.06201295699584949
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.03216675117492676,
+                  "candidate_win_fraction": 0.40066,
+                  "losing_margin_mean_eV": 0.10632321628264153,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03102746202170849,
+                    0.033334696425795556
+                  ],
+                  "winning_margin_mean_eV": 0.07876255496408831
+                }
+              },
+              "full": {
+                "mae_eV": 0.14344366698265076,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.002190359721183777,
+                  "candidate_win_fraction": 0.49334,
+                  "losing_margin_mean_eV": 0.06651037657806284,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0013973854341506958,
+                    0.003025486406803131
+                  ],
+                  "winning_margin_mean_eV": 0.0638662741230339
+                }
+              },
+              "half": {
+                "mae_eV": 0.1903841985988617,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04694053161621094,
+                  "candidate_win_fraction": 0.33826,
+                  "losing_margin_mean_eV": 0.1148932766502916,
+                  "paired_row_bootstrap_95_eV": [
+                    0.04581818059444428,
+                    0.04801320343410969
+                  ],
+                  "winning_margin_mean_eV": 0.08599581763836406
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04913089133739471,
+                  "candidate_win_fraction": 0.35458,
+                  "losing_margin_mean_eV": 0.12713650559836748,
+                  "paired_row_bootstrap_95_eV": [
+                    0.04783772264432907,
+                    0.050435769398570064
+                  ],
+                  "winning_margin_mean_eV": 0.09285789414491405
+                }
+              },
+              "off": {
+                "mae_eV": 0.32729441479682925,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.18385074781417846,
+                  "candidate_win_fraction": 0.21192,
+                  "losing_margin_mean_eV": 0.2649784524868423,
+                  "paired_row_bootstrap_95_eV": [
+                    0.18167832255256178,
+                    0.18598557174289226
+                  ],
+                  "winning_margin_mean_eV": 0.11784386099307391
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.18604110753536224,
+                  "candidate_win_fraction": 0.21418,
+                  "losing_margin_mean_eV": 0.2690151490014907,
+                  "paired_row_bootstrap_95_eV": [
+                    0.18381732458651065,
+                    0.18829547508466243
+                  ],
+                  "winning_margin_mean_eV": 0.11838816347459705
+                }
+              }
+            },
+            "k1_mae_eV": 0.14125330726146698,
+            "mean_descriptors": {
+              "atom_count": 14.62134,
+              "bond_count": 15.24698,
+              "conjugated_bond_fraction": 0.4528769623090327,
+              "ring_atom_fraction": 0.5641222699123621,
+              "rwse_mean": 0.13694966578915715
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.404361105468273,
+              "receiver_dispersion_rms": 0.25764743198268114,
+              "update_rms": 0.45625228515267374,
+              "update_to_hidden_rms": 0.5426193953981996
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.20110922594271866,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.061391040693645656,
+                  "candidate_win_fraction": 0.3258557902403496,
+                  "losing_margin_mean_eV": 0.1333899033821752,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05812460020694608,
+                    0.06464898062724748
+                  ],
+                  "winning_margin_mean_eV": 0.08756324474333012
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.05608526325017452,
+                  "candidate_win_fraction": 0.34770575382374364,
+                  "losing_margin_mean_eV": 0.14074631251624356,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05227634624677771,
+                    0.059675425013224745
+                  ],
+                  "winning_margin_mean_eV": 0.1027384395623337
+                }
+              },
+              "full": {
+                "mae_eV": 0.139718185249073,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0053057774434711324,
+                  "candidate_win_fraction": 0.5126001456664239,
+                  "losing_margin_mean_eV": 0.06660415616066813,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.007546339451789161,
+                    -0.0031310932356687854
+                  ],
+                  "winning_margin_mean_eV": 0.07368049692043901
+                }
+              },
+              "half": {
+                "mae_eV": 0.19135815576315796,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.05163997051408494,
+                  "candidate_win_fraction": 0.3408594319009468,
+                  "losing_margin_mean_eV": 0.12303764928111714,
+                  "paired_row_bootstrap_95_eV": [
+                    0.04871183615744939,
+                    0.05443218982575674
+                  ],
+                  "winning_margin_mean_eV": 0.0864260535973769
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04633419307061381,
+                  "candidate_win_fraction": 0.3659140568099053,
+                  "losing_margin_mean_eV": 0.13165567251503837,
+                  "paired_row_bootstrap_95_eV": [
+                    0.042832687298746244,
+                    0.049650422428440893
+                  ],
+                  "winning_margin_mean_eV": 0.10151787700167128
+                }
+              },
+              "off": {
+                "mae_eV": 0.3206879687152982,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.1809697834662252,
+                  "candidate_win_fraction": 0.20291332847778587,
+                  "losing_margin_mean_eV": 0.25876773244630524,
+                  "paired_row_bootstrap_95_eV": [
+                    0.17569187801073521,
+                    0.18638019398625366
+                  ],
+                  "winning_margin_mean_eV": 0.12463709149357234
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.17566400602275406,
+                  "candidate_win_fraction": 0.2201019664967225,
+                  "losing_margin_mean_eV": 0.2604810600188137,
+                  "paired_row_bootstrap_95_eV": [
+                    0.17010266746470987,
+                    0.1811735824269269
+                  ],
+                  "winning_margin_mean_eV": 0.12487239840802257
+                }
+              }
+            },
+            "k1_mae_eV": 0.14502396269254414,
+            "mean_descriptors": {
+              "atom_count": 14.691332847778588,
+              "bond_count": 15.651711580480699,
+              "conjugated_bond_fraction": 0.8429441979047771,
+              "ring_atom_fraction": 0.6933505956959916,
+              "rwse_mean": 0.13217201924028835
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.4803187691201627,
+              "receiver_dispersion_rms": 0.2883778075297558,
+              "update_rms": 0.4749400428803577,
+              "update_to_hidden_rms": 0.49897641579078567
+            },
+            "rows": 6865
+          },
+          "low_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.2107137639357093,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.00922697682272828,
+                  "candidate_win_fraction": 0.4450995553837232,
+                  "losing_margin_mean_eV": 0.0656279609336647,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007513363184376748,
+                    0.01089866970324226
+                  ],
+                  "winning_margin_mean_eV": 0.061087474812643275
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.019743484038576592,
+                  "candidate_win_fraction": 0.43127778851730136,
+                  "losing_margin_mean_eV": 0.10201076242406704,
+                  "paired_row_bootstrap_95_eV": [
+                    0.017101199474713568,
+                    0.022362580635020838
+                  ],
+                  "winning_margin_mean_eV": 0.08874164953834537
+                }
+              },
+              "full": {
+                "mae_eV": 0.20148678711298101,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.010516507215848311,
+                  "candidate_win_fraction": 0.468103614923642,
+                  "losing_margin_mean_eV": 0.08934540144642894,
+                  "paired_row_bootstrap_95_eV": [
+                    0.008051206687997855,
+                    0.012822123531813133
+                  ],
+                  "winning_margin_mean_eV": 0.07905512296191036
+                }
+              },
+              "half": {
+                "mae_eV": 0.2806792160355328,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.07919242892255181,
+                  "candidate_win_fraction": 0.31326116373477675,
+                  "losing_margin_mean_eV": 0.17831400422291552,
+                  "paired_row_bootstrap_95_eV": [
+                    0.07559985597728645,
+                    0.08285504681804114
+                  ],
+                  "winning_margin_mean_eV": 0.13810432902532976
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.08970893613840011,
+                  "candidate_win_fraction": 0.3097815580900831,
+                  "losing_margin_mean_eV": 0.19013678234609432,
+                  "paired_row_bootstrap_95_eV": [
+                    0.08585099889753682,
+                    0.09356447734455754
+                  ],
+                  "winning_margin_mean_eV": 0.13405245224510823
+                }
+              },
+              "off": {
+                "mae_eV": 0.5064622554146712,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.3049754683016901,
+                  "candidate_win_fraction": 0.1850956891552291,
+                  "losing_margin_mean_eV": 0.4182691428178062,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2985844551675812,
+                    0.3116272937749125
+                  ],
+                  "winning_margin_mean_eV": 0.19381250550790494
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.31549197551753844,
+                  "candidate_win_fraction": 0.17881306785231008,
+                  "losing_margin_mean_eV": 0.42376469311404363,
+                  "paired_row_bootstrap_95_eV": [
+                    0.30886543158657104,
+                    0.32224403442093
+                  ],
+                  "winning_margin_mean_eV": 0.1817431643202498
+                }
+              }
+            },
+            "k1_mae_eV": 0.1909702798971327,
+            "mean_descriptors": {
+              "atom_count": 13.696791030349894,
+              "bond_count": 14.044364971969843,
+              "conjugated_bond_fraction": 0.07665202615643271,
+              "ring_atom_fraction": 0.46939189800632175,
+              "rwse_mean": 0.14075579110474667
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.327280630358824,
+              "receiver_dispersion_rms": 0.20638858873008956,
+              "update_rms": 0.43828077164507223,
+              "update_to_hidden_rms": 0.5454008897426924
+            },
+            "rows": 10346
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "common_return": {
+                "mae_eV": 0.15585542358852283,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.02994625563808975,
+                  "candidate_win_fraction": 0.39174723230351643,
+                  "losing_margin_mean_eV": 0.08652076115581438,
+                  "paired_row_bootstrap_95_eV": [
+                    0.028778363275791172,
+                    0.031024782338013403
+                  ],
+                  "winning_margin_mean_eV": 0.05789507858110059
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.03107890270123445,
+                  "candidate_win_fraction": 0.40208606544877856,
+                  "losing_margin_mean_eV": 0.09975488440657841,
+                  "paired_row_bootstrap_95_eV": [
+                    0.02968556203974937,
+                    0.03237700770244408
+                  ],
+                  "winning_margin_mean_eV": 0.07104432403824283
+                }
+              },
+              "full": {
+                "mae_eV": 0.12590916795043308,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0011326470631446992,
+                  "candidate_win_fraction": 0.4972704260575193,
+                  "losing_margin_mean_eV": 0.058868121765273715,
+                  "paired_row_bootstrap_95_eV": [
+                    0.00028569904238711833,
+                    0.0020268602527403292
+                  ],
+                  "winning_margin_mean_eV": 0.05723666081725363
+                }
+              },
+              "half": {
+                "mae_eV": 0.1616892561994993,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.035780088249066234,
+                  "candidate_win_fraction": 0.3456037085607978,
+                  "losing_margin_mean_eV": 0.09217539644532453,
+                  "paired_row_bootstrap_95_eV": [
+                    0.034655413060390584,
+                    0.03687823771077958
+                  ],
+                  "winning_margin_mean_eV": 0.07100372113737166
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.03691273531221093,
+                  "candidate_win_fraction": 0.36634237091707583,
+                  "losing_margin_mean_eV": 0.10453666395405956,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03554047266548938,
+                    0.038246514530426774
+                  ],
+                  "winning_margin_mean_eV": 0.08005549357487605
+                }
+              },
+              "off": {
+                "mae_eV": 0.27214429656563943,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.14623512861520635,
+                  "candidate_win_fraction": 0.22226966360669737,
+                  "losing_margin_mean_eV": 0.21563102493033326,
+                  "paired_row_bootstrap_95_eV": [
+                    0.14411138714317825,
+                    0.14840972094236396
+                  ],
+                  "winning_margin_mean_eV": 0.09658385491004759
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.14736777567835108,
+                  "candidate_win_fraction": 0.22409954557931014,
+                  "losing_margin_mean_eV": 0.21913265167956952,
+                  "paired_row_bootstrap_95_eV": [
+                    0.1451431703622403,
+                    0.14958715760088706
+                  ],
+                  "winning_margin_mean_eV": 0.10110394592575879
+                }
+              }
+            },
+            "k1_mae_eV": 0.12477652088728838,
+            "mean_descriptors": {
+              "atom_count": 14.898411052487115,
+              "bond_count": 15.541706059959132,
+              "conjugated_bond_fraction": 0.48992022733907364,
+              "ring_atom_fraction": 0.5669563902342772,
+              "rwse_mean": 0.1367490000489057
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.4127793321452726,
+              "receiver_dispersion_rms": 0.2673872826692116,
+              "update_rms": 0.45801024733356044,
+              "update_to_hidden_rms": 0.5508792299316337
+            },
+            "rows": 32789
+          }
+        }
+      }
+    },
+    "neural_atom_k1_rrwp_pair": {
+      "original_100k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.1389245206016302,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0024491172218322754,
+                  "candidate_win_fraction": 0.50882,
+                  "losing_margin_mean_eV": 0.06404968826180245,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0033198916836977006,
+                    -0.001576902977228165
+                  ],
+                  "winning_margin_mean_eV": 0.0666425122877725
+                }
+              },
+              "half": {
+                "mae_eV": 0.21343877445161344,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.07451425384998321,
+                  "candidate_win_fraction": 0.2833,
+                  "losing_margin_mean_eV": 0.1437313306376544,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0732708554663658,
+                    0.07582834480166435
+                  ],
+                  "winning_margin_mean_eV": 0.10059297853167555
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.07206513662815094,
+                  "candidate_win_fraction": 0.29886,
+                  "losing_margin_mean_eV": 0.14936100318889758,
+                  "paired_row_bootstrap_95_eV": [
+                    0.07065080077970028,
+                    0.07357235070824623
+                  ],
+                  "winning_margin_mean_eV": 0.1092747010229295
+                }
+              },
+              "off": {
+                "mae_eV": 0.3748915244573355,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.23596700385570527,
+                  "candidate_win_fraction": 0.15778,
+                  "losing_margin_mean_eV": 0.30631223632706694,
+                  "paired_row_bootstrap_95_eV": [
+                    0.23379072012794017,
+                    0.23820801131534577
+                  ],
+                  "winning_margin_mean_eV": 0.13953154914233148
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.233517886633873,
+                  "candidate_win_fraction": 0.16298,
+                  "losing_margin_mean_eV": 0.30686710128698497,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2313442766931057,
+                    0.2358754820713997
+                  ],
+                  "winning_margin_mean_eV": 0.14318330154227016
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.1430708118337393,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.00414629123210907,
+                  "candidate_win_fraction": 0.45518,
+                  "losing_margin_mean_eV": 0.03503413627501276,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0037842155890464783,
+                    0.004506318928360939
+                  ],
+                  "winning_margin_mean_eV": 0.032822852960406615
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0016971740102767945,
+                  "candidate_win_fraction": 0.48688,
+                  "losing_margin_mean_eV": 0.07068365237071278,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0007734554305076599,
+                    0.002611715334177015
+                  ],
+                  "winning_margin_mean_eV": 0.07100727426508247
+                }
+              }
+            },
+            "k1_mae_eV": 0.1413736378234625,
+            "mean_descriptors": {
+              "atom_count": 13.9378,
+              "bond_count": 14.462,
+              "conjugated_bond_fraction": 0.5021915429714322,
+              "ring_atom_fraction": 0.5450672379639745,
+              "rwse_mean": 0.1378407478104532
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.3731710744678973,
+              "receiver_dispersion_rms": 0.2561257799370541,
+              "update_rms": 0.47694275300502775,
+              "update_to_hidden_rms": 0.5350463245996833
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12963440554037203,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0026805886173400027,
+                  "candidate_win_fraction": 0.5141209228321401,
+                  "losing_margin_mean_eV": 0.06344348809487792,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.004505682511991608,
+                    -0.0009358595496572576
+                  ],
+                  "winning_margin_mean_eV": 0.06517231759526974
+                }
+              },
+              "half": {
+                "mae_eV": 0.22315043367166887,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.09351602813129684,
+                  "candidate_win_fraction": 0.24264120922832141,
+                  "losing_margin_mean_eV": 0.16045025344781516,
+                  "paired_row_bootstrap_95_eV": [
+                    0.09058279390954364,
+                    0.09635148920243282
+                  ],
+                  "winning_margin_mean_eV": 0.11540653744681936
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.09083543951395683,
+                  "candidate_win_fraction": 0.25865155131264916,
+                  "losing_margin_mean_eV": 0.16400005553569832,
+                  "paired_row_bootstrap_95_eV": [
+                    0.08759208560440401,
+                    0.09394845061342016
+                  ],
+                  "winning_margin_mean_eV": 0.118869371113526
+                }
+              },
+              "off": {
+                "mae_eV": 0.40512545180100246,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.2754910462606304,
+                  "candidate_win_fraction": 0.12251392203659507,
+                  "losing_margin_mean_eV": 0.3356030705779223,
+                  "paired_row_bootstrap_95_eV": [
+                    0.27089724213880684,
+                    0.2800044315461849
+                  ],
+                  "winning_margin_mean_eV": 0.15505156946646703
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.2728104576432904,
+                  "candidate_win_fraction": 0.1286793953858393,
+                  "losing_margin_mean_eV": 0.3359974615107495,
+                  "paired_row_bootstrap_95_eV": [
+                    0.26806319519557364,
+                    0.27761310618207774
+                  ],
+                  "winning_margin_mean_eV": 0.15504466437114262
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.13309470044008873,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.003460294899716677,
+                  "candidate_win_fraction": 0.4555489260143198,
+                  "losing_margin_mean_eV": 0.030863583447182014,
+                  "paired_row_bootstrap_95_eV": [
+                    0.00277842056886393,
+                    0.004117288025556904
+                  ],
+                  "winning_margin_mean_eV": 0.02929085218549894
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.000779706282376674,
+                  "candidate_win_fraction": 0.493933969769292,
+                  "losing_margin_mean_eV": 0.0664815484809838,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0012011288986048627,
+                    0.002585408748879542
+                  ],
+                  "winning_margin_mean_eV": 0.06653591178662105
+                }
+              }
+            },
+            "k1_mae_eV": 0.13231499415771206,
+            "mean_descriptors": {
+              "atom_count": 14.035700079554495,
+              "bond_count": 14.710719968178202,
+              "conjugated_bond_fraction": 0.8434134776286881,
+              "ring_atom_fraction": 0.6153010027949878,
+              "rwse_mean": 0.133668150792051
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.4379192029400865,
+              "receiver_dispersion_rms": 0.28182216700279084,
+              "update_rms": 0.48956256194444714,
+              "update_to_hidden_rms": 0.45702069472631196
+            },
+            "rows": 10056
+          },
+          "low_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.18883744098721378,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.00542281748702374,
+                  "candidate_win_fraction": 0.5140582485135544,
+                  "losing_margin_mean_eV": 0.0807918684950314,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.008334741133614244,
+                    -0.0025990694530017683
+                  ],
+                  "winning_margin_mean_eV": 0.08692197761356164
+                }
+              },
+              "half": {
+                "mae_eV": 0.2514958045276725,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.06265836354045874,
+                  "candidate_win_fraction": 0.32107225637408043,
+                  "losing_margin_mean_eV": 0.14605828642367397,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05980288146376598,
+                    0.06568045827045707
+                  ],
+                  "winning_margin_mean_eV": 0.11369608732715614
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.057235546053435,
+                  "candidate_win_fraction": 0.34253753905069034,
+                  "losing_margin_mean_eV": 0.16020372263278645,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05354772496461316,
+                    0.06105352819812858
+                  ],
+                  "winning_margin_mean_eV": 0.14040034215006278
+                }
+              },
+              "off": {
+                "mae_eV": 0.41014393236348073,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.22130649137626693,
+                  "candidate_win_fraction": 0.1960092713897007,
+                  "losing_margin_mean_eV": 0.3159407702386454,
+                  "paired_row_bootstrap_95_eV": [
+                    0.21610496270492002,
+                    0.22684991591329667
+                  ],
+                  "winning_margin_mean_eV": 0.1668643450062808
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.2158836738892432,
+                  "candidate_win_fraction": 0.20880782021566058,
+                  "losing_margin_mean_eV": 0.3220514974204192,
+                  "paired_row_bootstrap_95_eV": [
+                    0.21031269445350115,
+                    0.221800696526061
+                  ],
+                  "winning_margin_mean_eV": 0.18639604741542035
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.1936065984399379,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.00476915745272411,
+                  "candidate_win_fraction": 0.4575229265343142,
+                  "losing_margin_mean_eV": 0.039132048998228045,
+                  "paired_row_bootstrap_95_eV": [
+                    0.003881045564172682,
+                    0.005698055168871892
+                  ],
+                  "winning_margin_mean_eV": 0.03597433267711018
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0006536600342996296,
+                  "candidate_win_fraction": 0.48886425476166484,
+                  "losing_margin_mean_eV": 0.08977932363090455,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.003824230411366735,
+                    0.0023297034173221736
+                  ],
+                  "winning_margin_mean_eV": 0.09520655493224141
+                }
+              }
+            },
+            "k1_mae_eV": 0.19426025847423753,
+            "mean_descriptors": {
+              "atom_count": 12.702106217877658,
+              "bond_count": 12.804494608485337,
+              "conjugated_bond_fraction": 0.09124492690572332,
+              "ring_atom_fraction": 0.3990753537045243,
+              "rwse_mean": 0.14313056132542465
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.2519469553876714,
+              "receiver_dispersion_rms": 0.22226950579694962,
+              "update_rms": 0.4394014802362774,
+              "update_to_hidden_rms": 0.5496402914670282
+            },
+            "rows": 9923
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12553840715004186,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0013886693991507987,
+                  "candidate_win_fraction": 0.5053129476033443,
+                  "losing_margin_mean_eV": 0.05881307799521861,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0023865449194674497,
+                    -0.00043223360417816233
+                  ],
+                  "winning_margin_mean_eV": 0.06032447365450875
+                }
+              },
+              "half": {
+                "mae_eV": 0.19760651188335748,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.07206810473331561,
+                  "candidate_win_fraction": 0.2844342293727724,
+                  "losing_margin_mean_eV": 0.1370742215578388,
+                  "paired_row_bootstrap_95_eV": [
+                    0.07053987810670573,
+                    0.07367870895304514
+                  ],
+                  "winning_margin_mean_eV": 0.09147111550610439
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0706794353341648,
+                  "candidate_win_fraction": 0.29789147596682325,
+                  "losing_margin_mean_eV": 0.14082736447092953,
+                  "paired_row_bootstrap_95_eV": [
+                    0.068936757756115,
+                    0.0724211691680348
+                  ],
+                  "winning_margin_mean_eV": 0.09465412726728066
+                }
+              },
+              "off": {
+                "mae_eV": 0.35311203619843023,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.22757362904838835,
+                  "candidate_win_fraction": 0.1569567969088305,
+                  "losing_margin_mean_eV": 0.2930648237475055,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2249800843278968,
+                    0.23032772198201798
+                  ],
+                  "winning_margin_mean_eV": 0.12419136387180595
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.22618495964923757,
+                  "candidate_win_fraction": 0.15932180806768595,
+                  "losing_margin_mean_eV": 0.29203023187085786,
+                  "paired_row_bootstrap_95_eV": [
+                    0.22340653523991869,
+                    0.22899197591248122
+                  ],
+                  "winning_margin_mean_eV": 0.12125450937214093
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.1297086042350997,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0041701970850578345,
+                  "candidate_win_fraction": 0.4542820025981813,
+                  "losing_margin_mean_eV": 0.03508142674890517,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0036903636765501483,
+                    0.004623839738133039
+                  ],
+                  "winning_margin_mean_eV": 0.03296014417876839
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0027815276859070354,
+                  "candidate_win_fraction": 0.48386129709203557,
+                  "losing_margin_mean_eV": 0.06581313039995694,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0017294263230988322,
+                    0.003781261801588627
+                  ],
+                  "winning_margin_mean_eV": 0.06445478541158733
+                }
+              }
+            },
+            "k1_mae_eV": 0.12692707654919266,
+            "mean_descriptors": {
+              "atom_count": 14.313447253589155,
+              "bond_count": 14.926551414010193,
+              "conjugated_bond_fraction": 0.5237263185054472,
+              "ring_atom_fraction": 0.5697968182033354,
+              "rwse_mean": 0.13748995390312133
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.391551533270627,
+              "receiver_dispersion_rms": 0.2587090696329073,
+              "update_rms": 0.48512426764443045,
+              "update_to_hidden_rms": 0.556358399506647
+            },
+            "rows": 30021
+          }
+        }
+      },
+      "unseen_500k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.14482923397541045,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0035759267139434813,
+                  "candidate_win_fraction": 0.48784,
+                  "losing_margin_mean_eV": 0.06716589067772528,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0027142164083719254,
+                    0.004420298805832862
+                  ],
+                  "winning_margin_mean_eV": 0.06318415024508098
+                }
+              },
+              "half": {
+                "mae_eV": 0.20911361400604248,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.06428438003063201,
+                  "candidate_win_fraction": 0.30842,
+                  "losing_margin_mean_eV": 0.134315220160076,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06305092158055306,
+                    0.06541527866685391
+                  ],
+                  "winning_margin_mean_eV": 0.09274800573138363
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0678603067445755,
+                  "candidate_win_fraction": 0.30852,
+                  "losing_margin_mean_eV": 0.14495880933965605,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06646480711197852,
+                    0.06926405519556998
+                  ],
+                  "winning_margin_mean_eV": 0.10493909872167076
+                }
+              },
+              "off": {
+                "mae_eV": 0.36157280264377595,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.21674356866836547,
+                  "candidate_win_fraction": 0.175,
+                  "losing_margin_mean_eV": 0.2896458596547445,
+                  "paired_row_bootstrap_95_eV": [
+                    0.21453482411563396,
+                    0.21882490534162521
+                  ],
+                  "winning_margin_mean_eV": 0.12693866026742118
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.22031949538230897,
+                  "candidate_win_fraction": 0.18022,
+                  "losing_margin_mean_eV": 0.297563348930588,
+                  "paired_row_bootstrap_95_eV": [
+                    0.218075013910532,
+                    0.2224706791766882
+                  ],
+                  "winning_margin_mean_eV": 0.1310453157474669
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.14991180034637452,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0050825663709640504,
+                  "candidate_win_fraction": 0.45392,
+                  "losing_margin_mean_eV": 0.03958902787226161,
+                  "paired_row_bootstrap_95_eV": [
+                    0.004707456152796745,
+                    0.005484205238699912
+                  ],
+                  "winning_margin_mean_eV": 0.036429789323053775
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.008658493084907532,
+                  "candidate_win_fraction": 0.4688,
+                  "losing_margin_mean_eV": 0.07547060736870191,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007755655714035034,
+                    0.00959179642534256
+                  ],
+                  "winning_margin_mean_eV": 0.06704670125713934
+                }
+              }
+            },
+            "k1_mae_eV": 0.14125330726146698,
+            "mean_descriptors": {
+              "atom_count": 14.62134,
+              "bond_count": 15.24698,
+              "conjugated_bond_fraction": 0.4528769623090327,
+              "ring_atom_fraction": 0.5641222699123621,
+              "rwse_mean": 0.13694966578915715
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.432731552772522,
+              "receiver_dispersion_rms": 0.2487167392832786,
+              "update_rms": 0.4763012978744507,
+              "update_to_hidden_rms": 0.57831507779181
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.14414639811574848,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0008775645767956517,
+                  "candidate_win_fraction": 0.4989075018208303,
+                  "losing_margin_mean_eV": 0.07033685154693071,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0032433720913058375,
+                    0.001509604926362839
+                  ],
+                  "winning_margin_mean_eV": 0.07240386865434856
+                }
+              },
+              "half": {
+                "mae_eV": 0.23050189766672,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0863554995509715,
+                  "candidate_win_fraction": 0.2656955571740714,
+                  "losing_margin_mean_eV": 0.16031894544787975,
+                  "paired_row_bootstrap_95_eV": [
+                    0.08268363780898937,
+                    0.0899775272490591
+                  ],
+                  "winning_margin_mean_eV": 0.11805773003582369
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.08547793497417586,
+                  "candidate_win_fraction": 0.28011653313911145,
+                  "losing_margin_mean_eV": 0.16797975015659555,
+                  "paired_row_bootstrap_95_eV": [
+                    0.08118408689165497,
+                    0.08948868579961744
+                  ],
+                  "winning_margin_mean_eV": 0.12654701075204264
+                }
+              },
+              "off": {
+                "mae_eV": 0.41513302812416536,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.2709866300084169,
+                  "candidate_win_fraction": 0.1328477785870357,
+                  "losing_margin_mean_eV": 0.33718210617954864,
+                  "paired_row_bootstrap_95_eV": [
+                    0.26506675652665806,
+                    0.27700777551073796
+                  ],
+                  "winning_margin_mean_eV": 0.1610985340779288
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.2701090654316212,
+                  "candidate_win_fraction": 0.14275309541150766,
+                  "losing_margin_mean_eV": 0.3424427495938595,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2637087176172558,
+                    0.2762152696801899
+                  ],
+                  "winning_margin_mean_eV": 0.16426208895079944
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.14825694727706631,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0041105491613178296,
+                  "candidate_win_fraction": 0.45477057538237436,
+                  "losing_margin_mean_eV": 0.03671757766597258,
+                  "paired_row_bootstrap_95_eV": [
+                    0.003129908703403237,
+                    0.005051926736491315
+                  ],
+                  "winning_margin_mean_eV": 0.03498237450713916
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.003232984584522178,
+                  "candidate_win_fraction": 0.47997086671522216,
+                  "losing_margin_mean_eV": 0.07400611014593216,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0008549682857863502,
+                    0.005576684412431821
+                  ],
+                  "winning_margin_mean_eV": 0.0734468510009812
+                }
+              }
+            },
+            "k1_mae_eV": 0.14502396269254414,
+            "mean_descriptors": {
+              "atom_count": 14.691332847778588,
+              "bond_count": 15.651711580480699,
+              "conjugated_bond_fraction": 0.8429441979047771,
+              "ring_atom_fraction": 0.6933505956959916,
+              "rwse_mean": 0.13217201924028835
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.496225119783161,
+              "receiver_dispersion_rms": 0.279440234387151,
+              "update_rms": 0.4870179029424435,
+              "update_to_hidden_rms": 0.4814674465372366
+            },
+            "rows": 6865
+          },
+          "low_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.200318314341035,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.009348034443902297,
+                  "candidate_win_fraction": 0.477769186158902,
+                  "losing_margin_mean_eV": 0.09038029554572874,
+                  "paired_row_bootstrap_95_eV": [
+                    0.006866512707278504,
+                    0.01176750370157818
+                  ],
+                  "winning_margin_mean_eV": 0.07922516133460636
+                }
+              },
+              "half": {
+                "mae_eV": 0.26141234320366424,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.061094028862629275,
+                  "candidate_win_fraction": 0.31993040788710614,
+                  "losing_margin_mean_eV": 0.14719107457356673,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05808243843934394,
+                    0.06415735573446453
+                  ],
+                  "winning_margin_mean_eV": 0.1219207184552426
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.07044206330653156,
+                  "candidate_win_fraction": 0.32379663638121015,
+                  "losing_margin_mean_eV": 0.1707420172249678,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06676098273405595,
+                    0.0740265738046909
+                  ],
+                  "winning_margin_mean_eV": 0.13902016881686538
+                }
+              },
+              "off": {
+                "mae_eV": 0.42967373592443814,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.22935542158340316,
+                  "candidate_win_fraction": 0.20471679876280688,
+                  "losing_margin_mean_eV": 0.3310942955833068,
+                  "paired_row_bootstrap_95_eV": [
+                    0.22406191403518302,
+                    0.23478531368219388
+                  ],
+                  "winning_margin_mean_eV": 0.16587944870517432
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.23870345602730544,
+                  "candidate_win_fraction": 0.2020104388169341,
+                  "losing_margin_mean_eV": 0.34625938202637113,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2330189683227412,
+                    0.24424127310474122
+                  ],
+                  "winning_margin_mean_eV": 0.1861681827517788
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.20871766989774498,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.008399355556710002,
+                  "candidate_win_fraction": 0.43794703266963075,
+                  "losing_margin_mean_eV": 0.044991842345338595,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007452037838310516,
+                    0.009355720333220671
+                  ],
+                  "winning_margin_mean_eV": 0.03856275229495083
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.017747390000612297,
+                  "candidate_win_fraction": 0.4614343707713126,
+                  "losing_margin_mean_eV": 0.10762330228616587,
+                  "paired_row_bootstrap_95_eV": [
+                    0.015106542794173953,
+                    0.020437944151436637
+                  ],
+                  "winning_margin_mean_eV": 0.08715176862006313
+                }
+              }
+            },
+            "k1_mae_eV": 0.1909702798971327,
+            "mean_descriptors": {
+              "atom_count": 13.696791030349894,
+              "bond_count": 14.044364971969843,
+              "conjugated_bond_fraction": 0.07665202615643271,
+              "ring_atom_fraction": 0.46939189800632175,
+              "rwse_mean": 0.14075579110474667
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.3707724595908704,
+              "receiver_dispersion_rms": 0.20843426294505263,
+              "update_rms": 0.43953391402763947,
+              "update_to_hidden_rms": 0.5821848761541641
+            },
+            "rows": 10346
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12746358216272413,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0026870612754357577,
+                  "candidate_win_fraction": 0.48870047881911616,
+                  "losing_margin_mean_eV": 0.05903373828333881,
+                  "paired_row_bootstrap_95_eV": [
+                    0.001747234742782294,
+                    0.00360893568329036
+                  ],
+                  "winning_margin_mean_eV": 0.056265262740883185
+                }
+              },
+              "half": {
+                "mae_eV": 0.18813361401796275,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.060670031855238615,
+                  "candidate_win_fraction": 0.3137332642044588,
+                  "losing_margin_mean_eV": 0.12446368292653501,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05921791213993156,
+                    0.06206391837722033
+                  ],
+                  "winning_margin_mean_eV": 0.07887354123762726
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.06335709313067438,
+                  "candidate_win_fraction": 0.30964652779895696,
+                  "losing_margin_mean_eV": 0.1319640747627451,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06174580133125968,
+                    0.0648950348628902
+                  ],
+                  "winning_margin_mean_eV": 0.08960140546319474
+                }
+              },
+              "off": {
+                "mae_eV": 0.3288708842063547,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.20140730204363058,
+                  "candidate_win_fraction": 0.1744487480557504,
+                  "losing_margin_mean_eV": 0.2665928836902696,
+                  "paired_row_bootstrap_95_eV": [
+                    0.19875318164042174,
+                    0.20398321461872423
+                  ],
+                  "winning_margin_mean_eV": 0.10707320662645194
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.20409436331906633,
+                  "candidate_win_fraction": 0.18118881332154077,
+                  "losing_margin_mean_eV": 0.27275145522743927,
+                  "paired_row_bootstrap_95_eV": [
+                    0.20139088192380625,
+                    0.20671324680656392
+                  ],
+                  "winning_margin_mean_eV": 0.106174211593574
+                }
+              },
+              "rrwp_off": {
+                "mae_eV": 0.13170310352556028,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.004239521362836132,
+                  "candidate_win_fraction": 0.45878190856689743,
+                  "losing_margin_mean_eV": 0.03842428494209127,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0037701330781110217,
+                    0.004730428338410772
+                  ],
+                  "winning_margin_mean_eV": 0.03608772815371387
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.00692658263827189,
+                  "candidate_win_fraction": 0.4687852633505139,
+                  "losing_margin_mean_eV": 0.06548515777662353,
+                  "paired_row_bootstrap_95_eV": [
+                    0.005962760458490202,
+                    0.00795510864209822
+                  ],
+                  "winning_margin_mean_eV": 0.05943040531045031
+                }
+              }
+            },
+            "k1_mae_eV": 0.12477652088728838,
+            "mean_descriptors": {
+              "atom_count": 14.898411052487115,
+              "bond_count": 15.541706059959132,
+              "conjugated_bond_fraction": 0.48992022733907364,
+              "ring_atom_fraction": 0.5669563902342772,
+              "rwse_mean": 0.1367490000489057
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.438988085162327,
+              "receiver_dispersion_rms": 0.2549946284018001,
+              "update_rms": 0.48565888302457233,
+              "update_to_hidden_rms": 0.5973709213584248
+            },
+            "rows": 32789
+          }
+        }
+      }
+    },
+    "neural_atom_k1_triplet_aggregate": {
+      "original_100k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.13985791506707668,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0015157227563858033,
+                  "candidate_win_fraction": 0.50794,
+                  "losing_margin_mean_eV": 0.06430633113727585,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.002409544188857079,
+                    -0.0006072651770114906
+                  ],
+                  "winning_margin_mean_eV": 0.06527994656021137
+                }
+              },
+              "half": {
+                "mae_eV": 0.1878189832919836,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04796106822490692,
+                  "candidate_win_fraction": 0.33244,
+                  "losing_margin_mean_eV": 0.11330743853475912,
+                  "paired_row_bootstrap_95_eV": [
+                    0.046879220982909205,
+                    0.049105904833555224
+                  ],
+                  "winning_margin_mean_eV": 0.08325165231195458
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04644534546852112,
+                  "candidate_win_fraction": 0.35452,
+                  "losing_margin_mean_eV": 0.12405534729369845,
+                  "paired_row_bootstrap_95_eV": [
+                    0.04518726546680927,
+                    0.047816240544080735
+                  ],
+                  "winning_margin_mean_eV": 0.09486037488044499
+                }
+              },
+              "off": {
+                "mae_eV": 0.30322486016213895,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.16336694509506225,
+                  "candidate_win_fraction": 0.21996,
+                  "losing_margin_mean_eV": 0.24194757710737508,
+                  "paired_row_bootstrap_95_eV": [
+                    0.1613954224383831,
+                    0.1655208745955229
+                  ],
+                  "winning_margin_mean_eV": 0.11530206833867339
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.16185122233867646,
+                  "candidate_win_fraction": 0.22772,
+                  "losing_margin_mean_eV": 0.2450389458316027,
+                  "paired_row_bootstrap_95_eV": [
+                    0.15976280348050595,
+                    0.16399750002634525
+                  ],
+                  "winning_margin_mean_eV": 0.12026811324501004
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.1506864363092184,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.010828521242141724,
+                  "candidate_win_fraction": 0.42974,
+                  "losing_margin_mean_eV": 0.053162643679665396,
+                  "paired_row_bootstrap_95_eV": [
+                    0.010267771631479263,
+                    0.011386349561929703
+                  ],
+                  "winning_margin_mean_eV": 0.04534589447049535
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.00931279848575592,
+                  "candidate_win_fraction": 0.45606,
+                  "losing_margin_mean_eV": 0.08074643037098009,
+                  "paired_row_bootstrap_95_eV": [
+                    0.008290356674313545,
+                    0.010312289789795873
+                  ],
+                  "winning_margin_mean_eV": 0.07588566164591279
+                }
+              }
+            },
+            "k1_mae_eV": 0.1413736378234625,
+            "mean_descriptors": {
+              "atom_count": 13.9378,
+              "bond_count": 14.462,
+              "conjugated_bond_fraction": 0.5021915429714322,
+              "ring_atom_fraction": 0.5450672379639745,
+              "rwse_mean": 0.1378407478104532
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.374832436144352,
+              "receiver_dispersion_rms": 0.25666265698798,
+              "update_rms": 0.4815997160178423,
+              "update_to_hidden_rms": 0.5284018230330944
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12946509091256153,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0028499032451505214,
+                  "candidate_win_fraction": 0.5091487669053302,
+                  "losing_margin_mean_eV": 0.061720113796778206,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.004629856514001329,
+                    -0.001058515694137596
+                  ],
+                  "winning_margin_mean_eV": 0.06509943529963494
+                }
+              },
+              "half": {
+                "mae_eV": 0.17346129001265684,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.043996199100095314,
+                  "candidate_win_fraction": 0.31672633253778837,
+                  "losing_margin_mean_eV": 0.09948079413573757,
+                  "paired_row_bootstrap_95_eV": [
+                    0.041942189029857295,
+                    0.04596639746768946
+                  ],
+                  "winning_margin_mean_eV": 0.07570070905999823
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.041146295854944795,
+                  "candidate_win_fraction": 0.3581941129673827,
+                  "losing_margin_mean_eV": 0.11510256048249208,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03862330407058329,
+                    0.04373602666606861
+                  ],
+                  "winning_margin_mean_eV": 0.09136723326948336
+                }
+              },
+              "off": {
+                "mae_eV": 0.26541898469829617,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.13595389378573464,
+                  "candidate_win_fraction": 0.21738265712012728,
+                  "losing_margin_mean_eV": 0.20429644790659107,
+                  "paired_row_bootstrap_95_eV": [
+                    0.13227948990954988,
+                    0.13965461242383875
+                  ],
+                  "winning_margin_mean_eV": 0.11009180654873023
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.1331039905405841,
+                  "candidate_win_fraction": 0.23677406523468575,
+                  "losing_margin_mean_eV": 0.21105043367764847,
+                  "paired_row_bootstrap_95_eV": [
+                    0.12918931989439347,
+                    0.13699598124957596
+                  ],
+                  "winning_margin_mean_eV": 0.11815134380505597
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.14317771839533613,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.013712627482774624,
+                  "candidate_win_fraction": 0.4059268098647574,
+                  "losing_margin_mean_eV": 0.05109725782294157,
+                  "paired_row_bootstrap_95_eV": [
+                    0.01263746618631821,
+                    0.014783374913030896
+                  ],
+                  "winning_margin_mean_eV": 0.040999714911188465
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.010862724237624102,
+                  "candidate_win_fraction": 0.44699681782020684,
+                  "losing_margin_mean_eV": 0.08095482364229924,
+                  "paired_row_bootstrap_95_eV": [
+                    0.008893023002759369,
+                    0.012940499120130365
+                  ],
+                  "winning_margin_mean_eV": 0.07585188416936109
+                }
+              }
+            },
+            "k1_mae_eV": 0.13231499415771206,
+            "mean_descriptors": {
+              "atom_count": 14.035700079554495,
+              "bond_count": 14.710719968178202,
+              "conjugated_bond_fraction": 0.8434134776286881,
+              "ring_atom_fraction": 0.6153010027949878,
+              "rwse_mean": 0.133668150792051
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.4496806261552737,
+              "receiver_dispersion_rms": 0.27334447215476454,
+              "update_rms": 0.49901634148583585,
+              "update_to_hidden_rms": 0.4773853413624335
+            },
+            "rows": 10056
+          },
+          "low_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.1901339342862527,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.004126324187984849,
+                  "candidate_win_fraction": 0.5081124659881084,
+                  "losing_margin_mean_eV": 0.08120351916232868,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.007077034725533081,
+                    -0.0014168312487601827
+                  ],
+                  "winning_margin_mean_eV": 0.0867314343412733
+                }
+              },
+              "half": {
+                "mae_eV": 0.2560831038663311,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.06594916958007843,
+                  "candidate_win_fraction": 0.3283281265746246,
+                  "losing_margin_mean_eV": 0.1552399483642807,
+                  "paired_row_bootstrap_95_eV": [
+                    0.06283163467650571,
+                    0.06939553289383178
+                  ],
+                  "winning_margin_mean_eV": 0.11671597486335562
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.06182284539209358,
+                  "candidate_win_fraction": 0.3445530585508415,
+                  "losing_margin_mean_eV": 0.16766906352793892,
+                  "paired_row_bootstrap_95_eV": [
+                    0.05787009212274675,
+                    0.06587639936309518
+                  ],
+                  "winning_margin_mean_eV": 0.13952953915179003
+                }
+              },
+              "off": {
+                "mae_eV": 0.4377778992109405,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.24764396492468785,
+                  "candidate_win_fraction": 0.20346669354026,
+                  "losing_margin_mean_eV": 0.35281459573912716,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2414088268277867,
+                    0.2540522082887757
+                  ],
+                  "winning_margin_mean_eV": 0.16407899988825336
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.243517640736703,
+                  "candidate_win_fraction": 0.20638919681547918,
+                  "losing_margin_mean_eV": 0.35422839140513585,
+                  "paired_row_bootstrap_95_eV": [
+                    0.2371377384519668,
+                    0.2499425568966739
+                  ],
+                  "winning_margin_mean_eV": 0.18218898109626025
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.20531054205271212,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.015176607766459453,
+                  "candidate_win_fraction": 0.4299103093822433,
+                  "losing_margin_mean_eV": 0.07636097524594383,
+                  "paired_row_bootstrap_95_eV": [
+                    0.013415500999494125,
+                    0.01696394807771246
+                  ],
+                  "winning_margin_mean_eV": 0.06594003683180526
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.011050283578474604,
+                  "candidate_win_fraction": 0.4517786959588834,
+                  "losing_margin_mean_eV": 0.10610089302062989,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007560494566449088,
+                    0.01416756374922705
+                  ],
+                  "winning_margin_mean_eV": 0.10429107608365448
+                }
+              }
+            },
+            "k1_mae_eV": 0.19426025847423753,
+            "mean_descriptors": {
+              "atom_count": 12.702106217877658,
+              "bond_count": 12.804494608485337,
+              "conjugated_bond_fraction": 0.09124492690572332,
+              "ring_atom_fraction": 0.3990753537045243,
+              "rwse_mean": 0.14313056132542465
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.2321946778437263,
+              "receiver_dispersion_rms": 0.21546616773310176,
+              "update_rms": 0.4576848377254501,
+              "update_to_hidden_rms": 0.5479810874243544
+            },
+            "rows": 9923
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12672115416590488,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.00020592238328779393,
+                  "candidate_win_fraction": 0.5074780986642683,
+                  "losing_margin_mean_eV": 0.05959176289991711,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0011818715637828773,
+                    0.0007362351312393025
+                  ],
+                  "winning_margin_mean_eV": 0.058241273521946656
+                }
+              },
+              "half": {
+                "mae_eV": 0.17006461452204455,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04334346035613968,
+                  "candidate_win_fraction": 0.3390626561407015,
+                  "losing_margin_mean_eV": 0.10400965594577247,
+                  "paired_row_bootstrap_95_eV": [
+                    0.042103336064948385,
+                    0.04459306955266049
+                  ],
+                  "winning_margin_mean_eV": 0.07490338542768465
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.043137537972851886,
+                  "candidate_win_fraction": 0.3565837247260251,
+                  "losing_margin_mean_eV": 0.1123612944717905,
+                  "paired_row_bootstrap_95_eV": [
+                    0.041734698332506405,
+                    0.04462845604383414
+                  ],
+                  "winning_margin_mean_eV": 0.0817691486720335
+                }
+              },
+              "off": {
+                "mae_eV": 0.27141399700578656,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.14469284283988168,
+                  "candidate_win_fraction": 0.22627494087472103,
+                  "losing_margin_mean_eV": 0.21697863753206947,
+                  "paired_row_bootstrap_95_eV": [
+                    0.14245603399175716,
+                    0.14691002497960207
+                  ],
+                  "winning_margin_mean_eV": 0.10248137166183159
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.14448692045659386,
+                  "candidate_win_fraction": 0.23173778355151395,
+                  "losing_margin_mean_eV": 0.21906751619624132,
+                  "paired_row_bootstrap_95_eV": [
+                    0.14221929969386857,
+                    0.1466907423502965
+                  ],
+                  "winning_margin_mean_eV": 0.1027643171658337
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.13514640320070476,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.008425249034799888,
+                  "candidate_win_fraction": 0.4376603044535492,
+                  "losing_margin_mean_eV": 0.04612134832184033,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007827383400911749,
+                    0.009065328817619147
+                  ],
+                  "winning_margin_mean_eV": 0.04000960507615352
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.008219326651512093,
+                  "candidate_win_fraction": 0.4605109756503781,
+                  "losing_margin_mean_eV": 0.07215868328553302,
+                  "paired_row_bootstrap_95_eV": [
+                    0.007161260872423115,
+                    0.009320480643597025
+                  ],
+                  "winning_margin_mean_eV": 0.06668568745659662
+                }
+              }
+            },
+            "k1_mae_eV": 0.12692707654919266,
+            "mean_descriptors": {
+              "atom_count": 14.313447253589155,
+              "bond_count": 14.926551414010193,
+              "conjugated_bond_fraction": 0.5237263185054472,
+              "ring_atom_fraction": 0.5697968182033354,
+              "rwse_mean": 0.13748995390312133
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.3969076860316734,
+              "receiver_dispersion_rms": 0.26469171763082905,
+              "update_rms": 0.48367045821794435,
+              "update_to_hidden_rms": 0.5390189476833623
+            },
+            "rows": 30021
+          }
+        }
+      },
+      "unseen_500k": {
+        "full_reproduction_max_abs_eV": 0.0,
+        "groups": {
+          "all": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.14319518166542053,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.0019418744039535521,
+                  "candidate_win_fraction": 0.496,
+                  "losing_margin_mean_eV": 0.06586390763048142,
+                  "paired_row_bootstrap_95_eV": [
+                    0.001137795646071434,
+                    0.002814754256606101
+                  ],
+                  "winning_margin_mean_eV": 0.06301115935848606
+                }
+              },
+              "half": {
+                "mae_eV": 0.19087576843738555,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.047680586771965024,
+                  "candidate_win_fraction": 0.33974,
+                  "losing_margin_mean_eV": 0.11425378296385602,
+                  "paired_row_bootstrap_95_eV": [
+                    0.046563379066109654,
+                    0.04875076087868213
+                  ],
+                  "winning_margin_mean_eV": 0.08169958193839569
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04962246117591858,
+                  "candidate_win_fraction": 0.35444,
+                  "losing_margin_mean_eV": 0.128627313535832,
+                  "paired_row_bootstrap_95_eV": [
+                    0.048365570364952086,
+                    0.05098374386632442
+                  ],
+                  "winning_margin_mean_eV": 0.09427318403756103
+                }
+              },
+              "off": {
+                "mae_eV": 0.32195584832191465,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.17876066665649415,
+                  "candidate_win_fraction": 0.2126,
+                  "losing_margin_mean_eV": 0.2565367476480516,
+                  "paired_row_bootstrap_95_eV": [
+                    0.17659846016943456,
+                    0.18084048000860214
+                  ],
+                  "winning_margin_mean_eV": 0.1092961826979385
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.1807025410604477,
+                  "candidate_win_fraction": 0.21724,
+                  "losing_margin_mean_eV": 0.2629897510020367,
+                  "paired_row_bootstrap_95_eV": [
+                    0.1784764750057459,
+                    0.18292435084295275
+                  ],
+                  "winning_margin_mean_eV": 0.11579504895003938
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.15253344153881074,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.009338259873390199,
+                  "candidate_win_fraction": 0.43964,
+                  "losing_margin_mean_eV": 0.05032116668282884,
+                  "paired_row_bootstrap_95_eV": [
+                    0.008804521084308625,
+                    0.009852771671056746
+                  ],
+                  "winning_margin_mean_eV": 0.042893495228669955
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.01128013427734375,
+                  "candidate_win_fraction": 0.45018,
+                  "losing_margin_mean_eV": 0.07813781474495302,
+                  "paired_row_bootstrap_95_eV": [
+                    0.010366163053512572,
+                    0.01219490393936634
+                  ],
+                  "winning_margin_mean_eV": 0.07037540322921125
+                }
+              }
+            },
+            "k1_mae_eV": 0.14125330726146698,
+            "mean_descriptors": {
+              "atom_count": 14.62134,
+              "bond_count": 15.24698,
+              "conjugated_bond_fraction": 0.4528769623090327,
+              "ring_atom_fraction": 0.5641222699123621,
+              "rwse_mean": 0.13694966578915715
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.4306537909078596,
+              "receiver_dispersion_rms": 0.24272236327648164,
+              "update_rms": 0.47632375986516473,
+              "update_to_hidden_rms": 0.5602967920866608
+            },
+            "rows": 50000
+          },
+          "high_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.14376190729759422,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": -0.0012620553949499165,
+                  "candidate_win_fraction": 0.5015294974508376,
+                  "losing_margin_mean_eV": 0.06771717609403288,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.00353596873467453,
+                    0.001020833426640143
+                  ],
+                  "winning_margin_mean_eV": 0.06982055965149918
+                }
+              },
+              "half": {
+                "mae_eV": 0.1870761775310597,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.04331427023346547,
+                  "candidate_win_fraction": 0.32512745812090316,
+                  "losing_margin_mean_eV": 0.10260555457533654,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0407598926529603,
+                    0.04577984742673747
+                  ],
+                  "winning_margin_mean_eV": 0.07975764748870685
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.04205221483851556,
+                  "candidate_win_fraction": 0.36693372177713035,
+                  "losing_margin_mean_eV": 0.12206366936621774,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03864640073713732,
+                    0.04550029656527603
+                  ],
+                  "winning_margin_mean_eV": 0.09599057252845294
+                }
+              },
+              "off": {
+                "mae_eV": 0.2843668333214734,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.1406049260238792,
+                  "candidate_win_fraction": 0.2225782957028405,
+                  "losing_margin_mean_eV": 0.21310397929548436,
+                  "paired_row_bootstrap_95_eV": [
+                    0.13607879790613797,
+                    0.14505951028797456
+                  ],
+                  "winning_margin_mean_eV": 0.11261984315842234
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.13934287062892928,
+                  "candidate_win_fraction": 0.23670793882010197,
+                  "losing_margin_mean_eV": 0.2192746384908225,
+                  "paired_row_bootstrap_95_eV": [
+                    0.13438285285942067,
+                    0.14449806607038718
+                  ],
+                  "winning_margin_mean_eV": 0.1184063377380371
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.15668323331737033,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.012921326019776101,
+                  "candidate_win_fraction": 0.4093226511289148,
+                  "losing_margin_mean_eV": 0.05097016482700108,
+                  "paired_row_bootstrap_95_eV": [
+                    0.011617866328226244,
+                    0.014283305997841564
+                  ],
+                  "winning_margin_mean_eV": 0.04198545026609482
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.011659270624826185,
+                  "candidate_win_fraction": 0.4573925710123816,
+                  "losing_margin_mean_eV": 0.08881763202232003,
+                  "paired_row_bootstrap_95_eV": [
+                    0.009065581677347227,
+                    0.014490881929932418
+                  ],
+                  "winning_margin_mean_eV": 0.07987413581009883
+                }
+              }
+            },
+            "k1_mae_eV": 0.14502396269254414,
+            "mean_descriptors": {
+              "atom_count": 14.691332847778588,
+              "bond_count": 15.651711580480699,
+              "conjugated_bond_fraction": 0.8429441979047771,
+              "ring_atom_fraction": 0.6933505956959916,
+              "rwse_mean": 0.13217201924028835
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.5119521881139635,
+              "receiver_dispersion_rms": 0.26505155283238707,
+              "update_rms": 0.4908418773823382,
+              "update_to_hidden_rms": 0.4953821456397613
+            },
+            "rows": 6865
+          },
+          "low_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.19970142820599046,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.00873114830885776,
+                  "candidate_win_fraction": 0.4784457761453702,
+                  "losing_margin_mean_eV": 0.09155356689591687,
+                  "paired_row_bootstrap_95_eV": [
+                    0.006281789759936979,
+                    0.01123443460605049
+                  ],
+                  "winning_margin_mean_eV": 0.08155365385190405
+                }
+              },
+              "half": {
+                "mae_eV": 0.28011973118980227,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0804183029838118,
+                  "candidate_win_fraction": 0.30910496810361493,
+                  "losing_margin_mean_eV": 0.17360833869276596,
+                  "paired_row_bootstrap_95_eV": [
+                    0.07703971907960223,
+                    0.08370559504639127
+                  ],
+                  "winning_margin_mean_eV": 0.1278751226720995
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.08914945129266957,
+                  "candidate_win_fraction": 0.31509762226947613,
+                  "losing_margin_mean_eV": 0.19371631150187796,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0853142872300066,
+                    0.0929920186203498
+                  ],
+                  "winning_margin_mean_eV": 0.13813912890440116
+                }
+              },
+              "off": {
+                "mae_eV": 0.503785018968831,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.3040835907628406,
+                  "candidate_win_fraction": 0.18113280494877249,
+                  "losing_margin_mean_eV": 0.4093044250499988,
+                  "paired_row_bootstrap_95_eV": [
+                    0.29767004609073405,
+                    0.31054685392175585
+                  ],
+                  "winning_margin_mean_eV": 0.17159992475519822
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.3128147390716983,
+                  "candidate_win_fraction": 0.18306591919582446,
+                  "losing_margin_mean_eV": 0.42189251595179844,
+                  "paired_row_bootstrap_95_eV": [
+                    0.30614087046195154,
+                    0.31960204607820963
+                  ],
+                  "winning_margin_mean_eV": 0.1739462800363301
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.213342983372871,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.013641555166880535,
+                  "candidate_win_fraction": 0.4402667697660932,
+                  "losing_margin_mean_eV": 0.07834532923328714,
+                  "paired_row_bootstrap_95_eV": [
+                    0.011802684995760752,
+                    0.015260405875648815
+                  ],
+                  "winning_margin_mean_eV": 0.06861959864619535
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.022372703475738297,
+                  "candidate_win_fraction": 0.4148463174173594,
+                  "losing_margin_mean_eV": 0.10540849224427055,
+                  "paired_row_bootstrap_95_eV": [
+                    0.019625388091315206,
+                    0.025035796488319998
+                  ],
+                  "winning_margin_mean_eV": 0.09475186903234518
+                }
+              }
+            },
+            "k1_mae_eV": 0.1909702798971327,
+            "mean_descriptors": {
+              "atom_count": 13.696791030349894,
+              "bond_count": 14.044364971969843,
+              "conjugated_bond_fraction": 0.07665202615643271,
+              "ring_atom_fraction": 0.46939189800632175,
+              "rwse_mean": 0.14075579110474667
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.3443477532629946,
+              "receiver_dispersion_rms": 0.19520732814728026,
+              "update_rms": 0.46176067449796276,
+              "update_to_hidden_rms": 0.5834444033357545
+            },
+            "rows": 10346
+          },
+          "middle_conjugation": {
+            "conditions": {
+              "full": {
+                "mae_eV": 0.12524696128134025,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.0,
+                  "candidate_win_fraction": 0.0,
+                  "losing_margin_mean_eV": null,
+                  "paired_row_bootstrap_95_eV": [
+                    0.0,
+                    0.0
+                  ],
+                  "winning_margin_mean_eV": null
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.00047044039405185904,
+                  "candidate_win_fraction": 0.500381225410961,
+                  "losing_margin_mean_eV": 0.057014970621656925,
+                  "paired_row_bootstrap_95_eV": [
+                    -0.0004303286965889727,
+                    0.0013478663467292738
+                  ],
+                  "winning_margin_mean_eV": 0.055987930678577276
+                }
+              },
+              "half": {
+                "mae_eV": 0.1635119010713611,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.03826493979002086,
+                  "candidate_win_fraction": 0.3524657659580957,
+                  "losing_margin_mean_eV": 0.09681312159298952,
+                  "paired_row_bootstrap_95_eV": [
+                    0.03709544850881279,
+                    0.039452279505323505
+                  ],
+                  "winning_margin_mean_eV": 0.06929714345308986
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.038735380184072715,
+                  "candidate_win_fraction": 0.36423800664857114,
+                  "losing_margin_mean_eV": 0.10787057161765788,
+                  "paired_row_bootstrap_95_eV": [
+                    0.037318325672964336,
+                    0.04006777363783443
+                  ],
+                  "winning_margin_mean_eV": 0.08193716445500593
+                }
+              },
+              "off": {
+                "mae_eV": 0.2724527829178167,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.1472058216364765,
+                  "candidate_win_fraction": 0.2204397816340846,
+                  "losing_margin_mean_eV": 0.21497158672900915,
+                  "paired_row_bootstrap_95_eV": [
+                    0.14503686544701683,
+                    0.1494377824827811
+                  ],
+                  "winning_margin_mean_eV": 0.0924400999919446
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.14767626203052836,
+                  "candidate_win_fraction": 0.22394705541492574,
+                  "losing_margin_mean_eV": 0.21921159412879046,
+                  "paired_row_bootstrap_95_eV": [
+                    0.14542362629529262,
+                    0.14990919159837274
+                  ],
+                  "winning_margin_mean_eV": 0.10021806734062484
+                }
+              },
+              "triplet_off": {
+                "mae_eV": 0.1324772080344343,
+                "minus_full": {
+                  "candidate_minus_reference_eV": 0.007230246753094053,
+                  "candidate_win_fraction": 0.4457897465613468,
+                  "losing_margin_mean_eV": 0.041244688267621225,
+                  "paired_row_bootstrap_95_eV": [
+                    0.006717651402395123,
+                    0.007722362303596398
+                  ],
+                  "winning_margin_mean_eV": 0.03505120236953388
+                },
+                "minus_k1": {
+                  "candidate_minus_reference_eV": 0.007700687147145913,
+                  "candidate_win_fraction": 0.4598188416847113,
+                  "losing_margin_mean_eV": 0.06657057214450922,
+                  "paired_row_bootstrap_95_eV": [
+                    0.006673071928977414,
+                    0.008640524463497376
+                  ],
+                  "winning_margin_mean_eV": 0.061457859186560986
+                }
+              }
+            },
+            "k1_mae_eV": 0.12477652088728838,
+            "mean_descriptors": {
+              "atom_count": 14.898411052487115,
+              "bond_count": 15.541706059959132,
+              "conjugated_bond_fraction": 0.48992022733907364,
+              "ring_atom_fraction": 0.5669563902342772,
+              "rwse_mean": 0.1367490000489057
+            },
+            "mean_diagnostics": {
+              "assignment_entropy": 2.440864799741733,
+              "receiver_dispersion_rms": 0.25303986814535306,
+              "update_rms": 0.477879245072206,
+              "update_to_hidden_rms": 0.5665840793438155
+            },
+            "rows": 32789
+          }
+        }
+      }
+    }
+  },
+  "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+  "statistical_scope": "paired row bootstrap 2000; descriptive, not multiplicity adjusted or training-seed uncertainty",
+  "training_executed": false
+}

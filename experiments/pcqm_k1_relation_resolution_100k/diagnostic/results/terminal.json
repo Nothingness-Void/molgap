@@ -1,0 +1,256 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md": "0cc708c2a291908fcecbbd2a84a22425fb6f6ec17ab06d45d5bfeb5ab6e0685e",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md": "65803b62532c51698fbb5eb8ca7ad93396b79eca076cddd3925ae56b27575daa",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/release.json": "d3386e2e38a3011c2a46fad637d8e482c10e9ee8f087e6d054f5b380773029b1",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/acceptance.json": "a51d436df4cf57a0594419de26e96c94be3d3d5b89feb58fa22bd42a663c3d05",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/analysis.json": "5a90a3719f68499ad3414b9e3261d2b61fe4cdf1aec59ff6ef1dfc88ad16987d",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/cost_records.json": "4892fc9af87579fde6ae7b96ad3dbace18c866fca6f22bd850cc2cb96995152d",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/execution.json": "eb5ca379298ed9ffcb0c15b465bc0fe0b5ca9f0277708764f9d15aaf10e629c7",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_receiver_pair_terminal.json": "cc84643919f7d0ffbf4e86dc2f1f05722d6c7e2f7dcaa3d5ecd092dad4bfb437",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_rrwp_pair_terminal.json": "198d1f64231fe36918ef1b4037b8b1cda7e121b7017892f8d931cefe5a45edbc",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_triplet_aggregate_terminal.json": "e7011244a14d37be1f0c6d7eac374cdaacd91f9595157c53339c09516d037765",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/role_history.json": "c49c3f27db8d4fbf5030783966b93c4ef5cc5c44ec7b9b34bfbdc2fba71df5b8",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/role_row_manifests.json": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json": "061b9156f82e2a30105fa7f7886d01b3c962e29440e687e7726302e79847ecf8",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/trajectory.json": "6fb2ff96835e31acb0fa52871b54173a0bce8451a9d0d252e37c08439fb80a82",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/role_plan.json": "98b3a62ae85753fc9440fe5f4edd30d094e5460f652a14d6dfe38f900433ebed",
+    "experiments/pcqm_k1_relation_resolution_100k/diagnostic/submission_receipt_v1.json": "b51a5f3a6697cd2f4e91b2279edd1cfc6aae5f1a56bf2bfbb4e75572c6fc2700"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-k1-relation-frozen-intervention-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.40577930565277776
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.20288965282638888
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "new mechanism evidence and explicit prospective authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/acceptance.json",
+        "name": "acceptance",
+        "sha256": "a51d436df4cf57a0594419de26e96c94be3d3d5b89feb58fa22bd42a663c3d05"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/analysis.json",
+        "name": "analysis",
+        "sha256": "5a90a3719f68499ad3414b9e3261d2b61fe4cdf1aec59ff6ef1dfc88ad16987d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/execution.json",
+        "name": "execution",
+        "sha256": "eb5ca379298ed9ffcb0c15b465bc0fe0b5ca9f0277708764f9d15aaf10e629c7"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/role_row_manifests.json",
+        "name": "role_row_manifests",
+        "sha256": "a02ca4f5cc610d3e59a7b78f700342048417d66e109a86e88226b58e597a0520"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/role_history.json",
+        "name": "role_history",
+        "sha256": "c49c3f27db8d4fbf5030783966b93c4ef5cc5c44ec7b9b34bfbdc2fba71df5b8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/cost_records.json",
+        "name": "cost_records",
+        "sha256": "4892fc9af87579fde6ae7b96ad3dbace18c866fca6f22bd850cc2cb96995152d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_receiver_pair_terminal.json",
+        "name": "neural_atom_k1_receiver_pair_terminal",
+        "sha256": "cc84643919f7d0ffbf4e86dc2f1f05722d6c7e2f7dcaa3d5ecd092dad4bfb437"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_triplet_aggregate_terminal.json",
+        "name": "neural_atom_k1_triplet_aggregate_terminal",
+        "sha256": "e7011244a14d37be1f0c6d7eac374cdaacd91f9595157c53339c09516d037765"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/neural_atom_k1_rrwp_pair_terminal.json",
+        "name": "neural_atom_k1_rrwp_pair_terminal",
+        "sha256": "198d1f64231fe36918ef1b4037b8b1cda7e121b7017892f8d931cefe5a45edbc"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/submission_receipt_v1.json",
+        "name": "submission_receipt_v1",
+        "sha256": "b51a5f3a6697cd2f4e91b2279edd1cfc6aae5f1a56bf2bfbb4e75572c6fc2700"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md",
+        "experiments/pcqm_k1_relation_resolution_100k/diagnostic/release.json",
+        "experiments/pcqm_k1_relation_resolution_100k/diagnostic/role_plan.json",
+        "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-relation-frozen-intervention-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-27T08:32:08Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "saved remote artifacts; no local model inference; distinct NO_TRAIN evidence"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "paired_endpoint_diagnostic",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "no_train_dependence_not_net_architecture_benefit",
+      "transfer_status": "no_new_transfer_claim"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "internal_development_500000_550000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "frozen_checkpoint_NO_TRAIN_relation_dependence_not_architecture_promotion",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-27T08:32:08Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-original_100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-original_100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-original_100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-unseen_500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-unseen_500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-relation-frozen-intervention-s42-unseen_500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "3546bfb0901e6d3f0467015258b9ba0bc376acb8fc364efe414f949d6e6ef391",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+  "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+}

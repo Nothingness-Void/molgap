@@ -1,0 +1,104 @@
+{
+  "accepted": true,
+  "allocated_device_seconds": 1460.8055003499999,
+  "execution_sha256": "eb8c68cb12811a5568b03860d38d7e62bc14f815a97f78f8e9a82c98806f1474",
+  "model_inference_executed_by_acceptance": false,
+  "no_new_model_or_coefficient_selected": true,
+  "observed_role_events": [
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_receiver_pair",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_triplet_aggregate",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "original_100k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "labels_read",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "unseen_500k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "mode": "neural_atom_k1_rrwp_pair",
+      "role": "unseen_500k"
+    }
+  ],
+  "protected_roles_read": false,
+  "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+  "training_executed": false,
+  "training_prefix_replay_claim": false,
+  "wall_seconds": 730.4027501749999
+}

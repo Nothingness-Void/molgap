@@ -98,20 +98,18 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 3,
+      "count": 2,
       "items": [
         "TC-k1-linear-attention-post100k-audit-s42",
-        "TC-k1-relation-frozen-intervention-s42",
         "TS-v5-legacy-evidence-migration"
       ],
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 1,
       "items": [
-        "TC-k1-pair-token-scale-attribution",
-        "TC-k1-relation-frozen-intervention-s42"
+        "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"
     },

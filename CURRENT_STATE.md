@@ -66,11 +66,12 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The user authorized one frozen-checkpoint relation-intervention diagnostic
-on Kaggle2. Its single private v1 job is RUNNING and bound to the existing
-Luna monitor; the source, inputs and NO_TRAIN plan are frozen. It does not
-reopen the closed training candidates or authorize a successor. Authority:
-`experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
+The Kaggle2 frozen-checkpoint relation-intervention diagnostic is complete.
+Receiver, Triplet and RRWP computations helped within their co-adapted networks,
+but none established a new portable architecture winner. Attenuation and
+targeted knockouts did not repair the weak molecular groups. The separate
+NO_TRAIN terminal is closed; no training successor is authorized. Authority:
+[diagnostic decision](experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md).
 
 The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit
 are complete. Receiver-pair, vector triplet aggregation and RRWP-pair were

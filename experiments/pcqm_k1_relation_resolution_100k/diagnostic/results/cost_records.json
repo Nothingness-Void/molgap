@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-k1-relation-frozen-intervention-s42",
+      "evidence_ref": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.40577930565277776
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.20288965282638888
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-relation-frozen-intervention-s42"
+    }
+  ],
+  "semantics": "sum over all allocated devices, including idle second T4 and setup; not claimed Kaggle billing"
+}

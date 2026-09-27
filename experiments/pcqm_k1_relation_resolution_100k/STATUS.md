@@ -1,15 +1,18 @@
 # Execution state
 
-## Separate frozen-intervention diagnostic
+## Separate frozen-intervention diagnostic complete
 
 On September 27, 2026 the user authorized one Kaggle2 NO_TRAIN diagnostic.
 The [protocol](diagnostic/protocol.md) freezes four inference conditions per
 accepted model on the two already consumed internal development roles.
 The source/package passed validation; private Kaggle2 kernel
 `kaseichou/molgap-k1-frozen-relation-diagnostic-s42`, numeric **136078071/v1**,
-was confirmed RUNNING. The requested T4 allocation is recorded, while actual
-hardware and device-time cost remain subject to terminal evidence. The frozen
-budget is at most 5,400 summed allocated-device seconds including setup/idle.
+completed on two T4s and passed independent saved-artifact acceptance. All full
+predictions reproduced exactly; weights were unchanged and optimizer steps were
+zero. Every predeclared non-full intervention worsened both roles and each
+conjugation group. This establishes checkpoint dependence, not a net portable
+architecture win. Authority, native cost and limits:
+[diagnostic decision](diagnostic/decision.md).
 
 The [receipt](diagnostic/submission_receipt_v1.json) binds the title-derived
 actual slug to the unchanged logical run ID (without `frozen`) in the released
@@ -19,11 +22,14 @@ were independently reconciled after submission. The initial SDK pull with a
 version-suffixed slug returned 403; pulling the actual slug succeeded, while
 status was separately verified for v1. This was not an execution failure.
 
-The same Luna B heartbeat monitors only
-[this binding](diagnostic/monitor_binding.json), silently while healthy and with
-one idempotent terminal/error handoff to the existing A. Static/synthetic
-tests passed (26), without local model construction or inference. No new training, coefficient
-selection, scale-up, protected role or successor is authorized.
+The same Luna B heartbeat delivered terminal event `evt-f2fd578ec3dd059bc877b121`
+once to the existing A and is paused. A claimed and closed the event, retaining
+the [closed binding](diagnostic/monitor_binding.json). The prospective NO_TRAIN
+trajectory was finalized through the shared RML terminal pipeline; it is not
+a new training-prefix replay entry. Focused static/synthetic checks passed
+(33), including byte-identical historical terminal translation after extracting
+the shared helper. No local model construction/inference, new training,
+coefficient selection, scale-up, protected role or successor was authorized.
 
 ## Training and separate audit complete; exact routes closed
 

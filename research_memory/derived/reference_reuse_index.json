@@ -577,6 +577,27 @@
       "comparison_status": "paired_endpoint_diagnostic",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "pcqm-k1-relation-frozen-intervention-s42",
+      "role_use": {
+        "internal_development_100000_150000": "used",
+        "internal_development_500000_550000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "frozen_checkpoint_NO_TRAIN_relation_dependence_not_architecture_promotion",
+      "source_envelope": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "no_new_transfer_claim",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "paired_endpoint_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
       "role_use": {
         "internal_development_100000_150000": "used",
