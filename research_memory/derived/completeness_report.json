@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 40,
-    "with_complete_native_measurement": 2,
-    "with_cost_event": 40,
-    "with_incomplete_native_measurement": 38,
+    "trajectories_total": 43,
+    "with_complete_native_measurement": 4,
+    "with_cost_event": 43,
+    "with_incomplete_native_measurement": 39,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,14 +15,17 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 16,
+      "count": 19,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-corrupt-gap-100k-s42",
+        "TC-k1-corrupt-gap-100k-s42-v2",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
         "TC-k1-joint-atom-post100k-audit-s42",
+        "TC-k1-joint-atom-post100k-audit-s42-v2",
         "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-linear-attention-post100k-audit-s42-recovery",
         "TC-k1-pair-token-batch-profile",
@@ -59,7 +62,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 38,
+      "count": 39,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -67,11 +70,12 @@
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
-        "TC-k1-corrupt-gap-100k-s42",
-        "TC-k1-corrupt-gap-atom-aux-100k-s42",
+        "TC-k1-corrupt-gap-100k-s42-v2",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
         "TC-k1-degree-balance-100k-s42",
         "TC-k1-functional-group-token-100k-s42",
         "TC-k1-joint-atom-post100k-audit-s42",
+        "TC-k1-joint-atom-post100k-audit-s42-v2",
         "TC-k1-linear-attention-100k-s42",
         "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-linear-attention-post100k-audit-s42-recovery",
@@ -104,11 +108,14 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 5,
+      "count": 8,
       "items": [
         "TC-k1-corrupt-gap-100k-s42",
+        "TC-k1-corrupt-gap-100k-s42-v2",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
         "TC-k1-joint-atom-post100k-audit-s42",
+        "TC-k1-joint-atom-post100k-audit-s42-v2",
         "TC-k1-linear-attention-post100k-audit-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -118,9 +125,9 @@
       "code": "trajectory_without_v5_evidence",
       "count": 4,
       "items": [
-        "TC-k1-corrupt-gap-100k-s42",
-        "TC-k1-corrupt-gap-atom-aux-100k-s42",
-        "TC-k1-joint-atom-post100k-audit-s42",
+        "TC-k1-corrupt-gap-100k-s42-v2",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+        "TC-k1-joint-atom-post100k-audit-s42-v2",
         "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"

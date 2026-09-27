@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 40,
-      "with_complete_native_measurement": 2,
-      "with_cost_event": 40,
-      "with_incomplete_native_measurement": 38,
+      "trajectories_total": 43,
+      "with_complete_native_measurement": 4,
+      "with_cost_event": 43,
+      "with_incomplete_native_measurement": 39,
       "without_cost_event": 0
     },
     "totals_by_hardware": {
@@ -270,11 +270,11 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 0,
-            "known_total": null
+            "known_records": 2,
+            "known_total": 0.010148628855833333
           },
           "not_applicable_records": 0,
-          "unknown_records": 23
+          "unknown_records": 24
         },
         "device_hours": {
           "estimated": {
@@ -282,11 +282,11 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 16,
-            "known_total": 20.485850975134717
+            "known_records": 18,
+            "known_total": 20.51268864834944
           },
           "not_applicable_records": 0,
-          "unknown_records": 7
+          "unknown_records": 8
         },
         "queue_hours": {
           "estimated": {
@@ -298,7 +298,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 23
+          "unknown_records": 26
         },
         "wall_hours": {
           "estimated": {
@@ -306,11 +306,11 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 5,
-            "known_total": 0.3851682327297223
+            "known_records": 7,
+            "known_total": 0.4120059059444445
           },
           "not_applicable_records": 0,
-          "unknown_records": 18
+          "unknown_records": 19
         }
       },
       "local-cpu": {
@@ -524,12 +524,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 5
         },
         "device_hours": {
           "estimated": {
-            "known_records": 3,
-            "known_total": 7.0
+            "known_records": 5,
+            "known_total": 13.0
           },
           "measured": {
             "known_records": 0,
@@ -548,12 +548,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 5
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 3,
-            "known_total": 6.5
+            "known_records": 5,
+            "known_total": 12.5
           },
           "measured": {
             "known_records": 0,
@@ -564,17 +564,17 @@
         }
       }
     },
-    "unknown_events": 46
+    "unknown_events": 51
   },
   "evidence": {
-    "validated": 38,
+    "validated": 41,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 16,
+      "count": 19,
       "severity": "INFO"
     },
     {
@@ -584,12 +584,12 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 38,
+      "count": 39,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 5,
+      "count": 8,
       "severity": "WARN"
     },
     {
@@ -604,17 +604,17 @@
     }
   ],
   "roles": {
-    "coarse_historical": 168,
+    "coarse_historical": 180,
     "explicit_events": 164,
     "repeatedly_selected": 3
   },
-  "source_digest": "1f71c1e2f0ad907f73b7fb1ef349e055e1c1ff5f3eaf71cc0acba7438bafab12",
+  "source_digest": "6c980b070e2e4e528132a61f995b96190628464e0d51f3dbaa8d546729abc9e4",
   "trajectories": {
-    "count": 40,
+    "count": 43,
     "outcomes": {
       "ACTIVE": 3,
       "CLOSED": 2,
-      "INFRASTRUCTURE_ONLY": 6,
+      "INFRASTRUCTURE_ONLY": 9,
       "NEGATIVE_UNDER_CONTRACT": 9,
       "NO_TRAIN": 6,
       "POSITIVE_BELOW_GATE": 12,

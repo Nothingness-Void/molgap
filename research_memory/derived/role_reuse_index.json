@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 168,
+  "ambiguous_historical_role_record_count": 180,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -297,6 +297,34 @@
     },
     {
       "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1151,6 +1179,62 @@
     },
     {
       "evidence_id": "pcqm-k1-v4-100k-reference-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -2365,6 +2449,7 @@
       "pcqm-k1-conjugated-persistent-100k-s42",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2391,7 +2476,9 @@
       "pcqm-k1-tf32-a100-paired-s42",
       "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-triplet-aggregate-100k-s42",
-      "pcqm-k1-v4-100k-reference-s42"
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
     ],
     "test_challenge": [
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -2404,6 +2491,7 @@
       "pcqm-k1-conjugated-persistent-100k-s42",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2430,7 +2518,9 @@
       "pcqm-k1-tf32-a100-paired-s42",
       "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-triplet-aggregate-100k-s42",
-      "pcqm-k1-v4-100k-reference-s42"
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
     ],
     "test_dev": [
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -2443,6 +2533,7 @@
       "pcqm-k1-conjugated-persistent-100k-s42",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-linear-attention-100k-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42",
       "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
@@ -2469,7 +2560,9 @@
       "pcqm-k1-tf32-a100-paired-s42",
       "pcqm-k1-topology-portability-post100k-audit-s42",
       "pcqm-k1-triplet-aggregate-100k-s42",
-      "pcqm-k1-v4-100k-reference-s42"
+      "pcqm-k1-v4-100k-reference-s42",
+      "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
     ]
   },
   "repeatedly_selected_role_identities": {

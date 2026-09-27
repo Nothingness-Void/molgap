@@ -91,8 +91,18 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-corrupt-gap-100k-s42:A001",
       "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -123,6 +133,11 @@
     {
       "source": "TC-k1-functional-group-token-100k-s42:A002",
       "target": "experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -596,8 +611,18 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42-v2",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
       "type": "parent_trajectory"
     },
     {
@@ -717,7 +742,17 @@
     },
     {
       "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
       "type": "parent_trajectory"
     },
     {
@@ -942,7 +977,17 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
       "type": "prior_evidence"
     },
     {
@@ -958,6 +1003,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
       "type": "prior_evidence"
     },
     {
@@ -1122,7 +1172,17 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
       "type": "reference_used"
     },
     {
@@ -1138,6 +1198,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
       "type": "reference_used"
     },
     {
@@ -1299,6 +1364,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-linear-attention-100k-s42",
       "type": "evidence"
     },
@@ -1407,6 +1476,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
       "id": "v5-legacy-evidence-migration-2026-09-17",
       "type": "evidence"
     },
@@ -1443,7 +1520,15 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
       "type": "trajectory"
     },
     {
@@ -1456,6 +1541,10 @@
     },
     {
       "id": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42-v2",
       "type": "trajectory"
     },
     {

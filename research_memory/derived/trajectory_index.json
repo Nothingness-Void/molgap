@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "1f71c1e2f0ad907f73b7fb1ef349e055e1c1ff5f3eaf71cc0acba7438bafab12",
+  "source_digest": "6c980b070e2e4e528132a61f995b96190628464e0d51f3dbaa8d546729abc9e4",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -128,17 +128,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md",
       "family_id": "k1-joint-objective",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-corrupt-gap-100k-s42"
     },
@@ -153,10 +155,44 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json",
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap/rml_plan/trajectory.json",
       "result_evidence_ids": [],
       "track": "C",
+      "trajectory_id": "TC-k1-corrupt-gap-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md",
+      "family_id": "k1-joint-objective",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
+      ],
+      "track": "C",
       "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "family_id": "k1-joint-objective",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2"
     },
     {
       "completeness_status": "complete",
@@ -196,9 +232,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/failure_v1/decision.md",
       "family_id": "k1-joint-objective",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-corrupt-gap-100k-s42",
@@ -206,10 +242,29 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md",
+      "family_id": "k1-joint-objective",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-corrupt-gap-100k-s42-v2",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-joint-atom-post100k-audit-s42-v2"
     },
     {
       "completeness_status": "complete",
