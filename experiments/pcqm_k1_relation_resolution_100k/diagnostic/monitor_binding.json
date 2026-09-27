@@ -1,0 +1,34 @@
+{
+  "acceptance_operation": "accept-analyze",
+  "acceptance_script": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\pcqm_k1_relation_resolution_100k\\diagnose.py",
+  "automatic_training_retry": false,
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
+  "credential_owner": "kaseichou",
+  "experiment_purpose": "NO_TRAIN",
+  "format": "molgap-server-multi-job-monitor-v1",
+  "healthy_action": "SILENT",
+  "helper_commit": "b9e138220b0168b4ce3a89810a8b1497fb965ee2",
+  "jobs": [
+    {
+      "audit_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_diagnostic_v1\\pcqm_k1_relation_diagnostic",
+      "closed": false,
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_diagnostic_v1\\monitor\\control_state.json",
+      "experiment_run_id": "kaseichou/molgap-k1-relation-diagnostic-s42:v1",
+      "kernel": "kaseichou/molgap-k1-frozen-relation-diagnostic-s42",
+      "kernel_id": 136078071,
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\k1_relation_diagnostic_v1",
+      "run_id": "kaseichou/molgap-k1-frozen-relation-diagnostic-s42:v1",
+      "slot": "diagnostic",
+      "version": 1
+    }
+  ],
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "owner": "server",
+  "python": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+  "source_archive_sha256": "5a0e5f29b836d4e92dc7b52937f4ca05521777d434f9314de548d5be0120297f",
+  "source_commit": "f2d794f953af437af3fab60b33d49720531c7195",
+  "terminal_action": "one idempotent handoff per job to existing A; no model/thinking override",
+  "working_directory": "C:\\Users\\Adminn\\Documents\\molgap"
+}

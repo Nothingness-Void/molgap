@@ -67,9 +67,10 @@ modify or take custody of the desktop full run.
 ## Discovery state
 
 The user authorized one frozen-checkpoint relation-intervention diagnostic
-on Kaggle2. Its source and NO_TRAIN release are being prepared; it does not
+on Kaggle2. Its single private v1 job is RUNNING and bound to the existing
+Luna monitor; the source, inputs and NO_TRAIN plan are frozen. It does not
 reopen the closed training candidates or authorize a successor. Authority:
-`experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md`.
+`experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
 
 The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit
 are complete. Receiver-pair, vector triplet aggregation and RRWP-pair were
@@ -77,7 +78,7 @@ positive below the original-role material gate, but all three regressed on
 fixed500K internal-dev molecules with unchanged 100K checkpoints. The three
 training trajectories remain replay-ready; the audit has a distinct accepted
 NO_TRAIN terminal. All three exact interventions are closed without scale-up,
-extra seeds or successor training. Luna monitoring is paused.
+extra seeds or successor training. Their former monitoring is closed.
 Authority: `experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
 
 The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early

@@ -5,7 +5,24 @@
 On September 27, 2026 the user authorized one Kaggle2 NO_TRAIN diagnostic.
 The [protocol](diagnostic/protocol.md) freezes four inference conditions per
 accepted model on the two already consumed internal development roles.
-Source/package validation precedes submission. No new training, coefficient
+The source/package passed validation; private Kaggle2 kernel
+`kaseichou/molgap-k1-frozen-relation-diagnostic-s42`, numeric **136078071/v1**,
+was confirmed RUNNING. The requested T4 allocation is recorded, while actual
+hardware and device-time cost remain subject to terminal evidence. The frozen
+budget is at most 5,400 summed allocated-device seconds including setup/idle.
+
+The [receipt](diagnostic/submission_receipt_v1.json) binds the title-derived
+actual slug to the unchanged logical run ID (without `frozen`) in the released
+source. No duplicate kernel was submitted and no source payload was rewritten.
+The exact mounted datasets, returned private metadata and normalized entry text
+were independently reconciled after submission. The initial SDK pull with a
+version-suffixed slug returned 403; pulling the actual slug succeeded, while
+status was separately verified for v1. This was not an execution failure.
+
+The same Luna B heartbeat monitors only
+[this binding](diagnostic/monitor_binding.json), silently while healthy and with
+one idempotent terminal/error handoff to the existing A. Static/synthetic
+tests passed (26), without local model construction or inference. No new training, coefficient
 selection, scale-up, protected role or successor is authorized.
 
 ## Training and separate audit complete; exact routes closed
