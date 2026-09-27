@@ -1,0 +1,33 @@
+{
+  "actual_hardware": "pending_startup_log",
+  "job": {
+    "candidate_root": "platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v1\\pcqm_k1_joint_atom_reconstruction",
+    "closed": false,
+    "control_state": "platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v1\\monitor\\control_state.json",
+    "embedded_trace_run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+    "kernel": "kaseichou/molgap-k1-joint-atom-s42",
+    "kernel_id": 136108187,
+    "output_directory": "platforms\\_records\\kaggle\\training\\k1_joint_atom_s42_v1",
+    "recipes": [
+      "k1_corrupt_gap",
+      "k1_corrupt_gap_atom_aux"
+    ],
+    "run_id": "kaseichou/molgap-k1-joint-atom-s42:v1",
+    "slot": "dual",
+    "version": 1
+  },
+  "protected_roles_accessed": false,
+  "raw_returned_ref": "/code/kaseichou/molgap-k1-joint-atom-s42",
+  "recorded_at": "2026-09-27T12:14:31Z",
+  "remote_entry_sha256": "217ecf3aad4f31678d1939e423a4337a0a0252beb8f61c2ddc32fd52401bfda0",
+  "remote_metadata_sha256": "f8adf670942a1f95e253ac2e566fa283c8d84b1d7aa10232031829aef0c0c77d",
+  "returned_machine_shape": "NvidiaTeslaT4",
+  "runtime_trace_identity_rewritten": false,
+  "scientific_entry_text_matches": true,
+  "source_archive_sha256": "91c74687e91bb7b5f67b06824bbb2bc06fc7537fabfe44161158af00cd5889c8",
+  "source_commit": "6576b4797b79308d1772a5fd6001ba86f0d74f43",
+  "source_dataset": "kaseichou/molgap-k1-joint-atom-source",
+  "source_dataset_private": true,
+  "source_dataset_status_at_release": "ready",
+  "submission_confirmed": true
+}

@@ -66,8 +66,9 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-One Kaggle2 dual-arm joint-Gap/atom-reconstruction study is authorized and in
-prelaunch preparation. It changes the training objective, not K1's inference
+One Kaggle2 dual-arm joint-Gap/atom-reconstruction study reached an execution
+failure before training; a reconciled identity-gate repair is in preparation.
+It changes the training objective, not K1's inference
 architecture, and retains a separately identified frozen500K terminal audit.
 No result or successor is assumed. Authority:
 [joint-objective protocol](experiments/pcqm_k1_joint_atom_reconstruction_100k/protocol.md)

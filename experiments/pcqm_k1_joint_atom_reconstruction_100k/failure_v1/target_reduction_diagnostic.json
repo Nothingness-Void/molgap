@@ -1,0 +1,50 @@
+{
+  "cpu_reduction_probes": [
+    {
+      "cpu_threads": 1,
+      "mean": 5.3383002281188965,
+      "mean_delta": 0.0,
+      "std": 1.275090217590332,
+      "std_delta": 0.0
+    },
+    {
+      "cpu_threads": 2,
+      "mean": 5.338300704956055,
+      "mean_delta": 4.76837158203125e-07,
+      "std": 1.275090217590332,
+      "std_delta": 0.0
+    },
+    {
+      "cpu_threads": 4,
+      "mean": 5.3383002281188965,
+      "mean_delta": 0.0,
+      "std": 1.275090217590332,
+      "std_delta": 0.0
+    },
+    {
+      "cpu_threads": 8,
+      "mean": 5.3383002281188965,
+      "mean_delta": 0.0,
+      "std": 1.275090217590332,
+      "std_delta": 0.0
+    },
+    {
+      "cpu_threads": 16,
+      "mean": 5.3383002281188965,
+      "mean_delta": 0.0,
+      "std": 1.275090217590332,
+      "std_delta": 0.0
+    }
+  ],
+  "float64_mean": 5.338300266634226,
+  "float64_std": 1.2750902063230531,
+  "format": "molgap-target-reduction-diagnostic-v1",
+  "frozen_mean": 5.3383002281188965,
+  "frozen_std": 1.275090217590332,
+  "model_executed": false,
+  "rows": 100000,
+  "train_indices_verified": true,
+  "train_only": true,
+  "train_target_sha256": "df5da6a53a51d25edaacfbd72462b53a554c1ac2a667f00718a4df6308d786ce",
+  "verified_train_shard_count": 2
+}
