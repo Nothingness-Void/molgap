@@ -66,6 +66,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The user authorized one frozen-checkpoint relation-intervention diagnostic
+on Kaggle2. Its source and NO_TRAIN release are being prepared; it does not
+reopen the closed training candidates or authorize a successor. Authority:
+`experiments/pcqm_k1_relation_resolution_100k/diagnostic/protocol.md`.
+
 The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit
 are complete. Receiver-pair, vector triplet aggregation and RRWP-pair were
 positive below the original-role material gate, but all three regressed on

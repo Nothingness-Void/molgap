@@ -1,5 +1,13 @@
 # Execution state
 
+## Separate frozen-intervention diagnostic
+
+On September 27, 2026 the user authorized one Kaggle2 NO_TRAIN diagnostic.
+The [protocol](diagnostic/protocol.md) freezes four inference conditions per
+accepted model on the two already consumed internal development roles.
+Source/package validation precedes submission. No new training, coefficient
+selection, scale-up, protected role or successor is authorized.
+
 ## Training and separate audit complete; exact routes closed
 
 All three arms completed 40 epochs / 31,240 optimizer steps and passed strict
