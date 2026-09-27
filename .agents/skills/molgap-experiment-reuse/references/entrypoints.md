@@ -46,6 +46,9 @@ patterns with experiment-specific assumptions, not generic launch commands:
   independent acceptance of retained prediction chunks.
 - [k1_relation_intervention_records.py](../../../../src/molgap/k1_relation_intervention_records.py):
   saved-tensor comparisons and observed/logical identity reconciliation.
+- [k1_relation_audit_records.py](../../../../src/molgap/k1_relation_audit_records.py):
+  `prepare_no_train_terminal` translates the accepted two-role relation audits;
+  reuse only when its fixed role/cost scope matches, then use RML finalization.
 
 Inspect modes, checkpoint layout, transform, role ranges and helper signatures.
 Reuse compatible functions; when values are hardcoded, parameterize the small
@@ -79,3 +82,5 @@ rerun every historical suite or a model smoke test to validate documentation.
 For an evidence change, also run the existing `molgap.research_memory validate`
 and `check --frozen`; rebuild only when the source evidence changed. Help/schema
 success, intact links and synthetic tests are not release authorization.
+The terminal-wiring entry accepts explicit `trajectory.json` and `terminal.json`
+paths; do not pass a plan directory to `terminal-pipeline`.

@@ -310,3 +310,33 @@ def accept_and_analyze(remote=REMOTE):
         "no_new_model_or_coefficient_selected": True, "training_prefix_replay_claim": False}
     save(results / "acceptance.json", accepted)
     return accepted
+
+
+def prepare_terminal(finalized_at):
+    """Reuse relation-audit evidence translation; never select a new model."""
+    from .k1_relation_audit_records import prepare_no_train_terminal
+    # Independent acceptance is deliberately required, not inferred from COMPLETE.
+    accepted = accept_and_analyze()
+    if not accepted["accepted"] or accepted["run_id"] != RUN:
+        raise ValueError("Accepted logical run required")
+    receipt = load(ROOT / "submission_receipt_v1.json")
+    if (receipt["logical_run_id"] != RUN or receipt["version"] != 1
+        or receipt["submission_confirmed"] is not True
+        or receipt["release_sha256"] != file_digest(ROOT / "release.json")):
+        raise ValueError("Observed scheduler receipt is not bound to the frozen release")
+    outcome = {"execution_status": "complete", "artifact_status": "accepted",
+        "comparison_status": "paired_endpoint_diagnostic",
+        "scientific_status": "no_train_dependence_not_net_architecture_benefit",
+        "transfer_status": "no_new_transfer_claim", "budget_decision": "stop_under_contract",
+        "full_handoff_status": "not_authorized"}
+    names = ["acceptance", "analysis", "execution", "role_row_manifests", "role_history", "cost_records"]
+    names += [f"{mode}_terminal" for mode in VARIANTS]
+    artifacts = [f"{REL}/results/{name}.json" for name in names]
+    artifacts.append(f"{REL}/submission_receipt_v1.json")
+    authority = [f"{REL}/{name}" for name in ("protocol.md", "release.json", "role_plan.json",
+        "rml_plan/trajectory.json", "decision.md")]
+    return prepare_no_train_terminal(prefix=REL, frozen=load(ROOT / "rml_plan/trajectory.json"),
+        run_id=RUN, evidence_id=EID, outcome=outcome,
+        scope="frozen_checkpoint_NO_TRAIN_relation_dependence_not_architecture_promotion",
+        finalized_at=finalized_at, artifact_refs=artifacts, authority=authority,
+        acceptance_name="acceptance", repo_root=REPO_ROOT)

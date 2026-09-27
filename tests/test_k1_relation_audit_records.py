@@ -1,6 +1,8 @@
 """Metadata/synthetic-array checks; no model or remote execution."""
 import ast
+import json
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -44,3 +46,34 @@ def test_adapter_has_no_training_or_model_execution():
              for node in ast.walk(tree) if isinstance(node, ast.Call)
              and isinstance(node.func, (ast.Attribute, ast.Name))}
     assert not calls.intersection({"_model", "_infer", "make_encoder", "backward", "step", "kernels_push"})
+
+
+def test_shared_terminal_translation_preserves_historical_bytes(tmp_path):
+    """Only retained metadata is copied; historical predictions are never read."""
+    from molgap.k1_relation_audit_records import prepare_no_train_terminal
+    root = Path(__file__).resolve().parents[1]
+    prefix = "experiments/pcqm_k1_relation_resolution_100k/audit"
+    original = root / prefix / "results/terminal.json"
+    terminal = json.loads(original.read_text())
+    for ref in terminal["artifact_hashes"]:
+        target = tmp_path / ref
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(root / ref, target)
+    frozen = json.loads((tmp_path / prefix / "rml_plan/trajectory.json").read_text())
+    evidence = terminal["evidence"]
+    result = prepare_no_train_terminal(prefix=prefix, frozen=frozen, run_id=terminal["run_id"],
+        evidence_id=evidence["evidence_id"], outcome=evidence["outcome"], scope=evidence["scope"],
+        finalized_at=terminal["finalized_at"], acceptance_name="acceptance_summary",
+        artifact_refs=[a["locator"] for a in evidence["artifacts"]],
+        authority=evidence["authority"]["pointers"], repo_root=tmp_path)
+    for name in ("terminal.json", "terminal_evidence.json", "terminal_acceptance.json",
+                 "role_history.json", "cost_records.json"):
+        assert (tmp_path / prefix / "results" / name).read_bytes() == (root / prefix / "results" / name).read_bytes()
+    assert result["terminal"] == f"{prefix}/results/terminal.json"
+    frozen["actions"][0]["run_ids"] = ["different-run"]
+    with pytest.raises(ValueError, match="prospective"):
+        prepare_no_train_terminal(prefix="unused", frozen=frozen, run_id=terminal["run_id"],
+            evidence_id=evidence["evidence_id"], outcome=evidence["outcome"], scope=evidence["scope"],
+            finalized_at=terminal["finalized_at"], acceptance_name="acceptance_summary",
+            artifact_refs=[], authority=[], repo_root=tmp_path)
+    assert not (tmp_path / "unused").exists()

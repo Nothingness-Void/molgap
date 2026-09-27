@@ -110,16 +110,45 @@ def prepare(finalized_at):
     accepted = accept_audit(AUDIT)
     analysis = load(RESULTS / "portability_analysis.json")
     frozen = load(ROOT / "audit/rml_plan/trajectory.json")
-    tid, run_id = frozen["trajectory_id"], accepted["run_id"]
+    run_id = accepted["run_id"]
     if frozen["actions"][0]["run_ids"] != [run_id] or analysis["run_id"] != run_id:
         raise ValueError("NO_TRAIN physical run differs from the prospective plan")
     if any(row["frozen500k_gain_eV"] >= 0 for row in analysis["retention"].values()):
         raise ValueError("A different scientific outcome needs an explicit controller interpretation")
     prefix = f"{REL}/audit"
+    outcome = {"execution_status": "complete", "artifact_status": "accepted",
+        "comparison_status": "paired_endpoint_diagnostic", "scientific_status": "no_train_negative_transfer",
+        "transfer_status": "frozen_portability_regressed", "budget_decision": "stop_under_contract",
+        "full_handoff_status": "not_authorized"}
+    artifact_refs = [f"{prefix}/results/{name}.json" for name in (
+        "acceptance_summary", "audit_terminal", "execution", "portability_analysis", "role_row_manifests", "role_history", "cost_records")]
+    artifact_refs += [f"{REL}/audit_submission_receipt_v1.json", f"{REL}/audit_release.json"]
+    authority = [f"{REL}/protocol.md", f"{REL}/training_contract.json", f"{REL}/audit_role_plan.json",
+        f"{prefix}/rml_plan/trajectory.json", f"{prefix}/decision.md"]
+    return prepare_no_train_terminal(prefix=prefix, frozen=frozen, run_id=run_id,
+        evidence_id="pcqm-k1-relation-resolution-post100k-audit-s42", outcome=outcome,
+        scope="frozen_checkpoint_NO_TRAIN_portability_not_scale_training", finalized_at=finalized_at,
+        artifact_refs=artifact_refs, authority=authority, acceptance_name="acceptance_summary",
+        repo_root=REPO_ROOT)
+
+
+def prepare_no_train_terminal(*, prefix, frozen, run_id, evidence_id, outcome, scope,
+                             finalized_at, artifact_refs, authority, acceptance_name,
+                             repo_root=REPO_ROOT):
+    """Translate accepted two-role relation diagnostics to existing RML inputs.
+
+    The caller owns scientific interpretation and saved-artifact acceptance.
+    RML finalize owns validation/publication; this helper does not release work.
+    """
+    repo_root = Path(repo_root)
+    results = repo_root / prefix / "results"
+    tid = frozen["trajectory_id"]
+    if frozen["actions"][0]["run_ids"] != [run_id]:
+        raise ValueError("NO_TRAIN physical run differs from the prospective plan")
     source_ref = f"{prefix}/results/terminal_acceptance.json"
     role_use = {key: "untouched" for key in ("official_validation", "test_dev", "test_challenge")}
     roles = []
-    manifests = load(RESULTS / "role_row_manifests.json")
+    manifests = load(results / "role_row_manifests.json")
     for key, dataset, role in (
             ("original_100k", "pcqm4mv2-ogb-fixed-100k-v1", "internal_development_100000_150000"),
             ("unseen_500k", "pcqm4mv2-ogb-fixed-500k-scnet-v1", "internal_development_500000_550000")):
@@ -131,44 +160,35 @@ def prepare(finalized_at):
                 "row_manifest_hash": hashlib.sha256(json_bytes(manifests[key])).hexdigest(),
                 "role_name": role, "access_kind": access, "selection_used": False,
                 "evidence_ref": source_ref})
-    execution = load(RESULTS / "execution.json")
+    execution = load(results / "execution.json")
     cost = {"schema": "molgap-cost-event-v1", "cost_event_id": frozen["actions"][0]["cost_event_ids"][0],
         "trajectory_id": tid, "action_id": "A001", "run_id": run_id, "attempt_id": "v1",
         "category": "audit", "platform": "kaggle2", "hardware": "Tesla_T4_16GB",
         "measurement": measured_cost(execution), "evidence_ref": source_ref}
-    save(RESULTS / "role_history.json", {"events": roles, "protected_roles_read": False,
+    save(results / "role_history.json", {"events": roles, "protected_roles_read": False,
         "observed_scope": "accepted remote prediction chunks and local saved-prediction metric computation; no training or checkpoint selection"})
-    save(RESULTS / "cost_records.json", {"costs": [cost],
+    save(results / "cost_records.json", {"costs": [cost],
         "semantics": "sum over all allocated devices, including idle second T4 and setup; not claimed Kaggle billing"})
-    outcome = {"execution_status": "complete", "artifact_status": "accepted",
-        "comparison_status": "paired_endpoint_diagnostic", "scientific_status": "no_train_negative_transfer",
-        "transfer_status": "frozen_portability_regressed", "budget_decision": "stop_under_contract",
-        "full_handoff_status": "not_authorized"}
     decision = {"decision_ref": f"{prefix}/decision.md", "outcome": "NO_TRAIN", "final": True,
         "next_allowed_actions": [], "reopen_conditions": ["new mechanism evidence and explicit prospective authority"]}
-    artifact_refs = [f"{prefix}/results/{name}.json" for name in (
-        "acceptance_summary", "audit_terminal", "execution", "portability_analysis", "role_row_manifests", "role_history", "cost_records")]
-    artifact_refs += [f"{REL}/audit_submission_receipt_v1.json", f"{REL}/audit_release.json"]
-    authority = [f"{REL}/protocol.md", f"{REL}/training_contract.json", f"{REL}/audit_role_plan.json",
-        f"{prefix}/rml_plan/trajectory.json", decision["decision_ref"]]
     evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
-        "legacy_contract": "none-prospective-v5", "evidence_id": "pcqm-k1-relation-resolution-post100k-audit-s42",
-        "track": "C", "scope": "frozen_checkpoint_NO_TRAIN_portability_not_scale_training",
+        "legacy_contract": "none-prospective-v5", "evidence_id": evidence_id,
+        "track": "C", "scope": scope,
         "outcome": outcome, "role_use": role_use, "authority": {"pointers": authority},
         "artifacts": [{"name": Path(ref).stem, "locator": ref, "availability": "repository_retained",
-                       "sha256": file_digest(REPO_ROOT / ref)} for ref in artifact_refs],
+                       "sha256": file_digest(repo_root / ref)} for ref in artifact_refs],
         "migration": {"training_executed": False, "inference_executed": False,
             "scientific_reinterpretation": False, "migrated_at": finalized_at,
             "verification_scope": "saved remote artifacts; no local model inference; distinct NO_TRAIN evidence"}}
-    save(RESULTS / "terminal_evidence.json", evidence)
-    save(REPO_ROOT / source_ref, {"format": "molgap-rml-terminal-acceptance-adapter-v1",
+    save(results / "terminal_evidence.json", evidence)
+    save(repo_root / source_ref, {"format": "molgap-rml-terminal-acceptance-adapter-v1",
         "evidence_id": evidence["evidence_id"], "run_id": run_id, "outcome": outcome,
         "trajectory_decision": decision, "role_use": role_use, "costs": [cost], "roles": roles,
-        "source_acceptance_ref": f"{prefix}/results/acceptance_summary.json",
-        "source_acceptance_sha256": file_digest(RESULTS / "acceptance_summary.json")})
+        "source_acceptance_ref": f"{prefix}/results/{acceptance_name}.json",
+        "source_acceptance_sha256": file_digest(results / f"{acceptance_name}.json")})
     bound = sorted(set(artifact_refs + authority + [source_ref]))
-    save(RESULTS / "terminal.json", {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid,
+    save(results / "terminal.json", {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid,
         "run_id": run_id, "action_id": "A001", "finalized_at": finalized_at, "acceptance_ref": source_ref,
-        "artifact_hashes": {ref: file_digest(REPO_ROOT / ref) for ref in bound},
+        "artifact_hashes": {ref: file_digest(repo_root / ref) for ref in bound},
         "evidence": evidence, "decision": decision, "costs": [cost], "roles": roles, "role_use": role_use})
     return {"trajectory": f"{prefix}/rml_plan/trajectory.json", "terminal": f"{prefix}/results/terminal.json"}

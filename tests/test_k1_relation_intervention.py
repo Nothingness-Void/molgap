@@ -163,3 +163,33 @@ def test_submission_binding_preserves_actual_and_logical_identity(tmp_path, monk
     assert records.load(Path(result["receipt"]))["logical_run_id"] == records.RUN
     with pytest.raises(FileExistsError):
         records.bind_submission()
+
+
+@pytest.mark.parametrize("bad_receipt", [False, True])
+def test_terminal_reuses_no_train_translation_with_bound_receipt(tmp_path, monkeypatch, bad_receipt):
+    from molgap import k1_relation_intervention_records as records
+    from molgap import k1_relation_audit_records as shared
+    root = tmp_path / records.REL
+    monkeypatch.setattr(records, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(records, "ROOT", root)
+    monkeypatch.setattr(records, "accept_and_analyze", lambda: {"accepted": True, "run_id": records.RUN})
+    records.save(root / "release.json", {"run_id": records.RUN})
+    records.save(root / "rml_plan/trajectory.json", {"trajectory_id": records.TID})
+    records.save(root / "submission_receipt_v1.json", {"logical_run_id": records.RUN, "version": 1,
+        "submission_confirmed": True, "release_sha256": "0"*64 if bad_receipt else records.file_digest(root / "release.json")})
+    captured = {}
+    def translate(**kwargs):
+        captured.update(kwargs)
+        return "translated"
+    monkeypatch.setattr(shared, "prepare_no_train_terminal", translate)
+    if bad_receipt:
+        with pytest.raises(ValueError, match="receipt"):
+            records.prepare_terminal("2026-09-27T08:30:00Z")
+        assert not captured
+    else:
+        assert records.prepare_terminal("2026-09-27T08:30:00Z") == "translated"
+        assert captured["run_id"] == records.RUN
+        assert captured["evidence_id"] == records.EID
+        assert captured["outcome"]["full_handoff_status"] == "not_authorized"
+        assert captured["outcome"]["comparison_status"] == "paired_endpoint_diagnostic"
+        assert f"{records.REL}/submission_receipt_v1.json" in captured["artifact_refs"]
