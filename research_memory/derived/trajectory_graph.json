@@ -96,6 +96,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-corrupt-gap-100k-s42:A001",
       "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
       "type": "action_produced_evidence"
@@ -103,6 +108,11 @@
     {
       "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2:A001",
       "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -138,6 +148,11 @@
     {
       "source": "TC-k1-joint-atom-post100k-audit-s42-v2:A001",
       "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
       "type": "action_produced_evidence"
     },
     {
@@ -616,6 +631,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-corrupt-gap-100k-s42-v3",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42",
       "type": "parent_trajectory"
@@ -623,6 +643,11 @@
     {
       "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
       "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
       "type": "parent_trajectory"
     },
     {
@@ -747,12 +772,22 @@
     },
     {
       "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "type": "parent_trajectory"
     },
     {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "type": "parent_trajectory"
     },
     {
@@ -982,12 +1017,22 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "type": "prior_evidence"
     },
     {
@@ -1008,6 +1053,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
       "type": "prior_evidence"
     },
     {
@@ -1177,12 +1227,22 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "type": "reference_used"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "type": "reference_used"
     },
     {
@@ -1203,6 +1263,11 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
       "type": "reference_used"
     },
     {
@@ -1536,11 +1601,19 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-k1-corrupt-gap-atom-aux-100k-s42",
       "type": "trajectory"
     },
     {
       "id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "type": "trajectory"
     },
     {
@@ -1557,6 +1630,10 @@
     },
     {
       "id": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42-v3",
       "type": "trajectory"
     },
     {
