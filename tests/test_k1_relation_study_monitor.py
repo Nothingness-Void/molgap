@@ -4,6 +4,8 @@ from pathlib import Path
 import sys
 import types
 
+import pytest
+
 from molgap.k1_relation_study_monitor import tick
 from molgap.server_control import BoundRun, LocalServerControlStore
 
@@ -63,3 +65,42 @@ def test_closed_binding_does_not_read_credentials(tmp_path):
     binding = tmp_path / "binding.json"
     binding.write_text(json.dumps({"owner": "server", "closed": True}))
     assert tick(binding) == {"events": [], "closed": True}
+
+
+@pytest.mark.parametrize("raw, expected", [("CANCEL_ACKNOWLEDGED", "CANCELLED"),
+                                          ("CANCELED", "CANCELLED"),
+                                          ("CANCEL_REQUESTED", "UNKNOWN")])
+def test_cancellation_is_terminal_only_after_acknowledgment(tmp_path, monkeypatch, raw, expected):
+    class FakeAPI:
+        def authenticate(self):
+            pass
+
+        def kernels_status(self, kernel):
+            return types.SimpleNamespace(status=raw)
+
+    fake = types.ModuleType("kaggle.api.kaggle_api_extended")
+    fake.KaggleApi = FakeAPI
+    monkeypatch.setitem(sys.modules, "kaggle.api.kaggle_api_extended", fake)
+    monkeypatch.setattr("molgap.k1_relation_study_monitor._latest_identity",
+        lambda api, kernel: {"kernel": kernel, "kernel_id": 123, "version": 2})
+    monkeypatch.setenv("KAGGLE_USERNAME", "test-owner")
+    monkeypatch.setenv("KAGGLE_KEY", "test-placeholder")
+    credential = tmp_path / "account.json"
+    credential.write_text(json.dumps({"username": "kaseichou", "key": "not-a-real-credential"}))
+    control = tmp_path / "control.json"
+    LocalServerControlStore(control).bind_run(BoundRun(
+        campaign_id="study", chain_id="dual", run_id="kaseichou/dual:v2",
+        attempt_id="v2", a_thread_id="A", b_thread_id="B", monitor_generation=2,
+        remote_platform="kaggle2", remote_job_identity={"kernel": "dual"}, release_identity="frozen"))
+    binding = tmp_path / "binding.json"
+    binding.write_text(json.dumps({"owner": "server", "credential_file": str(credential),
+        "jobs": [{"slot": "dual", "kernel": "kaseichou/dual", "kernel_id": 123,
+                  "version": 2, "control_state": str(control)}]}))
+    result = tick(binding)
+    assert result["observations"][0]["status"] == expected
+    assert LocalServerControlStore(control).load()["last_observation"]["detail"]["api_status"] == raw
+    if expected == "CANCELLED":
+        assert len(result["events"]) == 1
+        assert tick(binding)["events"] == result["events"]
+    else:
+        assert not result["events"]

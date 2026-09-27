@@ -495,6 +495,80 @@ def close_failure_v1(
     }
 
 
+def close_cancelled_attempt(attempt: int, *, repo_root: str | Path = REPO_ROOT) -> dict[str, Any]:
+    """Translate an empty, identity-bound cancellation into existing RML closure.
+
+    No log does not establish zero cost, zero training or untouched roles.
+    This adapter records the scheduler terminal without inventing worker facts.
+    """
+    root = Path(repo_root).resolve()
+    if type(attempt) is not int or attempt < 2:
+        raise ValueError("expected a separately planned retry attempt")
+    release = f"{REL}/attempts/v{attempt}"
+    cancelled = f"{REL}/cancellation_v{attempt}"
+    observation_ref = f"{cancelled}/platform_observation.json"
+    observation = _load(root / observation_ref)
+    receipt_ref = f"{REL}/submission_receipt_v{attempt}.json"
+    receipt = _load(root / receipt_ref)
+    job = receipt["job"]
+    config_ref = f"{release}/source_config.json"
+    config = _load(root / config_ref)
+    run_id = f"{job['kernel']}:v{attempt}"
+    if (observation["raw_status"] != "CANCEL_ACKNOWLEDGED"
+            or observation["files"] or observation["log"] or observation["next_page_token"]
+            or (observation["kernel"], observation["kernel_id"], observation["version"])
+            != (job["kernel"], job["kernel_id"], attempt)
+            or job["version"] != attempt or job["run_id"] != run_id
+            or config["run_id"] != run_id or config["source_commit"] != receipt["source_commit"]):
+        raise ValueError("cancellation evidence does not bind an empty terminal attempt")
+    observed_at = observation["observed_at"]
+    decision = {"decision_ref": f"{cancelled}/decision.md", "outcome": "INFRASTRUCTURE_ONLY",
+        "next_allowed_actions": [], "reopen_conditions": ["explicitly authorized new physical attempt"], "final": True}
+    outcome = {"execution_status": "cancelled", "artifact_status": "no_native_outputs_available",
+        "comparison_status": "not_evaluated", "scientific_status": "not_evaluated",
+        "transfer_status": "unavailable", "budget_decision": "cancellation_recorded_cost_unknown",
+        "full_handoff_status": "not_authorized"}
+    roles = {name: "unknown" for name in ("train", "internal_development_100000_150000",
+        "internal_development_500000_550000")}
+    # This is scheduler-metadata evidence, not an attestation of remote role use.
+    roles.update({name: "not_applicable" for name in ("official_validation", "test_dev", "test_challenge")})
+    jobs = []
+    for recipe in (*RECIPES, "audit"):
+        sub = "audit" if recipe == "audit" else f"arms/{recipe}"
+        trajectory_ref = f"{release}/{sub}/rml_plan/trajectory.json"
+        trajectory = _load(root / trajectory_ref)
+        if trajectory["actions"][0]["run_ids"] != [run_id]:
+            raise ValueError("prospective trajectory does not bind cancelled run")
+        tid = trajectory["trajectory_id"]
+        evidence_id = f"pcqm-k1-joint-{recipe.replace('_', '-')}-cancelled-v{attempt}"
+        authority = [f"{REL}/protocol.md", f"{REL}/training_contract.json", config_ref,
+            receipt_ref, observation_ref, trajectory_ref, decision["decision_ref"]]
+        evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
+            "legacy_contract": "none-v5-prospective-cancellation", "evidence_id": evidence_id,
+            "track": "C", "scope": "scheduler_cancellation_without_native_worker_evidence",
+            "outcome": outcome, "role_use": roles, "authority": {"pointers": authority},
+            "artifacts": [{"name": "platform_observation", "locator": observation_ref,
+                "availability": "repository_retained_platform_record", "sha256": file_digest(root / observation_ref)}],
+            "migration": {"migrated_at": observed_at,
+                "verification_scope": "Scheduler cancellation only; remote training, inference, cost and role access remain unknown. Closure executes no models.",
+                "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
+        acceptance_ref = f"{cancelled}/terminal_acceptance_{recipe}.json"
+        terminal_ref = f"{cancelled}/terminal_{recipe}.json"
+        acceptance = {"format": ACCEPTANCE_FORMAT, "evidence_id": evidence_id, "run_id": run_id,
+            "finalized_at": observed_at, "outcome": outcome, "trajectory_decision": decision,
+            "role_use": roles, "costs": [], "roles": [], "native_measurements_available": False}
+        from .v5_common import validate_v5_evidence_envelope
+        validate_v5_evidence_envelope(evidence, repo_root=root)
+        _write(root / acceptance_ref, acceptance)
+        terminal = {"format": TERMINAL_FORMAT, "trajectory_id": tid, "run_id": run_id,
+            "action_id": "A001", "finalized_at": observed_at, "acceptance_ref": acceptance_ref,
+            "artifact_hashes": {ref: file_digest(root / ref) for ref in [*authority, acceptance_ref]},
+            "evidence": evidence, "decision": decision, "costs": [], "roles": [], "role_use": roles}
+        _write(root / terminal_ref, terminal)
+        jobs.append(finalize(root, trajectory_ref, terminal_ref))
+    return {"status": "FINALIZED", "run_id": run_id, "results": jobs, "scientific_claim": None}
+
+
 __all__ = [
     "AUDIT_TRAJECTORY",
     "RECIPES",
@@ -502,4 +576,5 @@ __all__ = [
     "SOURCE_COMMIT",
     "TRAJECTORIES",
     "close_failure_v1",
+    "close_cancelled_attempt",
 ]

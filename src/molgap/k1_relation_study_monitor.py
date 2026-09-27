@@ -63,8 +63,10 @@ def tick(binding_path):
             response = api.kernels_status(f"{job['kernel']}/{job['version']}")
             status = getattr(response, "status", response)
             status = getattr(status, "name", str(status)).split(".")[-1].upper()
+            detail["api_status"] = status
+            # Kaggle's acknowledged cancellation is terminal, not an API outage.
+            status = {"CANCEL_ACKNOWLEDGED": "CANCELLED", "CANCELED": "CANCELLED"}.get(status, status)
             if status not in {"QUEUED", "RUNNING", "COMPLETE", "ERROR", "FAILED", "CANCELLED"}:
-                detail["api_status"] = status
                 status = "UNKNOWN"
         except Exception as error:
             status = "UNKNOWN"
