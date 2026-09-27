@@ -175,7 +175,9 @@ def make_trace(raw: dict[str, Any], checkpoint_sha: str) -> dict[str, Any]:
     )
 
 
-def main() -> None:
+def main(*, observed_comparison_identity=None, experiment_purpose="architecture_comparison",
+         declared_intervention_fields=("architecture_config_identity",),
+         intervention_group_id="architecture", evidence_scope="terminal_fixed_100k_architecture_screen") -> None:
     acceptance = load(RAW_ACCEPTANCE)
     candidate = acceptance["candidates"][MODE]
     record = candidate["record"]
@@ -254,6 +256,8 @@ def main() -> None:
     }
     comparison_identity = dict(load(ROOT / "comparison_readiness_prelaunch.json")["matched_fields"])
     comparison_identity["architecture_config_identity"] = record["contract"]["architecture_fingerprint"]
+    if observed_comparison_identity is not None:
+        comparison_identity = dict(observed_comparison_identity)
     trace_manifest = {
         "schema": "molgap-trace-manifest-v1",
         "trajectory_id": TRAJECTORY_ID,
@@ -416,8 +420,8 @@ def main() -> None:
     readiness = assess_comparison_readiness(
         candidate_id=MODE, candidate=candidate_side,
         reference_id=reference_bundle["reference_id"], reference=reference_side,
-        declared_intervention_fields=["architecture_config_identity"],
-        experiment_purpose="architecture_comparison", intervention_group_id="architecture",
+        declared_intervention_fields=list(declared_intervention_fields),
+        experiment_purpose=experiment_purpose, intervention_group_id=intervention_group_id,
     )
     validate_comparison_readiness(
         readiness,
@@ -450,7 +454,7 @@ def main() -> None:
     evidence = {
         "format": "molgap-v5-evidence-envelope-v1",
         "evidence_id": EVIDENCE_ID,
-        "track": "C", "scope": "terminal_fixed_100k_architecture_screen",
+        "track": "C", "scope": evidence_scope,
         "contract": "MOLGAP-COMMON-V5-FINAL", "legacy_contract": "none-prospective-v5",
         "outcome": outcome, "role_use": role_use,
         "artifacts": [

@@ -134,7 +134,8 @@ def prepare(finalized_at):
 
 def prepare_no_train_terminal(*, prefix, frozen, run_id, evidence_id, outcome, scope,
                              finalized_at, artifact_refs, authority, acceptance_name,
-                             repo_root=REPO_ROOT):
+                             repo_root=REPO_ROOT, cost_measurement=None, attempt_id="v1",
+                             cost_semantics=None):
     """Translate accepted two-role relation diagnostics to existing RML inputs.
 
     The caller owns scientific interpretation and saved-artifact acceptance.
@@ -162,13 +163,14 @@ def prepare_no_train_terminal(*, prefix, frozen, run_id, evidence_id, outcome, s
                 "evidence_ref": source_ref})
     execution = load(results / "execution.json")
     cost = {"schema": "molgap-cost-event-v1", "cost_event_id": frozen["actions"][0]["cost_event_ids"][0],
-        "trajectory_id": tid, "action_id": "A001", "run_id": run_id, "attempt_id": "v1",
+        "trajectory_id": tid, "action_id": "A001", "run_id": run_id, "attempt_id": attempt_id,
         "category": "audit", "platform": "kaggle2", "hardware": "Tesla_T4_16GB",
-        "measurement": measured_cost(execution), "evidence_ref": source_ref}
+        "measurement": measured_cost(execution) if cost_measurement is None else cost_measurement,
+        "evidence_ref": source_ref}
     save(results / "role_history.json", {"events": roles, "protected_roles_read": False,
         "observed_scope": "accepted remote prediction chunks and local saved-prediction metric computation; no training or checkpoint selection"})
     save(results / "cost_records.json", {"costs": [cost],
-        "semantics": "sum over all allocated devices, including idle second T4 and setup; not claimed Kaggle billing"})
+        "semantics": cost_semantics or "sum over all allocated devices, including idle second T4 and setup; not claimed Kaggle billing"})
     decision = {"decision_ref": f"{prefix}/decision.md", "outcome": "NO_TRAIN", "final": True,
         "next_allowed_actions": [], "reopen_conditions": ["new mechanism evidence and explicit prospective authority"]}
     evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
