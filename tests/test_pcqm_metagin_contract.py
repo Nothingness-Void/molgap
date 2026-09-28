@@ -46,7 +46,20 @@ def test_cpu_gpu_kernels_have_only_frozen_inputs_and_separate_resources():
         "kaseichou/molgap-metagin-2d-source",
         "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
     ]
-    assert gpu["dataset_sources"] == [*cpu["dataset_sources"],
-        "kaseichou/molgap-metagin-2d-hop-cache-v1"]
+    assert gpu["dataset_sources"] == [
+        "kaseichou/molgap-metagin-2d-source-v4",
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+        "kaseichou/molgap-metagin-2d-hop-cache-v1",
+    ]
     assert cpu["competition_sources"] == gpu["competition_sources"] == []
     assert cpu["model_sources"] == gpu["model_sources"] == []
+
+
+def test_retry_changes_only_physical_run_and_trajectory_identity():
+    from molgap.pcqm_metagin_screen import TRAJECTORY_ID
+
+    script = (ROOT / "kaggle_gpu/run.py").read_text(encoding="utf-8")
+    assert 'RUN_ID = "kaseichou/molgap-metagin-2d-s42:v2"' in script
+    assert f'TRAJECTORY_ID = "{TRAJECTORY_ID}-v2"' in script
+    assert "run_id=RUN_ID, trajectory_id=TRAJECTORY_ID" in script
+    assert (ROOT / "results/profile_v2_acceptance.json").is_file()

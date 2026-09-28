@@ -36,10 +36,15 @@ def _sealed(record: dict, label: str) -> None:
             raise ValueError(f"{label}: protected role {role} not sealed")
 
 
-def accept(candidate: Path, reference_payload: Path) -> dict:
-    source = _json(ROOT / "source_config.json")
-    plan = _json(ROOT / "rml_plan/trajectory.json")
-    prelaunch = _json(ROOT / "comparison_readiness_prelaunch.json")
+def accept(candidate: Path, reference_payload: Path, *, attempt: str = "v1") -> dict:
+    if attempt not in {"v1", "v2"}:
+        raise ValueError("Unknown MetaGIN screen attempt")
+    frozen = ROOT if attempt == "v1" else ROOT / "attempt_v2"
+    expected_run_id = RUN_ID if attempt == "v1" else "kaseichou/molgap-metagin-2d-s42:v2"
+    expected_trajectory_id = TRAJECTORY_ID if attempt == "v1" else f"{TRAJECTORY_ID}-v2"
+    source = _json(frozen / "source_config.json")
+    plan = _json(frozen / "rml_plan/trajectory.json")
+    prelaunch = _json(frozen / "comparison_readiness_prelaunch.json")
     completion = _json(candidate / "completion_manifest.json")
     record = _json(candidate / "arm_record.json")
     preflight = _json(candidate / "preflight.json")
@@ -57,9 +62,10 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
     if (
         prelaunch.get("prelaunch_ready") is not True
         or prelaunch.get("planned_status") != "PRELAUNCH_STRICT_PLANNED"
-        or plan["trajectory_id"] != TRAJECTORY_ID
+        or plan["trajectory_id"] != expected_trajectory_id
+        or source.get("gpu_run_id") != expected_run_id
         or plan["actions"][0]["source_commit"] != source["source_commit"]
-        or plan["actions"][0]["run_ids"] != [RUN_ID]
+        or plan["actions"][0]["run_ids"] != [expected_run_id]
         or completion.get("complete") is not True
         or completion.get("format") != "molgap-metagin-2d-100k-completion-v1"
     ):
@@ -79,8 +85,8 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
         or record.get("architecture") != ARCHITECTURE
         or record.get("architecture_config_identity") != canonical_fingerprint(ARCHITECTURE)
         or record.get("architecture_config_identity") != source["architecture_config_identity"]
-        or record.get("trajectory_id") != TRAJECTORY_ID
-        or record.get("run_id") != RUN_ID
+        or record.get("trajectory_id") != expected_trajectory_id
+        or record.get("run_id") != expected_run_id
         or record.get("source_commit") != source["source_commit"]
         or record.get("source_archive_sha256") != source["source_archive_sha256"]
         or record.get("fixed_manifest_sha256") != FIXED_MANIFEST_SHA256
@@ -122,16 +128,16 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
         raise ValueError("Runtime qualification or frozen target transform invalid")
     if (
         len(trace) != EPOCHS or len(canonical["observations"]) != EPOCHS
-        or canonical["trajectory_id"] != TRAJECTORY_ID
-        or canonical["run_id"] != RUN_ID
+        or canonical["trajectory_id"] != expected_trajectory_id
+        or canonical["run_id"] != expected_run_id
         or canonical["observations"][-1]["event"] != "terminal"
         or checkpoint.get("epoch") != EPOCHS - 1
         or checkpoint.get("source_commit") != source["source_commit"]
         or checkpoint.get("source_archive_sha256") != source["source_archive_sha256"]
         or checkpoint.get("row_order_fingerprint") != ROW_ORDER_FINGERPRINT
         or checkpoint.get("sidecar_aggregate_sha256") != sidecar["aggregate_sha256"]
-        or checkpoint.get("run_id") != RUN_ID
-        or checkpoint.get("trajectory_id") != TRAJECTORY_ID
+        or checkpoint.get("run_id") != expected_run_id
+        or checkpoint.get("trajectory_id") != expected_trajectory_id
         or checkpoint.get("target_transform_asset_id") != record["target_transform_asset_id"]
         or checkpoint.get("best_model_sha256") != sha256_file(candidate / "best_model.pt")
         or checkpoint.get("best_development_payload_sha256") != sha256_file(candidate / "best_development_payload.pt")
@@ -178,15 +184,15 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
     paired = paired_saved_errors(reference, payload)
     _sealed(roles, "observed roles")
     if (
-        roles.get("trajectory_id") != TRAJECTORY_ID
-        or roles.get("run_id") != RUN_ID
+        roles.get("trajectory_id") != expected_trajectory_id
+        or roles.get("run_id") != expected_run_id
         or roles.get("epoch") != 39
         or any(roles.get(name) is not True for name in (
             "training_labels_read", "development_labels_read", "development_metric_computed",
             "development_selection_used",
         ))
         or cost.get("training_completed") is not True
-        or cost.get("run_id") != RUN_ID
+        or cost.get("run_id") != expected_run_id
         or cost.get("model_id") != MODEL_ID
         or not math.isfinite(float(cost["allocated_device_seconds"]))
         or cost["allocated_device_seconds"] <= 0
@@ -199,7 +205,7 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
         "format": "molgap-metagin-2d-100k-acceptance-v1",
         "accepted": True, "model_inference_executed": False,
         "training_executed_locally": False,
-        "trajectory_id": TRAJECTORY_ID, "run_id": RUN_ID,
+        "trajectory_id": expected_trajectory_id, "run_id": expected_run_id,
         "source_commit": source["source_commit"],
         "source_archive_sha256": source["source_archive_sha256"],
         "reference_payload_sha256": REFERENCE_SHA,
@@ -224,5 +230,8 @@ if __name__ == "__main__":
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--reference-payload", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--attempt", choices=("v1", "v2"), default="v1")
     args = parser.parse_args()
-    atomic_json(args.output, accept(args.candidate, args.reference_payload))
+    atomic_json(args.output, accept(
+        args.candidate, args.reference_payload, attempt=args.attempt,
+    ))

@@ -215,6 +215,7 @@ def _preflight(roles, transform, *, output: Path, source_commit: str, sidecar_ma
 def train_screen(
     output: Path, *, source_commit: str, source_archive_sha256: str,
     sidecar_root: Path, transform_path: Path, run_id: str,
+    trajectory_id: str = TRAJECTORY_ID,
 ) -> dict:
     import torch
 
@@ -254,7 +255,7 @@ def train_screen(
     mean = torch.tensor(float(transform["mean"]), device="cuda")
     std = torch.tensor(float(transform["std"]), device="cuda")
     development = _development_loader(roles["development"])
-    canonical = recorder(output, TRAJECTORY_ID, run_id)
+    canonical = recorder(output, trajectory_id, run_id)
     best, best_epoch, trace = math.inf, -1, []
     steps, samples = 0, 0
     torch.cuda.reset_peak_memory_stats()
@@ -300,7 +301,7 @@ def train_screen(
             "format": "molgap-metagin-2d-resumable-checkpoint-v1",
             "epoch": epoch, "source_commit": source_commit,
             "source_archive_sha256": source_archive_sha256,
-            "run_id": run_id, "trajectory_id": TRAJECTORY_ID,
+            "run_id": run_id, "trajectory_id": trajectory_id,
             "runtime_certificate_id": preflight["runtime_certificate_id"],
             "sidecar_aggregate_sha256": sidecar["aggregate_sha256"],
             "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
@@ -339,7 +340,7 @@ def train_screen(
         "format": "molgap-metagin-2d-100k-arm-v1", "complete": True,
         "model_id": MODEL_ID, "architecture": ARCHITECTURE,
         "architecture_config_identity": canonical_fingerprint(ARCHITECTURE),
-        "trajectory_id": TRAJECTORY_ID, "run_id": run_id,
+        "trajectory_id": trajectory_id, "run_id": run_id,
         "source_commit": source_commit,
         "source_archive_sha256": source_archive_sha256,
         "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,

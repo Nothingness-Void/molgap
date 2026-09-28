@@ -10,8 +10,9 @@ import time
 import traceback
 
 
-RUN_ID = "kaseichou/molgap-metagin-2d-s42:v1"
-OUTPUT = Path("/kaggle/working/molgap-metagin-2d-s42")
+RUN_ID = "kaseichou/molgap-metagin-2d-s42:v2"
+TRAJECTORY_ID = "TC-metagin-2d-3hop-100k-s42-v2"
+OUTPUT = Path("/kaggle/working/molgap-metagin-2d-s42-v2")
 
 
 def _one(name: str) -> Path:
@@ -63,7 +64,7 @@ def main() -> None:
         train_screen(
             OUTPUT, source_commit=commit, source_archive_sha256=digest,
             sidecar_root=sidecars[0], transform_path=_one("target_transform.json"),
-            run_id=RUN_ID,
+            run_id=RUN_ID, trajectory_id=TRAJECTORY_ID,
         )
         finished = True
     except BaseException:
