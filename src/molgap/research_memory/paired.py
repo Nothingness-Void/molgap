@@ -93,8 +93,8 @@ def reference_trajectory(root: Path, trajectory: Mapping[str, Any]) -> dict[str,
     return reference
 
 
-def accepted_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tuple[str, dict[str, Any]]:
-    """Return the accepted control evidence only after its immutable finalization."""
+def terminal_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tuple[str, dict[str, Any]]:
+    """Bind a completed same-run control, including one excluded from trace replay."""
     binding = pair_binding(trajectory)
     if binding is None:
         raise ValueError("trajectory has no same-run replay binding")
@@ -118,6 +118,22 @@ def accepted_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     evidence_id = finalized["result"]["evidence_ids"][0]
     if evidence["evidence_id"] != evidence_id or evidence["outcome"]["execution_status"] != "complete":
         raise ValueError("same-run reference evidence is incomplete")
+    observation = validate_pair_observation(load_json_object(destination / "terminal_input.json").get("same_run_observation"))
+    if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
+        binding["spec_identity"], binding["logical_run_id"], reference["state_at_start"]["source_commit"]
+    ):
+        raise ValueError("same-run reference observation differs from frozen plan")
+    return evidence_id, finalized
+
+
+def accepted_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tuple[str, dict[str, Any]]:
+    """Return a replay-eligible control after its immutable finalization."""
+    evidence_id, finalized = terminal_reference_evidence(root, trajectory)
+    binding = pair_binding(trajectory)
+    assert binding is not None
+    reference_path = resolve_repo_pointer(root, binding["reference_trajectory_ref"])
+    assert reference_path is not None
+    destination = reference_path.parent / "rml_finalized"
     manifest_path = destination / "trace_manifest.json"
     if not manifest_path.is_file():
         raise ValueError("same-run reference has no canonical trace manifest")
@@ -126,9 +142,4 @@ def accepted_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
         not manifest["backtest_eligibility"]["eligible"] or manifest["backtest_eligibility"]["exclusion_reasons"]
     ):
         raise ValueError("same-run reference trace is not eligible")
-    observation = validate_pair_observation(load_json_object(destination / "terminal_input.json").get("same_run_observation"))
-    if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
-        binding["spec_identity"], binding["logical_run_id"], reference["state_at_start"]["source_commit"]
-    ):
-        raise ValueError("same-run reference observation differs from frozen plan")
     return evidence_id, finalized

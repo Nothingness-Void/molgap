@@ -11,7 +11,7 @@ from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .backtest import _comparison_key, build_screening_backtest
 from .trace import load_canonical_trace, json_bytes, trace_digest, validate_manifest_trace
 from .schemas import validate_trace_manifest
-from .paired import accepted_reference_evidence, pair_binding
+from .paired import accepted_reference_evidence, pair_binding, terminal_reference_evidence
 
 
 def _terminal_label(trajectory: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any] | None:
@@ -37,10 +37,15 @@ def _reference_binding_is_valid(
     recovery rule from weakening the candidate release gate.
     """
     paired = pair_binding(trajectory)
-    if paired is not None and manifest["backtest_eligibility"]["eligible"]:
+    if paired is not None:
         if manifest["comparison_role"] != paired["comparison_role"]:
             return False
-        return manifest["reference_id"] == accepted_reference_evidence(root, trajectory)[0]
+        if manifest["backtest_eligibility"]["eligible"]:
+            return manifest["reference_id"] == accepted_reference_evidence(root, trajectory)[0]
+        if paired["comparison_role"] == "reference":
+            return manifest["reference_id"] in trajectory["result"]["evidence_ids"]
+        control_id = terminal_reference_evidence(root, trajectory)[0]
+        return manifest["reference_id"] == control_id
     if manifest["comparison_role"] == "candidate":
         return manifest["reference_id"] in trajectory["state_at_start"]["reference_ids"]
     if manifest["comparison_role"] == "reference":
