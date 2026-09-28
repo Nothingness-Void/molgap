@@ -22,7 +22,8 @@ See the [profile failure record](results/profile_v1_failure.md). No MetaGIN2D
 validation result or full-scale claim exists.
 
 The exact Kaggle2 profile v2 (`kaseichou/molgap-metagin-2d-runtime-profile:v2`)
-is bound to the existing Luna B monitor through [`monitor_binding.json`](monitor_binding.json).
-Its first verified observation was `RUNNING`; the monitor is silent until a
-terminal status, then hands the raw evidence to server A. A complete 40-epoch
-screen remains conditional on the measured runtime/memory gate.
+completed and passed its [no-inference acceptance](results/profile_v2_acceptance.json).
+The measured time and VRAM [decision](results/profile_v2_decision.md) releases
+one new run identity of the *same* scientific screen, pending a new V5
+prelaunch/RML plan. The temporary profile monitor is paused and closed; it
+will be rebound to the screen only after an exact Kaggle submission receipt.
