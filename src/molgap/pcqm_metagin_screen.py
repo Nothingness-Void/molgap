@@ -43,6 +43,14 @@ MAX_WORKER_SECONDS = 6 * 3600
 MIN_MEMORY_RESERVE = 0.15
 
 
+def _warmed_step_seconds(results: list[tuple[float, str, float]]) -> float:
+    if len(results) != 3 or results[1][:2] != results[2][:2]:
+        raise RuntimeError("MetaGIN optimizer step calibration is not deterministic")
+    if any(not math.isfinite(row[2]) or row[2] <= 0 for row in results):
+        raise RuntimeError("Invalid MetaGIN step timing")
+    return max(results[1][2], results[2][2])
+
+
 def _state_sha256(model) -> str:
     digest = hashlib.sha256()
     for name, value in sorted(model.state_dict().items()):
@@ -130,7 +138,9 @@ def _preflight(roles, transform, *, output: Path, source_commit: str, sidecar_ma
     std = torch.tensor(float(transform["std"]), device="cuda")
     results = []
     torch.cuda.reset_peak_memory_stats()
-    for _ in range(2):
+    # The first CUDA/optimizer step initializes kernels and allocator state.
+    # It remains observed, but is not an estimator of every future step.
+    for _ in range(3):
         configure_fp32_determinism(SEED)
         model = MetaGIN2D().to("cuda").train()
         optimizer = torch.optim.AdamW(
@@ -143,17 +153,27 @@ def _preflight(roles, transform, *, output: Path, source_commit: str, sidecar_ma
         results.append((loss, _state_sha256(model), time.perf_counter() - started))
         del model, optimizer
         torch.cuda.empty_cache()
-    if results[0][:2] != results[1][:2]:
-        raise RuntimeError("MetaGIN optimizer step calibration is not deterministic")
+    warmed_seconds = _warmed_step_seconds(results)
     parameter_count = sum(parameter.numel() for parameter in MetaGIN2D().parameters())
     total_mib = torch.cuda.get_device_properties(0).total_memory / 1024**2
     reserved_mib = torch.cuda.max_memory_reserved() / 1024**2
     reserve = 1.0 - reserved_mib / total_mib
     if reserve < MIN_MEMORY_RESERVE:
         raise RuntimeError("MetaGIN preflight retains less than 15% GPU memory")
-    # Conservative lower bound: one measured train step plus no evaluation.
-    # A second runtime estimate after the first epoch is the stronger budget gate.
-    if max(result[2] for result in results) * STEPS_PER_EPOCH * EPOCHS > MAX_WORKER_SECONDS * 0.8:
+    # This is only a lower bound: the first complete epoch still gates the
+    # loader plus development-evaluation cost before the long run continues.
+    projected_train_seconds = warmed_seconds * STEPS_PER_EPOCH * EPOCHS
+    atomic_json(output / "preflight_runtime_observation.json", {
+        "format": "molgap-metagin-warmed-step-observation-v1",
+        "hardware": torch.cuda.get_device_name(0),
+        "allocated_device_count": torch.cuda.device_count(),
+        "cold_step_seconds": results[0][2],
+        "repeated_warmed_step_seconds": [results[1][2], results[2][2]],
+        "projected_train_only_seconds": projected_train_seconds,
+        "budget_seconds": MAX_WORKER_SECONDS,
+        "precision": "fp32", "physical_batch_per_device": BATCH_SIZE,
+    })
+    if projected_train_seconds > MAX_WORKER_SECONDS * 0.8:
         raise RuntimeError("MetaGIN calibrated optimizer throughput exceeds bounded worker budget")
     certificate = {
         "format": "molgap-runtime-certificate-v1", "status": "accepted",
@@ -165,7 +185,7 @@ def _preflight(roles, transform, *, output: Path, source_commit: str, sidecar_ma
         "determinism_fingerprint": canonical_fingerprint(determinism),
         "calibration_fixture_sha256": fixture_sha,
         "calibration_model_id": MODEL_ID,
-        "calibration_output_sha256": results[0][1],
+        "calibration_output_sha256": results[1][1],
         "runtime_fingerprint": runtime_manifest["runtime_fingerprint"],
         "calibration_checks_passed": True,
     }
@@ -179,7 +199,7 @@ def _preflight(roles, transform, *, output: Path, source_commit: str, sidecar_ma
         "fixed_geometry_sha256": FIXED_GEOMETRY_SHA256,
         "sidecar_aggregate_sha256": sidecar_manifest["aggregate_sha256"],
         "runtime_certificate_id": canonical_fingerprint(certificate),
-        "calibration_step_seconds": max(result[2] for result in results),
+        "calibration_step_seconds": warmed_seconds,
         "peak_reserved_mib": reserved_mib, "total_memory_mib": total_mib,
         "memory_reserve_fraction": reserve,
         "geometry_model_input": False, "teacher_model_input": False,

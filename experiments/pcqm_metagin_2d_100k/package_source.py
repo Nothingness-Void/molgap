@@ -22,6 +22,7 @@ TRANSFORM_SHA = "20e6730d57080b0bec9901a26a931034aad162848e0075940fd1e1273bf084b
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--dataset-id", default=DATASET_ID)
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -43,7 +44,7 @@ def main() -> None:
         raise RuntimeError("K1 target-transform asset changed")
     shutil.copyfile(asset, output / "target_transform.json")
     (output / "dataset-metadata.json").write_text(json.dumps({
-        "id": DATASET_ID, "title": "MolGap MetaGIN2D V5 Source",
+        "id": args.dataset_id, "title": "MolGap MetaGIN2D V5 Source",
         "licenses": [{"name": "other"}], "isPrivate": True,
     }, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
