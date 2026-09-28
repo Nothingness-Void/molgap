@@ -73,6 +73,16 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   This is exploratory on an already used role and does not release a Kaggle
   run or change the model recommendation. Authority:
   `experiments/pcqm_geometry_reliability_gate/decision.md`.
+- The desktop Kaggle1 GPTrans geometry-channel pair completed and closed.
+  Adding the angle channel to distance-only worsened the same-job 100K Gap MAE
+  by 4.789 meV, so the angle increment is `NEGATIVE_UNDER_CONTRACT`. The
+  distance-only arm is 4.035 meV lower than an accepted older Kaggle1 pure-2D
+  reference on identical development rows, but that cross-job comparison is
+  contextual and does not promote the model. Both geometry traces are excluded
+  from replay because live-development observations are absent. Canonical
+  evidence is indexed under
+  `experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/`; rejected
+  implementation history is on `archive` at `629d0549`.
 - Xi'an full-model replay job `67440607` matched predictions but differed in
   269 cross-process gradient tensors. The audit is closed negative; Xi'an V4
   ranking remains gated. Authority: `experiments/pcqm_xian_determinism/decision.md`.

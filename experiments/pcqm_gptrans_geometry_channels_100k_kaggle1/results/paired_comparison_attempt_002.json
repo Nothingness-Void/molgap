@@ -1,0 +1,39 @@
+{
+  "format": "molgap-geometry-channel-paired-endpoint-attempt-002-v1",
+  "kernel": "nothingnessvoid/molgap-geometry-channels-100k-s42-v2",
+  "kernel_id": 136152423,
+  "source_commit": "e4be2b828e0022df7e057db2c0ba8f576cad31a8",
+  "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "reference_arm": "distance_only",
+  "candidate_arm": "distance_angle",
+  "development_rows": 50000,
+  "reference_mae_eV": 0.15197911872327327,
+  "candidate_mae_eV": 0.15676831460893154,
+  "candidate_minus_reference_eV": 0.004789195885658264,
+  "paired_row_bootstrap": {
+    "replicates": 10000,
+    "seed": 42,
+    "ci95_candidate_minus_reference_eV": [0.0037790546683073045, 0.005771375794410705],
+    "training_seed_variation_estimated": false
+  },
+  "gate": {
+    "minimum_improvement_eV": 0.003,
+    "interval_upper_bound_must_be_below_zero": true,
+    "passed": false,
+    "outcome": "NEGATIVE_UNDER_CONTRACT"
+  },
+  "native_cost_t4_device_hours": {
+    "distance_only": 2.7594684600797232,
+    "distance_angle": 2.8662774200311136
+  },
+  "mechanical_acceptance": {
+    "distance_only": true,
+    "distance_angle": true
+  },
+  "strict_v5_comparison_ready": false,
+  "dual_replay_ready": false,
+  "replay_blockers": [
+    "missing_remote_live_development_metric_per_epoch",
+    "frozen_feature_identity_differs_between_arms"
+  ]
+}

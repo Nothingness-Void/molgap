@@ -1,0 +1,32 @@
+{
+  "format": "molgap-pcqm-gptrans-t-100k-reference-v4",
+  "variant": "distance_only",
+  "parameters": 5251425,
+  "variant_source_sha256": "40885936021c62aca4a3558251eb0ce4405590eb873b820aea2745f19f543dfa",
+  "checkpoint_sha256": "dc9f57f41ba0dd0103ee502bd4149b278f10bbce5d1d88c6c9682b0708922999",
+  "checkpoint_chunks": {
+    "checkpoint_epoch_09.pt": "4efb86cc861764d2f7cc89ba7f115765fb2cc497976c437b81febd6e8ee09785",
+    "checkpoint_epoch_19.pt": "8b239a8610c38e1e724fbce0f26dfe7bf1cc908430b4d1466be760c791b8d844",
+    "checkpoint_epoch_29.pt": "fff066140edc55787915e06d474d9bb1b51a38fa7e8061a1f58b892102979d41",
+    "checkpoint_epoch_39.pt": "8f0e688d037da49a4c263c1481705894d6afd9e2b4b25e401407aa3897782717",
+    "checkpoint_epoch_49.pt": "18e1e34d4ea64e23308ae97c3a220d8a987d7e9742b770a3a892b96706d669c5",
+    "checkpoint_epoch_59.pt": "dc9f57f41ba0dd0103ee502bd4149b278f10bbce5d1d88c6c9682b0708922999"
+  },
+  "complete": true,
+  "epochs": 60,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "best_development_mae_eV": 0.15197911858558655,
+  "best_epoch": 59,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "runtime_certificate_id": "38ebccca970b70f24c694128807fa03482588e9f783b21bd419a687b88438371",
+  "runtime_calibration_fingerprint": "3c21df1dc326c9d2a0e982d0824ea6c4b228a8548b93ed03c42fd1c6e85547f1",
+  "source_archive_sha256": "84866ec721d55d163442cb4ae678bda29396df5a51b781d7c8bf68365fc5a4e6",
+  "source_commit": "e4be2b828e0022df7e057db2c0ba8f576cad31a8",
+  "best_model_sha256": "4feb7b3fbc50e1aa5ca8afcacd62bc3c20ba41e50f59fb9fb7bc91cd859b9106",
+  "development_predictions_sha256": "aea1e3d65043ad57838a3b6f46ae97cd6355be38c93e7bd05ab0100867eb860d",
+  "frozen_reference_sha256": "4ef95bfc450612239251159cbaf806f2e145b2eb86b509a8f20a9373f8d67577",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

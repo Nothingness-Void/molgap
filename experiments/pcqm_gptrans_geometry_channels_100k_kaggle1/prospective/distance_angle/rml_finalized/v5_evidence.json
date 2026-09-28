@@ -1,0 +1,46 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v1/attempt_001/kernel.log",
+      "name": "kernel_log",
+      "sha256": "3a389bd6192f4d4653645d92036fc464499bd7c1cf220fbf3787b8023d62aa6b"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/decision_attempt_001_infrastructure.md",
+      "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v1/attempt_001/README.md",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective/distance_angle/terminal_inputs_infrastructure/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-geometry-channels-100k-kaggle1-contract-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28T08:30:22.392912+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained Kaggle1 worker-error log; no contracted training result"
+  },
+  "outcome": {
+    "artifact_status": "preflight_only",
+    "budget_decision": "v1_closed_after_authorized_v2_retry",
+    "comparison_status": "not_applicable",
+    "execution_status": "preflight_failed",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "internal_development": "unknown",
+    "official_train_prefix": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "attempt-001-infrastructure-distance_angle",
+  "track": "B"
+}
