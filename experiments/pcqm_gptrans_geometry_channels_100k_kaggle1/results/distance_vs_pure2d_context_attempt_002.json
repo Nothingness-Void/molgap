@@ -1,0 +1,53 @@
+{
+  "format": "molgap-saved-prediction-context-v1",
+  "scope": "post-hoc cross-run endpoint analysis; no new training or inference",
+  "candidate": {
+    "arm": "distance_only",
+    "prediction_sha256": "aea1e3d65043ad57838a3b6f46ae97cd6355be38c93e7bd05ab0100867eb860d",
+    "development_gap_mae_eV": 0.15197911871671677
+  },
+  "rows": {
+    "count": 50000,
+    "source_index_min": 100000,
+    "source_index_max": 149999,
+    "source_index_order_identical": true,
+    "target_tensors_identical": true,
+    "finite_predictions_and_targets": true,
+    "protected_roles_read": false
+  },
+  "method": {
+    "per_row_delta": "abs(distance_prediction-target)-abs(reference_prediction-target)",
+    "bootstrap": "molgap.router.paired_bootstrap_mean",
+    "replicates": 10000,
+    "seed": 42,
+    "interval": "paired row bootstrap percentile 95%; does not measure training-seed variation"
+  },
+  "references": [
+    {
+      "name": "accepted pure-2D GPTrans-T Kaggle1 same-platform prior job",
+      "prediction_sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff",
+      "development_gap_mae_eV": 0.15601448805570603,
+      "distance_minus_reference_eV": -0.004035369338989258,
+      "paired_ci95_eV": [-0.004997070548295975, -0.003074372460722924],
+      "distance_better_row_fraction": 0.51194,
+      "source": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md"
+    },
+    {
+      "name": "accepted pure-2D GPTrans-T Kaggle2 P100 V4 prior job",
+      "prediction_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+      "development_gap_mae_eV": 0.15662720430135726,
+      "distance_minus_reference_eV": -0.004648085584640503,
+      "paired_ci95_eV": [-0.005568461167693138, -0.003691652728319168],
+      "distance_better_row_fraction": 0.51536,
+      "source": "experiments/pcqm_gptrans_t_100k_v4/decision.md"
+    }
+  ],
+  "comparison_limitations": [
+    "Both pure-2D references were trained in separate jobs; the Kaggle2 job used P100 rather than T4.",
+    "The V5 strict mechanism gate does not permit feature_identity as a declared intervention; distance geometry changes feature identity.",
+    "The geometry run lacks the per-epoch live-development metric required by strict V5 trace comparison.",
+    "The row bootstrap is conditional on these fitted models and cannot establish training-seed robustness.",
+    "This comparison was not the frozen angle-versus-distance decision gate and cannot promote distance_only."
+  ],
+  "disposition": "contextual_positive_signal_only"
+}

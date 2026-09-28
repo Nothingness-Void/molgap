@@ -1,0 +1,78 @@
+{
+  "arm": "distance_angle",
+  "completion_ref": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/completion_manifest.json",
+  "format": "molgap-geometry-role-observation-v1",
+  "predictions_ref": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/development_predictions.pt",
+  "protected_roles": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json",
+      "role_event_id": "role-geometry-distance_angle-training_membership-a2",
+      "role_name": "official_train_prefix",
+      "row_manifest_hash": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json",
+      "role_event_id": "role-geometry-distance_angle-prediction_input-a2",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json",
+      "role_event_id": "role-geometry-distance_angle-labels_read-a2",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json",
+      "role_event_id": "role-geometry-distance_angle-metric_computed-a2",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json",
+      "role_event_id": "role-geometry-distance_angle-selection_used-a2",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/best_model.pt",
+      "name": "best_model",
+      "sha256": "f0597e32fc2e536bb3f6203cd5576193dbc9f9910070fb16fcda4656376f371b"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/last_checkpoint.pt",
+      "name": "resume_checkpoint",
+      "sha256": "41ad1e08ab6159f4db5cb72362547d7878a43d9fb651bc0608365fbea172523d"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "80de33b3cddb5a753ae90eb9e3d705a17d73f9afdc209af39167d4b97539fa1a"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/trace.json",
+      "name": "training_trace",
+      "sha256": "33e3d15a61599d08e71a880699c5ddd6d85717e3e41cd81ea22432d182f358ec"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "64ac8392f018d064d457d9c600f3bae357e1e367a1e5245d0c3840cc883d9a4e"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "sha256": "c76c8402c29ca62ec0188f4efe96963e633a0fca1eb52cb9dd7421e09f65f0f6"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/mechanical_acceptance.json",
+      "name": "mechanical_acceptance",
+      "sha256": "082155478146230b099efaa271ef3baf07fec4e0869464d670d290a15b80a80a"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/results/paired_comparison_attempt_002.json",
+      "name": "paired_comparison",
+      "sha256": "a7f66bae3c763ae9e05ce84e4513ff96e1a2f0c1ae83193d9832c8ec4b97a244"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/protocol.md",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/training_contract_attempt_002.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/release_gate_attempt_002.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/decision_attempt_002.md",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/acceptance.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/cost_records.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-geometry-channels-100k-kaggle1-attempt-002",
+  "metrics": {
+    "best_epoch": 59,
+    "observed_development_gap_mae_eV": 0.15676831460893154,
+    "source_commit_observed": "e4be2b828e0022df7e057db2c0ba8f576cad31a8"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28T08:27:01.745358+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-inference terminal mechanical, source, role, cost, trace and paired-row audit"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "paired_endpoint_only_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "same-job-paired-100k-geometry-distance_angle-attempt-002",
+  "track": "B"
+}
