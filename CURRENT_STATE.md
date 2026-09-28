@@ -66,10 +66,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The sole active server-owned architecture screen is the Kaggle2 K1 layer-6
-chemistry-separated local-bond comparison. Its exact job, source, and monitor
-binding are in [status](experiments/pcqm_k1_chem_local_100k/STATUS.md); no
-scientific endpoint or successor has been accepted.
+No server-owned architecture screen is running. The Kaggle2 K1 layer-6
+chemistry-separated local-bond comparison completed: both atom-pair and
+bond-type grouping regressed versus frozen K1. Both training trajectories are
+strict and replay-ready; the conditional 500K inference audit was not released.
+Authority: [decision](experiments/pcqm_k1_chem_local_100k/decision.md) and
+[status](experiments/pcqm_k1_chem_local_100k/STATUS.md). A distinct new
+mechanism would require its own evidence-backed prospective compute decision.
 
 The Kaggle2 joint-Gap/atom-reconstruction v3 study is complete and closed.
 Reconstruction improved both audited roles relative to identical corruption
