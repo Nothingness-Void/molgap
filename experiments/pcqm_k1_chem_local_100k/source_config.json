@@ -1,0 +1,19 @@
+{
+  "architecture_config_identities": {
+    "neural_atom_k1_atom_pair_local": "30ed0310359ba064fc01897430033553111c40ddac0fffbe8014d97607aeec64",
+    "neural_atom_k1_bond_type_local": "d586acb753cd4b977dde80f3c05cbc1b9b0e7805b04c4a88267ffc51baad8d78"
+  },
+  "candidate_ids": [
+    "neural_atom_k1_atom_pair_local",
+    "neural_atom_k1_bond_type_local"
+  ],
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_chem_local.py",
+    "src/molgap/k1_chem_local_study_runtime.py",
+    "src/molgap/pcqm_k1_variants_runner.py"
+  ],
+  "source_commit": "37b2269ee6f046856dcb0c01d9aafb774e68f72b",
+  "training_contract_ref": "experiments/pcqm_k1_chem_local_100k/training_contract.json",
+  "training_contract_sha256": "98768d975ffc74a8d79c3de35298e507f58c486db7d611e9df1f52e05801ffd3"
+}

@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "RUN_BOUNDED_LOCAL_COLOR_STUDY",
+    "field": "local_color_hypothesis_frozen",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "controller-only-bounded-user-authorization",
+    "authority_ref": "experiments/pcqm_k1_chem_local_100k/protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "2216bac7dd9cc25980c703313bd5bb414609a08d318942cd9d50deca90577db7",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-chem-local-bounded-screen",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "local_color_hypothesis_frozen"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}
