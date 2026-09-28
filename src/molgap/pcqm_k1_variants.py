@@ -5,6 +5,7 @@ import copy
 import math
 
 from .k1_relation_resolution import CONFIGS as RELATION_RESOLUTION_CONFIGS
+from .k1_chem_local import MODES as CHEM_LOCAL_MODES, PARAMETERS as CHEM_LOCAL_PARAMETERS
 
 
 HIDDEN_CHANNELS = 192
@@ -19,6 +20,21 @@ REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
     **RELATION_RESOLUTION_CONFIGS,
+    **{
+        mode: {
+            "backbone": "neural_atom_k1_v4",
+            "change": "layer6-four-color-separated-local-real-bond-message",
+            "color_source": "atom-pair-organic-classes" if mode == CHEM_LOCAL_MODES[0] else "ogb-bond-type",
+            "color_count": 4,
+            "local_layer": 6,
+            "adapter_channels": 64,
+            "expected_parameters": CHEM_LOCAL_PARAMETERS[mode],
+            "initialization_policy": "exact-nested-k1-zero-return",
+            "geometry": False,
+            "teacher": False,
+        }
+        for mode in CHEM_LOCAL_MODES
+    },
     "neural_atom_k1_linear_attention": {
         "backbone": "neural_atom_k1_v4",
         "change": "replace-single-slot-with-node-query-normalized-linear-kernel-exchange",
@@ -986,6 +1002,10 @@ def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
+
+    if mode in CHEM_LOCAL_MODES:
+        from .k1_chem_local import make_encoder as make_chem_local
+        return make_chem_local(mode)
 
     if mode in RELATION_RESOLUTION_CONFIGS:
         from .k1_relation_resolution import make_encoder as make_relation_resolution

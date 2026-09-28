@@ -565,6 +565,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         MODES as RESOLUTION_MODES, PARAMETERS as RESOLUTION_PARAMETERS,
         check_mechanism as check_resolution,
     )
+    from .k1_chem_local import (
+        MODES as CHEM_LOCAL_MODES, PARAMETERS as CHEM_LOCAL_PARAMETERS,
+        check_mechanism as check_chem_local,
+    )
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recoverable_modes = (
         active_edge_modes
@@ -578,7 +582,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
         + PAIR_TOKEN_MOSE_MODES
-        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES
+        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES + CHEM_LOCAL_MODES
     )
     import torch
 
@@ -1259,6 +1263,10 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         mechanism_checks = check_resolution(model, batch)
         if sum(parameter.numel() for parameter in model.parameters()) != RESOLUTION_PARAMETERS[mode]:
             raise RuntimeError("Relation-resolution parameter identity changed")
+    elif mode in CHEM_LOCAL_MODES:
+        mechanism_checks = check_chem_local(model, batch)
+        if sum(parameter.numel() for parameter in model.parameters()) != CHEM_LOCAL_PARAMETERS[mode]:
+            raise RuntimeError("Chem-local parameter identity changed")
     elif mode in PORTABILITY_MODES:
         mechanism_checks = check_portability(model, batch)
         if (
@@ -1326,6 +1334,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.base.neural_atom_mixers.parameters())
     elif mode in RESOLUTION_MODES:
         candidate_parameters = list(model.relation_token.parameters())
+    elif mode in CHEM_LOCAL_MODES:
+        candidate_parameters = list(model.local_adapter.parameters())
     elif mode in PORTABILITY_MODES:
         candidate_parameters = (
             list(model.rwse_refresh.parameters())
@@ -1594,6 +1604,7 @@ def train_arm(
     from .k1_portability_dual import MODES as PORTABILITY_MODES
     from .k1_linear_attention import MODES as LINEAR_MODES
     from .k1_relation_resolution import MODES as RESOLUTION_MODES
+    from .k1_chem_local import MODES as CHEM_LOCAL_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1607,7 +1618,7 @@ def train_arm(
         + SPARSE_TRIPLET_MODES
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
-        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES
+        + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES + CHEM_LOCAL_MODES
         + MOSE_MODES
     )
 
@@ -1629,11 +1640,11 @@ def train_arm(
         raise ValueError("target_transform_asset is only valid with objective_recipe")
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
-    if mode in RESOLUTION_MODES:
+    if mode in RESOLUTION_MODES + CHEM_LOCAL_MODES:
         if not trajectory_id or not physical_run_id:
-            raise ValueError("Relation study requires prospective trajectory and physical run binding")
+            raise ValueError("Architecture study requires prospective trajectory and physical run binding")
         if resume_from is not None:
-            raise RuntimeError("Recovered relation runs require a reviewed new physical-attempt trace binding")
+            raise RuntimeError("Recovered architecture runs require a reviewed new physical-attempt trace binding")
     validate_screen_arm(physical_batch_per_device=BATCH_SIZE)
     if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
         raise RuntimeError("Frozen row order implementation changed")
@@ -1890,7 +1901,7 @@ def train_arm(
             raise RuntimeError("Linear screen resume requires a separately reviewed canonical-trace binding")
         canonical = recorder(output, "TC-k1-linear-attention-100k-s42",
                              "nothingnessvoid/molgap-k1-linear-attention-s42:v1")
-    elif mode in RESOLUTION_MODES:
+    elif mode in RESOLUTION_MODES + CHEM_LOCAL_MODES:
         from .k1_screen_trace import recorder, record_epoch
         canonical = recorder(output, trajectory_id, physical_run_id)
     elif joint_objective is not None:
