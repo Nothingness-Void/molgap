@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 
 from molgap.constants import REPO_ROOT
@@ -17,6 +18,14 @@ REFERENCE = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/refer
 DATASET_ID = "kaseichou/molgap-k1-chem-local-source"
 
 
+def validate_kernel_slug():
+    metadata = json.loads((REPO_ROOT / REL / "kaggle/kernel-metadata.json").read_text())
+    resolved = re.sub(r"[^a-z0-9]+", "-", metadata["title"].lower()).strip("-")
+    if (metadata["id"] != f"kaseichou/{resolved}"
+            or RUN_ID.partition(":")[0] != metadata["id"]):
+        raise ValueError("Kaggle title would resolve to a different frozen run ID")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -24,6 +33,7 @@ def main():
     args = parser.parse_args()
     if args.dataset_id != DATASET_ID:
         raise ValueError("Source dataset owner/identity differs from frozen experiment")
+    validate_kernel_slug()
     root = REPO_ROOT / REL
     bundle = json.loads((REPO_ROOT / REFERENCE).read_text())
     frozen = json.loads((root / "source_config.json").read_text())

@@ -1,0 +1,21 @@
+{
+  "format": "molgap-kaggle-launch-reconciliation-v1",
+  "source_commit": "37b2269ee6f046856dcb0c01d9aafb774e68f72b",
+  "source_archive_sha256": "272fcee6321042bcf878ce495903b5d2733b03594c4dddbd02250e17db9e808a",
+  "planned_run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+  "returned_kernel": "kaseichou/molgap-k1-local-chemistry-color-s42",
+  "returned_kernel_id": 136210645,
+  "returned_version": 1,
+  "returned_machine_shape": "NvidiaTeslaT4",
+  "datasets": ["kaseichou/molgap-k1-chem-local-source", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"],
+  "observed_state_before_delete": "RUNNING",
+  "visible_log_at_delete": "empty",
+  "terminal_artifacts_retrieved": false,
+  "deleted": true,
+  "status_after_delete": "not_accessible",
+  "scientific_outcome": "UNKNOWN_NO_ACCEPTED_RESULT",
+  "gpu_cost": "unknown_not_zero",
+  "fault": "Kaggle title-derived slug differed from frozen physical run ID",
+  "automatic_scientific_successor_authorized": false,
+  "remote_metadata_local_record": "platforms/_records/kaggle/source/k1_chem_local_remote_v1/kernel-metadata.json"
+}
