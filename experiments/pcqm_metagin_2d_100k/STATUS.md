@@ -20,3 +20,9 @@ already accepted CPU sidecar's producer commit. The source and sidecar are
 independently immutable assets; profile v2 pins both identities separately.
 See the [profile failure record](results/profile_v1_failure.md). No MetaGIN2D
 validation result or full-scale claim exists.
+
+The exact Kaggle2 profile v2 (`kaseichou/molgap-metagin-2d-runtime-profile:v2`)
+is bound to the existing Luna B monitor through [`monitor_binding.json`](monitor_binding.json).
+Its first verified observation was `RUNNING`; the monitor is silent until a
+terminal status, then hands the raw evidence to server A. A complete 40-epoch
+screen remains conditional on the measured runtime/memory gate.

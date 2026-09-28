@@ -66,7 +66,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-No server-owned architecture screen is running. The Kaggle2 K1 layer-6
+No server-owned architecture training screen is running. A train-role-only
+MetaGIN2D runtime profile is active on Kaggle2; it is not a model-selection
+result and cannot release a full screen without its measured cost gate.
+Authority: [MetaGIN2D status](experiments/pcqm_metagin_2d_100k/STATUS.md).
+The Kaggle2 K1 layer-6
 chemistry-separated local-bond comparison completed: both atom-pair and
 bond-type grouping regressed versus frozen K1. Both training trajectories are
 strict and replay-ready; the conditional 500K inference audit was not released.
