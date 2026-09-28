@@ -31,6 +31,10 @@ def load(path):
 
 
 def save(path, value):
+    if path.exists():
+        if load(path) != value:
+            raise RuntimeError(f"Partial release evidence changed: {path}")
+        return
     atomic_write(path, json_bytes(value))
 
 
@@ -43,21 +47,25 @@ def main():
     digest = (package / "SOURCE_ARCHIVE_SHA256.txt").read_text().strip()
     if len(commit) != 40 or file_digest(package / "source_payload.bin") != digest:
         raise RuntimeError("Frozen source package bytes changed")
-    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip()
-    if head != commit:
-        raise RuntimeError("Freeze against the committed executable source HEAD")
+    subprocess.run(
+        ["git", "merge-base", "--is-ancestor", commit, "HEAD"],
+        cwd=REPO_ROOT, check=True,
+    )
+    changed = subprocess.check_output(
+        ["git", "diff", "--name-only", commit, "HEAD", "--", "src",
+         f"{REL}/package_source.py", f"{REL}/kaggle_cpu", f"{REL}/kaggle_gpu"],
+        cwd=REPO_ROOT, text=True,
+    ).strip()
+    if changed:
+        raise RuntimeError("Executable package source changed since frozen commit")
     dirty = subprocess.check_output(
-        ["git", "status", "--porcelain", "--", "src", REL],
+        ["git", "status", "--porcelain", "--", "src"],
         cwd=REPO_ROOT, text=True,
     ).strip()
     if dirty:
-        raise RuntimeError("Commit architecture, runner, contract and scripts before freezing")
-    for name in (
-        "source_config.json", "comparison_readiness_prelaunch.json", "role_plan.json",
-        "trace_plan.json", "budget_snapshot.json", "rml_plan",
-    ):
-        if (ROOT / name).exists():
-            raise FileExistsError(f"Frozen release must not overwrite {name}")
+        raise RuntimeError("Commit architecture and runner before freezing")
+    if (ROOT / "rml_plan").exists():
+        raise FileExistsError("Frozen RML plan must not be overwritten")
     bundle = load(REFERENCE)
     role = load(TEMPLATE / "role_plan.json")
     trace = load(TEMPLATE / "trace_plan.json")
@@ -153,6 +161,9 @@ def main():
         "alternative_explanations": [
             "path counts duplicate K1 local depth", "virtual-state bandwidth is too weak",
             "larger independent encoder overfits 100K", "reused-development selection optimism",
+        ],
+        "related_closed_family_ids": [
+            "k1-chemistry-separated-local", "shortest-path-attention", "k1-sparse-triplet",
         ],
         "changed_mechanism": "replace K1 EdgeState-plus-slot backbone with four sequential bond/2-hop/3-hop gated MetaFormer blocks and persistent virtual molecular state",
         "cheapest_falsifier": "one accepted CPU topology sidecar then one seed42 fixed100K screen against immutable K1-v4",
