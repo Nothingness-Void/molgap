@@ -66,10 +66,10 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-No server-owned architecture training screen is running. The MetaGIN2D
-train-role-only runtime profile passed the measured cost/memory gate; one
-newly frozen seed-42 screen of the same scientific model is the next bounded
-server action. There is still no MetaGIN2D accuracy result. Authority:
+One server-owned MetaGIN2D seed-42 Kaggle2 screen is running under the frozen
+V5 fixed-100K FP32/BS128 contract. Its train-role-only runtime profile passed
+the cost/memory gate and its new v2 V5 prelaunch/RML plan passed repository
+validation. There is still no MetaGIN2D accuracy result. Authority:
 [MetaGIN2D status](experiments/pcqm_metagin_2d_100k/STATUS.md).
 The Kaggle2 K1 layer-6
 chemistry-separated local-bond comparison completed: both atom-pair and

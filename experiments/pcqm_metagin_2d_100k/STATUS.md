@@ -24,6 +24,12 @@ validation result or full-scale claim exists.
 The exact Kaggle2 profile v2 (`kaseichou/molgap-metagin-2d-runtime-profile:v2`)
 completed and passed its [no-inference acceptance](results/profile_v2_acceptance.json).
 The measured time and VRAM [decision](results/profile_v2_decision.md) releases
-one new run identity of the *same* scientific screen, pending a new V5
-prelaunch/RML plan. The temporary profile monitor is paused and closed; it
-will be rebound to the screen only after an exact Kaggle submission receipt.
+one new run identity of the *same* scientific screen. Its
+[v2 V5 prelaunch/RML plan](attempt_v2/rml_plan/trajectory.json) passed
+repository validation; the private source-v4 dataset was ready before the
+single GPU submission. Kaggle returned `kaseichou/molgap-metagin-2d-s42:v2`
+(numeric kernel 136263563), verified `RUNNING` at submission and bound to
+the existing Luna B monitor. The [receipt](attempt_v2/submission_receipt.json)
+fixes the physical version, source and sidecar. This is not an accepted model
+result; B stays silent until an actionable terminal state, then A performs
+artifact and RML acceptance.
