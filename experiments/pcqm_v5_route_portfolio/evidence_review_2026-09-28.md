@@ -55,8 +55,18 @@ payloads. No model was trained or inferred and no official role was read.
 - [MetaGIN](https://journal.hep.com.cn/fcs/EN/10.1007/s11704-024-3784-y)
   reports a pure-2D PCQM4Mv2 result with a 3-hop/MetaFormer backbone, but its
   reported 8.87M-parameter full-scale recipe is not the frozen 3.66M K1
-  100K/40-epoch contract. Local path and extra-local-capacity evidence is
-  weak or negative. A shrunken K1 add-on would not reproduce the paper.
+  100K/40-epoch contract. The public [source snapshot](https://github.com/xwxztq/MetaGIN/tree/32154dbce8c3aa8268eb973288dd512a5774536d)
+  at `32154dbce8c3aa8268eb973288dd512a5774536d` confirms a distinct
+  bond/2-hop/3-hop backbone whose forward pass does not consume `pos_3d`.
+  However, the published `main.py` imports dataset symbols that are commented
+  out in `data.py`, constructs official-valid/test-dev loaders, and specifies
+  batch 256, Adan, and 12 periods of 12 epochs. Its preprocessing preferentially
+  constructs training graphs from an SDF and other graphs from SMILES. None of
+  that code can be run as-is under the fixed cross-platform 2D data identity,
+  protected-role boundary, or V5 batch-128 contract. Local path and
+  extra-local-capacity evidence is weak or negative; a shrunken K1 add-on
+  would not reproduce the paper. A faithful, role-safe independent backbone
+  would require a separate source/graph/runtime preflight before any GPU gate.
 - [CTNN](https://proceedings.iclr.cc/paper_files/paper/2026/hash/cffcd7e5c10755a3439e812f3beffde2-Abstract-Conference.html)
   offers a distinct canonical tree-cover backbone, but the reported sparse
   molecular results are classification rather than PCQM Gap regression.

@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P1 | C-DISTINCT-2D-BACKBONE-PREFLIGHT | Audit a faithful independent 2D information-flow backbone against the fixed cache, protected-role boundary, V5 batch and runtime budget; [evidence review](experiments/pcqm_v5_route_portfolio/evidence_review_2026-09-28.md) | Freeze one prospectively falsifiable mechanism and accepted CPU/runtime preflight before any GPU release; otherwise retain no-go |
 | P0 | C-K1-CHEM-LOCAL | Completed: two equal-capacity layer-6 atom-pair/bond-type grouping arms regressed versus K1 | Preserve both strict/replay-ready [negative terminals](experiments/pcqm_k1_chem_local_100k/decision.md); no fixed500K audit, scale, seed or automatic successor |
 | P0 | C-K1-JOINT-ATOM | Completed: joint reconstruction helped the corrupted control, but did not establish a portable K1 winner | Preserve [paired attribution](experiments/pcqm_k1_joint_atom_reconstruction_100k/decision.md), two training replay entries and separate NO_TRAIN audit; no automatic successor |
 | P0 | C-K1-RELATION-DEPENDENCY | Completed: frozen interventions established checkpoint dependence, not a portable winner | Preserve [diagnostic attribution](experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md); no automatic training |
