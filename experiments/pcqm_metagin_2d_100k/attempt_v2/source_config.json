@@ -1,0 +1,14 @@
+{
+  "architecture_config_identity": "9423550f7f26e5374b7de6e45b1ae2971e7f5ebcc4b6ff4d9ee5380cb73988b0",
+  "candidate_id": "metagin_2d_3hop_4x256",
+  "cpu_run_id": "kaseichou/molgap-metagin-2d-sidecar-v1:v1",
+  "format": "molgap-metagin-2d-source-config-v2",
+  "gpu_run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+  "model_parameters_expected": 5268481,
+  "reference_bundle_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json",
+  "sidecar_required_before_gpu": true,
+  "source_archive_sha256": "bc216e3b0d5b2103bbd57b323e548608c2ba6efd628b90c60ae56cbc65ea05e1",
+  "source_commit": "7d16ad59eb7548220d92858be64648c33f3d515d",
+  "training_contract_ref": "experiments/pcqm_metagin_2d_100k/training_contract.json",
+  "training_contract_sha256": "2074ccd19f9e18f79a3161015989b98e6e3fd8eb24f345db2686a57ca1c743b0"
+}

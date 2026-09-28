@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v2",
+  "category": "training",
+  "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-v2-training",
+  "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/budget_snapshot.json",
+  "hardware": "actual_GPU_pending",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 3.669210724325182
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 1.834605362162591
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+}

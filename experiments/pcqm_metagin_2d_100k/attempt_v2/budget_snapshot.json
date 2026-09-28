@@ -1,0 +1,12 @@
+{
+  "accelerator_allocation": "P100-request-with-observed-T4x2-allocation-cost-counted",
+  "authorization": "user-requested-one-distinct-model-family-seed42-screen",
+  "automatic_second_seed_or_scale_authorized": false,
+  "available_device_hours": null,
+  "cpu_sidecar_estimated_wall_hours": 1.0,
+  "gpu_estimated_device_hours": 3.669210724325182,
+  "max_worker_wall_hours": 6.0,
+  "measured_profile_ref": "experiments/pcqm_metagin_2d_100k/results/profile_v2_acceptance.json",
+  "platform": "kaggle2",
+  "preflight_cost_gate": true
+}
