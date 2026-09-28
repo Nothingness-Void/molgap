@@ -1,30 +1,30 @@
 {
   "format": "molgap-server-multi-job-monitor-v1",
   "owner": "server",
-  "closed": true,
+  "closed": false,
   "working_directory": "C:/Users/Adminn/Documents/molgap",
   "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
   "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
   "credential_owner": "kaseichou",
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
-  "source_commit": "418332ed142313bc7c65b530ce695289e0cd5666",
-  "source_archive_sha256": "e25d6cdde7976bd132c3971ef7efaeed13dfc2df23fabb4abaf8845bc4aec2ea",
+  "source_commit": "7d16ad59eb7548220d92858be64648c33f3d515d",
+  "source_archive_sha256": "bc216e3b0d5b2103bbd57b323e548608c2ba6efd628b90c60ae56cbc65ea05e1",
   "healthy_action": "SILENT",
   "terminal_action": "one idempotent handoff to existing A; no model/thinking override",
   "automatic_training_retry": false,
   "automatic_training_successor_authorized": false,
   "jobs": [
     {
-      "slot": "profile",
-      "kernel": "kaseichou/molgap-metagin-2d-runtime-profile",
-      "kernel_id": 136267761,
+      "slot": "screen",
+      "kernel": "kaseichou/molgap-metagin-2d-s42",
+      "kernel_id": 136263563,
       "version": 2,
-      "run_id": "kaseichou/molgap-metagin-2d-runtime-profile:v2",
-      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_runtime_profile_v2",
-      "candidate_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_runtime_profile_v2/metagin-runtime-profile",
-      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_runtime_profile_v2/monitor/control_state.json",
-      "closed": true
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_2d_s42_v2",
+      "candidate_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_2d_s42_v2/molgap-metagin-2d-s42-v2",
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/metagin_2d_s42_v2/monitor/control_state.json",
+      "closed": false
     }
   ]
 }
