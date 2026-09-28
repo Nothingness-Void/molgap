@@ -1,0 +1,30 @@
+{
+  "format": "molgap-server-multi-job-monitor-v1",
+  "owner": "server",
+  "closed": false,
+  "working_directory": "C:/Users/Adminn/Documents/molgap",
+  "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
+  "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
+  "credential_owner": "kaseichou",
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "source_commit": "e734870b92b9d8580c94bf4f3aa2b4d5743706d8",
+  "source_archive_sha256": "d27bfef6b2a8729507132bdd26a0f1919135cac4f658cf55d6e831cab7162931",
+  "healthy_action": "SILENT",
+  "terminal_action": "one idempotent handoff to existing A; no model/thinking override",
+  "automatic_training_retry": false,
+  "automatic_training_successor_authorized": false,
+  "jobs": [
+    {
+      "slot": "sidecar",
+      "kernel": "kaseichou/molgap-motif-hierarchy-cpu-sidecar-v1",
+      "kernel_id": 136289702,
+      "version": 1,
+      "run_id": "kaseichou/molgap-motif-hierarchy-cpu-sidecar-v1:v1",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_cpu_v1",
+      "candidate_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_cpu_v1/molgap-motif-partition-cache-v1",
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_cpu_v1/monitor/control_state.json",
+      "closed": false
+    }
+  ]
+}
