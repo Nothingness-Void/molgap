@@ -1,0 +1,97 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/best_model.pt",
+      "name": "best_model",
+      "sha256": "4feb7b3fbc50e1aa5ca8afcacd62bc3c20ba41e50f59fb9fb7bc91cd859b9106"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/last_checkpoint.pt",
+      "name": "resume_checkpoint",
+      "sha256": "dc9f57f41ba0dd0103ee502bd4149b278f10bbce5d1d88c6c9682b0708922999"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "aea1e3d65043ad57838a3b6f46ae97cd6355be38c93e7bd05ab0100867eb860d"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/trace.json",
+      "name": "training_trace",
+      "sha256": "62e107e28fc303c220e5600ea254e9e69102c0a4f5225c76fdccbfb525828f31"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "ff856f65786d610e424236e4b9fc50f2925e1cebb58d3c9990c286db60732253"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "sha256": "f03c451b2b8ac94c9cf15d969b33b63c07f076fbe866809ddf66ea7019ec9994"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/mechanical_acceptance.json",
+      "name": "mechanical_acceptance",
+      "sha256": "efde94de2770d44d9d8989884ec3b279e89fdefa95c732f4eec38878b78aa641"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/results/paired_comparison_attempt_002.json",
+      "name": "paired_comparison",
+      "sha256": "a7f66bae3c763ae9e05ce84e4513ff96e1a2f0c1ae83193d9832c8ec4b97a244"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/protocol.md",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/training_contract_attempt_002.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/release_gate_attempt_002.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/decision_attempt_002.md",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_only/terminal_inputs/acceptance.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_only/terminal_inputs/cost_records.json",
+      "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_only/terminal_inputs/role_history.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-geometry-channels-100k-kaggle1-attempt-002",
+  "metrics": {
+    "best_epoch": 59,
+    "observed_development_gap_mae_eV": 0.15197911872327327,
+    "source_commit_observed": "e4be2b828e0022df7e057db2c0ba8f576cad31a8"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28T08:27:01.745358+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-inference terminal mechanical, source, role, cost, trace and paired-row audit"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "same_job_reference_endpoint_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "CLOSED",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "same-job-paired-100k-geometry-distance_only-attempt-002",
+  "track": "B"
+}

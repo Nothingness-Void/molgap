@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_100K",
+    "field": "two_geometry_arms_unrun",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "f23f0fef784addd558c40c14f1dd7308eb024203f7b7f4d7145d31d76a532f45",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-gptrans-geometry-channels-100k-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "two_geometry_arms_unrun"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

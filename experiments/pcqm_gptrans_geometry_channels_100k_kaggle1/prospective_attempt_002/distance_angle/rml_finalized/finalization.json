@@ -1,0 +1,47 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8022c95b898b7c284478cbc2720379321c8c4bb32b300a7322c190fc0be3c083",
+  "finalized_at": "2026-09-28T08:27:01.745358+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/decision_attempt_002.md": "4c6620d7376a16f2d07c7ca437b40ea2b3b9867d7392596eb16d2b58cba0093a",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/acceptance.json": "6c3de9dade297464247bb80174a35ccb7ab06df29c39b7acffe10e0d2c0403b4",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/canonical_trace.json": "4eb437507a2a9cbfec967b4cd6b7f83c503182c2db152d0c7edd4c2eefe47687",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/cost_records.json": "03ffb287f9edcd63dca34dadff777d84a1f42ae123eaf96ee345df3f8068a855",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/terminal_inputs/role_history.json": "0f58bfcfe101e92e44fb87908b83cc92b367c744a3c2f9abe024821b612032e0",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/protocol.md": "f23f0fef784addd558c40c14f1dd7308eb024203f7b7f4d7145d31d76a532f45",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/release_gate_attempt_002.json": "e548d9bf6eaac6af4122599f70c3a0ee2db1d6b37796c8afa124d34465cd37fa",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/results/paired_comparison_attempt_002.json": "a7f66bae3c763ae9e05ce84e4513ff96e1a2f0c1ae83193d9832c8ec4b97a244",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/training_contract_attempt_002.json": "44d559dcea2cc4e05f2d34fd3d3d36ea11c03eccca67c19097a9e6e43ff1db7a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/mechanical_acceptance.json": "082155478146230b099efaa271ef3baf07fec4e0869464d670d290a15b80a80a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/best_model.pt": "f0597e32fc2e536bb3f6203cd5576193dbc9f9910070fb16fcda4656376f371b",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/completion_manifest.json": "64ac8392f018d064d457d9c600f3bae357e1e367a1e5245d0c3840cc883d9a4e",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/development_predictions.pt": "80de33b3cddb5a753ae90eb9e3d705a17d73f9afdc209af39167d4b97539fa1a",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/last_checkpoint.pt": "41ad1e08ab6159f4db5cb72362547d7878a43d9fb651bc0608365fbea172523d",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/runtime_certificate.json": "c76c8402c29ca62ec0188f4efe96963e633a0fca1eb52cb9dd7421e09f65f0f6",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/trace.json": "33e3d15a61599d08e71a880699c5ddd6d85717e3e41cd81ea22432d182f358ec"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TB-gptrans-geometry-distance-angle-100k-s42-a2-observed-training.json": "6e4be06db2d9139010dc657ce45287a9cf3a61f16eada92486330d5daaec6e82",
+    "prospective_snapshot.json": "e692edfebd96b977a20451fcd0937a4e5ffd0d5235dc0e4a71cbcfc8913c850f",
+    "roles/role-geometry-distance_angle-labels_read-a2.json": "a80187dcc13ed61b40e77604d88adb998d98d6cae16dd35105f16ea9e752651a",
+    "roles/role-geometry-distance_angle-metric_computed-a2.json": "beafdcfce53608d7c7a1e1890e17444b4af94eebb340bae277a9bd7b1e1bda85",
+    "roles/role-geometry-distance_angle-prediction_input-a2.json": "d6258510ba4e68a9b549fb00c6c42d70a86c0b7a7c886636d4ea3da924af1c1f",
+    "roles/role-geometry-distance_angle-selection_used-a2.json": "7c41ed5f3b8fee7f129ffd78ef9cc80cd3d3c3a29109ee0f3a5f8d6aaa9d9d24",
+    "roles/role-geometry-distance_angle-training_membership-a2.json": "17bf461179f4314f6d4f4b78ba89c79c1e0fca6fa6bc598ef0b36f5eff9c0b8b",
+    "terminal_input.json": "96b4a63a3b084cf0ae903625daf95699a2774ab12b961d0dfdea9afcab32be90",
+    "trace.json": "4eb437507a2a9cbfec967b4cd6b7f83c503182c2db152d0c7edd4c2eefe47687",
+    "trace_manifest.json": "18d9ebb2de00533954336fedadfa62ff994ac125276aeabd344862fb6776725f",
+    "trajectory.json": "e8edf5d0c440d48b9ef18ca111bcefcd6c649b91d6076553ffcf816c54a622fe",
+    "v5_evidence.json": "ceb28134e89d1a9daeb30e40ff805f697fc45e9901abefcb695f06c3401e41f1"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "8022c95b898b7c284478cbc2720379321c8c4bb32b300a7322c190fc0be3c083",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+}

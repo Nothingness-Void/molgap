@@ -1,0 +1,28 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-71384f17fe3530dcdc8c765bd81c2e669ac811434baee64cc255ccc6c13ca5ac",
+  "finalized_at": "2026-09-28T08:30:22.392912+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/decision_attempt_001_infrastructure.md": "a5362189079563a1329559aed9997d92217876a195ea3cbeb2d48a5e952938e8",
+    "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective/distance_angle/terminal_inputs_infrastructure/acceptance.json": "bce8b07f37f4b3bba23b52227f1079f7039fc06103d427cfce54410f3a98f2ea",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v1/attempt_001/README.md": "36371c21fff2b10c6a130e5b672677711966f8ed70c8df735f3f48816213c766",
+    "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v1/attempt_001/kernel.log": "3a389bd6192f4d4653645d92036fc464499bd7c1cf220fbf3787b8023d62aa6b"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/measurement_missing.json": "74938cbfa7cb9410d0efe459dbe9215ae5cce6aa39c0c13a5fb87b38551e5745",
+    "prospective_snapshot.json": "632cd76542b7bee3d388c47eb1f355dfb5380e9bafe868eb55ca7be53b42ca37",
+    "terminal_input.json": "faa09da0f9089b217a00c6f2fe2e85d3c4335d424da3af375052a9cd9fd68f83",
+    "trajectory.json": "3ca6292b3546b541c5a05aa61aa611bf8ec9cd0c82f40134fef3270ba7e92f1a",
+    "v5_evidence.json": "cbabfdcfa7237ba88f22cbdb1810d5e436869dd39963efed2e49667a646c01ff"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective/distance_angle/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "71384f17fe3530dcdc8c765bd81c2e669ac811434baee64cc255ccc6c13ca5ac",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42"
+}

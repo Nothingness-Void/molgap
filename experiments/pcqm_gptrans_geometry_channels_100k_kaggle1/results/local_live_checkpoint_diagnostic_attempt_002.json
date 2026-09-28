@@ -1,0 +1,37 @@
+{
+  "format": "molgap-geometry-channel-local-live-checkpoint-diagnostic-attempt-002-v1",
+  "accepted_remote_gate_input": false,
+  "source_commit": "e4be2b828e0022df7e057db2c0ba8f576cad31a8",
+  "development_graph_shard_sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+  "device": "NVIDIA GeForce RTX 5060",
+  "role": "internal_development",
+  "rows": 50000,
+  "source_indices_aligned": true,
+  "targets_aligned": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "distance_only": {
+    "checkpoint_sha256": "dc9f57f41ba0dd0103ee502bd4149b278f10bbce5d1d88c6c9682b0708922999",
+    "live_prediction_sha256": "a0c75af7ebbae8ab9fd6d33cfbe9daef2bb1eb5c7c9deac689aaaaf81d4df7b8",
+    "live_mae_eV": 0.14519699161946772,
+    "local_ema_mae_eV": 0.15197978913784027,
+    "local_ema_remote_mean_abs_prediction_difference_eV": 0.000024323086108779535,
+    "local_ema_remote_max_abs_prediction_difference_eV": 0.0037431716918945312
+  },
+  "distance_angle": {
+    "checkpoint_sha256": "41ad1e08ab6159f4db5cb72362547d7878a43d9fb651bc0608365fbea172523d",
+    "live_prediction_sha256": "3ae69ac6db346c95dc375a7225c40804289095f9c01e9a96a45fc373cb54ff9f",
+    "live_mae_eV": 0.14699601493775843,
+    "local_ema_mae_eV": 0.15676724910736084,
+    "local_ema_remote_mean_abs_prediction_difference_eV": 0.000021344732886063866,
+    "local_ema_remote_max_abs_prediction_difference_eV": 0.0012814998626708984
+  },
+  "live_paired_row_bootstrap": {
+    "candidate_minus_reference_eV": 0.0017990233182907105,
+    "ci95_eV": [0.000840028007388115, 0.002773999025464057],
+    "replicates": 10000,
+    "seed": 42,
+    "training_seed_variation_estimated": false
+  }
+}
