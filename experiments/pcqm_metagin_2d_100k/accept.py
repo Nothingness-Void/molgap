@@ -15,6 +15,7 @@ from molgap.pcqm_metagin_screen import (
     FIXED_MANIFEST_SHA256, MODEL_ID, ROW_ORDER_FINGERPRINT,
     SAMPLE_EXPOSURE, STEPS_PER_EPOCH, TRAJECTORY_ID,
 )
+from molgap.pcqm_metagin_sidecar import ACCEPTED_PRODUCER_COMMIT
 from molgap.research_memory.trace import load_canonical_trace
 from molgap.screen_policy import canonical_fingerprint
 from molgap.training_reproducibility import atomic_json, sha256_file
@@ -98,7 +99,7 @@ def accept(candidate: Path, reference_payload: Path) -> dict:
         or record.get("sidecar_aggregate_sha256") != sidecar.get("aggregate_sha256")
         or preflight.get("sidecar_aggregate_sha256") != sidecar.get("aggregate_sha256")
         or sidecar.get("accepted") is not True
-        or sidecar.get("source_commit") != source["source_commit"]
+        or sidecar.get("source_commit") != ACCEPTED_PRODUCER_COMMIT
         or sidecar.get("rows_recomputed") != 150_000
         or sidecar.get("model_inference_executed") is not False
         or sidecar.get("gap_labels_read") is not False

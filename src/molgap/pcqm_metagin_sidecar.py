@@ -11,6 +11,9 @@ from .training_reproducibility import atomic_json, atomic_torch_save, sha256_fil
 
 FORMAT = "molgap-pcqm-fixed100k-metagin-hop-sidecar-v1"
 ACCEPTANCE_FORMAT = "molgap-pcqm-fixed100k-metagin-hop-acceptance-v1"
+ACCEPTED_PRODUCER_COMMIT = "c569ca2e333e49de3f0388b816b46c8a278a5da5"
+ACCEPTED_MANIFEST_SHA256 = "c583513c8045e1dfbd562ed27f7e8f1f12a20cd34c50c794fb2d2da8ee4fe799"
+ACCEPTED_AGGREGATE_SHA256 = "0ee9e3f2cdf9161ecfd6bf2fa743fc5391a1f385b30550af7e828f6b77358547"
 
 
 def derive_hops(edge_index, node_count: int):
@@ -230,14 +233,17 @@ def accept_sidecar(root: Path, *, fixed_root: Path, expected_source_commit: str)
 
 
 def attach_accepted_sidecar(roles, root: Path, *, expected_source_commit: str):
-    """Add accepted row-aligned hops without altering the immutable base cache."""
+    """Bind the independently frozen producer asset, not the training commit."""
     import torch
 
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     acceptance = json.loads((root / "acceptance.json").read_text(encoding="utf-8"))
     if (
-        manifest.get("format") != FORMAT or manifest.get("complete") is not True
+        expected_source_commit != ACCEPTED_PRODUCER_COMMIT
+        or manifest.get("format") != FORMAT or manifest.get("complete") is not True
         or manifest.get("source_commit") != expected_source_commit
+        or sha256_file(root / "manifest.json") != ACCEPTED_MANIFEST_SHA256
+        or manifest.get("aggregate_sha256") != ACCEPTED_AGGREGATE_SHA256
         or manifest.get("fixed_manifest_sha256") != "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
         or manifest.get("fixed_geometry_sha256") != "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5"
         or manifest.get("role_counts") != {"train": 100_000, "development": 50_000}

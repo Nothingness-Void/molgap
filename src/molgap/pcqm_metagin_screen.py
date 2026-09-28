@@ -23,7 +23,7 @@ from .training_reproducibility import (
     capture_rng_state, configure_fp32_determinism, sha256_file,
 )
 from .pcqm_metagin import DEPTH, HOPS, WIDTH, MetaGIN2D
-from .pcqm_metagin_sidecar import attach_accepted_sidecar
+from .pcqm_metagin_sidecar import ACCEPTED_PRODUCER_COMMIT, attach_accepted_sidecar
 
 
 MODEL_ID = "metagin_2d_3hop_4x256"
@@ -233,7 +233,7 @@ def train_screen(
     raw_roles = load_roles(root, manifest)
     transform, target_observation = _target_transform(raw_roles, transform_path)
     roles, sidecar, sidecar_acceptance = attach_accepted_sidecar(
-        raw_roles, sidecar_root, expected_source_commit=source_commit,
+        raw_roles, sidecar_root, expected_source_commit=ACCEPTED_PRODUCER_COMMIT,
     )
     certificate, preflight = _preflight(
         roles, transform, output=output, source_commit=source_commit,
@@ -345,6 +345,7 @@ def train_screen(
         "fixed_manifest_sha256": FIXED_MANIFEST_SHA256,
         "fixed_geometry_sha256": FIXED_GEOMETRY_SHA256,
         "sidecar_aggregate_sha256": sidecar["aggregate_sha256"],
+        "sidecar_producer_commit": ACCEPTED_PRODUCER_COMMIT,
         "runtime_certificate_id": preflight["runtime_certificate_id"],
         "target_transform_asset_id": transform["asset_id"],
         "row_order_fingerprint": ROW_ORDER_FINGERPRINT,

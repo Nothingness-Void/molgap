@@ -12,7 +12,7 @@ from .pcqm_k1_variants_runner import (
 )
 from .pcqm_metagin import MetaGIN2D
 from .pcqm_metagin_screen import _step, _target_transform
-from .pcqm_metagin_sidecar import attach_accepted_sidecar
+from .pcqm_metagin_sidecar import ACCEPTED_PRODUCER_COMMIT, attach_accepted_sidecar
 from .training_reproducibility import atomic_json, configure_fp32_determinism
 
 
@@ -35,7 +35,7 @@ def projected_40_epoch_seconds(train_step_seconds: float,
 
 
 def profile_runtime(output: Path, *, source_commit: str, sidecar_root: Path,
-                    transform_path: Path) -> dict:
+                    transform_path: Path, run_id: str) -> dict:
     """Measure a representative optimizer loop after CUDA warm-up on real rows."""
     import torch
 
@@ -46,7 +46,7 @@ def profile_runtime(output: Path, *, source_commit: str, sidecar_root: Path,
     raw_roles = load_roles(fixed_root, fixed)
     transform, observation = _target_transform(raw_roles, transform_path)
     roles, sidecar, acceptance = attach_accepted_sidecar(
-        raw_roles, sidecar_root, expected_source_commit=source_commit,
+        raw_roles, sidecar_root, expected_source_commit=ACCEPTED_PRODUCER_COMMIT,
     )
     model = MetaGIN2D().to("cuda")
     optimizer = torch.optim.AdamW(
@@ -96,7 +96,9 @@ def profile_runtime(output: Path, *, source_commit: str, sidecar_root: Path,
     result = {
         "format": "molgap-metagin-2d-train-role-runtime-profile-v1",
         "complete": True, "training_screen_executed": False,
+        "run_id": run_id,
         "source_commit": source_commit,
+        "sidecar_producer_commit": ACCEPTED_PRODUCER_COMMIT,
         "sidecar_aggregate_sha256": sidecar["aggregate_sha256"],
         "sidecar_accepted": acceptance["accepted"],
         "target_transform_asset_id": transform["asset_id"],

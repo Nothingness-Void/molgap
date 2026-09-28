@@ -10,6 +10,9 @@ import time
 import traceback
 
 
+RUN_ID = "kaseichou/molgap-metagin-2d-runtime-profile:v2"
+
+
 def _one(name: str) -> Path:
     matches = list(Path("/kaggle/input").rglob(name))
     if len(matches) != 1:
@@ -54,7 +57,7 @@ def main() -> None:
     try:
         result = profile_runtime(
             output, source_commit=commit, sidecar_root=sidecars[0],
-            transform_path=_one("target_transform.json"),
+            transform_path=_one("target_transform.json"), run_id=RUN_ID,
         )
         print(json.dumps({key: result[key] for key in (
             "hardware", "allocated_device_count", "steady_train_step_mean_seconds",
@@ -64,14 +67,15 @@ def main() -> None:
         output.mkdir(parents=True, exist_ok=True)
         atomic_json(output / "failure.json", {
             "format": "molgap-metagin-runtime-profile-failure-v1",
-            "source_commit": commit, "traceback": traceback.format_exc(),
+            "source_commit": commit, "run_id": RUN_ID,
+            "traceback": traceback.format_exc(),
             "complete": False,
         })
         raise
     finally:
         atomic_json(output / "native_cost.json", {
             "format": "molgap-metagin-runtime-profile-cost-v1",
-            "source_commit": commit,
+            "source_commit": commit, "run_id": RUN_ID,
             "wall_seconds": time.monotonic() - started,
             "training_screen_executed": False,
         })
