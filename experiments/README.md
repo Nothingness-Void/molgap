@@ -20,6 +20,7 @@ shared packaging, planning or terminal logic.
 | Question | Verdict | Directory |
 |---|---|---|
 | Does one chemistry-separated local bond update improve K1 while preserving portable gains? | Both equal-capacity arms regressed; strict/replay-ready terminals retained, no scale-up | `pcqm_k1_chem_local_100k/` |
+| Can an independent pure-2D multi-hop MetaGIN-derived backbone beat frozen K1-v4? | No under the matched fixed-100K screen; strict negative terminal retained | `pcqm_metagin_2d_100k/` |
 | Does local atom reconstruction help when every optimizer step retains Gap supervision? | One prospective paired training-objective study; no outcome assumed | `pcqm_k1_joint_atom_reconstruction_100k/` |
 | Can per-node linear-kernel retrieval replace K1's single global slot? | No retained terminal gain; negative frozen500K portability, complete training replay, route closed | `pcqm_k1_linear_attention_100k/` |
 | Should K1 normalize stored bond memory or only its reads? | Bounded two-arm protocol; no outcome assumed | `pcqm_k1_edge_memory_100k/` |

@@ -66,11 +66,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-One server-owned MetaGIN2D seed-42 Kaggle2 screen is running under the frozen
-V5 fixed-100K FP32/BS128 contract. Its train-role-only runtime profile passed
-the cost/memory gate and its new v2 V5 prelaunch/RML plan passed repository
-validation. There is still no MetaGIN2D accuracy result. Authority:
-[MetaGIN2D status](experiments/pcqm_metagin_2d_100k/STATUS.md).
+The server-owned MetaGIN2D fixed-100K seed-42 screen is complete and closed:
+the independent 2D backbone regressed versus frozen K1-v4 under the strict
+paired contract. No additional seed, scale-up, protected-role use, or automatic
+successor is released. Its terminal is strict and replay-ready. Authority:
+[MetaGIN2D decision](experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md).
 The Kaggle2 K1 layer-6
 chemistry-separated local-bond comparison completed: both atom-pair and
 bond-type grouping regressed versus frozen K1. Both training trajectories are

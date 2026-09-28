@@ -30,6 +30,11 @@ repository validation; the private source-v4 dataset was ready before the
 single GPU submission. Kaggle returned `kaseichou/molgap-metagin-2d-s42:v2`
 (numeric kernel 136263563), verified `RUNNING` at submission and bound to
 the existing Luna B monitor. The [receipt](attempt_v2/submission_receipt.json)
-fixes the physical version, source and sidecar. This is not an accepted model
-result; B stays silent until an actionable terminal state, then A performs
-artifact and RML acceptance.
+fixes the physical version, source and sidecar. Kaggle subsequently reported
+`COMPLETE`; the exact v2 outputs were retained under the ignored local
+`platforms/_records/kaggle/training/metagin_2d_s42_v2/` directory. The
+[no-inference acceptance](attempt_v2/results/acceptance.json) passed, the
+[strict comparison](attempt_v2/results/comparison_readiness.json) passed, and
+the [RML terminal](attempt_v2/rml_plan/rml_finalized/finalization.json) entered
+the replay pool. The [dated decision](attempt_v2/decision.md) closes the
+scientific question under this adaptation; no further compute is released.
