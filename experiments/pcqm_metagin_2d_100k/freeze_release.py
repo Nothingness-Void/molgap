@@ -110,7 +110,8 @@ def main():
         ),
         "automatic_second_seed_or_scale_authorized": False,
     })
-    save(REPO_ROOT / f"research_memory/policies/{POLICY_ID}.v1.json", {
+    policy_path = REPO_ROOT / f"research_memory/policies/{POLICY_ID}.v1.json"
+    policy_record = {
         "schema": "molgap-policy-v1", "policy_id": POLICY_ID, "version": "v1",
         "policy_type": "research_action", "status": "candidate",
         "comparability_selector": {
@@ -129,7 +130,18 @@ def main():
             "threshold": True, "action": "RUN_BOUNDED_METAGIN2D_SCREEN",
         },
         "borderline_action": "DEFER",
-    })
+    }
+    if args.attempt == "v1":
+        save(policy_path, policy_record)
+    else:
+        existing_policy = load(policy_path)
+        if (
+            existing_policy.get("policy_id") != POLICY_ID
+            or existing_policy.get("action_rule") != policy_record["action_rule"]
+            or existing_policy.get("comparability_selector")
+            != policy_record["comparability_selector"]
+        ):
+            raise RuntimeError("Existing scientific action policy changed")
     identity = dict(bundle["comparison_identity"], architecture_config_identity=config_id)
     prelaunch = assess_comparison_prelaunch(
         candidate_id=MODEL_ID, reference_id=bundle["reference_id"],
