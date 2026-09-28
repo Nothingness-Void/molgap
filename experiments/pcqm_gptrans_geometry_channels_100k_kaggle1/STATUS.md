@@ -7,7 +7,9 @@ reached `KernelWorkerStatus.COMPLETE`. Both arms passed independent mechanical
 acceptance against their retained artifacts. The paired development endpoint
 fails the frozen 3.0 meV gain gate: enabling the angle channel worsened MAE by
 4.789 meV. See [the attempt-002 decision](decision_attempt_002.md) and
-[paired result](results/paired_comparison_attempt_002.json).
+[paired result](results/paired_comparison_attempt_002.json). The
+[post-hoc failure analysis](results/failure_analysis_attempt_002.md) separates
+observed convergence, EMA lag and molecule-level error patterns.
 
 The remote trace does not contain the live-weight development metric required
 by strict V5 mechanism comparison, and the frozen Spec gives the two arms
