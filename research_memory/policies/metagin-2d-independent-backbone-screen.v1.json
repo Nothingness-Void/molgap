@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_BOUNDED_METAGIN2D_SCREEN",
+    "field": "independent_multihop_backbone_frozen",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "controller-only-bounded-user-authorization",
+    "authority_ref": "experiments/pcqm_metagin_2d_100k/protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion",
+      "CPU sidecar cost separately retained"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "3b7b5798fcce4338d554ed90f3f042758cca13f653c93680234780c6a71067b8",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "metagin-2d-independent-backbone-screen",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "independent_multihop_backbone_frozen"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}
