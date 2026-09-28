@@ -1,0 +1,141 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/best_model.pt",
+      "name": "selected_model",
+      "sha256": "de4e9a21a7b96cf47190a355244fca70bec826f4fc04a698df51e64f287a2a30"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/last_checkpoint.pt",
+      "name": "resumable_checkpoint",
+      "sha256": "d1587c599298933d23d1e493ec2c32b20eae434ea2940227ca81680baba8df16"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/development_predictions.pt",
+      "name": "development_predictions",
+      "sha256": "22f3d9581f99af44e879e9eed59cf31303c6fc266cb8eac896cb86d49fae4292"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "33e371e2eeeb0f549086baba84cba4dff5c6b6e789bf7fa67672e6e5e00dfa20"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/frozen_reference.json",
+      "name": "frozen_reference",
+      "sha256": "6c86c70d11d79721b61aa681c8eeba8e84bbc89c1a3b966ce0f47d764445cd63"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/preflight.json",
+      "name": "runtime_preflight",
+      "sha256": "34459aef3b007cd93bc8adf139aa697caef24c9ae4c3c15071bd047400e49f20"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory_message/mechanical_acceptance.json",
+      "name": "mechanical_acceptance",
+      "sha256": "51db4f6dac0bc53a790321da459c06294613b8eb6c41fe46dd2ca2e7ba6870d8"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/paired_comparison.json",
+      "name": "paired_comparison",
+      "sha256": "1efb0d75718044a31104f958002d6b272eb7ee2a48092b18849945de9f76641d"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-message/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "235515d13ff3fcadf2a5be995c58c575156c05083196692f0d1325189d024d4b"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-message/trace_recovery.json",
+      "name": "epoch_recovery_specification",
+      "sha256": "a603855e077328200c6f0732db1915233ab435b7d0ac613f623ed4632466fcc6"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json",
+      "name": "observed_platform_cost_and_roles",
+      "sha256": "c583614def1a8b13239fe3fc32ef228e1203c421db531cc56aa30537735c1ba0"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/acceptance.json",
+      "name": "terminal_acceptance",
+      "sha256": "da113cf4dcde76457a766561e441504b5effb1d2c5e9169d66e5141ecdbf0588"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md",
+      "name": "decision_authority",
+      "sha256": "1d5622a3223deb2b68f5d1b5c1bfde57e17d57ca9f7e1d0a67aeaf7d61f6b34b"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/comparison_readiness.json",
+      "name": "strict_comparison_readiness_blocker",
+      "sha256": "1e1043d1383bd50ab60b949121fc682e9b1315c3e0cf1e86ad0b1d9473e6aea5"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/protocol.md",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/training_contract.json",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/release_gate.json",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/experiment_spec_replay.json",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/paired_comparison.json",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json",
+      "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-gptrans-pair-memory-dual-100k-kaggle1-contract-v1",
+  "metrics": {
+    "best_epoch": 59,
+    "candidate_minus_reference_eV": 0.004323315858840942,
+    "observed_development_gap_mae_eV": 0.15990668535232544,
+    "paired_ci95_eV": [
+      0.003265723347902298,
+      0.005336872674703598
+    ]
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "terminal audit of already completed same-run Kaggle training; hash-verified retained artifacts, per-arm mechanical acceptance and paired internal-development endpoint comparison"
+  },
+  "missing_evidence": [
+    "cumulative_optimizer_step_and_sample_presentation_trace_coordinates",
+    "live_development_metric_and_per_epoch_checkpoint_identity_for_strict_v5_comparison_readiness"
+  ],
+  "outcome": {
+    "artifact_status": "hash_verified",
+    "budget_decision": "closed_no_scale_up",
+    "comparison_status": "paired_endpoint_only_not_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "none",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_train_prefix": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "same_run_candidate",
+  "track": "B"
+}

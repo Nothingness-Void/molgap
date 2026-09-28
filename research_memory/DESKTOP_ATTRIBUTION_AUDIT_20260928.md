@@ -1,14 +1,15 @@
 # Desktop RML attribution audit — 2026-09-28
 
-This audit uses the committed `molgap-desktop` RML snapshot at
-`7429160e`. The index contains 52 trajectories across 36 experiment
+This audit started from the committed `molgap-desktop` RML snapshot at
+`7429160e` and incorporates the subsequently accepted pair-memory terminal
+milestone. The index contains 52 trajectories across 36 experiment
 directories; 47 trajectories across 32 directories have desktop ownership
 and are in scope here. Multiple arms, retries, reference records, and
 no-train actions are separate trajectories, not independent module tests.
-Historical and server-owned trajectories are outside this audit. No remote
-state, server branch, training, checkpoint inference, or protected role was
-accessed. A locally uncommitted pair-memory terminal draft is not substituted
-for canonical RML.
+Historical and server-owned trajectories are outside this audit. The
+pair-memory terminal addition used the authoritative Kaggle status and
+retained artifacts; it did not launch training, run checkpoint inference,
+access the server branch or consume a protected role.
 
 An endpoint answers **whether** a candidate cleared its frozen gate.
 A paired intervention estimates **which change** produced an effect under
@@ -26,6 +27,7 @@ comparators and traces remain missing.
 | [RWSE16 plus local edge](../experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/results/posthoc_attribution_attempt_002.md) | The small 1.082 meV gain survives descriptive offset correction and agrees between terminal live and EMA development. Its relative lead shrinks late while training fits better; the extra path costs 40.4% more measured T4 interval time. | A one-seed online-train/development contrast does not prove overfitting or a generic local-path ceiling. |
 | [Feature denoising](../experiments/pcqm_gptrans_feature_denoising_100k/results/posthoc_attribution.md) | The auxiliary objective was learned; bond reconstruction improves over atom-only under the *executed* recipe. The decisive blocker is the observed source/optimizer mismatch with the frozen contract. | The intended contracted mechanism cannot be accepted or assigned a causal failure mode from this run. |
 | [K1 PairToken value decoupling](../experiments/pcqm_k1_pair_value_100k/results/posthoc_attribution.md) | The candidate was still improving at its last frozen epoch, so a horizon limit cannot be excluded. Both predeclared point gates nevertheless failed. | The exact K1 reference predictions and deterministic resume evidence are absent; no paired mechanism or subgroup attribution is possible. |
+| [Pair-memory readback](../experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/posthoc_attribution.md) | Same-job `memory_message` is 4.323 meV worse than `memory_value`; it is also worse on endpoint online training MAE, and a same-role descriptive offset cannot remove the deficit. | No fixed-cohort train evaluation or second seed isolates representation harm from optimization or exposure; both traces lack the per-epoch fields required for replay. |
 
 The new paired diagnostics verify accepted prediction SHA256, finite values,
 exact 50,000 ordered internal-development source indices, equal targets, and
@@ -62,7 +64,7 @@ do not each require a new module postmortem.
 | `pcqm_gptrans_memory_value_100k_kaggle1_pair` | Reference/operations | The proposed redundant baseline arms closed NO_TRAIN before submission. |
 | `pcqm_gptrans_noisy_nodes_100k`, `pcqm_gptrans_noisy_nodes_500k` | Effect + diagnostic | Material 100K gain became sub-threshold at 500K; matched traces show early-to-late contraction, not a proven representation collapse. |
 | `pcqm_gptrans_noisy_pair_norm_100k`, `pcqm_gptrans_noisy_pair_norm_500k` | Effect + diagnostic | Joint gain contracted and is sub-additive with isolated 500K effects; data diversity versus horizon remains unresolved. |
-| `pcqm_gptrans_pair_memory_dual_100k_kaggle1` | Pending | Committed RML has two ACTIVE submitted arms. A local terminal draft is uncommitted; finish independent acceptance before causal postmortem or replay claim. |
+| `pcqm_gptrans_pair_memory_dual_100k_kaggle1` | Effect + new diagnostic | Both arms terminally accepted; `memory_message` loses 4.323 meV under the frozen pair. Two explicit replay exclusions remain; mechanism-level cause is not isolated. |
 | `pcqm_gptrans_pair_norm_500k` | Effect + diagnostic | Isolated 1.140 meV gain is real under its 500K pair, sub-threshold; joint mechanism and seed variance remain unresolved. |
 | `pcqm_gptrans_t_100k_v4` | Reference/operations | Frozen desktop reference, not an unexplained new-module failure. |
 | `pcqm_k1_full_convergence` | Reference/operations | Continuation failed to improve under its LR restart/patience contract; alternative schedules were not tested. |
@@ -77,15 +79,12 @@ do not each require a new module postmortem.
 
 ## Before the next module
 
-1. Finish canonical pair-memory terminal acceptance and any saved-artifact
-   failure analysis. Do not count the uncommitted draft or fill absent trace
-   fields by derivation.
-2. For a future module, freeze a falsifier that distinguishes at least one
+1. For a future module, freeze a falsifier that distinguishes at least one
    plausible failure mode before running it: implementation/contract fault,
    optimization or exposure limit, training-fit versus development transfer,
    calibration shift, or added-path harm. Preserve a same-contract reference,
    fixed-role train/development observations, exposure coordinates and cost.
-3. After terminal acceptance, write an attribution disposition beside the
+2. After terminal acceptance, write an attribution disposition beside the
    experiment decision before proposing another unrelated module. State what
    is measured, what is only consistent with the evidence, what is ruled out,
    and the cheapest missing discriminator. If the discriminator is unavailable,

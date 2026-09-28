@@ -1,0 +1,31 @@
+{
+  "field_mapping": {
+    "ema_dev_metric": "development_mae_eV",
+    "epoch_or_pass": "epoch",
+    "learning_rate": "learning_rate",
+    "live_train_metric": "train_mae_eV",
+    "wall_time_seconds": "elapsed_seconds"
+  },
+  "metric_semantics": {
+    "ema_dev_metric": {
+      "direction": "minimize",
+      "metric": "Gap MAE",
+      "role_identity": "internal_development",
+      "target": "pcqm4mv2-gap-eV-direct",
+      "unit": "eV",
+      "weights": "ema"
+    },
+    "live_dev_metric": null,
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "Gap MAE",
+      "role_identity": "official_train_prefix",
+      "target": "pcqm4mv2-gap-eV-direct",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "rows_key": "rows",
+  "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+  "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+}

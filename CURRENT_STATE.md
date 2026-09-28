@@ -112,13 +112,15 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   for the same-job control. Authority:
   `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md` and
   `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md`.
-- The desktop-owned Kaggle1 pair-memory dual screen submitted two new directions,
-  `memory_value` and `memory_message`, to one T4x2 kernel on 2026-09-24.
-  `memory_value` is a relative same-run reference for `memory_message`; no
-  GPTrans-T baseline is retrained. Kaggle's first status query returned
-  `RUNNING`. Both prospective RML trajectories are ACTIVE, and no terminal
-  metric or replay-ready result is accepted. Authority:
-  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/STATUS.md`.
+- The desktop-owned Kaggle1 pair-memory dual screen is terminally accepted.
+  On the aligned 50K internal-development rows, `memory_message` scored
+  `0.159906685 eV` versus the same-job `memory_value` reference at
+  `0.155583367 eV`; the +4.323 meV deficit closes the mechanism comparison
+  `NEGATIVE_UNDER_CONTRACT`. Both RML trajectories are terminal, but both
+  traces are excluded from replay for missing observed per-epoch fields; no
+  scale or successor is released. Authorities:
+  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md` and
+  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/posthoc_attribution.md`.
 - The local GPTrans-T 100K frozen-initialization diagnostic and raw/EMA probe
   are terminal and accepted as mechanism evidence, not a model promotion.
   The 100K gain survives prediction on the previously used 500K development

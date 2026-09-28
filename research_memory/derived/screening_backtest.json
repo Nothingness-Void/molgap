@@ -58,6 +58,28 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "cumulative_optimizer_step_and_sample_presentation_coordinates_not_observed",
+        "epoch_axis_not_cross_scale_comparable",
+        "live_development_metric_not_observed",
+        "per_epoch_checkpoint_identity_not_observed"
+      ],
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cumulative_optimizer_step_and_sample_presentation_coordinates_not_observed",
+        "epoch_axis_not_cross_scale_comparable",
+        "live_development_metric_not_observed",
+        "per_epoch_checkpoint_identity_not_observed"
+      ],
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-value-100k-s42-v1",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "strict_replay_reference_binding_unavailable_under_frozen_prospective"
       ],
       "run_id": "kaggle1-gptrans-reference-k1pair-100k-s42-v1",
@@ -143,5 +165,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 18
+  "trace_count": 20
 }

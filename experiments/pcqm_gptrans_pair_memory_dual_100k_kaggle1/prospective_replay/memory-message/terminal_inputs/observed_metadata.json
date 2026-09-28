@@ -1,0 +1,82 @@
+{
+  "format": "molgap-kaggle1-paired-observed-source-v1",
+  "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+  "completion_ref": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/completion_manifest.json",
+  "completion_sha256": "33e371e2eeeb0f549086baba84cba4dff5c6b6e789bf7fa67672e6e5e00dfa20",
+  "training_trace_ref": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/trace.json",
+  "training_trace_sha256": "a98a33a754cfb740f07882b29ae63663a4322a546e791460bbd07d08def23707",
+  "cost_scope": "sum of 60 observed per-epoch single-T4 training/evaluation wall intervals; excludes setup and queue",
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-memory-message-kaggle1-100k-s42-measured-training",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+      "attempt_id": "attempt-001",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 2.6941549246913894
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.6941549246913894
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-memory-message-train-100k-s42",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "official_train_prefix",
+      "access_kind": "training_membership",
+      "row_manifest_hash": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-memory-message-dev-metric-100k-s42",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-memory-message-dev-select-100k-s42",
+      "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaggle1-gptrans-pair-memory-replay-memory-message-100k-s42-v1",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/terminal_inputs/observed_metadata.json"
+    }
+  ]
+}

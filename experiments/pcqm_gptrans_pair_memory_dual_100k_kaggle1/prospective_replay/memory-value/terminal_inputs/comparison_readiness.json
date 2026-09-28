@@ -1,0 +1,85 @@
+{
+  "format": "molgap-comparison-readiness-v1",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "candidate_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+  "reference_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "strict_ready": false,
+  "strict_status": "BLOCKED_TRACE_FIELDS_UNAVAILABLE",
+  "experiment_purpose": "mechanism_comparison",
+  "intervention_group_id": "pair-to-node-memory-readback",
+  "mechanism_id": "accumulated-pair-memory-readback",
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "matched_fields": {},
+  "mismatched_fields": {},
+  "missing_fields": [
+    "live_dev_metric",
+    "checkpoint_identity",
+    "cumulative_optimizer_step_coordinates",
+    "cumulative_sample_presentation_coordinates"
+  ],
+  "missing_artifacts": [
+    "strict_reference_bundle",
+    "complete_causal_trace_fields"
+  ],
+  "reference_prediction_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "role_status": "complete",
+  "trace_status": "incomplete",
+  "stochasticity_status": "single_seed_row_bootstrap_only",
+  "candidate_role_applicability_plan": null,
+  "candidate_observed_role_event_kinds": [
+    "training_membership",
+    "metric_computed",
+    "selection_used"
+  ],
+  "reference_role_applicability_plan": null,
+  "reference_observed_role_event_kinds": [
+    "training_membership",
+    "metric_computed",
+    "selection_used"
+  ],
+  "candidate_trace_field_availability": {
+    "epoch_or_pass": true,
+    "optimizer_step": false,
+    "sample_presentations": false,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": false,
+    "ema_dev_metric": true,
+    "checkpoint_identity": false
+  },
+  "reference_trace_field_availability": {
+    "epoch_or_pass": true,
+    "optimizer_step": false,
+    "sample_presentations": false,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": false,
+    "ema_dev_metric": true,
+    "checkpoint_identity": false
+  },
+  "candidate_artifact_bindings": null,
+  "reference_artifact_bindings": null,
+  "blocker_codes": [
+    "MISSING_CAUSAL_TRACE_FIELDS",
+    "STRICT_REFERENCE_BUNDLE_UNAVAILABLE",
+    "EPOCH_AXIS_NOT_REPLAY_COMPARABLE"
+  ],
+  "decision_scope": [
+    "paired terminal endpoint and row-bootstrap only"
+  ],
+  "forbidden_claims": [
+    "strict causal claim",
+    "replay-pool readiness",
+    "promotion under frozen contract"
+  ],
+  "recoverable_without_training": [
+    "locate cumulative counters/live-development/checkpoint-identity observations if retained"
+  ],
+  "rerun_required_blockers": []
+}

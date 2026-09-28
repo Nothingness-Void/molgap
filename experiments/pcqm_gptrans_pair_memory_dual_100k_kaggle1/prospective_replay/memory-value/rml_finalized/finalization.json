@@ -1,0 +1,49 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-35a7a2cb3621b8844b505ab0d9fa47ed7b54af481d1ce78e311f155b5720d213",
+  "finalized_at": "2026-09-24T10:32:01Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md": "1d5622a3223deb2b68f5d1b5c1bfde57e17d57ca9f7e1d0a67aeaf7d61f6b34b",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/experiment_spec_replay.json": "8a514e9eefed2c61414281739bfffdfef5898e4f398925aa86d0f234709b5364",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/launch/receipts_submitted/31fcd9f9bc56a61d12345c48078590aa22487738e468527925a289363d4803e3.json": "e4a0850d8c64fad3eb35e80a223c17f6000030e580418d2b2232b3fbb05f7dfd",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-value/terminal_inputs/acceptance.json": "95ab8ae70bcd8281a91a705629451412408e7ef1d99fd7391d5afb6d5351b826",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-value/terminal_inputs/comparison_readiness.json": "430772d9b43b1757cf8ea05884091325c2df727b2af6cbbbe384fe829f2558b1",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-value/terminal_inputs/observed_metadata.json": "a881820f7ed654b7c3872d1ec48ce02d7d58eaed60e17a7ff483c6a03dd5b6af",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/protocol.md": "36382aa72af81095b984d38a9de51767f2a6a7bc345c12c49c3ba675ab746e68",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/release_gate.json": "cc2e73e6da6614b02ae6c99c84a6fddcff86a7a5648ccb21a37ffb200bd3cabb",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-value/canonical_trace.json": "1b08fb50b35ccf058155d97241d67fe6b124644b736aaa0f0e7e3bad18fb6a39",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-value/trace_recovery.json": "35aabb32ace3abe7226be74f0581789d4a0ab768ecf126a4f2668a5488cbef0b",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory_value/mechanical_acceptance.json": "8a855264071f4dea4668c1d353fa81f04372489a758e155e4e7bc9eb53ad0021",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/paired_comparison.json": "1efb0d75718044a31104f958002d6b272eb7ee2a48092b18849945de9f76641d",
+    "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/training_contract.json": "781ae28d4f391e390612f9acef545ec0c60aa8521a7c25761f7f97913428d32d",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/best_model.pt": "0ea53502feab4285d6ebcd31bf08752587b9a31c9f2a806af24ae079dfc3e0a2",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/completion_manifest.json": "ad9b2323c50482178ee1ae2b1ef411bd47f86cf12036b611c4ce9105ab9eb2b2",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/development_predictions.pt": "6077ffa6608b4f36d2752565852f4072ec84e28566b5d2a2fc47647e5a600cff",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/frozen_reference.json": "9af39f8e78653fb085da8840feac8919fc536b98bdde6182a349524af404a9c3",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/last_checkpoint.pt": "29eeeb6cd2dc5fe79ce0ec08e5a70fe9aa8dc4064ef330433d5d53a6b365c784",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/preflight.json": "df56f20d90b17723cfd8b14ed1f9638bbd46e7727955d941199bd402e1990334",
+    "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/trace.json": "4b9f64d0391c38621bfa1d0b407b2907307a651deb790509ed03af06efbb255f"
+  },
+  "outcome": "CLOSED",
+  "published_hashes": {
+    "costs/cost-memory-value-kaggle1-100k-s42-measured-training.json": "00b54544514b41418ff6f926b9817f0cbf0742e0ae9be3806baa0c3acf3c01bf",
+    "prospective_snapshot.json": "02e47f9ef2461e53a3ecafb07cb6b288607413cf7f73ab0c3afabdc41247d71d",
+    "roles/role-memory-value-dev-metric-100k-s42.json": "85ee89a552280950282564b80963d7e4f4c2048586b0debd1b9652cf23b74b1d",
+    "roles/role-memory-value-dev-select-100k-s42.json": "125c9919502fd5c157c8957a269251ed70a6ddc4ff2fac8c3d9db4f1fccdf4f8",
+    "roles/role-memory-value-train-100k-s42.json": "58ea2712bf65315fcd234a9acd0c823cebc3704530acfb668b682936e57adc0f",
+    "terminal_input.json": "d9974c62ef40770bb20aaf0eb84d27d9afacebfe5209eb7d33b6d7bc28fa2099",
+    "trace.json": "1b08fb50b35ccf058155d97241d67fe6b124644b736aaa0f0e7e3bad18fb6a39",
+    "trace_manifest.json": "da0dc9dfbf308977986c79e3a2bf639473ffa33a298564b4f9aefa137531ad26",
+    "trajectory.json": "c0b965f385fceabb9ff4380678d0b069982fb55e2f98ff569d61ef44c41329b4",
+    "v5_evidence.json": "efeb46f99c07d09d58dfae7a41c5bd803cbb98f635cc8db3a00aba933e6c1dd7"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-value/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "35a7a2cb3621b8844b505ab0d9fa47ed7b54af481d1ce78e311f155b5720d213",
+  "trace_status": "available",
+  "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+}

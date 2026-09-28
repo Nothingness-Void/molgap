@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 195,
+  "ambiguous_historical_role_record_count": 205,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -940,6 +940,76 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-pair-norm-500k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -1367,7 +1437,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 82,
+  "explicit_role_event_count": 88,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1493,6 +1563,34 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-memory-message-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-message-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-memory-value-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-value-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
@@ -1583,6 +1681,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-memory-message-train-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-memory-value-train-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
       },
       {
         "access_kind": "training_membership",
@@ -2025,6 +2137,8 @@
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
       "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
       "pcqm-gptrans-pair-norm-500k-s42",
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
@@ -2072,6 +2186,8 @@
       "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "pcqm-gptrans-pair-memory-external-ref-memory-message-no-train",
       "pcqm-gptrans-pair-memory-external-ref-memory-value-no-train",
+      "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
       "pcqm-gptrans-pair-norm-500k-s42",
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
@@ -2190,6 +2306,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-memory-message-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-message-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-memory-value-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-value-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
       },
       {
         "access_kind": "metric_computed",
@@ -2575,6 +2719,34 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-memory-message-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-message-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-memory-value-dev-metric-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-memory-value-dev-select-100k-s42",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
@@ -2665,6 +2837,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-memory-message-train-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-message-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-memory-value-train-100k-s42",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
       },
       {
         "access_kind": "training_membership",

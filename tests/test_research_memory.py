@@ -486,8 +486,6 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
     assert set(no_evidence_trajectories) == {
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
-        "TB-gptrans-pair-memory-replay-memory-message-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
     }

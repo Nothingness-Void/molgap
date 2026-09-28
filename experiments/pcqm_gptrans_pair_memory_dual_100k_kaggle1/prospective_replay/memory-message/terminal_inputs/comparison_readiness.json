@@ -1,0 +1,85 @@
+{
+  "blocker_codes": [
+    "MISSING_CAUSAL_TRACE_FIELDS",
+    "STRICT_REFERENCE_BUNDLE_UNAVAILABLE",
+    "EPOCH_AXIS_NOT_REPLAY_COMPARABLE"
+  ],
+  "candidate_artifact_bindings": null,
+  "candidate_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+  "candidate_observed_role_event_kinds": [
+    "training_membership",
+    "metric_computed",
+    "selection_used"
+  ],
+  "candidate_role_applicability_plan": null,
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "comparison_class": "PAIRED_ENDPOINT",
+  "decision_scope": [
+    "paired terminal endpoint and row-bootstrap only"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "strict causal claim",
+    "replay-pool readiness",
+    "promotion under frozen contract"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "pair-to-node-memory-readback",
+  "matched_fields": {},
+  "mechanism_id": "accumulated-pair-memory-readback",
+  "mismatched_fields": {},
+  "missing_artifacts": [
+    "strict_reference_bundle",
+    "complete_causal_trace_fields"
+  ],
+  "missing_fields": [
+    "live_dev_metric",
+    "checkpoint_identity",
+    "cumulative_optimizer_step_coordinates",
+    "cumulative_sample_presentation_coordinates"
+  ],
+  "recoverable_without_training": [
+    "locate cumulative counters/live-development/checkpoint-identity observations if retained"
+  ],
+  "reference_artifact_bindings": null,
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "reference_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+  "reference_observed_role_event_kinds": [
+    "training_membership",
+    "metric_computed",
+    "selection_used"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": null,
+  "reference_trace_field_availability": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "single_seed_row_bootstrap_only",
+  "strict_ready": false,
+  "strict_status": "BLOCKED_TRACE_FIELDS_UNAVAILABLE",
+  "trace_status": "incomplete"
+}

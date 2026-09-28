@@ -1,0 +1,31 @@
+{
+  "format": "molgap-kaggle1-pair-memory-dual-100k-comparison-v1",
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 42,
+  "reference_variant": "memory_value",
+  "candidate_variant": "memory_message",
+  "reference_mae_eV": 0.15558336675167084,
+  "candidate_mae_eV": 0.15990668535232544,
+  "candidate_minus_reference_eV": 0.004323315858840942,
+  "paired_row_bootstrap": {
+    "delta": 0.004323315858840942,
+    "ci95": [
+      0.003265723347902298,
+      0.005336872674703598
+    ],
+    "probability_better": 0.0,
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "shortlist_gate": {
+    "gain_eV": -0.004323318600654602,
+    "required_gain_eV": 0.003,
+    "paired_row_bootstrap_upper_eV": 0.005336872674703598,
+    "training_seed_variance_measured": false,
+    "passed": false
+  },
+  "scope": "same-job aligned internal-development rows; no training-seed variance estimate",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

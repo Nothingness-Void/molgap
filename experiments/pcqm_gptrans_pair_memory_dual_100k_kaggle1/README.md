@@ -9,6 +9,8 @@ the comparison and resource gate, and `STATUS.md` records platform state.
 
 The shared ExperimentSpec v2 `same_run_replay` binding and CLI own the new
 per-arm prospective RML identity. The first unsubmitted external-reference
-plan was closed `NO_TRAIN` under `prospective/`; the live plan is under
-`prospective_replay/`. Terminal acceptance must establish two replay-ready
-trajectories before the job can be called dual replay-ready.
+plan was closed `NO_TRAIN` under `prospective/`; the executed plan is under
+`prospective_replay/`. Both arms are terminally accepted, but neither meets
+strict replay capability because observed per-epoch coordinates and checkpoint
+identity are absent. See `decision.md` for the frozen endpoint and
+`results/posthoc_attribution.md` for saved-artifact analysis.

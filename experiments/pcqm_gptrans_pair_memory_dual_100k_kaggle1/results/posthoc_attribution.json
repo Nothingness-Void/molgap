@@ -1,0 +1,136 @@
+{
+  "candidate_minus_reference_mean_prediction_shift_meV": 17.324369392395017,
+  "candidate_minus_reference_median_row_absolute_error_meV": 2.4330615997314453,
+  "candidate_worse_row_fraction": 0.5136,
+  "frozen_paired_interval_candidate_minus_reference_eV": [
+    0.003265723347902298,
+    0.005336872674703598
+  ],
+  "inputs": [
+    {
+      "arm": "memory-value",
+      "paths": {
+        "canonical_trace": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-value/canonical_trace.json",
+        "development_predictions": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/development_predictions.pt",
+        "raw_trace": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/trace.json",
+        "resumable_checkpoint": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/last_checkpoint.pt",
+        "selected_model": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/best_model.pt"
+      },
+      "sha256": {
+        "canonical_trace": "1b08fb50b35ccf058155d97241d67fe6b124644b736aaa0f0e7e3bad18fb6a39",
+        "development_predictions": "6077ffa6608b4f36d2752565852f4072ec84e28566b5d2a2fc47647e5a600cff",
+        "raw_trace": "4b9f64d0391c38621bfa1d0b407b2907307a651deb790509ed03af06efbb255f",
+        "resumable_checkpoint": "29eeeb6cd2dc5fe79ce0ec08e5a70fe9aa8dc4064ef330433d5d53a6b365c784",
+        "selected_model": "0ea53502feab4285d6ebcd31bf08752587b9a31c9f2a806af24ae079dfc3e0a2"
+      }
+    },
+    {
+      "arm": "memory-message",
+      "paths": {
+        "canonical_trace": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/memory-message/canonical_trace.json",
+        "development_predictions": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/development_predictions.pt",
+        "raw_trace": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/trace.json",
+        "resumable_checkpoint": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/last_checkpoint.pt",
+        "selected_model": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/best_model.pt"
+      },
+      "sha256": {
+        "canonical_trace": "235515d13ff3fcadf2a5be995c58c575156c05083196692f0d1325189d024d4b",
+        "development_predictions": "22f3d9581f99af44e879e9eed59cf31303c6fc266cb8eac896cb86d49fae4292",
+        "raw_trace": "a98a33a754cfb740f07882b29ae63663a4322a546e791460bbd07d08def23707",
+        "resumable_checkpoint": "d1587c599298933d23d1e493ec2c32b20eae434ea2940227ca81680baba8df16",
+        "selected_model": "de4e9a21a7b96cf47190a355244fca70bec826f4fc04a698df51e64f287a2a30"
+      }
+    }
+  ],
+  "limits": [
+    "single seed; row bootstrap does not measure training-seed variation",
+    "online train and EMA development metrics have different weight/role semantics",
+    "no observed live development or per-epoch checkpoint identity",
+    "target strata and offset fit are post-hoc and cannot authorize a router, calibration, or new gate"
+  ],
+  "mean_signed_error_meV": {
+    "memory_message": -10.532353869080543,
+    "memory_value": -27.85672326147556
+  },
+  "measured_t4_device_hours": {
+    "memory-message": 2.6941549246913894,
+    "memory-value": 2.693758851670277
+  },
+  "paired": {
+    "candidate_better_row_fraction": 0.4864,
+    "candidate_mae_eV": 0.15990667399823666,
+    "material_3mev_point_gain": false,
+    "paired_gain_eV": -0.004323315858840942,
+    "reference_mae_eV": 0.15558335813939572,
+    "rows": 50000
+  },
+  "posthoc_same_development_role_median_offset": {
+    "candidate_minus_reference_mae_meV": 6.521579313278209,
+    "offset_mae_meV": {
+      "memory_message": 159.24462025105953,
+      "memory_value": 152.72304093778132
+    },
+    "offset_meV": {
+      "memory_message": 15.858650207519531,
+      "memory_value": 31.653642654418945
+    },
+    "qualification": "same-role fitted diagnostic only, not a valid evaluation or promotion score"
+  },
+  "posthoc_target_strata": {
+    "4to6": {
+      "candidate_minus_reference_mae_meV": 4.757935374544898,
+      "rows": 34837
+    },
+    "6to8": {
+      "candidate_minus_reference_mae_meV": 3.4187965422267035,
+      "rows": 10451
+    },
+    "ge8": {
+      "candidate_minus_reference_mae_meV": 18.580646379619626,
+      "rows": 987
+    },
+    "lt4": {
+      "candidate_minus_reference_mae_meV": -0.9812999571729827,
+      "rows": 3725
+    }
+  },
+  "question": "memory_message versus same-job memory_value",
+  "scope": "post-hoc descriptive analysis of previously selected 50K internal-development rows",
+  "trace": {
+    "candidate_minus_reference_ema_development_meV": {
+      "0": 31.45354986190796,
+      "19": -70.73572278022766,
+      "29": -21.67382836341858,
+      "39": -1.2098997831344604,
+      "49": 3.2051950693130493,
+      "59": 4.323318600654602,
+      "9": -454.8048973083496
+    },
+    "candidate_minus_reference_online_train_meV": {
+      "0": 4.159071331451769,
+      "19": 3.1136858251222255,
+      "29": 2.2501833963065323,
+      "39": 1.5944726055599767,
+      "49": 1.403241270980418,
+      "59": 1.362833881345102,
+      "9": 6.710068063051966
+    },
+    "epoch49_to59_ema_development_improvement_meV": {
+      "memory_message": 15.792027115821838,
+      "memory_value": 16.91015064716339
+    },
+    "last10_mean_ema_development_delta_meV": 3.9125412702560425,
+    "terminal_observed_exposure": {
+      "memory-message": {
+        "epochs": 60,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080
+      },
+      "memory-value": {
+        "epochs": 60,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080
+      }
+    }
+  }
+}

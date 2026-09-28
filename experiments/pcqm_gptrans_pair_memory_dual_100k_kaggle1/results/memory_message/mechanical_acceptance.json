@@ -1,0 +1,36 @@
+{
+  "accepted": true,
+  "format": "molgap-kaggle1-gptrans-pair-memory-mechanical-acceptance-v1",
+  "arm_id": "memory-message",
+  "variant": "memory_message",
+  "parameters": 5246817,
+  "epochs": 60,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "best_epoch": 59,
+  "best_development_mae_eV": 0.15990668535232544,
+  "runtime_certificate_id": "28352d3521868cabaf7fe71231eb3b5e155f3adc578445dcd64977e8594c78c0",
+  "runtime_certificate_status": "accepted",
+  "selected_model_sha256": "de4e9a21a7b96cf47190a355244fca70bec826f4fc04a698df51e64f287a2a30",
+  "resumable_checkpoint_sha256": "d1587c599298933d23d1e493ec2c32b20eae434ea2940227ca81680baba8df16",
+  "development_predictions_sha256": "22f3d9581f99af44e879e9eed59cf31303c6fc266cb8eac896cb86d49fae4292",
+  "source_commit": "d01b8f24281e95e9ffee1a6bdf9fe0019de7f720",
+  "source_archive_sha256": "de7b4ebe525982490b881ac74dcb5f63fdb188ab1f64433430ae0752d7070c90",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "trace_sha256": "a98a33a754cfb740f07882b29ae63663a4322a546e791460bbd07d08def23707",
+  "measured_cost": {
+    "status": "measured",
+    "metric": "device_hours",
+    "unit": "T4 device hours",
+    "value": 2.6941549246913894,
+    "observed_training_epoch_seconds": 9698.957728889001,
+    "scope": "sum of 60 observed per-epoch single-T4 training/evaluation wall intervals; excludes setup and queue"
+  },
+  "role_use": {
+    "official_train_prefix": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  }
+}

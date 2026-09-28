@@ -652,6 +652,48 @@
       "artifact_availability": [
         "durable_local_verified"
       ],
+      "comparison_status": "paired_endpoint_only_not_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-pair-memory-replay-memory-message-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same_run_candidate",
+      "source_envelope": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-message/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "not_applicable_relative_reference",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_train_prefix": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "same_run_reference",
+      "source_envelope": "experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective_replay/memory-value/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_ready",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
       "comparison_status": "paired_development_comparison_complete",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

@@ -15,12 +15,27 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
 | P0 blocked | B-GPTRANS-CENTER-PAIR-REPLAY | Resolve replay qualification for the terminally accepted Kaggle1 pair | Existing frozen reference identity cannot satisfy strict causal replay entrance for the same-job control; no training successor is released | `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md` |
-| P1 | B-GPTRANS-PAIR-MEMORY-DUAL | Reconcile the submitted Kaggle1 `memory_value` / `memory_message` T4x2 run | Accept each arm and require two complete replay-pool entries or record the exact terminal blocker; no successor is preauthorized | `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/STATUS.md` |
 | P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
 The accepted V4 reference and runtime policy are documented in
 `experiments/pcqm_gptrans_t_100k_v4/` and `platforms/V4_EXECUTION_CONTRACT.md`.
+
+The Kaggle1 pair-memory dual screen is closed negative with two replay
+exclusions. Its accepted endpoint, exact replay blocker and saved-artifact
+attribution are in `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/`;
+no further pair-memory run is queued.
+
+The next desktop research action is a **local, no-training feasibility audit**
+for `B-GEOMETRY-V4-BRIDGE`. Follow the accepted geometry and component
+decisions to test whether an existing strict 500K 2D reference actually
+matches the proposed geometry candidate in rows, recipe and runtime; identify
+the exact missing reference, cache, trainer, runtime certificate, role and
+native-cost records. The historical geometry gain and local fusion result use
+a previously selected development role and are not V4 causal evidence. Freeze
+a new prospective mechanism question and cheapest discriminating gate only if
+the audit finds a feasible matched comparison. A training release still needs
+the separate authorization stated in the active-queue row.
 V4 requires fixed data and
 row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
 selection rule, sample exposure, role access, and a runtime certificate for
