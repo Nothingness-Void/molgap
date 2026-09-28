@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 46,
+    "trajectories_total": 49,
     "with_complete_native_measurement": 4,
-    "with_cost_event": 46,
-    "with_incomplete_native_measurement": 42,
+    "with_cost_event": 49,
+    "with_incomplete_native_measurement": 45,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,11 +15,14 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 20,
+      "count": 23,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
+        "TC-k1-atom-pair-local-100k-s42",
+        "TC-k1-bond-type-local-100k-s42",
+        "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
@@ -63,11 +66,14 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 42,
+      "count": 45,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
+        "TC-k1-atom-pair-local-100k-s42",
+        "TC-k1-bond-type-local-100k-s42",
+        "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-chem-typed-pair-token-100k-s42",
         "TC-k1-conjugated-oneshot-100k-s42",
         "TC-k1-conjugated-persistent-100k-s42",
@@ -112,8 +118,11 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 8,
+      "count": 11,
       "items": [
+        "TC-k1-atom-pair-local-100k-s42",
+        "TC-k1-bond-type-local-100k-s42",
+        "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
         "TC-k1-corrupt-gap-atom-aux-100k-s42",
@@ -127,8 +136,11 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 1,
+      "count": 4,
       "items": [
+        "TC-k1-atom-pair-local-100k-s42",
+        "TC-k1-bond-type-local-100k-s42",
+        "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-pair-token-scale-attribution"
       ],
       "severity": "WARN"

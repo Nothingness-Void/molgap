@@ -61,6 +61,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-atom-pair-local-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-bond-type-local-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-chem-local-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-chem-typed-pair-token-100k-s42:A001",
       "target": "experiments/pcqm_k1_chem_typed_pair_token_100k/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -621,6 +636,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-k1-atom-pair-local-100k-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-bond-type-local-100k-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-corrupt-gap-100k-s42",
       "target": "TC-k1-joint-atom-post100k-audit-s42",
       "type": "parent_trajectory"
@@ -748,6 +773,16 @@
     {
       "source": "TC-k1-triplet-aggregate-100k-s42",
       "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -992,6 +1027,21 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-chem-typed-pair-token-100k-s42",
       "type": "prior_evidence"
     },
@@ -1198,6 +1248,21 @@
     {
       "source": "pcqm-k1-pair-token-500k-s42",
       "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
       "type": "reference_used"
     },
     {
@@ -1590,6 +1655,18 @@
     },
     {
       "id": "TC-gptrans-step-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-atom-pair-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-bond-type-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-chem-local-post100k-audit-s42",
       "type": "trajectory"
     },
     {
