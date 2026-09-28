@@ -222,6 +222,37 @@ Never invent retrospective hypotheses, rationale, costs, role use, traces, or
 evidence to justify work that was already launched. Unknown fields remain
 unknown.
 
+## Terminal attribution before another module
+
+After accepting a module experiment's terminal result, write a concise
+failure-mode attribution beside its owning decision before proposing another
+unrelated module. Use the accepted contract, artifacts, trace, role and cost
+records, and existing analysis helpers. This is an interpretation of evidence,
+not a replacement RML schema or a new promotion gate. An infrastructure-only
+failure or NO_TRAIN closure needs only the reason and missing discriminator.
+
+For a trained module, distinguish the following where the retained evidence
+permits it:
+
+- contract, source, data, runtime, artifact, and reference validity;
+- absolute and paired endpoint effect under the frozen gate;
+- train and development behavior with their exact metric/EMA semantics;
+- optimizer-step and sample-presentation exposure, selected endpoint, and
+  whether absolute and relative gains are still moving;
+- paired row errors, calibration shifts, and predeclared slices when available;
+  label any additional slice or same-role fit as post-hoc and non-promotional;
+- observed native cost and exact role use;
+- which explanations are contradicted, supported, merely compatible, or
+  unidentifiable, followed by the cheapest decision-relevant falsifier.
+
+Do not diagnose underfitting, overfitting, insufficient exposure, or module
+harm from one endpoint score or from mismatched train/development metrics.
+State `insufficient_evidence` when the needed comparator, fixed-cohort metric,
+trace, or checkpoint is absent. Preserve the accepted terminal decision; do
+not manufacture a reference or launch a repeat solely to complete an
+attribution report. Query this disposition along with RML before selecting a
+new module in the same family.
+
 ## Hard constraints
 
 - **Python**: on this Windows checkout, use

@@ -41,3 +41,6 @@ The [terminal decision](decision_attempt_002.md) owns the scientific verdict;
 [decision evidence index](decision_evidence_index.md) links its machine records;
 [RML closure](RML_CLOSURE_ATTEMPT_002.md) records two replay-ready traces.
 The complete rejected implementation history is preserved on `archive`.
+The [attempt-002 saved-artifact attribution](results/posthoc_attribution_attempt_002.md)
+examines training versus development behavior, prediction shift, and cost
+without changing the frozen decision.

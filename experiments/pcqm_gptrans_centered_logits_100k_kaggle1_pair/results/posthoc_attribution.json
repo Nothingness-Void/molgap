@@ -1,0 +1,97 @@
+{
+  "candidate_arm": "centered_logits",
+  "limits": [
+    "post-hoc descriptive analysis on previously selected internal development rows",
+    "target strata are not inference-time routing rules",
+    "one seed; paired row bootstrap does not measure training-seed variation",
+    "online train metrics are not fixed-cohort evaluation metrics"
+  ],
+  "mean_candidate_minus_reference_prediction_shift_meV": 4.2395069026947025,
+  "mean_signed_error_meV": {
+    "centered_logits": -17.19438951551914,
+    "reference": -21.43389641821384
+  },
+  "median_reference_minus_candidate_row_gain_meV": -0.4792213439941406,
+  "paired": {
+    "candidate_better_row_fraction": 0.49702,
+    "candidate_mae_eV": 0.15541620911061763,
+    "material_3mev_point_gain": false,
+    "paired_gain_eV": 0.0005982789516448975,
+    "reference_mae_eV": 0.15601448806226254,
+    "rows": 50000
+  },
+  "paired_uncertainty": "Use the owning frozen 10,000-replicate comparison; this post-hoc calculation makes no new uncertainty or promotion claim.",
+  "posthoc_same_role_median_shift_diagnostic": {
+    "mae_meV": {
+      "centered_logits": 154.1826325649023,
+      "reference": 154.36858839452267
+    },
+    "offset_meV": {
+      "centered_logits": 21.092653274536133,
+      "reference": 23.839950561523438
+    },
+    "reference_minus_candidate_gain_meV": 0.18595582962036006,
+    "warning": "Offsets are fitted on these same selected development labels; these are diagnostics, not valid evaluation scores."
+  },
+  "prediction_inputs": [
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/development_predictions.pt",
+      "sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff"
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/development_predictions.pt",
+      "sha256": "de1ab0c56181e157184222d676441541bc6dda1f01262a319537d9e38a299f71"
+    }
+  ],
+  "question": "centered_logits",
+  "reference_arm": "reference",
+  "reference_minus_candidate_better_row_fraction": 0.49702,
+  "role": "previously consumed internal development rows 100000:150000; no protected role",
+  "target_strata_posthoc": {
+    "4to6": {
+      "reference_minus_candidate_gain_meV": -2.3777854939800838,
+      "rows": 34837
+    },
+    "6to8": {
+      "reference_minus_candidate_gain_meV": 7.414819886040863,
+      "rows": 10451
+    },
+    "ge8": {
+      "reference_minus_candidate_gain_meV": 20.297244689384854,
+      "rows": 987
+    },
+    "lt4": {
+      "reference_minus_candidate_gain_meV": 4.086764482843796,
+      "rows": 3725
+    }
+  },
+  "trace": {
+    "ema_gain_epoch59_meV": 0.5982816219329834,
+    "ema_gain_first10_mean_meV": 193.3620810508728,
+    "ema_gain_last10_mean_meV": 0.23575276136398315,
+    "ema_reference_minus_candidate_gain_meV_by_epoch": {
+      "0": 0.832676887512207,
+      "19": 39.97904062271118,
+      "29": 19.356712698936462,
+      "39": 3.8652420043945312,
+      "49": -0.011354684829711914,
+      "59": 0.5982816219329834,
+      "9": 381.18642568588257
+    },
+    "inputs": [
+      {
+        "path": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/reference/canonical_trace.json",
+        "sha256": "d91bde2d4a65507e4ea3b3e21ece046941400a4e33a24a92e2592a1af5341b99"
+      },
+      {
+        "path": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/results/centered_logits/canonical_trace.json",
+        "sha256": "2c27b2af1404b20c1187541715fcf508449d3ba0663cfaa0019fc845ef8e2053"
+      }
+    ],
+    "measured_epoch_interval_seconds": {
+      "centered_logits": 9751.94105358699,
+      "reference": 9744.876442908992
+    },
+    "terminal_online_train_reference_minus_candidate_meV": 3.895837865002
+  }
+}

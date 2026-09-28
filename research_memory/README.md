@@ -31,6 +31,10 @@ locators remain explicit URIs. Missing historical facts remain missing, and no
 command submits training, accesses protected data, changes a scientific gate,
 or creates desktop/server live orchestration.
 
+For desktop experiment failure-mode coverage, see the
+[2026-09-28 attribution audit](DESKTOP_ATTRIBUTION_AUDIT_20260928.md). It
+links back to owning decisions and does not replace canonical evidence.
+
 Before handoff, use `check --frozen --portable`. The portable check verifies
 that every discovered canonical RML input, its direct local record/authority
 references, replay trace-migration sidecar, RML runtime module, policy/schema,

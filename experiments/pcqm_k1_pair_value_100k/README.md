@@ -15,4 +15,6 @@ result does not authorize a 500K or full-scale successor.
 
 The terminal disposition is in `decision.md`; the replay artifact audit and
 minimal file list are in `results/acceptance_v2.json`.
+The [saved-trace audit](results/posthoc_attribution.md) states what the late
+training curve can and cannot explain without a paired accepted reference.
 

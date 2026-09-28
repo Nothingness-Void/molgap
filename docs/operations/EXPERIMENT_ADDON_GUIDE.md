@@ -107,6 +107,14 @@ alone and record why two arms were not feasible.
 6. Submit only under the owning experiment's explicit resource/role authority.
    Reconcile the authoritative platform state and durable artifacts before
    creating terminal evidence or considering a retry.
+7. After terminal acceptance, close the scientific question with the owning
+   decision and a failure-mode attribution beside it before selecting another
+   module. Apply `AGENTS.md`'s terminal attribution rule to accepted traces,
+   paired artifacts, role use, and native cost. State the exact unresolved
+   discriminator when evidence cannot identify a cause; do not use another
+   architecture submission to substitute for this analysis. Rebuild and check
+   RML for accepted canonical milestones, then route the closed branch by
+   `BRANCHES.md`.
 
 The shared code makes identities and evidence flows reusable. It does not make
 an experiment scientifically valid, authorize resource use, submit a job, or

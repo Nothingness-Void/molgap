@@ -13,3 +13,5 @@ T4x2 runner. `decision.md` owns the terminal scientific result, and `STATUS.md`
 tracks the replay qualification blocker. `release_gate.json` and `launch/`
 retain the local preflight and Kaggle submission observations. The per-arm
 `prospective/*/rml_finalized/` records are the canonical terminal RML inputs.
+The [saved-artifact attribution](results/posthoc_attribution.md) examines why
+the terminal gain is small without changing the frozen decision.
