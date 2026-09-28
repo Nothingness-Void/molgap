@@ -40,7 +40,8 @@ holdout. Official-valid/test-dev/challenge remain sealed.
    accepted sidecar plus the unchanged fixed cache.
 3. GPU runtime preflight must hash the mounted source and target-transform
    asset, verify all fixed source indices/label bytes and sidecar hashes,
-   execute two identical FP32 optimizer steps, retain at least 15% VRAM, and
+   observe one cold CUDA step plus two identical warmed FP32 optimizer steps,
+   retain at least 15% VRAM, and
    reject estimated >6-hour worker time. Epoch 0 measures the full train+dev
    pass and fails early if 40 epochs project beyond that budget.
 4. If admitted, every epoch emits an atomic model/optimizer/RNG checkpoint,
@@ -73,3 +74,14 @@ K1's learned slot; 5.27M parameters may overfit 100K; and a benefit on the
 reused development role may not transfer. This protocol cannot justify a
 later hyperparameter/seed sweep without a new hypothesis and budget decision.
 
+## Bounded execution retry after preflight diagnosis
+
+The v1 physical attempt stopped before epoch 0 because its first-step runtime
+projection was not representative. A separately accepted train-role-only
+[runtime profile](results/profile_v2_decision.md) measured the same 4 x 256
+model under FP32/BS128 on the actual assigned T4 and passed the six-hour
+wall/memory gate. The v2 attempt uses a new run/trajectory/source identity and
+the warmed-step estimator; its dataset, seed, model, optimizer, schedule,
+sample exposure and protected-role boundary do not change. The profile has no
+development result and cannot itself support a scientific claim. The v1
+prospective record stays frozen as an infrastructure-ended attempt.
