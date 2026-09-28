@@ -90,6 +90,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 | `v4_bundle.py`, `gptrans_adapter.py`, `k1_adapter.py`, `edge_state_adapter.py` | Deterministic source bundling and fixed family construction adapters | Changing family-specific construction or package source identity |
 | `edge_state_model_only_v1.py`, `edge_state_training_core.py` | EdgeState/depth/K1 construction and reusable target, sampler, step, evaluation and resume primitives | Integrating an experiment-owned trainer; see `docs/operations/EDGE_STATE_ADAPTER.md` |
 | `pcqm_topology.py` | Shared OGB/RWSE16 batch checks, PyG source-row normalization and selected frozen topology-shard inspection | Extending CPU loader diagnostics without claiming full-role acceptance |
+| `pcqm_motif_partition.py`, `pcqm_motif_sidecar.py` | Label-free motif derivation and hash-bound CPU sidecar over the accepted fixed PCQM graph cache | Testing a non-overlapping motif graph without modifying accepted graph inputs or training models |
 | `k1_pair_value.py` | Model-only desktop value-decoupled PairToken copy | Constructing the shared addon without replacing historical `k1_pair_token.py` |
 | `ogb_features.py`, `v4_runtime.py` | OGB categorical feature definitions and portable source/state/runtime helpers | Changing shared feature encoding or low-level compatibility, not scientific admission |
 | `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, screening-trace and paired terminal helpers | Changing the committed RML schemas, compiler, CLI, replay, or fail-closed package rules |

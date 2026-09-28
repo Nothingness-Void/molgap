@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-MOTIF-HIERARCHY-PREFLIGHT | Pure-2D, topology-defined motif-graph question frozen; only CPU partition/acceptance is released | Submit/accept the fixed-cache CPU sidecar, then decide whether a separately frozen GPU model preflight is justified; no automatic training |
 | P1 | C-DISTINCT-2D-BACKBONE-PREFLIGHT | Completed: independent MetaGIN-derived 2D backbone passed execution acceptance but regressed versus K1-v4 | Preserve the [strict replay-ready negative terminal](experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md); no extra seed, scale-up, protected-role read, or automatic successor |
 | P0 | C-K1-CHEM-LOCAL | Completed: two equal-capacity layer-6 atom-pair/bond-type grouping arms regressed versus K1 | Preserve both strict/replay-ready [negative terminals](experiments/pcqm_k1_chem_local_100k/decision.md); no fixed500K audit, scale, seed or automatic successor |
 | P0 | C-K1-JOINT-ATOM | Completed: joint reconstruction helped the corrupted control, but did not establish a portable K1 winner | Preserve [paired attribution](experiments/pcqm_k1_joint_atom_reconstruction_100k/decision.md), two training replay entries and separate NO_TRAIN audit; no automatic successor |
