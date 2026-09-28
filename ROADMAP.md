@@ -27,15 +27,19 @@ attribution are in `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/`;
 no further pair-memory run is queued.
 
 The next desktop research action is a **local, no-training feasibility audit**
-for `B-GEOMETRY-V4-BRIDGE`. Follow the accepted geometry and component
-decisions to test whether an existing strict 500K 2D reference actually
-matches the proposed geometry candidate in rows, recipe and runtime; identify
-the exact missing reference, cache, trainer, runtime certificate, role and
-native-cost records. The historical geometry gain and local fusion result use
-a previously selected development role and are not V4 causal evidence. Freeze
-a new prospective mechanism question and cheapest discriminating gate only if
-the audit finds a feasible matched comparison. A training release still needs
-the separate authorization stated in the active-queue row.
+for `B-GEOMETRY-V4-BRIDGE`. The accepted 500K V4 GPTrans-T control scored
+`0.106868 eV`, but the historical geometry GPTrans-T `0.102737 eV` used
+different optimizer, step and EMA selection contracts (see their protocols),
+so that numerical gap is contextual, not a strict geometry effect. First
+verify that the retained V4 control's exact row predictions, runtime
+certificate and artifact identity can be reused. Then specify a single
+geometry-only candidate matching its V4 recipe and row split; audit the
+ETKDGv3+MMFF cache, geometry-capable trainer, preflight, native-cost cap and
+per-epoch replay fields. Do not retrain a control merely for bookkeeping.
+Freeze a prospective mechanism question and cheapest discriminator only if
+that matched comparison is feasible. The earlier geometry gain and local
+fusion result reused a selected development role and do not release training;
+the active-queue row still requires separate authorization.
 V4 requires fixed data and
 row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
 selection rule, sample exposure, role access, and a runtime certificate for
