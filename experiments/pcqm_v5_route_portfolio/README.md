@@ -5,6 +5,8 @@ PCQM-100K questions. It does not own a model result yet.
 
 - `evidence_selection.md` explains what the current RML trajectories support
   and which families remain closed.
+- `evidence_review_2026-09-28.md` records the later post-chemistry-local
+  no-training search and why it did not release another GPU candidate.
 - `protocol.md` freezes the sequential use of Kaggle2/Kaggle3 and the evidence
   required before each compute release.
 

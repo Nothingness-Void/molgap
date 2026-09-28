@@ -19,7 +19,7 @@ shared packaging, planning or terminal logic.
 
 | Question | Verdict | Directory |
 |---|---|---|
-| Does one chemistry-separated local bond update improve K1 while preserving portable gains? | Prospective two-arm protocol; no outcome assumed | `pcqm_k1_chem_local_100k/` |
+| Does one chemistry-separated local bond update improve K1 while preserving portable gains? | Both equal-capacity arms regressed; strict/replay-ready terminals retained, no scale-up | `pcqm_k1_chem_local_100k/` |
 | Does local atom reconstruction help when every optimizer step retains Gap supervision? | One prospective paired training-objective study; no outcome assumed | `pcqm_k1_joint_atom_reconstruction_100k/` |
 | Can per-node linear-kernel retrieval replace K1's single global slot? | No retained terminal gain; negative frozen500K portability, complete training replay, route closed | `pcqm_k1_linear_attention_100k/` |
 | Should K1 normalize stored bond memory or only its reads? | Bounded two-arm protocol; no outcome assumed | `pcqm_k1_edge_memory_100k/` |
@@ -54,7 +54,7 @@ shared packaging, planning or terminal logic.
 | Does the same GPTrans-T core transfer at 500K? | Yes; it beat matched ESGPS6-304 scratch and remains a scale candidate | `pcqm_gptrans_t_500k/` |
 | Can exact cached shortest paths reduce GPTrans-T runtime under V5? | No; isolated path work was cheap relative to end-to-end compute and strict equivalence failed | `pcqm_gptrans_shortest_path_profile_v5/` |
 | Can historical V4 evidence be represented under V5 without rewriting history? | Yes for evidence-complete runs through non-destructive sidecars; incomplete strict comparisons remain pending | `v5_legacy_evidence_migration/` |
-| Which evidence-supported routes should follow the first RML synthesis? | Stage-0 repeatability/reference calibration, then isolated functional-group-token and node-adaptive PairToken-return questions; no compute released before complete prospective RML/prelaunch evidence | `pcqm_v5_route_portfolio/` |
+| Which evidence-supported routes should follow the first RML synthesis? | Initial functional-group-token and node-adaptive PairToken-return screens closed below gate; post-chemistry-local review released no new GPU candidate | `pcqm_v5_route_portfolio/` |
 | Which existing K1/GPTrans/EdgeState/PairToken comparisons are complete enough for strict V5 claims? | Zero-training audit: none is yet a prospective reusable strict bundle; permitted endpoint, prefix, contextual, and no-comparison scopes are recorded separately | `v5_comparison_readiness_audit/` |
 | Can a task-level PCQM Gap specialist beat the general model? | Yes on PCQM only; stays deterministically routed | `pcqm_gine_expert/` |
 | Does scaling the repaired corpus to 2M help? | Yes on the general scopes; its pure-2D presets are the frozen Track A identity, while PCQM regresses | `repaired_2m_scaling/` |
