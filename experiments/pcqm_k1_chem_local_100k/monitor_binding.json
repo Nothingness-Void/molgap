@@ -1,0 +1,32 @@
+{
+  "format": "molgap-server-multi-job-monitor-v1",
+  "owner": "server",
+  "closed": false,
+  "working_directory": "C:/Users/Adminn/Documents/molgap",
+  "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
+  "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
+  "credential_owner": "kaseichou",
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "source_commit": "37b2269ee6f046856dcb0c01d9aafb774e68f72b",
+  "source_archive_sha256": "272fcee6321042bcf878ce495903b5d2733b03594c4dddbd02250e17db9e808a",
+  "healthy_action": "SILENT",
+  "terminal_action": "one idempotent handoff to existing A; no model/thinking override",
+  "automatic_training_retry": false,
+  "automatic_training_successor_authorized": false,
+  "jobs": [
+    {
+      "slot": "dual",
+      "kernel": "kaseichou/molgap-k1-chem-local-s42",
+      "kernel_id": 136210977,
+      "version": 1,
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "embedded_trace_run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "modes": ["neural_atom_k1_atom_pair_local", "neural_atom_k1_bond_type_local"],
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/k1_chem_local_s42_v1",
+      "candidate_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/k1_chem_local_s42_v1/pcqm_k1_chem_local",
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/k1_chem_local_s42_v1/monitor/control_state.json",
+      "closed": false
+    }
+  ]
+}

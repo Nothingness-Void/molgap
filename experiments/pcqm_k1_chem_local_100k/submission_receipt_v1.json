@@ -1,0 +1,29 @@
+{
+  "format": "molgap-kaggle-kernel-submission-receipt-v1",
+  "recorded_at_utc": "2026-09-28T05:31:10Z",
+  "submission_confirmed": true,
+  "kernel": "kaseichou/molgap-k1-chem-local-s42",
+  "physical_run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+  "kernel_id": 136210977,
+  "version": 1,
+  "source_dataset": "kaseichou/molgap-k1-chem-local-source",
+  "source_dataset_version": 1,
+  "source_dataset_private": true,
+  "source_dataset_status_at_release": "ready",
+  "source_commit": "37b2269ee6f046856dcb0c01d9aafb774e68f72b",
+  "source_archive_sha256": "272fcee6321042bcf878ce495903b5d2733b03594c4dddbd02250e17db9e808a",
+  "returned_machine_shape": "NvidiaTeslaT4",
+  "remote_metadata_sha256": "16714b7a784a1cae9e8a1e3830bcc466f836b8e375a44c935596ab2fa94a3e9c",
+  "remote_entry_text_matches": true,
+  "remote_entry_raw_sha256": "903f65d0a4e6918024b9ec2b17a94c1e5ed3a5885466d0017413b18d7425584f",
+  "dataset_mounts": [
+    "kaseichou/molgap-k1-chem-local-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "scheduler_state_at_record": "RUNNING",
+  "worker_preflight_verified": false,
+  "training_completed": false,
+  "protected_roles_accessed": false,
+  "prior_wrong_slug_event": "experiments/pcqm_k1_chem_local_100k/launch_error_v1.json",
+  "remote_metadata_local_record": "platforms/_records/kaggle/source/k1_chem_local_correct_remote_v1/kernel-metadata.json"
+}
