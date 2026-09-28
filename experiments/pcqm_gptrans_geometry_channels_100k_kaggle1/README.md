@@ -11,7 +11,8 @@ numeric recipe, and `STATUS.md` the operational state. Each arm must produce
 separate terminal evidence and a complete replay-pool entry before the pair
 can be called dual replay-ready.
 
-The accepted terminal result is in [the attempt-002 decision](decision_attempt_002.md)
-and [RML closure](RML_CLOSURE.md). This Desktop copy keeps the canonical
+The accepted terminal result is in [the attempt-002 decision](decision_attempt_002.md),
+its [evidence index](decision_evidence_index.md), and [RML closure](RML_CLOSURE.md).
+This Desktop copy keeps the canonical
 decision and evidence for RML discovery. The rejected implementation and its
 complete commit history are retained on the `archive` branch at `629d0549`.

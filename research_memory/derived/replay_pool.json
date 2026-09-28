@@ -10846,6 +10846,30 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "missing_remote_live_development_metric_per_epoch"
+      ],
+      "run_id": "kaggle1-gptrans-geometry-distance-100k-s42-v2",
+      "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen_feature_identity_differs_between_arms_under_v5_strict_mechanism_gate",
+        "missing_remote_live_development_metric_per_epoch"
+      ],
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "kaggle1-gptrans-geometry-distance-angle-100k-s42-v2",
+      "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "strict_replay_reference_binding_unavailable_under_frozen_prospective"
       ],
       "run_id": "kaggle1-gptrans-reference-k1pair-100k-s42-v1",
@@ -10865,5 +10889,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "3d7ce5699a326eee84d2a88807ba39fc39837c45ff3a5a05c22745c906532a89"
+  "source_digest": "31f4d6e387f0251804596cb6109bebe3c0b8e9d9b23abd11705e58ceb9ecf3a7"
 }

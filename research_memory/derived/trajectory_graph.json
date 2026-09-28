@@ -316,6 +316,26 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-geometry-transfer-500k-context",
+      "target": "TB-gptrans-geometry-distance-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-geometry-transfer-500k-context",
+      "target": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-geometry-transfer-500k-context",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-geometry-transfer-500k-context",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-100k-local-joint-control-20260925",
       "target": "TB-gptrans-local-selection-probe-20260925",
       "type": "parent_trajectory"
@@ -333,6 +353,16 @@
     {
       "source": "TB-gptrans-100k-transfer-control-local-20260925",
       "target": "TB-gptrans-100k-local-reference-control-20260925",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-geometry-distance-100k-s42",
+      "target": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
       "type": "parent_trajectory"
     },
     {
@@ -491,6 +521,26 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-geometry-reliability-screen-20260928",
+      "target": "TB-gptrans-geometry-distance-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-geometry-reliability-screen-20260928",
+      "target": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-geometry-reliability-screen-20260928",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-geometry-reliability-screen-20260928",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-attribution",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "parent_trajectory"
@@ -553,6 +603,46 @@
     {
       "source": "pcqm-geometry-component-attribution-no-train-20260928",
       "target": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-reliability-screen-positive-20260928",
+      "target": "TB-gptrans-geometry-distance-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-reliability-screen-positive-20260928",
+      "target": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-reliability-screen-positive-20260928",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-reliability-screen-positive-20260928",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-transfer-500k-contextual",
+      "target": "TB-gptrans-geometry-distance-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-transfer-500k-contextual",
+      "target": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-transfer-500k-contextual",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-geometry-transfer-500k-contextual",
+      "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
       "type": "prior_evidence"
     },
     {
@@ -1100,6 +1190,22 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "type": "evidence"
     },
@@ -1261,6 +1367,22 @@
     },
     {
       "id": "TB-gptrans-full-convergence-20260919",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-geometry-distance-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-geometry-distance-100k-s42-a2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-geometry-distance-angle-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
       "type": "trajectory"
     },
     {

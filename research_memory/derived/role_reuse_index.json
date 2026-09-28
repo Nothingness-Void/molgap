@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 175,
+  "ambiguous_historical_role_record_count": 195,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -437,6 +437,146 @@
     },
     {
       "evidence_id": "pcqm-gptrans-full-convergence-20260919",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1227,7 +1367,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 72,
+  "explicit_role_event_count": 82,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1294,6 +1434,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_angle-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_angle-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_angle-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_angle-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_only-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_only-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_only-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_only-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
       },
       {
         "access_kind": "metric_computed",
@@ -1373,6 +1569,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-geometry-distance_angle-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-geometry-distance_only-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
       },
       {
         "access_kind": "training_membership",
@@ -1798,6 +2008,10 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
@@ -1841,6 +2055,10 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-geometry-distance-100k-s42-a2",
+      "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
+      "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
+      "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
@@ -1916,6 +2134,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_angle-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_angle-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_angle-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_angle-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_only-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_only-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_only-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_only-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
       },
       {
         "access_kind": "metric_computed",
@@ -2244,6 +2518,62 @@
         "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_angle-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_angle-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_angle-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_angle-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-geometry-distance_only-labels_read-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-geometry-distance_only-metric_computed-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-geometry-distance_only-prediction_input-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-geometry-distance_only-selection_used-a2",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
+      },
+      {
         "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
@@ -2321,6 +2651,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-centered-logits-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-geometry-distance_angle-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-angle-100k-s42-a2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-geometry-distance_only-training_membership-a2",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-geometry-distance-100k-s42-a2"
       },
       {
         "access_kind": "training_membership",
