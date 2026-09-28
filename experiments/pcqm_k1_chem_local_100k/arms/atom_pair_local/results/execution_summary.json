@@ -1,0 +1,38 @@
+{
+  "allocated_device_count": 2,
+  "allocated_device_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "automatic_successor_submitted": false,
+  "complete": true,
+  "format": "molgap-k1-chem-local-execution-v1",
+  "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+  "total_allocated_device_seconds": 15661.450660424,
+  "total_job_wall_seconds": 7830.725330212,
+  "used_device_count": 2,
+  "workers": [
+    {
+      "allocated_device_seconds": 7665.899743667,
+      "complete": true,
+      "device": 0,
+      "exit_code": 0,
+      "log": "neural_atom_k1_atom_pair_local.log",
+      "mode": "neural_atom_k1_atom_pair_local",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "timed_out": false,
+      "worker_wall_seconds": 7665.899743667
+    },
+    {
+      "allocated_device_seconds": 7593.154894585,
+      "complete": true,
+      "device": 1,
+      "exit_code": 0,
+      "log": "neural_atom_k1_bond_type_local.log",
+      "mode": "neural_atom_k1_bond_type_local",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "timed_out": false,
+      "worker_wall_seconds": 7593.154894585
+    }
+  ]
+}

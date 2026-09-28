@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b59ee4a28fcdb24efceb6c39ac5fa94391aefdabe37f3008c621806b48908ef0",
+  "source_digest": "f9aa18913329aa4af6e1e9ef71ce3876ffa60217ec5abe90d89c239f7a59c4af",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -74,33 +74,37 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_chem_local_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/decision.md",
       "family_id": "k1-chemistry-separated-local",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-atom-pair-local-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_chem_local_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/decision.md",
       "family_id": "k1-chemistry-separated-local",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-bond-type-local-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-bond-type-local-100k-s42"
     },

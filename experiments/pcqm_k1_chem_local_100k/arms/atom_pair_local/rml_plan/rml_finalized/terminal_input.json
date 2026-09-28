@@ -1,0 +1,305 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/decision.md": "ec4f8e4e542b8f35698338807863a6e8feeaa1bdf87053ccb69010b4cc67108d",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/acceptance_summary.json": "407dffc5392db65037efdde1f93801f0f7094f64d132040549cc445db120dc1c",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/arm_record.json": "4928be428288fccef1fc2cd672fb38684f7706cce7459f7619dc6c8e1cde96df",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/canonical_trace.json": "845175a222e1b9a40376fd099fdd6546b35332ad7c1396fef04665ecae7e05bd",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/comparison_readiness.json": "fdaa998e596dec4ecbe9bca5c9cc2682714d985bf63e4311de60f7486e87b774",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/completion_manifest.json": "017e5abb2e4b75e92a4edaa0f038a1bd24a195a0213ee57ec164019a6cd1ce5e",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/cost_allocation.json": "16c172ce1a575ff9f5ea80943d3ed59fed12a291228764b7f6dc7bb2ee991d89",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/execution_summary.json": "0a0227028bd737c6f58232b8f264e98752fdd34acc92b9ac02451cc6b21ff314",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/native_cost.json": "04005630446c14135567257a608ae4f22df64e7e6a3f877f5646d5bc396a76f7",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/observed_role_history.json": "e445b0c241e9dc5c7edb4f5490e49e5ca3d31c98fba77344152bcae387fe430e",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/paired_analysis.json": "a168a07dc60135b6c322b251b066489d0acc5392ad4515b36abf605fada127bf",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json": "75d04114c9f6cafde639866914643eed4fa5b7814395f8886e6f25d71fb4e51f",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/trajectory.json": "53fd793c1cd31d4c4e08bc79ecd68ae6bf5e4670e3ad5e5d4368bdff60242843",
+    "experiments/pcqm_k1_chem_local_100k/protocol.md": "2216bac7dd9cc25980c703313bd5bb414609a08d318942cd9d50deca90577db7",
+    "experiments/pcqm_k1_chem_local_100k/source_config.json": "69065ce3442554e0f5f60a140dbbd56fecbb2fa75f8692fb9961988ab0699047",
+    "experiments/pcqm_k1_chem_local_100k/submission_receipt_v1.json": "7061b86d2a9b4741eb41aba867d3ca59df649baeff441e4e6f731fbd754639ce",
+    "experiments/pcqm_k1_chem_local_100k/training_contract.json": "98768d975ffc74a8d79c3de35298e507f58c486db7d611e9df1f52e05801ffd3"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-atom-pair-local-100k-s42",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.241193268288611
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.1294165954630553
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "new mechanism and explicit prospective compute authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "407dffc5392db65037efdde1f93801f0f7094f64d132040549cc445db120dc1c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "a168a07dc60135b6c322b251b066489d0acc5392ad4515b36abf605fada127bf"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "fdaa998e596dec4ecbe9bca5c9cc2682714d985bf63e4311de60f7486e87b774"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "845175a222e1b9a40376fd099fdd6546b35332ad7c1396fef04665ecae7e05bd"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/native_cost.json",
+        "name": "native_cost",
+        "sha256": "04005630446c14135567257a608ae4f22df64e7e6a3f877f5646d5bc396a76f7"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/observed_role_history.json",
+        "name": "observed_role_history",
+        "sha256": "e445b0c241e9dc5c7edb4f5490e49e5ca3d31c98fba77344152bcae387fe430e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/arm_record.json",
+        "name": "arm_record",
+        "sha256": "4928be428288fccef1fc2cd672fb38684f7706cce7459f7619dc6c8e1cde96df"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/completion_manifest.json",
+        "name": "completion_manifest",
+        "sha256": "017e5abb2e4b75e92a4edaa0f038a1bd24a195a0213ee57ec164019a6cd1ce5e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/execution_summary.json",
+        "name": "execution_summary",
+        "sha256": "0a0227028bd737c6f58232b8f264e98752fdd34acc92b9ac02451cc6b21ff314"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/cost_allocation.json",
+        "name": "cost_allocation",
+        "sha256": "16c172ce1a575ff9f5ea80943d3ed59fed12a291228764b7f6dc7bb2ee991d89"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_k1_chem_local_100k/submission_receipt_v1.json",
+        "name": "submission_receipt",
+        "sha256": "7061b86d2a9b4741eb41aba867d3ca59df649baeff441e4e6f731fbd754639ce"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_chem_local_100k/protocol.md",
+        "experiments/pcqm_k1_chem_local_100k/training_contract.json",
+        "experiments/pcqm_k1_chem_local_100k/source_config.json",
+        "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/decision.md",
+        "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-atom-pair-local-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "negative_under_contract",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-28T08:17:37+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-atom-pair-local-100k-s42-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-atom-pair-local-100k-s42-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-atom-pair-local-100k-s42-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-atom-pair-local-100k-s42-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-atom-pair-local-100k-s42-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "90fd010aec36c713bcefc6fc91dc62da7a2410bd0e6f5f65fa22c468e5f95ffb",
+    "comparability_identity": {
+      "architecture_identity": "30ed0310359ba064fc01897430033553111c40ddac0fffbe8014d97607aeec64",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_chem_local_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "30ed0310359ba064fc01897430033553111c40ddac0fffbe8014d97607aeec64",
+    "presentation_semantics_ref": "experiments/pcqm_k1_chem_local_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/canonical_trace.json",
+    "trace_artifact_sha256": "845175a222e1b9a40376fd099fdd6546b35332ad7c1396fef04665ecae7e05bd",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-atom-pair-local-100k-s42",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+}

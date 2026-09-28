@@ -1,0 +1,43 @@
+{
+  "accepted": true,
+  "artifact_sha256": {
+    "arm_record.json": "5f7ad115e1afbb7abf33b10a4af216217abaa1e0ae6bf220c10e694d4971c2c1",
+    "best_development_payload.pt": "645d72901b0ed121bf44c3426d4eeedbbdec3f6ff76fd3b60fe648d670f8ae01",
+    "best_model.pt": "fe89320e2ff0dfa1e6ec23ca2c8ba7595bcd869510be0236cf3d11e17cf2cec6",
+    "canonical_trace.json": "a26040adb2f79669b191c68e012a2c7f71f069fa89355a489641b23b590cc258",
+    "last_checkpoint.pt": "61172d27d917489f6f3e78483f041b055ccc0c0e5e623fb478b6e2342967adfc",
+    "native_cost.json": "00bf97598fcdcbbcb212b640983a653d9fdf43298492bfbb6ff5b57631c006d6",
+    "observed_role_history.json": "2ff43aef93f8eb15b2425d1753d15ba340154c9403c7e997e45d12aaedea8535",
+    "preflight.json": "838f733e63ccac4a7df48889b3f6540ae3e0d0fa98f258ac2602f998a821dda2",
+    "recovery_epoch_10.tar": "83cdbfa8637dad6acac23f812030649526339d659e4c3a58dc23f03fd0b8a169",
+    "recovery_epoch_20.tar": "96c87a592eb24b3723c297e215252043fb5f4ee0a648451b6f42d47bf44263a4",
+    "recovery_epoch_30.tar": "8935caff2181d079cee3aa44c65da287bce5ede32474b8b280a5eb97e6a6e071",
+    "recovery_epoch_40.tar": "265b9c62e74105fac2f296f4b81ac788ddf5d6703c74e3a8adb7afd9434beb6d",
+    "runtime_certificate.json": "ce60c67bc1fe90a08399e6a10ce2329aad4df625f46f709a72973e9ecc2de671",
+    "runtime_manifest.json": "89f5bdeae331b2b78b14480bebfd00daf4aa678222e7c0411500ad133153d0b9",
+    "trace.json": "764ef247362f59ec47769057d9a37c04e852185f72635de709b98e5abd7b907b"
+  },
+  "candidate": {
+    "best_epoch": 39,
+    "best_model_sha256": "fe89320e2ff0dfa1e6ec23ca2c8ba7595bcd869510be0236cf3d11e17cf2cec6",
+    "checkpoint_sha256": "61172d27d917489f6f3e78483f041b055ccc0c0e5e623fb478b6e2342967adfc",
+    "development_gap_mae_eV": 0.14295341074466705,
+    "epochs_completed": 40,
+    "mean_epoch_seconds": 188.17068606215,
+    "mean_graphs_per_second": 531.2623453314192,
+    "optimizer_steps": 31240,
+    "parameter_count": 3717121,
+    "payload_sha256": "645d72901b0ed121bf44c3426d4eeedbbdec3f6ff76fd3b60fe648d670f8ae01",
+    "peak_allocated_mib": 595.34814453125,
+    "peak_reserved_mib": 644.0,
+    "sample_presentations": 3998720,
+    "total_memory_mib": 14911.6875
+  },
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "format": "molgap-v5-terminal-acceptance-summary-v1",
+  "model_inference_executed": false,
+  "paired_analysis_ref": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/paired_analysis.json",
+  "protected_roles_read": false,
+  "source_archive_sha256": "272fcee6321042bcf878ce495903b5d2733b03594c4dddbd02250e17db9e808a",
+  "source_commit": "37b2269ee6f046856dcb0c01d9aafb774e68f72b"
+}

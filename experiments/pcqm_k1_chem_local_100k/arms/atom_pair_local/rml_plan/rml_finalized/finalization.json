@@ -1,0 +1,49 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-e01d66673bbde586a843bb03a3aa95e33aab544f0636bb44ddcb39edca8baef5",
+  "finalized_at": "2026-09-28T08:17:37+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/decision.md": "ec4f8e4e542b8f35698338807863a6e8feeaa1bdf87053ccb69010b4cc67108d",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/acceptance_summary.json": "407dffc5392db65037efdde1f93801f0f7094f64d132040549cc445db120dc1c",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/arm_record.json": "4928be428288fccef1fc2cd672fb38684f7706cce7459f7619dc6c8e1cde96df",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/canonical_trace.json": "845175a222e1b9a40376fd099fdd6546b35332ad7c1396fef04665ecae7e05bd",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/comparison_readiness.json": "fdaa998e596dec4ecbe9bca5c9cc2682714d985bf63e4311de60f7486e87b774",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/completion_manifest.json": "017e5abb2e4b75e92a4edaa0f038a1bd24a195a0213ee57ec164019a6cd1ce5e",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/cost_allocation.json": "16c172ce1a575ff9f5ea80943d3ed59fed12a291228764b7f6dc7bb2ee991d89",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/execution_summary.json": "0a0227028bd737c6f58232b8f264e98752fdd34acc92b9ac02451cc6b21ff314",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/native_cost.json": "04005630446c14135567257a608ae4f22df64e7e6a3f877f5646d5bc396a76f7",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/observed_role_history.json": "e445b0c241e9dc5c7edb4f5490e49e5ca3d31c98fba77344152bcae387fe430e",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/paired_analysis.json": "a168a07dc60135b6c322b251b066489d0acc5392ad4515b36abf605fada127bf",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/results/terminal_acceptance.json": "75d04114c9f6cafde639866914643eed4fa5b7814395f8886e6f25d71fb4e51f",
+    "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/trajectory.json": "53fd793c1cd31d4c4e08bc79ecd68ae6bf5e4670e3ad5e5d4368bdff60242843",
+    "experiments/pcqm_k1_chem_local_100k/protocol.md": "2216bac7dd9cc25980c703313bd5bb414609a08d318942cd9d50deca90577db7",
+    "experiments/pcqm_k1_chem_local_100k/source_config.json": "69065ce3442554e0f5f60a140dbbd56fecbb2fa75f8692fb9961988ab0699047",
+    "experiments/pcqm_k1_chem_local_100k/submission_receipt_v1.json": "7061b86d2a9b4741eb41aba867d3ca59df649baeff441e4e6f731fbd754639ce",
+    "experiments/pcqm_k1_chem_local_100k/training_contract.json": "98768d975ffc74a8d79c3de35298e507f58c486db7d611e9df1f52e05801ffd3"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-atom-pair-local-100k-s42.json": "52fffd0f5b4ef1475e0321027e1adc046b749787408189e4fecab070790b16a4",
+    "prospective_snapshot.json": "53fd793c1cd31d4c4e08bc79ecd68ae6bf5e4670e3ad5e5d4368bdff60242843",
+    "roles/role-TC-k1-atom-pair-local-100k-s42-labels-read.json": "ee0346df704f23d61b01692ce02130b25963098ef19de11011dc0bec497aa761",
+    "roles/role-TC-k1-atom-pair-local-100k-s42-metric-computed.json": "b05af5427588e4060f80307e7ccaeb24456918b2dd3b6e750915e9f0f62b7438",
+    "roles/role-TC-k1-atom-pair-local-100k-s42-prediction-input.json": "757cc5941a90734fbfa441288b8ce50f0e6288b7fa1fb255309001294dea338a",
+    "roles/role-TC-k1-atom-pair-local-100k-s42-selection-used.json": "462754aa168ee3046958c75e7e7a9fe61fc2f71988c45b11a188d0a7cd32413e",
+    "roles/role-TC-k1-atom-pair-local-100k-s42-training-membership.json": "7207e2998dd27e7651f8cf65f0068179899910b05d497e420dc6110a5bd47e66",
+    "terminal_input.json": "3974df9e912c597232be5b707a215cdb97a784ab763147e0cc032b17511cf498",
+    "trace.json": "845175a222e1b9a40376fd099fdd6546b35332ad7c1396fef04665ecae7e05bd",
+    "trace_manifest.json": "908e2fc3c99ca2dcd6b9987567e7142b724519a0b0e76c5e38929ee839a2c0e2",
+    "trajectory.json": "e5fe9d64e45e2a1059419d336d7fde92138dc557634c1494180ab3b8a11d4866",
+    "v5_evidence.json": "b84cd508444cee69a9e70fe16ebff7909df0dce5cba72039e230464f0f826744"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-atom-pair-local-100k-s42.json": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/costs/cost-TC-k1-atom-pair-local-100k-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "e01d66673bbde586a843bb03a3aa95e33aab544f0636bb44ddcb39edca8baef5",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-atom-pair-local-100k-s42"
+}

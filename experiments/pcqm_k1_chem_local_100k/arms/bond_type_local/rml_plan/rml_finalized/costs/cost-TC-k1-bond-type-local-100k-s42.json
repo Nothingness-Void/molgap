@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-bond-type-local-100k-s42",
+  "evidence_ref": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/terminal_acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 2.109209692940278
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 2.109209692940278
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-chem-local-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-bond-type-local-100k-s42"
+}

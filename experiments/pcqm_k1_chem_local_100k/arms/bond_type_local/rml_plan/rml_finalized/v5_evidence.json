@@ -1,0 +1,109 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "65be82d6e979eafcbc97083a8bca2f36db30c4109b5b43578f77c0b4028e39d8"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "eedf514cb8eb7690150762f6b5397685192bc15e94b06b2eb2ee9e0f222cea7d"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "36f77a0e5856495128ed4732ea0e371b74240324d853dc767d734a995fa6bd2a"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "a26040adb2f79669b191c68e012a2c7f71f069fa89355a489641b23b590cc258"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "826f1c7b5c39a93652651ea1e14c36ce23a6fbe67b891685fd7b849571c9007b"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "94d884f5e6edb80a28f71123069427b81813bf00176185e053caac36a60881a0"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "ab8f22411dcb1abe67369bce122c6e861907b825f9ef0fa724495836f305fd8f"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "efbc062db0587ff1746c838e0754cb8894da921ff620b779e385e7aedacc7d84"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "0a0227028bd737c6f58232b8f264e98752fdd34acc92b9ac02451cc6b21ff314"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/cost_allocation.json",
+      "name": "cost_allocation",
+      "sha256": "79a9ed60ad87d653e4c93fad43c7e6eb7a0aacd3ed5a3a661026b483d5e1d5e6"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_k1_chem_local_100k/submission_receipt_v1.json",
+      "name": "submission_receipt",
+      "sha256": "7061b86d2a9b4741eb41aba867d3ca59df649baeff441e4e6f731fbd754639ce"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_chem_local_100k/protocol.md",
+      "experiments/pcqm_k1_chem_local_100k/training_contract.json",
+      "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/decision.md",
+      "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-bond-type-local-100k-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}
