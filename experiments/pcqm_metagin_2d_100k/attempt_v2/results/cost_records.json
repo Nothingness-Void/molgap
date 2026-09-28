@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v2",
+      "category": "training",
+      "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-v2-training",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.1145706560505557
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.5572853276819445
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    }
+  ],
+  "format": "molgap-cost-records-v1"
+}

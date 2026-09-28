@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 223,
+  "ambiguous_historical_role_record_count": 228,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -1542,6 +1542,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "v5-legacy-evidence-migration-2026-09-17",
       "role_identity": null,
       "role_name": "official_validation",
@@ -1563,7 +1598,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 190,
+  "explicit_role_event_count": 195,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -2466,6 +2501,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
@@ -2664,6 +2727,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f:internal_development_100000_150000": [
@@ -2970,7 +3040,8 @@
       "pcqm-k1-triplet-aggregate-100k-s42",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
-      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "pcqm-metagin-2d-3hop-100k-s42-v2"
     ],
     "test_challenge": [
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -3017,7 +3088,8 @@
       "pcqm-k1-triplet-aggregate-100k-s42",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
-      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "pcqm-metagin-2d-3hop-100k-s42-v2"
     ],
     "test_dev": [
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -3064,7 +3136,8 @@
       "pcqm-k1-triplet-aggregate-100k-s42",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
-      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1"
+      "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "pcqm-metagin-2d-3hop-100k-s42-v2"
     ]
   },
   "repeatedly_selected_role_identities": {
@@ -3882,6 +3955,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
@@ -4721,6 +4822,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
@@ -4919,6 +5048,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1d052366b938014ada599b401b4c3ec6f500e8f069e5a6069aac94d7a9e5e75f:internal_development_100000_150000": [

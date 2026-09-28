@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-a1410528fb7f1c209be63bc82a4b4c6af24f598d2affb7714a942a86964359d0",
+  "finalized_at": "2026-09-29T01:48:03+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md": "7d45de07ac231f8bec81f40ce2901822b8878b406a3fc836db468d2cc105d489",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance.json": "a6c35f39aec52e43f46e50f53316105b392b213c5e2fb68559fdb04342b6e17e",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance_summary.json": "0ce293bb9928a4fa9df668eec25e37f06b95726d269b97f84c0f4b418f47bb86",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/arm_record.json": "0b2474b44235fe0488de4db481df66271c38ea903f9f5c0d9836faa45f3957d9",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/canonical_trace.json": "b3ba4dcbc025f84c31a4233b8063c5fc2cae97547d5cc9e92d2386bf77ade8ec",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/comparison_readiness.json": "34a4e2afec694455088c12ac0554547add6975c7373f7d6077e4ccae686cd8f0",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/completion_manifest.json": "991cd73083384b2fb1f02461cb5dd397e414957c20a91f76966f3688518d7ee6",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/native_cost.json": "2ea7856bf8cc8ff631e07878ab4990b8203f7152d2cadafe729b54e72945a593",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/normalized_arm_record.json": "8648df1bf40e8bd1d0319c9f94e11def4cde01307faa32c73261a23058d6662e",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/observed_role_history.json": "51a0fa2589a1b937e93c109a60e635807e0f6bf7984c1d31b8c395a1c052cbb1",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/paired_analysis.json": "c7d6f1a7bc3d4c9bfc8ddfa07f8180a0fff8229e09e9a55cbf0e9710b22c2b72",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/sidecar_acceptance_binding.json": "f2635ee16cb6176c430c4be918114de047687e4d3e0ebd12c04792300977bba2",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json": "6e4bfd75a5b374c85b76dbb0961ae0ac5ad72018e51bf7b2636065daf609e8ca",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_adapter_input.json": "9acdfbed908bffbcde1819995c71cbabb243a03337ddb5956d6e2dc2586afe58",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/trajectory.json": "de2817a8867c6c8d58e34a957ae5ad3aa87ffad15310a8ba9a910260ecaa3498",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/source_config.json": "268389b15d69e56317c4191d224b73c3f42988aa1e0dfaeca371440fed998682",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/submission_receipt.json": "06c79090280edf12bad3850af5bd80c1c17a2fe7bf7640ecac9f5a42a897fda6",
+    "experiments/pcqm_metagin_2d_100k/protocol.md": "df22b1a94c1546cd8e99cd1a54162ded5d478dd10f4865ebb297f8a7b5efef2c",
+    "experiments/pcqm_metagin_2d_100k/training_contract.json": "2074ccd19f9e18f79a3161015989b98e6e3fd8eb24f345db2686a57ca1c743b0"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-metagin-2d-3hop-100k-s42-v2-training.json": "e76908111ee2f5dc2f2cd4e9dbeb66024e5037cce13a37e184833112767c9917",
+    "prospective_snapshot.json": "de2817a8867c6c8d58e34a957ae5ad3aa87ffad15310a8ba9a910260ecaa3498",
+    "roles/role-TC-metagin-2d-3hop-100k-s42-v2-labels-read.json": "5f4ae93a39e0c89d386a57d70e9d264def3d723fc716f212b7c75fdfbc19934b",
+    "roles/role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed.json": "d830b53be4f411d3e8efd78c1df0b723d71248ceaeea58fd2a68d8863417514e",
+    "roles/role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input.json": "3cb1d224289e23ea17bde6b38c69252414d0c16e3226bf0fa1d9ad1fdd201dea",
+    "roles/role-TC-metagin-2d-3hop-100k-s42-v2-selection-used.json": "04f059c6eaf0f82724619bd3a8fd26c70e75eb4abc7d1d03c3511260cf1f7f77",
+    "roles/role-TC-metagin-2d-3hop-100k-s42-v2-training-membership.json": "49103b1845fde6bce35a3ff994ccfe2b7dfb93e52a8681fb0d5f7b4ac1feaac3",
+    "terminal_input.json": "a094b02156b60ee1cca11340e7cac2d7db876d2ca4694c163c2f99a6b142c226",
+    "trace.json": "b3ba4dcbc025f84c31a4233b8063c5fc2cae97547d5cc9e92d2386bf77ade8ec",
+    "trace_manifest.json": "577180ad669c2d2d91819aaf91fca04a92dbbf86b805e787f220e7f745dbf5bd",
+    "trajectory.json": "5d7bbdd42900fefee22985250201eb01c01e25efbb40a59df6f8032880b10207",
+    "v5_evidence.json": "c95aab9d031cbfd83ed251442bb39cb45d6a567c568448c25cd64273cb526f72"
+  },
+  "replacements": {
+    "costs/cost-TC-metagin-2d-3hop-100k-s42-v2-training.json": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/costs/cost-TC-metagin-2d-3hop-100k-s42-v2-training.json",
+    "trajectory.json": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "a1410528fb7f1c209be63bc82a4b4c6af24f598d2affb7714a942a86964359d0",
+  "trace_status": "available",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+}

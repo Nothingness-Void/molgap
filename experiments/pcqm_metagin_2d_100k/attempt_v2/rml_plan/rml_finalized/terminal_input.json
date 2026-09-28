@@ -1,0 +1,319 @@
+{
+  "acceptance_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md": "7d45de07ac231f8bec81f40ce2901822b8878b406a3fc836db468d2cc105d489",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance.json": "a6c35f39aec52e43f46e50f53316105b392b213c5e2fb68559fdb04342b6e17e",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance_summary.json": "0ce293bb9928a4fa9df668eec25e37f06b95726d269b97f84c0f4b418f47bb86",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/arm_record.json": "0b2474b44235fe0488de4db481df66271c38ea903f9f5c0d9836faa45f3957d9",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/canonical_trace.json": "b3ba4dcbc025f84c31a4233b8063c5fc2cae97547d5cc9e92d2386bf77ade8ec",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/comparison_readiness.json": "34a4e2afec694455088c12ac0554547add6975c7373f7d6077e4ccae686cd8f0",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/completion_manifest.json": "991cd73083384b2fb1f02461cb5dd397e414957c20a91f76966f3688518d7ee6",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/native_cost.json": "2ea7856bf8cc8ff631e07878ab4990b8203f7152d2cadafe729b54e72945a593",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/normalized_arm_record.json": "8648df1bf40e8bd1d0319c9f94e11def4cde01307faa32c73261a23058d6662e",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/observed_role_history.json": "51a0fa2589a1b937e93c109a60e635807e0f6bf7984c1d31b8c395a1c052cbb1",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/paired_analysis.json": "c7d6f1a7bc3d4c9bfc8ddfa07f8180a0fff8229e09e9a55cbf0e9710b22c2b72",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/sidecar_acceptance_binding.json": "f2635ee16cb6176c430c4be918114de047687e4d3e0ebd12c04792300977bba2",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json": "6e4bfd75a5b374c85b76dbb0961ae0ac5ad72018e51bf7b2636065daf609e8ca",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_adapter_input.json": "9acdfbed908bffbcde1819995c71cbabb243a03337ddb5956d6e2dc2586afe58",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/trajectory.json": "de2817a8867c6c8d58e34a957ae5ad3aa87ffad15310a8ba9a910260ecaa3498",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/source_config.json": "268389b15d69e56317c4191d224b73c3f42988aa1e0dfaeca371440fed998682",
+    "experiments/pcqm_metagin_2d_100k/attempt_v2/submission_receipt.json": "06c79090280edf12bad3850af5bd80c1c17a2fe7bf7640ecac9f5a42a897fda6",
+    "experiments/pcqm_metagin_2d_100k/protocol.md": "df22b1a94c1546cd8e99cd1a54162ded5d478dd10f4865ebb297f8a7b5efef2c",
+    "experiments/pcqm_metagin_2d_100k/training_contract.json": "2074ccd19f9e18f79a3161015989b98e6e3fd8eb24f345db2686a57ca1c743b0"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v2",
+      "category": "training",
+      "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-v2-training",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.1145706560505557
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.5572853276819445
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "distinct evidence-backed 2D hypothesis and explicit new compute decision"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "0ce293bb9928a4fa9df668eec25e37f06b95726d269b97f84c0f4b418f47bb86"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "c7d6f1a7bc3d4c9bfc8ddfa07f8180a0fff8229e09e9a55cbf0e9710b22c2b72"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "34a4e2afec694455088c12ac0554547add6975c7373f7d6077e4ccae686cd8f0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "b3ba4dcbc025f84c31a4233b8063c5fc2cae97547d5cc9e92d2386bf77ade8ec"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/acceptance.json",
+        "name": "acceptance",
+        "sha256": "a6c35f39aec52e43f46e50f53316105b392b213c5e2fb68559fdb04342b6e17e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/normalized_arm_record.json",
+        "name": "normalized_arm_record",
+        "sha256": "8648df1bf40e8bd1d0319c9f94e11def4cde01307faa32c73261a23058d6662e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/native_cost.json",
+        "name": "native_cost",
+        "sha256": "2ea7856bf8cc8ff631e07878ab4990b8203f7152d2cadafe729b54e72945a593"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/observed_role_history.json",
+        "name": "observed_role_history",
+        "sha256": "51a0fa2589a1b937e93c109a60e635807e0f6bf7984c1d31b8c395a1c052cbb1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/arm_record.json",
+        "name": "arm_record",
+        "sha256": "0b2474b44235fe0488de4db481df66271c38ea903f9f5c0d9836faa45f3957d9"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/completion_manifest.json",
+        "name": "completion_manifest",
+        "sha256": "991cd73083384b2fb1f02461cb5dd397e414957c20a91f76966f3688518d7ee6"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/sidecar_acceptance_binding.json",
+        "name": "sidecar_acceptance_binding",
+        "sha256": "f2635ee16cb6176c430c4be918114de047687e4d3e0ebd12c04792300977bba2"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_adapter_input.json",
+        "name": "terminal_adapter_input",
+        "sha256": "9acdfbed908bffbcde1819995c71cbabb243a03337ddb5956d6e2dc2586afe58"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_metagin_2d_100k/attempt_v2/submission_receipt.json",
+        "name": "submission_receipt",
+        "sha256": "06c79090280edf12bad3850af5bd80c1c17a2fe7bf7640ecac9f5a42a897fda6"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_metagin_2d_100k/protocol.md",
+        "experiments/pcqm_metagin_2d_100k/training_contract.json",
+        "experiments/pcqm_metagin_2d_100k/attempt_v2/source_config.json",
+        "experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md",
+        "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/trajectory.json",
+        "experiments/pcqm_metagin_2d_100k/attempt_v2/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-29",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "negative",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-29T01:48:03+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-metagin-2d-3hop-100k-s42-v2-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    }
+  ],
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "f5d79ac99147df70c466bc5acced93a8cd5ea5e5d4de24116c4226cd0b445163",
+    "comparability_identity": {
+      "architecture_identity": "9423550f7f26e5374b7de6e45b1ae2971e7f5ebcc4b6ff4d9ee5380cb73988b0",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_metagin_2d_100k/training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "9423550f7f26e5374b7de6e45b1ae2971e7f5ebcc4b6ff4d9ee5380cb73988b0",
+    "presentation_semantics_ref": "experiments/pcqm_metagin_2d_100k/training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_metagin_2d_100k/attempt_v2/results/canonical_trace.json",
+    "trace_artifact_sha256": "b3ba4dcbc025f84c31a4233b8063c5fc2cae97547d5cc9e92d2386bf77ade8ec",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+}

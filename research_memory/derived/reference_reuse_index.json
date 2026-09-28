@@ -1009,7 +1009,9 @@
         "TC-k1-sparse-triplet-100k-s42",
         "TC-k1-spd-pair-token-100k-s42",
         "TC-k1-topology-portability-post100k-audit-s42",
-        "TC-k1-triplet-aggregate-100k-s42"
+        "TC-k1-triplet-aggregate-100k-s42",
+        "TC-metagin-2d-3hop-100k-s42",
+        "TC-metagin-2d-3hop-100k-s42-v2"
       ]
     },
     {
@@ -1050,6 +1052,27 @@
       "source_envelope": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/v5_evidence.json",
       "track": "C",
       "transfer_status": "unavailable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "strict_causal",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "role_use": {
+        "internal_development_100000_150000": "used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_fixed_100k_architecture_screen",
+      "source_envelope": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_ready",
       "used_by_trajectory_ids": []
     },
     {

@@ -601,6 +601,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-metagin-2d-3hop-100k-s42-v2:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/attempt_v2/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42-v2:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/attempt_v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TS-v5-legacy-evidence-migration:A001",
       "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
       "type": "action_produced_evidence"
@@ -858,6 +878,16 @@
     {
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-triplet-aggregate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
       "type": "parent_trajectory"
     },
     {
@@ -1231,6 +1261,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
       "target": "TB-gptrans-pair-prenorm-500k-s42",
       "type": "reference_used"
@@ -1449,6 +1489,16 @@
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-triplet-aggregate-100k-s42",
       "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "reference_used"
     }
   ],
   "format": "molgap-rml-trajectory-graph-v1",
@@ -1646,6 +1696,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "type": "evidence"
+    },
+    {
       "id": "v5-legacy-evidence-migration-2026-09-17",
       "type": "evidence"
     },
@@ -1839,6 +1893,14 @@
     },
     {
       "id": "TC-k1-v4-100k-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-metagin-2d-3hop-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-metagin-2d-3hop-100k-s42-v2",
       "type": "trajectory"
     },
     {

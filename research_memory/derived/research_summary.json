@@ -1,15 +1,15 @@
 {
   "backtest": {
-    "eligible": 25,
+    "eligible": 26,
     "excluded": 4,
     "status": "available"
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 49,
+      "trajectories_total": 51,
       "with_complete_native_measurement": 4,
-      "with_cost_event": 49,
-      "with_incomplete_native_measurement": 45,
+      "with_cost_event": 51,
+      "with_incomplete_native_measurement": 47,
       "without_cost_event": 0
     },
     "totals_by_hardware": {
@@ -274,7 +274,7 @@
             "known_total": 0.010148628855833333
           },
           "not_applicable_records": 0,
-          "unknown_records": 29
+          "unknown_records": 30
         },
         "device_hours": {
           "estimated": {
@@ -282,8 +282,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 23,
-            "known_total": 29.155064745069993
+            "known_records": 24,
+            "known_total": 32.269635401120546
           },
           "not_applicable_records": 0,
           "unknown_records": 8
@@ -298,7 +298,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 31
+          "unknown_records": 32
         },
         "wall_hours": {
           "estimated": {
@@ -306,8 +306,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 11,
-            "known_total": 8.791043745215
+            "known_records": 12,
+            "known_total": 10.348329072896943
           },
           "not_applicable_records": 0,
           "unknown_records": 20
@@ -324,12 +324,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "device_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 1.0
+            "known_records": 2,
+            "known_total": 7.0
           },
           "measured": {
             "known_records": 0,
@@ -348,12 +348,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 1.0
+            "known_records": 2,
+            "known_total": 7.0
           },
           "measured": {
             "known_records": 0,
@@ -664,17 +664,17 @@
         }
       }
     },
-    "unknown_events": 60
+    "unknown_events": 62
   },
   "evidence": {
-    "validated": 49,
+    "validated": 50,
     "without_trajectory": 2
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 21,
+      "count": 22,
       "severity": "INFO"
     },
     {
@@ -684,17 +684,17 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 45,
+      "count": 47,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 9,
+      "count": 10,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 2,
+      "count": 3,
       "severity": "WARN"
     },
     {
@@ -704,18 +704,18 @@
     }
   ],
   "roles": {
-    "coarse_historical": 223,
-    "explicit_events": 190,
+    "coarse_historical": 228,
+    "explicit_events": 195,
     "repeatedly_selected": 3
   },
-  "source_digest": "f9aa18913329aa4af6e1e9ef71ce3876ffa60217ec5abe90d89c239f7a59c4af",
+  "source_digest": "f3fe7bc20edee1e207dd13ab01450a5f277c6a2acb3b86d745ebe0f7c272ad44",
   "trajectories": {
-    "count": 49,
+    "count": 51,
     "outcomes": {
-      "ACTIVE": 1,
+      "ACTIVE": 2,
       "CLOSED": 2,
       "INFRASTRUCTURE_ONLY": 12,
-      "NEGATIVE_UNDER_CONTRACT": 12,
+      "NEGATIVE_UNDER_CONTRACT": 13,
       "NO_TRAIN": 7,
       "POSITIVE_BELOW_GATE": 13,
       "POSITIVE_UNDER_CONTRACT": 1,

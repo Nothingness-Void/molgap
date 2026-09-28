@@ -1,0 +1,99 @@
+{
+  "format": "molgap-metagin-2d-100k-acceptance-v1",
+  "accepted": true,
+  "model_inference_executed": false,
+  "training_executed_locally": false,
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2",
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+  "source_commit": "7d16ad59eb7548220d92858be64648c33f3d515d",
+  "source_archive_sha256": "bc216e3b0d5b2103bbd57b323e548608c2ba6efd628b90c60ae56cbc65ea05e1",
+  "reference_payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "candidate_payload_sha256": "eddfee9d2810d5932a6a715b178b9e54ce97630aa8b47c31b24ce73266d75e48",
+  "candidate_checkpoint_sha256": "f5d79ac99147df70c466bc5acced93a8cd5ea5e5d4de24116c4226cd0b445163",
+  "parameter_count": 5268481,
+  "best_epoch": 34,
+  "candidate_dev_mae_eV": 0.16418757166326045,
+  "reference_dev_mae_eV": 0.14137364135205746,
+  "gain_eV": -0.022813930311203004,
+  "paired": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14137364135205746,
+    "candidate_mae_eV": 0.16418757166326045,
+    "candidate_minus_reference_eV": 0.022813930311203004,
+    "paired_row_bootstrap": {
+      "delta": 0.022813930311203004,
+      "ci95": [
+        0.021574525118350982,
+        0.024081651685237883
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 5000,
+      "seed": 20260912
+    },
+    "candidate_win_fraction": 0.43472,
+    "absolute_error_delta_quantiles_eV": [
+      -3.8296518325805664,
+      -0.11071300506591795,
+      -0.04236423969268799,
+      0.012757062911987305,
+      0.07928967475891113,
+      0.16908826828002924,
+      3.1261301040649414
+    ],
+    "posthoc_reference_error_quintiles": [
+      {
+        "reference_error_quintile": 1,
+        "rows": 10000,
+        "reference_mae_eV": 0.01572316561937332,
+        "candidate_mae_eV": 0.08673018540143966,
+        "candidate_minus_reference_eV": 0.07100701978206635
+      },
+      {
+        "reference_error_quintile": 2,
+        "rows": 10000,
+        "reference_mae_eV": 0.05012033491134644,
+        "candidate_mae_eV": 0.09976884508132934,
+        "candidate_minus_reference_eV": 0.04964851016998291
+      },
+      {
+        "reference_error_quintile": 3,
+        "rows": 10000,
+        "reference_mae_eV": 0.09428633654117584,
+        "candidate_mae_eV": 0.12203593573570251,
+        "candidate_minus_reference_eV": 0.027749599194526672
+      },
+      {
+        "reference_error_quintile": 4,
+        "rows": 10000,
+        "reference_mae_eV": 0.1627162032365799,
+        "candidate_mae_eV": 0.16544817698001862,
+        "candidate_minus_reference_eV": 0.0027319737434387207
+      },
+      {
+        "reference_error_quintile": 5,
+        "rows": 10000,
+        "reference_mae_eV": 0.3840221664518118,
+        "candidate_mae_eV": 0.3469547151178122,
+        "candidate_minus_reference_eV": -0.037067451333999635
+      }
+    ],
+    "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+  },
+  "native_cost": {
+    "format": "molgap-metagin-2d-native-cost-v1",
+    "run_id": "kaseichou/molgap-metagin-2d-s42:v2",
+    "model_id": "metagin_2d_3hop_4x256",
+    "hardware": "Tesla T4",
+    "allocated_device_count": 2,
+    "wall_seconds": 5606.227179655,
+    "allocated_device_seconds": 11212.454361782,
+    "measurement": "monotonic-full-kernel-lifetime-times-visible-allocated-devices",
+    "training_completed": true
+  },
+  "budget_overrun": false,
+  "nomination_gate_passed": false,
+  "decision_scope": "seed42-screen-only-no-automatic-scale-or-protected-role",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
