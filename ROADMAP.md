@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-K1-CHEM-LOCAL | Active: two equal-capacity layer-6 atom-pair/bond-type grouping arms on Kaggle2 | Accept both terminal RML records; only a qualifying candidate may enter its separately planned fixed500K NO_TRAIN audit; no automatic scale/seed successor |
 | P0 | C-K1-JOINT-ATOM | Completed: joint reconstruction helped the corrupted control, but did not establish a portable K1 winner | Preserve [paired attribution](experiments/pcqm_k1_joint_atom_reconstruction_100k/decision.md), two training replay entries and separate NO_TRAIN audit; no automatic successor |
 | P0 | C-K1-RELATION-DEPENDENCY | Completed: frozen interventions established checkpoint dependence, not a portable winner | Preserve [diagnostic attribution](experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md); no automatic training |
 | P1 | C-K1-RELATION-RESOLUTION | Completed: three replay-ready original-role positives below gate, all negative in the separate fixed500K NO_TRAIN audit | Preserve [audit attribution](experiments/pcqm_k1_relation_resolution_100k/audit/decision.md); no scale/full/seed successor |
