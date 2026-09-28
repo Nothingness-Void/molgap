@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 12,
-  "event_count": 74,
+  "event_count": 76,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 63,
+  "measurement_missing_event_count": 65,
   "not_applicable_event_count": 30,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -651,7 +651,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "NvidiaTeslaT4_requested:device_hours": {
         "estimated": {
@@ -663,7 +663,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "NvidiaTeslaT4_requested:queue_hours": {
         "estimated": {
@@ -675,7 +675,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "NvidiaTeslaT4_requested:wall_hours": {
         "estimated": {
@@ -687,7 +687,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "Tesla T4:cpu_hours": {
         "estimated": {
@@ -1149,7 +1149,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "device_hours": {
         "estimated": {
@@ -1161,7 +1161,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "queue_hours": {
         "estimated": {
@@ -1173,7 +1173,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       },
       "wall_hours": {
         "estimated": {
@@ -1185,7 +1185,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 16
+        "unknown_records": 18
       }
     },
     "Tesla T4": {
@@ -1538,6 +1538,106 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      }
+    },
+    "TB-geometry-v4-500k-gptrans_distance_only-s42": {
+      "NvidiaTeslaT4_requested:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
+    "TB-geometry-v4-500k-k1_distance_angle-s42": {
+      "NvidiaTeslaT4_requested:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NvidiaTeslaT4_requested:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
       }
     },
     "TB-gptrans-100k-local-joint-control-20260925": {

@@ -1,0 +1,143 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "geometry-v4-500k-gptrans_distance_only",
+    "question": "Does bond-distance input improve matched-V4 GPTrans-T by at least 3 meV at 500K?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-geometry-v4-500k-gptrans_distance_only-s42",
+      "observed_deficiency": "The 100K distance-only gain against a separate pure-2D job is contextual; a matched V4 500K geometry effect remains untested.",
+      "supporting_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-geometry-distance-100k-s42-a2"
+      ],
+      "alternative_explanations": [
+        "Historical geometry gains may reflect optimizer, schedule, exposure or selection differences.",
+        "Single-seed development-row bootstrap does not measure training stochasticity."
+      ],
+      "changed_mechanism": "Add zero-start ETKDGv3+MMFF94s real-bond distance projection to GPTrans pair state, with the angle path disabled.",
+      "cheapest_falsifier": "A single matched 500K run with 60 observed epochs missing the 3.0 meV gate (0.1038675369 eV) or paired sign gate.",
+      "related_closed_family_ids": [
+        "gptrans-pair-norm-500k",
+        "gptrans-noisy-pair-norm-500k",
+        "gptrans-geometry-angle-increment-100k"
+      ],
+      "expected_native_cost_ref": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-expected-training",
+      "decision_changed_if_positive": "Nominate distance-only GPTrans geometry for a separately frozen scale decision.",
+      "decision_changed_if_negative": "Close this matched V4 distance-only 500K route without changing seed or schedule.",
+      "historical_unknowns": [
+        "Kaggle1 T4 wall time for this exact geometry arm is unknown."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "35f1d8a28458348458d71723a4e2fb8b3dfaab5d",
+      "contract_refs": [
+        "experiments/pcqm_geometry_v4_500k_pair/protocol.md",
+        "experiments/pcqm_geometry_v4_500k_pair/training_contract.json"
+      ],
+      "reference_ids": [
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "parent_trajectory_ids": [
+        "TB-gptrans-geometry-distance-100k-s42-a2"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-geometry-distance-100k-s42-a2"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_500k_v4_evidence/roles/train.json",
+        "experiments/pcqm_500k_v4_evidence/roles/development.json",
+        "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+      "source_config_identity": "80407ac17676150764720122efab8853b1b23c356647329b808c710bbecbae77"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "remote_scale_transfer_training",
+        "run_ids": [
+          "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "35f1d8a28458348458d71723a4e2fb8b3dfaab5d",
+        "evidence_refs": [],
+        "cost_event_ids": [
+          "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-expected-training"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/launch_decision.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one_kaggle1_two_arm_attempt_after_preflight"
+      ],
+      "reopen_conditions": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "available_actions": [
+      "RUN_500K",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_500K",
+    "policy_id": "pcqm-geometry-v4-500k-pair-launch",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_500k_v4_evidence/roles/train.json",
+      "experiments/pcqm_500k_v4_evidence/roles/development.json",
+      "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+    "state_timestamp": "2026-09-28T14:35:01.349656+00:00",
+    "source_commit": "35f1d8a28458348458d71723a4e2fb8b3dfaab5d"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-expected-training",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42",
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "NvidiaTeslaT4_requested",
+      "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
