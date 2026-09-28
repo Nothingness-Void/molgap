@@ -1,0 +1,39 @@
+{
+  "format": "molgap-kaggle-v4-submission-observation-v1",
+  "logical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1",
+  "physical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-gptrans-k1-s42",
+  "physical_kernel_id_no": 136270106,
+  "physical_version": null,
+  "physical_version_missing_reason": "Kaggle status and pulled metadata did not expose a version number",
+  "owner": "nothingnessvoid",
+  "account": "kaggle1",
+  "arms": [
+    "gptrans_distance_only",
+    "k1_distance_angle"
+  ],
+  "arm_logical_run_ids": {
+    "gptrans_distance_only": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001",
+    "k1_distance_angle": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001"
+  },
+  "arm_physical_run_bindings": {
+    "gptrans_distance_only": "nothingnessvoid/molgap-geometry-v4-500k-gptrans-k1-s42/evidence/gptrans_distance_only",
+    "k1_distance_angle": "nothingnessvoid/molgap-geometry-v4-500k-gptrans-k1-s42/evidence/k1_distance_angle"
+  },
+  "source_commit": "35f1d8a28458348458d71723a4e2fb8b3dfaab5d",
+  "source_archive_sha256": "80407ac17676150764720122efab8853b1b23c356647329b808c710bbecbae77",
+  "local_kernel_code_sha256": "362ef93d19034e713408fb8fb933954ba8f1aa6b62caba95aa55585919857f02",
+  "pulled_kernel_code_sha256": "a8df8b4d79364b89e421062576b5361caf057df41dcb0cc9fba85f17387ce490",
+  "pulled_source_matches_local_after_newline_normalization": true,
+  "accepted_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "accepted_dataset_version": 3,
+  "expected_dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "remote_mounted_manifest_verified": false,
+  "requested_accelerator": "NvidiaTeslaT4",
+  "actual_accelerator_verified": false,
+  "remote_last_run_time_utc": "2026-09-28T14:43:04.363Z",
+  "observed_at_utc": "2026-09-28T14:46:24.7043878Z",
+  "authoritative_status": "RUNNING",
+  "startup_preflight_verified": false,
+  "submission_api_invalid_sources": [],
+  "evidence_note": "Kaggle push accepted the request, then Kaggle CLI status confirmed RUNNING under the platform-generated title slug. Pulled source matches the frozen package after line-ending normalization. Execution and arm completion remain unverified."
+}
