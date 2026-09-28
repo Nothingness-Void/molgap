@@ -154,6 +154,10 @@ CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
 INTERVENTION_FIELDS_BY_PURPOSE = {
     "architecture_comparison": frozenset({"architecture_config_identity"}),
     "mechanism_comparison": frozenset({"architecture_config_identity"}),
+    # A geometry input and its encoder are one declared information-flow change.
+    "geometry_input_comparison": frozenset(
+        {"feature_identity", "architecture_config_identity"}
+    ),
     "optimizer_comparison": frozenset(
         {"optimizer_identity", "optimizer_mode", "optimizer_fused"}
     ),

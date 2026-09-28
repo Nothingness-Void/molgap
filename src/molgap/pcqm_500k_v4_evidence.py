@@ -27,10 +27,16 @@ PARAMETERS = {
     "edge_sparse_global_369": 3_879_425,
     "gptrans_noisy_nodes": 5_277_400,
     "gptrans_noisy_pair_norm": 5_277_400,
+    "gptrans_distance_only": 5_251_425,
+    "k1_distance_angle": 3_778_801,
 }
 EPOCHS = 60
 BS = 128
 STEPS = 500000 // BS
+GEOMETRY_DEVICE_SECOND_CAPS = {
+    "gptrans_distance_only": 12 * 3600,
+    "k1_distance_angle": 16 * 3600,
+}
 
 # This screen's prefix gates were frozen against the accepted GPTrans trace.
 GPTRANS_REFERENCE_TRACE_SHA256 = (
@@ -56,7 +62,13 @@ def scientific_contract(arm="gptrans"):
         "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
         "data_role_fingerprint": FIXED_500K_MANIFEST_SHA256,
         "row_order_fingerprint": "global-randperm-seed42-plus-epoch-drop-last32",
-        "feature_fingerprint": "ogb-node9-edge3-rwse16-no-geometry-input",
+        "feature_fingerprint": (
+            "ogb-node9-edge3-rwse16-etkdgv3-mmff94s-bond-distance"
+            if arm == "gptrans_distance_only" else
+            "ogb-node9-edge3-rwse16-etkdgv3-mmff94s-bond-distance-angle"
+            if arm == "k1_distance_angle" else
+            "ogb-node9-edge3-rwse16-no-geometry-input"
+        ),
         "target_fingerprint": "pcqm4mv2-gap-eV",
         "seed": 42, "precision": "fp32",
         "optimizer_fingerprint": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
@@ -87,7 +99,13 @@ def scientific_contract(arm="gptrans"):
 
 
 def make_model(arm):
-    if arm in {"gptrans", "gptrans_pair_update_norm"}:
+    if arm == "gptrans_distance_only":
+        from .pcqm_geometry_transfer import GeometryGPTransTiny
+        model = GeometryGPTransTiny(geometry_mode="distance_only")
+    elif arm == "k1_distance_angle":
+        from .pcqm_geometry_transfer import GeometryNeuralAtomK1
+        model = GeometryNeuralAtomK1()
+    elif arm in {"gptrans", "gptrans_pair_update_norm"}:
         from .pcqm_gptrans_v4 import _make_model
         variant = "pair_update_norm" if arm == "gptrans_pair_update_norm" else "reference"
         model = _make_model(variant=variant)
@@ -115,6 +133,13 @@ def optimizer_for(model):
                             foreach=False, fused=False)
 
 
+def _forward_arm(model, batch, arm):
+    if arm in {"gptrans_distance_only", "k1_distance_angle"}:
+        from .pcqm_geometry_transfer import forward_geometry_transfer
+        return forward_geometry_transfer(model, batch)
+    return _forward(model, batch)
+
+
 def loader(graphs, epoch=None):
     import torch
     from torch_geometric.loader import DataLoader
@@ -128,7 +153,7 @@ def loader(graphs, epoch=None):
                       generator=torch.Generator().manual_seed(9000 + (epoch or 0)))
 
 
-def step(model, optimizer, batch, mean, std):
+def step(model, optimizer, batch, mean, std, arm="gptrans"):
     import torch
     if batch.num_graphs != BS:
         raise RuntimeError("Non-128 optimizer batch")
@@ -140,7 +165,7 @@ def step(model, optimizer, batch, mean, std):
         gap_loss = torch.nn.functional.l1_loss(prediction.view(-1), (batch.y.view(-1) - mean) / std)
         loss = gap_loss + model.loss_weight * aux_loss
     else:
-        prediction = _forward(model, batch)
+        prediction = _forward_arm(model, batch, arm)
         loss = torch.nn.functional.l1_loss(prediction.view(-1), (batch.y.view(-1) - mean) / std)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=True)
@@ -148,14 +173,14 @@ def step(model, optimizer, batch, mean, std):
     return loss.detach()
 
 
-def evaluate(model, graphs, mean, std):
+def evaluate(model, graphs, mean, std, arm="gptrans"):
     import torch
     model.eval()
     rows = {"prediction": [], "target": [], "source_idx": []}
     with torch.no_grad():
         for batch in loader(graphs):
             batch = batch.to("cuda", non_blocking=True)
-            rows["prediction"].append((_forward(model, batch) * std + mean).cpu())
+            rows["prediction"].append((_forward_arm(model, batch, arm) * std + mean).cpu())
             rows["target"].append(batch.y.view(-1).cpu())
             rows["source_idx"].append(batch.source_idx.view(-1).cpu().long())
     result = {key: torch.cat(values) for key, values in rows.items()}
@@ -172,6 +197,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         platform_id="kaggle1", preflight_only=False):
     import shutil
     import torch
+    run_started = time.monotonic()
     output.mkdir(parents=True, exist_ok=True)
     if torch.cuda.device_count() != 1:
         raise RuntimeError("One visible accelerator per worker required")
@@ -196,7 +222,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         model = make_model(arm).to("cuda").train()
         initial_sha = _state_sha256(model)
         optimizer = optimizer_for(model)
-        losses = [float(step(model, optimizer, batch, mean, std)) for _ in range(3)]
+        losses = [float(step(model, optimizer, batch, mean, std, arm)) for _ in range(3)]
         calibrations.append({"initial": initial_sha, "losses": losses, "state": _state_sha256(model)})
         del model, optimizer
     atomic_json(output / "calibration.json", {"repeats": calibrations, "fixture": fixture_sha})
@@ -248,9 +274,13 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
     model = make_model(arm).to("cuda")
     optimizer = optimizer_for(model)
     start_epoch, trace, best, best_epoch = 0, [], float("inf"), -1
+    observed_steps = 0
+    observed_presentations = 0
+    prior_wall_seconds = 0.0
     if resume is not None:
         resume = Path(resume)
-        checksums = json.loads((resume / "stage_manifest.json").read_text())["artifacts"]
+        resume_manifest = json.loads((resume / "stage_manifest.json").read_text())
+        checksums = resume_manifest["artifacts"]
         for name in ("last_checkpoint.pt", "best_model.pt", "best_predictions.pt"):
             if sha256_file(resume / name) != checksums[name]:
                 raise RuntimeError(f"Resume hash mismatch: {name}")
@@ -265,6 +295,13 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         optimizer.load_state_dict(state["optimizer"])
         restore_rng_state(state["rng"])
         start_epoch, trace, best, best_epoch = state["next_epoch"], state["trace"], state["best"], state["best_epoch"]
+        observed_steps = state.get("observed_steps", start_epoch * STEPS)
+        observed_presentations = state.get("observed_presentations", start_epoch * STEPS * BS)
+        prior_wall_seconds = float(resume_manifest.get(
+            "cumulative_device_seconds", state.get("cumulative_wall_seconds", 0.0)
+        ))
+        if observed_steps != start_epoch * STEPS or observed_presentations != observed_steps * BS:
+            raise RuntimeError("Resume observed exposure does not match the frozen sampler")
         if resume.resolve() != output.resolve():
             for name in ("best_model.pt", "best_predictions.pt", "initial_state.pt"):
                 shutil.copy2(resume / name, output / name)
@@ -281,6 +318,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         if output.resolve() != resume.resolve():
             shutil.copy2(resume / "futility_decisions.json", output / "futility_decisions.json")
     futility_stopped = False
+    cost_stopped = False
     for epoch in range(start_epoch, min(EPOCHS, start_epoch + stage_epochs)):
         started = time.monotonic()
         for group in optimizer.param_groups:
@@ -289,28 +327,35 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         loss_sum = torch.zeros((), device="cuda")
         count = 0
         for batch_index, batch in enumerate(loader(roles["train"], epoch)):
-            loss_sum += step(model, optimizer, batch.to("cuda", non_blocking=True), mean, std)
+            loss_sum += step(model, optimizer, batch.to("cuda", non_blocking=True), mean, std, arm)
             count += BS
+            observed_steps += 1
+            observed_presentations += BS
             if (batch_index + 1) % 500 == 0:
                 print(f"{arm} ep={epoch} batch={batch_index+1}/{STEPS}", flush=True)
         if count != STEPS * BS:
             raise RuntimeError("Sample exposure mismatch")
-        evaluation = evaluate(model, roles["validation"], mean, std)
+        evaluation = evaluate(model, roles["validation"], mean, std, arm)
         mae = evaluation["mae_eV"]
         if mae < best:
             best, best_epoch = mae, epoch
             atomic_torch_save(output / "best_model.pt", {"arm": arm, "model": model.state_dict(),
                 "mean": mean, "std": std, "contract": contract, "epoch": epoch, "source_sha256": source_sha})
             atomic_torch_save(output / "best_predictions.pt", evaluation)
-        atomic_torch_save(output / f"predictions_epoch_{epoch:02d}.pt", evaluation)
+        if arm not in {"gptrans_distance_only", "k1_distance_angle"}:
+            atomic_torch_save(output / f"predictions_epoch_{epoch:02d}.pt", evaluation)
         trace.append({"epoch": epoch, "train_mae_eV": float(loss_sum) / STEPS * std,
             "development_mae_eV": mae, "lr": schedule(epoch), "seconds": time.monotonic()-started,
-            "global_step": (epoch+1)*STEPS, "sample_presentations": (epoch+1)*STEPS*BS,
+            "global_step": observed_steps, "sample_presentations": observed_presentations,
+            "device_seconds_cumulative": prior_wall_seconds + time.monotonic() - run_started,
+            "checkpoint_identity": _state_sha256(model),
             "peak_allocated_bytes": torch.cuda.max_memory_allocated(), "peak_reserved_bytes": torch.cuda.max_memory_reserved()})
         atomic_json(output / "trace.json", {"epochs": trace})
         atomic_torch_save(output / "last_checkpoint.pt", {"arm": arm, "model": model.state_dict(),
             "optimizer": optimizer.state_dict(), "rng": capture_rng_state(), "next_epoch": epoch+1,
             "trace": trace, "best": best, "best_epoch": best_epoch, "contract": contract,
+            "observed_steps": observed_steps, "observed_presentations": observed_presentations,
+            "cumulative_wall_seconds": prior_wall_seconds + time.monotonic() - run_started,
             "source_sha256": source_sha, "runtime_software": runtime["installed_distributions_sha256"],
             "accelerator": certificate["accelerator"]})
         atomic_json(output / "progress.json", {"status": "RUNNING", "next_epoch": epoch+1, "best": best})
@@ -327,6 +372,19 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
             "official_validation_role_read": False, "test_dev_role_read": False,
             "test_challenge_role_read": False})
         print(f"{arm} ep{epoch:02d} dev={mae:.8f} best={best:.8f}@{best_epoch} {trace[-1]['seconds']:.1f}s", flush=True)
+        cap = GEOMETRY_DEVICE_SECOND_CAPS.get(arm)
+        if cap is not None:
+            elapsed = prior_wall_seconds + time.monotonic() - run_started
+            projected = elapsed * EPOCHS / (epoch + 1)
+            if epoch + 1 < EPOCHS and (elapsed >= cap or (epoch >= 4 and projected > cap)):
+                cost_stopped = True
+                atomic_json(output / "cost_stop.json", {
+                    "arm": arm, "next_epoch": epoch + 1,
+                    "observed_device_seconds": elapsed,
+                    "projected_60_epoch_device_seconds": projected,
+                    "device_second_cap": cap,
+                })
+                break
         if arm == "gptrans_pair_update_norm":
             decision = evaluate_matched_prefix_futility(
                 completed_epochs=epoch + 1,
@@ -354,7 +412,9 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         if (max_stage_seconds is not None and
                 time.monotonic() - stage_start + 1.5 * trace[-1]["seconds"] > max_stage_seconds):
             break
-    if futility_stopped:
+    if cost_stopped:
+        status = "COST_STOPPED"
+    elif futility_stopped:
         status = "FUTILITY_STOPPED"
     else:
         status = "COMPLETE" if trace[-1]["epoch"] + 1 == EPOCHS else "STAGE_COMPLETE"
@@ -362,6 +422,8 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
     atomic_json(output / "stage_manifest.json", {"status": status, "arm": arm,
         "next_epoch": trace[-1]["epoch"]+1, "best_development_mae_eV": best, "best_epoch": best_epoch,
         "parameters": PARAMETERS[arm], "contract": contract, "source_sha256": source_sha,
+        "run_wall_seconds": time.monotonic() - run_started,
+        "cumulative_device_seconds": prior_wall_seconds + time.monotonic() - run_started,
         "resume_source_sha256": resume_source_sha,
         "runtime_certificate_id": certificate_id, "artifacts": artifacts,
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})

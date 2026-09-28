@@ -27,7 +27,9 @@ MODEL_IDS = (GEOMETRY_GPTRANS_T, GEOMETRY_NEURAL_ATOM_K1)
 class GeometryGPTransTiny(OGBGPTransTiny):
     """GPTrans-T with zero-start bond-distance and bond-angle channels."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, geometry_mode: str = "distance_angle") -> None:
+        if geometry_mode not in {"distance_only", "distance_angle"}:
+            raise ValueError(f"unsupported GPTrans geometry mode: {geometry_mode}")
         super().__init__(
             node_channels=256,
             pair_channels=32,
@@ -50,6 +52,7 @@ class GeometryGPTransTiny(OGBGPTransTiny):
         )
         nn.init.zeros_(self.distance_to_pair.weight)
         nn.init.zeros_(self.angle_to_node.weight)
+        self.geometry_mode = geometry_mode
 
     @staticmethod
     def _validate_geometry(
@@ -116,7 +119,7 @@ class GeometryGPTransTiny(OGBGPTransTiny):
             edge_target + 1,
         ] += self.distance_to_pair(distance)
 
-        if wedge_edge_ids.shape[0]:
+        if self.geometry_mode == "distance_angle" and wedge_edge_ids.shape[0]:
             first = wedge_edge_ids[:, 0].long()
             centers = edge_index[1, first]
             center_graph = batch[centers]

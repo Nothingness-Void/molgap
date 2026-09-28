@@ -16,7 +16,7 @@ def accept(root):
         raise ValueError('Model identity changed')
     if not 1 <= manifest['next_epoch'] <= 60:
         raise ValueError('Invalid epoch cursor')
-    expected = scientific_contract()
+    expected = scientific_contract(manifest['arm'])
     actual = manifest['contract']
     for key, value in expected.items():
         if key != 'target_transform_fingerprint' and actual[key] != value:

@@ -211,6 +211,32 @@ def test_all_fields_and_complete_artifacts_are_strict_causal():
     )
 
 
+def test_geometry_input_scope_accepts_only_its_declared_composite_change():
+    candidate = _side("geometry-arch")
+    candidate["comparison_identity"]["feature_identity"] = "geometry-feature"
+    result = _assess(
+        candidate=candidate,
+        experiment_purpose="geometry_input_comparison",
+        intervention_group_id="geometry-input-and-encoder",
+        declared_intervention_fields=[
+            "feature_identity", "architecture_config_identity"
+        ],
+    )
+    assert result["strict_ready"] is True
+    changed_optimizer = copy.deepcopy(candidate)
+    changed_optimizer["comparison_identity"]["optimizer_identity"] = "other"
+    blocked = _assess(
+        candidate=changed_optimizer,
+        experiment_purpose="geometry_input_comparison",
+        intervention_group_id="geometry-input-and-encoder",
+        declared_intervention_fields=[
+            "feature_identity", "architecture_config_identity"
+        ],
+    )
+    assert blocked["strict_ready"] is False
+    assert "SCIENTIFIC_CONTRACT_MISMATCH" in blocked["blocker_codes"]
+
+
 @pytest.mark.parametrize(
     "experiment_purpose",
     (

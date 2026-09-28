@@ -1,0 +1,30 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-geometry-v4-500k-pair-launch",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-fixed500k-dev50k-matched60-v4"
+  },
+  "required_observable_fields": [
+    "two_independent_500k_questions_and_strict_refs_verified"
+  ],
+  "action_rule": {
+    "field": "two_independent_500k_questions_and_strict_refs_verified",
+    "operator": "eq",
+    "threshold": true,
+    "action": "RUN_500K"
+  },
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []},
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "756e27551a7d73009c84dded6e8ba4dff19b9537a02da61f2acb42d30f012fe7"
+}
