@@ -13,6 +13,10 @@ first-step extrapolation exceeded the six-hour gate. See the
 [failure record](results/v1_preflight_failure.md). This is an infrastructure/
 cost-screen outcome, not a scientific loss or a completed V5 comparison.
 
-A short train-role-only [runtime diagnosis](runtime_profile_protocol.md) is
-prepared to measure steady-state throughput before any bounded retry. No
-MetaGIN2D validation result or full-scale claim exists.
+A short train-role-only [runtime diagnosis](runtime_profile_protocol.md) was
+attempted in profile v1. It stopped before optimizer timing because the
+consumer incorrectly required its executable-source commit to equal the
+already accepted CPU sidecar's producer commit. The source and sidecar are
+independently immutable assets; profile v2 pins both identities separately.
+See the [profile failure record](results/profile_v1_failure.md). No MetaGIN2D
+validation result or full-scale claim exists.
