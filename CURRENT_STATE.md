@@ -420,6 +420,11 @@ train–development gap. This remains descriptive, not a unique causal
 mechanism; PairToken promotion stays closed. Authority:
 `experiments/pcqm_k1_cross_scale_frozen/decision.md`.
 
+A read-only structural residual follow-up on retained predictions found no
+stable, inference-visible subgroup that justifies another K1 relation or motif
+training screen. It released no new GPU work. Authority:
+`experiments/pcqm_k1_cross_scale_frozen/structural_residual_decision.md`.
+
 Server acceptance now follows the V5 seven-state outcome model without
 rewriting historical V4 decisions. A local audit found complete raw artifact
 sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
