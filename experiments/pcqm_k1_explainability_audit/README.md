@@ -11,3 +11,6 @@
   distinguishes measured exchange effects from unresolved information loss.
 - [Representation diagnostic design](representation_protocol.md) scopes the
   distinct same-row frozen-checkpoint measurement and unreleased input gates.
+- [Terminal workflow](representation/terminal_runbook.md) routes retrieval,
+  saved-JSON acceptance, interpretation and NO_TRAIN closure; the thin
+  `accept_representation.py` CLI never runs a model.
