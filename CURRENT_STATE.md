@@ -66,10 +66,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The server has frozen a pure-2D motif-hierarchy feasibility question after
-closing MetaGIN2D. Its first stage is CPU-only, label-free partitioning over
-the accepted fixed 100K graph cache; no GPU model or scale-up is released by
-the preparation stage. Authority: [motif protocol](experiments/pcqm_motif_hierarchy_100k/protocol.md)
+The server's pure-2D motif-hierarchy CPU sidecar passed its accepted fixed-100K
+full-row and cost/coverage gates. This is infrastructure feasibility, not a
+model score or a replay-ready training result. No GPU model or scale-up is
+released; a motif-aware K1 model would need its own frozen scientific contract,
+runtime/prelaunch checks and compute decision. Authority: [motif decision](experiments/pcqm_motif_hierarchy_100k/decision.md)
 and [operational status](experiments/pcqm_motif_hierarchy_100k/STATUS.md).
 
 The server-owned MetaGIN2D fixed-100K seed-42 screen is complete and closed:

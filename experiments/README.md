@@ -19,7 +19,7 @@ shared packaging, planning or terminal logic.
 
 | Question | Verdict | Directory |
 |---|---|---|
-| Is a topology-defined motif graph a feasible new information-flow level for K1? | CPU-only accepted-cache partition is prospective; no architecture metric assumed | `pcqm_motif_hierarchy_100k/` |
+| Is a topology-defined motif graph a feasible new information-flow level for K1? | CPU partition passed coverage/cost acceptance; no architecture metric or GPU release | `pcqm_motif_hierarchy_100k/` |
 | Does one chemistry-separated local bond update improve K1 while preserving portable gains? | Both equal-capacity arms regressed; strict/replay-ready terminals retained, no scale-up | `pcqm_k1_chem_local_100k/` |
 | Can an independent pure-2D multi-hop MetaGIN-derived backbone beat frozen K1-v4? | No under the matched fixed-100K screen; strict negative terminal retained | `pcqm_metagin_2d_100k/` |
 | Does local atom reconstruction help when every optimizer step retains Gap supervision? | One prospective paired training-objective study; no outcome assumed | `pcqm_k1_joint_atom_reconstruction_100k/` |

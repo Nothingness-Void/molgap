@@ -1,0 +1,53 @@
+{
+  "format": "molgap-motif-hierarchy-cpu-terminal-evidence-v1",
+  "remote_run": "kaseichou/molgap-motif-hierarchy-cpu-sidecar-v1:v1",
+  "remote_kernel_id": 136289702,
+  "execution_status": "COMPLETE",
+  "artifact_status": "ACCEPTED",
+  "scientific_status": "NOT_EVALUATED",
+  "source_commit": "e734870b92b9d8580c94bf4f3aa2b4d5743706d8",
+  "source_archive_sha256": "d27bfef6b2a8729507132bdd26a0f1919135cac4f658cf55d6e831cab7162931",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "rules_sha256": "da38ed9de272caa7784557f84077df7a5acdb8a92526ceed118605a58a50c694",
+  "manifest_sha256": "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b",
+  "acceptance_sha256": "d366060a87477369759dfb6c99c786b47fcbe93d28b89aa525c39712030f473e",
+  "feasibility_sha256": "99d769e2c128696004cef41a721323596ffb04db0abd5e1c830bf7926300e5f1",
+  "native_cost_sha256": "a14210f8048262f053db4c783ff17be07074b38d648a390ad0e241830d551c76",
+  "aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+  "shards": [
+    {
+      "role": "train",
+      "rows": 50000,
+      "source_idx_min": 0,
+      "source_idx_max": 49999,
+      "sha256": "42a90d4c5eee9e9f9a6ab5f38083cec871d41d9d09175d0b42e70ecb8232413e"
+    },
+    {
+      "role": "train",
+      "rows": 50000,
+      "source_idx_min": 50000,
+      "source_idx_max": 99999,
+      "sha256": "c6ea810178ec27f729fa194519c61d493fdbf1dacea1a9864b98d51a3cdc79c8"
+    },
+    {
+      "role": "development",
+      "rows": 50000,
+      "source_idx_min": 100000,
+      "source_idx_max": 149999,
+      "sha256": "438c2b9907ac6d2e1dd163c31e8ab9c770d230f4e56f7cae85c00a53adada5ca"
+    }
+  ],
+  "rows_recomputed_remotely": 150000,
+  "shard_hashes_reverified_locally": 3,
+  "train_multi_motif_rows": 99011,
+  "train_three_plus_motif_rows": 95525,
+  "cpu_wall_seconds": 465.95898958800007,
+  "gpu_used": false,
+  "gap_labels_read": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "gpu_training_released": false
+}
