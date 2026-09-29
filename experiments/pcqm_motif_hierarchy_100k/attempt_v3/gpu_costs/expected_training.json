@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v3",
+  "category": "training",
+  "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42-v3",
+  "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/budget_snapshot.json",
+  "hardware": "actual_T4_count_pending",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 20
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 10.0
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+}

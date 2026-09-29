@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 51,
+      "trajectories_total": 54,
       "with_complete_native_measurement": 4,
-      "with_cost_event": 51,
-      "with_incomplete_native_measurement": 47,
+      "with_cost_event": 54,
+      "with_incomplete_native_measurement": 50,
       "without_cost_event": 0
     },
     "totals_by_hardware": {
@@ -213,6 +213,56 @@
           "unknown_records": 0
         }
       },
+      "Tesla_P100_16GB": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "Tesla_P100_PCIE_16GB": {
         "cpu_hours": {
           "estimated": {
@@ -354,6 +404,106 @@
           "estimated": {
             "known_records": 2,
             "known_total": 7.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "actual_P100_or_T4_pending": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "actual_T4_count_pending": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 20.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 10.0
           },
           "measured": {
             "known_records": 0,
@@ -664,7 +814,7 @@
         }
       }
     },
-    "unknown_events": 62
+    "unknown_events": 65
   },
   "evidence": {
     "validated": 50,
@@ -674,7 +824,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 22,
+      "count": 25,
       "severity": "INFO"
     },
     {
@@ -684,17 +834,17 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 47,
+      "count": 50,
       "severity": "WARN"
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 10,
+      "count": 13,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 3,
+      "count": 6,
       "severity": "WARN"
     },
     {
@@ -708,11 +858,11 @@
     "explicit_events": 195,
     "repeatedly_selected": 3
   },
-  "source_digest": "f3fe7bc20edee1e207dd13ab01450a5f277c6a2acb3b86d745ebe0f7c272ad44",
+  "source_digest": "c42ac14e68c39e31945ac55fc1189693e9741dfa52aa9f8f2afc8734249367e0",
   "trajectories": {
-    "count": 51,
+    "count": 54,
     "outcomes": {
-      "ACTIVE": 2,
+      "ACTIVE": 5,
       "CLOSED": 2,
       "INFRASTRUCTURE_ONLY": 12,
       "NEGATIVE_UNDER_CONTRACT": 13,

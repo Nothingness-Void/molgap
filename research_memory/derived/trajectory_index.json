@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "f3fe7bc20edee1e207dd13ab01450a5f277c6a2acb3b86d745ebe0f7c272ad44",
+  "source_digest": "c42ac14e68c39e31945ac55fc1189693e9741dfa52aa9f8f2afc8734249367e0",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -503,6 +503,54 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md",
+      "family_id": "k1-motif-hierarchy",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/protocol.md",
+      "family_id": "k1-motif-hierarchy",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md",
+      "family_id": "k1-motif-hierarchy",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-k1-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
     },
     {
       "completeness_status": "complete",

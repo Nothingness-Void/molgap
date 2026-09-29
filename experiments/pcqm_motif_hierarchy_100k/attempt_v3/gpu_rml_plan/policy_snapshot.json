@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_BOUNDED_MOTIF_SCREEN",
+    "field": "accepted_motif_sidecar",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "controller-only-bounded-user-authorization",
+    "authority_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-motif-hierarchy-screen",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_motif_sidecar",
+    "one_frozen_motif_mechanism"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

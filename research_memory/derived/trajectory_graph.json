@@ -271,6 +271,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-motif-hierarchy-100k-s42-v2:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-motif-hierarchy-100k-s42-v3:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-motif-hierarchy-100k-s42:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-multiplicative-pair-value-100k-s42:A001",
       "target": "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
       "type": "action_produced_evidence"
@@ -857,6 +872,21 @@
     },
     {
       "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-k1-receiver-pair-100k-s42",
       "type": "parent_trajectory"
     },
@@ -1177,6 +1207,21 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-multiplicative-pair-value-100k-s42",
       "type": "prior_evidence"
     },
@@ -1408,6 +1453,21 @@
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
       "type": "reference_used"
     },
     {
@@ -1813,6 +1873,18 @@
     },
     {
       "id": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42-v3",
       "type": "trajectory"
     },
     {
