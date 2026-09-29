@@ -1,0 +1,68 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_sha256_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/cost_stop.json",
+      "name": "cost_stop",
+      "sha256": "22f52919388ccb895eb560ee1a2de92a209855e2a256e20e7ce98ef3de45ff64"
+    },
+    {
+      "availability": "locally_retained_sha256_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/stage_manifest.json",
+      "name": "stage_manifest",
+      "sha256": "682a79b241504fc555162f430baba141478f7a8b8d68b5e68b5f57316fd1a9cf"
+    },
+    {
+      "availability": "locally_retained_sha256_verified",
+      "locator": "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/results/canonical_trace.json",
+      "name": "partial_canonical_training_trace",
+      "sha256": "25ef037fc65562a8e1fc493611d0196f30cfcfffb1b57c9bb59f19888128ea84"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_geometry_v4_500k_pair/protocol.md",
+      "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+      "experiments/pcqm_geometry_v4_500k_pair/launch/attempt_001.json",
+      "experiments/pcqm_geometry_v4_500k_pair/decision.md",
+      "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/acceptance.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/kernel_status.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/preflight/gptrans_distance_only/stage_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/stage_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/cost_stop.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/runtime_certificate.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/data_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/trace.json",
+      "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/results/trace_recovery_spec.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-geometry-v4-500k-pair-contract-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-29",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "V5 wrapper translation of actual remote partial training; no new execution"
+  },
+  "outcome": {
+    "artifact_status": "partial_metadata_hash_verified_model_prediction_checkpoint_bytes_unchecked",
+    "budget_decision": "stop_for_cost_under_frozen_cap",
+    "comparison_status": "no_complete_60epoch_paired_endpoint",
+    "execution_status": "cost_stopped_after_5_of_60_epochs",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "not_qualified"
+  },
+  "role_use": {
+    "internal_development_500000_550000": "selection_used",
+    "official_train_prefix_0_500000": "training_membership",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "matched_v4_geometry_500k_partial_cost_stop",
+  "track": "B"
+}

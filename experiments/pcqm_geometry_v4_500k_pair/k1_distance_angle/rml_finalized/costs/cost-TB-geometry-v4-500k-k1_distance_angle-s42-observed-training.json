@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-geometry-v4-500k-k1_distance_angle-s42-observed-training",
+  "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/acceptance.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.7412025973266665
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.7412025969333333
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+}

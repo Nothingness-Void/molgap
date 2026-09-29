@@ -4,6 +4,26 @@
   "excluded_traces": [
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cost_stopped_after_5_of_60_epochs",
+        "no_accepted_60epoch_endpoint",
+        "no_strict_paired_comparison"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cost_stopped_after_5_of_60_epochs",
+        "no_accepted_60epoch_endpoint",
+        "no_strict_paired_comparison"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -165,5 +185,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 20
+  "trace_count": 22
 }

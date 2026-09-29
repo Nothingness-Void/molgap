@@ -1,0 +1,142 @@
+{
+  "device_time_semantics": "sum_over_devices",
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "50K development Gap MAE",
+      "role_identity": "internal_development_500000_550000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "epoch training stream Gap MAE",
+      "role_identity": "official_train_prefix_0_500000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": "811010b43c554864c856bf18dfe217707574441902947e48ff0735c559412c5b",
+      "cumulative_device_time_seconds": 1461.5980528159998,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0,
+      "event": "observation",
+      "learning_rate": 0.0004,
+      "live_dev_metric": 0.2002997249364853,
+      "live_train_metric": 0.28143123346537946,
+      "optimizer_step": 3906,
+      "sample_presentations": 499968,
+      "sequence": 0,
+      "wall_time_seconds": 1443.005407573
+    },
+    {
+      "checkpoint_identity": "56e2210eb5474b788954a9a27cbe6cea120020d910a193cd5331b0e56adc881e",
+      "cumulative_device_time_seconds": 2922.828809365,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": 0.000399717247787514,
+      "live_dev_metric": 0.17542585730552673,
+      "live_train_metric": 0.2047807325277975,
+      "optimizer_step": 7812,
+      "sample_presentations": 999936,
+      "sequence": 1,
+      "wall_time_seconds": 1460.6493757409999
+    },
+    {
+      "checkpoint_identity": "d232e8b3d989c0c3a2a4fe114688f4d0066f20c5e2067e9e468551c746b847ee",
+      "cumulative_device_time_seconds": 4229.693129642001,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 2,
+      "event": "observation",
+      "learning_rate": 0.00039886979264192236,
+      "live_dev_metric": 0.16522014141082764,
+      "live_train_metric": 0.17965148135766032,
+      "optimizer_step": 11718,
+      "sample_presentations": 1499904,
+      "sequence": 2,
+      "wall_time_seconds": 1306.281740724
+    },
+    {
+      "checkpoint_identity": "1eafe3dcaa15d57a5a50cf519faf216af785c97e681f6809ca7a172230288b8d",
+      "cumulative_device_time_seconds": 5242.838132340001,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 3,
+      "event": "observation",
+      "learning_rate": 0.00039746003676690824,
+      "live_dev_metric": 0.142333522439003,
+      "live_train_metric": 0.1647082959255391,
+      "optimizer_step": 15624,
+      "sample_presentations": 1999872,
+      "sequence": 3,
+      "wall_time_seconds": 1012.6455985920002
+    },
+    {
+      "checkpoint_identity": "31fa61ef99257b47c0613910c6ab1c655da2e07c4c447bfa563e074ca9c6f85a",
+      "cumulative_device_time_seconds": 6267.621376888001,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 4,
+      "event": "observation",
+      "learning_rate": 0.0003954919762686644,
+      "live_dev_metric": 0.13551412522792816,
+      "live_train_metric": 0.15522568314382776,
+      "optimizer_step": 19530,
+      "sample_presentations": 2499840,
+      "sequence": 4,
+      "wall_time_seconds": 1024.3037626120004
+    }
+  ],
+  "provenance": [
+    {
+      "field_mapping": {
+        "checkpoint_identity": "checkpoint_identity",
+        "cumulative_device_time_seconds": "device_seconds_cumulative",
+        "epoch_or_pass": "epoch",
+        "learning_rate": "lr",
+        "live_dev_metric": "development_mae_eV",
+        "live_train_metric": "train_mae_eV",
+        "optimizer_step": "global_step",
+        "sample_presentations": "sample_presentations",
+        "wall_time_seconds": "seconds"
+      },
+      "first_sequence": 0,
+      "missing_fields": [
+        "cumulative_wall_time_seconds",
+        "device_time_seconds",
+        "ema_dev_metric"
+      ],
+      "recovered_fields": [
+        "checkpoint_identity",
+        "cumulative_device_time_seconds",
+        "epoch_or_pass",
+        "learning_rate",
+        "live_dev_metric",
+        "live_train_metric",
+        "optimizer_step",
+        "sample_presentations",
+        "wall_time_seconds"
+      ],
+      "row_count": 5,
+      "sha256": "47194646f74b09a97aa67d41bfb8b298926f1e59b278b68b8f826edd9ee03d4a",
+      "source": "C:\\Users\\17449\\.codex\\worktrees\\geometry-v4-500k\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_geometry_v4_500k_pair\\attempt_001\\diagnostic\\evidence\\k1_distance_angle\\trace.json"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+}

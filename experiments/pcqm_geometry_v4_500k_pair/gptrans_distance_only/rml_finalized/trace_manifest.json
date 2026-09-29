@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "cost_stopped_after_5_of_60_epochs",
+      "no_accepted_60epoch_endpoint",
+      "no_strict_paired_comparison"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "gptrans_distance_only",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development_500000_550000",
+    "lr_schedule_identity": "cosine60-epoch0-4e-4-epoch59-1e-6",
+    "matched_architecture_required": false,
+    "optimizer_identity": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+    "precision_identity": "fp32",
+    "row_split_identity": "global-randperm-seed42-plus-epoch-drop-last32",
+    "scientific_contract": "pcqm-fixed500k-dev50k-matched60-v4",
+    "selection_role_identity": "partial_best_development_raw_model",
+    "target_transform_identity": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+    "terminal_endpoint_identity": "cost_stop_epoch5_step19530",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+  "evaluation_role_identity": "internal_development_500000_550000",
+  "exposure": {
+    "optimizer_steps": 19530,
+    "sample_presentations": 2499840
+  },
+  "metric_semantics": "train_stream_and_50k_development_gap_mae_eV",
+  "model_identity": "gptrans_distance_only",
+  "presentation_semantics_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+  "reference_id": "pcqm-matched-500k-v4-three-arm",
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "partial_best_development_raw_model",
+  "terminal_evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/rml_finalized/trace.json",
+  "trace_artifact_sha256": "25ef037fc65562a8e1fc493611d0196f30cfcfffb1b57c9bb59f19888128ea84",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

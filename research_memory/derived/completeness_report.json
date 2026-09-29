@@ -15,13 +15,11 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 34,
+      "count": 32,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
-        "TB-geometry-v4-500k-gptrans_distance_only-s42",
-        "TB-geometry-v4-500k-k1_distance_angle-s42",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -143,12 +141,10 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 26,
+      "count": 24,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
-        "TB-geometry-v4-500k-gptrans_distance_only-s42",
-        "TB-geometry-v4-500k-k1_distance_angle-s42",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -176,10 +172,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 6,
+      "count": 4,
       "items": [
-        "TB-geometry-v4-500k-gptrans_distance_only-s42",
-        "TB-geometry-v4-500k-k1_distance_angle-s42",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",

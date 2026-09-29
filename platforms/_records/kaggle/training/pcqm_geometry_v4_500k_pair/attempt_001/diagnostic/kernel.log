@@ -1,0 +1,111 @@
+[{"stream_name":"stdout","time":14.076823895,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 798.9/798.9 MB 2.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":16.992133123,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 110.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":17.151990835,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.6/823.6 kB 177.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":17.368707331,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 152.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":26.472996746,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 664.8/664.8 MB 2.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":31.700171835,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 410.6/410.6 MB 72.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":34.635304558,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.6/121.6 MB 97.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":35.476289019,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 MB 138.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":36.781844085,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 MB 92.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":40.350330329,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 196.0/196.0 MB 94.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":42.949103621,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 176.2/176.2 MB 84.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":44.524881471,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 4.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":47.211484132,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 209.5/209.5 MB 8.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":171.195765605,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":171.195835817,"data":"torchaudio 2.10.0+cu128 requires torch==2.10.0, but you have torch 2.4.1+cu121 which is incompatible.\n"}
+,{"stream_name":"stderr","time":171.195841049,"data":"torchvision 0.25.0+cu128 requires torch==2.10.0, but you have torch 2.4.1+cu121 which is incompatible.\n"}
+,{"stream_name":"stdout","time":173.970662322,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.1/63.1 kB 654.0 kB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":174.357500005,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 5.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":174.458124895,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 836.5 kB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":247.635540597,"data":"PREFLIGHT ONLY PASS gptrans_distance_only parameters=5251425 peak=861929472\n"}
+,{"stream_name":"stdout","time":248.331874045,"data":"PREFLIGHT ONLY PASS k1_distance_angle parameters=3778801 peak=769654784\n"}
+,{"stream_name":"stdout","time":268.883793603,"data":"PREFLIGHT PASS gptrans_distance_only parameters=5251425 resume_epoch=0 peak=861929472\n"}
+,{"stream_name":"stdout","time":269.944530875,"data":"PREFLIGHT PASS k1_distance_angle parameters=3778801 resume_epoch=0 peak=794820608\n"}
+,{"stream_name":"stdout","time":360.585000132,"data":"gptrans_distance_only ep=0 batch=500/3906\n"}
+,{"stream_name":"stdout","time":440.302126718,"data":"k1_distance_angle ep=0 batch=500/3906\n"}
+,{"stream_name":"stdout","time":452.304522278,"data":"gptrans_distance_only ep=0 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":546.273772525,"data":"gptrans_distance_only ep=0 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":614.250901476,"data":"k1_distance_angle ep=0 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":639.663508985,"data":"gptrans_distance_only ep=0 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":734.601638957,"data":"gptrans_distance_only ep=0 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":790.78776443,"data":"k1_distance_angle ep=0 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":832.813016778,"data":"gptrans_distance_only ep=0 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":929.591582721,"data":"gptrans_distance_only ep=0 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":969.919845562,"data":"k1_distance_angle ep=0 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":1047.382909508,"data":"gptrans_distance_only ep00 dev=0.26320916 best=0.26320916@0 777.9s\n"}
+,{"stream_name":"stdout","time":1146.829573164,"data":"gptrans_distance_only ep=1 batch=500/3906\n"}
+,{"stream_name":"stdout","time":1158.467337921,"data":"k1_distance_angle ep=0 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":1245.232292124,"data":"gptrans_distance_only ep=1 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":1337.00758337,"data":"k1_distance_angle ep=0 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":1343.58871639,"data":"gptrans_distance_only ep=1 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":1441.270812225,"data":"gptrans_distance_only ep=1 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":1515.170880129,"data":"k1_distance_angle ep=0 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":1537.760539535,"data":"gptrans_distance_only ep=1 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":1636.024497553,"data":"gptrans_distance_only ep=1 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":1713.530087259,"data":"k1_distance_angle ep00 dev=0.20029972 best=0.20029972@0 1443.0s\n"}
+,{"stream_name":"stdout","time":1743.315752969,"data":"gptrans_distance_only ep=1 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":1857.295502125,"data":"gptrans_distance_only ep01 dev=0.19016379 best=0.19016379@1 809.2s\n"}
+,{"stream_name":"stdout","time":1900.817072616,"data":"k1_distance_angle ep=1 batch=500/3906\n"}
+,{"stream_name":"stdout","time":1955.611187386,"data":"gptrans_distance_only ep=2 batch=500/3906\n"}
+,{"stream_name":"stdout","time":2052.904392871,"data":"gptrans_distance_only ep=2 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":2079.462191678,"data":"k1_distance_angle ep=1 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":2150.260943369,"data":"gptrans_distance_only ep=2 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":2247.554264463,"data":"gptrans_distance_only ep=2 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":2260.15203526,"data":"k1_distance_angle ep=1 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":2346.111756987,"data":"gptrans_distance_only ep=2 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":2440.509936279,"data":"k1_distance_angle ep=1 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":2443.642159757,"data":"gptrans_distance_only ep=2 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":2543.319511267,"data":"gptrans_distance_only ep=2 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":2619.713784782,"data":"k1_distance_angle ep=1 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":2656.905319015,"data":"gptrans_distance_only ep02 dev=0.18194528 best=0.18194528@2 798.7s\n"}
+,{"stream_name":"stdout","time":2756.300096239,"data":"gptrans_distance_only ep=3 batch=500/3906\n"}
+,{"stream_name":"stdout","time":2807.451987383,"data":"k1_distance_angle ep=1 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":2854.014792352,"data":"gptrans_distance_only ep=3 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":2951.222538318,"data":"gptrans_distance_only ep=3 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":2985.676561618,"data":"k1_distance_angle ep=1 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":3048.847572227,"data":"gptrans_distance_only ep=3 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":3143.237380964,"data":"gptrans_distance_only ep=3 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":3174.762036078,"data":"k1_distance_angle ep01 dev=0.17542586 best=0.17542586@1 1460.6s\n"}
+,{"stream_name":"stdout","time":3239.679498598,"data":"gptrans_distance_only ep=3 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":3331.508336597,"data":"gptrans_distance_only ep=3 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":3345.537542733,"data":"k1_distance_angle ep=2 batch=500/3906\n"}
+,{"stream_name":"stdout","time":3440.729074264,"data":"gptrans_distance_only ep03 dev=0.16468754 best=0.16468754@3 783.2s\n"}
+,{"stream_name":"stdout","time":3521.441490643,"data":"k1_distance_angle ep=2 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":3532.175962568,"data":"gptrans_distance_only ep=4 batch=500/3906\n"}
+,{"stream_name":"stdout","time":3623.243257232,"data":"gptrans_distance_only ep=4 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":3693.926538538,"data":"k1_distance_angle ep=2 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":3715.848016276,"data":"gptrans_distance_only ep=4 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":3805.841103334,"data":"gptrans_distance_only ep=4 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":3858.74807255,"data":"k1_distance_angle ep=2 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":3895.109643315,"data":"gptrans_distance_only ep=4 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":3993.175281106,"data":"gptrans_distance_only ep=4 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":4035.314769881,"data":"k1_distance_angle ep=2 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":4091.5057142,"data":"gptrans_distance_only ep=4 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":4205.315303519,"data":"gptrans_distance_only ep04 dev=0.15442343 best=0.15442343@4 764.0s\n"}
+,{"stream_name":"stdout","time":4217.262195464,"data":"k1_distance_angle ep=2 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":4342.932866719,"data":"k1_distance_angle ep=2 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":4481.543214874,"data":"k1_distance_angle ep02 dev=0.16522014 best=0.16522014@2 1306.3s\n"}
+,{"stream_name":"stdout","time":4606.472309384,"data":"k1_distance_angle ep=3 batch=500/3906\n"}
+,{"stream_name":"stdout","time":4731.007196588,"data":"k1_distance_angle ep=3 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":4855.455549987,"data":"k1_distance_angle ep=3 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":4978.895048816,"data":"k1_distance_angle ep=3 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":5103.524649876,"data":"k1_distance_angle ep=3 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":5228.690326559,"data":"k1_distance_angle ep=3 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":5354.106488655,"data":"k1_distance_angle ep=3 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":5494.668324102,"data":"k1_distance_angle ep03 dev=0.14233352 best=0.14233352@3 1012.6s\n"}
+,{"stream_name":"stdout","time":5620.634271632,"data":"k1_distance_angle ep=4 batch=500/3906\n"}
+,{"stream_name":"stdout","time":5745.272761289,"data":"k1_distance_angle ep=4 batch=1000/3906\n"}
+,{"stream_name":"stdout","time":5869.698953396,"data":"k1_distance_angle ep=4 batch=1500/3906\n"}
+,{"stream_name":"stdout","time":5994.431003024,"data":"k1_distance_angle ep=4 batch=2000/3906\n"}
+,{"stream_name":"stdout","time":6120.232623034,"data":"k1_distance_angle ep=4 batch=2500/3906\n"}
+,{"stream_name":"stdout","time":6246.440605431,"data":"k1_distance_angle ep=4 batch=3000/3906\n"}
+,{"stream_name":"stdout","time":6374.361958784,"data":"k1_distance_angle ep=4 batch=3500/3906\n"}
+,{"stream_name":"stdout","time":6519.460498001,"data":"k1_distance_angle ep04 dev=0.13551413 best=0.13551413@4 1024.3s\n"}
+,{"stream_name":"stdout","time":6521.09720082,"data":"Two-arm stage published {\"source_commit\": \"35f1d8a28458348458d71723a4e2fb8b3dfaab5d\", \"source_archive_sha256\": \"80407ac17676150764720122efab8853b1b23c356647329b808c710bbecbae77\", \"dataset_manifest_sha256\": \"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\", \"arms\": {\"gptrans_distance_only\": {\"status\": \"COST_STOPPED\", \"next_epoch\": 5, \"cumulative_device_seconds\": 3954.3246473380004}, \"k1_distance_angle\": {\"status\": \"COST_STOPPED\", \"next_epoch\": 5, \"cumulative_device_seconds\": 6268.329350376}}}\n"}
+,{"stream_name":"stderr","time":6523.369620765,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":6523.369653584,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":6523.658555278,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":6523.658581826,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6524.365589581,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":6525.765581996,"data":"[NbConvertApp] Writing 1049605 bytes to __results__.html\n"}
+]

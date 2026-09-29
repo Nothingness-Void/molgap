@@ -114,6 +114,48 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_sha256_verified"
+      ],
+      "comparison_status": "no_complete_60epoch_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_use": {
+        "internal_development_500000_550000": "selection_used",
+        "official_train_prefix_0_500000": "training_membership",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_v4_geometry_500k_partial_cost_stop",
+      "source_envelope": "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_sha256_verified"
+      ],
+      "comparison_status": "no_complete_60epoch_paired_endpoint",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+      "role_use": {
+        "internal_development_500000_550000": "selection_used",
+        "official_train_prefix_0_500000": "training_membership",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_v4_geometry_500k_partial_cost_stop",
+      "source_envelope": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_authority",
         "local_hash_verified"
       ],

@@ -1,0 +1,69 @@
+{
+  "epochs": [
+    {
+      "epoch": 0,
+      "train_mae_eV": 0.28143123346537946,
+      "development_mae_eV": 0.2002997249364853,
+      "lr": 0.0004,
+      "seconds": 1443.005407573,
+      "global_step": 3906,
+      "sample_presentations": 499968,
+      "device_seconds_cumulative": 1461.5980528159998,
+      "checkpoint_identity": "811010b43c554864c856bf18dfe217707574441902947e48ff0735c559412c5b",
+      "peak_allocated_bytes": 783821312,
+      "peak_reserved_bytes": 849346560
+    },
+    {
+      "epoch": 1,
+      "train_mae_eV": 0.2047807325277975,
+      "development_mae_eV": 0.17542585730552673,
+      "lr": 0.000399717247787514,
+      "seconds": 1460.6493757409999,
+      "global_step": 7812,
+      "sample_presentations": 999936,
+      "device_seconds_cumulative": 2922.828809365,
+      "checkpoint_identity": "56e2210eb5474b788954a9a27cbe6cea120020d910a193cd5331b0e56adc881e",
+      "peak_allocated_bytes": 783821312,
+      "peak_reserved_bytes": 861929472
+    },
+    {
+      "epoch": 2,
+      "train_mae_eV": 0.17965148135766032,
+      "development_mae_eV": 0.16522014141082764,
+      "lr": 0.00039886979264192236,
+      "seconds": 1306.281740724,
+      "global_step": 11718,
+      "sample_presentations": 1499904,
+      "device_seconds_cumulative": 4229.693129642001,
+      "checkpoint_identity": "d232e8b3d989c0c3a2a4fe114688f4d0066f20c5e2067e9e468551c746b847ee",
+      "peak_allocated_bytes": 783821312,
+      "peak_reserved_bytes": 861929472
+    },
+    {
+      "epoch": 3,
+      "train_mae_eV": 0.1647082959255391,
+      "development_mae_eV": 0.142333522439003,
+      "lr": 0.00039746003676690824,
+      "seconds": 1012.6455985920002,
+      "global_step": 15624,
+      "sample_presentations": 1999872,
+      "device_seconds_cumulative": 5242.838132340001,
+      "checkpoint_identity": "1eafe3dcaa15d57a5a50cf519faf216af785c97e681f6809ca7a172230288b8d",
+      "peak_allocated_bytes": 783821312,
+      "peak_reserved_bytes": 861929472
+    },
+    {
+      "epoch": 4,
+      "train_mae_eV": 0.15522568314382776,
+      "development_mae_eV": 0.13551412522792816,
+      "lr": 0.0003954919762686644,
+      "seconds": 1024.3037626120004,
+      "global_step": 19530,
+      "sample_presentations": 2499840,
+      "device_seconds_cumulative": 6267.621376888001,
+      "checkpoint_identity": "31fa61ef99257b47c0613910c6ab1c655da2e07c4c447bfa563e074ca9c6f85a",
+      "peak_allocated_bytes": 783821312,
+      "peak_reserved_bytes": 861929472
+    }
+  ]
+}

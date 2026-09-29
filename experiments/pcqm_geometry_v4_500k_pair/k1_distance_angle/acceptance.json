@@ -1,0 +1,107 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "training",
+      "cost_event_id": "cost-TB-geometry-v4-500k-k1_distance_angle-s42-observed-training",
+      "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.7412025973266665
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.7412025969333333
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    }
+  ],
+  "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+  "format": "molgap-geometry-v4-cost-stop-disposition-v1",
+  "outcome": {
+    "artifact_status": "partial_metadata_hash_verified_model_prediction_checkpoint_bytes_unchecked",
+    "budget_decision": "stop_for_cost_under_frozen_cap",
+    "comparison_status": "no_complete_60epoch_paired_endpoint",
+    "execution_status": "cost_stopped_after_5_of_60_epochs",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "not_qualified"
+  },
+  "physical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-gptrans-k1-s42",
+  "role_use": {
+    "internal_development_500000_550000": "selection_used",
+    "official_train_prefix_0_500000": "training_membership",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/acceptance.json",
+      "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-train",
+      "role_name": "official_train_prefix_0_500000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/acceptance.json",
+      "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-development",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+  "stage_status": "COST_STOPPED",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": [
+      "A separately authorized device-hour budget or exact-recipe cost change with a new frozen decision."
+    ]
+  },
+  "unverified_artifacts": [
+    "best_model.pt",
+    "best_predictions.pt",
+    "last_checkpoint.pt"
+  ],
+  "v4_stage_acceptance": "not_applicable_incomplete_60_epochs",
+  "validated_metadata": [
+    "source",
+    "dataset",
+    "preflight",
+    "runtime_certificate",
+    "five_epoch_trace",
+    "cost_projection",
+    "protected_role_flags",
+    "remote_metadata_sha256"
+  ]
+}

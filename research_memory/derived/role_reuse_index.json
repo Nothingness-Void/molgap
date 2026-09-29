@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 205,
+  "ambiguous_historical_role_record_count": 215,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -143,6 +143,76 @@
     },
     {
       "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_500000",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_500000",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1437,7 +1507,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 88,
+  "explicit_role_event_count": 92,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -2042,6 +2112,22 @@
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
       {
         "access_kind": "training_membership",
@@ -2063,6 +2149,22 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:official_train_prefix_0_500000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
@@ -2111,6 +2213,8 @@
       "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-reliability-screen-positive-20260928",
       "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-100k-local-joint-control-v2-20260925",
       "pcqm-gptrans-100k-local-reference-control-v2-20260925",
@@ -2160,6 +2264,8 @@
       "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-reliability-screen-positive-20260928",
       "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
+      "pcqm-geometry-v4-500k-k1_distance_angle-s42-cost-stop",
       "pcqm-gine-1m-local-specialist-v7",
       "pcqm-gptrans-100k-local-joint-control-v2-20260925",
       "pcqm-gptrans-100k-local-reference-control-v2-20260925",
@@ -2596,6 +2702,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
       }
     ]
   },
@@ -3121,6 +3243,22 @@
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_train_500k": [
       {
         "access_kind": "training_membership",
@@ -3142,6 +3280,22 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:official_train_prefix_0_500000": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-geometry-v4-500k-k1_distance_angle-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [

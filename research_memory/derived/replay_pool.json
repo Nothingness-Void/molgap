@@ -10809,6 +10809,26 @@
   "exclusions": [
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cost_stopped_after_5_of_60_epochs",
+        "no_accepted_60epoch_endpoint",
+        "no_strict_paired_comparison"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/gptrans_distance_only/attempt-001",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cost_stopped_after_5_of_60_epochs",
+        "no_accepted_60epoch_endpoint",
+        "no_strict_paired_comparison"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -10904,5 +10924,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "1cacd7c72e2b18a352fe86d361e721ca595dda9b67ed865f11d3f77a1e6a842e"
+  "source_digest": "ce88e848873a8ebb555fc4fb10840bde9480d33e77039d9a1e500895ca9511cc"
 }

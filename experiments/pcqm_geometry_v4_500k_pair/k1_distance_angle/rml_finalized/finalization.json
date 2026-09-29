@@ -1,0 +1,42 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-62ddcb5d3dfab4215fb6b9e0ad08b970560004f85bc8caed1d8655da046699b7",
+  "finalized_at": "2026-09-29T13:07:06.134062+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_geometry_v4_500k_pair/decision.md": "bc734e40b29e8a6bc5e6b081aeec35b3199a8be223ff60754fc4e1ac190b6daf",
+    "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/acceptance.json": "ef51998b68f07ea27f1debfdd7b700f4448f5bf87c522eacf94787ecfd4f64dc",
+    "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/results/canonical_trace.json": "b8acd629d75d56b0d588cdb872b9f5a678d5f7925f008b67e76db3a9789188b6",
+    "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/results/trace_recovery_spec.json": "7a3e4b0f48bdae3e7150c84a6d0bedd9d6d0e73c9c4f0c69fcd6b97eabf5ab25",
+    "experiments/pcqm_geometry_v4_500k_pair/launch/attempt_001.json": "db1b980f069efdcea028abd7ffd4d8ed2422f80109eacbdb78f12c28891d6c80",
+    "experiments/pcqm_geometry_v4_500k_pair/protocol.md": "d766d86cff5483ed7a093832bdc7dda3af4b5606bfdc6bd4308721ef5adb13be",
+    "experiments/pcqm_geometry_v4_500k_pair/training_contract.json": "756e27551a7d73009c84dded6e8ba4dff19b9537a02da61f2acb42d30f012fe7",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/k1_distance_angle/cost_stop.json": "50809c8f8720ab1d8c913fe1240f18e31f9b47567f2dcf17ec9dc676f41516c1",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/k1_distance_angle/data_manifest.json": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/k1_distance_angle/runtime_certificate.json": "b72e44676133b5a8cd7e3b1b3b0f83279738e23def3d6e939989988472c5c0bc",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/k1_distance_angle/stage_manifest.json": "600a4f1b86338864cc6fa10763e3ca7d297c5d932e14079ab0d613c6e4df5099",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/k1_distance_angle/trace.json": "47194646f74b09a97aa67d41bfb8b298926f1e59b278b68b8f826edd9ee03d4a",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/kernel_status.json": "3236b2bbd5c6cdf1825071469696fec28d681cf858401b4acb8e6da85bd69814",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/preflight/k1_distance_angle/stage_manifest.json": "c4dd509e32d4c278df07f3eec893ddc450e13eaad167730da348325bf9d3471c"
+  },
+  "outcome": "STOP_FOR_COST",
+  "published_hashes": {
+    "costs/cost-TB-geometry-v4-500k-k1_distance_angle-s42-observed-training.json": "79639ef25d351be92c430c0a50d5545a685aac90a3ceec10859e5a3336617c62",
+    "prospective_snapshot.json": "7030f0d39af9492a2f48c9508b94cf62c3cd659683872b59fd38dfa52f09c821",
+    "roles/role-TB-geometry-v4-500k-k1_distance_angle-s42-development.json": "c1de837b781ab7ce2ff36bbad4e838f8169c8bc6c25bdb602407f0b3175b0c5f",
+    "roles/role-TB-geometry-v4-500k-k1_distance_angle-s42-train.json": "9533ac7aef5119975ce8717f360f9fcc6bbd2fdc5fcad1ed9aa806187e93365b",
+    "terminal_input.json": "564199cb9768bc804b6deaae43893217bad51ba8c52ffbcd977badcb3dafcb8f",
+    "trace.json": "b8acd629d75d56b0d588cdb872b9f5a678d5f7925f008b67e76db3a9789188b6",
+    "trace_manifest.json": "e694915f852eddb6fbc20953ef93ee62f3dabd4d1b94aafa06820846aa27c202",
+    "trajectory.json": "181ca6a563ff45269f227206f408d25cf45d66d89bbc36534f26af1b67cc4686",
+    "v5_evidence.json": "6247d2a074d5d79afba1ca181982f87b02609fcb22b376b76dcffe0f22a44d90"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_geometry_v4_500k_pair/k1_distance_angle/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "62ddcb5d3dfab4215fb6b9e0ad08b970560004f85bc8caed1d8655da046699b7",
+  "trace_status": "available",
+  "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+}

@@ -1,0 +1,42 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-86170be9a73edf0948f3872ddf835ddc2f57902ec81ee5aafd17ed4712a44c30",
+  "finalized_at": "2026-09-29T13:07:06.134062+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_geometry_v4_500k_pair/decision.md": "bc734e40b29e8a6bc5e6b081aeec35b3199a8be223ff60754fc4e1ac190b6daf",
+    "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/acceptance.json": "e450d3d83b33db0566414b02fabd3d193372486c37f982d385a30a426fb0b02c",
+    "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/results/canonical_trace.json": "25ef037fc65562a8e1fc493611d0196f30cfcfffb1b57c9bb59f19888128ea84",
+    "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/results/trace_recovery_spec.json": "e9c8fea2a42be272c1cab19996b160c53031c0b7f812eae72c83826c765e58fb",
+    "experiments/pcqm_geometry_v4_500k_pair/launch/attempt_001.json": "db1b980f069efdcea028abd7ffd4d8ed2422f80109eacbdb78f12c28891d6c80",
+    "experiments/pcqm_geometry_v4_500k_pair/protocol.md": "d766d86cff5483ed7a093832bdc7dda3af4b5606bfdc6bd4308721ef5adb13be",
+    "experiments/pcqm_geometry_v4_500k_pair/training_contract.json": "756e27551a7d73009c84dded6e8ba4dff19b9537a02da61f2acb42d30f012fe7",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/cost_stop.json": "22f52919388ccb895eb560ee1a2de92a209855e2a256e20e7ce98ef3de45ff64",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/data_manifest.json": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/runtime_certificate.json": "e0e60ac28f5519918ab35f2b433caacb4a8567b21d0af62fb7e5d33550925b4e",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/stage_manifest.json": "682a79b241504fc555162f430baba141478f7a8b8d68b5e68b5f57316fd1a9cf",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/evidence/gptrans_distance_only/trace.json": "f9c7054d60d3bc690a87af2cc3630cee55a98b86dfcc4196dfbf89d65e262df2",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/kernel_status.json": "3236b2bbd5c6cdf1825071469696fec28d681cf858401b4acb8e6da85bd69814",
+    "platforms/_records/kaggle/training/pcqm_geometry_v4_500k_pair/attempt_001/diagnostic/preflight/gptrans_distance_only/stage_manifest.json": "737db7496006212743d49f079f25a3103729da5bb2520d4bf4e7475c8c18bdfe"
+  },
+  "outcome": "STOP_FOR_COST",
+  "published_hashes": {
+    "costs/cost-TB-geometry-v4-500k-gptrans_distance_only-s42-observed-training.json": "c4573f9b7662cbc6468c369bc4a10fa86ae4dfa9992524a7b3af13b94e6f0d73",
+    "prospective_snapshot.json": "48cc1ad037bfa14853de9160f340d8b7e36885a2c776adae80ede82048e35bca",
+    "roles/role-TB-geometry-v4-500k-gptrans_distance_only-s42-development.json": "7dddec94e8292d58498351c0913eee0de250413831d27aa8af0329720f3152d2",
+    "roles/role-TB-geometry-v4-500k-gptrans_distance_only-s42-train.json": "d6a1550b658a765e20f2458f26f025fbea0d92e86291b5e0249f92f12556f796",
+    "terminal_input.json": "20a7e872a58bc40c26ccf0410bc9fa0f77a26b93aebed236d58c526551f26106",
+    "trace.json": "25ef037fc65562a8e1fc493611d0196f30cfcfffb1b57c9bb59f19888128ea84",
+    "trace_manifest.json": "b9a01ee032a45d7e964e29c3d87f2277a840965ef4cde091a19a1b41e5fca6e1",
+    "trajectory.json": "0ca01631547f6f0196e534608562da3ef86267e4cd2953a1336777305f33f9cd",
+    "v5_evidence.json": "c1e5149e1c45b65ff00e32d5869dab1476e56290ca235589590f84cae7863cf9"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_geometry_v4_500k_pair/gptrans_distance_only/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "86170be9a73edf0948f3872ddf835ddc2f57902ec81ee5aafd17ed4712a44c30",
+  "trace_status": "available",
+  "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42"
+}
