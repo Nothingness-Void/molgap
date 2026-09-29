@@ -1,0 +1,16 @@
+{
+  "architecture_config_identity": "54b94e680731d1f026ee225f5eb5a3c4e9daf51e4eaaac3ba4574ef6f7972f02",
+  "candidate_id": "neural_atom_k1_motif_hierarchy",
+  "format": "molgap-frozen-source-config-v1",
+  "implementation_refs": [
+    "src/molgap/k1_motif_hierarchy.py",
+    "src/molgap/pcqm_motif_sidecar.py",
+    "src/molgap/pcqm_k1_variants_runner.py",
+    "src/molgap/k1_motif_study_runtime.py"
+  ],
+  "motif_aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+  "motif_manifest_sha256": "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b",
+  "source_commit": "bd216e612510f4427df16361cbb745ef601388be",
+  "training_contract_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json",
+  "training_contract_sha256": "c4d9cd14f1db4e83aad124d9105e04b70824ff94f4500f6df42b73f3a8498913"
+}
