@@ -69,8 +69,9 @@ modify or take custody of the desktop full run.
 The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
 full-row and cost/coverage gates. The first two separately frozen K1 motif-graph
 GPU attempts stopped at runtime device gates before model work; neither is a
-scientific negative. The next attempt is being repaired for Kaggle's T4-only
-allocation, which can expose two T4s to a single-arm worker. No scientific
+scientific negative. The T4-only version-3 attempt is bound and running on
+Kaggle2; it accepts a one- or two-T4 allocation and isolates one T4 for the
+single arm. No scientific
 result or scale-up/production promotion exists yet. The
 [GPU protocol](experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md),
 [CPU decision](experiments/pcqm_motif_hierarchy_100k/decision.md) and
