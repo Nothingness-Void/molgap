@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 228,
+  "ambiguous_historical_role_record_count": 233,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
@@ -842,6 +842,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-multiplicative-pair-value-100k-s42",
       "role_identity": null,
       "role_name": "internal_development_100000_150000",
@@ -1598,7 +1633,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 195,
+  "explicit_role_event_count": 200,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -2081,6 +2116,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
       },
       {
         "access_kind": "labels_read",
@@ -2632,6 +2695,13 @@
       },
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-multiplicative-pair-value-100k-s42-training-membership",
         "selection_used": false,
         "semantics": "explicit",
@@ -3019,6 +3089,7 @@
       "pcqm-k1-mose-hidden-bn-100k-s42",
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
+      "pcqm-k1-motif-hierarchy-100k-s42-v3",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
       "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
@@ -3067,6 +3138,7 @@
       "pcqm-k1-mose-hidden-bn-100k-s42",
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
+      "pcqm-k1-motif-hierarchy-100k-s42-v3",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
       "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
@@ -3115,6 +3187,7 @@
       "pcqm-k1-mose-hidden-bn-100k-s42",
       "pcqm-k1-mose-replacement-100k-s42",
       "pcqm-k1-mose-residual-gate-100k-s42",
+      "pcqm-k1-motif-hierarchy-100k-s42-v3",
       "pcqm-k1-multiplicative-pair-value-100k-s42",
       "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
       "pcqm-k1-pair-token-100k-s42",
@@ -3535,6 +3608,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
       },
       {
         "access_kind": "labels_read",
@@ -4405,6 +4506,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-k1-multiplicative-pair-value-100k-s42-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -4950,6 +5079,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-mose-residual-gate-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
       },
       {
         "access_kind": "training_membership",

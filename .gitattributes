@@ -42,3 +42,8 @@ experiments/pcqm_k1_linear_attention_100k/results/portability_analysis.json text
 # Preserve the byte-bound K1 chemistry-local prospective and terminal records.
 experiments/pcqm_k1_chem_local_100k/** text eol=lf
 experiments/pcqm_k1_chem_local_100k/results/raw_acceptance.json text eol=crlf
+
+# Preserve the byte-bound motif v3 terminal decision and generated RML evidence.
+experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md text eol=lf
+experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/** text eol=lf
+experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/** text eol=lf

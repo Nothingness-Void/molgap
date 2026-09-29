@@ -1,0 +1,319 @@
+{
+  "acceptance_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md": "852e618e4e93d60d8d01a32e20419309708981b8ae6d910e8700f0a60edb941c",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json": "8e248f7a26e989fd1e19157e9acbd1403ac5eff00fdd853b8b1058a76b340390",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md": "49a07135b1b73a81a028933649941a6fa4a1c549ef363d33a5082476911ab531",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/acceptance_summary.json": "0da08b97e1b61dc7c5daf96a62f75458aabc51e0c262d32a5ff0231c8fb86065",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/arm_record.json": "947c78bed61fa58d664d1b35f9ed9f6e1b8085c2aa3b4237e23594443c10cbac",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/canonical_trace.json": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json": "a0edaa95d05a580ed48e938cce712ed977daff3ec986d910f65eff3760392172",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/completion_manifest.json": "f0473f38228359154ed749bab16b9d938e86a5d6fb3a966b614d7332d5078274",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/execution_summary.json": "2223dd69ac38f1a2cd87b53501c64033408830a3524094350c0d55fb7a60677b",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/launch_identity.json": "1ec2792225992c4613214115f21b0ca0f588d0a258902703e0e5562f81495a61",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/native_cost.json": "5e665656a02e218c6202824e38a8d30fd3d1f236d7a03440aaee3bd274e57669",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/observed_role_history.json": "2fc4a5cd27e4c69c8914eb4b746e27190573e606c414c147eb1e4bf83f29b7fb",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/paired_analysis.json": "16f50bb8e60eadac38f0f0e3089ac876f45c26dc2e7da3778898f64d2a4af47f",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/runtime_probe.json": "0997b45aa2012c93e89b986f8c663b839307de2246c12c98f40328e5fcc6a0f4",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json": "745d0c96e18359647e996cdf1c6c09a6652c3a86b0d8d96ad3a7a91f399cc6ca",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json": "9bec583740dfe91f6c54836d5c9ad888e52efb383841cec78c604459c14b45e6",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/submission_receipt.json": "879c4a4e8d25e25517576b56c5140dd2e9178bb33c5246f0bd7658baabd8e522",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md": "0295ef37c2f4f55ad4b23b3572d62256ddac1e8031d0643a71dd5ff9886b2fe1",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json": "c4d9cd14f1db4e83aad124d9105e04b70824ff94f4500f6df42b73f3a8498913"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v3",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42-v3",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 1.8264696639938889
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.2347386814699997
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.6173693407349998
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "new mechanism and explicit prospective compute authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "0da08b97e1b61dc7c5daf96a62f75458aabc51e0c262d32a5ff0231c8fb86065"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/paired_analysis.json",
+        "name": "paired_analysis",
+        "sha256": "16f50bb8e60eadac38f0f0e3089ac876f45c26dc2e7da3778898f64d2a4af47f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json",
+        "name": "comparison_readiness",
+        "sha256": "a0edaa95d05a580ed48e938cce712ed977daff3ec986d910f65eff3760392172"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/canonical_trace.json",
+        "name": "canonical_trace",
+        "sha256": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/native_cost.json",
+        "name": "native_cost",
+        "sha256": "5e665656a02e218c6202824e38a8d30fd3d1f236d7a03440aaee3bd274e57669"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/observed_role_history.json",
+        "name": "observed_role_history",
+        "sha256": "2fc4a5cd27e4c69c8914eb4b746e27190573e606c414c147eb1e4bf83f29b7fb"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/arm_record.json",
+        "name": "arm_record",
+        "sha256": "947c78bed61fa58d664d1b35f9ed9f6e1b8085c2aa3b4237e23594443c10cbac"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/completion_manifest.json",
+        "name": "completion_manifest",
+        "sha256": "f0473f38228359154ed749bab16b9d938e86a5d6fb3a966b614d7332d5078274"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/execution_summary.json",
+        "name": "execution_summary",
+        "sha256": "2223dd69ac38f1a2cd87b53501c64033408830a3524094350c0d55fb7a60677b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/launch_identity.json",
+        "name": "launch_identity",
+        "sha256": "1ec2792225992c4613214115f21b0ca0f588d0a258902703e0e5562f81495a61"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/runtime_probe.json",
+        "name": "runtime_probe",
+        "sha256": "0997b45aa2012c93e89b986f8c663b839307de2246c12c98f40328e5fcc6a0f4"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/submission_receipt.json",
+        "name": "submission_receipt",
+        "sha256": "879c4a4e8d25e25517576b56c5140dd2e9178bb33c5246f0bd7658baabd8e522"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md",
+        "name": "attempt_protocol",
+        "sha256": "49a07135b1b73a81a028933649941a6fa4a1c549ef363d33a5082476911ab531"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md",
+        "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-29",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "negative_under_contract",
+      "transfer_status": "not_ready"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "official_train_prefix_0_100000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_fixed_100k_architecture_screen",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-29T12:30:09Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-training-membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+    }
+  ],
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "checkpoint_identity": "74ef7863104788d9f81326f3b12cfff16f2e641843f724b553f4fddec6fd95da",
+    "comparability_identity": {
+      "architecture_identity": "54b94e680731d1f026ee225f5eb5a3c4e9daf51e4eaaac3ba4574ef6f7972f02",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+      "terminal_endpoint_identity": "31240-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "internal_development_direct_gap_mae_eV",
+    "model_identity": "54b94e680731d1f026ee225f5eb5a3c4e9daf51e4eaaac3ba4574ef6f7972f02",
+    "presentation_semantics_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json",
+    "reference_id": "pcqm-k1-v4-100k-reference-s42",
+    "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/canonical_trace.json",
+    "trace_artifact_sha256": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3",
+    "weight_semantics": "raw_model_no_ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+}

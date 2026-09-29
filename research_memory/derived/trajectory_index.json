@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c42ac14e68c39e31945ac55fc1189693e9741dfa52aa9f8f2afc8734249367e0",
+  "source_digest": "dda8635826252fe22b79c81310fc4962bf38d1068f5a7e205365bd7cd8d45caa",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -538,17 +538,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md",
       "family_id": "k1-motif-hierarchy",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-motif-hierarchy-100k-s42-v3"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
     },

@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-62a523694d0eb228396544721a65ec6081e6955fa64cf0801376fda201ebcdca",
+  "finalized_at": "2026-09-29T12:30:09Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md": "852e618e4e93d60d8d01a32e20419309708981b8ae6d910e8700f0a60edb941c",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json": "8e248f7a26e989fd1e19157e9acbd1403ac5eff00fdd853b8b1058a76b340390",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md": "49a07135b1b73a81a028933649941a6fa4a1c549ef363d33a5082476911ab531",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/acceptance_summary.json": "0da08b97e1b61dc7c5daf96a62f75458aabc51e0c262d32a5ff0231c8fb86065",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/arm_record.json": "947c78bed61fa58d664d1b35f9ed9f6e1b8085c2aa3b4237e23594443c10cbac",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/canonical_trace.json": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json": "a0edaa95d05a580ed48e938cce712ed977daff3ec986d910f65eff3760392172",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/completion_manifest.json": "f0473f38228359154ed749bab16b9d938e86a5d6fb3a966b614d7332d5078274",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/execution_summary.json": "2223dd69ac38f1a2cd87b53501c64033408830a3524094350c0d55fb7a60677b",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/launch_identity.json": "1ec2792225992c4613214115f21b0ca0f588d0a258902703e0e5562f81495a61",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/native_cost.json": "5e665656a02e218c6202824e38a8d30fd3d1f236d7a03440aaee3bd274e57669",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/observed_role_history.json": "2fc4a5cd27e4c69c8914eb4b746e27190573e606c414c147eb1e4bf83f29b7fb",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/paired_analysis.json": "16f50bb8e60eadac38f0f0e3089ac876f45c26dc2e7da3778898f64d2a4af47f",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/runtime_probe.json": "0997b45aa2012c93e89b986f8c663b839307de2246c12c98f40328e5fcc6a0f4",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/terminal_acceptance.json": "745d0c96e18359647e996cdf1c6c09a6652c3a86b0d8d96ad3a7a91f399cc6ca",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json": "9bec583740dfe91f6c54836d5c9ad888e52efb383841cec78c604459c14b45e6",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v3/submission_receipt.json": "879c4a4e8d25e25517576b56c5140dd2e9178bb33c5246f0bd7658baabd8e522",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md": "0295ef37c2f4f55ad4b23b3572d62256ddac1e8031d0643a71dd5ff9886b2fe1",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json": "c4d9cd14f1db4e83aad124d9105e04b70824ff94f4500f6df42b73f3a8498913"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "published_hashes": {
+    "costs/cost-TC-k1-motif-hierarchy-100k-s42-v3.json": "3ce05cd37565f273a54212d438cdc0e35e1dcb0832d00e775c0272113afe5dbd",
+    "prospective_snapshot.json": "8e248f7a26e989fd1e19157e9acbd1403ac5eff00fdd853b8b1058a76b340390",
+    "roles/role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read.json": "ac391e4b2fe0c3d2275c71883686eaee3a300062daa4c00d48245f363108aa2f",
+    "roles/role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed.json": "74caab73d31927887c8a825301b808c2fb678200db8728131d859f619908a690",
+    "roles/role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input.json": "08acb750c9c539176da8a3fbeff9e246b05dd26e06d846619c9438aa7afd5ae6",
+    "roles/role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used.json": "11d4a427630099ba1e20f7976870767867a79c3ca4bd8f3f71055c24282812a7",
+    "roles/role-TC-k1-motif-hierarchy-100k-s42-v3-training-membership.json": "b978ab19f57f09982f50dbc129c2bc1f2aea547d93fae9d9ea0702c820d8ccb6",
+    "terminal_input.json": "e1b9a88e5afc095ea61ede62ad37984ded2a3ba825edc9eb816352616485fd32",
+    "trace.json": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588",
+    "trace_manifest.json": "f0a1c292acee652bd8b7c93add55b9964207e58025bf31b221e8fe5d5bcab184",
+    "trajectory.json": "e3ef1904a5336b6d30e81203b5d2f77d5ef2b1062e8547f523c553391ec44664",
+    "v5_evidence.json": "9c05a8489b0bf41f6859f3db0e4ae307f36db81f7a8025864499ddbb06f185d6"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-motif-hierarchy-100k-s42-v3.json": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/costs/cost-TC-k1-motif-hierarchy-100k-s42-v3.json",
+    "trajectory.json": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "62a523694d0eb228396544721a65ec6081e6955fa64cf0801376fda201ebcdca",
+  "trace_status": "available",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v3"
+}

@@ -1,0 +1,295 @@
+{
+  "accepted": true,
+  "candidates": {
+    "neural_atom_k1_motif_hierarchy": {
+      "comparability": {
+        "candidate_run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_motif_hierarchy",
+        "comparison_mode": "immutable-reference-no-baseline-rerun",
+        "cross_platform": false,
+        "policy": "molgap-reference-comparability-v4",
+        "reference_run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+        "resource": {
+          "device_count_per_model": 1,
+          "gradient_accumulation_steps": 1,
+          "physical_batch_per_device": 128,
+          "tail_batch_policy": "drop_last"
+        },
+        "runtime_certificates": [
+          {
+            "certificate_id": "5f3ffb7efa89a9dd769a7a5eba7acfa141367fb9a9ac1ab6fd4bf92407dc00d9",
+            "platform_id": "kaggle2"
+          },
+          {
+            "certificate_id": "f7753f44dbb31c62b1e3e88ba536934194130b5ab0170112917f726394c07b38",
+            "platform_id": "kaggle2"
+          }
+        ],
+        "scientific_contract_sha256": "64172e22eaafe61464fbefa678861e758151698e8c3b5dc291094fc365186272",
+        "shared": {
+          "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+          "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+          "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+          "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+          "precision": "fp32",
+          "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+          "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+          "sample_exposure": 3998720,
+          "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+          "seed": 42,
+          "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+          "tail_batch_policy": "drop_last",
+          "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+          "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7"
+        }
+      },
+      "gate": {
+        "gain_eV": -0.00034214556217193604,
+        "memory_gate_passed": true,
+        "memory_reserve_fraction": 0.9562759077401535,
+        "paired_row_bootstrap_upper_eV": 0.0012424598770141597,
+        "passed": false,
+        "required_gain_eV": 0.003,
+        "row_bootstrap_is_sufficient_alone": false,
+        "training_stochasticity_accounted": true
+      },
+      "paired_error_delta_bootstrap_95_eV": [
+        -0.0005569673509597779,
+        0.0012424598770141597
+      ],
+      "recomputed_development_gap_mae_eV": 0.14171577990055084,
+      "record": {
+        "architecture": {
+          "backbone": "neural_atom_k1_v4",
+          "change": "one-layer6-real-bond-motif-graph-exchange",
+          "exchange_layer": 6,
+          "expected_parameters": 3693505,
+          "geometry": false,
+          "initialization_policy": "exact-nested-k1-zero-return",
+          "motif_channels": 64,
+          "motif_sidecar_aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+          "teacher": false
+        },
+        "complete": true,
+        "contract": {
+          "accelerator": "Tesla T4",
+          "architecture_fingerprint": "54b94e680731d1f026ee225f5eb5a3c4e9daf51e4eaaac3ba4574ef6f7972f02",
+          "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+          "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "device_count": 1,
+          "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+          "gradient_accumulation_steps": 1,
+          "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+          "model_id": "neural_atom_k1_motif_hierarchy",
+          "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "result_artifact_sha256": "0314b6648123ae20fa5b15751b1a011acb8704550a55677abd6f6ace2f6b3898",
+          "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+          "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+          "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_motif_hierarchy",
+          "runtime_certificate_id": "f7753f44dbb31c62b1e3e88ba536934194130b5ab0170112917f726394c07b38",
+          "sample_exposure": 3998720,
+          "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+          "seed": 42,
+          "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+          "source_archive_sha256": "71640306217ed93065aa506c962065169c638b8668e2042c246239e4f96f9b47",
+          "tail_batch_policy": "drop_last",
+          "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+          "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7"
+        },
+        "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+        "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+        "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "format": "molgap-pcqm-k1-variant-arm-v1",
+        "geometry_attributes_removed_before_batching": true,
+        "motif_sidecar": {
+          "aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+          "format": "molgap-pcqm-fixed100k-motif-partition-sidecar-v1",
+          "source_commit": "e734870b92b9d8580c94bf4f3aa2b4d5743706d8"
+        },
+        "official_validation_role_read": false,
+        "preflight": {
+          "candidate_mechanism_trainable_after_two_steps": true,
+          "exact_k1_function_at_initialization": true,
+          "exchange_layers": [
+            3,
+            6,
+            9
+          ],
+          "initialization_policy": "nested-function",
+          "mechanism_checks": {
+            "batch_inter_motif_edges": 1198,
+            "batch_motif_count": 727,
+            "local_real_bond_edge_state_preserved": true,
+            "resume_two_step_bitwise_equal": true,
+            "source_motif_aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+            "zero_return_exact": true
+          },
+          "mode": "neural_atom_k1_motif_hierarchy",
+          "motif_sidecar": {
+            "aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+            "derived_only_from_ogb_graph_features": true,
+            "gap_labels_read": false,
+            "manifest_sha256": "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b",
+            "protected_roles_read": false
+          },
+          "parameter_count": 3693505,
+          "preflight_memory_reserve_fraction": 0.954264063004271,
+          "preflight_peak_reserved_mib": 682.0,
+          "preflight_total_memory_mib": 14911.6875,
+          "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3"
+        },
+        "pure_2d": true,
+        "runtime_certificate": {
+          "accelerator": "Tesla T4",
+          "calibration_checks_passed": true,
+          "calibration_fixture_sha256": "62a3ebcb88d43e690b2df6e89a2aa33e6800aa7bb95e46ba6020cfd1cd726398",
+          "calibration_model_id": "neural_atom_k1_motif_hierarchy",
+          "calibration_output_sha256": "ab9f1a3a103432eadfc441b086407a21043d12b84f62f825a5adef2af6b88547",
+          "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+          "deterministic_algorithms": true,
+          "format": "molgap-runtime-certificate-v1",
+          "physical_batch_per_device": 128,
+          "platform_id": "kaggle2",
+          "precision": "fp32",
+          "runtime_fingerprint": "c24f5a0fd6a944b4478f40c359381b1f4656de84a710452ca183a2d4aae20bdf",
+          "software_fingerprint": "5313abd0b164656d00341c883e1e3f48c2c58cd7c8a0d2a74eb31c7576914cae",
+          "status": "accepted",
+          "tail_batch_policy": "drop_last",
+          "tf32_enabled": false
+        },
+        "source_commit": "a741db84a616abaa24da8e581f04b7d6fb104a69",
+        "test_challenge_role_read": false,
+        "test_dev_role_read": false,
+        "training": {
+          "best_epoch": 39,
+          "best_model_sha256": "9626fc488edd623136b136916568d3bd3e9abb6adedf533f43779b05dfc209f9",
+          "checkpoint_sha256": "74ef7863104788d9f81326f3b12cfff16f2e641843f724b553f4fddec6fd95da",
+          "development_gap_mae_eV": 0.14171577990055084,
+          "epochs_completed": 40,
+          "mean_epoch_seconds": 143.39999452527496,
+          "mean_graphs_per_second": 697.1269443276034,
+          "optimizer_steps": 31240,
+          "parameter_count": 3693505,
+          "payload_sha256": "0314b6648123ae20fa5b15751b1a011acb8704550a55677abd6f6ace2f6b3898",
+          "peak_allocated_mib": 610.00244140625,
+          "peak_reserved_mib": 652.0,
+          "sample_presentations": 3998720,
+          "total_memory_mib": 14911.6875
+        }
+      }
+    }
+  },
+  "format": "molgap-pcqm-k1-v4-variants-acceptance-v1",
+  "minimum_gain_eV": 0.003,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "reference": {
+    "architecture": {
+      "backbone": "neural_atom_k1",
+      "exchange_layers": [
+        3,
+        6,
+        9
+      ],
+      "global_exchange": "one-atom-slot-64"
+    },
+    "complete": true,
+    "contract": {
+      "accelerator": "Tesla P100-PCIE-16GB",
+      "architecture_fingerprint": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+      "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+      "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "device_count": 1,
+      "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+      "frozen_reference": true,
+      "gradient_accumulation_steps": 1,
+      "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+      "minimum_material_gain_eV": 0.003,
+      "model_id": "neural_atom_k1_v4",
+      "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+      "physical_batch_per_device": 128,
+      "platform_id": "kaggle2",
+      "precision": "fp32",
+      "result_artifact_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+      "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+      "runtime_certificate_id": "5f3ffb7efa89a9dd769a7a5eba7acfa141367fb9a9ac1ab6fd4bf92407dc00d9",
+      "sample_exposure": 3998720,
+      "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+      "seed": 42,
+      "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+      "source_archive_sha256": "13faa735b91fe7cf9b74e3a141c9810577ae59e5a428494baa18a32a5ee72dd4",
+      "stochasticity_floor_eV": 0.003,
+      "tail_batch_policy": "drop_last",
+      "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+      "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7"
+    },
+    "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+    "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+    "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "format": "molgap-pcqm-k1-variant-arm-v1",
+    "geometry_attributes_removed_before_batching": true,
+    "official_validation_role_read": false,
+    "preflight": {
+      "candidate_mechanism_trainable_after_two_steps": true,
+      "exact_k1_function_at_initialization": true,
+      "exchange_layers": [
+        3,
+        6,
+        9
+      ],
+      "mode": "neural_atom_k1_v4",
+      "parameter_count": 3658817,
+      "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3"
+    },
+    "pure_2d": true,
+    "runtime_certificate": {
+      "accelerator": "Tesla P100-PCIE-16GB",
+      "calibration_checks_passed": true,
+      "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "calibration_output_sha256": "8368ec94f198009ef67eac75de35a7fa077d79b8eb7379a8e029c5c0869f91b3",
+      "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "deterministic_algorithms": true,
+      "format": "molgap-runtime-certificate-v1",
+      "physical_batch_per_device": 128,
+      "platform_id": "kaggle2",
+      "precision": "fp32",
+      "runtime_fingerprint": "c82e0232352160bf939364dc84d04050d5417bcb26e8844dce595f8b1c08e0fc",
+      "software_fingerprint": "4937ef4412677aa6e69cbef4547f1441ad7c15dc7678000bc94bad93776ccffb",
+      "status": "accepted",
+      "tail_batch_policy": "drop_last",
+      "tf32_enabled": false
+    },
+    "source_commit": "0006a689b74cf96e994892464830b79687ca60de",
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "training": {
+      "best_epoch": 39,
+      "best_model_sha256": "53f9118f34a95e02e3f0d798a56389af53ff55739753b4208c9f53c36d116d95",
+      "checkpoint_sha256": "156edf2fc3455433861fc4c31c75b3df68f779451012245040b7acc8f48c26f5",
+      "development_gap_mae_eV": 0.1413736343383789,
+      "epochs_completed": 40,
+      "mean_epoch_seconds": 123.06805255487507,
+      "mean_graphs_per_second": 812.2985447862276,
+      "optimizer_steps": 31240,
+      "parameter_count": 3658817,
+      "payload_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "peak_allocated_mib": 629.77587890625,
+      "peak_reserved_mib": 672.0,
+      "sample_presentations": 3998720,
+      "total_memory_mib": 16269.25
+    }
+  },
+  "reference_development_gap_mae_eV": 0.1413736343383789,
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+  "selected_candidate": null,
+  "source_archive_sha256": "71640306217ed93065aa506c962065169c638b8668e2042c246239e4f96f9b47",
+  "source_commit": "a741db84a616abaa24da8e581f04b7d6fb104a69",
+  "stochasticity_floor_eV": 0.003,
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false
+}

@@ -1,0 +1,121 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/acceptance_summary.json",
+      "name": "acceptance_summary",
+      "sha256": "0da08b97e1b61dc7c5daf96a62f75458aabc51e0c262d32a5ff0231c8fb86065"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/paired_analysis.json",
+      "name": "paired_analysis",
+      "sha256": "16f50bb8e60eadac38f0f0e3089ac876f45c26dc2e7da3778898f64d2a4af47f"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "a0edaa95d05a580ed48e938cce712ed977daff3ec986d910f65eff3760392172"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/canonical_trace.json",
+      "name": "canonical_trace",
+      "sha256": "2eb75ea4a562229379b34793a5d3491b6343e0841b2e17e9f458c0ea2ece3588"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/native_cost.json",
+      "name": "native_cost",
+      "sha256": "5e665656a02e218c6202824e38a8d30fd3d1f236d7a03440aaee3bd274e57669"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/observed_role_history.json",
+      "name": "observed_role_history",
+      "sha256": "2fc4a5cd27e4c69c8914eb4b746e27190573e606c414c147eb1e4bf83f29b7fb"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/arm_record.json",
+      "name": "arm_record",
+      "sha256": "947c78bed61fa58d664d1b35f9ed9f6e1b8085c2aa3b4237e23594443c10cbac"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/completion_manifest.json",
+      "name": "completion_manifest",
+      "sha256": "f0473f38228359154ed749bab16b9d938e86a5d6fb3a966b614d7332d5078274"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/execution_summary.json",
+      "name": "execution_summary",
+      "sha256": "2223dd69ac38f1a2cd87b53501c64033408830a3524094350c0d55fb7a60677b"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/launch_identity.json",
+      "name": "launch_identity",
+      "sha256": "1ec2792225992c4613214115f21b0ca0f588d0a258902703e0e5562f81495a61"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/runtime_probe.json",
+      "name": "runtime_probe",
+      "sha256": "0997b45aa2012c93e89b986f8c663b839307de2246c12c98f40328e5fcc6a0f4"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/submission_receipt.json",
+      "name": "submission_receipt",
+      "sha256": "879c4a4e8d25e25517576b56c5140dd2e9178bb33c5246f0bd7658baabd8e522"
+    },
+    {
+      "availability": "repository_retained",
+      "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/protocol.md",
+      "name": "attempt_protocol",
+      "sha256": "49a07135b1b73a81a028933649941a6fa4a1c549ef363d33a5082476911ab531"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md",
+      "experiments/pcqm_motif_hierarchy_100k/gpu_training_contract.json",
+      "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json",
+      "experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md",
+      "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/trajectory.json",
+      "experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/comparison_readiness.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-29",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "no-training/no-inference terminal saved-artifact acceptance and paired analysis"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "negative_under_contract",
+    "transfer_status": "not_ready"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_fixed_100k_architecture_screen",
+  "track": "C"
+}
