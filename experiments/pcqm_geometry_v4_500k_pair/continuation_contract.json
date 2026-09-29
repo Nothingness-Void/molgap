@@ -1,0 +1,35 @@
+{
+  "format": "molgap-geometry-v4-500k-continuation-v1",
+  "owner": "desktop",
+  "authorization": "User requested completion of both original matched-V4 geometry 500K arms on 2026-09-29",
+  "original_contract_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+  "original_decision_ref": "experiments/pcqm_geometry_v4_500k_pair/decision.md",
+  "original_attempt": "attempt-001",
+  "original_source_archive_sha256": "80407ac17676150764720122efab8853b1b23c356647329b808c710bbecbae77",
+  "original_resume_epoch": 5,
+  "checkpoint_dataset": "nothingnessvoid/molgap-geometry-v4-500k-a1-resume-s42",
+  "checkpoint_dataset_version": 1,
+  "continued_scientific_recipe": "exactly the original 60-epoch per-arm V4 contract; no change to data, model, optimizer, precision, seed, schedule, row order, or evaluation roles",
+  "changed_execution_policy": "explicitly raised cumulative per-arm T4 device-hour cost ceiling; preserve the 39600-second bounded stage and checkpoint continuation",
+  "stage_wall_cap_seconds": 39600,
+  "total_device_hour_cap": {
+    "gptrans_distance_only": 16,
+    "k1_distance_angle": 26
+  },
+  "observed_first_stage_device_hours": {
+    "gptrans_distance_only": 1.0984235131494446,
+    "k1_distance_angle": 1.7412025973266667
+  },
+  "first_stage_projected_60_epoch_device_hours": {
+    "gptrans_distance_only": 13.17994,
+    "k1_distance_angle": 20.89370
+  },
+  "roles": {
+    "train": "official-train-derived 500K",
+    "development": "official-train-derived 50K",
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "acceptance": "Both arms independently require 60 epochs, exact exposure, selected models, 50000 finite aligned development predictions, measured native cost, V5/RML acceptance, and strict matched-V4 paired comparison before a scientific decision."
+}

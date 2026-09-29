@@ -194,9 +194,11 @@ def evaluate(model, graphs, mean, std, arm="gptrans"):
 
 def run(arm, output, source_sha, stage_epochs=60, resume=None,
         resume_source_sha=None, max_stage_seconds=41_400,
-        platform_id="kaggle1", preflight_only=False):
+        platform_id="kaggle1", preflight_only=False, device_second_cap=None):
     import shutil
     import torch
+    if device_second_cap is not None and (arm not in GEOMETRY_DEVICE_SECOND_CAPS or device_second_cap <= 0):
+        raise ValueError("A positive device-second override is supported only for geometry arms")
     run_started = time.monotonic()
     output.mkdir(parents=True, exist_ok=True)
     if torch.cuda.device_count() != 1:
@@ -372,7 +374,8 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
             "official_validation_role_read": False, "test_dev_role_read": False,
             "test_challenge_role_read": False})
         print(f"{arm} ep{epoch:02d} dev={mae:.8f} best={best:.8f}@{best_epoch} {trace[-1]['seconds']:.1f}s", flush=True)
-        cap = GEOMETRY_DEVICE_SECOND_CAPS.get(arm)
+        cap = (device_second_cap if device_second_cap is not None
+               else GEOMETRY_DEVICE_SECOND_CAPS.get(arm))
         if cap is not None:
             elapsed = prior_wall_seconds + time.monotonic() - run_started
             projected = elapsed * EPOCHS / (epoch + 1)
@@ -438,13 +441,14 @@ def main():
     parser.add_argument("--stage-epochs", type=int, default=4)
     parser.add_argument("--resume-source-sha")
     parser.add_argument("--max-stage-seconds", type=int, default=41_400)
+    parser.add_argument("--device-second-cap", type=int)
     parser.add_argument("--platform-id", default="kaggle1")
     parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
     try:
         run(args.arm, args.output, args.source_sha, args.stage_epochs, args.resume,
             args.resume_source_sha, args.max_stage_seconds, args.platform_id,
-            args.preflight_only)
+            args.preflight_only, args.device_second_cap)
     except Exception as error:
         atomic_json(args.output / "failure.json", {"type": type(error).__name__, "error": str(error)})
         raise

@@ -1,0 +1,25 @@
+{
+  "format": "molgap-geometry-v4-500k-resume-config-v1",
+  "kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "title": "molgap-geometry-v4-500k-resume-s42-v1",
+  "dataset": "nothingnessvoid/molgap-geometry-v4-500k-a1-resume-s42",
+  "resume_source_sha256": "80407ac17676150764720122efab8853b1b23c356647329b808c710bbecbae77",
+  "resume_status": "COST_STOPPED",
+  "resume_next_epoch": 5,
+  "arm_device_second_caps": {
+    "gptrans_distance_only": 57600,
+    "k1_distance_angle": 93600
+  },
+  "files": {
+    "gptrans_distance_only__stage_manifest.json": "682a79b241504fc555162f430baba141478f7a8b8d68b5e68b5f57316fd1a9cf",
+    "gptrans_distance_only__last_checkpoint.pt": "9cd7e5dfe56aa5618eafa4a35f70ab89c345ddcf4591aee4fa4e90ecfcce5038",
+    "gptrans_distance_only__best_model.pt": "eb708432917b8e4bd8905f33e6c1ad70b0a6a877a2a181276fb71edbdbcea654",
+    "gptrans_distance_only__best_predictions.pt": "35e0bd8f646b777ef81ee6fa1e022f8f3a455ee7711ec642d103c5ca140fb018",
+    "gptrans_distance_only__initial_state.pt": "e6ad385325316eedd67683f34e351cae17eff79f39c4d82f575e226b84184bee",
+    "k1_distance_angle__stage_manifest.json": "600a4f1b86338864cc6fa10763e3ca7d297c5d932e14079ab0d613c6e4df5099",
+    "k1_distance_angle__last_checkpoint.pt": "b784f74463a748266dbddf429b0f95528ab267c697503a7fbcd7add07db4029e",
+    "k1_distance_angle__best_model.pt": "b6cf40d94c138728b9deac6ba0d62f28a8d998cc84a26ac90603ab324f094ed6",
+    "k1_distance_angle__best_predictions.pt": "a4605e534aa96624adc79bfcfa0435cc73a9443e3fec980a938784625d9fbfa7",
+    "k1_distance_angle__initial_state.pt": "2e26216bea74470b766b410ac42093e5ddb512a8a61e8f55e2a4799e5a113e15"
+  }
+}
