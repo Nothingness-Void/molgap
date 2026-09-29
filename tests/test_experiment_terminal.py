@@ -91,6 +91,17 @@ def test_unknown_fields_and_execution_hooks_rejected(case, nested, field, value)
         TerminalDescriptor(spec, data)
 
 
+@pytest.mark.parametrize("nested,field", [
+    *[(False, field) for field in ("schema_version", "spec_identity", "experiment_id", "logical_run_id", "arms")],
+    *[(True, field) for field in ("arm_id", "arm_identity", "trajectory_id", "run_id", "trajectory", "terminal")],
+])
+def test_required_fields_cannot_be_omitted(case, nested, field):
+    spec, data = case
+    (data["arms"][0] if nested else data).pop(field)
+    with pytest.raises(ValueError, match="missing or unknown fields"):
+        TerminalDescriptor(spec, data)
+
+
 @pytest.mark.parametrize("field", ["schema_version", "spec_identity", "experiment_id", "logical_run_id"])
 def test_wrong_spec_identity_and_protocol(case, field):
     spec, data = case
@@ -149,6 +160,14 @@ def test_swapped_arm_files_rejected(tmp_path, case):
 def test_existing_trajectory_schema_is_enforced(tmp_path, case):
     rewrite(tmp_path / case[1]["arms"][0]["trajectory"], lambda value: value.pop("hypothesis"))
     with pytest.raises(ValueError):
+        translate(tmp_path, case)
+
+
+def test_duplicate_terminal_metadata_keys_rejected(tmp_path, case):
+    path = tmp_path / case[1]["arms"][0]["terminal"]
+    text = path.read_text(encoding="utf-8")
+    path.write_text(text.replace('"run_id":', '"run_id": "wrong", "run_id":', 1), encoding="utf-8")
+    with pytest.raises(ValueError, match="Duplicate JSON field"):
         translate(tmp_path, case)
 
 
@@ -282,6 +301,6 @@ def test_existing_retained_trace_guard_still_fails_closed(tmp_path, case):
     raw.unlink()
     descriptor = TerminalDescriptor(*case)
     translate_terminal_descriptor(tmp_path, case[0], descriptor)
-    with pytest.raises(ValueError, match="FAIL CLOSED"):
+    with pytest.raises(FileNotFoundError, match="FAIL CLOSED"):
         execute_terminal_descriptor(tmp_path, case[0], descriptor)
     assert not list(tmp_path.rglob("rml_finalized"))
