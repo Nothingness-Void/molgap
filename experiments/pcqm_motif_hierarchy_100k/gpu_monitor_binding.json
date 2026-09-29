@@ -1,0 +1,30 @@
+{
+  "format": "molgap-server-multi-job-monitor-v1",
+  "owner": "server",
+  "closed": false,
+  "working_directory": "C:/Users/Adminn/Documents/molgap",
+  "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
+  "credential_file": "C:/Users/Adminn/Desktop/kaggle.json",
+  "credential_owner": "kaseichou",
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "source_commit": "bd216e612510f4427df16361cbb745ef601388be",
+  "source_archive_sha256": "0b58a5849ff22f428932420ffc1578bcdd50f5c3c611db6a1ce45621460f3783",
+  "healthy_action": "SILENT",
+  "terminal_action": "one idempotent handoff to existing A; no model/thinking override",
+  "automatic_training_retry": false,
+  "automatic_training_successor_authorized": false,
+  "jobs": [
+    {
+      "slot": "gpu_motif",
+      "kernel": "kaseichou/molgap-k1-motif-hierarchy-s42",
+      "kernel_id": 136356323,
+      "version": 1,
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v1",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_gpu_v1",
+      "candidate_root": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_gpu_v1/pcqm_k1_motif_hierarchy/neural_atom_k1_motif_hierarchy",
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/motif_hierarchy_gpu_v1/monitor/control_state.json",
+      "closed": false
+    }
+  ]
+}
