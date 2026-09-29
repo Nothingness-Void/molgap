@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 205,
+  "ambiguous_historical_role_record_count": 215,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -577,6 +577,76 @@
     },
     {
       "evidence_id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "official_train_prefix",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1437,7 +1507,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 88,
+  "explicit_role_event_count": 94,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1491,6 +1561,20 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-candidate-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-candidate-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
       {
         "access_kind": "metric_computed",
         "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
@@ -1591,10 +1675,24 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
       },
       {
         "access_kind": "selection_used",
@@ -1663,6 +1761,13 @@
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-candidate-train-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-centered-logits-train-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
@@ -1695,6 +1800,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-reference-train-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
       },
       {
         "access_kind": "training_membership",
@@ -2124,6 +2236,8 @@
       "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
       "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
@@ -2173,6 +2287,8 @@
       "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
       "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "pcqm-gptrans-local-bias-rwse16-100k-s42-v1-infra",
       "pcqm-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
@@ -2237,6 +2353,20 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-candidate-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-candidate-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
       {
         "access_kind": "metric_computed",
         "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
@@ -2337,10 +2467,24 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
       },
       {
         "access_kind": "selection_used",
@@ -2649,6 +2793,20 @@
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35:internal_development": [
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-candidate-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-candidate-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-centered-logits-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
@@ -2747,10 +2905,24 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-reference-dev-metric-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-reference-dev-metric-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-reference-k1pair-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-reference-dev-select-input-init-k1pair-s42-r3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
       },
       {
         "access_kind": "selection_used",
@@ -2819,6 +2991,13 @@
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
       {
         "access_kind": "training_membership",
+        "role_event_id": "role-candidate-train-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+      },
+      {
+        "access_kind": "training_membership",
         "role_event_id": "role-centered-logits-train-k1pair-100k-s42",
         "selection_used": false,
         "semantics": "explicit",
@@ -2851,6 +3030,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-memory-replay-memory-value-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-reference-train-input-init-k1pair-s42-r3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
       },
       {
         "access_kind": "training_membership",

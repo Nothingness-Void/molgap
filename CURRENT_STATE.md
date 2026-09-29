@@ -121,6 +121,12 @@ separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
   scale or successor is released. Authorities:
   `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md` and
   `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/posthoc_attribution.md`.
+- The same-job Kaggle1 GPTrans-T input-initialization screen closed
+  `NEGATIVE_UNDER_CONTRACT`: the 15-table initialization change worsened the
+  100K/50K development MAE by 1.269 meV and did not show a practical runtime
+  benefit. No scale successor is released. The accepted decision and attribution
+  are in `experiments/pcqm_gptrans_input_init_100k/`; complete implementation
+  history is preserved on `archive` at `fc9d0d14`.
 - The local GPTrans-T 100K frozen-initialization diagnostic and raw/EMA probe
   are terminal and accepted as mechanism evidence, not a model promotion.
   The 100K gain survives prediction on the previously used 500K development

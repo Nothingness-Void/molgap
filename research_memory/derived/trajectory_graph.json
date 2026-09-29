@@ -146,6 +146,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/reference/observed_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/reference/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-local-selection-probe-20260925:A001",
       "target": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
       "type": "action_produced_evidence"
@@ -428,6 +448,46 @@
     {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "type": "parent_trajectory"
     },
     {
@@ -772,6 +832,46 @@
     },
     {
       "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
       "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "prior_evidence"
     },
@@ -798,6 +898,46 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "type": "prior_evidence"
     },
     {
@@ -998,6 +1138,46 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "type": "reference_used"
     },
     {
@@ -1206,6 +1386,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-local-bias-rwse16-100k-s42-a2",
       "type": "evidence"
     },
@@ -1391,6 +1579,38 @@
     },
     {
       "id": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-candidate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-reference-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "type": "trajectory"
     },
     {

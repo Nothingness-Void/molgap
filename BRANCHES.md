@@ -134,6 +134,11 @@ contained reusable reference infrastructure but no terminal experiment
 disposition; merge `becbcf8` preserves that history in `archive` without
 activating its tree. Both temporary branch refs were then retired.
 
+The terminal GPTrans-T input-initialization 100K history is preserved by
+archive ancestry merge `fc9d0d14`. Its accepted negative decision, canonical
+RML records, and artifact provenance are indexed on `molgap-desktop` without
+merging the rejected model or launcher implementation.
+
 ## V5 workflow boundary
 
 The V5 contract is the stable operating topology for this checkout. The

@@ -1,0 +1,82 @@
+{
+  "completion_ref": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/completion_manifest.json",
+  "completion_sha256": "4c7ac2bfa2e1d0e6eb46d0a981498ca6947e7c76195890be19390c33791a2158",
+  "cost_scope": "sum of 60 observed per-epoch single-T4 training/development wall intervals; excludes setup and queue",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "category": "training",
+      "cost_event_id": "cost-TB-gptrans-input-init-k1pair-candidate-100k-s42-r3-measured-epoch-intervals",
+      "evidence_ref": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.847388726022222
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.847388726022222
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+    }
+  ],
+  "format": "molgap-kaggle1-paired-observed-source-v1",
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "role_event_id": "role-candidate-train-input-init-k1pair-s42-r3",
+      "role_name": "official_train_prefix",
+      "row_manifest_hash": "fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d",
+      "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "role_event_id": "role-candidate-dev-metric-input-init-k1pair-s42-r3",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "role_event_id": "role-candidate-dev-select-input-init-k1pair-s42-r3",
+      "role_name": "internal_development",
+      "row_manifest_hash": "a0ac0b49bea95a9ab75ede8f35fd8c1220cbfb9a0062682e07d5dda46cd50b35",
+      "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+  "training_trace_ref": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/trace.json",
+  "training_trace_sha256": "b0938cd23360dba8911178343284b6ad7ae304a9953bd60e942c498f3e2d0c97"
+}
