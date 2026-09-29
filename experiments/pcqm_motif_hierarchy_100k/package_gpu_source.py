@@ -51,7 +51,7 @@ def main():
         "reference_bundle_sha256": file_digest(reference_path),
         "motif_sidecar_aggregate_sha256": frozen["motif_aggregate_sha256"],
     }
-    common.EXPERIMENT = REL
+    common.EXPERIMENT = f"{REL}/attempt_v2"
     previous = sys.argv
     try:
         sys.argv = [previous[0], "--output", str(args.output), "--dataset-id", DATASET_ID]
