@@ -1,6 +1,6 @@
 # GPTrans V5 audit-reference execution status
 
-Observed 2026-09-29 18:34 UTC. The user authorized exactly one matched 100K
+Observed 2026-09-29 19:06 UTC. The user authorized exactly one matched 100K
 baseline, not a candidate or full-scale run. Source archive
 `af94a63c3c4626ceec8af4106aad0ea97d398e40aefb04c51b15356b994137a3`
 was built from scientific-source commit
@@ -43,13 +43,23 @@ development MAE is 0.3450094 eV at epoch 19; this is not a final reference.
 The compact [acceptance](results/segment_02_acceptance.json) and
 [operation receipt](results/segment_02_operation.json) bind this observation.
 
+The same kernel's version 3 completed epochs 20–29 and passed streaming
+artifact/trace acceptance at cumulative epoch 30. Its accepted checkpoint is
+`5e2cf00c...24f518ab`; source archive, fixed manifest and runtime certificate
+remain identical. The third segment used 0.8680383 allocated T4-device-hours
+(T4x2, one used), bringing accepted segment cost to 2.4622387 allocated
+device-hours, below the 20-hour snapshot ceiling. Its best-so-far EMA
+development MAE is 0.2494885 eV at epoch 29, not a final reference. The
+compact [acceptance](results/segment_03_acceptance.json) and
+[operation receipt](results/segment_03_operation.json) bind this observation.
+
 The private progress dataset `kaseichou/molgap-gptrans-v5-audit-progress-v1`
-version 2 is ready. All five resume payload files were downloaded and SHA-verified
-against its sixth file, the partial manifest. The same kernel's version 3 was
-submitted with `EXPECTED_PREVIOUS_EPOCHS=20` and `NvidiaTeslaT4`; remote source
+version 3 is ready. All five resume payload files were downloaded and SHA-verified
+against its sixth file, the partial manifest. The same kernel's version 4 was
+submitted with `EXPECTED_PREVIOUS_EPOCHS=30` and `NvidiaTeslaT4`; remote source
 SHA matches the staged script, metadata binds the four exact datasets and T4,
 and the scheduler reported `RUNNING` at the observation. Its next gate is
-preflight and accepted epochs 20–29, not a new scientific arm. Neither G1 nor
+preflight and accepted epochs 30–39, not a new scientific arm. Neither G1 nor
 G2 is released by queue state.
 
 The local thread heartbeat `gptrans-100k` checks this exact chain every 30

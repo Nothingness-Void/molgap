@@ -307,10 +307,10 @@ excluded). This is mechanism evidence, not an MAE effect. Authority:
 `experiments/pcqm_gptrans_author_alignment/STATUS.md`.
 
 The user authorized one separate matched GPTrans-T 100K reference rerun to
-obtain the missing V5 live-development trace. Its Kaggle2 T4 first two
-10-epoch segments passed streaming artifact/trace acceptance; version 3 of
+obtain the missing V5 live-development trace. Its Kaggle2 T4 first three
+10-epoch segments passed streaming artifact/trace acceptance; version 4 of
 the exact kernel `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1` was
-submitted to resume from the SHA-verified checkpoint at epoch 20. A wrong-slug
+submitted to resume from the SHA-verified checkpoint at epoch 30. A wrong-slug
 first package attempt failed before training and is infrastructure-only. The
 60-epoch reference and final MAE are not yet accepted. No G1/G2 candidate or
 500K successor is released. Authority:
