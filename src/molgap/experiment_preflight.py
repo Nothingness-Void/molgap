@@ -1,4 +1,4 @@
-"""Source-bound, CPU loader-only diagnostics; not scientific admission.
+"""Source-bound CPU loader/model diagnostics; not scientific admission.
 
 This file also serves as the isolated stdlib bootstrap. Family imports happen
 only in a fresh -I -S interpreter after installing the unpacked-source guard.
@@ -26,6 +26,23 @@ __all__ = ["run_experiment_preflight", "validate_real_shard_manifest"]
 
 MANIFEST_FORMAT = "molgap-real-shard-preflight-manifest-v1"
 REPORT_FORMAT = "molgap-experiment-preflight-v1"
+SMOKE_MODE = "model_smoke_v1"
+SMOKE_FORMAT = "molgap-experiment-model-smoke-v1"
+# Reviewed ae7674d source semantics, not caller-provided claims of real code.
+SMOKE_SOURCE = {
+    "pcqm_gptrans_v4": "7ec7c44dd766296d7aa683c35e9adab4f6d245d91e2506d674d17d3c5ad73d9c",
+    "gptrans_adapter": "8a4c77ac91750b2c3f09fcdb876e9f20c82b87c06614253a6ab98ae4ad28e21a",
+    "gptrans": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "gptrans_variants": "a84355f2ab4eaa9cc4c3269d4ba0646c81d03b09a600b1f5e64864951de6a35a",
+    "v4_runtime": "0a973278b8c3b41ff9f36ed4b7a3f4fc7a068c76dc1c24f57d4bd01843bb7b51",
+    "experiment_spec": "7fd97ba800c7241dec6737363ffa3d2eedbe8c014636ddd7a9c14c99abcb4c49",
+    "training_reproducibility": "6608ee1a52e432c2f2a7f68e483f5cb5ec162f95d1d09d9d7b35d3ea7e3f48ba",
+}
+SMOKE_LIMITATIONS = [
+    "CPU FP32 single-train-batch diagnostic; no runtime qualification or scientific admission.",
+    "Seeded fresh initialization, not verified frozen initial-state artifact parity.",
+    "Checkpoint unsupported: frozen helper emits certificate-bound scientific fields; no certificate supplied.",
+]
 CHECKS = (
     "package_verified", "shard_verified", "loader_batch_built", "forward_checked",
     "backward_checked", "optimizer_step_checked", "checkpoint_roundtrip_checked",
@@ -262,16 +279,110 @@ def _origins(root):
     return observed
 
 
+def _smoke_source(root):
+    for name, expected in SMOKE_SOURCE.items():
+        raw = _regular(root / f"src/molgap/{name}.py").read_bytes()
+        if _sha(raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")) != expected:
+            raise ValueError(f"Unsupported model-smoke source contract: {name}")
+
+
+def _checkpoint_support(runtime):
+    # _save_checkpoint requires a runtime certificate and labels scientific
+    # fields. A CPU diagnostic must not fabricate those fields or a resume claim.
+    return {"status": "CHECKPOINT_UNSUPPORTED", "checked": False,
+            "helper_available": callable(getattr(runtime, "_save_checkpoint", None)),
+            "reason": "No certified checkpoint contract for CPU model_smoke_v1"}
+
+
+def _model_smoke(runtime, request, batch, stats, result):
+    import torch
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap.gptrans_adapter import build_gptrans_model, gptrans_metadata
+
+    spec = ExperimentSpec.from_json(request["spec_json"])
+    if spec.identity != request["spec_identity"]:
+        raise ValueError("Worker spec identity mismatch")
+    metadata = gptrans_metadata(spec, request["entry"]["arm_id"])
+    torch.manual_seed(runtime.SEED)
+    model = build_gptrans_model(spec, metadata.arm_id).to(device="cpu", dtype=torch.float32)
+    result["import_origins"] = _origins(Path(request["source_root"]))
+    model.train()
+    optimizer = runtime.make_adamw_compat(
+        model.parameters(), lr=runtime.LEARNING_RATE, weight_decay=runtime.WEIGHT_DECAY,
+        fused=False, foreach=False)
+    scheduler = runtime.FrozenEpochScheduler(optimizer)
+    scheduler.step(0)
+    ema = runtime.ExponentialMovingAverage(model)
+    mean, std = stats
+    if not math.isfinite(mean) or not math.isfinite(std) or std <= 0:
+        raise ValueError("Invalid real training target statistics")
+    optimizer.zero_grad(set_to_none=True)
+    prediction = runtime._forward(model, batch)
+    target = (batch.y.view(-1).float() - mean) / std
+    if (tuple(prediction.shape) != (int(batch.num_graphs),)
+            or prediction.shape != target.shape
+            or not bool(torch.isfinite(prediction).all())
+            or not bool(torch.isfinite(target).all())):
+        raise ValueError("Invalid model prediction/target shape or finiteness")
+    loss = torch.nn.functional.l1_loss(prediction, target)
+    if not bool(torch.isfinite(loss)):
+        raise ValueError("Nonfinite normalized-gap-L1 loss")
+    result["observations"].update(
+        variant=metadata.variant, loss=float(loss.detach()), loss_name="normalized-gap-l1",
+        prediction_shape=list(prediction.shape), target_shape=list(target.shape),
+        target_mean=mean, target_std=std)
+    result["forward_checked"] = True
+    loss.backward()
+    gradients = [p.grad for p in model.parameters() if p.grad is not None]
+    if not gradients or not all(bool(torch.isfinite(g).all()) for g in gradients):
+        raise ValueError("Missing or nonfinite gradients")
+    norm = torch.nn.utils.clip_grad_norm_(model.parameters(), runtime.GRADIENT_CLIP)
+    if not bool(torch.isfinite(norm)):
+        raise ValueError("Nonfinite gradient norm")
+    result["observations"].update(gradient_norm=float(norm), gradient_tensors=len(gradients))
+    result["backward_checked"] = True
+    before = runtime.model_state_sha256(model)
+    optimizer.step()
+    ema.update(model)
+    runtime.assert_finite_state_dict(model.state_dict(), label="smoke model")
+    runtime.assert_finite_state_dict(ema.state_dict(), label="smoke EMA")
+    states = list(optimizer.state.values())
+    if not states:
+        raise ValueError("Optimizer has no observed state")
+    for state in states:
+        if any(not bool(torch.isfinite(v).all()) for v in state.values() if torch.is_tensor(v)):
+            raise ValueError("Nonfinite optimizer state")
+        if float(state["step"]) != 1:
+            raise ValueError("Unexpected optimizer step cursor")
+    after = runtime.model_state_sha256(model)
+    if before == after:
+        raise ValueError("Optimizer did not change model state")
+    result["observations"].update(model_before_sha256=before, model_after_sha256=after,
+                                  optimizer_steps=1, optimizer_state_entries=len(states))
+    result["optimizer_step_checked"] = True
+    result["checkpoint"] = _checkpoint_support(runtime)
+    result["status"] = "MODEL_SMOKE_CHECKPOINT_UNSUPPORTED"
+
+
 def _worker(request):
     root = Path(request["source_root"])
     if any(name == "molgap" or name.startswith("molgap.") for name in sys.modules):
         raise ImportError("Bootstrap already imported host molgap")
+    mode = request.get("mode", "loader_only")
+    if type(mode) is not str or mode not in {"loader_only", SMOKE_MODE}:
+        raise ValueError("Unknown preflight mode")
     sys.path[:] = [str(root / "src"), *request["dependency_paths"], *sys.path]
     sys.meta_path.insert(0, _PackageOnly(root))
     result = {"status": "LOADER_FAILED", "shard_verified": False,
               "loader_batch_built": False, "import_origins": {}, "batches": {},
               "device": None, "error": None}
+    smoke = mode == SMOKE_MODE
+    if smoke:
+        result.update({key: False for key in CHECKS[3:]})
+        result.update(observations={}, checkpoint={"status": "NOT_RUN", "checked": False})
     try:
+        if smoke:
+            _smoke_source(root)
         runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
         result["import_origins"] = _origins(root)
         if (not all(callable(getattr(runtime, name, None)) for name in (
@@ -314,20 +425,32 @@ def _worker(request):
             result["batches"][role] = {"graphs": int(batch.num_graphs), "rows": len(graphs),
                                        "device": str(batch.x.device)}
             result["device"] = str(batch.x.device)
+            if smoke and role == "train":
+                train_batch, target_stats = batch, runtime._target_stats(shards)
             del batch, loader, graphs, shards
         result["import_origins"] = _origins(root)
         result.update(status="LOADER_VERIFIED_ONLY", loader_batch_built=True)
+        if smoke:
+            result["status"] = "MODEL_SMOKE_FAILED"
+            _model_smoke(runtime, request, train_batch, target_stats, result)
+            result["import_origins"] = _origins(root)
     except Exception as exc:
+        if smoke:
+            result["status"] = "MODEL_SMOKE_FAILED"
         result["error"] = {"type": type(exc).__name__, "message": str(exc)}
     return result
 
 
-def _launch(source_root, data_root, entry, timeout_seconds, workspace):
+def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode="loader_only", spec=None):
+    if type(mode) is not str or mode not in {"loader_only", SMOKE_MODE}:
+        raise ValueError("Unknown preflight mode")
     # Copy only this infrastructure bootstrap, never host family source.
     bootstrap = workspace / "bootstrap.py"
     shutil.copyfile(Path(__file__), bootstrap)
     request = {"source_root": str(source_root), "data_root": str(data_root), "entry": entry,
                "dependency_paths": sorted({sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})}
+    if mode == SMOKE_MODE:
+        request.update(mode=mode, spec_json=spec.to_json(), spec_identity=spec.identity)
     request_path = workspace / "request.json"
     response_path = workspace / "response.json"
     _atomic(request_path, request)
@@ -342,19 +465,38 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace):
     if child.returncode != 0:
         raise RuntimeError(f"Isolated loader exited {child.returncode}")
     result = _load(_regular(response_path).read_bytes())
-    _fields(result, "status shard_verified loader_batch_built import_origins batches device error")
-    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT"}:
+    smoke = mode == SMOKE_MODE
+    extra = " forward_checked backward_checked optimizer_step_checked checkpoint_roundtrip_checked observations checkpoint" if smoke else ""
+    _fields(result, "status shard_verified loader_batch_built import_origins batches device error" + extra)
+    allowed = {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT"}
+    if smoke:
+        allowed = {"MODEL_SMOKE_FAILED", "MODEL_SMOKE_CHECKPOINT_UNSUPPORTED", "UNSUPPORTED_FAMILY_PREFLIGHT"}
+    if result["status"] not in allowed:
         raise ValueError("Invalid worker status")
     if any(type(result[key]) is not bool for key in ("shard_verified", "loader_batch_built")):
         raise ValueError("Invalid worker observations")
-    if result["status"] == "LOADER_VERIFIED_ONLY":
-        if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
+    if result["status"] == "LOADER_VERIFIED_ONLY" and not result["loader_batch_built"]:
+        raise ValueError("Incomplete loader observations")
+    if smoke:
+        flags = [result[key] for key in CHECKS[1:]]
+        if any(type(flag) is not bool for flag in flags) or any(
+                flags[i] and not all(flags[:i]) for i in range(len(flags))):
+            raise ValueError("Invalid smoke observation ordering")
+        if result["checkpoint_roundtrip_checked"]:
+            raise ValueError("Unsupported checkpoint claim")
+        if result["status"] == "MODEL_SMOKE_CHECKPOINT_UNSUPPORTED" and (
+                not all(flags[:-1]) or result["error"] is not None
+                or result["checkpoint"]["status"] != "CHECKPOINT_UNSUPPORTED"
+                or result["checkpoint"]["checked"] is not False):
+            raise ValueError("Incomplete smoke observations")
+    if result["loader_batch_built"]:
+        if (not result["shard_verified"] or (not smoke and result["error"] is not None)
                 or set(result["batches"]) != {"train", "development"}
                 or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
                 or result["device"] != "cpu"):
             raise ValueError("Incomplete worker observations")
-    elif result["loader_batch_built"]:
-        raise ValueError("Failed worker claimed completed loader observation")
+        if not smoke and result["status"] != "LOADER_VERIFIED_ONLY":
+            raise ValueError("Failed worker claimed completed loader observation")
     for name in result["import_origins"].values():
         _regular(_under(source_root, name))
     return result
@@ -373,16 +515,19 @@ def _blank(spec, arm, package_identity, manifest_digest):
 
 def run_experiment_preflight(spec, package_dir, output_root, *, expected_package_identity,
                              shard_manifest=None, shard_root=None,
-                             expected_shard_manifest_sha256=None, timeout_seconds=300.0):
+                             expected_shard_manifest_sha256=None, timeout_seconds=300.0,
+                             mode="loader_only"):
     """Publish independent arm reports and a summary in a *new* output directory.
 
-    No model is constructed or executed. LOADER_VERIFIED_ONLY is deliberately
-    not PASS: forward/backward/optimizer/checkpoint evidence remains missing.
+    Default loader_only never constructs a model. Explicit model_smoke_v1
+    performs one CPU train-batch step, without checkpoint certification.
     Invalid output/spec/API arguments raise; artifact failures are structured.
     """
     from .experiment_package import SIDECARS, verify_experiment_source_package
     from .experiment_spec import ExperimentSpec
 
+    if type(mode) is not str or mode not in {"loader_only", SMOKE_MODE}:
+        raise ValueError("Unknown preflight mode")
     if type(spec) is not ExperimentSpec:
         raise TypeError("Expected exactly ExperimentSpec")
     rebuilt = ExperimentSpec.from_json(spec.to_json())
@@ -410,6 +555,12 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
         raise ValueError("Case-colliding arm IDs")
     output.mkdir(exist_ok=False)
     reports = [_blank(spec, arm, None, None) for arm in arms]
+    limitations = list(LIMITATIONS)
+    if mode == SMOKE_MODE:
+        limitations = SMOKE_LIMITATIONS + LIMITATIONS[1:2] + LIMITATIONS[3:]
+        for report in reports:
+            report.update(format=SMOKE_FORMAT, mode=mode, limitations=list(limitations),
+                          observations={}, checkpoint={"status": "NOT_RUN", "checked": False})
     package_error = None
     manifest_error = None
     manifest = None
@@ -456,13 +607,17 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 source_root.mkdir()
                 data_root.mkdir()
                 try:
+                    entry = entries[arm["arm_id"]]
+                    _stage_files(entry, Path(shard_root).absolute(), data_root)
                     _unpack(snapshot, source_root)
                     if not (source_root / "src/molgap/pcqm_gptrans_v4.py").is_file():
                         report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
                     else:
-                        entry = entries[arm["arm_id"]]
-                        _stage_files(entry, Path(shard_root).absolute(), data_root)
-                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage))
+                        if mode == SMOKE_MODE:
+                            report.update(_launch(source_root, data_root, entry, timeout_seconds,
+                                                  stage, mode=mode, spec=spec))
+                        else:
+                            report.update(_launch(source_root, data_root, entry, timeout_seconds, stage))
                 except FileNotFoundError as exc:
                     report.update(status="MISSING_REAL_SHARD", error={"type": type(exc).__name__, "message": str(exc)})
                 except Exception as exc:
@@ -473,13 +628,13 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
             _atomic(directory / "preflight.json", report)
     statuses = {r["status"] for r in reports}
     status = next(iter(statuses)) if len(statuses) == 1 else "MIXED_NONPASS"
-    summary = {"format": REPORT_FORMAT, "spec_identity": spec.identity,
+    summary = {"format": SMOKE_FORMAT if mode == SMOKE_MODE else REPORT_FORMAT, "spec_identity": spec.identity,
                "expected_package_identity": expected_package_identity,
                "expected_shard_manifest_sha256": expected_shard_manifest_sha256,
                "package_identity": reports[0]["package_identity"],
                "shard_manifest_sha256": reports[0]["shard_manifest_sha256"],
                "status": status, "requested_device": "cpu", "arms": reports,
-               "limitations": list(LIMITATIONS),
+               "limitations": limitations,
                "missing_evidence": sorted({item for r in reports for item in r["missing_evidence"]})}
     _atomic(output / "preflight.json", summary)
     return summary

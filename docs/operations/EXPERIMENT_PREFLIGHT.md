@@ -1,9 +1,9 @@
 # Experiment Source / Real-Shard Preflight V1
 
-`molgap.experiment_preflight` is a CPU loader-only boundary. It is not a model
-preflight, training launcher, platform submitter, acceptance transaction, or
-source of scientific authority. No status is named PASS. No model is built;
-forward, backward, optimizer step and checkpoint round-trip remain unobserved.
+`molgap.experiment_preflight` defaults to a CPU loader-only boundary. An explicit
+versioned model-smoke mode adds one CPU train-batch diagnostic. Neither mode is
+a training launcher, platform submitter, acceptance transaction, or source of
+scientific authority. No status is named PASS.
 
 ## API
 
@@ -15,6 +15,7 @@ run_experiment_preflight(
     shard_root=real_dataset_root,
     expected_shard_manifest_sha256=trusted_manifest_digest,
     timeout_seconds=300.0,
+    mode="loader_only",  # optional; model_smoke_v1 explicitly opts into compute
 )
 ```
 
@@ -70,6 +71,55 @@ nested DataLoader processes and is explicitly not production runtime parity.
 K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
 loader integration for that family. It never borrows code from another checkout.
 Missing package GPTrans loader source is likewise unsupported.
+For a declared GPTrans arm, real-shard presence and staging are checked before
+unpacking or inspecting the package loader. Therefore an absent shard root or
+listed shard is `MISSING_REAL_SHARD`, even when the package also lacks GPTrans
+source; a K1 arm remains `UNSUPPORTED_FAMILY_PREFLIGHT`.
+
+## Model Smoke V1
+
+Only `mode="model_smoke_v1"` enables model computation. Unknown modes, non-string
+modes and callback/provider keyword arguments are rejected before output creation.
+The default API and V1 loader report remain unchanged. Smoke reports use
+`molgap-experiment-model-smoke-v1`, the same independent observed boolean fields,
+and additional `observations` and `checkpoint` objects. Package, manifest, shard,
+spec and arm bindings still use the existing verification and private staging.
+
+Before importing the runtime, smoke checks normalized source hashes for seven
+reviewed numerical/adapter modules at ae7674d. Missing or changed code is non-pass,
+not a fallback to the host. This deliberately rejects synthetic/stub model and
+loader implementations, even inside an otherwise internally valid source package.
+Updating those implementations requires reviewing/versioning this smoke contract.
+These pins supplement trusted package identity; they are not a security sandbox
+or a complete dependency/software certificate.
+
+Both real role batches must be built before model work. Only the train batch is
+used for forward/backward/step; development supplies loader evidence only. Full
+100K training targets supply `_target_stats`; no protected role is read. The
+package's `ExperimentSpec`, `gptrans_metadata` and `build_gptrans_model` select
+reference, pair_prenorm or centered_logits, without host family imports.
+Initialization is seeded fresh CPU FP32 initialization, not verification of a
+declared frozen initial-state artifact. No CUDA path is enabled.
+
+The bounded step reuses `_forward`, `make_adamw_compat`, `FrozenEpochScheduler`,
+`ExponentialMovingAverage`, `model_state_sha256` and `assert_finite_state_dict`.
+It follows `_optimizer_step`'s normalized-gap-L1, clipping and EMA order, splitting
+the operations solely to record independent observations. It checks prediction
+and normalized target shapes/finiteness, finite loss and gradients, finite
+clipped norm, changed model state, finite model/EMA/optimizer tensors, and actual
+AdamW step cursors equal to one. Loss, shapes, statistics, gradient norm/count,
+state hashes and observed step count are recorded. It does not run a trainer.
+
+Checkpoint is deliberately `CHECKPOINT_UNSUPPORTED` with `checked=false` and
+`checkpoint_roundtrip_checked=false`. `_make_training_state` forces CUDA;
+`_save_checkpoint` emits certificate-bound scientific fields. No runtime
+certificate is supplied at this boundary, so it does not invoke that helper with
+fabricated identity, write a substitute trainer checkpoint, or claim restoration
+of model/optimizer/scheduler/EMA/RNG. Missing helper availability is recorded.
+The highest attainable status in this version is
+`MODEL_SMOKE_CHECKPOINT_UNSUPPORTED`, not `MODEL_SMOKE_VERIFIED`. A completed
+forward/backward/step is retained as observed, but checkpoint evidence remains
+missing. Errors use `MODEL_SMOKE_FAILED`; one arm never cancels its sibling.
 
 ## Isolation And Reports
 
@@ -86,8 +136,10 @@ that arm's unpacked root. The host provides the stdlib bootstrap, not family cod
 
 Arms run sequentially in separate processes with independent timeouts and
 temporary trees. Failure in one arm does not cancel another. Package or global
-authorization-envelope corruption blocks all arms. An arm's file corruption
-blocks that arm. Temporary copies are removed after completion.
+authorization-envelope corruption blocks all arms. For a declared GPTrans arm,
+missing real-shard files are classified before package loader inspection; an
+arm's file corruption blocks that arm. Temporary copies are removed after
+completion.
 
 Each `<output>/<arm_id>/preflight.json` and the final `<output>/preflight.json`
 are canonical JSON, written by same-directory temporary file, fsync and atomic
@@ -127,12 +179,25 @@ the first arm's real loader result. It does not construct a model.
 Suggested Luna commands, from this worktree, with the project virtualenv:
 
 ```powershell
-$env:PYTHONPATH = 'D:\w\pf2\src'
-& 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
+Set-Location 'D:\w\ms1'
+$env:PYTHONPATH = 'D:\w\ms1\src'
+& 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm and not real_model_smoke' -q
 & 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
+& 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_model_smoke -q
 ```
 
 Ensure that the test environment resolves `molgap` from this worktree's `src`,
 not the main checkout's editable installation. The real test additionally needs
 the explicit environment configuration described above. Neither command was
 executed by the implementer.
+
+The model test separately skips unless `MOLGAP_MODEL_SMOKE_REAL_INPUTS` points to
+an explicitly authorized configuration with the same six fields described above.
+It needs a package containing the reviewed adapter/runtime sources and their
+dependencies. It performs real CPU model computation only when explicitly enabled;
+allow substantial RAM/time for physical batch 128 and the unchanged 12-layer
+model. It expects successful step observations plus unsupported checkpoint for
+one arm and a missing-shard failure for the other. Use separately authorized
+configs to cover each of the three adapter variants. No fake Torch graph is
+used to assert numerical success. All commands above are a handoff, not an
+implementation-time verification claim.

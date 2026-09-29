@@ -109,22 +109,24 @@ def test_noncanonical_rejected(payload, tmp_path, raw):
         pf.validate_real_shard_manifest(ExperimentSpec(payload), path, pf._sha(raw))
 
 
-def test_manifest_tamper(package, payload, manifest, tmp_path):
+@pytest.mark.parametrize("mode", ["loader_only", pf.SMOKE_MODE])
+def test_manifest_tamper(package, payload, manifest, tmp_path, mode):
     value, path = manifest
     digest = pf._file_sha(path)
     path.write_bytes(path.read_bytes() + b" ")
     result = run(package, payload, tmp_path, shard_manifest=path,
-                 expected_shard_manifest_sha256=digest)
+                 expected_shard_manifest_sha256=digest, mode=mode)
     assert result["status"] == "SHARD_MANIFEST_INVALID"
     assert not any(a["shard_verified"] for a in result["arms"])
 
 
 @pytest.mark.parametrize("name", ["source.tar.gz", "experiment_spec.json", "SOURCE_FILES.json",
                                   "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt"])
-def test_package_tamper(package, payload, tmp_path, name):
+@pytest.mark.parametrize("mode", ["loader_only", pf.SMOKE_MODE])
+def test_package_tamper(package, payload, tmp_path, name, mode):
     target = package / name
     target.write_bytes(target.read_bytes() + b"tamper")
-    result = run(package, payload, tmp_path)
+    result = run(package, payload, tmp_path, mode=mode)
     assert result["status"] == "PACKAGE_INVALID"
     assert all(not a["package_verified"] for a in result["arms"])
 
@@ -233,11 +235,12 @@ def test_worker_missing_frozen_loader_is_unsupported(tmp_path, manifest):
     assert result["loader_batch_built"] is False
 
 
-def test_existing_output_rejected(package, payload, tmp_path):
+@pytest.mark.parametrize("mode", ["loader_only", pf.SMOKE_MODE])
+def test_existing_output_rejected(package, payload, tmp_path, mode):
     output = tmp_path / "output"
     output.mkdir()
     with pytest.raises(ValueError, match="Output must be new"):
-        run(package, payload, tmp_path)
+        run(package, payload, tmp_path, mode=mode)
     assert list(output.iterdir()) == []
 
 
@@ -248,8 +251,9 @@ def test_output_cannot_modify_package(package, payload):
     assert not (package / "output").exists()
 
 
-def test_canonical_reports_no_authority(package, payload, tmp_path):
-    result = run(package, payload, tmp_path)
+@pytest.mark.parametrize("mode", ["loader_only", pf.SMOKE_MODE])
+def test_canonical_reports_no_authority(package, payload, tmp_path, mode):
+    result = run(package, payload, tmp_path, mode=mode)
     for path in (tmp_path / "output").rglob("*.json"):
         raw = path.read_bytes()
         assert raw == pf._canonical(json.loads(raw))
@@ -315,3 +319,103 @@ def test_real_dual_arm_independent_success_failure(real_inputs, tmp_path):
     assert result["status"] == "MIXED_NONPASS"
     for arm in result["arms"]:
         assert all(arm[key] is False for key in pf.CHECKS[3:])
+
+
+@pytest.mark.parametrize("options", [
+    {"mode": "model_smoke"}, {"mode": True}, {"mode": lambda: None},
+    {"callback": lambda: None}, {"provider": "custom.module:factory"},
+    {"model_provider": lambda: None},
+])
+def test_smoke_rejects_dynamic_api(package, payload, tmp_path, options):
+    with pytest.raises((TypeError, ValueError)):
+        run(package, payload, tmp_path, **options)
+    assert not (tmp_path / "output").exists()
+
+
+def test_default_does_not_dispatch_model(package, payload, tmp_path, monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("default must not dispatch model")
+    monkeypatch.setattr(pf, "_model_smoke", forbidden)
+    result = run(package, payload, tmp_path)
+    assert result["format"] == pf.REPORT_FORMAT
+    assert all(not arm["forward_checked"] for arm in result["arms"])
+
+
+def test_smoke_stub_source_rejected_before_loader(tmp_path, payload, manifest):
+    root = tmp_path / "source"
+    module = root / "src/molgap"
+    module.mkdir(parents=True)
+    (module / "__init__.py").write_text("", encoding="ascii")
+    (module / "pcqm_gptrans_v4.py").write_text(
+        'raise AssertionError("stub must not be imported")', encoding="ascii")
+    stage = tmp_path / "worker"
+    stage.mkdir()
+    result = pf._launch(root, tmp_path / "absent", manifest[0]["arms"][0],
+                        30, stage, mode=pf.SMOKE_MODE, spec=ExperimentSpec(payload))
+    assert result["status"] == "MODEL_SMOKE_FAILED"
+    assert "source contract" in result["error"]["message"]
+    assert all(not result[key] for key in pf.CHECKS[1:])
+
+
+def test_checkpoint_missing_helper_is_not_success():
+    result = pf._checkpoint_support(object())
+    assert result["status"] == "CHECKPOINT_UNSUPPORTED"
+    assert result["checked"] is False
+    assert result["helper_available"] is False
+
+
+@pytest.mark.parametrize("change", [
+    {"role": "test-dev"}, {"path": "../protected.pt"}, {"sha256": "bad-hash"},
+])
+def test_smoke_manifest_fail_closed(package, payload, manifest, tmp_path, change):
+    value, path = manifest
+    value["arms"][0]["files"][0].update(change)
+    path.write_bytes(pf._canonical(value))
+    result = run(package, payload, tmp_path, mode=pf.SMOKE_MODE,
+                 shard_manifest=path, expected_shard_manifest_sha256=pf._file_sha(path))
+    assert result["status"] == "SHARD_MANIFEST_INVALID"
+    assert all(not arm["forward_checked"] for arm in result["arms"])
+
+
+def test_smoke_failure_and_unsupported_are_independent(package, payload, manifest, tmp_path):
+    value, path = manifest
+    result = run(package, payload, tmp_path, mode=pf.SMOKE_MODE,
+                 shard_manifest=path, expected_shard_manifest_sha256=pf._file_sha(path),
+                 shard_root=tmp_path / "absent")
+    assert result["status"] == "MIXED_NONPASS"
+    assert result["arms"][0]["status"] == "MISSING_REAL_SHARD"
+    assert result["arms"][1]["status"] == "UNSUPPORTED_FAMILY_PREFLIGHT"
+    assert all(a["status"] != "MODEL_SMOKE_VERIFIED" for a in result["arms"])
+    assert all(not a["optimizer_step_checked"] for a in result["arms"])
+
+
+def test_real_model_smoke_independent_arms(tmp_path):
+    config = os.environ.get("MOLGAP_MODEL_SMOKE_REAL_INPUTS")
+    if not config:
+        pytest.skip("Explicit real model-smoke authorization absent")
+    inputs = json.loads(Path(config).read_bytes())
+    spec = ExperimentSpec.from_json(Path(inputs["spec"]).read_text(encoding="utf-8"))
+    arms = spec.to_dict()["arms"]
+    assert len(arms) == 2 and all(a["family"]["name"] == "gptrans_t" for a in arms)
+    manifest = pf.validate_real_shard_manifest(spec, inputs["shard_manifest"],
+                                              inputs["expected_shard_manifest_sha256"])
+    second = next(a for a in manifest["arms"] if a["arm_id"] == arms[1]["arm_id"])
+    second["files"][0]["path"] = "deliberately-missing-real-shard.pt"
+    assert not (Path(inputs["shard_root"]) / second["files"][0]["path"]).exists()
+    path = tmp_path / "negative-arm.json"
+    path.write_bytes(pf._canonical(manifest))
+    result = pf.run_experiment_preflight(
+        spec, inputs["package_dir"], tmp_path / "output", mode=pf.SMOKE_MODE,
+        expected_package_identity=inputs["expected_package_identity"],
+        shard_manifest=path, shard_root=inputs["shard_root"],
+        expected_shard_manifest_sha256=pf._file_sha(path), timeout_seconds=1800)
+    first, second = result["arms"]
+    assert first["status"] == "MODEL_SMOKE_CHECKPOINT_UNSUPPORTED"
+    assert all(first[key] for key in pf.CHECKS[:-1])
+    assert first["checkpoint_roundtrip_checked"] is False
+    assert "checkpoint_roundtrip_checked" in first["missing_evidence"]
+    assert first["observations"]["optimizer_steps"] == 1
+    assert "molgap.gptrans_adapter" in first["import_origins"]
+    assert second["status"] == "MISSING_REAL_SHARD"
+    assert not second["forward_checked"]
+    assert result["status"] == "MIXED_NONPASS"
