@@ -9,3 +9,5 @@
 - `results/` receives compact accepted evidence and the final decision.
 - [Slot-compression reassessment](results/slot_compression_reassessment.md)
   distinguishes measured exchange effects from unresolved information loss.
+- [Representation diagnostic design](representation_protocol.md) scopes the
+  distinct same-row frozen-checkpoint measurement and unreleased input gates.
