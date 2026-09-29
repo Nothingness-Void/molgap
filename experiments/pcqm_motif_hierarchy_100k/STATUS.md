@@ -58,3 +58,15 @@ count/name was not present in the downloaded log. The v2 monitor is paused.
 The user reported P100 is no longer available on Kaggle. Any further attempt
 must request T4, qualify the actual one- or two-T4 allocation, and isolate one
 device for this single candidate without changing the scientific contract.
+
+Version 3 used source commit `a741db84a616abaa24da8e581f04b7d6fb104a69`
+and archive SHA-256
+`71640306217ed93065aa506c962065169c638b8668e2042c246239e4f96f9b47`.
+Kaggle2 source dataset version 3 was downloaded and byte-verified. The same
+kernel numeric ID `136356323` received version 3 with explicit
+`NvidiaTeslaT4`; pulled remote metadata also reports `NvidiaTeslaT4` and the
+three frozen input datasets. Its exact-version status was `RUNNING` at binding.
+The existing Luna B heartbeat now monitors only v3. The [receipt](attempt_v3/submission_receipt.json),
+[binding](attempt_v3/monitor_binding.json), and T4-only [protocol](attempt_v3/protocol.md)
+own this physical run. No runtime certificate, training metric, or model result
+has yet been accepted.
