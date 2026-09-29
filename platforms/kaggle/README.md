@@ -12,9 +12,10 @@ Retrieved outputs and acceptance evidence belong in
 For accelerator-specific kernels, use the current project Kaggle CLI with
 credentials supplied through `KAGGLE_USERNAME` and `KAGGLE_KEY`, and pass an
 explicit `--accelerator` value. After submission, pull the remote metadata and
-verify that `machine_shape` survived. Kaggle API 1.7.4.5 can silently omit that
-field and fall back to P100 even when the local JSON requests T4; that client
-is suitable only for legacy operations that do not depend on accelerator type.
+verify the returned job identity and actual runtime GPU. Active jobs request
+`NvidiaTeslaT4` only; P100 is no longer available. Kaggle may expose two T4s
+even when only one scientifically justified arm exists. Isolate that arm to
+one device and count the entire allocation in native cost.
 
 Both Kaggle accounts hold accepted, byte-identical fixed OGB PCQM4Mv2
 100K/500K graph datasets. Evidence is under

@@ -18,6 +18,7 @@ from experiments.pcqm_k1_sparse_triplet_100k import package_source as common
 REL = "experiments/pcqm_motif_hierarchy_100k"
 REFERENCE = "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json"
 DATASET_ID = "kaseichou/molgap-k1-motif-hierarchy-source"
+ATTEMPT = RUN_ID.rsplit(":", 1)[1].replace("v", "attempt_v", 1)
 
 
 def main():
@@ -35,8 +36,8 @@ def main():
         raise ValueError("Frozen Kaggle slug or input mounts changed")
     reference_path = REPO_ROOT / REFERENCE
     bundle = json.loads(reference_path.read_text())
-    frozen = json.loads((root / "attempt_v2/source_config.json").read_text())
-    prelaunch_path = root / "attempt_v2/comparison_readiness_prelaunch.json"
+    frozen = json.loads((root / ATTEMPT / "source_config.json").read_text())
+    prelaunch_path = root / ATTEMPT / "comparison_readiness_prelaunch.json"
     prelaunch = json.loads(prelaunch_path.read_text())
     validate_server_scientific_prelaunch(
         comparison_prelaunch=prelaunch,
@@ -51,7 +52,7 @@ def main():
         "reference_bundle_sha256": file_digest(reference_path),
         "motif_sidecar_aggregate_sha256": frozen["motif_aggregate_sha256"],
     }
-    common.EXPERIMENT = f"{REL}/attempt_v2"
+    common.EXPERIMENT = f"{REL}/{ATTEMPT}"
     previous = sys.argv
     try:
         sys.argv = [previous[0], "--output", str(args.output), "--dataset-id", DATASET_ID]

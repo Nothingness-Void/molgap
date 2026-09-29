@@ -51,6 +51,10 @@ handoff rules; this root file stays a short navigation and safety protocol.
   can be isolated, request `NvidiaTeslaT4` and use T4x2 candidate parallelism.
   Give each worker an independent model, RNG, optimizer, checkpoint directory,
   and one visible GPU. Record why any job instead requires one accelerator.
+- **Kaggle active accelerator**: request T4 only; P100 is unavailable. A T4
+  allocation may expose two devices even for one justified candidate. Isolate
+  one visible device before importing CUDA, and record the full allocation and
+  its cost; never turn an idle device into an unapproved second experiment.
 - **Seed-budget governance**: architecture discovery defaults to one paired
   seed-42 screen. A win never automatically triggers seeds 43/44; reserve
   multi-seed confirmation for the final shortlist after a material gain and an

@@ -1,7 +1,8 @@
-"""One isolated Kaggle2 P100 arm; existing K1 runner owns all training state."""
+"""One isolated Kaggle2 T4 arm; existing K1 runner owns all training state."""
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -11,9 +12,17 @@ import traceback
 from .k1_motif_hierarchy import MODE
 
 
-RUN_ID = "kaseichou/molgap-k1-motif-hierarchy-s42:v2"
-TRAJECTORY_ID = "TC-k1-motif-hierarchy-100k-s42-v2"
+RUN_ID = "kaseichou/molgap-k1-motif-hierarchy-s42:v3"
+TRAJECTORY_ID = "TC-k1-motif-hierarchy-100k-s42-v3"
 ROOT = Path("/kaggle/working/pcqm_k1_motif_hierarchy")
+
+
+def select_t4_device(device_names: list[str]) -> int:
+    """Reserve one T4 without treating a Kaggle T4x2 allocation as two arms."""
+    if (len(device_names) not in (1, 2)
+            or any(not isinstance(name, str) or "T4" not in name for name in device_names)):
+        raise RuntimeError(f"Expected one or two T4 devices, got {device_names!r}")
+    return 0
 
 
 def bootstrap(source: Path, archive: Path) -> None:
@@ -48,8 +57,7 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
         raise RuntimeError("Refusing unreviewed same-worker restart")
     ROOT.mkdir(parents=True)
     try:
-        _pin_runtime(required_devices=1, required_name=None)
-    except BaseException:
+        _pin_runtime(required_devices=1, required_name="T4")
         probe = subprocess.run(
             [sys.executable, "-c", (
                 "import json,importlib.metadata as m,torch; "
@@ -58,6 +66,28 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
                 "'pyg':m.version('torch-geometric'),'ogb':m.version('ogb'),"
                 "'device_names':[torch.cuda.get_device_name(i) "
                 "for i in range(torch.cuda.device_count())]}))"
+            )], capture_output=True, text=True, check=True,
+        )
+        allocation = json.loads(probe.stdout)
+        allocated_names = allocation["device_names"]
+        selected_device = select_t4_device(allocated_names)
+        # torch has only been imported in subprocesses: mask before this worker
+        # imports CUDA so physical batch 128 remains on exactly one device.
+        if "torch" in sys.modules:
+            raise RuntimeError("CUDA was imported before T4 isolation")
+        print("MOLGAP_GPU_ALLOCATION " + json.dumps(allocation), flush=True)
+        atomic_json(ROOT / "runtime_probe.json", {
+            "run_id": RUN_ID, "torch": allocation["torch"],
+            "cuda": allocation["cuda"], "allocated_device_names": allocated_names,
+            "allocated_device_count": len(allocated_names),
+            "selected_device_index": selected_device, "accepted_gpu_family": "T4",
+        })
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(selected_device)
+    except BaseException:
+        probe = subprocess.run(
+            [sys.executable, "-c", (
+                "import json,torch; print(json.dumps({'device_names':"
+                "[torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())]}))"
             )], capture_output=True, text=True, check=False,
         )
         atomic_json(ROOT / "runtime_preflight_failure.json", {
@@ -69,19 +99,14 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
         raise
     import torch
     gpu = torch.cuda.get_device_name(0) if torch.cuda.device_count() == 1 else None
-    atomic_json(ROOT / "runtime_probe.json", {
-        "run_id": RUN_ID, "torch": torch.__version__, "cuda": torch.version.cuda,
-        "device_count": torch.cuda.device_count(), "actual_gpu_name": gpu,
-        "accepted_gpu_families": ["P100", "T4"],
-    })
-    if gpu is None or not any(name in gpu for name in ("P100", "T4")):
-        raise RuntimeError("Exactly one qualified 16GB P100 or T4 is required")
+    if gpu is None or "T4" not in gpu:
+        raise RuntimeError("One isolated T4 is required for this candidate")
     output = ROOT / MODE
     output.mkdir()
     atomic_json(ROOT / "launch_identity.json", {
         "run_id": RUN_ID, "trajectory_id": TRAJECTORY_ID, "mode": MODE,
         "source_commit": source_commit, "source_archive_sha256": source_archive_sha256,
-        "allocated_device_names": [gpu], "used_device_count": 1,
+        "allocated_device_names": allocated_names, "used_device_count": 1,
         "motif_sidecar_aggregate_sha256":
             "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
     })
@@ -104,8 +129,9 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
         atomic_json(output / "native_cost.json", {
             "format": "molgap-k1-motif-native-cost-v1", "run_id": RUN_ID,
             "trajectory_id": TRAJECTORY_ID, "mode": MODE, "hardware": gpu,
-            "allocated_device_count": 1, "wall_seconds": elapsed,
-            "allocated_device_seconds": elapsed,
+            "allocated_device_count": len(allocated_names), "used_device_count": 1,
+            "wall_seconds": elapsed,
+            "allocated_device_seconds": elapsed * len(allocated_names),
             "cpu_process_seconds": time.process_time() - cpu_started,
             "training_completed": complete, "account_billing_inferred": False,
         })
@@ -116,7 +142,7 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
             atomic_json(manifest, record)
         atomic_json(ROOT / "execution_summary.json", {
             "format": "molgap-k1-motif-execution-v1", "run_id": RUN_ID,
-            "complete": complete, "allocated_device_names": [gpu],
+            "complete": complete, "allocated_device_names": allocated_names,
             "used_device_count": 1, "total_job_wall_seconds": elapsed,
             "automatic_successor_submitted": False,
         })
