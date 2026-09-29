@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 54,
+    "trajectories_total": 56,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 43,
-    "with_incomplete_native_measurement": 38,
+    "with_cost_event": 45,
+    "with_incomplete_native_measurement": 40,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,11 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 32,
+      "count": 34,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
+        "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+        "TB-geometry-v4-500k-k1_distance_angle-s42-continuation",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -78,12 +80,14 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 38,
+      "count": 40,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-v4-500k-gptrans_distance_only-s42",
+        "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
         "TB-geometry-v4-500k-k1_distance_angle-s42",
+        "TB-geometry-v4-500k-k1_distance_angle-s42-continuation",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -141,10 +145,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 24,
+      "count": 26,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
+        "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+        "TB-geometry-v4-500k-k1_distance_angle-s42-continuation",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -172,8 +178,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 4,
+      "count": 6,
       "items": [
+        "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+        "TB-geometry-v4-500k-k1_distance_angle-s42-continuation",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",

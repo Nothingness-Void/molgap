@@ -1,0 +1,150 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "geometry-v4-500k-gptrans_distance_only",
+    "question": "Does bond-distance input improve matched-V4 GPTrans-T by at least 3 meV at 500K?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "observed_deficiency": "The matched 500K geometry arm stopped for the original cost cap after five improving epochs; its 60-epoch V4 effect is unresolved.",
+      "supporting_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-geometry-distance-100k-s42-a2",
+        "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop"
+      ],
+      "alternative_explanations": [
+        "Historical geometry gains may reflect optimizer, schedule, exposure or selection differences.",
+        "Single-seed development-row bootstrap does not measure training stochasticity."
+      ],
+      "changed_mechanism": "Add zero-start ETKDGv3+MMFF94s real-bond distance projection to GPTrans pair state, with the angle path disabled.",
+      "cheapest_falsifier": "Resume the hash-verified epoch-five state to 60 epochs, then compare the aligned 50K predictions under the existing 3 meV matched-V4 gate.",
+      "related_closed_family_ids": [
+        "gptrans-pair-norm-500k",
+        "gptrans-noisy-pair-norm-500k",
+        "gptrans-geometry-angle-increment-100k"
+      ],
+      "expected_native_cost_ref": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-expected-training",
+      "decision_changed_if_positive": "Nominate distance-only GPTrans geometry for a separately frozen scale decision.",
+      "decision_changed_if_negative": "Close this matched V4 distance-only 500K route without changing seed or schedule.",
+      "historical_unknowns": [
+        "The final 60-epoch geometry effect and actual continued native T4 cost remain unknown."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f",
+      "contract_refs": [
+        "experiments/pcqm_geometry_v4_500k_pair/protocol.md",
+        "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+        "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json"
+      ],
+      "reference_ids": [
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "parent_trajectory_ids": [
+        "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-geometry-distance-100k-s42-a2",
+        "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_500k_v4_evidence/roles/train.json",
+        "experiments/pcqm_500k_v4_evidence/roles/development.json",
+        "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json",
+      "source_config_identity": "8bea0dab3b8b1755352f7f11e7ae7708b87de0731fe32aefabb9725e60112367"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "remote_scale_transfer_training",
+        "run_ids": [
+          "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002"
+        ],
+        "attempt_ids": [
+          "attempt-002"
+        ],
+        "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f",
+        "evidence_refs": [],
+        "cost_event_ids": [
+          "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-expected-training"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_decision.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "resume_exact_epoch_five_checkpoint_under_new_budget"
+      ],
+      "reopen_conditions": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [
+      "TB-geometry-v4-500k-gptrans_distance_only-s42"
+    ],
+    "known_evidence_ids": [
+      "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop"
+    ],
+    "active_reference_ids": [
+      "pcqm-matched-500k-v4-three-arm"
+    ],
+    "available_actions": [
+      "RUN_500K",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_500K",
+    "policy_id": "pcqm-geometry-v4-500k-pair-launch",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_500k_v4_evidence/roles/train.json",
+      "experiments/pcqm_500k_v4_evidence/roles/development.json",
+      "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json",
+    "state_timestamp": "2026-09-29T05:16:03.936959+00:00",
+    "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-expected-training",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "NvidiaTeslaT4_requested",
+      "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

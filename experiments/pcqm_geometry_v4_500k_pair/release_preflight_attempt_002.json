@@ -1,0 +1,67 @@
+{
+  "format": "molgap-geometry-v4-500k-resume-local-preflight-v1",
+  "status": "PASS",
+  "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f",
+  "source_archive_sha256": "8bea0dab3b8b1755352f7f11e7ae7708b87de0731fe32aefabb9725e60112367",
+  "kernel_code_sha256": "e2f53ec9a1cfa223ad2267b35e8b712cfcfd7a5807701a17bd0d315515996592",
+  "kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "dataset_sources": [
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+    "nothingnessvoid/molgap-geometry-v4-500k-a1-resume-s42"
+  ],
+  "machine_shape": "NvidiaTeslaT4",
+  "active_account_owner": "nothingnessvoid",
+  "checkpoint_files": {
+    "gptrans_distance_only__stage_manifest.json": {
+      "sha256": "682a79b241504fc555162f430baba141478f7a8b8d68b5e68b5f57316fd1a9cf",
+      "bytes": 2815
+    },
+    "gptrans_distance_only__last_checkpoint.pt": {
+      "sha256": "9cd7e5dfe56aa5618eafa4a35f70ab89c345ddcf4591aee4fa4e90ecfcce5038",
+      "bytes": 63333993
+    },
+    "gptrans_distance_only__best_model.pt": {
+      "sha256": "eb708432917b8e4bd8905f33e6c1ad70b0a6a877a2a181276fb71edbdbcea654",
+      "bytes": 21106127
+    },
+    "gptrans_distance_only__best_predictions.pt": {
+      "sha256": "35e0bd8f646b777ef81ee6fa1e022f8f3a455ee7711ec642d103c5ca140fb018",
+      "bytes": 801839
+    },
+    "gptrans_distance_only__initial_state.pt": {
+      "sha256": "e6ad385325316eedd67683f34e351cae17eff79f39c4d82f575e226b84184bee",
+      "bytes": 21105666
+    },
+    "k1_distance_angle__stage_manifest.json": {
+      "sha256": "600a4f1b86338864cc6fa10763e3ca7d297c5d932e14079ab0d613c6e4df5099",
+      "bytes": 2812
+    },
+    "k1_distance_angle__last_checkpoint.pt": {
+      "sha256": "b784f74463a748266dbddf429b0f95528ab267c697503a7fbcd7add07db4029e",
+      "bytes": 46011580
+    },
+    "k1_distance_angle__best_model.pt": {
+      "sha256": "b6cf40d94c138728b9deac6ba0d62f28a8d998cc84a26ac90603ab324f094ed6",
+      "bytes": 15339925
+    },
+    "k1_distance_angle__best_predictions.pt": {
+      "sha256": "a4605e534aa96624adc79bfcfa0435cc73a9443e3fec980a938784625d9fbfa7",
+      "bytes": 801839
+    },
+    "k1_distance_angle__initial_state.pt": {
+      "sha256": "2e26216bea74470b766b410ac42093e5ddb512a8a61e8f55e2a4799e5a113e15",
+      "bytes": 15340274
+    }
+  },
+  "scientific_contract_ref": "experiments/pcqm_geometry_v4_500k_pair/training_contract.json",
+  "continuation_contract_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json",
+  "checkpoint_dataset_remote": {
+    "id": "nothingnessvoid/molgap-geometry-v4-500k-a1-resume-s42",
+    "dataset_id": 12264118,
+    "version": 1,
+    "status": "ready",
+    "listed_file_count": 10,
+    "listed_sizes_match_local": true,
+    "byte_hash_verification": "deferred to hash-gated Kaggle entrypoint before training"
+  }
+}

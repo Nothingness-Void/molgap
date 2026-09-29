@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-002",
+  "category": "training",
+  "cost_event_id": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-expected-training",
+  "evidence_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_contract.json",
+  "hardware": "NvidiaTeslaT4_requested",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation"
+}

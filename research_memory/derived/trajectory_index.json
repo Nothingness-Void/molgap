@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "bb937ec70581329c6a2928c23038050d755a99c0cdca9f5fd16f2bc37329b61b",
+  "source_digest": "0361130d7ba47c5a39d6f17a53922e7390b2e34744cc37b9cd9f4f6642535f18",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -70,6 +70,22 @@
     },
     {
       "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_decision.md",
+      "family_id": "geometry-v4-500k-gptrans_distance_only",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-geometry-v4-500k-gptrans_distance_only-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_geometry_v4_500k_pair/continuation_gptrans_distance_only/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation"
+    },
+    {
+      "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/decision.md",
       "family_id": "geometry-v4-500k-k1_distance_angle",
       "outcome": "STOP_FOR_COST",
@@ -85,6 +101,22 @@
       ],
       "track": "B",
       "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_geometry_v4_500k_pair/continuation_decision.md",
+      "family_id": "geometry-v4-500k-k1_distance_angle",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-geometry-v4-500k-k1_distance_angle-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_geometry_v4_500k_pair/continuation_k1_distance_angle/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42-continuation"
     },
     {
       "completeness_status": "partial",
