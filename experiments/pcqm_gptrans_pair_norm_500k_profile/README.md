@@ -15,3 +15,5 @@ can choose a runtime configuration for a later separately authorized 500K
 bridge; it is not model-quality evidence and does not read development or any
 official evaluation role.
 
+
+Read `decision.md` for the terminal result and machine-evidence pointers.

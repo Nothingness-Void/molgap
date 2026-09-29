@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 
 TRACE_DIRS = {
@@ -266,7 +267,7 @@ def analyze(root: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
+    parser.add_argument("--repo-root", type=Path, default=REPO_ROOT)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     result = json.dumps(analyze(args.repo_root), indent=2, sort_keys=True) + "\n"

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT as ROOT
 EXPERIMENT = ROOT / "experiments/pcqm_xian_determinism"
 PROBE = EXPERIMENT / "results/initial_probe"
 PAYLOAD = PROBE / "model-replay"

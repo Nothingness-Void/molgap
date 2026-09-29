@@ -15,7 +15,7 @@ from molgap.pcqm_distance_angle_scale import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT as ROOT
 EXPERIMENT = ROOT / "experiments/pcqm_distance_angle_500k"
 RETAINED = ROOT / "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote"
 

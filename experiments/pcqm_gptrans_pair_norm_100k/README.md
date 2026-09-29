@@ -6,3 +6,5 @@ one isolated candidate per device against the immutable accepted GPTrans-T
 100K reference; it does not retrain that reference.
 
 See `protocol.md` and `training_contract.json` for the frozen question.
+
+Read `decision.md` for the terminal result and machine-evidence pointers.

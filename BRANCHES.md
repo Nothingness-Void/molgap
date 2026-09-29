@@ -47,6 +47,12 @@ work entry point. Promotion from `molgap-desktop` to `master` is separate.
 
 ## Retained branch awaiting reconciliation
 
+The 2026-09-30 local reconciliation is recorded in
+`docs/operations/LOCAL_RECONCILIATION_20260930.md`. It preserves eight old
+infrastructure drafts and the inconclusive frozen-transfer history in archive,
+and identifies the geometry, precision and DSAR/DSMR branches still in use or
+awaiting acceptance. Historical downloaded payloads remain retained locally.
+
 The 2026-09-24 local branch audit found one retained desktop temporary ref:
 `codex/fix/rml-500k-reference` at `b78b978d`. It contains prospective DSAR/DSMR
 work and its checkout is clean. The committed tip is also at

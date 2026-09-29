@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 60,
+      "trajectories_total": 61,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 49,
-      "with_incomplete_native_measurement": 44,
+      "with_cost_event": 50,
+      "with_incomplete_native_measurement": 45,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -208,6 +208,56 @@
           "measured": {
             "known_records": 3,
             "known_total": 0.0073372306666666795
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        }
+      },
+      "NVIDIA_GeForce_RTX_5060": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
           },
           "not_applicable_records": 0,
           "unknown_records": 1
@@ -664,7 +714,7 @@
         }
       }
     },
-    "unknown_events": 73
+    "unknown_events": 74
   },
   "evidence": {
     "validated": 50,
@@ -674,17 +724,17 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 40,
+      "count": 41,
       "severity": "INFO"
     },
     {
       "code": "historical_partial_record",
-      "count": 17,
+      "count": 18,
       "severity": "WARN"
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 44,
+      "count": 45,
       "severity": "WARN"
     },
     {
@@ -699,21 +749,21 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 10,
+      "count": 11,
       "severity": "WARN"
     }
   ],
   "roles": {
     "coarse_historical": 215,
-    "explicit_events": 94,
+    "explicit_events": 95,
     "repeatedly_selected": 7
   },
-  "source_digest": "23a20538aae81a901569fc30f3319714e60a667dad205f559f7333f83241d082",
+  "source_digest": "d1f9ad285e5bf5a1be6b357354d65a8f5cf5dfb65d4f9edb3704baf39fc23ac7",
   "trajectories": {
-    "count": 60,
+    "count": 61,
     "outcomes": {
       "CLOSED": 9,
-      "INCONCLUSIVE": 13,
+      "INCONCLUSIVE": 14,
       "INFRASTRUCTURE_ONLY": 4,
       "NEGATIVE_UNDER_CONTRACT": 14,
       "NO_TRAIN": 12,

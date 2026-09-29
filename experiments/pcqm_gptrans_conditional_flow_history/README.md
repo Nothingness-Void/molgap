@@ -60,3 +60,5 @@ is not claimed, and the derived corpus remains untouched.
 Tests, RML acceptance/rebuild, training, inference, remote jobs and protected-role
 access were not run. Luna owns validation. Snapshot byte preservation is explicit
 in `.gitattributes`; original records are never rewritten by the generator.
+
+`decision_evidence_index.md` links the preserved decision to its machine evidence.

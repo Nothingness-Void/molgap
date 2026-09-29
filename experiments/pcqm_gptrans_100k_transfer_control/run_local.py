@@ -7,8 +7,7 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "src"))
+from molgap.constants import REPO_ROOT as ROOT
 
 
 def main() -> None:

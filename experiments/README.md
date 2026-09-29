@@ -28,7 +28,7 @@ Track C.
 | Does a bond-angle channel help GPTrans-T after a distance channel is present? | No; same-job angle arm is 4.789 meV worse. Distance-only is 4.035 meV better than an older Kaggle1 pure-2D checkpoint on aligned rows, but that cross-job signal is contextual. Both training traces are excluded from replay; rejected code is in `archive` | `pcqm_gptrans_geometry_channels_100k_kaggle1/` |
 | Does a persistent real-bond local path improve GPTrans-T with RWSE16 at fixed 100K? | No; the same-job local-edge arm gained 1.082 meV against RWSE16, below the 3 meV gate. Both terminal traces are replay-ready; rejected implementation history is archived | `pcqm_gptrans_local_inductive_bias_100k_kaggle1/` |
 | Should a same-job GPTrans-T baseline be retrained for pair-memory readback? | No; both prospective arms closed `NO_TRAIN` before submission because the accepted V5 reference can be reused | `pcqm_gptrans_memory_value_100k_kaggle1_pair/` |
-| Does pair-memory readback improve GPTrans-T on fixed 100K rows? | Same-job `memory_message` is 4.323 meV worse than `memory_value`; both arms closed and replay-excluded for missing per-epoch fields | `pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md` |
+| Does pair-memory readback improve GPTrans-T on fixed 100K rows? | Same-job `memory_message` is 4.323 meV worse than `memory_value`; both arms closed and replay-excluded for missing per-epoch fields | `pcqm_gptrans_pair_memory_dual_100k_kaggle1/` |
 | Does changing GPTrans-T input-table initialization improve the fixed 100K screen? | No; the same-job zero-parameter candidate was 1.269 meV worse, with no practical runtime gain. Accepted evidence is indexed here; implementation history is archived | `pcqm_gptrans_input_init_100k/` |
 | What did the GPTrans PairNorm 500K runtime profile measure? | Bounded Kaggle3 T4 training-only throughput; no development or official role was read | `pcqm_gptrans_pair_norm_500k_profile/` |
 | Which architecture wins the matched PCQM 500K V4 comparison, and is global attention useful? | K1 and GPTrans-T beat EdgeState; K1 leads but not materially, while matched local ablation rejects dense and sparse global attention | `pcqm_500k_v4_evidence/` |
@@ -55,6 +55,20 @@ Track C.
 | Can a student compress the expert ensemble? | No; external retention fails | `distillation/` |
 | Which SchNet compute shape is efficient? | `176/160/6` at 78% params and 48% time | `schnet_arch/` |
 | Does 1M continuation beat the 500K base? | Specialist only; no global promotion | `expansion_1m/` |
+
+| Frozen-initialization and cohort-transfer control? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_100k_transfer_control/` |
+| Noisy Nodes 100K screen? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_nodes_100k/` |
+| Noisy Nodes 500K transfer? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_nodes_500k/` |
+| Noisy Nodes plus Pair Update Norm 100K screen? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_pair_norm_100k/` |
+| Noisy Nodes plus Pair Update Norm 500K transfer? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_pair_norm_500k/` |
+| K1 and GPTrans residual reconciliation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_k1_residual_reconciliation/` |
+| Historical scale-transfer attribution? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_attribution/` |
+| Historical scale-transfer diagnostic? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_diagnostic/` |
+| Scale-transfer reassessment? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_reassessment/` |
+| Frozen 500K readout probe? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_500k_frozen_readout/` |
+| Conditional-flow historical arm views? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_conditional_flow_history/` |
+| Historical flow ablation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_flow_ablation_100k/` |
+| Frozen 100K weights on the 500K development cohort? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_frozen_transfer_probe/` |
 
 `_closed/` holds branches that are settled and must not be rerun without a
 materially new hypothesis. `_scripts/` holds entrypoints shared by more than one

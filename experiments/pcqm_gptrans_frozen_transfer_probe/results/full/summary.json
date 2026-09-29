@@ -1,0 +1,25 @@
+{
+  "format": "molgap-gptrans-frozen-transfer-probe-v1",
+  "scope": "full_500k_internal_development",
+  "rows": 50000,
+  "source_idx_start": 500000,
+  "source_idx_stop_exclusive": 550000,
+  "inputs_sha256": {
+    "development": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1",
+    "candidate": "e70c922d5ddd347551b1d378fc37e2105130a3f6d2bf4153344e8698dbfd82fa",
+    "reference": "a06f1f163dc6fd7ebae45eec6bfcff75cf05da4ae077344a93926b7d498d0565"
+  },
+  "prediction_file": "predictions.npz",
+  "prediction_sha256": "d9cf0a5a8fe9558505a4a36aef14a2fb256a29452b4a6c8c93e88868d162260e",
+  "candidate_mae_eV": 0.15098093567848206,
+  "reference_mae_eV": 0.15608958146095275,
+  "reference_minus_candidate_gain_eV": 0.005108645782470703,
+  "paired_row_bootstrap_95pct_eV": [
+    0.004250668951630592,
+    0.00602258039188385
+  ],
+  "descriptive_gain_reaches_existing_0p003_eV_floor": true,
+  "device": "cuda",
+  "batch_size": 64,
+  "protected_roles_read": false
+}

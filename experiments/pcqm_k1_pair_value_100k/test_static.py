@@ -6,7 +6,7 @@ import json
 import unittest
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT
 ROOT = Path(__file__).resolve().parent
 MODE = "neural_atom_k1_pair_token_value_decoupled"
 

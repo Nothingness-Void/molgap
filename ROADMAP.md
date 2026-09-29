@@ -15,7 +15,7 @@ Branch and worktree routing is defined in `BRANCHES.md`.
 | Priority | ID | Task | Exit condition | Owner |
 |---|---|---|---|---|
 | P0 blocked | B-GPTRANS-CENTER-PAIR-REPLAY | Resolve replay qualification for the terminally accepted Kaggle1 pair | Existing frozen reference identity cannot satisfy strict causal replay entrance for the same-job control; no training successor is released | `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md` |
-| P1 | B-GEOMETRY-V4-BRIDGE | Consider one 500K distance-angle candidate under a matched V4 reference | Requires a new frozen contract/runtime certificate and explicit launch authorization; the accepted 100K reference alone does not release it | `experiments/pcqm_geometry_transfer_500k/` |
+| P1 active on dedicated branch | B-GEOMETRY-V4-BRIDGE | Finish the authorized frozen-checkpoint geometry continuation | Per-arm terminal acceptance and scientific disposition under its existing contract | `codex/exp/geometry-v4-500k-pair` |
 | P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
 
 The accepted V4 reference and runtime policy are documented in
@@ -26,20 +26,12 @@ exclusions. Its accepted endpoint, exact replay blocker and saved-artifact
 attribution are in `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/`;
 no further pair-memory run is queued.
 
-The next desktop research action is a **local, no-training feasibility audit**
-for `B-GEOMETRY-V4-BRIDGE`. The accepted 500K V4 GPTrans-T control scored
-`0.106868 eV`, but the historical geometry GPTrans-T `0.102737 eV` used
-different optimizer, step and EMA selection contracts (see their protocols),
-so that numerical gap is contextual, not a strict geometry effect. First
-verify that the retained V4 control's exact row predictions, runtime
-certificate and artifact identity can be reused. Then specify a single
-geometry-only candidate matching its V4 recipe and row split; audit the
-ETKDGv3+MMFF cache, geometry-capable trainer, preflight, native-cost cap and
-per-epoch replay fields. Do not retrain a control merely for bookkeeping.
-Freeze a prospective mechanism question and cheapest discriminator only if
-that matched comparison is feasible. The earlier geometry gain and local
-fusion result reused a selected development role and do not release training;
-the active-queue row still requires separate authorization.
+The geometry bridge has advanced to an authorized continuation on the dedicated
+branch above. Its branch-local protocol, continuation contract, STATUS and launch
+records own execution. Keep its source and checkpoints isolated until terminal
+acceptance; do not repeat the earlier feasibility audit or retrain references.
+The older geometry scores remain contextual because their recipe/runtime
+contracts differ; see `experiments/pcqm_geometry_transfer_500k/`.
 V4 requires fixed data and
 row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
 selection rule, sample exposure, role access, and a runtime certificate for

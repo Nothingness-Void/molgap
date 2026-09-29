@@ -1507,7 +1507,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 94,
+  "explicit_role_event_count": 95,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -2126,6 +2126,13 @@
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
       },
       {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      },
+      {
         "access_kind": "metric_computed",
         "role_event_id": "role-TB-gptrans-local-selection-probe-development-500k",
         "selection_used": false,
@@ -2714,6 +2721,13 @@
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
       },
       {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      },
+      {
         "access_kind": "metric_computed",
         "role_event_id": "role-TB-gptrans-local-selection-probe-development-500k",
         "selection_used": false,
@@ -3277,6 +3291,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
       },
       {
         "access_kind": "metric_computed",

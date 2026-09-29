@@ -8,3 +8,5 @@ from scientific acceptance. Per-arm prospective RML records live under
 `prospective/` and are created by the shared experiment CLI.
 
 No official validation, test-dev, or challenge role is released.
+
+`decision_evidence_index.md` links the preserved decision to its machine evidence.

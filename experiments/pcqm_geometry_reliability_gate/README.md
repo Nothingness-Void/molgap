@@ -9,3 +9,7 @@ RML records remain separate from the historical training pair.
 
 `kaggle_feasibility.md` records why the positive local screen did not release
 a remote kernel and what a later matched geometry submission would require.
+
+Read `decision.md` for the terminal result and machine-evidence pointers.
+
+`decision_evidence_index.md` links the decision and machine evidence.

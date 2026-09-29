@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 import tarfile
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT
 ROOT = REPO_ROOT / "experiments/pcqm_k1_pair_value_100k"
 
 

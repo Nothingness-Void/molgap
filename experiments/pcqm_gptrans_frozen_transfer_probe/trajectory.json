@@ -1,0 +1,105 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
+  "record_mode": "retrospective_partial",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "gptrans-frozen-transfer-probe",
+  "question": "Would frozen 100K GPTrans weights on the 500K internal-development cohort flag a known sub-threshold 500K retraining outcome?",
+  "hypothesis": {
+    "hypothesis_id": "H-gptrans-frozen-transfer-probe",
+    "observed_deficiency": "The 100K pair_update_norm gain passed 0.003 eV, but its 500K retraining gain was only 0.001140 eV.",
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-pair-norm-500k-s42"
+    ],
+    "alternative_explanations": [
+      "The gain may persist across evaluation cohorts and disappear only after longer 500K optimization."
+    ],
+    "related_closed_family_ids": [
+      "gptrans-pair-update-norm",
+      "pcqm-scale-transfer-attribution"
+    ],
+    "changed_mechanism": "No model change; compare two existing frozen 100K checkpoints on the fixed 500K development cohort.",
+    "cheapest_falsifier": "Local inference on the existing, SHA-pinned 50K development shard.",
+    "expected_native_cost_ref": "cost-TB-gptrans-frozen-transfer-probe-expected-inference",
+    "decision_changed_if_positive": "Treat frozen transfer as a useful risk flag to test on more historical winners, without activating an automatic gate.",
+    "decision_changed_if_negative": "Do not use frozen transfer alone to screen 500K retraining candidates."
+  },
+  "state_at_start": {
+    "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_frozen_transfer_probe/protocol.md"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-scale-transfer-attribution",
+      "TB-gptrans-pair-norm-500k-s42"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference",
+      "pcqm-gptrans-pair-norm-500k-s42"
+    ],
+    "reference_ids": [
+      "pcqm-gptrans-reference-k1pair-100k-s42"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_pair_norm_500k/roles/development.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_frozen_transfer_probe/protocol.md",
+    "source_config_identity": "GPTrans-T 12x256 pair32 100K seed42 EMA best; two SHA-pinned checkpoints; accepted fixed 500K OGB graph shard"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "local_frozen_checkpoint_inference",
+      "source_commit": "459d64300748bc5d75beab0f87cca1ff555a7061",
+      "run_ids": [
+        "local-gptrans-frozen-transfer-500k-dev-s42"
+      ],
+      "attempt_ids": [
+        "local-attempt-001"
+      ],
+      "cost_event_ids": [
+        "cost-TB-gptrans-frozen-transfer-probe-expected-inference"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_frozen_transfer_probe/results/full/summary.json"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_frozen_transfer_probe/results/full/summary.json",
+      "experiments/pcqm_gptrans_frozen_transfer_probe/decision.md"
+    ],
+    "reference_minus_candidate_gain_eV": 0.005108645782470703,
+    "rows": 50000,
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false,
+    "provenance": {
+      "preserved_snapshot_commit": "b20374fe",
+      "original_trajectory_ref": "experiments/pcqm_gptrans_frozen_transfer_probe/sources/original_trajectory.json",
+      "chronology_status": "prospective creation time and executed script commit not independently established",
+      "acceptance_scope": "retained prediction hash, row order, finite values and metric recomputation only"
+    }
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_frozen_transfer_probe/decision.md",
+    "outcome": "INCONCLUSIVE",
+    "next_allowed_actions": [
+      "Do not activate a frozen-weight transfer cutoff from this case. Calibrate with exact references and additional completed 500K outcomes."
+    ],
+    "reopen_conditions": [
+      "Exact original 100K GPTrans reference checkpoint becomes locally available for a matched recheck."
+    ]
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_frozen_transfer_probe/protocol.md",
+  "comparison_blockers": [
+    "Candidate and reference checkpoints came from separately accepted 100K runs.",
+    "Frozen-cohort inference does not identify 500K retraining performance."
+  ],
+  "reference_bundle_id": null
+}

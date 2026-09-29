@@ -12,7 +12,7 @@ import torch
 from molgap.research_memory.trace import canonicalize_trace, json_bytes
 
 
-ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT as ROOT
 EXPERIMENT = ROOT / "experiments/pcqm_k1_pair_value_100k"
 RAW = ROOT / (
     "platforms/_records/kaggle/training/k1_pair_value_s42_v2/"

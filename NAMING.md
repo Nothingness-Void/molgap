@@ -103,7 +103,7 @@ example `common_metrics.json` and `ood_metrics.json`.
 - Production decisions and compact metrics: `production/`.
 - Question-specific evidence: `experiments/<question>/results/`.
 - Historical production evidence: the `archive` branch, never a new desktop
-  `production/history/` or `production/03_train/_retired/` tree.
+  desktop history or retired-production tree.
 - Large reproducible embeddings and graph caches: `data/cache/`.
 - Selected checkpoints: `models/`.
 - Platform submission and scheduler records: `platforms/`.

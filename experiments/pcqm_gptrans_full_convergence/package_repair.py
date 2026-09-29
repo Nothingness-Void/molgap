@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import tarfile
 
-ROOT = Path(__file__).resolve().parents[2]
+from molgap.constants import REPO_ROOT as ROOT
 BASE = '/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full'
 
 

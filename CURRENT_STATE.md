@@ -1,214 +1,87 @@
 # Current State
 
-> This file owns only live project truth: production identity, active candidate,
-> blocker, and immediate handoff. Historical evidence belongs to dated decisions;
-> task ordering belongs only in `ROADMAP.md`.
+This file owns the live recommendation, blockers and branch routing.
+Dated decisions and canonical RML evidence own historical results.
+Task ordering belongs to `ROADMAP.md`; checkout ownership to `BRANCHES.md`.
 
-## Production Identity
+## Production identity
 
-- **Recommended model:** repaired-2M three-GPS dense pure 2D.
-- **Registry key:** `repaired_2m_dense_2d`.
-- **Lower-cost preset:** `repaired_2m_equal_2d`.
-- **Public loader:** `load_repaired_2m_2d` and
-  `predict_smiles_batch_repaired_2m_2d` in `src/molgap/inference.py`.
-- **Decision owner:**
-  `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+- Recommended Track A model: repaired-2M three-GPS dense pure 2D.
+- Registry key: `repaired_2m_dense_2d`; lower-cost preset: `repaired_2m_equal_2d`.
+- Public loader: `load_repaired_2m_2d` in `src/molgap/inference.py`.
+- Decision: `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+- Compatibility and model-asset hashes: `models/README.md`.
 
-The routed-v4 model remains registered for compatibility; historical Delta/UQ
-bundles still target their v3 base. Asset hashes are indexed in `models/README.md`.
+## Track B recommendation and constraints
 
-## Active Objective
+Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
+full EdgeState checkpoint remains the operational full-scale reference.
+The matched 500K architecture ordering and the full-data ordering have different
+training and role contracts; they do not establish a causal architecture rank.
+See `experiments/pcqm_scale_transfer_reassessment/decision.md`.
 
-Track B is a PCQM4Mv2 Gap-only line, separate from Track A. New cross-platform
-screens use V4, not historical Kaggle BS48 contracts. The GPTrans-T seed-42
-100K/50K V4 reference completed on Kaggle2 and passed mechanical acceptance at
-`0.156627 eV`. It is frozen as a reusable reference but closed for 100K
-promotion; authority: `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
+New screens use the frozen V4 row, recipe and runtime contract. The accepted
+GPTrans-T 100K reference is reusable but closed for 100K promotion:
+`experiments/pcqm_gptrans_t_100k_v4/decision.md`.
+Official validation has been consumed for the recorded full-model selection
+and calibration. Test-dev and challenge remain sealed.
 
-The Kunshan 500K distance-angle OOF blend is positive nomination evidence, but
-its V4 audit found no runtime certificate or matching V4 reference. It is not
-formal V4 cross-platform/causal evidence. Its decision and binding comparability
-audit are in `experiments/pcqm_geometry_transfer_500k/`; no scale-up is
-authorized without the declared matched bridge.
+## Active work and unresolved acceptance
 
-The older Kaggle2 recurrent screen is closed and missed its comparator by
-`0.0006301 eV`; it is archived at commit `285e1dc`. Do not resume or scale it.
-
-The strict OGB-rich EdgeState baseline completed official-train-only training
-from random initialization. Its public reproduction repository is
-`https://github.com/Nothingness-Void/pcqm4mv2-edgestate`; public head `ae00b44`
-passed a fresh-clone audit. OGB review status is indexed in
-`experiments/pcqm_edge_state_full/results/rich_full/`.
-
-## Prior Architecture Evidence
-
-PairGPS2D's PubChemQC-100K validation-only screen and the QM9 R3-R10 tournament
-are architecture evidence only; neither authorizes PCQM transfer. Their
-decisions are indexed under `experiments/`. The conservative 2D+3D repair is a
-separate untrained Track A task; frozen-2D plus dual-SchNet remains rejected.
-
-## Execution State
-
-- Kunshan V4 bootstrap passed source and graph checks. CPU setup `122210841`
-  and dependent DCU gate `122210845` were pending in the 2026-09-16 snapshot;
-  no formal training was submitted. Evidence is in
-  `platforms/_records/scnet/kunshan_v4_bootstrap_20260916/README.md`.
-- The matched 500K V4 experiment completed. K1 (`0.104860 eV`) and GPTrans-T
-  (`0.106868 eV`) beat EdgeState (`0.111349 eV`) on the aligned 50K development
-  role; K1's advantage over GPTrans-T remained below the `0.003 eV` nomination
-  floor. The local matched ablation also rejected dense/sparse global attention;
-  K1's molecular-slot gain over local-only was positive but sub-threshold.
-  Authorities: `experiments/pcqm_500k_v4_evidence/final_decision.md` and
-  `experiments/pcqm_500k_v4_evidence/local_ablation_decision.md`.
-- The matched Kunshan distance-angle Triangle 500K screen passed local replay:
-  candidate `0.114141 eV` versus baseline `0.117659 eV` on the same 50K
-  development rows. It is nominated under its frozen point gate, but has no
-  V5 transfer qualification or automatic scale release. Authority:
-  `experiments/pcqm_distance_angle_500k/decision.md`. The subsequent
-  existing-prediction component diagnostic closed `NO_TRAIN`; its accepted
-  result and strict-reference blocker are in
-  `experiments/pcqm_geometry_component_attribution/decision.md`.
-  A separate hash-gated 2D/geometry fusion screen reached `0.111103 eV`
-  cross-fitted development MAE, a `0.003038 eV` gain over the geometry arm.
-  This is exploratory on an already used role and does not release a Kaggle
-  run or change the model recommendation. Authority:
-  `experiments/pcqm_geometry_reliability_gate/decision.md`.
-- The desktop Kaggle1 GPTrans geometry-channel pair completed and closed.
-  Adding the angle channel to distance-only worsened the same-job 100K Gap MAE
-  by 4.789 meV, so the angle increment is `NEGATIVE_UNDER_CONTRACT`. The
-  distance-only arm is 4.035 meV lower than an accepted older Kaggle1 pure-2D
-  reference on identical development rows, but that cross-job comparison is
-  contextual and does not promote the model. Both geometry traces are excluded
-  from replay because live-development observations are absent. Canonical
-  evidence is indexed under
-  `experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/`; rejected
-  implementation history is on `archive` at `629d0549`.
-- Xi'an full-model replay job `67440607` matched predictions but differed in
-  269 cross-process gradient tensors. The audit is closed negative; Xi'an V4
-  ranking remains gated. Authority: `experiments/pcqm_xian_determinism/decision.md`.
-- The standalone desktop Kaggle3 Pair Update Norm 500K bridge completed 60
-  epochs. Its 50K-row paired internal-development result is `0.105728 eV`
-  versus GPTrans-T `0.106868 eV`; the `0.001140 eV` gain misses the frozen
-  `0.003 eV` promotion floor. It is closed `NEGATIVE_UNDER_CONTRACT` after
-  replay-ready artifact acceptance and RML indexing. This is separate from
-  the Noisy Nodes + Pair Update Norm joint experiment recorded below.
-  Authority: `experiments/pcqm_gptrans_pair_norm_500k/decision.md`.
-- Desktop GPTrans `centered_logits` seed-42 100K was submitted to Kaggle3 as
-  `nvoid912/molgap-gptrans-centered-logits-100k-s42-v1` version 1. The user
-  cancelled it; Kaggle reported `CANCEL_ACKNOWLEDGED` and no listed output
-  files. No candidate metric was accepted, so its outcome is `INCONCLUSIVE`.
-  Authority: `experiments/pcqm_gptrans_centered_logits_100k/decision.md`.
-- The user-directed Kaggle1 replacement pairs GPTrans-T `reference` and
-  `centered_logits` on one T4x2 kernel,
-  `nothingnessvoid/molgap-gptrans-centered-logits-paired-100k-s42-v1`.
-  Kaggle version 1 completed. Both arms passed separate mechanical and V5/RML
-  terminal acceptance after 60 epochs and 50K aligned development predictions.
-  The same-job GPTrans-T reference scored `0.156014488 eV`; centered logits
-  scored `0.155416209 eV`. The `0.000598279 eV` gain misses the frozen
-  `0.003 eV` gate, and its paired interval crosses zero. The candidate closed
-  `NEGATIVE_UNDER_CONTRACT`, with no scale release. RML frozen validation passes,
-  but the two new traces are excluded from replay because the prospective
-  historical reference binding cannot satisfy the strict causal replay entrance
-  for the same-job control. Authority:
-  `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md` and
+- The authorized geometry V4 500K continuation belongs to the separate branch
+  `codex/exp/geometry-v4-500k-pair` and the chat
+  "Geometry V4 500K 双臂续训监控". Its branch-local STATUS and launch records
+  own observations; query Kaggle before resuming any action. Do not duplicate
+  the earlier feasibility audit or replace the frozen checkpoint continuation.
+- The FP32/FP16 100K pair is retained on
+  `codex/exp/gptrans-fp16-precision-100k`. Its measured speed gate failed,
+  but formal terminal acceptance remains incomplete. The missing adapter and
+  prospective same-run reference binding are recorded on that branch; neither
+  a new run nor a replay-ready claim is released by its endpoint observation.
+- The centered-logits pair is scientifically closed. Its frozen historical
+  reference binding excludes strict causal replay; the gap is not a training
+  retry trigger. See
   `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md`.
-- The desktop-owned Kaggle1 pair-memory dual screen is terminally accepted.
-  On the aligned 50K internal-development rows, `memory_message` scored
-  `0.159906685 eV` versus the same-job `memory_value` reference at
-  `0.155583367 eV`; the +4.323 meV deficit closes the mechanism comparison
-  `NEGATIVE_UNDER_CONTRACT`. Both RML trajectories are terminal, but both
-  traces are excluded from replay for missing observed per-epoch fields; no
-  scale or successor is released. Authorities:
-  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md` and
-  `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/results/posthoc_attribution.md`.
-- The same-job Kaggle1 GPTrans-T input-initialization screen closed
-  `NEGATIVE_UNDER_CONTRACT`: the 15-table initialization change worsened the
-  100K/50K development MAE by 1.269 meV and did not show a practical runtime
-  benefit. No scale successor is released. The accepted decision and attribution
-  are in `experiments/pcqm_gptrans_input_init_100k/`; complete implementation
-  history is preserved on `archive` at `fc9d0d14`.
-- The local GPTrans-T 100K frozen-initialization diagnostic and raw/EMA probe
-  are terminal and accepted as mechanism evidence, not a model promotion.
-  The 100K gain survives prediction on the previously used 500K development
-  cohort; EMA selection is a weak contributor, while the exact cause of the
-  historical 500K gain contraction remains unresolved. Authority:
+- Server DSAR/DSMR material on `codex/fix/rml-500k-reference` remains separate
+  from desktop integration. Its old local status is not remote scheduler truth.
+- Kaggle TPU probes ran on CPU despite requested metadata. TPU execution needs
+  actual allocation and compatibility qualification; retained observations are
+  under `platforms/_records/kaggle/preflight/`.
+
+## Closed evidence entrypoints
+
+All accepted and historical module decisions are indexed in
+`experiments/README.md` and `research_memory/README.md`. Follow those pointers
+before selecting another module. No closed negative screen releases a successor.
+
+- Same-job input initialization: `experiments/pcqm_gptrans_input_init_100k/`.
+- Pair-memory, local-edge, centered-logit and geometry-channel attribution:
+  `research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md`.
+- 100K-to-500K transfer and raw/EMA probes:
   `experiments/pcqm_gptrans_100k_transfer_control/decision.md` and
-  `experiments/pcqm_gptrans_100k_transfer_control/selection_probe/decision.md`.
-- The frozen 500K readout probe is inconclusive for a readout bottleneck; the
-  scale-transfer postmortem closes `NO_TRAIN` and does not identify a unique
-  100K-to-500K cause. Neither changes the model recommendation or releases
-  another full run. Authorities:
-  `experiments/pcqm_gptrans_500k_frozen_readout/decision.md` and
   `experiments/pcqm_scale_transfer_reassessment/decision.md`.
-- The full K1/GPTrans-T R3 chain completed mechanical acceptance. On the same
-  73,545-row official-validation role, K1 scored 0.106672 eV, GPTrans-T scored
-  0.109012 eV, and their fixed 50:50 blend scored 0.102227 eV. The calibrated
-  blend scored 0.102186 eV on its frozen four-fifths holdout, but remained
-  behind the 0.099638 eV EdgeState reference. The route is closed without
-  promotion; exact evidence is under
-  `experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/`.
-- The one-time K1/GPTrans-T official-validation calibration role is consumed.
-  Test-dev/challenge remain sealed.
-- The 2026-09-19 IMS K1 and GPTrans-T continuation jobs completed and passed
-  local no-inference terminal acceptance. K1 stopped on patience after 79,185
-  additional steps; its selected score remains `0.106672 eV` with no gain.
-  GPTrans-T stopped at the frozen six-pass budget after 158,370 additional
-  steps; its selected EMA score is `0.103791 eV`, improving its source by
-  `0.005221 eV`. Zero stale evaluations mean GPTrans-T has no demonstrated
-  convergence plateau. Official validation was consumed for selection;
-  test-dev/challenge remain sealed. Authorities:
-  `experiments/pcqm_k1_full_convergence/decision.md` and
+- Retrospectively recovered frozen-weight diagnostic:
+  `experiments/pcqm_gptrans_frozen_transfer_probe/reconciliation_decision.md`.
+- Full K1/GPTrans fusion and convergence: see
+  `experiments/pcqm_k1_gptrans_full_fusion/README.md`,
+  `experiments/pcqm_k1_full_convergence/decision.md`, and
   `experiments/pcqm_gptrans_full_convergence/decision.md`.
-  A 2026-09-26 read-only IMS/local recheck found no artifact drift; audit:
-  `platforms/_records/ims/full_chain_reacceptance_20260926.md`.
-- Accepted PCQM scale identities are held on IMS and mirrored to the accepted
-  Kaggle account datasets for the 100K/500K roles.
-- Kaggle3 account `nvoid912` now has accepted private, byte-identical 100K and
-  500K fixed-data mirrors plus the accepted V5 desktop runtime source layer.
-  Script and notebook batch probes both retained `TpuV5E8` metadata but ran on
-  CPU, so TPU training is blocked pending an interactive allocation and
-  PyTorch/XLA/PyG compatibility gate. Evidence is under
-  `platforms/_records/kaggle/preflight/`.
-- IMS EdgeState continuation `1364434.ccpbs1` passed acceptance; the decision
-  is under `experiments/pcqm_edge_state_full/`.
-- GPTrans Noisy Nodes 500K on Kaggle 2 completed 60 epochs (`0.105056 eV`,
-  +0.001812 eV over the frozen `0.106868 eV` GPTrans reference, trailing K1 by
-  0.196 meV). Mechanical acceptance passed, but the scientific outcome is
-  `NEGATIVE_UNDER_CONTRACT` under the frozen `< 0.103868 eV` gate.
-  Authority: `experiments/pcqm_gptrans_noisy_nodes_500k/decision.md`.
-- GPTrans Noisy Nodes + Pair Update Norm 500K on Kaggle 3 (`nvoid912`) completed
-  60 epochs (`0.104812 eV`, 0.048 meV below K1 and +2.056 meV over the frozen
-  GPTrans reference). Mechanical acceptance passed, but the scientific outcome
-  is `NEGATIVE_UNDER_CONTRACT` under the frozen `< 0.103868 eV` gate.
-  Authority: `experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md`.
-- Every new remote run needs a frozen input contract, atomic checkpoints, and
- independently retrievable outputs before launch.
-- Desktop operations follow the installed V5 topology: desktop-owned remote
-  work remains durable and desktop-owned while offline; no default desktop
-  heartbeat, server fallback, or cross-machine takeover is part of live work.
-  Reconcile authoritative remote state when the desktop returns.
+- OGB submission/reproduction state:
+  `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md`.
+- Geometry nomination and its comparability limits:
+  `experiments/pcqm_geometry_transfer_500k/decision.md`.
 
-## Boundaries
+## Operating boundaries
 
-- Track B predicts only Gap and cannot replace Track A without a separate
-  production gate. Official validation is not a screen-tuning role; the authorized
-  frozen-model scoring and fusion uses are recorded above. Test-dev/challenge stay sealed.
-- IMS access is limited to `/lustre/home/users/sm2/chou/` and governed by
+- No default desktop heartbeat, server takeover or cross-machine live handoff.
+  Explicitly requested experiment monitors retain their own scope.
+- Remote work needs immutable source/configuration, atomic resumable state and
+  independently retrievable outputs. Reconcile scheduler and artifacts after downtime.
+- IMS access stays below `/lustre/home/users/sm2/chou/` under
   `platforms/REMOTE_HANDOFF.md`.
-- Common/OOD/P8-hard are one-time Track A acceptance roles, not tuning data.
-  Router, MoE, dataset replacement, and closed fusion routes stay closed without
-  a materially new question and stop rule in `ROADMAP.md`.
-- Train/inference conformer construction remains ETKDG-consistent.
-
-## Evidence Map
-
-| Question | Authoritative pointer |
-|---|---|
-| What ships now? | `production/README.md` |
-| Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
-| V4 reference status? | `experiments/pcqm_gptrans_t_100k_v4/decision.md`; accepted and closed for 100K promotion |
-| 500K geometry nomination? | `experiments/pcqm_geometry_transfer_500k/decision.md`; positive but not V4-comparable |
-| Recurrent Kaggle disposition? | `archive` branch at `285e1dc`; negative, closed |
-| Full K1/GPTrans-T chain? | `experiments/pcqm_k1_gptrans_full_fusion/README.md` and its linked 2026-09-14 recovery/evaluation evidence |
-| What was submitted for OGB review? | `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md` |
-| Experiment/data/remote/model indices? | `experiments/README.md`, `platforms/README.md`, `models/README.md` |
+- Common/OOD/P8-hard and official roles are governed by their frozen contracts;
+  they are not implementation or screen-tuning data.
+- Geometry training/inference must remain ETKDGv3+MMFF consistent.
+- Router, MoE, replacement-data and closed fusion routes need a materially new
+  question and stop rule before reopening. The Track A delivery queue is in
+  `ROADMAP.md`.

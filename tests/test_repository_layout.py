@@ -16,6 +16,7 @@ EXCLUDED_PARTS = {
     "_closed",       # settled experiments
     "_retired",      # replaced production evidence
     "_records",      # downloaded remote payloads
+    "_staging",      # generated source snapshots, not active implementation
     "packages",      # generated Kaggle copies, not source entrypoints
     "bundle",        # frozen remote wheel/notebook payloads
     "__pycache__",
@@ -191,7 +192,8 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
             reachable_evidence = False
             for decision in decisions:
                 decision_text = decision.read_text(encoding="utf-8", errors="ignore")
-                for raw_pointer in LOCAL_ARTIFACT_POINTER.findall(decision_text):
+                for raw_pointer in (LOCAL_ARTIFACT_POINTER.findall(decision_text)
+                                    + MARKDOWN_LINK.findall(decision_text)):
                     if not raw_pointer.endswith(".json"):
                         continue
                     resolved = resolve_doc_pointer(decision, raw_pointer)
