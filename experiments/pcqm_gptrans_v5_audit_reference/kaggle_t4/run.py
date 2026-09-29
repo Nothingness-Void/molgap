@@ -22,6 +22,7 @@ TRAIN_FILES = (
     "last_checkpoint.pt", "trace.json", "canonical_trace.json",
     "best_model.pt", "development_predictions.pt",
 )
+EXPECTED_PREVIOUS_EPOCHS = None
 
 
 def digest(path: Path) -> str:
@@ -65,17 +66,22 @@ def source_archive() -> tuple[Path, str, str]:
 
 def prior_segment() -> Path | None:
     candidates = list(Path("/kaggle/input").rglob("partial_manifest.json"))
-    candidates = [p for p in candidates if p.parent.name == "training"]
     if not candidates:
+        if EXPECTED_PREVIOUS_EPOCHS is not None:
+            raise RuntimeError("Required previous segment is not mounted")
         return None
+    if EXPECTED_PREVIOUS_EPOCHS is None:
+        raise RuntimeError("Unexpected previous segment mounted for first job")
     if len(candidates) != 1:
         raise RuntimeError("Ambiguous previous audit segment")
     prior = candidates[0].parent
     record = json.loads(candidates[0].read_text(encoding="utf-8"))
     if record.get("v5_audit") is not True or record.get("complete") is not False:
         raise RuntimeError("Previous segment is not a partial V5 audit")
-    if record["completed_epochs"] not in (10, 20, 30, 40, 50):
+    if record["completed_epochs"] != EXPECTED_PREVIOUS_EPOCHS:
         raise RuntimeError("Unexpected previous epoch boundary")
+    if record.get("source_archive_sha256") != SOURCE_SHA256 or record.get("manifest_sha256") != MANIFEST_SHA256:
+        raise RuntimeError("Previous segment scientific identity changed")
     expected = record.get("resume_file_sha256", {})
     if set(expected) != set(TRAIN_FILES):
         raise RuntimeError("Previous segment lacks resume-file checksums")

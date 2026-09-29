@@ -132,6 +132,12 @@ def test_segment_acceptance_checks_streaming_hashes_without_loading_checkpoint(t
     assert recorder.record["run_id"] == RUN
     accepted = accept_segment(root, 10, tmp_path / "acceptance.json")
     assert accepted["accepted"] and accepted["next_segment_authorized"]
+    import runpy
+    adapter = runpy.run_path(str(Path(__file__).resolve().parents[1] / "experiments/pcqm_gptrans_v5_audit_reference/prepare_continuation.py"), run_name="prepare_test")
+    staged = adapter["prepare"](root, 10, tmp_path / "progress", tmp_path / "kernel")
+    assert staged["accepted_epochs"] == 10
+    assert "EXPECTED_PREVIOUS_EPOCHS = 10" in (tmp_path / "kernel/run.py").read_text(encoding="utf-8")
+    assert (tmp_path / "progress/last_checkpoint.pt").read_bytes() == checkpoint.read_bytes()
     checkpoint.write_bytes(b"corrupted")
     import pytest
     with pytest.raises(RuntimeError, match="Resume hash last_checkpoint.pt"):
