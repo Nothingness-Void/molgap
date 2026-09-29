@@ -30,3 +30,11 @@ particular checkpoint mount directory. The pulled source matched the local
 package after newline normalization. The [failure observation](launch/attempt_002a.json)
 and [retry decision](retry_decision_attempt_002b.md) own that infrastructure
 attempt. Neither five-epoch checkpoint was advanced or replaced by a fresh run.
+
+The mount-discovery repair was submitted as the next version of
+`nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1` at the Kaggle
+2026-09-29 05:30 UTC last-run timestamp. Kaggle reported `RUNNING` at the
+submission check; the pulled entrypoint matched the frozen local package.
+Its [launch observation](launch/attempt_002b.json) has no startup or training
+acceptance yet. Later remote status must be reconciled before any further
+submission.
