@@ -1,4 +1,4 @@
-"""Stage a self-contained Kaggle kernel from the frozen scientific source."""
+"""Stage the Kaggle adapter after verifying its separately mounted source."""
 
 from __future__ import annotations
 
@@ -30,8 +30,6 @@ def main() -> None:
     output.mkdir(parents=True)
     for name in ("run.py", "kernel-metadata.json"):
         shutil.copyfile(base / name, output / name)
-    for name in ("source_payload.bin", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
-        shutil.copyfile(source / name, output / name)
     print(f"Staged verified Kaggle kernel: {output}")
 
 

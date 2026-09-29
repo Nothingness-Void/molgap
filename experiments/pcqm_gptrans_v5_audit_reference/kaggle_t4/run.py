@@ -41,10 +41,7 @@ def mounted(name: str, expected: str) -> Path:
 
 def source_archive() -> tuple[Path, str, str]:
     matches = []
-    candidates = [*Path("/kaggle/input").rglob("source_payload.bin"), Path(__file__).resolve().parent / "source_payload.bin"]
-    for archive in candidates:
-        if not archive.is_file():
-            continue
+    for archive in Path("/kaggle/input").rglob("source_payload.bin"):
         sidecar = archive.parent / "SOURCE_ARCHIVE_SHA256.txt"
         commit = archive.parent / "SOURCE_COMMIT.txt"
         inventory = archive.parent / "SOURCE_FILES.json"
