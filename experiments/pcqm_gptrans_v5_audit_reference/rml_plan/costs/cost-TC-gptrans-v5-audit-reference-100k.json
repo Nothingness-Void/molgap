@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "training",
+  "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k",
+  "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/budget_snapshot.json",
+  "hardware": "NvidiaTeslaT4-allocated-shape",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 20.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 10.0
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+}
