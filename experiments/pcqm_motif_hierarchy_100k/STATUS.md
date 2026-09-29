@@ -70,3 +70,18 @@ The existing Luna B heartbeat now monitors only v3. The [receipt](attempt_v3/sub
 [binding](attempt_v3/monitor_binding.json), and T4-only [protocol](attempt_v3/protocol.md)
 own this physical run. No runtime certificate, training metric, or model result
 has yet been accepted.
+
+Version 3 then reached exact-version Kaggle status `COMPLETE`. The Luna B
+heartbeat did not hand off: its saved prompt contradicted itself by inserting
+`pcqm_k1_motif_hierarchy_100k` into the sole binding path while describing the
+real directory as `pcqm_motif_hierarchy_100k`. It returned `UNKNOWN` and
+paused. A used the correct absolute binding, recorded the idempotent COMPLETE
+event, retrieved the exact v3 outputs, and completed no-inference acceptance.
+The saved automation prompt was corrected and remains `PAUSED`; the bound
+control event is `CLOSED`. No duplicate training was submitted.
+
+The [v3 decision](attempt_v3/decision.md), [saved-artifact acceptance](attempt_v3/results/raw_acceptance.json),
+and [terminal RML record](attempt_v3/gpu_rml_plan/rml_finalized/) establish a
+strict/replay-ready negative against K1-v4. All 40 epochs and allocated T4x2
+cost are retained; official validation, test-dev and challenge remain unread.
+No seed, audit, scale-up, full run or automatic successor was released.
