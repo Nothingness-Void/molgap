@@ -74,16 +74,17 @@ compact [acceptance](results/segment_05_acceptance.json) and
 [operation receipt](results/segment_05_operation.json) bind this observation.
 
 The private progress dataset `kaseichou/molgap-gptrans-v5-audit-progress-v1`
-version 5 is ready. Kaggle's whole-dataset download returned 404 despite ready
-status and six listed files; its per-file API downloaded all six, and all five
-resume payload SHA values matched the partial manifest. The same kernel's
-version 6 was submitted with `EXPECTED_PREVIOUS_EPOCHS=50` and `NvidiaTeslaT4`;
-remote source SHA matches the staged script, metadata binds the four exact
-datasets and T4, and the scheduler reported `RUNNING` at the observation. Its
-next gate is final 60-epoch prediction, role, certificate, cost and V5 trajectory
-acceptance, not a new scientific arm. Neither G1 nor G2 is released by queue state.
-
-The local thread heartbeat `gptrans-100k` checks this exact chain every 30
-minutes, stays silent while status is unchanged, and may submit the next
-segment only after the preceding output passes `accept_segment.py`. It must
-stop itself after full acceptance or an actionable block.
+version 5 supplied the SHA-verified continuation input. Kaggle's whole-dataset
+download returned 404 despite ready status; per-file retrieval recovered the
+six files and verified the resume payloads. The same kernel's version 6 then
+completed epochs 50–59. The final segment passed streaming checkpoint/trace
+acceptance, and the 50K prediction content, model hashes, selection, and role
+flags passed independent result acceptance. All six segments have the same
+fixed manifest, source archive, and runtime certificate; each allocated two
+T4s and used one. The measured total is 5.0155572684 allocated T4-device-hours.
+The accepted EMA development MAE is 0.1560144881 eV at epoch 59. The exact
+[final acceptance](results/final_acceptance.json), [final segment operation](results/segment_06_operation.json),
+and [decision](decision.md) retain the evidence and scope. No successor was
+submitted. Strict RML terminal/reference-bundle packaging remains separate
+from the completed artifact and trajectory checks; neither G1 nor G2 is
+released by this baseline.

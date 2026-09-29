@@ -66,6 +66,16 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The authorized GPTrans-T 100K V5 evidence-baseline rerun completed six accepted
+Kaggle2 T4 segments and final prediction/trajectory checks. Its selected EMA
+internal-development MAE is `0.1560144881 eV` at epoch 59; the full two-T4
+allocation cost `5.0155572684` device-hours. The result repairs the missing
+live-development trace, not GPTrans architecture or the official benchmark.
+Strict RML terminal/reference-bundle packaging is not yet complete, so no
+replay-ready causal comparison, G1/G2, additional seed, 500K, or protected role
+is released. Authority: [decision](experiments/pcqm_gptrans_v5_audit_reference/decision.md)
+and [acceptance](experiments/pcqm_gptrans_v5_audit_reference/results/final_acceptance.json).
+
 The server-owned frozen K1 representation diagnostic is submitted on Kunshan
 as job `123315282` (30-minute cap). It compares accepted 100K/500K checkpoints
 on one predeclared development panel without training or protected-role access.
