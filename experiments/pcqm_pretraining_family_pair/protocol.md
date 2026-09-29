@@ -39,25 +39,19 @@ It changes neither Track A production nor the accepted full EdgeState reference.
 
 Use the same authorized 100K training membership for both arms, seed42,
 physical BS128, FP32/no TF32, full-batch drop_last and deterministic order.
-Each arm: 10 local pretraining passes, then 60 Gap passes. At 781 updates/pass,
-this is 7,810 pretraining updates + 46,860 Gap updates = 54,670 updates and
-6,997,760 presented graphs per arm. These are planned counters, not observations.
-Relative to a 60-pass scratch run, pretraining adds 16.7% encoder passes;
-its wall-time increment is unknown and is not claimed to be <=5%.
+Each arm has 10 local pretraining passes. K1 then uses exactly the historical
+40-pass downstream recipe: 7,810 + 31,240 = 39,050 updates, 4,998,400 sample
+presentations. GPTrans joint uses exactly its 60-pass downstream recipe:
+7,810 + 46,860 = 54,670 updates, 6,997,760 presentations. These are planned,
+not measured, counters. The previously proposed extra 20 K1 passes are cancelled.
+Additional pretraining exposure is 25% of K1 downstream exposure and 16.7% of
+GPTrans downstream exposure; native wall-time ratios remain unmeasured.
 
-Arm A preserves the K1 40-pass reference scheduler exactly for Gap passes
-1-40, stores its selected and endpoint payload, then continues 20 passes at
-the frozen final learning rate without resetting optimizer state. Its strict
-reference comparison is at the 40-pass window; passes41-60 are descriptive
-continuation until an exact longer-exposure reference is independently found.
-Arm B preserves its 60-pass joint-variant reference scheduler and selection.
-The 60-pass cross-family endpoint ranks complete recipes only.
-
-Use family-owned downstream optimizer/loss recipes, with a prospectively frozen
-family-specific scheduler matching the reused reference at its comparison endpoint. K1 gets clean normalized Gap L1; GPTrans retains its original
-Noisy Nodes loss (alpha0.1, corruption0.15) and Pair Update Norm during Gap
-training. Do not silently disable those mechanisms and still call it the same
-variant. Both arms start from the same seed's own family initialization, not
+Preserve each accepted reference optimizer, scheduler, loss, selection and
+EMA semantics verbatim. K1 receives clean normalized Gap L1; GPTrans retains
+Noisy Nodes alpha0.1/corruption0.15 plus Pair Update Norm. Reuse their accepted
+reference records; do not repeat scratch training.
+Both arms start from the same seed's own family initialization, not
 from previously Gap-trained checkpoints. Reset optimizer/scheduler at the
 pretrain-to-Gap transition; reinitialize the unused scalar Gap head from a
 separate frozen seed. Reset the downstream RNG/order stream at that boundary.
@@ -99,13 +93,12 @@ not another search over the old EdgeState 10/30 allocation. No extra fresh audit
 protected role or repeated baseline is added merely for bookkeeping. A later
 promotion audit is a separate decision. Do not relabel the reused role as fresh.
 
-Retain development predictions at Gap20/30/40/60 and each reference-matched
+Retain development predictions at Gap20/30/40 (plus60 for GPTrans) and each reference-matched
 selected checkpoint. K1 uses its reference weight semantics; GPTrans uses its
 own reference EMA semantics. Never silently replace EMA with live/raw selection.
 Capture additional raw metrics separately for interpretation. Compare early/tail
 relative gains only where reference trace exposure and metric semantics match.
-Without a 60-pass K1 reference, further K1 absolute improvement is descriptive,
-not an identified additional pretraining gain. Fixed-train-cohort metrics are
+Fixed-train-cohort metrics are
 needed for fitting attribution; online training loss alone is insufficient.
 Row bootstrap does not measure training-seed variability.
 
@@ -117,7 +110,7 @@ allocation, mounts, source package and durable output. No account/run is assumed
 Engineering budget proposal: 8 T4-hours per arm / 16 allocated T4-hours total,
 with separately recorded CPU cache cost. This is a cap, not a runtime forecast.
 Use measured warmup/profile plus evaluation/save overhead to decide whether
-70 passes fit. If not, STOP_FOR_COST or freeze a new plan before launch; do not
+each arm's frozen exposure fits. If not, STOP_FOR_COST or freeze a new plan before launch; do not
 truncate scientific exposure or silently shrink the batch. Durable checkpoint
 stages must fit the verified platform limit and retain processed step cursor,
 sampler and mask RNG, model/head/optimizer/scheduler, source/config/cache pins,

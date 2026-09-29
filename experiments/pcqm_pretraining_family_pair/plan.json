@@ -1,5 +1,5 @@
 {
-  "status": "SUBMISSION_BLOCKED_INPUT_AND_ADAPTER_GATES",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
   "owner": "desktop",
   "question": "Short local pretraining followed by longer Gap adaptation on two selected families",
   "train_rows": 100000,
@@ -8,10 +8,8 @@
   "seed": 42,
   "precision": "fp32-no-tf32",
   "pretrain_epochs": 10,
-  "total_gap_epochs": 60,
+  "total_gap_epochs": "family_reference_matched",
   "steps_per_epoch": 781,
-  "per_arm_planned_steps": 54670,
-  "per_arm_planned_presentations": 6997760,
   "arms": [
     {
       "id": "k1_pretrained",
@@ -19,9 +17,11 @@
       "inference_parameters": 3658817,
       "reference_id": "pcqm-k1-v4-100k-reference-s42",
       "matched_gap_epochs": 40,
-      "extra_gap_epochs": 20,
-      "extra_schedule": "hold-reference-final-lr",
-      "reference_binding_status": "canonical-record-found-payload-verification-pending"
+      "extra_gap_epochs": 0,
+      "reference_binding_status": "canonical-record-found-payload-verification-pending",
+      "gap_epochs": 40,
+      "planned_updates": 39050,
+      "planned_sample_presentations": 4998400
     },
     {
       "id": "gptrans_joint_pretrained",
@@ -30,7 +30,10 @@
       "reference_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "matched_gap_epochs": 60,
       "extra_gap_epochs": 0,
-      "reference_binding_status": "canonical-record-found-payload-verification-pending"
+      "reference_binding_status": "canonical-record-found-payload-verification-pending",
+      "gap_epochs": 60,
+      "planned_updates": 54670,
+      "planned_sample_presentations": 6997760
     }
   ],
   "platform_proposal": {

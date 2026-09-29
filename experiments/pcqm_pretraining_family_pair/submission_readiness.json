@@ -27,13 +27,22 @@
     "reason": "Legacy parent graph/geometry and role identities differ; official fixed V4 uses 100K/50K."
   },
   "release_blockers": [
-    "No verified V4-local-hierarchy functional-group sidecar or authenticated SMILES-to-graph atom mapping bound to this run.",
-    "The legacy local hierarchy implementation hardcodes EdgeState hooks and 192/64 heads; reviewed K1/GPTrans stage adapters and resume qualification are not implemented.",
-    "No executable Spec v2 per-arm prospective bindings or source package/preflight certificates exist."
+    "Matching V5 atom-aligned functional-group sidecar is not built/accepted.",
+    "Family feature/masking adapter implemented; dual-stage runner, transition and resumable-state integration remain incomplete.",
+    "Per-arm executable Spec/prospective source packages and actual runtime preflight remain incomplete."
   ],
   "resource_claims": {
     "t4_quota_available": null,
     "new_gpu_allocated": false
   },
-  "scientific_result": null
+  "scientific_result": null,
+  "updated_at": "2026-09-29T18:42:29.094232+00:00",
+  "shutdown_authorized_after_verified_submission": true,
+  "shutdown_executed": false,
+  "implementation_progress": {
+    "local_reconstruction_adapter": "src/molgap/local_hierarchy_adapter.py",
+    "static_tensor_tests_passed": 7,
+    "model_execution_verified": false,
+    "stage_resume_runner_complete": false
+  }
 }
