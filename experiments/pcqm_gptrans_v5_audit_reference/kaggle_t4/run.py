@@ -15,6 +15,8 @@ import time
 
 MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
 INITIAL_SHA256 = "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+SOURCE_SHA256 = "af94a63c3c4626ceec8af4106aad0ea97d398e40aefb04c51b15356b994137a3"
+SOURCE_COMMIT = "21f70ab93c3b0ddc4745316daf8459df40efdb48"
 OUTPUT = Path("/kaggle/working/gptrans_v5_audit_reference")
 TRAIN_FILES = (
     "last_checkpoint.pt", "trace.json", "canonical_trace.json",
@@ -39,14 +41,19 @@ def mounted(name: str, expected: str) -> Path:
 
 def source_archive() -> tuple[Path, str, str]:
     matches = []
-    for archive in Path("/kaggle/input").rglob("source_payload.bin"):
+    candidates = [*Path("/kaggle/input").rglob("source_payload.bin"), Path(__file__).resolve().parent / "source_payload.bin"]
+    for archive in candidates:
+        if not archive.is_file():
+            continue
         sidecar = archive.parent / "SOURCE_ARCHIVE_SHA256.txt"
         commit = archive.parent / "SOURCE_COMMIT.txt"
         inventory = archive.parent / "SOURCE_FILES.json"
         if not all(p.is_file() for p in (sidecar, commit, inventory)):
             continue
         expected = sidecar.read_text(encoding="ascii").strip()
-        if digest(archive) != expected:
+        if digest(archive) != expected or expected != SOURCE_SHA256:
+            continue
+        if commit.read_text(encoding="ascii").strip() != SOURCE_COMMIT:
             continue
         files = {item["path"] for item in json.loads(inventory.read_text(encoding="utf-8"))["files"]}
         if "src/molgap/pcqm_gptrans_v4.py" in files and "src/molgap/research_memory/trace.py" in files:
