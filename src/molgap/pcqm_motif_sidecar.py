@@ -220,3 +220,99 @@ def accept_sidecar(root: Path, *, expected_source_commit: str) -> dict:
     }
     atomic_json(root / "acceptance.json", acceptance)
     return acceptance
+
+
+def attach_motif_roles(roles, fixed_manifest):
+    """Attach the accepted topology bytes without PyG's node-index offsets.
+
+    Membership and motif-edge endpoints are deliberately stored under names
+    without ``index``: PyG would otherwise increment them by atom count.
+    The model applies motif-count offsets after batching.
+    """
+    import os
+    import torch
+
+    from .pcqm_k1_variants_runner import (
+        DEVELOPMENT_ROWS, FIXED_GEOMETRY_SHA256, FIXED_MANIFEST_SHA256,
+        TRAIN_ROWS,
+    )
+
+    expected_manifest = "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b"
+    expected_aggregate = "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae"
+    expected_source = "e734870b92b9d8580c94bf4f3aa2b4d5743706d8"
+    input_root = Path(os.environ.get("MOLGAP_MOTIF_SIDECAR_ROOT", "/kaggle/input"))
+    matches = [p for p in input_root.rglob("manifest.json")
+               if sha256_file(p) == expected_manifest]
+    if len(matches) != 1:
+        raise RuntimeError(f"Expected one immutable motif manifest, found {len(matches)}")
+    root = matches[0].parent
+    manifest = json.loads(matches[0].read_text(encoding="utf-8"))
+    acceptance_path = root / "acceptance.json"
+    if not acceptance_path.is_file():
+        raise RuntimeError("Accepted motif sidecar lacks acceptance")
+    acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+    if (manifest.get("format") != FORMAT or manifest.get("complete") is not True
+            or manifest.get("source_commit") != expected_source
+            or manifest.get("aggregate_sha256") != expected_aggregate
+            or manifest.get("fixed_manifest_sha256") != FIXED_MANIFEST_SHA256
+            or manifest.get("fixed_geometry_sha256") != FIXED_GEOMETRY_SHA256
+            or manifest.get("role_counts") != {"train": TRAIN_ROWS, "development": DEVELOPMENT_ROWS}
+            or manifest.get("derived_from_ogb_2d_only") is not True
+            or acceptance.get("format") != ACCEPTANCE_FORMAT
+            or acceptance.get("accepted") is not True
+            or acceptance.get("manifest_sha256") != expected_manifest
+            or acceptance.get("aggregate_sha256") != expected_aggregate
+            or acceptance.get("rows_recomputed") != TRAIN_ROWS + DEVELOPMENT_ROWS
+            or any(manifest.get(key) is not False or acceptance.get(key) is not False
+                   for key in ("gap_labels_read", "official_validation_role_read",
+                               "test_dev_role_read", "test_challenge_role_read"))):
+        raise RuntimeError("Motif sidecar identity or role seal changed")
+    rows_by_role = {"train": [], "development": []}
+    if len(manifest["shards"]) != len(fixed_manifest["geometry_shards"]):
+        raise RuntimeError("Motif shard count changed")
+    for item, parent in zip(manifest["shards"], fixed_manifest["geometry_shards"], strict=True):
+        path = (root / item["file"]).resolve()
+        if (not path.is_relative_to(root.resolve())
+                or item["role"] != parent["role"]
+                or item["parent_file"] != parent["file"]
+                or item["parent_sha256"] != parent["sha256"]
+                or sha256_file(path) != item["sha256"]):
+            raise RuntimeError("Motif shard or accepted parent hash changed")
+        shard_rows = torch.load(path, map_location="cpu", weights_only=False)
+        if len(shard_rows) != item["rows"]:
+            raise RuntimeError("Motif shard row count changed")
+        rows_by_role[item["role"]].extend(shard_rows)
+    if _aggregate(manifest["shards"]) != expected_aggregate:
+        raise RuntimeError("Motif aggregate changed")
+
+    class AttachedRole(torch.utils.data.Dataset):
+        def __init__(self, graphs, rows, offset):
+            if len(graphs) != len(rows):
+                raise RuntimeError("Motif role length mismatch")
+            self.graphs, self.rows, self.offset = graphs, rows, offset
+            self.datasets = graphs.datasets
+
+        def __len__(self):
+            return len(self.rows)
+
+        def __getitem__(self, index):
+            graph, row = self.graphs[index], self.rows[index]
+            if (int(graph.source_idx.view(-1)[0]) != self.offset + index
+                    or row["source_idx"] != self.offset + index
+                    or row["node_count"] != graph.num_nodes
+                    or row["motif_index"].numel() != graph.num_nodes
+                    or row["motif_edge_index"].shape[0] != 2):
+                raise RuntimeError("Motif row/graph alignment changed")
+            graph.motif_membership = row["motif_index"]
+            graph.motif_count = torch.tensor([row["motif_count"]], dtype=torch.long)
+            graph.motif_source = row["motif_edge_index"][0]
+            graph.motif_target = row["motif_edge_index"][1]
+            graph.motif_edge_count = torch.tensor([row["motif_edge_index"].shape[1]], dtype=torch.long)
+            graph.motif_bond_type = row["motif_bond_type"]
+            graph.motif_bridge_rule_mask = row["motif_bridge_rule_mask"]
+            return graph
+
+    return ({
+        role: AttachedRole(roles[role], rows_by_role[role], offset)
+        for role, offset in (("train", 0), ("development", TRAIN_ROWS))
+    }, manifest)

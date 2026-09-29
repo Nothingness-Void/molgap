@@ -19,6 +19,17 @@ REPSET_ELEMENTS = 8
 REPSET_CHANNELS = 64
 
 ARCHITECTURE_CONFIGS = {
+    "neural_atom_k1_motif_hierarchy": {
+        "backbone": "neural_atom_k1_v4",
+        "change": "one-layer6-real-bond-motif-graph-exchange",
+        "exchange_layer": 6,
+        "motif_channels": 64,
+        "expected_parameters": 3_693_505,
+        "motif_sidecar_aggregate_sha256": "5466ccd1f498619b045eb73d82f958949c1474ff0d303b99d6fd226737a0b8ae",
+        "initialization_policy": "exact-nested-k1-zero-return",
+        "geometry": False,
+        "teacher": False,
+    },
     **RELATION_RESOLUTION_CONFIGS,
     **{
         mode: {
@@ -1002,6 +1013,10 @@ def make_encoder(mode: str):
     """Build frozen K1 or one isolated global-allocation candidate."""
     if mode not in ARCHITECTURE_CONFIGS:
         raise ValueError(f"Unknown K1 variant: {mode}")
+
+    if mode == "neural_atom_k1_motif_hierarchy":
+        from .k1_motif_hierarchy import make_encoder as make_motif
+        return make_motif(mode)
 
     if mode in CHEM_LOCAL_MODES:
         from .k1_chem_local import make_encoder as make_chem_local

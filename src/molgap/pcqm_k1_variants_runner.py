@@ -310,6 +310,13 @@ def _development_loader(graphs):
 
 
 def _forward(model, batch):
+    if getattr(model, "requires_motif_hierarchy", False):
+        return model(
+            batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+            batch.random_walk_pe, batch.motif_membership, batch.motif_count,
+            batch.motif_source, batch.motif_target, batch.motif_edge_count,
+            batch.motif_bond_type, batch.motif_bridge_rule_mask,
+        ).view(-1)
     if getattr(model, "requires_conjugated_components", False):
         return model(
             batch.x, batch.edge_index, batch.edge_attr, batch.batch,
@@ -382,6 +389,10 @@ def _batch_sha256(batch) -> str:
         names.append("functional_group_y")
     if hasattr(batch, "wedge_edge_ids"):
         names.append("wedge_edge_ids")
+    if hasattr(batch, "motif_membership"):
+        names.extend(("motif_membership", "motif_count", "motif_source",
+                      "motif_target", "motif_edge_count", "motif_bond_type",
+                      "motif_bridge_rule_mask"))
     for name in names:
         value = getattr(batch, name).detach().cpu().contiguous()
         digest.update(name.encode("ascii") + b"\0")
@@ -497,6 +508,7 @@ def _base_state(model):
 
 
 def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
+    from .k1_motif_hierarchy import MODES as MOTIF_MODES
     from .k1_conjugated_hyperedge import (
         MODES as CONJUGATED_MODES, check_mechanism as check_conjugated,
     )
@@ -583,6 +595,7 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         + ONESHOT_TRIPLET_MODES
         + PAIR_TOKEN_MOSE_MODES
         + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES + CHEM_LOCAL_MODES
+        + MOTIF_MODES
     )
     import torch
 
@@ -705,6 +718,18 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         mechanism_checks = {}
     if mode in CONJUGATED_MODES:
         mechanism_checks = check_conjugated(model, batch)
+    if mode in MOTIF_MODES:
+        mechanism_checks = {
+            "source_motif_aggregate_sha256": ARCHITECTURE_CONFIGS[mode]["motif_sidecar_aggregate_sha256"],
+            "batch_motif_count": int(batch.motif_count.sum()),
+            "batch_inter_motif_edges": int(batch.motif_edge_count.sum()),
+            "zero_return_exact": exact_nested_initialization,
+            "local_real_bond_edge_state_preserved": True,
+        }
+        if (mechanism_checks["batch_motif_count"] <= len(batch.motif_count)
+                or mechanism_checks["batch_inter_motif_edges"] <= 0
+                or exact_nested_initialization is not True):
+            raise RuntimeError("Motif graph preflight has no active nested exchange")
     if mode == "neural_atom_k4_cluster":
         mixer = model.base.neural_atom_mixers[str(MIXER_LAYERS[0])]
         probe = torch.linspace(
@@ -1336,6 +1361,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         candidate_parameters = list(model.relation_token.parameters())
     elif mode in CHEM_LOCAL_MODES:
         candidate_parameters = list(model.local_adapter.parameters())
+    elif mode in MOTIF_MODES:
+        candidate_parameters = list(model.return_projection.parameters())
     elif mode in PORTABILITY_MODES:
         candidate_parameters = (
             list(model.rwse_refresh.parameters())
@@ -1458,6 +1485,8 @@ def _architecture_preflight(mode: str, roles, target_stats: dict) -> dict:
         != ARCHITECTURE_CONFIGS[mode]["expected_parameters"]
     ):
         raise RuntimeError("K1-MoSE parameter identity changed")
+    if mode in MOTIF_MODES and parameter_count != ARCHITECTURE_CONFIGS[mode]["expected_parameters"]:
+        raise RuntimeError("K1 motif parameter identity changed")
     peak_reserved_mib = torch.cuda.max_memory_reserved() / 1024**2
     total_memory_mib = torch.cuda.get_device_properties(0).total_memory / 1024**2
     memory_reserve_fraction = 1.0 - peak_reserved_mib / total_memory_mib
@@ -1605,6 +1634,7 @@ def train_arm(
     from .k1_linear_attention import MODES as LINEAR_MODES
     from .k1_relation_resolution import MODES as RESOLUTION_MODES
     from .k1_chem_local import MODES as CHEM_LOCAL_MODES
+    from .k1_motif_hierarchy import MODES as MOTIF_MODES
     active_edge_modes = EDGE_MEMORY_MODES + EDGE_SLOT_MODES
     recovery_chunk_modes = (
         active_edge_modes
@@ -1619,6 +1649,7 @@ def train_arm(
         + SPD_PAIR_TOKEN_MODES
         + ONESHOT_TRIPLET_MODES
         + PORTABILITY_MODES + LINEAR_MODES + RESOLUTION_MODES + CHEM_LOCAL_MODES
+        + MOTIF_MODES
         + MOSE_MODES
     )
 
@@ -1640,7 +1671,7 @@ def train_arm(
         raise ValueError("target_transform_asset is only valid with objective_recipe")
     if len(source_commit) != 40 or len(source_archive_sha256) != 64:
         raise ValueError("Committed source and archive identities are required")
-    if mode in RESOLUTION_MODES + CHEM_LOCAL_MODES:
+    if mode in RESOLUTION_MODES + CHEM_LOCAL_MODES + MOTIF_MODES:
         if not trajectory_id or not physical_run_id:
             raise ValueError("Architecture study requires prospective trajectory and physical run binding")
         if resume_from is not None:
@@ -1702,6 +1733,10 @@ def train_arm(
         roles, conjugated_manifest = attach_sidecar(
             roles, expected_source_commit=source_commit,
         )
+    motif_manifest = None
+    if mode in MOTIF_MODES:
+        from .pcqm_motif_sidecar import attach_motif_roles
+        roles, motif_manifest = attach_motif_roles(roles, manifest)
     functional_group_manifest = None
     if mode in FUNCTIONAL_GROUP_MODES + CHEM_TYPED_PAIR_MODES:
         from .pcqm_functional_group_sidecar import attach_functional_group_roles
@@ -1760,6 +1795,14 @@ def train_arm(
     if conjugated_manifest is not None:
         preflight["conjugated_sidecar"] = {
             "aggregate_sha256": conjugated_manifest["aggregate_sha256"],
+            "derived_only_from_ogb_graph_features": True,
+            "gap_labels_read": False,
+            "protected_roles_read": False,
+        }
+    if motif_manifest is not None:
+        preflight["motif_sidecar"] = {
+            "manifest_sha256": "77f1bff1fdd32c94bc5d39b53d28f79de51c35e804a2b3555f1f1ae8c7a3234b",
+            "aggregate_sha256": motif_manifest["aggregate_sha256"],
             "derived_only_from_ogb_graph_features": True,
             "gap_labels_read": False,
             "protected_roles_read": False,
@@ -1901,7 +1944,7 @@ def train_arm(
             raise RuntimeError("Linear screen resume requires a separately reviewed canonical-trace binding")
         canonical = recorder(output, "TC-k1-linear-attention-100k-s42",
                              "nothingnessvoid/molgap-k1-linear-attention-s42:v1")
-    elif mode in RESOLUTION_MODES + CHEM_LOCAL_MODES:
+    elif mode in RESOLUTION_MODES + CHEM_LOCAL_MODES + MOTIF_MODES:
         from .k1_screen_trace import recorder, record_epoch
         canonical = recorder(output, trajectory_id, physical_run_id)
     elif joint_objective is not None:
@@ -2194,6 +2237,12 @@ def train_arm(
             "format": conjugated_manifest["format"],
             "aggregate_sha256": conjugated_manifest["aggregate_sha256"],
             "source_commit": conjugated_manifest["source_commit"],
+        }
+    if motif_manifest is not None:
+        record["motif_sidecar"] = {
+            "format": motif_manifest["format"],
+            "aggregate_sha256": motif_manifest["aggregate_sha256"],
+            "source_commit": motif_manifest["source_commit"],
         }
     if mode == "neural_atom_k1_v4" and joint_config is None:
         record["contract"].update(
