@@ -1,0 +1,21 @@
+{
+  "format": "molgap-kaggle-paired-release-gate-v1",
+  "status": "LOCAL_LOADER_PREFLIGHT_PASSED_GPU_PREFLIGHT_PENDING",
+  "kernel": "nothingnessvoid/molgap-gptrans-input-init-pair-100k-s42-v1",
+  "source_dataset": "nothingnessvoid/molgap-gptrans-init-pair-100k-source-v1",
+  "graph_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "arm_ids": ["reference", "input-embedding-normal002"],
+  "arm_loader_statuses": {
+    "reference": "LOADER_VERIFIED_ONLY",
+    "input-embedding-normal002": "LOADER_VERIFIED_ONLY"
+  },
+  "spec_identity": "660f94cb5487828069fd529d20febd3bda07df5463e5b351f37005e8308b415d",
+  "source_commit": "e0f8493539e4d70deb96ef378b133ee39354b78a",
+  "package_identity": "a811a0ba76f2df0f64a00cb10d1035f9fdf80017c7c51d9f8620e386e5bc08f4",
+  "source_archive_sha256": "95aee9a302f22fcfab0bb05ad1ad1f5b564dbd8b0ae05ef2305ea28933aa1a24",
+  "shard_manifest_sha256": "3622047a39785939e3cf9601d3bc39dfdf68d290457d51174c19c93192e6cba9",
+  "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initial_state_artifact_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "packaged_semantics_checks": 16,
+  "gpu_preflight_status": "PENDING_REMOTE"
+}
