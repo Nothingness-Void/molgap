@@ -1,0 +1,48 @@
+{
+  "status": "PLAN_ONLY",
+  "owner": "desktop",
+  "question": "Short local pretraining followed by longer Gap adaptation on two selected families",
+  "train_rows": 100000,
+  "batch_size": 128,
+  "drop_last": true,
+  "seed": 42,
+  "precision": "fp32-no-tf32",
+  "pretrain_epochs": 10,
+  "total_gap_epochs": 60,
+  "steps_per_epoch": 781,
+  "per_arm_planned_steps": 54670,
+  "per_arm_planned_presentations": 6997760,
+  "arms": [
+    {
+      "id": "k1_pretrained",
+      "family": "neural_atom_k1_v4",
+      "inference_parameters": 3658817,
+      "reference_id": "pcqm-k1-v4-100k-reference-s42",
+      "matched_gap_epochs": 40,
+      "extra_gap_epochs": 20,
+      "extra_schedule": "hold-reference-final-lr",
+      "reference_binding_status": "canonical-record-found-payload-verification-pending"
+    },
+    {
+      "id": "gptrans_joint_pretrained",
+      "family": "gptrans_noisy_nodes_pair_update_norm",
+      "historical_training_parameters": 5277400,
+      "reference_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "matched_gap_epochs": 60,
+      "extra_gap_epochs": 0,
+      "reference_binding_status": "canonical-record-found-payload-verification-pending"
+    }
+  ],
+  "platform_proposal": {
+    "accelerator": "T4",
+    "device_count": 2,
+    "per_arm_t4_hour_cap": 8,
+    "account": null,
+    "submission_authorized": false
+  },
+  "minimum_gain_eV": 0.003,
+  "label_cache_sha256": null,
+  "source_package_sha256": null,
+  "reference_retraining_planned": false,
+  "canonical_prospective_published": false
+}

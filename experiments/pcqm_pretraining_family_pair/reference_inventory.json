@@ -1,0 +1,34 @@
+[
+  {
+    "source_commit": "67a6237895ce94d502991d251f22654df3ab06c7",
+    "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+    "sha256": "bfb20f300820315e3d4a869d3709c22fc61fe94a43582eb5d674b47b3918b9b2",
+    "evidence_id": "pcqm-k1-v4-100k-reference-s42",
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "complete_local_verified",
+      "comparison_status": "strict_reference_accepted",
+      "scientific_status": "frozen_reference",
+      "transfer_status": "reusable_same_contract_only",
+      "budget_decision": "closed",
+      "full_handoff_status": "not_applicable"
+    },
+    "note": "Canonical record inspected; artifact bytes not reverified in this planning action."
+  },
+  {
+    "source_commit": "22af38b37cc60ec1e20ddc93eaff3e467b55007f",
+    "path": "experiments/pcqm_gptrans_noisy_pair_norm_100k/v5_evidence.json",
+    "sha256": "a2779a2baae63b96c62b75835385c8baef3fdf80e07161c7cae37c531acab59f",
+    "evidence_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "accepted",
+      "comparison_status": "paired_development_comparison_complete",
+      "scientific_status": "positive_under_contract",
+      "transfer_status": "qualified_for_500k",
+      "budget_decision": "closed_positive",
+      "full_handoff_status": "candidate_500k"
+    },
+    "note": "Canonical record inspected; artifact bytes not reverified in this planning action."
+  }
+]
