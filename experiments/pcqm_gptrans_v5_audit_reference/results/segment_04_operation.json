@@ -1,0 +1,33 @@
+{
+  "format": "molgap-gptrans-v5-audit-segment-operation-v1",
+  "observed_utc": "2026-09-29T20:06:59Z",
+  "accepted_segment": {
+    "kernel_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+    "version": 4,
+    "remote_id_no": 136421626,
+    "status": "COMPLETE",
+    "acceptance_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_04_acceptance.json",
+    "completed_epochs": 40,
+    "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "source_archive_sha256": "af94a63c3c4626ceec8af4106aad0ea97d398e40aefb04c51b15356b994137a3",
+    "runtime_certificate_id": "dbbe37028e4aa37a62747cee0a785a3bd8d316826e1595936e4c3c9d707792b4",
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 1,
+    "allocated_device_hours": 0.9194066508233334
+  },
+  "continuation_input": {
+    "dataset_id": "kaseichou/molgap-gptrans-v5-audit-progress-v1",
+    "dataset_version": 4,
+    "status": "ready",
+    "downloaded_resume_files_sha256_verified": 5,
+    "checkpoint_sha256": "7e4349520418c509f8f4bed2d8cb18cac6fb3fdea9f73e506042824b846f280e"
+  },
+  "submitted_successor": {
+    "kernel_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+    "version": 5,
+    "requested_accelerator": "NvidiaTeslaT4",
+    "remote_source_sha256": "f15b6678f8aa8c534e01a8843f627c57593e8ff93288a3106d81b0b908af1ce5",
+    "expected_previous_epochs": 40,
+    "status_at_observation": "RUNNING"
+  }
+}
