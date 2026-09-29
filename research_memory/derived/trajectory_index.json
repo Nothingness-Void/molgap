@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "38d31240a0d67788b7f8819089485e70a87c3d3b1111111ee50df1ad54a4d95b",
+  "source_digest": "76fc24c90e41c0e9f892a0e6bd703d466c575b36f9955cc0ab0e23136e607e1d",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -307,9 +307,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_p100_no_train.md",
       "family_id": "gptrans-t-input-embedding-initialization",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference"

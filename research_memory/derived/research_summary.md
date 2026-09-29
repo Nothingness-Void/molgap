@@ -5,12 +5,11 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
 - CLOSED: 8
 - INCONCLUSIVE: 11
 - INFRASTRUCTURE_ONLY: 4
 - NEGATIVE_UNDER_CONTRACT: 13
-- NO_TRAIN: 8
+- NO_TRAIN: 9
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer

@@ -124,6 +124,9 @@ def main() -> None:
         raise RuntimeError("Kaggle entry differs from committed source archive")
     sys.path.insert(0, str(root / "src"))
     from molgap.pcqm_gptrans_v4 import run_preflight, run_training
+    import torch
+    if torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
+        raise RuntimeError("T4x2 candidate requires one visible T4 in each worker")
 
     common = {
         "dataset_root": dataset_manifest.parent,

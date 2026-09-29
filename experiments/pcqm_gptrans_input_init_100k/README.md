@@ -26,3 +26,8 @@ source package, Kaggle owner, mounted dataset, and native resource budget.
 The intervention is an initialization-scale test of this adapted GPTrans-T
 implementation. It is not a claim that the entire implementation matches the
 paper's atom or bond input semantics.
+
+The first P100 planning route closed `NO_TRAIN` after Kaggle retired P100.
+`decision_p100_no_train.md` owns that disposition. `protocol_t4.md` and
+`launch_decision_t4.md` describe the T4x2 planning revision; neither is a
+remote training result.
