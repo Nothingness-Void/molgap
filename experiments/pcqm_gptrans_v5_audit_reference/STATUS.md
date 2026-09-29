@@ -31,3 +31,8 @@ log; only an accepted preflight plus an independently retrieved and SHA-
 validated 10-epoch checkpoint/trace may authorize the next segment. The
 failed first submission must be allowed to reach a terminal infrastructure
 status and recorded separately. Neither G1 nor G2 is released by queue state.
+
+The local thread heartbeat `gptrans-100k` checks this exact chain every 30
+minutes, stays silent while status is unchanged, and may submit the next
+segment only after the preceding output passes `accept_segment.py`. It must
+stop itself after full acceptance or an actionable block.
