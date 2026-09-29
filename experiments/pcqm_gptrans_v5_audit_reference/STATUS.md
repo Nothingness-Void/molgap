@@ -1,6 +1,6 @@
 # GPTrans V5 audit-reference execution status
 
-Observed 2026-09-29 20:06 UTC. The user authorized exactly one matched 100K
+Observed 2026-09-29 20:38 UTC. The user authorized exactly one matched 100K
 baseline, not a candidate or full-scale run. Source archive
 `af94a63c3c4626ceec8af4106aad0ea97d398e40aefb04c51b15356b994137a3`
 was built from scientific-source commit
@@ -63,14 +63,25 @@ development MAE is 0.1993127 eV at epoch 39, not a final reference. The
 compact [acceptance](results/segment_04_acceptance.json) and
 [operation receipt](results/segment_04_operation.json) bind this observation.
 
+The same kernel's version 5 completed epochs 40–49 and passed streaming
+artifact/trace acceptance at cumulative epoch 50. Its accepted checkpoint is
+`d6902f1e...59a103abc`; source archive, fixed manifest and runtime certificate
+remain identical. The fifth segment used 0.8047330 allocated T4-device-hours
+(T4x2, one used), bringing accepted segment cost to 4.1863784 allocated
+device-hours, below the 20-hour snapshot ceiling. Its best-so-far EMA
+development MAE is 0.1697378 eV at epoch 49, not a final reference. The
+compact [acceptance](results/segment_05_acceptance.json) and
+[operation receipt](results/segment_05_operation.json) bind this observation.
+
 The private progress dataset `kaseichou/molgap-gptrans-v5-audit-progress-v1`
-version 4 is ready. All five resume payload files were downloaded and SHA-verified
-against its sixth file, the partial manifest. The same kernel's version 5 was
-submitted with `EXPECTED_PREVIOUS_EPOCHS=40` and `NvidiaTeslaT4`; remote source
-SHA matches the staged script, metadata binds the four exact datasets and T4,
-and the scheduler reported `RUNNING` at the observation. Its next gate is
-preflight and accepted epochs 40–49, not a new scientific arm. Neither G1 nor
-G2 is released by queue state.
+version 5 is ready. Kaggle's whole-dataset download returned 404 despite ready
+status and six listed files; its per-file API downloaded all six, and all five
+resume payload SHA values matched the partial manifest. The same kernel's
+version 6 was submitted with `EXPECTED_PREVIOUS_EPOCHS=50` and `NvidiaTeslaT4`;
+remote source SHA matches the staged script, metadata binds the four exact
+datasets and T4, and the scheduler reported `RUNNING` at the observation. Its
+next gate is final 60-epoch prediction, role, certificate, cost and V5 trajectory
+acceptance, not a new scientific arm. Neither G1 nor G2 is released by queue state.
 
 The local thread heartbeat `gptrans-100k` checks this exact chain every 30
 minutes, stays silent while status is unchanged, and may submit the next
