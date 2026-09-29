@@ -17,3 +17,27 @@ all three shards. The [dated decision](decision.md) and compact
 [evidence](results/sidecar_evidence.json) own the terminal result. The Luna B
 terminal handoff succeeded once and its heartbeat is paused. No GPU training,
 protected-role read or scale-up job is released by this CPU result.
+
+The separately authorized [GPU protocol](gpu_protocol.md) added one zero-start
+motif-graph exchange to K1. Its committed source is
+`bd216e612510f4427df16361cbb745ef601388be`; the V5 K1 reference binding,
+single-arm prospective RML plan and local mechanism tests passed. The accepted
+sidecar and source were published as private Kaggle2 datasets; downloaded
+manifest/source payload bytes matched the frozen SHA identities.
+
+GPU kernel `kaseichou/molgap-k1-motif-hierarchy-s42` v1, numeric ID
+`136356323`, was submitted with an explicit P100 request and 10-hour cap.
+Its generic pulled metadata said `machine_shape=Gpu`. The job changed from
+`RUNNING` to `ERROR` at its pinned runtime/device assertion after about 174
+seconds, before graph loading, model construction or an epoch. The actual
+device was not reported, so this is infrastructure failure with no model
+result. The original [receipt](gpu_submission_receipt.json),
+[binding](gpu_monitor_binding.json), retained raw log and compact
+[failure evidence](attempt_v1_failure.json) remain available. The heartbeat
+was paused during diagnosis; it will be rebound only to an independently
+released version-2 attempt.
+
+The [version-2 protocol](attempt_v2/protocol.md) changes only runtime device
+qualification: accept one actual P100 or T4 after recording its identity.
+The scientific model/data/optimization contract is unchanged. A new source
+commit and prospective RML binding are required before submission.

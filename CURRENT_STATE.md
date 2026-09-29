@@ -66,12 +66,14 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The server's pure-2D motif-hierarchy CPU sidecar passed its accepted fixed-100K
-full-row and cost/coverage gates. This is infrastructure feasibility, not a
-model score or a replay-ready training result. No GPU model or scale-up is
-released; a motif-aware K1 model would need its own frozen scientific contract,
-runtime/prelaunch checks and compute decision. Authority: [motif decision](experiments/pcqm_motif_hierarchy_100k/decision.md)
-and [operational status](experiments/pcqm_motif_hierarchy_100k/STATUS.md).
+The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
+full-row and cost/coverage gates. The first separately frozen K1 motif-graph
+GPU attempt stopped at its runtime device gate before model work; no scientific
+result exists. An unchanged-science, new-source retry is being prepared with
+an actual-device qualification gate. No scale-up or production promotion is
+released. The [GPU protocol](experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md),
+[CPU decision](experiments/pcqm_motif_hierarchy_100k/decision.md) and
+[operational status](experiments/pcqm_motif_hierarchy_100k/STATUS.md) own its boundaries.
 
 The server-owned MetaGIN2D fixed-100K seed-42 screen is complete and closed:
 the independent 2D backbone regressed versus frozen K1-v4 under the strict
