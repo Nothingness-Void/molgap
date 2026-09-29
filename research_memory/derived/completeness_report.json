@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 56,
+    "trajectories_total": 57,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 56,
-    "with_incomplete_native_measurement": 51,
+    "with_cost_event": 57,
+    "with_incomplete_native_measurement": 52,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 25,
+      "count": 26,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -39,6 +39,7 @@
         "TC-k1-pairtoken-combination-transfer",
         "TC-k1-relation-frozen-intervention-s42",
         "TC-k1-relation-resolution-post100k-audit-s42",
+        "TC-k1-representation-100k-500k",
         "TC-k1-topology-portability-post100k-audit-s42",
         "TC-metagin-2d-3hop-100k-s42",
         "TS-v5-legacy-evidence-migration"
@@ -69,7 +70,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 51,
+      "count": 52,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-shortest-path-profile-v5",
@@ -111,6 +112,7 @@
         "TC-k1-receiver-pair-100k-s42",
         "TC-k1-relation-frozen-intervention-s42",
         "TC-k1-relation-resolution-post100k-audit-s42",
+        "TC-k1-representation-100k-500k",
         "TC-k1-rrwp-pair-100k-s42",
         "TC-k1-rwse-refresh-100k-s42",
         "TC-k1-sparse-triplet-100k-s42",
@@ -127,7 +129,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 13,
+      "count": 14,
       "items": [
         "TC-gptrans-v5-audit-reference-100k",
         "TC-k1-chem-local-post100k-audit-s42",
@@ -140,6 +142,7 @@
         "TC-k1-linear-attention-post100k-audit-s42",
         "TC-k1-motif-hierarchy-100k-s42",
         "TC-k1-motif-hierarchy-100k-s42-v2",
+        "TC-k1-representation-100k-500k",
         "TC-metagin-2d-3hop-100k-s42",
         "TS-v5-legacy-evidence-migration"
       ],
@@ -147,13 +150,14 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 6,
+      "count": 7,
       "items": [
         "TC-gptrans-v5-audit-reference-100k",
         "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-motif-hierarchy-100k-s42",
         "TC-k1-motif-hierarchy-100k-s42-v2",
         "TC-k1-pair-token-scale-attribution",
+        "TC-k1-representation-100k-500k",
         "TC-metagin-2d-3hop-100k-s42"
       ],
       "severity": "WARN"

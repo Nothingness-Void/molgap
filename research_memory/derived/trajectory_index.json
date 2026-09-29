@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "14533ea38cc16598cecf3f796b69f4510062e100aa8e859759aab5f1f37c8f2b",
+  "source_digest": "801198e38654682a8da22f2ad1e6281b884a4eabf2093c73b5c3de7c2ea1115b",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -799,6 +799,20 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-relation-resolution-post100k-audit-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_explainability_audit/representation_protocol.md",
+      "family_id": "k1-representation-observation",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-k1-representation-100k-500k"
     },
     {
       "completeness_status": "complete",

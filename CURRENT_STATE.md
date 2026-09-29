@@ -66,6 +66,12 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The server-owned frozen K1 representation diagnostic is submitted on Kunshan
+as job `123315282` (30-minute cap). It compares accepted 100K/500K checkpoints
+on one predeclared development panel without training or protected-role access.
+It has a prospective NO_TRAIN plan, not a scientific result. Operational and
+terminal authority: [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md).
+
 The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
 full-row and cost/coverage gates. The first two separately frozen K1 motif-graph
 GPU attempts stopped at runtime device gates before model work; neither has a

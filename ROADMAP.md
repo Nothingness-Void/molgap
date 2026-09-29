@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-K1-REPRESENTATION-DIAGNOSTIC | Collect and independently accept the bounded frozen-checkpoint representation audit | Analyze same-row geometry/sensitivity with scale confounds explicit; close NO_TRAIN RML, no automatic training; [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md) |
 | P0 | C-MOTIF-HIERARCHY-PREFLIGHT | Completed: pure-2D motif partition passed the accepted-cache CPU feasibility gate | Preserve the [infrastructure-only decision](experiments/pcqm_motif_hierarchy_100k/decision.md); any GPU model requires a separate prospective release, not an automatic successor |
 | P0 | C-MOTIF-K1-100K | Completed: v1/v2 were infrastructure failures; T4-only v3 was a strict, replay-ready negative versus K1-v4 | Preserve the [v3 decision](experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md); no repeat seed, 500K audit, protected role, full run or automatic successor |
 | P1 | C-DISTINCT-2D-BACKBONE-PREFLIGHT | Completed: independent MetaGIN-derived 2D backbone passed execution acceptance but regressed versus K1-v4 | Preserve the [strict replay-ready negative terminal](experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md); no extra seed, scale-up, protected-role read, or automatic successor |
