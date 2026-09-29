@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "RUN_REPRESENTATION_DIAGNOSTIC",
+    "field": "accepted_checkpoints_available",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-NO_TRAIN-diagnostic",
+    "authority_ref": "experiments/pcqm_k1_explainability_audit/representation_protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "frozen-K1-100k-500k-context-only"
+  },
+  "cost_model": {
+    "assumptions": [
+      "no cross-hardware scalar conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "d054009d75a5c827f6c8cee07a18ccdbfdb64a7ac0ca460ac9e6ac0762fb08bd",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-representation-observation",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_checkpoints_available"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

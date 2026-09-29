@@ -1,0 +1,43 @@
+{
+  "blocker_codes": [],
+  "candidate_id": "k1-representation-100k-500k",
+  "candidate_source_commit_or_archive": "8f07cff3bb0be4d9a38dc2a714fccc6c4d69cf0f",
+  "candidate_source_config_status": "frozen",
+  "declared_intervention_fields": [],
+  "experiment_purpose": "NO_TRAIN",
+  "format": "molgap-comparison-prelaunch-v1",
+  "intervention_group_id": "representation-observation-only",
+  "matched_fields": {},
+  "mechanism_id": null,
+  "mismatched_fields": {},
+  "missing_fields": [],
+  "planned_status": "PRELAUNCH_NONCAUSAL_PLANNED",
+  "prelaunch_ready": true,
+  "reference_bundle_id": "reference-k1-v4-100k-s42-v5-recovered",
+  "reference_bundle_sha256": "9a22f065aca00686da58be5d992eff5c7d6ce33096353db2ace587087ea0c287",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "not_applicable",
+    "training_membership": "not_applicable"
+  },
+  "runtime_qualification_plan": {
+    "qualification_scope": "frozen payload reproduction then hook invariance and no cross-graph gradient coupling",
+    "runtime_certificate_required": true,
+    "status": "declared"
+  },
+  "terminal_candidate_artifacts_required": false,
+  "trace_plan": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": true,
+    "live_train_metric": false,
+    "optimizer_step": false,
+    "sample_presentations": false
+  }
+}

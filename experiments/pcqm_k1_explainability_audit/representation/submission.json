@@ -1,0 +1,20 @@
+{
+  "format": "molgap-representation-submission-v1",
+  "owner": "server",
+  "platform": "scnet-kunshan",
+  "job_id": "123315282",
+  "source_commit": "8f07cff3bb0be4d9a38dc2a714fccc6c4d69cf0f",
+  "source_archive_sha256": "b8b9771a36f6944a8655f3e439380a9b22d6c4c8bf1f051c01a34c28e390ff8e",
+  "purpose": "NO_TRAIN",
+  "allocation": {"dcu": 1, "cpus": 8, "memory_gib": 24, "wall_limit_minutes": 30},
+  "resource_override": "--cpus-per-task=8; partition DefMemPerCPU=3569 MiB",
+  "prior_submission": "Rejected before job allocation: 24 GiB exceeded four-CPU memory ratio; no job ID returned",
+  "startup_observation": {"state": "RUNNING", "elapsed_seconds": 21, "node": "e06r4n19", "stderr_empty": true},
+  "remote_root_relative_to_profile_home": "molgap-v4-bootstrap/k1-representation-audit",
+  "remote_output_relative_to_root": "attempts/123315282/output",
+  "control_state": ".codex/server_control/k1-representation.json",
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "automatic_retry": false,
+  "automatic_training": false
+}

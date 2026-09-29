@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "planned-v1",
+  "category": "inference",
+  "cost_event_id": "cost-k1-representation-planned",
+  "evidence_ref": "experiments/pcqm_k1_explainability_audit/representation/budget_snapshot.json",
+  "hardware": "one Hygon DCU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "scnet-kunshan",
+  "run_id": "planned-k1-representation",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-representation-100k-500k"
+}
