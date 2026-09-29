@@ -5,6 +5,7 @@ import argparse
 import base64
 import hashlib
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -74,9 +75,12 @@ def check_dataset():
 def prepare_resume():
     if RESUME_CONFIG is None:
         return None
-    mount = Path("/kaggle/input") / RESUME_CONFIG["dataset"].split("/")[-1]
-    if not mount.is_dir():
-        raise RuntimeError("Pinned checkpoint dataset is not mounted")
+    input_root = Path("/kaggle/input")
+    matches = list(input_root.rglob("gptrans_distance_only__stage_manifest.json"))
+    if len(matches) != 1:
+        visible = sorted(path.name for path in input_root.iterdir())
+        raise RuntimeError("Expected one checkpoint manifest under /kaggle/input; visible=" + repr(visible))
+    mount = matches[0].parent
     destination = Path("/kaggle/temp/molgap-resume")
     for arm in ARMS:
         arm_dir = destination / arm
@@ -171,7 +175,8 @@ if __name__ == "__main__":
 '''
 
 
-def build_package(repo_root: Path, output: Path, resume_config: Path | None = None) -> dict:
+def build_package(repo_root: Path, output: Path, resume_config: Path | None = None,
+                  source_bundle: Path | None = None) -> dict:
     repo_root = repo_root.resolve()
     output = output.resolve()
     resume = None if resume_config is None else json.loads(resume_config.read_text(encoding="utf-8"))
@@ -185,9 +190,7 @@ def build_package(repo_root: Path, output: Path, resume_config: Path | None = No
             raise RuntimeError("Invalid pinned two-arm resume configuration")
         if not resume["dataset"].startswith("nothingnessvoid/") or not resume["kernel"].startswith("nothingnessvoid/"):
             raise RuntimeError("Resume dataset and kernel must belong to Kaggle1")
-    commit = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=repo_root, text=True
-    ).strip()
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo_root, text=True).strip()
     tracked = subprocess.check_output(
         ["git", "ls-files", "-z", "--", "src/molgap"], cwd=repo_root
     )
@@ -196,10 +199,29 @@ def build_package(repo_root: Path, output: Path, resume_config: Path | None = No
         if path and path.decode("utf-8").endswith(".py")
     )
     bundle_dir = output / "source_bundle"
-    bundle = build_v4_source_bundle(
-        repo_root=repo_root, relative_paths=source_paths,
-        output_dir=bundle_dir, source_commit=commit,
-    )
+    if source_bundle is None:
+        commit = head
+        bundle = build_v4_source_bundle(
+            repo_root=repo_root, relative_paths=source_paths,
+            output_dir=bundle_dir, source_commit=commit,
+        )
+    else:
+        source_bundle = source_bundle.resolve()
+        commit = (source_bundle / "SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
+        inventory = json.loads((source_bundle / "SOURCE_FILES.json").read_text(encoding="utf-8"))
+        if inventory["source_commit"] != commit or sorted(item["path"] for item in inventory["files"]) != source_paths:
+            raise RuntimeError("Frozen source inventory differs from the package source list")
+        subprocess.run(["git", "diff", "--quiet", commit, head, "--", "src/molgap"],
+                       cwd=repo_root, check=True)
+        dirty = subprocess.check_output(["git", "status", "--porcelain=v1", "--", "src/molgap"],
+                                        cwd=repo_root, text=True)
+        if dirty.strip():
+            raise RuntimeError("Frozen source files changed in the working tree")
+        shutil.copytree(source_bundle, bundle_dir)
+        bundle = {
+            "archive": str(bundle_dir / "source.tar.gz"),
+            "archive_sha256": (bundle_dir / "SOURCE_ARCHIVE_SHA256.txt").read_text(encoding="utf-8").strip(),
+        }
     archive = Path(bundle["archive"]).read_bytes()
     if hashlib.sha256(archive).hexdigest() != bundle["archive_sha256"]:
         raise RuntimeError("Source bundle changed after packaging")
@@ -238,8 +260,10 @@ def main() -> None:
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume-config", type=Path)
+    parser.add_argument("--source-bundle", type=Path)
     args = parser.parse_args()
-    print(json.dumps(build_package(args.repo_root, args.output, args.resume_config), indent=2))
+    print(json.dumps(build_package(args.repo_root, args.output, args.resume_config,
+                                   args.source_bundle), indent=2))
 
 
 if __name__ == "__main__":

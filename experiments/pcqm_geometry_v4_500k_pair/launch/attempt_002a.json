@@ -1,0 +1,33 @@
+{
+  "format": "molgap-kaggle-v4-submission-observation-v1",
+  "logical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "physical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "physical_kernel_id_no": 136350380,
+  "physical_version": null,
+  "physical_version_missing_reason": "Kaggle status and pulled metadata do not expose the version number",
+  "owner": "nothingnessvoid",
+  "account": "kaggle1",
+  "arms": [
+    "gptrans_distance_only",
+    "k1_distance_angle"
+  ],
+  "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f",
+  "source_archive_sha256": "8bea0dab3b8b1755352f7f11e7ae7708b87de0731fe32aefabb9725e60112367",
+  "local_kernel_code_sha256": "e2f53ec9a1cfa223ad2267b35e8b712cfcfd7a5807701a17bd0d315515996592",
+  "pulled_kernel_code_sha256": "216ce17639f104745b3c212c6badbd3ffe944508d922ab13660e5b4d8afba284",
+  "pulled_source_matches_local_after_newline_normalization": true,
+  "accepted_dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "checkpoint_dataset": "nothingnessvoid/molgap-geometry-v4-500k-a1-resume-s42",
+  "requested_accelerator": "NvidiaTeslaT4",
+  "actual_accelerator_verified": false,
+  "observed_at_utc": "2026-09-29T05:29:00.291279+00:00",
+  "authoritative_status": "ERROR",
+  "startup_preflight_verified": false,
+  "submission_api_invalid_sources": [],
+  "remote_listed_output_files": 0,
+  "failure_point": "prepare_resume: fixed checkpoint dataset mount path absent",
+  "training_released": false,
+  "optimizer_steps_observed": null,
+  "native_t4_device_hours_observed": null,
+  "evidence_note": "Pulled metadata bound both datasets; runtime failed before model preflight and training. No metric or cost inferred."
+}

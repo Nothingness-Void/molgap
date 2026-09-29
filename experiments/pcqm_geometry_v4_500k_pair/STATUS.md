@@ -18,3 +18,15 @@ The remote-listed model, prediction, and checkpoint bytes were not retrieved
 or locally validated. No successor or resume was submitted.
 
 This is a dated observation, not live scheduler state.
+
+## Checkpoint continuation, 2026-09-29
+
+The user separately authorized finishing both 60-epoch arms. The ten-file
+private Kaggle1 checkpoint dataset is ready, and the two continuation
+trajectories are prospective in `continuation_gptrans_distance_only/` and
+`continuation_k1_distance_angle/`. The first continuation submission reached
+Kaggle `ERROR` before either training worker started: its wrapper assumed a
+particular checkpoint mount directory. The pulled source matched the local
+package after newline normalization. The [failure observation](launch/attempt_002a.json)
+and [retry decision](retry_decision_attempt_002b.md) own that infrastructure
+attempt. Neither five-epoch checkpoint was advanced or replaced by a fresh run.
