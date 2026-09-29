@@ -1,0 +1,24 @@
+{
+  "format": "molgap-gptrans-real-path-cpu-acceptance-v1",
+  "accepted": true,
+  "sampled_train_rows": 512,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "source_commit": "8c50a668c4afb9fa3d1e2398287b69e652131cc1",
+  "source_archive_sha256": "0f6e0b2f5cda04db0b022432d550a40223b76338026a4564683672fba482056e",
+  "counts": {
+    "connected_nonbond_pairs": 40559,
+    "capped_nonbond_pairs": 40559,
+    "nontrivial_bond_pairs": 26917,
+    "same_distance_multiple_signature_pairs": 38905,
+    "distances_with_multiple_signatures": 3030
+  },
+  "same_distance_multiple_signature_fraction": 0.9592199018713479,
+  "output_sha256": {
+    "summary.json": "48da46ec187ea01a3d4c4fea29a9845cbc85ebd156a9d84159a7bda405160fdd",
+    "train_shard_0.json": "bbf7edf35daf51d51063645d4b4d8938ea445432addb0b48d74245c2c0deddf0",
+    "train_shard_1.json": "0c104d50cebe1c52fc10e33cad01a8c0551314eb98b95783af8a5d417ca836af",
+    "native_cost.json": "bf80b6e433ae815c63442d5d6ccd4f646bd231938d55996d94fe42a88648755c"
+  },
+  "training_released": false,
+  "official_evaluation_read": false
+}

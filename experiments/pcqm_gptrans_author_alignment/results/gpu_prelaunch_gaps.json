@@ -1,0 +1,28 @@
+{
+  "format": "molgap-gptrans-author-alignment-gpu-prelaunch-gaps-v1",
+  "date": "2026-09-29",
+  "gpu_jobs_submitted": 0,
+  "historical_reference": {
+    "benchmark": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+    "best_model_present_and_sha256_verified": true,
+    "development_predictions_present_and_sha256_verified": true,
+    "trace_present": true,
+    "runtime_certificate_present": true,
+    "v5_reusable_reference_bundle_present": false,
+    "required_action": "Recover and validate a repository-bound V5 reference from retained artifacts before claiming a strict new comparison; do not retrain automatically"
+  },
+  "initialization_arm": {
+    "frozen_modified_initial_state_identity": false,
+    "single_factor_model_and_optimizer_step_test": false,
+    "prospective_rml_prelaunch": false
+  },
+  "path_arm": {
+    "real_graph_preflight_accepted": true,
+    "full_100k_cpu_path_sidecar_accepted": false,
+    "author_path_tie_and_zero_sentinel_policy_frozen": false,
+    "model_input_and_inference_parity_test": false,
+    "prospective_rml_prelaunch": false
+  },
+  "t4_resource_release": false,
+  "official_evaluation_release": false
+}
