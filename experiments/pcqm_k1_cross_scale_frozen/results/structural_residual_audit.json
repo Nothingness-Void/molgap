@@ -1,0 +1,228 @@
+{
+  "comparison_caveat": "Only K1/PairToken checkpoints are shared across the two roles; MetaGIN2D and motif K1 have original-100K endpoints only.",
+  "cross_scale_terminal_sha256": "65720f58b4b6eeb1baff098e2cdb1547059fda93eb6722de73da247d25ac86c6",
+  "format": "molgap-k1-structural-residual-audit-v1",
+  "matrix_sha256": "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb",
+  "models": {
+    "metagin_2d": {
+      "original_payload_sha256": "eddfee9d2810d5932a6a715b178b9e54ce97630aa8b47c31b24ce73266d75e48",
+      "roles": {
+        "original_100k": {
+          "overall": {
+            "candidate_win_fraction": 0.43472,
+            "gain_eV": -0.022813934388160706,
+            "rows": 50000
+          },
+          "structure_groups": {
+            "atoms_13_to_15": {
+              "candidate_win_fraction": 0.431185944363104,
+              "gain_eV": -0.024448124809111543,
+              "rows": 21856
+            },
+            "atoms_ge_16": {
+              "candidate_win_fraction": 0.42946646441996966,
+              "gain_eV": -0.022764272286663473,
+              "rows": 15163
+            },
+            "atoms_ge_16_and_conjugation_gt_075": {
+              "candidate_win_fraction": 0.3927083333333333,
+              "gain_eV": -0.038054393066300284,
+              "rows": 2880
+            },
+            "atoms_le_12": {
+              "candidate_win_fraction": 0.44680687158154225,
+              "gain_eV": -0.020120471681489498,
+              "rows": 12981
+            },
+            "conjugation_025_to_050": {
+              "candidate_win_fraction": 0.4352071418607895,
+              "gain_eV": -0.021027342330995406,
+              "rows": 14338
+            },
+            "conjugation_050_to_075": {
+              "candidate_win_fraction": 0.4330002854695975,
+              "gain_eV": -0.02256140640862084,
+              "rows": 17515
+            },
+            "conjugation_gt_075": {
+              "candidate_win_fraction": 0.40464403583215464,
+              "gain_eV": -0.03293646587509414,
+              "rows": 8484
+            },
+            "conjugation_le_025": {
+              "candidate_win_fraction": 0.46352064576218566,
+              "gain_eV": -0.017035152161329857,
+              "rows": 9663
+            }
+          }
+        }
+      }
+    },
+    "motif_k1": {
+      "original_payload_sha256": "0314b6648123ae20fa5b15751b1a011acb8704550a55677abd6f6ace2f6b3898",
+      "roles": {
+        "original_100k": {
+          "overall": {
+            "candidate_win_fraction": 0.49826,
+            "gain_eV": -0.00034214375495910645,
+            "rows": 50000
+          },
+          "structure_groups": {
+            "atoms_13_to_15": {
+              "candidate_win_fraction": 0.5004117862371888,
+              "gain_eV": -0.0011080159515273343,
+              "rows": 21856
+            },
+            "atoms_ge_16": {
+              "candidate_win_fraction": 0.4942953241442986,
+              "gain_eV": -0.0012947755148297114,
+              "rows": 15163
+            },
+            "atoms_ge_16_and_conjugation_gt_075": {
+              "candidate_win_fraction": 0.5041666666666667,
+              "gain_eV": 0.0007472358644008637,
+              "rows": 2880
+            },
+            "atoms_le_12": {
+              "candidate_win_fraction": 0.49926816115861644,
+              "gain_eV": 0.002060110162544412,
+              "rows": 12981
+            },
+            "conjugation_025_to_050": {
+              "candidate_win_fraction": 0.4916306318872925,
+              "gain_eV": -0.002592195009882604,
+              "rows": 14338
+            },
+            "conjugation_050_to_075": {
+              "candidate_win_fraction": 0.5008849557522124,
+              "gain_eV": -0.00035330065651822013,
+              "rows": 17515
+            },
+            "conjugation_gt_075": {
+              "candidate_win_fraction": 0.5126119754832626,
+              "gain_eV": 0.0028117197912181117,
+              "rows": 8484
+            },
+            "conjugation_le_025": {
+              "candidate_win_fraction": 0.4907378660871365,
+              "gain_eV": 0.00024765958749494186,
+              "rows": 9663
+            }
+          }
+        }
+      }
+    },
+    "pair_token": {
+      "original_payload_sha256": "b67be3f9ba0c67ca0eb1cf7dffa00ad535e9f04f5f8371aadad1e6a2711e0331",
+      "roles": {
+        "original_100k": {
+          "overall": {
+            "candidate_win_fraction": 0.51242,
+            "gain_eV": 0.0030435929775238036,
+            "rows": 50000
+          },
+          "structure_groups": {
+            "atoms_13_to_15": {
+              "candidate_win_fraction": 0.5150073206442167,
+              "gain_eV": 0.0029477393077372805,
+              "rows": 21856
+            },
+            "atoms_ge_16": {
+              "candidate_win_fraction": 0.5045835256875288,
+              "gain_eV": 0.0011393268213874,
+              "rows": 15163
+            },
+            "atoms_ge_16_and_conjugation_gt_075": {
+              "candidate_win_fraction": 0.5059027777777778,
+              "gain_eV": -0.0008984755310747359,
+              "rows": 2880
+            },
+            "atoms_le_12": {
+              "candidate_win_fraction": 0.5172174716893921,
+              "gain_eV": 0.005429338723795319,
+              "rows": 12981
+            },
+            "conjugation_025_to_050": {
+              "candidate_win_fraction": 0.5131817547775143,
+              "gain_eV": 0.002461474649176835,
+              "rows": 14338
+            },
+            "conjugation_050_to_075": {
+              "candidate_win_fraction": 0.5077933200114187,
+              "gain_eV": 0.0016283179295937607,
+              "rows": 17515
+            },
+            "conjugation_gt_075": {
+              "candidate_win_fraction": 0.5233380480905233,
+              "gain_eV": 0.004254543798141803,
+              "rows": 8484
+            },
+            "conjugation_le_025": {
+              "candidate_win_fraction": 0.5100900341508848,
+              "gain_eV": 0.005409447090553963,
+              "rows": 9663
+            }
+          }
+        },
+        "unseen_500k": {
+          "overall": {
+            "candidate_win_fraction": 0.5056,
+            "gain_eV": 0.0004162072515487671,
+            "rows": 50000
+          },
+          "structure_groups": {
+            "atoms_13_to_15": {
+              "candidate_win_fraction": 0.5067932990370664,
+              "gain_eV": 0.0006982293087244296,
+              "rows": 22743
+            },
+            "atoms_ge_16": {
+              "candidate_win_fraction": 0.5072214927785073,
+              "gain_eV": 0.001075623047711837,
+              "rows": 19802
+            },
+            "atoms_ge_16_and_conjugation_gt_075": {
+              "candidate_win_fraction": 0.5372361608920748,
+              "gain_eV": 0.006803489120677855,
+              "rows": 2511
+            },
+            "atoms_le_12": {
+              "candidate_win_fraction": 0.49765258215962443,
+              "gain_eV": -0.0021957014328197375,
+              "rows": 7455
+            },
+            "conjugation_025_to_050": {
+              "candidate_win_fraction": 0.5060186121788388,
+              "gain_eV": 0.0011768456704457858,
+              "rows": 19772
+            },
+            "conjugation_050_to_075": {
+              "candidate_win_fraction": 0.5071944922547332,
+              "gain_eV": 0.0010517364935292229,
+              "rows": 14525
+            },
+            "conjugation_gt_075": {
+              "candidate_win_fraction": 0.515867418899859,
+              "gain_eV": 0.0023517006711327644,
+              "rows": 5672
+            },
+            "conjugation_le_025": {
+              "candidate_win_fraction": 0.4966603529059914,
+              "gain_eV": -0.0030977518486484624,
+              "rows": 10031
+            }
+          }
+        }
+      }
+    }
+  },
+  "new_model_inference": false,
+  "new_training": false,
+  "protected_role_access": false,
+  "role_rows": {
+    "original_100k": 50000,
+    "unseen_500k": 50000
+  },
+  "selection_caveat": "Post-hoc structure groups on repeatedly used internal development roles; not a promotion, router, or new independent validation.",
+  "source_type": "derived_from_accepted_artifacts"
+}
