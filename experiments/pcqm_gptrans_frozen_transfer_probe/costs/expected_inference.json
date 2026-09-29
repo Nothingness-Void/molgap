@@ -1,0 +1,18 @@
+{
+  "schema": "molgap-cost-event-v1",
+  "cost_event_id": "cost-TB-gptrans-frozen-transfer-probe-expected-inference",
+  "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
+  "action_id": "A001",
+  "run_id": "local-gptrans-frozen-transfer-500k-dev-s42",
+  "attempt_id": "local-attempt-001",
+  "category": "inference",
+  "platform": "desktop",
+  "hardware": "NVIDIA_GeForce_RTX_5060",
+  "measurement": {
+    "device_hours": {"value": null, "status": "measurement_missing"},
+    "cpu_hours": {"value": null, "status": "measurement_missing"},
+    "wall_hours": {"value": null, "status": "measurement_missing"},
+    "queue_hours": {"value": null, "status": "not_applicable"}
+  },
+  "evidence_ref": "experiments/pcqm_gptrans_frozen_transfer_probe/protocol.md"
+}
