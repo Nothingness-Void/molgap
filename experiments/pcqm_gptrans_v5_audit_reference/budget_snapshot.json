@@ -1,0 +1,11 @@
+{
+  "format": "molgap-budget-snapshot-v1",
+  "trajectory_id": "TC-gptrans-v5-audit-reference-100k",
+  "pool": "Kaggle2-user-authorized-reference-rerun",
+  "reserved_allocated_device_hours_ceiling": 20,
+  "maximum_preflight_estimated_training_hours": 6,
+  "segment_epochs": 10,
+  "one_worker_reason": "only one authorized reference; isolate one T4 even if T4x2 allocated and charge the whole allocation",
+  "automatic_successor_authorized": false,
+  "account_quota_hours": null
+}

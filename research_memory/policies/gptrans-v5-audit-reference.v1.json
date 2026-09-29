@@ -1,0 +1,30 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-v5-audit-reference",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "required_observable_fields": ["user_authorized_matched_reference_rerun"],
+  "created_from_source_digest": "41a70330a1e29c9af8acadbc2095643b52c065d557a17100ec8a2492a5441731",
+  "approval": {
+    "activation": "one-user-authorized-baseline-only",
+    "authority_ref": "experiments/pcqm_gptrans_v5_audit_reference/protocol.md"
+  },
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": ["charge the full T4 allocation", "no cross-hardware device-hour conversion"]
+  },
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {
+    "field": "user_authorized_matched_reference_rerun",
+    "operator": "eq",
+    "threshold": true,
+    "action": "RUN_MATCHED_GPTRANS_REFERENCE"
+  },
+  "borderline_action": "DEFER"
+}
