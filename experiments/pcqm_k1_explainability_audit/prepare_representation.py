@@ -60,7 +60,7 @@ def main():
     h.update(hypothesis_id="H-"+tid, observed_deficiency="Aggregate dispersion does not identify task-relevant information loss.",
         supporting_evidence_ids=[ref["reference_id"]], changed_mechanism="none; observe frozen activations and gradients",
         cheapest_falsifier="same 1024 label-independent rows, two accepted checkpoints",
-        expected_native_cost_ref=(dest/"budget_snapshot.json").as_posix(),
+        expected_native_cost_ref="cost-k1-representation-planned",
         decision_changed_if_positive="Nominate a diagnostic-backed mechanism only; no automatic training",
         decision_changed_if_negative="Stop the information-collapse explanation without changing models")
     trajectory["state_at_start"].update(source_commit=commit, source_config_identity="k1-representation-observation-v1",
@@ -73,7 +73,12 @@ def main():
     trajectory["actions"] = [{"action_id":"A001", "type":"planned_NO_TRAIN_representation_diagnostic",
         "run_ids":[], "attempt_ids":[], "source_commit":commit,
         "evidence_refs":[(dest/"input_binding.json").as_posix()], "cost_event_ids":[]}]
-    plan(root, {"trajectory": trajectory, "decision_state": {"available_actions":["RUN_REPRESENTATION_DIAGNOSTIC","DEFER"],
+    cost = {"schema":"molgap-cost-event-v1", "cost_event_id":"cost-k1-representation-planned",
+        "trajectory_id":tid, "action_id":"A001", "run_id":"planned-k1-representation", "attempt_id":"planned-v1",
+        "category":"inference", "platform":"scnet-kunshan", "hardware":"one Hygon DCU",
+        "measurement":{k:{"value":None,"status":"measurement_missing"} for k in ("device_hours","cpu_hours","wall_hours","queue_hours")},
+        "evidence_ref":(dest/"budget_snapshot.json").as_posix()}
+    plan(root, {"trajectory": trajectory, "costs":[cost], "decision_state": {"available_actions":["RUN_REPRESENTATION_DIAGNOSTIC","DEFER"],
         "chosen_action":"RUN_REPRESENTATION_DIAGNOSTIC", "policy_id":policy["policy_id"],"policy_version":"v1", "state_timestamp":timestamp}}, dest/"rml_plan")
     print("V5 reference-evidence gate and prospective RML plan PASS")
 
